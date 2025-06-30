@@ -1,0 +1,154 @@
+url: na.html
+
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left: [reference, articles]
+    right: [search, github]
+  components:
+
+authors:
+  before: "We define *authors* as those who are actively maintaining the code base, and *contributors* as those who made a significant contribution in the past. For all acknowledgements, see the eponymous section in the [Home Page](https://johnsonandjohnson.github.io/junco/)."
+  footer:
+    roles: [aut, ctb, cre, fnd]
+    text: "Developed by"
+  sidebar:
+    roles: [aut]
+articles:
+  - title: Junco
+    contents:
+    - junco
+    - auto_colwidths
+reference:
+  - title: junco Analysis Functions
+    desc: The following functions are the Analysis functions used used to create common table layouts.
+    contents:
+    - s_ancova_j
+    - s_summarize_ancova_j
+    - column_stats
+    - a_freq_combos_j
+    - a_summarize_ex_j 
+    - a_freq_j
+    - a_freq_subcol_j
+    - a_proportion_ci_factor
+    - a_proportion_ci_logical
+    - a_summarize_aval_chg_diff_j
+    - rbmi_analyse
+    - analyze_values 
+    - rbmi_ancova
+    - rbmi_ancova_single
+    - build_formula
+    - c_proportion_logical
+    - cmp_cfun
+    - cmp_post_fun
+    - count_fraction
+    - find_missing_chg_after_avisit
+    - fit_ancova
+    - fit_mmrm_j
+    - coxph_hr
+    - d_test_proportion_diff
+    - tabulate_rbmi
+    - tabulate_lsmeans
+    - h_colexpr_substr
+    - h_odds_ratio
+    - make_rbmi_cluster
+    - rbmi_mmrm
+    - event_free
+    - odds_ratio
+    - par_lapply
+    - prop_diff
+    - prop_post_fun
+    - prop_ratio_cmh
+    - prop_table_afun
+    - a_relative_risk
+    - resp01_a_comp_stat_factor
+    - resp01_a_comp_stat_logical
+    - resp01_acfun
+    - resp01_counts_cfun
+    - resp01_split_fun_fct
+    - response_by_var
+    - s_proportion_factor
+    - summarize_row_counts
+    - s_proportion_logical
+    - summarize_coxreg_multivar
+    - summarize_lsmeans_wide
+    - summarize_mmrm
+    - h_a_freq_dataprep
+    - h_a_freq_prepinrows
+    - h_create_altdf
+    - h_denom_parentdf
+    - h_df_add_newlevels
+    - h_get_label_map
+    - h_get_trtvar_refpath
+    - h_subset_combo
+    - h_upd_dfrow
+    - h_update_factor
+    - rbmi_mmrm_single_info
+        
+  - title: junco Formatting Functions
+    desc: The following functions are the junco formatting functions used to create common table layouts.
+    contents:
+    - jj_uc_map
+    - jjcsformat_xx
+    - jjcs_num_formats
+    - jjcsformat_count_denom_fraction
+    - format_xx_fct
+    - jjcsformat_fraction_count_denom
+    - jjcsformat_pval_fct
+    - jjcsformat_range_fct
+    - insert_blank_line
+    
+  - title: junco Sorting Functions and Pruning Functions
+    desc: The following functions are the junco sorting and pruning functions used to create common table layouts.
+    contents:
+    - bspt_pruner
+    - count_pruner
+    - jj_complex_scorefun
+    - keep_non_null_rows
+    - remove_rows
+    - safe_prune_table
+    
+  - title: junco Splitting Functions
+    desc: The following functions are junco column spanning functions used to create common table layouts.
+    contents:
+    - cond_rm_facets
+    - create_colspan_map
+    - create_colspan_var
+    - make_combo_splitfun
+    - real_add_overall_facet
+    
+  - title: junco Functions For titles/footnotes and generating .rtfs 
+    desc: The following utility functions help to add titles/footnotes and generate the .rtf files.
+    contents:
+    - def_colwidths
+    - get_titles_from_file
+    - set_titles
+    - tt_to_tlgrtf
+    
+  - title: junco Miscellaneous Functions
+    desc: The following functions are other miscellaneous junco functions used to create common table layouts.
+    contents:
+    - remove_col_count
+    - rm_levels
+    - get_mmrm_lsmeans
+    - get_ref_info
+    - get_visit_levels
+    
+  - title: internal
+    desc: The following are additional junco functions which are outside of priority documentation scope but are creating a .rd file.
+    contents:
+    - check_wrap_nobreak
+    - inches_to_spaces
+    - rm_other_facets_fact
+    - smart_colwidths_1page
+    - tt_to_tbldf
+
+
+
+
+
+
+

@@ -1,0 +1,35 @@
+# R-related
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# docs
+inst/doc
+docs
+
+# others
+.DS_Store
+InputVads.Rdata
+temp/
+
+#tests
+tests/testthat/_snaps/**/*.new.md
+tests/testthat/_snaps/**/*.new.svg
+*/test_result.log
+tests/testthat/table.csv
+
+#RTFs
+/output
+*.prof
+*.rprof
+*.rtf
+*.diff
+programs_internal/*
+programs_external/*
+
+#IDE
+.vscode/settings.json
+.idea/*
+temp_ilse/*
