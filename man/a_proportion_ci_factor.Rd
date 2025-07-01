@@ -7,15 +7,15 @@
 a_proportion_ci_factor(df, .var, ...)
 }
 \arguments{
-\item{df}{(`data.frame`)\cr including factor `.var`.}
+\item{df}{(\code{data.frame})\cr including factor \code{.var}.}
 
-\item{.var}{(`string`)\cr name of the factor variable.}
+\item{.var}{(\code{string})\cr name of the factor variable.}
 
-\item{\dots}{see [a_proportion_ci_logical()] for additionally required
+\item{\dots}{see \code{\link[=a_proportion_ci_logical]{a_proportion_ci_logical()}} for additionally required
 arguments.}
 }
 \value{
-The [rtables::rcell()] result.
+The \code{\link[rtables:rcell]{rtables::rcell()}} result.
 }
 \description{
 Formatted Analysis Function For Proportion Confidence Interval for Factor

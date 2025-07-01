@@ -7,20 +7,20 @@
 rbmi_mmrm_single_info(fit, visit_level, visit, group, weights)
 }
 \arguments{
-\item{fit}{(`mmrm`)\cr the fitted MMRM.}
+\item{fit}{(\code{mmrm})\cr the fitted MMRM.}
 
-\item{visit_level}{(`string`)\cr the visit level to extract information for.}
+\item{visit_level}{(\code{string})\cr the visit level to extract information for.}
 
-\item{visit}{(`string`)\cr the name of the visit variable.}
+\item{visit}{(\code{string})\cr the name of the visit variable.}
 
-\item{group}{(`string`)\cr the name of the group variable.}
+\item{group}{(\code{string})\cr the name of the group variable.}
 
-\item{weights}{(`string`)\cr the weighting strategy to be used when calculating the
-least square means, either `'counterfactual'` or `'equal'`.}
+\item{weights}{(\code{string})\cr the weighting strategy to be used when calculating the
+least square means, either \code{'counterfactual'} or \code{'equal'}.}
 }
 \description{
-Extracts relevant estimates from a given fitted MMRM. See [rbmi_mmrm()] for full details.
+Extracts relevant estimates from a given fitted MMRM. See \code{\link[=rbmi_mmrm]{rbmi_mmrm()}} for full details.
 }
 \seealso{
-[rbmi_mmrm()]
+\code{\link[=rbmi_mmrm]{rbmi_mmrm()}}
 }

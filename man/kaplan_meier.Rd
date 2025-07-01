@@ -19,63 +19,72 @@ a_kaplan_meier(
 s_kaplan_meier(df, .var, is_event, control = control_surv_time())
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
 \item{...}{additional arguments for the lower level functions.}
 
-\item{.stats}{(`character`)\cr statistics to select for the table.}
+\item{.stats}{(\code{character})\cr statistics to select for the table.}
 
-\item{.formats}{(named `character` or `list`)\cr formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.}
+\item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
+information on the \code{'auto'} setting.}
 
-\item{.labels}{(named `character`)\cr labels for the statistics (without indent).}
+\item{.labels}{(named \code{character})\cr labels for the statistics (without indent).}
 
-\item{.indent_mods}{(named `integer`)\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
+\item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 
-\item{is_event}{(`character`)\cr variable name storing Logical values: `TRUE` if event,
-`FALSE` if time to event is censored.}
+\item{is_event}{(\code{character})\cr variable name storing Logical values: \code{TRUE} if event,
+\code{FALSE} if time to event is censored.}
 
-\item{control}{(`list`)\cr parameters for comparison details, specified by using the helper function
-[tern::control_surv_time()]. Some possible parameter options are:
-* `conf_level` (`proportion`)\cr confidence level of the interval for survival time.
-* `conf_type` (`string`)\cr confidence interval type. Options are 'plain' (default), 'log', or 'log-log',
-  see more in [survival::survfit()]. Note option 'none' is not supported.
-* `quantiles` (`numeric`)\cr vector of length two to specify the quantiles of survival time.}
+\item{control}{(\code{list})\cr parameters for comparison details, specified by using the helper function
+\code{\link[tern:control_surv_time]{tern::control_surv_time()}}. Some possible parameter options are:
+\itemize{
+\item \code{conf_level} (\code{proportion})\cr confidence level of the interval for survival time.
+\item \code{conf_type} (\code{string})\cr confidence interval type. Options are 'plain' (default), 'log', or 'log-log',
+see more in \code{\link[survival:survfit]{survival::survfit()}}. Note option 'none' is not supported.
+\item \code{quantiles} (\code{numeric})\cr vector of length two to specify the quantiles of survival time.
+}}
 }
 \value{
-* `a_kaplan_meier()` returns the corresponding list with formatted [rtables::CellValue()].
+\itemize{
+\item \code{a_kaplan_meier()} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
+}
 
-* `s_kaplan_meier()` returns the following statistics:
-  * `quantiles_lower`: Lower quantile estimate and confidence interval for it.
-  * `median_ci_3d`: Median survival time and confidence interval for it.
-  * `quantiles_upper`: Upper quantile estimate and confidence interval for it.
-  * `range_with_cens_info`: Survival time range with censoring information.
+\itemize{
+\item \code{s_kaplan_meier()} returns the following statistics:
+\itemize{
+\item \code{quantiles_lower}: Lower quantile estimate and confidence interval for it.
+\item \code{median_ci_3d}: Median survival time and confidence interval for it.
+\item \code{quantiles_upper}: Upper quantile estimate and confidence interval for it.
+\item \code{range_with_cens_info}: Survival time range with censoring information.
+}
+}
 }
 \description{
-`r lifecycle::badge('stable')`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
-The analyze function [kaplan_meier()] creates a layout element to analyze
+The analyze function \code{\link[=kaplan_meier]{kaplan_meier()}} creates a layout element to analyze
 survival time by calculating survival time median, 2 quantiles, each with
 their confidence intervals, and range (for all, censored, or event patients).
-The primary analysis variable `vars` is the time variable and the secondary
-analysis variable `is_event` indicates whether or not an event has occurred.
+The primary analysis variable \code{vars} is the time variable and the secondary
+analysis variable \code{is_event} indicates whether or not an event has occurred.
 }
 \section{Functions}{
 \itemize{
-\item \code{a_kaplan_meier()}: Formatted analysis function which is used as `afun`
+\item \code{a_kaplan_meier()}: Formatted analysis function which is used as \code{afun}
 
 \item \code{s_kaplan_meier()}: Statistics function which analyzes survival times using Kaplan-Meier.
 
 }}
 \note{
-These functions have been forked from the `tern` package file `survival_time.R`.
-  Here we have the additional features:
-
-  * Additional statistics `quantiles_lower`, `quantiles_upper`, `range_with_cens_info` are returned.
+These functions have been forked from the \code{tern} package file \code{survival_time.R}.
+Here we have the additional features:
+\itemize{
+\item Additional statistics \code{quantiles_lower}, \code{quantiles_upper}, \code{range_with_cens_info} are returned.
+}
 }
 \examples{
 library(dplyr)

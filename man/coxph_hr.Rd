@@ -30,53 +30,55 @@ s_coxph_hr(
 )
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
-\item{ref_path}{(`character`)\cr global reference group specification, see [get_ref_info()].}
+\item{ref_path}{(\code{character})\cr global reference group specification, see \code{\link[=get_ref_info]{get_ref_info()}}.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states
-that is passed by `rtables`.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
+that is passed by \code{rtables}.}
 
 \item{...}{additional arguments for the lower level functions.}
 
-\item{.stats}{(`character`)\cr statistics to select for the table.}
+\item{.stats}{(\code{character})\cr statistics to select for the table.}
 
-\item{.formats}{(named `character` or `list`)\cr formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.}
+\item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
+information on the \code{'auto'} setting.}
 
-\item{.labels}{(named `character`)\cr labels for the statistics (without indent).}
+\item{.labels}{(named \code{character})\cr labels for the statistics (without indent).}
 
-\item{.indent_mods}{(named `integer`)\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
+\item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 
-\item{.ref_group}{(`data.frame` or `vector`)\cr the data corresponding to the reference group.}
+\item{.ref_group}{(\code{data.frame} or \code{vector})\cr the data corresponding to the reference group.}
 
-\item{.in_ref_col}{(`logical`)\cr `TRUE` when working with the reference level, `FALSE` otherwise.}
+\item{.in_ref_col}{(\code{logical})\cr \code{TRUE} when working with the reference level, \code{FALSE} otherwise.}
 
-\item{is_event}{(`character`)\cr variable name storing Logical values: `TRUE` if event,
-`FALSE` if time to event is censored.}
+\item{is_event}{(\code{character})\cr variable name storing Logical values: \code{TRUE} if event,
+\code{FALSE} if time to event is censored.}
 
-\item{strata}{(`character` or `NULL`)\cr variable names indicating stratification factors.}
+\item{strata}{(\code{character} or \code{NULL})\cr variable names indicating stratification factors.}
 
-\item{control}{(`list`)\cr relevant list of control options.}
+\item{control}{(\code{list})\cr relevant list of control options.}
 
-\item{alternative}{(`string`)\cr whether `two.sided`, or one-sided `less` or `greater` p-value
+\item{alternative}{(\code{string})\cr whether \code{two.sided}, or one-sided \code{less} or \code{greater} p-value
 should be displayed.}
 }
 \description{
-This is a workaround for [tern::s_coxph_pairwise()], which adds a statistic
+This is a workaround for \code{\link[tern:survival_coxph_pairwise]{tern::s_coxph_pairwise()}}, which adds a statistic
 containing the hazard ratio estimate together with the confidence interval.
 }
 \section{Functions}{
 \itemize{
-\item \code{a_coxph_hr()}: Formatted analysis function which is used as `afun`.
+\item \code{a_coxph_hr()}: Formatted analysis function which is used as \code{afun}.
 
-\item \code{s_coxph_hr()}: Statistics function forked from [tern::s_coxph_pairwise()].
+\item \code{s_coxph_hr()}: Statistics function forked from \code{\link[tern:survival_coxph_pairwise]{tern::s_coxph_pairwise()}}.
 the difference is that:
-1) It returns the additional statistic `lr_stat_df` (log rank statistic with degrees of freedom).
+\enumerate{
+\item It returns the additional statistic \code{lr_stat_df} (log rank statistic with degrees of freedom).
+}
 
 }}
 \examples{

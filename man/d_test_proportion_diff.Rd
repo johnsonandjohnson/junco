@@ -7,17 +7,17 @@
 d_test_proportion_diff(method, alternative)
 }
 \arguments{
-\item{method}{(`string`)\cr one of `chisq`, `cmh`, `fisher`; specifies the test used
+\item{method}{(\code{string})\cr one of \code{chisq}, \code{cmh}, \code{fisher}; specifies the test used
 to calculate the p-value.}
 
-\item{alternative}{(`string`)\cr whether `two.sided`, or one-sided `less` or `greater` p-value
+\item{alternative}{(\code{string})\cr whether \code{two.sided}, or one-sided \code{less} or \code{greater} p-value
 should be displayed.}
 }
 \value{
-A `string` describing the test from which the p-value is derived.
+A \code{string} describing the test from which the p-value is derived.
 }
 \description{
-`r lifecycle::badge('stable')`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
-This is an auxiliary function that describes the analysis in `s_test_proportion_diff`.
+This is an auxiliary function that describes the analysis in \code{s_test_proportion_diff}.
 }

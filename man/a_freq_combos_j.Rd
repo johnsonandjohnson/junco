@@ -27,28 +27,28 @@ a_freq_combos_j(
   .formats = NULL,
   .labels_n = NULL,
   .indent_mods = NULL,
-  na_str = rep(NA, 3)
+  na_str = rep("NA", 3)
 )
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{labelstr}{(`character`)\cr label of the level of the parent split currently being summarized
-(must be present as second argument in Content Row Functions). See [rtables::summarize_row_groups()]
+\item{labelstr}{(\code{character})\cr label of the level of the parent split currently being summarized
+(must be present as second argument in Content Row Functions). See \code{\link[rtables:summarize_row_groups]{rtables::summarize_row_groups()}}
 for more information.}
 
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
-\item{val}{(`character` or NULL)\cr
-When NULL, all levels of the incoming variable (variable used in the `analyze` call)
+\item{val}{(\code{character} or NULL)\cr
+When NULL, all levels of the incoming variable (variable used in the \code{analyze} call)
 will be considered.\cr
-When a single `string`, only that current level/value of the incoming variable
+When a single \code{string}, only that current level/value of the incoming variable
 will be considered.\cr
 When multiple levels, only those levels/values of the incoming variable
 will be considered.\cr
 When no values are observed (eg zero row input df),
-a row with row-label `No data reported` will be included in the table.}
+a row with row-label \verb{No data reported} will be included in the table.}
 
 \item{combosdf}{The df which provides the mapping of facets to produce cumulative counts for .N_col.}
 
@@ -63,80 +63,80 @@ Generally, this will contain text matching the column header for the column asso
 \item{flag_var}{Variable which identifies the occurrence (or first occurrence) of an event.
 The flag variable is expected to have a value of "Y" identifying that the event should be counted, or NA otherwise.}
 
-\item{.df_row}{(`data.frame`)\cr data frame across all of the columns for the given row split.}
+\item{.df_row}{(\code{data.frame})\cr data frame across all of the columns for the given row split.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states
-that is passed by `rtables`.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
+that is passed by \code{rtables}.}
 
-\item{.N_col}{(`integer`)\cr column-wise N (column count) for the full column being analyzed that is typically
-passed by `rtables`.}
+\item{.N_col}{(\code{integer})\cr column-wise N (column count) for the full column being analyzed that is typically
+passed by \code{rtables}.}
 
-\item{id}{(`string`)\cr subject variable name.}
+\item{id}{(\code{string})\cr subject variable name.}
 
-\item{denom}{(`string`)\cr
+\item{denom}{(\code{string})\cr
 One of \cr
 \itemize{
 \item \strong{N_col} Column count, \cr
-\item \strong{n_df} Number of patients (based upon the main input dataframe `df`),\cr
-\item \strong{n_altdf} Number of patients from the secondary dataframe (`.alt_df_full`),\cr
-Note that argument `denom_by` will perform a row-split on the `.alt_df_full` dataframe.\cr
-It is a requirement that variables specified in `denom_by` are part of the row split specifications. \cr
+\item \strong{n_df} Number of patients (based upon the main input dataframe \code{df}),\cr
+\item \strong{n_altdf} Number of patients from the secondary dataframe (\code{.alt_df_full}),\cr
+Note that argument \code{denom_by} will perform a row-split on the \code{.alt_df_full} dataframe.\cr
+It is a requirement that variables specified in \code{denom_by} are part of the row split specifications. \cr
 \item \strong{n_rowdf} Number of patients from the current row-level dataframe
-(`.row_df` from the rtables splitting machinery).\cr
+(\code{.row_df} from the rtables splitting machinery).\cr
 \item \strong{n_parentdf} Number of patients from a higher row-level split than the current split.\cr
-This higher row-level split is specified in the argument `denom_by`.\cr
+This higher row-level split is specified in the argument \code{denom_by}.\cr
 }}
 
-\item{label}{(`string`)\cr
-When `val`is a single `string`,
+\item{label}{(\code{string})\cr
+When \code{val}is a single \code{string},
 the row label to be shown on the output can be specified using this argument.\cr
-When `val` is a `character vector`, the `label_map` argument can be specified
+When \code{val} is a \verb{character vector}, the \code{label_map} argument can be specified
 to control the row-labels.}
 
-\item{label_fstr}{(`string`)\cr
+\item{label_fstr}{(\code{string})\cr
 a sprintf style format string.
-It can contain up to one "\%s" which takes the current split value and
+It can contain up to one "\\%s" which takes the current split value and
 generates the row/column label.\cr
-It will be combined with the `labelstr` argument,
+It will be combined with the \code{labelstr} argument,
 when utilizing this function as
-a `cfun` in a `summarize_row_groups` call.\cr
+a \code{cfun} in a \code{summarize_row_groups} call.\cr
 It is recommended not to utilize this argument for other purposes.
-The label argument could be used instead (if `val` is a single string)\cr}
+The label argument could be used instead (if \code{val} is a single string)\cr}
 
-\item{label_map}{(`tibble`)\cr
+\item{label_map}{(\code{tibble})\cr
 A mapping tibble to translate levels from the incoming variable into
 a different row label to be presented on the table.\cr}
 
-\item{.alt_df_full}{(`dataframe`)\cr Denominator dataset
+\item{.alt_df_full}{(\code{dataframe})\cr Denominator dataset
 for fraction and relative risk calculations.\cr
 .alt_df_full is a crucial parameter for the relative risk calculations
-if this parameter is not set to utilize `alt_counts_df`,
+if this parameter is not set to utilize \code{alt_counts_df},
 then the values in the relative risk columns might not be correct.\cr
 Once the rtables PR is integrated, this argument gets populated by the rtables
-split machinery (see [rtables::additional_fun_params]).}
+split machinery (see \link[rtables:additional_fun_params]{rtables::additional_fun_params}).}
 
-\item{denom_by}{(`character`)\cr Variables from row-split
+\item{denom_by}{(\code{character})\cr Variables from row-split
 to be used in the denominator derivation.\cr
-This controls both `denom = "n_parentdf"` and `denom = "n_altdf"`.\cr
-When `denom = "n_altdf"`, the denominator is derived from `.alt_df_full`
-in combination with `denom_by` argument}
+This controls both \code{denom = "n_parentdf"} and \code{denom = "n_altdf"}.\cr
+When \code{denom = "n_altdf"}, the denominator is derived from \code{.alt_df_full}
+in combination with \code{denom_by} argument}
 
-\item{.stats}{(`character`)\cr statistics to select for the table.}
+\item{.stats}{(\code{character})\cr statistics to select for the table.}
 
 \item{.formats}{(named 'character' or 'list')\cr
 formats for the statistics.}
 
-\item{.labels_n}{(named `character`)\cr
+\item{.labels_n}{(named \code{character})\cr
 String to control row labels for the 'n'-statistics.\cr
 Only useful when more than one 'n'-statistic is requested (rare situations only).}
 
-\item{.indent_mods}{(named `integer`)\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
+\item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 
-\item{na_str}{(`string`)\cr string used to replace all `NA` or empty values in the output.}
+\item{na_str}{(\code{string})\cr string used to replace all \code{NA} or empty values in the output.}
 }
 \value{
-list of requested statistics with formatted `rtables::CellValue()`.\cr
+list of requested statistics with formatted \code{rtables::CellValue()}.\cr
 }
 \description{
 Analysis function count and percentage in column design controlled by combosdf

@@ -1,7 +1,11 @@
-#' Statistical Function for Patient Years
+#' Patient years exposure
+#' @description Statistical/Analysis Function for presenting Patient years exposure summary data
 #'
-#' This function calculates patient years based on the provided data.
-#'
+#' @name a_patyrs_j
+#' @order 1
+NULL
+
+#' @describeIn a_patyrs_j Statistical Function for Patient years exposure summary data
 #' @param df (`data.frame`)\cr data set containing all analysis variables.
 #' @param .var (`string`)\cr variable name containing the patient years data.
 #' @param id (`string`)\cr subject variable name.
@@ -9,7 +13,8 @@
 #' @param source (`string`)\cr source of data, either "alt_df" or "df".
 #' @param inriskdiffcol (`logical`)\cr flag indicating if the function is called within a risk difference column.
 #'
-#' @return A list containing the patient years statistics.
+#' @return
+#' * `s_patyrs_j()` return x a list containing the patient years statistics.  The list of available statistics for can be viewed by running `junco_get_stats("a_patyrs_j")`, currently this is just a single statistic `patyrs`, patient years of exposure.
 #'
 #' @keywords internal
 s_patyrs_j <- function(
@@ -44,9 +49,8 @@ s_patyrs_j <- function(
   return(x)
 }
 
-#' Calculate Patient Years
+#' @describeIn a_patyrs_j Formatted analysis function for patient years summary which is used as `afun` in `analyze` or `cfun` in `summarize_row_groups`.
 #'
-#' This function calculates patient years based on the provided data.
 #'
 #' @param df (`data.frame`)\cr data set containing all analysis variables.
 #' @param .var (`string`)\cr variable name containing the patient years data.
@@ -59,10 +63,73 @@ s_patyrs_j <- function(
 #' @param .spl_context (`data.frame`)\cr gives information about ancestor split states.
 #' @param .stats (`character`)\cr statistics to select for the table.
 #'
-#' @return A list of in_rows objects containing the patient years statistics.
+#' @return
+#' * `a_patyrs_j` returns the corresponding list with formatted [rtables::CellValue()].
 #'
 #' @export
-#' @keywords internal
+#' 
+#' @examples
+#' library(tern)
+#' trtvar <- "ARM"
+#' ctrl_grp <- "B: Placebo"
+#' cutoffd <- as.Date("2023-09-24")
+#' 
+#' 
+#' adexsum <- ex_adsl %>%
+#'   create_colspan_var(
+#'     non_active_grp          = ctrl_grp,
+#'     non_active_grp_span_lbl = " ",
+#'     active_grp_span_lbl     = "Active Study Agent",
+#'     colspan_var             = "colspan_trt",
+#'     trt_var                 = trtvar
+#'   ) %>% 
+#'   mutate(
+#'     rrisk_header = "Risk Difference (95% CI)",
+#'     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
+#'     TRTDURY = case_when(!is.na(EOSDY) ~ EOSDY,
+#'                         TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1))
+#'   ) %>%
+#'   select(USUBJID, !!rlang::sym(trtvar), colspan_trt, rrisk_header, rrisk_label, TRTDURY)
+#' 
+#' 
+#' adae <- ex_adae %>%
+#'   group_by(USUBJID, AEDECOD) %>% 
+#'   select(USUBJID, AEDECOD, ASTDY) %>%  
+#'   mutate(rwnum = row_number()) %>% 
+#'   mutate(AOCCPFL = case_when(rwnum == 1 ~ "Y",
+#'                              TRUE ~ NA)) %>% 
+#'   filter(AOCCPFL == "Y") 
+#' 
+#' # left join -- subjects without ae will be handled via alt_counts_df dataframe
+#' aefup <- left_join(adae, adexsum, by = "USUBJID")
+#' 
+#' colspan_trt_map <- create_colspan_map(adexsum,
+#'                                       non_active_grp = ctrl_grp,
+#'                                       non_active_grp_span_lbl = " ",
+#'                                       active_grp_span_lbl = "Active Study Agent",
+#'                                       colspan_var = "colspan_trt",
+#'                                       trt_var = trtvar
+#' )
+#' 
+#' ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
+#' 
+#' ################################################################################
+#' # Define layout and build table:
+#' ################################################################################
+#' 
+#' lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") %>%
+#'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%
+#'   split_cols_by(trtvar) %>%
+#'   split_cols_by("rrisk_header", nested = FALSE) %>%
+#'   split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) %>%
+#'   analyze("TRTDURY",
+#'           nested = FALSE,
+#'           show_labels = "hidden",
+#'           afun = a_patyrs_j
+#'   ) 
+#' result <- build_table(lyt, aefup, alt_counts_df = adexsum)
+#' result 
+#' 
 a_patyrs_j <- function(
   df,
   .var,
@@ -144,10 +211,19 @@ a_patyrs_j <- function(
   return(inrows)
 }
 
-#' Statistical Function for Exposure-Adjusted Incidence Rate
+#' Exposure-Adjusted Incidence Rate
+#' @description
+#' Statistical/Analysis Function for presenting Exposure-Adjusted Incidence Rate summary data 
+#' 
 #'
-#' This function calculates exposure-adjusted incidence rates (EAIR) per 100 person-years for a
+#' @name a_eair100_j
+NULL
+
+
+#' @describeIn a_eair100_j
+#' calculates exposure-adjusted incidence rates (EAIR) per 100 person-years for a
 #' specific level of a variable.
+#'
 #'
 #' @param levii (`string`)\cr the specific level of the variable to calculate EAIR for.
 #' @param df (`data.frame`)\cr data set containing all analysis variables.
@@ -165,14 +241,16 @@ a_patyrs_j <- function(
 #' @param occ_var (`string`)\cr occurrence variable name.
 #' @param occ_dy (`string`)\cr occurrence day variable name.
 #'
-#' @return A list containing the following statistics:
+#' @return
+#'  * `s_eair100_levii_j()` returns a list containing the following statistics:
 #' \itemize{
 #'   \item n_event: Number of events
 #'   \item person_years: Total person-years of follow-up
 #'   \item eair: Exposure-adjusted incidence rate per 100 person-years
 #'   \item eair_diff: Risk difference in EAIR (if diff=TRUE and inriskdiffcol=TRUE)
 #'   \item eair_diff_ci: Confidence interval for the risk difference (if diff=TRUE and inriskdiffcol=TRUE)
-#' }
+#' }.\cr
+#' The list of available statistics (core columns) can also be viewed by running `junco_get_stats("a_eair100_j")`
 #'
 #' @keywords internal
 s_eair100_levii_j <- function(
@@ -283,10 +361,9 @@ s_eair100_levii_j <- function(
   return(x)
 }
 
-#' Calculate Exposure-Adjusted Incidence Rate per 100 Patient-Years
+#' @describeIn a_eair100_j
+#' Formatted analysis function for exposure adjusted incidence rate summary which is used as `afun` in `analyze` or `cfun` in `summarize_row_groups`.
 #'
-#' This function calculates the exposure-adjusted incidence rate (EAIR) per 100 patient-years.
-#' It can also calculate the difference in EAIR between treatment groups.
 #'
 #' @param df (`data.frame`)\cr data set containing all analysis variables.
 #' @param labelstr (`string`)\cr label string for the row.
@@ -308,10 +385,85 @@ s_eair100_levii_j <- function(
 #' @param occ_var (`string`)\cr variable name for occurrence.
 #' @param occ_dy (`string`)\cr variable name for occurrence day.
 #'
-#' @return A list of in_rows objects containing the EAIR statistics.
+#' @return
+#'  * `a_eair100_j` returns the corresponding list with formatted [rtables::CellValue()].
 #'
 #' @export
-#' @keywords internal
+#' 
+#' @examples
+#' library(tern)
+#' trtvar <- "ARM"
+#' ctrl_grp <- "B: Placebo"
+#' cutoffd <- as.Date("2023-09-24")
+#' 
+#' 
+#' adexsum <- ex_adsl %>%
+#'   create_colspan_var(
+#'     non_active_grp          = ctrl_grp,
+#'     non_active_grp_span_lbl = " ",
+#'     active_grp_span_lbl     = "Active Study Agent",
+#'     colspan_var             = "colspan_trt",
+#'     trt_var                 = trtvar
+#'   ) %>% 
+#'   mutate(
+#'     rrisk_header = "Risk Difference (95% CI)",
+#'     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
+#'     TRTDURY = case_when(!is.na(EOSDY) ~ EOSDY,
+#'                         TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1))
+#'   ) %>%
+#'   select(USUBJID, !!rlang::sym(trtvar), colspan_trt, rrisk_header, rrisk_label, TRTDURY)
+#' 
+#' adexsum$TRTDURY <- as.numeric(adexsum$TRTDURY)
+#' 
+#' adae <- ex_adae %>%
+#'   group_by(USUBJID, AEDECOD) %>% 
+#'   select(USUBJID, AEDECOD, ASTDY) %>%  
+#'   mutate(rwnum = row_number()) %>% 
+#'   mutate(AOCCPFL = case_when(rwnum == 1 ~ "Y",
+#'                              TRUE ~ NA)) %>% 
+#'   filter(AOCCPFL == "Y") 
+#' 
+#' # left join -- subjects without ae will be handled via alt_counts_df dataframe
+#' aefup <- left_join(adae, adexsum, by = "USUBJID")
+#' 
+#' colspan_trt_map <- create_colspan_map(adexsum,
+#'                                       non_active_grp = ctrl_grp,
+#'                                       non_active_grp_span_lbl = " ",
+#'                                       active_grp_span_lbl = "Active Study Agent",
+#'                                       colspan_var = "colspan_trt",
+#'                                       trt_var = trtvar
+#' )
+#' 
+#' ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
+#' 
+#' ################################################################################
+#' # Define layout and build table:
+#' ################################################################################
+#' 
+#' lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") %>%
+#'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%
+#'   split_cols_by(trtvar) %>%
+#'   split_cols_by("rrisk_header", nested = FALSE) %>%
+#'   split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) %>%
+#'   analyze("TRTDURY",
+#'           nested = FALSE,
+#'           show_labels = "hidden",
+#'           afun = a_patyrs_j
+#'   ) %>% 
+#' analyze(vars = "AEDECOD",
+#'         nested = FALSE,
+#'         afun = a_eair100_j,
+#'         extra_args = list(
+#'           fup_var = "TRTDURY",
+#'           occ_var = "AOCCPFL",
+#'           occ_dy = "ASTDY",
+#'           ref_path = ref_path,
+#'           drop_levels = TRUE)
+#' ) 
+#'    
+#' result <- build_table(lyt, aefup, alt_counts_df = adexsum)
+#' head(result, 5)
+#' 
 a_eair100_j <- function(
   df,
   labelstr = NULL,

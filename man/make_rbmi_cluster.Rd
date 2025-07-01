@@ -2,7 +2,7 @@
 % Please edit documentation in R/rbmi.R
 \name{make_rbmi_cluster}
 \alias{make_rbmi_cluster}
-\title{Create a `rbmi` ready cluster}
+\title{Create a \code{rbmi} ready cluster}
 \usage{
 make_rbmi_cluster(cluster_or_cores = 1, objects = NULL, packages = NULL)
 }
@@ -13,17 +13,17 @@ make_rbmi_cluster(cluster_or_cores = 1, objects = NULL, packages = NULL)
 
 \item{packages}{a character vector of libraries to load in the sub-processes
 
-This function is a wrapper around `parallel::makePSOCKcluster()` but takes
-care of configuring `rbmi` to be used in the sub-processes as well as loading
+This function is a wrapper around \code{parallel::makePSOCKcluster()} but takes
+care of configuring \code{rbmi} to be used in the sub-processes as well as loading
 user defined objects and libraries and setting the seed for reproducibility.
 
-If `cluster_or_cores` is `1` this function will return `NULL`.
+If \code{cluster_or_cores} is \code{1} this function will return \code{NULL}.
 
-If `cluster_or_cores` is a cluster created via `parallel::makeCluster()` then this function
-just takes care of inserting the relevant `rbmi` objects into the existing cluster.}
+If \code{cluster_or_cores} is a cluster created via \code{parallel::makeCluster()} then this function
+just takes care of inserting the relevant \code{rbmi} objects into the existing cluster.}
 }
 \description{
-Create a `rbmi` ready cluster
+Create a \code{rbmi} ready cluster
 }
 \examples{
 # Basic usage # dontrun because .check_ncores

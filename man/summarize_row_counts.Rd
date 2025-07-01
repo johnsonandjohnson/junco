@@ -7,20 +7,20 @@
 summarize_row_counts(lyt, label_fstr = "\%s", alt_counts = TRUE)
 }
 \arguments{
-\item{lyt}{(`layout`)\cr input layout where analyses will be added to.}
+\item{lyt}{(\code{layout})\cr input layout where analyses will be added to.}
 
-\item{label_fstr}{(`string`)\cr a `sprintf` style format string.
-It can contain up to one `%s` which takes the current split value and
+\item{label_fstr}{(\code{string})\cr a \code{sprintf} style format string.
+It can contain up to one \verb{\%s} which takes the current split value and
 generates the row label.}
 
-\item{alt_counts}{(`flag`)\cr whether row counts should be taken from
-`alt_counts_df` (`TRUE`) or from `df` (`FALSE`).}
+\item{alt_counts}{(\code{flag})\cr whether row counts should be taken from
+\code{alt_counts_df} (\code{TRUE}) or from \code{df} (\code{FALSE}).}
 }
 \value{
 A modified layout where the latest row split now contains the counts.
 }
 \description{
-This is a simple wrapper of [rtables::summarize_row_groups()] and the main
+This is a simple wrapper of \code{\link[rtables:summarize_row_groups]{rtables::summarize_row_groups()}} and the main
 additional value is that we can choose whether we want to use the alternative
 (usually ADSL) data set for the counts (default) or use the original data set.
 }

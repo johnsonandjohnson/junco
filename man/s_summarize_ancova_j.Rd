@@ -28,41 +28,43 @@ by a statistics function.}
 
 \item{.df_row}{(\code{data.frame})\cr data set that includes all the variables that are called in \code{.var} and \code{variables}.}
 
-\item{ref_path}{(`character`)\cr path to the reference group.}
+\item{ref_path}{(\code{character})\cr path to the reference group.}
 
-\item{.spl_context}{(`environment`)\cr split context environment.}
+\item{.spl_context}{(\code{environment})\cr split context environment.}
 
-\item{...}{Additional arguments passed to `s_ancova_j`.}
+\item{...}{Additional arguments passed to \code{s_ancova_j}.}
 
-\item{.stats}{(`character`)\cr statistics to calculate.}
+\item{.stats}{(\code{character})\cr statistics to calculate.}
 
-\item{.formats}{(`list`)\cr formats for the statistics.}
+\item{.formats}{(\code{list})\cr formats for the statistics.}
 
-\item{.labels}{(`list`)\cr labels for the statistics.}
+\item{.labels}{(\code{list})\cr labels for the statistics.}
 
-\item{.indent_mods}{(`list`)\cr indentation modifications for the statistics.}
+\item{.indent_mods}{(\code{list})\cr indentation modifications for the statistics.}
 
 \item{.ref_group}{(\code{data.frame} or \code{vector})\cr the data corresponding to the reference group.}
 
 \item{.in_ref_col}{(\code{flag})\cr \code{TRUE} when working with the reference level, \code{FALSE} otherwise.}
 }
 \value{
-* `a_summarize_ancova_j()` returns the corresponding list with formatted [rtables::CellValue()].
+\itemize{
+\item \code{a_summarize_ancova_j()} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
+}
 
 returns the statistics from tern::s_summary(x), appended with a new statistics based upon ANCOVA
 }
 \description{
 Combination of tern::s_summary, and ANCOVA based estimates for mean and diff between columns,
-based on ANCOVA function `s_ancova_j`
+based on ANCOVA function \code{s_ancova_j}
 }
 \details{
 Combination of tern::s_summary, and ANCOVA based estimates for mean and diff between columns,
-based on ANCOVA function `s_ancova_j`
+based on ANCOVA function \code{s_ancova_j}
 }
 \section{Functions}{
 \itemize{
-\item \code{a_summarize_ancova_j()}: Formatted analysis function which is used as `afun`. Note that the
-junco specific `ref_path` and `.spl_context` arguments are used for reference column information.
+\item \code{a_summarize_ancova_j()}: Formatted analysis function which is used as \code{afun}. Note that the
+junco specific \code{ref_path} and \code{.spl_context} arguments are used for reference column information.
 
 }}
 \examples{

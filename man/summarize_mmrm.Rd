@@ -29,41 +29,43 @@ a_summarize_mmrm(
 )
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
-\item{variables}{(named `list` of `string`)\cr list of additional analysis variables.}
+\item{variables}{(named \code{list} of \code{string})\cr list of additional analysis variables.}
 
-\item{ref_levels}{(`list`)\cr with `visit` and `arm` reference levels.}
+\item{ref_levels}{(\code{list})\cr with \code{visit} and \code{arm} reference levels.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states
-that is passed by `rtables`.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
+that is passed by \code{rtables}.}
 
-\item{alternative}{(`string`)\cr whether `two.sided`, or one-sided `less` or `greater` p-value
+\item{alternative}{(\code{string})\cr whether \code{two.sided}, or one-sided \code{less} or \code{greater} p-value
 should be displayed.}
 
-\item{show_relative}{should the 'reduction' (`control - treatment`, default) or the 'increase'
-(`treatment - control`) be shown for the relative change from baseline?}
+\item{show_relative}{should the 'reduction' (\code{control - treatment}, default) or the 'increase'
+(\code{treatment - control}) be shown for the relative change from baseline?}
 
-\item{...}{eventually passed to [fit_mmrm_j()] via [h_summarize_mmrm()].}
+\item{...}{eventually passed to \code{\link[=fit_mmrm_j]{fit_mmrm_j()}} via \code{\link[=h_summarize_mmrm]{h_summarize_mmrm()}}.}
 
-\item{.stats}{(`character`)\cr statistics to select for the table.}
+\item{.stats}{(\code{character})\cr statistics to select for the table.}
 
-\item{.formats}{(named `character` or `list`)\cr formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.}
+\item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
+information on the \code{'auto'} setting.}
 
-\item{.labels}{(named `character`)\cr labels for the statistics (without indent).}
+\item{.labels}{(named \code{character})\cr labels for the statistics (without indent).}
 
-\item{.indent_mods}{(named `integer`)\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
+\item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 }
 \value{
-* `a_summarize_mmrm()` returns the corresponding list with formatted [rtables::CellValue()].
+\itemize{
+\item \code{a_summarize_mmrm()} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
+}
 }
 \description{
-`r lifecycle::badge('stable')`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
 These functions can be used to produce tables for MMRM results, within
 tables which are split by arms and visits. This is helpful when higher-level
@@ -74,9 +76,9 @@ row splits are needed (e.g. splits by parameter or subgroup).
 \item \code{s_summarize_mmrm()}: Statistics function which is extracting estimates,
 not including any results when in the reference visit, and only showing LS mean
 estimates when in the reference arm and not in reference visit. It uses
-[s_lsmeans()] for the final processing.
+\code{\link[=s_lsmeans]{s_lsmeans()}} for the final processing.
 
-\item \code{a_summarize_mmrm()}: Formatted analysis function which is used as `afun`.
+\item \code{a_summarize_mmrm()}: Formatted analysis function which is used as \code{afun}.
 
 }}
 \examples{

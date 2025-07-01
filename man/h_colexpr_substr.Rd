@@ -20,5 +20,5 @@ Retrieves the substring from a column expression related to a variable component
 \details{
 get substring from col_expr related to var component
 intended usage is on strings coming from .spl_context$cur_col_expr
-these strings are of type '!(is.na(var) & var %in% 'xxx') & !(is.na(var2) & var2 %in% 'xxx')'
+these strings are of type '!(is.na(var) & var \%in\% 'xxx') & !(is.na(var2) & var2 \%in\% 'xxx')'
 }

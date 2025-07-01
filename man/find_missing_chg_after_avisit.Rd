@@ -7,11 +7,11 @@
 find_missing_chg_after_avisit(df)
 }
 \arguments{
-\item{df}{(`data.frame`)\cr with `CHG` and `AVISIT` variables.}
+\item{df}{(\code{data.frame})\cr with \code{CHG} and \code{AVISIT} variables.}
 }
 \value{
-A string with either the factor level after which `AVISIT` is all missing,
-  or `NA`.
+A string with either the factor level after which \code{AVISIT} is all missing,
+or \code{NA}.
 }
 \description{
 Helper for Finding AVISIT after which CHG are all Missing
