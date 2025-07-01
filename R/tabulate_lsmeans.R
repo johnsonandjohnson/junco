@@ -8,7 +8,7 @@
 #' @note These functions have been forked from the `tern.mmrm` package. Additional features
 #'   are:
 #'
-#'   * Additional `ref_path` argument for [summarize_lsmeans()]
+#'   * Additional `ref_path` argument for [tern.mmrm::summarize_lsmeans()]
 #'   * The function is more general in that it also works for LS means results from ANCOVA
 #'   * Additional statistic `diff_mean_est_ci` is returned
 #'   * P-value sidedness can be chosen

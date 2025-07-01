@@ -70,6 +70,7 @@ s_patyrs_j <- function(
 #' 
 #' @examples
 #' library(tern)
+#' library(dplyr)
 #' trtvar <- "ARM"
 #' ctrl_grp <- "B: Placebo"
 #' cutoffd <- as.Date("2023-09-24")
@@ -392,6 +393,7 @@ s_eair100_levii_j <- function(
 #' 
 #' @examples
 #' library(tern)
+#' library(dplyr)
 #' trtvar <- "ARM"
 #' ctrl_grp <- "B: Placebo"
 #' cutoffd <- as.Date("2023-09-24")

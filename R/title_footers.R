@@ -64,7 +64,8 @@ get_titles_from_file <- function(id,
                                  file = .find_titles_file(input_path),
                                  input_path = ".",
                                  title_df = .read_titles_file(file)) {
-  title_df <- title_df[title_df[["TABLE ID"]] == id, , drop = FALSE]
+  ## "TABLE ID" gets munged to "TABLE.ID"
+  title_df <- title_df[title_df[["TABLE.ID"]] == id, , drop = FALSE]
 
   message(paste0("Static titles file/data.frame used: "))
 

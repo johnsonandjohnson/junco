@@ -26,7 +26,7 @@ Description: Provides tools and functions for table and listing reporting needs,
     with the NEST framework (rtables, rlistings, and formatters).
 License: Apache License (>= 2)
 URL: https://johnsonandjohnson.github.io/junco/
-BugReports: https://github.com/johnsonandjohnson/junco/issue
+BugReports: https://github.com/johnsonandjohnson/junco/issues
 Depends: 
     R (>= 4.4),
     formatters (>= 0.5.6),
@@ -40,7 +40,6 @@ Imports:
     methods,
     dplyr,
     generics,
-    purrr,
     stats,
     survival,
     tibble,
@@ -61,6 +60,7 @@ Suggests:
     mockery,
     parallel,
     readxl,
-    pharmaverseadam
+    pharmaverseadam,
+    rlang
 VignetteBuilder: knitr
 Config/testthat/edition: 3

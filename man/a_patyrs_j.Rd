@@ -71,6 +71,7 @@ Statistical/Analysis Function for presenting Patient years exposure summary data
 }}
 \examples{
 library(tern)
+library(dplyr)
 trtvar <- "ARM"
 ctrl_grp <- "B: Placebo"
 cutoffd <- as.Date("2023-09-24")

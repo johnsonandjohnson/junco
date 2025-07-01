@@ -569,8 +569,7 @@ tt_to_tlgrtf <- function(
   }
 
   if (!one_table &&
-        is.list(tt) && !is(tt, "MatrixPrintForm") &&
-        length(unique(vapply(tt, ncol, 1))) > 1) {
+        is.list(tt) && !is(tt, "MatrixPrintForm")) {
     ### gentlg is not vectorized on wcol.  x.x x.x x.x
     ### but it won't break if we only give it one number...
     ### Calling this an ugly hack is an insult to all the hard working hacks
@@ -627,13 +626,6 @@ cwidths_final_adj <- function(labwidth_ins, total_width, colwidths) {
   prop <- labwidth_ins / total_width
   lwidth <- floor(prop / (1 - prop) * sum(colwidths))
   c(lwidth, colwidths)
-}
-
-muffwarn_fun <- function(w) {
-  print("handling warnings")
-  if (grepl("grid.Call(C_convert", w, fixed = TRUE)) {
-    invokeRestart("muffleWarning")
-  }
 }
 
 make_bordmat_row <- function(rowspns) {
