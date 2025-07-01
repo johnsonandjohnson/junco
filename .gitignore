@@ -5,10 +5,6 @@
 .Ruserdata
 *.Rproj
 
-# docs
-inst/doc
-docs
-
 # others
 .DS_Store
 InputVads.Rdata
