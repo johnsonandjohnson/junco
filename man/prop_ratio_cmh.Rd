@@ -7,13 +7,13 @@
 prop_ratio_cmh(rsp, grp, strata, conf_level = 0.95)
 }
 \arguments{
-\item{rsp}{(`logical`)\cr whether each subject is a responder or not.}
+\item{rsp}{(\code{logical})\cr whether each subject is a responder or not.}
 
-\item{grp}{(`factor`)\cr defining the groups.}
+\item{grp}{(\code{factor})\cr defining the groups.}
 
-\item{strata}{(`factor`)\cr variable with one level per stratum and same length as `rsp`.}
+\item{strata}{(\code{factor})\cr variable with one level per stratum and same length as \code{rsp}.}
 
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 }
 \description{
 Calculates the relative risk which is defined as the ratio between the

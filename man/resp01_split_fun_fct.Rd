@@ -7,9 +7,9 @@
 resp01_split_fun_fct(method = c("rr", "or_logistic", "or_cmh"), conf_level)
 }
 \arguments{
-\item{method}{(`string`)\cr which method to use for the comparative statistics.}
+\item{method}{(\code{string})\cr which method to use for the comparative statistics.}
 
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 }
 \value{
 A split function for use in the response table RESP01 and similar ones.
@@ -27,6 +27,6 @@ split_fun <- resp01_split_fun_fct(
 )
 }
 \seealso{
-[rtables::make_split_fun()] describing the requirements for this kind of
-  post-processing function.
+\code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} describing the requirements for this kind of
+post-processing function.
 }

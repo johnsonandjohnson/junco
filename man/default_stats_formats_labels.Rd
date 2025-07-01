@@ -15,18 +15,26 @@
 \alias{junco_default_indents}
 \title{Get default statistical methods and their associated formats, labels, and indent modifiers}
 \format{
-* `junco_default_stats` is a named list of available statistics, with each element
-  named for their corresponding statistical method group.
+\itemize{
+\item \code{junco_default_stats} is a named list of available statistics, with each element
+named for their corresponding statistical method group.
+}
 
-* `junco_default_formats` is a named vector of available default formats, with each element
-  named for their corresponding statistic.
+\itemize{
+\item \code{junco_default_formats} is a named vector of available default formats, with each element
+named for their corresponding statistic.
+}
 
-* `junco_default_labels` is a named `character` vector of available default labels, with each element
-  named for their corresponding statistic.
+\itemize{
+\item \code{junco_default_labels} is a named \code{character} vector of available default labels, with each element
+named for their corresponding statistic.
+}
 
-* `junco_default_indents` is a named `integer` vector of available default indents, with each element
-  named for their corresponding statistic. Only indentations different from zero need to be
-  recorded here.
+\itemize{
+\item \code{junco_default_indents} is a named \code{integer} vector of available default indents, with each element
+named for their corresponding statistic. Only indentations different from zero need to be
+recorded here.
+}
 }
 \usage{
 junco_get_stats(
@@ -67,76 +75,86 @@ junco_default_labels
 junco_default_indents
 }
 \arguments{
-\item{method_groups}{(`character`)\cr indicates the statistical method group (`junco` analyze function)
+\item{method_groups}{(\code{character})\cr indicates the statistical method group (\code{junco} analyze function)
 to retrieve default statistics for. A character vector can be used to specify more than one statistical
 method group.}
 
-\item{stats_in}{(`character`)\cr statistics to retrieve for the selected method group. If custom statistical
-functions are used, `stats_in` needs to have them in too.}
+\item{stats_in}{(\code{character})\cr statistics to retrieve for the selected method group. If custom statistical
+functions are used, \code{stats_in} needs to have them in too.}
 
-\item{custom_stats_in}{(`character`)\cr custom statistics to add to the default statistics.}
+\item{custom_stats_in}{(\code{character})\cr custom statistics to add to the default statistics.}
 
-\item{add_pval}{(`flag`)\cr should `'pval'` (or `'pval_counts'` if `method_groups` contains
-`'analyze_vars_counts'`) be added to the statistical methods?}
+\item{add_pval}{(\code{flag})\cr should \code{'pval'} (or \code{'pval_counts'} if \code{method_groups} contains
+\code{'analyze_vars_counts'}) be added to the statistical methods?}
 
-\item{stats}{(`character`)\cr statistical methods to return defaults for.}
+\item{stats}{(\code{character})\cr statistical methods to return defaults for.}
 
-\item{formats_in}{(named `vector`)\cr custom formats to use instead of defaults. Can be a character vector with
-values from [formatters::list_valid_format_labels()] or custom format functions. Defaults to `NULL` for any rows
+\item{formats_in}{(named \code{vector})\cr custom formats to use instead of defaults. Can be a character vector with
+values from \code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}} or custom format functions. Defaults to \code{NULL} for any rows
 with no value is provided.}
 
-\item{levels_per_stats}{(named `list` of `character` or `NULL`)\cr named list where the name of each element is a
-statistic from `stats` and each element is the levels of a `factor` or `character` variable (or variable name),
+\item{levels_per_stats}{(named \code{list} of \code{character} or \code{NULL})\cr named list where the name of each element is a
+statistic from \code{stats} and each element is the levels of a \code{factor} or \code{character} variable (or variable name),
 each corresponding to a single row, for which the named statistic should be calculated for. If a statistic is only
-calculated once (one row), the element can be either `NULL` or the name of the statistic. Each list element will be
-flattened such that the names of the list elements returned by the function have the format `statistic.level` (or
-just `statistic` for statistics calculated for a single row). Defaults to `NULL`.}
+calculated once (one row), the element can be either \code{NULL} or the name of the statistic. Each list element will be
+flattened such that the names of the list elements returned by the function have the format \code{statistic.level} (or
+just \code{statistic} for statistics calculated for a single row). Defaults to \code{NULL}.}
 
-\item{labels_in}{(named `character`)\cr custom labels to use instead of defaults. If no value is provided, the
+\item{labels_in}{(named \code{character})\cr custom labels to use instead of defaults. If no value is provided, the
 variable level (if rows correspond to levels of a variable) or statistic name will be used as label.}
 
-\item{label_attr_from_stats}{(named `list`)\cr if `labels_in = NULL`, then this will be used instead. It is a list
-of values defined in statistical functions as default labels. Values are ignored if `labels_in` is provided or `''`
+\item{label_attr_from_stats}{(named \code{list})\cr if \code{labels_in = NULL}, then this will be used instead. It is a list
+of values defined in statistical functions as default labels. Values are ignored if \code{labels_in} is provided or \code{''}
 values are provided.}
 
-\item{x_stats}{(`list`)\cr with the statistics results.}
+\item{x_stats}{(\code{list})\cr with the statistics results.}
 
-\item{indents_in}{(named `integer`)\cr custom row indent modifiers to use instead of defaults. Defaults to `0L` for
+\item{indents_in}{(named \code{integer})\cr custom row indent modifiers to use instead of defaults. Defaults to \code{0L} for
 all values.}
 }
 \value{
-* `junco_get_stats()` returns a `character` vector of statistical methods.
+\itemize{
+\item \code{junco_get_stats()} returns a \code{character} vector of statistical methods.
+}
 
-* `junco_get_formats_from_stats()` returns a named list of formats as strings or functions.
+\itemize{
+\item \code{junco_get_formats_from_stats()} returns a named list of formats as strings or functions.
+}
 
-* `junco_get_labels_from_stats()` returns a named list of labels as strings.
+\itemize{
+\item \code{junco_get_labels_from_stats()} returns a named list of labels as strings.
+}
 
-* `junco_get_indents_from_stats()` returns a named list of indentation modifiers as integers. By default all of the
-  indentations will be zero.
+\itemize{
+\item \code{junco_get_indents_from_stats()} returns a named list of indentation modifiers as integers. By default all of the
+indentations will be zero.
+}
 
-* `format_stats()` returns the correspondingly formatted [rtables::in_rows()] result.
+\itemize{
+\item \code{format_stats()} returns the correspondingly formatted \code{\link[rtables:in_rows]{rtables::in_rows()}} result.
+}
 }
 \description{
-`r lifecycle::badge('experimental')`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 Utility functions to get valid statistic methods for different method groups
-(`.stats`) and their associated formats (`.formats`), labels (`.labels`), and indent modifiers
-(`.indent_mods`). This utility is used across `junco`, but some of its working principles can be
-seen in [analyze_vars()]. See notes to understand why this is experimental.
+(\code{.stats}) and their associated formats (\code{.formats}), labels (\code{.labels}), and indent modifiers
+(\code{.indent_mods}). This utility is used across \code{junco}, but some of its working principles can be
+seen in \code{\link[=analyze_vars]{analyze_vars()}}. See notes to understand why this is experimental.
 }
 \details{
-Current choices for `type` are `counts` and `numeric` for [analyze_vars()] and affect `junco_get_stats()`.
+Current choices for \code{type} are \code{counts} and \code{numeric} for \code{\link[=analyze_vars]{analyze_vars()}} and affect \code{junco_get_stats()}.
 }
 \section{Functions}{
 \itemize{
 \item \code{junco_get_stats()}: Get statistics available for a given method
-group (analyze function). To check available defaults see `junco_default_stats` list.
+group (analyze function). To check available defaults see \code{junco_default_stats} list.
 
 \item \code{junco_get_formats_from_stats()}: Get formats corresponding to a list of statistics.
-To check available defaults see list `junco_default_formats`.
+To check available defaults see list \code{junco_default_formats}.
 
 \item \code{junco_get_labels_from_stats()}: Get labels corresponding to a list of statistics.
-To check for available defaults see list `junco_default_labels`.
+To check for available defaults see list \code{junco_default_labels}.
 
 \item \code{get_label_attr_from_stats()}: Get label attributes from statistics list.
 
@@ -144,25 +162,25 @@ To check for available defaults see list `junco_default_labels`.
 
 \item \code{format_stats()}: Format statistics results according to format specifications.
 
-\item \code{junco_default_stats}: Named list of available statistics by method group for `junco`.
+\item \code{junco_default_stats}: Named list of available statistics by method group for \code{junco}.
 
-\item \code{junco_default_formats}: Named vector of default formats for `junco`.
+\item \code{junco_default_formats}: Named vector of default formats for \code{junco}.
 
-\item \code{junco_default_labels}: Named `character` vector of default labels for `junco`.
+\item \code{junco_default_labels}: Named \code{character} vector of default labels for \code{junco}.
 
-\item \code{junco_default_indents}: Named `integer` vector of default indents for `junco`.
+\item \code{junco_default_indents}: Named \code{integer} vector of default indents for \code{junco}.
 
 }}
 \note{
 These defaults are experimental because we use the names of functions to retrieve the default
 statistics. This should be generalized in groups of methods according to more reasonable groupings.
 
-These functions have been modified from the `tern` file `utils_default_stats_formats_labels.R`.
-This file contains `junco` specific wrappers of functions called within the `afun` functions,
-in order to point to `junco` specific default statistics, formats and labels.
+These functions have been modified from the \code{tern} file \code{utils_default_stats_formats_labels.R}.
+This file contains \code{junco} specific wrappers of functions called within the \code{afun} functions,
+in order to point to \code{junco} specific default statistics, formats and labels.
 
-Formats in `tern` or `junco` and `rtables` can be functions that take in the table cell value and
-  return a string. This is well documented in `vignette('custom_appearance', package = 'rtables')`.
+Formats in \code{tern} or \code{junco} and \code{rtables} can be functions that take in the table cell value and
+return a string. This is well documented in \code{vignette('custom_appearance', package = 'rtables')}.
 }
 \keyword{datasets}
 \keyword{internal}

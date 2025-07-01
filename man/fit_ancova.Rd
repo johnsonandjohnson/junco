@@ -2,7 +2,7 @@
 % Please edit documentation in R/ancova.R
 \name{fit_ancova}
 \alias{fit_ancova}
-\title{`ANCOVA` Analysis}
+\title{\code{ANCOVA} Analysis}
 \usage{
 fit_ancova(
   vars = list(response = "AVAL", covariates = c(), arm = "ARM", visit = "AVISIT", id =
@@ -13,42 +13,44 @@ fit_ancova(
 )
 }
 \arguments{
-\item{vars}{(named `list` of `string` or `character`)\cr specifying the variables in the `ANCOVA` analysis.
-  The following elements need to be included as character vectors and match corresponding columns
-  in `data`:
+\item{vars}{(named \code{list} of \code{string} or \code{character})\cr specifying the variables in the \code{ANCOVA} analysis.
+The following elements need to be included as character vectors and match corresponding columns
+in \code{data}:
+\itemize{
+\item \code{response}: the response variable.
+\item \code{covariates}: the additional covariate terms (might also include interactions).
+\item \code{id}: the subject ID variable (not really needed for the computations but for internal logistics).
+\item \code{arm}: the treatment group variable (factor).
+\item \code{visit}: the visit variable (factor).
+}
 
-  - `response`: the response variable.
-  - `covariates`: the additional covariate terms (might also include interactions).
-  - `id`: the subject ID variable (not really needed for the computations but for internal logistics).
-  - `arm`: the treatment group variable (factor).
-  - `visit`: the visit variable (factor).
+Note that the \code{arm} variable is by default included in the model, thus should not be part of \code{covariates}.}
 
-  Note that the `arm` variable is by default included in the model, thus should not be part of `covariates`.}
-
-\item{data}{(`data.frame`)\cr with all the variables specified in
-`vars`. Records with missing values in any independent variables
+\item{data}{(\code{data.frame})\cr with all the variables specified in
+\code{vars}. Records with missing values in any independent variables
 will be excluded.}
 
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
-\item{weights_emmeans}{(`string`)\cr argument from [emmeans::emmeans()], `'counterfactual'` by default.}
+\item{weights_emmeans}{(\code{string})\cr argument from \code{\link[emmeans:emmeans]{emmeans::emmeans()}}, \code{'counterfactual'} by default.}
 }
 \value{
-A `tern_model` object which is a list with model results:
-
-  - `fit`: A list with a fitted [stats::lm()] result for each visit.
-  - `mse`: Mean squared error, i.e. variance estimate, for each visit.
-  - `df`: Degrees of freedom for the variance estimate for each visit.
-  - `lsmeans`: This is a list with data frames `estimates` and `contrasts`.
-       The attribute `weights` savse the settings used (`weights_emmeans`).
-  - `vars`: The variable list.
-  - `labels`: Corresponding list with variable labels extracted from `data`.
-  - `ref_level`: The reference level for the arm variable, which is always the first level.
-  - `treatment_levels`: The treatment levels for the arm variable.
-  - `conf_level`: The confidence level which was used to construct the `lsmeans` confidence intervals.
+A \code{tern_model} object which is a list with model results:
+\itemize{
+\item \code{fit}: A list with a fitted \code{\link[stats:lm]{stats::lm()}} result for each visit.
+\item \code{mse}: Mean squared error, i.e. variance estimate, for each visit.
+\item \code{df}: Degrees of freedom for the variance estimate for each visit.
+\item \code{lsmeans}: This is a list with data frames \code{estimates} and \code{contrasts}.
+The attribute \code{weights} savse the settings used (\code{weights_emmeans}).
+\item \code{vars}: The variable list.
+\item \code{labels}: Corresponding list with variable labels extracted from \code{data}.
+\item \code{ref_level}: The reference level for the arm variable, which is always the first level.
+\item \code{treatment_levels}: The treatment levels for the arm variable.
+\item \code{conf_level}: The confidence level which was used to construct the \code{lsmeans} confidence intervals.
+}
 }
 \description{
-Does the `ANCOVA` analysis, separately for each visit.
+Does the \code{ANCOVA} analysis, separately for each visit.
 }
 \examples{
 library(mmrm)

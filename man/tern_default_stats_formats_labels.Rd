@@ -46,7 +46,7 @@ tern_get_indents_from_stats(
 tern_default_labels
 }
 \description{
-`r lifecycle::badge("experimental")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \section{Functions}{
 \itemize{
@@ -59,20 +59,21 @@ group (analyze function).
 
 \item \code{tern_get_indents_from_stats()}: Get row indent modifiers corresponding to a list of statistics/rows.
 
-\item \code{tern_default_labels}: Named `character` vector of default labels for `tern`.
+\item \code{tern_default_labels}: Named \code{character} vector of default labels for \code{tern}.
 This is only copied here from the latest GitHub version, because otherwise a tern test fails.
 
 }}
 \note{
-These functions have been copied from the `tern` package file
-  `utils_default_stats_formats_labels.R` from GitHub development version 0.9.7.9017.
-  Slight modifications have been applied to enhance functionality:
+These functions have been copied from the \code{tern} package file
+\code{utils_default_stats_formats_labels.R} from GitHub development version 0.9.7.9017.
+Slight modifications have been applied to enhance functionality:
+\itemize{
+\item \code{tern_get_stats} added the \code{tern_stats} argument to avoid hardcoding within the function's body.
+\item \code{tern_get_labels_from_stats} is more careful when receiving partial \code{labels_in}
+and partial \code{label_attr_from_stats}.
+}
 
-  * `tern_get_stats` added the `tern_stats` argument to avoid hardcoding within the function's body.
-  * `tern_get_labels_from_stats` is more careful when receiving partial `labels_in`
-     and partial `label_attr_from_stats`.
-
-  Once these features are included in the `tern` package, this file could be removed from
-  the `junco` package, and the functions could be used from the `tern` namespace directly.
+Once these features are included in the \code{tern} package, this file could be removed from
+the \code{junco} package, and the functions could be used from the \code{tern} namespace directly.
 }
 \keyword{internal}

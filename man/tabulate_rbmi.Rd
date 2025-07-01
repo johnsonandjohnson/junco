@@ -23,44 +23,44 @@ a_rbmi_lsmeans(
 )
 }
 \arguments{
-\item{x}{(`list`)\cr is a list of pooled object from `rbmi` analysis results.
+\item{x}{(\code{list})\cr is a list of pooled object from \code{rbmi} analysis results.
 This list includes analysis results, confidence level, hypothesis testing type.}
 
-\item{visit_name}{(`string`)\cr single visit level.}
+\item{visit_name}{(\code{string})\cr single visit level.}
 
-\item{group_names}{(`character`)\cr group levels.}
+\item{group_names}{(\code{character})\cr group levels.}
 
-\item{df}{(`data.frame`)\cr input with LS means results.}
+\item{df}{(\code{data.frame})\cr input with LS means results.}
 
-\item{.in_ref_col}{(`flag`)\cr whether reference column is specified.}
+\item{.in_ref_col}{(\code{flag})\cr whether reference column is specified.}
 
-\item{show_relative}{(`string`)\cr 'reduction' if (`control - treatment`, default)
-or 'increase' (`treatment - control`) of relative change from baseline?}
+\item{show_relative}{(\code{string})\cr 'reduction' if (\code{control - treatment}, default)
+or 'increase' (\code{treatment - control}) of relative change from baseline?}
 
-\item{ref_path}{(`character`)\cr global reference group specification, see [get_ref_info()].}
+\item{ref_path}{(\code{character})\cr global reference group specification, see \code{\link[=get_ref_info]{get_ref_info()}}.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states
-that is passed by `rtables`.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
+that is passed by \code{rtables}.}
 
 \item{...}{additional arguments for the lower level functions.}
 
-\item{.stats}{(`character`)\cr statistics to select for the table.}
+\item{.stats}{(\code{character})\cr statistics to select for the table.}
 
-\item{.formats}{(named `character` or `list`)\cr formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.}
+\item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
+information on the \code{'auto'} setting.}
 
-\item{.labels}{(named `character`)\cr labels for the statistics (without indent).}
+\item{.labels}{(named \code{character})\cr labels for the statistics (without indent).}
 
-\item{.indent_mods}{(named `integer`)\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
+\item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 }
 \value{
-The `data.frame` with results of pooled analysis for a single visit.
+The \code{data.frame} with results of pooled analysis for a single visit.
 
 A list of statistics extracted from a tidied LS means data frame.
 }
 \description{
-`r lifecycle::badge('stable')`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
 These functions can be used to produce tables from RBMI.
 }
@@ -72,13 +72,14 @@ of pool for a single visit.
 \item \code{s_rbmi_lsmeans()}: Statistics function which is extracting estimates
 from a tidied RBMI results data frame.
 
-\item \code{a_rbmi_lsmeans()}: Formatted Analysis function which is used as `afun`.
+\item \code{a_rbmi_lsmeans()}: Formatted Analysis function which is used as \code{afun}.
 
 }}
 \note{
-These functions have been forked from `tern.rbmi`. Additional features are:
-
-* Additional `ref_path` argument.
-* Extraction of variance statistics in the `tidy()` method.
-* Adapted to `rbmi` forked functions update with more than two treatment groups.
+These functions have been forked from \code{tern.rbmi}. Additional features are:
+\itemize{
+\item Additional \code{ref_path} argument.
+\item Extraction of variance statistics in the \code{tidy()} method.
+\item Adapted to \code{rbmi} forked functions update with more than two treatment groups.
+}
 }

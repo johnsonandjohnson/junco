@@ -27,7 +27,7 @@ This overrides other arguments if specified
 \item{lastcat}{If you wish to put any category at the bottom of the list despite any n's user can specify here.}
 }
 \value{
-a function which can be used as a score function (scorefun in `sort_at_path`).
+a function which can be used as a score function (scorefun in \code{sort_at_path}).
 }
 \description{
 A function used for sorting AE tables (and others) as required.

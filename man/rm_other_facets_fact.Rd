@@ -11,7 +11,7 @@ rm_other_facets_fact(nm)
 removed}
 }
 \value{
-a function suitable for use within the `post` portion make_split_fun
+a function suitable for use within the \code{post} portion make_split_fun
 }
 \description{
 rm_other_facets_fact
