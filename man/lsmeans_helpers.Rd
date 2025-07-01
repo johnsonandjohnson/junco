@@ -88,7 +88,7 @@ given the \code{specs} for single visit contrasts and the averages required.
 
 }}
 \note{
-The difference here compared to the original \code{\link[tern.mmrm:h_get_spec_visit_estimates]{tern.mmrm::h_get_spec_visit_estimates()}}
+The difference here compared to the original \code{\link[tern.mmrm:lsmeans_helpers]{tern.mmrm::h_get_spec_visit_estimates()}}
 function is that additional arguments for \code{\link[emmeans:contrast]{emmeans::contrast()}} can be passed via the
 Once this has been added to the \code{tern.mmrm} package then its functions can be used instead.
 }

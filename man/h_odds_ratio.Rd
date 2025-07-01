@@ -15,7 +15,7 @@ or_cmh(data, conf_level)
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr data frame containing at least the variables \code{rsp} and \code{grp}, and optionally
-\code{strata} for \code{\link[=or_clogit]{or_clogit()}}.New: pval here}
+\code{strata} for \code{\link[=or_clogit]{or_clogit()}}.}
 
 \item{conf_level}{(\code{numeric})\cr confidence level for the confidence interval.}
 

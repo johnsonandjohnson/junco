@@ -292,7 +292,6 @@ a_odds_ratio_j <- function(
 #' @inheritParams proposal_argument_convention
 #' @param data (`data.frame`)\cr data frame containing at least the variables `rsp` and `grp`, and optionally
 #'   `strata` for [or_clogit()].
-#' # New: pval here
 #' @return A named `list` of elements `or_ci`, `n_tot` and `pval`.
 #'
 #' @seealso [odds_ratio]
