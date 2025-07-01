@@ -32,7 +32,7 @@ my_range_format(c(0.35235, 99.2342, 0, 0))
 my_range_format(c(0.35235, 99.2342, 1, 1))
 }
 \seealso{
-Other JJCS formats: 
+Other JJCS formats:
 \code{\link{count_fraction}},
 \code{\link{format_xx_fct}()},
 \code{\link{jjcsformat_pval_fct}()}

@@ -36,7 +36,7 @@ a_summarize_ex_j(
   .formats = c(diff_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)")),
   .labels = c(quantiles = "Interquartile range"),
   .indent_mods = NULL,
-  na_str = rep(NA, 3),
+  na_str = rep("NA", 3),
   daysconv = 1
 )
 }

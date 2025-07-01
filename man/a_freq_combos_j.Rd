@@ -27,7 +27,7 @@ a_freq_combos_j(
   .formats = NULL,
   .labels_n = NULL,
   .indent_mods = NULL,
-  na_str = rep(NA, 3)
+  na_str = rep("NA", 3)
 )
 }
 \arguments{

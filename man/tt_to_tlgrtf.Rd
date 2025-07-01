@@ -95,10 +95,10 @@ This function aids in converting the rtables TableTree into the desired .rtf fil
 and passed separately to `gentlg`.
 
 When `one_table` is `FALSE`, only the width of the row label
-  pseudocolumn can be directly controlled due to a limitation in 
+  pseudocolumn can be directly controlled due to a limitation in
   `tidytlg::gentlg`. The proportion of the full page that the first value
   in colwidths would take up is preserved and all other columns equally
-  split the remaining available width. This will cause, e.g., the 
+  split the remaining available width. This will cause, e.g., the
   elements within the allparts rtf generated when `combined_rtf` is `TRUE`
   to differ visually from the content of the individual part rtfs.
 }

@@ -51,7 +51,7 @@ a_freq_j(
   .stats = c("count_unique_denom_fraction"),
   .formats = NULL,
   .indent_mods = NULL,
-  na_str = rep(NA, 3),
+  na_str = rep("NA", 3),
   .labels_n = NULL,
   extrablankline = FALSE,
   extrablanklineafter = NULL,
@@ -346,7 +346,7 @@ extra_args_rr2 <- list(
   ref_path = ref_path,
   method = "wald",
   .stats = c("count_unique_denom_fraction"),
-  na_str = rep(NA, 3)
+  na_str = rep("NA", 3)
 )
 
 lyt2 <- basic_table(

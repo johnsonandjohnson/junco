@@ -19,7 +19,7 @@ a_eair100_j(
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL,
-  na_str = rep(NA, 3),
+  na_str = rep("NA", 3),
   conf_level = 0.95,
   fup_var,
   occ_var,

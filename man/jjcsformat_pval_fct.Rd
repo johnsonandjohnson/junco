@@ -34,7 +34,7 @@ my_pval_format(0.9991)
 
 }
 \seealso{
-Other JJCS formats: 
+Other JJCS formats:
 \code{\link{count_fraction}},
 \code{\link{format_xx_fct}()},
 \code{\link{jjcsformat_range_fct}()}
