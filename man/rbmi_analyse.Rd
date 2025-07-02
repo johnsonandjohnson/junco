@@ -167,6 +167,12 @@ library(dplyr)
 dat <- antidepressant_data
 dat$GENDER <- as.factor(dat$GENDER)
 dat$POOLINV <- as.factor(dat$POOLINV)
+# To speed up the example, we only use a portion of it.
+set.seed(123)
+pat_ids <- sample(levels(dat$PATIENT), nlevels(dat$PATIENT) / 4)
+dat <- dat |>
+  filter(PATIENT \%in\% pat_ids) |>
+  droplevels()
 dat <- expand_locf(
   dat,
   PATIENT = levels(dat$PATIENT),
@@ -197,7 +203,7 @@ drawObj <- draws(
   data = dat,
   data_ice = dat_ice,
   vars = vars,
-  method = method_condmean(type = "jackknife"),
+  method = method_condmean(type = "jackknife", covariance = "csh"),
   quiet = TRUE
 )
 references <- c("DRUG" = "PLACEBO", "PLACEBO" = "PLACEBO")

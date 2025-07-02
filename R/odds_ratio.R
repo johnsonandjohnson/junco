@@ -107,7 +107,7 @@ s_odds_ratio_j <- function(
         rsp = c(.ref_group[[.var]], df[[.var]]),
         grp = factor(rep(c("ref", "Not-ref"), c(nrow(.ref_group), nrow(df))), levels = c("ref", "Not-ref"))
       )
-      y <- or_glm(data, conf_level = conf_level)
+      y <- or_glm_j(data, conf_level = conf_level)
     } else {
       assert_df_with_variables(.df_row, c(list(rsp = .var), variables))
       checkmate::assert_subset(method, c("exact", "approximate", "efron", "breslow", "cmh"), empty.ok = FALSE)
@@ -145,7 +145,7 @@ s_odds_ratio_j <- function(
         # The reference level in `grp` must be the same as in the `rtables` column split.
         data <- data.frame(rsp = .df_row[[.var]], grp = grp, strata = interaction(.df_row[variables$strata]))
 
-        y_all <- or_clogit(data, conf_level = conf_level, method = method)
+        y_all <- or_clogit_j(data, conf_level = conf_level, method = method)
         checkmate::assert_string(trt_grp)
         # New: pval here
         checkmate::assert_subset(trt_grp, names(y_all$or_ci_pvals))
@@ -291,7 +291,7 @@ a_odds_ratio_j <- function(
 #' @inheritParams odds_ratio
 #' @inheritParams proposal_argument_convention
 #' @param data (`data.frame`)\cr data frame containing at least the variables `rsp` and `grp`, and optionally
-#'   `strata` for [or_clogit()].
+#'   `strata` for [or_clogit_j()].
 #' @return A named `list` of elements `or_ci`, `n_tot` and `pval`.
 #'
 #' @seealso [odds_ratio]
@@ -312,10 +312,10 @@ NULL
 #' )
 #'
 #' # Odds ratio based on glm.
-#' or_glm(data, conf_level = 0.95)
+#' or_glm_j(data, conf_level = 0.95)
 #'
 #' @export
-or_glm <- function(data, conf_level) {
+or_glm_j <- function(data, conf_level) {
   checkmate::assert_logical(data$rsp)
   (assert_proportion_value)(conf_level)
   assert_df_with_variables(data, list(rsp = "rsp", grp = "grp"))
@@ -354,10 +354,10 @@ or_glm <- function(data, conf_level) {
 #'
 #'
 #' # Odds ratio based on stratified estimation by conditional logistic regression.
-#' or_clogit(data, conf_level = 0.95)
+#' or_clogit_j(data, conf_level = 0.95)
 #'
 #' @export
-or_clogit <- function(data, conf_level, method = "exact") {
+or_clogit_j <- function(data, conf_level, method = "exact") {
   checkmate::assert_logical(data$rsp)
   (assert_proportion_value)(conf_level)
   assert_df_with_variables(data, list(rsp = "rsp", grp = "grp", strata = "strata"))
