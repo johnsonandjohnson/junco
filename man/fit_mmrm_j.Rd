@@ -99,7 +99,7 @@ variance parameters.
 }
 \note{
 This function has the \verb{_j} suffix to distinguish it from \code{\link[mmrm:fit_mmrm]{mmrm::fit_mmrm()}}.
-It is a copy from the \code{tern.mmrm} package and later will be replaced by \code{\link[tern.mmrm:fit_mmrm]{tern.mmrm::fit_mmrm()}}.
+It is a copy from the \code{tern.mmrm} package and later will be replaced by tern.mmrm::fit_mmrm().
 No new features are included in this function here.
 }
 \examples{

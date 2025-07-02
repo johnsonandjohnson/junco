@@ -52,7 +52,9 @@ a_patyrs_j(
 }
 \value{
 \itemize{
-\item \code{s_patyrs_j()} return x a list containing the patient years statistics.  The list of available statistics for can be viewed by running \code{junco_get_stats("a_patyrs_j")}, currently this is just a single statistic \code{patyrs}, patient years of exposure.
+\item \code{s_patyrs_j()} return x a list containing the patient years statistics.
+The list of available statistics for can be viewed by running \code{junco_get_stats("a_patyrs_j")},
+currently this is just a single statistic \code{patyrs}, patient years of exposure.
 }
 
 \itemize{
@@ -66,7 +68,8 @@ Statistical/Analysis Function for presenting Patient years exposure summary data
 \itemize{
 \item \code{s_patyrs_j()}: Statistical Function for Patient years exposure summary data
 
-\item \code{a_patyrs_j()}: Formatted analysis function for patient years summary which is used as \code{afun} in \code{analyze} or \code{cfun} in \code{summarize_row_groups}.
+\item \code{a_patyrs_j()}: Formatted analysis function for patient years summary which is used
+as \code{afun} in \code{analyze} or \code{cfun} in \code{summarize_row_groups}.
 
 }}
 \examples{
@@ -84,7 +87,7 @@ adexsum <- ex_adsl \%>\%
     active_grp_span_lbl     = "Active Study Agent",
     colspan_var             = "colspan_trt",
     trt_var                 = trtvar
-  ) \%>\% 
+  ) \%>\%
   mutate(
     rrisk_header = "Risk Difference (95\% CI)",
     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
@@ -93,14 +96,13 @@ adexsum <- ex_adsl \%>\%
   ) \%>\%
   select(USUBJID, !!rlang::sym(trtvar), colspan_trt, rrisk_header, rrisk_label, TRTDURY)
 
-
 adae <- ex_adae \%>\%
-  group_by(USUBJID, AEDECOD) \%>\% 
-  select(USUBJID, AEDECOD, ASTDY) \%>\%  
-  mutate(rwnum = row_number()) \%>\% 
+  group_by(USUBJID, AEDECOD) \%>\%
+  select(USUBJID, AEDECOD, ASTDY) \%>\%
+  mutate(rwnum = row_number()) \%>\%
   mutate(AOCCPFL = case_when(rwnum == 1 ~ "Y",
-                             TRUE ~ NA)) \%>\% 
-  filter(AOCCPFL == "Y") 
+                             TRUE ~ NA)) \%>\%
+  filter(AOCCPFL == "Y")
 
 # left join -- subjects without ae will be handled via alt_counts_df dataframe
 aefup <- left_join(adae, adexsum, by = "USUBJID")
@@ -128,9 +130,9 @@ lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_se
           nested = FALSE,
           show_labels = "hidden",
           afun = a_patyrs_j
-  ) 
+  )
 result <- build_table(lyt, aefup, alt_counts_df = adexsum)
-result 
+result
 
 }
 \keyword{internal}

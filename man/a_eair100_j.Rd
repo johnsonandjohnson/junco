@@ -121,7 +121,8 @@ Statistical/Analysis Function for presenting Exposure-Adjusted Incidence Rate su
 \item \code{s_eair100_levii_j()}: calculates exposure-adjusted incidence rates (EAIR) per 100 person-years for a
 specific level of a variable.
 
-\item \code{a_eair100_j()}: Formatted analysis function for exposure adjusted incidence rate summary which is used as \code{afun} in \code{analyze} or \code{cfun} in \code{summarize_row_groups}.
+\item \code{a_eair100_j()}: Formatted analysis function for exposure adjusted incidence rate summary which is
+used as \code{afun} in \code{analyze} or \code{cfun} in \code{summarize_row_groups}.
 
 }}
 \examples{
@@ -139,7 +140,7 @@ adexsum <- ex_adsl \%>\%
     active_grp_span_lbl     = "Active Study Agent",
     colspan_var             = "colspan_trt",
     trt_var                 = trtvar
-  ) \%>\% 
+  ) \%>\%
   mutate(
     rrisk_header = "Risk Difference (95\% CI)",
     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
@@ -151,12 +152,12 @@ adexsum <- ex_adsl \%>\%
 adexsum$TRTDURY <- as.numeric(adexsum$TRTDURY)
 
 adae <- ex_adae \%>\%
-  group_by(USUBJID, AEDECOD) \%>\% 
-  select(USUBJID, AEDECOD, ASTDY) \%>\%  
-  mutate(rwnum = row_number()) \%>\% 
+  group_by(USUBJID, AEDECOD) \%>\%
+  select(USUBJID, AEDECOD, ASTDY) \%>\%
+  mutate(rwnum = row_number()) \%>\%
   mutate(AOCCPFL = case_when(rwnum == 1 ~ "Y",
-                             TRUE ~ NA)) \%>\% 
-  filter(AOCCPFL == "Y") 
+                             TRUE ~ NA)) \%>\%
+  filter(AOCCPFL == "Y")
 
 # left join -- subjects without ae will be handled via alt_counts_df dataframe
 aefup <- left_join(adae, adexsum, by = "USUBJID")
@@ -184,7 +185,7 @@ lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_se
           nested = FALSE,
           show_labels = "hidden",
           afun = a_patyrs_j
-  ) \%>\% 
+  ) \%>\%
 analyze(vars = "AEDECOD",
         nested = FALSE,
         afun = a_eair100_j,
@@ -194,8 +195,8 @@ analyze(vars = "AEDECOD",
           occ_dy = "ASTDY",
           ref_path = ref_path,
           drop_levels = TRUE)
-) 
-   
+)
+
 result <- build_table(lyt, aefup, alt_counts_df = adexsum)
 head(result, 5)
 

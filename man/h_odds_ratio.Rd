@@ -2,20 +2,20 @@
 % Please edit documentation in R/odds_ratio.R
 \name{h_odds_ratio}
 \alias{h_odds_ratio}
-\alias{or_glm}
-\alias{or_clogit}
+\alias{or_glm_j}
+\alias{or_clogit_j}
 \alias{or_cmh}
 \title{Helper functions for odds ratio estimation}
 \usage{
-or_glm(data, conf_level)
+or_glm_j(data, conf_level)
 
-or_clogit(data, conf_level, method = "exact")
+or_clogit_j(data, conf_level, method = "exact")
 
 or_cmh(data, conf_level)
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr data frame containing at least the variables \code{rsp} and \code{grp}, and optionally
-\code{strata} for \code{\link[=or_clogit]{or_clogit()}}.}
+\code{strata} for \code{\link[=or_clogit_j]{or_clogit_j()}}.}
 
 \item{conf_level}{(\code{numeric})\cr confidence level for the confidence interval.}
 
@@ -32,10 +32,10 @@ Functions to calculate odds ratios in \code{\link[=s_odds_ratio_j]{s_odds_ratio_
 }
 \section{Functions}{
 \itemize{
-\item \code{or_glm()}: Estimates the odds ratio based on \code{\link[stats:glm]{stats::glm()}}. Note that there must be
+\item \code{or_glm_j()}: Estimates the odds ratio based on \code{\link[stats:glm]{stats::glm()}}. Note that there must be
 exactly 2 groups in \code{data} as specified by the \code{grp} variable.
 
-\item \code{or_clogit()}: Estimates the odds ratio based on \code{\link[survival:clogit]{survival::clogit()}}. This is done for
+\item \code{or_clogit_j()}: Estimates the odds ratio based on \code{\link[survival:clogit]{survival::clogit()}}. This is done for
 the whole data set including all groups, since the results are not the same as when doing
 pairwise comparisons between the groups.
 
@@ -53,7 +53,7 @@ data <- data.frame(
 )
 
 # Odds ratio based on glm.
-or_glm(data, conf_level = 0.95)
+or_glm_j(data, conf_level = 0.95)
 
 # Data with 3 groups.
 data <- data.frame(
@@ -65,7 +65,7 @@ data <- data.frame(
 
 
 # Odds ratio based on stratified estimation by conditional logistic regression.
-or_clogit(data, conf_level = 0.95)
+or_clogit_j(data, conf_level = 0.95)
 
 # Data with 2 groups.
 set.seed(123)

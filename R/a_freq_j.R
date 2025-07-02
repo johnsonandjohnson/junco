@@ -59,8 +59,6 @@
 #' This higher row-level split is specified in the argument `denom_by`.\cr
 #' }
 #'
-#' 
-#'
 #' @return
 #' * `s_freq_j`: returns a list of following statistics\cr
 #' \itemize{
