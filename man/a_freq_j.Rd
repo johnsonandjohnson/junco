@@ -4,9 +4,7 @@
 \alias{a_freq_j}
 \alias{s_freq_j}
 \title{Analysis/statistical function for count and percentage in core columns
-\itemize{
-\item (optional) relative risk columns
-}}
+and (optional) relative risk columns}
 \usage{
 s_freq_j(
   df,
@@ -100,23 +98,7 @@ It is a data frame in the higher row-space than the current input df
 
 \item{id}{(\code{string})\cr subject variable name.}
 
-\item{denom}{(\code{string})\cr
-One of \cr
-\itemize{
-\item \strong{N_col} Column count, \cr
-\item \strong{n_df} Number of patients (based upon the main input dataframe \code{df}),\cr
-\item \strong{n_altdf} Number of patients from the secondary dataframe (\code{.alt_df_full}),\cr
-Note that argument \code{denom_by} will perform a row-split on the \code{.alt_df_full} dataframe.\cr
-It is a requirement that variables specified in \code{denom_by} are part of the row split specifications. \cr
-\item \strong{N_colgroup} Number of patients from the column group variable
-(note that this is based upon the input .alt_df_full dataframe).\cr
-Note that the argument \code{colgroup} (column variable) needs to be provided,
-as it cannot be retrieved directly from the column layout definition.
-\item \strong{n_rowdf} Number of patients from the current row-level dataframe
-(\code{.row_df} from the rtables splitting machinery).\cr
-\item \strong{n_parentdf} Number of patients from a higher row-level split than the current split.\cr
-This higher row-level split is specified in the argument \code{denom_by}.\cr
-}}
+\item{denom}{(\code{string})\cr See Details.}
 
 \item{.N_col}{(\code{integer})\cr column-wise N (column count) for the full column being analyzed that is typically
 passed by \code{rtables}.}
@@ -258,8 +240,25 @@ the statistic is replaced by the relative risk difference + confidence interval.
 }
 \description{
 Analysis/statistical function for count and percentage in core columns
+and (optional) relative risk columns
+}
+\details{
+\code{denom} controls the denominator used to calculate proportions/percents.
+It must be one of \cr
 \itemize{
-\item (optional) relative risk columns
+\item \strong{N_col} Column count, \cr
+\item \strong{n_df} Number of patients (based upon the main input dataframe \code{df}),\cr
+\item \strong{n_altdf} Number of patients from the secondary dataframe (\code{.alt_df_full}),\cr
+Note that argument \code{denom_by} will perform a row-split on the \code{.alt_df_full} dataframe.\cr
+It is a requirement that variables specified in \code{denom_by} are part of the row split specifications. \cr
+\item \strong{N_colgroup} Number of patients from the column group variable
+(note that this is based upon the input .alt_df_full dataframe).\cr
+Note that the argument \code{colgroup} (column variable) needs to be provided,
+as it cannot be retrieved directly from the column layout definition.
+\item \strong{n_rowdf} Number of patients from the current row-level dataframe
+(\code{.row_df} from the rtables splitting machinery).\cr
+\item \strong{n_parentdf} Number of patients from a higher row-level split than the current split.\cr
+This higher row-level split is specified in the argument \code{denom_by}.\cr
 }
 }
 \examples{

@@ -99,9 +99,9 @@ Only considered if \code{draw = TRUE} is used.}
 
 \item{prune_zero_rows}{(\code{flag})\cr whether to prune all zero rows.}
 
-\item{riskdiff}{(\code{flag})\cr whether a risk difference column is present. When set to \code{TRUE}, \code{\link[=add_riskdiff]{add_riskdiff()}} must be
+\item{riskdiff}{(\code{flag})\cr whether a risk difference column is present. When set to \code{TRUE}, \code{\link[tern:add_riskdiff]{tern::add_riskdiff()}} must be
 used as \code{split_fun} in the prior column split of the table layout, specifying which columns should be compared.
-See \code{\link[=stat_propdiff_ci]{stat_propdiff_ci()}} for details on risk difference calculation.}
+See \code{\link[tern:stat_propdiff_ci]{tern::stat_propdiff_ci()}} for details on risk difference calculation.}
 
 \item{rsp}{(\code{logical})\cr whether each subject is a responder or not.}
 

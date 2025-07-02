@@ -56,7 +56,7 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA)))
   for (fl in res_wide) {
     expect_snapshot_file(fl, cran = TRUE)
-    expect_snapshot_file(gsub("rtf$", "csv", fl), cran = TRUE)
+    expect_snapshot_file(gsub("rtf$", "csv", fl))
   }
   expect_silent(suppressMessages(cmb_fl <- rtf_out_wrapper(tbl_wide, "test2", combined = TRUE)))
   expect_snapshot_file(cmb_fl, cran = TRUE)

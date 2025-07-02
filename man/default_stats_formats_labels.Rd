@@ -140,10 +140,10 @@ indentations will be zero.
 Utility functions to get valid statistic methods for different method groups
 (\code{.stats}) and their associated formats (\code{.formats}), labels (\code{.labels}), and indent modifiers
 (\code{.indent_mods}). This utility is used across \code{junco}, but some of its working principles can be
-seen in \code{\link[=analyze_vars]{analyze_vars()}}. See notes to understand why this is experimental.
+seen in \code{\link[tern:analyze_variables]{tern::analyze_vars()}}. See notes to understand why this is experimental.
 }
 \details{
-Current choices for \code{type} are \code{counts} and \code{numeric} for \code{\link[=analyze_vars]{analyze_vars()}} and affect \code{junco_get_stats()}.
+Current choices for \code{type} are \code{counts} and \code{numeric} for \code{\link[tern:analyze_variables]{tern::analyze_vars()}} and affect \code{junco_get_stats()}.
 }
 \section{Functions}{
 \itemize{
