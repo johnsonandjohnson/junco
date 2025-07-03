@@ -22,9 +22,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "covr"))
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("testthat")
+          Rscript -e 'install.packages(c("remotes", "covr", " testthat"))'
+          Rscript -e 'remotes::install_deps(dependencies = TRUE)'
 
 
       - name: Run coverage and generate badge
