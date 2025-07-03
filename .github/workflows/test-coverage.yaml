@@ -10,12 +10,11 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
 
-  permissions:
-    contents: write  # must be present for gh-pages
+    permissions:
+      contents: write
 
-  steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
