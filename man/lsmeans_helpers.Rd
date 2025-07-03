@@ -26,39 +26,40 @@ h_single_visit_contrast_specs(emmeans_res, vars)
 h_average_visit_contrast_specs(specs, averages)
 }
 \arguments{
-\item{fit}{result of model fitting function, e.g. [mmrm::mmrm()] or [stats::lm()].}
+\item{fit}{result of model fitting function, e.g. \code{\link[mmrm:mmrm]{mmrm::mmrm()}} or \code{\link[stats:lm]{stats::lm()}}.}
 
-\item{vars}{(named `list` of `string` or `character`)\cr specifying the variables in the `MMRM`.
-  The following elements need to be included as character vectors and match corresponding columns
-  in `data`:
+\item{vars}{(named \code{list} of \code{string} or \code{character})\cr specifying the variables in the \code{MMRM}.
+The following elements need to be included as character vectors and match corresponding columns
+in \code{data}:
+\itemize{
+\item \code{response}: the response variable.
+\item \code{covariates}: the additional covariate terms (might also include interactions).
+\item \code{id}: the subject ID variable.
+\item \code{arm}: the treatment group variable (factor).
+\item \code{visit}: the visit variable (factor).
+\item \code{weights}: optional weights variable (if \code{NULL} or omitted then no weights will be used).
+}
 
-  - `response`: the response variable.
-  - `covariates`: the additional covariate terms (might also include interactions).
-  - `id`: the subject ID variable.
-  - `arm`: the treatment group variable (factor).
-  - `visit`: the visit variable (factor).
-  - `weights`: optional weights variable (if `NULL` or omitted then no weights will be used).
+Note that the main effects and interaction of \code{arm} and \code{visit} are by default
+included in the model.}
 
-  Note that the main effects and interaction of `arm` and `visit` are by default
-  included in the model.}
+\item{weights}{(\code{string})\cr argument from \code{\link[emmeans:emmeans]{emmeans::emmeans()}}, 'counterfactual' by default.}
 
-\item{weights}{(`string`)\cr argument from [emmeans::emmeans()], 'counterfactual' by default.}
+\item{emmeans_res}{(\code{list})\cr initial \code{emmeans} result from \code{\link[=h_get_emmeans_res]{h_get_emmeans_res()}}.}
 
-\item{emmeans_res}{(`list`)\cr initial `emmeans` result from [h_get_emmeans_res()].}
-
-\item{averages}{(`list`)\cr optional named list of visit levels which should be averaged
+\item{averages}{(\code{list})\cr optional named list of visit levels which should be averaged
 and reported along side the single visits.}
 
-\item{specs}{(`list`)\cr list of least square means specifications, with
-elements `coefs` (coefficient list) and `grid` (corresponding `data.frame`).}
+\item{specs}{(\code{list})\cr list of least square means specifications, with
+elements \code{coefs} (coefficient list) and \code{grid} (corresponding \code{data.frame}).}
 
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
-\item{tests}{(`flag`)\cr whether to add test results to the estimates.}
+\item{tests}{(\code{flag})\cr whether to add test results to the estimates.}
 
-\item{...}{additional arguments for [emmeans::contrast()].}
+\item{...}{additional arguments for \code{\link[emmeans:contrast]{emmeans::contrast()}}.}
 
-\item{estimates}{(`data.frame`)\cr single visit least square mean estimates.}
+\item{estimates}{(\code{data.frame})\cr single visit least square mean estimates.}
 }
 \description{
 Helpers for Processing Least Square Means
@@ -66,29 +67,29 @@ Helpers for Processing Least Square Means
 \section{Functions}{
 \itemize{
 \item \code{h_get_emmeans_res()}: returns a list with
-`object` (`emmGrid` object containing `emmeans` results) and `grid`
-(`data.frame` containing the potential arm and the visit variables
-together with the sample size `n` for each combination).
+\code{object} (\code{emmGrid} object containing \code{emmeans} results) and \code{grid}
+(\code{data.frame} containing the potential arm and the visit variables
+together with the sample size \code{n} for each combination).
 
 \item \code{h_get_average_visit_specs()}: constructs average of visits specifications.
 
-\item \code{h_get_spec_visit_estimates()}: estimates least square means as a `data.frame`
+\item \code{h_get_spec_visit_estimates()}: estimates least square means as a \code{data.frame}
 given specifications.
 
 \item \code{h_get_single_visit_estimates()}: estimates least square means for single visits.
 
-\item \code{h_get_relative_reduc_df()}: constructs `data.frame` with
+\item \code{h_get_relative_reduc_df()}: constructs \code{data.frame} with
 relative reduction vs. reference arm based on single visit estimates.
 
 \item \code{h_single_visit_contrast_specs()}: constructs single visit contrast specifications.
 
 \item \code{h_average_visit_contrast_specs()}: constructs average visits contrast specifications,
-given the `specs` for single visit contrasts and the averages required.
+given the \code{specs} for single visit contrasts and the averages required.
 
 }}
 \note{
-The difference here compared to the original [tern.mmrm::h_get_spec_visit_estimates()]
-  function is that additional arguments for [emmeans::contrast()] can be passed via the
-  Once this has been added to the `tern.mmrm` package then its functions can be used instead.
+The difference here compared to the original \code{\link[tern.mmrm:lsmeans_helpers]{tern.mmrm::h_get_spec_visit_estimates()}}
+function is that additional arguments for \code{\link[emmeans:contrast]{emmeans::contrast()}} can be passed via the
+Once this has been added to the \code{tern.mmrm} package then its functions can be used instead.
 }
 \keyword{internal}

@@ -70,7 +70,7 @@ s_test_proportion_diff <- function(
     )
   }
 
-  y$pval <- with_label(y$pval, d_test_proportion_diff(method, alternative))
+  y$pval <- with_label(y$pval, d_test_proportion_diff_j(method, alternative))
   y
 }
 
@@ -85,7 +85,7 @@ s_test_proportion_diff <- function(
 #' @return A `string` describing the test from which the p-value is derived.
 #'
 #' @export
-d_test_proportion_diff <- function(method, alternative) {
+d_test_proportion_diff_j <- function(method, alternative) {
   checkmate::assert_string(method)
   meth_part <- switch(
     method,

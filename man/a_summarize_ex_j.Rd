@@ -41,73 +41,77 @@ a_summarize_ex_j(
 )
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
-\item{.df_row}{(`data.frame`)\cr data frame across all of the columns for the given row split.}
+\item{.df_row}{(\code{data.frame})\cr data frame across all of the columns for the given row split.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states
-that is passed by `rtables`.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
+that is passed by \code{rtables}.}
 
-\item{comp_btw_group}{(`logical`)\cr If TRUE,
+\item{comp_btw_group}{(\code{logical})\cr If TRUE,
 \cr When ancova = FALSE, the estimate of between group difference (on CHG) will be based upon two-sample t-test. \cr
 \cr When ancova = TRUE, the same ancova model will be used for the estimate of between group difference (on CHG).}
 
-\item{ref_path}{(`character`)\cr global reference group specification, see [get_ref_info()].}
+\item{ref_path}{(\code{character})\cr global reference group specification, see \code{\link[=get_ref_info]{get_ref_info()}}.}
 
-\item{ancova}{(`logical`)\cr If FALSE, only descriptive methods will be used. \cr
+\item{ancova}{(\code{logical})\cr If FALSE, only descriptive methods will be used. \cr
 If TRUE Ancova methods will be used for each of the columns : AVAL, CHG, DIFF. \cr}
 
-\item{interaction_y}{(`character`)\cr Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.}
+\item{interaction_y}{(\code{character})\cr Will be passed onto the \code{tern} function \code{s_ancova}, when ancova = TRUE.}
 
-\item{interaction_item}{(`character`)\cr Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.}
+\item{interaction_item}{(\code{character})\cr Will be passed onto the \code{tern} function \code{s_ancova}, when ancova = TRUE.}
 
-\item{conf_level}{(`proportion`)\cr Confidence level of the interval}
+\item{conf_level}{(\code{proportion})\cr Confidence level of the interval}
 
 \item{daysconv}{conversion required to get the values into days
 (i.e 1 if original PARAMCD unit is days, 30.4375 if original PARAMCD unit is in months)}
 
 \item{variables}{(named list of strings)\cr
 list of additional analysis variables, with expected elements:
-   * arm (string)\cr
+\itemize{
+\item arm (string)\cr
 group variable, for which the covariate adjusted means of multiple groups will be summarized.
 Specifically, the first level of arm variable is taken as the reference group.
-   * covariates (character)\cr
-a vector that can contain single variable names (such as 'X1'), and/or interaction terms indicated by 'X1 * X2'.}
+\item covariates (character)\cr
+a vector that can contain single variable names (such as 'X1'), and/or interaction terms indicated by 'X1 * X2'.
+}}
 
-\item{.stats}{(`character`)\cr statistics to select for the table.}
+\item{.stats}{(\code{character})\cr statistics to select for the table.}
 
-\item{.formats}{(named `character` or `list`)\cr formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.}
+\item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
+information on the \code{'auto'} setting.}
 
-\item{.labels}{(named `character`)\cr labels for the statistics (without indent).}
+\item{.labels}{(named \code{character})\cr labels for the statistics (without indent).}
 
-\item{.indent_mods}{(named `integer`)\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
+\item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 
-\item{na_str}{(`string`)\cr string used to replace all `NA` or empty values in the output.}
+\item{na_str}{(\code{string})\cr string used to replace all \code{NA} or empty values in the output.}
 }
 \value{
-* `a_summarize_ex_j()` returns the corresponding list with formatted [rtables::CellValue()].
+\itemize{
+\item \code{a_summarize_ex_j()} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
+}
 }
 \description{
 A function to create the appropriate statistics needed for exposure table
 }
 \details{
 Creates statistics needed for standard exposure table
-This includes differences and 95% CI and total treatment years.
-This is designed to be used as an analysis (afun in `analyze`) function.
+This includes differences and 95\% CI and total treatment years.
+This is designed to be used as an analysis (afun in \code{analyze}) function.
 
-Creates statistics needed for table. This includes differences and 95% CI and total treatment years.
-This is designed to be used as an analysis (afun in `analyze`) function.
+Creates statistics needed for table. This includes differences and 95\% CI and total treatment years.
+This is designed to be used as an analysis (afun in \code{analyze}) function.
 }
 \section{Functions}{
 \itemize{
 \item \code{s_summarize_ex_j()}: Statistics function needed for the exposure tables
 
-\item \code{a_summarize_ex_j()}: Formatted analysis function which is used as `afun`.
+\item \code{a_summarize_ex_j()}: Formatted analysis function which is used as \code{afun}.
 
 }}
 \examples{

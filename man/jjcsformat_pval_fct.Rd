@@ -7,16 +7,16 @@
 jjcsformat_pval_fct(alpha = 0.05)
 }
 \arguments{
-\item{alpha}{`number`\cr the significance level to account for during rounding.}
+\item{alpha}{\code{number}\cr the significance level to account for during rounding.}
 }
 \value{
-The p-value in the standard format. If `count` is 0, the format is `0`.
-  If it is smaller than 0.001, then `<0.001`, if it is larger than 0.999, then
-  `>0.999` is returned. Otherwise, 3 digits are used. In the special case that
-  rounding from below would make the string equal to the specified `alpha`,
-  then a higher number of digits is used to be able to still see the difference.
-  For example, 0.0048 is not rounded to 0.005 but stays at 0.0048 if `alpha = 0.005`
-  is set.
+The p-value in the standard format. If \code{count} is 0, the format is \code{0}.
+If it is smaller than 0.001, then \verb{<0.001}, if it is larger than 0.999, then
+\verb{>0.999} is returned. Otherwise, 3 digits are used. In the special case that
+rounding from below would make the string equal to the specified \code{alpha},
+then a higher number of digits is used to be able to still see the difference.
+For example, 0.0048 is not rounded to 0.005 but stays at 0.0048 if \code{alpha = 0.005}
+is set.
 }
 \description{
 A function factory to generate formatting functions for p-value

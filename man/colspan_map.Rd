@@ -38,15 +38,15 @@ default value = 'TRT01A'}
 \item{active_first}{whether the active columns come first.}
 }
 \value{
-a data frame that contains the map to be used with rtables split function `trim_levels_to_map`
+a data frame that contains the map to be used with rtables split function \code{trim_levels_to_map}
 }
 \description{
 A function used for creating a data frame containing the map that is compatible with rtables split function
-`trim_levels_to_map`
+\code{trim_levels_to_map}
 }
 \details{
 This function creates a data frame containing the map that is compatible with rtables split function
-`trim_levels_to_map`.
+\code{trim_levels_to_map}.
 The levels of the specified trt_var variable will be stored within the trt_var variable
 and the colspan_var variable will contain the corresponding spanning header value for each treatment group.
 }

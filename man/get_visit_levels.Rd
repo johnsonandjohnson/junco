@@ -7,9 +7,9 @@
 get_visit_levels(visit_cat, visit_n)
 }
 \arguments{
-\item{visit_cat}{(`character`)\cr the categorical version.}
+\item{visit_cat}{(\code{character})\cr the categorical version.}
 
-\item{visit_n}{(`numeric`)\cr the numeric version.}
+\item{visit_n}{(\code{numeric})\cr the numeric version.}
 }
 \value{
 The unique visit levels in the order defined by the numeric version.

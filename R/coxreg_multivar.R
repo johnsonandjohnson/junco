@@ -92,6 +92,7 @@ tefos03_second_split_fun_fct <- function(conf_level) {
   make_split_fun(post = list(post_fun))
 }
 
+#' @importFrom tern fit_coxreg_multivar
 #' @keywords internal
 memoised_fit_coxreg_multivar <- memoise::memoise(fit_coxreg_multivar)
 

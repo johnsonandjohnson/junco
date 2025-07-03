@@ -7,22 +7,24 @@
 jjcsformat_range_fct(str)
 }
 \arguments{
-\item{str}{`string`\cr the format specifying the number of digits to be used,
-for the range values, e.g. `"xx.xx"`.}
+\item{str}{\code{string}\cr the format specifying the number of digits to be used,
+for the range values, e.g. \code{"xx.xx"}.}
 }
 \value{
 A function that formats a numeric vector with 4 elements:
-  - minimum
-  - maximum
-  - censored minimum? (1 if censored, 0 if event)
-  - censored maximum? (1 if censored, 0 if event)
-  The range along with the censoring information is returned as a string
-  with the specified numeric format as `(min, max)`, and the `+` is appended
-  to `min` or `max` if these have been censored.
+\itemize{
+\item minimum
+\item maximum
+\item censored minimum? (1 if censored, 0 if event)
+\item censored maximum? (1 if censored, 0 if event)
+The range along with the censoring information is returned as a string
+with the specified numeric format as \verb{(min, max)}, and the \code{+} is appended
+to \code{min} or \code{max} if these have been censored.
+}
 }
 \description{
 A function factory to generate formatting functions for range formatting
-  that includes information about the censoring of survival times.
+that includes information about the censoring of survival times.
 }
 \examples{
 my_range_format <- jjcsformat_range_fct("xx.xx")

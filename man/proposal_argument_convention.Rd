@@ -6,141 +6,141 @@
 \arguments{
 \item{...}{additional arguments for the lower level functions.}
 
-\item{.aligns}{(`character`)\cr alignment for table contents (not including labels). When `NULL`, `'center'`
-is applied. See [formatters::list_valid_aligns()] for a list of all currently supported alignments.}
+\item{.aligns}{(\code{character})\cr alignment for table contents (not including labels). When \code{NULL}, \code{'center'}
+is applied. See \code{\link[formatters:list_formats]{formatters::list_valid_aligns()}} for a list of all currently supported alignments.}
 
-\item{.all_col_counts}{(`vector` of `integer`)\cr each value represents a global count for a column. Values are
-taken from `alt_counts_df` if specified (see [rtables::build_table()]).}
+\item{.all_col_counts}{(\code{vector} of \code{integer})\cr each value represents a global count for a column. Values are
+taken from \code{alt_counts_df} if specified (see \code{\link[rtables:build_table]{rtables::build_table()}}).}
 
-\item{.df_row}{(`data.frame`)\cr data frame across all of the columns for the given row split.}
+\item{.df_row}{(\code{data.frame})\cr data frame across all of the columns for the given row split.}
 
-\item{.formats}{(named `character` or `list`)\cr formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.}
+\item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
+information on the \code{'auto'} setting.}
 
-\item{.in_ref_col}{(`logical`)\cr `TRUE` when working with the reference level, `FALSE` otherwise.}
+\item{.in_ref_col}{(\code{logical})\cr \code{TRUE} when working with the reference level, \code{FALSE} otherwise.}
 
-\item{.indent_mods}{(named `integer`)\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
+\item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 
-\item{.labels}{(named `character`)\cr labels for the statistics (without indent).}
+\item{.labels}{(named \code{character})\cr labels for the statistics (without indent).}
 
-\item{.N_col}{(`integer`)\cr column-wise N (column count) for the full column being analyzed that is typically
-passed by `rtables`.}
+\item{.N_col}{(\code{integer})\cr column-wise N (column count) for the full column being analyzed that is typically
+passed by \code{rtables}.}
 
-\item{.N_row}{(`integer`)\cr row-wise N (row group count) for the group of observations being analyzed
-(i.e. with no column-based subsetting) that is typically passed by `rtables`.}
+\item{.N_row}{(\code{integer})\cr row-wise N (row group count) for the group of observations being analyzed
+(i.e. with no column-based subsetting) that is typically passed by \code{rtables}.}
 
-\item{.ref_group}{(`data.frame` or `vector`)\cr the data corresponding to the reference group.}
+\item{.ref_group}{(\code{data.frame} or \code{vector})\cr the data corresponding to the reference group.}
 
-\item{ref_path}{(`character`)\cr global reference group specification, see [get_ref_info()].}
+\item{ref_path}{(\code{character})\cr global reference group specification, see \code{\link[=get_ref_info]{get_ref_info()}}.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states
-that is passed by `rtables`.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
+that is passed by \code{rtables}.}
 
-\item{.stats}{(`character`)\cr statistics to select for the table.}
+\item{.stats}{(\code{character})\cr statistics to select for the table.}
 
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
-\item{add_total_level}{(`flag`)\cr adds a 'total' level after the others which includes all the levels
-that constitute the split. A custom label can be set for this level via the `custom_label` argument.}
+\item{add_total_level}{(\code{flag})\cr adds a 'total' level after the others which includes all the levels
+that constitute the split. A custom label can be set for this level via the \code{custom_label} argument.}
 
-\item{alternative}{(`string`)\cr whether `two.sided`, or one-sided `less` or `greater` p-value
+\item{alternative}{(\code{string})\cr whether \code{two.sided}, or one-sided \code{less} or \code{greater} p-value
 should be displayed.}
 
-\item{col_by}{(`factor`)\cr defining column groups.}
+\item{col_by}{(\code{factor})\cr defining column groups.}
 
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
-\item{control}{(`list`)\cr relevant list of control options.}
+\item{control}{(\code{list})\cr relevant list of control options.}
 
-\item{data}{(`data.frame`)\cr the dataset containing the variables to summarize.}
+\item{data}{(\code{data.frame})\cr the dataset containing the variables to summarize.}
 
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{draw}{(`flag`)\cr whether the plot should be drawn.}
+\item{draw}{(\code{flag})\cr whether the plot should be drawn.}
 
-\item{grp}{(`factor`)\cr defining the groups.}
+\item{grp}{(\code{factor})\cr defining the groups.}
 
-\item{groups_lists}{(named `list` of `list`)\cr optionally contains for each `subgroups` variable a
+\item{groups_lists}{(named \code{list} of \code{list})\cr optionally contains for each \code{subgroups} variable a
 list, which specifies the new group levels via the names and the
 levels that belong to it in the character vectors that are elements of the list.}
 
-\item{id}{(`string`)\cr subject variable name.}
+\item{id}{(\code{string})\cr subject variable name.}
 
-\item{is_event}{(`character`)\cr variable name storing Logical values: `TRUE` if event,
-`FALSE` if time to event is censored.}
+\item{is_event}{(\code{character})\cr variable name storing Logical values: \code{TRUE} if event,
+\code{FALSE} if time to event is censored.}
 
-\item{indent_mod}{`r lifecycle::badge('deprecated')` Please use the `.indent_mods` argument instead.}
+\item{indent_mod}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please use the \code{.indent_mods} argument instead.}
 
-\item{label_all}{(`string`)\cr label for the total population analysis.}
+\item{label_all}{(\code{string})\cr label for the total population analysis.}
 
-\item{labelstr}{(`character`)\cr label of the level of the parent split currently being summarized
-(must be present as second argument in Content Row Functions). See [rtables::summarize_row_groups()]
+\item{labelstr}{(\code{character})\cr label of the level of the parent split currently being summarized
+(must be present as second argument in Content Row Functions). See \code{\link[rtables:summarize_row_groups]{rtables::summarize_row_groups()}}
 for more information.}
 
-\item{lyt}{(`layout`)\cr input layout where analyses will be added to.}
+\item{lyt}{(\code{layout})\cr input layout where analyses will be added to.}
 
-\item{method}{(`string`)\cr specifies the test used to calculate the p-value for the difference between
-two proportions. For options, see [s_test_proportion_diff()]. Default is `NULL` so no test is performed.}
+\item{method}{(\code{string})\cr specifies the test used to calculate the p-value for the difference between
+two proportions. For options, see \code{\link[=s_test_proportion_diff]{s_test_proportion_diff()}}. Default is \code{NULL} so no test is performed.}
 
-\item{na.rm}{(`flag`)\cr whether `NA` values should be removed from `x` prior to analysis.}
+\item{na.rm}{(\code{flag})\cr whether \code{NA} values should be removed from \code{x} prior to analysis.}
 
-\item{na_level}{`r lifecycle::badge('deprecated')` Please use the `na_str` argument instead.}
+\item{na_level}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please use the \code{na_str} argument instead.}
 
-\item{na_str}{(`string`)\cr string used to replace all `NA` or empty values in the output.}
+\item{na_str}{(\code{string})\cr string used to replace all \code{NA} or empty values in the output.}
 
-\item{nested}{(`flag`)\cr whether this layout instruction should be applied within the existing layout structure _if
-possible_ (`TRUE`, the default) or as a new top-level element (`FALSE`). Ignored if it would nest a split.
+\item{nested}{(\code{flag})\cr whether this layout instruction should be applied within the existing layout structure \emph{if
+possible} (\code{TRUE}, the default) or as a new top-level element (\code{FALSE}). Ignored if it would nest a split.
 underneath analyses, which is not allowed.}
 
-\item{newpage}{(`flag`)\cr whether the plot should be drawn on a new page.
-Only considered if `draw = TRUE` is used.}
+\item{newpage}{(\code{flag})\cr whether the plot should be drawn on a new page.
+Only considered if \code{draw = TRUE} is used.}
 
-\item{prune_zero_rows}{(`flag`)\cr whether to prune all zero rows.}
+\item{prune_zero_rows}{(\code{flag})\cr whether to prune all zero rows.}
 
-\item{riskdiff}{(`flag`)\cr whether a risk difference column is present. When set to `TRUE`, [add_riskdiff()] must be
-used as `split_fun` in the prior column split of the table layout, specifying which columns should be compared.
-See [stat_propdiff_ci()] for details on risk difference calculation.}
+\item{riskdiff}{(\code{flag})\cr whether a risk difference column is present. When set to \code{TRUE}, \code{\link[tern:add_riskdiff]{tern::add_riskdiff()}} must be
+used as \code{split_fun} in the prior column split of the table layout, specifying which columns should be compared.
+See \code{\link[tern:stat_propdiff_ci]{tern::stat_propdiff_ci()}} for details on risk difference calculation.}
 
-\item{rsp}{(`logical`)\cr whether each subject is a responder or not.}
+\item{rsp}{(\code{logical})\cr whether each subject is a responder or not.}
 
-\item{section_div}{(`string`)\cr string which should be repeated as a section divider after each group
-defined by this split instruction, or `NA_character_` (the default) for no section divider.}
+\item{section_div}{(\code{string})\cr string which should be repeated as a section divider after each group
+defined by this split instruction, or \code{NA_character_} (the default) for no section divider.}
 
-\item{show_labels}{(`string`)\cr label visibility: one of 'default', 'visible' and 'hidden'.}
+\item{show_labels}{(\code{string})\cr label visibility: one of 'default', 'visible' and 'hidden'.}
 
-\item{show_relative}{should the 'reduction' (`control - treatment`, default) or the 'increase'
-(`treatment - control`) be shown for the relative change from baseline?}
+\item{show_relative}{should the 'reduction' (\code{control - treatment}, default) or the 'increase'
+(\code{treatment - control}) be shown for the relative change from baseline?}
 
-\item{strata}{(`character` or `NULL`)\cr variable names indicating stratification factors.}
+\item{strata}{(\code{character} or \code{NULL})\cr variable names indicating stratification factors.}
 
-\item{table_names}{(`character`)\cr this can be customized in case that the same `vars` are analyzed multiple times,
-to avoid warnings from `rtables`.}
+\item{table_names}{(\code{character})\cr this can be customized in case that the same \code{vars} are analyzed multiple times,
+to avoid warnings from \code{rtables}.}
 
-\item{tte}{(`numeric`)\cr contains time-to-event duration values.}
+\item{tte}{(\code{numeric})\cr contains time-to-event duration values.}
 
-\item{var_labels}{(`character`)\cr character for label.}
+\item{var_labels}{(\code{character})\cr character for label.}
 
-\item{variables}{(named `list` of `string`)\cr list of additional analysis variables.}
+\item{variables}{(named \code{list} of \code{string})\cr list of additional analysis variables.}
 
-\item{vars}{(`character`)\cr variable names for the primary analysis variable to be iterated over.}
+\item{vars}{(\code{character})\cr variable names for the primary analysis variable to be iterated over.}
 
-\item{var}{(`string`)\cr single variable name for the primary analysis variable.}
+\item{var}{(\code{string})\cr single variable name for the primary analysis variable.}
 
-\item{x}{(`numeric`)\cr vector of numbers we want to analyze.}
+\item{x}{(\code{numeric})\cr vector of numbers we want to analyze.}
 
-\item{ctrl_grp}{(`string`)\cr Level of the control group for the relative risk derivation.}
+\item{ctrl_grp}{(\code{string})\cr Level of the control group for the relative risk derivation.}
 }
 \description{
-The documentation to this function lists all the arguments in `tern`
+The documentation to this function lists all the arguments in \code{tern}
 that are used repeatedly to express an analysis.
 }
 \details{
-Although this function just returns `NULL` it has two uses, for
-  the `tern` users it provides a documentation of arguments that are
-  commonly and consistently used in the framework. For the developer it adds a
-  single reference point to import the `roxygen` argument description with:
-  `@inheritParams proposal_argument_convention`
+Although this function just returns \code{NULL} it has two uses, for
+the \code{tern} users it provides a documentation of arguments that are
+commonly and consistently used in the framework. For the developer it adds a
+single reference point to import the \code{roxygen} argument description with:
+\verb{@inheritParams proposal_argument_convention}
 }
 \keyword{internal}
