@@ -47,4 +47,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./coverage
           publish_branch: gh-pages
-          destination_dir: _xml_coverage_reports/data/main
+          destination_dir: docs/_xml_coverage_reports/
