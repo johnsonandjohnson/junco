@@ -2,9 +2,9 @@ name: coverage-report
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, ci_cd]
   pull_request:
-    branches: [main, master]
+    branches: [main, ci_cd]
 
 jobs:
   coverage:
