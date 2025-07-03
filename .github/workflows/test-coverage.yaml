@@ -1,0 +1,481 @@
+---
+name: Coverage 📔
+
+on:
+  push:
+    tags:
+      - "v*"
+    branches: [main, ci_cd]
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+    branches: [main, ci_cd]
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      install-system-dependencies:
+        description: Check for and install system dependencies
+        required: false
+        default: false
+        type: boolean
+      enable-staged-dependencies-check:
+        description: Enable staged dependencies YAML check
+        required: false
+        default: false
+        type: boolean
+      publish-coverage-report:
+        description: Publish the coverage report as a pull request comment
+        required: false
+        default: true
+        type: boolean
+      allow-failure:
+        description: Allow workflow failure if errors from covtracer are generated
+        required: false
+        type: boolean
+        default: false
+      enable-covtracer:
+        description: Enable the covtracer job
+        required: false
+        type: boolean
+        default: false
+      additional-env-vars:
+        description: |
+          Extra environment variables, as a 'key=value' pair, with each pair on a new line.
+          Example usage:
+          additional-env-vars: |
+            ABC=123
+            XYZ=456
+        required: false
+        default: ""
+        type: string
+      sd-direction:
+        description: The direction to use to install staged dependencies. Choose between 'upstream', 'downstream' and 'all'
+        required: false
+        type: string
+        default: upstream
+      publish-coverage-report-gh-pages:
+        description: Publish HTML coverage report to GitHub pages alongside pkgdown docs.
+        required: false
+        type: boolean
+        default: true
+      latest-tag-alt-name:
+        description: |
+          The name of directory to store coverage report when running for latest tag.
+          The variable is named this way to keep it consistent with r-pkgdown-multiversion input name.
+        required: false
+        type: string
+        default: "latest-tag"
+      release-candidate-alt-name:
+        description: |
+          The name of directory to store coverage report when running for rc tag.
+          The variable is named this way to keep it consistent with r-pkgdown-multiversion input name.
+        required: false
+        type: string
+        default: "release-candidate"
+      package-subdirectory:
+        description: Subdirectory in the repository, where the R package is located.
+        required: false
+        type: string
+        default: ""
+      deps-installation-method:
+        description: |
+          Which method for installing R package dependencies to use? Supported values are:
+          staged-dependencies
+          setup-r-dependencies
+        required: false
+        type: string
+        default: staged-dependencies
+      lookup-refs:
+        description: |
+          List of package references to be used by setup-r-dependencies action if deps-installation-method == 'setup-r-dependencies'.
+        required: false
+        type: string
+        default: ""
+    secrets:
+      REPO_GITHUB_TOKEN:
+        description: |
+          Github token with read access to repositories, required
+          for staged.dependencies installation
+        required: false
+
+concurrency:
+  group: coverage-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  coverage:
+    name: Coverage 📔
+    runs-on: ubuntu-latest
+    if: >
+      !contains(github.event.commits[0].message, '[skip coverage]')
+        && github.event.pull_request.draft == false
+    container:
+      image: ghcr.io/insightsengineering/rstudio:latest
+    outputs:
+      publish-coverage-html-report: ${{ steps.coverage-output.outputs.coverage-upload }}
+      current-branch-or-tag: ${{ steps.current-branch-or-tag.outputs.ref-name }}
+      is-latest-tag: ${{ steps.current-branch-or-tag.outputs.is-latest-tag }}
+      is-rc-tag: ${{ steps.current-branch-or-tag.outputs.is-rc-tag }}
+      multiversion-docs: ${{ steps.current-branch-or-tag.outputs.multiversion-docs }}
+
+    steps:
+      - name: Setup token 🔑
+        id: github-token
+        run: |
+          if [ "${{ secrets.REPO_GITHUB_TOKEN }}" == "" ]; then
+            echo "REPO_GITHUB_TOKEN is empty. Substituting it with GITHUB_TOKEN."
+            echo "token=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+          else
+            echo "Using REPO_GITHUB_TOKEN."
+            echo "token=${{ secrets.REPO_GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Get branch names 🌿
+        id: branch-name
+        uses: tj-actions/branch-names@v7
+
+      - name: Checkout gh-pages 🛎
+        if: >-
+          github.event_name != 'pull_request'
+            && inputs.publish-coverage-report-gh-pages == true
+        id: checkout-gh-pages
+        uses: actions/checkout@v4.1.1
+        with:
+          ref: gh-pages
+          path: gh-pages
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Get current branch or tag 🏷️
+        if: >-
+          github.event_name != 'pull_request'
+            && inputs.publish-coverage-report-gh-pages == true
+        id: current-branch-or-tag
+        run: |
+          if [ "${{ steps.branch-name.outputs.is_tag }}" == "true" ]; then
+            echo "Current tag: ${{ steps.branch-name.outputs.tag }}"
+            echo "ref-name=${{ steps.branch-name.outputs.tag }}" >> $GITHUB_OUTPUT
+            current_tag="${{ steps.branch-name.outputs.tag }}"
+            if [ "$(echo "$current_tag" | grep -E "^v([0-9]+\.)?([0-9]+\.)?([0-9]+)$")" != "" ]; then
+              echo "Running for latest-tag."
+              echo "is-latest-tag=true" >> $GITHUB_OUTPUT
+            elif [ "$(echo "$current_tag" | grep -E "^v([0-9]+\.)?([0-9]+\.)?([0-9]+)(-rc[0-9]+)$")" != "" ]; then
+              echo "Running for rc-tag."
+              echo "is-rc-tag=true" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "Current branch: ${{ steps.branch-name.outputs.current_branch }}"
+            echo "ref-name=${{ steps.branch-name.outputs.current_branch }}" >> $GITHUB_OUTPUT
+          fi
+          # Check if pkgdown multiversion docs are used at all.
+          if [ $(grep -rl '<!-- Generated by pkgdown + https://github.com/insightsengineering/r-pkgdown-multiversion -->' gh-pages | wc -l) -gt 0 ]; then
+            echo "multiversion-docs=true" >> $GITHUB_OUTPUT
+          else
+            echo "multiversion-docs=false" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Checkout repo (PR) 🛎
+        uses: actions/checkout@v4.1.1
+        if: github.event_name == 'pull_request'
+        with:
+          ref: ${{ steps.branch-name.outputs.head_ref_branch }}
+          path: ${{ github.event.repository.name }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Checkout repo 🛎
+        uses: actions/checkout@v4.1.1
+        if: github.event_name != 'pull_request'
+        with:
+          ref: ${{ steps.branch-name.outputs.head_ref_branch }}
+          path: ${{ github.event.repository.name }}
+
+      - name: Check commit message 💬
+        run: |
+          git config --global --add safe.directory $(pwd)
+          export head_commit_message="$(git show -s --format=%B | tr '\r\n' ' ' | tr '\n' ' ')"
+          echo "head_commit_message = $head_commit_message"
+          if [[ $head_commit_message == *"$SKIP_INSTRUCTION"* ]]; then
+            echo "Skip instruction detected - cancelling the workflow."
+            exit 1
+          fi
+        shell: bash
+        working-directory: ${{ github.event.repository.name }}
+        env:
+          SKIP_INSTRUCTION: "[skip coverage]"
+
+      - name: Normalize inputs ⊳
+        id: normalizer
+        shell: bash
+        run: |
+          echo "publish-coverage-report=${{ inputs.publish-coverage-report }}" >> $GITHUB_OUTPUT
+          if [ "${{ inputs.publish-coverage-report }}" == "" ]
+          then {
+            echo "publish-coverage-report=true" >> $GITHUB_OUTPUT
+          }
+          fi
+
+      - name: Restore SD cache 💰
+        if: >-
+          inputs.deps-installation-method == 'staged-dependencies'
+        uses: actions/cache@v4
+        with:
+          key: sd-${{ runner.os }}-${{ github.event.repository.name }}
+          path: ~/.staged.dependencies
+
+      - name: Run Staged dependencies 🎦
+        if: >-
+          inputs.deps-installation-method == 'staged-dependencies'
+        uses: insightsengineering/staged-dependencies-action@v2
+        env:
+          GITHUB_PAT: ${{ secrets.REPO_GITHUB_TOKEN }}
+        with:
+          path: ${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}
+          enable-check: ${{ inputs.enable-staged-dependencies-check }}
+          run-system-dependencies: ${{ inputs.install-system-dependencies }}
+          direction: ${{ inputs.sd-direction }}
+
+      - name: Setup R dependencies 🎦
+        if: >-
+          inputs.deps-installation-method == 'setup-r-dependencies'
+        uses: insightsengineering/setup-r-dependencies@v1
+        env:
+          GITHUB_PAT: ${{ steps.github-token.outputs.token }}
+        with:
+          lookup-refs: ${{ inputs.lookup-refs }}
+          repository-path: ${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}
+
+      - name: Install R package 🚧
+        run: |
+          if (file.exists("renv.lock")) renv::restore()
+          install.packages(".", repos=NULL, type="source")
+        shell: Rscript {0}
+        working-directory: ${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}
+
+      - name: Install covr 🎪
+        run: |
+          if (file.exists("renv.lock")) {
+            renv::restore()
+            if (!require("covr")) renv::install("covr")
+          }
+          if (!require("covr")) install.packages("covr")
+        shell: Rscript {0}
+
+      - name: Run coverage 👟
+        run: |
+          setwd("${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}")
+          if (file.exists("renv.lock")) {
+            renv::restore()
+          }
+          # Load extra env vars
+          extra_env_vars <- "${{ inputs.additional-env-vars }}"
+          if (extra_env_vars != "") {
+            writeLines(extra_env_vars, "/tmp/dotenv.env")
+            if (!require("dotenv")) install.packages("dotenv", repos = "https://cloud.r-project.org")
+            dotenv::load_dot_env("/tmp/dotenv.env")
+          }
+          tryCatch(
+            expr = {
+                x <- covr::package_coverage(
+                  clean = FALSE,
+                  quiet = FALSE
+                )
+                print(x)
+                covr::report(
+                    x,
+                    file = "coverage-report.html",
+                    browse = FALSE
+                )
+                covr::to_cobertura(x, filename = "coverage.xml")
+                p <- covr::percent_coverage(x)
+                cat(p, file = "coverage.txt", sep = "")
+            },
+            error = function(e) {
+              message("Errors generated during coverage analysis:")
+              print(e)
+              error_file <- list.files(path = "/tmp", pattern="*.fail$", recursive = T, full.names = T)[1]
+              if (length(error_file) && file.exists(error_file)) {
+                cat("__________FULL OUTPUT__________")
+                writeLines(readLines(error_file))
+              }
+            }
+          )
+          covr_html <- "coverage-report.html"
+          if (!file.exists(covr_html)) writeLines(c("No coverage report."), covr_html)
+        shell: Rscript {0}
+
+      - name: Check whether coverage reports exists 💭
+        id: check_coverage_reports
+        uses: andstor/file-existence-action@v3
+        with:
+          files: >-
+            ${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}/coverage.xml,
+            ${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}/coverage.txt,
+            ${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}/coverage-report.html
+
+      - name: Post coverage report 🗞
+        if: steps.check_coverage_reports.outputs.files_exists == 'true'
+        uses: insightsengineering/coverage-action@v2
+        with:
+          path: ${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}/coverage.xml
+          threshold: 80
+          fail: false
+          publish: ${{ steps.normalizer.outputs.publish-coverage-report }}
+          diff: true
+        continue-on-error: true
+
+      - name: Upload report 🔼
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            ${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}/coverage-report.html
+            ${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}/lib/
+        continue-on-error: true
+
+      - name: Set output ⚙️
+        id: coverage-output
+        if: >-
+          github.event_name != 'pull_request'
+            && inputs.publish-coverage-report-gh-pages == true
+        run: echo "coverage-upload=true" >> $GITHUB_OUTPUT
+
+  covtracer:
+    name: Covtracer 🐄
+    runs-on: ubuntu-latest
+    if: >
+      !contains(github.event.commits[0].message, '[skip coverage]')
+        && github.event.pull_request.draft == false
+        && contains(inputs.enable-covtracer, 'true')
+    container:
+      image: ghcr.io/insightsengineering/rstudio:latest
+
+    steps:
+      - name: Get branch names 🌿
+        id: branch-name
+        uses: tj-actions/branch-names@v7
+
+      - name: Checkout repo (PR) 🛎
+        uses: actions/checkout@v4.1.1
+        if: github.event_name == 'pull_request'
+        with:
+          ref: ${{ steps.branch-name.outputs.head_ref_branch }}
+          path: ${{ github.event.repository.name }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Checkout repo 🛎
+        uses: actions/checkout@v4.1.1
+        if: github.event_name != 'pull_request'
+        with:
+          ref: ${{ steps.branch-name.outputs.head_ref_branch }}
+          path: ${{ github.event.repository.name }}
+
+      - name: Check commit message 💬
+        run: |
+          git config --global --add safe.directory $(pwd)
+          export head_commit_message="$(git show -s --format=%B | tr '\r\n' ' ' | tr '\n' ' ')"
+          echo "head_commit_message = $head_commit_message"
+          if [[ $head_commit_message == *"$SKIP_INSTRUCTION"* ]]; then
+            echo "Skip instruction detected - cancelling the workflow."
+            exit 1
+          fi
+        shell: bash
+        working-directory: ${{ github.event.repository.name }}
+        env:
+          SKIP_INSTRUCTION: "[skip coverage]"
+
+      - name: Restore SD cache 💰
+        uses: actions/cache@v4
+        with:
+          key: sd-${{ runner.os }}-${{ github.event.repository.name }}
+          path: ~/.staged.dependencies
+
+      - name: Run Staged dependencies 🎦
+        uses: insightsengineering/staged-dependencies-action@v2
+        env:
+          GITHUB_PAT: ${{ steps.github-token.outputs.token }}
+        with:
+          path: ${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}
+          enable-check: ${{ inputs.enable-staged-dependencies-check }}
+          run-system-dependencies: ${{ inputs.install-system-dependencies }}
+          direction: ${{ inputs.sd-direction }}
+
+      - name: Run Covtracer 🐄
+        uses: insightsengineering/covtracer-action@v1
+        env:
+          GITHUB_PAT: ${{ steps.github-token.outputs.token }}
+        with:
+          path: ${{ github.event.repository.name }}/${{ inputs.package-subdirectory }}
+          allow-failure: ${{ inputs.allow-failure }}
+
+  publish-coverage-report:
+    name: Publish coverage report 📰
+    runs-on: ubuntu-latest
+    needs: coverage
+    if: >
+      needs.coverage.outputs.publish-coverage-html-report == 'true'
+        && github.event_name != 'pull_request'
+    # Only one job can publish to gh-pages branch concurrently.
+    concurrency:
+      group: ghpages
+    steps:
+      - name: Setup token 🔑
+        id: github-token
+        run: |
+          if [ "${{ secrets.REPO_GITHUB_TOKEN }}" == "" ]; then
+            echo "REPO_GITHUB_TOKEN is empty. Substituting it with GITHUB_TOKEN."
+            echo "token=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+          else
+            echo "Using REPO_GITHUB_TOKEN."
+            echo "token=${{ secrets.REPO_GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Download coverage report as artifact ⤵️
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage-report
+
+      - name: Rename report ⚙️
+        run: mv coverage-report/coverage-report.html coverage-report/index.html
+
+      - name: Upload coverage report to GitHub pages 🗞️
+        if: needs.coverage.outputs.multiversion-docs == 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ steps.github-token.outputs.token }}
+          publish_dir: ./coverage-report
+          destination_dir: ${{ needs.coverage.outputs.current-branch-or-tag }}/coverage-report
+
+      - name: Upload coverage report to GitHub pages (latest-tag) 🏷️
+        if: >
+          needs.coverage.outputs.is-latest-tag == 'true'
+            && needs.coverage.outputs.multiversion-docs == 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ steps.github-token.outputs.token }}
+          publish_dir: ./coverage-report
+          destination_dir: ${{ inputs.latest-tag-alt-name }}/coverage-report
+
+      - name: Upload coverage report to GitHub pages (release-candidate) 🏷️
+        if: >
+          needs.coverage.outputs.is-rc-tag == 'true'
+            && needs.coverage.outputs.multiversion-docs == 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ steps.github-token.outputs.token }}
+          publish_dir: ./coverage-report
+          destination_dir: ${{ inputs.release-candidate-alt-name }}/coverage-report
+
+      - name: Upload coverage report to GitHub pages (non-multiversion) 🗞️
+        if: needs.coverage.outputs.multiversion-docs == 'false'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ steps.github-token.outputs.token }}
+          publish_dir: ./coverage-report
+          destination_dir: coverage-report

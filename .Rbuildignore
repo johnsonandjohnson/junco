@@ -1,50 +1,41 @@
 # cicd
-^\.pre-commit-config\.yaml$
-
 # data
-^data-raw$
-
 # doc
-^CODE_OF_CONDUCT\.md$
-^docs$
+# git
+# lintr
+# others
+# output
+# pkgdown
+# rstudio
+# staded dependencies
 LICENSE
+^.*\.Rproj$
+^.*\.rtf$
+^.revdeprefs\.yaml$
+^CODE_OF_CONDUCT\.md$
 ^LICENSE\.md$
 ^LICENSE\.note$
 ^SECURITY\.md$
-
-# git
+^[^/]*\.R$
+^\.Rproj\.user$
+^\.covrignore$
+^\.covrignore$
 ^\.git$
 ^\.github$
 ^\.gitlab-ci\.yml$
-
-# lintr
+^\.idea$
 ^\.lintr$
-
-# pkgdown
+^\.pre-commit-config\.yaml$
 ^_pkgdown\.yml$
-pkgdown
+^cran-comments\.md$
+^data-raw$
+^docs$
+^junco_tlg_template_scripts$
+^lint_results.txt$
+^output$
 ^pkgdown$
-
-# rstudio
-^.*\.Rproj$
-^\.Rproj\.user$
-
-# staded dependencies
-^staged_dependencies\.yaml$
-
-# others
 ^renv$
 ^renv\.lock$
-^.revdeprefs\.yaml$
 ^revdep$
-^\.covrignore$
-^cran-comments\.md$
-^\.covrignore$
-^\.idea$
-^lint_results.txt$
-
-# output
-^output$
-^junco_tlg_template_scripts$
-^[^/]*\.R$
-^.*\.rtf$
+^staged_dependencies\.yaml$
+pkgdown
