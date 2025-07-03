@@ -64,9 +64,7 @@ a_freq_combos_j <- function(
 ) {
   denom <- match.arg(denom)
 
-  if (denom %in% c("n_altdf") && is.null(.alt_df_full)) {
-    stop(".alt_df_full cannot be NULL when denom = n_altdf.")
-  }
+  check_alt_df_full(denom, "n_altdf", .alt_df_full)
 
   if (!is.null(combosdf) && !all(c("valname", "label") %in% names(combosdf))) {
     stop("a_freq_combos_j: combosdf must have variables valname and label.")

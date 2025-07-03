@@ -149,11 +149,7 @@ a_patyrs_j <- function(
     stop("a_patyrs_j: .stats must be 'patyrs'.")
   }
 
-  if (source == "alt_df" && is.null(.alt_df_full)) {
-    stop(paste(
-      "a_patyrs_j: .alt_df_full cannot be NULL when source = 'alt_df'."
-    ))
-  }
+  check_alt_df_full(source, "alt_df", .alt_df_full)
 
   col_expr <- .spl_context$cur_col_expr[[1]]
   ## colid can be used to figure out if we're in the relative risk columns or not
