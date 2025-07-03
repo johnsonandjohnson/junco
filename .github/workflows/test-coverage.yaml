@@ -10,7 +10,10 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
 
-    steps:
+  permissions:
+    contents: write  # must be present for gh-pages
+
+  steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
