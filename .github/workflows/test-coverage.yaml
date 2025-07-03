@@ -22,7 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages(c("remotes", "covr", " testthat"))'
+          Rscript -e 'install.packages(c("remotes", "covr", " testthat", "DT", "htmltools"))'
           Rscript -e 'remotes::install_deps(dependencies = TRUE)'
 
 
