@@ -3,7 +3,7 @@
 <!-- start badges -->
 [![Check 🛠](https://github.com/johnsonandjohnson/junco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/johnsonandjohnson/junco/actions/workflows/R-CMD-check.yaml)
 [![Docs 📚](https://github.com/johnsonandjohnson/junco/actions/workflows/pkgdown.yaml/badge.svg)](https://johnsonandjohnson.github.io/junco/)
-[![Code Coverage 📔](https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/gh-pages/_xml_coverage_reports/data/main/badge.svg)](https://johnsonandjohnson.github.io/junco/_xml_coverage_reports/report.html)
+[![Code Coverage 📔](https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/gh-pages/_xml_coverage_reports/badge.svg)](https://johnsonandjohnson.github.io/junco/_xml_coverage_reports/report.html)
 
 ![GitHub forks](https://img.shields.io/github/forks/johnsonandjohnson/junco?style=social)
 ![GitHub repo stars](https://img.shields.io/github/stars/johnsonandjohnson/junco?style=social)
