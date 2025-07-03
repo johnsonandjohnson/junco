@@ -11,27 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
+      contents: write  # Needed to push to gh-pages
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
 
-      - name: Install covr + deps
+      - name: Install covr package
         run: |
-          Rscript -e '
-            options(repos = c(CRAN = "https://cloud.r-project.org"))
-            install.packages("covr")
-          '
+          Rscript -e 'install.packages("covr", repos = "https://cloud.r-project.org")'
 
-      - name: Run test coverage and generate reports
+      - name: Run coverage and generate badge
         run: |
           mkdir -p coverage
           Rscript -e '
-            if (!requireNamespace("covr", quietly = TRUE)) stop("covr not installed")
             cov <- covr::package_coverage(type = "tests")
             covr::to_cobertura(cov, "coverage/cobertura.xml")
             covr::report(cov, file = "coverage/coverage.html")
@@ -39,7 +39,6 @@ jobs:
             col <- if (pct >= 90) "brightgreen" else if (pct >= 75) "orange" else "red"
             url <- sprintf("https://img.shields.io/badge/coverage-%s%%25-%s.svg", pct, col)
             download.file(url, "coverage/badge.svg", quiet = TRUE)
-            message("Generated badge for ", pct, "% coverage")
           '
 
       - name: Deploy badge and reports to gh-pages
