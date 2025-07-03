@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # Needed to push to gh-pages
+      contents: write
 
     steps:
       - name: Checkout repo
@@ -22,23 +22,21 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "covr", "xml2"))
-          remotes::install_deps(dependencies = TRUE)
+          Rscript -e 'install.packages(c("remotes", "covr"))'
+          Rscript -e 'remotes::install_deps(dependencies = TRUE)'
 
-      - name: Run test coverage
+      - name: Run test coverage and generate badge
         run: |
-          dir.create("coverage", showWarnings = FALSE)
-          cov <- covr::package_coverage(type = "tests")
-          covr::to_cobertura(cov, "coverage/cobertura.xml")
-          covr::report(cov, file = "coverage/coverage.html")
+          mkdir -p coverage
+          Rscript -e 'cov <- covr::package_coverage(type = "tests"); \
+                      covr::to_cobertura(cov, "coverage/cobertura.xml"); \
+                      covr::report(cov, file = "coverage/coverage.html"); \
+                      pct <- round(covr::percent_coverage(cov)); \
+                      col <- if (pct > 90) "brightgreen" else if (pct > 75) "orange" else "red"; \
+                      url <- sprintf("https://img.shields.io/badge/coverage-%s%%25-%s.svg", pct, col); \
+                      download.file(url, "coverage/badge.svg", quiet = TRUE)'
 
-          # Extract percentage
-          percent <- round(covr::percent_coverage(cov))
-          color <- if (percent > 90) "brightgreen" else if (percent > 75) "orange" else "red"
-          url <- sprintf("https://img.shields.io/badge/coverage-%s%%25-%s.svg", percent, color)
-          download.file(url, "coverage/badge.svg", quiet = TRUE)
-
-      - name: Upload to gh-pages
+      - name: Deploy badge and reports to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
