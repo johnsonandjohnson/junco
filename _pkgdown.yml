@@ -138,7 +138,7 @@ reference:
     - get_visit_levels
     
   - title: internal
-    desc: The following are additional junco functions which are outside of priority documentation scope but are creating a .rd file.
+    desc: The following are additional junco functions.
     contents:
     - check_wrap_nobreak
     - inches_to_spaces
