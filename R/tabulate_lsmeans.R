@@ -17,15 +17,15 @@
 #' @examples
 #' result <- fit_mmrm_j(
 #'   vars = list(
-#'     response = 'FEV1',
-#'     covariates = c('RACE', 'SEX'),
-#'     id = 'USUBJID',
-#'     arm = 'ARMCD',
-#'     visit = 'AVISIT'
+#'     response = "FEV1",
+#'     covariates = c("RACE", "SEX"),
+#'     id = "USUBJID",
+#'     arm = "ARMCD",
+#'     visit = "AVISIT"
 #'   ),
 #'   data = mmrm::fev_data,
-#'   cor_struct = 'unstructured',
-#'   weights_emmeans = 'equal'
+#'   cor_struct = "unstructured",
+#'   weights_emmeans = "equal"
 #' )
 #'
 #' df <- broom::tidy(result)
@@ -131,13 +131,11 @@ s_lsmeans <- function(df,
       if_not_ref(c(df$estimate_contr, df$lower_cl_contr, df$upper_cl_contr)),
       paste0("Difference in Adjusted Means (", f_conf_level(df$conf_level), ")")
     ),
-    change = switch(
-      show_relative,
+    change = switch(show_relative,
       reduction = with_label(if_not_ref(df$relative_reduc), "Relative Reduction (%)"),
       increase = with_label(if_not_ref(-df$relative_reduc), "Relative Increase (%)")
     ),
-    p_value = if_not_ref(switch(
-      alternative,
+    p_value = if_not_ref(switch(alternative,
       two.sided = with_label(df$p_value, "2-sided p-value"),
       less = with_label(df$p_value_less, "1-sided p-value (less)"),
       greater = with_label(df$p_value_greater, "1-sided p-value (greater)")

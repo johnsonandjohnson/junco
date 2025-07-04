@@ -40,32 +40,31 @@ NULL
 #' @examples
 #' nex <- 100 # Number of example rows
 #' dta <- data.frame(
-#'   'rsp' = sample(c(TRUE, FALSE), nex, TRUE),
-#'   'grp' = sample(c('A', 'B'), nex, TRUE),
-#'   'f1' = sample(c('a1', 'a2'), nex, TRUE),
-#'   'f2' = sample(c('x', 'y', 'z'), nex, TRUE),
+#'   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
+#'   "grp" = sample(c("A", "B"), nex, TRUE),
+#'   "f1" = sample(c("a1", "a2"), nex, TRUE),
+#'   "f2" = sample(c("x", "y", "z"), nex, TRUE),
 #'   stringsAsFactors = TRUE
 #' )
 #'
 #' s_relative_risk(
-#'   df = subset(dta, grp == 'A'),
-#'   .var = 'rsp',
-#'   .ref_group = subset(dta, grp == 'B'),
+#'   df = subset(dta, grp == "A"),
+#'   .var = "rsp",
+#'   .ref_group = subset(dta, grp == "B"),
 #'   .in_ref_col = FALSE,
-#'   variables = list(strata = c('f1', 'f2')),
+#'   variables = list(strata = c("f1", "f2")),
 #'   conf_level = 0.90
 #' )
 #' @export
 s_relative_risk <- function(
-  df,
-  .var,
-  .ref_group,
-  .in_ref_col,
-  variables = list(strata = NULL),
-  conf_level = 0.95,
-  method = "cmh",
-  weights_method = "cmh"
-) {
+    df,
+    .var,
+    .ref_group,
+    .in_ref_col,
+    variables = list(strata = NULL),
+    conf_level = 0.95,
+    method = "cmh",
+    weights_method = "cmh") {
   method <- match.arg(method)
   weights_method <- match.arg(weights_method)
   checkmate::assert_character(variables$strata, null.ok = FALSE)
@@ -113,22 +112,22 @@ s_relative_risk <- function(
 #' ## 'Mid' case: 4/4 respond in group A, 1/2 respond in group B.
 #' nex <- 100 # Number of example rows
 #' dta <- data.frame(
-#'   'rsp' = sample(c(TRUE, FALSE), nex, TRUE),
-#'   'grp' = sample(c('A', 'B'), nex, TRUE),
-#'   'f1' = sample(c('a1', 'a2'), nex, TRUE),
-#'   'f2' = sample(c('x', 'y', 'z'), nex, TRUE),
+#'   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
+#'   "grp" = sample(c("A", "B"), nex, TRUE),
+#'   "f1" = sample(c("a1", "a2"), nex, TRUE),
+#'   "f2" = sample(c("x", "y", "z"), nex, TRUE),
 #'   stringsAsFactors = TRUE
 #' )
 #'
 #' l <- basic_table() |>
-#'   split_cols_by(var = 'grp') |>
+#'   split_cols_by(var = "grp") |>
 #'   analyze(
-#'     vars = 'rsp',
+#'     vars = "rsp",
 #'     afun = a_relative_risk,
 #'     extra_args = list(
 #'       conf_level = 0.90,
-#'       variables = list(strata = 'f1'),
-#'       ref_path = c('grp', 'B')
+#'       variables = list(strata = "f1"),
+#'       ref_path = c("grp", "B")
 #'     )
 #'   )
 #'
@@ -136,16 +135,15 @@ s_relative_risk <- function(
 #' @export
 #' @order 2
 a_relative_risk <- function(
-  df,
-  .var,
-  ref_path,
-  .spl_context,
-  ...,
-  .stats = NULL,
-  .formats = NULL,
-  .labels = NULL,
-  .indent_mods = NULL
-) {
+    df,
+    .var,
+    ref_path,
+    .spl_context,
+    ...,
+    .stats = NULL,
+    .formats = NULL,
+    .labels = NULL,
+    .indent_mods = NULL) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 
@@ -202,11 +200,11 @@ safe_mh_test <- function(...) {
 #'
 #' set.seed(2)
 #' rsp <- sample(c(TRUE, FALSE), 100, TRUE)
-#' grp <- sample(c('Placebo', 'Treatment'), 100, TRUE)
-#' grp <- factor(grp, levels = c('Placebo', 'Treatment'))
+#' grp <- sample(c("Placebo", "Treatment"), 100, TRUE)
+#' grp <- factor(grp, levels = c("Placebo", "Treatment"))
 #' strata_data <- data.frame(
-#'   'f1' = sample(c('a', 'b'), 100, TRUE),
-#'   'f2' = sample(c('x', 'y', 'z'), 100, TRUE),
+#'   "f1" = sample(c("a", "b"), 100, TRUE),
+#'   "f2" = sample(c("x", "y", "z"), 100, TRUE),
 #'   stringsAsFactors = TRUE
 #' )
 #'

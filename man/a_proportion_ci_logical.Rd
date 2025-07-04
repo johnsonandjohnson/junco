@@ -27,10 +27,10 @@ Formatted Analysis Function For Proportion Confidence Interval for Logical
 }
 \examples{
 a_proportion_ci_logical(
-  x = DM$SEX == 'F',
+  x = DM$SEX == "F",
   .alt_df = DM,
   conf_level = 0.95,
-  formats = list(prop_ci = jjcsformat_xx('xx.xx\% - xx.xx\%')),
-  method = 'wald'
+  formats = list(prop_ci = jjcsformat_xx("xx.xx\% - xx.xx\%")),
+  method = "wald"
 )
 }

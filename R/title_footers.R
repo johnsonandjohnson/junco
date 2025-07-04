@@ -4,9 +4,11 @@
   } else if (file.exists(file.path(path, "titles.xlsx"))) {
     file.path(path, "titles.xlsx")
   } else {
-    stop("No titles.csv/xlsx file detected at path ", path,
-         "please specify parent directory, full file path, or ",
-         "pass the full titles data.frame directly.")
+    stop(
+      "No titles.csv/xlsx file detected at path ", path,
+      "please specify parent directory, full file path, or ",
+      "pass the full titles data.frame directly."
+    )
   }
 }
 
@@ -105,10 +107,12 @@ get_titles_from_file <- function(id,
 
   # ---- Return titles and footnotes.
 
-  title_foot <- list(title = title,
-                     subtitles = NULL,
-                     main_footer = main_footer,
-                     prov_footer = NULL)
+  title_foot <- list(
+    title = title,
+    subtitles = NULL,
+    main_footer = main_footer,
+    prov_footer = NULL
+  )
 
   return(title_foot)
 }

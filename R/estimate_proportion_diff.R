@@ -47,37 +47,36 @@ NULL
 #' @examples
 #'
 #' s_proportion_diff_j(
-#'   df = subset(dta, grp == 'A'),
-#'   .var = 'rsp',
-#'   .ref_group = subset(dta, grp == 'B'),
+#'   df = subset(dta, grp == "A"),
+#'   .var = "rsp",
+#'   .ref_group = subset(dta, grp == "B"),
 #'   .in_ref_col = FALSE,
 #'   conf_level = 0.90,
-#'   method = 'ha'
+#'   method = "ha"
 #' )
 #'
 #' # CMH example with strata
 #' s_proportion_diff_j(
-#'   df = subset(dta, grp == 'A'),
-#'   .var = 'rsp',
-#'   .ref_group = subset(dta, grp == 'B'),
+#'   df = subset(dta, grp == "A"),
+#'   .var = "rsp",
+#'   .ref_group = subset(dta, grp == "B"),
 #'   .in_ref_col = FALSE,
-#'   variables = list(strata = c('f1', 'f2')),
+#'   variables = list(strata = c("f1", "f2")),
 #'   conf_level = 0.90,
-#'   method = 'cmh'
+#'   method = "cmh"
 #' )
 #'
 #' @export
 #' @order 3
 s_proportion_diff_j <- function(
-  df,
-  .var,
-  .ref_group,
-  .in_ref_col,
-  variables = list(strata = NULL),
-  conf_level = 0.95,
-  method = c("waldcc", "wald", "cmh", "ha", "newcombe", "newcombecc", "strat_newcombe", "strat_newcombecc"),
-  weights_method = "cmh"
-) {
+    df,
+    .var,
+    .ref_group,
+    .in_ref_col,
+    variables = list(strata = NULL),
+    conf_level = 0.95,
+    method = c("waldcc", "wald", "cmh", "ha", "newcombe", "newcombecc", "strat_newcombe", "strat_newcombecc"),
+    weights_method = "cmh") {
   start <- s_proportion_diff(
     df = df,
     .var = .var,
@@ -113,24 +112,24 @@ s_proportion_diff_j <- function(
 #' ## 'Mid' case: 4/4 respond in group A, 1/2 respond in group B.
 #' nex <- 100 # Number of example rows
 #' dta <- data.frame(
-#'   'rsp' = sample(c(TRUE, FALSE), nex, TRUE),
-#'   'grp' = sample(c('A', 'B'), nex, TRUE),
-#'   'f1' = sample(c('a1', 'a2'), nex, TRUE),
-#'   'f2' = sample(c('x', 'y', 'z'), nex, TRUE),
+#'   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
+#'   "grp" = sample(c("A", "B"), nex, TRUE),
+#'   "f1" = sample(c("a1", "a2"), nex, TRUE),
+#'   "f2" = sample(c("x", "y", "z"), nex, TRUE),
 #'   stringsAsFactors = TRUE
 #' )
 #'
 #' l <- basic_table() |>
-#'   split_cols_by(var = 'grp') |>
+#'   split_cols_by(var = "grp") |>
 #'   analyze(
-#'     vars = 'rsp',
+#'     vars = "rsp",
 #'     afun = a_proportion_diff_j,
 #'     show_labels = "hidden",
 #'     na_str = tern::default_na_str(),
 #'     extra_args = list(
 #'       conf_level = 0.9,
-#'       method = 'ha',
-#'       ref_path = c('grp', 'B')
+#'       method = "ha",
+#'       ref_path = c("grp", "B")
 #'     )
 #'   )
 #'
@@ -138,16 +137,15 @@ s_proportion_diff_j <- function(
 #' @export
 #' @order 2
 a_proportion_diff_j <- function(
-  df,
-  .var,
-  ref_path,
-  .spl_context,
-  ...,
-  .stats = NULL,
-  .formats = NULL,
-  .labels = NULL,
-  .indent_mods = NULL
-) {
+    df,
+    .var,
+    ref_path,
+    .spl_context,
+    ...,
+    .stats = NULL,
+    .formats = NULL,
+    .labels = NULL,
+    .indent_mods = NULL) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

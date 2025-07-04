@@ -20,23 +20,20 @@ test_that("mod_pool_internal_rubin combines results correctly", {
   }
 
   mock_parametric_ci <- function(
-    point,
-    se,
-    alpha,
-    alternative,
-    qfun,
-    pfun,
-    df
-  ) {
-    q_val <- qfun(1 - alpha / 2, df = df)
-    ci <- switch(
+      point,
+      se,
+      alpha,
       alternative,
+      qfun,
+      pfun,
+      df) {
+    q_val <- qfun(1 - alpha / 2, df = df)
+    ci <- switch(alternative,
       "two.sided" = c(point - q_val * se, point + q_val * se),
       "less" = c(-Inf, point + q_val * se),
       "greater" = c(point - q_val * se, Inf)
     )
-    p_val <- switch(
-      alternative,
+    p_val <- switch(alternative,
       "two.sided" = 2 * pfun(-abs((point) / se), df = df),
       "less" = pfun(point / se, df = df),
       "greater" = pfun(-point / se, df = df)
@@ -145,11 +142,10 @@ test_that("pool function processes and returns combined results", {
   )
 
   pool_no_validate <- function(
-    results,
-    conf.level = 0.95,
-    alternative = c("two.sided", "less", "greater"),
-    type = c("percentile", "normal")
-  ) {
+      results,
+      conf.level = 0.95,
+      alternative = c("two.sided", "less", "greater"),
+      type = c("percentile", "normal")) {
     # Skip validation step rbmi::validate(results)
 
     alternative <- match.arg(alternative)

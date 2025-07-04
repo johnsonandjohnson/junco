@@ -95,24 +95,24 @@ adtte_f <- tern::tern_ex_adtte |>
     AVAL = tern::day2month(AVAL),
     is_event = CNSR == 0
   )
-df <- adtte_f |> filter(ARMCD == 'ARM A')
+df <- adtte_f |> filter(ARMCD == "ARM A")
 a_kaplan_meier(
   df,
-  .var = 'AVAL',
-  is_event = 'is_event'
+  .var = "AVAL",
+  is_event = "is_event"
 )
 
 basic_table() |>
-  split_cols_by(var = 'ARMCD') |>
+  split_cols_by(var = "ARMCD") |>
   add_colcounts() |>
   analyze(
-    vars = 'AVAL',
+    vars = "AVAL",
     afun = a_kaplan_meier,
-    var_labels = 'Kaplan-Meier estimate of time to event (months)',
-    show_labels = 'visible',
+    var_labels = "Kaplan-Meier estimate of time to event (months)",
+    show_labels = "visible",
     extra_args = list(
-      is_event = 'is_event',
-      control = control_surv_time(conf_level = 0.9, conf_type = 'log-log')
+      is_event = "is_event",
+      control = control_surv_time(conf_level = 0.9, conf_type = "log-log")
     )
   ) |>
   build_table(df = adtte_f)

@@ -107,17 +107,17 @@ Once these updates are contributed back to \code{tern}, they can later be replac
 set.seed(12)
 dta <- data.frame(
   rsp = sample(c(TRUE, FALSE), 100, TRUE),
-  grp = factor(rep(c('A', 'B'), each = 50), levels = c('A', 'B')),
-  strata = factor(sample(c('C', 'D'), 100, TRUE))
+  grp = factor(rep(c("A", "B"), each = 50), levels = c("A", "B")),
+  strata = factor(sample(c("C", "D"), 100, TRUE))
 )
 
 a_odds_ratio_j(
-  df = subset(dta, grp == 'A'),
-  .var = 'rsp',
-  ref_path = c('grp', 'B'),
+  df = subset(dta, grp == "A"),
+  .var = "rsp",
+  ref_path = c("grp", "B"),
   .spl_context = data.frame(
-    cur_col_split = I(list('grp')),
-    cur_col_split_val = I(list(c(grp = 'A'))),
+    cur_col_split = I(list("grp")),
+    cur_col_split_val = I(list(c(grp = "A"))),
     full_parent_df = I(list(dta))
   ),
   .df_row = dta
@@ -125,61 +125,61 @@ a_odds_ratio_j(
 
 
 l <- basic_table() |>
-  split_cols_by(var = 'grp') |>
+  split_cols_by(var = "grp") |>
   analyze(
-    'rsp',
+    "rsp",
     afun = a_odds_ratio_j,
-    show_labels = 'hidden',
+    show_labels = "hidden",
     extra_args = list(
-      ref_path = c('grp', 'B'),
-      .stats = c('or_ci', 'pval')
+      ref_path = c("grp", "B"),
+      .stats = c("or_ci", "pval")
     )
   )
 
 build_table(l, df = dta)
 
 l2 <- basic_table() |>
-  split_cols_by(var = 'grp') |>
+  split_cols_by(var = "grp") |>
   analyze(
-    'rsp',
+    "rsp",
     afun = a_odds_ratio_j,
-    show_labels = 'hidden',
+    show_labels = "hidden",
     extra_args = list(
-      variables = list(arm = 'grp', strata = 'strata'),
-      method = 'cmh',
-      ref_path = c('grp', 'A'),
-      .stats = c('or_ci', 'pval')
+      variables = list(arm = "grp", strata = "strata"),
+      method = "cmh",
+      ref_path = c("grp", "A"),
+      .stats = c("or_ci", "pval")
     )
   )
 
 build_table(l2, df = dta)
 # Unstratified analysis.
 s_odds_ratio_j(
-  df = subset(dta, grp == 'A'),
-  .var = 'rsp',
-  .ref_group = subset(dta, grp == 'B'),
+  df = subset(dta, grp == "A"),
+  .var = "rsp",
+  .ref_group = subset(dta, grp == "B"),
   .in_ref_col = FALSE,
   .df_row = dta
 )
 
 # Stratified analysis.
 s_odds_ratio_j(
-  df = subset(dta, grp == 'A'),
-  .var = 'rsp',
-  .ref_group = subset(dta, grp == 'B'),
+  df = subset(dta, grp == "A"),
+  .var = "rsp",
+  .ref_group = subset(dta, grp == "B"),
   .in_ref_col = FALSE,
   .df_row = dta,
-  variables = list(arm = 'grp', strata = 'strata')
+  variables = list(arm = "grp", strata = "strata")
 )
 
 # Stratified analysis with CMH.
 s_odds_ratio_j(
-  df = subset(dta, grp == 'A'),
-  method = 'cmh',
-  .var = 'rsp',
-  .ref_group = subset(dta, grp == 'B'),
+  df = subset(dta, grp == "A"),
+  method = "cmh",
+  .var = "rsp",
+  .ref_group = subset(dta, grp == "B"),
   .in_ref_col = FALSE,
   .df_row = dta,
-  variables = list(arm = 'grp', strata = c('strata'))
+  variables = list(arm = "grp", strata = c("strata"))
 )
 }

@@ -40,10 +40,9 @@ NULL
 
 # Utility function to apply statistical functions
 .apply_stat_functions <- function(
-  default_stat_fnc,
-  custom_stat_fnc_list,
-  args_list
-) {
+    default_stat_fnc,
+    custom_stat_fnc_list,
+    args_list) {
   # Default checks
   checkmate::assert_function(default_stat_fnc)
   checkmate::assert_list(
@@ -92,12 +91,11 @@ NULL
 #'   group (analyze function).
 #' @keywords internal
 tern_get_stats <- function(
-  method_groups = "analyze_vars_numeric",
-  stats_in = NULL,
-  custom_stats_in = NULL,
-  add_pval = FALSE,
-  tern_defaults = tern_default_stats
-) {
+    method_groups = "analyze_vars_numeric",
+    stats_in = NULL,
+    custom_stats_in = NULL,
+    add_pval = FALSE,
+    tern_defaults = tern_default_stats) {
   checkmate::assert_character(method_groups)
   checkmate::assert_character(stats_in, null.ok = TRUE)
   checkmate::assert_character(custom_stats_in, null.ok = TRUE)
@@ -193,11 +191,10 @@ tern_get_stats <- function(
 #' @describeIn tern_default_stats_formats_labels Get formats corresponding to a list of statistics.
 #' @keywords internal
 tern_get_formats_from_stats <- function(
-  stats,
-  formats_in = NULL,
-  levels_per_stats = NULL,
-  tern_defaults = tern_default_formats
-) {
+    stats,
+    formats_in = NULL,
+    levels_per_stats = NULL,
+    tern_defaults = tern_default_formats) {
   checkmate::assert_character(stats, min.len = 1)
   # It may be a list if there is a function in the formats
   if (checkmate::test_list(formats_in, null.ok = TRUE)) {
@@ -235,12 +232,11 @@ tern_get_formats_from_stats <- function(
 #' @describeIn tern_default_stats_formats_labels Get labels corresponding to a list of statistics.
 #' @keywords internal
 tern_get_labels_from_stats <- function(
-  stats,
-  labels_in = NULL,
-  levels_per_stats = NULL,
-  label_attr_from_stats = NULL,
-  tern_defaults = tern_default_labels
-) {
+    stats,
+    labels_in = NULL,
+    levels_per_stats = NULL,
+    label_attr_from_stats = NULL,
+    tern_defaults = tern_default_labels) {
   checkmate::assert_character(stats, min.len = 1)
 
   # Modification:

@@ -88,44 +88,46 @@ adtte_f <- tern::tern_ex_adtte |>
   filter(PARAMCD == "OS") |>
   mutate(is_event = CNSR == 0)
 
-df <- adtte_f |> filter(ARMCD == 'ARM A')
-df_ref_group <- adtte_f |> filter(ARMCD == 'ARM B')
+df <- adtte_f |> filter(ARMCD == "ARM A")
+df_ref_group <- adtte_f |> filter(ARMCD == "ARM B")
 
 basic_table() |>
-  split_cols_by(var = 'ARMCD', ref_group = 'ARM A') |>
+  split_cols_by(var = "ARMCD", ref_group = "ARM A") |>
   add_colcounts() |>
   analyze("AVAL",
     afun = s_coxph_hr,
-    extra_args = list(is_event = 'is_event'),
-    var_labels = 'Unstratified Analysis',
-    show_labels = 'visible'
+    extra_args = list(is_event = "is_event"),
+    var_labels = "Unstratified Analysis",
+    show_labels = "visible"
   ) |>
   build_table(df = adtte_f)
 
-  basic_table() |>
-  split_cols_by(var = 'ARMCD', ref_group = 'ARM A') |>
+basic_table() |>
+  split_cols_by(var = "ARMCD", ref_group = "ARM A") |>
   add_colcounts() |>
   analyze("AVAL",
-          afun = s_coxph_hr,
-          extra_args = list(is_event = 'is_event',
-                            strata = 'SEX',
-                            control = tern::control_coxph(pval_method = 'wald')),
-          var_labels = 'Unstratified Analysis',
-          show_labels = 'visible'
+    afun = s_coxph_hr,
+    extra_args = list(
+      is_event = "is_event",
+      strata = "SEX",
+      control = tern::control_coxph(pval_method = "wald")
+    ),
+    var_labels = "Unstratified Analysis",
+    show_labels = "visible"
   ) |>
   build_table(df = adtte_f)
 adtte_f <- tern::tern_ex_adtte |>
   dplyr::filter(PARAMCD == "OS") |>
   dplyr::mutate(is_event = CNSR == 0)
-df <- adtte_f |> dplyr::filter(ARMCD == 'ARM A')
-df_ref <- adtte_f |> dplyr::filter(ARMCD == 'ARM B')
+df <- adtte_f |> dplyr::filter(ARMCD == "ARM A")
+df_ref <- adtte_f |> dplyr::filter(ARMCD == "ARM B")
 
 s_coxph_hr(
   df = df,
   .ref_group = df_ref,
   .in_ref_col = FALSE,
-  .var = 'AVAL',
-  is_event = 'is_event',
+  .var = "AVAL",
+  is_event = "is_event",
   strata = NULL
 )
 }

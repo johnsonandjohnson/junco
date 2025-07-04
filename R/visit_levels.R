@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' get_visit_levels(
-#'   visit_cat = c('Week 1', 'Week 11', 'Week 2'),
+#'   visit_cat = c("Week 1", "Week 11", "Week 2"),
 #'   visit_n = c(1, 5, 2)
 #' )
 get_visit_levels <- function(visit_cat, visit_n) {

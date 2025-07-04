@@ -87,15 +87,15 @@ are:
 \examples{
 result <- fit_mmrm_j(
   vars = list(
-    response = 'FEV1',
-    covariates = c('RACE', 'SEX'),
-    id = 'USUBJID',
-    arm = 'ARMCD',
-    visit = 'AVISIT'
+    response = "FEV1",
+    covariates = c("RACE", "SEX"),
+    id = "USUBJID",
+    arm = "ARMCD",
+    visit = "AVISIT"
   ),
   data = mmrm::fev_data,
-  cor_struct = 'unstructured',
-  weights_emmeans = 'equal'
+  cor_struct = "unstructured",
+  weights_emmeans = "equal"
 )
 
 df <- broom::tidy(result)

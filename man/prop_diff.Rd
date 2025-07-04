@@ -102,47 +102,47 @@ and \code{'strat_newcombecc'} are not permitted.
 ## 'Mid' case: 4/4 respond in group A, 1/2 respond in group B.
 nex <- 100 # Number of example rows
 dta <- data.frame(
-  'rsp' = sample(c(TRUE, FALSE), nex, TRUE),
-  'grp' = sample(c('A', 'B'), nex, TRUE),
-  'f1' = sample(c('a1', 'a2'), nex, TRUE),
-  'f2' = sample(c('x', 'y', 'z'), nex, TRUE),
+  "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
+  "grp" = sample(c("A", "B"), nex, TRUE),
+  "f1" = sample(c("a1", "a2"), nex, TRUE),
+  "f2" = sample(c("x", "y", "z"), nex, TRUE),
   stringsAsFactors = TRUE
 )
 
 l <- basic_table() |>
-  split_cols_by(var = 'grp') |>
+  split_cols_by(var = "grp") |>
   analyze(
-    vars = 'rsp',
+    vars = "rsp",
     afun = a_proportion_diff_j,
     show_labels = "hidden",
     na_str = tern::default_na_str(),
     extra_args = list(
       conf_level = 0.9,
-      method = 'ha',
-      ref_path = c('grp', 'B')
+      method = "ha",
+      ref_path = c("grp", "B")
     )
   )
 
 build_table(l, df = dta)
 
 s_proportion_diff_j(
-  df = subset(dta, grp == 'A'),
-  .var = 'rsp',
-  .ref_group = subset(dta, grp == 'B'),
+  df = subset(dta, grp == "A"),
+  .var = "rsp",
+  .ref_group = subset(dta, grp == "B"),
   .in_ref_col = FALSE,
   conf_level = 0.90,
-  method = 'ha'
+  method = "ha"
 )
 
 # CMH example with strata
 s_proportion_diff_j(
-  df = subset(dta, grp == 'A'),
-  .var = 'rsp',
-  .ref_group = subset(dta, grp == 'B'),
+  df = subset(dta, grp == "A"),
+  .var = "rsp",
+  .ref_group = subset(dta, grp == "B"),
   .in_ref_col = FALSE,
-  variables = list(strata = c('f1', 'f2')),
+  variables = list(strata = c("f1", "f2")),
   conf_level = 0.90,
-  method = 'cmh'
+  method = "cmh"
 )
 
 }

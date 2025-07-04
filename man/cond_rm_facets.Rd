@@ -80,45 +80,45 @@ are removed.
 ## faceting, we had a split 'ARM' (splitting the ARM var)
 ## with a value that matches 'Placeb' as a regex
 rm_a_from_placebo <- cond_rm_facets(
-  facets = 'A',
+  facets = "A",
   ancestor_pos = NA,
-  value_regex = 'Placeb',
-  split = 'ARM'
+  value_regex = "Placeb",
+  split = "ARM"
 )
 mysplit <- make_split_fun(post = list(rm_a_from_placebo))
 
 lyt <- basic_table() |>
-  split_cols_by('ARM') |>
-  split_cols_by('STRATA1', split_fun = mysplit) |>
-  analyze('AGE', mean, format = 'xx.x')
+  split_cols_by("ARM") |>
+  split_cols_by("STRATA1", split_fun = mysplit) |>
+  analyze("AGE", mean, format = "xx.x")
 build_table(lyt, ex_adsl)
 
 rm_bc_from_combo <- cond_rm_facets(
-  facets = c('B', 'C'),
+  facets = c("B", "C"),
   ancestor_pos = -1,
-  value_regex = 'Combi'
+  value_regex = "Combi"
 )
 mysplit2 <- make_split_fun(post = list(rm_bc_from_combo))
 
 lyt2 <- basic_table() |>
-  split_cols_by('ARM') |>
-  split_cols_by('STRATA1', split_fun = mysplit2) |>
-  analyze('AGE', mean, format = 'xx.x')
+  split_cols_by("ARM") |>
+  split_cols_by("STRATA1", split_fun = mysplit2) |>
+  analyze("AGE", mean, format = "xx.x")
 tbl2 <- build_table(lyt2, ex_adsl)
 tbl2
 #
 rm_bc_from_combo2 <- cond_rm_facets(
-  facets_regex = '^A$',
+  facets_regex = "^A$",
   ancestor_pos = -1,
-  value_regex = 'Combi',
+  value_regex = "Combi",
   keep_matches = TRUE
 )
 mysplit3 <- make_split_fun(post = list(rm_bc_from_combo2))
 #
 lyt3 <- basic_table() |>
-  split_cols_by('ARM') |>
-  split_cols_by('STRATA1', split_fun = mysplit3) |>
-  analyze('AGE', mean, format = 'xx.x')
+  split_cols_by("ARM") |>
+  split_cols_by("STRATA1", split_fun = mysplit3) |>
+  analyze("AGE", mean, format = "xx.x")
 tbl3 <- build_table(lyt3, ex_adsl)
 ## column info carries around the split objects which
 ## carry around their split_fun, which are different so

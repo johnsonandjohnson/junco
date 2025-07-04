@@ -3,11 +3,13 @@ library(rlistings)
 options(tidytlg.add_datetime = FALSE)
 mk_part_names <- function(nfiles, fname) {
   if (nfiles > 1) {
-    vapply(seq_len(nfiles), FUN.VALUE = "",
-           function(i) {
-             fmti <- paste0("%0", ceiling(log(nfiles, base = 10)), "d")
-             paste0(fname, "part", sprintf(fmti, i), "of", nfiles)
-           })
+    vapply(seq_len(nfiles),
+      FUN.VALUE = "",
+      function(i) {
+        fmti <- paste0("%0", ceiling(log(nfiles, base = 10)), "d")
+        paste0(fname, "part", sprintf(fmti, i), "of", nfiles)
+      }
+    )
   } else {
     fname
   }
@@ -21,8 +23,9 @@ rtf_out_wrapper <- function(tt, filnm, ..., part = 1, combined = FALSE) {
   } else {
     fpaths <- mk_part_names(nf, fullfl)
     res <- paste0(fpaths, ".rtf")
-    if (!is.na(part))
+    if (!is.na(part)) {
       res <- res[part]
+    }
     res
   }
 }
@@ -74,10 +77,12 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   ##  when calling tt_to_tlgrtf directly....
   expect_error(tt_to_tbldf(badtbl))
 
-  empty_lsting <-  as_listing(ex_adsl[numeric(), 1:10])
+  empty_lsting <- as_listing(ex_adsl[numeric(), 1:10])
   expect_snapshot_file(rtf_out_wrapper(empty_lsting, "testemptylisting"), cran = TRUE)
-  expect_error(tt_to_tlgrtf("hi"),
-               "unable to determine tlg type")
+  expect_error(
+    tt_to_tlgrtf("hi"),
+    "unable to determine tlg type"
+  )
 
   lyt_pgby <- basic_table() |>
     split_cols_by("ARM") |>

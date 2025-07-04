@@ -156,8 +156,7 @@ s_rbmi_lsmeans <- function(df, .in_ref_col, show_relative = c("reduction", "incr
       if_not_ref(c(df$lower_cl_contr, df$upper_cl_contr)),
       f_conf_level(df$conf_level)
     ),
-    change = switch(
-      show_relative,
+    change = switch(show_relative,
       reduction = with_label(if_not_ref(df$relative_reduc), "Relative Reduction (%)"),
       increase = with_label(if_not_ref(-df$relative_reduc), "Relative Increase (%)")
     ),
@@ -171,15 +170,14 @@ s_rbmi_lsmeans <- function(df, .in_ref_col, show_relative = c("reduction", "incr
 #' @inheritParams proposal_argument_convention
 #' @export
 a_rbmi_lsmeans <- function(
-  df,
-  ref_path,
-  .spl_context,
-  ...,
-  .stats = NULL,
-  .formats = NULL,
-  .labels = NULL,
-  .indent_mods = NULL
-) {
+    df,
+    ref_path,
+    .spl_context,
+    ...,
+    .stats = NULL,
+    .formats = NULL,
+    .labels = NULL,
+    .indent_mods = NULL) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

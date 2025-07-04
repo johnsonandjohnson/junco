@@ -38,23 +38,22 @@
 #'
 #' fit <- fit_ancova(
 #'   vars = list(
-#'     response = 'FEV1',
-#'     covariates = c('RACE', 'SEX'),
-#'     arm = 'ARMCD',
-#'     id = 'USUBJID',
-#'     visit = 'AVISIT'
+#'     response = "FEV1",
+#'     covariates = c("RACE", "SEX"),
+#'     arm = "ARMCD",
+#'     id = "USUBJID",
+#'     visit = "AVISIT"
 #'   ),
 #'   data = fev_data,
 #'   conf_level = 0.9,
-#'   weights_emmeans = 'equal'
+#'   weights_emmeans = "equal"
 #' )
 #'
 fit_ancova <- function(
-  vars = list(response = "AVAL", covariates = c(), arm = "ARM", visit = "AVISIT", id = "USUBJID"),
-  data,
-  conf_level = 0.95,
-  weights_emmeans = "proportional"
-) {
+    vars = list(response = "AVAL", covariates = c(), arm = "ARM", visit = "AVISIT", id = "USUBJID"),
+    data,
+    conf_level = 0.95,
+    weights_emmeans = "proportional") {
   labels <- h_labels(vars, data)
 
   arm_levels <- levels(data[[vars$arm]])

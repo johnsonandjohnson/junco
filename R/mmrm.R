@@ -79,25 +79,24 @@ h_labels <- function(vars, data) {
 #'
 #' @examples
 #' vars <- list(
-#'   response = 'AVAL', covariates = c('RACE', 'SEX'),
-#'   id = 'USUBJID', arm = 'ARMCD', visit = 'AVISIT'
+#'   response = "AVAL", covariates = c("RACE", "SEX"),
+#'   id = "USUBJID", arm = "ARMCD", visit = "AVISIT"
 #' )
-#' build_formula(vars, 'auto-regressive')
+#' build_formula(vars, "auto-regressive")
 #' build_formula(vars)
 build_formula <- function(
-  vars,
-  cor_struct = c(
-    "unstructured",
-    "toeplitz",
-    "heterogeneous toeplitz",
-    "ante-dependence",
-    "heterogeneous ante-dependence",
-    "auto-regressive",
-    "heterogeneous auto-regressive",
-    "compound symmetry",
-    "heterogeneous compound symmetry"
-  )
-) {
+    vars,
+    cor_struct = c(
+      "unstructured",
+      "toeplitz",
+      "heterogeneous toeplitz",
+      "ante-dependence",
+      "heterogeneous ante-dependence",
+      "auto-regressive",
+      "heterogeneous auto-regressive",
+      "compound symmetry",
+      "heterogeneous compound symmetry"
+    )) {
   checkmate::assert_list(vars)
   cor_struct <- match.arg(cor_struct)
   covariates_part <- paste(vars$covariates, collapse = " + ")
@@ -106,8 +105,7 @@ build_formula <- function(
   } else {
     paste0(vars$arm, "*", vars$visit)
   }
-  random_effects_fun <- switch(
-    cor_struct,
+  random_effects_fun <- switch(cor_struct,
     unstructured = "us",
     toeplitz = "toep",
     `heterogeneous toeplitz` = "toeph",
@@ -252,28 +250,27 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list()) 
 #' @examples
 #' mmrm_results <- fit_mmrm_j(
 #'   vars = list(
-#'     response = 'FEV1',
-#'     covariates = c('RACE', 'SEX'),
-#'     id = 'USUBJID',
-#'     arm = 'ARMCD',
-#'     visit = 'AVISIT'
+#'     response = "FEV1",
+#'     covariates = c("RACE", "SEX"),
+#'     id = "USUBJID",
+#'     arm = "ARMCD",
+#'     visit = "AVISIT"
 #'   ),
 #'   data = mmrm::fev_data,
-#'   cor_struct = 'unstructured',
-#'   weights_emmeans = 'equal',
+#'   cor_struct = "unstructured",
+#'   weights_emmeans = "equal",
 #'   averages_emmeans = list(
-#'     'VIS1+2' = c('VIS1', 'VIS2')
+#'     "VIS1+2" = c("VIS1", "VIS2")
 #'   )
 #' )
 fit_mmrm_j <- function(
-  vars = list(response = "AVAL", covariates = c(), id = "USUBJID", arm = "ARM", visit = "AVISIT"),
-  data,
-  conf_level = 0.95,
-  cor_struct = "unstructured",
-  weights_emmeans = "counterfactual",
-  averages_emmeans = list(),
-  ...
-) {
+    vars = list(response = "AVAL", covariates = c(), id = "USUBJID", arm = "ARM", visit = "AVISIT"),
+    data,
+    conf_level = 0.95,
+    cor_struct = "unstructured",
+    weights_emmeans = "counterfactual",
+    averages_emmeans = list(),
+    ...) {
   labels <- h_labels(vars, data)
   formula <- build_formula(vars, cor_struct)
   weights <- if (!is.null(vars$weights)) data[[vars$weights]] else NULL
