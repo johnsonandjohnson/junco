@@ -7,10 +7,10 @@
 h_get_covariate_parts(covariates)
 }
 \arguments{
-\item{covariates}{(`character`)\cr specification in the usual way, see examples.}
+\item{covariates}{(\code{character})\cr specification in the usual way, see examples.}
 }
 \value{
-Character vector of the covariates involved in `covariates` specification.
+Character vector of the covariates involved in \code{covariates} specification.
 }
 \description{
 Extraction of Covariate Parts from Character Vector

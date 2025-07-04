@@ -4,20 +4,23 @@
   } else if (file.exists(file.path(path, "titles.xlsx"))) {
     file.path(path, "titles.xlsx")
   } else {
-    stop("No titles.csv/xlsx file detected at path ", path,
-         "please specify parent directory, full file path, or ",
-         "pass the full titles data.frame directly.")
+    stop(
+      "No titles.csv/xlsx file detected at path ", path,
+      "please specify parent directory, full file path, or ",
+      "pass the full titles data.frame directly."
+    )
   }
 }
 
 #' @importFrom utils read.csv
 .read_titles_file <- function(file) {
   if (grepl("csv$", file, ignore.case = TRUE)) {
-    df <- read.csv(file)
+    df <- read.csv(file, check.names = FALSE)
   } else if (grepl("xlsx$", file, ignore.case = TRUE)) {
-    if (!requireNamespace("readxl"))
+    if (!requireNamespace("readxl")) {
       stop("readxl package is required for xslx file support, please install it.")
-    df <- readxl::read_excel(df, sheet = 1, range = readxl::cell_cols("A:C"))
+    }
+    df <- readxl::read_excel(path = file, sheet = 1, range = readxl::cell_cols("A:C"))
   } else {
     stop("Unrecognized titles file type. file: ", file)
   }
@@ -64,6 +67,7 @@ get_titles_from_file <- function(id,
                                  file = .find_titles_file(input_path),
                                  input_path = ".",
                                  title_df = .read_titles_file(file)) {
+  ## "TABLE ID" gets munged to "TABLE.ID"
   title_df <- title_df[title_df[["TABLE ID"]] == id, , drop = FALSE]
 
   message(paste0("Static titles file/data.frame used: "))
@@ -86,6 +90,8 @@ get_titles_from_file <- function(id,
 
     if (length(title) != 1) {
       msg <- "Warning: Title file should contain exactly one title record per Table ID"
+    } else {
+      message(file)
     }
 
     main_footer <- title_df[grep("^FOOT", title_df$IDENTIFIER), ]$TEXT
@@ -101,10 +107,12 @@ get_titles_from_file <- function(id,
 
   # ---- Return titles and footnotes.
 
-  title_foot <- list(title = title,
-                     subtitles = NULL,
-                     main_footer = main_footer,
-                     prov_footer = NULL)
+  title_foot <- list(
+    title = title,
+    subtitles = NULL,
+    main_footer = main_footer,
+    prov_footer = NULL
+  )
 
   return(title_foot)
 }

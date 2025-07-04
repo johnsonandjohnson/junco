@@ -7,30 +7,30 @@
 a_proportion_ci_logical(x, .alt_df, conf_level, method, formats)
 }
 \arguments{
-\item{x}{(`logical`)\cr including binary response values.}
+\item{x}{(\code{logical})\cr including binary response values.}
 
-\item{.alt_df}{(`data.frame`)\cr alternative data frame used for denominator calculation.}
+\item{.alt_df}{(\code{data.frame})\cr alternative data frame used for denominator calculation.}
 
-\item{conf_level}{(`numeric`)\cr confidence level for the confidence interval.}
+\item{conf_level}{(\code{numeric})\cr confidence level for the confidence interval.}
 
-\item{method}{(`string`)\cr please see [tern::s_proportion()] for possible
+\item{method}{(\code{string})\cr please see \code{\link[tern:estimate_proportion]{tern::s_proportion()}} for possible
 methods.}
 
-\item{formats}{(`list`)\cr including element `prop_ci` with the
+\item{formats}{(\code{list})\cr including element \code{prop_ci} with the
 required format. Note that the value is in percent already.}
 }
 \value{
-The [rtables::rcell()] result.
+The \code{\link[rtables:rcell]{rtables::rcell()}} result.
 }
 \description{
 Formatted Analysis Function For Proportion Confidence Interval for Logical
 }
 \examples{
 a_proportion_ci_logical(
-  x = DM$SEX == 'F',
+  x = DM$SEX == "F",
   .alt_df = DM,
   conf_level = 0.95,
-  formats = list(prop_ci = jjcsformat_xx('xx.xx\% - xx.xx\%')),
-  method = 'wald'
+  formats = list(prop_ci = jjcsformat_xx("xx.xx\% - xx.xx\%")),
+  method = "wald"
 )
 }

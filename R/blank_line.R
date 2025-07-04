@@ -27,17 +27,17 @@ ac_blank_line <- function(df, labelstr = "") {
 #' ADSL <- ex_adsl
 #'
 #' lyt <- basic_table() |>
-#'   split_cols_by('ARM') |>
-#'   split_rows_by('STRATA1') |>
-#'   analyze(vars = 'AGE', afun = function(x) {
+#'   split_cols_by("ARM") |>
+#'   split_rows_by("STRATA1") |>
+#'   analyze(vars = "AGE", afun = function(x) {
 #'     in_rows(
-#'       'Mean (sd)' = rcell(c(mean(x), sd(x)), format = 'xx.xx (xx.xx)')
+#'       "Mean (sd)" = rcell(c(mean(x), sd(x)), format = "xx.xx (xx.xx)")
 #'     )
 #'   }) |>
 #'   insert_blank_line() |>
-#'   analyze(vars = 'AGE', table_names = 'AGE_Range', afun = function(x) {
+#'   analyze(vars = "AGE", table_names = "AGE_Range", afun = function(x) {
 #'     in_rows(
-#'       'Range' = rcell(range(x), format = 'xx.xx - xx.xx')
+#'       "Range" = rcell(range(x), format = "xx.xx - xx.xx")
 #'     )
 #'   })
 #' build_table(lyt, ADSL)

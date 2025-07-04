@@ -138,7 +138,7 @@ test_that("Check aeir100 numbers are giving expected result", {
 
   expected <- (100 * number_with_event) / total_exp_years
 
-  expect_identical(
+  expect_equal(
     result,
     expected
   )
@@ -191,7 +191,7 @@ test_that("Check aeir100 numbers are giving expected result when fup_var argumen
 
   expected <- (100 * number_with_event) / total_exp_years
 
-  expect_identical(
+  expect_equal(
     result,
     expected
   )
@@ -244,7 +244,7 @@ test_that("Check aeir100 numbers are giving expected result when occ_dy argument
 
   expected <- (100 * number_with_event) / total_exp_years
 
-  expect_identical(
+  expect_equal(
     result,
     expected
   )

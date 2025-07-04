@@ -9,13 +9,13 @@ check_wrap_nobreak(tt, colwidths, fontspec)
 \arguments{
 \item{tt}{TableTree}
 
-\item{colwidths}{numeric. Column widths (in numbers of spaces under `fontspec`)}
+\item{colwidths}{numeric. Column widths (in numbers of spaces under \code{fontspec})}
 
 \item{fontspec}{font_spec.}
 }
 \value{
-`TRUE` if the wrap is able to be done without breaking words,
-`FALSE` if wordbreaking is required to apply `colwidths`
+\code{TRUE} if the wrap is able to be done without breaking words,
+\code{FALSE} if wordbreaking is required to apply \code{colwidths}
 }
 \description{
 Check a set of column widths for word-breaking wrap behavior

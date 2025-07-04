@@ -20,27 +20,27 @@ summarize_lsmeans_wide(
 )
 }
 \arguments{
-\item{lyt}{empty layout, i.e. result of [rtables::basic_table()]}
+\item{lyt}{empty layout, i.e. result of \code{\link[rtables:basic_table]{rtables::basic_table()}}}
 
-\item{variables}{(named `list` of `string`)\cr list of additional analysis variables.}
+\item{variables}{(named \code{list} of \code{string})\cr list of additional analysis variables.}
 
-\item{ref_level}{(`string`)\cr the reference level of the treatment arm variable.}
+\item{ref_level}{(\code{string})\cr the reference level of the treatment arm variable.}
 
-\item{treatment_levels}{(`character`)\cr the non-reference levels of the treatment arm
+\item{treatment_levels}{(\code{character})\cr the non-reference levels of the treatment arm
 variable.}
 
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
-\item{pval_sided}{(`string`)\cr either '2' for two-sided or '1' for 1-sided with greater than
+\item{pval_sided}{(\code{string})\cr either '2' for two-sided or '1' for 1-sided with greater than
 control or '-1' for 1-sided with smaller than control alternative hypothesis.}
 
-\item{include_variance}{(`flag`)\cr whether to include the variance statistics
+\item{include_variance}{(\code{flag})\cr whether to include the variance statistics
 (M.S. error and d.f.).}
 
-\item{include_pval}{(`flag`)\cr whether to include the p-value column.}
+\item{include_pval}{(\code{flag})\cr whether to include the p-value column.}
 
-\item{formats}{(named `character` or `list`)\cr formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.}
+\item{formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
+information on the \code{'auto'} setting.}
 }
 \value{
 Modified layout.
@@ -50,17 +50,17 @@ Layout Generating Function for LS Means Wide Table Layouts
 }
 \examples{
 variables <- list(
-  response = 'FEV1',
-  covariates = c('RACE', 'SEX'),
-  arm = 'ARMCD',
-  id = 'USUBJID',
-  visit = 'AVISIT'
+  response = "FEV1",
+  covariates = c("RACE", "SEX"),
+  arm = "ARMCD",
+  id = "USUBJID",
+  visit = "AVISIT"
 )
 fit <- fit_ancova(
   vars = variables,
   data = mmrm::fev_data,
   conf_level = 0.9,
-  weights_emmeans = 'equal'
+  weights_emmeans = "equal"
 )
 anl <- broom::tidy(fit)
 basic_table() |>
@@ -68,7 +68,7 @@ basic_table() |>
     variables = variables,
     ref_level = fit$ref_level,
     treatment_levels = fit$treatment_levels,
-    pval_sided = '2',
+    pval_sided = "2",
     conf_level = 0.8
   ) |>
   build_table(df = anl)

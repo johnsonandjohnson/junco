@@ -13,11 +13,11 @@ set_titles(obj, titles)
 }
 \value{
 The table tree object specified in the obj argument, with titles
-          and footnotes appended.
+and footnotes appended.
 }
 \description{
 Retrieves titles and footnotes from the list specified in the titles
-             argument and appends them to the table tree specified in the obj argument.
+argument and appends them to the table tree specified in the obj argument.
 }
 \examples{
 # set_titles(obj, get_titles_csv(tblid))

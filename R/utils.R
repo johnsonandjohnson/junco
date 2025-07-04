@@ -26,5 +26,27 @@ leftside <- function(x) {
 #' @export
 #' @keywords internal
 string_to_title <- function(x) {
-  gsub("(^|\\s)(\\w)", "\\1\\U\\2", x, perl = TRUE)
+  checkmate::assert_character(x, null.ok = TRUE)
+  x_lower <- tolower(x)
+  gsub("(^|\\s)(\\w)", "\\1\\U\\2", x_lower, perl = TRUE)
+}
+
+
+#' Check If `.alt_df_full` Is `NULL`
+#'
+#' For example, in `a_patyrs_j()`, if `source` is `"alt_df"`, we need to
+#' check if `.alt_df_full` is `NULL`.
+#'
+#' @noRd
+check_alt_df_full <- function(argument, values, .alt_df_full) {
+  if (!argument %in% values || !is.null(.alt_df_full)) {
+    return(invisible())
+  }
+
+  name <- deparse(substitute(argument))
+
+  stop(sprintf(
+    '`.alt_df_full` cannot be `NULL` when `%s` is `"%s"`',
+    name, argument
+  ))
 }

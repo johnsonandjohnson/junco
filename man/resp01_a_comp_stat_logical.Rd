@@ -17,36 +17,36 @@ resp01_a_comp_stat_logical(
 )
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
-\item{include}{(`flag`)\cr whether to include the results for this variable.}
+\item{include}{(\code{flag})\cr whether to include the results for this variable.}
 
-\item{arm}{(`string`)\cr column name in the data frame that identifies the treatment arms.}
+\item{arm}{(\code{string})\cr column name in the data frame that identifies the treatment arms.}
 
-\item{strata}{(`character` or `NULL`)\cr variable names indicating stratification factors.}
+\item{strata}{(\code{character} or \code{NULL})\cr variable names indicating stratification factors.}
 
-\item{formats}{(`list`)\cr containing formats for `comp_stat_ci` and `pval`.}
+\item{formats}{(\code{list})\cr containing formats for \code{comp_stat_ci} and \code{pval}.}
 
-\item{methods}{(`list`)\cr containing methods for comparative statistics. The element `comp_stat_ci` can be
+\item{methods}{(\code{list})\cr containing methods for comparative statistics. The element \code{comp_stat_ci} can be
 'rr' (relative risk), 'or_cmh' (odds ratio with CMH estimation and p-value) or 'or_logistic' (odds ratio
-estimated by conditional or standard logistic regression). The element `pval` can be 'fisher' (Fisher's
+estimated by conditional or standard logistic regression). The element \code{pval} can be 'fisher' (Fisher's
 exact test) or 'chisq' (chi-square test), only used when using unstratified analyses with 'or_logistic'.}
 
-\item{stat}{(`string`)\cr the statistic to return, either `comp_stat_ci`
-or `pval`.}
+\item{stat}{(\code{string})\cr the statistic to return, either \code{comp_stat_ci}
+or \code{pval}.}
 }
 \value{
-The formatted result as [rtables::rcell()].
+The formatted result as \code{\link[rtables:rcell]{rtables::rcell()}}.
 }
 \description{
-This function applies to a `logical` column called `.var` from `df`.
+This function applies to a \code{logical} column called \code{.var} from \code{df}.
 The response proportion is compared between the treatment arms identified
-by column `arm`.
+by column \code{arm}.
 }
 \examples{
 dm <- droplevels(subset(formatters::DM, SEX \%in\% c("F", "M")))
@@ -68,5 +68,5 @@ resp01_a_comp_stat_logical(
 )
 }
 \seealso{
-[resp01_a_comp_stat_factor()] for the `factor` equivalent.
+\code{\link[=resp01_a_comp_stat_factor]{resp01_a_comp_stat_factor()}} for the \code{factor} equivalent.
 }

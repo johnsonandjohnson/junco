@@ -5,7 +5,7 @@
 #' Utility functions to get valid statistic methods for different method groups
 #' (`.stats`) and their associated formats (`.formats`), labels (`.labels`), and indent modifiers
 #' (`.indent_mods`). This utility is used across `junco`, but some of its working principles can be
-#' seen in [analyze_vars()]. See notes to understand why this is experimental.
+#' seen in [tern::analyze_vars()]. See notes to understand why this is experimental.
 #'
 #' @param stats (`character`)\cr statistical methods to return defaults for.
 #' @param levels_per_stats (named `list` of `character` or `NULL`)\cr named list where the name of each element is a
@@ -16,7 +16,7 @@
 #'   just `statistic` for statistics calculated for a single row). Defaults to `NULL`.
 #'
 #' @details
-#' Current choices for `type` are `counts` and `numeric` for [analyze_vars()] and affect `junco_get_stats()`.
+#' Current choices for `type` are `counts` and `numeric` for [tern::analyze_vars()] and affect `junco_get_stats()`.
 #'
 #' @note
 #' These defaults are experimental because we use the names of functions to retrieve the default
@@ -46,11 +46,10 @@ NULL
 #'
 #' @export
 junco_get_stats <- function(
-  method_groups = "analyze_vars_numeric",
-  stats_in = NULL,
-  custom_stats_in = NULL,
-  add_pval = FALSE
-) {
+    method_groups = "analyze_vars_numeric",
+    stats_in = NULL,
+    custom_stats_in = NULL,
+    add_pval = FALSE) {
   tern_get_stats(
     method_groups = method_groups,
     stats_in = stats_in,
@@ -97,11 +96,10 @@ junco_get_formats_from_stats <- function(stats, formats_in = NULL, levels_per_st
 #'
 #' @export
 junco_get_labels_from_stats <- function(
-  stats,
-  labels_in = NULL,
-  levels_per_stats = NULL,
-  label_attr_from_stats = NULL
-) {
+    stats,
+    labels_in = NULL,
+    levels_per_stats = NULL,
+    label_attr_from_stats = NULL) {
   tern_get_labels_from_stats(
     stats = stats,
     labels_in = labels_in,

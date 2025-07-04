@@ -20,7 +20,7 @@ The first two elements are treated as main variables with full statistics, and t
 is treated as the base variable. By default, the function expects these specific variable names in your data,
 but you can customize them to match your dataset's column names.}
 
-\item{stats}{A list with two components, `main` and `base`, that define the statistics to be calculated
+\item{stats}{A list with two components, \code{main} and \code{base}, that define the statistics to be calculated
 for the main variables (default: AVAL, CHG) and the base variable (default: BASE).
 Default for main variables: c(N = "N", mean = "Mean", SD = "SD", SE = "SE", Med = "Med", Min = "Min", Max = "Max")
 Default for base variable: c(mean = "Mean")

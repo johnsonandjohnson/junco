@@ -14,25 +14,25 @@ h_summarize_mmrm(
 )
 }
 \arguments{
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
-\item{df_parent}{(`data.frame`)\cr data set containing all analysis variables
+\item{df_parent}{(\code{data.frame})\cr data set containing all analysis variables
 from all visits and arms.}
 
-\item{variables}{(named `list` of `string`)\cr list of additional analysis variables.}
+\item{variables}{(named \code{list} of \code{string})\cr list of additional analysis variables.}
 
-\item{ref_arm_level}{(`string`)\cr the reference arm which should be compared
+\item{ref_arm_level}{(\code{string})\cr the reference arm which should be compared
 against.}
 
-\item{ref_visit_levels}{(`character`)\cr the reference visits which should not
+\item{ref_visit_levels}{(\code{character})\cr the reference visits which should not
 be included in the model fit.}
 
-\item{...}{additional options passed to [fit_mmrm_j()].}
+\item{...}{additional options passed to \code{\link[=fit_mmrm_j]{fit_mmrm_j()}}.}
 }
 \value{
 The resulting estimates and contrasts LS means as returned by
-  [tidy.tern_model()].
+\code{\link[=tidy.tern_model]{tidy.tern_model()}}.
 }
 \description{
 Helper Function to Fit the MMRM and Return LS Mean Estimates and Contrasts

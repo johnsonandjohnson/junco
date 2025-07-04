@@ -13,8 +13,10 @@ jjcs_num_formats(d, cap = 4)
 }
 \value{
 list:
- - fmt : named vector with formatting function (jjcsformat_xx) for numerical stats: range, median, mean_sd, sd
- - spec : named vector with formatting specifications for numerical stats: range, median, mean_sd, sd
+\itemize{
+\item fmt : named vector with formatting function (jjcsformat_xx) for numerical stats: range, median, mean_sd, sd
+\item spec : named vector with formatting specifications for numerical stats: range, median, mean_sd, sd
+}
 }
 \description{
 Formatting setter for selected numerical statistics

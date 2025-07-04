@@ -11,20 +11,22 @@ format_xx_fct(
 )
 }
 \arguments{
-\item{roundmethod}{(`string`)\cr choice of rounding methods. Options are:
-* `sas`: the underlying rounding method is `tidytlg::roundSAS`, where \cr
+\item{roundmethod}{(\code{string})\cr choice of rounding methods. Options are:
+\itemize{
+\item \code{sas}: the underlying rounding method is \code{tidytlg::roundSAS}, where \cr
 roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions/12688717/round-up-from-5
-* `iec`: the underlying rounding method is `round`}
+\item \code{iec}: the underlying rounding method is \code{round}
+}}
 
 \item{na_str_dflt}{Character to represent NA value}
 
-\item{replace_na_dflt}{logical(1). Should an `na_string` of "NA" within
-the formatters framework be overridden by `na_str_default`? Defaults to
-`TRUE`, as a way to have a different default na string behavior from the
-base `formatters` framework.}
+\item{replace_na_dflt}{logical(1). Should an \code{na_string} of "NA" within
+the formatters framework be overridden by \code{na_str_default}? Defaults to
+\code{TRUE}, as a way to have a different default na string behavior from the
+base \code{formatters} framework.}
 }
 \value{
-`format_xx_fct()` format function that can be used in rtables formatting calls
+\code{format_xx_fct()} format function that can be used in rtables formatting calls
 }
 \description{
 A function factory to generate formatting functions for value

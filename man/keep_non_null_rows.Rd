@@ -23,16 +23,16 @@ library(dplyr)
 
 ADSL <- data.frame(
   USUBJID = c(
-    'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-    'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
   ),
   TRT01P = c(
-    'ARMA', 'ARMB', 'ARMA', 'ARMB', 'ARMB', 'Placebo',
-    'Placebo', 'Placebo', 'ARMA', 'ARMB'
+    "ARMA", "ARMB", "ARMA", "ARMB", "ARMB", "Placebo",
+    "Placebo", "Placebo", "ARMA", "ARMB"
   ),
   AGE = c(34, 56, 75, 81, 45, 75, 48, 19, 32, 31),
-  SAFFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'),
-  PKFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N')
+  SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
+  PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
 )
 
 ADSL <- ADSL |>
@@ -40,15 +40,15 @@ ADSL <- ADSL |>
 
 create_blank_line <- function(x) {
   list(
-    'Mean' = rcell(mean(x), format = 'xx.x'),
-    ' ' = rcell(NULL),
-    'Max' = rcell(max(x))
+    "Mean" = rcell(mean(x), format = "xx.x"),
+    " " = rcell(NULL),
+    "Max" = rcell(max(x))
   )
 }
 
 lyt <- basic_table() |>
-  split_cols_by('TRT01P') |>
-  analyze('AGE', afun = create_blank_line)
+  split_cols_by("TRT01P") |>
+  analyze("AGE", afun = create_blank_line)
 
 result <- build_table(lyt, ADSL)
 

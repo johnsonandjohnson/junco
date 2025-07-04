@@ -17,18 +17,18 @@ h_check_and_get_label(x, vars, data)
 h_labels(vars, data)
 }
 \arguments{
-\item{x}{(`character`)\cr an element in vars.}
+\item{x}{(\code{character})\cr an element in vars.}
 
-\item{vars}{(`list`)\cr variables to use.}
+\item{vars}{(\code{list})\cr variables to use.}
 
-\item{data}{(`data.frame`)\cr data to use.}
+\item{data}{(\code{data.frame})\cr data to use.}
 }
 \description{
 Adding Labels To Variables For Model
 }
 \section{Functions}{
 \itemize{
-\item \code{h_is_specified()}: checks if element in `vars` is not `NULL` and not empty.
+\item \code{h_is_specified()}: checks if element in \code{vars} is not \code{NULL} and not empty.
 
 \item \code{h_is_specified_and_in_data()}: checks if element in vars is not NULL and exists in dataset.
 

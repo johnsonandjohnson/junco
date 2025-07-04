@@ -7,14 +7,16 @@
 jjcsformat_count_denom_fraction(x, d = 1, roundmethod = c("sas", "iec"), ...)
 }
 \arguments{
-\item{x}{`numeric`\cr with elements `num` and `fraction` or `num`, `denom` and `fraction`.}
+\item{x}{\code{numeric}\cr with elements \code{num} and \code{fraction} or \code{num}, \code{denom} and \code{fraction}.}
 
 \item{d}{numeric(1). Number of digits to round fraction to (default=1)}
 
-\item{roundmethod}{(`string`)\cr choice of rounding methods. Options are:
-* `sas`: the underlying rounding method is `tidytlg::roundSAS`, where \cr
+\item{roundmethod}{(\code{string})\cr choice of rounding methods. Options are:
+\itemize{
+\item \code{sas}: the underlying rounding method is \code{tidytlg::roundSAS}, where \cr
 roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions/12688717/round-up-from-5
-* `iec`: the underlying rounding method is `round`}
+\item \code{iec}: the underlying rounding method is \code{round}
+}}
 
 \item{...}{Additional arguments passed to other methods.}
 }

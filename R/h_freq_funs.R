@@ -238,12 +238,16 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
   if (!is.null(new_levels)) {
     ## assumption: new_levels[[1]] : names of the new levels new_levels[[2]] : values of the new levels
     if (length(new_levels[[1]]) != length(new_levels[[2]])) {
-      stop("new_levels must be a list of length 2, second element must be a ",
-           "list of same length as first element.")
+      stop(
+        "new_levels must be a list of length 2, second element must be a ",
+        "list of same length as first element."
+      )
     }
     if (any(duplicated(unlist(new_levels[[2]])))) {
-      stop("unlist(new_levels[[2]]) contains duplicates: duplicate assignment ",
-           "of a level to a new level is not allowed.")
+      stop(
+        "unlist(new_levels[[2]]) contains duplicates: duplicate assignment ",
+        "of a level to a new level is not allowed."
+      )
     }
 
     sortnewlevs <- unlist(lapply(X = new_levels[[2]], FUN = function(x) {
@@ -264,7 +268,7 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
     levs <- newlevsx
 
     ### add newlevels to df
-    for (i in  seq_along(new_levels[[1]])) {
+    for (i in seq_along(new_levels[[1]])) {
       levii <- unlist(new_levels[[2]][i])
 
       addi <- df[df[[.var]] %in% levii, ]
@@ -341,20 +345,19 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
 #' @return List containing updated data frames and values.
 #' @export
 h_upd_dfrow <- function(
-  df_row,
-  .var,
-  val,
-  excl_levels,
-  drop_levels,
-  new_levels,
-  new_levels_after,
-  addstr2levs,
-  label,
-  label_map,
-  labelstr,
-  label_fstr,
-  .spl_context
-) {
+    df_row,
+    .var,
+    val,
+    excl_levels,
+    drop_levels,
+    new_levels,
+    new_levels_after,
+    addstr2levs,
+    label,
+    label_map,
+    labelstr,
+    label_fstr,
+    .spl_context) {
   if (!is.null(label) && !is.null(label_map)) {
     stop("a_freq_j: label and label_map cannot be used together.")
   }
@@ -532,29 +535,27 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
 #' @return List containing prepared data frames and values.
 #' @export
 h_a_freq_dataprep <- function(
-  df,
-  labelstr = NULL,
-  .var = NA,
-  val = NULL,
-  drop_levels = FALSE,
-  excl_levels = NULL,
-  new_levels = NULL,
-  new_levels_after = FALSE,
-  addstr2levs = NULL,
-  .df_row,
-  .spl_context,
-  .N_col,
-  id = "USUBJID",
-  denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
-  variables,
-  label = NULL,
-  label_fstr = NULL,
-  label_map = NULL,
-  .alt_df_full = NULL,
-  denom_by = NULL,
-  .stats
-) {
-
+    df,
+    labelstr = NULL,
+    .var = NA,
+    val = NULL,
+    drop_levels = FALSE,
+    excl_levels = NULL,
+    new_levels = NULL,
+    new_levels_after = FALSE,
+    addstr2levs = NULL,
+    .df_row,
+    .spl_context,
+    .N_col,
+    id = "USUBJID",
+    denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
+    variables,
+    label = NULL,
+    label_fstr = NULL,
+    label_map = NULL,
+    .alt_df_full = NULL,
+    denom_by = NULL,
+    .stats) {
   denom <- match.arg(denom)
 
   df <- df[!is.na(df[[.var]]), ]
@@ -640,16 +641,15 @@ h_a_freq_dataprep <- function(
 #' @return List containing prepared statistics, formats, labels, and indentation.
 #' @export
 h_a_freq_prepinrows <- function(
-  x_stats,
-  .stats_adj,
-  .formats,
-  labelstr,
-  label_fstr,
-  label,
-  .indent_mods,
-  .labels_n,
-  na_str
-) {
+    x_stats,
+    .stats_adj,
+    .formats,
+    labelstr,
+    label_fstr,
+    label,
+    .indent_mods,
+    .labels_n,
+    na_str) {
   # Fill in formatting defaults
 
   x_stats <- x_stats[.stats_adj]

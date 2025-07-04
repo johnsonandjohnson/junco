@@ -7,10 +7,10 @@
 ac_blank_line(df, labelstr = "")
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{labelstr}{(`character`)\cr label of the level of the parent split currently being summarized
-(must be present as second argument in Content Row Functions). See [rtables::summarize_row_groups()]
+\item{labelstr}{(\code{character})\cr label of the level of the parent split currently being summarized
+(must be present as second argument in Content Row Functions). See \code{\link[rtables:summarize_row_groups]{rtables::summarize_row_groups()}}
 for more information.}
 }
 \description{

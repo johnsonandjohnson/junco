@@ -13,26 +13,28 @@ rbmi_ancova_single(
 )
 }
 \arguments{
-\item{data}{A `data.frame` containing the data to be used in the model.}
+\item{data}{A \code{data.frame} containing the data to be used in the model.}
 
-\item{outcome}{string, the name of the outcome variable in `data`.}
+\item{outcome}{string, the name of the outcome variable in \code{data}.}
 
-\item{group}{string, the name of the group variable in `data`.}
+\item{group}{string, the name of the group variable in \code{data}.}
 
 \item{covariates}{character vector containing the name of any additional covariates
 to be included in the model as well as any interaction terms.}
 
-\item{weights}{Character, either `"counterfactual"` (default), `"equal"`,
-`"proportional_em"` or `"proportional"`.
+\item{weights}{Character, either \code{"counterfactual"} (default), \code{"equal"},
+\code{"proportional_em"} or \code{"proportional"}.
 Specifies the weighting strategy to be used when calculating the lsmeans.
 See the weighting section for more details.}
 }
 \description{
-Performance analysis of covariance. See [rbmi_ancova()] for full details.
+Performance analysis of covariance. See \code{\link[=rbmi_ancova]{rbmi_ancova()}} for full details.
 }
 \details{
-- `group` must be a factor variable with only 2 levels.
-- `outcome` must be a continuous numeric variable.
+\itemize{
+\item \code{group} must be a factor variable with only 2 levels.
+\item \code{outcome} must be a continuous numeric variable.
+}
 }
 \examples{
 
@@ -42,5 +44,5 @@ rbmi_ancova_single(iris2, "Sepal.Length", "Species", c("Petal.Length * Petal.Wid
 
 }
 \seealso{
-[rbmi_ancova()]
+\code{\link[=rbmi_ancova]{rbmi_ancova()}}
 }

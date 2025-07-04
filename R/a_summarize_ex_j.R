@@ -33,19 +33,18 @@ NULL
 #' a vector that can contain single variable names (such as 'X1'), and/or interaction terms indicated by 'X1 * X2'.
 #'
 s_summarize_ex_j <- function(
-  df,
-  .var,
-  .df_row,
-  .spl_context,
-  comp_btw_group = TRUE,
-  ref_path = NULL,
-  ancova = FALSE,
-  interaction_y,
-  interaction_item,
-  conf_level,
-  daysconv,
-  variables
-) {
+    df,
+    .var,
+    .df_row,
+    .spl_context,
+    comp_btw_group = TRUE,
+    ref_path = NULL,
+    ancova = FALSE,
+    interaction_y,
+    interaction_item,
+    conf_level,
+    daysconv,
+    variables) {
   control <- control_analyze_vars()
   control$conf_level <- conf_level
   x_stats <- s_summary(df[[.var]], na.rm = TRUE, .var, control = control)
@@ -134,12 +133,12 @@ s_summarize_ex_j <- function(
 #'
 #' ADEX <- data.frame(
 #'   USUBJID = c(
-#'     'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-#'     'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
 #'   ),
 #'   TRT01A = c(
-#'     'ARMA', 'ARMA', 'ARMA', 'ARMA', 'ARMA',
-#'     'Placebo', 'Placebo', 'Placebo', 'ARMA', 'ARMA'
+#'     "ARMA", "ARMA", "ARMA", "ARMA", "ARMA",
+#'     "Placebo", "Placebo", "Placebo", "ARMA", "ARMA"
 #'   ),
 #'   AVAL = c(56, 78, 67, 87, 88, 93, 39, 87, 65, 55)
 #' )
@@ -147,42 +146,42 @@ s_summarize_ex_j <- function(
 #' ADEX <- ADEX |>
 #'   mutate(TRT01A = as.factor(TRT01A))
 #'
-#' ADEX$colspan_trt <- factor(ifelse(ADEX$TRT01A == 'Placebo', ' ', 'Active Study Agent'),
-#'   levels = c('Active Study Agent', ' ')
+#' ADEX$colspan_trt <- factor(ifelse(ADEX$TRT01A == "Placebo", " ", "Active Study Agent"),
+#'   levels = c("Active Study Agent", " ")
 #' )
 #'
-#' ADEX$diff_header <- 'Difference in Means (95% CI)'
-#' ADEX$diff_label <- paste(ADEX$TRT01A, paste('vs', 'Placebo'))
+#' ADEX$diff_header <- "Difference in Means (95% CI)"
+#' ADEX$diff_label <- paste(ADEX$TRT01A, paste("vs", "Placebo"))
 #'
 #' colspan_trt_map <- create_colspan_map(ADEX,
-#'   non_active_grp = 'Placebo',
-#'   non_active_grp_span_lbl = ' ',
-#'   active_grp_span_lbl = 'Active Study Agent',
-#'   colspan_var = 'colspan_trt',
-#'   trt_var = 'TRT01A'
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = " ",
+#'   active_grp_span_lbl = "Active Study Agent",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
 #' )
-#' ref_path <- c('colspan_trt', '', 'TRT01A', 'Placebo')
+#' ref_path <- c("colspan_trt", "", "TRT01A", "Placebo")
 #'
 #' lyt <- basic_table() |>
 #'   split_cols_by(
-#'     'colspan_trt',
+#'     "colspan_trt",
 #'     split_fun = trim_levels_to_map(map = colspan_trt_map)
 #'   ) |>
-#'   split_cols_by('TRT01A') |>
-#'   split_cols_by('diff_header', nested = FALSE) |>
+#'   split_cols_by("TRT01A") |>
+#'   split_cols_by("diff_header", nested = FALSE) |>
 #'   split_cols_by(
-#'     'TRT01A',
-#'     split_fun = remove_split_levels('Placebo'),
-#'     labels_var = 'diff_label'
+#'     "TRT01A",
+#'     split_fun = remove_split_levels("Placebo"),
+#'     labels_var = "diff_label"
 #'   ) |>
-#'   analyze('AVAL',
-#'     afun = a_summarize_ex_j, var_labels = 'Duration of treatment (Days)',
-#'     show_labels = 'visible',
+#'   analyze("AVAL",
+#'     afun = a_summarize_ex_j, var_labels = "Duration of treatment (Days)",
+#'     show_labels = "visible",
 #'     indent_mod = 0L,
 #'     extra_args = list(
 #'       daysconv = 1,
 #'       ref_path = ref_path,
-#'       variables = list(arm = 'TRT01A', covariates = NULL),
+#'       variables = list(arm = "TRT01A", covariates = NULL),
 #'       ancova = TRUE,
 #'       comp_btw_group = TRUE
 #'     )
@@ -193,24 +192,23 @@ s_summarize_ex_j <- function(
 #' result
 #' @export
 a_summarize_ex_j <- function(
-  df,
-  .var,
-  .df_row,
-  .spl_context,
-  comp_btw_group = TRUE,
-  ref_path = NULL,
-  ancova = FALSE,
-  interaction_y = FALSE,
-  interaction_item = NULL,
-  conf_level = 0.95,
-  variables,
-  .stats = c("mean_sd", "median", "range", "quantiles", "total_subject_years"),
-  .formats = c(diff_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)")),
-  .labels = c(quantiles = "Interquartile range"),
-  .indent_mods = NULL,
-  na_str = rep("NA", 3),
-  daysconv = 1
-) {
+    df,
+    .var,
+    .df_row,
+    .spl_context,
+    comp_btw_group = TRUE,
+    ref_path = NULL,
+    ancova = FALSE,
+    interaction_y = FALSE,
+    interaction_item = NULL,
+    conf_level = 0.95,
+    variables,
+    .stats = c("mean_sd", "median", "range", "quantiles", "total_subject_years"),
+    .formats = c(diff_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)")),
+    .labels = c(quantiles = "Interquartile range"),
+    .indent_mods = NULL,
+    na_str = rep("NA", 3),
+    daysconv = 1) {
   if (!is.numeric(df[[.var]])) {
     stop("a_summarize_ex_j issue: input variable must be numeric.")
   }

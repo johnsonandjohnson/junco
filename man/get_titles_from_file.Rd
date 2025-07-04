@@ -14,35 +14,36 @@ get_titles_from_file(
 \arguments{
 \item{id}{character. The identifier for the table of interest.}
 
-\item{file}{(`character(1)`)\cr A path to CSV or xlsx file containing title
+\item{file}{(\code{character(1)})\cr A path to CSV or xlsx file containing title
 and footer information for one or more outputs. See Details. Ignored if
-`title_df` is specified.}
+\code{title_df} is specified.}
 
-\item{input_path}{(`character(1)`)\cr A path to look for
-titles.csv/titles.xlsx. Ignored if `file` or `title_df` is specified.}
+\item{input_path}{(\code{character(1)})\cr A path to look for
+titles.csv/titles.xlsx. Ignored if \code{file} or \code{title_df} is specified.}
 
-\item{title_df}{(`data.frame`)\cr A data.frame containing titles and footers for
+\item{title_df}{(\code{data.frame})\cr A data.frame containing titles and footers for
 one or more  outputs. See Details.}
 }
 \value{
 List object containing: title, subtitles, main_footer, prov_footer
-          for the table of interest.  Note: the subtitles and prov_footer are
-          currently set to NULL. Suitable for use with [`set_titles()`].
+for the table of interest.  Note: the subtitles and prov_footer are
+currently set to NULL. Suitable for use with \code{\link[=set_titles]{set_titles()}}.
 }
 \description{
 Retrieves the titles and footnotes for a given table from a CSV/XLSX file or a data.frame.
 }
 \details{
 Retrieves the titles for a given output id (see below) and outputs
-         a list containing the title and footnote objects supported by
-         rtables. Both titles.csv and titles.xlsx (*if `readxl` is
-         installed*) files are supported, with titles.csv being checked
-         first.
+a list containing the title and footnote objects supported by
+rtables. Both titles.csv and titles.xlsx (\emph{if \code{readxl} is
+installed}) files are supported, with titles.csv being checked
+first.
 
-         Data is expected to have `TABLE ID`, `IDENTIFIER`, and `TEXT` columns,
-         where `IDENTIFIER` has the value `TITLE` for a title and `FOOT*` for
-         footer materials where `*` is a positive integer. `TEXT` contains
-         the value of the title/footer to be applied.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{     Data is expected to have `TABLE ID`, `IDENTIFIER`, and `TEXT` columns,
+     where `IDENTIFIER` has the value `TITLE` for a title and `FOOT*` for
+     footer materials where `*` is a positive integer. `TEXT` contains
+     the value of the title/footer to be applied.
+}\if{html}{\out{</div>}}
 }
 \examples{
 # title_footer <- get_titles_from_file(tblid)
