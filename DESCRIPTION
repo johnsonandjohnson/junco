@@ -25,13 +25,12 @@ Authors@R: c(
 Description: Provides tools and functions for table and listing reporting needs, for use
     with the NEST framework (rtables, rlistings, and formatters).
 License: Apache License (>= 2)
-URL: https://johnsonandjohnson.github.io/junco/
 BugReports: https://github.com/johnsonandjohnson/junco/issues
 Depends: 
     R (>= 4.4),
     formatters (>= 0.5.6),
     rtables (>= 0.6.13)
-Imports: 
+Imports:
     tidytlg (>= 0.1.5),
     tern (>= 0.9.9),
     rlistings (>= 0.2.11),
@@ -52,7 +51,7 @@ Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Suggests: 
+Suggests:
     knitr,
     rmarkdown,
     forcats (>= 1.0.0),

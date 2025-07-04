@@ -13,11 +13,12 @@
 #' @importFrom utils read.csv
 .read_titles_file <- function(file) {
   if (grepl("csv$", file, ignore.case = TRUE)) {
-    df <- read.csv(file)
+    df <- read.csv(file, check.names = FALSE)
   } else if (grepl("xlsx$", file, ignore.case = TRUE)) {
-    if (!requireNamespace("readxl"))
+    if (!requireNamespace("readxl")) {
       stop("readxl package is required for xslx file support, please install it.")
-    df <- readxl::read_excel(df, sheet = 1, range = readxl::cell_cols("A:C"))
+    }
+    df <- readxl::read_excel(path = file, sheet = 1, range = readxl::cell_cols("A:C"))
   } else {
     stop("Unrecognized titles file type. file: ", file)
   }
@@ -65,7 +66,7 @@ get_titles_from_file <- function(id,
                                  input_path = ".",
                                  title_df = .read_titles_file(file)) {
   ## "TABLE ID" gets munged to "TABLE.ID"
-  title_df <- title_df[title_df[["TABLE.ID"]] == id, , drop = FALSE]
+  title_df <- title_df[title_df[["TABLE ID"]] == id, , drop = FALSE]
 
   message(paste0("Static titles file/data.frame used: "))
 
@@ -87,6 +88,8 @@ get_titles_from_file <- function(id,
 
     if (length(title) != 1) {
       msg <- "Warning: Title file should contain exactly one title record per Table ID"
+    } else {
+      message(file)
     }
 
     main_footer <- title_df[grep("^FOOT", title_df$IDENTIFIER), ]$TEXT

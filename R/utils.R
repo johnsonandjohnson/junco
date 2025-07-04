@@ -26,7 +26,9 @@ leftside <- function(x) {
 #' @export
 #' @keywords internal
 string_to_title <- function(x) {
-  gsub("(^|\\s)(\\w)", "\\1\\U\\2", x, perl = TRUE)
+  checkmate::assert_character(x, null.ok = TRUE)
+  x_lower <- tolower(x)
+  gsub("(^|\\s)(\\w)", "\\1\\U\\2", x_lower, perl = TRUE)
 }
 
 

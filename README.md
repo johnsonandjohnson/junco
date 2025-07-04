@@ -22,7 +22,7 @@
 
 ## Overview
 
-The junco R package contains analysis functions to create tables and listings used for clinical trial reporting. 
+The junco R package contains analysis functions to create tables and listings used for clinical trial reporting.
 It complements the tern package by providing additional statistical analysis capabilities.
 
 The package provides a range of functionality, such as:
@@ -49,5 +49,3 @@ remotes::install_github("johnsonandjohnson/junco")
 To understand how to use this package, please refer to the [junco article](https://johnsonandjohnson.github.io/junco/articles/junco.html), which provides multiple examples of code implementation.
 
 See package vignettes `browseVignettes(package = "junco")` for usage of this package.
-
-
