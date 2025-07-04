@@ -78,7 +78,7 @@ data frame.
 These functions have been forked from the \code{tern.mmrm} package. Additional features
 are:
 \itemize{
-\item Additional \code{ref_path} argument for \code{\link[tern.mmrm:tabulate_mmrm]{tern.mmrm::summarize_lsmeans()}}
+\item Additional \code{ref_path} argument for tern.mmrm::summarize_lsmeans().
 \item The function is more general in that it also works for LS means results from ANCOVA
 \item Additional statistic \code{diff_mean_est_ci} is returned
 \item P-value sidedness can be chosen

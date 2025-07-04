@@ -48,7 +48,7 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
     split_cols_by("ARM") |>
     split_cols_by("STRATA1") |>
     split_cols_by("SEX") |>
-    split_rows_by("RACE", split_fun = keep_split_levels(levels(ex_adsl$RACE)[1:2])) |>
+    split_rows_by("RACE") |>
     summarize_row_groups() |>
     analyze("AGE")
 
