@@ -677,9 +677,7 @@ a_freq_j <- function(
     }
   }
 
-  if (denom %in% c("n_altdf", "N_colgroup") && is.null(.alt_df_full)) {
-    stop(".alt_df_full cannot be NULL when denom = n_altdf or N_colgroup.")
-  }
+  check_alt_df_full(denom, c("n_altdf", "N_colgroup"), .alt_df_full)
 
   res_dataprep <- h_a_freq_dataprep(
     df = df,
