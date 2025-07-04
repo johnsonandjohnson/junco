@@ -2,9 +2,9 @@ name: test-coverage
 
 on:
   push:
-    branches: [main, ci_cd]
+    branches: [main]
   pull_request:
-    branches: [main, ci_cd]
+    branches: [main]
 
 jobs:
   coverage:
