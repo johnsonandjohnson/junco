@@ -36,7 +36,7 @@ jjcsformat_count_fraction(c(70000, 1))
 
 }
 \seealso{
-Other JJCS formats:
+Other JJCS formats: 
 \code{\link{format_xx_fct}()},
 \code{\link{jjcsformat_pval_fct}()},
 \code{\link{jjcsformat_range_fct}()}

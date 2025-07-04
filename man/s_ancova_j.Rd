@@ -71,7 +71,7 @@ conf_level <- 0.95
 s_ancova_j(df, .var, .df_row, variables, .ref_group, .in_ref_col = FALSE, conf_level)
 }
 \seealso{
-Other Inclusion of ANCOVA Functions:
+Other Inclusion of ANCOVA Functions: 
 \code{\link{a_summarize_ancova_j}()},
 \code{\link{a_summarize_aval_chg_diff_j}()}
 }

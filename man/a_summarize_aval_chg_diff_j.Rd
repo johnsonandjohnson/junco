@@ -217,7 +217,7 @@ result
 \seealso{
 s_summarize_ancova_j
 
-Other Inclusion of ANCOVA Functions:
+Other Inclusion of ANCOVA Functions: 
 \code{\link{a_summarize_ancova_j}()},
 \code{\link{s_ancova_j}()}
 }

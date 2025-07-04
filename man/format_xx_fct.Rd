@@ -39,7 +39,7 @@ rcell(c(1.453, 2.45638), jjcsformat_xx("xx.xx (xx.xxx)"))
 
 }
 \seealso{
-Other JJCS formats:
+Other JJCS formats: 
 \code{\link{count_fraction}},
 \code{\link{jjcsformat_pval_fct}()},
 \code{\link{jjcsformat_range_fct}()}

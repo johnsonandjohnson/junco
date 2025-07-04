@@ -122,7 +122,7 @@ s_summarize_ancova_j(
 )
 }
 \seealso{
-Other Inclusion of ANCOVA Functions:
+Other Inclusion of ANCOVA Functions: 
 \code{\link{a_summarize_aval_chg_diff_j}()},
 \code{\link{s_ancova_j}()}
 }
