@@ -287,7 +287,7 @@ extra_args_rr2 <- append(
     ref_path = ref_path,
     method = "wald",
     .stats = c("count_unique_denom_fraction"),
-    na_str = rep("NA", 3)
+    na_str = rep("NE", 3)
   )
 )
 
@@ -355,7 +355,7 @@ In junco, we have added extra stats for
 multivars <- c("AVAL", "AVAL", "CHG")
 
 extra_args_3col <- list(
-  format_na_str = rep(NA, 3), 
+  format_na_str = rep("NE", 3), 
   ref_path = ref_path,
   ancova = FALSE, 
   comp_btw_group = TRUE,
@@ -435,7 +435,7 @@ The columns for the comparison between reference group is optional. The same tab
 multivars <- c("AVAL", "AVAL", "CHG")
 
 extra_args_3col <- list(
-  format_na_str = rep(NA, 3), 
+  format_na_str = rep("NE", 3), 
   ancova = FALSE, 
   comp_btw_group = FALSE,
   multivars = multivars

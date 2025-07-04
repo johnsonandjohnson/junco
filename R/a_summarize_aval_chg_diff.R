@@ -174,47 +174,6 @@ s_aval_chg_col23_diff <- function(
 }
 
 
-xxd_to_xx <- function(str, d = 0) {
-  checkmate::assert_integerish(d, null.ok = TRUE)
-  if (checkmate::test_list(str, null.ok = FALSE)) {
-    checkmate::assert_list(str, null.ok = FALSE)
-    # Or it may be a vector of characters
-  } else {
-    checkmate::assert_character(str, null.ok = FALSE)
-  }
-
-  nmstr <- names(str)
-
-  if (any(grepl("xx.d", str, fixed = TRUE))) {
-    checkmate::assert_integerish(d)
-    str <- gsub("xx.d", paste0("xx.", strrep("x", times = d)), str, fixed = TRUE)
-  }
-  str <- stats::setNames(str, nmstr)
-  return(str)
-}
-
-format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
-  # Handling of data precision
-  if (!is.numeric(d)) {
-    if (is.character(d) && length(d) == 1) {
-      # check if d is a variable name available in .df_row
-      if (d %in% names(.df_row)) {
-        d <- max(.df_row[[d]], na.rm = TRUE)
-      } else {
-        message(paste("precision has been reset to d = 0, as variable", d, "not present on input"))
-        d <- 0
-      }
-    }
-  }
-  # convert xxd type of string to xx
-  fmt <- xxd_to_xx(str = str, d = d)
-
-  if (!is.null(formatting_fun)) {
-    fmt <- formatting_fun(fmt)
-  }
-
-  return(fmt)
-}
 
 #' @name a_summarize_aval_chg_diff_j
 #'
@@ -550,8 +509,8 @@ a_summarize_aval_chg_diff_j <- function(
 
     fmt_d <- .formats[[mystat1]]
     formatting_fun <- .formats_fun[[mystat1]]
-
-    fmt <- format_xxd(fmt_d, d = d, .df_row = .df_row, formatting_fun = formatting_fun)
+    d <- h_get_d(d, .df_row, .var, d_unspecified = 0)
+    fmt <- format_xxd(fmt_d, d = d, formatting_fun = formatting_fun)[[1]]
   }
   x_stats <- x_stats[[mystat]]
 
