@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.838327651175309" branch-rate="0" lines-covered="4672" lines-valid="5573" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-07-04 14:50:29.880829">
+<coverage line-rate="0.838327651175309" branch-rate="0" lines-covered="4672" lines-valid="5573" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-07-04 14:50:43.85053">
   <sources>
     <source>/home/runner/work/junco/junco</source>
   </sources>
@@ -5592,7 +5592,7 @@
                 <line number="232" hits="257" branch="false"/>
                 <line number="234" hits="1" branch="false"/>
                 <line number="237" hits="258" branch="false"/>
-                <line number="240" hits="8" branch="false"/>
+                <line number="240" hits="4" branch="false"/>
                 <line number="241" hits="258" branch="false"/>
                 <line number="242" hits="107" branch="false"/>
                 <line number="243" hits="258" branch="false"/>
@@ -5600,7 +5600,7 @@
                 <line number="246" hits="258" branch="false"/>
                 <line number="248" hits="1" branch="false"/>
                 <line number="249" hits="258" branch="false"/>
-                <line number="250" hits="141" branch="false"/>
+                <line number="250" hits="145" branch="false"/>
                 <line number="251" hits="258" branch="false"/>
                 <line number="252" hits="258" branch="false"/>
               </lines>
@@ -5846,7 +5846,7 @@
             <line number="232" hits="257" branch="false"/>
             <line number="234" hits="1" branch="false"/>
             <line number="237" hits="258" branch="false"/>
-            <line number="240" hits="8" branch="false"/>
+            <line number="240" hits="4" branch="false"/>
             <line number="241" hits="258" branch="false"/>
             <line number="242" hits="107" branch="false"/>
             <line number="243" hits="258" branch="false"/>
@@ -5854,7 +5854,7 @@
             <line number="246" hits="258" branch="false"/>
             <line number="248" hits="1" branch="false"/>
             <line number="249" hits="258" branch="false"/>
-            <line number="250" hits="141" branch="false"/>
+            <line number="250" hits="145" branch="false"/>
             <line number="251" hits="258" branch="false"/>
             <line number="252" hits="258" branch="false"/>
             <line number="271" hits="2" branch="false"/>
