@@ -14,10 +14,10 @@ prop_cmh(ary, alternative)
 prop_fisher(tbl, alternative)
 }
 \arguments{
-\item{tbl}{(`matrix`)\cr matrix with two groups in rows and the binary response (`TRUE`/`FALSE`) in columns.}
+\item{tbl}{(\code{matrix})\cr matrix with two groups in rows and the binary response (\code{TRUE}/\code{FALSE}) in columns.}
 
-\item{ary}{(`array`, 3 dimensions)\cr array with two groups in rows, the binary response
-(`TRUE`/`FALSE`) in columns, and the strata in the third dimension.}
+\item{ary}{(\code{array}, 3 dimensions)\cr array with two groups in rows, the binary response
+(\code{TRUE}/\code{FALSE}) in columns, and the strata in the third dimension.}
 }
 \value{
 A p-value.
@@ -27,20 +27,20 @@ Helper functions to implement various tests on the difference between two propor
 }
 \section{Functions}{
 \itemize{
-\item \code{prop_chisq()}: Performs Chi-Squared test. Internally calls [stats::prop.test()].
+\item \code{prop_chisq()}: Performs Chi-Squared test. Internally calls \code{\link[stats:prop.test]{stats::prop.test()}}.
 
 \item \code{prop_cmh()}: Performs stratified Cochran-Mantel-Haenszel test.
-Internally calls [stats::mantelhaen.test()].
+Internally calls \code{\link[stats:mantelhaen.test]{stats::mantelhaen.test()}}.
 
-\item \code{prop_fisher()}: Performs the Fisher's exact test. Internally calls [stats::fisher.test()].
+\item \code{prop_fisher()}: Performs the Fisher's exact test. Internally calls \code{\link[stats:fisher.test]{stats::fisher.test()}}.
 
 }}
 \note{
 strata with less than five observations will result in a warning and
- possibly incorrect results; strata with less than two observations are
- automatically discarded.
+possibly incorrect results; strata with less than two observations are
+automatically discarded.
 }
 \seealso{
-[prop_diff_test()] for implementation of these helper functions.
+\code{\link[=prop_diff_test]{prop_diff_test()}} for implementation of these helper functions.
 }
 \keyword{internal}

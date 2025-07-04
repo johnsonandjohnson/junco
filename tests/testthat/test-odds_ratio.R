@@ -98,12 +98,12 @@ test_that("s_odds_ratio_j does not fail with only one grp", {
   expect_equal(result, expected)
 })
 
-test_that("or_glm does not fail with only non-responders", {
+test_that("or_glm_j does not fail with only non-responders", {
   dta <- data.frame(
     rsp = rep(FALSE, 100),
     grp = factor(rep(c("A", "B"), each = 50), levels = c("A", "B"))
   )
-  result <- expect_silent(or_glm(data = dta, conf_level = 0.9))
+  result <- expect_silent(or_glm_j(data = dta, conf_level = 0.9))
   expected <- list(
     or_ci = c(est = 1, lcl = 0, ucl = Inf),
     n_tot = c(n_tot = 100L),

@@ -35,19 +35,19 @@ will be counted in the numerator.}
 \item{...}{Additional arguments passed to the function.}
 }
 \value{
-a `RowsVerticalSection` for use by the internal tabulation machinery of `rtables`
+a \code{RowsVerticalSection} for use by the internal tabulation machinery of \code{rtables}
 }
 \description{
 Derives the count_denom_fraction statistic (i.e., 'xx /xx (xx.x percent)' )
-             Summarizes the number of unique subjects with a response = 'Y' for a given variable
-             (e.g. TRTEMFL) within each category of another variable (e.g., SEX).
-             Note that the denominator is derived using input df,
-             in order to have these aligned with alt_source_df, it is expected that df includes all subjects.
+Summarizes the number of unique subjects with a response = 'Y' for a given variable
+(e.g. TRTEMFL) within each category of another variable (e.g., SEX).
+Note that the denominator is derived using input df,
+in order to have these aligned with alt_source_df, it is expected that df includes all subjects.
 }
 \details{
-This is an analysis function for use within `analyze`. Arguments
-         `df`, `.var` will be populated automatically by rtables during
-         the tabulation process.
+This is an analysis function for use within \code{analyze}. Arguments
+\code{df}, \code{.var} will be populated automatically by rtables during
+the tabulation process.
 }
 \examples{
 

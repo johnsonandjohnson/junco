@@ -181,8 +181,12 @@ a_relative_risk <- function(
 
 
 #' @keywords internal
-#' @importFrom purrr possibly
-safe_mh_test <- purrr::possibly(stats::mantelhaen.test, otherwise = list(p.value = NA_real_))
+safe_mh_test <- function(...) {
+  tryCatch(
+    stats::mantelhaen.test(...),
+    error = function(e) list(p.value = NA_real_)
+  )
+}
 
 #' Relative Risk CMH Statistic
 #'

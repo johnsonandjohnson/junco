@@ -12,16 +12,16 @@ build_formula(
 )
 }
 \arguments{
-\item{vars}{(`list`)\cr variables to use in the model.}
+\item{vars}{(\code{list})\cr variables to use in the model.}
 
-\item{cor_struct}{(`string`)\cr specify the covariance structure to use.}
+\item{cor_struct}{(\code{string})\cr specify the covariance structure to use.}
 }
 \value{
-Formula to use in [mmrm::mmrm()].
+Formula to use in \code{\link[mmrm:mmrm]{mmrm::mmrm()}}.
 }
 \description{
-This builds the model formula which is used inside [fit_mmrm_j()] and provided
-to [mmrm::mmrm()] internally. It can be instructive to look at the resulting
+This builds the model formula which is used inside \code{\link[=fit_mmrm_j]{fit_mmrm_j()}} and provided
+to \code{\link[mmrm:mmrm]{mmrm::mmrm()}} internally. It can be instructive to look at the resulting
 formula directly sometimes.
 }
 \examples{

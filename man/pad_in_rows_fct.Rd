@@ -7,13 +7,13 @@
 pad_in_rows_fct(length_out = NULL, label = "")
 }
 \arguments{
-\item{length_out}{(`count` or `NULL`)\cr full length which should be padded
-by `NA` which will be printed as empty strings.}
+\item{length_out}{(\code{count} or \code{NULL})\cr full length which should be padded
+by \code{NA} which will be printed as empty strings.}
 
-\item{label}{(`string`)\cr row label to be used for the first row only.}
+\item{label}{(\code{string})\cr row label to be used for the first row only.}
 }
 \value{
-The function of `content` and `.formats`.
+The function of \code{content} and \code{.formats}.
 }
 \description{
 Function Factory to Create Padded In Rows Content

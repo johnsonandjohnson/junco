@@ -1,5 +1,5 @@
 Package: junco
-Title: Create Common TLs Used in Clinical Trials
+Title: Create Common Tables and Listings Used in Clinical Trials
 Version: 0.0.1
 Date: 2025-06-20
 Authors@R: c(
@@ -22,11 +22,11 @@ Authors@R: c(
     person("F. Hoffmann-La Roche AG", role = c("cph"),
             comment = "Copyright holder of included formatters, rbmi and tern functions")
   )
-Description: Provides tools and functions for table and listing (TL) reporting needs.
+Description: Provides tools and functions for table and listing reporting needs, for use
+    with the NEST framework (rtables, rlistings, and formatters).
 License: Apache License (>= 2)
-URL: https://johnsonandjohnson.github.io/junco/
-BugReports: https://github.com/johnsonandjohnson/junco/issue
-Depends:
+BugReports: https://github.com/johnsonandjohnson/junco/issues
+Depends: 
     R (>= 4.4),
     formatters (>= 0.5.6),
     rtables (>= 0.6.13)
@@ -39,7 +39,6 @@ Imports:
     methods,
     dplyr,
     generics,
-    purrr,
     stats,
     survival,
     tibble,
@@ -50,16 +49,17 @@ Imports:
     assertthat
 Encoding: UTF-8
 Language: en-US
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests:
     knitr,
     rmarkdown,
     forcats (>= 1.0.0),
     testthat (>= 3.0.0),
-    covr,
     mockery,
     parallel,
     readxl,
-    pharmaverseadam
+    pharmaverseadam,
+    rlang
 VignetteBuilder: knitr
 Config/testthat/edition: 3

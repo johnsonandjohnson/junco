@@ -7,9 +7,9 @@
 lsmeans_wide_second_split_fun_fct(pval_sided, conf_level, include_pval)
 }
 \arguments{
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
-\item{include_pval}{(`flag`)\cr whether to include the p-value column.}
+\item{include_pval}{(\code{flag})\cr whether to include the p-value column.}
 }
 \description{
 Second Level Column Split for LS Means Wide Table Layouts

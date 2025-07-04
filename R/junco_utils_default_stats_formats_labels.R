@@ -5,7 +5,7 @@
 #' Utility functions to get valid statistic methods for different method groups
 #' (`.stats`) and their associated formats (`.formats`), labels (`.labels`), and indent modifiers
 #' (`.indent_mods`). This utility is used across `junco`, but some of its working principles can be
-#' seen in [analyze_vars()]. See notes to understand why this is experimental.
+#' seen in [tern::analyze_vars()]. See notes to understand why this is experimental.
 #'
 #' @param stats (`character`)\cr statistical methods to return defaults for.
 #' @param levels_per_stats (named `list` of `character` or `NULL`)\cr named list where the name of each element is a
@@ -16,7 +16,7 @@
 #'   just `statistic` for statistics calculated for a single row). Defaults to `NULL`.
 #'
 #' @details
-#' Current choices for `type` are `counts` and `numeric` for [analyze_vars()] and affect `junco_get_stats()`.
+#' Current choices for `type` are `counts` and `numeric` for [tern::analyze_vars()] and affect `junco_get_stats()`.
 #'
 #' @note
 #' These defaults are experimental because we use the names of functions to retrieve the default

@@ -71,14 +71,14 @@ all the associated columns don't fit on a single page.}
 \item{markup_df}{Data frame containing markup information}
 
 \item{combined_rtf}{logical(1). In the case where the result is broken up into multiple
-parts due to width, should a combined rtf file also be created. Defaults to `FALSE`.}
+parts due to width, should a combined rtf file also be created. Defaults to \code{FALSE}.}
 
-\item{one_table}{logical(1). If `tt` is a (non-`MatrixPrintForm`) list,
-should the parts be added to the rtf within a single table (`TRUE`, the
+\item{one_table}{logical(1). If \code{tt} is a (non-\code{MatrixPrintForm}) list,
+should the parts be added to the rtf within a single table (\code{TRUE}, the
 default) or as separate tables. End users will not generally need to set this.}
 
-\item{border_mat}{matrix. A `m x k` matrix where m is the number of columns of `tt`
-and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
+\item{border_mat}{matrix. A \verb{m x k} matrix where m is the number of columns of \code{tt}
+and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}
 for what the matrix should contain. Users should only specify this when the
 default behavior does not meet their needs.}
 
@@ -91,16 +91,16 @@ A function to convert TableTree to .rtf
 This function aids in converting the rtables TableTree into the desired .rtf file.
 }
 \note{
-`file` should always include path. Path will be extracted
-and passed separately to `gentlg`.
+\code{file} should always include path. Path will be extracted
+and passed separately to \code{gentlg}.
 
-When `one_table` is `FALSE`, only the width of the row label
-  pseudocolumn can be directly controlled due to a limitation in
-  `tidytlg::gentlg`. The proportion of the full page that the first value
-  in colwidths would take up is preserved and all other columns equally
-  split the remaining available width. This will cause, e.g., the
-  elements within the allparts rtf generated when `combined_rtf` is `TRUE`
-  to differ visually from the content of the individual part rtfs.
+When \code{one_table} is \code{FALSE}, only the width of the row label
+pseudocolumn can be directly controlled due to a limitation in
+\code{tidytlg::gentlg}. The proportion of the full page that the first value
+in colwidths would take up is preserved and all other columns equally
+split the remaining available width. This will cause, e.g., the
+elements within the allparts rtf generated when \code{combined_rtf} is \code{TRUE}
+to differ visually from the content of the individual part rtfs.
 }
 \seealso{
 Used in all table and listing scripts

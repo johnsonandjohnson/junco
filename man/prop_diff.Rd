@@ -31,67 +31,72 @@ s_proportion_diff_j(
 )
 }
 \arguments{
-\item{df}{(`data.frame`)\cr input data frame.}
+\item{df}{(\code{data.frame})\cr input data frame.}
 
-\item{.var}{(`string`)\cr name of the response variable.}
+\item{.var}{(\code{string})\cr name of the response variable.}
 
-\item{ref_path}{(`character`)\cr path to the reference group.}
+\item{ref_path}{(\code{character})\cr path to the reference group.}
 
-\item{.spl_context}{(`environment`)\cr split context environment.}
+\item{.spl_context}{(\code{environment})\cr split context environment.}
 
 \item{...}{Additional arguments passed to the statistics function.}
 
-\item{.stats}{(`character`)\cr statistics to calculate.}
+\item{.stats}{(\code{character})\cr statistics to calculate.}
 
-\item{.formats}{(`list`)\cr formats for the statistics.}
+\item{.formats}{(\code{list})\cr formats for the statistics.}
 
-\item{.labels}{(`list`)\cr labels for the statistics.}
+\item{.labels}{(\code{list})\cr labels for the statistics.}
 
-\item{.indent_mods}{(`list`)\cr indentation modifications for the statistics.}
+\item{.indent_mods}{(\code{list})\cr indentation modifications for the statistics.}
 
-\item{.ref_group}{(`data.frame`)\cr reference group data frame.}
+\item{.ref_group}{(\code{data.frame})\cr reference group data frame.}
 
-\item{.in_ref_col}{(`logical`)\cr whether the current column is the reference column.}
+\item{.in_ref_col}{(\code{logical})\cr whether the current column is the reference column.}
 
-\item{variables}{(`list`)\cr list with strata variable names.}
+\item{variables}{(\code{list})\cr list with strata variable names.}
 
-\item{conf_level}{(`numeric`)\cr confidence level for the confidence interval.}
+\item{conf_level}{(\code{numeric})\cr confidence level for the confidence interval.}
 
-\item{method}{(`string`)\cr method to use for confidence interval calculation.}
+\item{method}{(\code{string})\cr method to use for confidence interval calculation.}
 
-\item{weights_method}{(`string`)\cr method to use for weights calculation in stratified analysis.}
+\item{weights_method}{(\code{string})\cr method to use for weights calculation in stratified analysis.}
 }
 \value{
-* `a_proportion_diff_j()` returns the corresponding list with formatted [rtables::CellValue()].
+\itemize{
+\item \code{a_proportion_diff_j()} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
+}
 
-* `s_proportion_diff_j()` returns a named list of elements `diff`,
-   `diff_ci`, `diff_est_ci` and `diff_ci_3d`.
+\itemize{
+\item \code{s_proportion_diff_j()} returns a named list of elements \code{diff},
+\code{diff_ci}, \code{diff_est_ci} and \code{diff_ci_3d}.
+}
 }
 \description{
-The analysis function [a_proportion_diff_j()] can be used to create a layout element to estimate
+The analysis function \code{\link[=a_proportion_diff_j]{a_proportion_diff_j()}} can be used to create a layout element to estimate
 the difference in proportion of responders within a studied population. The primary analysis variable,
-`vars`, is a logical variable indicating whether a response has occurred for each record. See the `method`
+\code{vars}, is a logical variable indicating whether a response has occurred for each record. See the \code{method}
 parameter for options of methods to use when constructing the confidence interval of the proportion difference.
-A stratification variable can be supplied via the `strata` element of the `variables` argument.
+A stratification variable can be supplied via the \code{strata} element of the \code{variables} argument.
 }
 \section{Functions}{
 \itemize{
-\item \code{a_proportion_diff_j()}: Formatted analysis function which is used as `afun` in `estimate_proportion_diff()`.
+\item \code{a_proportion_diff_j()}: Formatted analysis function which is used as \code{afun} in \code{estimate_proportion_diff()}.
 
 \item \code{s_proportion_diff_j()}: Statistics function estimating the difference
 in terms of responder proportion.
 
 }}
 \note{
-The [a_proportion_diff_j()] function has the `_j` suffix to distinguish it
-  from [tern::a_proportion_diff()]. The functions here are a copy from the `tern` package
-  with additional features:
+The \code{\link[=a_proportion_diff_j]{a_proportion_diff_j()}} function has the \verb{_j} suffix to distinguish it
+from \code{\link[tern:prop_diff]{tern::a_proportion_diff()}}. The functions here are a copy from the \code{tern} package
+with additional features:
+\itemize{
+\item Additional statistic \code{diff_est_ci} is returned.
+\item \code{ref_path} needs to be provided as extra argument to specify the control group column.
+}
 
-  * Additional statistic `diff_est_ci` is returned.
-  * `ref_path` needs to be provided as extra argument to specify the control group column.
-
-When performing an unstratified analysis, methods `'cmh'`, `'strat_newcombe'`,
-  and `'strat_newcombecc'` are not permitted.
+When performing an unstratified analysis, methods \code{'cmh'}, \code{'strat_newcombe'},
+and \code{'strat_newcombecc'} are not permitted.
 }
 \examples{
 ## 'Mid' case: 4/4 respond in group A, 1/2 respond in group B.

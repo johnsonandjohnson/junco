@@ -1,7 +1,7 @@
 #' @name a_freq_j
 #'
 #' @title Analysis/statistical function for count and percentage in core columns
-#' + (optional) relative risk columns
+#' and (optional) relative risk columns
 #'
 #' @inheritParams proposal_argument_convention
 
@@ -27,8 +27,22 @@
 #'     First element : names of the new levels\cr
 #'     Second element: list with values of the new levels.\cr
 #' @param new_levels_after (`logical`)\cr If `TRUE` new levels will be added after last level.
-#' @param denom (`string`)\cr
-#' One of \cr
+#' @param denom (`string`)\cr See Details.
+#' @param alt_df (`dataframe`)\cr Will be derived based upon alt_df_full and denom_by within a_freq_j.
+#' @param parent_df (`dataframe`)\cr Will be derived within a_freq_j based
+#' upon the input dataframe that goes into build_table (df) and denom_by.\cr
+#' It is a data frame in the higher row-space than the current input df
+#' (which underwent row-splitting by the rtables splitting machinery).
+#'
+#' @param countsource Either `df` or `alt_df`.\cr
+#' When `alt_df` the counts will be based upon the alternative dataframe `alt_df`.\cr
+#' This is useful for subgroup processing,
+#' to present counts of subjects in a subgroup from the alternative dataframe.
+#'
+#' @details
+#'
+#' `denom` controls the denominator used to calculate proportions/percents.
+#' It must be one of \cr
 #' \itemize{
 #' \item \strong{N_col} Column count, \cr
 #' \item \strong{n_df} Number of patients (based upon the main input dataframe `df`),\cr
@@ -45,18 +59,7 @@
 #' This higher row-level split is specified in the argument `denom_by`.\cr
 #' }
 #'
-#' @param alt_df (`dataframe`)\cr Will be derived based upon alt_df_full and denom_by within a_freq_j.
-#' @param parent_df (`dataframe`)\cr Will be derived within a_freq_j based
-#' upon the input dataframe that goes into build_table (df) and denom_by.\cr
-#' It is a data frame in the higher row-space than the current input df
-#' (which underwent row-splitting by the rtables splitting machinery).
-#'
-#' @param countsource Either `df` or `alt_df`.\cr
-#' When `alt_df` the counts will be based upon the alternative dataframe `alt_df`.\cr
-#' This is useful for subgroup processing,
-#' to present counts of subjects in a subgroup from the alternative dataframe.
-#'
-#'
+#' 
 #'
 #' @return
 #' * `s_freq_j`: returns a list of following statistics\cr

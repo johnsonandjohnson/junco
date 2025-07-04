@@ -33,70 +33,75 @@ s_odds_ratio_j(
 )
 }
 \arguments{
-\item{df}{(`data.frame`)\cr input data frame.}
+\item{df}{(\code{data.frame})\cr input data frame.}
 
-\item{.var}{(`string`)\cr name of the response variable.}
+\item{.var}{(\code{string})\cr name of the response variable.}
 
-\item{.df_row}{(`data.frame`)\cr data frame containing all rows.}
+\item{.df_row}{(\code{data.frame})\cr data frame containing all rows.}
 
-\item{ref_path}{(`character`)\cr path to the reference group.}
+\item{ref_path}{(\code{character})\cr path to the reference group.}
 
-\item{.spl_context}{(`environment`)\cr split context environment.}
+\item{.spl_context}{(\code{environment})\cr split context environment.}
 
 \item{...}{Additional arguments passed to the statistics function.}
 
-\item{.stats}{(`character`)\cr statistics to calculate.}
+\item{.stats}{(\code{character})\cr statistics to calculate.}
 
-\item{.formats}{(`list`)\cr formats for the statistics.}
+\item{.formats}{(\code{list})\cr formats for the statistics.}
 
-\item{.labels}{(`list`)\cr labels for the statistics.}
+\item{.labels}{(\code{list})\cr labels for the statistics.}
 
-\item{.indent_mods}{(`list`)\cr indentation modifications for the statistics.}
+\item{.indent_mods}{(\code{list})\cr indentation modifications for the statistics.}
 
-\item{.ref_group}{(`data.frame`)\cr reference group data frame.}
+\item{.ref_group}{(\code{data.frame})\cr reference group data frame.}
 
-\item{.in_ref_col}{(`logical`)\cr whether the current column is the reference column.}
+\item{.in_ref_col}{(\code{logical})\cr whether the current column is the reference column.}
 
-\item{variables}{(`list`)\cr list with arm and strata variable names.}
+\item{variables}{(\code{list})\cr list with arm and strata variable names.}
 
-\item{conf_level}{(`numeric`)\cr confidence level for the confidence interval.}
+\item{conf_level}{(\code{numeric})\cr confidence level for the confidence interval.}
 
-\item{groups_list}{(`list`)\cr list of groups for combination.}
+\item{groups_list}{(\code{list})\cr list of groups for combination.}
 
-\item{na_if_no_events}{(`flag`)\cr whether the point estimate should be `NA` if there
+\item{na_if_no_events}{(\code{flag})\cr whether the point estimate should be \code{NA} if there
 are no events in one arm. The p-value and confidence interval will still be computed.}
 
-\item{method}{(`string`)\cr whether to use the correct (`'exact'`) calculation in the conditional likelihood or one
-of the approximations, or the CMH method. See [survival::clogit()] for details.}
+\item{method}{(\code{string})\cr whether to use the correct (\code{'exact'}) calculation in the conditional likelihood or one
+of the approximations, or the CMH method. See \code{\link[survival:clogit]{survival::clogit()}} for details.}
 }
 \value{
-* `a_odds_ratio_j()` returns the corresponding list with formatted [rtables::CellValue()].
+\itemize{
+\item \code{a_odds_ratio_j()} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
+}
 
-* `s_odds_ratio_j()` returns a named list with the statistics `or_ci`
-  (containing `est`, `lcl`, and `ucl`), `pval` and `n_tot`.
+\itemize{
+\item \code{s_odds_ratio_j()} returns a named list with the statistics \code{or_ci}
+(containing \code{est}, \code{lcl}, and \code{ucl}), \code{pval} and \code{n_tot}.
+}
 }
 \description{
-`r lifecycle::badge('stable')`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \section{Functions}{
 \itemize{
-\item \code{a_odds_ratio_j()}: Formatted analysis function which is used as `afun`. Note that the
-junco specific `ref_path` and `.spl_context` arguments are used for reference column information.
+\item \code{a_odds_ratio_j()}: Formatted analysis function which is used as \code{afun}. Note that the
+junco specific \code{ref_path} and \code{.spl_context} arguments are used for reference column information.
 
 \item \code{s_odds_ratio_j()}: Statistics function which estimates the odds ratio
-between a treatment and a control. A `variables` list with `arm` and `strata`
+between a treatment and a control. A \code{variables} list with \code{arm} and \code{strata}
 variable names must be passed if a stratified analysis is required.
 
 }}
 \note{
-The `a_odds_ratio_j()` and `s_odds_ratio_j()` functions have the `_j` suffix to distinguish them
-from [tern::a_odds_ratio()] and [tern::s_odds_ratio()], respectively.
+The \code{a_odds_ratio_j()} and \code{s_odds_ratio_j()} functions have the \verb{_j} suffix to distinguish them
+from \code{\link[tern:odds_ratio]{tern::a_odds_ratio()}} and \code{\link[tern:odds_ratio]{tern::s_odds_ratio()}}, respectively.
 These functions differ as follows:
+\itemize{
+\item Additional \code{method = 'cmh'} option is provided to calculate the Cochran-Mantel-Haenszel estimate.
+\item The p-value is returned as an additional statistic.
+}
 
-* Additional `method = 'cmh'` option is provided to calculate the Cochran-Mantel-Haenszel estimate.
-* The p-value is returned as an additional statistic.
-
-Once these updates are contributed back to `tern`, they can later be replaced by the `tern` versions.
+Once these updates are contributed back to \code{tern}, they can later be replaced by the \code{tern} versions.
 }
 \examples{
 set.seed(12)
