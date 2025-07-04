@@ -14,7 +14,9 @@ NULL
 #' @param inriskdiffcol (`logical`)\cr flag indicating if the function is called within a risk difference column.
 #'
 #' @return
-#' * `s_patyrs_j()` return x a list containing the patient years statistics.  The list of available statistics for can be viewed by running `junco_get_stats("a_patyrs_j")`, currently this is just a single statistic `patyrs`, patient years of exposure.
+#' * `s_patyrs_j()` return x a list containing the patient years statistics.
+#' The list of available statistics for can be viewed by running `junco_get_stats("a_patyrs_j")`,
+#' currently this is just a single statistic `patyrs`, patient years of exposure.
 #'
 #' @keywords internal
 s_patyrs_j <- function(
@@ -49,7 +51,8 @@ s_patyrs_j <- function(
   return(x)
 }
 
-#' @describeIn a_patyrs_j Formatted analysis function for patient years summary which is used as `afun` in `analyze` or `cfun` in `summarize_row_groups`.
+#' @describeIn a_patyrs_j Formatted analysis function for patient years summary which is used
+#' as `afun` in `analyze` or `cfun` in `summarize_row_groups`.
 #'
 #'
 #' @param df (`data.frame`)\cr data set containing all analysis variables.
@@ -67,15 +70,15 @@ s_patyrs_j <- function(
 #' * `a_patyrs_j` returns the corresponding list with formatted [rtables::CellValue()].
 #'
 #' @export
-#' 
+#'
 #' @examples
 #' library(tern)
 #' library(dplyr)
 #' trtvar <- "ARM"
 #' ctrl_grp <- "B: Placebo"
 #' cutoffd <- as.Date("2023-09-24")
-#' 
-#' 
+#'
+#'
 #' adexsum <- ex_adsl %>%
 #'   create_colspan_var(
 #'     non_active_grp          = ctrl_grp,
@@ -83,7 +86,7 @@ s_patyrs_j <- function(
 #'     active_grp_span_lbl     = "Active Study Agent",
 #'     colspan_var             = "colspan_trt",
 #'     trt_var                 = trtvar
-#'   ) %>% 
+#'   ) %>%
 #'   mutate(
 #'     rrisk_header = "Risk Difference (95% CI)",
 #'     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
@@ -91,19 +94,18 @@ s_patyrs_j <- function(
 #'                         TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1))
 #'   ) %>%
 #'   select(USUBJID, !!rlang::sym(trtvar), colspan_trt, rrisk_header, rrisk_label, TRTDURY)
-#' 
-#' 
+#'
 #' adae <- ex_adae %>%
-#'   group_by(USUBJID, AEDECOD) %>% 
-#'   select(USUBJID, AEDECOD, ASTDY) %>%  
-#'   mutate(rwnum = row_number()) %>% 
+#'   group_by(USUBJID, AEDECOD) %>%
+#'   select(USUBJID, AEDECOD, ASTDY) %>%
+#'   mutate(rwnum = row_number()) %>%
 #'   mutate(AOCCPFL = case_when(rwnum == 1 ~ "Y",
-#'                              TRUE ~ NA)) %>% 
-#'   filter(AOCCPFL == "Y") 
-#' 
+#'                              TRUE ~ NA)) %>%
+#'   filter(AOCCPFL == "Y")
+#'
 #' # left join -- subjects without ae will be handled via alt_counts_df dataframe
 #' aefup <- left_join(adae, adexsum, by = "USUBJID")
-#' 
+#'
 #' colspan_trt_map <- create_colspan_map(adexsum,
 #'                                       non_active_grp = ctrl_grp,
 #'                                       non_active_grp_span_lbl = " ",
@@ -111,13 +113,13 @@ s_patyrs_j <- function(
 #'                                       colspan_var = "colspan_trt",
 #'                                       trt_var = trtvar
 #' )
-#' 
+#'
 #' ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
-#' 
+#'
 #' ################################################################################
 #' # Define layout and build table:
 #' ################################################################################
-#' 
+#'
 #' lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") %>%
 #'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%
 #'   split_cols_by(trtvar) %>%
@@ -127,10 +129,10 @@ s_patyrs_j <- function(
 #'           nested = FALSE,
 #'           show_labels = "hidden",
 #'           afun = a_patyrs_j
-#'   ) 
+#'   )
 #' result <- build_table(lyt, aefup, alt_counts_df = adexsum)
-#' result 
-#' 
+#' result
+#'
 a_patyrs_j <- function(
   df,
   .var,
@@ -149,11 +151,7 @@ a_patyrs_j <- function(
     stop("a_patyrs_j: .stats must be 'patyrs'.")
   }
 
-  if (source == "alt_df" && is.null(.alt_df_full)) {
-    stop(paste(
-      "a_patyrs_j: .alt_df_full cannot be NULL when source = 'alt_df'."
-    ))
-  }
+  check_alt_df_full(source, "alt_df", .alt_df_full)
 
   col_expr <- .spl_context$cur_col_expr[[1]]
   ## colid can be used to figure out if we're in the relative risk columns or not
@@ -214,8 +212,8 @@ a_patyrs_j <- function(
 
 #' Exposure-Adjusted Incidence Rate
 #' @description
-#' Statistical/Analysis Function for presenting Exposure-Adjusted Incidence Rate summary data 
-#' 
+#' Statistical/Analysis Function for presenting Exposure-Adjusted Incidence Rate summary data
+#'
 #'
 #' @name a_eair100_j
 NULL
@@ -363,7 +361,8 @@ s_eair100_levii_j <- function(
 }
 
 #' @describeIn a_eair100_j
-#' Formatted analysis function for exposure adjusted incidence rate summary which is used as `afun` in `analyze` or `cfun` in `summarize_row_groups`.
+#' Formatted analysis function for exposure adjusted incidence rate summary which is
+#' used as `afun` in `analyze` or `cfun` in `summarize_row_groups`.
 #'
 #'
 #' @param df (`data.frame`)\cr data set containing all analysis variables.
@@ -390,15 +389,15 @@ s_eair100_levii_j <- function(
 #'  * `a_eair100_j` returns the corresponding list with formatted [rtables::CellValue()].
 #'
 #' @export
-#' 
+#'
 #' @examples
 #' library(tern)
 #' library(dplyr)
 #' trtvar <- "ARM"
 #' ctrl_grp <- "B: Placebo"
 #' cutoffd <- as.Date("2023-09-24")
-#' 
-#' 
+#'
+#'
 #' adexsum <- ex_adsl %>%
 #'   create_colspan_var(
 #'     non_active_grp          = ctrl_grp,
@@ -406,7 +405,7 @@ s_eair100_levii_j <- function(
 #'     active_grp_span_lbl     = "Active Study Agent",
 #'     colspan_var             = "colspan_trt",
 #'     trt_var                 = trtvar
-#'   ) %>% 
+#'   ) %>%
 #'   mutate(
 #'     rrisk_header = "Risk Difference (95% CI)",
 #'     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
@@ -414,20 +413,20 @@ s_eair100_levii_j <- function(
 #'                         TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1))
 #'   ) %>%
 #'   select(USUBJID, !!rlang::sym(trtvar), colspan_trt, rrisk_header, rrisk_label, TRTDURY)
-#' 
+#'
 #' adexsum$TRTDURY <- as.numeric(adexsum$TRTDURY)
-#' 
+#'
 #' adae <- ex_adae %>%
-#'   group_by(USUBJID, AEDECOD) %>% 
-#'   select(USUBJID, AEDECOD, ASTDY) %>%  
-#'   mutate(rwnum = row_number()) %>% 
+#'   group_by(USUBJID, AEDECOD) %>%
+#'   select(USUBJID, AEDECOD, ASTDY) %>%
+#'   mutate(rwnum = row_number()) %>%
 #'   mutate(AOCCPFL = case_when(rwnum == 1 ~ "Y",
-#'                              TRUE ~ NA)) %>% 
-#'   filter(AOCCPFL == "Y") 
-#' 
+#'                              TRUE ~ NA)) %>%
+#'   filter(AOCCPFL == "Y")
+#'
 #' # left join -- subjects without ae will be handled via alt_counts_df dataframe
 #' aefup <- left_join(adae, adexsum, by = "USUBJID")
-#' 
+#'
 #' colspan_trt_map <- create_colspan_map(adexsum,
 #'                                       non_active_grp = ctrl_grp,
 #'                                       non_active_grp_span_lbl = " ",
@@ -435,13 +434,13 @@ s_eair100_levii_j <- function(
 #'                                       colspan_var = "colspan_trt",
 #'                                       trt_var = trtvar
 #' )
-#' 
+#'
 #' ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
-#' 
+#'
 #' ################################################################################
 #' # Define layout and build table:
 #' ################################################################################
-#' 
+#'
 #' lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") %>%
 #'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%
 #'   split_cols_by(trtvar) %>%
@@ -451,7 +450,7 @@ s_eair100_levii_j <- function(
 #'           nested = FALSE,
 #'           show_labels = "hidden",
 #'           afun = a_patyrs_j
-#'   ) %>% 
+#'   ) %>%
 #' analyze(vars = "AEDECOD",
 #'         nested = FALSE,
 #'         afun = a_eair100_j,
@@ -461,11 +460,11 @@ s_eair100_levii_j <- function(
 #'           occ_dy = "ASTDY",
 #'           ref_path = ref_path,
 #'           drop_levels = TRUE)
-#' ) 
-#'    
+#' )
+#'
 #' result <- build_table(lyt, aefup, alt_counts_df = adexsum)
 #' head(result, 5)
-#' 
+#'
 a_eair100_j <- function(
   df,
   labelstr = NULL,
