@@ -246,7 +246,7 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list()) 
 #' @export
 #'
 #' @note This function has the `_j` suffix to distinguish it from [mmrm::fit_mmrm()].
-#'   It is a copy from the `tern.mmrm` package and later will be replaced by [tern.mmrm::fit_mmrm()].
+#'   It is a copy from the `tern.mmrm` package and later will be replaced by tern.mmrm::fit_mmrm().
 #'   No new features are included in this function here.
 #'
 #' @examples
