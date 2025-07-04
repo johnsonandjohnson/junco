@@ -37,15 +37,15 @@ anl <- tern::tern_ex_adtte |>
   dplyr::mutate(EVENT = 1 - CNSR)
 
 variables <- list(
-  time = 'AVAL',
-  event = 'EVENT',
-  arm = 'ARM',
-  covariates = c('SEX', 'AGE')
+  time = "AVAL",
+  event = "EVENT",
+  arm = "ARM",
+  covariates = c("SEX", "AGE")
 )
 
 basic_table() |>
   summarize_coxreg_multivar(
-    var = 'STUDYID',
+    var = "STUDYID",
     variables = variables
   ) |>
   build_table(df = anl)

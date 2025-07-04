@@ -77,16 +77,16 @@ adtte_f <- tern::tern_ex_adtte |>
   )
 
 basic_table() |>
-  split_cols_by(var = 'ARMCD') |>
+  split_cols_by(var = "ARMCD") |>
   analyze(
-    vars = 'AVAL',
+    vars = "AVAL",
     afun = a_event_free,
     show_labels = "hidden",
     na_str = tern::default_na_str(),
     extra_args = list(
-      time_unit = 'week',
+      time_unit = "week",
       time_point = 3,
-      is_event = 'is_event'
+      is_event = "is_event"
     )
   ) |>
   build_table(df = adtte_f)
@@ -99,9 +99,9 @@ adtte_f <- tern::tern_ex_adtte |>
 
 s_event_free(
   df = adtte_f,
-  .var = 'AVAL',
+  .var = "AVAL",
   time_point = 6,
-  is_event = 'is_event',
-  time_unit = 'month'
+  is_event = "is_event",
+  time_unit = "month"
 )
 }

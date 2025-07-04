@@ -25,11 +25,11 @@ for stratification factors by applying Cochran-Mantel-Haenszel (CMH) weights.
 
 set.seed(2)
 rsp <- sample(c(TRUE, FALSE), 100, TRUE)
-grp <- sample(c('Placebo', 'Treatment'), 100, TRUE)
-grp <- factor(grp, levels = c('Placebo', 'Treatment'))
+grp <- sample(c("Placebo", "Treatment"), 100, TRUE)
+grp <- factor(grp, levels = c("Placebo", "Treatment"))
 strata_data <- data.frame(
-  'f1' = sample(c('a', 'b'), 100, TRUE),
-  'f2' = sample(c('x', 'y', 'z'), 100, TRUE),
+  "f1" = sample(c("a", "b"), 100, TRUE),
+  "f2" = sample(c("x", "y", "z"), 100, TRUE),
   stringsAsFactors = TRUE
 )
 

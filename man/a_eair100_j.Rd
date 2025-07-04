@@ -144,8 +144,10 @@ adexsum <- ex_adsl \%>\%
   mutate(
     rrisk_header = "Risk Difference (95\% CI)",
     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
-    TRTDURY = case_when(!is.na(EOSDY) ~ EOSDY,
-                        TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1))
+    TRTDURY = case_when(
+      !is.na(EOSDY) ~ EOSDY,
+      TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
+    )
   ) \%>\%
   select(USUBJID, !!rlang::sym(trtvar), colspan_trt, rrisk_header, rrisk_label, TRTDURY)
 
@@ -155,19 +157,21 @@ adae <- ex_adae \%>\%
   group_by(USUBJID, AEDECOD) \%>\%
   select(USUBJID, AEDECOD, ASTDY) \%>\%
   mutate(rwnum = row_number()) \%>\%
-  mutate(AOCCPFL = case_when(rwnum == 1 ~ "Y",
-                             TRUE ~ NA)) \%>\%
+  mutate(AOCCPFL = case_when(
+    rwnum == 1 ~ "Y",
+    TRUE ~ NA
+  )) \%>\%
   filter(AOCCPFL == "Y")
 
 # left join -- subjects without ae will be handled via alt_counts_df dataframe
 aefup <- left_join(adae, adexsum, by = "USUBJID")
 
 colspan_trt_map <- create_colspan_map(adexsum,
-                                      non_active_grp = ctrl_grp,
-                                      non_active_grp_span_lbl = " ",
-                                      active_grp_span_lbl = "Active Study Agent",
-                                      colspan_var = "colspan_trt",
-                                      trt_var = trtvar
+  non_active_grp = ctrl_grp,
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = trtvar
 )
 
 ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
@@ -182,20 +186,22 @@ lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_se
   split_cols_by("rrisk_header", nested = FALSE) \%>\%
   split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) \%>\%
   analyze("TRTDURY",
-          nested = FALSE,
-          show_labels = "hidden",
-          afun = a_patyrs_j
+    nested = FALSE,
+    show_labels = "hidden",
+    afun = a_patyrs_j
   ) \%>\%
-analyze(vars = "AEDECOD",
-        nested = FALSE,
-        afun = a_eair100_j,
-        extra_args = list(
-          fup_var = "TRTDURY",
-          occ_var = "AOCCPFL",
-          occ_dy = "ASTDY",
-          ref_path = ref_path,
-          drop_levels = TRUE)
-)
+  analyze(
+    vars = "AEDECOD",
+    nested = FALSE,
+    afun = a_eair100_j,
+    extra_args = list(
+      fup_var = "TRTDURY",
+      occ_var = "AOCCPFL",
+      occ_dy = "ASTDY",
+      ref_path = ref_path,
+      drop_levels = TRUE
+    )
+  )
 
 result <- build_table(lyt, aefup, alt_counts_df = adexsum)
 head(result, 5)

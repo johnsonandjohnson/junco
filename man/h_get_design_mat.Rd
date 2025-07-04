@@ -18,6 +18,6 @@ The logical matrix with dummy encoding of all factor levels.
 Helper Function to Create Logical Design Matrix from Factor Variable
 }
 \examples{
-h_get_design_mat(df = data.frame(a = factor(c('a', 'b', 'a'))), .var = 'a')
+h_get_design_mat(df = data.frame(a = factor(c("a", "b", "a"))), .var = "a")
 }
 \keyword{internal}

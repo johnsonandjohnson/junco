@@ -26,9 +26,9 @@ formula directly sometimes.
 }
 \examples{
 vars <- list(
-  response = 'AVAL', covariates = c('RACE', 'SEX'),
-  id = 'USUBJID', arm = 'ARMCD', visit = 'AVISIT'
+  response = "AVAL", covariates = c("RACE", "SEX"),
+  id = "USUBJID", arm = "ARMCD", visit = "AVISIT"
 )
-build_formula(vars, 'auto-regressive')
+build_formula(vars, "auto-regressive")
 build_formula(vars)
 }

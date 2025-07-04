@@ -36,7 +36,7 @@ VALUE <- 5
 myfun <- function(x) {
   x + day(VALUE) # From lubridate::day()
 }
-make_rbmi_cluster(5, list(VALUE = VALUE, myfun = myfun), c('lubridate'))
+make_rbmi_cluster(5, list(VALUE = VALUE, myfun = myfun), c("lubridate"))
 closeAllConnections()
 
 # Using a already created cluster

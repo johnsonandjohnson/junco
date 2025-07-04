@@ -119,12 +119,12 @@ library(dplyr)
 
 ADEX <- data.frame(
   USUBJID = c(
-    'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-    'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
   ),
   TRT01A = c(
-    'ARMA', 'ARMA', 'ARMA', 'ARMA', 'ARMA',
-    'Placebo', 'Placebo', 'Placebo', 'ARMA', 'ARMA'
+    "ARMA", "ARMA", "ARMA", "ARMA", "ARMA",
+    "Placebo", "Placebo", "Placebo", "ARMA", "ARMA"
   ),
   AVAL = c(56, 78, 67, 87, 88, 93, 39, 87, 65, 55)
 )
@@ -132,42 +132,42 @@ ADEX <- data.frame(
 ADEX <- ADEX |>
   mutate(TRT01A = as.factor(TRT01A))
 
-ADEX$colspan_trt <- factor(ifelse(ADEX$TRT01A == 'Placebo', ' ', 'Active Study Agent'),
-  levels = c('Active Study Agent', ' ')
+ADEX$colspan_trt <- factor(ifelse(ADEX$TRT01A == "Placebo", " ", "Active Study Agent"),
+  levels = c("Active Study Agent", " ")
 )
 
-ADEX$diff_header <- 'Difference in Means (95\% CI)'
-ADEX$diff_label <- paste(ADEX$TRT01A, paste('vs', 'Placebo'))
+ADEX$diff_header <- "Difference in Means (95\% CI)"
+ADEX$diff_label <- paste(ADEX$TRT01A, paste("vs", "Placebo"))
 
 colspan_trt_map <- create_colspan_map(ADEX,
-  non_active_grp = 'Placebo',
-  non_active_grp_span_lbl = ' ',
-  active_grp_span_lbl = 'Active Study Agent',
-  colspan_var = 'colspan_trt',
-  trt_var = 'TRT01A'
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
 )
-ref_path <- c('colspan_trt', '', 'TRT01A', 'Placebo')
+ref_path <- c("colspan_trt", "", "TRT01A", "Placebo")
 
 lyt <- basic_table() |>
   split_cols_by(
-    'colspan_trt',
+    "colspan_trt",
     split_fun = trim_levels_to_map(map = colspan_trt_map)
   ) |>
-  split_cols_by('TRT01A') |>
-  split_cols_by('diff_header', nested = FALSE) |>
+  split_cols_by("TRT01A") |>
+  split_cols_by("diff_header", nested = FALSE) |>
   split_cols_by(
-    'TRT01A',
-    split_fun = remove_split_levels('Placebo'),
-    labels_var = 'diff_label'
+    "TRT01A",
+    split_fun = remove_split_levels("Placebo"),
+    labels_var = "diff_label"
   ) |>
-  analyze('AVAL',
-    afun = a_summarize_ex_j, var_labels = 'Duration of treatment (Days)',
-    show_labels = 'visible',
+  analyze("AVAL",
+    afun = a_summarize_ex_j, var_labels = "Duration of treatment (Days)",
+    show_labels = "visible",
     indent_mod = 0L,
     extra_args = list(
       daysconv = 1,
       ref_path = ref_path,
-      variables = list(arm = 'TRT01A', covariates = NULL),
+      variables = list(arm = "TRT01A", covariates = NULL),
       ancova = TRUE,
       comp_btw_group = TRUE
     )
