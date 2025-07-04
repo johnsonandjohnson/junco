@@ -895,10 +895,11 @@ a_freq_j <- function(
   )
 
   ### add extra blankline to the end of inrows --- as long as section_div is not working as expected
-  if (!is.null(inrows) && extrablankline ||
-        (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
+  # nolint start
+   if (!is.null(inrows) && extrablankline ||
+    (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
     inrows <- add_blank_line_rcells(inrows)
-  }
+  } # nolint end
 
   return(inrows)
 }

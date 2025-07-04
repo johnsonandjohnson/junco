@@ -12,15 +12,15 @@
 #'   dplyr::mutate(EVENT = 1 - CNSR)
 #'
 #' variables <- list(
-#'   time = 'AVAL',
-#'   event = 'EVENT',
-#'   arm = 'ARM',
-#'   covariates = c('SEX', 'AGE')
+#'   time = "AVAL",
+#'   event = "EVENT",
+#'   arm = "ARM",
+#'   covariates = c("SEX", "AGE")
 #' )
 #'
 #' control <- tern::control_coxreg(
 #'   conf_level = 0.9,
-#'   ties = 'efron'
+#'   ties = "efron"
 #' )
 #'
 #' fit <- tern::fit_coxreg_multivar(
@@ -137,30 +137,29 @@ tefos03_afun <- function(df, .var, .spl_context, variables, control, formats) {
 #'   dplyr::mutate(EVENT = 1 - CNSR)
 #'
 #' variables <- list(
-#'   time = 'AVAL',
-#'   event = 'EVENT',
-#'   arm = 'ARM',
-#'   covariates = c('SEX', 'AGE')
+#'   time = "AVAL",
+#'   event = "EVENT",
+#'   arm = "ARM",
+#'   covariates = c("SEX", "AGE")
 #' )
 #'
 #' basic_table() |>
 #'   summarize_coxreg_multivar(
-#'     var = 'STUDYID',
+#'     var = "STUDYID",
 #'     variables = variables
 #'   ) |>
 #'   build_table(df = anl)
 summarize_coxreg_multivar <- function(
-  lyt,
-  var,
-  variables,
-  control = control_coxreg(),
-  formats = list(
-    coef_se = jjcsformat_xx("xx.xx (xx.xx)"),
-    hr_est = jjcsformat_xx("xx.xx"),
-    hr_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
-    pval = jjcsformat_pval_fct(0)
-  )
-) {
+    lyt,
+    var,
+    variables,
+    control = control_coxreg(),
+    formats = list(
+      coef_se = jjcsformat_xx("xx.xx (xx.xx)"),
+      hr_est = jjcsformat_xx("xx.xx"),
+      hr_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+      pval = jjcsformat_pval_fct(0)
+    )) {
   second_split_fun <- tefos03_second_split_fun_fct(conf_level = control$conf_level)
   lyt |>
     split_cols_by(var = var, split_fun = tefos03_first_split_fun) |>
