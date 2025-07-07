@@ -509,7 +509,7 @@ a_summarize_aval_chg_diff_j <- function(
 
     fmt_d <- .formats[[mystat1]]
     formatting_fun <- .formats_fun[[mystat1]]
-    d <- h_get_d(d, .df_row, .var, d_unspecified = 0)
+    d <- h_get_d(d, .df_row, .var = flast_val, d_unspecified = 0)
     fmt <- format_xxd(fmt_d, d = d, formatting_fun = formatting_fun)[[1]]
   }
   x_stats <- x_stats[[mystat]]

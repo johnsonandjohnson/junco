@@ -170,11 +170,14 @@ format_xxd <- function(str, d = 0, formatting_fun = NULL){
 #' junco_get_precision_df(formatters::ex_adsl, precisionon = "BMRKR1", decimal = 1)
 #' junco_get_precision_df(formatters::ex_adsl, precisionon = "BMRKR1", decimal = 7)
 #' junco_get_precision_df(formatters::ex_adsl, precisionon = "AGE", decimal = 7)
-#' prec_df <- junco_get_precision_df(formatters::ex_advs, precisionon = "AVAL", precisionby = c("PARAMCD"), decimal = 3) 
+#' prec_df <- junco_get_precision_df(formatters::ex_advs, 
+#' precisionon = "AVAL", precisionby = c("PARAMCD"), decimal = 3) 
 #' prec_df
 #' 
 #' @order 4
 junco_get_precision_df <- function(df, decimal = 3, precisionby = NULL, precisionon){
+  
+  make_precision_data <- utils::getFromNamespace("make_precision_data", "tidytlg")
   
   res <- make_precision_data(
     df = df,
