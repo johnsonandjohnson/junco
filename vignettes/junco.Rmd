@@ -53,7 +53,6 @@ advs <- ex_advs
 Some common data manipulation on/from these datasets, such as adding extra variables and defining some tabulation settings, like treatment variable, control group for the table.
 
 ```{r data_manipulation, message=FALSE}
-
 trtvar <- "ARM"
 ctrl_grp <- "B: Placebo"
 
@@ -82,11 +81,10 @@ ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
 adae[["TRTEMFL"]] <- "Y"
 
 # add adsl variables to adae
-adae <- adae %>% left_join(., adsl) 
-advs <- advs %>% left_join(., adsl) 
+adae <- adae %>% left_join(., adsl)
+advs <- advs %>% left_join(., adsl)
 
 advs[advs[["ABLFL"]] == "Y", "CHG"] <- NA
-
 ```
 
 ## `junco` Analysis Functions 
@@ -125,7 +123,6 @@ extra_args_rr <- list(
   method = "wald",
   .stats = c("count_unique_fraction")
 )
-
 ```
 
 
@@ -145,12 +142,14 @@ lyt <- basic_table(
   split_cols_by(trtvar, show_colcounts = TRUE) %>%
   ## risk diff columns, note nested = FALSE
   split_cols_by("rrisk_header", nested = FALSE) %>%
-  split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp),
+  split_cols_by(trtvar,
+    labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp),
     show_colcounts = FALSE
   ) %>%
-  analyze("TRTEMFL", afun = a_freq_j,
+  analyze("TRTEMFL",
+    afun = a_freq_j,
     extra_args = append(extra_args_rr, list(val = "Y", label = "Number of subjects with AE"))
-  ) %>%   
+  ) %>%
   split_rows_by("AEBODSYS",
     split_label = "System Organ Class",
     split_fun = trim_levels_in_group("AEDECOD"),
@@ -158,10 +157,12 @@ lyt <- basic_table(
     section_div = c(" "),
     nested = FALSE
   ) %>%
-  summarize_row_groups("AEBODSYS", cfun = a_freq_j,
+  summarize_row_groups("AEBODSYS",
+    cfun = a_freq_j,
     extra_args = extra_args_rr
   ) %>%
-  analyze("AEDECOD", afun = a_freq_j,
+  analyze("AEDECOD",
+    afun = a_freq_j,
     extra_args = extra_args_rr
   )
 ```
@@ -177,14 +178,13 @@ head(tbl, 10)
 
 Here is a similar table generated with the tern functions (`summarize_occurrences` and `count_occurrences`), as close as possible to our target AE table we produced before in `tbl`.
 ```{r tern_layout_and_table}
-
 lyt_tern <- basic_table(
   top_level_section_div = " ",
   colcount_format = "N=xx"
 ) %>%
   ## main columns
-  split_cols_by(trtvar, 
-    show_colcounts = TRUE, 
+  split_cols_by(trtvar,
+    show_colcounts = TRUE,
     split_fun = add_riskdiff(arm_x = ctrl_grp, arm_y = non_ctrl_grp)
   ) %>%
   analyze_num_patients(
@@ -192,9 +192,9 @@ lyt_tern <- basic_table(
     .stats = c("unique"),
     .labels = c(
       unique = "Total number of patients with at least one adverse event"
-    ), 
+    ),
     riskdiff = TRUE
-  ) %>%  
+  ) %>%
   split_rows_by("AEBODSYS",
     split_label = "System Organ Class",
     split_fun = trim_levels_in_group("AEDECOD"),
@@ -202,12 +202,14 @@ lyt_tern <- basic_table(
     section_div = c(" "),
     nested = FALSE
   ) %>%
-  summarize_occurrences(var = "AEBODSYS",
+  summarize_occurrences(
+    var = "AEBODSYS",
     denom = "N_col",
     riskdiff = TRUE,
     .stats = c("count_fraction")
   ) %>%
-  count_occurrences(vars = "AEDECOD",  
+  count_occurrences(
+    vars = "AEDECOD",
     denom = "N_col",
     riskdiff = TRUE,
     .stats = c("count_fraction")
@@ -239,8 +241,10 @@ tbl2 <- basic_table(
   split_cols_by(trtvar, show_colcounts = TRUE) %>%
   ## risk diff columns, note nested = FALSE
   split_cols_by("rrisk_header", nested = FALSE) %>%
-  split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp),
-    show_colcounts = FALSE) %>%
+  split_cols_by(trtvar,
+    labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp),
+    show_colcounts = FALSE
+  ) %>%
   split_rows_by("AEBODSYS",
     split_label = "System Organ Class",
     split_fun = trim_levels_in_group("AEDECOD"),
@@ -248,30 +252,30 @@ tbl2 <- basic_table(
     section_div = c(" "),
     nested = FALSE
   ) %>%
-  summarize_row_groups("AEBODSYS", cfun = a_freq_j,
+  summarize_row_groups("AEBODSYS",
+    cfun = a_freq_j,
     extra_args = extra_args_rr
   ) %>%
-  analyze("AEDECOD", afun = a_freq_j,
+  analyze("AEDECOD",
+    afun = a_freq_j,
     extra_args = extra_args_rr
-  ) %>% 
+  ) %>%
   build_table(adae, alt_counts_df = adsl)
 
 head(tbl2, 10)
-
 ```
 
 ### Creation of Subgroup tables with `a_freq_j`
 The junco function `a_freq_j` also supports the creation of subgroup tables, which is demonstrated in below table. 
 
 ```{r subgroup_tables, eval = TRUE} 
-
 extra_args_rr_common <- list(
   denom = "n_altdf",
   denom_by = "SEX"
 )
 
 extra_args_rr <- append(
-  extra_args_rr_common, 
+  extra_args_rr_common,
   list(
     riskdiff = FALSE,
     extrablankline = TRUE,
@@ -281,7 +285,7 @@ extra_args_rr <- append(
 )
 
 extra_args_rr2 <- append(
-  extra_args_rr_common, 
+  extra_args_rr_common,
   list(
     riskdiff = TRUE,
     ref_path = ref_path,
@@ -300,10 +304,13 @@ tbl <- basic_table(
   split_cols_by(trtvar, show_colcounts = TRUE) %>%
   ## risk diff columns, note nested = FALSE
   split_cols_by("rrisk_header", nested = FALSE) %>%
-  split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp),
-    show_colcounts = FALSE) %>%
-  split_rows_by("SEX", split_fun = drop_split_levels) %>% 
-  summarize_row_groups("SEX", cfun = a_freq_j,
+  split_cols_by(trtvar,
+    labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp),
+    show_colcounts = FALSE
+  ) %>%
+  split_rows_by("SEX", split_fun = drop_split_levels) %>%
+  summarize_row_groups("SEX",
+    cfun = a_freq_j,
     extra_args = extra_args_rr
   ) %>%
   split_rows_by("TRTEMFL",
@@ -313,25 +320,26 @@ tbl <- basic_table(
   ) %>%
   summarize_row_groups("TRTEMFL",
     cfun = a_freq_j,
-    extra_args = append(extra_args_rr2, list(label =  "Subjects with >=1 AE", extrablankline = TRUE))
-  ) %>%    
-   split_rows_by("AEBODSYS",
+    extra_args = append(extra_args_rr2, list(label = "Subjects with >=1 AE", extrablankline = TRUE))
+  ) %>%
+  split_rows_by("AEBODSYS",
     split_label = "System Organ Class",
     split_fun = trim_levels_in_group("AEDECOD"),
     label_pos = "topleft",
     section_div = c(" "),
     nested = TRUE
   ) %>%
-  summarize_row_groups("AEBODSYS", cfun = a_freq_j,
+  summarize_row_groups("AEBODSYS",
+    cfun = a_freq_j,
     extra_args = extra_args_rr2
   ) %>%
-  analyze("AEDECOD", afun = a_freq_j,
+  analyze("AEDECOD",
+    afun = a_freq_j,
     extra_args = extra_args_rr2
-  ) %>% 
+  ) %>%
   build_table(adae, alt_counts_df = adsl)
 
- head(tbl, 30)
-
+head(tbl, 30)
 ```
 
 
@@ -357,62 +365,62 @@ multivars <- c("AVAL", "AVAL", "CHG")
 extra_args_3col <- list(
   format_na_str = rep("NE", 3), 
   ref_path = ref_path,
-  ancova = FALSE, 
+  ancova = FALSE,
   comp_btw_group = TRUE,
   multivars = multivars
 )
 
 
 lyt_vs_p1 <- basic_table(
-  show_colcounts = FALSE, 
+  show_colcounts = FALSE,
   colcount_format = "N=xx"
 ) %>%
   ### first columns
-  split_cols_by("colspan_trt", 
-    split_fun = trim_levels_to_map(map = colspan_trt_map), 
+  split_cols_by("colspan_trt",
+    split_fun = trim_levels_to_map(map = colspan_trt_map),
     show_colcounts = FALSE
   ) %>%
   split_cols_by(trtvar,
     show_colcounts = TRUE, colcount_format = "N=xx"
   ) %>%
   ## set up a 3 column split
-  split_cols_by_multivar(multivars, 
+  split_cols_by_multivar(multivars,
     varlabels = c("n/N (%)", "Mean (95% CI)", "Mean Change From Baseline (95% CI)")
   ) %>%
-  split_rows_by("PARAM", 
-    label_pos = "topleft", 
-    split_label = "Parameter", 
-    section_div = " ", 
+  split_rows_by("PARAM",
+    label_pos = "topleft",
+    split_label = "Parameter",
+    section_div = " ",
     split_fun = drop_split_levels
   ) %>%
   ## note the child_labels = hidden for AVISIT, these labels will be taken care off by
   ## applying function summarize_aval_chg_diff further in the layout
-  split_rows_by("AVISIT", 
-    label_pos = "topleft", 
-    split_label = "Study Visit", 
-    split_fun = drop_split_levels, 
+  split_rows_by("AVISIT",
+    label_pos = "topleft",
+    split_label = "Study Visit",
+    split_fun = drop_split_levels,
     child_labels = "hidden"
   )
 
 
-lyt_vs <- lyt_vs_p1 %>% 
+lyt_vs <- lyt_vs_p1 %>%
   ### restart for the rrisk_header columns - note the nested = FALSE option
   ### also note the child_labels = "hidden" in both PARAM and AVISIT
   split_cols_by("rrisk_header_vs", nested = FALSE) %>%
   split_cols_by(trtvar,
-    split_fun = remove_split_levels(ctrl_grp), 
+    split_fun = remove_split_levels(ctrl_grp),
     labels_var = "rrisk_label",
-    show_colcounts = TRUE, 
+    show_colcounts = TRUE,
     colcount_format = "N=xx"
   ) %>%
   ### difference columns : just 1 column & analysis needs to be done on change
-  split_cols_by_multivar(multivars[3], 
+  split_cols_by_multivar(multivars[3],
     varlabels = c(" ")
   ) %>%
   ### the variable passed here in analyze is not used (STUDYID), it is a dummy var passing,
   ### the function a_summarize_aval_chg_diff_j grabs the required vars from cols_by_multivar calls
-  analyze("STUDYID", 
-    afun = a_summarize_aval_chg_diff_j, 
+  analyze("STUDYID",
+    afun = a_summarize_aval_chg_diff_j,
     extra_args = extra_args_3col
   )
 
@@ -421,7 +429,7 @@ result_vs <- build_table(lyt_vs, advs, alt_counts_df = adsl)
 
 This is the resulting table.
 ```{r display_result_vs, eval = TRUE} 
- head(result_vs, 15)
+head(result_vs, 15)
 ```
 
 The columns for the comparison between reference group is optional. The same table without these extra columns can be produced by specifying the argument `comp_btw_group` = `FALSE` and leaving out the 3 `split_cols_by` calls
@@ -441,11 +449,11 @@ extra_args_3col <- list(
   multivars = multivars
 )
 
-lyt_vs2 <-  lyt_vs_p1 %>% 
+lyt_vs2 <- lyt_vs_p1 %>%
   ### the variable passed here in analyze is not used (STUDYID), it is a dummy var passing,
   ### the function a_summarize_aval_chg_diff_j grabs the required vars from cols_by_multivar calls
-  analyze("STUDYID", 
-    afun = a_summarize_aval_chg_diff_j, 
+  analyze("STUDYID",
+    afun = a_summarize_aval_chg_diff_j,
     extra_args = extra_args_3col
   )
 
@@ -454,5 +462,5 @@ result_vs2 <- build_table(lyt_vs2, advs, alt_counts_df = adsl)
 
 This is the resulting table without the difference between treatment group columns.
 ```{r display_alternative_table, eval = TRUE}
- head(result_vs2, 15)
+head(result_vs2, 15)
 ```

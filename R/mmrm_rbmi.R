@@ -60,13 +60,12 @@
 #' @seealso [rbmi::set_vars()]
 #' @export
 rbmi_mmrm <- function(
-  data,
-  vars,
-  cov_struct = c("us", "toep", "cs", "ar1"),
-  visits = NULL,
-  weights = c("counterfactual", "equal"),
-  ...
-) {
+    data,
+    vars,
+    cov_struct = c("us", "toep", "cs", "ar1"),
+    visits = NULL,
+    weights = c("counterfactual", "equal"),
+    ...) {
   subjid <- vars[["subjid"]]
   outcome <- vars[["outcome"]]
   group <- vars[["group"]]

@@ -89,28 +89,28 @@ longdat <- data.frame(
     rep(0, nrow(DM)),
     rnorm(n = nrow(DM) * 4)
   ),
-  VISIT = factor(rep(paste0('V', 0:4), each = nrow(DM)))
+  VISIT = factor(rep(paste0("V", 0:4), each = nrow(DM)))
 ) |>
-  dplyr::inner_join(DM, by = 'ID')
+  dplyr::inner_join(DM, by = "ID")
 
 basic_table() |>
-  split_rows_by('VISIT') |>
-  split_cols_by('ARM') |>
+  split_rows_by("VISIT") |>
+  split_cols_by("ARM") |>
   analyze(
-    vars = 'AVAL',
+    vars = "AVAL",
     afun = a_summarize_mmrm,
     na_str = tern::default_na_str(),
     show_labels = "hidden",
     extra_args = list(
       variables = list(
-        covariates = c('AGE'),
-        id = 'ID',
-        arm = 'ARM',
-        visit = 'VISIT'
+        covariates = c("AGE"),
+        id = "ID",
+        arm = "ARM",
+        visit = "VISIT"
       ),
       conf_level = 0.9,
-      cor_struct = 'toeplitz',
-      ref_levels = list(VISIT = 'V0', ARM = 'B: Placebo')
+      cor_struct = "toeplitz",
+      ref_levels = list(VISIT = "V0", ARM = "B: Placebo")
     )
   ) |>
   build_table(longdat) |>

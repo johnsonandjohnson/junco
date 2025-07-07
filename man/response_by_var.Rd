@@ -55,18 +55,18 @@ library(dplyr)
 
 ADAE <- data.frame(
   USUBJID = c(
-    'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-    'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
   ),
   SEX_DECODE = c(
-    'Female', 'Female', 'Male', 'Female', 'Male',
-    'Female', 'Male', 'Female', 'Male', 'Female'
+    "Female", "Female", "Male", "Female", "Male",
+    "Female", "Male", "Female", "Male", "Female"
   ),
   TRT01A = c(
-    'ARMA', 'ARMB', 'ARMA', 'ARMB', 'ARMB',
-    'Placebo', 'Placebo', 'Placebo', 'ARMA', 'ARMB'
+    "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
+    "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
   ),
-  TRTEMFL = c('Y', 'Y', 'N', 'Y', 'Y', 'Y', 'Y', 'N', 'Y', 'Y')
+  TRTEMFL = c("Y", "Y", "N", "Y", "Y", "Y", "Y", "N", "Y", "Y")
 )
 
 ADAE <- ADAE |>
@@ -76,13 +76,13 @@ ADAE <- ADAE |>
   )
 
 lyt <- basic_table() |>
-  split_cols_by('TRT01A') |>
+  split_cols_by("TRT01A") |>
   analyze(
-    vars = 'SEX_DECODE',
-    var_labels = 'Sex, n/Ns (\%)',
-    show_labels = 'visible',
+    vars = "SEX_DECODE",
+    var_labels = "Sex, n/Ns (\%)",
+    show_labels = "visible",
     afun = response_by_var,
-    extra_args = list(resp_var = 'TRTEMFL'),
+    extra_args = list(resp_var = "TRTEMFL"),
     nested = FALSE
   )
 

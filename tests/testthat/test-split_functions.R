@@ -38,10 +38,14 @@ testthat::test_that("cond_rm_facets works", {
   testthat::expect_identical(cols, expected)
 
   expect_error(cond_rm_facets())
-  expect_error(cond_rm_facets(split = "lol", facets = "lol", facets_regex = "lol"),
-               "Got both facets and facets_regex")
-  expect_error(cond_rm_facets(split = "lol"),
-               "Must specify facets")
+  expect_error(
+    cond_rm_facets(split = "lol", facets = "lol", facets_regex = "lol"),
+    "Got both facets and facets_regex"
+  )
+  expect_error(
+    cond_rm_facets(split = "lol"),
+    "Must specify facets"
+  )
 })
 
 testthat::test_that("rm_levels works", {

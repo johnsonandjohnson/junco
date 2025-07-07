@@ -146,11 +146,10 @@ jjcsformat_xx <- jjcsformat_xx_SAS
 #' jjcsformat_count_fraction(c(70000, 1))
 #'
 jjcsformat_count_fraction <- function(
-  x,
-  d = 1,
-  roundmethod = c("sas", "iec"),
-  ...
-) {
+    x,
+    d = 1,
+    roundmethod = c("sas", "iec"),
+    ...) {
   roundmethod <- match.arg(roundmethod)
   attr(x, "label") <- NULL
   if (any(is.na(x))) {
@@ -206,11 +205,10 @@ jjcsformat_count_fraction <- function(
 #' jjcsformat_count_denom_fraction(c(70000, 70001, 70000 / 70001))
 #' jjcsformat_count_denom_fraction(c(235, 235, 235 / 235))
 jjcsformat_count_denom_fraction <- function(
-  x,
-  d = 1,
-  roundmethod = c("sas", "iec"),
-  ...
-) {
+    x,
+    d = 1,
+    roundmethod = c("sas", "iec"),
+    ...) {
   roundmethod <- match.arg(roundmethod)
   attr(x, "label") <- NULL
   if (any(is.na(x))) {
@@ -263,11 +261,10 @@ jjcsformat_count_denom_fraction <- function(
 #' jjcsformat_fraction_count_denom(c(70000, 70001, 70000 / 70001))
 #' jjcsformat_fraction_count_denom(c(235, 235, 235 / 235))
 jjcsformat_fraction_count_denom <- function(
-  x,
-  d = 1,
-  roundmethod = c("sas", "iec"),
-  ...
-) {
+    x,
+    d = 1,
+    roundmethod = c("sas", "iec"),
+    ...) {
   roundmethod <- match.arg(roundmethod)
   attr(x, "label") <- NULL
   if (any(is.na(x))) {

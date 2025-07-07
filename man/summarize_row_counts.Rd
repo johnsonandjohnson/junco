@@ -26,11 +26,11 @@ additional value is that we can choose whether we want to use the alternative
 }
 \examples{
 basic_table() |>
-  split_cols_by('ARM') |>
+  split_cols_by("ARM") |>
   add_colcounts() |>
-  split_rows_by('RACE', split_fun = drop_split_levels) |>
-  summarize_row_counts(label_fstr = 'RACE value - \%s') |>
-  analyze('AGE', afun = list_wrap_x(summary), format = 'xx.xx') |>
+  split_rows_by("RACE", split_fun = drop_split_levels) |>
+  summarize_row_counts(label_fstr = "RACE value - \%s") |>
+  analyze("AGE", afun = list_wrap_x(summary), format = "xx.xx") |>
   build_table(DM, alt_counts_df = rbind(DM, DM))
 
 }

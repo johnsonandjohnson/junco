@@ -100,21 +100,21 @@ These functions have been forked from the \code{tern} package. Additional featur
 \examples{
 dta <- data.frame(
   rsp = sample(c(TRUE, FALSE), 100, TRUE),
-  grp = factor(rep(c('A', 'B'), each = 50)),
-  strata = factor(rep(c('V', 'W', 'X', 'Y', 'Z'), each = 20))
+  grp = factor(rep(c("A", "B"), each = 50)),
+  strata = factor(rep(c("V", "W", "X", "Y", "Z"), each = 20))
 )
 
 # With `rtables` pipelines.
 l <- basic_table() |>
-  split_cols_by(var = 'grp') |>
+  split_cols_by(var = "grp") |>
   analyze(
-    vars = 'rsp',
+    vars = "rsp",
     afun = a_test_proportion_diff,
-    show_labels = 'hidden',
+    show_labels = "hidden",
     extra_args = list(
-      method = 'cmh',
-      variables = list(strata = 'strata'),
-      ref_path = c('grp', 'B')
+      method = "cmh",
+      variables = list(strata = "strata"),
+      ref_path = c("grp", "B")
     )
   )
 
