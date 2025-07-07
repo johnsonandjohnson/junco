@@ -105,17 +105,17 @@ No new features are included in this function here.
 \examples{
 mmrm_results <- fit_mmrm_j(
   vars = list(
-    response = 'FEV1',
-    covariates = c('RACE', 'SEX'),
-    id = 'USUBJID',
-    arm = 'ARMCD',
-    visit = 'AVISIT'
+    response = "FEV1",
+    covariates = c("RACE", "SEX"),
+    id = "USUBJID",
+    arm = "ARMCD",
+    visit = "AVISIT"
   ),
   data = mmrm::fev_data,
-  cor_struct = 'unstructured',
-  weights_emmeans = 'equal',
+  cor_struct = "unstructured",
+  weights_emmeans = "equal",
   averages_emmeans = list(
-    'VIS1+2' = c('VIS1', 'VIS2')
+    "VIS1+2" = c("VIS1", "VIS2")
   )
 )
 }

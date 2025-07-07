@@ -5,11 +5,10 @@
 #' @param string_map Unicode mapping for special characters
 #' @param markup_df Data frame containing markup information
 tt_to_tbldf <- function(
-  tt,
-  fontspec = font_spec("Times", 9L, 1),
-  string_map = default_str_map,
-  markup_df = dps_markup_df
-) {
+    tt,
+    fontspec = font_spec("Times", 9L, 1),
+    string_map = default_str_map,
+    markup_df = dps_markup_df) {
   if (!validate_table_struct(tt)) {
     stop(
       "invalid table structure. summarize_row_groups without ",
@@ -110,10 +109,9 @@ tlg_type <- function(tt) {
 }
 
 mpf_to_colspan <- function(
-  mpf,
-  string_map = default_str_map,
-  markup_df = dps_markup_df
-) {
+    mpf,
+    string_map = default_str_map,
+    markup_df = dps_markup_df) {
   if (!methods::is(mpf, "MatrixPrintForm")) {
     stop("figure out how to make this an mpf (MatrixPrintForm) first.")
   }
@@ -203,15 +201,16 @@ subset_border_mat <- function(full_brdr, full_mpf, part_mpf) {
 
 
 get_ncol <- function(tt) {
-  if (is(tt, "listing_df") || is(tt, "VTableTree"))
+  if (is(tt, "listing_df") || is(tt, "VTableTree")) {
     ncol(tt)
-  else if (is(tt, "MatrixPrintForm"))
+  } else if (is(tt, "MatrixPrintForm")) {
     mf_ncol(tt)
-  else if (is.list(tt)) {
-    if (is(tt[[1]], "MatrixPrintForm"))
+  } else if (is.list(tt)) {
+    if (is(tt[[1]], "MatrixPrintForm")) {
       mf_ncol(tt[[1]])
-    else
+    } else {
       ncol(tt[[1]])
+    }
   }
 }
 
@@ -266,37 +265,36 @@ get_ncol <- function(tt) {
 #'   to differ visually from the content of the individual part rtfs.
 #'
 tt_to_tlgrtf <- function(
-  tt,
-  file = file.path(".", tolower(tlg_type(tt))),
-  orientation = c("portrait", "landscape"),
-  colwidths = def_colwidths(
     tt,
-    fontspec,
-    col_gap = col_gap,
-    label_width_ins = label_width_ins,
-    type = tlgtype
-  ),
-  label_width_ins = 2,
-  watermark = NULL,
-  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-  fontspec = font_spec("Times", 9L, 1.2),
-  pg_width = pg_width_by_orient(orientation == "landscape"),
-  margins = c(0, 0, 0, 0),
-  paginate = tlg_type(tt) == "Table",
-  col_gap = ifelse(tlgtype == "Listing", .5, 3),
-  nosplitin = list(
-    row = character(),
-    col = character()
-  ),
-  verbose = FALSE,
-  tlgtype = tlg_type(tt),
-  string_map = default_str_map,
-  markup_df = dps_markup_df,
-  combined_rtf = FALSE,
-  one_table = TRUE,
-  border_mat = make_header_bordmat(obj = tt),
-  ...
-) {
+    file = file.path(".", tolower(tlg_type(tt))),
+    orientation = c("portrait", "landscape"),
+    colwidths = def_colwidths(
+      tt,
+      fontspec,
+      col_gap = col_gap,
+      label_width_ins = label_width_ins,
+      type = tlgtype
+    ),
+    label_width_ins = 2,
+    watermark = NULL,
+    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+    fontspec = font_spec("Times", 9L, 1.2),
+    pg_width = pg_width_by_orient(orientation == "landscape"),
+    margins = c(0, 0, 0, 0),
+    paginate = tlg_type(tt) == "Table",
+    col_gap = ifelse(tlgtype == "Listing", .5, 3),
+    nosplitin = list(
+      row = character(),
+      col = character()
+    ),
+    verbose = FALSE,
+    tlgtype = tlg_type(tt),
+    string_map = default_str_map,
+    markup_df = dps_markup_df,
+    combined_rtf = FALSE,
+    one_table = TRUE,
+    border_mat = make_header_bordmat(obj = tt),
+    ...) {
   orientation <- match.arg(orientation)
   newdev <- open_font_dev(fontspec)
   if (newdev) {
@@ -568,14 +566,14 @@ tt_to_tlgrtf <- function(
     colwidths <- colwidths - 0.00000000001 ## much smaller than a twip = 1/20 printing point
   }
 
-  if (!one_table &&
-        is.list(tt) && !is(tt, "MatrixPrintForm")) {
+  if (!one_table && # nolint start
+    is.list(tt) && !is(tt, "MatrixPrintForm")) {
     ### gentlg is not vectorized on wcol.  x.x x.x x.x
     ### but it won't break if we only give it one number...
     ### Calling this an ugly hack is an insult to all the hard working hacks
     ### out there
     colwidths <- colwidths[1]
-  }
+  } # nolint end
 
   footer_val <- prep_strs_for_rtf(
     c(
@@ -673,9 +671,8 @@ fixup_bord_mat <- function(brdmat, hstrs) {
 }
 
 .make_header_bordmat <- function(
-  obj,
-  mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)
-) {
+    obj,
+    mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
   spns <- mf_spans(mpf)
   nlh <- mf_nlheader(mpf)
   nrh <- mf_nrheader(mpf)
@@ -699,9 +696,8 @@ fixup_bord_mat <- function(brdmat, hstrs) {
 setGeneric(
   "make_header_bordmat",
   function(
-    obj,
-    mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)
-  ) {
+      obj,
+      mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
     standardGeneric("make_header_bordmat")
   }
 )

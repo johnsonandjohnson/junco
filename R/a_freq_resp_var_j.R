@@ -24,31 +24,30 @@
 #' @export
 #' @keywords internal
 a_freq_resp_var_j <- function(
-  df,
-  .var,
-  .df_row,
-  .N_col,
-  .spl_context,
-  resp_var = NULL,
-  id = "USUBJID",
-  drop_levels = FALSE,
-  riskdiff = TRUE,
-  ref_path = NULL,
-  variables = formals(s_proportion_diff)$variables,
-  conf_level = formals(s_proportion_diff)$conf_level,
-  method = c(
-    "wald",
-    "waldcc",
-    "cmh",
-    "ha",
-    "newcombe",
-    "newcombecc",
-    "strat_newcombe",
-    "strat_newcombecc"
-  ),
-  weights_method = formals(s_proportion_diff)$weights_method,
-  ...
-) {
+    df,
+    .var,
+    .df_row,
+    .N_col,
+    .spl_context,
+    resp_var = NULL,
+    id = "USUBJID",
+    drop_levels = FALSE,
+    riskdiff = TRUE,
+    ref_path = NULL,
+    variables = formals(s_proportion_diff)$variables,
+    conf_level = formals(s_proportion_diff)$conf_level,
+    method = c(
+      "wald",
+      "waldcc",
+      "cmh",
+      "ha",
+      "newcombe",
+      "newcombecc",
+      "strat_newcombe",
+      "strat_newcombecc"
+    ),
+    weights_method = formals(s_proportion_diff)$weights_method,
+    ...) {
   # ---- Derive statistics: xx / xx (xx.x%)
 
   if (is.null(resp_var)) {
@@ -81,10 +80,11 @@ a_freq_resp_var_j <- function(
 
   df <- df[!is.na(df[[.var]]), ]
 
+  # nolint start
   if ((is.factor(df[[resp_var]]) &&
-         (identical(levels(df[[resp_var]]), c("Y", "N")) || identical(levels(df[[resp_var]]), c("N", "Y")))) ||
-      is.character(df[[resp_var]])
-  ) {
+    (identical(levels(df[[resp_var]]), c("Y", "N")) || identical(levels(df[[resp_var]]), c("N", "Y")))) ||
+    is.character(df[[resp_var]])
+  ) { # nolint end
     # missing values in resp_var should be excluded, not considered as not met response
     # subject will then not contribute to denominator
     df <- df[!is.na(df[[resp_var]]), ]

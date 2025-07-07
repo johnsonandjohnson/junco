@@ -55,20 +55,20 @@ library(tibble)
 
 df <- tribble(
   ~TRT01A,
-  'Placebo',
-  'Active 1',
-  'Active 2'
+  "Placebo",
+  "Active 1",
+  "Active 2"
 )
 
-df$TRT01A <- factor(df$TRT01A, levels = c('Placebo', 'Active 1', 'Active 2'))
+df$TRT01A <- factor(df$TRT01A, levels = c("Placebo", "Active 1", "Active 2"))
 
 colspan_map <- create_colspan_map(
   df = df,
-  non_active_grp = c('Placebo'),
-  non_active_grp_span_lbl = ' ',
-  active_grp_span_lbl = 'Active Study Agent',
-  colspan_var = 'colspan_trt',
-  trt_var = 'TRT01A'
+  non_active_grp = c("Placebo"),
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
 )
 
 colspan_map

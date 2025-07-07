@@ -39,7 +39,9 @@ string_to_title <- function(x) {
 #'
 #' @noRd
 check_alt_df_full <- function(argument, values, .alt_df_full) {
-  if (!argument %in% values || !is.null(.alt_df_full)) return(invisible())
+  if (!argument %in% values || !is.null(.alt_df_full)) {
+    return(invisible())
+  }
 
   name <- deparse(substitute(argument))
 

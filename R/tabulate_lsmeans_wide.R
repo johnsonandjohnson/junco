@@ -114,16 +114,15 @@ lsmeans_wide_second_split_fun_fct <- function(pval_sided, conf_level, include_pv
 #'
 #' @keywords internal
 lsmeans_wide_cfun <- function(
-  df,
-  labelstr,
-  .spl_context,
-  variables,
-  ref_level,
-  treatment_levels,
-  pval_sided = c("2", "1", "-1"),
-  conf_level,
-  formats
-) {
+    df,
+    labelstr,
+    .spl_context,
+    variables,
+    ref_level,
+    treatment_levels,
+    pval_sided = c("2", "1", "-1"),
+    conf_level,
+    formats) {
   this_col_split <- .spl_context[nrow(.spl_context), "cur_col_split_val"][[1]]
   pad_in_rows <- pad_in_rows_fct(length_out = length(treatment_levels), label = labelstr)
   if (this_col_split[1] %in% c("reference_group", "testing_group")) {
@@ -162,7 +161,11 @@ lsmeans_wide_cfun <- function(
       ),
       "pval" = {
         pval_sided <- match.arg(pval_sided)
-        pval_col <- switch(pval_sided, `2` = "p_value", `1` = "p_value_greater", `-1` = "p_value_less")
+        pval_col <- switch(pval_sided,
+          `2` = "p_value",
+          `1` = "p_value_greater",
+          `-1` = "p_value_less"
+        )
         pad_in_rows(df[[pval_col]][has_trt], .formats = formats$pval)
       }
     )
@@ -182,17 +185,17 @@ lsmeans_wide_cfun <- function(
 #' @export
 #' @examples
 #' variables <- list(
-#'   response = 'FEV1',
-#'   covariates = c('RACE', 'SEX'),
-#'   arm = 'ARMCD',
-#'   id = 'USUBJID',
-#'   visit = 'AVISIT'
+#'   response = "FEV1",
+#'   covariates = c("RACE", "SEX"),
+#'   arm = "ARMCD",
+#'   id = "USUBJID",
+#'   visit = "AVISIT"
 #' )
 #' fit <- fit_ancova(
 #'   vars = variables,
 #'   data = mmrm::fev_data,
 #'   conf_level = 0.9,
-#'   weights_emmeans = 'equal'
+#'   weights_emmeans = "equal"
 #' )
 #' anl <- broom::tidy(fit)
 #' basic_table() |>
@@ -200,29 +203,28 @@ lsmeans_wide_cfun <- function(
 #'     variables = variables,
 #'     ref_level = fit$ref_level,
 #'     treatment_levels = fit$treatment_levels,
-#'     pval_sided = '2',
+#'     pval_sided = "2",
 #'     conf_level = 0.8
 #'   ) |>
 #'   build_table(df = anl)
 summarize_lsmeans_wide <- function(
-  lyt,
-  variables,
-  ref_level,
-  treatment_levels,
-  conf_level,
-  pval_sided = "2",
-  include_variance = TRUE,
-  include_pval = TRUE,
-  formats = list(
-    lsmean = jjcsformat_xx("xx.x"),
-    mse = jjcsformat_xx("xx.x"),
-    df = jjcsformat_xx("xx."),
-    lsmean_diff = jjcsformat_xx("xx.x"),
-    se = jjcsformat_xx("xx.xx"),
-    ci = jjcsformat_xx("(xx.xx, xx.xx)"),
-    pval = jjcsformat_pval_fct(0)
-  )
-) {
+    lyt,
+    variables,
+    ref_level,
+    treatment_levels,
+    conf_level,
+    pval_sided = "2",
+    include_variance = TRUE,
+    include_pval = TRUE,
+    formats = list(
+      lsmean = jjcsformat_xx("xx.x"),
+      mse = jjcsformat_xx("xx.x"),
+      df = jjcsformat_xx("xx."),
+      lsmean_diff = jjcsformat_xx("xx.x"),
+      se = jjcsformat_xx("xx.xx"),
+      ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+      pval = jjcsformat_pval_fct(0)
+    )) {
   # Check that all required format elements are present in the formats parameter
   checkmate::assert_names(
     names(formats),

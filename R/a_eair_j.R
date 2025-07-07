@@ -20,13 +20,12 @@ NULL
 #'
 #' @keywords internal
 s_patyrs_j <- function(
-  df,
-  .var,
-  id = "USUBJID",
-  .alt_df_full,
-  source = c("alt_df", "df"),
-  inriskdiffcol = FALSE
-) {
+    df,
+    .var,
+    id = "USUBJID",
+    .alt_df_full,
+    source = c("alt_df", "df"),
+    inriskdiffcol = FALSE) {
   source <- match.arg(source)
 
   if (source == "alt_df") {
@@ -90,8 +89,10 @@ s_patyrs_j <- function(
 #'   mutate(
 #'     rrisk_header = "Risk Difference (95% CI)",
 #'     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
-#'     TRTDURY = case_when(!is.na(EOSDY) ~ EOSDY,
-#'                         TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1))
+#'     TRTDURY = case_when(
+#'       !is.na(EOSDY) ~ EOSDY,
+#'       TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
+#'     )
 #'   ) %>%
 #'   select(USUBJID, !!rlang::sym(trtvar), colspan_trt, rrisk_header, rrisk_label, TRTDURY)
 #'
@@ -99,19 +100,21 @@ s_patyrs_j <- function(
 #'   group_by(USUBJID, AEDECOD) %>%
 #'   select(USUBJID, AEDECOD, ASTDY) %>%
 #'   mutate(rwnum = row_number()) %>%
-#'   mutate(AOCCPFL = case_when(rwnum == 1 ~ "Y",
-#'                              TRUE ~ NA)) %>%
+#'   mutate(AOCCPFL = case_when(
+#'     rwnum == 1 ~ "Y",
+#'     TRUE ~ NA
+#'   )) %>%
 #'   filter(AOCCPFL == "Y")
 #'
 #' # left join -- subjects without ae will be handled via alt_counts_df dataframe
 #' aefup <- left_join(adae, adexsum, by = "USUBJID")
 #'
 #' colspan_trt_map <- create_colspan_map(adexsum,
-#'                                       non_active_grp = ctrl_grp,
-#'                                       non_active_grp_span_lbl = " ",
-#'                                       active_grp_span_lbl = "Active Study Agent",
-#'                                       colspan_var = "colspan_trt",
-#'                                       trt_var = trtvar
+#'   non_active_grp = ctrl_grp,
+#'   non_active_grp_span_lbl = " ",
+#'   active_grp_span_lbl = "Active Study Agent",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = trtvar
 #' )
 #'
 #' ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
@@ -126,25 +129,24 @@ s_patyrs_j <- function(
 #'   split_cols_by("rrisk_header", nested = FALSE) %>%
 #'   split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) %>%
 #'   analyze("TRTDURY",
-#'           nested = FALSE,
-#'           show_labels = "hidden",
-#'           afun = a_patyrs_j
+#'     nested = FALSE,
+#'     show_labels = "hidden",
+#'     afun = a_patyrs_j
 #'   )
 #' result <- build_table(lyt, aefup, alt_counts_df = adexsum)
 #' result
 #'
 a_patyrs_j <- function(
-  df,
-  .var,
-  .df_row,
-  id = "USUBJID",
-  .alt_df_full = NULL,
-  .formats = NULL,
-  .labels = NULL,
-  source = c("alt_df", "df"),
-  .spl_context,
-  .stats = "patyrs"
-) {
+    df,
+    .var,
+    .df_row,
+    id = "USUBJID",
+    .alt_df_full = NULL,
+    .formats = NULL,
+    .labels = NULL,
+    source = c("alt_df", "df"),
+    .spl_context,
+    .stats = "patyrs") {
   source <- match.arg(source)
 
   if (length(.stats) > 1 || (length(.stats) == 1 && .stats != "patyrs")) {
@@ -253,23 +255,22 @@ NULL
 #'
 #' @keywords internal
 s_eair100_levii_j <- function(
-  levii,
-  df,
-  .df_row,
-  .var,
-  .alt_df_full = NULL,
-  id = "USUBJID",
-  diff = FALSE,
-  # treatment/ref group related arguments
-  conf_level = 0.95,
-  trt_var = NULL,
-  ctrl_grp = NULL,
-  cur_trt_grp = NULL,
-  inriskdiffcol = FALSE,
-  fup_var,
-  occ_var,
-  occ_dy
-) {
+    levii,
+    df,
+    .df_row,
+    .var,
+    .alt_df_full = NULL,
+    id = "USUBJID",
+    diff = FALSE,
+    # treatment/ref group related arguments
+    conf_level = 0.95,
+    trt_var = NULL,
+    ctrl_grp = NULL,
+    cur_trt_grp = NULL,
+    inriskdiffcol = FALSE,
+    fup_var,
+    occ_var,
+    occ_dy) {
   if (diff && inriskdiffcol) {
     .alt_df_full_cur_group <- get_ctrl_subset(
       .alt_df_full,
@@ -409,8 +410,10 @@ s_eair100_levii_j <- function(
 #'   mutate(
 #'     rrisk_header = "Risk Difference (95% CI)",
 #'     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
-#'     TRTDURY = case_when(!is.na(EOSDY) ~ EOSDY,
-#'                         TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1))
+#'     TRTDURY = case_when(
+#'       !is.na(EOSDY) ~ EOSDY,
+#'       TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
+#'     )
 #'   ) %>%
 #'   select(USUBJID, !!rlang::sym(trtvar), colspan_trt, rrisk_header, rrisk_label, TRTDURY)
 #'
@@ -420,19 +423,21 @@ s_eair100_levii_j <- function(
 #'   group_by(USUBJID, AEDECOD) %>%
 #'   select(USUBJID, AEDECOD, ASTDY) %>%
 #'   mutate(rwnum = row_number()) %>%
-#'   mutate(AOCCPFL = case_when(rwnum == 1 ~ "Y",
-#'                              TRUE ~ NA)) %>%
+#'   mutate(AOCCPFL = case_when(
+#'     rwnum == 1 ~ "Y",
+#'     TRUE ~ NA
+#'   )) %>%
 #'   filter(AOCCPFL == "Y")
 #'
 #' # left join -- subjects without ae will be handled via alt_counts_df dataframe
 #' aefup <- left_join(adae, adexsum, by = "USUBJID")
 #'
 #' colspan_trt_map <- create_colspan_map(adexsum,
-#'                                       non_active_grp = ctrl_grp,
-#'                                       non_active_grp_span_lbl = " ",
-#'                                       active_grp_span_lbl = "Active Study Agent",
-#'                                       colspan_var = "colspan_trt",
-#'                                       trt_var = trtvar
+#'   non_active_grp = ctrl_grp,
+#'   non_active_grp_span_lbl = " ",
+#'   active_grp_span_lbl = "Active Study Agent",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = trtvar
 #' )
 #'
 #' ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
@@ -447,46 +452,47 @@ s_eair100_levii_j <- function(
 #'   split_cols_by("rrisk_header", nested = FALSE) %>%
 #'   split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) %>%
 #'   analyze("TRTDURY",
-#'           nested = FALSE,
-#'           show_labels = "hidden",
-#'           afun = a_patyrs_j
+#'     nested = FALSE,
+#'     show_labels = "hidden",
+#'     afun = a_patyrs_j
 #'   ) %>%
-#' analyze(vars = "AEDECOD",
-#'         nested = FALSE,
-#'         afun = a_eair100_j,
-#'         extra_args = list(
-#'           fup_var = "TRTDURY",
-#'           occ_var = "AOCCPFL",
-#'           occ_dy = "ASTDY",
-#'           ref_path = ref_path,
-#'           drop_levels = TRUE)
-#' )
+#'   analyze(
+#'     vars = "AEDECOD",
+#'     nested = FALSE,
+#'     afun = a_eair100_j,
+#'     extra_args = list(
+#'       fup_var = "TRTDURY",
+#'       occ_var = "AOCCPFL",
+#'       occ_dy = "ASTDY",
+#'       ref_path = ref_path,
+#'       drop_levels = TRUE
+#'     )
+#'   )
 #'
 #' result <- build_table(lyt, aefup, alt_counts_df = adexsum)
 #' head(result, 5)
 #'
 a_eair100_j <- function(
-  df,
-  labelstr = NULL,
-  .var,
-  .df_row,
-  .spl_context,
-  .alt_df_full = NULL,
-  id = "USUBJID",
-  drop_levels = FALSE,
-  riskdiff = TRUE,
-  ref_path = NULL,
-  .stats = c("eair"),
-  .formats = NULL,
-  .labels = NULL,
-  .indent_mods = NULL,
-  na_str = rep("NA", 3),
-  # treatment/ref group related arguments
-  conf_level = 0.95,
-  fup_var,
-  occ_var,
-  occ_dy
-) {
+    df,
+    labelstr = NULL,
+    .var,
+    .df_row,
+    .spl_context,
+    .alt_df_full = NULL,
+    id = "USUBJID",
+    drop_levels = FALSE,
+    riskdiff = TRUE,
+    ref_path = NULL,
+    .stats = c("eair"),
+    .formats = NULL,
+    .labels = NULL,
+    .indent_mods = NULL,
+    na_str = rep("NA", 3),
+    # treatment/ref group related arguments
+    conf_level = 0.95,
+    fup_var,
+    occ_var,
+    occ_dy) {
   ## prepare for column based split
   col_expr <- .spl_context$cur_col_expr[[1]]
   ## colid can be used to figure out if we're in the relative risk columns or not

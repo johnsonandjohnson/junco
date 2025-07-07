@@ -22,15 +22,15 @@ anl <- tern::tern_ex_adtte |>
   dplyr::mutate(EVENT = 1 - CNSR)
 
 variables <- list(
-  time = 'AVAL',
-  event = 'EVENT',
-  arm = 'ARM',
-  covariates = c('SEX', 'AGE')
+  time = "AVAL",
+  event = "EVENT",
+  arm = "ARM",
+  covariates = c("SEX", "AGE")
 )
 
 control <- tern::control_coxreg(
   conf_level = 0.9,
-  ties = 'efron'
+  ties = "efron"
 )
 
 fit <- tern::fit_coxreg_multivar(

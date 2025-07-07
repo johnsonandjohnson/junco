@@ -50,17 +50,17 @@ Layout Generating Function for LS Means Wide Table Layouts
 }
 \examples{
 variables <- list(
-  response = 'FEV1',
-  covariates = c('RACE', 'SEX'),
-  arm = 'ARMCD',
-  id = 'USUBJID',
-  visit = 'AVISIT'
+  response = "FEV1",
+  covariates = c("RACE", "SEX"),
+  arm = "ARMCD",
+  id = "USUBJID",
+  visit = "AVISIT"
 )
 fit <- fit_ancova(
   vars = variables,
   data = mmrm::fev_data,
   conf_level = 0.9,
-  weights_emmeans = 'equal'
+  weights_emmeans = "equal"
 )
 anl <- broom::tidy(fit)
 basic_table() |>
@@ -68,7 +68,7 @@ basic_table() |>
     variables = variables,
     ref_level = fit$ref_level,
     treatment_levels = fit$treatment_levels,
-    pval_sided = '2',
+    pval_sided = "2",
     conf_level = 0.8
   ) |>
   build_table(df = anl)

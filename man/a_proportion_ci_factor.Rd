@@ -23,10 +23,10 @@ Formatted Analysis Function For Proportion Confidence Interval for Factor
 \examples{
 a_proportion_ci_factor(
   df = DM,
-  .var = 'SEX',
+  .var = "SEX",
   .alt_df = DM,
   conf_level = 0.95,
-  formats = list(prop_ci = jjcsformat_xx('xx.x\%, xx.x\%')),
-  method = 'clopper-pearson'
+  formats = list(prop_ci = jjcsformat_xx("xx.x\%, xx.x\%")),
+  method = "clopper-pearson"
 )
 }

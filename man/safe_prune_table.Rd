@@ -42,10 +42,10 @@ Safely Prune Table With Empty Table Message If Needed
 prfun <- function(tt) TRUE
 
 lyt <- basic_table() |>
-  split_cols_by('ARM') |>
-  split_cols_by('STRATA1') |>
-  split_rows_by('SEX') |>
-  analyze('AGE')
+  split_cols_by("ARM") |>
+  split_cols_by("STRATA1") |>
+  split_rows_by("SEX") |>
+  analyze("AGE")
 tbl <- build_table(lyt, ex_adsl)
 
 safe_prune_table(tbl, prfun)

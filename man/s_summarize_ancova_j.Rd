@@ -86,22 +86,22 @@ basic_table() |>
       ref_path = c("Species", "setosa")
     )
   ) |>
-    analyze(
-      vars = "Petal.Length",
-      afun = a_summarize_ancova_j,
-      show_labels = "hidden",
-      na_str = tern::default_na_str(),
-      table_names = "adj",
-      var_labels = "Adjusted comparison (covariates: Sepal.Length and Sepal.Width)",
-      extra_args = list(
-        variables = list(
-          arm = "Species",
-          covariates = c("Sepal.Length", "Sepal.Width")
-        ),
-        conf_level = 0.95,
-        ref_path = c("Species", "setosa")
-      )
-    ) |>
+  analyze(
+    vars = "Petal.Length",
+    afun = a_summarize_ancova_j,
+    show_labels = "hidden",
+    na_str = tern::default_na_str(),
+    table_names = "adj",
+    var_labels = "Adjusted comparison (covariates: Sepal.Length and Sepal.Width)",
+    extra_args = list(
+      variables = list(
+        arm = "Species",
+        covariates = c("Sepal.Length", "Sepal.Width")
+      ),
+      conf_level = 0.95,
+      ref_path = c("Species", "setosa")
+    )
+  ) |>
   build_table(iris)
 
 library(dplyr)

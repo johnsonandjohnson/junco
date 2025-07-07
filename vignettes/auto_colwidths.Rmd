@@ -68,7 +68,7 @@ lyt1 <- basic_table() |>
 
 tbl1 <- build_table(lyt1, adsl2)
 
-head(tbl1) 
+head(tbl1)
 
 ## super narrow column labels
 lyt2 <- basic_table() |>
@@ -82,7 +82,7 @@ tbl2 <- build_table(lyt2, adsl2)
 head(tbl2)
 
 ## super wide column labels
-lyt3 <-  basic_table() |>
+lyt3 <- basic_table() |>
   split_cols_by("ARM", labels_var = "ARM3") |>
   split_rows_by("RACE") |>
   summarize_row_groups(format = "xx (xx.xx%)") |>
@@ -116,7 +116,6 @@ Meanwhile, `def_colwidths` gives the same widths for the 3 columns as with `tbl2
 def_colwidths(tbl1, fontspec = font_spec(), label_width_ins = 2, col_gap = 0)
 def_colwidths(tbl2, fontspec = font_spec(), label_width_ins = 2, col_gap = 0)
 def_colwidths(tbl3, fontspec = font_spec(), label_width_ins = 2, col_gap = 0)
-
 ```
 
 We see, however, that the label-row width has been reduced due to the `label_width_ins` constraint, which we can vary up to the maximum width the row labels need with no wrapping:
@@ -132,7 +131,7 @@ While we have done these examples with the default monospace font used by `rtabl
 
 ```{r}
 fspec_times <- font_spec("Times", 9)
-propose_column_widths(tbl3, fontspec = fspec_times )
+propose_column_widths(tbl3, fontspec = fspec_times)
 ```
 
 ```{r}
@@ -148,7 +147,7 @@ sum(propose_column_widths(tbl3, fontspec = fspec_times))
 space-character widths (which is the unit `formatters` calculates widths in) while a standard page only has
 
 ```{r}
-formatters::page_lcpp(fontspec = fspec_times )$cpp
+formatters::page_lcpp(fontspec = fspec_times)$cpp
 ```
 
 spaces of width available.
@@ -184,7 +183,7 @@ library(rlistings)
 
 adae <- pharmaverseadam::adae
 adae$AEOUT <- gsub("/", " / ", adae$AEOUT)
-adsl <-  pharmaverseadam::adsl
+adsl <- pharmaverseadam::adsl
 
 adsl <- adsl[, c("USUBJID", setdiff(names(adsl), names(adae)))]
 
@@ -192,8 +191,10 @@ lstdat <- merge(adae, adsl, by = "USUBJID")
 var_labels(lstdat) <- c(var_labels(adae), var_labels(adsl)[-1])
 lstdat$demog <- with_label(paste(lstdat$RACE, lstdat$SEX, lstdat$AGE, sep = " / "), "Demographic Information")
 
-lsting <- as_listing(lstdat,key_cols = c("USUBJID"),
-                     disp_cols = c("ACTARM", "COUNTRY", "demog", "AESEV", "AEBODSYS", "AEDECOD", "ASTDTM", "AENDTM", "AEOUT", "EOSSTT"))
+lsting <- as_listing(lstdat,
+  key_cols = c("USUBJID"),
+  disp_cols = c("ACTARM", "COUNTRY", "demog", "AESEV", "AEBODSYS", "AEDECOD", "ASTDTM", "AENDTM", "AEOUT", "EOSSTT")
+)
 ```
 
 #### Candidate Column Widths
@@ -221,15 +222,16 @@ max(nchar(wrds))
 And using that width, the first two words fit into a line, the third into another, the fourth in its own, and "words" five through 8 all fit into a final line, for a total of four lines. We call this *packing lines*
 
 ```{r}
-
 packed_widths <- function(...) {
   lst <- list(...)
   nchar(vapply(lst, paste, collapse = " ", ""))
 }
-packed_widths(wrds[1:2],
-              wrds[3],
-              wrds[4],
-              wrds[5:8])
+packed_widths(
+  wrds[1:2],
+  wrds[3],
+  wrds[4],
+  wrds[5:8]
+)
 ```
 
 Recall that we do not care which words are allocated where, only the total number of lines required, so a colwidth of 10, which would allow the fifth word (`r wrds[5]`) to be packed into the same line as the fourth, resulting in `r paste(wrds[4:5], collapse = " ")`, results in the same number of total lines, so will not be considered a distinct possible column width with respect to that cell.
@@ -245,9 +247,10 @@ packed_widths(wrds[1:3], wrds[4], wrds[5:8])
 Increasing the column width to 17, however, allows us to get down to two lines:
 
 ```{R}
-packed_widths(wrds[1:3],
-              wrds[4:8])
-
+packed_widths(
+  wrds[1:3],
+  wrds[4:8]
+)
 ```
 
 Finally, the last possible width with a different line total is the smallest width that will fit the entire value, i.e., `r nchar(demcell)`.
@@ -280,13 +283,14 @@ via `export_as_txt` output.
 
 
 ```{r}
-
 fspec_times8 <- font_spec("Times", 8, 1)
 cw <- listing_column_widths(lsting, col_gap = 0, fontspec = fspec_times8, verbose = TRUE)
 
-txt <- export_as_txt(lsting, pg_width = inches_to_spaces(8.88, fontspec = fspec_times8),
-                     lpp = NULL, colwidths = cw,
-                     fontspec = fspec_times8, col_gap = 0)
+txt <- export_as_txt(lsting,
+  pg_width = inches_to_spaces(8.88, fontspec = fspec_times8),
+  lpp = NULL, colwidths = cw,
+  fontspec = fspec_times8, col_gap = 0
+)
 
 txt2 <- strsplit(txt, "\n", fixed = FALSE)[[1]]
 head(txt2)
@@ -296,15 +300,17 @@ length(txt2)
 Versus giving each column an equal portion of the width (admittedly an ill-conceived strategy)
 
 ```{r}
-txtbad <- export_as_txt(lsting, pg_width = inches_to_spaces(8.88, fontspec = fspec_times8),
-                     lpp = NULL, colwidths = rep(floor(320/11), 11),
-                     fontspec = fspec_times8, col_gap = 0)
+txtbad <- export_as_txt(lsting,
+  pg_width = inches_to_spaces(8.88, fontspec = fspec_times8),
+  lpp = NULL, colwidths = rep(floor(320 / 11), 11),
+  fontspec = fspec_times8, col_gap = 0
+)
 txt2bad <- strsplit(txtbad, "\n", fixed = TRUE)[[1]]
 head(txt2bad)
 length(txt2bad)
 ```
 ```{r calc, include = FALSE}
-saved <- (length(txt2bad) - length(txt2))/length(txt2bad)*100
-dec_saved <- round(saved,2)
+saved <- (length(txt2bad) - length(txt2)) / length(txt2bad) * 100
+dec_saved <- round(saved, 2)
 ```
 So we see that our algorithm saved `r dec_saved` percent of the total lines required by (a set of) naive column widths in this instance.
