@@ -19,10 +19,31 @@
 #' @param weights_method (`character`)\cr method for calculating weights.
 #' @param ... Additional arguments passed to other functions.
 #'
-#' @return A list of rcell objects containing the response statistics.
+#' @return Formatted analysis function which is used as `afun` in `analyze_vars()` and as `cfun` in `summarize_row_groups()`.
 #'
 #' @export
-#' @keywords internal
+#' 
+#' @examples
+#' 
+#' ADSL <- ex_adsl |> select(USUBJID, ARM, SEX) 
+#' 
+#' ADAE <- ex_adae |> select(USUBJID, ARM, SEX, AEBODSYS, AEDECOD) 
+#' 
+#' ADAE <- ADAE |> 
+#'   mutate(TRTEMFL = "Y")
+#' 
+#' lyt <- basic_table(show_colcounts = TRUE) |>
+#'   split_cols_by("ARM") |>
+#'   analyze("SEX",
+#'           show_labels = "visible",
+#'           afun = a_freq_resp_var_j,
+#'           extra_args = list(resp_var = "TRTEMFL", riskdiff = FALSE)
+#'   )
+#' 
+#' result <- build_table(lyt, df = ADAE, alt_counts_df = ADSL)
+#' 
+#' result
+
 a_freq_resp_var_j <- function(
     df,
     .var,

@@ -78,14 +78,14 @@ s_patyrs_j <- function(
 #' cutoffd <- as.Date("2023-09-24")
 #'
 #'
-#' adexsum <- ex_adsl %>%
+#' adexsum <- ex_adsl |>
 #'   create_colspan_var(
 #'     non_active_grp          = ctrl_grp,
 #'     non_active_grp_span_lbl = " ",
 #'     active_grp_span_lbl     = "Active Study Agent",
 #'     colspan_var             = "colspan_trt",
 #'     trt_var                 = trtvar
-#'   ) %>%
+#'   ) |>
 #'   mutate(
 #'     rrisk_header = "Risk Difference (95% CI)",
 #'     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
@@ -93,17 +93,17 @@ s_patyrs_j <- function(
 #'       !is.na(EOSDY) ~ EOSDY,
 #'       TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   select(USUBJID, !!rlang::sym(trtvar), colspan_trt, rrisk_header, rrisk_label, TRTDURY)
 #'
-#' adae <- ex_adae %>%
-#'   group_by(USUBJID, AEDECOD) %>%
-#'   select(USUBJID, AEDECOD, ASTDY) %>%
-#'   mutate(rwnum = row_number()) %>%
+#' adae <- ex_adae |>
+#'   group_by(USUBJID, AEDECOD) |>
+#'   select(USUBJID, AEDECOD, ASTDY) |>
+#'   mutate(rwnum = row_number()) |>
 #'   mutate(AOCCPFL = case_when(
 #'     rwnum == 1 ~ "Y",
 #'     TRUE ~ NA
-#'   )) %>%
+#'   )) |>
 #'   filter(AOCCPFL == "Y")
 #'
 #' # left join -- subjects without ae will be handled via alt_counts_df dataframe
@@ -123,11 +123,11 @@ s_patyrs_j <- function(
 #' # Define layout and build table:
 #' ################################################################################
 #'
-#' lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") %>%
-#'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%
-#'   split_cols_by(trtvar) %>%
-#'   split_cols_by("rrisk_header", nested = FALSE) %>%
-#'   split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) %>%
+#' lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") |>
+#'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
+#'   split_cols_by(trtvar) |>
+#'   split_cols_by("rrisk_header", nested = FALSE) |>
+#'   split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) |>
 #'   analyze("TRTDURY",
 #'     nested = FALSE,
 #'     show_labels = "hidden",
@@ -220,7 +220,7 @@ a_patyrs_j <- function(
 #' @name a_eair100_j
 NULL
 
-
+#' @noRd
 #' @describeIn a_eair100_j
 #' calculates exposure-adjusted incidence rates (EAIR) per 100 person-years for a
 #' specific level of a variable.
@@ -399,14 +399,14 @@ s_eair100_levii_j <- function(
 #' cutoffd <- as.Date("2023-09-24")
 #'
 #'
-#' adexsum <- ex_adsl %>%
+#' adexsum <- ex_adsl |>
 #'   create_colspan_var(
 #'     non_active_grp          = ctrl_grp,
 #'     non_active_grp_span_lbl = " ",
 #'     active_grp_span_lbl     = "Active Study Agent",
 #'     colspan_var             = "colspan_trt",
 #'     trt_var                 = trtvar
-#'   ) %>%
+#'   ) |>
 #'   mutate(
 #'     rrisk_header = "Risk Difference (95% CI)",
 #'     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
@@ -414,19 +414,19 @@ s_eair100_levii_j <- function(
 #'       !is.na(EOSDY) ~ EOSDY,
 #'       TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   select(USUBJID, !!rlang::sym(trtvar), colspan_trt, rrisk_header, rrisk_label, TRTDURY)
 #'
 #' adexsum$TRTDURY <- as.numeric(adexsum$TRTDURY)
 #'
-#' adae <- ex_adae %>%
-#'   group_by(USUBJID, AEDECOD) %>%
-#'   select(USUBJID, AEDECOD, ASTDY) %>%
-#'   mutate(rwnum = row_number()) %>%
+#' adae <- ex_adae |>
+#'   group_by(USUBJID, AEDECOD) |>
+#'   select(USUBJID, AEDECOD, ASTDY) |>
+#'   mutate(rwnum = row_number()) |>
 #'   mutate(AOCCPFL = case_when(
 #'     rwnum == 1 ~ "Y",
 #'     TRUE ~ NA
-#'   )) %>%
+#'   )) |>
 #'   filter(AOCCPFL == "Y")
 #'
 #' # left join -- subjects without ae will be handled via alt_counts_df dataframe
@@ -446,16 +446,16 @@ s_eair100_levii_j <- function(
 #' # Define layout and build table:
 #' ################################################################################
 #'
-#' lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") %>%
-#'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%
-#'   split_cols_by(trtvar) %>%
-#'   split_cols_by("rrisk_header", nested = FALSE) %>%
-#'   split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) %>%
+#' lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") |>
+#'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
+#'   split_cols_by(trtvar) |>
+#'   split_cols_by("rrisk_header", nested = FALSE) |>
+#'   split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) |>
 #'   analyze("TRTDURY",
 #'     nested = FALSE,
 #'     show_labels = "hidden",
 #'     afun = a_patyrs_j
-#'   ) %>%
+#'   ) |>
 #'   analyze(
 #'     vars = "AEDECOD",
 #'     nested = FALSE,

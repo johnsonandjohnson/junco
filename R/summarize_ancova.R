@@ -45,7 +45,6 @@ h_ancova <- function(
 #' @title Junco Extended ANCOVA Function
 #' @name s_ancova_j
 #' @inheritParams tern::s_ancova
-#' @param df : need to check on how to inherit params from tern::s_ancova
 #' @param weights_emmeans (`string`)\cr argument from [emmeans::emmeans()], `"counterfactual"` by default.
 #' @description Extension to tern:::s_ancova, 3 extra statistics are returned
 #'   * `lsmean_se`: Marginal mean and estimated SE in the group.

@@ -104,10 +104,7 @@ a different row label to be presented on the table.\cr}
 
 \item{.alt_df_full}{(\code{dataframe})\cr Denominator dataset
 for fraction and relative risk calculations.\cr
-.alt_df_full is a crucial parameter for the relative risk calculations
-if this parameter is not set to utilize \code{alt_counts_df},
-then the values in the relative risk columns might not be correct.\cr
-Once the rtables PR is integrated, this argument gets populated by the rtables
+this argument gets populated by the rtables
 split machinery (see \link[rtables:additional_fun_params]{rtables::additional_fun_params}).}
 
 \item{denom_by}{(\code{character})\cr Variables from row-split
@@ -136,4 +133,36 @@ list of requested statistics with formatted \code{rtables::CellValue()}.\cr
 \description{
 Analysis function count and percentage with extra column-subsetting in
 selected columns (controlled by subcol_* arguments)
+}
+\examples{
+
+ADSL <- ex_adsl |> 
+  select(USUBJID, ARM)
+
+ADSL$COLSPAN_REL <- "AEs"
+
+ADAE <- ex_adae |> 
+ select(USUBJID, ARM, AEDECOD, AREL)
+
+ADAE <- ADAE |>
+  mutate(
+    AEREL = case_when(AREL == "Y" ~ "RELATED",
+                      AREL == "N" ~ "NOT RELATED"),
+    AEREL = factor(AEREL),
+    COLSPAN_REL = "AEs"
+  )
+
+combodf <- tribble(
+  ~valname,  ~label,        ~levelcombo, ~exargs,
+  "RELATED", "Related AEs", c("AEs"),    list()
+)
+
+lyt <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("COLSPAN_REL", split_fun = add_combo_levels(combodf, trim = TRUE)) |>
+  split_cols_by("ARM") |>
+  analyze("AEDECOD", afun = a_freq_subcol_j, extra_args = list(subcol_split = "RELATED", subcol_var = "AEREL", subcol_val = "RELATED"))
+
+result <- build_table(lyt, ADAE, alt_counts_df = ADSL)
+
+result
 }

@@ -420,10 +420,7 @@ s_rel_risk_val_j <- function(
 #'
 #' @param .alt_df_full (`dataframe`)\cr Denominator dataset
 #' for fraction and relative risk calculations.\cr
-#' .alt_df_full is a crucial parameter for the relative risk calculations
-#' if this parameter is not set to utilize `alt_counts_df`,
-#' then the values in the relative risk columns might not be correct.\cr
-#' Once the rtables PR is integrated, this argument gets populated by the rtables
+#' this argument gets populated by the rtables
 #' split machinery (see [rtables::additional_fun_params]).
 #'
 #' @param denom_by (`character`)\cr Variables from row-split

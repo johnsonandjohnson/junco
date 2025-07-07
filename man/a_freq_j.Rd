@@ -168,10 +168,7 @@ a different row label to be presented on the table.\cr}
 
 \item{.alt_df_full}{(\code{dataframe})\cr Denominator dataset
 for fraction and relative risk calculations.\cr
-.alt_df_full is a crucial parameter for the relative risk calculations
-if this parameter is not set to utilize \code{alt_counts_df},
-then the values in the relative risk columns might not be correct.\cr
-Once the rtables PR is integrated, this argument gets populated by the rtables
+this argument gets populated by the rtables
 split machinery (see \link[rtables:additional_fun_params]{rtables::additional_fun_params}).}
 
 \item{denom_by}{(\code{character})\cr Variables from row-split

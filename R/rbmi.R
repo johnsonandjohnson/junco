@@ -343,13 +343,13 @@ par_lapply <- function(cl, fun, x, ...) {
 #'   group = c("PATIENT"),
 #'   order = c("PATIENT", "VISIT")
 #' )
-#' dat_ice <- dat %>%
-#'   arrange(PATIENT, VISIT) %>%
-#'   filter(is.na(CHANGE)) %>%
-#'   group_by(PATIENT) %>%
-#'   slice(1) %>%
-#'   ungroup() %>%
-#'   select(PATIENT, VISIT) %>%
+#' dat_ice <- dat |>
+#'   arrange(PATIENT, VISIT) |>
+#'   filter(is.na(CHANGE)) |>
+#'   group_by(PATIENT) |>
+#'   slice(1) |>
+#'   ungroup() |>
+#'   select(PATIENT, VISIT) |>
 #'   mutate(strategy = "JR")
 #' dat_ice <- dat_ice[-which(dat_ice$PATIENT == 3618), ]
 #' vars <- set_vars(

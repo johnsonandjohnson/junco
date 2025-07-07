@@ -21,7 +21,7 @@ a_summarize_ancova_j(
 s_summarize_ancova_j(df, .var, .df_row, .ref_group, .in_ref_col, ...)
 }
 \arguments{
-\item{df}{: need to check on how to inherit params from tern::s_ancova}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
 \item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
