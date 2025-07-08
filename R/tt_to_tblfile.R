@@ -4,7 +4,7 @@
 #' @param fontspec Font specification object
 #' @param string_map Unicode mapping for special characters
 #' @param markup_df Data frame containing markup information
-#' @return `tt` represented as a "tbl" data.frame suitable for passing
+#' @return `tt` represented as a `tbl` data.frame suitable for passing
 #'   to [tidytlg::gentlg] via the `huxme` argument.
 tt_to_tbldf <- function(
     tt,

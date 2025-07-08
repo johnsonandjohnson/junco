@@ -1,5 +1,5 @@
 library(rbmi)
-require(mockery)
+suppressMessages(require(mockery))
 
 
 test_that("mod_pool_internal_rubin combines results correctly", {

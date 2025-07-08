@@ -1,4 +1,4 @@
-library(emmeans)
+suppressMessages(library(emmeans))
 library(mmrm)
 
 test_that("fit_ancova works as expected", {
