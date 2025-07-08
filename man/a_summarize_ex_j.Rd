@@ -115,6 +115,7 @@ This is designed to be used as an analysis (afun in \code{analyze}) function.
 
 }}
 \examples{
+library(dplyr)
 ADEX <- ex_adsl \%>\% select(USUBJID, ARM, TRTSDTM, EOSSTT, EOSDY)
 
 trtvar <- "ARM"

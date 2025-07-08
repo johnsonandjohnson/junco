@@ -129,6 +129,7 @@ s_summarize_ex_j <- function(
 #'
 #' @aliases a_summarize_ex_j
 #' @examples
+#' library(dplyr)
 #' ADEX <- ex_adsl %>% select(USUBJID, ARM, TRTSDTM, EOSSTT, EOSDY)
 #' 
 #' trtvar <- "ARM"

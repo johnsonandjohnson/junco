@@ -31,6 +31,7 @@
 #' @export
 #' 
 #' @examples
+#' library(dplyr)
 #' 
 #' ADSL <- ex_adsl |> 
 #'   select(USUBJID, ARM)

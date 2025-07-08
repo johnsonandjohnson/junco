@@ -135,6 +135,7 @@ Analysis function count and percentage with extra column-subsetting in
 selected columns (controlled by subcol_* arguments)
 }
 \examples{
+library(dplyr)
 
 ADSL <- ex_adsl |> 
   select(USUBJID, ARM)
