@@ -106,7 +106,6 @@ s_patyrs_j <- function(
 #'   )) %>%
 #'   filter(AOCCPFL == "Y")
 #'
-#' # left join -- subjects without ae will be handled via alt_counts_df dataframe
 #' aefup <- left_join(adae, adexsum, by = "USUBJID")
 #'
 #' colspan_trt_map <- create_colspan_map(adexsum,
@@ -118,10 +117,6 @@ s_patyrs_j <- function(
 #' )
 #'
 #' ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
-#'
-#' ################################################################################
-#' # Define layout and build table:
-#' ################################################################################
 #'
 #' lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") %>%
 #'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%
@@ -429,7 +424,6 @@ s_eair100_levii_j <- function(
 #'   )) %>%
 #'   filter(AOCCPFL == "Y")
 #'
-#' # left join -- subjects without ae will be handled via alt_counts_df dataframe
 #' aefup <- left_join(adae, adexsum, by = "USUBJID")
 #'
 #' colspan_trt_map <- create_colspan_map(adexsum,
@@ -442,9 +436,6 @@ s_eair100_levii_j <- function(
 #'
 #' ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
 #'
-#' ################################################################################
-#' # Define layout and build table:
-#' ################################################################################
 #'
 #' lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") %>%
 #'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%

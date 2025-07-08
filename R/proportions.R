@@ -186,7 +186,7 @@ prop_post_fun <- function(ret, spl, fulldf, .spl_context) {
 #' @param vals A character vector that contains values to use for the split.
 #' @param labels A character vector that contains labels for the statistics (without indent).
 #' @param trim A single logical that indicates whether to trim the values.
-#'
+#' @return a split function for use in [rtables::split_rows_by].
 #' @export
 prop_split_fun <- make_split_fun(post = list(prop_post_fun))
 
@@ -210,7 +210,7 @@ prop_split_fun <- make_split_fun(post = list(prop_post_fun))
 #' @param formats (`list`)\cr formats for the statistics.
 #' @param add_total_level (`flag`)\cr whether to add a total level.
 #'
-#' @return The formatted result as [rtables::rcell()].
+#' @return A `VerticalRowsSection` as returned by [rtables::in_rows].
 #' @export
 prop_table_afun <- function(x, .spl_context, formats, add_total_level = FALSE) {
   checkmate::assert_list(formats, len = 3, names = "unique")

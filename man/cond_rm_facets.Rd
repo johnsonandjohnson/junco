@@ -76,9 +76,6 @@ are removed.
 }
 \examples{
 
-## remove the 'A' facet if anywhere in the preceding
-## faceting, we had a split 'ARM' (splitting the ARM var)
-## with a value that matches 'Placeb' as a regex
 rm_a_from_placebo <- cond_rm_facets(
   facets = "A",
   ancestor_pos = NA,
@@ -106,7 +103,7 @@ lyt2 <- basic_table() |>
   analyze("AGE", mean, format = "xx.x")
 tbl2 <- build_table(lyt2, ex_adsl)
 tbl2
-#
+
 rm_bc_from_combo2 <- cond_rm_facets(
   facets_regex = "^A$",
   ancestor_pos = -1,
@@ -114,14 +111,12 @@ rm_bc_from_combo2 <- cond_rm_facets(
   keep_matches = TRUE
 )
 mysplit3 <- make_split_fun(post = list(rm_bc_from_combo2))
-#
+
 lyt3 <- basic_table() |>
   split_cols_by("ARM") |>
   split_cols_by("STRATA1", split_fun = mysplit3) |>
   analyze("AGE", mean, format = "xx.x")
 tbl3 <- build_table(lyt3, ex_adsl)
-## column info carries around the split objects which
-## carry around their split_fun, which are different so
-## identical(tbl2, tbl3) will (expectedly) be FALSE
+
 stopifnot(identical(cell_values(tbl2), cell_values(tbl3)))
 }

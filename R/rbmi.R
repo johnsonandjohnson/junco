@@ -66,26 +66,24 @@ find_missing_chg_after_avisit <- function(df) {
 #' care of configuring `rbmi` to be used in the sub-processes as well as loading
 #' user defined objects and libraries and setting the seed for reproducibility.
 #'
-#' If `cluster_or_cores` is `1` this function will return `NULL`.
+#' @return If `cluster_or_cores` is `1` this function will return `NULL`. If `cluster_or_cores`
+#'   is a number greater than `1`, a cluster with `cluster_or_cores`  cores is returned.
 #'
 #' If `cluster_or_cores` is a cluster created via `parallel::makeCluster()` then this function
-#' just takes care of inserting the relevant `rbmi` objects into the existing cluster.
+#' returns it after inserting the relevant `rbmi` objects into the existing cluster.
 #'
 #' @examples
-#' # Basic usage # dontrun because .check_ncores
 #' \dontrun{
 #' make_rbmi_cluster(5)
 #' closeAllConnections()
 #'
-#' # User objects + libraries
 #' VALUE <- 5
 #' myfun <- function(x) {
-#'   x + day(VALUE) # From lubridate::day()
+#'   x + day(VALUE)
 #' }
 #' make_rbmi_cluster(5, list(VALUE = VALUE, myfun = myfun), c("lubridate"))
 #' closeAllConnections()
 #'
-#' # Using a already created cluster
 #' cl <- parallel::makeCluster(5)
 #' make_rbmi_cluster(cl)
 #' closeAllConnections()
@@ -156,6 +154,7 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
 #' @param fun Function to be run
 #' @param x object to be looped over
 #' @param ... extra arguments passed to `fun`
+#' @return `list` of results of calling `fun` on elements of `x`.
 par_lapply <- function(cl, fun, x, ...) {
   result <- if (is.null(cl)) {
     lapply(x, fun, ...)
@@ -320,6 +319,8 @@ par_lapply <- function(cl, fun, x, ...) {
 #' parallel::clusterStop(cl)
 #' ```
 #'
+#' @return An `analysis` object, as defined by `rbmi`, representing the desired
+#' analysis applied to each of the imputed datasets in `imputations`.
 #' @examples
 #' library(rbmi)
 #' library(dplyr)
@@ -327,7 +328,6 @@ par_lapply <- function(cl, fun, x, ...) {
 #' dat <- antidepressant_data
 #' dat$GENDER <- as.factor(dat$GENDER)
 #' dat$POOLINV <- as.factor(dat$POOLINV)
-#' # To speed up the example, we only use a portion of it.
 #' set.seed(123)
 #' pat_ids <- sample(levels(dat$PATIENT), nlevels(dat$PATIENT) / 4)
 #' dat <- dat |>
@@ -336,10 +336,8 @@ par_lapply <- function(cl, fun, x, ...) {
 #' dat <- expand_locf(
 #'   dat,
 #'   PATIENT = levels(dat$PATIENT),
-#'   # expand by PATIENT and VISIT
 #'   VISIT = levels(dat$VISIT),
 #'   vars = c("BASVAL", "THERAPY"),
-#'   # fill with LOCF BASVAL and THERAPY
 #'   group = c("PATIENT"),
 #'   order = c("PATIENT", "VISIT")
 #' )

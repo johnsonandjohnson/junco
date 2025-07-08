@@ -27,6 +27,11 @@ See details.}
 Specifies the weighting strategy to be used when calculating the lsmeans.
 See the weighting section for more details.}
 }
+\value{
+a list of variance (\verb{var_*}), treatment effect (\verb{trt_*}), and
+least square mean (\verb{lsm_*}) estimates for each visit, organized as
+described in Details above.
+}
 \description{
 Performs an analysis of covariance between two groups returning the estimated
 "treatment effect" (i.e. the contrast between the two treatment groups) and

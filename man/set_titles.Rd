@@ -19,10 +19,6 @@ and footnotes appended.
 Retrieves titles and footnotes from the list specified in the titles
 argument and appends them to the table tree specified in the obj argument.
 }
-\examples{
-# set_titles(obj, get_titles_csv(tblid))
-
-}
 \seealso{
 Used in all template scripts
 }

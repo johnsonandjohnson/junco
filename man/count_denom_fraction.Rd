@@ -20,6 +20,10 @@ roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions
 
 \item{...}{Additional arguments passed to other methods.}
 }
+\value{
+\code{x}, formatted into a string with the appropriate
+format and \code{d} digits of precision.
+}
 \description{
 Formatting count, denominator and fraction values
 }

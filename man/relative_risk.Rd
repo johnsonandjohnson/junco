@@ -94,8 +94,7 @@ junco specific \code{ref_path} and \code{.spl_context} arguments are used for re
 This has been adapted from the \code{odds_ratio} functions in the \code{tern} package.
 }
 \examples{
-## 'Mid' case: 4/4 respond in group A, 1/2 respond in group B.
-nex <- 100 # Number of example rows
+nex <- 100
 dta <- data.frame(
   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
   "grp" = sample(c("A", "B"), nex, TRUE),
@@ -117,7 +116,7 @@ l <- basic_table() |>
   )
 
 build_table(l, df = dta)
-nex <- 100 # Number of example rows
+nex <- 100
 dta <- data.frame(
   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
   "grp" = sample(c("A", "B"), nex, TRUE),

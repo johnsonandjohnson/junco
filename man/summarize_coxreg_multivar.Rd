@@ -27,7 +27,7 @@ summarize_coxreg_multivar(
 information on the \code{'auto'} setting.}
 }
 \value{
-Modified layout.
+\code{lyt} modified to add the desired cox regression table section.
 }
 \description{
 Layout Generating Function for TEFOS03 and Related Cox Regression Layouts

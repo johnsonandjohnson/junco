@@ -38,7 +38,6 @@ empty message spanning all columns
 Safely Prune Table With Empty Table Message If Needed
 }
 \examples{
-# always prune
 prfun <- function(tt) TRUE
 
 lyt <- basic_table() |>

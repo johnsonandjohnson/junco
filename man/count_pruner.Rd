@@ -73,8 +73,6 @@ result <- build_table(lyt, ADSL)
 
 result
 
-# use pruning function to prune where total column has >0 count,
-# but exclude pruning safety set row
 result <- prune_table(
   result,
   prune_func = count_pruner(cat_exclude = c("Safety"), cols = "Total")

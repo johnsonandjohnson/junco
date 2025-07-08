@@ -15,31 +15,30 @@ make_rbmi_cluster(cluster_or_cores = 1, objects = NULL, packages = NULL)
 
 This function is a wrapper around \code{parallel::makePSOCKcluster()} but takes
 care of configuring \code{rbmi} to be used in the sub-processes as well as loading
-user defined objects and libraries and setting the seed for reproducibility.
-
-If \code{cluster_or_cores} is \code{1} this function will return \code{NULL}.
+user defined objects and libraries and setting the seed for reproducibility.}
+}
+\value{
+If \code{cluster_or_cores} is \code{1} this function will return \code{NULL}. If \code{cluster_or_cores}
+is a number greater than \code{1}, a cluster with \code{cluster_or_cores}  cores is returned.
 
 If \code{cluster_or_cores} is a cluster created via \code{parallel::makeCluster()} then this function
-just takes care of inserting the relevant \code{rbmi} objects into the existing cluster.}
+returns it after inserting the relevant \code{rbmi} objects into the existing cluster.
 }
 \description{
 Create a \code{rbmi} ready cluster
 }
 \examples{
-# Basic usage # dontrun because .check_ncores
 \dontrun{
 make_rbmi_cluster(5)
 closeAllConnections()
 
-# User objects + libraries
 VALUE <- 5
 myfun <- function(x) {
-  x + day(VALUE) # From lubridate::day()
+  x + day(VALUE)
 }
 make_rbmi_cluster(5, list(VALUE = VALUE, myfun = myfun), c("lubridate"))
 closeAllConnections()
 
-# Using a already created cluster
 cl <- parallel::makeCluster(5)
 make_rbmi_cluster(cl)
 closeAllConnections()

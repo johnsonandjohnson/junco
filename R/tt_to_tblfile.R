@@ -4,6 +4,8 @@
 #' @param fontspec Font specification object
 #' @param string_map Unicode mapping for special characters
 #' @param markup_df Data frame containing markup information
+#' @return `tt` represented as a "tbl" data.frame suitable for passing
+#'   to [tidytlg::gentlg] via the `huxme` argument.
 tt_to_tbldf <- function(
     tt,
     fontspec = font_spec("Times", 9L, 1),
@@ -263,10 +265,11 @@ get_ncol <- function(tt) {
 #'   split the remaining available width. This will cause, e.g., the
 #'   elements within the allparts rtf generated when `combined_rtf` is `TRUE`
 #'   to differ visually from the content of the individual part rtfs.
-#'
+#' @return If `file` is non-NULL, this is called for the side-effect of writing
+#'   one or more RTF files. Otherwise, returns a list of `huxtable` objects.
 tt_to_tlgrtf <- function(
     tt,
-    file = file.path(".", tolower(tlg_type(tt))),
+    file = NULL,
     orientation = c("portrait", "landscape"),
     colwidths = def_colwidths(
       tt,
@@ -400,7 +403,7 @@ tt_to_tlgrtf <- function(
     ret <- lapply(
       seq_along(pags),
       function(i) {
-        if (length(pags) > 1) {
+        if (!is.null(file) && length(pags) > 1) {
           fmti <- paste0("%0", ceiling(log(length(pags), base = 10)), "d")
           fname <- paste0(file, "part", sprintf(fmti, i), "of", length(pags))
         } else {
@@ -452,13 +455,16 @@ tt_to_tlgrtf <- function(
           border_mat = pag_bord_mats,
           ...
         )
-      } else { # only one page after pagination
+      } else if (!is.null(file)) { # only one page after pagination
         message(
           "Table ",
           basename(file),
           ": No combined RTF created, output fit within one part."
         )
       }
+    }
+    if (is.null(file) && length(pags) > 1) {
+      ret <- unlist(ret, recursive = FALSE)
     }
     return(ret)
   }
@@ -547,10 +553,15 @@ tt_to_tlgrtf <- function(
     colheader <- colinfo$colheader
   }
 
-  fname <- basename(file)
-  ## dirname on "table" returns "." so we're good using
-  ## this unconditionally as opath
-  fpath <- dirname(file)
+  if (is.null(file)) {
+    fname <- NULL
+    fpath <- tempdir()
+  } else {
+    fname <- basename(file)
+    ## dirname on "table" returns "." so we're good using
+    ## this unconditionally as opath
+    fpath <- dirname(file)
+  }
 
   if (tlgtype == "Table") {
     colwidths <- cwidths_final_adj(
@@ -587,7 +598,7 @@ tt_to_tlgrtf <- function(
     footer_val <- NULL
   }
 
-  if (tlgtype == "Table" && is.data.frame(df)) {
+  if (!is.null(fname) && tlgtype == "Table" && is.data.frame(df)) {
     utils::write.csv(
       df,
       file = file.path(fpath, paste0(tolower(fname), ".csv")),
@@ -615,6 +626,7 @@ tt_to_tlgrtf <- function(
     watermark = watermark,
     pagenum = pagenum,
     bottom_borders = border_mat,
+    print.hux = !is.null(fname),
     ...
   )
 }

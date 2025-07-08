@@ -51,6 +51,10 @@
 #' by providing them to the `covariates` argument of [rbmi::set_vars()]
 #' e.g. `set_vars(covariates = c("sex*age"))`.
 #'
+#' @return a list of variance (`var_*`), treatment effect (`trt_*`), and
+#'   least square mean (`lsm_*`) estimates for each visit, organized as
+#'   described in Details above.
+#'
 #' @note These functions have the `rbmi_` prefix to distinguish them from the corresponding
 #'   `rbmi` package functions, from which they were copied from. Additional features here
 #'   include:
@@ -112,6 +116,8 @@ rbmi_ancova <- function(
 #' - `group` must be a factor variable with only 2 levels.
 #' - `outcome` must be a continuous numeric variable.
 #' @export
+#' @return a list containing `var` with variance estimates as well as
+#' `trt_*` and `lsm_*` entries. See [rbmi_ancova()] for full details.
 #' @examples
 #'
 #' iris2 <- iris[iris$Species %in% c("versicolor", "virginica"), ]

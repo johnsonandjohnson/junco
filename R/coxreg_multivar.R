@@ -130,7 +130,7 @@ tefos03_afun <- function(df, .var, .spl_context, variables, control, formats) {
 #' @inheritParams tefos03_afun
 #' @param var (`string`)\cr any variable from the data, because this is not used.
 #'
-#' @return Modified layout.
+#' @return `lyt` modified to add the desired cox regression table section.
 #' @export
 #' @examples
 #' anl <- tern::tern_ex_adtte |>

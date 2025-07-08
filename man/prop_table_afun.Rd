@@ -16,7 +16,7 @@ prop_table_afun(x, .spl_context, formats, add_total_level = FALSE)
 \item{add_total_level}{(\code{flag})\cr whether to add a total level.}
 }
 \value{
-The formatted result as \code{\link[rtables:rcell]{rtables::rcell()}}.
+A \code{VerticalRowsSection} as returned by \link[rtables:in_rows]{rtables::in_rows}.
 }
 \description{
 This function applies to a factor \code{x} when a column split was prepared with

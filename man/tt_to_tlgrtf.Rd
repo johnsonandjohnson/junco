@@ -6,7 +6,7 @@
 \usage{
 tt_to_tlgrtf(
   tt,
-  file = file.path(".", tolower(tlg_type(tt))),
+  file = NULL,
   orientation = c("portrait", "landscape"),
   colwidths = def_colwidths(tt, fontspec, col_gap = col_gap, label_width_ins =
     label_width_ins, type = tlgtype),
@@ -83,6 +83,10 @@ for what the matrix should contain. Users should only specify this when the
 default behavior does not meet their needs.}
 
 \item{...}{Additional arguments passed to gentlg}
+}
+\value{
+If \code{file} is non-NULL, this is called for the side-effect of writing
+one or more RTF files. Otherwise, returns a list of \code{huxtable} objects.
 }
 \description{
 A function to convert TableTree to .rtf

@@ -20,6 +20,10 @@ tt_to_tbldf(
 
 \item{markup_df}{Data frame containing markup information}
 }
+\value{
+\code{tt} represented as a "tbl" data.frame suitable for passing
+to \link[tidytlg:gentlg]{tidytlg::gentlg} via the \code{huxme} argument.
+}
 \description{
 Create TableTree as DataFrame via gentlg
 }

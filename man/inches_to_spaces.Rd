@@ -20,6 +20,10 @@ between an integer \code{n}, and \code{n+tol} will be returned
 as \code{n}, rather than \code{n+1}, if \code{raw == FALSE}. Ignored
 when \code{raw} is \code{TRUE}.}
 }
+\value{
+the number of either fractional (\code{raw = TRUE}) or whole (\code{raw = FALSE})
+spaces that will fit within \code{ins} inches in the specified font
+}
 \description{
 Conversion of inches to spaces
 }

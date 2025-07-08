@@ -66,6 +66,11 @@ unmodified default behavior. Can be negative.}
 \item{alternative}{(\code{string})\cr whether \code{two.sided}, or one-sided \code{less} or \code{greater} p-value
 should be displayed.}
 }
+\value{
+for \code{s_coxph_hr} a list containing the same statistics returned by \link[tern:survival_coxph_pairwise]{tern::s_coxph_pairwise}
+and the additional \code{lr_stat_df} statistic. for \code{a_coxph_hr}, a \code{VerticalRowsSection}
+object.
+}
 \description{
 This is a workaround for \code{\link[tern:survival_coxph_pairwise]{tern::s_coxph_pairwise()}}, which adds a statistic
 containing the hazard ratio estimate together with the confidence interval.

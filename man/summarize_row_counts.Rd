@@ -17,7 +17,9 @@ generates the row label.}
 \code{alt_counts_df} (\code{TRUE}) or from \code{df} (\code{FALSE}).}
 }
 \value{
-A modified layout where the latest row split now contains the counts.
+A modified layout where the latest row split now has a row group
+summaries (as created by \link[rtables:summarize_row_groups]{rtables::summarize_row_groups} for the counts.
+for the counts.
 }
 \description{
 This is a simple wrapper of \code{\link[rtables:summarize_row_groups]{rtables::summarize_row_groups()}} and the main

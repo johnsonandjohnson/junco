@@ -153,7 +153,6 @@ l2 <- basic_table() |>
   )
 
 build_table(l2, df = dta)
-# Unstratified analysis.
 s_odds_ratio_j(
   df = subset(dta, grp == "A"),
   .var = "rsp",
@@ -162,7 +161,6 @@ s_odds_ratio_j(
   .df_row = dta
 )
 
-# Stratified analysis.
 s_odds_ratio_j(
   df = subset(dta, grp == "A"),
   .var = "rsp",
@@ -172,7 +170,6 @@ s_odds_ratio_j(
   variables = list(arm = "grp", strata = "strata")
 )
 
-# Stratified analysis with CMH.
 s_odds_ratio_j(
   df = subset(dta, grp == "A"),
   method = "cmh",

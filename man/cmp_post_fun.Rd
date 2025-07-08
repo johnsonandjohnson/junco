@@ -27,6 +27,10 @@ that is passed by \code{rtables}.}
 
 \item{trim}{(\code{logical})\cr whether to trim the values.}
 }
+\value{
+a split function for use with \link[rtables:split_rows_by]{rtables::split_rows_by}
+when creating proportion-based tables with compliance columns.
+}
 \description{
 Here we just split into 3 columns for expected, received and missing visits.
 }

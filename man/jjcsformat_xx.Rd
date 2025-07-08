@@ -12,6 +12,9 @@ jjcsformat_xx(str, na_str = na_str_dflt)
 \item{na_str}{character. Na string that will be passed from \code{formatters} into
 our formatting functions.}
 }
+\value{
+a formatting function with \code{"sas"}-style rounding.
+}
 \description{
 jjcs formatting function
 }

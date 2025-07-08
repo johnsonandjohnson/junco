@@ -47,7 +47,6 @@ NULL
 #'   (containing `est`, `lcl`, and `ucl`), `pval` and `n_tot`.
 #'
 #' @examples
-#' # Unstratified analysis.
 #' s_odds_ratio_j(
 #'   df = subset(dta, grp == "A"),
 #'   .var = "rsp",
@@ -56,7 +55,6 @@ NULL
 #'   .df_row = dta
 #' )
 #'
-#' # Stratified analysis.
 #' s_odds_ratio_j(
 #'   df = subset(dta, grp == "A"),
 #'   .var = "rsp",
@@ -66,7 +64,6 @@ NULL
 #'   variables = list(arm = "grp", strata = "strata")
 #' )
 #'
-#' # Stratified analysis with CMH.
 #' s_odds_ratio_j(
 #'   df = subset(dta, grp == "A"),
 #'   method = "cmh",
@@ -301,7 +298,6 @@ NULL
 #'   exactly 2 groups in `data` as specified by the `grp` variable.
 #'
 #' @examples
-#' # Data with 2 groups.
 #' data <- data.frame(
 #'   rsp = as.logical(c(1, 1, 0, 1, 0, 0, 1, 1)),
 #'   grp = letters[c(1, 1, 1, 2, 2, 2, 1, 2)],
@@ -309,7 +305,6 @@ NULL
 #'   stringsAsFactors = TRUE
 #' )
 #'
-#' # Odds ratio based on glm.
 #' or_glm_j(data, conf_level = 0.95)
 #'
 #' @export
@@ -342,7 +337,6 @@ or_glm_j <- function(data, conf_level) {
 #'   pairwise comparisons between the groups.
 #'
 #' @examples
-#' # Data with 3 groups.
 #' data <- data.frame(
 #'   rsp = as.logical(c(1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0)),
 #'   grp = letters[c(1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3)],
@@ -350,8 +344,6 @@ or_glm_j <- function(data, conf_level) {
 #'   stringsAsFactors = TRUE
 #' )
 #'
-#'
-#' # Odds ratio based on stratified estimation by conditional logistic regression.
 #' or_clogit_j(data, conf_level = 0.95)
 #'
 #' @export
@@ -397,7 +389,6 @@ or_clogit_j <- function(data, conf_level, method = "exact") {
 #'   exactly 2 groups in `data` as specified by the `grp` variable.
 #'
 #' @examples
-#' # Data with 2 groups.
 #' set.seed(123)
 #' data <- data.frame(
 #'   rsp = as.logical(rbinom(n = 40, size = 1, prob = 0.5)),
@@ -406,7 +397,6 @@ or_clogit_j <- function(data, conf_level, method = "exact") {
 #'   stringsAsFactors = TRUE
 #' )
 #'
-#' # Odds ratio based on CMH.
 #' or_cmh(data, conf_level = 0.95)
 #'
 #' @export

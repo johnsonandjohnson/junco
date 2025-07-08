@@ -55,8 +55,6 @@
 #'
 #' @export
 #' @seealso Used in all template script
-#' @examples # title_footer <- get_titles_from_file(tblid)
-#'
 #' @returns  List object containing: title, subtitles, main_footer, prov_footer
 #'           for the table of interest.  Note: the subtitles and prov_footer are
 #'           currently set to NULL. Suitable for use with [`set_titles()`].
@@ -129,7 +127,6 @@ get_titles_from_file <- function(id,
 #' @param titles The list object containing the titles and footnotes to be appended.
 #' @seealso Used in all template scripts
 #' @export
-#' @examples # set_titles(obj, get_titles_csv(tblid))
 #'
 #' @returns  The table tree object specified in the obj argument, with titles
 #'           and footnotes appended.

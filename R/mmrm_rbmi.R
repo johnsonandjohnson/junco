@@ -54,6 +54,7 @@
 #' @note The `group` and `visit` interaction `group:visit` is not included by
 #' default in the model, therefore please add that to `covariates` manually if
 #' you want to include it. This will make sense in most cases.
+#' @inherit rbmi_ancova return
 #'
 #' @seealso [rbmi_analyse()]
 #' @seealso [mmrm::mmrm()]
@@ -117,6 +118,8 @@ rbmi_mmrm <- function(
 #' @param visit (`string`)\cr the name of the visit variable.
 #' @param group (`string`)\cr the name of the group variable.
 #'
+#' @return a list with `trt_*`, `var_*` and `lsm_*` elements. See [rbmi_mmrm] for
+#' full details.
 #' @inheritParams rbmi_mmrm
 #' @seealso [rbmi_mmrm()]
 rbmi_mmrm_single_info <- function(fit, visit_level, visit, group, weights) {

@@ -26,6 +26,9 @@ prop_split_fun(df, spl, vals = NULL, labels = NULL, trim = FALSE, .spl_context)
 
 \item{trim}{A single logical that indicates whether to trim the values.}
 }
+\value{
+a split function for use in \link[rtables:split_rows_by]{rtables::split_rows_by}.
+}
 \description{
 Here we just split into 3 columns \code{n}, \verb{\%} and \verb{Cum \%}.
 }

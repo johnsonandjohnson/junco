@@ -12,8 +12,10 @@
 #'  - fmt : named vector with formatting function (jjcsformat_xx) for numerical stats: range, median, mean_sd, sd
 #'  - spec : named vector with formatting specifications for numerical stats: range, median, mean_sd, sd
 #' @export
-#' @examples # P1_precision <- jjcs_num_formats(d=0)$fmt
-# jjcs_num_formats(2)$fmt jjcs_num_formats(2)$specs
+#' @examples
+#' P1_precision <- jjcs_num_formats(d=0)$fmt
+#' jjcs_num_formats(2)$fmt
+#' jjcs_num_formats(2)$spec
 jjcs_num_formats <- function(d, cap = 4) {
   fmt_xx <- function(d, cap) {
     prec <- NULL

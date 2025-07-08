@@ -55,7 +55,6 @@ NULL
 #'   method = "ha"
 #' )
 #'
-#' # CMH example with strata
 #' s_proportion_diff_j(
 #'   df = subset(dta, grp == "A"),
 #'   .var = "rsp",
@@ -109,8 +108,7 @@ s_proportion_diff_j <- function(
 #' * `a_proportion_diff_j()` returns the corresponding list with formatted [rtables::CellValue()].
 #'
 #' @examples
-#' ## 'Mid' case: 4/4 respond in group A, 1/2 respond in group B.
-#' nex <- 100 # Number of example rows
+#' nex <- 100
 #' dta <- data.frame(
 #'   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
 #'   "grp" = sample(c("A", "B"), nex, TRUE),

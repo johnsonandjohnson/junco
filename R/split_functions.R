@@ -23,13 +23,8 @@ rm_other_facets_fact <- function(nm) {
 #' @note current add_overall_facet is bugged, can use that directly after it's fixed
 #' https://github.com/insightsengineering/rtables/issues/768
 #' @examples
-#' # split_rows_by(
-#' #   'AVALCAT1',
-#' #   split_fun = make_split_fun(
-#' #     post = list(real_add_overall_facet('Total', 'Total'))
-#' #   ),
-#' #   child_labels =  'hidden'
-#' # )
+#'
+#' splfun <- make_split_fun(post = list(real_add_overall_facet('Total', 'Total')))
 #' @export
 #' @returns function usable directly as a split function.
 #'
@@ -59,7 +54,8 @@ real_add_overall_facet <- function(name, label) {
 #' created one be removed. Defaults to `TRUE`
 #' @export
 #' @returns function usable directly as a split function.
-#' @examples # aesevall_spf <- make_combo_splitfun(nm = 'AESEV_ALL', label  = 'Any AE', levels = NULL)
+#' @examples
+#' aesevall_spf <- make_combo_splitfun(nm = 'AESEV_ALL', label  = 'Any AE', levels = NULL)
 #'
 make_combo_splitfun <- function(nm, label = nm, levels = NULL, rm_other_facets = TRUE) {
   if (is.null(levels)) {
@@ -194,9 +190,6 @@ resolve_ancestor_pos <- function(anc_pos, numrows) {
 #' @export
 #' @examples
 #'
-#' ## remove the 'A' facet if anywhere in the preceding
-#' ## faceting, we had a split 'ARM' (splitting the ARM var)
-#' ## with a value that matches 'Placeb' as a regex
 #' rm_a_from_placebo <- cond_rm_facets(
 #'   facets = "A",
 #'   ancestor_pos = NA,
@@ -224,7 +217,7 @@ resolve_ancestor_pos <- function(anc_pos, numrows) {
 #'   analyze("AGE", mean, format = "xx.x")
 #' tbl2 <- build_table(lyt2, ex_adsl)
 #' tbl2
-#' #
+#'
 #' rm_bc_from_combo2 <- cond_rm_facets(
 #'   facets_regex = "^A$",
 #'   ancestor_pos = -1,
@@ -232,15 +225,13 @@ resolve_ancestor_pos <- function(anc_pos, numrows) {
 #'   keep_matches = TRUE
 #' )
 #' mysplit3 <- make_split_fun(post = list(rm_bc_from_combo2))
-#' #
+#'
 #' lyt3 <- basic_table() |>
 #'   split_cols_by("ARM") |>
 #'   split_cols_by("STRATA1", split_fun = mysplit3) |>
 #'   analyze("AGE", mean, format = "xx.x")
 #' tbl3 <- build_table(lyt3, ex_adsl)
-#' ## column info carries around the split objects which
-#' ## carry around their split_fun, which are different so
-#' ## identical(tbl2, tbl3) will (expectedly) be FALSE
+#'
 #' stopifnot(identical(cell_values(tbl2), cell_values(tbl3)))
 cond_rm_facets <- function(
     facets = NULL,
@@ -317,6 +308,9 @@ cond_rm_facets <- function(
 #' custom function for removing level inside pre step in make_split_fun.
 #'
 #' @param excl Choose which level(s) to remove
+#' @return a function implementing pre-processing split behavior (for use in
+#'   `make_split_fun(pre = )` which removes the levels in `excl` from the data
+#'   before facets are generated.
 #' @export
 #'
 rm_levels <- function(excl) {

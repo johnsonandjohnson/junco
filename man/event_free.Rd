@@ -55,6 +55,14 @@ unmodified default behavior. Can be negative.}
 
 \item{control}{(\code{list})\cr relevant list of control options.}
 }
+\value{
+for \code{s_event_free}, a list as returned by the \code{\link[tern:survival_timepoint]{tern::s_surv_timepoint()}}
+with an additional three-dimensional statistic \code{event_free_ci} which
+combines the \code{event_free_rate} and \code{rate_ci} statistics.
+
+For \code{a_event_free}, analogous to \link[tern:survival_timepoint]{tern::a_surv_timepoint} but with the additional
+three-dimensional statistic described above  available via \code{.stats}.
+}
 \description{
 This is a workaround for \code{\link[tern:survival_timepoint]{tern::s_surv_timepoint()}}, which adds a statistic
 containing the time point specific survival estimate together with the
