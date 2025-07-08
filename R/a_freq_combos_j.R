@@ -35,7 +35,7 @@
 #' @return list of requested statistics with formatted `rtables::CellValue()`.\cr
 #' 
 #' @examples
-#' 
+#' library(dplyr)
 #' ADSL <- ex_adsl |> select(USUBJID, ARM, EOSSTT, EOSDT, EOSDY, TRTSDTM) 
 #' 
 #' cutoffd <- as.Date("2023-09-24")

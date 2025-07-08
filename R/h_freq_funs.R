@@ -102,6 +102,7 @@ h_create_altdf <- function(.spl_context, .df_row, denomdf, denom_by = NULL, id, 
 #' @return A character string with the value "No data to report".
 #'
 #' @export
+#' @keywords internal
 #' @noRd
 no_data_to_report_str <- "No data to report"
 

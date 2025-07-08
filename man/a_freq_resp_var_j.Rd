@@ -62,7 +62,7 @@ This function calculates counts and percentages for response variables (Y/N valu
 with optional risk difference calculations.
 }
 \examples{
-
+library(dplyr)
 ADSL <- ex_adsl |> select(USUBJID, ARM, SEX) 
 
 ADAE <- ex_adae |> select(USUBJID, ARM, SEX, AEBODSYS, AEDECOD) 

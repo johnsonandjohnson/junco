@@ -24,7 +24,7 @@
 #' @export
 #' 
 #' @examples
-#' 
+#' library(dplyr)
 #' ADSL <- ex_adsl |> select(USUBJID, ARM, SEX) 
 #' 
 #' ADAE <- ex_adae |> select(USUBJID, ARM, SEX, AEBODSYS, AEDECOD) 

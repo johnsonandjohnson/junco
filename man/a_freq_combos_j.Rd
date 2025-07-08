@@ -141,7 +141,7 @@ list of requested statistics with formatted \code{rtables::CellValue()}.\cr
 Analysis function count and percentage in column design controlled by combosdf
 }
 \examples{
-
+library(dplyr)
 ADSL <- ex_adsl |> select(USUBJID, ARM, EOSSTT, EOSDT, EOSDY, TRTSDTM) 
 
 cutoffd <- as.Date("2023-09-24")
