@@ -185,7 +185,7 @@ test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
       {
         cluster_has_rbmi <- all(unlist(parallel::clusterEvalQ(
           cl,
-          requireNamesapce("rbmi")
+          requireNamespace("rbmi")
         )))
       },
       error = function(e) {
