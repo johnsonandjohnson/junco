@@ -33,6 +33,11 @@ least square means, either \code{'counterfactual'} or \code{'equal'}.}
 \code{method} and \code{vcov} to control the degrees of freedom and variance-covariance
 adjustment methods as well as \code{reml} decide between REML and ML estimation.}
 }
+\value{
+a list of variance (\verb{var_*}), treatment effect (\verb{trt_*}), and
+least square mean (\verb{lsm_*}) estimates for each visit, organized as
+described in Details above.
+}
 \description{
 Performs an MMRM for two or more groups returning the estimated
 'treatment effect' (i.e. the contrast between treatment groups and the control

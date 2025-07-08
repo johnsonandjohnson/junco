@@ -1,12 +1,15 @@
 #' Simple Content Row Function to Count Rows
 #'
+#' @return a `VertalRowsSection` object (as returned by [rtables::in_rows()]
+#'   containing counts from the data.
 #' @keywords internal
 c_row_counts <- function(df, labelstr, label_fstr) {
   in_rows(count = nrow(df), .formats = "xx", .labels = sprintf(label_fstr, labelstr))
 }
 
 #' Simple Content Row Function to Count Rows from Alternative Data
-#'
+#' @return a `VertalRowsSection` object (as returned by [rtables::in_rows()]
+#'   containing counts from the alt data.
 #' @keywords internal
 c_row_counts_alt <- function(df, labelstr, label_fstr, .alt_df) {
   c_row_counts(df = .alt_df, labelstr = labelstr, label_fstr = label_fstr)
@@ -25,7 +28,9 @@ c_row_counts_alt <- function(df, labelstr, label_fstr, .alt_df) {
 #' @param alt_counts (`flag`)\cr whether row counts should be taken from
 #'   `alt_counts_df` (`TRUE`) or from `df` (`FALSE`).
 #'
-#' @return A modified layout where the latest row split now contains the counts.
+#' @return A modified layout where the latest row split now has a row group
+#'   summaries (as created by [rtables::summarize_row_groups] for the counts.
+#'   for the counts.
 #' @export
 #' @examples
 #' basic_table() |>

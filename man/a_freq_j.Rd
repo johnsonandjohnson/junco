@@ -274,7 +274,6 @@ adsl$colspan_trt <- factor(ifelse(adsl[[trtvar]] == ctrl_grp, " ", "Active Study
 adsl$rrisk_header <- "Risk Difference (\%) (95\% CI)"
 adsl$rrisk_label <- paste(adsl[[trtvar]], paste("vs", ctrl_grp))
 
-# join data together
 adae <- adae |> left_join(adsl)
 
 colspan_trt_map <- create_colspan_map(adsl,
@@ -308,8 +307,6 @@ result1 <- build_table(lyt1, adae, alt_counts_df = adsl)
 
 result1
 
-# quick check for risk difference results using tern function stat_propdiff_ci
-# For Drug X vs Placebo
 x_drug_x <- list(length(unique(subset(adae, adae[[trtvar]] == "A: Drug X")[["USUBJID"]])))
 N_x_drug_x <- length(unique(subset(adsl, adsl[[trtvar]] == "A: Drug X")[["USUBJID"]]))
 y_placebo <- list(length(unique(subset(adae, adae[[trtvar]] == ctrl_grp)[["USUBJID"]])))
@@ -322,7 +319,6 @@ tern::stat_propdiff_ci(
   N_y = N_y_placebo
 )
 
-# For Combination vs Placebo
 x_combo <- list(length(unique(subset(adae, adae[[trtvar]] == "C: Combination")[["USUBJID"]])))
 N_x_combo <- length(unique(subset(adsl, adsl[[trtvar]] == "C: Combination")[["USUBJID"]]))
 
@@ -333,8 +329,6 @@ tern::stat_propdiff_ci(
   N_y = N_y_placebo
 )
 
-
-# example for subgroup AE table
 
 extra_args_rr <- list(
   denom = "n_altdf",
@@ -357,10 +351,8 @@ lyt2 <- basic_table(
   top_level_section_div = " ",
   colcount_format = "N=xx"
 ) |>
-  ## main columns
   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
   split_cols_by(trtvar, show_colcounts = TRUE) |>
-  ## risk diff columns, note nested = FALSE
   split_cols_by("rrisk_header", nested = FALSE) |>
   split_cols_by(trtvar,
     labels_var = "rrisk_label", split_fun = remove_split_levels("B: Placebo"),

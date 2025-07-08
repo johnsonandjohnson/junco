@@ -57,6 +57,11 @@ information on the \code{'auto'} setting.}
 \item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 }
+\value{
+for \code{s_lsmeans}, a list containing the same statistics returned by tern.mmrm::s_mmrm_lsmeans,
+with the additional \code{diff_mean_est_ci} three-dimensional statistic. For \code{a_lsmeans},
+a \code{VertalRowsSection} as returned by \link[rtables:in_rows]{rtables::in_rows}.
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 

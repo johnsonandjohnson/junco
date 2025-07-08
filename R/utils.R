@@ -26,6 +26,10 @@ leftside <- function(x) {
 #' @export
 #' @keywords internal
 string_to_title <- function(x) {
+  # Accept either character or factor
+  if (is.factor(x)) {
+    x <- as.character(x)
+  }
   checkmate::assert_character(x, null.ok = TRUE)
   x_lower <- tolower(x)
   gsub("(^|\\s)(\\w)", "\\1\\U\\2", x_lower, perl = TRUE)

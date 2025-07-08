@@ -1,4 +1,4 @@
-# junco 0.0.1
+# junco 0.1.0
 
 ## Initial CRAN release
 

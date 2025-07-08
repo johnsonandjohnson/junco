@@ -15,6 +15,9 @@ par_lapply(cl, fun, x, ...)
 
 \item{...}{extra arguments passed to \code{fun}}
 }
+\value{
+\code{list} of results of calling \code{fun} on elements of \code{x}.
+}
 \description{
 Simple wrapper around \code{lapply} and \code{\link[parallel:clusterApply]{parallel::clusterApplyLB}} to abstract away
 the logic of deciding which one to use

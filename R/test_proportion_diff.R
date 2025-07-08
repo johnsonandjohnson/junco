@@ -114,7 +114,6 @@ d_test_proportion_diff_j <- function(method, alternative) {
 #'   strata = factor(rep(c("V", "W", "X", "Y", "Z"), each = 20))
 #' )
 #'
-#' # With `rtables` pipelines.
 #' l <- basic_table() |>
 #'   split_cols_by(var = "grp") |>
 #'   analyze(

@@ -18,6 +18,10 @@ rbmi_mmrm_single_info(fit, visit_level, visit, group, weights)
 \item{weights}{(\code{string})\cr the weighting strategy to be used when calculating the
 least square means, either \code{'counterfactual'} or \code{'equal'}.}
 }
+\value{
+a list with \verb{trt_*}, \verb{var_*} and \verb{lsm_*} elements. See \link{rbmi_mmrm} for
+full details.
+}
 \description{
 Extracts relevant estimates from a given fitted MMRM. See \code{\link[=rbmi_mmrm]{rbmi_mmrm()}} for full details.
 }

@@ -10,6 +10,8 @@
 #'  between an integer `n`, and `n+tol` will be returned
 #'  as `n`, rather than `n+1`, if `raw == FALSE`. Ignored
 #'  when `raw` is `TRUE`.
+#' @return the number of either fractional (`raw = TRUE`) or whole (`raw = FALSE`)
+#'   spaces that will fit within `ins` inches in the specified font
 #' @export
 inches_to_spaces <- function(ins, fontspec, raw = FALSE, tol = sqrt(.Machine$double.eps)) {
   newdev <- open_font_dev(fontspec)
@@ -79,6 +81,7 @@ check_wrap_nobreak <- function(tt, colwidths, fontspec) {
 #' @param print_width_ins Print width in inches
 #' @param landscape Whether the output is in landscape orientation
 #' @param lastcol_gap Whether to include a gap after the last column
+#' @keywords internal
 smart_colwidths_1page <- function(
     tt,
     fontspec,
@@ -475,17 +478,30 @@ j_mf_col_widths <- utils::getFromNamespace("mf_col_widths", "formatters")
 #' @title Define Column Widths
 #'
 #' @description
-#' function for aiding more personalized column widths in case default is not desired.
+#' `def_colwidths` uses heuristics to determine suitable column widths given a
+#' table or listing, and a font.
 #'
 #' @param tt input Tabletree
 #' @param fontspec Font specification
 #' @param label_width_ins Label Width in Inches.
-#' @param col_gap Column gap.
+#' @param col_gap Column gap in spaces. Defaults to `.5` for listings and `3`
+#'   for tables.
 #' @param type Type of the table tree, used to determine column width calculation method.
-#' @examples # colwidths <- def_colwidths(result, font_spec('Times', 9L, 1.2), col_gap = 7L, label_width_ins = 2)
+#'
+#' @details Listings are assumed to be rendered landscape on standard A1 paper,
+#'   such that all columns are rendered on one page. Tables are allowed to
+#'   be horizontally paginated, and column widths are determined based only on
+#'   required word wrapping. See the `Automatic Column Widths` vignette for
+#'   a detailed discussion of the algorithms used.
+#' @return a vector of column widths (including the label row pseudo-column in the table
+#'   case) suitable for use rendering `tt` in the specified font.
 #' @export
 #'
-def_colwidths <- function(tt, fontspec, label_width_ins, col_gap, type = tlg_type(tt)) {
+def_colwidths <- function(tt,
+                          fontspec,
+                          label_width_ins = 2,
+                          col_gap = ifelse(type == "Listing", .5, 3),
+                          type = tlg_type(tt)) {
   if (type == "Figure") {
     ret <- NULL
   } else if (type == "Table") {

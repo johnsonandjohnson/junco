@@ -101,9 +101,6 @@ result <- build_table(lyt, ADSL)
 
 result
 
-# use pruning function to prune rows where it doesn't meet 5\% criteria
-# in the total column but it will not
-# prune the Safety row regardless
 result <- prune_table(
   result,
   prune_func = bspt_pruner(

@@ -6,6 +6,13 @@
 #'
 #' @inheritParams proposal_argument_convention
 #'
+#' @return for `s_event_free`, a list as returned by the [tern::s_surv_timepoint()]
+#' with an additional three-dimensional statistic `event_free_ci` which
+#' combines the `event_free_rate` and `rate_ci` statistics.
+#'
+#' For `a_event_free`, analogous to [tern::a_surv_timepoint] but with the additional
+#' three-dimensional statistic described above  available via `.stats`.
+#'
 #' @name event_free
 #' @order 1
 NULL

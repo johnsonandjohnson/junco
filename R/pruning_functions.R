@@ -19,7 +19,6 @@
 #'
 #' @export
 #' @examples
-#' # always prune
 #' prfun <- function(tt) TRUE
 #'
 #' lyt <- basic_table() |>
@@ -111,8 +110,6 @@ safe_prune_table <- function(
 #'
 #' result
 #'
-#' # use pruning function to prune where total column has >0 count,
-#' # but exclude pruning safety set row
 #' result <- prune_table(
 #'   result,
 #'   prune_func = count_pruner(cat_exclude = c("Safety"), cols = "Total")
@@ -279,9 +276,6 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #'
 #' result
 #'
-#' # use pruning function to prune rows where it doesn't meet 5% criteria
-#' # in the total column but it will not
-#' # prune the Safety row regardless
 #' result <- prune_table(
 #'   result,
 #'   prune_func = bspt_pruner(
@@ -507,7 +501,6 @@ lst_slicer <- function(lst, ind, type) {
 #'
 #' result
 #'
-#' # use pruning function to prune rows where category is Unknown
 #' result <- prune_table(result, prune_func = remove_rows(removerowtext = "Unknown"))
 #'
 #' result
@@ -584,7 +577,6 @@ remove_rows <- function(removerowtext = NULL, reg_expr = FALSE) {
 #' result <- build_table(lyt, ADSL)
 #'
 #' result
-#' # use pruning function to prune rows where category is Unknown
 #' result <- prune_table(result, prune_func = tern::keep_rows(keep_non_null_rows))
 #'
 #' result

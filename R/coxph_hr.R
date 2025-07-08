@@ -7,6 +7,9 @@
 #'
 #'
 #' @name coxph_hr
+#' @return for `s_coxph_hr` a list containing the same statistics returned by [tern::s_coxph_pairwise]
+#' and the additional `lr_stat_df` statistic. for `a_coxph_hr`, a `VerticalRowsSection`
+#' object.
 #' @order 1
 NULL
 

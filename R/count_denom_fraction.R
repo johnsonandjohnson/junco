@@ -63,7 +63,7 @@
 #' result <- build_table(lyt, ADAE)
 #'
 #' result
-#' @returns a `RowsVerticalSection` for use by the internal tabulation machinery of `rtables`
+#' @return a `RowsVerticalSection` for use by the internal tabulation machinery of `rtables`
 #' @export
 
 response_by_var <- function(

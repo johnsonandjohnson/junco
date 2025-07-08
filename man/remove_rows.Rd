@@ -51,7 +51,6 @@ result <- build_table(lyt, ADSL)
 
 result
 
-# use pruning function to prune rows where category is Unknown
 result <- prune_table(result, prune_func = remove_rows(removerowtext = "Unknown"))
 
 result

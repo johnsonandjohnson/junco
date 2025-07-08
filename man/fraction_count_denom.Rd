@@ -20,8 +20,19 @@ roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions
 
 \item{...}{Additional arguments passed to other methods.}
 }
+\value{
+\code{x} formatted as a string with \code{d} digits of precision,
+with special cased values as described in Details above.
+}
 \description{
 Formatting fraction, count and denominator values
+}
+\details{
+Formats a 3-dimensional value such that percent values
+near 0 or 100\% are formatted as .e.g, \code{"<0.1\%"} and
+\code{">99.9\%"}, where the cutoff is controlled by \code{d}, and
+formatted as \code{"xx.x\% (xx/xx)"} otherwise, with the
+precision of the percent also controlled by \code{d}.
 }
 \examples{
 jjcsformat_fraction_count_denom(c(7, 10, 0.7))

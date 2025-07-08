@@ -24,6 +24,6 @@ function usable directly as a split function.
 A function which aids the construction for users to create their own split function for combined columns
 }
 \examples{
-# aesevall_spf <- make_combo_splitfun(nm = 'AESEV_ALL', label  = 'Any AE', levels = NULL)
+aesevall_spf <- make_combo_splitfun(nm = 'AESEV_ALL', label  = 'Any AE', levels = NULL)
 
 }

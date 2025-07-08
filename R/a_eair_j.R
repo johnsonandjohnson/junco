@@ -106,7 +106,6 @@ s_patyrs_j <- function(
 #'   )) |>
 #'   filter(AOCCPFL == "Y")
 #'
-#' # left join -- subjects without ae will be handled via alt_counts_df dataframe
 #' aefup <- left_join(adae, adexsum, by = "USUBJID")
 #'
 #' colspan_trt_map <- create_colspan_map(adexsum,
@@ -429,7 +428,6 @@ s_eair100_levii_j <- function(
 #'   )) |>
 #'   filter(AOCCPFL == "Y")
 #'
-#' # left join -- subjects without ae will be handled via alt_counts_df dataframe
 #' aefup <- left_join(adae, adexsum, by = "USUBJID")
 #'
 #' colspan_trt_map <- create_colspan_map(adexsum,

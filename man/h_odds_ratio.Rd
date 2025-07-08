@@ -44,7 +44,6 @@ exactly 2 groups in \code{data} as specified by the \code{grp} variable.
 
 }}
 \examples{
-# Data with 2 groups.
 data <- data.frame(
   rsp = as.logical(c(1, 1, 0, 1, 0, 0, 1, 1)),
   grp = letters[c(1, 1, 1, 2, 2, 2, 1, 2)],
@@ -52,10 +51,8 @@ data <- data.frame(
   stringsAsFactors = TRUE
 )
 
-# Odds ratio based on glm.
 or_glm_j(data, conf_level = 0.95)
 
-# Data with 3 groups.
 data <- data.frame(
   rsp = as.logical(c(1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0)),
   grp = letters[c(1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3)],
@@ -63,11 +60,8 @@ data <- data.frame(
   stringsAsFactors = TRUE
 )
 
-
-# Odds ratio based on stratified estimation by conditional logistic regression.
 or_clogit_j(data, conf_level = 0.95)
 
-# Data with 2 groups.
 set.seed(123)
 data <- data.frame(
   rsp = as.logical(rbinom(n = 40, size = 1, prob = 0.5)),
@@ -76,7 +70,6 @@ data <- data.frame(
   stringsAsFactors = TRUE
 )
 
-# Odds ratio based on CMH.
 or_cmh(data, conf_level = 0.95)
 
 }

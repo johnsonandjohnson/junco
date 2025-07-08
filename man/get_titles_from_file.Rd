@@ -45,10 +45,6 @@ first.
      the value of the title/footer to be applied.
 }\if{html}{\out{</div>}}
 }
-\examples{
-# title_footer <- get_titles_from_file(tblid)
-
-}
 \seealso{
 Used in all template script
 }

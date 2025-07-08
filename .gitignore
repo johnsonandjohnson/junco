@@ -21,11 +21,11 @@ tests/testthat/_snaps/**/*.new.svg
 tests/testthat/table.csv
 
 #RTFs
-/output
+/output/*
 *.prof
 *.rprof
-*.rtf
 *.diff
+./*.rtf
 programs_internal/*
 programs_external/*
 

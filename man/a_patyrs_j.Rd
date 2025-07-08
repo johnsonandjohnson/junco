@@ -108,7 +108,6 @@ adae <- ex_adae |>
   )) |>
   filter(AOCCPFL == "Y")
 
-# left join -- subjects without ae will be handled via alt_counts_df dataframe
 aefup <- left_join(adae, adexsum, by = "USUBJID")
 
 colspan_trt_map <- create_colspan_map(adexsum,

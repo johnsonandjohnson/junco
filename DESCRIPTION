@@ -1,6 +1,6 @@
 Package: junco
 Title: Create Common Tables and Listings Used in Clinical Trials
-Version: 0.0.1
+Version: 0.1.0
 Date: 2025-06-20
 Authors@R: c(
     person("Gabriel", "Becker", , "gabembecker@gmail.com", role = c("cre", "aut"),
@@ -22,8 +22,16 @@ Authors@R: c(
     person("F. Hoffmann-La Roche AG", role = c("cph"),
             comment = "Copyright holder of included formatters, rbmi and tern functions")
   )
-Description: Provides tools and functions for table and listing reporting needs, for use
-    with the NEST framework (rtables, rlistings, and formatters).
+Description: Structure and formatting requirements for clinical trial table and listing outputs
+    vary between pharmaceutical companies. 'junco' provides additional tooling for use alongside
+    the 'rtables', 'rlistings' and 'tern' packages when creating table and listing outputs. While
+    motivated by the specifics of Johnson and Johnson Clinical and Statistical Programming's
+    table and listing shells, 'junco' provides functionality that is general and reusable.
+    Major features include a) alternative and extended statistical analyses beyond what 'tern'
+    supports for use in standard safety and efficacy tables, b) a robust production-grade
+    Rich Text Format (RTF) exporter for both tables and listings, c) structural support
+    for spanning column headers and risk difference columns in tables, and d) robust
+    font-aware automatic column width algorithms for both listings and tables.
 License: Apache License (>= 2)
 URL: https://github.com/johnsonandjohnson/junco, https://johnsonandjohnson.github.io/junco/
 BugReports: https://github.com/johnsonandjohnson/junco/issues

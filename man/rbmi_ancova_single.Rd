@@ -27,6 +27,10 @@ to be included in the model as well as any interaction terms.}
 Specifies the weighting strategy to be used when calculating the lsmeans.
 See the weighting section for more details.}
 }
+\value{
+a list containing \code{var} with variance estimates as well as
+\verb{trt_*} and \verb{lsm_*} entries. See \code{\link[=rbmi_ancova]{rbmi_ancova()}} for full details.
+}
 \description{
 Performance analysis of covariance. See \code{\link[=rbmi_ancova]{rbmi_ancova()}} for full details.
 }

@@ -337,7 +337,6 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #' ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
 #'
 #' lyt <- basic_table() |>
-#'   ### first columns
 #'   split_cols_by(
 #'     "colspan_trt",
 #'     split_fun = trim_levels_to_map(map = colspan_trt_map)
@@ -357,7 +356,6 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #'     split_fun = drop_split_levels,
 #'     child_labels = "hidden"
 #'   ) |>
-#'   ## set up a 3 column split
 #'   split_cols_by_multivar(
 #'     c("AVAL", "AVAL", "CHG"),
 #'     varlabels = c("n/N (%)", "Mean (CI)", "CFB (CI)")
@@ -368,11 +366,7 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #'     split_fun = remove_split_levels("Placebo"),
 #'     labels_var = "rrisk_label"
 #'   ) |>
-#'   ### difference columns : just 1 column & analysis needs to be done on change
 #'   split_cols_by_multivar(c("CHG"), varlabels = c(" ")) |>
-#'   # the variable passed here in analyze is not used (STUDYID),
-#'   # it is a dummy var passing, the function a_summarize_aval_chg_diff_j
-#'   # grabs the required vars from cols_by_multivar calls
 #'   analyze("STUDYID",
 #'     afun = a_summarize_aval_chg_diff_j,
 #'     extra_args = list(

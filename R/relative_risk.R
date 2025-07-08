@@ -38,7 +38,7 @@ NULL
 #' * `s_relative_risk()` returns a named list of elements `rel_risk_ci` and `pval`.
 #'
 #' @examples
-#' nex <- 100 # Number of example rows
+#' nex <- 100
 #' dta <- data.frame(
 #'   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
 #'   "grp" = sample(c("A", "B"), nex, TRUE),
@@ -109,8 +109,7 @@ s_relative_risk <- function(
 #' * `a_relative_risk()` returns the corresponding list with formatted [rtables::CellValue()].
 #'
 #' @examples
-#' ## 'Mid' case: 4/4 respond in group A, 1/2 respond in group B.
-#' nex <- 100 # Number of example rows
+#' nex <- 100
 #' dta <- data.frame(
 #'   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
 #'   "grp" = sample(c("A", "B"), nex, TRUE),
@@ -195,8 +194,8 @@ safe_mh_test <- function(...) {
 #' @inheritParams proposal_argument_convention
 #' @param strata (`factor`)\cr variable with one level per stratum and same length as `rsp`.
 #'
+#' @return a list with elements `rel_risk_ci` and `pval`.
 #' @examples
-#' # Cochran-Mantel-Haenszel confidence interval
 #'
 #' set.seed(2)
 #' rsp <- sample(c(TRUE, FALSE), 100, TRUE)

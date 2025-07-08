@@ -6,6 +6,10 @@
 \usage{
 c_row_counts(df, labelstr, label_fstr)
 }
+\value{
+a \code{VertalRowsSection} object (as returned by \code{\link[rtables:in_rows]{rtables::in_rows()}}
+containing counts from the data.
+}
 \description{
 Simple Content Row Function to Count Rows
 }

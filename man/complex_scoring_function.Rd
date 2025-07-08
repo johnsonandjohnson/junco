@@ -136,9 +136,6 @@ result <- build_table(lyt, ADAE)
 
 result
 
-# now add sorting function to sort by AEBODSYS and AEDECOD within SOC
-# using complex score function which sorts
-# using the last active treatment column by default
 result <- sort_at_path(
   result,
   c("root", "AEBODSYS"),
