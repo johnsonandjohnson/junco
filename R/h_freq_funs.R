@@ -42,7 +42,6 @@ null_fn <- function(...) {
 #' @param variables Variables to include in the analysis.
 #' @param denom Denominator type.
 #' @return Grand parent dataset.
-#' @export
 h_create_altdf <- function(.spl_context, .df_row, denomdf, denom_by = NULL, id, variables, denom) {
   ### parent df in the current row-split (all col splits are still in)
   pardf <- .spl_context$full_parent_df[[NROW(.spl_context)]]
@@ -114,7 +113,6 @@ no_data_to_report_str <- "No data to report"
 #' @param val Values to keep.
 #' @param excl_levels Levels to exclude from the factor.
 #' @return Updated data frame.
-#' @export
 h_update_factor <- function(df, .var, val = NULL, excl_levels = NULL) {
   if (!is.factor(df[[.var]]) || (is.null(val) && is.null(excl_levels))) {
     return(df)
@@ -156,7 +154,6 @@ h_update_factor <- function(df, .var, val = NULL, excl_levels = NULL) {
 #' @param var Variable to extract from the expression.
 #' @param col_expr Column expression string.
 #' @return Substring corresponding to the variable.
-#' @export
 h_colexpr_substr <- function(var, col_expr) {
   # reconstructing the strings is not an option as doesn't work for combined columns facets
   cur_col_expr <- as.character(col_expr)
@@ -202,7 +199,6 @@ h_colexpr_substr <- function(var, col_expr) {
 #' @param denom Denominator type.
 #' @param denom_by Denominator grouping variable.
 #' @return Parent data frame.
-#' @export
 h_denom_parentdf <- function(.spl_context, denom, denom_by) {
   if (denom != "n_parentdf") {
     return(NULL)
@@ -229,7 +225,6 @@ h_denom_parentdf <- function(.spl_context, denom, denom_by) {
 #' @param addstr2levs String to add to new levels.
 #' @param new_levels_after Boolean, indicating if new levels should be added after existing levels.
 #' @return Updated data frame.
-#' @export
 h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_levels_after) {
   varvec <- df[[.var]]
 
@@ -343,7 +338,6 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
 #' @param label_fstr Format string for labels.
 #' @param .spl_context Current split context.
 #' @return List containing updated data frames and values.
-#' @export
 h_upd_dfrow <- function(
     df_row,
     .var,
@@ -470,7 +464,6 @@ h_upd_dfrow <- function(
 #' @param .var Variable name.
 #' @param split_info Current split information.
 #' @return Mapped labels.
-#' @export
 h_get_label_map <- function(.labels, label_map, .var, split_info) {
   if (!is.null(label_map)) {
     if (!all(c("split", "value") %in% names(split_info))) {
@@ -533,7 +526,6 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
 #' @param denom_by Denominator grouping variable.
 #' @param .stats Statistics to compute.
 #' @return List containing prepared data frames and values.
-#' @export
 h_a_freq_dataprep <- function(
     df,
     labelstr = NULL,
@@ -639,7 +631,6 @@ h_a_freq_dataprep <- function(
 #' @param .labels_n Labels for statistics.
 #' @param na_str String for NA values.
 #' @return List containing prepared statistics, formats, labels, and indentation.
-#' @export
 h_a_freq_prepinrows <- function(
     x_stats,
     .stats_adj,
@@ -755,7 +746,6 @@ h_a_freq_prepinrows <- function(
 #' @param flag_var Flag variable for filtering.
 #' @param colid Column ID for identification.
 #' @return Subsetted data frame.
-#' @export
 h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, colid) {
   ### this is the core code for subsetting to appropriate combo level
   if (!is.null(flag_var)) {

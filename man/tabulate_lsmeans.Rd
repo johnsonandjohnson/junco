@@ -58,7 +58,7 @@ information on the \code{'auto'} setting.}
 unmodified default behavior. Can be negative.}
 }
 \value{
-for \code{s_lsmeans}, a list containing the same statistics returned by \link[tern.mmrm:tabulate_mmrm]{tern.mmrm::s_mmrm_lsmeans},
+for \code{s_lsmeans}, a list containing the same statistics returned by tern.mmrm::s_mmrm_lsmeans,
 with the additional \code{diff_mean_est_ci} three-dimensional statistic. For \code{a_lsmeans},
 a \code{VertalRowsSection} as returned by \link[rtables:in_rows]{rtables::in_rows}.
 }
