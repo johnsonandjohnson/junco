@@ -52,7 +52,6 @@ reference:
     - d_test_proportion_diff_j
     - tabulate_rbmi
     - tabulate_lsmeans
-    - h_colexpr_substr
     - h_odds_ratio
     - make_rbmi_cluster
     - rbmi_mmrm
@@ -76,16 +75,7 @@ reference:
     - summarize_coxreg_multivar
     - summarize_lsmeans_wide
     - summarize_mmrm
-    - h_a_freq_dataprep
-    - h_a_freq_prepinrows
-    - h_create_altdf
-    - h_denom_parentdf
-    - h_df_add_newlevels
-    - h_get_label_map
     - h_get_trtvar_refpath
-    - h_subset_combo
-    - h_upd_dfrow
-    - h_update_factor
     - rbmi_mmrm_single_info
 
   - title: junco Formatting Functions
