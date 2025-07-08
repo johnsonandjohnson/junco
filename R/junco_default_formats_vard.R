@@ -28,7 +28,7 @@ junco_default_formats_d <- c(
   range = "xx.d - xx.d",
   min = "xx.d",
   max = "xx.d",
-  median_range = "xx.dx (xx.dx - xx.dx)",
+  median_range = "xx.dx (xx.d - xx.d)",
   cv = "xx.dx",
   geom_mean = "xx.dx",
   geom_mean_ci = "(xx.dx, xx.dx)",
