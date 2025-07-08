@@ -33,6 +33,8 @@ reference:
     - a_summarize_ex_j 
     - a_freq_j
     - a_freq_subcol_j
+    - a_freq_resp_var_j
+    - a_eair100_j
     - a_proportion_ci_factor
     - a_proportion_ci_logical
     - a_summarize_aval_chg_diff_j
