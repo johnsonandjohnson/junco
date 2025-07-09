@@ -87,6 +87,7 @@ reference:
     - h_upd_dfrow
     - h_update_factor
     - rbmi_mmrm_single_info
+    - rbmi_pool
 
   - title: junco Formatting Functions
     desc: The following functions are the junco formatting functions used to create common table layouts.
