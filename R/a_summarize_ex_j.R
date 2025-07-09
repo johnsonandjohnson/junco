@@ -20,7 +20,6 @@ NULL
 #' @param comp_btw_group (`logical`)\cr If TRUE, comparison between groups will be performed.
 #' \cr When ancova = FALSE, the estimate of between group difference (on CHG) will be based upon two-sample t-test.
 #' \cr When ancova = TRUE, the same ANCOVA model will be used for the estimate of between group difference (on CHG).
-#'
 #' @param interaction_y (`character`)\cr Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.
 #' @param interaction_item (`character`)\cr Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.
 #' @param conf_level (`proportion`)\cr Confidence level of the interval
@@ -31,7 +30,6 @@ NULL
 #' Specifically, the first level of arm variable is taken as the reference group.
 #'    * covariates (character)\cr
 #' a vector that can contain single variable names (such as 'X1'), and/or interaction terms indicated by 'X1 * X2'.
-#'
 s_summarize_ex_j <- function(
     df,
     .var,
