@@ -80,7 +80,6 @@
 #' @param var (`string`)\cr single variable name for the primary analysis variable.
 #' @param x (`numeric`)\cr vector of numbers we want to analyze.
 #' @param ctrl_grp (`string`)\cr Level of the control group for the relative risk derivation.
-
 #' @details Although this function just returns `NULL` it has two uses, for
 #'   the `tern` users it provides a documentation of arguments that are
 #'   commonly and consistently used in the framework. For the developer it adds a

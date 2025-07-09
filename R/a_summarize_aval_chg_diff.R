@@ -219,8 +219,6 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #'
 #' @title Analysis function 3-column presentation
 #'
-#' @inherit proposal_argument_convention
-#'
 #' @description Analysis functions to produce a 1-row summary presented in
 #' a 3-column layout in the columns (column 1 = N, column 2 = Value, column 3 = Change).\cr
 #' In the difference columns, only 1 column will be presented : difference + CI\cr
