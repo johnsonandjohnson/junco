@@ -51,14 +51,14 @@ by a statistics function.}
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
 that is passed by \code{rtables}.}
 
-\item{comp_btw_group}{(\code{logical})\cr If TRUE,
-\cr When ancova = FALSE, the estimate of between group difference (on CHG) will be based upon two-sample t-test. \cr
-\cr When ancova = TRUE, the same ancova model will be used for the estimate of between group difference (on CHG).}
+\item{comp_btw_group}{(\code{logical})\cr If TRUE, comparison between groups will be performed.
+\cr When ancova = FALSE, the estimate of between group difference (on CHG) will be based upon two-sample t-test.
+\cr When ancova = TRUE, the same ANCOVA model will be used for the estimate of between group difference (on CHG).}
 
 \item{ref_path}{(\code{character})\cr global reference group specification, see \code{\link[=get_ref_info]{get_ref_info()}}.}
 
 \item{ancova}{(\code{logical})\cr If FALSE, only descriptive methods will be used. \cr
-If TRUE Ancova methods will be used for each of the columns : AVAL, CHG, DIFF. \cr}
+If TRUE, ANCOVA methods will be used for each of the columns : AVAL, CHG, DIFF. \cr}
 
 \item{interaction_y}{(\code{character})\cr Will be passed onto the \code{tern} function \code{s_ancova}, when ancova = TRUE.}
 
@@ -66,7 +66,7 @@ If TRUE Ancova methods will be used for each of the columns : AVAL, CHG, DIFF. \
 
 \item{conf_level}{(\code{proportion})\cr Confidence level of the interval}
 
-\item{daysconv}{conversion required to get the values into days
+\item{daysconv}{(\code{numeric})\cr conversion required to get the values into days
 (i.e 1 if original PARAMCD unit is days, 30.4375 if original PARAMCD unit is in months)}
 
 \item{variables}{(named list of strings)\cr
@@ -100,16 +100,13 @@ unmodified default behavior. Can be negative.}
 A function to create the appropriate statistics needed for exposure table
 }
 \details{
-Creates statistics needed for standard exposure table
+Creates statistics needed for standard exposure table.
 This includes differences and 95\% CI and total treatment years.
-This is designed to be used as an analysis (afun in \code{analyze}) function.
-
-Creates statistics needed for table. This includes differences and 95\% CI and total treatment years.
 This is designed to be used as an analysis (afun in \code{analyze}) function.
 }
 \section{Functions}{
 \itemize{
-\item \code{s_summarize_ex_j()}: Statistics function needed for the exposure tables
+\item \code{s_summarize_ex_j()}: Statistics function needed for the exposure tables.
 
 \item \code{a_summarize_ex_j()}: Formatted analysis function which is used as \code{afun}.
 

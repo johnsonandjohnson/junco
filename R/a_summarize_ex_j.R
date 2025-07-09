@@ -2,7 +2,7 @@
 #'
 #'
 #' @details
-#' Creates statistics needed for standard exposure table
+#' Creates statistics needed for standard exposure table.
 #' This includes differences and 95% CI and total treatment years.
 #' This is designed to be used as an analysis (afun in `analyze`) function.
 #'
@@ -11,15 +11,15 @@ NULL
 
 
 #' @inheritParams proposal_argument_convention
-#' @describeIn a_summarize_ex_j Statistics function needed for the exposure tables
+#' @describeIn a_summarize_ex_j Statistics function needed for the exposure tables.
 #'
-#' @param daysconv conversion required to get the values into days
+#' @param daysconv (`numeric`)\cr conversion required to get the values into days
 #' (i.e 1 if original PARAMCD unit is days, 30.4375 if original PARAMCD unit is in months)
 #' @param ancova (`logical`)\cr If FALSE, only descriptive methods will be used. \cr
-#' If TRUE Ancova methods will be used for each of the columns : AVAL, CHG, DIFF. \cr
-#' @param comp_btw_group (`logical`)\cr If TRUE,
-#' \cr When ancova = FALSE, the estimate of between group difference (on CHG) will be based upon two-sample t-test. \cr
-#' \cr When ancova = TRUE, the same ancova model will be used for the estimate of between group difference (on CHG).
+#' If TRUE, ANCOVA methods will be used for each of the columns : AVAL, CHG, DIFF. \cr
+#' @param comp_btw_group (`logical`)\cr If TRUE, comparison between groups will be performed.
+#' \cr When ancova = FALSE, the estimate of between group difference (on CHG) will be based upon two-sample t-test.
+#' \cr When ancova = TRUE, the same ANCOVA model will be used for the estimate of between group difference (on CHG).
 #'
 #' @param interaction_y (`character`)\cr Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.
 #' @param interaction_item (`character`)\cr Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.
@@ -117,9 +117,6 @@ s_summarize_ex_j <- function(
 #' @title Analysis Function For Exposure Tables
 #' @description
 #' A function to create the appropriate statistics needed for exposure table
-#' @details
-#' Creates statistics needed for table. This includes differences and 95% CI and total treatment years.
-#' This is designed to be used as an analysis (afun in `analyze`) function.
 #' @inheritParams proposal_argument_convention
 #'
 #' @describeIn a_summarize_ex_j Formatted analysis function which is used as `afun`.

@@ -50,13 +50,13 @@ will be considered.\cr
 When no values are observed (eg zero row input df),
 a row with row-label \verb{No data reported} will be included in the table.}
 
-\item{subcol_split}{Text to search colid to determine whether further subsetting
+\item{subcol_split}{(\code{string})\cr text to search colid to determine whether further subsetting
 should be performed.}
 
-\item{subcol_var}{Name of variable containing to be searched for the text
+\item{subcol_var}{(\code{string})\cr name of variable containing to be searched for the text
 identified in subcol_val argument.}
 
-\item{subcol_val}{Value to use to perform further data sub-setting.}
+\item{subcol_val}{(\code{string})\cr value to use to perform further data sub-setting.}
 
 \item{.df_row}{(\code{data.frame})\cr data frame across all of the columns for the given row split.}
 
@@ -83,14 +83,14 @@ This higher row-level split is specified in the argument \code{denom_by}.\cr
 }}
 
 \item{label}{(\code{string})\cr
-When \code{val}is a single \code{string},
+When \code{val} is a single \code{string},
 the row label to be shown on the output can be specified using this argument.\cr
 When \code{val} is a \verb{character vector}, the \code{label_map} argument can be specified
 to control the row-labels.}
 
 \item{label_fstr}{(\code{string})\cr
 a sprintf style format string.
-It can contain up to one "\\%s" which takes the current split value and
+It can contain up to one \code{"\%s"}, which takes the current split value and
 generates the row/column label.\cr
 It will be combined with the \code{labelstr} argument,
 when utilizing this function as

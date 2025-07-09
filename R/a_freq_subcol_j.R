@@ -5,12 +5,11 @@
 #'
 #' @inheritParams proposal_argument_convention
 #' @inheritParams a_freq_j
-#' @param subcol_split Text to search colid to determine whether further subsetting
+#' @param subcol_split (`string`)\cr text to search colid to determine whether further subsetting
 #'                     should be performed.
-#' @param subcol_var Name of variable containing to be searched for the text
+#' @param subcol_var (`string`)\cr name of variable containing to be searched for the text
 #'                     identified in subcol_val argument.
-#' @param subcol_val Value to use to perform further data sub-setting.
-
+#' @param subcol_val (`string`)\cr value to use to perform further data sub-setting.
 #' @param denom (`string`)\cr
 #' One of \cr
 #' \itemize{
@@ -65,7 +64,6 @@
 #' result <- build_table(lyt, ADAE, alt_counts_df = ADSL)
 #'
 #' result
-
 a_freq_subcol_j <- function(
     df,
     labelstr = NULL,
