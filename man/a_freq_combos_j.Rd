@@ -51,7 +51,8 @@ When no values are observed (eg zero row input df),
 a row with row-label \verb{No data reported} will be included in the table.}
 
 \item{combosdf}{The df which provides the mapping of column facets to produce cumulative counts for .N_col.\cr
-In the cell facet, these cumulative records must then be removed from the numerator, which can be done via the filter_var parameter
+In the cell facet, these cumulative records must then be removed from the numerator,
+which can be done via the filter_var parameter
 to avoid unwanted counting of events.}
 
 \item{do_not_filter}{A vector of facets (i.e., column headers), identifying headers for which
@@ -142,34 +143,34 @@ Analysis function count and percentage in column design controlled by combosdf
 }
 \examples{
 library(dplyr)
-ADSL <- ex_adsl |> select(USUBJID, ARM, EOSSTT, EOSDT, EOSDY, TRTSDTM) 
+ADSL <- ex_adsl |> select(USUBJID, ARM, EOSSTT, EOSDT, EOSDY, TRTSDTM)
 
 cutoffd <- as.Date("2023-09-24")
 
-ADSL <- ADSL |> 
+ADSL <- ADSL |>
   mutate(
      TRTDURY = case_when(
        !is.na(EOSDY) ~ EOSDY,
        TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
      )
-   ) |> 
+   ) |>
   mutate(ACAT1 = case_when(
     TRTDURY < 183 ~ "0-6 Months",
     TRTDURY < 366 ~ "6-12 Months",
     TRUE ~ "+12 Months"
-  )) |> 
+  )) |>
   mutate(ACAT1 = factor(ACAT1, levels = c("0-6 Months", "6-12 Months", "+12 Months")))
 
 
-ADAE <- ex_adae |> select(USUBJID, ARM, AEBODSYS, AEDECOD, ASTDY) 
+ADAE <- ex_adae |> select(USUBJID, ARM, AEBODSYS, AEDECOD, ASTDY)
 
-ADAE <- ADAE |> 
-  mutate(TRTEMFL = "Y") |> 
+ADAE <- ADAE |>
+  mutate(TRTEMFL = "Y") |>
   mutate(ACAT1 = case_when(
     ASTDY < 183 ~ "0-6 Months",
     ASTDY < 366 ~ "6-12 Months",
     TRUE ~ "+12 Months"
-  )) |> 
+  )) |>
   mutate(ACAT1 = factor(ACAT1, levels = c("0-6 Months", "6-12 Months", "+12 Months")))
 
 combodf <- tribble(
@@ -184,7 +185,7 @@ combodf <- tribble(
 lyt <- basic_table(show_colcounts = TRUE) |>
   split_cols_by("ARM") |>
   split_cols_by("ACAT1",
-    split_fun = add_combo_levels(combosdf = combodf, trim = FALSE, keep_levels = combodf$valname)            
+    split_fun = add_combo_levels(combosdf = combodf, trim = FALSE, keep_levels = combodf$valname)
     ) |>
   analyze("TRTEMFL",
           show_labels = "hidden",

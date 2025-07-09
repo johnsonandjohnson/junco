@@ -52,9 +52,9 @@ a_patyrs_j(
 }
 \value{
 \itemize{
-\item \code{s_patyrs_j()} return x a list containing the patient years statistics.
-The list of available statistics for can be viewed by running \code{junco_get_stats("a_patyrs_j")},
-currently this is just a single statistic \code{patyrs}, patient years of exposure.
+\item \code{s_patyrs_j()} returns a list containing the patient years statistics.
+The list of available statistics for can be viewed by running \code{junco_get_stats("a_patyrs_j")}.
+Currently, this is just a single statistic \code{patyrs}, patient years of exposure.
 }
 
 \itemize{

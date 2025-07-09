@@ -87,6 +87,7 @@ h_get_average_visit_specs <- function(emmeans_res, vars, averages, fit) {
 #'
 #' @note The difference here compared to the original tern.mmrm::h_get_spec_visit_estimates()
 #'   function is that additional arguments for [emmeans::contrast()] can be passed via the
+#'   dots (`...`) argument.
 #'   Once this has been added to the `tern.mmrm` package then its functions can be used instead.
 #'
 #' @param tests (`flag`)\cr whether to add test results to the estimates.

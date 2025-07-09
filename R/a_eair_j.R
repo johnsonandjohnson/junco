@@ -14,9 +14,9 @@ NULL
 #' @param inriskdiffcol (`logical`)\cr flag indicating if the function is called within a risk difference column.
 #'
 #' @return
-#' * `s_patyrs_j()` return x a list containing the patient years statistics.
-#' The list of available statistics for can be viewed by running `junco_get_stats("a_patyrs_j")`,
-#' currently this is just a single statistic `patyrs`, patient years of exposure.
+#' * `s_patyrs_j()` returns a list containing the patient years statistics.
+#' The list of available statistics for can be viewed by running `junco_get_stats("a_patyrs_j")`.
+#' Currently, this is just a single statistic `patyrs`, patient years of exposure.
 #'
 #' @keywords internal
 s_patyrs_j <- function(

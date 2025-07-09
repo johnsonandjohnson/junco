@@ -6,7 +6,8 @@
 #' @inheritParams a_freq_j
 #'
 #' @param combosdf The df which provides the mapping of column facets to produce cumulative counts for .N_col.\cr
-#' In the cell facet, these cumulative records must then be removed from the numerator, which can be done via the filter_var parameter 
+#' In the cell facet, these cumulative records must then be removed from the numerator,
+#' which can be done via the filter_var parameter
 #' to avoid unwanted counting of events.
 #' @param do_not_filter A vector of facets (i.e., column headers), identifying headers for which
 #' no filtering of records should occur.
@@ -16,7 +17,6 @@
 #' Generally, this will contain text matching the column header for the column associated with a given record.
 #' @param flag_var Variable which identifies the occurrence (or first occurrence) of an event.
 #' The flag variable is expected to have a value of "Y" identifying that the event should be counted, or NA otherwise.
-
 #' @param denom (`string`)\cr
 #' One of \cr
 #' \itemize{
@@ -33,39 +33,39 @@
 #' @param .formats (named 'character' or 'list')\cr
 #' formats for the statistics.
 #' @return list of requested statistics with formatted `rtables::CellValue()`.\cr
-#' 
+#'
 #' @examples
 #' library(dplyr)
-#' ADSL <- ex_adsl |> select(USUBJID, ARM, EOSSTT, EOSDT, EOSDY, TRTSDTM) 
-#' 
+#' ADSL <- ex_adsl |> select(USUBJID, ARM, EOSSTT, EOSDT, EOSDY, TRTSDTM)
+#'
 #' cutoffd <- as.Date("2023-09-24")
-#' 
-#' ADSL <- ADSL |> 
+#'
+#' ADSL <- ADSL |>
 #'   mutate(
 #'      TRTDURY = case_when(
 #'        !is.na(EOSDY) ~ EOSDY,
 #'        TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
 #'      )
-#'    ) |> 
+#'    ) |>
 #'   mutate(ACAT1 = case_when(
 #'     TRTDURY < 183 ~ "0-6 Months",
 #'     TRTDURY < 366 ~ "6-12 Months",
 #'     TRUE ~ "+12 Months"
-#'   )) |> 
+#'   )) |>
 #'   mutate(ACAT1 = factor(ACAT1, levels = c("0-6 Months", "6-12 Months", "+12 Months")))
-#' 
-#' 
-#' ADAE <- ex_adae |> select(USUBJID, ARM, AEBODSYS, AEDECOD, ASTDY) 
-#' 
-#' ADAE <- ADAE |> 
-#'   mutate(TRTEMFL = "Y") |> 
+#'
+#'
+#' ADAE <- ex_adae |> select(USUBJID, ARM, AEBODSYS, AEDECOD, ASTDY)
+#'
+#' ADAE <- ADAE |>
+#'   mutate(TRTEMFL = "Y") |>
 #'   mutate(ACAT1 = case_when(
 #'     ASTDY < 183 ~ "0-6 Months",
 #'     ASTDY < 366 ~ "6-12 Months",
 #'     TRUE ~ "+12 Months"
-#'   )) |> 
+#'   )) |>
 #'   mutate(ACAT1 = factor(ACAT1, levels = c("0-6 Months", "6-12 Months", "+12 Months")))
-#' 
+#'
 #' combodf <- tribble(
 #'   ~valname,        ~label,        ~levelcombo,                                  ~exargs,
 #'   "Tot",           "Total",       c("0-6 Months", "6-12 Months", "+12 Months"), list(),
@@ -73,12 +73,12 @@
 #'   "B_6-12 Months", "6-12 Months", c(              "6-12 Months", "+12 Months"), list(),
 #'   "C_+12 Months",  "+12 Months",  c(                             "+12 Months"), list()
 #' )
-#' 
-#' 
+#'
+#'
 #' lyt <- basic_table(show_colcounts = TRUE) |>
 #'   split_cols_by("ARM") |>
 #'   split_cols_by("ACAT1",
-#'     split_fun = add_combo_levels(combosdf = combodf, trim = FALSE, keep_levels = combodf$valname)            
+#'     split_fun = add_combo_levels(combosdf = combodf, trim = FALSE, keep_levels = combodf$valname)
 #'     ) |>
 #'   analyze("TRTEMFL",
 #'           show_labels = "hidden",
@@ -91,14 +91,12 @@
 #'             do_not_filter = "Tot"
 #'           )
 #'   )
-#' 
-#' 
+#'
+#'
 #' result <- build_table(lyt, df = ADAE, alt_counts_df = ADSL)
-#' 
+#'
 #' result
-
 #' @export
-
 a_freq_combos_j <- function(
     df,
     labelstr = NULL,

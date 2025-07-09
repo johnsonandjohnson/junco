@@ -55,7 +55,8 @@ a_freq_resp_var_j(
 \item{...}{Additional arguments passed to other functions.}
 }
 \value{
-Formatted analysis function which is used as \code{afun} in \code{analyze_vars()} and as \code{cfun} in \code{summarize_row_groups()}.
+Formatted analysis function which is used as \code{afun} in \code{analyze_vars()}
+and as \code{cfun} in \code{summarize_row_groups()}.
 }
 \description{
 This function calculates counts and percentages for response variables (Y/N values),
@@ -63,11 +64,11 @@ with optional risk difference calculations.
 }
 \examples{
 library(dplyr)
-ADSL <- ex_adsl |> select(USUBJID, ARM, SEX) 
+ADSL <- ex_adsl |> select(USUBJID, ARM, SEX)
 
-ADAE <- ex_adae |> select(USUBJID, ARM, SEX, AEBODSYS, AEDECOD) 
+ADAE <- ex_adae |> select(USUBJID, ARM, SEX, AEBODSYS, AEDECOD)
 
-ADAE <- ADAE |> 
+ADAE <- ADAE |>
   mutate(TRTEMFL = "Y")
 
 lyt <- basic_table(show_colcounts = TRUE) |>

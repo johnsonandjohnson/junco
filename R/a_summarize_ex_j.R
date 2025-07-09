@@ -131,7 +131,7 @@ s_summarize_ex_j <- function(
 #' @examples
 #' library(dplyr)
 #' ADEX <- ex_adsl %>% select(USUBJID, ARM, TRTSDTM, EOSSTT, EOSDY)
-#' 
+#'
 #' trtvar <- "ARM"
 #' ctrl_grp <- "B: Placebo"
 #' cutoffd <- as.Date("2023-09-24")
@@ -151,8 +151,8 @@ s_summarize_ex_j <- function(
 #'        !is.na(EOSDY) ~ EOSDY,
 #'        TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
 #'      )
-#'  ) 
-#' 
+#'  )
+#'
 #' colspan_trt_map <- create_colspan_map(ADEX,
 #'  non_active_grp = ctrl_grp,
 #'  non_active_grp_span_lbl = " ",

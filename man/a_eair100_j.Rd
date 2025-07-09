@@ -129,6 +129,9 @@ colspan_trt_map <- create_colspan_map(adexsum,
 
 ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
 
+################################################################################
+# Define layout and build table:
+################################################################################
 
 lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") |>
   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>

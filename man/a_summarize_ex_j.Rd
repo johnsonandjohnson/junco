@@ -137,7 +137,7 @@ ADEX <- ADEX |>
        !is.na(EOSDY) ~ EOSDY,
        TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
      )
- ) 
+ )
 
 colspan_trt_map <- create_colspan_map(ADEX,
  non_active_grp = ctrl_grp,

@@ -29,16 +29,16 @@
 #'
 #' @return list of requested statistics with formatted `rtables::CellValue()`.\cr
 #' @export
-#' 
+#'
 #' @examples
 #' library(dplyr)
-#' 
-#' ADSL <- ex_adsl |> 
+#'
+#' ADSL <- ex_adsl |>
 #'   select(USUBJID, ARM)
 #'
 #' ADSL$COLSPAN_REL <- "AEs"
 #'
-#' ADAE <- ex_adae |> 
+#' ADAE <- ex_adae |>
 #'  select(USUBJID, ARM, AEDECOD, AREL)
 #'
 #' ADAE <- ADAE |>
@@ -57,9 +57,9 @@
 #' lyt <- basic_table(show_colcounts = TRUE) |>
 #'   split_cols_by("COLSPAN_REL", split_fun = add_combo_levels(combodf, trim = TRUE)) |>
 #'   split_cols_by("ARM") |>
-#'   analyze("AEDECOD", afun = a_freq_subcol_j, 
-#'     extra_args = list(subcol_split = "RELATED", 
-#'       subcol_var = "AEREL", 
+#'   analyze("AEDECOD", afun = a_freq_subcol_j,
+#'     extra_args = list(subcol_split = "RELATED",
+#'       subcol_var = "AEREL",
 #'       subcol_val = "RELATED"))
 #'
 #' result <- build_table(lyt, ADAE, alt_counts_df = ADSL)
