@@ -1,14 +1,14 @@
 #' @title Function factory for xx style formatting
 #' @description A function factory to generate formatting functions for value
-#' formatting that support the xx style format and control the rounding method
+#' formatting that support the xx style format and control the rounding method.
 #'
 #' @param roundmethod (`string`)\cr choice of rounding methods. Options are:
 #'   * `sas`: the underlying rounding method is `tidytlg::roundSAS`, where \cr
 #'   roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions/12688717/round-up-from-5
 #'   * `iec`: the underlying rounding method is `round`
 #'
-#' @param na_str_dflt Character to represent NA value
-#' @param replace_na_dflt logical(1). Should an `na_string` of "NA" within
+#' @param na_str_dflt (`character`)\cr Character to represent NA value
+#' @param replace_na_dflt (`logical`)\cr Should an `na_string` of "NA" within
 #'    the formatters framework be overridden by `na_str_default`? Defaults to
 #'    `TRUE`, as a way to have a different default na string behavior from the
 #'    base `formatters` framework.
@@ -22,7 +22,6 @@
 #' rcell(c(1.453), jjcsformat_xx("xx.xx"))
 #' rcell(c(), jjcsformat_xx("xx.xx"))
 #' rcell(c(1.453, 2.45638), jjcsformat_xx("xx.xx (xx.xxx)"))
-#'
 format_xx_fct <- function(roundmethod = c("sas", "iec"), na_str_dflt = "NE",
                           replace_na_dflt = TRUE) {
   roundmethod <- match.arg(roundmethod)
@@ -115,8 +114,8 @@ jjcsformat_xx_R <- format_xx_fct(roundmethod = "iec")
 #' @title Formatting of values
 #' @name jjcsformat_xx
 #' @description jjcs formatting function
-#' @param str The formatting that is required specified as a text string, eg "xx.xx"
-#' @param na_str character. Na string that will be passed from `formatters` into
+#' @param str (`character`)\cr the formatting that is required specified as a text string, eg "xx.xx"
+#' @param na_str (`character`)\cr Na string that will be passed from `formatters` into
 #'    our formatting functions.
 #' @return a formatting function with `"sas"`-style rounding.
 #' @export
@@ -129,11 +128,11 @@ jjcsformat_xx <- jjcsformat_xx_SAS
 #'
 #' Formats a count together with fraction (and/or denominator) with special
 #' consideration when count is 0, or fraction is 1.
-#' \cr See also: tern::format_count_fraction_fixed_dp()
+#' \cr See also: [tern::format_count_fraction_fixed_dp()]
 #'
 #' @inheritParams format_xx_fct
-#' @param x `numeric`\cr with elements `num` and `fraction` or `num`, `denom` and `fraction`.
-#' @param d numeric(1). Number of digits to round fraction to (default=1)
+#' @param x (`numeric vector`)\cr Vector with elements `num` and `fraction` or `num`, `denom` and `fraction`.
+#' @param d (`numeric`)\cr Number of digits to round fraction to (default = 1)
 #' @param ... Additional arguments passed to other methods.
 #' @return A string in the format `count / denom (ratio percent)`. If `count`
 #' is 0, the format is `0`. If fraction is >0.99, the format is
@@ -145,7 +144,6 @@ jjcsformat_xx <- jjcsformat_xx_SAS
 #' jjcsformat_count_fraction(c(7, 0.7))
 #' jjcsformat_count_fraction(c(70000, 0.9999999))
 #' jjcsformat_count_fraction(c(70000, 1))
-#'
 jjcsformat_count_fraction <- function(
     x,
     d = 1,
@@ -195,7 +193,7 @@ jjcsformat_count_fraction <- function(
   return(result)
 }
 
-#' @title Formatting count, denominator and fraction values
+#' @title Formatting count, denominator and fraction values.
 #'
 #' @inheritParams count_fraction
 #' @param ... Additional arguments passed to other methods.
@@ -253,7 +251,7 @@ jjcsformat_count_denom_fraction <- function(
   return(result)
 }
 
-#' @title Formatting fraction, count and denominator values
+#' @title Formatting fraction, count and denominator values.
 #'
 #' @details
 #' Formats a 3-dimensional value such that percent values
@@ -321,9 +319,9 @@ jjcsformat_fraction_count_denom <- function(
 #' @title Function factory for p-value formatting
 #'
 #' @description A function factory to generate formatting functions for p-value
-#' formatting that support rounding close to the significance level specified
+#' formatting that support rounding close to the significance level specified.
 #'
-#' @param alpha `number`\cr the significance level to account for during rounding.
+#' @param alpha (`numeric`)\cr the significance level to account for during rounding.
 #' @return The p-value in the standard format. If `count` is 0, the format is `0`.
 #'   If it is smaller than 0.001, then `<0.001`, if it is larger than 0.999, then
 #'   `>0.999` is returned. Otherwise, 3 digits are used. In the special case that
@@ -379,7 +377,7 @@ jjcsformat_pval_fct <- function(alpha = 0.05) {
 #' @description A function factory to generate formatting functions for range formatting
 #'   that includes information about the censoring of survival times.
 #'
-#' @param str `string`\cr the format specifying the number of digits to be used,
+#' @param str (`string`)\cr the format specifying the number of digits to be used,
 #'   for the range values, e.g. `"xx.xx"`.
 #' @return A function that formats a numeric vector with 4 elements:
 #'   - minimum

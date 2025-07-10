@@ -7,11 +7,11 @@
 get_ctrl_subset(df, trt_var, ctrl_grp)
 }
 \arguments{
-\item{df}{Data frame to subset.}
+\item{df}{(\code{data.frame})\cr Data frame to subset.}
 
-\item{trt_var}{Treatment variable name.}
+\item{trt_var}{(\code{character})\cr Treatment variable name.}
 
-\item{ctrl_grp}{Control group value.}
+\item{ctrl_grp}{(\code{character})\cr Control group value.}
 }
 \value{
 Subset of the data frame.

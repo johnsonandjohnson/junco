@@ -7,9 +7,10 @@
 jjcs_num_formats(d, cap = 4)
 }
 \arguments{
-\item{d}{precision of individual values}
+\item{d}{(\code{numeric})\cr precision of individual values}
 
-\item{cap}{cap to numerical precision (d > cap -- will use precision as if cap was specified as precision)}
+\item{cap}{(\code{numeric})\cr cap to numerical precision (d > cap --
+will use precision as if cap was specified as precision)}
 }
 \value{
 list:
@@ -19,7 +20,7 @@ list:
 }
 }
 \description{
-Formatting setter for selected numerical statistics
+Formatting setter for selected numerical statistics.
 }
 \examples{
 P1_precision <- jjcs_num_formats(d=0)$fmt

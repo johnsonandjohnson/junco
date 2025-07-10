@@ -7,7 +7,7 @@
 jjcsformat_range_fct(str)
 }
 \arguments{
-\item{str}{\code{string}\cr the format specifying the number of digits to be used,
+\item{str}{(\code{string})\cr the format specifying the number of digits to be used,
 for the range values, e.g. \code{"xx.xx"}.}
 }
 \value{

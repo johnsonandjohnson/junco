@@ -67,9 +67,11 @@ unmodified default behavior. Can be negative.}
 should be displayed.}
 }
 \value{
-for \code{s_coxph_hr} a list containing the same statistics returned by \link[tern:survival_coxph_pairwise]{tern::s_coxph_pairwise}
-and the additional \code{lr_stat_df} statistic. for \code{a_coxph_hr}, a \code{VerticalRowsSection}
-object.
+\itemize{
+\item \code{s_coxph_hr} returns a list containing the same statistics returned by
+\link[tern:survival_coxph_pairwise]{tern::s_coxph_pairwise} and the additional \code{lr_stat_df} statistic.
+\item \code{a_coxph_hr} returns a \code{VerticalRowsSection} object.
+}
 }
 \description{
 This is a workaround for \code{\link[tern:survival_coxph_pairwise]{tern::s_coxph_pairwise()}}, which adds a statistic
@@ -80,10 +82,8 @@ containing the hazard ratio estimate together with the confidence interval.
 \item \code{a_coxph_hr()}: Formatted analysis function which is used as \code{afun}.
 
 \item \code{s_coxph_hr()}: Statistics function forked from \code{\link[tern:survival_coxph_pairwise]{tern::s_coxph_pairwise()}}.
-the difference is that:
-\enumerate{
-\item It returns the additional statistic \code{lr_stat_df} (log rank statistic with degrees of freedom).
-}
+The difference is that it returns the additional statistic \code{lr_stat_df}
+(log rank statistic with degrees of freedom).
 
 }}
 \examples{

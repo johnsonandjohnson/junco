@@ -7,9 +7,9 @@ non_blank_sentinel <- structure("", class = "non_blank_sentinel")
 #'
 #' Retrieves a subset of the DataFrame based on treatment variable and control group.
 #'
-#' @param df Data frame to subset.
-#' @param trt_var Treatment variable name.
-#' @param ctrl_grp Control group value.
+#' @param df (`data.frame`)\cr Data frame to subset.
+#' @param trt_var (`character`)\cr Treatment variable name.
+#' @param ctrl_grp (`character`)\cr Control group value.
 #' @return Subset of the data frame.
 #' @keywords internal
 get_ctrl_subset <- function(df, trt_var, ctrl_grp) {
@@ -18,7 +18,6 @@ get_ctrl_subset <- function(df, trt_var, ctrl_grp) {
 
 
 # sfunction to perform counting of records or subjects on an incoming df and .alt_df
-
 #' Null Function
 #'
 #' A function that returns NULL.
@@ -297,9 +296,9 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
 #'
 #' Retrieves the treatment variable reference path from the provided context.
 #'
-#' @param ref_path Reference path for treatment variable.
-#' @param .spl_context Current split context.
-#' @param df Data frame.
+#' @param ref_path (`character`)\cr Reference path for treatment variable.
+#' @param .spl_context (`data.frame`)\cr Current split context.
+#' @param df (`data.frame`)\cr Data frame.
 #' @return List containing treatment variable details.
 #' @export
 h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
@@ -539,7 +538,6 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
 #' @param denom_by Denominator grouping variable.
 #' @param .stats Statistics to compute.
 #' @return List containing prepared data frames and values.
-
 h_a_freq_dataprep <- function(
     df,
     labelstr = NULL,
@@ -762,7 +760,6 @@ h_a_freq_prepinrows <- function(
 #' @param flag_var Flag variable for filtering.
 #' @param colid Column ID for identification.
 #' @return Subsetted data frame.
-
 h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, colid) {
   ### this is the core code for subsetting to appropriate combo level
   if (!is.null(flag_var)) {

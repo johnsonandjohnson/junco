@@ -48,11 +48,15 @@ displayed during the calculation of the column widths? Defaults to \code{FALSE}.
 \item{type}{Type of the table tree, used to determine column width calculation method.}
 }
 \value{
-A vector of column widths suitable to use in \code{tt_to_tlgrtf} and
+\itemize{
+\item \code{listing_column_widths}: a vector of column widths suitable to use in \code{tt_to_tlgrtf} and
 other exporters.
+}
 
-a vector of column widths (including the label row pseudo-column in the table
+\itemize{
+\item \code{def_colwidths}: a vector of column widths (including the label row pseudo-column in the table
 case) suitable for use rendering \code{tt} in the specified font.
+}
 }
 \description{
 \code{def_colwidths} uses heuristics to determine suitable column widths given a

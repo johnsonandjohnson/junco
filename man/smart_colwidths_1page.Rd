@@ -2,7 +2,7 @@
 % Please edit documentation in R/colwidths.R
 \name{smart_colwidths_1page}
 \alias{smart_colwidths_1page}
-\title{Colwidths for all columns to be forced on one page}
+\title{Colwidths for all columns to be forced on one page.}
 \usage{
 smart_colwidths_1page(
   tt,
@@ -15,21 +15,21 @@ smart_colwidths_1page(
 )
 }
 \arguments{
-\item{tt}{TableTree object to calculate column widths for}
+\item{tt}{(\code{TableTree})\cr TableTree object to calculate column widths for}
 
-\item{fontspec}{Font specification object}
+\item{fontspec}{(\code{font_spec})\cr Font specification object}
 
-\item{col_gap}{Column gap in spaces}
+\item{col_gap}{(\code{numeric})\cr Column gap in spaces}
 
-\item{rowlabel_width}{Width of row labels in spaces}
+\item{rowlabel_width}{(\code{numeric})\cr Width of row labels in spaces}
 
-\item{print_width_ins}{Print width in inches}
+\item{print_width_ins}{(\code{numeric})\cr Print width in inches}
 
-\item{landscape}{Whether the output is in landscape orientation}
+\item{landscape}{(\code{logical})\cr Whether the output is in landscape orientation}
 
-\item{lastcol_gap}{Whether to include a gap after the last column}
+\item{lastcol_gap}{(\code{logical})\cr Whether to include a gap after the last column}
 }
 \description{
-Colwidths for all columns to be forced on one page
+Colwidths for all columns to be forced on one page.
 }
 \keyword{internal}

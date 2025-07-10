@@ -7,9 +7,9 @@
 jjcsformat_xx(str, na_str = na_str_dflt)
 }
 \arguments{
-\item{str}{The formatting that is required specified as a text string, eg "xx.xx"}
+\item{str}{(\code{character})\cr the formatting that is required specified as a text string, eg "xx.xx"}
 
-\item{na_str}{character. Na string that will be passed from \code{formatters} into
+\item{na_str}{(\code{character})\cr Na string that will be passed from \code{formatters} into
 our formatting functions.}
 }
 \value{
