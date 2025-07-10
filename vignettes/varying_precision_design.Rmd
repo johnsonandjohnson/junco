@@ -1,0 +1,173 @@
+
+
+# Design Sketches and Considerations
+
+## Level of Implementation
+
+### First Class Internal Format Support
+
+#### API Sketch 1
+
+Support for "xx.d", "xx.dd", "xx.ddd" components to formats supported by `formatters` via format labels.
+
+```{R eval = FALSE}
+in_rows(mean = mean(x), sd = sd(x), .formats = list(mean = "xx.d", sd = "xx.dd"), .format_precision = 2)
+format_value(c(53.2, 5.2747), c("xx.d, xx.dd"), d_precision = 2) ## would return `"53.20, 1.235"`
+```
+
+
+#### Difficulties
+
+- combinatorial explosion of number of supported format labels
+  - In practice, likely requires either
+    a. Auto code generation of format label support, or
+	b. A proper parser at the core of `formatters` formatting machinery.
+  - Both of the above are possible, neither are remotely trivial.
+- Requires a way for the `d` parameter to get to the `format_value` call. Not currently achievable as factored.
+- Requires Roche buy in at the `formatters` level, which they are more wary of than changes to rtables/rlistings.
+
+#### Benefits
+
+- "automatically" supported in all a/cfuns once achieved
+- No specialized machinery required.
+- **ability to tie precision to argument of printing/exporter machinery** 
+
+#### Some off-the-cuff notes/details
+
+##### Default d
+
+Default `d`/precision to 1, so if not specified, "xx.d" is equivalent to "xx.x", "xx.dd" is "xx.xx", etc. Makes safe to use
+d-based formats with a/cfuns that dont' accept/calculate/pass along `d`.
+
+### Support in `rtables` at `in_rows` stage
+
+#### Implementation Sketch
+
+```{r, eval = FALSE}
+resolve_d_formats <- function(formats, d) {
+  ret <- lapply(formats, function(fmt) {
+    if (is.null(fmt) || is.function(fmt) ||
+        !grepl(".d", fmt, fixed = TRUE)) {
+      fmt
+    } else {
+      replace_fmt_ds(fmt, d)    
+    }
+  })
+  names(ret)  <- names(formats)
+  ret
+}
+
+ in_rows <- function (..., .list = NULL, .names = NULL, .labels = NULL, .formats = NULL, 
+    .indent_mods = NULL, .cell_footnotes = list(NULL), .row_footnotes = list(NULL), 
+    .aligns = NULL, .format_na_strs = NULL, .stat_names = list(NULL),
+    ##
+    d_prec = 1
+    ##
+    )
+{
+    if (is.function(.formats)) {
+        .formats <- list(.formats)
+    }
+    
+    l <- c(list(...), .list)
+    if (missing(.names) && missing(.labels)) {
+        if (length(l) > 0 && is.null(names(l))) {
+            stop("need a named list")
+        }
+        else {
+            .names <- names(l)
+        }
+        stopifnot(!anyNA(.names))
+    }
+    if (length(l) == 0) {
+        if (length(.labels) > 0 || length(.formats) > 0 || length(.names) > 
+            0 || length(.indent_mods) > 0 || length(.format_na_strs) > 
+            0 || (!all(is.na(.stat_names)) && length(.stat_names) > 
+            0)) {
+            stop("in_rows got 0 rows but length >0 of at least one of ", 
+                ".labels, .formats, .names, .indent_mods, .format_na_strs, .stat_names. ", 
+                "Does your analysis/summary function handle the 0 row ", 
+                "df/length 0 x case?")
+        }
+        l2 <- list()
+    }
+    else {
+        if (is.null(.formats)) {
+            .formats <- list(NULL)
+        }
+        ##
+        .formats <- resolve_d_formats(.formats, d = d_prec)
+        ##
+        ## remainder unchanged
+    }
+    ## remainder unchanged
+}
+```
+
+#### Benefits
+
+- Immediate Support in all a/cfuns
+- behavior of all code that doesn't specify formats with d in them unchanged.
+- Easy to factor code that determines `d` from this part
+
+#### Difficulties
+
+- No support in `rlistings`
+  - not convinced this is a big deal regarding listings specifically, but currently formatting works the same for evreything that uses `formatters`. A little wary of removing that guranate.
+- Requires Roche buy-in at the `rtables` layer.
+  - Easier than at `formatters` level but still not a guarantee.
+
+### `junco_in_rows`
+
+#### Implementation Sketch
+
+
+```{r, eval = FALSE}
+resolve_d_formats <- function(formats, d) {
+  if (is.function(formats) || is.null(formats)) {
+    return(formats)
+  }
+  
+  ret <- lapply(formats, function(fmt) {
+    if (is.null(fmt) || is.function(fmt) ||
+        !grepl(".d", fmt, fixed = TRUE)) {
+      fmt
+    } else {
+      replace_fmt_ds(fmt, d)    
+    }
+  })
+  names(ret)  <- names(formats)
+  ret
+}
+resolve_cell_d_fmt <- function(rc, d) {
+  if (!is.null(obj_format(rc))) {
+    obj_format(rc) <- resolve_d_formats(obj_format(rc), d)
+  }
+  rc
+}
+junco_in_rows <- function(..., .list = NULL, .names = NULL, .labels = NULL, .formats = NULL, 
+    .indent_mods = NULL, .cell_footnotes = list(NULL), .row_footnotes = list(NULL), 
+    .aligns = NULL, .format_na_strs = NULL, .stat_names = list(NULL), .d_precision = 1) {
+    l <- c(list(...), .list)
+    l <- sapply(l, resolve_cell_d_fmt, d = .d_precision, simplify = FALSE, USE.NAMES = TRUE)
+    .formats <- resolve_d_formats(.formats, d = .d_precision)
+    in_rows(.list = l, .names = .names, .labels = .labels, .formats = .formats,
+            .indent_mods = .indent_mods, .cell_footnotes = .cell_footnotes, .row_footnotes = .row_footnotes,
+            .aligns = .aligns, .format_na_strs = .format_na_strs, .stat_names = .stat_names)
+}
+```
+
+
+#### Benefits
+
+- doesn't require Roche buyin
+- Easy to blanket-implement across all junco a/cfuns
+- Easily factor out code determining `d` from other aspsects
+
+#### Difficulties
+
+- rolling our own `in_rows` is kinda janky
+- support unlikely to extend to any `tern` functions
+
+
+- 
