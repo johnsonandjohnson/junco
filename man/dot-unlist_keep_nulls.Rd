@@ -7,6 +7,6 @@
 .unlist_keep_nulls(lst, null_placeholder = "NULL", recursive = FALSE)
 }
 \description{
-Unlist a list, but retain `NULL` as `'NULL'` or `NA`.
+Unlist a list, but retain \code{NULL} as \code{'NULL'} or \code{NA}.
 }
 \keyword{internal}

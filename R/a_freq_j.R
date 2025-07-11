@@ -1,7 +1,7 @@
 #' @name a_freq_j
 #'
 #' @title Analysis/statistical function for count and percentage in core columns
-#' + (optional) relative risk columns
+#' and (optional) relative risk columns
 #'
 #' @inheritParams proposal_argument_convention
 
@@ -27,8 +27,22 @@
 #'     First element : names of the new levels\cr
 #'     Second element: list with values of the new levels.\cr
 #' @param new_levels_after (`logical`)\cr If `TRUE` new levels will be added after last level.
-#' @param denom (`string`)\cr
-#' One of \cr
+#' @param denom (`string`)\cr See Details.
+#' @param alt_df (`dataframe`)\cr Will be derived based upon alt_df_full and denom_by within a_freq_j.
+#' @param parent_df (`dataframe`)\cr Will be derived within a_freq_j based
+#' upon the input dataframe that goes into build_table (df) and denom_by.\cr
+#' It is a data frame in the higher row-space than the current input df
+#' (which underwent row-splitting by the rtables splitting machinery).
+#'
+#' @param countsource Either `df` or `alt_df`.\cr
+#' When `alt_df` the counts will be based upon the alternative dataframe `alt_df`.\cr
+#' This is useful for subgroup processing,
+#' to present counts of subjects in a subgroup from the alternative dataframe.
+#'
+#' @details
+#'
+#' `denom` controls the denominator used to calculate proportions/percents.
+#' It must be one of \cr
 #' \itemize{
 #' \item \strong{N_col} Column count, \cr
 #' \item \strong{n_df} Number of patients (based upon the main input dataframe `df`),\cr
@@ -44,19 +58,6 @@
 #' \item \strong{n_parentdf} Number of patients from a higher row-level split than the current split.\cr
 #' This higher row-level split is specified in the argument `denom_by`.\cr
 #' }
-#'
-#' @param alt_df (`dataframe`)\cr Will be derived based upon alt_df_full and denom_by within a_freq_j.
-#' @param parent_df (`dataframe`)\cr Will be derived within a_freq_j based
-#' upon the input dataframe that goes into build_table (df) and denom_by.\cr
-#' It is a data frame in the higher row-space than the current input df
-#' (which underwent row-splitting by the rtables splitting machinery).
-#'
-#' @param countsource Either `df` or `alt_df`.\cr
-#' When `alt_df` the counts will be based upon the alternative dataframe `alt_df`.\cr
-#' This is useful for subgroup processing,
-#' to present counts of subjects in a subgroup from the alternative dataframe.
-#'
-#'
 #'
 #' @return
 #' * `s_freq_j`: returns a list of following statistics\cr
@@ -466,7 +467,6 @@ s_rel_risk_val_j <- function(
 #' adsl$rrisk_header <- "Risk Difference (%) (95% CI)"
 #' adsl$rrisk_label <- paste(adsl[[trtvar]], paste("vs", ctrl_grp))
 #'
-#' # join data together
 #' adae <- adae |> left_join(adsl)
 #'
 #' colspan_trt_map <- create_colspan_map(adsl,
@@ -500,8 +500,6 @@ s_rel_risk_val_j <- function(
 #'
 #' result1
 #'
-#' # quick check for risk difference results using tern function stat_propdiff_ci
-#' # For Drug X vs Placebo
 #' x_drug_x <- list(length(unique(subset(adae, adae[[trtvar]] == "A: Drug X")[["USUBJID"]])))
 #' N_x_drug_x <- length(unique(subset(adsl, adsl[[trtvar]] == "A: Drug X")[["USUBJID"]]))
 #' y_placebo <- list(length(unique(subset(adae, adae[[trtvar]] == ctrl_grp)[["USUBJID"]])))
@@ -514,7 +512,6 @@ s_rel_risk_val_j <- function(
 #'   N_y = N_y_placebo
 #' )
 #'
-#' # For Combination vs Placebo
 #' x_combo <- list(length(unique(subset(adae, adae[[trtvar]] == "C: Combination")[["USUBJID"]])))
 #' N_x_combo <- length(unique(subset(adsl, adsl[[trtvar]] == "C: Combination")[["USUBJID"]]))
 #'
@@ -525,8 +522,6 @@ s_rel_risk_val_j <- function(
 #'   N_y = N_y_placebo
 #' )
 #'
-#'
-#' # example for subgroup AE table
 #'
 #' extra_args_rr <- list(
 #'   denom = "n_altdf",
@@ -549,10 +544,8 @@ s_rel_risk_val_j <- function(
 #'   top_level_section_div = " ",
 #'   colcount_format = "N=xx"
 #' ) |>
-#'   ## main columns
 #'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
 #'   split_cols_by(trtvar, show_colcounts = TRUE) |>
-#'   ## risk diff columns, note nested = FALSE
 #'   split_cols_by("rrisk_header", nested = FALSE) |>
 #'   split_cols_by(trtvar,
 #'     labels_var = "rrisk_label", split_fun = remove_split_levels("B: Placebo"),
@@ -674,9 +667,7 @@ a_freq_j <- function(
     }
   }
 
-  if (denom %in% c("n_altdf", "N_colgroup") && is.null(.alt_df_full)) {
-    stop(".alt_df_full cannot be NULL when denom = n_altdf or N_colgroup.")
-  }
+  check_alt_df_full(denom, c("n_altdf", "N_colgroup"), .alt_df_full)
 
   res_dataprep <- h_a_freq_dataprep(
     df = df,
@@ -896,10 +887,11 @@ a_freq_j <- function(
   )
 
   ### add extra blankline to the end of inrows --- as long as section_div is not working as expected
-  if (!is.null(inrows) && extrablankline ||
-        (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
+  # nolint start
+   if (!is.null(inrows) && extrablankline ||
+    (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
     inrows <- add_blank_line_rcells(inrows)
-  }
+  } # nolint end
 
   return(inrows)
 }

@@ -7,20 +7,20 @@
 tefos03_afun(df, .var, .spl_context, variables, control, formats)
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states
-that is passed by `rtables`.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
+that is passed by \code{rtables}.}
 
-\item{variables}{(`list`)\cr see [tern::fit_coxreg_multivar()] for required variable
+\item{variables}{(\code{list})\cr see \code{\link[tern:fit_coxreg]{tern::fit_coxreg_multivar()}} for required variable
 specifications.}
 
-\item{control}{(`list`)\cr from [tern::control_coxreg()].}
+\item{control}{(\code{list})\cr from \code{\link[tern:control_coxreg]{tern::control_coxreg()}}.}
 
-\item{formats}{(`list`)\cr including `coef_se`, `hr_est`, `hr_ci` and `pval` formats.}
+\item{formats}{(\code{list})\cr including \code{coef_se}, \code{hr_est}, \code{hr_ci} and \code{pval} formats.}
 }
 \description{
 Analysis Function for TEFOS03 and Related Table Layouts

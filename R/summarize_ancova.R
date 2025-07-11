@@ -1,12 +1,11 @@
 #' @note This has been forked from [tern::h_ancova()], because the new
 #'   `weights_emmeans` option was added here.
 h_ancova <- function(
-  .var,
-  .df_row,
-  variables,
-  weights_emmeans,
-  interaction_item = NULL
-) {
+    .var,
+    .df_row,
+    variables,
+    weights_emmeans,
+    interaction_item = NULL) {
   checkmate::assert_string(.var)
   checkmate::assert_list(variables)
   checkmate::assert_subset(names(variables), c("arm", "covariates"))
@@ -69,17 +68,16 @@ h_ancova <- function(
 #' conf_level <- 0.95
 #' s_ancova_j(df, .var, .df_row, variables, .ref_group, .in_ref_col = FALSE, conf_level)
 s_ancova_j <- function(
-  df,
-  .var,
-  .df_row,
-  variables,
-  .ref_group,
-  .in_ref_col,
-  conf_level,
-  interaction_y = FALSE,
-  interaction_item = NULL,
-  weights_emmeans = "counterfactual"
-) {
+    df,
+    .var,
+    .df_row,
+    variables,
+    .ref_group,
+    .in_ref_col,
+    conf_level,
+    interaction_y = FALSE,
+    interaction_item = NULL,
+    weights_emmeans = "counterfactual") {
   arm <- variables$arm
 
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
@@ -230,11 +228,13 @@ s_ancova_j <- function(
         )
         if (!is.null(interaction_item)) {
           sum_contrasts_level <- sum_contrasts[
-            grepl(sum_level, contrast_lvls, fixed = TRUE), , drop = FALSE
+            grepl(sum_level, contrast_lvls, fixed = TRUE), ,
+            drop = FALSE
           ]
         } else {
           sum_contrasts_level <- sum_contrasts[
-            (sum_level == contrast_lvls | paste0("(", sum_level, ")") == contrast_lvls), , drop = FALSE
+            (sum_level == contrast_lvls | paste0("(", sum_level, ")") == contrast_lvls), ,
+            drop = FALSE
           ]
         }
         if (interaction_y != FALSE) {
@@ -322,13 +322,12 @@ s_ancova_j <- function(
 #'   conf_level = conf_level
 #' )
 s_summarize_ancova_j <- function(
-  df,
-  .var,
-  .df_row,
-  .ref_group,
-  .in_ref_col,
-  ...
-) {
+    df,
+    .var,
+    .df_row,
+    .ref_group,
+    .in_ref_col,
+    ...) {
   x <- df[[.var]]
   y1 <- s_summary(x)
   y2 <- s_ancova_j(
@@ -375,38 +374,37 @@ s_summarize_ancova_j <- function(
 #'       ref_path = c("Species", "setosa")
 #'     )
 #'   ) |>
-#'     analyze(
-#'       vars = "Petal.Length",
-#'       afun = a_summarize_ancova_j,
-#'       show_labels = "hidden",
-#'       na_str = tern::default_na_str(),
-#'       table_names = "adj",
-#'       var_labels = "Adjusted comparison (covariates: Sepal.Length and Sepal.Width)",
-#'       extra_args = list(
-#'         variables = list(
-#'           arm = "Species",
-#'           covariates = c("Sepal.Length", "Sepal.Width")
-#'         ),
-#'         conf_level = 0.95,
-#'         ref_path = c("Species", "setosa")
-#'       )
-#'     ) |>
+#'   analyze(
+#'     vars = "Petal.Length",
+#'     afun = a_summarize_ancova_j,
+#'     show_labels = "hidden",
+#'     na_str = tern::default_na_str(),
+#'     table_names = "adj",
+#'     var_labels = "Adjusted comparison (covariates: Sepal.Length and Sepal.Width)",
+#'     extra_args = list(
+#'       variables = list(
+#'         arm = "Species",
+#'         covariates = c("Sepal.Length", "Sepal.Width")
+#'       ),
+#'       conf_level = 0.95,
+#'       ref_path = c("Species", "setosa")
+#'     )
+#'   ) |>
 #'   build_table(iris)
 #'
 #' @export
 #' @order 2
 a_summarize_ancova_j <- function(
-  df,
-  .var,
-  .df_row,
-  ref_path,
-  .spl_context,
-  ...,
-  .stats = NULL,
-  .formats = NULL,
-  .labels = NULL,
-  .indent_mods = NULL
-) {
+    df,
+    .var,
+    .df_row,
+    ref_path,
+    .spl_context,
+    ...,
+    .stats = NULL,
+    .formats = NULL,
+    .labels = NULL,
+    .indent_mods = NULL) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

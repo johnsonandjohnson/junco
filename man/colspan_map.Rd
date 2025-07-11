@@ -38,15 +38,15 @@ default value = 'TRT01A'}
 \item{active_first}{whether the active columns come first.}
 }
 \value{
-a data frame that contains the map to be used with rtables split function `trim_levels_to_map`
+a data frame that contains the map to be used with rtables split function \code{trim_levels_to_map}
 }
 \description{
 A function used for creating a data frame containing the map that is compatible with rtables split function
-`trim_levels_to_map`
+\code{trim_levels_to_map}
 }
 \details{
 This function creates a data frame containing the map that is compatible with rtables split function
-`trim_levels_to_map`.
+\code{trim_levels_to_map}.
 The levels of the specified trt_var variable will be stored within the trt_var variable
 and the colspan_var variable will contain the corresponding spanning header value for each treatment group.
 }
@@ -55,20 +55,20 @@ library(tibble)
 
 df <- tribble(
   ~TRT01A,
-  'Placebo',
-  'Active 1',
-  'Active 2'
+  "Placebo",
+  "Active 1",
+  "Active 2"
 )
 
-df$TRT01A <- factor(df$TRT01A, levels = c('Placebo', 'Active 1', 'Active 2'))
+df$TRT01A <- factor(df$TRT01A, levels = c("Placebo", "Active 1", "Active 2"))
 
 colspan_map <- create_colspan_map(
   df = df,
-  non_active_grp = c('Placebo'),
-  non_active_grp_span_lbl = ' ',
-  active_grp_span_lbl = 'Active Study Agent',
-  colspan_var = 'colspan_trt',
-  trt_var = 'TRT01A'
+  non_active_grp = c("Placebo"),
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
 )
 
 colspan_map

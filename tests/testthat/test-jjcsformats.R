@@ -110,35 +110,46 @@ test_that("jjjcs formats work", {
 
 test_that("roundmethod support works", {
   val <- 7.05 ## differs for xx.x between round types
-  expect_equal(format_value(val, format = jjcsformat_xx("xx.x")),
-               format_value(val, format = "xx.x", round_type = "sas"))
-  expect_false(format_value(val,  format = jjcsformat_xx("xx.x")) ==
-                 format_value(val, format = "xx.x", round_type = "iec"))
-
+  expect_equal(
+    format_value(val, format = jjcsformat_xx("xx.x")),
+    format_value(val, format = "xx.x", round_type = "sas")
+  ) # nolint start
+  expect_false(format_value(val, format = jjcsformat_xx("xx.x")) ==
+    format_value(val, format = "xx.x", round_type = "iec"))
+  # nolint end
   val2 <- c(5, 0.9945)
 
-  expect_equal(format_value(val2, format = "xx (xx.x%)", round_type = "sas"),
-               jjcsformat_count_fraction(val2, roundmethod = "sas"))
-  expect_equal(format_value(val2, format = "xx (xx.x%)", round_type = "iec"),
-               jjcsformat_count_fraction(val2, roundmethod = "iec"))
-
+  expect_equal(
+    format_value(val2, format = "xx (xx.x%)", round_type = "sas"),
+    jjcsformat_count_fraction(val2, roundmethod = "sas")
+  )
+  expect_equal(
+    format_value(val2, format = "xx (xx.x%)", round_type = "iec"),
+    jjcsformat_count_fraction(val2, roundmethod = "iec")
+  )
+  # nolint start
   expect_false(jjcsformat_count_fraction(val2, roundmethod = "sas") ==
-                 format_value(val2, "xx (xx.x%)", round_type = "iec"))
-
+    format_value(val2, "xx (xx.x%)", round_type = "iec"))
+  # nolint end
   val3 <- c(5, 10, 0.9945)
 
   ## these differ for now :(:(:(:( xx/xx (xx.x%)  vs xx / xx (xx.x%)
   add_spcs_fmt <- function(str) gsub("/", " / ", str, fixed = TRUE)
-  expect_equal(format_value(val3, format = "xx / xx (xx.x%)", round_type = "sas"),
-               add_spcs_fmt(jjcsformat_count_denom_fraction(val3, roundmethod = "sas")))
-  expect_equal(format_value(val3, format = "xx / xx (xx.x%)", round_type = "iec"),
-               add_spcs_fmt(jjcsformat_count_denom_fraction(val3, roundmethod = "iec")))
-
+  expect_equal(
+    format_value(val3, format = "xx / xx (xx.x%)", round_type = "sas"),
+    add_spcs_fmt(jjcsformat_count_denom_fraction(val3, roundmethod = "sas"))
+  )
+  expect_equal(
+    format_value(val3, format = "xx / xx (xx.x%)", round_type = "iec"),
+    add_spcs_fmt(jjcsformat_count_denom_fraction(val3, roundmethod = "iec"))
+  )
+  # nolint start
   expect_false(add_spcs_fmt(jjcsformat_count_denom_fraction(val3, roundmethod = "sas")) ==
-                 format_value(val3, "xx / xx (xx.x%)", round_type = "iec"))
+    format_value(val3, "xx / xx (xx.x%)", round_type = "iec"))
 
   expect_false(jjcsformat_fraction_count_denom(val3, roundmethod = "sas") ==
-                 jjcsformat_fraction_count_denom(val3, roundmethod = "iec"))
+    jjcsformat_fraction_count_denom(val3, roundmethod = "iec"))
+  # nolint end
 })
 
 test_that("jjcsformat_range_fct is formatting ranges as expected", {

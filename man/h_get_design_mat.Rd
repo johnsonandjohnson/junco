@@ -7,9 +7,9 @@
 h_get_design_mat(df, .var)
 }
 \arguments{
-\item{df}{(`data.frame`)\cr including a factor variable with name in `.var`.}
+\item{df}{(\code{data.frame})\cr including a factor variable with name in \code{.var}.}
 
-\item{.var}{(`string`)\cr name of the factor variable.}
+\item{.var}{(\code{string})\cr name of the factor variable.}
 }
 \value{
 The logical matrix with dummy encoding of all factor levels.
@@ -18,6 +18,6 @@ The logical matrix with dummy encoding of all factor levels.
 Helper Function to Create Logical Design Matrix from Factor Variable
 }
 \examples{
-h_get_design_mat(df = data.frame(a = factor(c('a', 'b', 'a'))), .var = 'a')
+h_get_design_mat(df = data.frame(a = factor(c("a", "b", "a"))), .var = "a")
 }
 \keyword{internal}

@@ -7,7 +7,7 @@
 tefos03_second_split_fun_fct(conf_level)
 }
 \arguments{
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 }
 \value{
 Split function to use in the TEFOS03 (mmy) and related table layouts.
@@ -16,6 +16,6 @@ Split function to use in the TEFOS03 (mmy) and related table layouts.
 Second Level Column Split Function Factory for TEFOS03 (mmy) Table Layout
 }
 \seealso{
-[tefos03_first_post_fun()] for the first level split.
+\code{\link[=tefos03_first_post_fun]{tefos03_first_post_fun()}} for the first level split.
 }
 \keyword{internal}

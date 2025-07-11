@@ -15,19 +15,19 @@ summarize_coxreg_multivar(
 )
 }
 \arguments{
-\item{lyt}{(`layout`)\cr input layout where analyses will be added to.}
+\item{lyt}{(\code{layout})\cr input layout where analyses will be added to.}
 
-\item{var}{(`string`)\cr any variable from the data, because this is not used.}
+\item{var}{(\code{string})\cr any variable from the data, because this is not used.}
 
-\item{variables}{(named `list` of `string`)\cr list of additional analysis variables.}
+\item{variables}{(named \code{list} of \code{string})\cr list of additional analysis variables.}
 
-\item{control}{(`list`)\cr relevant list of control options.}
+\item{control}{(\code{list})\cr relevant list of control options.}
 
-\item{formats}{(named `character` or `list`)\cr formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.}
+\item{formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
+information on the \code{'auto'} setting.}
 }
 \value{
-Modified layout.
+\code{lyt} modified to add the desired cox regression table section.
 }
 \description{
 Layout Generating Function for TEFOS03 and Related Cox Regression Layouts
@@ -37,15 +37,15 @@ anl <- tern::tern_ex_adtte |>
   dplyr::mutate(EVENT = 1 - CNSR)
 
 variables <- list(
-  time = 'AVAL',
-  event = 'EVENT',
-  arm = 'ARM',
-  covariates = c('SEX', 'AGE')
+  time = "AVAL",
+  event = "EVENT",
+  arm = "ARM",
+  covariates = c("SEX", "AGE")
 )
 
 basic_table() |>
   summarize_coxreg_multivar(
-    var = 'STUDYID',
+    var = "STUDYID",
     variables = variables
   ) |>
   build_table(df = anl)

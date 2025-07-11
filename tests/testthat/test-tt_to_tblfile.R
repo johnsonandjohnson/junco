@@ -3,11 +3,13 @@ library(rlistings)
 options(tidytlg.add_datetime = FALSE)
 mk_part_names <- function(nfiles, fname) {
   if (nfiles > 1) {
-    vapply(seq_len(nfiles), FUN.VALUE = "",
-           function(i) {
-             fmti <- paste0("%0", ceiling(log(nfiles, base = 10)), "d")
-             paste0(fname, "part", sprintf(fmti, i), "of", nfiles)
-           })
+    vapply(seq_len(nfiles),
+      FUN.VALUE = "",
+      function(i) {
+        fmti <- paste0("%0", ceiling(log(nfiles, base = 10)), "d")
+        paste0(fname, "part", sprintf(fmti, i), "of", nfiles)
+      }
+    )
   } else {
     fname
   }
@@ -21,8 +23,9 @@ rtf_out_wrapper <- function(tt, filnm, ..., part = 1, combined = FALSE) {
   } else {
     fpaths <- mk_part_names(nf, fullfl)
     res <- paste0(fpaths, ".rtf")
-    if (!is.na(part))
+    if (!is.na(part)) {
       res <- res[part]
+    }
     res
   }
 }
@@ -37,9 +40,9 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   tbl <- build_table(lyt, ex_adsl)
 
   # test that it runs without error
-  expect_snapshot_file(rtf_out_wrapper(tbl, "test1"))
-  expect_snapshot_file(rtf_out_wrapper(tbl, "test1b", colwidths = 120))
-  expect_no_error(suppressMessages(result <- tt_to_tlgrtf(tbl)))
+  expect_snapshot_file(rtf_out_wrapper(tbl, "test1"), cran = TRUE)
+  expect_snapshot_file(rtf_out_wrapper(tbl, "test1b", colwidths = 120), cran = TRUE)
+  expect_no_error(suppressMessages(result <- tt_to_tlgrtf(tbl, file = tempfile())))
   expect_true(is.null(result[[1]]))
 
   ## wide enough for pagination:
@@ -56,10 +59,13 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA)))
   for (fl in res_wide) {
     expect_snapshot_file(fl, cran = TRUE)
-    expect_snapshot_file(gsub("rtf$", "csv", fl), cran = TRUE)
+    expect_snapshot_file(gsub("rtf$", "csv", fl))
   }
   expect_silent(suppressMessages(cmb_fl <- rtf_out_wrapper(tbl_wide, "test2", combined = TRUE)))
   expect_snapshot_file(cmb_fl, cran = TRUE)
+  res_nullfl <- expect_silent(tt_to_tlgrtf(tbl_wide, file = NULL))
+  expect_equal(length(res_nullfl), 7)
+  expect_equal(sapply(res_nullfl, nrow), rep(nrow(tbl_wide) + nlines(col_info(tbl_wide)), 7))
 
   lsting <- as_listing(ex_adsl[1:30, 1:10])
   expect_snapshot_file(rtf_out_wrapper(lsting, "listing1"), cran = TRUE)
@@ -70,6 +76,30 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
 
   badtbl <- build_table(badlyt, ex_adsl)
 
+  ## this test is largely meaningless because it doesn't get caught
+  ##  when calling tt_to_tlgrtf directly....
+  expect_error(tt_to_tbldf(badtbl))
+
+  empty_lsting <- as_listing(ex_adsl[numeric(), 1:10])
+  expect_snapshot_file(rtf_out_wrapper(empty_lsting, "testemptylisting"), cran = TRUE)
+  expect_error(
+    tt_to_tlgrtf("hi"),
+    "unable to determine tlg type"
+  )
+
+  lyt_pgby <- basic_table() |>
+    split_cols_by("ARM") |>
+    split_cols_by("STRATA1") |>
+    split_cols_by("SEX") |>
+    split_rows_by("RACE", page_by = TRUE, split_fun = keep_split_levels(levels(ex_adsl$RACE)[1:2])) |>
+    summarize_row_groups() |>
+    analyze("AGE")
+
+  tbl_pgby <- build_table(lyt_pgby, ex_adsl)
+  expect_silent(suppressMessages(res_pgby <- rtf_out_wrapper(tbl_pgby, "testpageby", part = NA)))
+  for (fl in res_pgby) {
+    expect_snapshot_file(fl, cran = TRUE)
+  }
 })
 
 test_that("cwidths_final_adj calculates adjusted column widths correctly", {

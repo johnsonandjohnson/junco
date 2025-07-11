@@ -7,11 +7,11 @@
 var_relabel_list(x, lbl_list, replace_existing = TRUE)
 }
 \arguments{
-\item{x}{(`data.frame`)\cr dataset containing variables to be relabeled.}
+\item{x}{(\code{data.frame})\cr dataset containing variables to be relabeled.}
 
-\item{lbl_list}{(`list`)\cr named list of labels to apply to variables.}
+\item{lbl_list}{(\code{list})\cr named list of labels to apply to variables.}
 
-\item{replace_existing}{(`logical`)\cr if TRUE, existing labels will be replaced;
+\item{replace_existing}{(\code{logical})\cr if TRUE, existing labels will be replaced;
 if FALSE, only variables without labels will be updated.}
 }
 \value{

@@ -32,3 +32,4 @@ smart_colwidths_1page(
 \description{
 Colwidths for all columns to be forced on one page
 }
+\keyword{internal}

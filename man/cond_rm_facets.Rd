@@ -31,30 +31,30 @@ counting back from the current one, e.g., -1 indicates the direct parent
 cannot be mixed.}
 
 \item{split}{character(1) or NULL. If specified, name of the split
-at position `ancestor_pos` must be identical to this value for
+at position \code{ancestor_pos} must be identical to this value for
 the removal condition to be met.}
 
 \item{split_regex}{character(1) or NULL. If specified, a regular expression
-the name of the split at position `ancestor_pos` must match for
+the name of the split at position \code{ancestor_pos} must match for
 the removal condition to be met. Cannot be specified at the same time
-as `split`.}
+as \code{split}.}
 
 \item{value}{character(1) or NULL. If specified, split (facet) value
-at position `ancestor_pos` must be identical to this value for
+at position \code{ancestor_pos} must be identical to this value for
 removal condition to be met.}
 
 \item{value_regex}{character(1) or NULL. If specified, a regular expression
-the value of the split at position `ancestor_pos` must match for
+the value of the split at position \code{ancestor_pos} must match for
 the removal condition to be met. Cannot be specified at the same time
-as `value`.}
+as \code{value}.}
 
 \item{keep_matches}{logical(1). Given the specified condition is met,
-should the facets removed be those matching `facets`/`facets_regex`
-(`FALSE`, the default), or those *not* matching (`TRUE`).}
+should the facets removed be those matching \code{facets}/\code{facets_regex}
+(\code{FALSE}, the default), or those \emph{not} matching (\code{TRUE}).}
 }
 \value{
-a function suitable for use in `make_split_fun`'s
-`post` argument which encodes the specified condition.
+a function suitable for use in \code{make_split_fun}'s
+\code{post} argument which encodes the specified condition.
 }
 \description{
 Conditional Removal of Facets
@@ -62,13 +62,13 @@ Conditional Removal of Facets
 \details{
 Facet removal occurs when the specified condition(s)
 on the split(s) and or value(s) are met within at least one
-of the split_context rows indicated by `ancestor_pos`; otherwise
+of the split_context rows indicated by \code{ancestor_pos}; otherwise
 the set of facets is returned unchanged.
 
-If facet removal is performed, either *all* facets which match `facets` (or
-`facets_regex` will be removed ( the default `keep_matches == FALSE`
- case), or all *non-matching* facets will be removed (when
-  `keep_matches_only == TRUE`).
+If facet removal is performed, either \emph{all} facets which match \code{facets} (or
+\code{facets_regex} will be removed ( the default \code{keep_matches == FALSE}
+case), or all \emph{non-matching} facets will be removed (when
+\code{keep_matches_only == TRUE}).
 }
 \note{
 A degenerate table is likely to be returned if all facets
@@ -76,52 +76,47 @@ are removed.
 }
 \examples{
 
-## remove the 'A' facet if anywhere in the preceding
-## faceting, we had a split 'ARM' (splitting the ARM var)
-## with a value that matches 'Placeb' as a regex
 rm_a_from_placebo <- cond_rm_facets(
-  facets = 'A',
+  facets = "A",
   ancestor_pos = NA,
-  value_regex = 'Placeb',
-  split = 'ARM'
+  value_regex = "Placeb",
+  split = "ARM"
 )
 mysplit <- make_split_fun(post = list(rm_a_from_placebo))
 
 lyt <- basic_table() |>
-  split_cols_by('ARM') |>
-  split_cols_by('STRATA1', split_fun = mysplit) |>
-  analyze('AGE', mean, format = 'xx.x')
+  split_cols_by("ARM") |>
+  split_cols_by("STRATA1", split_fun = mysplit) |>
+  analyze("AGE", mean, format = "xx.x")
 build_table(lyt, ex_adsl)
 
 rm_bc_from_combo <- cond_rm_facets(
-  facets = c('B', 'C'),
+  facets = c("B", "C"),
   ancestor_pos = -1,
-  value_regex = 'Combi'
+  value_regex = "Combi"
 )
 mysplit2 <- make_split_fun(post = list(rm_bc_from_combo))
 
 lyt2 <- basic_table() |>
-  split_cols_by('ARM') |>
-  split_cols_by('STRATA1', split_fun = mysplit2) |>
-  analyze('AGE', mean, format = 'xx.x')
+  split_cols_by("ARM") |>
+  split_cols_by("STRATA1", split_fun = mysplit2) |>
+  analyze("AGE", mean, format = "xx.x")
 tbl2 <- build_table(lyt2, ex_adsl)
 tbl2
-#
+
 rm_bc_from_combo2 <- cond_rm_facets(
-  facets_regex = '^A$',
+  facets_regex = "^A$",
   ancestor_pos = -1,
-  value_regex = 'Combi',
+  value_regex = "Combi",
   keep_matches = TRUE
 )
 mysplit3 <- make_split_fun(post = list(rm_bc_from_combo2))
-#
+
 lyt3 <- basic_table() |>
-  split_cols_by('ARM') |>
-  split_cols_by('STRATA1', split_fun = mysplit3) |>
-  analyze('AGE', mean, format = 'xx.x')
+  split_cols_by("ARM") |>
+  split_cols_by("STRATA1", split_fun = mysplit3) |>
+  analyze("AGE", mean, format = "xx.x")
 tbl3 <- build_table(lyt3, ex_adsl)
-## column info carries around the split objects which
-## carry around their split_fun, which are different so
-## identical(tbl2, tbl3) will (expectedly) be FALSE
+
 stopifnot(identical(cell_values(tbl2), cell_values(tbl3)))
 }

@@ -6,6 +6,10 @@
 \usage{
 c_row_counts_alt(df, labelstr, label_fstr, .alt_df)
 }
+\value{
+a \code{VertalRowsSection} object (as returned by \code{\link[rtables:in_rows]{rtables::in_rows()}}
+containing counts from the alt data.
+}
 \description{
 Simple Content Row Function to Count Rows from Alternative Data
 }

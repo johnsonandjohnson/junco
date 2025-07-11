@@ -10,6 +10,6 @@ tefos03_first_post_fun(ret, spl, fulldf, .spl_context)
 First Level Column Split Function for TEFOS03 (mmy) Table Layout
 }
 \seealso{
-[rtables::make_split_fun()] for details.
+\code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} for details.
 }
 \keyword{internal}

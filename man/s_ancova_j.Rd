@@ -45,18 +45,20 @@ used to select the specific ANCOVA results. if the interaction is not needed, th
 \item{interaction_item}{(\code{string} or \code{NULL})\cr name of the variable that should have interactions
 with arm. if the interaction is not needed, the default option is \code{NULL}.}
 
-\item{weights_emmeans}{(`string`)\cr argument from [emmeans::emmeans()], `"counterfactual"` by default.}
+\item{weights_emmeans}{(\code{string})\cr argument from \code{\link[emmeans:emmeans]{emmeans::emmeans()}}, \code{"counterfactual"} by default.}
 }
 \value{
-returns a named list of 8 statistics (3 extra compared to `tern:::s_ancova()`).
+returns a named list of 8 statistics (3 extra compared to \code{tern:::s_ancova()}).
 }
 \description{
 Extension to tern:::s_ancova, 3 extra statistics are returned
-  * `lsmean_se`: Marginal mean and estimated SE in the group.
-  * `lsmean_ci`: Marginal mean and associated confidence interval in the group.
-  * `lsmean_diffci`: Difference in mean and associated confidence level in one combined statistic.
-  In addition, the LS mean weights can be specified.
-  In addition, also a NULL .ref_group can be specified, the lsmean_diff related estimates will be returned as NA.
+\itemize{
+\item \code{lsmean_se}: Marginal mean and estimated SE in the group.
+\item \code{lsmean_ci}: Marginal mean and associated confidence interval in the group.
+\item \code{lsmean_diffci}: Difference in mean and associated confidence level in one combined statistic.
+In addition, the LS mean weights can be specified.
+In addition, also a NULL .ref_group can be specified, the lsmean_diff related estimates will be returned as NA.
+}
 }
 \examples{
 library(dplyr)

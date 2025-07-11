@@ -24,33 +24,33 @@ a_freq_resp_var_j(
 )
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(`string`)\cr variable name that is passed by `rtables`.}
+\item{.var}{(\code{string})\cr variable name that is passed by \code{rtables}.}
 
-\item{.df_row}{(`data.frame`)\cr data frame across all of the columns for the given row split.}
+\item{.df_row}{(\code{data.frame})\cr data frame across all of the columns for the given row split.}
 
-\item{.N_col}{(`integer`)\cr column-wise N (column count) for the full column being analyzed.}
+\item{.N_col}{(\code{integer})\cr column-wise N (column count) for the full column being analyzed.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states.}
 
-\item{resp_var}{(`string`)\cr response variable name containing Y/N values.}
+\item{resp_var}{(\code{string})\cr response variable name containing Y/N values.}
 
-\item{id}{(`string`)\cr subject variable name.}
+\item{id}{(\code{string})\cr subject variable name.}
 
-\item{drop_levels}{(`logical`)\cr if TRUE, non-observed levels will not be included.}
+\item{drop_levels}{(\code{logical})\cr if TRUE, non-observed levels will not be included.}
 
-\item{riskdiff}{(`logical`)\cr if TRUE, risk difference calculations will be performed.}
+\item{riskdiff}{(\code{logical})\cr if TRUE, risk difference calculations will be performed.}
 
-\item{ref_path}{(`string`)\cr column path specifications for the control group.}
+\item{ref_path}{(\code{string})\cr column path specifications for the control group.}
 
-\item{variables}{(`list`)\cr variables to include in the analysis.}
+\item{variables}{(\code{list})\cr variables to include in the analysis.}
 
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
-\item{method}{(`character`)\cr method for calculating confidence intervals.}
+\item{method}{(\code{character})\cr method for calculating confidence intervals.}
 
-\item{weights_method}{(`character`)\cr method for calculating weights.}
+\item{weights_method}{(\code{character})\cr method for calculating weights.}
 
 \item{...}{Additional arguments passed to other functions.}
 }

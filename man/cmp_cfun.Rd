@@ -7,36 +7,36 @@
 cmp_cfun(df, labelstr, .spl_context, variables, formats)
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{labelstr}{(`character`)\cr label of the level of the parent split currently being summarized
-(must be present as second argument in Content Row Functions). See [rtables::summarize_row_groups()]
+\item{labelstr}{(\code{character})\cr label of the level of the parent split currently being summarized
+(must be present as second argument in Content Row Functions). See \code{\link[rtables:summarize_row_groups]{rtables::summarize_row_groups()}}
 for more information.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states
-that is passed by `rtables`.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
+that is passed by \code{rtables}.}
 
-\item{variables}{(`list`)\cr with variable names of logical columns for
-`expected`, `received` and `missing` visits.}
+\item{variables}{(\code{list})\cr with variable names of logical columns for
+\code{expected}, \code{received} and \code{missing} visits.}
 
-\item{formats}{(`list`)\cr with the `count_percent` format to use for the received
+\item{formats}{(\code{list})\cr with the \code{count_percent} format to use for the received
 and missing visits columns.}
 }
 \value{
-The [rtables::in_rows()] result with the counts and proportion statistics.
+The \code{\link[rtables:in_rows]{rtables::in_rows()}} result with the counts and proportion statistics.
 }
 \description{
 A simple statistics function which prepares the numbers with percentages
-  in the required format, for use in a split content row. The denominator here is
-  from the expected visits column.
+in the required format, for use in a split content row. The denominator here is
+from the expected visits column.
 }
 \details{
-Although this function just returns `NULL` it has two uses, for
-  the `tern` users it provides a documentation of arguments that are
-  commonly and consistently used in the framework. For the developer it adds a
-  single reference point to import the `roxygen` argument description with:
-  `@inheritParams proposal_argument_convention`
+Although this function just returns \code{NULL} it has two uses, for
+the \code{tern} users it provides a documentation of arguments that are
+commonly and consistently used in the framework. For the developer it adds a
+single reference point to import the \code{roxygen} argument description with:
+\verb{@inheritParams proposal_argument_convention}
 }
 \seealso{
-[cmp_post_fun()] for the corresponding split function.
+\code{\link[=cmp_post_fun]{cmp_post_fun()}} for the corresponding split function.
 }

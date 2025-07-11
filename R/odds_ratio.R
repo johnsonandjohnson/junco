@@ -47,48 +47,44 @@ NULL
 #'   (containing `est`, `lcl`, and `ucl`), `pval` and `n_tot`.
 #'
 #' @examples
-#' # Unstratified analysis.
 #' s_odds_ratio_j(
-#'   df = subset(dta, grp == 'A'),
-#'   .var = 'rsp',
-#'   .ref_group = subset(dta, grp == 'B'),
+#'   df = subset(dta, grp == "A"),
+#'   .var = "rsp",
+#'   .ref_group = subset(dta, grp == "B"),
 #'   .in_ref_col = FALSE,
 #'   .df_row = dta
 #' )
 #'
-#' # Stratified analysis.
 #' s_odds_ratio_j(
-#'   df = subset(dta, grp == 'A'),
-#'   .var = 'rsp',
-#'   .ref_group = subset(dta, grp == 'B'),
+#'   df = subset(dta, grp == "A"),
+#'   .var = "rsp",
+#'   .ref_group = subset(dta, grp == "B"),
 #'   .in_ref_col = FALSE,
 #'   .df_row = dta,
-#'   variables = list(arm = 'grp', strata = 'strata')
+#'   variables = list(arm = "grp", strata = "strata")
 #' )
 #'
-#' # Stratified analysis with CMH.
 #' s_odds_ratio_j(
-#'   df = subset(dta, grp == 'A'),
-#'   method = 'cmh',
-#'   .var = 'rsp',
-#'   .ref_group = subset(dta, grp == 'B'),
+#'   df = subset(dta, grp == "A"),
+#'   method = "cmh",
+#'   .var = "rsp",
+#'   .ref_group = subset(dta, grp == "B"),
 #'   .in_ref_col = FALSE,
 #'   .df_row = dta,
-#'   variables = list(arm = 'grp', strata = c('strata'))
+#'   variables = list(arm = "grp", strata = c("strata"))
 #' )
 #' @export
 s_odds_ratio_j <- function(
-  df,
-  .var,
-  .ref_group,
-  .in_ref_col,
-  .df_row,
-  variables = list(arm = NULL, strata = NULL),
-  conf_level = 0.95,
-  groups_list = NULL,
-  na_if_no_events = TRUE,
-  method = c("exact", "approximate", "efron", "breslow", "cmh")
-) {
+    df,
+    .var,
+    .ref_group,
+    .in_ref_col,
+    .df_row,
+    variables = list(arm = NULL, strata = NULL),
+    conf_level = 0.95,
+    groups_list = NULL,
+    na_if_no_events = TRUE,
+    method = c("exact", "approximate", "efron", "breslow", "cmh")) {
   checkmate::assert_flag(na_if_no_events)
   # New: pval here
   y <- list(or_ci = list(), n_tot = list(), pval = list())
@@ -107,7 +103,7 @@ s_odds_ratio_j <- function(
         rsp = c(.ref_group[[.var]], df[[.var]]),
         grp = factor(rep(c("ref", "Not-ref"), c(nrow(.ref_group), nrow(df))), levels = c("ref", "Not-ref"))
       )
-      y <- or_glm(data, conf_level = conf_level)
+      y <- or_glm_j(data, conf_level = conf_level)
     } else {
       assert_df_with_variables(.df_row, c(list(rsp = .var), variables))
       checkmate::assert_subset(method, c("exact", "approximate", "efron", "breslow", "cmh"), empty.ok = FALSE)
@@ -145,7 +141,7 @@ s_odds_ratio_j <- function(
         # The reference level in `grp` must be the same as in the `rtables` column split.
         data <- data.frame(rsp = .df_row[[.var]], grp = grp, strata = interaction(.df_row[variables$strata]))
 
-        y_all <- or_clogit(data, conf_level = conf_level, method = method)
+        y_all <- or_clogit_j(data, conf_level = conf_level, method = method)
         checkmate::assert_string(trt_grp)
         # New: pval here
         checkmate::assert_subset(trt_grp, names(y_all$or_ci_pvals))
@@ -188,17 +184,17 @@ s_odds_ratio_j <- function(
 #' set.seed(12)
 #' dta <- data.frame(
 #'   rsp = sample(c(TRUE, FALSE), 100, TRUE),
-#'   grp = factor(rep(c('A', 'B'), each = 50), levels = c('A', 'B')),
-#'   strata = factor(sample(c('C', 'D'), 100, TRUE))
+#'   grp = factor(rep(c("A", "B"), each = 50), levels = c("A", "B")),
+#'   strata = factor(sample(c("C", "D"), 100, TRUE))
 #' )
 #'
 #' a_odds_ratio_j(
-#'   df = subset(dta, grp == 'A'),
-#'   .var = 'rsp',
-#'   ref_path = c('grp', 'B'),
+#'   df = subset(dta, grp == "A"),
+#'   .var = "rsp",
+#'   ref_path = c("grp", "B"),
 #'   .spl_context = data.frame(
-#'     cur_col_split = I(list('grp')),
-#'     cur_col_split_val = I(list(c(grp = 'A'))),
+#'     cur_col_split = I(list("grp")),
+#'     cur_col_split_val = I(list(c(grp = "A"))),
 #'     full_parent_df = I(list(dta))
 #'   ),
 #'   .df_row = dta
@@ -206,30 +202,30 @@ s_odds_ratio_j <- function(
 #'
 #'
 #' l <- basic_table() |>
-#'   split_cols_by(var = 'grp') |>
+#'   split_cols_by(var = "grp") |>
 #'   analyze(
-#'     'rsp',
+#'     "rsp",
 #'     afun = a_odds_ratio_j,
-#'     show_labels = 'hidden',
+#'     show_labels = "hidden",
 #'     extra_args = list(
-#'       ref_path = c('grp', 'B'),
-#'       .stats = c('or_ci', 'pval')
+#'       ref_path = c("grp", "B"),
+#'       .stats = c("or_ci", "pval")
 #'     )
 #'   )
 #'
 #' build_table(l, df = dta)
 #'
 #' l2 <- basic_table() |>
-#'   split_cols_by(var = 'grp') |>
+#'   split_cols_by(var = "grp") |>
 #'   analyze(
-#'     'rsp',
+#'     "rsp",
 #'     afun = a_odds_ratio_j,
-#'     show_labels = 'hidden',
+#'     show_labels = "hidden",
 #'     extra_args = list(
-#'       variables = list(arm = 'grp', strata = 'strata'),
-#'       method = 'cmh',
-#'       ref_path = c('grp', 'A'),
-#'       .stats = c('or_ci', 'pval')
+#'       variables = list(arm = "grp", strata = "strata"),
+#'       method = "cmh",
+#'       ref_path = c("grp", "A"),
+#'       .stats = c("or_ci", "pval")
 #'     )
 #'   )
 #'
@@ -237,17 +233,16 @@ s_odds_ratio_j <- function(
 #' @export
 #' @order 2
 a_odds_ratio_j <- function(
-  df,
-  .var,
-  .df_row,
-  ref_path,
-  .spl_context,
-  ...,
-  .stats = NULL,
-  .formats = NULL,
-  .labels = NULL,
-  .indent_mods = NULL
-) {
+    df,
+    .var,
+    .df_row,
+    ref_path,
+    .spl_context,
+    ...,
+    .stats = NULL,
+    .formats = NULL,
+    .labels = NULL,
+    .indent_mods = NULL) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 
@@ -291,8 +286,7 @@ a_odds_ratio_j <- function(
 #' @inheritParams odds_ratio
 #' @inheritParams proposal_argument_convention
 #' @param data (`data.frame`)\cr data frame containing at least the variables `rsp` and `grp`, and optionally
-#'   `strata` for [or_clogit()].
-#' # New: pval here
+#'   `strata` for [or_clogit_j()].
 #' @return A named `list` of elements `or_ci`, `n_tot` and `pval`.
 #'
 #' @seealso [odds_ratio]
@@ -304,7 +298,6 @@ NULL
 #'   exactly 2 groups in `data` as specified by the `grp` variable.
 #'
 #' @examples
-#' # Data with 2 groups.
 #' data <- data.frame(
 #'   rsp = as.logical(c(1, 1, 0, 1, 0, 0, 1, 1)),
 #'   grp = letters[c(1, 1, 1, 2, 2, 2, 1, 2)],
@@ -312,11 +305,10 @@ NULL
 #'   stringsAsFactors = TRUE
 #' )
 #'
-#' # Odds ratio based on glm.
-#' or_glm(data, conf_level = 0.95)
+#' or_glm_j(data, conf_level = 0.95)
 #'
 #' @export
-or_glm <- function(data, conf_level) {
+or_glm_j <- function(data, conf_level) {
   checkmate::assert_logical(data$rsp)
   (assert_proportion_value)(conf_level)
   assert_df_with_variables(data, list(rsp = "rsp", grp = "grp"))
@@ -345,7 +337,6 @@ or_glm <- function(data, conf_level) {
 #'   pairwise comparisons between the groups.
 #'
 #' @examples
-#' # Data with 3 groups.
 #' data <- data.frame(
 #'   rsp = as.logical(c(1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0)),
 #'   grp = letters[c(1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3)],
@@ -353,12 +344,10 @@ or_glm <- function(data, conf_level) {
 #'   stringsAsFactors = TRUE
 #' )
 #'
-#'
-#' # Odds ratio based on stratified estimation by conditional logistic regression.
-#' or_clogit(data, conf_level = 0.95)
+#' or_clogit_j(data, conf_level = 0.95)
 #'
 #' @export
-or_clogit <- function(data, conf_level, method = "exact") {
+or_clogit_j <- function(data, conf_level, method = "exact") {
   checkmate::assert_logical(data$rsp)
   (assert_proportion_value)(conf_level)
   assert_df_with_variables(data, list(rsp = "rsp", grp = "grp", strata = "strata"))
@@ -400,7 +389,6 @@ or_clogit <- function(data, conf_level, method = "exact") {
 #'   exactly 2 groups in `data` as specified by the `grp` variable.
 #'
 #' @examples
-#' # Data with 2 groups.
 #' set.seed(123)
 #' data <- data.frame(
 #'   rsp = as.logical(rbinom(n = 40, size = 1, prob = 0.5)),
@@ -409,7 +397,6 @@ or_clogit <- function(data, conf_level, method = "exact") {
 #'   stringsAsFactors = TRUE
 #' )
 #'
-#' # Odds ratio based on CMH.
 #' or_cmh(data, conf_level = 0.95)
 #'
 #' @export

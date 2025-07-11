@@ -29,18 +29,18 @@
 #'
 #' ADAE <- data.frame(
 #'   USUBJID = c(
-#'     'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-#'     'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
 #'   ),
 #'   SEX_DECODE = c(
-#'     'Female', 'Female', 'Male', 'Female', 'Male',
-#'     'Female', 'Male', 'Female', 'Male', 'Female'
+#'     "Female", "Female", "Male", "Female", "Male",
+#'     "Female", "Male", "Female", "Male", "Female"
 #'   ),
 #'   TRT01A = c(
-#'     'ARMA', 'ARMB', 'ARMA', 'ARMB', 'ARMB',
-#'     'Placebo', 'Placebo', 'Placebo', 'ARMA', 'ARMB'
+#'     "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
+#'     "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
 #'   ),
-#'   TRTEMFL = c('Y', 'Y', 'N', 'Y', 'Y', 'Y', 'Y', 'N', 'Y', 'Y')
+#'   TRTEMFL = c("Y", "Y", "N", "Y", "Y", "Y", "Y", "N", "Y", "Y")
 #' )
 #'
 #' ADAE <- ADAE |>
@@ -50,32 +50,31 @@
 #'   )
 #'
 #' lyt <- basic_table() |>
-#'   split_cols_by('TRT01A') |>
+#'   split_cols_by("TRT01A") |>
 #'   analyze(
-#'     vars = 'SEX_DECODE',
-#'     var_labels = 'Sex, n/Ns (%)',
-#'     show_labels = 'visible',
+#'     vars = "SEX_DECODE",
+#'     var_labels = "Sex, n/Ns (%)",
+#'     show_labels = "visible",
 #'     afun = response_by_var,
-#'     extra_args = list(resp_var = 'TRTEMFL'),
+#'     extra_args = list(resp_var = "TRTEMFL"),
 #'     nested = FALSE
 #'   )
 #'
 #' result <- build_table(lyt, ADAE)
 #'
 #' result
-#' @returns a `RowsVerticalSection` for use by the internal tabulation machinery of `rtables`
+#' @return a `RowsVerticalSection` for use by the internal tabulation machinery of `rtables`
 #' @export
 
 response_by_var <- function(
-  df,
-  labelstr = NULL,
-  .var,
-  .N_col,
-  resp_var = NULL,
-  id = "USUBJID",
-  .format = jjcsformat_count_denom_fraction,
-  ...
-) {
+    df,
+    labelstr = NULL,
+    .var,
+    .N_col,
+    resp_var = NULL,
+    id = "USUBJID",
+    .format = jjcsformat_count_denom_fraction,
+    ...) {
   # Derive statistics: xx / xx (xx.x%)
 
   if (is.null(resp_var)) {
@@ -96,11 +95,11 @@ response_by_var <- function(
 
   df <- df[!is.na(df[[.var]]), ]
 
-  if (
+  if ( # nolint start
     (is.factor(df[[resp_var]]) &&
-       (identical(levels(df[[resp_var]]), c("Y", "N")) || identical(levels(df[[resp_var]]), c("N", "Y")))) ||
+      (identical(levels(df[[resp_var]]), c("Y", "N")) || identical(levels(df[[resp_var]]), c("N", "Y")))) ||
       is.character(df[[resp_var]])
-  ) {
+  ) { # nolint end
     # missing values in resp_var should be excluded, not considered as not met response subject will then not
     # contribute to denominator
     df <- df[!is.na(df[[resp_var]]), ]

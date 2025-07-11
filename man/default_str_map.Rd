@@ -12,7 +12,7 @@ default_str_map
 }
 \value{
 A tibble with columns 'pattern' and 'value', where 'pattern' contains
-  the string to be replaced and 'value' contains the replacement.
+the string to be replaced and 'value' contains the replacement.
 }
 \description{
 A tibble that maps special characters to their UTF-8 equivalents for use in RTF output.

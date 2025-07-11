@@ -21,19 +21,19 @@ provided by the user.
 \examples{
 ADSL <- data.frame(
   USUBJID = c(
-    'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-    'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
   ),
   TRT01P = c(
-    'ARMA', 'ARMB', 'ARMA', 'ARMB', 'ARMB', 'Placebo',
-    'Placebo', 'Placebo', 'ARMA', 'ARMB'
+    "ARMA", "ARMB", "ARMA", "ARMB", "ARMB", "Placebo",
+    "Placebo", "Placebo", "ARMA", "ARMB"
   ),
   Category = c(
-    'Cat 1', 'Cat 2', 'Cat 1', 'Unknown', 'Cat 2',
-    'Cat 1', 'Unknown', 'Cat 1', 'Cat 2', 'Cat 1'
+    "Cat 1", "Cat 2", "Cat 1", "Unknown", "Cat 2",
+    "Cat 1", "Unknown", "Cat 1", "Cat 2", "Cat 1"
   ),
-  SAFFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'),
-  PKFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N')
+  SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
+  PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
 )
 
 ADSL <- ADSL |>
@@ -41,7 +41,6 @@ ADSL <- ADSL |>
 
 lyt <- basic_table() |>
   split_cols_by("TRT01P") |>
-
   analyze(
     "Category",
     afun = a_freq_j,
@@ -52,8 +51,7 @@ result <- build_table(lyt, ADSL)
 
 result
 
-# use pruning function to prune rows where category is Unknown
-result <- prune_table(result, prune_func = remove_rows(removerowtext = 'Unknown'))
+result <- prune_table(result, prune_func = remove_rows(removerowtext = "Unknown"))
 
 result
 }

@@ -10,13 +10,13 @@ prop_post_fun(ret, spl, fulldf, .spl_context)
 prop_split_fun(df, spl, vals = NULL, labels = NULL, trim = FALSE, .spl_context)
 }
 \arguments{
-\item{ret}{(`list`)\cr return value from the previous split function.}
+\item{ret}{(\code{list})\cr return value from the previous split function.}
 
-\item{spl}{(`list`)\cr split information.}
+\item{spl}{(\code{list})\cr split information.}
 
-\item{fulldf}{(`data.frame`)\cr full data frame.}
+\item{fulldf}{(\code{data.frame})\cr full data frame.}
 
-\item{.spl_context}{(`environment`)\cr split context environment.}
+\item{.spl_context}{(\code{environment})\cr split context environment.}
 
 \item{df}{A data frame that contains all analysis variables.}
 
@@ -26,13 +26,16 @@ prop_split_fun(df, spl, vals = NULL, labels = NULL, trim = FALSE, .spl_context)
 
 \item{trim}{A single logical that indicates whether to trim the values.}
 }
+\value{
+a split function for use in \link[rtables:split_rows_by]{rtables::split_rows_by}.
+}
 \description{
-Here we just split into 3 columns `n`, `%` and `Cum %`.
+Here we just split into 3 columns \code{n}, \verb{\%} and \verb{Cum \%}.
 }
 \note{
 This split function is used in the proportion table TEFCGIS08 and similar ones.
 }
 \seealso{
-[rtables::make_split_fun()] describing the requirements for this kind of
-  post-processing function.
+\code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} describing the requirements for this kind of
+post-processing function.
 }

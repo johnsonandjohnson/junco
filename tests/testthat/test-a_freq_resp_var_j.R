@@ -1,6 +1,6 @@
 library(testthat)
 library(rtables)
-library(dplyr)
+suppressMessages(library(dplyr))
 
 # Create test datasets based on patterns in other test files
 test_that("a_freq_resp_var_j works as expected with basic usage", {

@@ -144,8 +144,8 @@ calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, roundmethod = 
 #' @name column_stats
 #' @title Statistics within the column space
 #' @description
-#' A function used for obtaining statistics within the columns of your table. Used in change from baseline tables.
-#' This takes the visit names as its row labels.
+#' A function factory used for obtaining statistics within the columns of your table.
+#' Used in change from baseline tables. This takes the visit names as its row labels.
 #' @param exclude_visits Vector of visit(s) for which you do not want the statistics displayed
 #' in the baseline mean or change from baseline sections of the table.
 #' @param var_names Vector of variable names to use instead of the default AVAL, CHG, BASE.
@@ -158,6 +158,9 @@ calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, roundmethod = 
 #' Default for base variable: c(mean = "Mean")
 #' You can customize these statistics by providing your own named vectors in the list. The names are used
 #' internally for calculations, and the values are used as display labels in the table.
+#'
+#' @return an analysis function (for use with [rtables::analyze]) implementing
+#'   the specified statistics.
 #' @export
 column_stats <- function(exclude_visits = c("Baseline (DB)"),
                          var_names = c("AVAL", "CHG", "BASE"),

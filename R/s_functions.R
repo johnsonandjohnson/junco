@@ -1,4 +1,3 @@
-
 add_blank_line_rcells <- function(ret) {
   # check that ret is expected structure and not NULL
   if (is.null(ret)) {

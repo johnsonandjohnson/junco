@@ -27,45 +27,53 @@ s_event_free(
 )
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
 \item{...}{additional arguments for the lower level functions.}
 
-\item{.stats}{(`character`)\cr statistics to select for the table.}
+\item{.stats}{(\code{character})\cr statistics to select for the table.}
 
-\item{.formats}{(named `character` or `list`)\cr formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.}
+\item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
+information on the \code{'auto'} setting.}
 
-\item{.labels}{(named `character`)\cr labels for the statistics (without indent).}
+\item{.labels}{(named \code{character})\cr labels for the statistics (without indent).}
 
-\item{.indent_mods}{(named `integer`)\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
+\item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 
-\item{time_point}{(`numeric`)\cr time point at which to estimate survival.}
+\item{time_point}{(\code{numeric})\cr time point at which to estimate survival.}
 
-\item{time_unit}{(`string`)\cr unit of time for the time point.}
+\item{time_unit}{(\code{string})\cr unit of time for the time point.}
 
-\item{is_event}{(`character`)\cr variable name storing Logical values: `TRUE` if event,
-`FALSE` if time to event is censored.}
+\item{is_event}{(\code{character})\cr variable name storing Logical values: \code{TRUE} if event,
+\code{FALSE} if time to event is censored.}
 
-\item{percent}{(`flag`)\cr whether to return in percent or not.}
+\item{percent}{(\code{flag})\cr whether to return in percent or not.}
 
-\item{control}{(`list`)\cr relevant list of control options.}
+\item{control}{(\code{list})\cr relevant list of control options.}
+}
+\value{
+for \code{s_event_free}, a list as returned by the \code{\link[tern:survival_timepoint]{tern::s_surv_timepoint()}}
+with an additional three-dimensional statistic \code{event_free_ci} which
+combines the \code{event_free_rate} and \code{rate_ci} statistics.
+
+For \code{a_event_free}, analogous to \link[tern:survival_timepoint]{tern::a_surv_timepoint} but with the additional
+three-dimensional statistic described above  available via \code{.stats}.
 }
 \description{
-This is a workaround for [tern::s_surv_timepoint()], which adds a statistic
+This is a workaround for \code{\link[tern:survival_timepoint]{tern::s_surv_timepoint()}}, which adds a statistic
 containing the time point specific survival estimate together with the
 confidence interval.
 }
 \section{Functions}{
 \itemize{
-\item \code{a_event_free()}: Formatted analysis function which is used as `afun`.
+\item \code{a_event_free()}: Formatted analysis function which is used as \code{afun}.
 
-\item \code{s_event_free()}: Statistics function which works like [tern::s_surv_timepoint()],
-the difference is that it returns the additional statistic `event_free_ci`.
+\item \code{s_event_free()}: Statistics function which works like \code{\link[tern:survival_timepoint]{tern::s_surv_timepoint()}},
+the difference is that it returns the additional statistic \code{event_free_ci}.
 
 }}
 \examples{
@@ -77,16 +85,16 @@ adtte_f <- tern::tern_ex_adtte |>
   )
 
 basic_table() |>
-  split_cols_by(var = 'ARMCD') |>
+  split_cols_by(var = "ARMCD") |>
   analyze(
-    vars = 'AVAL',
+    vars = "AVAL",
     afun = a_event_free,
     show_labels = "hidden",
     na_str = tern::default_na_str(),
     extra_args = list(
-      time_unit = 'week',
+      time_unit = "week",
       time_point = 3,
-      is_event = 'is_event'
+      is_event = "is_event"
     )
   ) |>
   build_table(df = adtte_f)
@@ -99,9 +107,9 @@ adtte_f <- tern::tern_ex_adtte |>
 
 s_event_free(
   df = adtte_f,
-  .var = 'AVAL',
+  .var = "AVAL",
   time_point = 6,
-  is_event = 'is_event',
-  time_unit = 'month'
+  is_event = "is_event",
+  time_unit = "month"
 )
 }

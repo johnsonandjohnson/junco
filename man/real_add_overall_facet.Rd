@@ -22,11 +22,6 @@ current add_overall_facet is bugged, can use that directly after it's fixed
 https://github.com/insightsengineering/rtables/issues/768
 }
 \examples{
-# split_rows_by(
-#   'AVALCAT1',
-#   split_fun = make_split_fun(
-#     post = list(real_add_overall_facet('Total', 'Total'))
-#   ),
-#   child_labels =  'hidden'
-# )
+
+splfun <- make_split_fun(post = list(real_add_overall_facet('Total', 'Total')))
 }

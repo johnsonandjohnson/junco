@@ -2,24 +2,24 @@
 % Please edit documentation in R/tabulate_rbmi.R
 \name{tidy.pool}
 \alias{tidy.pool}
-\title{Helper method (for [`broom::tidy()`]) to prepare a data frame from an
-  `pool` `rbmi` object containing the LS means and contrasts and multiple visits}
+\title{Helper method (for \code{\link[broom:reexports]{broom::tidy()}}) to prepare a data frame from an
+\code{pool} \code{rbmi} object containing the LS means and contrasts and multiple visits}
 \usage{
 \method{tidy}{pool}(x, visits, ...)
 }
 \arguments{
-\item{x}{(`pool`) is a list of pooled object from `rbmi` analysis results. This list includes
+\item{x}{(\code{pool}) is a list of pooled object from \code{rbmi} analysis results. This list includes
 analysis results, confidence level, hypothesis testing type.}
 
-\item{visits}{(`character`)\cr all visit levels. Otherwise too hard to guess this.}
+\item{visits}{(\code{character})\cr all visit levels. Otherwise too hard to guess this.}
 
 \item{...}{Additional arguments. Not used. Needed to match generic signature only.}
 }
 \value{
-A `data.frame`.
+A \code{data.frame}.
 }
 \description{
-Helper method (for [`broom::tidy()`]) to prepare a data frame from an
-  `pool` `rbmi` object containing the LS means and contrasts and multiple visits
+Helper method (for \code{\link[broom:reexports]{broom::tidy()}}) to prepare a data frame from an
+\code{pool} \code{rbmi} object containing the LS means and contrasts and multiple visits
 }
 \keyword{internal}

@@ -38,11 +38,11 @@ testthat::test_that("count_pruner with cat_include removes text correctly", {
 })
 
 testthat::test_that("count_pruner with cat_include does nothing if text is supplied and it is not text that
-  is in the table", {# nolint start
+  is in the table", { # nolint start
   result <- prune_table(tab, count_pruner(cat_include = "XXX", col = "ARM"))
   expected <- tab
   testthat::expect_identical(result, expected)
-})# nolint end
+}) # nolint end
 
 testthat::test_that("count_pruner does remove if text is supplied and all columns are 0", {
   sub_tab2 <- tt_at_path(

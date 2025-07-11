@@ -14,25 +14,32 @@ listing_column_widths(
   verbose = FALSE
 )
 
-def_colwidths(tt, fontspec, label_width_ins, col_gap, type = tlg_type(tt))
+def_colwidths(
+  tt,
+  fontspec,
+  label_width_ins = 2,
+  col_gap = ifelse(type == "Listing", 0.5, 3),
+  type = tlg_type(tt)
+)
 }
 \arguments{
-\item{mpf}{(`listing_df` or `MatrixPrintForm` derived thereof)\cr The listing
+\item{mpf}{(\code{listing_df} or \code{MatrixPrintForm} derived thereof)\cr The listing
 calculate column widths for.}
 
-\item{incl_header}{(`logical(1)`)\cr Should the constraint to not break up
-individual words be extended to words in the column labels? Defaults to `TRUE`}
+\item{incl_header}{(\code{logical(1)})\cr Should the constraint to not break up
+individual words be extended to words in the column labels? Defaults to \code{TRUE}}
 
-\item{col_gap}{Column gap.}
+\item{col_gap}{Column gap in spaces. Defaults to \code{.5} for listings and \code{3}
+for tables.}
 
-\item{pg_width_ins}{(`numeric(1)`)\cr Number of inches in width for
-*the portion of the page the listing will be printed to*. Defaults to `8.88`
+\item{pg_width_ins}{(\code{numeric(1)})\cr Number of inches in width for
+\emph{the portion of the page the listing will be printed to}. Defaults to \code{8.88}
 which corresponds to landscape orientation on a standard page after margins.}
 
 \item{fontspec}{Font specification}
 
-\item{verbose}{(`logical(1)`)\cr Should additional information messages be
-displayed during the calculation of the column widths? Defaults to `FALSE`.}
+\item{verbose}{(\code{logical(1)})\cr Should additional information messages be
+displayed during the calculation of the column widths? Defaults to \code{FALSE}.}
 
 \item{tt}{input Tabletree}
 
@@ -41,12 +48,20 @@ displayed during the calculation of the column widths? Defaults to `FALSE`.}
 \item{type}{Type of the table tree, used to determine column width calculation method.}
 }
 \value{
-A vector of column widths suitable to use in `tt_to_tlgrtf` and
+A vector of column widths suitable to use in \code{tt_to_tlgrtf} and
 other exporters.
+
+a vector of column widths (including the label row pseudo-column in the table
+case) suitable for use rendering \code{tt} in the specified font.
 }
 \description{
-function for aiding more personalized column widths in case default is not desired.
+\code{def_colwidths} uses heuristics to determine suitable column widths given a
+table or listing, and a font.
 }
-\examples{
-# colwidths <- def_colwidths(result, font_spec('Times', 9L, 1.2), col_gap = 7L, label_width_ins = 2)
+\details{
+Listings are assumed to be rendered landscape on standard A1 paper,
+such that all columns are rendered on one page. Tables are allowed to
+be horizontally paginated, and column widths are determined based only on
+required word wrapping. See the \verb{Automatic Column Widths} vignette for
+a detailed discussion of the algorithms used.
 }

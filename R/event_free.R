@@ -6,6 +6,13 @@
 #'
 #' @inheritParams proposal_argument_convention
 #'
+#' @return for `s_event_free`, a list as returned by the [tern::s_surv_timepoint()]
+#' with an additional three-dimensional statistic `event_free_ci` which
+#' combines the `event_free_rate` and `rate_ci` statistics.
+#'
+#' For `a_event_free`, analogous to [tern::a_surv_timepoint] but with the additional
+#' three-dimensional statistic described above  available via `.stats`.
+#'
 #' @name event_free
 #' @order 1
 NULL
@@ -27,21 +34,20 @@ NULL
 #'
 #' s_event_free(
 #'   df = adtte_f,
-#'   .var = 'AVAL',
+#'   .var = "AVAL",
 #'   time_point = 6,
-#'   is_event = 'is_event',
-#'   time_unit = 'month'
+#'   is_event = "is_event",
+#'   time_unit = "month"
 #' )
 #' @order 3
 s_event_free <- function(
-  df,
-  .var,
-  time_point,
-  time_unit,
-  is_event,
-  percent = FALSE,
-  control = control_surv_timepoint()
-) {
+    df,
+    .var,
+    time_point,
+    time_unit,
+    is_event,
+    percent = FALSE,
+    control = control_surv_timepoint()) {
   checkmate::assert_string(time_unit, min.chars = 1L)
   start <- s_surv_timepoint(
     df = df,
@@ -87,16 +93,16 @@ s_event_free <- function(
 #'   )
 #'
 #' basic_table() |>
-#'   split_cols_by(var = 'ARMCD') |>
+#'   split_cols_by(var = "ARMCD") |>
 #'   analyze(
-#'     vars = 'AVAL',
+#'     vars = "AVAL",
 #'     afun = a_event_free,
 #'     show_labels = "hidden",
 #'     na_str = tern::default_na_str(),
 #'     extra_args = list(
-#'       time_unit = 'week',
+#'       time_unit = "week",
 #'       time_point = 3,
-#'       is_event = 'is_event'
+#'       is_event = "is_event"
 #'     )
 #'   ) |>
 #'   build_table(df = adtte_f)

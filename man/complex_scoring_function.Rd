@@ -27,7 +27,7 @@ This overrides other arguments if specified
 \item{lastcat}{If you wish to put any category at the bottom of the list despite any n's user can specify here.}
 }
 \value{
-a function which can be used as a score function (scorefun in `sort_at_path`).
+a function which can be used as a score function (scorefun in \code{sort_at_path}).
 }
 \description{
 A function used for sorting AE tables (and others) as required.
@@ -44,89 +44,89 @@ default sorting behavior, they can simply specify their own colpath to use for s
 \examples{
 ADAE <- data.frame(
   USUBJID = c(
-    'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-    'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
   ),
   AEBODSYS = c(
-    'SOC 1', 'SOC 2', 'SOC 1', 'SOC 2', 'SOC 2',
-    'SOC 2', 'SOC 2', 'SOC 1', 'SOC 2', 'SOC 1'
+    "SOC 1", "SOC 2", "SOC 1", "SOC 2", "SOC 2",
+    "SOC 2", "SOC 2", "SOC 1", "SOC 2", "SOC 1"
   ),
   AEDECOD = c(
-    'Coded Term 2', 'Coded Term 1', 'Coded Term 3', 'Coded Term 4',
-    'Coded Term 4', 'Coded Term 4', 'Coded Term 5', 'Coded Term 3',
-    'Coded Term 1', 'Coded Term 2'
+    "Coded Term 2", "Coded Term 1", "Coded Term 3", "Coded Term 4",
+    "Coded Term 4", "Coded Term 4", "Coded Term 5", "Coded Term 3",
+    "Coded Term 1", "Coded Term 2"
   ),
   TRT01A = c(
-    'ARMA', 'ARMB', 'ARMA', 'ARMB', 'ARMB',
-    'Placebo', 'Placebo', 'Placebo', 'ARMA', 'ARMB'
+    "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
+    "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
   ),
-  TRTEMFL = c('Y', 'Y', 'N', 'Y', 'Y', 'Y', 'Y', 'N', 'Y', 'Y')
+  TRTEMFL = c("Y", "Y", "N", "Y", "Y", "Y", "Y", "N", "Y", "Y")
 )
 
 ADAE <- ADAE |>
   dplyr::mutate(TRT01A = as.factor(TRT01A))
 
-ADAE$colspan_trt <- factor(ifelse(ADAE$TRT01A == 'Placebo', ' ', 'Active Study Agent'),
-  levels = c('Active Study Agent', ' ')
+ADAE$colspan_trt <- factor(ifelse(ADAE$TRT01A == "Placebo", " ", "Active Study Agent"),
+  levels = c("Active Study Agent", " ")
 )
 
-ADAE$rrisk_header <- 'Risk Difference (\%) (95\% CI)'
-ADAE$rrisk_label <- paste(ADAE$TRT01A, paste('vs', 'Placebo'))
+ADAE$rrisk_header <- "Risk Difference (\%) (95\% CI)"
+ADAE$rrisk_label <- paste(ADAE$TRT01A, paste("vs", "Placebo"))
 
 colspan_trt_map <- create_colspan_map(ADAE,
-  non_active_grp = 'Placebo',
-  non_active_grp_span_lbl = ' ',
-  active_grp_span_lbl = 'Active Study Agent',
-  colspan_var = 'colspan_trt',
-  trt_var = 'TRT01A'
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
 )
 
 ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
 
 lyt <- basic_table() |>
   split_cols_by(
-    'colspan_trt',
+    "colspan_trt",
     split_fun = trim_levels_to_map(map = colspan_trt_map)
   ) |>
-  split_cols_by('TRT01A') |>
-  split_cols_by('rrisk_header', nested = FALSE) |>
+  split_cols_by("TRT01A") |>
+  split_cols_by("rrisk_header", nested = FALSE) |>
   split_cols_by(
-    'TRT01A',
-    labels_var = 'rrisk_label',
-    split_fun = remove_split_levels('Placebo')
+    "TRT01A",
+    labels_var = "rrisk_label",
+    split_fun = remove_split_levels("Placebo")
   ) |>
   analyze(
-    'TRTEMFL',
+    "TRTEMFL",
     a_freq_j,
-    show_labels = 'hidden',
+    show_labels = "hidden",
     extra_args = list(
-      method = 'wald',
-      label = 'Subjects with >=1 AE',
+      method = "wald",
+      label = "Subjects with >=1 AE",
       ref_path = ref_path,
       .stats = "count_unique_fraction"
     )
   ) |>
-  split_rows_by('AEBODSYS',
-    split_label = 'System Organ Class',
-    split_fun = trim_levels_in_group('AEDECOD'),
-    label_pos = 'topleft',
-    section_div = c(' '),
+  split_rows_by("AEBODSYS",
+    split_label = "System Organ Class",
+    split_fun = trim_levels_in_group("AEDECOD"),
+    label_pos = "topleft",
+    section_div = c(" "),
     nested = FALSE
   ) |>
   summarize_row_groups(
-    'AEBODSYS',
+    "AEBODSYS",
     cfun = a_freq_j,
     extra_args = list(
-      method = 'wald',
+      method = "wald",
       ref_path = ref_path,
       .stats = "count_unique_fraction"
     )
   ) |>
   analyze(
-    'AEDECOD',
+    "AEDECOD",
     afun = a_freq_j,
     extra_args = list(
-      method = 'wald',
+      method = "wald",
       ref_path = ref_path,
       .stats = "count_unique_fraction"
     )
@@ -136,18 +136,15 @@ result <- build_table(lyt, ADAE)
 
 result
 
-# now add sorting function to sort by AEBODSYS and AEDECOD within SOC
-# using complex score function which sorts
-# using the last active treatment column by default
 result <- sort_at_path(
   result,
-  c('root', 'AEBODSYS'),
+  c("root", "AEBODSYS"),
   scorefun = jj_complex_scorefun()
 )
 
 result <- sort_at_path(
   result,
-  c('root', 'AEBODSYS', '*', 'AEDECOD'),
+  c("root", "AEBODSYS", "*", "AEDECOD"),
   scorefun = jj_complex_scorefun()
 )
 

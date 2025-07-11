@@ -7,25 +7,25 @@
 prop_table_afun(x, .spl_context, formats, add_total_level = FALSE)
 }
 \arguments{
-\item{x}{(`factor`)\cr factor variable to analyze.}
+\item{x}{(\code{factor})\cr factor variable to analyze.}
 
-\item{.spl_context}{(`environment`)\cr split context environment.}
+\item{.spl_context}{(\code{environment})\cr split context environment.}
 
-\item{formats}{(`list`)\cr formats for the statistics.}
+\item{formats}{(\code{list})\cr formats for the statistics.}
 
-\item{add_total_level}{(`flag`)\cr whether to add a total level.}
+\item{add_total_level}{(\code{flag})\cr whether to add a total level.}
 }
 \value{
-The formatted result as [rtables::rcell()].
+A \code{VerticalRowsSection} as returned by \link[rtables:in_rows]{rtables::in_rows}.
 }
 \description{
-This function applies to a factor `x` when a column split was prepared with
-[prop_split_fun()] before.
+This function applies to a factor \code{x} when a column split was prepared with
+\code{\link[=prop_split_fun]{prop_split_fun()}} before.
 }
 \details{
-In the column named `n`, the counts of the categories as well as an
-optional `Total` count will be shown. In the column named `percent`, the
+In the column named \code{n}, the counts of the categories as well as an
+optional \code{Total} count will be shown. In the column named \code{percent}, the
 percentages of the categories will be shown, with an optional blank entry for
-`Total`. In the column named `cum_percent`, the cumulative percentages will
+\code{Total}. In the column named \code{cum_percent}, the cumulative percentages will
 be shown instead.
 }

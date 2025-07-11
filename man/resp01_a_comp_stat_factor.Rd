@@ -7,21 +7,21 @@
 resp01_a_comp_stat_factor(df, .var, include, ...)
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
-\item{include}{(`character`)\cr for which factor levels to include the comparison
+\item{include}{(\code{character})\cr for which factor levels to include the comparison
 statistic results.}
 
-\item{\dots}{see [resp01_a_comp_stat_logical()] for additional required arguments.}
+\item{\dots}{see \code{\link[=resp01_a_comp_stat_logical]{resp01_a_comp_stat_logical()}} for additional required arguments.}
 }
 \value{
-The formatted result as [rtables::rcell()].
+The formatted result as \code{\link[rtables:rcell]{rtables::rcell()}}.
 }
 \description{
-This function applies to a `factor` column called `.var` from `df`.
+This function applies to a \code{factor} column called \code{.var} from \code{df}.
 }
 \examples{
 dm <- droplevels(subset(formatters::DM, SEX \%in\% c("F", "M")))

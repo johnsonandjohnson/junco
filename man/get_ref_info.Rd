@@ -7,76 +7,72 @@
 get_ref_info(ref_path, .spl_context, .var = NULL)
 }
 \arguments{
-\item{ref_path}{(`character`)\cr reference group specification as an `rtables`
-`colpath`, see details.}
+\item{ref_path}{(\code{character})\cr reference group specification as an \code{rtables}
+\code{colpath}, see details.}
 
-\item{.spl_context}{see [rtables::spl_context].}
+\item{.spl_context}{see \link[rtables:spl_context]{rtables::spl_context}.}
 
-\item{.var}{the variable being analyzed, see [rtables::additional_fun_params].}
+\item{.var}{the variable being analyzed, see \link[rtables:additional_fun_params]{rtables::additional_fun_params}.}
 }
 \value{
-A list with `ref_group` and `in_ref_col`, which can be used as
-  `.ref_group` and `.in_ref_col` as if being directly passed to an analysis
-  function by `rtables`, see [rtables::additional_fun_params].
+A list with \code{ref_group} and \code{in_ref_col}, which can be used as
+\code{.ref_group} and \code{.in_ref_col} as if being directly passed to an analysis
+function by \code{rtables}, see \link[rtables:additional_fun_params]{rtables::additional_fun_params}.
 }
 \description{
 This helper function can be used in custom analysis functions, by passing
-an extra argument `ref_path` which defines a global reference group by
+an extra argument \code{ref_path} which defines a global reference group by
 the corresponding column split hierarchy levels.
 }
 \details{
-The reference group is specified in `colpath` hierarchical fashion in `ref_path`:
+The reference group is specified in \code{colpath} hierarchical fashion in \code{ref_path}:
 The first column split variable is the first element, and the level to use is the
 second element. It continues until the last column split variable with last
 level to use.
-Note that depending on `.var`, either a `data.frame` (if `.var` is `NULL`) or
+Note that depending on \code{.var}, either a \code{data.frame} (if \code{.var} is \code{NULL}) or
 a vector (otherwise) is returned. This allows usage for analysis functions with
-`df` and `x` arguments, respectively.
+\code{df} and \code{x} arguments, respectively.
 }
 \examples{
 dm <- DM
 dm$colspan_trt <- factor(
-  ifelse(dm$ARM == 'B: Placebo', ' ', 'Active Study Agent'),
-  levels = c('Active Study Agent', ' ')
+  ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
+  levels = c("Active Study Agent", " ")
 )
 colspan_trt_map <- create_colspan_map(
   dm,
-  non_active_grp = 'B: Placebo',
-  non_active_grp_span_lbl = ' ',
-  active_grp_span_lbl = 'Active Study Agent',
-  colspan_var = 'colspan_trt',
-  trt_var = 'ARM'
+  non_active_grp = "B: Placebo",
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = "ARM"
 )
 
-# A standard analysis function which uses a reference group.
 standard_afun <- function(x, .ref_group, .in_ref_col) {
   in_rows(
-    'Difference of Averages' = non_ref_rcell(
+    "Difference of Averages" = non_ref_rcell(
       mean(x) - mean(.ref_group),
       is_ref = .in_ref_col,
-      format = 'xx.xx'
+      format = "xx.xx"
     )
   )
 }
 
-# The custom analysis function which can work with a global reference group.
 result_afun <- function(x, ref_path, .spl_context, .var) {
   ref <- get_ref_info(ref_path, .spl_context, .var)
   standard_afun(x, .ref_group = ref$ref_group, .in_ref_col = ref$in_ref_col)
 }
 
-# Define the global reference group colpath.
-ref_path <- c('colspan_trt', ' ', 'ARM', 'B: Placebo')
+ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
 
 lyt <- basic_table() |>
   split_cols_by(
-    'colspan_trt',
+    "colspan_trt",
     split_fun = trim_levels_to_map(map = colspan_trt_map)
   ) |>
-  split_cols_by('ARM') |>
+  split_cols_by("ARM") |>
   analyze(
-    'AGE',
-    # Here we pass the global reference group colpath.
+    "AGE",
     extra_args = list(ref_path = ref_path),
     afun = result_afun
   )
