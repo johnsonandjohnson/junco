@@ -31,6 +31,8 @@ h_check_and_get_label <- function(x, vars, data) {
 }
 
 #' Extraction of Covariate Parts from Character Vector
+#' 
+#' Extraction of Covariate Parts from Character Vector.
 #'
 #' @param covariates (`character`)\cr specification in the usual way, see examples.
 #'
@@ -128,8 +130,8 @@ build_formula <- function(
 #'
 #' Extracts the least square means from an `MMRM` fit.
 #'
-#' @param fit (`mmrm`)\cr result of [mmrm::mmrm()].
 #' @inheritParams fit_mmrm_j
+#' @param fit (`mmrm`)\cr result of [mmrm::mmrm()].
 #' @param averages (`list`)\cr named list of visit levels which should be averaged
 #'   and reported along side the single visits.
 #' @param weights (`string`)\cr type of weights to be used for the least square means,

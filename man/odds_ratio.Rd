@@ -81,6 +81,8 @@ of the approximations, or the CMH method. See \code{\link[survival:clogit]{survi
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
+A set of functions for Odds-Ratio (OR) calculation.
 }
 \section{Functions}{
 \itemize{

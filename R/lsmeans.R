@@ -1,7 +1,7 @@
 #' Helpers for Processing Least Square Means
 #'
-#' @param fit result of model fitting function, e.g. [mmrm::mmrm()] or [stats::lm()].
 #' @inheritParams fit_mmrm_j
+#' @param fit result of model fitting function, e.g. [mmrm::mmrm()] or [stats::lm()].
 #' @param averages (`list`)\cr optional named list of visit levels which should be averaged
 #'   and reported along side the single visits.
 #' @param weights (`string`)\cr argument from [emmeans::emmeans()], 'counterfactual' by default.

@@ -79,6 +79,8 @@ c_proportion_logical <- function(x, labelstr, label_fstr, format, .N_col) {
 }
 
 #' Helper Function to Create Logical Design Matrix from Factor Variable
+#' 
+#' Helper Function to Create Logical Design Matrix from Factor Variable.
 #'
 #' @param df (`data.frame`)\cr including a factor variable with name in `.var`.
 #' @param .var (`string`)\cr name of the factor variable.
@@ -101,6 +103,8 @@ h_get_design_mat <- function(df, .var) {
 }
 
 #' Formatted Analysis Function For Proportion Confidence Interval for Logical
+#' 
+#' Formatted Analysis Function For Proportion Confidence Interval for Logical.
 #'
 #' @param x (`logical`)\cr including binary response values.
 #' @param .alt_df (`data.frame`)\cr alternative data frame used for denominator calculation.
@@ -136,6 +140,8 @@ a_proportion_ci_logical <- function(x, .alt_df, conf_level, method, formats) {
 }
 
 #' Formatted Analysis Function For Proportion Confidence Interval for Factor
+#' 
+#' Formatted Analysis Function For Proportion Confidence Interval for Factor.
 #'
 #' @param df (`data.frame`)\cr including factor `.var`.
 #' @param .var (`string`)\cr name of the factor variable.
@@ -164,7 +170,7 @@ a_proportion_ci_factor <- function(df, .var, ...) {
   in_rows(.list = res, .labels = colnames(design_mat))
 }
 
-#' Split Function for Proportion Analysis Columns (TEFCGIS08 e.g.)
+#' Split Function for Proportion Analysis Columns
 #'
 #' Here we just split into 3 columns `n`, `%` and `Cum %`.
 #'
@@ -173,7 +179,6 @@ a_proportion_ci_factor <- function(df, .var, ...) {
 #' @param fulldf (`data.frame`)\cr full data frame.
 #' @param .spl_context (`environment`)\cr split context environment.
 #'
-#' @note This split function is used in the proportion table TEFCGIS08 and similar ones.
 #' @seealso [rtables::make_split_fun()] describing the requirements for this kind of
 #'   post-processing function.
 prop_post_fun <- function(ret, spl, fulldf, .spl_context) {
@@ -190,7 +195,7 @@ prop_post_fun <- function(ret, spl, fulldf, .spl_context) {
 #' @export
 prop_split_fun <- make_split_fun(post = list(prop_post_fun))
 
-#' Formatted Analysis Function for Proportion Analysis (TEFCGIS08 e.g.)
+#' Formatted Analysis Function for Proportion Analysis
 #'
 #' This function applies to a factor `x` when a column split was prepared with
 #' [prop_split_fun()] before.
