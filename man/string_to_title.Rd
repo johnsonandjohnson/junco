@@ -7,12 +7,23 @@
 string_to_title(x)
 }
 \arguments{
-\item{x}{(\code{character})\cr Input string to apply the conversion.}
+\item{x}{(\code{character} or \code{factor})\cr Input string}
 }
 \value{
-String converted to title case (first letter of each word capitalized)
+x converted to title case (first letter of each word capitalized)
 }
 \description{
 Title Case Conversion
+}
+\examples{
+x <- c("THIS IS an eXaMple", "statement TO CAPItaliZe")
+string_to_title(x)
+
+x <- factor(
+  c("OPTIMAL DOSE", "UNDERDOSE"),
+  levels = c("OPTIMAL DOSE", "UNDERDOSE", "OVERDOSE")
+)
+string_to_title(x)
+
 }
 \keyword{internal}
