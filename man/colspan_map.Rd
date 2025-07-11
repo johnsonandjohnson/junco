@@ -15,33 +15,35 @@ create_colspan_map(
 )
 }
 \arguments{
-\item{df}{The name of the data frame in which the spanning variable is to be appended to}
+\item{df}{(\code{data.frame})\cr The name of the data frame in which the spanning variable is to be appended to}
 
-\item{non_active_grp}{The value(s) of the treatments that represent the non-active or comparator
+\item{non_active_grp}{(\code{character})\cr The value(s) of the treatments that represent the non-active or comparator
 treatment groups
 default value = c('Placebo')}
 
-\item{non_active_grp_span_lbl}{The assigned value of the spanning variable for the non-active or comparator
+\item{non_active_grp_span_lbl}{(\code{character})\cr The assigned value of the spanning
+variable for the non-active or comparator
 treatment groups
 default value = ''}
 
-\item{active_grp_span_lbl}{The assigned value of the spanning variable for the active treatment group(s)
+\item{active_grp_span_lbl}{(\code{character})\cr The assigned value of the spanning
+variable for the active treatment group(s)
 default value = 'Active Study Agent'}
 
-\item{colspan_var}{The desired name of the newly created spanning variable
+\item{colspan_var}{(\code{character})\cr The desired name of the newly created spanning variable
 default value = 'colspan_trt'}
 
-\item{trt_var}{The name of the treatment variable that is used to determine which
+\item{trt_var}{(\code{character})\cr The name of the treatment variable that is used to determine which
 spanning treatment group value to apply.
 default value = 'TRT01A'}
 
-\item{active_first}{whether the active columns come first.}
+\item{active_first}{(\code{logical})\cr whether the active columns come first.}
 }
 \value{
-a data frame that contains the map to be used with rtables split function \code{trim_levels_to_map}
+A data frame that contains the map to be used with rtables split function \code{trim_levels_to_map}.
 }
 \description{
-A function used for creating a data frame containing the map that is compatible with rtables split function
+A function used for creating a data frame containing the map that is compatible with rtables split function.
 \code{trim_levels_to_map}
 }
 \details{

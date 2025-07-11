@@ -21,7 +21,8 @@ leftside <- function(x) {
 
 #' Title Case Conversion
 #'
-#' @param x Input string
+#' @param x (`character`)\cr Input string to apply the conversion.
+#'
 #' @return String converted to title case (first letter of each word capitalized)
 #' @export
 #' @keywords internal

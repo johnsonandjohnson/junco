@@ -1,9 +1,9 @@
 #' @title Create TableTree as DataFrame via gentlg
 #'
-#' @param tt TableTree object to convert to a data frame
-#' @param fontspec Font specification object
-#' @param string_map Unicode mapping for special characters
-#' @param markup_df Data frame containing markup information
+#' @param tt (`TableTree`)\cr TableTree object to convert to a data frame
+#' @param fontspec (`font_spec`)\cr Font specification object
+#' @param string_map (`list`)\cr Unicode mapping for special characters
+#' @param markup_df (`data.frame`)\cr Data frame containing markup information
 #' @return `tt` represented as a `tbl` data.frame suitable for passing
 #'   to [tidytlg::gentlg] via the `huxme` argument.
 tt_to_tbldf <- function(
@@ -223,39 +223,38 @@ get_ncol <- function(tt) {
 #' @details
 #' This function aids in converting the rtables TableTree into the desired .rtf file.
 #'
-#' @param tt TableTree object to convert to RTF
-#' @param file character(1). File to create, including path, but excluding
+#' @param tt (`TableTree`)\cr TableTree object to convert to RTF
+#' @param file (`character`)\cr File to create, including path, but excluding
 #' .rtf extension.
-#' @param orientation Orientation of the output ("portrait" or "landscape")
-#' @param colwidths Column widths for the table
-#' @param label_width_ins Label width in inches
-#' @param fontspec Font specification object
-#' @param pg_width Page width in inches
-#' @param margins Margins in inches (top, right, bottom, left)
-#' @param paginate Whether to paginate the output
-#' @param col_gap Column gap in spaces
-#' @param verbose Whether to print verbose output
-#' @param tlgtype Type of the output (Table, Listing, or Figure)
-#' @param string_map Unicode mapping for special characters
-#' @param markup_df Data frame containing markup information
+#' @param orientation (`character`)\cr Orientation of the output ("portrait" or "landscape")
+#' @param colwidths (`numeric` vector)\cr Column widths for the table
+#' @param label_width_ins (`numeric`)\cr Label width in inches
+#' @param fontspec (`font_spec`)\cr Font specification object
+#' @param pg_width (`numeric`)\cr Page width in inches
+#' @param margins (`numeric` vector)\cr Margins in inches (top, right, bottom, left)
+#' @param paginate (`logical`)\cr Whether to paginate the output
+#' @param col_gap (`numeric`)\cr Column gap in spaces
+#' @param verbose (`logical`)\cr Whether to print verbose output
+#' @param tlgtype (`character`)\cr Type of the output (Table, Listing, or Figure)
+#' @param string_map (`data.frame`)\cr Unicode mapping for special characters
+#' @param markup_df (`data.frame`)\cr Data frame containing markup information
 #' @param ... Additional arguments passed to gentlg
 #' @inheritParams tidytlg::gentlg
-#' @param nosplitin list(row=, col=). Path elements whose children should not be paginated within
+#' @param nosplitin (`list`)\cr list(row=, col=). Path elements whose children should not be paginated within
 #' if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
 #' all the associated columns don't fit on a single page.
-#' @param combined_rtf logical(1). In the case where the result is broken up into multiple
+#' @param combined_rtf (`logical`)\cr In the case where the result is broken up into multiple
 #' parts due to width, should a combined rtf file also be created. Defaults to `FALSE`.
-#' @param one_table logical(1). If `tt` is a (non-`MatrixPrintForm`) list,
+#' @param one_table (`logical`)\cr If `tt` is a (non-`MatrixPrintForm`) list,
 #' should the parts be added to the rtf within a single table (`TRUE`, the
 #' default) or as separate tables. End users will not generally need to set this.
-#' @param border_mat matrix. A `m x k` matrix where m is the number of columns of `tt`
+#' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of columns of `tt`
 #'  and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #'  for what the matrix should contain. Users should only specify this when the
 #'  default behavior does not meet their needs.
 #' @import rlistings
 #' @rdname tt_to_tlgrtf
 #' @export
-#' @seealso Used in all table and listing scripts
 #' @note `file` should always include path. Path will be extracted
 #' and passed separately to `gentlg`.
 #' @note When `one_table` is `FALSE`, only the width of the row label

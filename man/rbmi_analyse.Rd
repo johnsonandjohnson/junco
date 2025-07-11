@@ -14,19 +14,24 @@ rbmi_analyse(
 )
 }
 \arguments{
-\item{imputations}{An \code{imputations} object as created by \code{\link[rbmi:impute]{rbmi::impute()}}.}
+\item{imputations}{(\code{imputations})\cr
+An \code{imputations} object as created by \code{\link[rbmi:impute]{rbmi::impute()}}.}
 
-\item{fun}{An analysis function to be applied to each imputed dataset. See details.}
+\item{fun}{(\code{function})\cr
+An analysis function to be applied to each imputed dataset. See details.}
 
-\item{delta}{A \code{data.frame} containing the delta transformation to be applied to the imputed
+\item{delta}{(\code{data.frame})\cr
+A \code{data.frame} containing the delta transformation to be applied to the imputed
 datasets prior to running \code{fun}. See details.}
 
 \item{...}{Additional arguments passed onto \code{fun}.}
 
-\item{cluster_or_cores}{The number of parallel processes to use when running this function. Can also be a
+\item{cluster_or_cores}{(\code{numeric} or \verb{cluster object})\cr
+The number of parallel processes to use when running this function. Can also be a
 cluster object created by \code{\link[=make_rbmi_cluster]{make_rbmi_cluster()}}. See the parallelisation section below.}
 
-\item{.validate}{Should \code{imputations} be checked to ensure it conforms to the required format
+\item{.validate}{(\code{logical})\cr
+Should \code{imputations} be checked to ensure it conforms to the required format
 (default = \code{TRUE}) ? Can gain a small performance increase if this is set to \code{FALSE} when
 analysing a large number of samples.}
 }

@@ -1,7 +1,6 @@
 #' Odds ratio estimation
 #'
 #' @description `r lifecycle::badge('stable')`
-#' 
 #' A set of functions for Odds-Ratio (OR) calculation.
 #'
 #' @param method (`string`)\cr whether to use the correct (`'exact'`) calculation in the conditional likelihood or one

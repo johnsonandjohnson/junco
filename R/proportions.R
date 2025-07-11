@@ -79,7 +79,8 @@ c_proportion_logical <- function(x, labelstr, label_fstr, format, .N_col) {
 }
 
 #' Helper Function to Create Logical Design Matrix from Factor Variable
-#' 
+#'
+#' @description
 #' Helper Function to Create Logical Design Matrix from Factor Variable.
 #'
 #' @param df (`data.frame`)\cr including a factor variable with name in `.var`.
@@ -103,7 +104,8 @@ h_get_design_mat <- function(df, .var) {
 }
 
 #' Formatted Analysis Function For Proportion Confidence Interval for Logical
-#' 
+#'
+#' @description
 #' Formatted Analysis Function For Proportion Confidence Interval for Logical.
 #'
 #' @param x (`logical`)\cr including binary response values.
@@ -140,7 +142,8 @@ a_proportion_ci_logical <- function(x, .alt_df, conf_level, method, formats) {
 }
 
 #' Formatted Analysis Function For Proportion Confidence Interval for Factor
-#' 
+#'
+#' @description
 #' Formatted Analysis Function For Proportion Confidence Interval for Factor.
 #'
 #' @param df (`data.frame`)\cr including factor `.var`.

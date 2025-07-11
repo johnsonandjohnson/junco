@@ -482,12 +482,12 @@ j_mf_col_widths <- utils::getFromNamespace("mf_col_widths", "formatters")
 #' `def_colwidths` uses heuristics to determine suitable column widths given a
 #' table or listing, and a font.
 #'
-#' @param tt input Tabletree
+#' @param tt input TableTree
 #' @param fontspec Font specification
 #' @param label_width_ins Label Width in Inches.
 #' @param col_gap Column gap in spaces. Defaults to `.5` for listings and `3`
 #'   for tables.
-#' @param type Type of the table tree, used to determine column width calculation method.
+#' @param type Type of the TableTree, used to determine column width calculation method.
 #'
 #' @details Listings are assumed to be rendered landscape on standard A1 paper,
 #'   such that all columns are rendered on one page. Tables are allowed to

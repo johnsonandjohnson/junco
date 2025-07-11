@@ -1,5 +1,8 @@
 #' Helper for Finding AVISIT after which CHG are all Missing
 #'
+#' @description
+#' Helper for Finding AVISIT after which CHG are all Missing.
+#'
 #' @param df (`data.frame`)\cr with `CHG` and `AVISIT` variables.
 #'
 #' @return A string with either the factor level after which `AVISIT` is all missing,
@@ -58,19 +61,24 @@ find_missing_chg_after_avisit <- function(df) {
 
 #' Create a `rbmi` ready cluster
 #'
-#' @param cluster_or_cores Number of parallel processes to use or an existing cluster to make use of
-#' @param objects a named list of objects to export into the sub-processes
-#' @param packages a character vector of libraries to load in the sub-processes
-#'
+#' @description
 #' This function is a wrapper around `parallel::makePSOCKcluster()` but takes
 #' care of configuring `rbmi` to be used in the sub-processes as well as loading
 #' user defined objects and libraries and setting the seed for reproducibility.
 #'
-#' @return If `cluster_or_cores` is `1` this function will return `NULL`. If `cluster_or_cores`
-#'   is a number greater than `1`, a cluster with `cluster_or_cores`  cores is returned.
+#' @param cluster_or_cores (`integer` or `cluster object`)\cr
+#' Number of parallel processes to use or an existing cluster to make use of
+#' @param objects (`list`)\cr A named list of objects to export into the sub-processes
+#' @param packages (`character vector`)\cr
+#' A character vector of libraries to load in the sub-processes
 #'
-#' If `cluster_or_cores` is a cluster created via `parallel::makeCluster()` then this function
-#' returns it after inserting the relevant `rbmi` objects into the existing cluster.
+#' @return
+#' * If `cluster_or_cores` is `1`, this function will return `NULL`.
+#' * If `cluster_or_cores` is a number greater than `1`,
+#' a cluster with `cluster_or_cores` cores is returned.
+#' * If `cluster_or_cores` is a cluster created via `parallel::makeCluster()`,
+#' then this function returns it after inserting the relevant `rbmi` objects
+#' into the existing cluster.
 #'
 #' @examples
 #' \dontrun{
@@ -148,12 +156,14 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
 
 #' Parallelise Lapply
 #'
+#' @description
 #' Simple wrapper around `lapply` and [`parallel::clusterApplyLB`] to abstract away
-#' the logic of deciding which one to use
-#' @param cl Cluster created by [`parallel::makeCluster()`] or `NULL`
-#' @param fun Function to be run
-#' @param x object to be looped over
-#' @param ... extra arguments passed to `fun`
+#' the logic of deciding which one to use.
+#'
+#' @param cl (`cluster object`)\cr Cluster created by [`parallel::makeCluster()`] or `NULL`
+#' @param fun (`functions`)\cr Function to be run
+#' @param x (`object`)\cr Bbject to be looped over
+#' @param ... Extra arguments passed to `fun`
 #' @return `list` of results of calling `fun` on elements of `x`.
 par_lapply <- function(cl, fun, x, ...) {
   result <- if (is.null(cl)) {
@@ -250,14 +260,19 @@ par_lapply <- function(cl, fun, x, ...) {
 #' @seealso [rbmi::delta_template()] for creating delta data.frames.
 #' @seealso [rbmi_ancova()] for the default analysis function.
 #'
-#' @param imputations An `imputations` object as created by [rbmi::impute()].
-#' @param fun An analysis function to be applied to each imputed dataset. See details.
-#' @param delta A `data.frame` containing the delta transformation to be applied to the imputed
+#' @param imputations (`imputations`)\cr
+#' An `imputations` object as created by [rbmi::impute()].
+#' @param fun (`function`)\cr
+#' An analysis function to be applied to each imputed dataset. See details.
+#' @param delta (`data.frame`)\cr
+#' A `data.frame` containing the delta transformation to be applied to the imputed
 #' datasets prior to running `fun`. See details.
 #' @param ... Additional arguments passed onto `fun`.
-#' @param cluster_or_cores The number of parallel processes to use when running this function. Can also be a
+#' @param cluster_or_cores (`numeric` or `cluster object`)\cr
+#' The number of parallel processes to use when running this function. Can also be a
 #' cluster object created by [`make_rbmi_cluster()`]. See the parallelisation section below.
-#' @param .validate Should `imputations` be checked to ensure it conforms to the required format
+#' @param .validate (`logical`)\cr
+#' Should `imputations` be checked to ensure it conforms to the required format
 #' (default = `TRUE`) ? Can gain a small performance increase if this is set to `FALSE` when
 #' analysing a large number of samples.
 #'

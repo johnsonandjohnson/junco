@@ -31,7 +31,8 @@ h_check_and_get_label <- function(x, vars, data) {
 }
 
 #' Extraction of Covariate Parts from Character Vector
-#' 
+#'
+#' @description
 #' Extraction of Covariate Parts from Character Vector.
 #'
 #' @param covariates (`character`)\cr specification in the usual way, see examples.

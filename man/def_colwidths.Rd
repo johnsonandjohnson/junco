@@ -41,11 +41,11 @@ which corresponds to landscape orientation on a standard page after margins.}
 \item{verbose}{(\code{logical(1)})\cr Should additional information messages be
 displayed during the calculation of the column widths? Defaults to \code{FALSE}.}
 
-\item{tt}{input Tabletree}
+\item{tt}{input TableTree}
 
 \item{label_width_ins}{Label Width in Inches.}
 
-\item{type}{Type of the table tree, used to determine column width calculation method.}
+\item{type}{Type of the TableTree, used to determine column width calculation method.}
 }
 \value{
 \itemize{

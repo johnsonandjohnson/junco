@@ -7,7 +7,7 @@
 string_to_title(x)
 }
 \arguments{
-\item{x}{Input string}
+\item{x}{(\code{character})\cr Input string to apply the conversion.}
 }
 \value{
 String converted to title case (first letter of each word capitalized)

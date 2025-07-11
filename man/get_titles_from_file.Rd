@@ -12,13 +12,13 @@ get_titles_from_file(
 )
 }
 \arguments{
-\item{id}{character. The identifier for the table of interest.}
+\item{id}{(\code{character})\cr The identifier for the table of interest.}
 
-\item{file}{(\code{character(1)})\cr A path to CSV or xlsx file containing title
+\item{file}{(\code{character})\cr A path to CSV or xlsx file containing title
 and footer information for one or more outputs. See Details. Ignored if
 \code{title_df} is specified.}
 
-\item{input_path}{(\code{character(1)})\cr A path to look for
+\item{input_path}{(\code{character})\cr A path to look for
 titles.csv/titles.xlsx. Ignored if \code{file} or \code{title_df} is specified.}
 
 \item{title_df}{(\code{data.frame})\cr A data.frame containing titles and footers for
@@ -44,7 +44,4 @@ first.
      footer materials where `*` is a positive integer. `TEXT` contains
      the value of the title/footer to be applied.
 }\if{html}{\out{</div>}}
-}
-\seealso{
-Used in all template script
 }
