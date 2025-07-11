@@ -9,13 +9,13 @@ short_split_result(..., fulldf)
 \arguments{
 \item{...}{sequence of named labels for the columns.}
 
-\item{fulldf}{(\code{data.frame})\cr the \code{fulldf} which will be used for each column.}
+\item{fulldf}{(\code{data.frame})\cr The \code{fulldf} which will be used for each column.}
 }
 \value{
 The result from \code{\link[rtables:make_split_result]{rtables::make_split_result()}}.
 }
 \description{
-This is a short cut for a common use of \code{\link[rtables:make_split_result]{rtables::make_split_result()}} where you need to create
+This is a shortcut for a common use of \code{\link[rtables:make_split_result]{rtables::make_split_result()}} where you need to create
 custom column splits with different labels but using the same full dataset for each column.
 It automatically sets up the values, datasplit (using the same full dataset for each column),
 and subset_exprs (using TRUE for all subsets) parameters for make_split_result().

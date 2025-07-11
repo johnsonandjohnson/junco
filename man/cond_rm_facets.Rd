@@ -16,13 +16,13 @@ cond_rm_facets(
 )
 }
 \arguments{
-\item{facets}{character or NULL. Vector of facet names to be removed
+\item{facets}{(\code{character} or NULL)\cr Vector of facet names to be removed
 if condition(s) are met}
 
-\item{facets_regex}{character(1). Regular expression to identify facet
+\item{facets_regex}{(\code{character})\cr Regular expression to identify facet
 names to be removed if condition(s) are met.}
 
-\item{ancestor_pos}{numeric(1). Row in spl_context to check the condition
+\item{ancestor_pos}{(\code{numeric})\cr Row in spl_context to check the condition
 within. E.g., 1 represents the first split, 2 represents the second split
 nested within the first, etc. NA specifies that the conditions
 should be checked at all split levels. Negative integers indicate position
@@ -30,30 +30,30 @@ counting back from the current one, e.g., -1 indicates the direct parent
 (most recent split before this one). Negative and positive/NA positions
 cannot be mixed.}
 
-\item{split}{character(1) or NULL. If specified, name of the split
+\item{split}{(\code{character} or NULL)\cr If specified, name of the split
 at position \code{ancestor_pos} must be identical to this value for
 the removal condition to be met.}
 
-\item{split_regex}{character(1) or NULL. If specified, a regular expression
+\item{split_regex}{(\code{character} or NULL)\cr If specified, a regular expression
 the name of the split at position \code{ancestor_pos} must match for
 the removal condition to be met. Cannot be specified at the same time
 as \code{split}.}
 
-\item{value}{character(1) or NULL. If specified, split (facet) value
+\item{value}{(\code{character} or NULL)\cr If specified, split (facet) value
 at position \code{ancestor_pos} must be identical to this value for
 removal condition to be met.}
 
-\item{value_regex}{character(1) or NULL. If specified, a regular expression
+\item{value_regex}{(\code{character} or NULL)\cr If specified, a regular expression
 the value of the split at position \code{ancestor_pos} must match for
 the removal condition to be met. Cannot be specified at the same time
 as \code{value}.}
 
-\item{keep_matches}{logical(1). Given the specified condition is met,
+\item{keep_matches}{(\code{logical})\cr Given the specified condition is met,
 should the facets removed be those matching \code{facets}/\code{facets_regex}
 (\code{FALSE}, the default), or those \emph{not} matching (\code{TRUE}).}
 }
 \value{
-a function suitable for use in \code{make_split_fun}'s
+A function suitable for use in \code{make_split_fun}'s
 \code{post} argument which encodes the specified condition.
 }
 \description{

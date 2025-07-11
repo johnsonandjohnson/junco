@@ -1,25 +1,27 @@
 #' @name create_colspan_var
 #' @title Creation of Column Spanning Variables
 #' @description
-#' A function used for creating a spanning variable for treatment groups
+#' A function used for creating a spanning variable for treatment groups.
 #' @details
 #' This function creates a spanning variable for treatment groups that is intended to
 #' be used within the column space.
-#' @param df The name of the data frame in which the spanning variable is to be appended to
-#' @param non_active_grp The value(s) of the treatments that represent the non-active or comparator
+#' @param df (`data.frame`)\cr The name of the data frame in which the spanning variable is to be appended to
+#' @param non_active_grp (`character`)\cr The value(s) of the treatments that represent the non-active or comparator
 #' treatment groups
 #' default value = c('Placebo')
-#' @param non_active_grp_span_lbl The assigned value of the spanning variable for the non-active or comparator
+#' @param non_active_grp_span_lbl (`character`)\cr The assigned value of the spanning
+#' variable for the non-active or comparator
 #' treatment groups
 #' default value = ''
-#' @param active_grp_span_lbl The assigned value of the spanning variable for the active treatment group(s)
+#' @param active_grp_span_lbl (`character`)\cr The assigned value of the spanning
+#' variable for the active treatment group(s)
 #' default value = 'Active Study Agent'
-#' @param colspan_var The desired name of the newly created spanning variable
+#' @param colspan_var (`character`)\cr The desired name of the newly created spanning variable
 #' default value = 'colspan_trt'
-#' @param trt_var The name of the treatment variable that is used to determine which
+#' @param trt_var (`character`)\cr The name of the treatment variable that is used to determine which
 #' spanning treatment group value to apply.
 #' default value = 'TRT01A'
-#' @returns a data frame that contains the new variable as specified in colspan_var
+#' @returns A data frame that contains the new variable as specified in colspan_var.
 #' @rdname colspan_var
 #' @export
 #' @aliases create_colspan_var
@@ -65,7 +67,7 @@ create_colspan_var <- function(
 #' @name create_colspan_map
 #' @title Creation of Column Spanning Mapping Dataframe
 #' @description
-#' A function used for creating a data frame containing the map that is compatible with rtables split function
+#' A function used for creating a data frame containing the map that is compatible with rtables split function.
 #' `trim_levels_to_map`
 #' @details
 #' This function creates a data frame containing the map that is compatible with rtables split function
@@ -73,8 +75,8 @@ create_colspan_var <- function(
 #' The levels of the specified trt_var variable will be stored within the trt_var variable
 #' and the colspan_var variable will contain the corresponding spanning header value for each treatment group.
 #' @inheritParams create_colspan_var
-#' @param active_first whether the active columns come first.
-#' @returns a data frame that contains the map to be used with rtables split function `trim_levels_to_map`
+#' @param active_first (`logical`)\cr whether the active columns come first.
+#' @returns A data frame that contains the map to be used with rtables split function `trim_levels_to_map`.
 #' @rdname colspan_map
 #' @export
 #' @examples

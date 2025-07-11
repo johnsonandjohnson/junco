@@ -146,20 +146,21 @@ calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, roundmethod = 
 #' @description
 #' A function factory used for obtaining statistics within the columns of your table.
 #' Used in change from baseline tables. This takes the visit names as its row labels.
-#' @param exclude_visits Vector of visit(s) for which you do not want the statistics displayed
+#' @param exclude_visits (`character vector`)\cr Vector of visit(s) for which you do not want the statistics displayed
 #' in the baseline mean or change from baseline sections of the table.
-#' @param var_names Vector of variable names to use instead of the default AVAL, CHG, BASE.
+#' @param var_names (`character vector`)\cr Vector of variable names to use instead of the default AVAL, CHG, BASE.
 #' The first two elements are treated as main variables with full statistics, and the third element
 #' is treated as the base variable. By default, the function expects these specific variable names in your data,
 #' but you can customize them to match your dataset's column names.
-#' @param stats A list with two components, `main` and `base`, that define the statistics to be calculated
-#' for the main variables (default: AVAL, CHG) and the base variable (default: BASE).
-#' Default for main variables: c(N = "N", mean = "Mean", SD = "SD", SE = "SE", Med = "Med", Min = "Min", Max = "Max")
-#' Default for base variable: c(mean = "Mean")
+#' @param stats (`list`)\cr A list with two components, `main` and `base`, that define the statistics to be calculated
+#' for the main variables (default: AVAL, CHG) and the base variable (default: BASE).\cr
+#' Default for main variables: c(N = "N", mean = "Mean", SD = "SD", SE = "SE",
+#' Med = "Med", Min = "Min", Max = "Max").\cr
+#' Default for base variable: c(mean = "Mean").\cr
 #' You can customize these statistics by providing your own named vectors in the list. The names are used
 #' internally for calculations, and the values are used as display labels in the table.
 #'
-#' @return an analysis function (for use with [rtables::analyze]) implementing
+#' @return An analysis function (for use with [rtables::analyze]) implementing
 #'   the specified statistics.
 #' @export
 column_stats <- function(exclude_visits = c("Baseline (DB)"),

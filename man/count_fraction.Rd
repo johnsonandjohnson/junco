@@ -8,9 +8,9 @@
 jjcsformat_count_fraction(x, d = 1, roundmethod = c("sas", "iec"), ...)
 }
 \arguments{
-\item{x}{\code{numeric}\cr with elements \code{num} and \code{fraction} or \code{num}, \code{denom} and \code{fraction}.}
+\item{x}{(\verb{numeric vector})\cr Vector with elements \code{num} and \code{fraction} or \code{num}, \code{denom} and \code{fraction}.}
 
-\item{d}{numeric(1). Number of digits to round fraction to (default=1)}
+\item{d}{(\code{numeric})\cr Number of digits to round fraction to (default = 1)}
 
 \item{roundmethod}{(\code{string})\cr choice of rounding methods. Options are:
 \itemize{
@@ -29,13 +29,12 @@ is 0, the format is \code{0}. If fraction is >0.99, the format is
 \description{
 Formats a count together with fraction (and/or denominator) with special
 consideration when count is 0, or fraction is 1.
-\cr See also: tern::format_count_fraction_fixed_dp()
+\cr See also: \code{\link[tern:format_count_fraction_fixed_dp]{tern::format_count_fraction_fixed_dp()}}
 }
 \examples{
 jjcsformat_count_fraction(c(7, 0.7))
 jjcsformat_count_fraction(c(70000, 0.9999999))
 jjcsformat_count_fraction(c(70000, 1))
-
 }
 \seealso{
 Other JJCS formats: 

@@ -50,7 +50,7 @@ The attribute \code{weights} savse the settings used (\code{weights_emmeans}).
 }
 }
 \description{
-Does the \code{ANCOVA} analysis, separately for each visit.
+Performs the \code{ANCOVA} analysis, separately for each visit.
 }
 \examples{
 library(mmrm)

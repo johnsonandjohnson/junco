@@ -44,7 +44,7 @@ that is passed by \code{rtables}.}
 \item{alternative}{(\code{string})\cr whether \code{two.sided}, or one-sided \code{less} or \code{greater} p-value
 should be displayed.}
 
-\item{show_relative}{should the 'reduction' (\code{control - treatment}, default) or the 'increase'
+\item{show_relative}{(\code{string})\cr should the 'reduction' (\code{control - treatment}, default) or the 'increase'
 (\code{treatment - control}) be shown for the relative change from baseline?}
 
 \item{...}{eventually passed to \code{\link[=fit_mmrm_j]{fit_mmrm_j()}} via \code{\link[=h_summarize_mmrm]{h_summarize_mmrm()}}.}

@@ -7,7 +7,7 @@
 pad_in_rows_fct(length_out = NULL, label = "")
 }
 \arguments{
-\item{length_out}{(\code{count} or \code{NULL})\cr full length which should be padded
+\item{length_out}{(\code{numeric} or \code{NULL})\cr full length which should be padded
 by \code{NA} which will be printed as empty strings.}
 
 \item{label}{(\code{string})\cr row label to be used for the first row only.}

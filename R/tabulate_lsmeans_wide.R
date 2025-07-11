@@ -1,6 +1,6 @@
 #' Function Factory to Create Padded In Rows Content
 #'
-#' @param length_out (`count` or `NULL`)\cr full length which should be padded
+#' @param length_out (`numeric` or `NULL`)\cr full length which should be padded
 #'   by `NA` which will be printed as empty strings.
 #' @param label (`string`)\cr row label to be used for the first row only.
 #'
@@ -176,7 +176,7 @@ lsmeans_wide_cfun <- function(
 #'
 #' @inheritParams proposal_argument_convention
 #' @inheritParams lsmeans_wide_cfun
-#' @param lyt empty layout, i.e. result of [rtables::basic_table()]
+#' @param lyt (`layout`)\cr empty layout, i.e. result of [rtables::basic_table()]
 #' @param include_variance (`flag`)\cr whether to include the variance statistics
 #'   (M.S. error and d.f.).
 #' @param include_pval (`flag`)\cr whether to include the p-value column.

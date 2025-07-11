@@ -55,10 +55,31 @@ a_freq_resp_var_j(
 \item{...}{Additional arguments passed to other functions.}
 }
 \value{
-A list of rcell objects containing the response statistics.
+Formatted analysis function which is used as \code{afun} in \code{analyze_vars()}
+and as \code{cfun} in \code{summarize_row_groups()}.
 }
 \description{
 This function calculates counts and percentages for response variables (Y/N values),
 with optional risk difference calculations.
 }
-\keyword{internal}
+\examples{
+library(dplyr)
+ADSL <- ex_adsl |> select(USUBJID, ARM, SEX)
+
+ADAE <- ex_adae |> select(USUBJID, ARM, SEX, AEBODSYS, AEDECOD)
+
+ADAE <- ADAE |>
+  mutate(TRTEMFL = "Y")
+
+lyt <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("ARM") |>
+  analyze("SEX",
+          show_labels = "visible",
+          afun = a_freq_resp_var_j,
+          extra_args = list(resp_var = "TRTEMFL", riskdiff = FALSE)
+  )
+
+result <- build_table(lyt, df = ADAE, alt_counts_df = ADSL)
+
+result
+}

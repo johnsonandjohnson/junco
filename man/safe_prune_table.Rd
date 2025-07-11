@@ -21,10 +21,10 @@ entire subtree should be removed.}
 \item{stop_depth}{(\code{numeric(1)})\cr the depth after which subtrees should not be checked for pruning.
 Defaults to \code{NA} which indicates pruning should happen at all levels.}
 
-\item{empty_msg}{character(1). The message to place in the table
+\item{empty_msg}{(\code{character})\cr The message to place in the table
 if no rows were left after pruning}
 
-\item{spancols}{logical(1). Should \code{empty_msg} be spanned
+\item{spancols}{(\code{logical})\cr Should \code{empty_msg} be spanned
 across the table's columns (\code{TRUE}) or placed in the
 rows row label (\code{FALSE}). Defaults to \code{FALSE} currently.}
 }
@@ -32,7 +32,7 @@ rows row label (\code{FALSE}). Defaults to \code{FALSE} currently.}
 \code{tt} pruned based on the arguments, or, if
 pruning would remove all rows, a TableTree with the
 same column structure, and one row containing the
-empty message spanning all columns
+empty message spanning all columns.
 }
 \description{
 Safely Prune Table With Empty Table Message If Needed

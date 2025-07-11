@@ -16,6 +16,8 @@ prop_fisher(tbl, alternative)
 \arguments{
 \item{tbl}{(\code{matrix})\cr matrix with two groups in rows and the binary response (\code{TRUE}/\code{FALSE}) in columns.}
 
+\item{alternative}{(\code{character})\cr alternative hypothesis as defined by \code{\link[stats:prop.test]{stats::prop.test()}}}
+
 \item{ary}{(\code{array}, 3 dimensions)\cr array with two groups in rows, the binary response
 (\code{TRUE}/\code{FALSE}) in columns, and the strata in the third dimension.}
 }
@@ -36,7 +38,7 @@ Internally calls \code{\link[stats:mantelhaen.test]{stats::mantelhaen.test()}}.
 
 }}
 \note{
-strata with less than five observations will result in a warning and
+Strata with less than five observations will result in a warning and
 possibly incorrect results; strata with less than two observations are
 automatically discarded.
 }

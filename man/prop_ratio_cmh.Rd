@@ -16,7 +16,7 @@ prop_ratio_cmh(rsp, grp, strata, conf_level = 0.95)
 \item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 }
 \value{
-a list with elements \code{rel_risk_ci} and \code{pval}.
+A list with elements \code{rel_risk_ci} and \code{pval}.
 }
 \description{
 Calculates the relative risk which is defined as the ratio between the

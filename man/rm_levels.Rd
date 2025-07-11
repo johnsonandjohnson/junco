@@ -7,13 +7,13 @@
 rm_levels(excl)
 }
 \arguments{
-\item{excl}{Choose which level(s) to remove}
+\item{excl}{(\code{character})\cr Choose which level(s) to remove}
 }
 \value{
-a function implementing pre-processing split behavior (for use in
+A function implementing pre-processing split behavior (for use in
 \code{make_split_fun(pre = )} which removes the levels in \code{excl} from the data
 before facets are generated.
 }
 \description{
-custom function for removing level inside pre step in make_split_fun.
+Custom function for removing level inside pre step in make_split_fun.
 }

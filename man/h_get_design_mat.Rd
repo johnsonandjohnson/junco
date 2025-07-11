@@ -15,7 +15,7 @@ h_get_design_mat(df, .var)
 The logical matrix with dummy encoding of all factor levels.
 }
 \description{
-Helper Function to Create Logical Design Matrix from Factor Variable
+Helper Function to Create Logical Design Matrix from Factor Variable.
 }
 \examples{
 h_get_design_mat(df = data.frame(a = factor(c("a", "b", "a"))), .var = "a")

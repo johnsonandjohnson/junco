@@ -55,9 +55,13 @@ information on the \code{'auto'} setting.}
 unmodified default behavior. Can be negative.}
 }
 \value{
-The \code{data.frame} with results of pooled analysis for a single visit.
+\itemize{
+\item \code{h_tidy_pool()} returns a \code{data.frame} with results of pooled analysis for a single visit.
+}
 
-A list of statistics extracted from a tidied LS means data frame.
+\itemize{
+\item \code{s_rbmi_lsmeans()} returns a list of statistics extracted from a tidied LS means data frame.
+}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}

@@ -44,23 +44,20 @@
 #'          footer materials where `*` is a positive integer. `TEXT` contains
 #'          the value of the title/footer to be applied.
 #'
-#' @param file (`character(1)`)\cr A path to CSV or xlsx file containing title
+#' @param file (`character`)\cr A path to CSV or xlsx file containing title
 #'   and footer information for one or more outputs. See Details. Ignored if
 #'   `title_df` is specified.
-#' @param input_path (`character(1)`)\cr A path to look for
+#' @param input_path (`character`)\cr A path to look for
 #'   titles.csv/titles.xlsx. Ignored if `file` or `title_df` is specified.
 #' @param title_df (`data.frame`)\cr A data.frame containing titles and footers for
 #'   one or more  outputs. See Details.
-#' @param id character. The identifier for the table of interest.
+#' @param id (`character`)\cr The identifier for the table of interest.
 #'
 #' @export
-#' @seealso Used in all template script
 #' @returns  List object containing: title, subtitles, main_footer, prov_footer
 #'           for the table of interest.  Note: the subtitles and prov_footer are
 #'           currently set to NULL. Suitable for use with [`set_titles()`].
-#'
 # ----
-
 get_titles_from_file <- function(id,
                                  file = .find_titles_file(input_path),
                                  input_path = ".",
@@ -120,19 +117,16 @@ get_titles_from_file <- function(id,
 #' @title Set Output Titles
 #'
 #' @description Retrieves titles and footnotes from the list specified in the titles
-#'              argument and appends them to the table tree specified in the obj argument.
+#'              argument and appends them to the TableTree specified in the obj argument.
 #'
 #'
-#' @param obj The table tree to which the titles and footnotes will be appended.
-#' @param titles The list object containing the titles and footnotes to be appended.
-#' @seealso Used in all template scripts
+#' @param obj (`TableTree`)\cr The TableTree to which the titles and footnotes will be appended.
+#' @param titles (`list`)\cr The list object containing the titles and footnotes to be appended.
 #' @export
 #'
-#' @returns  The table tree object specified in the obj argument, with titles
+#' @returns  The TableTree object specified in the obj argument, with titles
 #'           and footnotes appended.
-#'
 # ----
-
 set_titles <- function(obj, titles) {
   ## add title and footers
   main_title(obj) <- titles$title

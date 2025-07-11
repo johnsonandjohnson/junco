@@ -18,7 +18,7 @@ s_ancova_j(
 )
 }
 \arguments{
-\item{df}{: need to check on how to inherit params from tern::s_ancova}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
 \item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
@@ -48,10 +48,10 @@ with arm. if the interaction is not needed, the default option is \code{NULL}.}
 \item{weights_emmeans}{(\code{string})\cr argument from \code{\link[emmeans:emmeans]{emmeans::emmeans()}}, \code{"counterfactual"} by default.}
 }
 \value{
-returns a named list of 8 statistics (3 extra compared to \code{tern:::s_ancova()}).
+Returns a named list of 8 statistics (3 extra compared to \code{tern:::s_ancova()}).
 }
 \description{
-Extension to tern:::s_ancova, 3 extra statistics are returned
+Extension to tern:::s_ancova, 3 extra statistics are returned:
 \itemize{
 \item \code{lsmean_se}: Marginal mean and estimated SE in the group.
 \item \code{lsmean_ci}: Marginal mean and associated confidence interval in the group.

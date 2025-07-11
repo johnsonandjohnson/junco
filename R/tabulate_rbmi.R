@@ -20,7 +20,8 @@ NULL
 #'   This list includes analysis results, confidence level, hypothesis testing type.
 #' @param visit_name (`string`)\cr single visit level.
 #' @param group_names (`character`)\cr group levels.
-#' @return The `data.frame` with results of pooled analysis for a single visit.
+#' @return
+#' * `h_tidy_pool()` returns a `data.frame` with results of pooled analysis for a single visit.
 #'
 #' @export
 h_tidy_pool <- function(x, visit_name, group_names) {
@@ -141,7 +142,8 @@ tidy.pool <- function(x, visits, ...) {
 #' @param .in_ref_col (`flag`)\cr whether reference column is specified.
 #' @param show_relative (`string`)\cr 'reduction' if (`control - treatment`, default)
 #'   or 'increase' (`treatment - control`) of relative change from baseline?
-#' @return A list of statistics extracted from a tidied LS means data frame.
+#' @return
+#' * `s_rbmi_lsmeans()` returns a list of statistics extracted from a tidied LS means data frame.
 #' @export
 s_rbmi_lsmeans <- function(df, .in_ref_col, show_relative = c("reduction", "increase")) {
   checkmate::assert_flag(.in_ref_col)

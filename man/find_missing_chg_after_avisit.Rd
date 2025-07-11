@@ -14,7 +14,7 @@ A string with either the factor level after which \code{AVISIT} is all missing,
 or \code{NA}.
 }
 \description{
-Helper for Finding AVISIT after which CHG are all Missing
+Helper for Finding AVISIT after which CHG are all Missing.
 }
 \examples{
 df <- data.frame(
