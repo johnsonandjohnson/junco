@@ -162,7 +162,7 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
 #'
 #' @param cl (`cluster object`)\cr Cluster created by [`parallel::makeCluster()`] or `NULL`
 #' @param fun (`functions`)\cr Function to be run
-#' @param x (`object`)\cr Bbject to be looped over
+#' @param x (`object`)\cr Object to be looped over
 #' @param ... Extra arguments passed to `fun`
 #' @return `list` of results of calling `fun` on elements of `x`.
 par_lapply <- function(cl, fun, x, ...) {

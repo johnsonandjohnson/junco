@@ -11,7 +11,7 @@ par_lapply(cl, fun, x, ...)
 
 \item{fun}{(\code{functions})\cr Function to be run}
 
-\item{x}{(\code{object})\cr Bbject to be looped over}
+\item{x}{(\code{object})\cr Object to be looped over}
 
 \item{...}{Extra arguments passed to \code{fun}}
 }
