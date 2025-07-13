@@ -170,4 +170,110 @@ junco_in_rows <- function(..., .list = NULL, .names = NULL, .labels = NULL, .for
 - support unlikely to extend to any `tern` functions
 
 
-- 
+### `junco_get_dflt_formats`
+
+Change default format specification/lookup/combination with `.formats` from list manipulation to a retrieval function and 
+have it accept `.d_precision`
+
+#### Benefits
+
+- Encapsulates other logic present in draft a funs into a callable (and testable) function
+- No requirement of Roche buyin
+
+#### Difficulties
+
+- Will only apply to `junco` functions (and those in other pkgs which depend on junco)
+- Will not apply to afuns which construct rcells with formats embedded instead of using the default formats list approach
+  - not sure if there are any of these left or not
+  - easy to write one and then be confused why our vard machinery isn't kicking in though...
+- No support in `rlistings`
+  - not convinced this is a big deal regarding listings specifically, but currently formatting works the same for evreything that uses `formatters`. A little wary of removing that guranate.
+
+
+### afun wrapper factory
+
+Create a factory that generates wrappers around existing afuns and injects our varying precision
+resolution logic.
+
+
+#### Implementation Sketch
+
+```{R, eval = FALSE}
+
+make_afun_vard <- function(afun) {
+  function(..., .d_precision = 1) { ## possibly other args
+    vrowsect <- afun(...) ## get result with unresolved d formats
+    vrsect_resolve_ds(vrowsect, .d_precision) ## resolve the var precision
+  }
+}
+
+```
+
+#### Benefits
+
+- Usable with any existing afun, including those in tern/rtables
+  - safe to call in situations that don't involve var prec, will be NOOP
+
+#### Difficulties
+
+- Have to call the constructor for every afun we want to use the machinery
+  - Will require existing template changes, or code shuffling
+- Writing `vrsect_resolve_ds` will require interacting with `VerticalRowsSection` objects
+  - Not a big deal with me here, but its an internal-ish part of `rtables` likely new to the team
+  - Might call for exporting (or writing and exporting) accessor methods for interacting with the objects
+- No support in `rlistings`
+  - not convinced this is a big deal regarding listings specifically, but currently formatting works the same for evreything that uses `formatters`. A little wary of removing that guranate.
+
+
+### Just write `junco_resolve_d_formats` and have a/cfuns call it when we want them to
+
+#### Benefits
+
+- Full specificity of behavior, including how `.d_precision` is obtained, for each a/cfun
+- No changes required to anything upstream
+- No changes to afuns we don't feel the need to support varying precision for (most of them IIUC)
+- Least amount of up-front design/development work
+
+#### Difficulties
+
+- Full specificity of behavior, including how `.d_precision` is obtained, for each a/cfun
+- Likely more repetetive code/risk of different behaviors in corner cases regarding any parts left to afuns (not wrapped in `junco_resolve_d_formats`)
+
+## Parameter "Degrees of Freedom" (Param DoF)
+
+I.e., whats the minimum number different things we need to specify to cover all our desired behavior-space.
+
+### Example from history formats and na_str
+
+If you go back far enough, (rtables < 0.5.3, circa 2023 or so), there was no `na_str` argument,
+users couldn't specify behavior for NAs in cell values. This was not enough
+Param DoF to meet users' needs.
+
+#### Super easy, barely an inconvenience
+So all we need is to let the users "say what should happen when formatting NAs", right?
+
+#### Not exactly
+When implementing `na_str` support, I had to figure out the behavior space we needed to support
+
+Key among these were two opposing needs
+
+- the ability to render the entire cell as a particular string, regardless of format, ie count-percent formats as `"-"` (or as commpletely blank) for unobserved levels
+- the ability to still render non-missing elements of a cell while giving the ability to control how missing elements are rendered.
+
+#### So ...
+
+Ultimately, landed on single argument with the following behaviors
+
+- if single and all values are NA, render `na_str` once for the whole cell
+- if single and not all values are NA, render each individual missing-valued elements as `na_str` within surrounding formatted cell
+- if multi-valued (must be length dimension of format), each value element is rendered as the corresponding na_str value within the larger formatted cell.
+
+
+#### Note this doesn't cover the fully optimal behavior-space
+
+- No way to render different elements as different `na_str` values while still having a single replacement string when all elements are missing. 
+
+#### But that was better than
+
+I decided that multiple arguments or a single argument with a more complex "controller" type value weren't worth it for that tiny corner case. 
+
