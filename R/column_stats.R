@@ -118,15 +118,3 @@ calc_N <- function(datvec, statnm, trt, varnm) {
   }
   length(stats::na.omit(datvec))
 }
-
-column_N <- function(df, .var, .spl_context, id = "USUBJID", var_names = c("AVAL", "CHG", "BASE")) {
-  allcolsplvals <- .spl_context[nrow(.spl_context), "cur_col_split_val"][[1]]
-  statnm <- utils::tail(allcolsplvals, 1)
-  varnm <- allcolsplvals[length(allcolsplvals) - 1]
-  datvec <- unique(df[[id]])
-  datpertrt <- split(datvec, df[[.var]]) ## ,var is Treatment
-  in_rows(
-    .list = mapply(calc_N, datvec = datpertrt, trt = names(datpertrt), MoreArgs = list(statnm = statnm, varnm = varnm)),
-    .names = names(datpertrt)
-  )
-}

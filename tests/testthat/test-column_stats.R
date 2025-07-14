@@ -193,25 +193,6 @@ test_that("column_stats handles iec roundmethod correctly", {
   expect_equal(result_SAS, "25.35")
 })
 
-test_that("column_N function works correctly", {
-  # Create sample data
-  df <- data.frame(
-    TRT = c("Drug A", "Drug A", "Drug B", "Drug B", "Drug B"),
-    USUBJID = c("001", "002", "003", "004", "004"), # Note 004 is duplicated
-    AVAL = c(10, 20, 30, 40, 50)
-  )
-
-  # Create context for AVAL N
-  ctx <- mk_context(c("AVAL", "N"))
-
-  # Call column_N
-  rows <- suppressWarnings(column_N(df, "TRT", ctx))
-
-  # Should have counts of subjects by TRT group
-  expect_equal(as.numeric(rows[["Drug A"]]), 2) # 2 unique subjects
-  expect_equal(as.numeric(rows[["Drug B"]]), 2) # 2 unique subjects (one duplicate)
-})
-
 test_that("calc_N returns NULL for non-AVAL variables", {
   result <- calc_N(datvec = c(1, 2, 3), statnm = "N", varnm = "CHG")
   expect_null(result)
