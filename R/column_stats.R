@@ -1,33 +1,3 @@
-postfun_eq5d <- function(ret, spl, fulldf, .spl_context) {
-  all_expr <- expression(TRUE)
-  colset <- .spl_context[nrow(.spl_context), "value"][[1]]
-  if (colset == "AVAL") {
-    ret <- make_split_result(
-      values = c(N = "N", mean = "Mean", SD = "SD", Med = "Med", Min = "Min", Max = "Max"),
-      labels = c(N = "N", mean = "Mean", SD = "SD", Med = "Med", Min = "Min", Max = "Max"),
-      datasplit = list(N = fulldf, mean = fulldf, SD = fulldf, Med = fulldf, Min = fulldf, Max = fulldf),
-      subset_exprs = list(all_expr, all_expr, all_expr, all_expr, all_expr, all_expr)
-    )
-  } else if (colset == "BASE") {
-    ret <- make_split_result(
-      values = c(mean_sd = "mean_sd"),
-      labels = c(mean_sd = "Base Mean (SD)"),
-      datasplit = list(mean_sd = fulldf),
-      subset_exprs = list(all_expr)
-    )
-  } else if (colset == "CHG") {
-    ret <- make_split_result(
-      values = c(N = "N", mean = "Mean", SE = "SE", SD = "SD", Med = "Med", Min = "Min", Max = "Max"),
-      labels = c(N = "N", mean = "Mean", SE = "SE", SD = "SD", Med = "Med", Min = "Min", Max = "Max"),
-      datasplit = list(N = fulldf, mean = fulldf, SE = fulldf, SD = fulldf, Med = fulldf, Min = fulldf, Max = fulldf),
-      subset_exprs = list(all_expr, all_expr, all_expr, all_expr, all_expr, all_expr, all_expr)
-    )
-  } else {
-    stop("something bad happened :(")
-  }
-  ret
-}
-
 calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, roundmethod = c("sas", "iec"), exclude_visits,
                            var_names = c("AVAL", "CHG", "BASE")) {
   roundmethod <- match.arg(roundmethod)

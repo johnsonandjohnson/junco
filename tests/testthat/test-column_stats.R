@@ -212,59 +212,6 @@ test_that("column_N function works correctly", {
   expect_equal(as.numeric(rows[["Drug B"]]), 2) # 2 unique subjects (one duplicate)
 })
 
-test_that("postfun_eq5d works correctly", {
-  # Create a basic return value and context
-  ret <- list()
-  fulldf <- data.frame(AVAL = c(10, 20, 30))
-
-  # Create spl_context for AVAL
-  spl_context <- data.frame(
-    value = I(list("AVAL")),
-    stringsAsFactors = FALSE
-  )
-
-  # Call postfun_eq5d
-  result <- postfun_eq5d(ret, NULL, fulldf, spl_context)
-
-  # Check structure of result
-  expect_type(result, "list")
-  expect_equal(names(result$values), c("N", "Mean", "SD", "Med", "Min", "Max"))
-  expect_equal(length(result$datasplit), 6)
-
-  # Test for CHG
-  spl_context$value <- list("CHG")
-  result_chg <- postfun_eq5d(ret, NULL, fulldf, spl_context)
-  expect_equal(
-    names(result_chg$values),
-    c("N", "Mean", "SE", "SD", "Med", "Min", "Max")
-  )
-  expect_equal(length(result_chg$datasplit), 7)
-
-  # Test for BASE
-  spl_context$value <- list("BASE")
-  result_base <- postfun_eq5d(ret, NULL, fulldf, spl_context)
-  expect_equal(names(result_base$values), c("mean_sd"))
-  expect_equal(length(result_base$datasplit), 1)
-})
-
-test_that("postfun_eq5d handles error cases", {
-  # Create a basic return value and context
-  ret <- list()
-  fulldf <- data.frame(AVAL = c(10, 20, 30))
-
-  # Create spl_context with invalid value
-  spl_context <- data.frame(
-    value = I(list("INVALID")),
-    stringsAsFactors = FALSE
-  )
-
-  # Expect error for postfun_eq5d
-  expect_error(
-    postfun_eq5d(ret, NULL, fulldf, spl_context),
-    "something bad happened"
-  )
-})
-
 test_that("calc_N returns NULL for non-AVAL variables", {
   result <- calc_N(datvec = c(1, 2, 3), statnm = "N", varnm = "CHG")
   expect_null(result)
