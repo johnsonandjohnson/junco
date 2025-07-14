@@ -30,14 +30,14 @@ reference:
     - s_summarize_ancova_j
     - column_stats
     - a_freq_combos_j
-    - a_summarize_ex_j 
+    - a_summarize_ex_j
     - a_freq_j
     - a_freq_subcol_j
     - a_proportion_ci_factor
     - a_proportion_ci_logical
     - a_summarize_aval_chg_diff_j
     - rbmi_analyse
-    - analyze_values 
+    - analyze_values
     - rbmi_ancova
     - rbmi_ancova_single
     - build_formula
@@ -92,7 +92,6 @@ reference:
   - title: junco Formatting Functions
     desc: The following functions are the junco formatting functions used to create common table layouts.
     contents:
-    - jj_uc_map
     - jjcsformat_xx
     - jjcs_num_formats
     - jjcsformat_count_denom_fraction
@@ -121,7 +120,7 @@ reference:
     - make_combo_splitfun
     - real_add_overall_facet
 
-  - title: junco Functions For titles/footnotes and generating .rtfs 
+  - title: junco Functions For titles/footnotes and generating .rtfs
     desc: The following utility functions help to add titles/footnotes and generate the .rtf files.
     contents:
     - def_colwidths

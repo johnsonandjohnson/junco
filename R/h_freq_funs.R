@@ -1,8 +1,3 @@
-#' Non-blank Sentinel
-#'
-#' @keywords internal
-non_blank_sentinel <- structure("", class = "non_blank_sentinel")
-
 #' Get Control Subset
 #'
 #' Retrieves a subset of the DataFrame based on treatment variable and control group.
@@ -18,16 +13,6 @@ get_ctrl_subset <- function(df, trt_var, ctrl_grp) {
 
 
 # sfunction to perform counting of records or subjects on an incoming df and .alt_df
-
-#' Null Function
-#'
-#' A function that returns NULL.
-#'
-#' @return NULL
-#' @keywords internal
-null_fn <- function(...) {
-  NULL
-}
 
 
 #' Create Alternative Data Frame
