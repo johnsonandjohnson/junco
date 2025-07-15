@@ -214,24 +214,13 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #'
 #'
 #' @examples
-#' ADSL <- data.frame(
-#'   USUBJID = c(
-#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-#'   ),
-#'   TRT01P = c(
-#'     "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
-#'     "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
-#'   ),
-#'   FASFL = c("Y", "Y", "Y", "Y", "N", "Y", "Y", "Y", "Y", "Y"),
-#'   SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
-#'   PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
-#' )
+#' if (require("pharmaverseadamjnj")) {
+#' library(dplyr)
 #'
-#' ADSL <- ADSL |>
-#'   dplyr::mutate(TRT01P = as.factor(TRT01P)) |>
-#'   dplyr::mutate(SAFFL = factor(SAFFL, c("Y", "N"))) |>
-#'   dplyr::mutate(PKFL = factor(PKFL, c("Y", "N")))
+#' ADSL <- pharmaverseadamjnj::adsl |>
+#'   select(USUBJID, TRT01P, FASFL, SAFFL) |>
+#'   mutate(SAFFL = factor("N", c("Y", "N"))) |>
+#'   mutate(PKFL = factor("N", c("Y", "N")))
 #'
 #' lyt <- basic_table() |>
 #'   split_cols_by("TRT01P") |>
@@ -284,6 +273,7 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #' )
 #'
 #' result
+#' }
 #' @rdname bspt_pruner
 #' @returns  Function that can be utilized as pruning function in prune_table.
 #'
