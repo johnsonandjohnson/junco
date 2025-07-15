@@ -734,7 +734,7 @@ h_a_freq_prepinrows <- function(
 h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, colid) {
   ### this is the core code for subsetting to appropriate combo level
   if (!is.null(flag_var)) {
-    df <- df[df[[flag_var]] == "Y", ]
+    df <- df[df[[flag_var]] == "Y" & !is.na(df[[flag_var]]), ]
   }
 
   # get the string related to combosdf text from colid it is the last part of the column id after the .  eg 'Active
