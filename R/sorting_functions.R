@@ -22,6 +22,7 @@
 #' @returns a function which can be used as a score function (scorefun in `sort_at_path`).
 # @examples #result <- sort_at_path(result, c('root', 'AEBODSYS'), scorefun = jj_complex_scorefun())
 #' @examples
+#' if (require("pharmaverseadamjnj")) {
 #' library(dplyr)
 #'
 #' ADAE <- pharmaverseadamjnj::adae |>
@@ -116,6 +117,7 @@
 #' )
 #'
 #' result
+#' }
 #' @rdname complex_scoring_function
 #' @aliases jj_complex_scorefun
 jj_complex_scorefun <- function(
