@@ -30,36 +30,23 @@
 #' @returns A function which can be used as a score function (scorefun in `sort_at_path`).
 # @examples #result <- sort_at_path(result, c('root', 'AEBODSYS'), scorefun = jj_complex_scorefun())
 #' @examples
-#' ADAE <- data.frame(
-#'   USUBJID = c(
-#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-#'   ),
-#'   AEBODSYS = c(
-#'     "SOC 1", "SOC 2", "SOC 1", "SOC 2", "SOC 2",
-#'     "SOC 2", "SOC 2", "SOC 1", "SOC 2", "SOC 1"
-#'   ),
-#'   AEDECOD = c(
-#'     "Coded Term 2", "Coded Term 1", "Coded Term 3", "Coded Term 4",
-#'     "Coded Term 4", "Coded Term 4", "Coded Term 5", "Coded Term 3",
-#'     "Coded Term 1", "Coded Term 2"
-#'   ),
-#'   TRT01A = c(
-#'     "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
-#'     "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
-#'   ),
-#'   TRTEMFL = c("Y", "Y", "N", "Y", "Y", "Y", "Y", "N", "Y", "Y")
-#' )
+#' library(dplyr)
 #'
-#' ADAE <- ADAE |>
-#'   dplyr::mutate(TRT01A = as.factor(TRT01A))
+#' ADAE <- pharmaverseadamjnj::adae |>
+#'   select(USUBJID, AEBODSYS, AEDECOD, TRT01A, TRTEMFL) |>
+#'   filter(AEBODSYS %in% c("Cardiac disorders", "Nervous system disorders")) |>
 #'
-#' ADAE$colspan_trt <- factor(ifelse(ADAE$TRT01A == "Placebo", " ", "Active Study Agent"),
-#'   levels = c("Active Study Agent", " ")
-#' )
+#'   filter(AEDECOD %in% c(
+#'     "DIZZINESS", "SYNCOPE", "SINUS BRADYCARDIA", "PALPITATIONS"
+#'   )) |>
 #'
-#' ADAE$rrisk_header <- "Risk Difference (%) (95% CI)"
-#' ADAE$rrisk_label <- paste(ADAE$TRT01A, paste("vs", "Placebo"))
+#'   mutate(colspan_trt = factor(
+#'     if_else(TRT01A == "Placebo", " ", "Active Study Agent"),
+#'     levels = c("Active Study Agent", " ")
+#'   )) |>
+#'
+#'   mutate(rrisk_header = "Risk Difference (%) (95% CI)") |>
+#'   mutate(rrisk_label = paste(TRT01A, paste("vs", "Placebo")))
 #'
 #' colspan_trt_map <- create_colspan_map(ADAE,
 #'   non_active_grp = "Placebo",
