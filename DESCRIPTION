@@ -69,6 +69,7 @@ Suggests:
     parallel,
     readxl,
     pharmaverseadam,
-    rlang
+    rlang,
+    pharmaverseadamjnj
 VignetteBuilder: knitr
 Config/testthat/edition: 3
