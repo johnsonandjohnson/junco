@@ -72,6 +72,7 @@ safe_prune_table <- function(
 #'
 #' ADSL <- pharmaverseadamjnj::adsl |>
 #'   select(USUBJID, TRT01P, FASFL, SAFFL) |>
+#'   mutate(SAFFL = "N") |>
 #'   mutate(PKFL = "N")
 #'
 #' lyt <- basic_table() |>
