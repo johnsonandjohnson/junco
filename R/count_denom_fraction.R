@@ -22,35 +22,16 @@
 #' @param .format      (`character`)\cr Format for the count/denominator/fraction output.
 #' @param ...          Additional arguments passed to the function.
 #' @examples
-#'
+#' if (require("pharmaverseadamjnj")) {
 #' library(dplyr)
 #'
-#' ADAE <- data.frame(
-#'   USUBJID = c(
-#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-#'   ),
-#'   SEX_DECODE = c(
-#'     "Female", "Female", "Male", "Female", "Male",
-#'     "Female", "Male", "Female", "Male", "Female"
-#'   ),
-#'   TRT01A = c(
-#'     "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
-#'     "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
-#'   ),
-#'   TRTEMFL = c("Y", "Y", "N", "Y", "Y", "Y", "Y", "N", "Y", "Y")
-#' )
-#'
-#' ADAE <- ADAE |>
-#'   mutate(
-#'     TRT01A = as.factor(TRT01A),
-#'     SEX_DECODE = as.factor(SEX_DECODE)
-#'   )
+#' ADAE <- pharmaverseadamjnj::adae |>
+#'   select(USUBJID, SEX, TRT01A, TRTEMFL)
 #'
 #' lyt <- basic_table() |>
 #'   split_cols_by("TRT01A") |>
 #'   analyze(
-#'     vars = "SEX_DECODE",
+#'     vars = "SEX",
 #'     var_labels = "Sex, n/Ns (%)",
 #'     show_labels = "visible",
 #'     afun = response_by_var,
@@ -61,6 +42,7 @@
 #' result <- build_table(lyt, ADAE)
 #'
 #' result
+#' }
 #' @return a `RowsVerticalSection` for use by the internal tabulation machinery of `rtables`
 #' @export
 response_by_var <- function(
