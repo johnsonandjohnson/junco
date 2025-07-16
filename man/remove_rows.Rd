@@ -20,30 +20,16 @@ This function will remove all rows of a table based on the row text
 provided by the user.
 }
 \examples{
-ADSL <- data.frame(
-  USUBJID = c(
-    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-  ),
-  TRT01P = c(
-    "ARMA", "ARMB", "ARMA", "ARMB", "ARMB", "Placebo",
-    "Placebo", "Placebo", "ARMA", "ARMB"
-  ),
-  Category = c(
-    "Cat 1", "Cat 2", "Cat 1", "Unknown", "Cat 2",
-    "Cat 1", "Unknown", "Cat 1", "Cat 2", "Cat 1"
-  ),
-  SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
-  PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
-)
+if (require("pharmaverseadamjnj")) {
+library(dplyr)
 
-ADSL <- ADSL |>
-  dplyr::mutate(TRT01P = as.factor(TRT01P))
+ADSL <- pharmaverseadamjnj::adsl |>
+  select(USUBJID, TRT01P, AGEGR1)
 
 lyt <- basic_table() |>
   split_cols_by("TRT01P") |>
   analyze(
-    "Category",
+    "AGEGR1",
     afun = a_freq_j,
     extra_args = list(.stats = "count_unique_fraction")
   )
@@ -52,7 +38,11 @@ result <- build_table(lyt, ADSL)
 
 result
 
-result <- prune_table(result, prune_func = remove_rows(removerowtext = "Unknown"))
+result <- prune_table(
+  result,
+  prune_func = remove_rows(removerowtext = ">=18 to <65")
+)
 
 result
+}
 }

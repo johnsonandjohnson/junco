@@ -125,42 +125,20 @@ In the difference column, the 2-sample t-test will be used.
 See Description
 }
 \examples{
-
+if (require("pharmaverseadamjnj")) {
 library(dplyr)
 
-ADEG <- data.frame(
-  STUDYID = c(
-    "DUMMY", "DUMMY", "DUMMY", "DUMMY", "DUMMY",
-    "DUMMY", "DUMMY", "DUMMY", "DUMMY", "DUMMY"
-  ),
-  USUBJID = c(
-    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-  ),
-  TRT01A = c(
-    "ARMA", "ARMA", "ARMA", "ARMA", "ARMA", "Placebo",
-    "Placebo", "Placebo", "ARMA", "ARMA"
-  ),
-  PARAM = c("BP", "BP", "BP", "BP", "BP", "BP", "BP", "BP", "BP", "BP"),
-  AVISIT = c(
-    "Visit 1", "Visit 1", "Visit 1", "Visit 1", "Visit 1",
-    "Visit 1", "Visit 1", "Visit 1", "Visit 1", "Visit 1"
-  ),
-  AVAL = c(56, 78, 67, 87, 88, 93, 39, 87, 65, 55),
-  CHG = c(2, 3, -1, 9, -2, 0, 6, -2, 5, 2)
-)
+ADEG <- pharmaverseadamjnj::adeg |>
+  select(STUDYID, USUBJID, TRT01A, PARAM, AVISIT, AVAL, CHG) |>
+  filter(PARAM == "ECG Mean Heart Rate (beats/min)") |>
 
-ADEG <- ADEG |>
-  mutate(
-    TRT01A = as.factor(TRT01A),
-    STUDYID = as.factor(STUDYID)
-  )
+  mutate(colspan_trt = factor(
+    if_else(TRT01A == "Placebo", " ", "Active Study Agent"),
+    levels = c("Active Study Agent", " ")
+  )) |>
 
-ADEG$colspan_trt <- factor(ifelse(ADEG$TRT01A == "Placebo", " ", "Active Study Agent"),
-  levels = c("Active Study Agent", " ")
-)
-ADEG$rrisk_header <- "Risk Difference (\%) (95\% CI)"
-ADEG$rrisk_label <- paste(ADEG$TRT01A, paste("vs", "Placebo"))
+  mutate(rrisk_header = "Risk Difference (\%) (95\% CI)") |>
+  mutate(rrisk_label = paste(TRT01A, paste("vs", "Placebo")))
 
 colspan_trt_map <- create_colspan_map(ADEG,
   non_active_grp = "Placebo",
@@ -213,6 +191,7 @@ lyt <- basic_table() |>
 result <- build_table(lyt, ADEG)
 
 result
+}
 }
 \seealso{
 s_summarize_ancova_j

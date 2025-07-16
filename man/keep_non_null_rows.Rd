@@ -18,25 +18,11 @@ columns are NULL, as then the row should not be kept. To be utilized as a
 row_condition in function tern::keep_rows
 }
 \examples{
-
+if (require("pharmaverseadamjnj")) {
 library(dplyr)
 
-ADSL <- data.frame(
-  USUBJID = c(
-    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-  ),
-  TRT01P = c(
-    "ARMA", "ARMB", "ARMA", "ARMB", "ARMB", "Placebo",
-    "Placebo", "Placebo", "ARMA", "ARMB"
-  ),
-  AGE = c(34, 56, 75, 81, 45, 75, 48, 19, 32, 31),
-  SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
-  PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
-)
-
-ADSL <- ADSL |>
-  mutate(TRT01P = as.factor(TRT01P))
+ADSL <- pharmaverseadamjnj::adsl |>
+  select(USUBJID, TRT01P, AGE)
 
 create_blank_line <- function(x) {
   list(
@@ -56,4 +42,5 @@ result
 result <- prune_table(result, prune_func = tern::keep_rows(keep_non_null_rows))
 
 result
+}
 }

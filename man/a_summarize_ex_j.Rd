@@ -112,29 +112,19 @@ This is designed to be used as an analysis (afun in \code{analyze}) function.
 
 }}
 \examples{
+if (require("pharmaverseadamjnj")) {
 library(dplyr)
-ADEX <- ex_adsl \%>\% select(USUBJID, ARM, TRTSDTM, EOSSTT, EOSDY)
 
-trtvar <- "ARM"
-ctrl_grp <- "B: Placebo"
-cutoffd <- as.Date("2023-09-24")
+ADEX <- pharmaverseadamjnj::adex |>
+  select(USUBJID, TRT01A, AVAL) |>
 
-ADEX <- ADEX |>
-  create_colspan_var(
-    non_active_grp          = ctrl_grp,
-    non_active_grp_span_lbl = " ",
-    active_grp_span_lbl     = "Active Study Agent",
-    colspan_var             = "colspan_trt",
-    trt_var                 = trtvar
-  ) |>
-  mutate(
-    diff_header = "Difference in Means (95\% CI)",
-    diff_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
-    TRTDURY = case_when(
-      !is.na(EOSDY) ~ EOSDY,
-      TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
-    )
-  )
+  mutate(colspan_trt = factor(
+    if_else(TRT01A == "Placebo", " ", "Active Study Agent"),
+    levels = c("Active Study Agent", " ")
+  )) |>
+
+  mutate(diff_header = "Difference in Means (95\% CI)") |>
+  mutate(diff_label = paste(TRT01A, paste("vs", "Placebo")))
 
 colspan_trt_map <- create_colspan_map(ADEX,
   non_active_grp = ctrl_grp,
@@ -173,4 +163,5 @@ lyt <- basic_table() |>
 
 result <- build_table(lyt, ADEX, alt_counts_df = ADEX)
 result
+}
 }
