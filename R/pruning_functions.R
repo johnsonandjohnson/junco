@@ -67,22 +67,13 @@ safe_prune_table <- function(
 #'
 #'
 #' @examples
+#' if (require("pharmaverseadamjnj")) {
+#' library(dplyr)
 #'
-#' ADSL <- data.frame(
-#'   USUBJID = c(
-#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-#'   ),
-#'   TRT01P = factor(
-#'     c(
-#'       "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
-#'       "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
-#'     )
-#'   ),
-#'   FASFL = c("Y", "Y", "Y", "Y", "N", "Y", "Y", "Y", "Y", "Y"),
-#'   SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
-#'   PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
-#' )
+#' ADSL <- pharmaverseadamjnj::adsl |>
+#'   select(USUBJID, TRT01P, FASFL, SAFFL) |>
+#'   mutate(SAFFL = "N") |>
+#'   mutate(PKFL = "N")
 #'
 #' lyt <- basic_table() |>
 #'   split_cols_by("TRT01P") |>
@@ -116,7 +107,7 @@ safe_prune_table <- function(
 #' )
 #'
 #' result
-#'
+#' }
 #' @rdname count_pruner
 #' @returns  function that can be utilized as pruning function in prune_table
 #'
@@ -216,24 +207,13 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #'
 #'
 #' @examples
-#' ADSL <- data.frame(
-#'   USUBJID = c(
-#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-#'   ),
-#'   TRT01P = c(
-#'     "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
-#'     "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
-#'   ),
-#'   FASFL = c("Y", "Y", "Y", "Y", "N", "Y", "Y", "Y", "Y", "Y"),
-#'   SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
-#'   PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
-#' )
+#' if (require("pharmaverseadamjnj")) {
+#' library(dplyr)
 #'
-#' ADSL <- ADSL |>
-#'   dplyr::mutate(TRT01P = as.factor(TRT01P)) |>
-#'   dplyr::mutate(SAFFL = factor(SAFFL, c("Y", "N"))) |>
-#'   dplyr::mutate(PKFL = factor(PKFL, c("Y", "N")))
+#' ADSL <- pharmaverseadamjnj::adsl |>
+#'   select(USUBJID, TRT01P, FASFL, SAFFL) |>
+#'   mutate(SAFFL = factor("N", c("Y", "N"))) |>
+#'   mutate(PKFL = factor("N", c("Y", "N")))
 #'
 #' lyt <- basic_table() |>
 #'   split_cols_by("TRT01P") |>
@@ -286,6 +266,7 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #' )
 #'
 #' result
+#' }
 #' @rdname bspt_pruner
 #' @returns  function that can be utilized as pruning function in prune_table
 #'
@@ -469,30 +450,16 @@ lst_slicer <- function(lst, ind, type) {
 #'
 #'
 #' @examples
-#' ADSL <- data.frame(
-#'   USUBJID = c(
-#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-#'   ),
-#'   TRT01P = c(
-#'     "ARMA", "ARMB", "ARMA", "ARMB", "ARMB", "Placebo",
-#'     "Placebo", "Placebo", "ARMA", "ARMB"
-#'   ),
-#'   Category = c(
-#'     "Cat 1", "Cat 2", "Cat 1", "Unknown", "Cat 2",
-#'     "Cat 1", "Unknown", "Cat 1", "Cat 2", "Cat 1"
-#'   ),
-#'   SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
-#'   PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
-#' )
+#' if (require("pharmaverseadamjnj")) {
+#' library(dplyr)
 #'
-#' ADSL <- ADSL |>
-#'   dplyr::mutate(TRT01P = as.factor(TRT01P))
+#' ADSL <- pharmaverseadamjnj::adsl |>
+#'   select(USUBJID, TRT01P, AGEGR1)
 #'
 #' lyt <- basic_table() |>
 #'   split_cols_by("TRT01P") |>
 #'   analyze(
-#'     "Category",
+#'     "AGEGR1",
 #'     afun = a_freq_j,
 #'     extra_args = list(.stats = "count_unique_fraction")
 #'   )
@@ -501,9 +468,13 @@ lst_slicer <- function(lst, ind, type) {
 #'
 #' result
 #'
-#' result <- prune_table(result, prune_func = remove_rows(removerowtext = "Unknown"))
+#' result <- prune_table(
+#'   result,
+#'   prune_func = remove_rows(removerowtext = ">=18 to <65")
+#' )
 #'
 #' result
+#' }
 #' @aliases remove_rows
 #' @returns function that can be utilized as pruning function in prune_table
 #'
@@ -542,25 +513,11 @@ remove_rows <- function(removerowtext = NULL, reg_expr = FALSE) {
 #'
 #'
 #' @examples
-#'
+#' if (require("pharmaverseadamjnj")) {
 #' library(dplyr)
 #'
-#' ADSL <- data.frame(
-#'   USUBJID = c(
-#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-#'   ),
-#'   TRT01P = c(
-#'     "ARMA", "ARMB", "ARMA", "ARMB", "ARMB", "Placebo",
-#'     "Placebo", "Placebo", "ARMA", "ARMB"
-#'   ),
-#'   AGE = c(34, 56, 75, 81, 45, 75, 48, 19, 32, 31),
-#'   SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
-#'   PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
-#' )
-#'
-#' ADSL <- ADSL |>
-#'   mutate(TRT01P = as.factor(TRT01P))
+#' ADSL <- pharmaverseadamjnj::adsl |>
+#'   select(USUBJID, TRT01P, AGE)
 #'
 #' create_blank_line <- function(x) {
 #'   list(
@@ -580,6 +537,7 @@ remove_rows <- function(removerowtext = NULL, reg_expr = FALSE) {
 #' result <- prune_table(result, prune_func = tern::keep_rows(keep_non_null_rows))
 #'
 #' result
+#' }
 #' @rdname keep_non_null_rows
 #' @returns a function that can be utilized as a row_condition in the tern::keep_rows function
 #'
