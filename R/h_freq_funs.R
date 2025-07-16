@@ -12,16 +12,6 @@ get_ctrl_subset <- function(df, trt_var, ctrl_grp) {
 }
 
 
-# sfunction to perform counting of records or subjects on an incoming df and .alt_df
-#' Null Function
-#'
-#' A function that returns NULL.
-#'
-#' @return NULL
-#' @keywords internal
-null_fn <- function(...) {
-  NULL
-}
 
 
 #' Create Alternative Data Frame
