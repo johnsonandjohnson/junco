@@ -20,7 +20,7 @@ roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions
 
 \item{na_str_dflt}{(\code{character})\cr Character to represent NA value}
 
-\item{replace_na_dflt}{(\code{logical})\cr Should an \code{na_string} of "NA" within
+\item{replace_na_dflt}{(\code{logical(1)})\cr Should an \code{na_string} of "NA" within
 the formatters framework be overridden by \code{na_str_default}? Defaults to
 \code{TRUE}, as a way to have a different default na string behavior from the
 base \code{formatters} framework.}

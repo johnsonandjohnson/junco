@@ -44,14 +44,14 @@
 #'          footer materials where `*` is a positive integer. `TEXT` contains
 #'          the value of the title/footer to be applied.
 #'
-#' @param file (`character`)\cr A path to CSV or xlsx file containing title
+#' @param file (`character(1)`)\cr A path to CSV or xlsx file containing title
 #'   and footer information for one or more outputs. See Details. Ignored if
 #'   `title_df` is specified.
-#' @param input_path (`character`)\cr A path to look for
+#' @param input_path (`character(1)`)\cr A path to look for
 #'   titles.csv/titles.xlsx. Ignored if `file` or `title_df` is specified.
 #' @param title_df (`data.frame`)\cr A data.frame containing titles and footers for
 #'   one or more  outputs. See Details.
-#' @param id (`character`)\cr The identifier for the table of interest.
+#' @param id (`character(1)`)\cr The identifier for the table of interest.
 #'
 #' @export
 #' @returns  List object containing: title, subtitles, main_footer, prov_footer

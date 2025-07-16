@@ -4,10 +4,10 @@
 #'
 #' @inheritParams rtables::prune_table
 #'
-#' @param empty_msg (`character`)\cr The message to place in the table
+#' @param empty_msg (`character(1)`)\cr The message to place in the table
 #' if no rows were left after pruning
 #'
-#' @param spancols (`logical`)\cr Should `empty_msg` be spanned
+#' @param spancols (`logical(1)`)\cr Should `empty_msg` be spanned
 #' across the table's columns (`TRUE`) or placed in the
 #' rows row label (`FALSE`). Defaults to `FALSE` currently.
 #'

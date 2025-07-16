@@ -147,7 +147,7 @@ See \code{?tern::s_proportion_diff} for details.}
 \item{weights_method}{Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr}
 
 \item{label}{(\code{string})\cr
-When \code{val} is a single \code{string},
+When \code{val} has length 1,
 the row label to be shown on the output can be specified using this argument.\cr
 When \code{val} is a \verb{character vector}, the \code{label_map} argument can be specified
 to control the row-labels.}

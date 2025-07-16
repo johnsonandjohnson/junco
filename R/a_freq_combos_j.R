@@ -167,7 +167,7 @@ a_freq_combos_j <- function(
   alt_df <- res_dataprep$alt_df
   parentdf <- res_dataprep$parentdf
   new_denomdf <- res_dataprep$new_denomdf
-  .stats <- .stats
+  .stats <- res_dataprep$.stats
 
   ## colid can be used to figure out if we're in the combo column or not
   colid <- .spl_context$cur_col_id[[1]]

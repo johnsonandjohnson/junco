@@ -8,7 +8,7 @@
 #'   * `iec`: the underlying rounding method is `round`
 #'
 #' @param na_str_dflt (`character`)\cr Character to represent NA value
-#' @param replace_na_dflt (`logical`)\cr Should an `na_string` of "NA" within
+#' @param replace_na_dflt (`logical(1)`)\cr Should an `na_string` of "NA" within
 #'    the formatters framework be overridden by `na_str_default`? Defaults to
 #'    `TRUE`, as a way to have a different default na string behavior from the
 #'    base `formatters` framework.
@@ -132,7 +132,7 @@ jjcsformat_xx <- jjcsformat_xx_SAS
 #'
 #' @inheritParams format_xx_fct
 #' @param x (`numeric vector`)\cr Vector with elements `num` and `fraction` or `num`, `denom` and `fraction`.
-#' @param d (`numeric`)\cr Number of digits to round fraction to (default = 1)
+#' @param d (`numeric(1)`)\cr Number of digits to round fraction to (default = 1)
 #' @param ... Additional arguments passed to other methods.
 #' @return A string in the format `count / denom (ratio percent)`. If `count`
 #' is 0, the format is `0`. If fraction is >0.99, the format is

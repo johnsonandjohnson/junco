@@ -11,11 +11,11 @@ inches_to_spaces(ins, fontspec, raw = FALSE, tol = sqrt(.Machine$double.eps))
 
 \item{fontspec}{(\code{font_spec})\cr The font specification to use.}
 
-\item{raw}{(\code{logical})\cr Should the answer be returned unrounded
+\item{raw}{(\code{logical(1)})\cr Should the answer be returned unrounded
 (\code{TRUE}), or rounded to the nearest reasonable value (\code{FALSE},
 the default).}
 
-\item{tol}{(\code{numeric})\cr The numeric tolerance. Values
+\item{tol}{(\code{numeric(1)})\cr The numeric tolerance. Values
 between an integer \code{n}, and \code{n+tol} will be returned
 as \code{n}, rather than \code{n+1}, if \code{raw == FALSE}. Ignored
 when \code{raw} is \code{TRUE}.}

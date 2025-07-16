@@ -248,7 +248,6 @@ NULL
 #'   \item person_years: Total person-years of follow-up
 #'   \item eair: Exposure-adjusted incidence rate per 100 person-years
 #'   \item eair_diff: Risk difference in EAIR (if diff=TRUE and inriskdiffcol=TRUE)
-#'   \item eair_diff_ci: Confidence interval for the risk difference (if diff=TRUE and inriskdiffcol=TRUE)
 #' }.\cr
 #' The list of available statistics (core columns) can also be viewed by running `junco_get_stats("a_eair100_j")`
 #'

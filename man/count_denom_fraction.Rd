@@ -9,7 +9,7 @@ jjcsformat_count_denom_fraction(x, d = 1, roundmethod = c("sas", "iec"), ...)
 \arguments{
 \item{x}{(\verb{numeric vector})\cr Vector with elements \code{num} and \code{fraction} or \code{num}, \code{denom} and \code{fraction}.}
 
-\item{d}{(\code{numeric})\cr Number of digits to round fraction to (default = 1)}
+\item{d}{(\code{numeric(1)})\cr Number of digits to round fraction to (default = 1)}
 
 \item{roundmethod}{(\code{string})\cr choice of rounding methods. Options are:
 \itemize{

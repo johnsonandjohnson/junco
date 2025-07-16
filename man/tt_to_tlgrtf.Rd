@@ -32,7 +32,7 @@ tt_to_tlgrtf(
 \arguments{
 \item{tt}{(\code{TableTree})\cr TableTree object to convert to RTF}
 
-\item{file}{(\code{character})\cr File to create, including path, but excluding
+\item{file}{(\code{character(1)})\cr File to create, including path, but excluding
 .rtf extension.}
 
 \item{orientation}{(\code{character})\cr Orientation of the output ("portrait" or "landscape")}
@@ -70,10 +70,10 @@ all the associated columns don't fit on a single page.}
 
 \item{markup_df}{(\code{data.frame})\cr Data frame containing markup information}
 
-\item{combined_rtf}{(\code{logical})\cr In the case where the result is broken up into multiple
+\item{combined_rtf}{(\code{logical(1)})\cr In the case where the result is broken up into multiple
 parts due to width, should a combined rtf file also be created. Defaults to \code{FALSE}.}
 
-\item{one_table}{(\code{logical})\cr If \code{tt} is a (non-\code{MatrixPrintForm}) list,
+\item{one_table}{(\code{logical(1)})\cr If \code{tt} is a (non-\code{MatrixPrintForm}) list,
 should the parts be added to the rtf within a single table (\code{TRUE}, the
 default) or as separate tables. End users will not generally need to set this.}
 

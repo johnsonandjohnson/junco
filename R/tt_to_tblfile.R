@@ -224,7 +224,7 @@ get_ncol <- function(tt) {
 #' This function aids in converting the rtables TableTree into the desired .rtf file.
 #'
 #' @param tt (`TableTree`)\cr TableTree object to convert to RTF
-#' @param file (`character`)\cr File to create, including path, but excluding
+#' @param file (`character(1)`)\cr File to create, including path, but excluding
 #' .rtf extension.
 #' @param orientation (`character`)\cr Orientation of the output ("portrait" or "landscape")
 #' @param colwidths (`numeric` vector)\cr Column widths for the table
@@ -243,9 +243,9 @@ get_ncol <- function(tt) {
 #' @param nosplitin (`list`)\cr list(row=, col=). Path elements whose children should not be paginated within
 #' if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
 #' all the associated columns don't fit on a single page.
-#' @param combined_rtf (`logical`)\cr In the case where the result is broken up into multiple
+#' @param combined_rtf (`logical(1)`)\cr In the case where the result is broken up into multiple
 #' parts due to width, should a combined rtf file also be created. Defaults to `FALSE`.
-#' @param one_table (`logical`)\cr If `tt` is a (non-`MatrixPrintForm`) list,
+#' @param one_table (`logical(1)`)\cr If `tt` is a (non-`MatrixPrintForm`) list,
 #' should the parts be added to the rtf within a single table (`TRUE`, the
 #' default) or as separate tables. End users will not generally need to set this.
 #' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of columns of `tt`

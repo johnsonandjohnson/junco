@@ -3,10 +3,10 @@
 #' @title Conversion of inches to spaces.
 #' @param ins (`numeric`)\cr Vector of widths in inches.
 #' @param fontspec (`font_spec`)\cr The font specification to use.
-#' @param raw (`logical`)\cr Should the answer be returned unrounded
+#' @param raw (`logical(1)`)\cr Should the answer be returned unrounded
 #'  (`TRUE`), or rounded to the nearest reasonable value (`FALSE`,
 #'  the default).
-#' @param tol (`numeric`)\cr The numeric tolerance. Values
+#' @param tol (`numeric(1)`)\cr The numeric tolerance. Values
 #'  between an integer `n`, and `n+tol` will be returned
 #'  as `n`, rather than `n+1`, if `raw == FALSE`. Ignored
 #'  when `raw` is `TRUE`.

@@ -387,7 +387,7 @@ s_rel_risk_val_j <- function(
 #' @param method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
 #' @param weights_method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
 #' @param label (`string`)\cr
-#' When `val` is a single `string`,
+#' When `val` has length 1,
 #' the row label to be shown on the output can be specified using this argument.\cr
 #' When `val` is a `character vector`, the `label_map` argument can be specified
 #' to control the row-labels.
@@ -691,7 +691,7 @@ a_freq_j <- function(
   alt_df <- res_dataprep$alt_df
   parentdf <- res_dataprep$parentdf
   new_denomdf <- res_dataprep$new_denomdf
-  .stats <- .stats
+  .stats <- res_dataprep$.stats
 
   ## prepare for column based split
   col_expr <- .spl_context$cur_col_expr[[1]]

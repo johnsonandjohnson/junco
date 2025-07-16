@@ -83,7 +83,7 @@ This higher row-level split is specified in the argument \code{denom_by}.\cr
 }}
 
 \item{label}{(\code{string})\cr
-When \code{val} is a single \code{string},
+When \code{val} has length 1,
 the row label to be shown on the output can be specified using this argument.\cr
 When \code{val} is a \verb{character vector}, the \code{label_map} argument can be specified
 to control the row-labels.}
