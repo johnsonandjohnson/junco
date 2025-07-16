@@ -1,8 +1,3 @@
-#' Non-blank Sentinel
-#'
-#' @keywords internal
-non_blank_sentinel <- structure("", class = "non_blank_sentinel")
-
 #' Get Control Subset
 #'
 #' Retrieves a subset of the DataFrame based on treatment variable and control group.
