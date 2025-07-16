@@ -115,29 +115,19 @@ This is designed to be used as an analysis (afun in \code{analyze}) function.
 
 }}
 \examples{
+if (require("pharmaverseadamjnj")) {
 library(dplyr)
 
-ADEX <- data.frame(
-  USUBJID = c(
-    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-  ),
-  TRT01A = c(
-    "ARMA", "ARMA", "ARMA", "ARMA", "ARMA",
-    "Placebo", "Placebo", "Placebo", "ARMA", "ARMA"
-  ),
-  AVAL = c(56, 78, 67, 87, 88, 93, 39, 87, 65, 55)
-)
+ADEX <- pharmaverseadamjnj::adex |>
+  select(USUBJID, TRT01A, AVAL) |>
 
-ADEX <- ADEX |>
-  mutate(TRT01A = as.factor(TRT01A))
+  mutate(colspan_trt = factor(
+    if_else(TRT01A == "Placebo", " ", "Active Study Agent"),
+    levels = c("Active Study Agent", " ")
+  )) |>
 
-ADEX$colspan_trt <- factor(ifelse(ADEX$TRT01A == "Placebo", " ", "Active Study Agent"),
-  levels = c("Active Study Agent", " ")
-)
-
-ADEX$diff_header <- "Difference in Means (95\% CI)"
-ADEX$diff_label <- paste(ADEX$TRT01A, paste("vs", "Placebo"))
+  mutate(diff_header = "Difference in Means (95\% CI)") |>
+  mutate(diff_label = paste(TRT01A, paste("vs", "Placebo")))
 
 colspan_trt_map <- create_colspan_map(ADEX,
   non_active_grp = "Placebo",
@@ -176,4 +166,5 @@ lyt <- basic_table() |>
 result <- build_table(lyt, ADEX)
 
 result
+}
 }
