@@ -1,4 +1,4 @@
-#' Split Function for Compliance Columns (TEFSCNCMP01 e.g.)
+#' Split Function for Compliance Columns
 #'
 #' Here we just split into 3 columns for expected, received and missing visits.
 #'
@@ -9,7 +9,6 @@
 #' @param vals (`character`)\cr values to use for the split.
 #' @param trim (`logical`)\cr whether to trim the values.
 #'
-#' @note This split function is used in the proportion table TEFSCNCMP01 and similar ones.
 #' @seealso [rtables::make_split_fun()] describing the requirements for this kind of
 #'   post-processing function.
 cmp_post_fun <- function(ret, spl, fulldf, .spl_context) {
@@ -26,11 +25,11 @@ cmp_post_fun <- function(ret, spl, fulldf, .spl_context) {
 #' @export
 cmp_split_fun <- make_split_fun(post = list(cmp_post_fun))
 
-#' @title Summary Analysis Function for Compliance Columns (TEFSCNCMP01 e.g.)
+#' @title Summary Analysis Function for Compliance Columns
 #' @description A simple statistics function which prepares the numbers with percentages
 #'   in the required format, for use in a split content row. The denominator here is
 #'   from the expected visits column.
-#' @inherit proposal_argument_convention
+#' @inheritParams proposal_argument_convention
 #' @param variables (`list`)\cr with variable names of logical columns for
 #'   `expected`, `received` and `missing` visits.
 #' @param formats (`list`)\cr with the `count_percent` format to use for the received

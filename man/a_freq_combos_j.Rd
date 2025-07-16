@@ -50,7 +50,10 @@ will be considered.\cr
 When no values are observed (eg zero row input df),
 a row with row-label \verb{No data reported} will be included in the table.}
 
-\item{combosdf}{The df which provides the mapping of facets to produce cumulative counts for .N_col.}
+\item{combosdf}{The df which provides the mapping of column facets to produce cumulative counts for .N_col.\cr
+In the cell facet, these cumulative records must then be removed from the numerator,
+which can be done via the filter_var parameter
+to avoid unwanted counting of events.}
 
 \item{do_not_filter}{A vector of facets (i.e., column headers), identifying headers for which
 no filtering of records should occur.
@@ -88,14 +91,14 @@ This higher row-level split is specified in the argument \code{denom_by}.\cr
 }}
 
 \item{label}{(\code{string})\cr
-When \code{val}is a single \code{string},
+When \code{val} has length 1,
 the row label to be shown on the output can be specified using this argument.\cr
 When \code{val} is a \verb{character vector}, the \code{label_map} argument can be specified
 to control the row-labels.}
 
 \item{label_fstr}{(\code{string})\cr
 a sprintf style format string.
-It can contain up to one "\\%s" which takes the current split value and
+It can contain up to one \code{"\%s"}, which takes the current split value and
 generates the row/column label.\cr
 It will be combined with the \code{labelstr} argument,
 when utilizing this function as
@@ -109,10 +112,7 @@ a different row label to be presented on the table.\cr}
 
 \item{.alt_df_full}{(\code{dataframe})\cr Denominator dataset
 for fraction and relative risk calculations.\cr
-.alt_df_full is a crucial parameter for the relative risk calculations
-if this parameter is not set to utilize \code{alt_counts_df},
-then the values in the relative risk columns might not be correct.\cr
-Once the rtables PR is integrated, this argument gets populated by the rtables
+this argument gets populated by the rtables
 split machinery (see \link[rtables:additional_fun_params]{rtables::additional_fun_params}).}
 
 \item{denom_by}{(\code{character})\cr Variables from row-split
@@ -141,7 +141,66 @@ list of requested statistics with formatted \code{rtables::CellValue()}.\cr
 \description{
 Analysis function count and percentage in column design controlled by combosdf
 }
-\note{
-: These extra records must then be removed from the numerator via the filter_var parameter
-to avoid double counting of events.
+\examples{
+library(dplyr)
+ADSL <- ex_adsl |> select(USUBJID, ARM, EOSSTT, EOSDT, EOSDY, TRTSDTM)
+
+cutoffd <- as.Date("2023-09-24")
+
+ADSL <- ADSL |>
+  mutate(
+     TRTDURY = case_when(
+       !is.na(EOSDY) ~ EOSDY,
+       TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
+     )
+   ) |>
+  mutate(ACAT1 = case_when(
+    TRTDURY < 183 ~ "0-6 Months",
+    TRTDURY < 366 ~ "6-12 Months",
+    TRUE ~ "+12 Months"
+  )) |>
+  mutate(ACAT1 = factor(ACAT1, levels = c("0-6 Months", "6-12 Months", "+12 Months")))
+
+
+ADAE <- ex_adae |> select(USUBJID, ARM, AEBODSYS, AEDECOD, ASTDY)
+
+ADAE <- ADAE |>
+  mutate(TRTEMFL = "Y") |>
+  mutate(ACAT1 = case_when(
+    ASTDY < 183 ~ "0-6 Months",
+    ASTDY < 366 ~ "6-12 Months",
+    TRUE ~ "+12 Months"
+  )) |>
+  mutate(ACAT1 = factor(ACAT1, levels = c("0-6 Months", "6-12 Months", "+12 Months")))
+
+combodf <- tribble(
+  ~valname,        ~label,        ~levelcombo,                                  ~exargs,
+  "Tot",           "Total",       c("0-6 Months", "6-12 Months", "+12 Months"), list(),
+  "A_0-6 Months",  "0-6 Months",  c("0-6 Months", "6-12 Months", "+12 Months"), list(),
+  "B_6-12 Months", "6-12 Months", c(              "6-12 Months", "+12 Months"), list(),
+  "C_+12 Months",  "+12 Months",  c(                             "+12 Months"), list()
+)
+
+
+lyt <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("ARM") |>
+  split_cols_by("ACAT1",
+    split_fun = add_combo_levels(combosdf = combodf, trim = FALSE, keep_levels = combodf$valname)
+    ) |>
+  analyze("TRTEMFL",
+          show_labels = "hidden",
+          afun = a_freq_combos_j,
+          extra_args = list(
+            val = "Y",
+            label = "Subjects with >= 1 AE",
+            combosdf = combodf,
+            filter_var = "ACAT1",
+            do_not_filter = "Tot"
+          )
+  )
+
+
+result <- build_table(lyt, df = ADAE, alt_counts_df = ADSL)
+
+result
 }

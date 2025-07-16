@@ -5,12 +5,11 @@
 #'
 #' @inheritParams proposal_argument_convention
 #' @inheritParams a_freq_j
-#' @param subcol_split Text to search colid to determine whether further subsetting
+#' @param subcol_split (`string`)\cr text to search colid to determine whether further subsetting
 #'                     should be performed.
-#' @param subcol_var Name of variable containing to be searched for the text
+#' @param subcol_var (`string`)\cr name of variable containing to be searched for the text
 #'                     identified in subcol_val argument.
-#' @param subcol_val Value to use to perform further data sub-setting.
-
+#' @param subcol_val (`string`)\cr value to use to perform further data sub-setting.
 #' @param denom (`string`)\cr
 #' One of \cr
 #' \itemize{
@@ -29,7 +28,42 @@
 #'
 #' @return list of requested statistics with formatted `rtables::CellValue()`.\cr
 #' @export
-
+#'
+#' @examples
+#' library(dplyr)
+#'
+#' ADSL <- ex_adsl |>
+#'   select(USUBJID, ARM)
+#'
+#' ADSL$COLSPAN_REL <- "AEs"
+#'
+#' ADAE <- ex_adae |>
+#'  select(USUBJID, ARM, AEDECOD, AREL)
+#'
+#' ADAE <- ADAE |>
+#'   mutate(
+#'     AEREL = case_when(AREL == "Y" ~ "RELATED",
+#'                       AREL == "N" ~ "NOT RELATED"),
+#'     AEREL = factor(AEREL),
+#'     COLSPAN_REL = "AEs"
+#'   )
+#'
+#' combodf <- tribble(
+#'   ~valname,  ~label,        ~levelcombo, ~exargs,
+#'   "RELATED", "Related AEs", c("AEs"),    list()
+#' )
+#'
+#' lyt <- basic_table(show_colcounts = TRUE) |>
+#'   split_cols_by("COLSPAN_REL", split_fun = add_combo_levels(combodf, trim = TRUE)) |>
+#'   split_cols_by("ARM") |>
+#'   analyze("AEDECOD", afun = a_freq_subcol_j,
+#'     extra_args = list(subcol_split = "RELATED",
+#'       subcol_var = "AEREL",
+#'       subcol_val = "RELATED"))
+#'
+#' result <- build_table(lyt, ADAE, alt_counts_df = ADSL)
+#'
+#' result
 a_freq_subcol_j <- function(
     df,
     labelstr = NULL,
@@ -99,7 +133,7 @@ a_freq_subcol_j <- function(
   alt_df <- res_dataprep$alt_df
   parentdf <- res_dataprep$parentdf
   new_denomdf <- res_dataprep$new_denomdf
-  .stats <- .stats
+  .stats <- res_dataprep$.stats
 
   ## colid can be used to figure out if we're in subcolum
   colid <- .spl_context$cur_col_id[[1]]

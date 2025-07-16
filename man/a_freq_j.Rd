@@ -147,14 +147,14 @@ See \code{?tern::s_proportion_diff} for details.}
 \item{weights_method}{Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr}
 
 \item{label}{(\code{string})\cr
-When \code{val}is a single \code{string},
+When \code{val} has length 1,
 the row label to be shown on the output can be specified using this argument.\cr
 When \code{val} is a \verb{character vector}, the \code{label_map} argument can be specified
 to control the row-labels.}
 
 \item{label_fstr}{(\code{string})\cr
 a sprintf style format string.
-It can contain up to one "\\%s" which takes the current split value and
+It can contain up to one \code{"\%s"}, which takes the current split value and
 generates the row/column label.\cr
 It will be combined with the \code{labelstr} argument,
 when utilizing this function as
@@ -168,10 +168,7 @@ a different row label to be presented on the table.\cr}
 
 \item{.alt_df_full}{(\code{dataframe})\cr Denominator dataset
 for fraction and relative risk calculations.\cr
-.alt_df_full is a crucial parameter for the relative risk calculations
-if this parameter is not set to utilize \code{alt_counts_df},
-then the values in the relative risk columns might not be correct.\cr
-Once the rtables PR is integrated, this argument gets populated by the rtables
+this argument gets populated by the rtables
 split machinery (see \link[rtables:additional_fun_params]{rtables::additional_fun_params}).}
 
 \item{denom_by}{(\code{character})\cr Variables from row-split

@@ -7,15 +7,16 @@
 #'
 #'
 #' @name coxph_hr
-#' @return for `s_coxph_hr` a list containing the same statistics returned by [tern::s_coxph_pairwise]
-#' and the additional `lr_stat_df` statistic. for `a_coxph_hr`, a `VerticalRowsSection`
-#' object.
+#' @return
+#' * `s_coxph_hr` returns a list containing the same statistics returned by
+#' [tern::s_coxph_pairwise] and the additional `lr_stat_df` statistic.
+#' * `a_coxph_hr` returns a `VerticalRowsSection` object.
 #' @order 1
 NULL
 
 #' @describeIn coxph_hr Statistics function forked from [tern::s_coxph_pairwise()].
-#'   the difference is that:
-#'   1) It returns the additional statistic `lr_stat_df` (log rank statistic with degrees of freedom).
+#'   The difference is that it returns the additional statistic `lr_stat_df`
+#'   (log rank statistic with degrees of freedom).
 #' @export
 #' @order 3
 #'

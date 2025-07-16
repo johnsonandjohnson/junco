@@ -68,7 +68,7 @@
 #' @param section_div (`string`)\cr string which should be repeated as a section divider after each group
 #'   defined by this split instruction, or `NA_character_` (the default) for no section divider.
 #' @param show_labels (`string`)\cr label visibility: one of 'default', 'visible' and 'hidden'.
-#' @param show_relative should the 'reduction' (`control - treatment`, default) or the 'increase'
+#' @param show_relative (`string`)\cr should the 'reduction' (`control - treatment`, default) or the 'increase'
 #'   (`treatment - control`) be shown for the relative change from baseline?
 #' @param strata (`character` or `NULL`)\cr variable names indicating stratification factors.
 #' @param table_names (`character`)\cr this can be customized in case that the same `vars` are analyzed multiple times,
@@ -80,7 +80,6 @@
 #' @param var (`string`)\cr single variable name for the primary analysis variable.
 #' @param x (`numeric`)\cr vector of numbers we want to analyze.
 #' @param ctrl_grp (`string`)\cr Level of the control group for the relative risk derivation.
-
 #' @details Although this function just returns `NULL` it has two uses, for
 #'   the `tern` users it provides a documentation of arguments that are
 #'   commonly and consistently used in the framework. For the developer it adds a

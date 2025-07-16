@@ -7,12 +7,13 @@
 remove_rows(removerowtext = NULL, reg_expr = FALSE)
 }
 \arguments{
-\item{removerowtext}{define a text string for which any row with row text will be removed.}
+\item{removerowtext}{(\code{character})\cr Define a text string for which any row with row text will be removed.}
 
-\item{reg_expr}{Apply removerowtext as a regular expression (grepl with fixed = TRUE)}
+\item{reg_expr}{(\code{logical})\cr Apply removerowtext as a regular expression
+(grepl with fixed = TRUE)}
 }
 \value{
-function that can be utilized as pruning function in prune_table
+Function that can be utilized as pruning function in prune_table.
 }
 \description{
 This function will remove all rows of a table based on the row text
