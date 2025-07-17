@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   auto_colwidths: auto_colwidths.html
   junco: junco.html
-last_built: 2025-07-07T15:25Z
+last_built: 2025-07-17T21:52Z
 urls:
-  reference: na.html/reference
-  article: na.html/articles
+  reference: https://johnsonandjohnson.github.io/junco/reference
+  article: https://johnsonandjohnson.github.io/junco/articles

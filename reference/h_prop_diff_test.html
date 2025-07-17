@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,12 +51,12 @@
 
 
 <dl><dt id="arg-tbl">tbl<a class="anchor" aria-label="anchor" href="#arg-tbl"></a></dt>
-<dd><p>(`matrix`)<br> matrix with two groups in rows and the binary response (`TRUE`/`FALSE`) in columns.</p></dd>
+<dd><p>(<code>matrix</code>)<br> matrix with two groups in rows and the binary response (<code>TRUE</code>/<code>FALSE</code>) in columns.</p></dd>
 
 
 <dt id="arg-ary">ary<a class="anchor" aria-label="anchor" href="#arg-ary"></a></dt>
-<dd><p>(`array`, 3 dimensions)<br> array with two groups in rows, the binary response
-(`TRUE`/`FALSE`) in columns, and the strata in the third dimension.</p></dd>
+<dd><p>(<code>array</code>, 3 dimensions)<br> array with two groups in rows, the binary response
+(<code>TRUE</code>/<code>FALSE</code>) in columns, and the strata in the third dimension.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -66,20 +66,20 @@
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
-<ul><li><p><code>prop_chisq()</code>: Performs Chi-Squared test. Internally calls [stats::prop.test()].</p></li>
+<ul><li><p><code>prop_chisq()</code>: Performs Chi-Squared test. Internally calls <code><a href="https://rdrr.io/r/stats/prop.test.html" class="external-link">stats::prop.test()</a></code>.</p></li>
 <li><p><code>prop_cmh()</code>: Performs stratified Cochran-Mantel-Haenszel test.
-Internally calls [stats::mantelhaen.test()].</p></li>
-<li><p><code>prop_fisher()</code>: Performs the Fisher's exact test. Internally calls [stats::fisher.test()].</p></li>
+Internally calls <code><a href="https://rdrr.io/r/stats/mantelhaen.test.html" class="external-link">stats::mantelhaen.test()</a></code>.</p></li>
+<li><p><code>prop_fisher()</code>: Performs the Fisher's exact test. Internally calls <code><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">stats::fisher.test()</a></code>.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>strata with less than five observations will result in a warning and
- possibly incorrect results; strata with less than two observations are
- automatically discarded.</p>
+possibly incorrect results; strata with less than two observations are
+automatically discarded.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>[prop_diff_test()] for implementation of these helper functions.</p></div>
+    <div class="dont-index"><p><code><a href="prop_diff_test.html">prop_diff_test()</a></code> for implementation of these helper functions.</p></div>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

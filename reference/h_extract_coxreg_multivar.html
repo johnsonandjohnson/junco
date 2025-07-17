@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,14 +47,14 @@
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>(`coxreg.multivar`)<br> from [tern::fit_coxreg_multivar()].</p></dd>
+<dd><p>(<code>coxreg.multivar</code>)<br> from <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/fit_coxreg.html" class="external-link">tern::fit_coxreg_multivar()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame containing Cox regression results with columns for term,
-  coef_se (coefficient and standard error), p.value, hr (hazard ratio),
-  hr_ci (confidence interval for hazard ratio), and labels (formatted term labels).</p>
+coef_se (coefficient and standard error), p.value, hr (hazard ratio),
+hr_ci (confidence interval for hazard ratio), and labels (formatted term labels).</p>
     </div>
 
     <div class="section level2">
@@ -63,15 +63,15 @@
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>EVENT <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">CNSR</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">variables</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  time <span class="op">=</span> <span class="st">'AVAL'</span>,</span></span>
-<span class="r-in"><span>  event <span class="op">=</span> <span class="st">'EVENT'</span>,</span></span>
-<span class="r-in"><span>  arm <span class="op">=</span> <span class="st">'ARM'</span>,</span></span>
-<span class="r-in"><span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'SEX'</span>, <span class="st">'AGE'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  time <span class="op">=</span> <span class="st">"AVAL"</span>,</span></span>
+<span class="r-in"><span>  event <span class="op">=</span> <span class="st">"EVENT"</span>,</span></span>
+<span class="r-in"><span>  arm <span class="op">=</span> <span class="st">"ARM"</span>,</span></span>
+<span class="r-in"><span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SEX"</span>, <span class="st">"AGE"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">control</span> <span class="op">&lt;-</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/control_coxreg.html" class="external-link">control_coxreg</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  conf_level <span class="op">=</span> <span class="fl">0.9</span>,</span></span>
-<span class="r-in"><span>  ties <span class="op">=</span> <span class="st">'efron'</span></span></span>
+<span class="r-in"><span>  ties <span class="op">=</span> <span class="st">"efron"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/fit_coxreg.html" class="external-link">fit_coxreg_multivar</a></span><span class="op">(</span></span></span>

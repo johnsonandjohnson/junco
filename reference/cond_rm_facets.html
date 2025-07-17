@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,51 +77,51 @@ cannot be mixed.</p></dd>
 
 <dt id="arg-split">split<a class="anchor" aria-label="anchor" href="#arg-split"></a></dt>
 <dd><p>character(1) or NULL. If specified, name of the split
-at position `ancestor_pos` must be identical to this value for
+at position <code>ancestor_pos</code> must be identical to this value for
 the removal condition to be met.</p></dd>
 
 
 <dt id="arg-split-regex">split_regex<a class="anchor" aria-label="anchor" href="#arg-split-regex"></a></dt>
 <dd><p>character(1) or NULL. If specified, a regular expression
-the name of the split at position `ancestor_pos` must match for
+the name of the split at position <code>ancestor_pos</code> must match for
 the removal condition to be met. Cannot be specified at the same time
-as `split`.</p></dd>
+as <code>split</code>.</p></dd>
 
 
 <dt id="arg-value">value<a class="anchor" aria-label="anchor" href="#arg-value"></a></dt>
 <dd><p>character(1) or NULL. If specified, split (facet) value
-at position `ancestor_pos` must be identical to this value for
+at position <code>ancestor_pos</code> must be identical to this value for
 removal condition to be met.</p></dd>
 
 
 <dt id="arg-value-regex">value_regex<a class="anchor" aria-label="anchor" href="#arg-value-regex"></a></dt>
 <dd><p>character(1) or NULL. If specified, a regular expression
-the value of the split at position `ancestor_pos` must match for
+the value of the split at position <code>ancestor_pos</code> must match for
 the removal condition to be met. Cannot be specified at the same time
-as `value`.</p></dd>
+as <code>value</code>.</p></dd>
 
 
 <dt id="arg-keep-matches">keep_matches<a class="anchor" aria-label="anchor" href="#arg-keep-matches"></a></dt>
 <dd><p>logical(1). Given the specified condition is met,
-should the facets removed be those matching `facets`/`facets_regex`
-(`FALSE`, the default), or those *not* matching (`TRUE`).</p></dd>
+should the facets removed be those matching <code>facets</code>/<code>facets_regex</code>
+(<code>FALSE</code>, the default), or those <em>not</em> matching (<code>TRUE</code>).</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a function suitable for use in `make_split_fun`'s
-`post` argument which encodes the specified condition.</p>
+    <p>a function suitable for use in <code>make_split_fun</code>'s
+<code>post</code> argument which encodes the specified condition.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Facet removal occurs when the specified condition(s)
 on the split(s) and or value(s) are met within at least one
-of the split_context rows indicated by `ancestor_pos`; otherwise
+of the split_context rows indicated by <code>ancestor_pos</code>; otherwise
 the set of facets is returned unchanged.</p>
-<p>If facet removal is performed, either *all* facets which match `facets` (or
-`facets_regex` will be removed ( the default `keep_matches == FALSE`
- case), or all *non-matching* facets will be removed (when
-  `keep_matches_only == TRUE`).</p>
+<p>If facet removal is performed, either <em>all</em> facets which match <code>facets</code> (or
+<code>facets_regex</code> will be removed ( the default <code>keep_matches == FALSE</code>
+case), or all <em>non-matching</em> facets will be removed (when
+<code>keep_matches_only == TRUE</code>).</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -132,62 +132,57 @@ are removed.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## remove the 'A' facet if anywhere in the preceding</span></span></span>
-<span class="r-in"><span><span class="co">## faceting, we had a split 'ARM' (splitting the ARM var)</span></span></span>
-<span class="r-in"><span><span class="co">## with a value that matches 'Placeb' as a regex</span></span></span>
 <span class="r-in"><span><span class="va">rm_a_from_placebo</span> <span class="op">&lt;-</span> <span class="fu">cond_rm_facets</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  facets <span class="op">=</span> <span class="st">'A'</span>,</span></span>
+<span class="r-in"><span>  facets <span class="op">=</span> <span class="st">"A"</span>,</span></span>
 <span class="r-in"><span>  ancestor_pos <span class="op">=</span> <span class="cn">NA</span>,</span></span>
-<span class="r-in"><span>  value_regex <span class="op">=</span> <span class="st">'Placeb'</span>,</span></span>
-<span class="r-in"><span>  split <span class="op">=</span> <span class="st">'ARM'</span></span></span>
+<span class="r-in"><span>  value_regex <span class="op">=</span> <span class="st">"Placeb"</span>,</span></span>
+<span class="r-in"><span>  split <span class="op">=</span> <span class="st">"ARM"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mysplit</span> <span class="op">&lt;-</span> <span class="fu">make_split_fun</span><span class="op">(</span>post <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">rm_a_from_placebo</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mysplit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/make_split_fun.html" class="external-link">make_split_fun</a></span><span class="op">(</span>post <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">rm_a_from_placebo</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu">basic_table</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">split_cols_by</span><span class="op">(</span><span class="st">'ARM'</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">split_cols_by</span><span class="op">(</span><span class="st">'STRATA1'</span>, split_fun <span class="op">=</span> <span class="va">mysplit</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">analyze</span><span class="op">(</span><span class="st">'AGE'</span>, <span class="va">mean</span>, format <span class="op">=</span> <span class="st">'xx.x'</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">build_table</span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ex_adsl</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"STRATA1"</span>, split_fun <span class="op">=</span> <span class="va">mysplit</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AGE"</span>, <span class="va">mean</span>, format <span class="op">=</span> <span class="st">"xx.x"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ex_adsl</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            A: Drug X         B: Placebo        C: Combination   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         A      B      C       B       C       A       B      C  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ————————————————————————————————————————————————————————————————</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mean   33.1   33.9   34.2   36.0    35.2    34.2    36.3    35.6</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">rm_bc_from_combo</span> <span class="op">&lt;-</span> <span class="fu">cond_rm_facets</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  facets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'B'</span>, <span class="st">'C'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  facets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  ancestor_pos <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,</span></span>
-<span class="r-in"><span>  value_regex <span class="op">=</span> <span class="st">'Combi'</span></span></span>
+<span class="r-in"><span>  value_regex <span class="op">=</span> <span class="st">"Combi"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mysplit2</span> <span class="op">&lt;-</span> <span class="fu">make_split_fun</span><span class="op">(</span>post <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">rm_bc_from_combo</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mysplit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/make_split_fun.html" class="external-link">make_split_fun</a></span><span class="op">(</span>post <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">rm_bc_from_combo</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lyt2</span> <span class="op">&lt;-</span> <span class="fu">basic_table</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">split_cols_by</span><span class="op">(</span><span class="st">'ARM'</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">split_cols_by</span><span class="op">(</span><span class="st">'STRATA1'</span>, split_fun <span class="op">=</span> <span class="va">mysplit2</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">analyze</span><span class="op">(</span><span class="st">'AGE'</span>, <span class="va">mean</span>, format <span class="op">=</span> <span class="st">'xx.x'</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">tbl2</span> <span class="op">&lt;-</span> <span class="fu">build_table</span><span class="op">(</span><span class="va">lyt2</span>, <span class="va">ex_adsl</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lyt2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"STRATA1"</span>, split_fun <span class="op">=</span> <span class="va">mysplit2</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AGE"</span>, <span class="va">mean</span>, format <span class="op">=</span> <span class="st">"xx.x"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tbl2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt2</span>, <span class="va">ex_adsl</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">tbl2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            A: Drug X            B: Placebo       C: Combination</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         A      B      C      A      B      C           A       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ———————————————————————————————————————————————————————————————</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mean   33.1   33.9   34.2   35.1   36.0   35.2        34.2     </span>
-<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">rm_bc_from_combo2</span> <span class="op">&lt;-</span> <span class="fu">cond_rm_facets</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  facets_regex <span class="op">=</span> <span class="st">'^A$'</span>,</span></span>
+<span class="r-in"><span>  facets_regex <span class="op">=</span> <span class="st">"^A$"</span>,</span></span>
 <span class="r-in"><span>  ancestor_pos <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,</span></span>
-<span class="r-in"><span>  value_regex <span class="op">=</span> <span class="st">'Combi'</span>,</span></span>
+<span class="r-in"><span>  value_regex <span class="op">=</span> <span class="st">"Combi"</span>,</span></span>
 <span class="r-in"><span>  keep_matches <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mysplit3</span> <span class="op">&lt;-</span> <span class="fu">make_split_fun</span><span class="op">(</span>post <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">rm_bc_from_combo2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="va">lyt3</span> <span class="op">&lt;-</span> <span class="fu">basic_table</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">split_cols_by</span><span class="op">(</span><span class="st">'ARM'</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">split_cols_by</span><span class="op">(</span><span class="st">'STRATA1'</span>, split_fun <span class="op">=</span> <span class="va">mysplit3</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">analyze</span><span class="op">(</span><span class="st">'AGE'</span>, <span class="va">mean</span>, format <span class="op">=</span> <span class="st">'xx.x'</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">tbl3</span> <span class="op">&lt;-</span> <span class="fu">build_table</span><span class="op">(</span><span class="va">lyt3</span>, <span class="va">ex_adsl</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co">## column info carries around the split objects which</span></span></span>
-<span class="r-in"><span><span class="co">## carry around their split_fun, which are different so</span></span></span>
-<span class="r-in"><span><span class="co">## identical(tbl2, tbl3) will (expectedly) be FALSE</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu">cell_values</span><span class="op">(</span><span class="va">tbl2</span><span class="op">)</span>, <span class="fu">cell_values</span><span class="op">(</span><span class="va">tbl3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mysplit3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/make_split_fun.html" class="external-link">make_split_fun</a></span><span class="op">(</span>post <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">rm_bc_from_combo2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lyt3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"STRATA1"</span>, split_fun <span class="op">=</span> <span class="va">mysplit3</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AGE"</span>, <span class="va">mean</span>, format <span class="op">=</span> <span class="st">"xx.x"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tbl3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt3</span>, <span class="va">ex_adsl</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/cell_values.html" class="external-link">cell_values</a></span><span class="op">(</span><span class="va">tbl2</span><span class="op">)</span>, <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/cell_values.html" class="external-link">cell_values</a></span><span class="op">(</span><span class="va">tbl3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,43 +60,43 @@
 
 
 <dl><dt id="arg-lyt">lyt<a class="anchor" aria-label="anchor" href="#arg-lyt"></a></dt>
-<dd><p>empty layout, i.e. result of [rtables::basic_table()]</p></dd>
+<dd><p>empty layout, i.e. result of <code><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">rtables::basic_table()</a></code></p></dd>
 
 
 <dt id="arg-variables">variables<a class="anchor" aria-label="anchor" href="#arg-variables"></a></dt>
-<dd><p>(named `list` of `string`)<br> list of additional analysis variables.</p></dd>
+<dd><p>(named <code>list</code> of <code>string</code>)<br> list of additional analysis variables.</p></dd>
 
 
 <dt id="arg-ref-level">ref_level<a class="anchor" aria-label="anchor" href="#arg-ref-level"></a></dt>
-<dd><p>(`string`)<br> the reference level of the treatment arm variable.</p></dd>
+<dd><p>(<code>string</code>)<br> the reference level of the treatment arm variable.</p></dd>
 
 
 <dt id="arg-treatment-levels">treatment_levels<a class="anchor" aria-label="anchor" href="#arg-treatment-levels"></a></dt>
-<dd><p>(`character`)<br> the non-reference levels of the treatment arm
+<dd><p>(<code>character</code>)<br> the non-reference levels of the treatment arm
 variable.</p></dd>
 
 
 <dt id="arg-conf-level">conf_level<a class="anchor" aria-label="anchor" href="#arg-conf-level"></a></dt>
-<dd><p>(`proportion`)<br> confidence level of the interval.</p></dd>
+<dd><p>(<code>proportion</code>)<br> confidence level of the interval.</p></dd>
 
 
 <dt id="arg-pval-sided">pval_sided<a class="anchor" aria-label="anchor" href="#arg-pval-sided"></a></dt>
-<dd><p>(`string`)<br> either '2' for two-sided or '1' for 1-sided with greater than
+<dd><p>(<code>string</code>)<br> either '2' for two-sided or '1' for 1-sided with greater than
 control or '-1' for 1-sided with smaller than control alternative hypothesis.</p></dd>
 
 
 <dt id="arg-include-variance">include_variance<a class="anchor" aria-label="anchor" href="#arg-include-variance"></a></dt>
-<dd><p>(`flag`)<br> whether to include the variance statistics
+<dd><p>(<code>flag</code>)<br> whether to include the variance statistics
 (M.S. error and d.f.).</p></dd>
 
 
 <dt id="arg-include-pval">include_pval<a class="anchor" aria-label="anchor" href="#arg-include-pval"></a></dt>
-<dd><p>(`flag`)<br> whether to include the p-value column.</p></dd>
+<dd><p>(<code>flag</code>)<br> whether to include the p-value column.</p></dd>
 
 
 <dt id="arg-formats">formats<a class="anchor" aria-label="anchor" href="#arg-formats"></a></dt>
-<dd><p>(named `character` or `list`)<br> formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.</p></dd>
+<dd><p>(named <code>character</code> or <code>list</code>)<br> formats for the statistics. See Details in <code>analyze_vars</code> for more
+information on the <code>'auto'</code> setting.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -107,17 +107,17 @@ information on the `'auto'` setting.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">variables</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  response <span class="op">=</span> <span class="st">'FEV1'</span>,</span></span>
-<span class="r-in"><span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'RACE'</span>, <span class="st">'SEX'</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  arm <span class="op">=</span> <span class="st">'ARMCD'</span>,</span></span>
-<span class="r-in"><span>  id <span class="op">=</span> <span class="st">'USUBJID'</span>,</span></span>
-<span class="r-in"><span>  visit <span class="op">=</span> <span class="st">'AVISIT'</span></span></span>
+<span class="r-in"><span>  response <span class="op">=</span> <span class="st">"FEV1"</span>,</span></span>
+<span class="r-in"><span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RACE"</span>, <span class="st">"SEX"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  arm <span class="op">=</span> <span class="st">"ARMCD"</span>,</span></span>
+<span class="r-in"><span>  id <span class="op">=</span> <span class="st">"USUBJID"</span>,</span></span>
+<span class="r-in"><span>  visit <span class="op">=</span> <span class="st">"AVISIT"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="fit_ancova.html">fit_ancova</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  vars <span class="op">=</span> <span class="va">variables</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="fu">mmrm</span><span class="fu">::</span><span class="va"><a href="https://openpharma.github.io/mmrm/latest-tag/reference/fev_data.html" class="external-link">fev_data</a></span>,</span></span>
 <span class="r-in"><span>  conf_level <span class="op">=</span> <span class="fl">0.9</span>,</span></span>
-<span class="r-in"><span>  weights_emmeans <span class="op">=</span> <span class="st">'equal'</span></span></span>
+<span class="r-in"><span>  weights_emmeans <span class="op">=</span> <span class="st">"equal"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">anl</span> <span class="op">&lt;-</span> <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
@@ -125,7 +125,7 @@ information on the `'auto'` setting.</p></dd>
 <span class="r-in"><span>    variables <span class="op">=</span> <span class="va">variables</span>,</span></span>
 <span class="r-in"><span>    ref_level <span class="op">=</span> <span class="va">fit</span><span class="op">$</span><span class="va">ref_level</span>,</span></span>
 <span class="r-in"><span>    treatment_levels <span class="op">=</span> <span class="va">fit</span><span class="op">$</span><span class="va">treatment_levels</span>,</span></span>
-<span class="r-in"><span>    pval_sided <span class="op">=</span> <span class="st">'2'</span>,</span></span>
+<span class="r-in"><span>    pval_sided <span class="op">=</span> <span class="st">"2"</span>,</span></span>
 <span class="r-in"><span>    conf_level <span class="op">=</span> <span class="fl">0.8</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">anl</span><span class="op">)</span></span></span>

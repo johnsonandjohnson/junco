@@ -11,7 +11,7 @@ consideration when count is 0, or fraction is 1.
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,7 @@ consideration when count is 0, or fraction is 1.
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>`numeric`<br> with elements `num` and `fraction` or `num`, `denom` and `fraction`.</p></dd>
+<dd><p><code>numeric</code><br> with elements <code>num</code> and <code>fraction</code> or <code>num</code>, <code>denom</code> and <code>fraction</code>.</p></dd>
 
 
 <dt id="arg-d">d<a class="anchor" aria-label="anchor" href="#arg-d"></a></dt>
@@ -61,10 +61,10 @@ consideration when count is 0, or fraction is 1.
 
 
 <dt id="arg-roundmethod">roundmethod<a class="anchor" aria-label="anchor" href="#arg-roundmethod"></a></dt>
-<dd><p>(`string`)<br> choice of rounding methods. Options are:
-* `sas`: the underlying rounding method is `tidytlg::roundSAS`, where <br>
-roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions/12688717/round-up-from-5
-* `iec`: the underlying rounding method is `round`</p></dd>
+<dd><p>(<code>string</code>)<br> choice of rounding methods. Options are:</p><ul><li><p><code>sas</code>: the underlying rounding method is <code><a href="https://pharmaverse.github.io/tidytlg/main/reference/roundSAS.html" class="external-link">tidytlg::roundSAS</a></code>, where <br>
+roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions/12688717/round-up-from-5</p></li>
+<li><p><code>iec</code>: the underlying rounding method is <code>round</code></p></li>
+</ul></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -73,9 +73,9 @@ roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A string in the format `count / denom (ratio percent)`. If `count`
-is 0, the format is `0`. If fraction is &gt;0.99, the format is
-`count / denom (&gt;99.9 percent)`</p>
+    <p>A string in the format <code>count / denom (ratio percent)</code>. If <code>count</code>
+is 0, the format is <code>0</code>. If fraction is &gt;0.99, the format is
+<code>count / denom (&gt;99.9 percent)</code></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

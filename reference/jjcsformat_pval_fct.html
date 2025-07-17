@@ -9,7 +9,7 @@ formatting that support rounding close to the significance level specified"></he
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,18 +50,18 @@ formatting that support rounding close to the significance level specified</p>
 
 
 <dl><dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
-<dd><p>`number`<br> the significance level to account for during rounding.</p></dd>
+<dd><p><code>number</code><br> the significance level to account for during rounding.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The p-value in the standard format. If `count` is 0, the format is `0`.
-  If it is smaller than 0.001, then `&lt;0.001`, if it is larger than 0.999, then
-  `&gt;0.999` is returned. Otherwise, 3 digits are used. In the special case that
-  rounding from below would make the string equal to the specified `alpha`,
-  then a higher number of digits is used to be able to still see the difference.
-  For example, 0.0048 is not rounded to 0.005 but stays at 0.0048 if `alpha = 0.005`
-  is set.</p>
+    <p>The p-value in the standard format. If <code>count</code> is 0, the format is <code>0</code>.
+If it is smaller than 0.001, then <code>&lt;0.001</code>, if it is larger than 0.999, then
+<code>&gt;0.999</code> is returned. Otherwise, 3 digits are used. In the special case that
+rounding from below would make the string equal to the specified <code>alpha</code>,
+then a higher number of digits is used to be able to still see the difference.
+For example, 0.0048 is not rounded to 0.005 but stays at 0.0048 if <code>alpha = 0.005</code>
+is set.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

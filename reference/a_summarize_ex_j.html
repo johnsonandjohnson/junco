@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,7 @@
 <span>  .formats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>diff_mean_est_ci <span class="op">=</span> <span class="fu"><a href="jjcsformat_xx.html">jjcsformat_xx</a></span><span class="op">(</span><span class="st">"xx.xx (xx.xx, xx.xx)"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  .labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>quantiles <span class="op">=</span> <span class="st">"Interquartile range"</span><span class="op">)</span>,</span>
 <span>  .indent_mods <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  na_str <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  na_str <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="fl">3</span><span class="op">)</span>,</span>
 <span>  daysconv <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -80,47 +80,47 @@
 
 
 <dl><dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
-<dd><p>(`data.frame`)<br> data set containing all analysis variables.</p></dd>
+<dd><p>(<code>data.frame</code>)<br> data set containing all analysis variables.</p></dd>
 
 
 <dt id="arg--var">.var<a class="anchor" aria-label="anchor" href="#arg--var"></a></dt>
-<dd><p>(`string`)<br> single variable name that is passed by `rtables` when requested
+<dd><p>(<code>string</code>)<br> single variable name that is passed by <code>rtables</code> when requested
 by a statistics function.</p></dd>
 
 
 <dt id="arg--df-row">.df_row<a class="anchor" aria-label="anchor" href="#arg--df-row"></a></dt>
-<dd><p>(`data.frame`)<br> data frame across all of the columns for the given row split.</p></dd>
+<dd><p>(<code>data.frame</code>)<br> data frame across all of the columns for the given row split.</p></dd>
 
 
 <dt id="arg--spl-context">.spl_context<a class="anchor" aria-label="anchor" href="#arg--spl-context"></a></dt>
-<dd><p>(`data.frame`)<br> gives information about ancestor split states
-that is passed by `rtables`.</p></dd>
+<dd><p>(<code>data.frame</code>)<br> gives information about ancestor split states
+that is passed by <code>rtables</code>.</p></dd>
 
 
 <dt id="arg-comp-btw-group">comp_btw_group<a class="anchor" aria-label="anchor" href="#arg-comp-btw-group"></a></dt>
-<dd><p>(`logical`)<br> If TRUE,
+<dd><p>(<code>logical</code>)<br> If TRUE,
 <br> When ancova = FALSE, the estimate of between group difference (on CHG) will be based upon two-sample t-test. <br><br> When ancova = TRUE, the same ancova model will be used for the estimate of between group difference (on CHG).</p></dd>
 
 
 <dt id="arg-ref-path">ref_path<a class="anchor" aria-label="anchor" href="#arg-ref-path"></a></dt>
-<dd><p>(`character`)<br> global reference group specification, see [get_ref_info()].</p></dd>
+<dd><p>(<code>character</code>)<br> global reference group specification, see <code><a href="get_ref_info.html">get_ref_info()</a></code>.</p></dd>
 
 
 <dt id="arg-ancova">ancova<a class="anchor" aria-label="anchor" href="#arg-ancova"></a></dt>
-<dd><p>(`logical`)<br> If FALSE, only descriptive methods will be used. <br>
+<dd><p>(<code>logical</code>)<br> If FALSE, only descriptive methods will be used. <br>
 If TRUE Ancova methods will be used for each of the columns : AVAL, CHG, DIFF. <br></p></dd>
 
 
 <dt id="arg-interaction-y">interaction_y<a class="anchor" aria-label="anchor" href="#arg-interaction-y"></a></dt>
-<dd><p>(`character`)<br> Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.</p></dd>
+<dd><p>(<code>character</code>)<br> Will be passed onto the <code>tern</code> function <code>s_ancova</code>, when ancova = TRUE.</p></dd>
 
 
 <dt id="arg-interaction-item">interaction_item<a class="anchor" aria-label="anchor" href="#arg-interaction-item"></a></dt>
-<dd><p>(`character`)<br> Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.</p></dd>
+<dd><p>(<code>character</code>)<br> Will be passed onto the <code>tern</code> function <code>s_ancova</code>, when ancova = TRUE.</p></dd>
 
 
 <dt id="arg-conf-level">conf_level<a class="anchor" aria-label="anchor" href="#arg-conf-level"></a></dt>
-<dd><p>(`proportion`)<br> Confidence level of the interval</p></dd>
+<dd><p>(<code>proportion</code>)<br> Confidence level of the interval</p></dd>
 
 
 <dt id="arg-daysconv">daysconv<a class="anchor" aria-label="anchor" href="#arg-daysconv"></a></dt>
@@ -130,53 +130,54 @@ If TRUE Ancova methods will be used for each of the columns : AVAL, CHG, DIFF. <
 
 <dt id="arg-variables">variables<a class="anchor" aria-label="anchor" href="#arg-variables"></a></dt>
 <dd><p>(named list of strings)<br>
-list of additional analysis variables, with expected elements:
-   * arm (string)<br>
+list of additional analysis variables, with expected elements:</p><ul><li><p>arm (string)<br>
 group variable, for which the covariate adjusted means of multiple groups will be summarized.
-Specifically, the first level of arm variable is taken as the reference group.
-   * covariates (character)<br>
-a vector that can contain single variable names (such as 'X1'), and/or interaction terms indicated by 'X1 * X2'.</p></dd>
+Specifically, the first level of arm variable is taken as the reference group.</p></li>
+<li><p>covariates (character)<br>
+a vector that can contain single variable names (such as 'X1'), and/or interaction terms indicated by 'X1 * X2'.</p></li>
+</ul></dd>
 
 
 <dt id="arg--stats">.stats<a class="anchor" aria-label="anchor" href="#arg--stats"></a></dt>
-<dd><p>(`character`)<br> statistics to select for the table.</p></dd>
+<dd><p>(<code>character</code>)<br> statistics to select for the table.</p></dd>
 
 
 <dt id="arg--formats">.formats<a class="anchor" aria-label="anchor" href="#arg--formats"></a></dt>
-<dd><p>(named `character` or `list`)<br> formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.</p></dd>
+<dd><p>(named <code>character</code> or <code>list</code>)<br> formats for the statistics. See Details in <code>analyze_vars</code> for more
+information on the <code>'auto'</code> setting.</p></dd>
 
 
 <dt id="arg--labels">.labels<a class="anchor" aria-label="anchor" href="#arg--labels"></a></dt>
-<dd><p>(named `character`)<br> labels for the statistics (without indent).</p></dd>
+<dd><p>(named <code>character</code>)<br> labels for the statistics (without indent).</p></dd>
 
 
 <dt id="arg--indent-mods">.indent_mods<a class="anchor" aria-label="anchor" href="#arg--indent-mods"></a></dt>
-<dd><p>(named `integer`)<br> indent modifiers for the labels. Defaults to 0, which corresponds to the
+<dd><p>(named <code>integer</code>)<br> indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.</p></dd>
 
 
 <dt id="arg-na-str">na_str<a class="anchor" aria-label="anchor" href="#arg-na-str"></a></dt>
-<dd><p>(`string`)<br> string used to replace all `NA` or empty values in the output.</p></dd>
+<dd><p>(<code>string</code>)<br> string used to replace all <code>NA</code> or empty values in the output.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>* `a_summarize_ex_j()` returns the corresponding list with formatted [rtables::CellValue()].</p>
-    </div>
+
+<ul><li><p><code>a_summarize_ex_j()</code> returns the corresponding list with formatted <code><a href="https://insightsengineering.github.io/rtables/latest-release/reference/CellValue.html" class="external-link">rtables::CellValue()</a></code>.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Creates statistics needed for standard exposure table
-This includes differences and 95<!-- % CI and total treatment years. -->
-This is designed to be used as an analysis (afun in `analyze`) function.</p>
-<p>Creates statistics needed for table. This includes differences and 95<!-- % CI and total treatment years. -->
-This is designed to be used as an analysis (afun in `analyze`) function.</p>
+This includes differences and 95% CI and total treatment years.
+This is designed to be used as an analysis (afun in <code>analyze</code>) function.</p>
+<p>Creates statistics needed for table. This includes differences and 95% CI and total treatment years.
+This is designed to be used as an analysis (afun in <code>analyze</code>) function.</p>
     </div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
 <ul><li><p><code>s_summarize_ex_j()</code>: Statistics function needed for the exposure tables</p></li>
-<li><p><code>a_summarize_ex_j()</code>: Formatted analysis function which is used as `afun`.</p></li>
+<li><p><code>a_summarize_ex_j()</code>: Formatted analysis function which is used as <code>afun</code>.</p></li>
 </ul></div>
 
     <div class="section level2">
@@ -185,12 +186,12 @@ This is designed to be used as an analysis (afun in `analyze`) function.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ADEX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  USUBJID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">'XXXXX01'</span>, <span class="st">'XXXXX02'</span>, <span class="st">'XXXXX03'</span>, <span class="st">'XXXXX04'</span>, <span class="st">'XXXXX05'</span>,</span></span>
-<span class="r-in"><span>    <span class="st">'XXXXX06'</span>, <span class="st">'XXXXX07'</span>, <span class="st">'XXXXX08'</span>, <span class="st">'XXXXX09'</span>, <span class="st">'XXXXX10'</span></span></span>
+<span class="r-in"><span>    <span class="st">"XXXXX01"</span>, <span class="st">"XXXXX02"</span>, <span class="st">"XXXXX03"</span>, <span class="st">"XXXXX04"</span>, <span class="st">"XXXXX05"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"XXXXX06"</span>, <span class="st">"XXXXX07"</span>, <span class="st">"XXXXX08"</span>, <span class="st">"XXXXX09"</span>, <span class="st">"XXXXX10"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  TRT01A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">'ARMA'</span>, <span class="st">'ARMA'</span>, <span class="st">'ARMA'</span>, <span class="st">'ARMA'</span>, <span class="st">'ARMA'</span>,</span></span>
-<span class="r-in"><span>    <span class="st">'Placebo'</span>, <span class="st">'Placebo'</span>, <span class="st">'Placebo'</span>, <span class="st">'ARMA'</span>, <span class="st">'ARMA'</span></span></span>
+<span class="r-in"><span>    <span class="st">"ARMA"</span>, <span class="st">"ARMA"</span>, <span class="st">"ARMA"</span>, <span class="st">"ARMA"</span>, <span class="st">"ARMA"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Placebo"</span>, <span class="st">"Placebo"</span>, <span class="st">"Placebo"</span>, <span class="st">"ARMA"</span>, <span class="st">"ARMA"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  AVAL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">78</span>, <span class="fl">67</span>, <span class="fl">87</span>, <span class="fl">88</span>, <span class="fl">93</span>, <span class="fl">39</span>, <span class="fl">87</span>, <span class="fl">65</span>, <span class="fl">55</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -198,48 +199,48 @@ This is designed to be used as an analysis (afun in `analyze`) function.</p>
 <span class="r-in"><span><span class="va">ADEX</span> <span class="op">&lt;-</span> <span class="va">ADEX</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>TRT01A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">TRT01A</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">ADEX</span><span class="op">$</span><span class="va">colspan_trt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">ADEX</span><span class="op">$</span><span class="va">TRT01A</span> <span class="op">==</span> <span class="st">'Placebo'</span>, <span class="st">' '</span>, <span class="st">'Active Study Agent'</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Active Study Agent'</span>, <span class="st">' '</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ADEX</span><span class="op">$</span><span class="va">colspan_trt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">ADEX</span><span class="op">$</span><span class="va">TRT01A</span> <span class="op">==</span> <span class="st">"Placebo"</span>, <span class="st">" "</span>, <span class="st">"Active Study Agent"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Active Study Agent"</span>, <span class="st">" "</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">ADEX</span><span class="op">$</span><span class="va">diff_header</span> <span class="op">&lt;-</span> <span class="st">'Difference in Means (95% CI)'</span></span></span>
-<span class="r-in"><span><span class="va">ADEX</span><span class="op">$</span><span class="va">diff_label</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">ADEX</span><span class="op">$</span><span class="va">TRT01A</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'vs'</span>, <span class="st">'Placebo'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ADEX</span><span class="op">$</span><span class="va">diff_header</span> <span class="op">&lt;-</span> <span class="st">"Difference in Means (95% CI)"</span></span></span>
+<span class="r-in"><span><span class="va">ADEX</span><span class="op">$</span><span class="va">diff_label</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">ADEX</span><span class="op">$</span><span class="va">TRT01A</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"vs"</span>, <span class="st">"Placebo"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">colspan_trt_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspan_map.html">create_colspan_map</a></span><span class="op">(</span><span class="va">ADEX</span>,</span></span>
-<span class="r-in"><span>  non_active_grp <span class="op">=</span> <span class="st">'Placebo'</span>,</span></span>
-<span class="r-in"><span>  non_active_grp_span_lbl <span class="op">=</span> <span class="st">' '</span>,</span></span>
-<span class="r-in"><span>  active_grp_span_lbl <span class="op">=</span> <span class="st">'Active Study Agent'</span>,</span></span>
-<span class="r-in"><span>  colspan_var <span class="op">=</span> <span class="st">'colspan_trt'</span>,</span></span>
-<span class="r-in"><span>  trt_var <span class="op">=</span> <span class="st">'TRT01A'</span></span></span>
+<span class="r-in"><span>  non_active_grp <span class="op">=</span> <span class="st">"Placebo"</span>,</span></span>
+<span class="r-in"><span>  non_active_grp_span_lbl <span class="op">=</span> <span class="st">" "</span>,</span></span>
+<span class="r-in"><span>  active_grp_span_lbl <span class="op">=</span> <span class="st">"Active Study Agent"</span>,</span></span>
+<span class="r-in"><span>  colspan_var <span class="op">=</span> <span class="st">"colspan_trt"</span>,</span></span>
+<span class="r-in"><span>  trt_var <span class="op">=</span> <span class="st">"TRT01A"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">ref_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'colspan_trt'</span>, <span class="st">''</span>, <span class="st">'TRT01A'</span>, <span class="st">'Placebo'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ref_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"colspan_trt"</span>, <span class="st">""</span>, <span class="st">"TRT01A"</span>, <span class="st">"Placebo"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu">basic_table</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">split_cols_by</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">'colspan_trt'</span>,</span></span>
-<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu">trim_levels_to_map</span><span class="op">(</span>map <span class="op">=</span> <span class="va">colspan_trt_map</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"colspan_trt"</span>,</span></span>
+<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/trim_levels_to_map.html" class="external-link">trim_levels_to_map</a></span><span class="op">(</span>map <span class="op">=</span> <span class="va">colspan_trt_map</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">split_cols_by</span><span class="op">(</span><span class="st">'TRT01A'</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">split_cols_by</span><span class="op">(</span><span class="st">'diff_header'</span>, nested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">split_cols_by</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">'TRT01A'</span>,</span></span>
-<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu">remove_split_levels</span><span class="op">(</span><span class="st">'Placebo'</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    labels_var <span class="op">=</span> <span class="st">'diff_label'</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"TRT01A"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"diff_header"</span>, nested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"TRT01A"</span>,</span></span>
+<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="st">"Placebo"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    labels_var <span class="op">=</span> <span class="st">"diff_label"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">analyze</span><span class="op">(</span><span class="st">'AVAL'</span>,</span></span>
-<span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_summarize_ex_j</span>, var_labels <span class="op">=</span> <span class="st">'Duration of treatment (Days)'</span>,</span></span>
-<span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">'visible'</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AVAL"</span>,</span></span>
+<span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_summarize_ex_j</span>, var_labels <span class="op">=</span> <span class="st">"Duration of treatment (Days)"</span>,</span></span>
+<span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"visible"</span>,</span></span>
 <span class="r-in"><span>    indent_mod <span class="op">=</span> <span class="fl">0L</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      daysconv <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>      ref_path <span class="op">=</span> <span class="va">ref_path</span>,</span></span>
-<span class="r-in"><span>      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>arm <span class="op">=</span> <span class="st">'TRT01A'</span>, covariates <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>arm <span class="op">=</span> <span class="st">"TRT01A"</span>, covariates <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      ancova <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>      comp_btw_group <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">build_table</span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ADEX</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ADEX</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     Active Study Agent                    Difference in Means (95% CI)</span>

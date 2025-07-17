@@ -9,7 +9,7 @@ formatting that support the xx style format and control the rounding method"></h
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,10 +54,10 @@ formatting that support the xx style format and control the rounding method</p>
 
 
 <dl><dt id="arg-roundmethod">roundmethod<a class="anchor" aria-label="anchor" href="#arg-roundmethod"></a></dt>
-<dd><p>(`string`)<br> choice of rounding methods. Options are:
-* `sas`: the underlying rounding method is `tidytlg::roundSAS`, where <br>
-roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions/12688717/round-up-from-5
-* `iec`: the underlying rounding method is `round`</p></dd>
+<dd><p>(<code>string</code>)<br> choice of rounding methods. Options are:</p><ul><li><p><code>sas</code>: the underlying rounding method is <code><a href="https://pharmaverse.github.io/tidytlg/main/reference/roundSAS.html" class="external-link">tidytlg::roundSAS</a></code>, where <br>
+roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions/12688717/round-up-from-5</p></li>
+<li><p><code>iec</code>: the underlying rounding method is <code>round</code></p></li>
+</ul></dd>
 
 
 <dt id="arg-na-str-dflt">na_str_dflt<a class="anchor" aria-label="anchor" href="#arg-na-str-dflt"></a></dt>
@@ -65,15 +65,15 @@ roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions
 
 
 <dt id="arg-replace-na-dflt">replace_na_dflt<a class="anchor" aria-label="anchor" href="#arg-replace-na-dflt"></a></dt>
-<dd><p>logical(1). Should an `na_string` of "NA" within
-the formatters framework be overridden by `na_str_default`? Defaults to
-`TRUE`, as a way to have a different default na string behavior from the
-base `formatters` framework.</p></dd>
+<dd><p>logical(1). Should an <code>na_string</code> of "NA" within
+the formatters framework be overridden by <code>na_str_default</code>? Defaults to
+<code>TRUE</code>, as a way to have a different default na string behavior from the
+base <code>formatters</code> framework.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>`format_xx_fct()` format function that can be used in rtables formatting calls</p>
+    <p><code>format_xx_fct()</code> format function that can be used in rtables formatting calls</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -87,11 +87,11 @@ base `formatters` framework.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">jjcsformat_xx_SAS</span> <span class="op">&lt;-</span> <span class="fu">format_xx_fct</span><span class="op">(</span>roundmethod <span class="op">=</span> <span class="st">"sas"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">jjcsformat_xx</span> <span class="op">&lt;-</span> <span class="va">jjcsformat_xx_SAS</span></span></span>
-<span class="r-in"><span><span class="fu">rcell</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.453</span><span class="op">)</span>, <span class="fu"><a href="jjcsformat_xx.html">jjcsformat_xx</a></span><span class="op">(</span><span class="st">"xx.xx"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/rcell.html" class="external-link">rcell</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.453</span><span class="op">)</span>, <span class="fu"><a href="jjcsformat_xx.html">jjcsformat_xx</a></span><span class="op">(</span><span class="st">"xx.xx"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> rcell: 1.45 </span>
-<span class="r-in"><span><span class="fu">rcell</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="jjcsformat_xx.html">jjcsformat_xx</a></span><span class="op">(</span><span class="st">"xx.xx"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/rcell.html" class="external-link">rcell</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="jjcsformat_xx.html">jjcsformat_xx</a></span><span class="op">(</span><span class="st">"xx.xx"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> rcell:  </span>
-<span class="r-in"><span><span class="fu">rcell</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.453</span>, <span class="fl">2.45638</span><span class="op">)</span>, <span class="fu"><a href="jjcsformat_xx.html">jjcsformat_xx</a></span><span class="op">(</span><span class="st">"xx.xx (xx.xxx)"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/rcell.html" class="external-link">rcell</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.453</span>, <span class="fl">2.45638</span><span class="op">)</span>, <span class="fu"><a href="jjcsformat_xx.html">jjcsformat_xx</a></span><span class="op">(</span><span class="st">"xx.xx (xx.xxx)"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> rcell: 1.45 (2.456) </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -114,7 +114,7 @@ two inches.</p>
 <p>We can see this by tables with the same structure and value contents
 but varying verbosity with column and row labels.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://johnsonandjohnson.github.io/junco/" class="external-link">junco</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/johnsonandjohnson/junco" class="external-link">junco</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: formatters</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'formatters'</span></span>
@@ -147,7 +147,7 @@ but varying verbosity with column and row labels.</p>
 <span></span>
 <span><span class="va">tbl1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt1</span>, <span class="va">adsl2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tbl1</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tbl1</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                    A: Drug X    B: Placebo    C: Combination</span></span>
 <span><span class="co">#&gt; ————————————————————————————————————————————————————————————————————————————</span></span>
 <span><span class="co">#&gt; ASIAN                             68 (50.75%)   67 (50.00%)    73 (55.30%)  </span></span>
@@ -177,7 +177,7 @@ but varying verbosity with column and row labels.</p>
 <span><span class="co">#&gt;   WITHDRAWAL BY PARENT/GUARDIAN        3             1             2</span></span>
 <span></span>
 <span><span class="co">## super wide column labels</span></span>
-<span><span class="va">lyt3</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="va">lyt3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span>, labels_var <span class="op">=</span> <span class="st">"ARM3"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"RACE"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"xx (xx.xx%)"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -240,7 +240,7 @@ labels, as many letters have larger print widths than punctuation and
 numeric digit characters:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fspec_times</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/font_spec.html" class="external-link">font_spec</a></span><span class="op">(</span><span class="st">"Times"</span>, <span class="fl">9</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/propose_column_widths.html" class="external-link">propose_column_widths</a></span><span class="op">(</span><span class="va">tbl3</span>, fontspec <span class="op">=</span> <span class="va">fspec_times</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/propose_column_widths.html" class="external-link">propose_column_widths</a></span><span class="op">(</span><span class="va">tbl3</span>, fontspec <span class="op">=</span> <span class="va">fspec_times</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 93 45 65 36</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/def_colwidths.html">def_colwidths</a></span><span class="op">(</span><span class="va">tbl3</span>, fontspec <span class="op">=</span> <span class="va">fspec_times</span>, label_width_ins <span class="op">=</span> <span class="fl">2</span>, col_gap <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
@@ -255,7 +255,7 @@ columns, those widths take up</p>
 <p>space-character widths (which is the unit <code>formatters</code>
 calculates widths in) while a standard page only has</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">formatters</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/page_lcpp.html" class="external-link">page_lcpp</a></span><span class="op">(</span>fontspec <span class="op">=</span> <span class="va">fspec_times</span> <span class="op">)</span><span class="op">$</span><span class="va">cpp</span></span>
+<code class="sourceCode R"><span><span class="fu">formatters</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/page_lcpp.html" class="external-link">page_lcpp</a></span><span class="op">(</span>fontspec <span class="op">=</span> <span class="va">fspec_times</span><span class="op">)</span><span class="op">$</span><span class="va">cpp</span></span>
 <span><span class="co">#&gt; [1] 224</span></span></code></pre></div>
 <p>spaces of width available.</p>
 <p>The column widths calculated by <code>def_colwidths</code>, however,
@@ -316,7 +316,7 @@ to less than the total available space.</p>
 <span></span>
 <span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu">pharmaverseadam</span><span class="fu">::</span><span class="va"><a href="https://pharmaverse.github.io/pharmaverseadam/reference/adae.html" class="external-link">adae</a></span></span>
 <span><span class="va">adae</span><span class="op">$</span><span class="va">AEOUT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"/"</span>, <span class="st">" / "</span>, <span class="va">adae</span><span class="op">$</span><span class="va">AEOUT</span><span class="op">)</span></span>
-<span><span class="va">adsl</span> <span class="op">&lt;-</span>  <span class="fu">pharmaverseadam</span><span class="fu">::</span><span class="va"><a href="https://pharmaverse.github.io/pharmaverseadam/reference/adsl.html" class="external-link">adsl</a></span></span>
+<span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu">pharmaverseadam</span><span class="fu">::</span><span class="va"><a href="https://pharmaverse.github.io/pharmaverseadam/reference/adsl.html" class="external-link">adsl</a></span></span>
 <span></span>
 <span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="va">adsl</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span>, <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">adsl</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">adae</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
@@ -324,8 +324,10 @@ to less than the total available space.</p>
 <span><span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/var_labels.html" class="external-link">var_labels</a></span><span class="op">(</span><span class="va">lstdat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/var_labels.html" class="external-link">var_labels</a></span><span class="op">(</span><span class="va">adae</span><span class="op">)</span>, <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/var_labels.html" class="external-link">var_labels</a></span><span class="op">(</span><span class="va">adsl</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">lstdat</span><span class="op">$</span><span class="va">demog</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/with_label.html" class="external-link">with_label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">lstdat</span><span class="op">$</span><span class="va">RACE</span>, <span class="va">lstdat</span><span class="op">$</span><span class="va">SEX</span>, <span class="va">lstdat</span><span class="op">$</span><span class="va">AGE</span>, sep <span class="op">=</span> <span class="st">" / "</span><span class="op">)</span>, <span class="st">"Demographic Information"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">lsting</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rlistings/latest-tag/reference/listings.html" class="external-link">as_listing</a></span><span class="op">(</span><span class="va">lstdat</span>,key_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span><span class="op">)</span>,</span>
-<span>                     disp_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ACTARM"</span>, <span class="st">"COUNTRY"</span>, <span class="st">"demog"</span>, <span class="st">"AESEV"</span>, <span class="st">"AEBODSYS"</span>, <span class="st">"AEDECOD"</span>, <span class="st">"ASTDTM"</span>, <span class="st">"AENDTM"</span>, <span class="st">"AEOUT"</span>, <span class="st">"EOSSTT"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">lsting</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rlistings/latest-tag/reference/listings.html" class="external-link">as_listing</a></span><span class="op">(</span><span class="va">lstdat</span>,</span>
+<span>  key_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span><span class="op">)</span>,</span>
+<span>  disp_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ACTARM"</span>, <span class="st">"COUNTRY"</span>, <span class="st">"demog"</span>, <span class="st">"AESEV"</span>, <span class="st">"AEBODSYS"</span>, <span class="st">"AEDECOD"</span>, <span class="st">"ASTDTM"</span>, <span class="st">"AENDTM"</span>, <span class="st">"AEOUT"</span>, <span class="st">"EOSSTT"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="candidate-column-widths">Candidate Column Widths<a class="anchor" aria-label="anchor" href="#candidate-column-widths"></a>
 </h4>
@@ -352,15 +354,16 @@ into another, the fourth in its own, and “words” five through 8 all fit
 into a final line, for a total of four lines. We call this <em>packing
 lines</em></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">packed_widths</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<code class="sourceCode R"><span><span class="va">packed_widths</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">lst</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">lst</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">" "</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="fu">packed_widths</span><span class="op">(</span><span class="va">wrds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>,</span>
-<span>              <span class="va">wrds</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,</span>
-<span>              <span class="va">wrds</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>,</span>
-<span>              <span class="va">wrds</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu">packed_widths</span><span class="op">(</span></span>
+<span>  <span class="va">wrds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>,</span>
+<span>  <span class="va">wrds</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,</span>
+<span>  <span class="va">wrds</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>,</span>
+<span>  <span class="va">wrds</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 8 7 8 8</span></span></code></pre></div>
 <p>Recall that we do not care which words are allocated where, only the
 total number of lines required, so a colwidth of 10, which would allow
@@ -380,8 +383,10 @@ one.</p>
 <p>Increasing the column width to 17, however, allows us to get down to
 two lines:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">packed_widths</span><span class="op">(</span><span class="va">wrds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,</span>
-<span>              <span class="va">wrds</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">packed_widths</span><span class="op">(</span></span>
+<span>  <span class="va">wrds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,</span>
+<span>  <span class="va">wrds</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 16 17</span></span></code></pre></div>
 <p>Finally, the last possible width with a different line total is the
 smallest width that will fit the entire value, i.e., 34.</p>
@@ -428,8 +433,7 @@ outcome.</p>
 for explicitness, and to make the column widths more directly comparable
 via <code>export_as_txt</code> output.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">fspec_times8</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/font_spec.html" class="external-link">font_spec</a></span><span class="op">(</span><span class="st">"Times"</span>, <span class="fl">8</span>, <span class="fl">1</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">fspec_times8</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/font_spec.html" class="external-link">font_spec</a></span><span class="op">(</span><span class="st">"Times"</span>, <span class="fl">8</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">cw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/def_colwidths.html">listing_column_widths</a></span><span class="op">(</span><span class="va">lsting</span>, col_gap <span class="op">=</span> <span class="fl">0</span>, fontspec <span class="op">=</span> <span class="va">fspec_times8</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Optimizng Column Widths</span></span>
 <span><span class="co">#&gt; Initial lines required: 3979</span></span>
@@ -437,9 +441,11 @@ via <code>export_as_txt</code> output.</p>
 <span><span class="co">#&gt; COL 10 width: 26-&gt;51 lines req: 3825-&gt;1914</span></span>
 <span><span class="co">#&gt; COL 6 width: 40-&gt;48 lines req: 3415-&gt;2974</span></span>
 <span></span>
-<span><span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/export_as_txt.html" class="external-link">export_as_txt</a></span><span class="op">(</span><span class="va">lsting</span>, pg_width <span class="op">=</span> <span class="fu"><a href="../reference/inches_to_spaces.html">inches_to_spaces</a></span><span class="op">(</span><span class="fl">8.88</span>, fontspec <span class="op">=</span> <span class="va">fspec_times8</span><span class="op">)</span>,</span>
-<span>                     lpp <span class="op">=</span> <span class="cn">NULL</span>, colwidths <span class="op">=</span> <span class="va">cw</span>,</span>
-<span>                     fontspec <span class="op">=</span> <span class="va">fspec_times8</span>, col_gap <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/export_as_txt.html" class="external-link">export_as_txt</a></span><span class="op">(</span><span class="va">lsting</span>,</span>
+<span>  pg_width <span class="op">=</span> <span class="fu"><a href="../reference/inches_to_spaces.html">inches_to_spaces</a></span><span class="op">(</span><span class="fl">8.88</span>, fontspec <span class="op">=</span> <span class="va">fspec_times8</span><span class="op">)</span>,</span>
+<span>  lpp <span class="op">=</span> <span class="cn">NULL</span>, colwidths <span class="op">=</span> <span class="va">cw</span>,</span>
+<span>  fontspec <span class="op">=</span> <span class="va">fspec_times8</span>, col_gap <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">txt2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">txt</span>, <span class="st">"\n"</span>, fixed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">txt2</span><span class="op">)</span></span>
@@ -454,9 +460,11 @@ via <code>export_as_txt</code> output.</p>
 <p>Versus giving each column an equal portion of the width (admittedly
 an ill-conceived strategy)</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">txtbad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/export_as_txt.html" class="external-link">export_as_txt</a></span><span class="op">(</span><span class="va">lsting</span>, pg_width <span class="op">=</span> <span class="fu"><a href="../reference/inches_to_spaces.html">inches_to_spaces</a></span><span class="op">(</span><span class="fl">8.88</span>, fontspec <span class="op">=</span> <span class="va">fspec_times8</span><span class="op">)</span>,</span>
-<span>                     lpp <span class="op">=</span> <span class="cn">NULL</span>, colwidths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fl">320</span><span class="op">/</span><span class="fl">11</span><span class="op">)</span>, <span class="fl">11</span><span class="op">)</span>,</span>
-<span>                     fontspec <span class="op">=</span> <span class="va">fspec_times8</span>, col_gap <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">txtbad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/export_as_txt.html" class="external-link">export_as_txt</a></span><span class="op">(</span><span class="va">lsting</span>,</span>
+<span>  pg_width <span class="op">=</span> <span class="fu"><a href="../reference/inches_to_spaces.html">inches_to_spaces</a></span><span class="op">(</span><span class="fl">8.88</span>, fontspec <span class="op">=</span> <span class="va">fspec_times8</span><span class="op">)</span>,</span>
+<span>  lpp <span class="op">=</span> <span class="cn">NULL</span>, colwidths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fl">320</span> <span class="op">/</span> <span class="fl">11</span><span class="op">)</span>, <span class="fl">11</span><span class="op">)</span>,</span>
+<span>  fontspec <span class="op">=</span> <span class="va">fspec_times8</span>, col_gap <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">txt2bad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">txtbad</span>, <span class="st">"\n"</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">txt2bad</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "  Unique Subject Identifier    Description of Actual Arm             Country              Demographic Information        Severity/Intensity       Body System or Organ Class     Dictionary-Derived Term     Analysis Start Date/Time      Analysis End Date/Time      Outcome of Adverse Event        End of Study Status     "</span></span>

@@ -11,7 +11,7 @@ this function also allows further flexibility to also prune based on a compariso
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,16 +100,16 @@ control and abs(diff) above threshold</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  USUBJID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">'XXXXX01'</span>, <span class="st">'XXXXX02'</span>, <span class="st">'XXXXX03'</span>, <span class="st">'XXXXX04'</span>, <span class="st">'XXXXX05'</span>,</span></span>
-<span class="r-in"><span>    <span class="st">'XXXXX06'</span>, <span class="st">'XXXXX07'</span>, <span class="st">'XXXXX08'</span>, <span class="st">'XXXXX09'</span>, <span class="st">'XXXXX10'</span></span></span>
+<span class="r-in"><span>    <span class="st">"XXXXX01"</span>, <span class="st">"XXXXX02"</span>, <span class="st">"XXXXX03"</span>, <span class="st">"XXXXX04"</span>, <span class="st">"XXXXX05"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"XXXXX06"</span>, <span class="st">"XXXXX07"</span>, <span class="st">"XXXXX08"</span>, <span class="st">"XXXXX09"</span>, <span class="st">"XXXXX10"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  TRT01P <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">'ARMA'</span>, <span class="st">'ARMB'</span>, <span class="st">'ARMA'</span>, <span class="st">'ARMB'</span>, <span class="st">'ARMB'</span>,</span></span>
-<span class="r-in"><span>    <span class="st">'Placebo'</span>, <span class="st">'Placebo'</span>, <span class="st">'Placebo'</span>, <span class="st">'ARMA'</span>, <span class="st">'ARMB'</span></span></span>
+<span class="r-in"><span>    <span class="st">"ARMA"</span>, <span class="st">"ARMB"</span>, <span class="st">"ARMA"</span>, <span class="st">"ARMB"</span>, <span class="st">"ARMB"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Placebo"</span>, <span class="st">"Placebo"</span>, <span class="st">"Placebo"</span>, <span class="st">"ARMA"</span>, <span class="st">"ARMB"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span>,</span></span>
-<span class="r-in"><span>  FASFL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Y'</span>, <span class="st">'Y'</span>, <span class="st">'Y'</span>, <span class="st">'Y'</span>, <span class="st">'N'</span>, <span class="st">'Y'</span>, <span class="st">'Y'</span>, <span class="st">'Y'</span>, <span class="st">'Y'</span>, <span class="st">'Y'</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  SAFFL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  PKFL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span>, <span class="st">'N'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  FASFL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Y"</span>, <span class="st">"Y"</span>, <span class="st">"Y"</span>, <span class="st">"Y"</span>, <span class="st">"N"</span>, <span class="st">"Y"</span>, <span class="st">"Y"</span>, <span class="st">"Y"</span>, <span class="st">"Y"</span>, <span class="st">"Y"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  SAFFL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  PKFL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span>, <span class="st">"N"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="va">ADSL</span> <span class="op">|&gt;</span></span></span>
@@ -117,47 +117,44 @@ control and abs(diff) above threshold</p></dd>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>SAFFL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">SAFFL</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Y"</span>, <span class="st">"N"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>PKFL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">PKFL</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Y"</span>, <span class="st">"N"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu">basic_table</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">split_cols_by</span><span class="op">(</span><span class="st">'TRT01P'</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">add_overall_col</span><span class="op">(</span><span class="st">'Total'</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu">split_rows_by</span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"TRT01P"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/add_overall_col.html" class="external-link">add_overall_col</a></span><span class="op">(</span><span class="st">"Total"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"FASFL"</span>,</span></span>
-<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu">drop_and_remove_levels</span><span class="op">(</span><span class="st">"N"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">drop_and_remove_levels</a></span><span class="op">(</span><span class="st">"N"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    child_labels <span class="op">=</span> <span class="st">"hidden"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">analyze</span><span class="op">(</span><span class="st">'FASFL'</span>,</span></span>
-<span class="r-in"><span>    var_labels <span class="op">=</span> <span class="st">'Analysis set:'</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"FASFL"</span>,</span></span>
+<span class="r-in"><span>    var_labels <span class="op">=</span> <span class="st">"Analysis set:"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span></span>
-<span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">'visible'</span>,</span></span>
-<span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">'Full'</span>, .stats <span class="op">=</span> <span class="st">"count_unique_fraction"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"visible"</span>,</span></span>
+<span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Full"</span>, .stats <span class="op">=</span> <span class="st">"count_unique_fraction"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu">split_rows_by</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"SAFFL"</span>,</span></span>
-<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu">remove_split_levels</span><span class="op">(</span><span class="st">"N"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="st">"N"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    child_labels <span class="op">=</span> <span class="st">"hidden"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">analyze</span><span class="op">(</span><span class="st">'SAFFL'</span>,</span></span>
-<span class="r-in"><span>    var_labels <span class="op">=</span> <span class="st">'Analysis set:'</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"SAFFL"</span>,</span></span>
+<span class="r-in"><span>    var_labels <span class="op">=</span> <span class="st">"Analysis set:"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span></span>
-<span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">'visible'</span>,</span></span>
-<span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">'Safety'</span>, .stats <span class="op">=</span> <span class="st">"count_unique_fraction"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"visible"</span>,</span></span>
+<span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Safety"</span>, .stats <span class="op">=</span> <span class="st">"count_unique_fraction"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu">split_rows_by</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"PKFL"</span>,</span></span>
-<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu">remove_split_levels</span><span class="op">(</span><span class="st">"N"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="st">"N"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    child_labels <span class="op">=</span> <span class="st">"hidden"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">analyze</span><span class="op">(</span><span class="st">'PKFL'</span>,</span></span>
-<span class="r-in"><span>    var_labels <span class="op">=</span> <span class="st">'Analysis set:'</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"PKFL"</span>,</span></span>
+<span class="r-in"><span>    var_labels <span class="op">=</span> <span class="st">"Analysis set:"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span></span>
-<span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">'visible'</span>,</span></span>
-<span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">'PK'</span>, .stats <span class="op">=</span> <span class="st">"count_unique_fraction"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"visible"</span>,</span></span>
+<span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"PK"</span>, .stats <span class="op">=</span> <span class="st">"count_unique_fraction"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">build_table</span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ADSL</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ADSL</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    ARMA        ARMB       Placebo       Total  </span>
@@ -169,15 +166,12 @@ control and abs(diff) above threshold</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Analysis set:                                                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   PK                0            0           0            0    </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># use pruning function to prune rows where it doesn't meet 5% criteria</span></span></span>
-<span class="r-in"><span><span class="co"># in the total column but it will not</span></span></span>
-<span class="r-in"><span><span class="co"># prune the Safety row regardless</span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">prune_table</span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/prune_table.html" class="external-link">prune_table</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">result</span>,</span></span>
 <span class="r-in"><span>  prune_func <span class="op">=</span> <span class="fu">bspt_pruner</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    fraction <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
-<span class="r-in"><span>    keeprowtext <span class="op">=</span> <span class="st">'Safety'</span>,</span></span>
-<span class="r-in"><span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Total'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    keeprowtext <span class="op">=</span> <span class="st">"Safety"</span>,</span></span>
+<span class="r-in"><span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Total"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>

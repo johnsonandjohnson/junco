@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,50 +56,44 @@
 
 
 <dt id="arg-file">file<a class="anchor" aria-label="anchor" href="#arg-file"></a></dt>
-<dd><p>(`character(1)`)<br> A path to CSV or xlsx file containing title
+<dd><p>(<code>character(1)</code>)<br> A path to CSV or xlsx file containing title
 and footer information for one or more outputs. See Details. Ignored if
-`title_df` is specified.</p></dd>
+<code>title_df</code> is specified.</p></dd>
 
 
 <dt id="arg-input-path">input_path<a class="anchor" aria-label="anchor" href="#arg-input-path"></a></dt>
-<dd><p>(`character(1)`)<br> A path to look for
-titles.csv/titles.xlsx. Ignored if `file` or `title_df` is specified.</p></dd>
+<dd><p>(<code>character(1)</code>)<br> A path to look for
+titles.csv/titles.xlsx. Ignored if <code>file</code> or <code>title_df</code> is specified.</p></dd>
 
 
 <dt id="arg-title-df">title_df<a class="anchor" aria-label="anchor" href="#arg-title-df"></a></dt>
-<dd><p>(`data.frame`)<br> A data.frame containing titles and footers for
+<dd><p>(<code>data.frame</code>)<br> A data.frame containing titles and footers for
 one or more  outputs. See Details.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>List object containing: title, subtitles, main_footer, prov_footer
-          for the table of interest.  Note: the subtitles and prov_footer are
-          currently set to NULL. Suitable for use with [`set_titles()`].</p>
+for the table of interest.  Note: the subtitles and prov_footer are
+currently set to NULL. Suitable for use with <code><a href="set_titles.html">set_titles()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Retrieves the titles for a given output id (see below) and outputs
-         a list containing the title and footnote objects supported by
-         rtables. Both titles.csv and titles.xlsx (*if `readxl` is
-         installed*) files are supported, with titles.csv being checked
-         first.</p>
-<p>Data is expected to have `TABLE ID`, `IDENTIFIER`, and `TEXT` columns,
-         where `IDENTIFIER` has the value `TITLE` for a title and `FOOT*` for
-         footer materials where `*` is a positive integer. `TEXT` contains
-         the value of the title/footer to be applied.</p>
+a list containing the title and footnote objects supported by
+rtables. Both titles.csv and titles.xlsx (<em>if <code>readxl</code> is
+installed</em>) files are supported, with titles.csv being checked
+first.</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>     Data is expected to have <span class="st">`</span><span class="at">TABLE ID</span><span class="st">`</span>, <span class="st">`</span><span class="at">IDENTIFIER</span><span class="st">`</span>, and <span class="st">`</span><span class="at">TEXT</span><span class="st">`</span> columns,</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>     where <span class="st">`</span><span class="at">IDENTIFIER</span><span class="st">`</span> has the value <span class="st">`</span><span class="at">TITLE</span><span class="st">`</span> <span class="cf">for</span> a title and <span class="st">`</span><span class="at">FOOT*</span><span class="st">`</span> <span class="cf">for</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>     footer materials where <span class="st">`</span><span class="at">*</span><span class="st">`</span> is a positive integer. <span class="st">`</span><span class="at">TEXT</span><span class="st">`</span> contains</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>     the value of the title<span class="sc">/</span>footer to be applied.</span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Used in all template script</p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># title_footer &lt;- get_titles_from_file(tblid)</span></span></span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

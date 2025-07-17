@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,7 +76,7 @@ to <code>rtables</code>”</a> vignettes.</p>
 <p>The packages used in this vignette are:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/insightsengineering/rtables" class="external-link">rtables</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://johnsonandjohnson.github.io/junco/" class="external-link">junco</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/johnsonandjohnson/junco" class="external-link">junco</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://insightsengineering.github.io/tern/" class="external-link">tern</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 <p>The datasets used in this vignette are:</p>
@@ -88,8 +88,7 @@ to <code>rtables</code>”</a> vignettes.</p>
 extra variables and defining some tabulation settings, like treatment
 variable, control group for the table.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">trtvar</span> <span class="op">&lt;-</span> <span class="st">"ARM"</span></span>
+<code class="sourceCode R"><span><span class="va">trtvar</span> <span class="op">&lt;-</span> <span class="st">"ARM"</span></span>
 <span><span class="va">ctrl_grp</span> <span class="op">&lt;-</span> <span class="st">"B: Placebo"</span></span>
 <span></span>
 <span><span class="va">non_ctrl_grp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">adsl</span><span class="op">[[</span><span class="va">trtvar</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, <span class="va">ctrl_grp</span><span class="op">)</span></span>
@@ -117,8 +116,8 @@ variable, control group for the table.</p>
 <span><span class="va">adae</span><span class="op">[[</span><span class="st">"TRTEMFL"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Y"</span></span>
 <span></span>
 <span><span class="co"># add adsl variables to adae</span></span>
-<span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="va">adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">adsl</span><span class="op">)</span> </span>
-<span><span class="va">advs</span> <span class="op">&lt;-</span> <span class="va">advs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">adsl</span><span class="op">)</span> </span>
+<span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="va">adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">adsl</span><span class="op">)</span></span>
+<span><span class="va">advs</span> <span class="op">&lt;-</span> <span class="va">advs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">adsl</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">advs</span><span class="op">[</span><span class="va">advs</span><span class="op">[[</span><span class="st">"ABLFL"</span><span class="op">]</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Y"</span>, <span class="st">"CHG"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></code></pre></div>
 </div>
@@ -197,12 +196,14 @@ TRTEMFL = “Y” values and the label to show in the row.</p>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>, show_colcounts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">## risk diff columns, note nested = FALSE</span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"rrisk_header"</span>, nested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>, labels_var <span class="op">=</span> <span class="st">"rrisk_label"</span>, split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="va">ctrl_grp</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>,</span>
+<span>    labels_var <span class="op">=</span> <span class="st">"rrisk_label"</span>, split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="va">ctrl_grp</span><span class="op">)</span>,</span>
 <span>    show_colcounts <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"TRTEMFL"</span>, afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"TRTEMFL"</span>,</span>
+<span>    afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
 <span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span><span class="va">extra_args_rr</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>val <span class="op">=</span> <span class="st">"Y"</span>, label <span class="op">=</span> <span class="st">"Number of subjects with AE"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>   </span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>,</span>
 <span>    split_label <span class="op">=</span> <span class="st">"System Organ Class"</span>,</span>
 <span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">trim_levels_in_group</a></span><span class="op">(</span><span class="st">"AEDECOD"</span><span class="op">)</span>,</span>
@@ -210,10 +211,12 @@ TRTEMFL = “Y” values and the label to show in the row.</p>
 <span>    section_div <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">" "</span><span class="op">)</span>,</span>
 <span>    nested <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>, cfun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>,</span>
+<span>    cfun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
 <span>    extra_args <span class="op">=</span> <span class="va">extra_args_rr</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AEDECOD"</span>, afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AEDECOD"</span>,</span>
+<span>    afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
 <span>    extra_args <span class="op">=</span> <span class="va">extra_args_rr</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Now we just build and view the resulting table.</p>
@@ -247,14 +250,13 @@ TRTEMFL = “Y” values and the label to show in the row.</p>
 as close as possible to our target AE table we produced before in
 <code>tbl</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">lyt_tern</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">lyt_tern</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span></span>
 <span>  top_level_section_div <span class="op">=</span> <span class="st">" "</span>,</span>
 <span>  colcount_format <span class="op">=</span> <span class="st">"N=xx"</span></span>
 <span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">## main columns</span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>, </span>
-<span>    show_colcounts <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>,</span>
+<span>    show_colcounts <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/add_riskdiff.html" class="external-link">add_riskdiff</a></span><span class="op">(</span>arm_x <span class="op">=</span> <span class="va">ctrl_grp</span>, arm_y <span class="op">=</span> <span class="va">non_ctrl_grp</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/summarize_num_patients.html" class="external-link">analyze_num_patients</a></span><span class="op">(</span></span>
@@ -262,9 +264,9 @@ as close as possible to our target AE table we produced before in
 <span>    .stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"unique"</span><span class="op">)</span>,</span>
 <span>    .labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>      unique <span class="op">=</span> <span class="st">"Total number of patients with at least one adverse event"</span></span>
-<span>    <span class="op">)</span>, </span>
+<span>    <span class="op">)</span>,</span>
 <span>    riskdiff <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  </span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>,</span>
 <span>    split_label <span class="op">=</span> <span class="st">"System Organ Class"</span>,</span>
 <span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">trim_levels_in_group</a></span><span class="op">(</span><span class="st">"AEDECOD"</span><span class="op">)</span>,</span>
@@ -272,12 +274,14 @@ as close as possible to our target AE table we produced before in
 <span>    section_div <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">" "</span><span class="op">)</span>,</span>
 <span>    nested <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/count_occurrences.html" class="external-link">summarize_occurrences</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"AEBODSYS"</span>,</span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/count_occurrences.html" class="external-link">summarize_occurrences</a></span><span class="op">(</span></span>
+<span>    var <span class="op">=</span> <span class="st">"AEBODSYS"</span>,</span>
 <span>    denom <span class="op">=</span> <span class="st">"N_col"</span>,</span>
 <span>    riskdiff <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    .stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"count_fraction"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/count_occurrences.html" class="external-link">count_occurrences</a></span><span class="op">(</span>vars <span class="op">=</span> <span class="st">"AEDECOD"</span>,  </span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/count_occurrences.html" class="external-link">count_occurrences</a></span><span class="op">(</span></span>
+<span>    vars <span class="op">=</span> <span class="st">"AEDECOD"</span>,</span>
 <span>    denom <span class="op">=</span> <span class="st">"N_col"</span>,</span>
 <span>    riskdiff <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    .stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"count_fraction"</span><span class="op">)</span></span>
@@ -336,8 +340,10 @@ methods using tern <code>count_occurrences</code> layouts, only
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>, show_colcounts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">## risk diff columns, note nested = FALSE</span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"rrisk_header"</span>, nested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>, labels_var <span class="op">=</span> <span class="st">"rrisk_label"</span>, split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="va">ctrl_grp</span><span class="op">)</span>,</span>
-<span>    show_colcounts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>,</span>
+<span>    labels_var <span class="op">=</span> <span class="st">"rrisk_label"</span>, split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="va">ctrl_grp</span><span class="op">)</span>,</span>
+<span>    show_colcounts <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>,</span>
 <span>    split_label <span class="op">=</span> <span class="st">"System Organ Class"</span>,</span>
 <span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">trim_levels_in_group</a></span><span class="op">(</span><span class="st">"AEDECOD"</span><span class="op">)</span>,</span>
@@ -345,12 +351,14 @@ methods using tern <code>count_occurrences</code> layouts, only
 <span>    section_div <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">" "</span><span class="op">)</span>,</span>
 <span>    nested <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>, cfun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>,</span>
+<span>    cfun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
 <span>    extra_args <span class="op">=</span> <span class="va">extra_args_rr</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AEDECOD"</span>, afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AEDECOD"</span>,</span>
+<span>    afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
 <span>    extra_args <span class="op">=</span> <span class="va">extra_args_rr</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">adae</span>, alt_counts_df <span class="op">=</span> <span class="va">adsl</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tbl2</span>, <span class="fl">10</span><span class="op">)</span></span>
@@ -378,14 +386,13 @@ methods using tern <code>count_occurrences</code> layouts, only
 <p>The junco function <code>a_freq_j</code> also supports the creation
 of subgroup tables, which is demonstrated in below table.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">extra_args_rr_common</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">extra_args_rr_common</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  denom <span class="op">=</span> <span class="st">"n_altdf"</span>,</span>
 <span>  denom_by <span class="op">=</span> <span class="st">"SEX"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">extra_args_rr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span></span>
-<span>  <span class="va">extra_args_rr_common</span>, </span>
+<span>  <span class="va">extra_args_rr_common</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    riskdiff <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    extrablankline <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -395,7 +402,7 @@ of subgroup tables, which is demonstrated in below table.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">extra_args_rr2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span></span>
-<span>  <span class="va">extra_args_rr_common</span>, </span>
+<span>  <span class="va">extra_args_rr_common</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    riskdiff <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    ref_path <span class="op">=</span> <span class="va">ref_path</span>,</span>
@@ -414,10 +421,13 @@ of subgroup tables, which is demonstrated in below table.</p>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>, show_colcounts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">## risk diff columns, note nested = FALSE</span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"rrisk_header"</span>, nested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>, labels_var <span class="op">=</span> <span class="st">"rrisk_label"</span>, split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="va">ctrl_grp</span><span class="op">)</span>,</span>
-<span>    show_colcounts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"SEX"</span>, split_fun <span class="op">=</span> <span class="va">drop_split_levels</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span><span class="st">"SEX"</span>, cfun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>,</span>
+<span>    labels_var <span class="op">=</span> <span class="st">"rrisk_label"</span>, split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="va">ctrl_grp</span><span class="op">)</span>,</span>
+<span>    show_colcounts <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"SEX"</span>, split_fun <span class="op">=</span> <span class="va">drop_split_levels</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span><span class="st">"SEX"</span>,</span>
+<span>    cfun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
 <span>    extra_args <span class="op">=</span> <span class="va">extra_args_rr</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"TRTEMFL"</span>,</span>
@@ -427,24 +437,26 @@ of subgroup tables, which is demonstrated in below table.</p>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span><span class="st">"TRTEMFL"</span>,</span>
 <span>    cfun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
-<span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span><span class="va">extra_args_rr2</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span>  <span class="st">"Subjects with &gt;=1 AE"</span>, extrablankline <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>    </span>
-<span>   <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>,</span>
+<span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span><span class="va">extra_args_rr2</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Subjects with &gt;=1 AE"</span>, extrablankline <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>,</span>
 <span>    split_label <span class="op">=</span> <span class="st">"System Organ Class"</span>,</span>
 <span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">trim_levels_in_group</a></span><span class="op">(</span><span class="st">"AEDECOD"</span><span class="op">)</span>,</span>
 <span>    label_pos <span class="op">=</span> <span class="st">"topleft"</span>,</span>
 <span>    section_div <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">" "</span><span class="op">)</span>,</span>
 <span>    nested <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>, cfun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>,</span>
+<span>    cfun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
 <span>    extra_args <span class="op">=</span> <span class="va">extra_args_rr2</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AEDECOD"</span>, afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AEDECOD"</span>,</span>
+<span>    afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span>
 <span>    extra_args <span class="op">=</span> <span class="va">extra_args_rr2</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">adae</span>, alt_counts_df <span class="op">=</span> <span class="va">adsl</span><span class="op">)</span></span>
 <span></span>
-<span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tbl</span>, <span class="fl">30</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tbl</span>, <span class="fl">30</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                              Active Study Agent                                                                               </span></span>
 <span><span class="co">#&gt;                          A: Drug X     C: Combination    B: Placebo                  Risk Difference (%) (95% CI)             </span></span>
 <span><span class="co">#&gt; System Organ Class         N=134           N=132            N=134       A: Drug X vs B: Placebo   C: Combination vs B: Placebo</span></span>
@@ -525,71 +537,71 @@ geom_mean-CI (available in tern &gt;= 0.9.6)</li>
 <code class="sourceCode R"><span><span class="va">multivars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AVAL"</span>, <span class="st">"AVAL"</span>, <span class="st">"CHG"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">extra_args_3col</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  format_na_str <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span>, </span>
+<span>  format_na_str <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span>,</span>
 <span>  ref_path <span class="op">=</span> <span class="va">ref_path</span>,</span>
-<span>  ancova <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>  ancova <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  comp_btw_group <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  multivars <span class="op">=</span> <span class="va">multivars</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="va">lyt_vs_p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span></span>
-<span>  show_colcounts <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>  show_colcounts <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  colcount_format <span class="op">=</span> <span class="st">"N=xx"</span></span>
 <span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">### first columns</span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"colspan_trt"</span>, </span>
-<span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/trim_levels_to_map.html" class="external-link">trim_levels_to_map</a></span><span class="op">(</span>map <span class="op">=</span> <span class="va">colspan_trt_map</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"colspan_trt"</span>,</span>
+<span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/trim_levels_to_map.html" class="external-link">trim_levels_to_map</a></span><span class="op">(</span>map <span class="op">=</span> <span class="va">colspan_trt_map</span><span class="op">)</span>,</span>
 <span>    show_colcounts <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>,</span>
 <span>    show_colcounts <span class="op">=</span> <span class="cn">TRUE</span>, colcount_format <span class="op">=</span> <span class="st">"N=xx"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">## set up a 3 column split</span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by_multivar.html" class="external-link">split_cols_by_multivar</a></span><span class="op">(</span><span class="va">multivars</span>, </span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by_multivar.html" class="external-link">split_cols_by_multivar</a></span><span class="op">(</span><span class="va">multivars</span>,</span>
 <span>    varlabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n/N (%)"</span>, <span class="st">"Mean (95% CI)"</span>, <span class="st">"Mean Change From Baseline (95% CI)"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"PARAM"</span>, </span>
-<span>    label_pos <span class="op">=</span> <span class="st">"topleft"</span>, </span>
-<span>    split_label <span class="op">=</span> <span class="st">"Parameter"</span>, </span>
-<span>    section_div <span class="op">=</span> <span class="st">" "</span>, </span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"PARAM"</span>,</span>
+<span>    label_pos <span class="op">=</span> <span class="st">"topleft"</span>,</span>
+<span>    split_label <span class="op">=</span> <span class="st">"Parameter"</span>,</span>
+<span>    section_div <span class="op">=</span> <span class="st">" "</span>,</span>
 <span>    split_fun <span class="op">=</span> <span class="va">drop_split_levels</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">## note the child_labels = hidden for AVISIT, these labels will be taken care off by</span></span>
 <span>  <span class="co">## applying function summarize_aval_chg_diff further in the layout</span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AVISIT"</span>, </span>
-<span>    label_pos <span class="op">=</span> <span class="st">"topleft"</span>, </span>
-<span>    split_label <span class="op">=</span> <span class="st">"Study Visit"</span>, </span>
-<span>    split_fun <span class="op">=</span> <span class="va">drop_split_levels</span>, </span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AVISIT"</span>,</span>
+<span>    label_pos <span class="op">=</span> <span class="st">"topleft"</span>,</span>
+<span>    split_label <span class="op">=</span> <span class="st">"Study Visit"</span>,</span>
+<span>    split_fun <span class="op">=</span> <span class="va">drop_split_levels</span>,</span>
 <span>    child_labels <span class="op">=</span> <span class="st">"hidden"</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">lyt_vs</span> <span class="op">&lt;-</span> <span class="va">lyt_vs_p1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">lyt_vs</span> <span class="op">&lt;-</span> <span class="va">lyt_vs_p1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">### restart for the rrisk_header columns - note the nested = FALSE option</span></span>
 <span>  <span class="co">### also note the child_labels = "hidden" in both PARAM and AVISIT</span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"rrisk_header_vs"</span>, nested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>,</span>
-<span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="va">ctrl_grp</span><span class="op">)</span>, </span>
+<span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="va">ctrl_grp</span><span class="op">)</span>,</span>
 <span>    labels_var <span class="op">=</span> <span class="st">"rrisk_label"</span>,</span>
-<span>    show_colcounts <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>    show_colcounts <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    colcount_format <span class="op">=</span> <span class="st">"N=xx"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">### difference columns : just 1 column &amp; analysis needs to be done on change</span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by_multivar.html" class="external-link">split_cols_by_multivar</a></span><span class="op">(</span><span class="va">multivars</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, </span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by_multivar.html" class="external-link">split_cols_by_multivar</a></span><span class="op">(</span><span class="va">multivars</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,</span>
 <span>    varlabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">" "</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">### the variable passed here in analyze is not used (STUDYID), it is a dummy var passing,</span></span>
 <span>  <span class="co">### the function a_summarize_aval_chg_diff_j grabs the required vars from cols_by_multivar calls</span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"STUDYID"</span>, </span>
-<span>    afun <span class="op">=</span> <span class="va">a_summarize_aval_chg_diff_j</span>, </span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"STUDYID"</span>,</span>
+<span>    afun <span class="op">=</span> <span class="va">a_summarize_aval_chg_diff_j</span>,</span>
 <span>    extra_args <span class="op">=</span> <span class="va">extra_args_3col</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">result_vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt_vs</span>, <span class="va">advs</span>, alt_counts_df <span class="op">=</span> <span class="va">adsl</span><span class="op">)</span></span></code></pre></div>
 <p>This is the resulting table.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result_vs</span>, <span class="fl">15</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result_vs</span>, <span class="fl">15</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                                                                             Active Study Agent                                                                                                                                                           Difference in Mean Change (95% CI)          </span></span>
 <span><span class="co">#&gt;                                                            A: Drug X                                                                C: Combination                                                                B: Placebo                                   A: Drug X vs B: Placebo   C: Combination vs B: Placebo</span></span>
 <span><span class="co">#&gt; Parameter                                                    N=134                                                                       N=132                                                                       N=134                                              N=134                       N=132            </span></span>
@@ -624,17 +636,17 @@ leaving out the 3 <code>split_cols_by</code> calls</p>
 <code class="sourceCode R"><span><span class="va">multivars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AVAL"</span>, <span class="st">"AVAL"</span>, <span class="st">"CHG"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">extra_args_3col</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  format_na_str <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span>, </span>
-<span>  ancova <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>  format_na_str <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  ancova <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  comp_btw_group <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  multivars <span class="op">=</span> <span class="va">multivars</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">lyt_vs2</span> <span class="op">&lt;-</span>  <span class="va">lyt_vs_p1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">lyt_vs2</span> <span class="op">&lt;-</span> <span class="va">lyt_vs_p1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">### the variable passed here in analyze is not used (STUDYID), it is a dummy var passing,</span></span>
 <span>  <span class="co">### the function a_summarize_aval_chg_diff_j grabs the required vars from cols_by_multivar calls</span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"STUDYID"</span>, </span>
-<span>    afun <span class="op">=</span> <span class="va">a_summarize_aval_chg_diff_j</span>, </span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"STUDYID"</span>,</span>
+<span>    afun <span class="op">=</span> <span class="va">a_summarize_aval_chg_diff_j</span>,</span>
 <span>    extra_args <span class="op">=</span> <span class="va">extra_args_3col</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
@@ -642,7 +654,7 @@ leaving out the 3 <code>split_cols_by</code> calls</p>
 <p>This is the resulting table without the difference between treatment
 group columns.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result_vs2</span>, <span class="fl">15</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result_vs2</span>, <span class="fl">15</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                                                                             Active Study Agent                                                                                                                                              </span></span>
 <span><span class="co">#&gt;                                                            A: Drug X                                                                C: Combination                                                                B: Placebo                                </span></span>
 <span><span class="co">#&gt; Parameter                                                    N=134                                                                       N=132                                                                       N=134                                  </span></span>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,52 +57,52 @@
 
 
 <dl><dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
-<dd><p>(`data.frame`)<br> data set containing all analysis variables.</p></dd>
+<dd><p>(<code>data.frame</code>)<br> data set containing all analysis variables.</p></dd>
 
 
 <dt id="arg-labelstr">labelstr<a class="anchor" aria-label="anchor" href="#arg-labelstr"></a></dt>
-<dd><p>(`character`)<br> label of the level of the parent split currently being summarized
-(must be present as second argument in Content Row Functions). See [rtables::summarize_row_groups()]
+<dd><p>(<code>character</code>)<br> label of the level of the parent split currently being summarized
+(must be present as second argument in Content Row Functions). See <code><a href="https://insightsengineering.github.io/rtables/latest-release/reference/summarize_row_groups.html" class="external-link">rtables::summarize_row_groups()</a></code>
 for more information.</p></dd>
 
 
 <dt id="arg--spl-context">.spl_context<a class="anchor" aria-label="anchor" href="#arg--spl-context"></a></dt>
-<dd><p>(`data.frame`)<br> gives information about ancestor split states
-that is passed by `rtables`.</p></dd>
+<dd><p>(<code>data.frame</code>)<br> gives information about ancestor split states
+that is passed by <code>rtables</code>.</p></dd>
 
 
 <dt id="arg-variables">variables<a class="anchor" aria-label="anchor" href="#arg-variables"></a></dt>
-<dd><p>(`list`)<br> see [fit_ancova()] for required variable
+<dd><p>(<code>list</code>)<br> see <code><a href="fit_ancova.html">fit_ancova()</a></code> for required variable
 specifications.</p></dd>
 
 
 <dt id="arg-ref-level">ref_level<a class="anchor" aria-label="anchor" href="#arg-ref-level"></a></dt>
-<dd><p>(`string`)<br> the reference level of the treatment arm variable.</p></dd>
+<dd><p>(<code>string</code>)<br> the reference level of the treatment arm variable.</p></dd>
 
 
 <dt id="arg-treatment-levels">treatment_levels<a class="anchor" aria-label="anchor" href="#arg-treatment-levels"></a></dt>
-<dd><p>(`character`)<br> the non-reference levels of the treatment arm
+<dd><p>(<code>character</code>)<br> the non-reference levels of the treatment arm
 variable.</p></dd>
 
 
 <dt id="arg-pval-sided">pval_sided<a class="anchor" aria-label="anchor" href="#arg-pval-sided"></a></dt>
-<dd><p>(`string`)<br> either '2' for two-sided or '1' for 1-sided with greater than
+<dd><p>(<code>string</code>)<br> either '2' for two-sided or '1' for 1-sided with greater than
 control or '-1' for 1-sided with smaller than control alternative hypothesis.</p></dd>
 
 
 <dt id="arg-conf-level">conf_level<a class="anchor" aria-label="anchor" href="#arg-conf-level"></a></dt>
-<dd><p>(`proportion`)<br> confidence level of the interval.</p></dd>
+<dd><p>(<code>proportion</code>)<br> confidence level of the interval.</p></dd>
 
 
 <dt id="arg-formats">formats<a class="anchor" aria-label="anchor" href="#arg-formats"></a></dt>
-<dd><p>(`list`)<br> including `lsmean`, `mse`, `df`, `lsmean_diff`, `se`,
-`ci`, `pval` formats.</p></dd>
+<dd><p>(<code>list</code>)<br> including <code>lsmean</code>, <code>mse</code>, <code>df</code>, <code>lsmean_diff</code>, <code>se</code>,
+<code>ci</code>, <code>pval</code> formats.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This assumes a lot of structure of the layout, and is only intended to be used inside
-  [summarize_lsmeans_wide()], please see there for the layout structure that is needed.</p>
+<code><a href="summarize_lsmeans_wide.html">summarize_lsmeans_wide()</a></code>, please see there for the layout structure that is needed.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>`numeric`<br> with elements `num` and `fraction` or `num`, `denom` and `fraction`.</p></dd>
+<dd><p><code>numeric</code><br> with elements <code>num</code> and <code>fraction</code> or <code>num</code>, <code>denom</code> and <code>fraction</code>.</p></dd>
 
 
 <dt id="arg-d">d<a class="anchor" aria-label="anchor" href="#arg-d"></a></dt>
@@ -55,16 +55,29 @@
 
 
 <dt id="arg-roundmethod">roundmethod<a class="anchor" aria-label="anchor" href="#arg-roundmethod"></a></dt>
-<dd><p>(`string`)<br> choice of rounding methods. Options are:
-* `sas`: the underlying rounding method is `tidytlg::roundSAS`, where <br>
-roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions/12688717/round-up-from-5
-* `iec`: the underlying rounding method is `round`</p></dd>
+<dd><p>(<code>string</code>)<br> choice of rounding methods. Options are:</p><ul><li><p><code>sas</code>: the underlying rounding method is <code><a href="https://pharmaverse.github.io/tidytlg/main/reference/roundSAS.html" class="external-link">tidytlg::roundSAS</a></code>, where <br>
+roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions/12688717/round-up-from-5</p></li>
+<li><p><code>iec</code>: the underlying rounding method is <code>round</code></p></li>
+</ul></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments passed to other methods.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p><code>x</code> formatted as a string with <code>d</code> digits of precision,
+with special cased values as described in Details above.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Formats a 3-dimensional value such that percent values
+near 0 or 100% are formatted as .e.g, <code>"&lt;0.1%"</code> and
+<code>"&gt;99.9%"</code>, where the cutoff is controlled by <code>d</code>, and
+formatted as <code>"xx.x% (xx/xx)"</code> otherwise, with the
+precision of the percent also controlled by <code>d</code>.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>

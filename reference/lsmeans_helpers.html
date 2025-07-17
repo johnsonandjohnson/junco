@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,79 +59,78 @@
 
 
 <dl><dt id="arg-fit">fit<a class="anchor" aria-label="anchor" href="#arg-fit"></a></dt>
-<dd><p>result of model fitting function, e.g. [mmrm::mmrm()] or [stats::lm()].</p></dd>
+<dd><p>result of model fitting function, e.g. <code><a href="https://openpharma.github.io/mmrm/latest-tag/reference/mmrm.html" class="external-link">mmrm::mmrm()</a></code> or <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code>.</p></dd>
 
 
 <dt id="arg-vars">vars<a class="anchor" aria-label="anchor" href="#arg-vars"></a></dt>
-<dd><p>(named `list` of `string` or `character`)<br> specifying the variables in the `MMRM`.
-  The following elements need to be included as character vectors and match corresponding columns
-  in `data`:</p>
-<p>- `response`: the response variable.
-  - `covariates`: the additional covariate terms (might also include interactions).
-  - `id`: the subject ID variable.
-  - `arm`: the treatment group variable (factor).
-  - `visit`: the visit variable (factor).
-  - `weights`: optional weights variable (if `NULL` or omitted then no weights will be used).</p>
-<p>Note that the main effects and interaction of `arm` and `visit` are by default
-  included in the model.</p></dd>
+<dd><p>(named <code>list</code> of <code>string</code> or <code>character</code>)<br> specifying the variables in the <code>MMRM</code>.
+The following elements need to be included as character vectors and match corresponding columns
+in <code>data</code>:</p><ul><li><p><code>response</code>: the response variable.</p></li>
+<li><p><code>covariates</code>: the additional covariate terms (might also include interactions).</p></li>
+<li><p><code>id</code>: the subject ID variable.</p></li>
+<li><p><code>arm</code>: the treatment group variable (factor).</p></li>
+<li><p><code>visit</code>: the visit variable (factor).</p></li>
+<li><p><code>weights</code>: optional weights variable (if <code>NULL</code> or omitted then no weights will be used).</p></li>
+</ul><p>Note that the main effects and interaction of <code>arm</code> and <code>visit</code> are by default
+included in the model.</p></dd>
 
 
 <dt id="arg-weights">weights<a class="anchor" aria-label="anchor" href="#arg-weights"></a></dt>
-<dd><p>(`string`)<br> argument from [emmeans::emmeans()], 'counterfactual' by default.</p></dd>
+<dd><p>(<code>string</code>)<br> argument from <code><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans::emmeans()</a></code>, 'counterfactual' by default.</p></dd>
 
 
 <dt id="arg-emmeans-res">emmeans_res<a class="anchor" aria-label="anchor" href="#arg-emmeans-res"></a></dt>
-<dd><p>(`list`)<br> initial `emmeans` result from [h_get_emmeans_res()].</p></dd>
+<dd><p>(<code>list</code>)<br> initial <code>emmeans</code> result from <code>h_get_emmeans_res()</code>.</p></dd>
 
 
 <dt id="arg-averages">averages<a class="anchor" aria-label="anchor" href="#arg-averages"></a></dt>
-<dd><p>(`list`)<br> optional named list of visit levels which should be averaged
+<dd><p>(<code>list</code>)<br> optional named list of visit levels which should be averaged
 and reported along side the single visits.</p></dd>
 
 
 <dt id="arg-specs">specs<a class="anchor" aria-label="anchor" href="#arg-specs"></a></dt>
-<dd><p>(`list`)<br> list of least square means specifications, with
-elements `coefs` (coefficient list) and `grid` (corresponding `data.frame`).</p></dd>
+<dd><p>(<code>list</code>)<br> list of least square means specifications, with
+elements <code>coefs</code> (coefficient list) and <code>grid</code> (corresponding <code>data.frame</code>).</p></dd>
 
 
 <dt id="arg-conf-level">conf_level<a class="anchor" aria-label="anchor" href="#arg-conf-level"></a></dt>
-<dd><p>(`proportion`)<br> confidence level of the interval.</p></dd>
+<dd><p>(<code>proportion</code>)<br> confidence level of the interval.</p></dd>
 
 
 <dt id="arg-tests">tests<a class="anchor" aria-label="anchor" href="#arg-tests"></a></dt>
-<dd><p>(`flag`)<br> whether to add test results to the estimates.</p></dd>
+<dd><p>(<code>flag</code>)<br> whether to add test results to the estimates.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>additional arguments for [emmeans::contrast()].</p></dd>
+<dd><p>additional arguments for <code><a href="https://rvlenth.github.io/emmeans/reference/contrast.html" class="external-link">emmeans::contrast()</a></code>.</p></dd>
 
 
 <dt id="arg-estimates">estimates<a class="anchor" aria-label="anchor" href="#arg-estimates"></a></dt>
-<dd><p>(`data.frame`)<br> single visit least square mean estimates.</p></dd>
+<dd><p>(<code>data.frame</code>)<br> single visit least square mean estimates.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
 <ul><li><p><code>h_get_emmeans_res()</code>: returns a list with
-`object` (`emmGrid` object containing `emmeans` results) and `grid`
-(`data.frame` containing the potential arm and the visit variables
-together with the sample size `n` for each combination).</p></li>
+<code>object</code> (<code>emmGrid</code> object containing <code>emmeans</code> results) and <code>grid</code>
+(<code>data.frame</code> containing the potential arm and the visit variables
+together with the sample size <code>n</code> for each combination).</p></li>
 <li><p><code>h_get_average_visit_specs()</code>: constructs average of visits specifications.</p></li>
-<li><p><code>h_get_spec_visit_estimates()</code>: estimates least square means as a `data.frame`
+<li><p><code>h_get_spec_visit_estimates()</code>: estimates least square means as a <code>data.frame</code>
 given specifications.</p></li>
 <li><p><code>h_get_single_visit_estimates()</code>: estimates least square means for single visits.</p></li>
-<li><p><code>h_get_relative_reduc_df()</code>: constructs `data.frame` with
+<li><p><code>h_get_relative_reduc_df()</code>: constructs <code>data.frame</code> with
 relative reduction vs. reference arm based on single visit estimates.</p></li>
 <li><p><code>h_single_visit_contrast_specs()</code>: constructs single visit contrast specifications.</p></li>
 <li><p><code>h_average_visit_contrast_specs()</code>: constructs average visits contrast specifications,
-given the `specs` for single visit contrasts and the averages required.</p></li>
+given the <code>specs</code> for single visit contrasts and the averages required.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>The difference here compared to the original [tern.mmrm::h_get_spec_visit_estimates()]
-  function is that additional arguments for [emmeans::contrast()] can be passed via the
-  Once this has been added to the `tern.mmrm` package then its functions can be used instead.</p>
+    <p>The difference here compared to the original tern.mmrm::h_get_spec_visit_estimates()
+function is that additional arguments for <code><a href="https://rvlenth.github.io/emmeans/reference/contrast.html" class="external-link">emmeans::contrast()</a></code> can be passed via the
+Once this has been added to the <code>tern.mmrm</code> package then its functions can be used instead.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,14 +56,105 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>list:
- - fmt : named vector with formatting function (jjcsformat_xx) for numerical stats: range, median, mean_sd, sd
- - spec : named vector with formatting specifications for numerical stats: range, median, mean_sd, sd</p>
-    </div>
+    <p>list:</p><ul><li><p>fmt : named vector with formatting function (jjcsformat_xx) for numerical stats: range, median, mean_sd, sd</p></li>
+<li><p>spec : named vector with formatting specifications for numerical stats: range, median, mean_sd, sd</p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># P1_precision &lt;- jjcs_num_formats(d=0)$fmt</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">P1_precision</span> <span class="op">&lt;-</span> <span class="fu">jjcs_num_formats</span><span class="op">(</span>d<span class="op">=</span><span class="fl">0</span><span class="op">)</span><span class="op">$</span><span class="va">fmt</span></span></span>
+<span class="r-in"><span><span class="fu">jjcs_num_formats</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">$</span><span class="va">fmt</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $range</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function (x, output, na_str = na_str_dflt) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (anyNA(na_str) || (replace_na_dflt &amp;&amp; any(na_str == "NA"))) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         na_inds &lt;- which(is.na(na_str) | (replace_na_dflt &amp; na_str == </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             "NA"))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         na_str[na_inds] &lt;- rep(na_str_dflt, length.out = length(na_str))[na_inds]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (length(x) == 0 || isTRUE(all(x == ""))) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         return(NULL)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     else if (!length(positions[[1]]) == length(x)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         stop("Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats.")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     values &lt;- Map(y = x, fun = roundings, na_str = na_str, function(y, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         fun, na_str) fun(y, na_str = na_str))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     regmatches(x = str, m = positions)[[1]] &lt;- values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     return(str)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55a01f448c30&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55a01869b690&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $mean_sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function (x, output, na_str = na_str_dflt) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (anyNA(na_str) || (replace_na_dflt &amp;&amp; any(na_str == "NA"))) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         na_inds &lt;- which(is.na(na_str) | (replace_na_dflt &amp; na_str == </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             "NA"))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         na_str[na_inds] &lt;- rep(na_str_dflt, length.out = length(na_str))[na_inds]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (length(x) == 0 || isTRUE(all(x == ""))) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         return(NULL)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     else if (!length(positions[[1]]) == length(x)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         stop("Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats.")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     values &lt;- Map(y = x, fun = roundings, na_str = na_str, function(y, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         fun, na_str) fun(y, na_str = na_str))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     regmatches(x = str, m = positions)[[1]] &lt;- values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     return(str)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55a01f448c30&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55a0186843c0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function (x, output, na_str = na_str_dflt) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (anyNA(na_str) || (replace_na_dflt &amp;&amp; any(na_str == "NA"))) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         na_inds &lt;- which(is.na(na_str) | (replace_na_dflt &amp; na_str == </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             "NA"))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         na_str[na_inds] &lt;- rep(na_str_dflt, length.out = length(na_str))[na_inds]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (length(x) == 0 || isTRUE(all(x == ""))) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         return(NULL)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     else if (!length(positions[[1]]) == length(x)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         stop("Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats.")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     values &lt;- Map(y = x, fun = roundings, na_str = na_str, function(y, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         fun, na_str) fun(y, na_str = na_str))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     regmatches(x = str, m = positions)[[1]] &lt;- values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     return(str)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55a01f448c30&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55a01841ea38&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $median</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function (x, output, na_str = na_str_dflt) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (anyNA(na_str) || (replace_na_dflt &amp;&amp; any(na_str == "NA"))) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         na_inds &lt;- which(is.na(na_str) | (replace_na_dflt &amp; na_str == </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             "NA"))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         na_str[na_inds] &lt;- rep(na_str_dflt, length.out = length(na_str))[na_inds]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (length(x) == 0 || isTRUE(all(x == ""))) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         return(NULL)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     else if (!length(positions[[1]]) == length(x)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         stop("Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats.")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     values &lt;- Map(y = x, fun = roundings, na_str = na_str, function(y, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         fun, na_str) fun(y, na_str = na_str))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     regmatches(x = str, m = positions)[[1]] &lt;- values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     return(str)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55a01f448c30&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55a0183e97c8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">jjcs_num_formats</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">$</span><span class="va">spec</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              range            mean_sd                 sd             median </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     "xx.xx, xx.xx" "xx.xxx (xx.xxxx)"          "xx.xxxx"           "xx.xxx" </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
