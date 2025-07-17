@@ -7,13 +7,16 @@
 prop_ratio_cmh(rsp, grp, strata, conf_level = 0.95)
 }
 \arguments{
-\item{rsp}{(`logical`)\cr whether each subject is a responder or not.}
+\item{rsp}{(\code{logical})\cr whether each subject is a responder or not.}
 
-\item{grp}{(`factor`)\cr defining the groups.}
+\item{grp}{(\code{factor})\cr defining the groups.}
 
-\item{strata}{(`factor`)\cr variable with one level per stratum and same length as `rsp`.}
+\item{strata}{(\code{factor})\cr variable with one level per stratum and same length as \code{rsp}.}
 
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
+}
+\value{
+a list with elements \code{rel_risk_ci} and \code{pval}.
 }
 \description{
 Calculates the relative risk which is defined as the ratio between the
@@ -21,15 +24,14 @@ response rates between the experimental treatment group and the control treatmen
 for stratification factors by applying Cochran-Mantel-Haenszel (CMH) weights.
 }
 \examples{
-# Cochran-Mantel-Haenszel confidence interval
 
 set.seed(2)
 rsp <- sample(c(TRUE, FALSE), 100, TRUE)
-grp <- sample(c('Placebo', 'Treatment'), 100, TRUE)
-grp <- factor(grp, levels = c('Placebo', 'Treatment'))
+grp <- sample(c("Placebo", "Treatment"), 100, TRUE)
+grp <- factor(grp, levels = c("Placebo", "Treatment"))
 strata_data <- data.frame(
-  'f1' = sample(c('a', 'b'), 100, TRUE),
-  'f2' = sample(c('x', 'y', 'z'), 100, TRUE),
+  "f1" = sample(c("a", "b"), 100, TRUE),
+  "f2" = sample(c("x", "y", "z"), 100, TRUE),
   stringsAsFactors = TRUE
 )
 

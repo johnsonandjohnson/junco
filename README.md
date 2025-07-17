@@ -1,7 +1,7 @@
 # junco
 
 <!-- start badges -->
-[![Check 🛠](https://github.com/johnsonandjohnson/junco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/johnsonandjohnson/junco/actions/workflows/R-CMD-check.yaml)
+[![Check 🛠](https://github.com/johnsonandjohnson/junco/actions/workflows/check.yaml/badge.svg)](https://github.com/johnsonandjohnson/junco/actions/workflows/check.yaml)
 [![Docs 📚](https://github.com/johnsonandjohnson/junco/actions/workflows/pkgdown.yaml/badge.svg)](https://johnsonandjohnson.github.io/junco/)
 [![Code Coverage 📔](https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/gh-pages/_xml_coverage_reports/badge.svg)](https://johnsonandjohnson.github.io/junco/_xml_coverage_reports/coverage.html)
 
@@ -22,7 +22,7 @@
 
 ## Overview
 
-The junco R package contains analysis functions to create tables and listings used for clinical trial reporting. 
+The junco R package contains analysis functions to create tables and listings used for clinical trial reporting.
 It complements the tern package by providing additional statistical analysis capabilities.
 
 The package provides a range of functionality, such as:
@@ -49,5 +49,3 @@ remotes::install_github("johnsonandjohnson/junco")
 To understand how to use this package, please refer to the [junco article](https://johnsonandjohnson.github.io/junco/articles/junco.html), which provides multiple examples of code implementation.
 
 See package vignettes `browseVignettes(package = "junco")` for usage of this package.
-
-

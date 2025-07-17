@@ -35,19 +35,19 @@ will be counted in the numerator.}
 \item{...}{Additional arguments passed to the function.}
 }
 \value{
-a `RowsVerticalSection` for use by the internal tabulation machinery of `rtables`
+a \code{RowsVerticalSection} for use by the internal tabulation machinery of \code{rtables}
 }
 \description{
 Derives the count_denom_fraction statistic (i.e., 'xx /xx (xx.x percent)' )
-             Summarizes the number of unique subjects with a response = 'Y' for a given variable
-             (e.g. TRTEMFL) within each category of another variable (e.g., SEX).
-             Note that the denominator is derived using input df,
-             in order to have these aligned with alt_source_df, it is expected that df includes all subjects.
+Summarizes the number of unique subjects with a response = 'Y' for a given variable
+(e.g. TRTEMFL) within each category of another variable (e.g., SEX).
+Note that the denominator is derived using input df,
+in order to have these aligned with alt_source_df, it is expected that df includes all subjects.
 }
 \details{
-This is an analysis function for use within `analyze`. Arguments
-         `df`, `.var` will be populated automatically by rtables during
-         the tabulation process.
+This is an analysis function for use within \code{analyze}. Arguments
+\code{df}, \code{.var} will be populated automatically by rtables during
+the tabulation process.
 }
 \examples{
 
@@ -55,18 +55,18 @@ library(dplyr)
 
 ADAE <- data.frame(
   USUBJID = c(
-    'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-    'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
   ),
   SEX_DECODE = c(
-    'Female', 'Female', 'Male', 'Female', 'Male',
-    'Female', 'Male', 'Female', 'Male', 'Female'
+    "Female", "Female", "Male", "Female", "Male",
+    "Female", "Male", "Female", "Male", "Female"
   ),
   TRT01A = c(
-    'ARMA', 'ARMB', 'ARMA', 'ARMB', 'ARMB',
-    'Placebo', 'Placebo', 'Placebo', 'ARMA', 'ARMB'
+    "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
+    "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
   ),
-  TRTEMFL = c('Y', 'Y', 'N', 'Y', 'Y', 'Y', 'Y', 'N', 'Y', 'Y')
+  TRTEMFL = c("Y", "Y", "N", "Y", "Y", "Y", "Y", "N", "Y", "Y")
 )
 
 ADAE <- ADAE |>
@@ -76,13 +76,13 @@ ADAE <- ADAE |>
   )
 
 lyt <- basic_table() |>
-  split_cols_by('TRT01A') |>
+  split_cols_by("TRT01A") |>
   analyze(
-    vars = 'SEX_DECODE',
-    var_labels = 'Sex, n/Ns (\%)',
-    show_labels = 'visible',
+    vars = "SEX_DECODE",
+    var_labels = "Sex, n/Ns (\%)",
+    show_labels = "visible",
     afun = response_by_var,
-    extra_args = list(resp_var = 'TRTEMFL'),
+    extra_args = list(resp_var = "TRTEMFL"),
     nested = FALSE
   )
 

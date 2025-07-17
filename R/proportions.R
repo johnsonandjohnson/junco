@@ -15,12 +15,11 @@
 #' @seealso [s_proportion_logical()] for tabulating logical `x`.
 #' @export
 s_proportion_factor <- function(
-  x,
-  .alt_df,
-  use_alt_counts = TRUE,
-  show_total = c("none", "top", "bottom"),
-  total_label = "Total"
-) {
+    x,
+    .alt_df,
+    use_alt_counts = TRUE,
+    show_total = c("none", "top", "bottom"),
+    total_label = "Total") {
   checkmate::assert_factor(x)
   checkmate::assert_flag(use_alt_counts)
   show_total <- match.arg(show_total)
@@ -88,7 +87,7 @@ c_proportion_logical <- function(x, labelstr, label_fstr, format, .N_col) {
 #' @keywords internal
 #' @export
 #' @examples
-#' h_get_design_mat(df = data.frame(a = factor(c('a', 'b', 'a'))), .var = 'a')
+#' h_get_design_mat(df = data.frame(a = factor(c("a", "b", "a"))), .var = "a")
 h_get_design_mat <- function(df, .var) {
   checkmate::assert_data_frame(df)
   checkmate::assert_string(.var)
@@ -117,11 +116,11 @@ h_get_design_mat <- function(df, .var) {
 #'
 #' @examples
 #' a_proportion_ci_logical(
-#'   x = DM$SEX == 'F',
+#'   x = DM$SEX == "F",
 #'   .alt_df = DM,
 #'   conf_level = 0.95,
-#'   formats = list(prop_ci = jjcsformat_xx('xx.xx% - xx.xx%')),
-#'   method = 'wald'
+#'   formats = list(prop_ci = jjcsformat_xx("xx.xx% - xx.xx%")),
+#'   method = "wald"
 #' )
 a_proportion_ci_logical <- function(x, .alt_df, conf_level, method, formats) {
   checkmate::assert_logical(x)
@@ -150,11 +149,11 @@ a_proportion_ci_logical <- function(x, .alt_df, conf_level, method, formats) {
 #' @examples
 #' a_proportion_ci_factor(
 #'   df = DM,
-#'   .var = 'SEX',
+#'   .var = "SEX",
 #'   .alt_df = DM,
 #'   conf_level = 0.95,
-#'   formats = list(prop_ci = jjcsformat_xx('xx.x%, xx.x%')),
-#'   method = 'clopper-pearson'
+#'   formats = list(prop_ci = jjcsformat_xx("xx.x%, xx.x%")),
+#'   method = "clopper-pearson"
 #' )
 a_proportion_ci_factor <- function(df, .var, ...) {
   checkmate::assert_factor(df[[.var]])
@@ -187,7 +186,7 @@ prop_post_fun <- function(ret, spl, fulldf, .spl_context) {
 #' @param vals A character vector that contains values to use for the split.
 #' @param labels A character vector that contains labels for the statistics (without indent).
 #' @param trim A single logical that indicates whether to trim the values.
-#'
+#' @return a split function for use in [rtables::split_rows_by].
 #' @export
 prop_split_fun <- make_split_fun(post = list(prop_post_fun))
 
@@ -211,7 +210,7 @@ prop_split_fun <- make_split_fun(post = list(prop_post_fun))
 #' @param formats (`list`)\cr formats for the statistics.
 #' @param add_total_level (`flag`)\cr whether to add a total level.
 #'
-#' @return The formatted result as [rtables::rcell()].
+#' @return A `VerticalRowsSection` as returned by [rtables::in_rows].
 #' @export
 prop_table_afun <- function(x, .spl_context, formats, add_total_level = FALSE) {
   checkmate::assert_list(formats, len = 3, names = "unique")

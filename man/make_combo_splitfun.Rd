@@ -15,7 +15,7 @@ make_combo_splitfun(nm, label = nm, levels = NULL, rm_other_facets = TRUE)
 or NULL, indicating the facet should include all incoming data.}
 
 \item{rm_other_facets}{logical(1). Should facets other than the newly
-created one be removed. Defaults to `TRUE`}
+created one be removed. Defaults to \code{TRUE}}
 }
 \value{
 function usable directly as a split function.
@@ -24,6 +24,6 @@ function usable directly as a split function.
 A function which aids the construction for users to create their own split function for combined columns
 }
 \examples{
-# aesevall_spf <- make_combo_splitfun(nm = 'AESEV_ALL', label  = 'Any AE', levels = NULL)
+aesevall_spf <- make_combo_splitfun(nm = 'AESEV_ALL', label  = 'Any AE', levels = NULL)
 
 }

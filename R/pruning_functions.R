@@ -19,24 +19,22 @@
 #'
 #' @export
 #' @examples
-#' # always prune
 #' prfun <- function(tt) TRUE
 #'
 #' lyt <- basic_table() |>
-#'   split_cols_by('ARM') |>
-#'   split_cols_by('STRATA1') |>
-#'   split_rows_by('SEX') |>
-#'   analyze('AGE')
+#'   split_cols_by("ARM") |>
+#'   split_cols_by("STRATA1") |>
+#'   split_rows_by("SEX") |>
+#'   analyze("AGE")
 #' tbl <- build_table(lyt, ex_adsl)
 #'
 #' safe_prune_table(tbl, prfun)
 safe_prune_table <- function(
-  tt,
-  prune_func = prune_empty_level,
-  stop_depth = NA,
-  empty_msg = " - No Data To Display - ",
-  spancols = FALSE
-) {
+    tt,
+    prune_func = prune_empty_level,
+    stop_depth = NA,
+    empty_msg = " - No Data To Display - ",
+    spancols = FALSE) {
   ret <- prune_table(tt = tt, prune_func = prune_func, stop_depth = stop_depth, depth = 0)
   if (is.null(ret)) {
     ret <- tt[integer(), , keep_titles = TRUE, keep_topleft = TRUE, keep_footers = TRUE]
@@ -72,51 +70,49 @@ safe_prune_table <- function(
 #'
 #' ADSL <- data.frame(
 #'   USUBJID = c(
-#'     'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-#'     'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
 #'   ),
 #'   TRT01P = factor(
 #'     c(
-#'       'ARMA', 'ARMB', 'ARMA', 'ARMB', 'ARMB',
-#'       'Placebo', 'Placebo', 'Placebo', 'ARMA', 'ARMB'
-#'      )
+#'       "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
+#'       "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
+#'     )
 #'   ),
-#'   FASFL = c('Y', 'Y', 'Y', 'Y', 'N', 'Y', 'Y', 'Y', 'Y', 'Y'),
-#'   SAFFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'),
-#'   PKFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N')
+#'   FASFL = c("Y", "Y", "Y", "Y", "N", "Y", "Y", "Y", "Y", "Y"),
+#'   SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
+#'   PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
 #' )
 #'
 #' lyt <- basic_table() |>
-#'   split_cols_by('TRT01P') |>
-#'   add_overall_col('Total') |>
-#'   analyze('FASFL',
-#'     var_labels = 'Analysis set:',
+#'   split_cols_by("TRT01P") |>
+#'   add_overall_col("Total") |>
+#'   analyze("FASFL",
+#'     var_labels = "Analysis set:",
 #'     afun = a_freq_j,
-#'     extra_args = list(label = 'Full', val = 'Y'),
-#'     show_labels = 'visible'
+#'     extra_args = list(label = "Full", val = "Y"),
+#'     show_labels = "visible"
 #'   ) |>
-#'   analyze('SAFFL',
-#'     var_labels = 'Analysis set:',
+#'   analyze("SAFFL",
+#'     var_labels = "Analysis set:",
 #'     afun = a_freq_j,
-#'     extra_args = list(label = 'Safety', val = 'Y'),
-#'     show_labels = 'visible'
+#'     extra_args = list(label = "Safety", val = "Y"),
+#'     show_labels = "visible"
 #'   ) |>
-#'   analyze('PKFL',
-#'     var_labels = 'Analysis set:',
+#'   analyze("PKFL",
+#'     var_labels = "Analysis set:",
 #'     afun = a_freq_j,
-#'     extra_args = list(label = 'PK', val = 'Y'),
-#'     show_labels = 'visible'
+#'     extra_args = list(label = "PK", val = "Y"),
+#'     show_labels = "visible"
 #'   )
 #'
 #' result <- build_table(lyt, ADSL)
 #'
 #' result
 #'
-#' # use pruning function to prune where total column has >0 count,
-#' # but exclude pruning safety set row
 #' result <- prune_table(
 #'   result,
-#'   prune_func = count_pruner(cat_exclude = c('Safety'), cols = 'Total')
+#'   prune_func = count_pruner(cat_exclude = c("Safety"), cols = "Total")
 #' )
 #'
 #' result
@@ -128,14 +124,14 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
   function(tt) {
     # Do not ever prune the following rows.  a row that should be kept in the table will get the value of FALSE
 
-    if (
+    if ( # nolint start
       !methods::is(tt, "TableRow") ||
         methods::is(tt, "LabelRow") ||
         obj_label(tt) == " " ||
         (!is.null(cat_include) &&
-           !obj_label(tt) %in% cat_include) ||
+          !obj_label(tt) %in% cat_include) ||
         (!is.null(cat_exclude) && obj_label(tt) %in% cat_exclude)
-    ) {
+    ) { # nolint end
       return(FALSE)
     }
 
@@ -222,16 +218,16 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #' @examples
 #' ADSL <- data.frame(
 #'   USUBJID = c(
-#'     'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-#'     'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
 #'   ),
 #'   TRT01P = c(
-#'     'ARMA', 'ARMB', 'ARMA', 'ARMB', 'ARMB',
-#'     'Placebo', 'Placebo', 'Placebo', 'ARMA', 'ARMB'
+#'     "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
+#'     "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
 #'   ),
-#'   FASFL = c('Y', 'Y', 'Y', 'Y', 'N', 'Y', 'Y', 'Y', 'Y', 'Y'),
-#'   SAFFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'),
-#'   PKFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N')
+#'   FASFL = c("Y", "Y", "Y", "Y", "N", "Y", "Y", "Y", "Y", "Y"),
+#'   SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
+#'   PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
 #' )
 #'
 #' ADSL <- ADSL |>
@@ -240,58 +236,52 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #'   dplyr::mutate(PKFL = factor(PKFL, c("Y", "N")))
 #'
 #' lyt <- basic_table() |>
-#'   split_cols_by('TRT01P') |>
-#'   add_overall_col('Total') |>
-#'
+#'   split_cols_by("TRT01P") |>
+#'   add_overall_col("Total") |>
 #'   split_rows_by(
 #'     "FASFL",
 #'     split_fun = drop_and_remove_levels("N"),
 #'     child_labels = "hidden"
 #'   ) |>
-#'   analyze('FASFL',
-#'     var_labels = 'Analysis set:',
+#'   analyze("FASFL",
+#'     var_labels = "Analysis set:",
 #'     afun = a_freq_j,
-#'     show_labels = 'visible',
-#'     extra_args = list(label = 'Full', .stats = "count_unique_fraction")
+#'     show_labels = "visible",
+#'     extra_args = list(label = "Full", .stats = "count_unique_fraction")
 #'   ) |>
-#'
 #'   split_rows_by(
 #'     "SAFFL",
 #'     split_fun = remove_split_levels("N"),
 #'     child_labels = "hidden"
 #'   ) |>
-#'   analyze('SAFFL',
-#'     var_labels = 'Analysis set:',
+#'   analyze("SAFFL",
+#'     var_labels = "Analysis set:",
 #'     afun = a_freq_j,
-#'     show_labels = 'visible',
-#'     extra_args = list(label = 'Safety', .stats = "count_unique_fraction")
+#'     show_labels = "visible",
+#'     extra_args = list(label = "Safety", .stats = "count_unique_fraction")
 #'   ) |>
-#'
 #'   split_rows_by(
 #'     "PKFL",
 #'     split_fun = remove_split_levels("N"),
 #'     child_labels = "hidden"
 #'   ) |>
-#'   analyze('PKFL',
-#'     var_labels = 'Analysis set:',
+#'   analyze("PKFL",
+#'     var_labels = "Analysis set:",
 #'     afun = a_freq_j,
-#'     show_labels = 'visible',
-#'     extra_args = list(label = 'PK', .stats = "count_unique_fraction")
+#'     show_labels = "visible",
+#'     extra_args = list(label = "PK", .stats = "count_unique_fraction")
 #'   )
 #'
 #' result <- build_table(lyt, ADSL)
 #'
 #' result
 #'
-#' # use pruning function to prune rows where it doesn't meet 5% criteria
-#' # in the total column but it will not
-#' # prune the Safety row regardless
 #' result <- prune_table(
 #'   result,
 #'   prune_func = bspt_pruner(
 #'     fraction = 0.05,
-#'     keeprowtext = 'Safety',
-#'     cols = c('Total')
+#'     keeprowtext = "Safety",
+#'     cols = c("Total")
 #'   )
 #' )
 #'
@@ -300,14 +290,13 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #' @returns  function that can be utilized as pruning function in prune_table
 #'
 bspt_pruner <- function(
-  fraction = 0.05,
-  keeprowtext = "Analysis set: Safety",
-  reg_expr = FALSE,
-  control = NULL,
-  diff_from_control = NULL,
-  only_more_often = TRUE,
-  cols = c("TRT01A")
-) {
+    fraction = 0.05,
+    keeprowtext = "Analysis set: Safety",
+    reg_expr = FALSE,
+    control = NULL,
+    diff_from_control = NULL,
+    only_more_often = TRUE,
+    cols = c("TRT01A")) {
   if (is.null(fraction) && is.null(diff_from_control)) {
     stop("At least one of fraction or diff_from_control must be non-NULL.")
   }
@@ -482,19 +471,19 @@ lst_slicer <- function(lst, ind, type) {
 #' @examples
 #' ADSL <- data.frame(
 #'   USUBJID = c(
-#'     'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-#'     'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
 #'   ),
 #'   TRT01P = c(
-#'     'ARMA', 'ARMB', 'ARMA', 'ARMB', 'ARMB', 'Placebo',
-#'     'Placebo', 'Placebo', 'ARMA', 'ARMB'
+#'     "ARMA", "ARMB", "ARMA", "ARMB", "ARMB", "Placebo",
+#'     "Placebo", "Placebo", "ARMA", "ARMB"
 #'   ),
 #'   Category = c(
-#'     'Cat 1', 'Cat 2', 'Cat 1', 'Unknown', 'Cat 2',
-#'     'Cat 1', 'Unknown', 'Cat 1', 'Cat 2', 'Cat 1'
+#'     "Cat 1", "Cat 2", "Cat 1", "Unknown", "Cat 2",
+#'     "Cat 1", "Unknown", "Cat 1", "Cat 2", "Cat 1"
 #'   ),
-#'   SAFFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'),
-#'   PKFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N')
+#'   SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
+#'   PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
 #' )
 #'
 #' ADSL <- ADSL |>
@@ -502,7 +491,6 @@ lst_slicer <- function(lst, ind, type) {
 #'
 #' lyt <- basic_table() |>
 #'   split_cols_by("TRT01P") |>
-#'
 #'   analyze(
 #'     "Category",
 #'     afun = a_freq_j,
@@ -513,8 +501,7 @@ lst_slicer <- function(lst, ind, type) {
 #'
 #' result
 #'
-#' # use pruning function to prune rows where category is Unknown
-#' result <- prune_table(result, prune_func = remove_rows(removerowtext = 'Unknown'))
+#' result <- prune_table(result, prune_func = remove_rows(removerowtext = "Unknown"))
 #'
 #' result
 #' @aliases remove_rows
@@ -560,16 +547,16 @@ remove_rows <- function(removerowtext = NULL, reg_expr = FALSE) {
 #'
 #' ADSL <- data.frame(
 #'   USUBJID = c(
-#'     'XXXXX01', 'XXXXX02', 'XXXXX03', 'XXXXX04', 'XXXXX05',
-#'     'XXXXX06', 'XXXXX07', 'XXXXX08', 'XXXXX09', 'XXXXX10'
+#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
 #'   ),
 #'   TRT01P = c(
-#'     'ARMA', 'ARMB', 'ARMA', 'ARMB', 'ARMB', 'Placebo',
-#'     'Placebo', 'Placebo', 'ARMA', 'ARMB'
+#'     "ARMA", "ARMB", "ARMA", "ARMB", "ARMB", "Placebo",
+#'     "Placebo", "Placebo", "ARMA", "ARMB"
 #'   ),
 #'   AGE = c(34, 56, 75, 81, 45, 75, 48, 19, 32, 31),
-#'   SAFFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'),
-#'   PKFL = c('N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N')
+#'   SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
+#'   PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
 #' )
 #'
 #' ADSL <- ADSL |>
@@ -577,20 +564,19 @@ remove_rows <- function(removerowtext = NULL, reg_expr = FALSE) {
 #'
 #' create_blank_line <- function(x) {
 #'   list(
-#'     'Mean' = rcell(mean(x), format = 'xx.x'),
-#'     ' ' = rcell(NULL),
-#'     'Max' = rcell(max(x))
+#'     "Mean" = rcell(mean(x), format = "xx.x"),
+#'     " " = rcell(NULL),
+#'     "Max" = rcell(max(x))
 #'   )
 #' }
 #'
 #' lyt <- basic_table() |>
-#'   split_cols_by('TRT01P') |>
-#'   analyze('AGE', afun = create_blank_line)
+#'   split_cols_by("TRT01P") |>
+#'   analyze("AGE", afun = create_blank_line)
 #'
 #' result <- build_table(lyt, ADSL)
 #'
 #' result
-#' # use pruning function to prune rows where category is Unknown
 #' result <- prune_table(result, prune_func = tern::keep_rows(keep_non_null_rows))
 #'
 #' result

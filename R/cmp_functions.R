@@ -21,6 +21,8 @@ cmp_post_fun <- function(ret, spl, fulldf, .spl_context) {
   )
 }
 #' @rdname cmp_post_fun
+#' @return a split function for use with [rtables::split_rows_by]
+#' when creating proportion-based tables with compliance columns.
 #' @export
 cmp_split_fun <- make_split_fun(post = list(cmp_post_fun))
 

@@ -33,14 +33,13 @@ NULL
 #'
 #' @keywords internal
 s_test_proportion_diff <- function(
-  df,
-  .var,
-  .ref_group,
-  .in_ref_col,
-  variables = list(strata = NULL),
-  method = c("chisq", "fisher", "cmh"),
-  alternative = c("two.sided", "less", "greater")
-) {
+    df,
+    .var,
+    .ref_group,
+    .in_ref_col,
+    variables = list(strata = NULL),
+    method = c("chisq", "fisher", "cmh"),
+    alternative = c("two.sided", "less", "greater")) {
   method <- match.arg(method)
   alternative <- match.arg(alternative)
   y <- list(pval = list())
@@ -60,17 +59,19 @@ s_test_proportion_diff <- function(
       strata <- c(interaction(.ref_group[strata]), interaction(df[strata]))
     }
 
-    tbl <- switch(method, cmh = table(grp, rsp, strata), table(grp, rsp))
+    tbl <- switch(method,
+      cmh = table(grp, rsp, strata),
+      table(grp, rsp)
+    )
 
-    y$pval <- switch(
-      method,
+    y$pval <- switch(method,
       chisq = prop_chisq(tbl, alternative),
       cmh = prop_cmh(tbl, alternative),
       fisher = prop_fisher(tbl, alternative)
     )
   }
 
-  y$pval <- with_label(y$pval, d_test_proportion_diff(method, alternative))
+  y$pval <- with_label(y$pval, d_test_proportion_diff_j(method, alternative))
   y
 }
 
@@ -85,17 +86,15 @@ s_test_proportion_diff <- function(
 #' @return A `string` describing the test from which the p-value is derived.
 #'
 #' @export
-d_test_proportion_diff <- function(method, alternative) {
+d_test_proportion_diff_j <- function(method, alternative) {
   checkmate::assert_string(method)
-  meth_part <- switch(
-    method,
+  meth_part <- switch(method,
     chisq = "Chi-Squared Test",
     cmh = "Cochran-Mantel-Haenszel Test",
     fisher = "Fisher's Exact Test",
     stop(paste(method, "does not have a description"))
   )
-  alt_part <- switch(
-    alternative,
+  alt_part <- switch(alternative,
     two.sided = "",
     less = ", 1-sided, direction less",
     greater = ", 1-sided, direction greater"
@@ -111,21 +110,20 @@ d_test_proportion_diff <- function(method, alternative) {
 #' @examples
 #' dta <- data.frame(
 #'   rsp = sample(c(TRUE, FALSE), 100, TRUE),
-#'   grp = factor(rep(c('A', 'B'), each = 50)),
-#'   strata = factor(rep(c('V', 'W', 'X', 'Y', 'Z'), each = 20))
+#'   grp = factor(rep(c("A", "B"), each = 50)),
+#'   strata = factor(rep(c("V", "W", "X", "Y", "Z"), each = 20))
 #' )
 #'
-#' # With `rtables` pipelines.
 #' l <- basic_table() |>
-#'   split_cols_by(var = 'grp') |>
+#'   split_cols_by(var = "grp") |>
 #'   analyze(
-#'     vars = 'rsp',
+#'     vars = "rsp",
 #'     afun = a_test_proportion_diff,
-#'     show_labels = 'hidden',
+#'     show_labels = "hidden",
 #'     extra_args = list(
-#'       method = 'cmh',
-#'       variables = list(strata = 'strata'),
-#'       ref_path = c('grp', 'B')
+#'       method = "cmh",
+#'       variables = list(strata = "strata"),
+#'       ref_path = c("grp", "B")
 #'     )
 #'   )
 #'
@@ -134,16 +132,15 @@ d_test_proportion_diff <- function(method, alternative) {
 #' @export
 #' @order 2
 a_test_proportion_diff <- function(
-  df,
-  .var,
-  ref_path,
-  .spl_context,
-  ...,
-  .stats = NULL,
-  .formats = NULL,
-  .labels = NULL,
-  .indent_mods = NULL
-) {
+    df,
+    .var,
+    ref_path,
+    .spl_context,
+    ...,
+    .stats = NULL,
+    .formats = NULL,
+    .labels = NULL,
+    .indent_mods = NULL) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

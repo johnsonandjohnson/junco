@@ -12,13 +12,17 @@ inches_to_spaces(ins, fontspec, raw = FALSE, tol = sqrt(.Machine$double.eps))
 \item{fontspec}{font_spec. The font specification to use}
 
 \item{raw}{logical(1). Should the answer be returned unrounded
-(`TRUE`), or rounded to the nearest reasonable value (`FALSE`,
+(\code{TRUE}), or rounded to the nearest reasonable value (\code{FALSE},
 the default)}
 
 \item{tol}{numeric(1). The numeric tolerance,  values
-between an integer `n`, and `n+tol` will be returned
-as `n`, rather than `n+1`, if `raw == FALSE`. Ignored
-when `raw` is `TRUE`.}
+between an integer \code{n}, and \code{n+tol} will be returned
+as \code{n}, rather than \code{n+1}, if \code{raw == FALSE}. Ignored
+when \code{raw} is \code{TRUE}.}
+}
+\value{
+the number of either fractional (\code{raw = TRUE}) or whole (\code{raw = FALSE})
+spaces that will fit within \code{ins} inches in the specified font
 }
 \description{
 Conversion of inches to spaces

@@ -1,4 +1,4 @@
-url: na.html
+url: https://johnsonandjohnson.github.io/junco/
 
 
 template:
@@ -49,7 +49,7 @@ reference:
     - fit_ancova
     - fit_mmrm_j
     - coxph_hr
-    - d_test_proportion_diff
+    - d_test_proportion_diff_j
     - tabulate_rbmi
     - tabulate_lsmeans
     - h_colexpr_substr
@@ -87,7 +87,7 @@ reference:
     - h_upd_dfrow
     - h_update_factor
     - rbmi_mmrm_single_info
-        
+
   - title: junco Formatting Functions
     desc: The following functions are the junco formatting functions used to create common table layouts.
     contents:
@@ -100,7 +100,7 @@ reference:
     - jjcsformat_pval_fct
     - jjcsformat_range_fct
     - insert_blank_line
-    
+
   - title: junco Sorting Functions and Pruning Functions
     desc: The following functions are the junco sorting and pruning functions used to create common table layouts.
     contents:
@@ -110,7 +110,7 @@ reference:
     - keep_non_null_rows
     - remove_rows
     - safe_prune_table
-    
+
   - title: junco Splitting Functions
     desc: The following functions are junco column spanning functions used to create common table layouts.
     contents:
@@ -119,7 +119,7 @@ reference:
     - create_colspan_var
     - make_combo_splitfun
     - real_add_overall_facet
-    
+
   - title: junco Functions For titles/footnotes and generating .rtfs 
     desc: The following utility functions help to add titles/footnotes and generate the .rtf files.
     contents:
@@ -127,7 +127,7 @@ reference:
     - get_titles_from_file
     - set_titles
     - tt_to_tlgrtf
-    
+
   - title: junco Miscellaneous Functions
     desc: The following functions are other miscellaneous junco functions used to create common table layouts.
     contents:
@@ -136,7 +136,7 @@ reference:
     - get_mmrm_lsmeans
     - get_ref_info
     - get_visit_levels
-    
+
   - title: internal
     desc: The following are additional junco functions.
     contents:
@@ -145,10 +145,3 @@ reference:
     - rm_other_facets_fact
     - smart_colwidths_1page
     - tt_to_tbldf
-
-
-
-
-
-
-

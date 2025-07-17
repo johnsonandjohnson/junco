@@ -24,12 +24,12 @@ Defaults to \code{NA} which indicates pruning should happen at all levels.}
 \item{empty_msg}{character(1). The message to place in the table
 if no rows were left after pruning}
 
-\item{spancols}{logical(1). Should `empty_msg` be spanned
-across the table's columns (`TRUE`) or placed in the
-rows row label (`FALSE`). Defaults to `FALSE` currently.}
+\item{spancols}{logical(1). Should \code{empty_msg} be spanned
+across the table's columns (\code{TRUE}) or placed in the
+rows row label (\code{FALSE}). Defaults to \code{FALSE} currently.}
 }
 \value{
-`tt` pruned based on the arguments, or, if
+\code{tt} pruned based on the arguments, or, if
 pruning would remove all rows, a TableTree with the
 same column structure, and one row containing the
 empty message spanning all columns
@@ -38,14 +38,13 @@ empty message spanning all columns
 Safely Prune Table With Empty Table Message If Needed
 }
 \examples{
-# always prune
 prfun <- function(tt) TRUE
 
 lyt <- basic_table() |>
-  split_cols_by('ARM') |>
-  split_cols_by('STRATA1') |>
-  split_rows_by('SEX') |>
-  analyze('AGE')
+  split_cols_by("ARM") |>
+  split_cols_by("STRATA1") |>
+  split_rows_by("SEX") |>
+  analyze("AGE")
 tbl <- build_table(lyt, ex_adsl)
 
 safe_prune_table(tbl, prfun)

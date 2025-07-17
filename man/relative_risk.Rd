@@ -30,104 +30,107 @@ s_relative_risk(
 )
 }
 \arguments{
-\item{df}{(`data.frame`)\cr input data frame.}
+\item{df}{(\code{data.frame})\cr input data frame.}
 
-\item{.var}{(`string`)\cr name of the response variable.}
+\item{.var}{(\code{string})\cr name of the response variable.}
 
-\item{ref_path}{(`character`)\cr path to the reference group.}
+\item{ref_path}{(\code{character})\cr path to the reference group.}
 
-\item{.spl_context}{(`environment`)\cr split context environment.}
+\item{.spl_context}{(\code{environment})\cr split context environment.}
 
 \item{...}{Additional arguments passed to the statistics function.}
 
-\item{.stats}{(`character`)\cr statistics to calculate.}
+\item{.stats}{(\code{character})\cr statistics to calculate.}
 
-\item{.formats}{(`list`)\cr formats for the statistics.}
+\item{.formats}{(\code{list})\cr formats for the statistics.}
 
-\item{.labels}{(`list`)\cr labels for the statistics.}
+\item{.labels}{(\code{list})\cr labels for the statistics.}
 
-\item{.indent_mods}{(`list`)\cr indentation modifications for the statistics.}
+\item{.indent_mods}{(\code{list})\cr indentation modifications for the statistics.}
 
-\item{.ref_group}{(`data.frame`)\cr reference group data frame.}
+\item{.ref_group}{(\code{data.frame})\cr reference group data frame.}
 
-\item{.in_ref_col}{(`logical`)\cr whether the current column is the reference column.}
+\item{.in_ref_col}{(\code{logical})\cr whether the current column is the reference column.}
 
-\item{variables}{(`list`)\cr list with strata variable names.}
+\item{variables}{(\code{list})\cr list with strata variable names.}
 
-\item{conf_level}{(`numeric`)\cr confidence level for the confidence interval.}
+\item{conf_level}{(\code{numeric})\cr confidence level for the confidence interval.}
 
-\item{method}{(`string`)\cr method to use for relative risk calculation.}
+\item{method}{(\code{string})\cr method to use for relative risk calculation.}
 
-\item{weights_method}{(`string`)\cr method to use for weights calculation in stratified analysis.}
+\item{weights_method}{(\code{string})\cr method to use for weights calculation in stratified analysis.}
 }
 \value{
-* `a_relative_risk()` returns the corresponding list with formatted [rtables::CellValue()].
+\itemize{
+\item \code{a_relative_risk()} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
+}
 
-* `s_relative_risk()` returns a named list of elements `rel_risk_ci` and `pval`.
+\itemize{
+\item \code{s_relative_risk()} returns a named list of elements \code{rel_risk_ci} and \code{pval}.
+}
 }
 \description{
-The analysis function [a_relative_risk()] is used to create a layout element
+The analysis function \code{\link[=a_relative_risk]{a_relative_risk()}} is used to create a layout element
 to estimate the relative risk for response within a studied population. Only
 the CMH method is available currently.
-The primary analysis variable, `vars`, is a logical variable indicating
+The primary analysis variable, \code{vars}, is a logical variable indicating
 whether a response has occurred for each record.
 A stratification variable must be supplied via the
-`strata` element of the `variables` argument.
+\code{strata} element of the \code{variables} argument.
 }
 \details{
 The variance of the CMH relative risk estimate is calculated using
-  the Greenland and Robins (1985) variance estimation.
+the Greenland and Robins (1985) variance estimation.
 }
 \section{Functions}{
 \itemize{
-\item \code{a_relative_risk()}: Formatted analysis function which is used as `afun`. Note that the
-junco specific `ref_path` and `.spl_context` arguments are used for reference column information.
+\item \code{a_relative_risk()}: Formatted analysis function which is used as \code{afun}. Note that the
+junco specific \code{ref_path} and \code{.spl_context} arguments are used for reference column information.
 
 \item \code{s_relative_risk()}: Statistics function estimating the relative risk for response.
 
 }}
 \note{
-This has been adapted from the `odds_ratio` functions in the `tern` package.
+This has been adapted from the \code{odds_ratio} functions in the \code{tern} package.
 }
 \examples{
-## 'Mid' case: 4/4 respond in group A, 1/2 respond in group B.
-nex <- 100 # Number of example rows
+nex <- 100
 dta <- data.frame(
-  'rsp' = sample(c(TRUE, FALSE), nex, TRUE),
-  'grp' = sample(c('A', 'B'), nex, TRUE),
-  'f1' = sample(c('a1', 'a2'), nex, TRUE),
-  'f2' = sample(c('x', 'y', 'z'), nex, TRUE),
+  "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
+  "grp" = sample(c("A", "B"), nex, TRUE),
+  "f1" = sample(c("a1", "a2"), nex, TRUE),
+  "f2" = sample(c("x", "y", "z"), nex, TRUE),
   stringsAsFactors = TRUE
 )
 
 l <- basic_table() |>
-  split_cols_by(var = 'grp') |>
+  split_cols_by(var = "grp") |>
   analyze(
-    vars = 'rsp',
+    vars = "rsp",
     afun = a_relative_risk,
     extra_args = list(
       conf_level = 0.90,
-      variables = list(strata = 'f1'),
-      ref_path = c('grp', 'B')
+      variables = list(strata = "f1"),
+      ref_path = c("grp", "B")
     )
   )
 
 build_table(l, df = dta)
-nex <- 100 # Number of example rows
+nex <- 100
 dta <- data.frame(
-  'rsp' = sample(c(TRUE, FALSE), nex, TRUE),
-  'grp' = sample(c('A', 'B'), nex, TRUE),
-  'f1' = sample(c('a1', 'a2'), nex, TRUE),
-  'f2' = sample(c('x', 'y', 'z'), nex, TRUE),
+  "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
+  "grp" = sample(c("A", "B"), nex, TRUE),
+  "f1" = sample(c("a1", "a2"), nex, TRUE),
+  "f2" = sample(c("x", "y", "z"), nex, TRUE),
   stringsAsFactors = TRUE
 )
 
 s_relative_risk(
-  df = subset(dta, grp == 'A'),
-  .var = 'rsp',
-  .ref_group = subset(dta, grp == 'B'),
+  df = subset(dta, grp == "A"),
+  .var = "rsp",
+  .ref_group = subset(dta, grp == "B"),
   .in_ref_col = FALSE,
-  variables = list(strata = c('f1', 'f2')),
+  variables = list(strata = c("f1", "f2")),
   conf_level = 0.90
 )
 }

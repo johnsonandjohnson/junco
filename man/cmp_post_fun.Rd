@@ -10,22 +10,26 @@ cmp_post_fun(ret, spl, fulldf, .spl_context)
 cmp_split_fun(df, spl, vals = NULL, labels = NULL, trim = FALSE, .spl_context)
 }
 \arguments{
-\item{ret}{(`list`)\cr result from previous split function steps.}
+\item{ret}{(\code{list})\cr result from previous split function steps.}
 
-\item{spl}{(`split`)\cr split object.}
+\item{spl}{(\code{split})\cr split object.}
 
-\item{fulldf}{(`data.frame`)\cr full data frame.}
+\item{fulldf}{(\code{data.frame})\cr full data frame.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states
-that is passed by `rtables`.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
+that is passed by \code{rtables}.}
 
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{vals}{(`character`)\cr values to use for the split.}
+\item{vals}{(\code{character})\cr values to use for the split.}
 
-\item{labels}{(named `character`)\cr labels for the statistics (without indent).}
+\item{labels}{(named \code{character})\cr labels for the statistics (without indent).}
 
-\item{trim}{(`logical`)\cr whether to trim the values.}
+\item{trim}{(\code{logical})\cr whether to trim the values.}
+}
+\value{
+a split function for use with \link[rtables:split_rows_by]{rtables::split_rows_by}
+when creating proportion-based tables with compliance columns.
 }
 \description{
 Here we just split into 3 columns for expected, received and missing visits.
@@ -34,6 +38,6 @@ Here we just split into 3 columns for expected, received and missing visits.
 This split function is used in the proportion table TEFSCNCMP01 and similar ones.
 }
 \seealso{
-[rtables::make_split_fun()] describing the requirements for this kind of
-  post-processing function.
+\code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} describing the requirements for this kind of
+post-processing function.
 }

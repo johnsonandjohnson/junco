@@ -7,19 +7,32 @@
 jjcsformat_fraction_count_denom(x, d = 1, roundmethod = c("sas", "iec"), ...)
 }
 \arguments{
-\item{x}{`numeric`\cr with elements `num` and `fraction` or `num`, `denom` and `fraction`.}
+\item{x}{\code{numeric}\cr with elements \code{num} and \code{fraction} or \code{num}, \code{denom} and \code{fraction}.}
 
 \item{d}{numeric(1). Number of digits to round fraction to (default=1)}
 
-\item{roundmethod}{(`string`)\cr choice of rounding methods. Options are:
-* `sas`: the underlying rounding method is `tidytlg::roundSAS`, where \cr
+\item{roundmethod}{(\code{string})\cr choice of rounding methods. Options are:
+\itemize{
+\item \code{sas}: the underlying rounding method is \code{tidytlg::roundSAS}, where \cr
 roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions/12688717/round-up-from-5
-* `iec`: the underlying rounding method is `round`}
+\item \code{iec}: the underlying rounding method is \code{round}
+}}
 
 \item{...}{Additional arguments passed to other methods.}
 }
+\value{
+\code{x} formatted as a string with \code{d} digits of precision,
+with special cased values as described in Details above.
+}
 \description{
 Formatting fraction, count and denominator values
+}
+\details{
+Formats a 3-dimensional value such that percent values
+near 0 or 100\% are formatted as .e.g, \code{"<0.1\%"} and
+\code{">99.9\%"}, where the cutoff is controlled by \code{d}, and
+formatted as \code{"xx.x\% (xx/xx)"} otherwise, with the
+precision of the percent also controlled by \code{d}.
 }
 \examples{
 jjcsformat_fraction_count_denom(c(7, 10, 0.7))

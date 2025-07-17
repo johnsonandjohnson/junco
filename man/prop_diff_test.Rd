@@ -29,87 +29,91 @@ s_test_proportion_diff(
 )
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(`string`)\cr single variable name that is passed by `rtables` when requested
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
-\item{ref_path}{(`character`)\cr global reference group specification, see [get_ref_info()].}
+\item{ref_path}{(\code{character})\cr global reference group specification, see \code{\link[=get_ref_info]{get_ref_info()}}.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states
-that is passed by `rtables`.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
+that is passed by \code{rtables}.}
 
 \item{...}{additional arguments for the lower level functions.}
 
-\item{.stats}{(`character`)\cr statistics to select for the table.}
+\item{.stats}{(\code{character})\cr statistics to select for the table.}
 
-\item{.formats}{(named `character` or `list`)\cr formats for the statistics. See Details in `analyze_vars` for more
-information on the `'auto'` setting.}
+\item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
+information on the \code{'auto'} setting.}
 
-\item{.labels}{(named `character`)\cr labels for the statistics (without indent).}
+\item{.labels}{(named \code{character})\cr labels for the statistics (without indent).}
 
-\item{.indent_mods}{(named `integer`)\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
+\item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 
-\item{.ref_group}{(`data.frame` or `vector`)\cr the data corresponding to the reference group.}
+\item{.ref_group}{(\code{data.frame} or \code{vector})\cr the data corresponding to the reference group.}
 
-\item{.in_ref_col}{(`logical`)\cr `TRUE` when working with the reference level, `FALSE` otherwise.}
+\item{.in_ref_col}{(\code{logical})\cr \code{TRUE} when working with the reference level, \code{FALSE} otherwise.}
 
-\item{variables}{(named `list` of `string`)\cr list of additional analysis variables.}
+\item{variables}{(named \code{list} of \code{string})\cr list of additional analysis variables.}
 
-\item{method}{(`string`)\cr one of `chisq`, `cmh`, `fisher`; specifies the test used
+\item{method}{(\code{string})\cr one of \code{chisq}, \code{cmh}, \code{fisher}; specifies the test used
 to calculate the p-value.}
 
-\item{alternative}{(`string`)\cr whether `two.sided`, or one-sided `less` or `greater` p-value
+\item{alternative}{(\code{string})\cr whether \code{two.sided}, or one-sided \code{less} or \code{greater} p-value
 should be displayed.}
 }
 \value{
-* `a_test_proportion_diff()` returns the corresponding list with formatted [rtables::CellValue()].
+\itemize{
+\item \code{a_test_proportion_diff()} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
+}
 
-* `s_test_proportion_diff()` returns a named `list` with a single item `pval` with an attribute `label`
-  describing the method used. The p-value tests the null hypothesis that proportions in two groups are the same.
+\itemize{
+\item \code{s_test_proportion_diff()} returns a named \code{list} with a single item \code{pval} with an attribute \code{label}
+describing the method used. The p-value tests the null hypothesis that proportions in two groups are the same.
+}
 }
 \description{
-`r lifecycle::badge('stable')`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
-The analysis function [a_test_proportion_diff()] can be used to create a layout element to test
-the difference between two proportions. The primary analysis variable, `vars`, indicates whether a
-response has occurred for each record. See the `method` parameter for options of methods to use
-to calculate the p-value. Additionally, a stratification variable can be supplied via the `strata`
-element of the `variables` argument. The argument `alternative` specifies the direction of the
+The analysis function \code{\link[=a_test_proportion_diff]{a_test_proportion_diff()}} can be used to create a layout element to test
+the difference between two proportions. The primary analysis variable, \code{vars}, indicates whether a
+response has occurred for each record. See the \code{method} parameter for options of methods to use
+to calculate the p-value. Additionally, a stratification variable can be supplied via the \code{strata}
+element of the \code{variables} argument. The argument \code{alternative} specifies the direction of the
 alternative hypothesis.
 }
 \section{Functions}{
 \itemize{
-\item \code{a_test_proportion_diff()}: Formatted analysis function which is used as `afun`
+\item \code{a_test_proportion_diff()}: Formatted analysis function which is used as \code{afun}
 
 \item \code{s_test_proportion_diff()}: Statistics function which tests the difference between two proportions.
 
 }}
 \note{
-These functions have been forked from the `tern` package. Additional features are:
-
-  * Additional `alternative` argument for the sidedness of the test.
-  * Additional `ref_path` argument for flexible reference column path specification.
+These functions have been forked from the \code{tern} package. Additional features are:
+\itemize{
+\item Additional \code{alternative} argument for the sidedness of the test.
+\item Additional \code{ref_path} argument for flexible reference column path specification.
+}
 }
 \examples{
 dta <- data.frame(
   rsp = sample(c(TRUE, FALSE), 100, TRUE),
-  grp = factor(rep(c('A', 'B'), each = 50)),
-  strata = factor(rep(c('V', 'W', 'X', 'Y', 'Z'), each = 20))
+  grp = factor(rep(c("A", "B"), each = 50)),
+  strata = factor(rep(c("V", "W", "X", "Y", "Z"), each = 20))
 )
 
-# With `rtables` pipelines.
 l <- basic_table() |>
-  split_cols_by(var = 'grp') |>
+  split_cols_by(var = "grp") |>
   analyze(
-    vars = 'rsp',
+    vars = "rsp",
     afun = a_test_proportion_diff,
-    show_labels = 'hidden',
+    show_labels = "hidden",
     extra_args = list(
-      method = 'cmh',
-      variables = list(strata = 'strata'),
-      ref_path = c('grp', 'B')
+      method = "cmh",
+      variables = list(strata = "strata"),
+      ref_path = c("grp", "B")
     )
   )
 
@@ -117,6 +121,6 @@ build_table(l, df = dta)
 
 }
 \seealso{
-[h_prop_diff_test]
+\link{h_prop_diff_test}
 }
 \keyword{internal}

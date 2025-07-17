@@ -7,6 +7,9 @@
 #'
 #'
 #' @name coxph_hr
+#' @return for `s_coxph_hr` a list containing the same statistics returned by [tern::s_coxph_pairwise]
+#' and the additional `lr_stat_df` statistic. for `a_coxph_hr`, a `VerticalRowsSection`
+#' object.
 #' @order 1
 NULL
 
@@ -22,27 +25,26 @@ NULL
 #' adtte_f <- tern::tern_ex_adtte |>
 #'   dplyr::filter(PARAMCD == "OS") |>
 #'   dplyr::mutate(is_event = CNSR == 0)
-#' df <- adtte_f |> dplyr::filter(ARMCD == 'ARM A')
-#' df_ref <- adtte_f |> dplyr::filter(ARMCD == 'ARM B')
+#' df <- adtte_f |> dplyr::filter(ARMCD == "ARM A")
+#' df_ref <- adtte_f |> dplyr::filter(ARMCD == "ARM B")
 #'
 #' s_coxph_hr(
 #'   df = df,
 #'   .ref_group = df_ref,
 #'   .in_ref_col = FALSE,
-#'   .var = 'AVAL',
-#'   is_event = 'is_event',
+#'   .var = "AVAL",
+#'   is_event = "is_event",
 #'   strata = NULL
 #' )
 s_coxph_hr <- function(
-  df,
-  .ref_group,
-  .in_ref_col,
-  .var,
-  is_event,
-  strata = NULL,
-  control = control_coxph(),
-  alternative = c("two.sided", "less", "greater")
-) {
+    df,
+    .ref_group,
+    .in_ref_col,
+    .var,
+    is_event,
+    strata = NULL,
+    control = control_coxph(),
+    alternative = c("two.sided", "less", "greater")) {
   checkmate::assert_string(.var)
   checkmate::assert_numeric(df[[.var]])
   checkmate::assert_logical(df[[is_event]])
@@ -93,8 +95,7 @@ s_coxph_hr <- function(
   log_rank_pvalue <- stats::pchisq(log_rank_stat, log_rank_df, lower.tail = FALSE)
   checkmate::assert_true(all.equal(log_rank_pvalue, original_survdiff$pvalue))
 
-  pval <- switch(
-    pval_method,
+  pval <- switch(pval_method,
     wald = sum_cox$waldtest["pvalue"],
     `log-rank` = log_rank_pvalue,
     likelihood = sum_cox$logtest["pvalue"]
@@ -137,45 +138,46 @@ s_coxph_hr <- function(
 #'   filter(PARAMCD == "OS") |>
 #'   mutate(is_event = CNSR == 0)
 #'
-#' df <- adtte_f |> filter(ARMCD == 'ARM A')
-#' df_ref_group <- adtte_f |> filter(ARMCD == 'ARM B')
+#' df <- adtte_f |> filter(ARMCD == "ARM A")
+#' df_ref_group <- adtte_f |> filter(ARMCD == "ARM B")
 #'
 #' basic_table() |>
-#'   split_cols_by(var = 'ARMCD', ref_group = 'ARM A') |>
+#'   split_cols_by(var = "ARMCD", ref_group = "ARM A") |>
 #'   add_colcounts() |>
 #'   analyze("AVAL",
 #'     afun = s_coxph_hr,
-#'     extra_args = list(is_event = 'is_event'),
-#'     var_labels = 'Unstratified Analysis',
-#'     show_labels = 'visible'
+#'     extra_args = list(is_event = "is_event"),
+#'     var_labels = "Unstratified Analysis",
+#'     show_labels = "visible"
 #'   ) |>
 #'   build_table(df = adtte_f)
 #'
-#'   basic_table() |>
-#'   split_cols_by(var = 'ARMCD', ref_group = 'ARM A') |>
+#' basic_table() |>
+#'   split_cols_by(var = "ARMCD", ref_group = "ARM A") |>
 #'   add_colcounts() |>
 #'   analyze("AVAL",
-#'           afun = s_coxph_hr,
-#'           extra_args = list(is_event = 'is_event',
-#'                             strata = 'SEX',
-#'                             control = tern::control_coxph(pval_method = 'wald')),
-#'           var_labels = 'Unstratified Analysis',
-#'           show_labels = 'visible'
+#'     afun = s_coxph_hr,
+#'     extra_args = list(
+#'       is_event = "is_event",
+#'       strata = "SEX",
+#'       control = tern::control_coxph(pval_method = "wald")
+#'     ),
+#'     var_labels = "Unstratified Analysis",
+#'     show_labels = "visible"
 #'   ) |>
 #'   build_table(df = adtte_f)
 #' @export
 #' @order 2
 a_coxph_hr <- function(
-  df,
-  .var,
-  ref_path,
-  .spl_context,
-  ...,
-  .stats = NULL,
-  .formats = NULL,
-  .labels = NULL,
-  .indent_mods = NULL
-) {
+    df,
+    .var,
+    ref_path,
+    .spl_context,
+    ...,
+    .stats = NULL,
+    .formats = NULL,
+    .labels = NULL,
+    .indent_mods = NULL) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

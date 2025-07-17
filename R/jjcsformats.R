@@ -118,6 +118,7 @@ jjcsformat_xx_R <- format_xx_fct(roundmethod = "iec")
 #' @param str The formatting that is required specified as a text string, eg "xx.xx"
 #' @param na_str character. Na string that will be passed from `formatters` into
 #'    our formatting functions.
+#' @return a formatting function with `"sas"`-style rounding.
 #' @export
 jjcsformat_xx <- jjcsformat_xx_SAS
 
@@ -146,11 +147,10 @@ jjcsformat_xx <- jjcsformat_xx_SAS
 #' jjcsformat_count_fraction(c(70000, 1))
 #'
 jjcsformat_count_fraction <- function(
-  x,
-  d = 1,
-  roundmethod = c("sas", "iec"),
-  ...
-) {
+    x,
+    d = 1,
+    roundmethod = c("sas", "iec"),
+    ...) {
   roundmethod <- match.arg(roundmethod)
   attr(x, "label") <- NULL
   if (any(is.na(x))) {
@@ -201,16 +201,17 @@ jjcsformat_count_fraction <- function(
 #' @param ... Additional arguments passed to other methods.
 #' @export
 #' @rdname count_denom_fraction
+#' @return `x`, formatted into a string with the appropriate
+#' format and `d` digits of precision.
 #' @examples
 #' jjcsformat_count_denom_fraction(c(7, 10, 0.7))
 #' jjcsformat_count_denom_fraction(c(70000, 70001, 70000 / 70001))
 #' jjcsformat_count_denom_fraction(c(235, 235, 235 / 235))
 jjcsformat_count_denom_fraction <- function(
-  x,
-  d = 1,
-  roundmethod = c("sas", "iec"),
-  ...
-) {
+    x,
+    d = 1,
+    roundmethod = c("sas", "iec"),
+    ...) {
   roundmethod <- match.arg(roundmethod)
   attr(x, "label") <- NULL
   if (any(is.na(x))) {
@@ -254,20 +255,28 @@ jjcsformat_count_denom_fraction <- function(
 
 #' @title Formatting fraction, count and denominator values
 #'
+#' @details
+#' Formats a 3-dimensional value such that percent values
+#' near 0 or 100% are formatted as .e.g, `"<0.1%"` and
+#' `">99.9%"`, where the cutoff is controlled by `d`, and
+#' formatted as `"xx.x% (xx/xx)"` otherwise, with the
+#' precision of the percent also controlled by `d`.
+#'
 #' @inheritParams count_fraction
 #' @param ... Additional arguments passed to other methods.
 #' @export
 #' @rdname fraction_count_denom
+#' @return `x` formatted as a string with `d` digits of precision,
+#' with special cased values as described in Details above.
 #' @examples
 #' jjcsformat_fraction_count_denom(c(7, 10, 0.7))
 #' jjcsformat_fraction_count_denom(c(70000, 70001, 70000 / 70001))
 #' jjcsformat_fraction_count_denom(c(235, 235, 235 / 235))
 jjcsformat_fraction_count_denom <- function(
-  x,
-  d = 1,
-  roundmethod = c("sas", "iec"),
-  ...
-) {
+    x,
+    d = 1,
+    roundmethod = c("sas", "iec"),
+    ...) {
   roundmethod <- match.arg(roundmethod)
   attr(x, "label") <- NULL
   if (any(is.na(x))) {

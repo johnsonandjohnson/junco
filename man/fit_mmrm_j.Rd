@@ -2,7 +2,7 @@
 % Please edit documentation in R/mmrm.R
 \name{fit_mmrm_j}
 \alias{fit_mmrm_j}
-\title{`MMRM` Analysis}
+\title{\code{MMRM} Analysis}
 \usage{
 fit_mmrm_j(
   vars = list(response = "AVAL", covariates = c(), id = "USUBJID", arm = "ARM", visit =
@@ -16,103 +16,106 @@ fit_mmrm_j(
 )
 }
 \arguments{
-\item{vars}{(named `list` of `string` or `character`)\cr specifying the variables in the `MMRM`.
-  The following elements need to be included as character vectors and match corresponding columns
-  in `data`:
+\item{vars}{(named \code{list} of \code{string} or \code{character})\cr specifying the variables in the \code{MMRM}.
+The following elements need to be included as character vectors and match corresponding columns
+in \code{data}:
+\itemize{
+\item \code{response}: the response variable.
+\item \code{covariates}: the additional covariate terms (might also include interactions).
+\item \code{id}: the subject ID variable.
+\item \code{arm}: the treatment group variable (factor).
+\item \code{visit}: the visit variable (factor).
+\item \code{weights}: optional weights variable (if \code{NULL} or omitted then no weights will be used).
+}
 
-  - `response`: the response variable.
-  - `covariates`: the additional covariate terms (might also include interactions).
-  - `id`: the subject ID variable.
-  - `arm`: the treatment group variable (factor).
-  - `visit`: the visit variable (factor).
-  - `weights`: optional weights variable (if `NULL` or omitted then no weights will be used).
+Note that the main effects and interaction of \code{arm} and \code{visit} are by default
+included in the model.}
 
-  Note that the main effects and interaction of `arm` and `visit` are by default
-  included in the model.}
-
-\item{data}{(`data.frame`)\cr with all the variables specified in
-`vars`. Records with missing values in any independent variables
+\item{data}{(\code{data.frame})\cr with all the variables specified in
+\code{vars}. Records with missing values in any independent variables
 will be excluded.}
 
-\item{conf_level}{(`proportion`)\cr confidence level of the interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
-\item{cor_struct}{(`string`)\cr specifying the covariance structure, defaults to
-`'unstructured'`. See the details.}
+\item{cor_struct}{(\code{string})\cr specifying the covariance structure, defaults to
+\code{'unstructured'}. See the details.}
 
-\item{weights_emmeans}{(`string`)\cr argument from [emmeans::emmeans()], `'counterfactual'` by default.}
+\item{weights_emmeans}{(\code{string})\cr argument from \code{\link[emmeans:emmeans]{emmeans::emmeans()}}, \code{'counterfactual'} by default.}
 
-\item{averages_emmeans}{(`list`)\cr optional named list of visit levels which should be averaged
+\item{averages_emmeans}{(\code{list})\cr optional named list of visit levels which should be averaged
 and reported along side the single visits.}
 
-\item{...}{additional arguments for [mmrm::mmrm()], in particular `reml` and options listed in
-[mmrm::mmrm_control()].}
+\item{...}{additional arguments for \code{\link[mmrm:mmrm]{mmrm::mmrm()}}, in particular \code{reml} and options listed in
+\code{\link[mmrm:mmrm_control]{mmrm::mmrm_control()}}.}
 }
 \value{
-A `tern_model` object which is a list with model results:
-
-  - `fit`: The `mmrm` object which was fitted to the data. Note that via `mmrm::component(fit, 'optimizer')`
-      the finally used optimization algorithm can be obtained, which can be useful for refitting the model
-      later on.
-  - `cov_estimate`: The matrix with the covariance matrix estimate.
-  - `diagnostics`: A list with model diagnostic statistics (REML criterion, AIC, corrected AIC, BIC).
-  - `lsmeans`: This is a list with data frames `estimates` and `contrasts`.
-       The attributes `averages` and `weights` save the settings used
-       (`averages_emmeans` and `weights_emmeans`).
-  - `vars`: The variable list.
-  - `labels`: Corresponding list with variable labels extracted from `data`.
-  - `cor_struct`: input.
-  - `ref_level`: The reference level for the arm variable, which is always the first level.
-  - `treatment_levels`: The treatment levels for the arm variable.
-  - `conf_level`: The confidence level which was used to construct the `lsmeans` confidence intervals.
-  - `additional`: List with any additional inputs passed via `...`
+A \code{tern_model} object which is a list with model results:
+\itemize{
+\item \code{fit}: The \code{mmrm} object which was fitted to the data. Note that via \code{mmrm::component(fit, 'optimizer')}
+the finally used optimization algorithm can be obtained, which can be useful for refitting the model
+later on.
+\item \code{cov_estimate}: The matrix with the covariance matrix estimate.
+\item \code{diagnostics}: A list with model diagnostic statistics (REML criterion, AIC, corrected AIC, BIC).
+\item \code{lsmeans}: This is a list with data frames \code{estimates} and \code{contrasts}.
+The attributes \code{averages} and \code{weights} save the settings used
+(\code{averages_emmeans} and \code{weights_emmeans}).
+\item \code{vars}: The variable list.
+\item \code{labels}: Corresponding list with variable labels extracted from \code{data}.
+\item \code{cor_struct}: input.
+\item \code{ref_level}: The reference level for the arm variable, which is always the first level.
+\item \code{treatment_levels}: The treatment levels for the arm variable.
+\item \code{conf_level}: The confidence level which was used to construct the \code{lsmeans} confidence intervals.
+\item \code{additional}: List with any additional inputs passed via \code{...}
+}
 }
 \description{
-Does the `MMRM` analysis. Multiple other functions can be called on the result to produce
+Does the \code{MMRM} analysis. Multiple other functions can be called on the result to produce
 tables and graphs.
 }
 \details{
-Multiple different degree of freedom adjustments are available via the `method` argument
-  for [mmrm::mmrm()]. In addition, covariance matrix adjustments are available via `vcov`.
-  Please see [mmrm::mmrm_control()] for details and additional useful options.
+Multiple different degree of freedom adjustments are available via the \code{method} argument
+for \code{\link[mmrm:mmrm]{mmrm::mmrm()}}. In addition, covariance matrix adjustments are available via \code{vcov}.
+Please see \code{\link[mmrm:mmrm_control]{mmrm::mmrm_control()}} for details and additional useful options.
 
-  For the covariance structure (`cor_struct`), the user can choose among the following options.
-
-  - `unstructured`: Unstructured covariance matrix. This is the most flexible choice and default.
-       If there are `T` visits, then `T * (T+1) / 2` variance parameters are used.
-  - `toeplitz`: Homogeneous Toeplitz covariance matrix, which uses `T` variance parameters.
-  - `heterogeneous toeplitz`: Heterogeneous Toeplitz covariance matrix,
-       which uses `2 * T - 1` variance parameters.
-  - `ante-dependence`: Homogeneous Ante-Dependence covariance matrix, which uses `T` variance parameters.
-  - `heterogeneous ante-dependence`: Heterogeneous Ante-Dependence covariance matrix,
-       which uses `2 * T - 1` variance parameters.
-  - `auto-regressive`: Homogeneous Auto-Regressive (order 1) covariance matrix,
-       which uses 2 variance parameters.
-  - `heterogeneous auto-regressive`: Heterogeneous Auto-Regressive (order 1) covariance matrix,
-       which uses `T + 1` variance parameters.
-  - `compound symmetry`: Homogeneous Compound Symmetry covariance matrix, which uses 2
-       variance parameters.
-  - `heterogeneous compound symmetry`: Heterogeneous Compound Symmetry covariance matrix, which uses
-       `T + 1` variance parameters.
+For the covariance structure (\code{cor_struct}), the user can choose among the following options.
+\itemize{
+\item \code{unstructured}: Unstructured covariance matrix. This is the most flexible choice and default.
+If there are \code{T} visits, then \code{T * (T+1) / 2} variance parameters are used.
+\item \code{toeplitz}: Homogeneous Toeplitz covariance matrix, which uses \code{T} variance parameters.
+\item \verb{heterogeneous toeplitz}: Heterogeneous Toeplitz covariance matrix,
+which uses \code{2 * T - 1} variance parameters.
+\item \code{ante-dependence}: Homogeneous Ante-Dependence covariance matrix, which uses \code{T} variance parameters.
+\item \verb{heterogeneous ante-dependence}: Heterogeneous Ante-Dependence covariance matrix,
+which uses \code{2 * T - 1} variance parameters.
+\item \code{auto-regressive}: Homogeneous Auto-Regressive (order 1) covariance matrix,
+which uses 2 variance parameters.
+\item \verb{heterogeneous auto-regressive}: Heterogeneous Auto-Regressive (order 1) covariance matrix,
+which uses \code{T + 1} variance parameters.
+\item \verb{compound symmetry}: Homogeneous Compound Symmetry covariance matrix, which uses 2
+variance parameters.
+\item \verb{heterogeneous compound symmetry}: Heterogeneous Compound Symmetry covariance matrix, which uses
+\code{T + 1} variance parameters.
+}
 }
 \note{
-This function has the `_j` suffix to distinguish it from [mmrm::fit_mmrm()].
-  It is a copy from the `tern.mmrm` package and later will be replaced by [tern.mmrm::fit_mmrm()].
-  No new features are included in this function here.
+This function has the \verb{_j} suffix to distinguish it from \code{\link[mmrm:fit_mmrm]{mmrm::fit_mmrm()}}.
+It is a copy from the \code{tern.mmrm} package and later will be replaced by tern.mmrm::fit_mmrm().
+No new features are included in this function here.
 }
 \examples{
 mmrm_results <- fit_mmrm_j(
   vars = list(
-    response = 'FEV1',
-    covariates = c('RACE', 'SEX'),
-    id = 'USUBJID',
-    arm = 'ARMCD',
-    visit = 'AVISIT'
+    response = "FEV1",
+    covariates = c("RACE", "SEX"),
+    id = "USUBJID",
+    arm = "ARMCD",
+    visit = "AVISIT"
   ),
   data = mmrm::fev_data,
-  cor_struct = 'unstructured',
-  weights_emmeans = 'equal',
+  cor_struct = "unstructured",
+  weights_emmeans = "equal",
   averages_emmeans = list(
-    'VIS1+2' = c('VIS1', 'VIS2')
+    "VIS1+2" = c("VIS1", "VIS2")
   )
 )
 }

@@ -8,24 +8,27 @@
 #' @note These functions have been forked from the `tern.mmrm` package. Additional features
 #'   are:
 #'
-#'   * Additional `ref_path` argument for [summarize_lsmeans()]
+#'   * Additional `ref_path` argument for tern.mmrm::summarize_lsmeans().
 #'   * The function is more general in that it also works for LS means results from ANCOVA
 #'   * Additional statistic `diff_mean_est_ci` is returned
 #'   * P-value sidedness can be chosen
 #'
 #' @name tabulate_lsmeans
+#' @return for `s_lsmeans`, a list containing the same statistics returned by [tern.mmrm::s_mmrm_lsmeans],
+#' with the additional `diff_mean_est_ci` three-dimensional statistic. For `a_lsmeans`,
+#' a `VertalRowsSection` as returned by [rtables::in_rows].
 #' @examples
 #' result <- fit_mmrm_j(
 #'   vars = list(
-#'     response = 'FEV1',
-#'     covariates = c('RACE', 'SEX'),
-#'     id = 'USUBJID',
-#'     arm = 'ARMCD',
-#'     visit = 'AVISIT'
+#'     response = "FEV1",
+#'     covariates = c("RACE", "SEX"),
+#'     id = "USUBJID",
+#'     arm = "ARMCD",
+#'     visit = "AVISIT"
 #'   ),
 #'   data = mmrm::fev_data,
-#'   cor_struct = 'unstructured',
-#'   weights_emmeans = 'equal'
+#'   cor_struct = "unstructured",
+#'   weights_emmeans = "equal"
 #' )
 #'
 #' df <- broom::tidy(result)
@@ -131,13 +134,11 @@ s_lsmeans <- function(df,
       if_not_ref(c(df$estimate_contr, df$lower_cl_contr, df$upper_cl_contr)),
       paste0("Difference in Adjusted Means (", f_conf_level(df$conf_level), ")")
     ),
-    change = switch(
-      show_relative,
+    change = switch(show_relative,
       reduction = with_label(if_not_ref(df$relative_reduc), "Relative Reduction (%)"),
       increase = with_label(if_not_ref(-df$relative_reduc), "Relative Increase (%)")
     ),
-    p_value = if_not_ref(switch(
-      alternative,
+    p_value = if_not_ref(switch(alternative,
       two.sided = with_label(df$p_value, "2-sided p-value"),
       less = with_label(df$p_value_less, "1-sided p-value (less)"),
       greater = with_label(df$p_value_greater, "1-sided p-value (greater)")

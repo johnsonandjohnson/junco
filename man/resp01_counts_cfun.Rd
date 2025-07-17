@@ -7,21 +7,21 @@
 resp01_counts_cfun(df, labelstr, .spl_context, .alt_df, label_fstr)
 }
 \arguments{
-\item{df}{(`data.frame`)\cr data set containing all analysis variables.}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{labelstr}{(`character`)\cr label of the level of the parent split currently being summarized
-(must be present as second argument in Content Row Functions). See [rtables::summarize_row_groups()]
+\item{labelstr}{(\code{character})\cr label of the level of the parent split currently being summarized
+(must be present as second argument in Content Row Functions). See \code{\link[rtables:summarize_row_groups]{rtables::summarize_row_groups()}}
 for more information.}
 
-\item{.spl_context}{(`data.frame`)\cr gives information about ancestor split states
-that is passed by `rtables`.}
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
+that is passed by \code{rtables}.}
 
-\item{.alt_df}{(`data.frame`)\cr alternative data frame used for denominator calculation.}
+\item{.alt_df}{(\code{data.frame})\cr alternative data frame used for denominator calculation.}
 
-\item{label_fstr}{(`string`)\cr format string for the label.}
+\item{label_fstr}{(\code{string})\cr format string for the label.}
 }
 \value{
-The correct [rtables::in_rows()] result.
+The correct \code{\link[rtables:in_rows]{rtables::in_rows()}} result.
 }
 \description{
 Content Row Function for Counts of Subgroups in Response Tables (RESP01)

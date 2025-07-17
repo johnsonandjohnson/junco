@@ -7,39 +7,39 @@
 insert_blank_line(lyt, table_names = NULL)
 }
 \arguments{
-\item{lyt}{(`layout`)\cr input layout where analyses will be added to.}
+\item{lyt}{(\code{layout})\cr input layout where analyses will be added to.}
 
-\item{table_names}{(`character`)\cr this can be customized in case that the same `vars` are analyzed multiple times,
-to avoid warnings from `rtables`.}
+\item{table_names}{(\code{character})\cr this can be customized in case that the same \code{vars} are analyzed multiple times,
+to avoid warnings from \code{rtables}.}
 }
 \value{
 The modified layout now including a blank line after the current
-  row content.
+row content.
 }
 \description{
-This is a hack for `rtables` in order to be able to add row gaps,
+This is a hack for \code{rtables} in order to be able to add row gaps,
 i.e. blank lines.
 In particular, by default this function needs to maintain a global state for avoiding
 duplicate table names. The global state variable is hidden by using
 a dot in front of its name. However, this likely won't work with parallelisation across
-multiple threads and also causes non-reproducibility of the resulting `rtables`
+multiple threads and also causes non-reproducibility of the resulting \code{rtables}
 object. Therefore also a custom table name can be used.
 }
 \examples{
 ADSL <- ex_adsl
 
 lyt <- basic_table() |>
-  split_cols_by('ARM') |>
-  split_rows_by('STRATA1') |>
-  analyze(vars = 'AGE', afun = function(x) {
+  split_cols_by("ARM") |>
+  split_rows_by("STRATA1") |>
+  analyze(vars = "AGE", afun = function(x) {
     in_rows(
-      'Mean (sd)' = rcell(c(mean(x), sd(x)), format = 'xx.xx (xx.xx)')
+      "Mean (sd)" = rcell(c(mean(x), sd(x)), format = "xx.xx (xx.xx)")
     )
   }) |>
   insert_blank_line() |>
-  analyze(vars = 'AGE', table_names = 'AGE_Range', afun = function(x) {
+  analyze(vars = "AGE", table_names = "AGE_Range", afun = function(x) {
     in_rows(
-      'Range' = rcell(range(x), format = 'xx.xx - xx.xx')
+      "Range" = rcell(range(x), format = "xx.xx - xx.xx")
     )
   })
 build_table(lyt, ADSL)

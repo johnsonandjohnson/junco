@@ -7,13 +7,13 @@
 analyze_values(lyt, vars, ..., formats)
 }
 \arguments{
-\item{lyt}{(`layout`)\cr input layout where analyses will be added to.}
+\item{lyt}{(\code{layout})\cr input layout where analyses will be added to.}
 
-\item{vars}{(`character`)\cr variable names for the primary analysis variable to be iterated over.}
+\item{vars}{(\code{character})\cr variable names for the primary analysis variable to be iterated over.}
 
 \item{...}{additional arguments for the lower level functions.}
 
-\item{formats}{(`list`)\cr formats including `mean_sd`, `median` and `range`
+\item{formats}{(\code{list})\cr formats including \code{mean_sd}, \code{median} and \code{range}
 specifications.}
 }
 \value{
@@ -23,5 +23,5 @@ Modified layout.
 Shortcut Layout Function for Standard Continuous Variable Analysis
 }
 \note{
-This is used in `tefmad01` and `tefmad03a` e.g.
+This is used in \code{tefmad01} and \code{tefmad03a} e.g.
 }
