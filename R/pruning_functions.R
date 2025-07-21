@@ -121,6 +121,9 @@ safe_prune_table <- function(
 #' @returns  Function that can be utilized as pruning function in prune_table.
 #'
 count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols = c("TRT01A")) {
+
+  colpaths <- NULL
+
   function(tt) {
     # Do not ever prune the following rows.  a row that should be kept in the table will get the value of FALSE
 
@@ -144,7 +147,10 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
     # init return value to FALSE (not remove row)
     remove <- FALSE
 
-    colpaths <- col_paths(tt)
+    if (is.null(colpaths)) {
+      colpaths <<- col_paths(tt)
+    }
+
     # identify non relative risk columns as in rrisk columns first element is not a count, but diff percentage with
     # small total columns and count > 0 (eg count = 1, n per group = 10), you can run into count1 = 1, countpbo =
     # 0, diffpct = 10, this row should not be considered though
