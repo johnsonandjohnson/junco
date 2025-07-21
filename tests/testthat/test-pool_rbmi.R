@@ -1,6 +1,8 @@
 library(rbmi)
 suppressMessages(require(mockery))
 
+as_analysis <- getFromNamespace("as_analysis", "rbmi")
+
 
 test_that("mod_pool_internal_rubin combines results correctly", {
   # Create mock data
@@ -234,4 +236,122 @@ test_that("pool function processes and returns combined results", {
   expect_equal(res$pars$param2$se, 0.3)
   expect_equal(res$pars$param2$pvalue, 0.02)
   expect_equal(res$pars$param2$df, median(mock_results$param2$df))
+})
+
+test_that("rbmi_pool works fine", {
+  
+  set.seed(101)
+  
+  mu <- 0
+  sd <- 1
+  n <- 2000
+  vals <- rnorm(n, mu, sd)
+  real_mu <- mean(vals)
+  
+  runanalysis <- function(x) {
+    list("p1" = list(est = mean(x), se = NA, df = NA))
+  }
+  
+  results_bayes <- as_analysis(
+    method = method_bayes(n_samples = 5000),
+    results = lapply(
+      seq_len(5000),
+      function(x) runanalysis(sample(vals, size = n, replace = TRUE))
+    )
+  )
+  
+  testthat::expect_equal(class(results_bayes$results)[1], "rubin")
+  
+  bayes <- rbmi_pool(results = results_bayes)
+  bayes2 <- rbmi_pool(results = results_bayes, conf.level = 0.8)
+  bayes3 <- rbmi_pool(results = results_bayes, conf.level = 0.8, alternative = "greater")
+  
+  expect_equal(
+    bayes$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = as.logical(NA)
+    ),
+    tolerance = 1e-2
+  )
+  
+  expect_equal(
+    bayes2$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = as.logical(NA)
+    ),
+    tolerance = 1e-2
+  )
+  
+  expect_equal(
+    bayes3$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = as.logical(NA)
+    ),
+    tolerance = 1e-2
+  )
+  
+  
+  runanalysis <- function(x) {
+    list("p1" = list(est = mean(x), se = NA, df = Inf))
+  }
+  
+  results_bayes <- as_analysis(
+    method = method_bayes(n_samples = 5000),
+    results = lapply(
+      seq_len(5000),
+      function(x) runanalysis(sample(vals, size = n, replace = TRUE))
+    )
+  )
+  bayes <- rbmi_pool(results_bayes)
+  bayes2 <- rbmi_pool(results_bayes, conf.level = 0.8)
+  bayes3 <- rbmi_pool(results_bayes, alternative = "greater")
+  
+  expect_equal(
+    bayes$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = as.logical(NA)
+    ),
+    tolerance = 1e-2
+  )
+  
+  expect_equal(
+    bayes2$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = as.logical(NA)
+    ),
+    tolerance = 1e-2
+  )
+  
+  expect_equal(
+    bayes3$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = as.logical(NA)
+    ),
+    tolerance = 1e-2
+  )
+  
 })
