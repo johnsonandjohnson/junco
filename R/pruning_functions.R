@@ -121,9 +121,9 @@ safe_prune_table <- function(
 #' @returns  function that can be utilized as pruning function in prune_table
 #'
 count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols = c("TRT01A")) {
-  
+
   colpaths <- NULL
-  
+
   function(tt) {
     # Do not ever prune the following rows.  a row that should be kept in the table will get the value of FALSE
 
@@ -146,7 +146,7 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 
     # init return value to FALSE (not remove row)
     remove <- FALSE
-    
+
     if (is.null(colpaths)) {
       colpaths <<- col_paths(tt)
     }
