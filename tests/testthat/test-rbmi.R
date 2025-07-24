@@ -251,7 +251,7 @@ test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
 })
 
 test_that("Parallisation works with rbmi_analyse and produces identical results", {
-  skip_on_cran()
+
   set.seed(4642)
   sigma <- as_vcov(
     c(2, 1, 0.7, 1.5),
@@ -326,20 +326,8 @@ test_that("Parallisation works with rbmi_analyse and produces identical results"
     cluster_or_cores = 2
   )
 
-  var <- 20
-  inner_fun <- function(...) {
-    x <- day(var) # lubridate::day
-    rbmi::ancova(...)
-  }
-  outer_fun <- function(...) {
-    inner_fun(...)
-  }
-
-  cl <- make_rbmi_cluster(
-    2,
-    objects = list(var = var, inner_fun = inner_fun),
-    "lubridate"
-  )
+  skip_on_cran()
+  cl <- make_rbmi_cluster(2)
   anaobj_d1_t3 <- rbmi_analyse(
     imputeobj,
     fun = rbmi::ancova,
