@@ -239,19 +239,19 @@ test_that("pool function processes and returns combined results", {
 })
 
 test_that("rbmi_pool works fine", {
-  
+
   set.seed(101)
-  
+
   mu <- 0
   sd <- 1
   n <- 2000
   vals <- rnorm(n, mu, sd)
   real_mu <- mean(vals)
-  
+
   runanalysis <- function(x) {
     list("p1" = list(est = mean(x), se = NA, df = NA))
   }
-  
+
   results_bayes <- as_analysis(
     method = method_bayes(n_samples = 5000),
     results = lapply(
@@ -259,13 +259,13 @@ test_that("rbmi_pool works fine", {
       function(x) runanalysis(sample(vals, size = n, replace = TRUE))
     )
   )
-  
+
   testthat::expect_equal(class(results_bayes$results)[1], "rubin")
-  
+
   bayes <- rbmi_pool(results = results_bayes)
   bayes2 <- rbmi_pool(results = results_bayes, conf.level = 0.8)
   bayes3 <- rbmi_pool(results = results_bayes, conf.level = 0.8, alternative = "greater")
-  
+
   expect_equal(
     bayes$pars$p1,
     list(
@@ -277,7 +277,7 @@ test_that("rbmi_pool works fine", {
     ),
     tolerance = 1e-2
   )
-  
+
   expect_equal(
     bayes2$pars$p1,
     list(
@@ -289,7 +289,7 @@ test_that("rbmi_pool works fine", {
     ),
     tolerance = 1e-2
   )
-  
+
   expect_equal(
     bayes3$pars$p1,
     list(
@@ -301,12 +301,11 @@ test_that("rbmi_pool works fine", {
     ),
     tolerance = 1e-2
   )
-  
-  
+
   runanalysis <- function(x) {
     list("p1" = list(est = mean(x), se = NA, df = Inf))
   }
-  
+
   results_bayes <- as_analysis(
     method = method_bayes(n_samples = 5000),
     results = lapply(
@@ -317,7 +316,7 @@ test_that("rbmi_pool works fine", {
   bayes <- rbmi_pool(results_bayes)
   bayes2 <- rbmi_pool(results_bayes, conf.level = 0.8)
   bayes3 <- rbmi_pool(results_bayes, alternative = "greater")
-  
+
   expect_equal(
     bayes$pars$p1,
     list(
@@ -329,7 +328,7 @@ test_that("rbmi_pool works fine", {
     ),
     tolerance = 1e-2
   )
-  
+
   expect_equal(
     bayes2$pars$p1,
     list(
@@ -341,7 +340,7 @@ test_that("rbmi_pool works fine", {
     ),
     tolerance = 1e-2
   )
-  
+
   expect_equal(
     bayes3$pars$p1,
     list(
@@ -353,5 +352,5 @@ test_that("rbmi_pool works fine", {
     ),
     tolerance = 1e-2
   )
-  
+
 })
