@@ -4,6 +4,48 @@ suppressPackageStartupMessages({
   library(dplyr)
 })
 
+set_col_names <- function(x, nam) {
+  colnames(x) <- nam
+  return(x)
+}
+
+f2n <- function(x) as.numeric(x) - 1
+
+get_sim_data <- function(n, sigma, trt = 4) {
+  nv <- ncol(sigma)
+  covars <- tibble::tibble(
+    id = 1:n,
+    age = rnorm(n),
+    group = factor(
+      sample(c("A", "B"), size = n, replace = TRUE),
+      levels = c("A", "B")
+    ),
+    sex = factor(
+      sample(c("M", "F"), size = n, replace = TRUE),
+      levels = c("M", "F")
+    )
+  )
+
+  dat <- mvtnorm::rmvnorm(n, sigma = sigma) %>%
+    set_col_names(paste0("visit_", 1:nv)) %>%
+    dplyr::as_tibble() %>%
+    dplyr::mutate(id = seq_len(dplyr::n())) %>%
+    tidyr::gather("visit", "outcome", -id) %>%
+    dplyr::mutate(visit = factor(.data$visit)) %>%
+    dplyr::arrange(id, .data$visit) %>%
+    dplyr::left_join(covars, by = "id") %>%
+    dplyr::mutate(
+      outcome = .data$outcome +
+        5 +
+        3 * .data$age +
+        3 * f2n(.data$sex) +
+        trt * f2n(.data$group)
+    ) %>%
+    dplyr::mutate(id = as.factor(id))
+
+  return(dat)
+}
+
 
 test_that("find_missing_chg_after_avisit works as expected", {
   df <- data.frame(
@@ -206,4 +248,160 @@ test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
 
     parallel::stopCluster(cl)
   }
+})
+
+test_that("Parallisation works with rbmi_analyse and produces identical results", {
+  set.seed(4642)
+  sigma <- as_vcov(
+    c(2, 1, 0.7, 1.5),
+    c(0.5, 0.3, 0.2, 0.3, 0.5, 0.4)
+  )
+  dat <- get_sim_data(200, sigma, trt = 8) %>%
+    mutate(
+      outcome = if_else(
+        rbinom(n(), 1, 0.3) == 1 & group == "A",
+        NA_real_,
+        outcome
+      )
+    )
+
+  dat_ice <- dat %>%
+    group_by(id) %>%
+    arrange(id, visit) %>%
+    filter(is.na(outcome)) %>%
+    slice(1) %>%
+    ungroup() %>%
+    select(id, visit) %>%
+    mutate(strategy = "JR")
+
+  vars <- set_vars(
+    outcome = "outcome",
+    group = "group",
+    strategy = "strategy",
+    subjid = "id",
+    visit = "visit",
+    covariates = c("age", "sex", "visit * group")
+  )
+
+  set.seed(984)
+  drawobj <- draws(
+    data = dat,
+    data_ice = dat_ice,
+    vars = vars,
+    method = method_condmean(n_samples = 6, type = "bootstrap"),
+    quiet = TRUE
+  )
+
+  imputeobj <- impute(
+    draws = drawobj,
+    references = c("A" = "B", "B" = "B")
+  )
+
+  #
+  # Here we set up a bunch of different analysis objects using different
+  # of parallelisation methods and different dat_delta objects
+  #
+
+  ### Delta 1
+
+  dat_delta_1 <- delta_template(imputations = imputeobj) %>%
+    mutate(delta = is_missing * 5)
+
+  vars2 <- vars
+  vars2$covariates <- c("age", "sex")
+
+  anaobj_d1_t1 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi::ancova,
+    vars = vars2,
+    delta = dat_delta_1
+  )
+
+  anaobj_d1_t2 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi::ancova,
+    vars = vars2,
+    delta = dat_delta_1,
+    cluster_or_cores = 2
+  )
+
+  var <- 20
+  inner_fun <- function(...) {
+    x <- day(var) # lubridate::day
+    rbmi::ancova(...)
+  }
+  outer_fun <- function(...) {
+    inner_fun(...)
+  }
+
+  cl <- make_rbmi_cluster(
+    2,
+    objects = list(var = var, inner_fun = inner_fun),
+    "lubridate"
+  )
+  anaobj_d1_t3 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi::ancova,
+    vars = vars2,
+    delta = dat_delta_1,
+    cluster_or_cores = cl
+  )
+
+  ### Delta 2
+
+  dat_delta_2 <- delta_template(imputations = imputeobj) %>%
+    mutate(delta = is_missing * 50)
+
+  anaobj_d2_t1 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi::ancova,
+    vars = vars2,
+    delta = dat_delta_2
+  )
+  anaobj_d2_t3 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi::ancova,
+    vars = vars2,
+    delta = dat_delta_2,
+    cluster_or_cores = cl
+  )
+
+  ### Delta 3 (no delta)
+
+  anaobj_d3_t1 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi::ancova,
+    vars = vars2
+  )
+  anaobj_d3_t3 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi::ancova,
+    vars = vars2,
+    cluster_or_cores = cl
+  )
+
+  ## Check for internal consistency
+  expect_equal(anaobj_d1_t1, anaobj_d1_t2)
+  expect_equal(anaobj_d1_t1, anaobj_d1_t3)
+  expect_equal(anaobj_d1_t2, anaobj_d1_t3)
+
+  expect_equal(anaobj_d2_t1, anaobj_d2_t3)
+
+  expect_equal(anaobj_d3_t1, anaobj_d3_t3)
+
+  ## Check that they differ (as different deltas have been used)
+  ## Main thing is sanity checking that the embedded delta
+  ## in the parallel processes hasn't lingered and impacted
+  ## future results
+
+  # First assert consistency
+  expect_true(identical(anaobj_d1_t1$results, anaobj_d1_t3$results))
+  expect_true(identical(anaobj_d2_t1$results, anaobj_d2_t3$results))
+  expect_true(identical(anaobj_d3_t1$results, anaobj_d3_t3$results))
+
+  # The ensure they are different
+  expect_false(identical(anaobj_d1_t1$results, anaobj_d2_t1$results))
+  expect_false(identical(anaobj_d1_t1$results, anaobj_d3_t1$results))
+  expect_false(identical(anaobj_d2_t1$results, anaobj_d3_t1$results))
+  parallel::stopCluster(cl)
 })
