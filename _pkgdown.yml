@@ -135,5 +135,4 @@ reference:
     - check_wrap_nobreak
     - inches_to_spaces
     - rm_other_facets_fact
-    - smart_colwidths_1page
     - tt_to_tbldf
