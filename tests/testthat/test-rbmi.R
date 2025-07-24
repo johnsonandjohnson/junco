@@ -4,49 +4,6 @@ suppressPackageStartupMessages({
   library(dplyr)
 })
 
-set_col_names <- function(x, nam) {
-  colnames(x) <- nam
-  return(x)
-}
-
-f2n <- function(x) as.numeric(x) - 1
-
-get_sim_data <- function(n, sigma, trt = 4) {
-  nv <- ncol(sigma)
-  covars <- tibble::tibble(
-    id = 1:n,
-    age = rnorm(n),
-    group = factor(
-      sample(c("A", "B"), size = n, replace = TRUE),
-      levels = c("A", "B")
-    ),
-    sex = factor(
-      sample(c("M", "F"), size = n, replace = TRUE),
-      levels = c("M", "F")
-    )
-  )
-
-  dat <- mvtnorm::rmvnorm(n, sigma = sigma) %>%
-    set_col_names(paste0("visit_", 1:nv)) %>%
-    dplyr::as_tibble() %>%
-    dplyr::mutate(id = seq_len(dplyr::n())) %>%
-    tidyr::gather("visit", "outcome", -id) %>%
-    dplyr::mutate(visit = factor(.data$visit)) %>%
-    dplyr::arrange(id, .data$visit) %>%
-    dplyr::left_join(covars, by = "id") %>%
-    dplyr::mutate(
-      outcome = .data$outcome +
-        5 +
-        3 * .data$age +
-        3 * f2n(.data$sex) +
-        trt * f2n(.data$group)
-    ) %>%
-    dplyr::mutate(id = as.factor(id))
-
-  return(dat)
-}
-
-
 test_that("find_missing_chg_after_avisit works as expected", {
   df <- data.frame(
     AVISIT = factor(c(1, 2, 3, 4, 5)),
@@ -253,18 +210,14 @@ test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
 test_that("Parallisation works with rbmi_analyse and produces identical results", {
 
   set.seed(4642)
-  sigma <- as_vcov(
-    c(2, 1, 0.7, 1.5),
-    c(0.5, 0.3, 0.2, 0.3, 0.5, 0.4)
+  dat <- rbmi::get_example_data()
+  n <- nrow(dat)
+  dat$age <- rnorm(n)
+  dat$sex <- factor(
+    sample(c("M", "F"), size = n, replace = TRUE),
+    levels = c("M", "F")
   )
-  dat <- get_sim_data(200, sigma, trt = 8) %>%
-    mutate(
-      outcome = if_else(
-        rbinom(n(), 1, 0.3) == 1 & group == "A",
-        NA_real_,
-        outcome
-      )
-    )
+  dat <- dat[, c("id", "visit", "outcome", "age", "group", "sex")]
 
   dat_ice <- dat %>%
     group_by(id) %>%
@@ -284,7 +237,6 @@ test_that("Parallisation works with rbmi_analyse and produces identical results"
     covariates = c("age", "sex", "visit * group")
   )
 
-  set.seed(984)
   drawobj <- draws(
     data = dat,
     data_ice = dat_ice,
@@ -295,7 +247,7 @@ test_that("Parallisation works with rbmi_analyse and produces identical results"
 
   imputeobj <- impute(
     draws = drawobj,
-    references = c("A" = "B", "B" = "B")
+    references = c("Intervention" = "Control", "Control" = "Control")
   )
 
   #
