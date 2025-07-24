@@ -251,6 +251,7 @@ test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
 })
 
 test_that("Parallisation works with rbmi_analyse and produces identical results", {
+  skip_on_cran()
   set.seed(4642)
   sigma <- as_vcov(
     c(2, 1, 0.7, 1.5),
@@ -334,7 +335,6 @@ test_that("Parallisation works with rbmi_analyse and produces identical results"
     inner_fun(...)
   }
 
-  skip_on_cran()
   cl <- make_rbmi_cluster(
     2,
     objects = list(var = var, inner_fun = inner_fun),
