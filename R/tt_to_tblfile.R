@@ -132,7 +132,7 @@ mpf_to_colspan <- function(
     csph <- lapply(seq_len(nspancols), function(ii) {
       spns <- mf_spans(mpf)[ii, ]
       vals <- strmat[ii, ]
-      jj <- 1 ## could start at 2 cause 1 is row label/topleft space but why complicate thigns
+      jj <- 1 ## could start at 2 cause 1 is row label/topleft space but why complicate things
       ind <- 1
       myrle <- rle(vals)
       while (jj < length(vals)) {

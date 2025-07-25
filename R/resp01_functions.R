@@ -110,7 +110,7 @@ resp01_counts_cfun <- function(df, labelstr, .spl_context, .alt_df, label_fstr) 
 #'   arm = "SEX",
 #'   strata = "RACE",
 #'   stat = "comp_stat_ci",
-#'   method = list(comp_stat_ci = "or_cmh"),
+#'   methods = list(comp_stat_ci = "or_cmh"),
 #'   formats = list(
 #'     comp_stat_ci = jjcsformat_xx("xx.xx (xx.xx - xx.xx)"),
 #'     pval = jjcsformat_pval_fct(0.05)
@@ -222,7 +222,7 @@ resp01_a_comp_stat_logical <- function(df,
 #'   arm = "SEX",
 #'   strata = "RACE",
 #'   stat = "comp_stat_ci",
-#'   method = list(comp_stat_ci = "or_cmh"),
+#'   methods = list(comp_stat_ci = "or_cmh"),
 #'   formats = list(
 #'     comp_stat_ci = jjcsformat_xx("xx.xx (xx.xx - xx.xx)"),
 #'     pval = jjcsformat_pval_fct(0.05)

@@ -97,7 +97,7 @@ find_missing_chg_after_avisit <- function(df) {
 #' closeAllConnections()
 #' }
 #' @export
-make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = NULL) {
+make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = NULL) { # nocov start
   if (is.numeric(cluster_or_cores) && cluster_or_cores == 1) {
     return(NULL)
   } else if (is.numeric(cluster_or_cores)) {
@@ -152,7 +152,7 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
   })
 
   return(cl)
-}
+} # nocov end
 
 #' Parallelise Lapply
 #'

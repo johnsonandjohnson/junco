@@ -55,7 +55,7 @@ test_that("s_ancova_j works as expected", {
     .ref_group = ref_group,
     .in_ref_col = FALSE,
     conf_level = 0.95,
-    weights = "proportional"
+    weights_emmeans = "proportional"
   )
   checkmate::expect_list(result)
   checkmate::expect_names(
@@ -84,6 +84,44 @@ test_that("s_ancova_j works as expected", {
     weights_emmeans = "equal"
   )
   expect_false(result$lsmean == result2$lsmean)
+
+  # try with n_obs_trt_lvls < 2
+  df_row <- df_row |>
+    filter(Color == "red")
+  df <- df_row |>
+    filter(Species == "virginica")
+  variables <- list(
+    arm = "Color",
+    covariates = c("Sepal.Length * Sepal.Width", "Color")
+  )
+  ref_group <- df_row |>
+    filter(Species == "setosa")
+
+  result <- s_ancova_j(
+    df = df,
+    .var = "Petal.Length",
+    .df_row = df_row,
+    variables = variables,
+    .ref_group = ref_group,
+    .in_ref_col = FALSE,
+    conf_level = 0.95,
+    weights_emmeans = "proportional"
+  )
+  checkmate::expect_list(result)
+  checkmate::expect_names(
+    names(result),
+    identical.to = c(
+      "n",
+      "lsmean",
+      "lsmean_se",
+      "lsmean_ci",
+      "lsmean_diff",
+      "lsmean_diff_ci",
+      "lsmean_diffci",
+      "pval"
+    )
+  )
+
 })
 
 test_that("s_summarize_ancova works as expected", {

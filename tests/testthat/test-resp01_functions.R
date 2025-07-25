@@ -1,6 +1,6 @@
 library(rtables)
 
-test_that("resp01_split_fun_fct works as expected", {
+test_that("resp01_split_fun_fct 1 works as expected", {
   split_fun <- resp01_split_fun_fct(
     method = "or_cmh",
     conf_level = 0.95
@@ -10,6 +10,10 @@ test_that("resp01_split_fun_fct works as expected", {
     split_cols_by("ID", split_fun = split_fun) |>
     build_table(formatters::DM)
   expect_snapshot(result)
+
+})
+
+test_that("resp01_split_fun_fct 2 works as expected", {
 
   split_fun <- resp01_split_fun_fct(
     method = "rr",
@@ -22,7 +26,7 @@ test_that("resp01_split_fun_fct works as expected", {
   expect_snapshot(col_info(result))
 })
 
-test_that("resp01_counts_cfun works as expected", {
+test_that("resp01_counts_cfun 1 works as expected", {
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(ARM = "A: Drug X", count_prop = "count_prop")))
   )
@@ -35,6 +39,10 @@ test_that("resp01_counts_cfun works as expected", {
   )
   expect_snapshot(result)
 
+})
+
+test_that("resp01_counts_cfun 2 works as expected", {
+
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(ARM = "Overall", count_prop = "count_prop")))
   )
@@ -46,6 +54,10 @@ test_that("resp01_counts_cfun works as expected", {
     label_fstr = "Color: %s"
   )
   expect_null(result)
+
+})
+
+test_that("resp01_counts_cfun 3 works as expected", {
 
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(ARM = "A: Drug X", count_prop = "bla")))
@@ -60,7 +72,8 @@ test_that("resp01_counts_cfun works as expected", {
   expect_null(result)
 })
 
-test_that("resp01_a_comp_stat_logical works as expected", {
+
+test_that("resp01_a_comp_stat_logical or_cmh works as expected", {
   dm <- droplevels(subset(DM, SEX %in% c("F", "M")))
   set.seed(123)
   dm$RESP <- as.logical(sample(
@@ -87,6 +100,16 @@ test_that("resp01_a_comp_stat_logical works as expected", {
   )
   expect_snapshot(result)
 
+})
+
+test_that("resp01_a_comp_stat_logical or_logistic works as expected", {
+  dm <- droplevels(subset(DM, SEX %in% c("F", "M")))
+  set.seed(123)
+  dm$RESP <- as.logical(sample(
+    c(TRUE, FALSE),
+    size = nrow(formatters::DM),
+    replace = TRUE
+  ))
   result <- resp01_a_comp_stat_logical(
     dm,
     .var = "RESP",
@@ -107,7 +130,36 @@ test_that("resp01_a_comp_stat_logical works as expected", {
   expect_snapshot(result)
 })
 
-test_that("resp01_a_comp_stat_factor works as expected", {
+test_that("resp01_a_comp_stat_logical rr works as expected", {
+  dm <- droplevels(subset(DM, SEX %in% c("F", "M")))
+  set.seed(123)
+  dm$RESP <- as.logical(sample(
+    c(TRUE, FALSE),
+    size = nrow(formatters::DM),
+    replace = TRUE
+  ))
+  result <- resp01_a_comp_stat_logical(
+    dm,
+    .var = "RESP",
+    conf_level = 0.9,
+    include = TRUE,
+    arm = "SEX",
+    strata = "RACE",
+    stat = "comp_stat_ci",
+    methods = list(
+      comp_stat_ci = "rr",
+      pval = ""
+    ),
+    formats = list(
+      comp_stat_ci = jjcsformat_xx("xx.xx (xx.xx - xx.xx)"),
+      pval = jjcsformat_pval_fct(0.05)
+    )
+  )
+  expect_snapshot(result)
+})
+
+
+test_that("resp01_a_comp_stat_factor or_cmh works as expected", {
   dm <- droplevels(subset(DM, SEX %in% c("F", "M")))
   result <- resp01_a_comp_stat_factor(
     dm,
@@ -127,6 +179,11 @@ test_that("resp01_a_comp_stat_factor works as expected", {
     )
   )
   expect_snapshot(result)
+
+})
+
+test_that("resp01_a_comp_stat_factor or_logistic works as expected", {
+  dm <- droplevels(subset(DM, SEX %in% c("F", "M")))
 
   result <- resp01_a_comp_stat_factor(
     dm,
@@ -171,6 +228,11 @@ test_that("resp01_acfun works as expected", {
   )
   expect_snapshot(result)
 
+})
+
+test_that("resp01_acfun works 2 as expected", {
+  dm <- droplevels(subset(DM, SEX %in% c("F", "M")))
+
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(
       ARM = "Overall",
@@ -199,6 +261,10 @@ test_that("resp01_acfun works as expected", {
   )
   expect_snapshot(result)
 
+})
+
+test_that("resp01_acfun 3 works as expected", {
+  dm <- droplevels(subset(DM, SEX %in% c("F", "M")))
   dm$AGEOVER50 <- dm$AGE > 50
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(

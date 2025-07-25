@@ -16,7 +16,7 @@ ref_path <- c("colspan_trt", " ", trtvar, "B: Placebo")
 
 #### Tests for count_pruner function####
 testthat::test_that("count_pruner is identical to standard pruning in cases where we have all 0's", {
-  pruning_fun <- count_pruner(col = "ARM")
+  pruning_fun <- count_pruner(cols = "ARM")
   testthat::expect_type(pruning_fun, "closure")
   result <- prune_table(tab, pruning_fun)
   expected <- prune_table(tab)
@@ -25,21 +25,21 @@ testthat::test_that("count_pruner is identical to standard pruning in cases wher
 
 testthat::test_that("count_pruner keeps everything if 0 condition is not met", {
   sub_tab <- prune_table(tab)
-  result <- prune_table(sub_tab, count_pruner(col = "ARM"))
+  result <- prune_table(sub_tab, count_pruner(cols = "ARM"))
   expected <- sub_tab
   testthat::expect_identical(result, expected)
 })
 
 testthat::test_that("count_pruner with cat_include removes text correctly", {
   sub_tab <- tab[32, ]
-  result <- prune_table(sub_tab, count_pruner(cat_include = "GBR", col = "ARM"))
+  result <- prune_table(sub_tab, count_pruner(cat_include = "GBR", cols = "ARM"))
   expected <- NULL
   testthat::expect_identical(result, expected)
 })
 
 testthat::test_that("count_pruner with cat_include does nothing if text is supplied and it is not text that
   is in the table", { # nolint start
-  result <- prune_table(tab, count_pruner(cat_include = "XXX", col = "ARM"))
+  result <- prune_table(tab, count_pruner(cat_include = "XXX", cols = "ARM"))
   expected <- tab
   testthat::expect_identical(result, expected)
 }) # nolint end
@@ -51,7 +51,7 @@ testthat::test_that("count_pruner does remove if text is supplied and all column
   )
   result <- prune_table(
     sub_tab2,
-    count_pruner(cat_include = c("USA", "RU", "XXX"), col = "ARM")
+    count_pruner(cat_include = c("USA", "RU", "XXX"), cols = "ARM")
   )
 
   rps_label <- make_row_df(sub_tab2)$label
@@ -547,7 +547,7 @@ testthat::test_that("check that when spancols=TRUE is used then we have expected
   result <- safe_prune_table(
     my_tab,
     prune_func = prune_empty_level,
-    spancol = TRUE
+    spancols = TRUE
   )
 
   rps_label <- make_row_df(my_tab)$label

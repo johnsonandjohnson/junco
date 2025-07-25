@@ -308,17 +308,17 @@ test_that("a_freq_j with risk difference method cmh", {
   subj_col <- adsl_col[["USUBJID"]]
   subj_ae <- unique(adae_col_chn[["USUBJID"]])
 
-  rsp_col <- rep(FALSE, length = length(subj_col))
+  rsp_col <- rep(FALSE, length.out = length(subj_col))
   rsp_col[subj_col %in% subj_ae] <- TRUE
-  grp_col <- rep("A: Drug X", length = length(subj_col))
+  grp_col <- rep("A: Drug X", length.out = length(subj_col))
   strata_col <- adsl_col[["STRATA1"]]
 
   subj_ctrl <- adsl_colPBO[["USUBJID"]]
   subj_ae_ctrl <- unique(adae_colPBO_chn[["USUBJID"]])
 
-  rsp_ctrl <- rep(FALSE, length = length(subj_ctrl))
+  rsp_ctrl <- rep(FALSE, length.out = length(subj_ctrl))
   rsp_ctrl[subj_ctrl %in% subj_ae_ctrl] <- TRUE
-  grp_ctrl <- rep(ctrl_grp, length = length(subj_ctrl))
+  grp_ctrl <- rep(ctrl_grp, length.out = length(subj_ctrl))
   strata_ctrl <- adsl_colPBO[["STRATA1"]]
 
   # for prop_diff_cmh diff is second group - first group
