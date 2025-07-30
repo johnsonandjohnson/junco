@@ -77,9 +77,6 @@ tt_to_tbldf <- function(
   tbldf
 }
 
-brackets_to_rtf <- function(strs) {
-  gsub("\\[\\[([^]]+)\\]\\]", "\\\\{\\1}", strs)
-}
 
 gutter_width <- .12 # inches
 
