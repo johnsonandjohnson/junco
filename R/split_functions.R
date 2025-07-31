@@ -72,6 +72,27 @@ make_combo_splitfun <- function(nm, label = nm, levels = NULL, rm_other_facets =
 
 blank_regex <- "^[[:space:]]*$"
 
+combine_nonblank <- function(name, label) {
+  function(ret, spl, .spl_context, fulldf) {
+    df <- fulldf[!grepl(blank_regex, fulldf[[spl_variable(spl)]]), ]
+    add_to_split_result(
+      ret,
+      values = name,
+      datasplit = stats::setNames(list(df), name),
+      labels = stats::setNames(label, name)
+    )
+  }
+}
+
+rm_blank_levels <- function(df, spl, ...) {
+  var <- spl_variable(spl)
+  varvec <- df[[var]]
+  oldlevs <- levels(varvec)
+  newlevs <- oldlevs[!grepl(blank_regex, oldlevs)]
+  df <- df[!grepl(blank_regex, varvec), ]
+  df[[var]] <- factor(df[[var]], levels = newlevs)
+  df
+}
 
 find_torm <- function(spl_ret, torm, torm_regex, keep_matches) {
   if (!is.null(torm)) {

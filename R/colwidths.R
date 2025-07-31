@@ -72,7 +72,31 @@ check_wrap_nobreak <- function(tt, colwidths, fontspec) {
   all(colok)
 }
 
+#' Colwidths for all columns to be forced on one page.
+#'
+#' @param tt (`TableTree`)\cr TableTree object to calculate column widths for
+#' @param fontspec (`font_spec`)\cr Font specification object
+#' @param col_gap (`numeric`)\cr Column gap in spaces
+#' @param rowlabel_width (`numeric`)\cr Width of row labels in spaces
+#' @param print_width_ins (`numeric`)\cr Print width in inches
+#' @param landscape (`logical`)\cr Whether the output is in landscape orientation
+#' @param lastcol_gap (`logical`)\cr Whether to include a gap after the last column
+#' @keywords internal
+smart_colwidths_1page <- function(
+    tt,
+    fontspec,
+    col_gap = 6L,
+    rowlabel_width = inches_to_spaces(2, fontspec),
+    print_width_ins = ifelse(landscape, 11, 8.5) - 2.12,
+    landscape = FALSE,
+    lastcol_gap = TRUE) {
+  total_cpp <- floor(inches_to_spaces(print_width_ins, fontspec = fontspec, raw = TRUE))
 
+  nc <- ncol(tt)
+  remain <- total_cpp - rowlabel_width - col_gap * (nc - !lastcol_gap)
+
+  c(rowlabel_width - col_gap, spread_integer(remain, nc))
+}
 
 spaces_to_inches <- function(spcs, fontspec) {
   nchar_ttype(" ", fontspec, raw = TRUE) * spcs
@@ -297,6 +321,28 @@ listing_column_widths <- function(
   optimal$colwidth
 }
 
+find_free_colspc <- function(curposs, fullposs, thresh = 0.99, skip = integer(), verbose = FALSE) {
+  orig_curposs <- curposs
+  maxlns_ind <- which.max(curposs$cell_lines)
+  longestcol <- curposs$col_num[maxlns_ind]
+  maxlns <- curposs$cell_lines[maxlns_ind]
+  adjrow_inds <- setdiff(which(curposs$cell_lines < thresh * maxlns), skip)
+  for (arowi in adjrow_inds) {
+    col <- curposs$col_num[arowi]
+    colwidthii <- curposs$colwidth[arowi]
+    fp_ind <- with(fullposs, min(which(col_num == col & cell_lines <= maxlns & colwidth < colwidthii)))
+    if (is.finite(fp_ind)) {
+      if (verbose) {
+        oldwdth <- curposs$colwidth[arowi]
+        newwdth <- fullposs$colwidth[fp_ind]
+        msg <- sprintf("adjusting column %d width from %d to %d", col, oldwdth, newwdth)
+        message(msg)
+      }
+      curposs[arowi, ] <- fullposs[fp_ind, ]
+    }
+  }
+  curposs
+}
 
 constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
   old_lbl_lns <- max(curdf$lbl_lines)
