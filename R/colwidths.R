@@ -33,7 +33,7 @@ ttype_wrap_vec <- function(vec, fontspec, width, wordbreak_ok = TRUE, ...) {
   lapply(
     vec,
     wrap_string_ttype,
-    width = width, # TODO: renamed 'width_spc' -> 'width'
+    width = width,
     fontspec = fontspec,
     wordbreak_ok = wordbreak_ok,
     ...
