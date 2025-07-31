@@ -288,7 +288,6 @@ test_that("column_stats handles iec roundmethod correctly", {
     "AVAL"
   )
   expect_equal(result_R, "40.0")
-
 })
 
 test_that("calc_N returns NULL for non-AVAL variables", {

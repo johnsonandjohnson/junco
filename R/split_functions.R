@@ -24,7 +24,7 @@ rm_other_facets_fact <- function(nm) {
 #' @note Current add_overall_facet is bugged. Can be used directly after it's fixed
 #' https://github.com/insightsengineering/rtables/issues/768
 #' @examples
-#' splfun <- make_split_fun(post = list(real_add_overall_facet('Total', 'Total')))
+#' splfun <- make_split_fun(post = list(real_add_overall_facet("Total", "Total")))
 #'
 #' @export
 #' @returns Function usable directly as a split function.
@@ -55,7 +55,7 @@ real_add_overall_facet <- function(name, label) {
 #' @export
 #' @returns Function usable directly as a split function.
 #' @examples
-#' aesevall_spf <- make_combo_splitfun(nm = 'AESEV_ALL', label  = 'Any AE', levels = NULL)
+#' aesevall_spf <- make_combo_splitfun(nm = "AESEV_ALL", label = "Any AE", levels = NULL)
 make_combo_splitfun <- function(nm, label = nm, levels = NULL, rm_other_facets = TRUE) {
   if (is.null(levels)) {
     fn <- real_add_overall_facet(name = nm, label = label)

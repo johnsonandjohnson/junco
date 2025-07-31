@@ -224,5 +224,4 @@ test_that("a_freq_resp_var_j works with riskdiff parameter", {
 
   # Should not throw an error
   expect_no_error(build_table(lyt, adrs))
-
 })
