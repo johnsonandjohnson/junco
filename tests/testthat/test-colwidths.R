@@ -69,8 +69,10 @@ test_that("def_colwidths works as expected", {
     USUBJID = "Unique\nSubject\nIdentifier",
     ARM = "Description\nOf\nPlanned Arm"
   )
+  # nolint start
   suppressMessages(tt2 <- as_listing(anl, key_cols = c("USUBJID")) %>%
-    add_listing_col("ARM"))
+                     add_listing_col("ARM"))
+  # nolint end
 
   result <- def_colwidths(tt = tt2, fontspec = fontspec)
   # TODO: how do I guess this expected result?
@@ -85,8 +87,10 @@ test_that("listing_column_widths works as expected", {
     USUBJID = "Unique\nSubject\nIdentifier",
     ARM = "Description\nOf\nPlanned Arm"
   )
+  # nolint start
   suppressMessages(tt3 <- as_listing(anl, key_cols = c("USUBJID")) %>%
-    add_listing_col("ARM"))
+                     add_listing_col("ARM"))
+  # nolint end
   mpf <- rlistings::matrix_form(tt3)
   suppressMessages(testthat::expect_message(result <- listing_column_widths(mpf, verbose = TRUE)))
   # TODO: how do I guess this expected result?
@@ -101,8 +105,10 @@ test_that("find_free_colspc works as expected", {
     USUBJID = "Unique\nSubject\nIdentifier",
     ARM = "Description\nOf\nPlanned Arm"
   )
+  # nolint start
   suppressMessages(tt4 <- as_listing(anl, key_cols = c("USUBJID")) %>%
-    add_listing_col("ARM"))
+                     add_listing_col("ARM"))
+  # nolint end
   mpf <- rlistings::matrix_form(tt4)
 
   possdf <- make_poss_wdf(mpf)
