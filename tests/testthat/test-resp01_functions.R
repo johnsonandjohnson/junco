@@ -10,11 +10,9 @@ test_that("resp01_split_fun_fct 1 works as expected", {
     split_cols_by("ID", split_fun = split_fun) |>
     build_table(formatters::DM)
   expect_snapshot(result)
-
 })
 
 test_that("resp01_split_fun_fct 2 works as expected", {
-
   split_fun <- resp01_split_fun_fct(
     method = "rr",
     conf_level = 0.92
@@ -38,11 +36,9 @@ test_that("resp01_counts_cfun 1 works as expected", {
     label_fstr = "Color: %s"
   )
   expect_snapshot(result)
-
 })
 
 test_that("resp01_counts_cfun 2 works as expected", {
-
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(ARM = "Overall", count_prop = "count_prop")))
   )
@@ -54,11 +50,9 @@ test_that("resp01_counts_cfun 2 works as expected", {
     label_fstr = "Color: %s"
   )
   expect_null(result)
-
 })
 
 test_that("resp01_counts_cfun 3 works as expected", {
-
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(ARM = "A: Drug X", count_prop = "bla")))
   )
@@ -99,7 +93,6 @@ test_that("resp01_a_comp_stat_logical or_cmh works as expected", {
     )
   )
   expect_snapshot(result)
-
 })
 
 test_that("resp01_a_comp_stat_logical or_logistic works as expected", {
@@ -179,7 +172,6 @@ test_that("resp01_a_comp_stat_factor or_cmh works as expected", {
     )
   )
   expect_snapshot(result)
-
 })
 
 test_that("resp01_a_comp_stat_factor or_logistic works as expected", {
@@ -227,7 +219,6 @@ test_that("resp01_acfun works as expected", {
     )
   )
   expect_snapshot(result)
-
 })
 
 test_that("resp01_acfun works 2 as expected", {
@@ -260,7 +251,6 @@ test_that("resp01_acfun works 2 as expected", {
     )
   )
   expect_snapshot(result)
-
 })
 
 test_that("resp01_acfun 3 works as expected", {

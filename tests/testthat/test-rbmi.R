@@ -208,7 +208,6 @@ test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
 })
 
 test_that("Parallisation works with rbmi_analyse and produces identical results", {
-
   set.seed(4642)
   dat <- rbmi::get_example_data()
   n <- nrow(dat)

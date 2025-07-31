@@ -121,7 +121,6 @@ test_that("s_ancova_j works as expected", {
       "pval"
     )
   )
-
 })
 
 test_that("s_summarize_ancova works as expected", {
