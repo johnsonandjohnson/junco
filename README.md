@@ -1,4 +1,4 @@
-# junco
+# junco <a href='https://github.com/johnsonandjohnson/junco'><img src="man/figures/logo.png" align="right" width="200"/></a>
 
 <!-- start badges -->
 [![Check 🛠](https://github.com/johnsonandjohnson/junco/actions/workflows/inspect.yaml/badge.svg)](https://johnsonandjohnson.github.io/junco/unit-test-report-non-cran/)
