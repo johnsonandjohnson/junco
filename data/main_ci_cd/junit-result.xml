@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="a_freq_resp_var_j" timestamp="2025-08-11T15:19:28Z" hostname="114c1d7f0cb0" tests="8" skipped="0" failures="0" errors="0" time="0.569">
+    <testcase time="0.186" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_as_expected_with_basic_usage"/>
+    <testcase time="0.0810000000000004" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_as_expected_with_basic_usage"/>
+    <testcase time="0.0089999999999999" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_as_expected_with_basic_usage"/>
+    <testcase time="0.0739999999999998" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_factor_responses"/>
+    <testcase time="0.0660000000000003" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_handles_missing_values_correctly"/>
+    <testcase time="0.0449999999999999" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_errors_on_invalid_responses"/>
+    <testcase time="0.0409999999999999" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_errors_when_resp_var_is_null"/>
+    <testcase time="0.0669999999999997" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_drop_levels_parameter"/>
+  </testsuite>
+  <testsuite name="a_summarize_aval_chg_diff" timestamp="2025-08-11T15:19:29Z" hostname="114c1d7f0cb0" tests="7" skipped="0" failures="0" errors="0" time="0.531">
+    <testcase time="0.0260000000000002" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
+    <testcase time="0.194" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
+    <testcase time="0.00099999999999989" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
+    <testcase time="0.004" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
+    <testcase time="0.301" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_with_ancova_TRUE"/>
+    <testcase time="0.00099999999999989" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_with_ancova_TRUE"/>
+    <testcase time="0.004" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_with_ancova_TRUE"/>
+  </testsuite>
+  <testsuite name="analyze_values" timestamp="2025-08-11T15:19:29Z" hostname="114c1d7f0cb0" tests="7" skipped="0" failures="0" errors="0" time="0.133">
+    <testcase time="0.0260000000000002" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
+    <testcase time="0.093" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
+    <testcase time="0.00299999999999967" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
+    <testcase time="0.00300000000000011" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
+    <testcase time="0.00300000000000011" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
+    <testcase time="0.00199999999999978" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
+    <testcase time="0.00300000000000011" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
+  </testsuite>
+  <testsuite name="ancova" timestamp="2025-08-11T15:19:29Z" hostname="114c1d7f0cb0" tests="3" skipped="0" failures="0" errors="0" time="0.778">
+    <testcase time="0.23" classname="ancova" name="fit_ancova_works_as_expected"/>
+    <testcase time="0.00200000000000022" classname="ancova" name="fit_ancova_works_as_expected"/>
+    <testcase time="0.546" classname="ancova" name="fit_ancova_works_as_expected"/>
+  </testsuite>
+  <testsuite name="ancova_rbmi" timestamp="2025-08-11T15:19:30Z" hostname="114c1d7f0cb0" tests="7" skipped="0" failures="0" errors="0" time="0.101">
+    <testcase time="0.0349999999999993" classname="ancova_rbmi" name="rbmi_ancova_single_works_also_with_multiple_treatment_arms"/>
+    <testcase time="0.00300000000000011" classname="ancova_rbmi" name="rbmi_ancova_single_works_also_with_multiple_treatment_arms"/>
+    <testcase time="0.0180000000000007" classname="ancova_rbmi" name="ancova_now_works_also_with_multiple_treatment_arms"/>
+    <testcase time="0.00999999999999979" classname="ancova_rbmi" name="ancova_now_works_also_with_multiple_treatment_arms"/>
+    <testcase time="0.00899999999999945" classname="ancova_rbmi" name="ancova_now_works_also_with_multiple_treatment_arms"/>
+    <testcase time="0.0230000000000006" classname="ancova_rbmi" name="ancova_now_works_also_with_multiple_treatment_arms"/>
+    <testcase time="0.00300000000000011" classname="ancova_rbmi" name="ancova_now_works_also_with_multiple_treatment_arms"/>
+  </testsuite>
+  <testsuite name="blank_line" timestamp="2025-08-11T15:19:30Z" hostname="114c1d7f0cb0" tests="15" skipped="0" failures="0" errors="0" time="0.825">
+    <testcase time="0.26" classname="blank_line" name="insert_blank_line_works_as_expected"/>
+    <testcase time="0.173" classname="blank_line" name="insert_blank_line_works_as_expected"/>
+    <testcase time="0.241" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.13" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00300000000000011" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00300000000000011" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00300000000000011" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00199999999999978" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00300000000000011" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00100000000000033" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00199999999999978" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00100000000000033" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.000999999999999446" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00100000000000033" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.000999999999999446" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+  </testsuite>
+  <testsuite name="cmp_functions" timestamp="2025-08-11T15:19:31Z" hostname="114c1d7f0cb0" tests="4" skipped="0" failures="0" errors="0" time="0.324">
+    <testcase time="0.237" classname="cmp_functions" name="cmp_split_fun_works_as_expected"/>
+    <testcase time="0.0270000000000001" classname="cmp_functions" name="cmp_cfun_works_correctly_for_expected_column"/>
+    <testcase time="0.0280000000000005" classname="cmp_functions" name="cmp_cfun_works_correctly_for_received_column"/>
+    <testcase time="0.032" classname="cmp_functions" name="cmp_cfun_works_correctly_for_missing_column"/>
+  </testsuite>
+  <testsuite name="column_stats" timestamp="2025-08-11T15:19:31Z" hostname="114c1d7f0cb0" tests="35" skipped="0" failures="0" errors="0" time="0.217">
+    <testcase time="0.0109999999999992" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+    <testcase time="0.00100000000000033" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+    <testcase time="0.000999999999999446" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+    <testcase time="0.00100000000000033" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+    <testcase time="0.00599999999999934" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00100000000000033" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_calculates_SD_statistic_correctly"/>
+    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_calculates_SE_statistic_correctly"/>
+    <testcase time="0.00700000000000056" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
+    <testcase time="0.00399999999999956" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
+    <testcase time="0.00400000000000045" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
+    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_handles_BASE_variable_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_BASE_variable_correctly"/>
+    <testcase time="0.00600000000000023" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
+    <testcase time="0.00699999999999967" classname="column_stats" name="column_N_function_works_correctly"/>
+    <testcase time="0.00199999999999978" classname="column_stats" name="column_N_function_works_correctly"/>
+    <testcase time="0.00800000000000001" classname="column_stats" name="postfun_cog_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="postfun_cog_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="postfun_cog_works_correctly"/>
+    <testcase time="0.00699999999999967" classname="column_stats" name="postfun_eq5d_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="postfun_eq5d_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="postfun_eq5d_works_correctly"/>
+    <testcase time="0.00499999999999989" classname="column_stats" name="postfun_eq5d_works_correctly"/>
+    <testcase time="0.00400000000000045" classname="column_stats" name="postfun_eq5d_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="postfun_eq5d_works_correctly"/>
+    <testcase time="0.00399999999999956" classname="column_stats" name="postfun_eq5d_works_correctly"/>
+    <testcase time="0.0680000000000005" classname="column_stats" name="postfun_cog_and_postfun_eq5d_handle_error_cases"/>
+    <testcase time="0.00599999999999934" classname="column_stats" name="postfun_cog_and_postfun_eq5d_handle_error_cases"/>
+    <testcase time="0.00700000000000056" classname="column_stats" name="calc_N_returns_NULL_for_non_AVAL_variables"/>
+  </testsuite>
+  <testsuite name="count_pct" timestamp="2025-08-11T15:19:32Z" hostname="114c1d7f0cb0" tests="24" skipped="0" failures="0" errors="0" time="8.046">
+    <testcase time="0.279" classname="count_pct" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.198" classname="count_pct" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.198" classname="count_pct" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.125999999999999" classname="count_pct" name="a_freq_j_with_specific_val_CHN_and_denom_option"/>
+    <testcase time="0.122000000000001" classname="count_pct" name="a_freq_j_with_specific_val_CHN_and_denom_option"/>
+    <testcase time="0.125" classname="count_pct" name="a_freq_j_with_specific_val_CHN_and_denom_option"/>
+    <testcase time="0.173" classname="count_pct" name="a_freq_j_with_N_only"/>
+    <testcase time="0.171" classname="count_pct" name="a_freq_j_with_N_only"/>
+    <testcase time="0.201" classname="count_pct" name="a_freq_j_with_TotCol_only"/>
+    <testcase time="0.207000000000001" classname="count_pct" name="a_freq_j_with_TotCol_only"/>
+    <testcase time="1.099" classname="count_pct" name="a_freq_j_as_cfun"/>
+    <testcase time="1.092" classname="count_pct" name="a_freq_j_as_cfun"/>
+    <testcase time="0.138999999999999" classname="count_pct" name="a_freq_j_with_label_map"/>
+    <testcase time="0.133000000000001" classname="count_pct" name="a_freq_j_with_label_map"/>
+    <testcase time="0.193" classname="count_pct" name="a_freq_j_old_count_pats_case_"/>
+    <testcase time="0.196999999999999" classname="count_pct" name="a_freq_j_old_count_pats_case_"/>
+    <testcase time="0.198" classname="count_pct" name="a_freq_j_old_count_pats_case_"/>
+    <testcase time="0.549000000000001" classname="count_pct" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.553999999999998" classname="count_pct" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.715" classname="count_pct" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="1.15" classname="count_pct" name="a_freq_j_with_N_trt_as_denom_special_situation"/>
+    <testcase time="0.0990000000000002" classname="count_pct" name="a_freq_j_with_N_trt_as_denom_special_situation"/>
+    <testcase time="0.124000000000001" classname="count_pct" name="a_freq_j_with_keep_levels_CHN_NGA_"/>
+    <testcase time="0.00399999999999956" classname="count_pct" name="a_freq_j_with_keep_levels_CHN_NGA_"/>
+  </testsuite>
+  <testsuite name="count_pct_relrisk" timestamp="2025-08-11T15:19:40Z" hostname="114c1d7f0cb0" tests="14" skipped="0" failures="0" errors="0" time="3.101">
+    <testcase time="0.234" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.00200000000000067" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.215" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.0139999999999993" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.205" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.00300000000000011" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.210000000000001" classname="count_pct_relrisk" name="a_freq_j_with_risk_difference_method_cmh"/>
+    <testcase time="0.00599999999999845" classname="count_pct_relrisk" name="a_freq_j_with_risk_difference_method_cmh"/>
+    <testcase time="0.741000000000001" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.00300000000000011" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.738999999999999" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.00300000000000011" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.723000000000001" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.00300000000000011" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
+  </testsuite>
+  <testsuite name="coxph_hr" timestamp="2025-08-11T15:19:43Z" hostname="114c1d7f0cb0" tests="8" skipped="0" failures="0" errors="0" time="0.33">
+    <testcase time="0.0289999999999999" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
+    <testcase time="0.0210000000000008" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
+    <testcase time="0.00900000000000034" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
+    <testcase time="0.00799999999999912" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
+    <testcase time="0.0739999999999981" classname="coxph_hr" name="a_coxph_hr_works_with_custom_arguments_and_stratification_factors"/>
+    <testcase time="0.0579999999999998" classname="coxph_hr" name="a_coxph_hr_works_with_custom_arguments_and_stratification_factors"/>
+    <testcase time="0.0730000000000004" classname="coxph_hr" name="a_coxph_hr_works_with_stratification_factors_for_Log_Rank_test"/>
+    <testcase time="0.0579999999999998" classname="coxph_hr" name="a_coxph_hr_works_with_stratification_factors_for_Log_Rank_test"/>
+  </testsuite>
+  <testsuite name="coxreg_multivar" timestamp="2025-08-11T15:19:43Z" hostname="114c1d7f0cb0" tests="15" skipped="0" failures="0" errors="0" time="1.772">
+    <testcase time="0.0690000000000026" classname="coxreg_multivar" name="h_extract_coxreg_multivar_works_as_expected"/>
+    <testcase time="0.204999999999998" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected"/>
+    <testcase time="0.0240000000000009" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected"/>
+    <testcase time="0.0410000000000004" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected"/>
+    <testcase time="0.497" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected"/>
+    <testcase time="0.0239999999999974" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected"/>
+    <testcase time="0.0580000000000034" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected"/>
+    <testcase time="0.032" classname="coxreg_multivar" name="tefos03_afun_works_as_expected"/>
+    <testcase time="0.0249999999999986" classname="coxreg_multivar" name="tefos03_afun_works_as_expected"/>
+    <testcase time="0.137" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_defaults"/>
+    <testcase time="0.0919999999999987" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_defaults"/>
+    <testcase time="0.100000000000001" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_custom_options"/>
+    <testcase time="0.0820000000000007" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_custom_options"/>
+    <testcase time="0.234999999999999" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_with_row_splits"/>
+    <testcase time="0.151" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_with_row_splits"/>
+  </testsuite>
+  <testsuite name="estimate_proportion_diff" timestamp="2025-08-11T15:19:45Z" hostname="114c1d7f0cb0" tests="6" skipped="0" failures="0" errors="0" time="0.184">
+    <testcase time="0.0109999999999992" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
+    <testcase time="0.0429999999999993" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
+    <testcase time="0.00400000000000134" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
+    <testcase time="0.0339999999999989" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
+    <testcase time="0.0360000000000014" classname="estimate_proportion_diff" name="a_proportion_diff_j_works_as_expected_in_a_table_layout"/>
+    <testcase time="0.0559999999999974" classname="estimate_proportion_diff" name="a_proportion_diff_j_works_as_expected_in_a_table_layout"/>
+  </testsuite>
+  <testsuite name="event_free" timestamp="2025-08-11T15:19:45Z" hostname="114c1d7f0cb0" tests="8" skipped="0" failures="0" errors="0" time="0.422">
+    <testcase time="0.017000000000003" classname="event_free" name="s_event_free_works_with_default_arguments"/>
+    <testcase time="0.0219999999999985" classname="event_free" name="s_event_free_works_with_default_arguments"/>
+    <testcase time="0.0109999999999992" classname="event_free" name="s_event_free_works_with_percent_format"/>
+    <testcase time="0.0210000000000008" classname="event_free" name="s_event_free_works_with_percent_format"/>
+    <testcase time="0.106999999999999" classname="event_free" name="a_event_free_works_with_default_arguments_in_a_table_layout"/>
+    <testcase time="0.0640000000000001" classname="event_free" name="a_event_free_works_with_default_arguments_in_a_table_layout"/>
+    <testcase time="0.106000000000002" classname="event_free" name="a_event_free_works_with_customized_arguments_in_a_table_layout"/>
+    <testcase time="0.0739999999999981" classname="event_free" name="a_event_free_works_with_customized_arguments_in_a_table_layout"/>
+  </testsuite>
+  <testsuite name="get_ref_info" timestamp="2025-08-11T15:19:45Z" hostname="114c1d7f0cb0" tests="5" skipped="0" failures="0" errors="0" time="0.536">
+    <testcase time="0.119" classname="get_ref_info" name="get_ref_info_works_with_a_df_analysis_function"/>
+    <testcase time="0.0890000000000022" classname="get_ref_info" name="get_ref_info_works_with_a_df_analysis_function"/>
+    <testcase time="0.140000000000001" classname="get_ref_info" name="get_ref_info_works_with_a_vector_analysis_function"/>
+    <testcase time="0.114999999999998" classname="get_ref_info" name="get_ref_info_works_with_a_vector_analysis_function"/>
+    <testcase time="0.0730000000000004" classname="get_ref_info" name="get_ref_info_works_with_a_vector_analysis_function"/>
+  </testsuite>
+  <testsuite name="h_freq_funs" timestamp="2025-08-11T15:19:46Z" hostname="114c1d7f0cb0" tests="18" skipped="0" failures="0" errors="0" time="0.087">
+    <testcase time="0.00999999999999801" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
+    <testcase time="0.00700000000000145" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
+    <testcase time="0.00400000000000134" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
+    <testcase time="0.00499999999999901" classname="h_freq_funs" name="h_colexpr_substr_works_correctly"/>
+    <testcase time="0.00200000000000244" classname="h_freq_funs" name="h_colexpr_substr_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_colexpr_substr_works_correctly"/>
+    <testcase time="0.00600000000000023" classname="h_freq_funs" name="h_get_label_map_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_get_label_map_works_correctly"/>
+    <testcase time="0.00900000000000034" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
+    <testcase time="0.0109999999999992" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
+    <testcase time="0.00499999999999901" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
+    <testcase time="0.00400000000000134" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
+  </testsuite>
+  <testsuite name="jjcs_num_formats" timestamp="2025-08-11T15:19:46Z" hostname="114c1d7f0cb0" tests="16" skipped="0" failures="0" errors="0" time="0.951">
+    <testcase time="0.0509999999999984" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.00600000000000023" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.00600000000000023" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.138999999999999" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.240000000000002" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.00499999999999901" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.00600000000000023" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.0069999999999979" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.0570000000000022" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.0399999999999991" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.00700000000000145" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.0479999999999983" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.0749999999999993" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.0350000000000001" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.0779999999999994" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.151" classname="jjcs_num_formats" name="jjcsformats_count_fraction_works"/>
+  </testsuite>
+  <testsuite name="jjcsformats" timestamp="2025-08-11T15:19:47Z" hostname="114c1d7f0cb0" tests="17" skipped="0" failures="0" errors="0" time="0.569">
+    <testcase time="0.232000000000003" classname="jjcsformats" name="jjjcs_formats_work"/>
+    <testcase time="0.0350000000000001" classname="jjcsformats" name="jjjcs_formats_work"/>
+    <testcase time="0.036999999999999" classname="jjcsformats" name="jjjcs_formats_work"/>
+    <testcase time="0.088000000000001" classname="jjcsformats" name="jjjcs_formats_work"/>
+    <testcase time="0.0069999999999979" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00400000000000134" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.0579999999999998" classname="jjcsformats" name="jjcsformat_range_fct_is_formatting_ranges_as_expected"/>
+    <testcase time="0.0760000000000005" classname="jjcsformats" name="jjcsformat_pval_fct_works"/>
+    <testcase time="0.00499999999999901" classname="jjcsformats" name="jjcsformat_xx_works_also_for_empty_cells"/>
+    <testcase time="0.00600000000000023" classname="jjcsformats" name="jjcsformat_xx_works_also_for_cells_with_0_length_vectors"/>
+  </testsuite>
+  <testsuite name="junco_utils_default_stats_formats_labels" timestamp="2025-08-11T15:19:48Z" hostname="114c1d7f0cb0" tests="6" skipped="0" failures="1" errors="0" time="0.243">
+    <testcase time="0.0289999999999999" classname="junco_utils_default_stats_formats_labels" name="get_stats_works_as_expected"/>
+    <testcase time="0.111000000000001" classname="junco_utils_default_stats_formats_labels" name="get_formats_from_stats_works_as_expected">
+      <failure type="failure" message="Snapshot of code has changed: ('test-junco_utils_default_stats_formats_labels.R:18:3')">Snapshot of code has changed:
+old[2:40] vs new[2:38]
+    res
+  Output
+    $quantiles_upper
+-   function(x, output, na_str = na_str_dflt) {
+-         if (anyNA(na_str) || (replace_na_dflt &amp;&amp; any(na_str == "NA"))) {
+-           na_inds &lt;- which(is.na(na_str) | (replace_na_dflt &amp; na_str == "NA"))
++   function (x, output, na_str = na_str_dflt) 
++   {
++       if (anyNA(na_str) || (replace_na_dflt &amp;&amp; any(na_str == "NA"))) {
++           na_inds &lt;- which(is.na(na_str) | (replace_na_dflt &amp; na_str == 
++               "NA"))
+            na_str[na_inds] &lt;- rep(na_str_dflt, length.out = length(na_str))[na_inds]
+-         }
++       }
+-         if (length(x) == 0 || isTRUE(all(x == ""))) {
++       if (length(x) == 0 || isTRUE(all(x == ""))) {
+            return(NULL)
+-         } else if (!length(positions[[1]]) == length(x)) {
+-           stop(
+-             "Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats."
+-           )
+-         }
+-   
+-         values &lt;- Map(y = x, fun = roundings, na_str = na_str, function(y, fun, na_str) fun(y, na_str = na_str))
+-         regmatches(x = str, m = positions)[[1]] &lt;- values
+-         return(str)
++       }
++       else if (!length(positions[[1]]) == length(x)) {
++           stop("Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats.")
+        }
++       values &lt;- Map(y = x, fun = roundings, na_str = na_str, function(y, 
++           fun, na_str) fun(y, na_str = na_str))
++       regmatches(x = str, m = positions)[[1]] &lt;- values
++       return(str)
++   }
+    &lt;environment: base&gt;
+    
+    $range_with_cens_info
+-   function(x, ...) {
+-       checkmate::assert_numeric(
+-         x,
+-         len = 4L,
+-         finite = TRUE,
+-         any.missing = FALSE
+-       )
++   function (x, ...) 
++   {
++       checkmate::assert_numeric(x, len = 4L, finite = TRUE, any.missing = FALSE)
+        checkmate::assert_true(all(x[c(3, 4)] %in% c(0, 1)))
+-   
+        res &lt;- vapply(x[c(1, 2)], format_xx, character(1))
+-       if (x[3] == 1) res[1] &lt;- paste0(res[1], "+")
+-       if (x[4] == 1) res[2] &lt;- paste0(res[2], "+")
++       if (x[3] == 1) 
++           res[1] &lt;- paste0(res[1], "+")
++       if (x[4] == 1) 
++           res[2] &lt;- paste0(res[2], "+")
+        paste0("(", res[1], ", ", res[2], ")")
+-     }
++   }
+    &lt;environment: base&gt;
+    
+
+* Run `testthat::snapshot_accept('junco_utils_default_stats_formats_labels')` to accept the change.
+* Run `testthat::snapshot_review('junco_utils_default_stats_formats_labels')` to interactively review the change.</failure>
+    </testcase>
+    <testcase time="0.0350000000000001" classname="junco_utils_default_stats_formats_labels" name="get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.00499999999999901" classname="junco_utils_default_stats_formats_labels" name="get_label_attr_from_stats_works_as_expected"/>
+    <testcase time="0.0380000000000003" classname="junco_utils_default_stats_formats_labels" name="get_label_attr_from_stats_works_as_expected"/>
+    <testcase time="0.0249999999999986" classname="junco_utils_default_stats_formats_labels" name="get_indents_from_stats_works_as_expected"/>
+  </testsuite>
+  <testsuite name="kaplan_meier" timestamp="2025-08-11T15:19:48Z" hostname="114c1d7f0cb0" tests="14" skipped="0" failures="0" errors="0" time="0.443">
+    <testcase time="0.0160000000000018" classname="kaplan_meier" name="s_kaplan_meier_works_with_default_arguments"/>
+    <testcase time="0.0219999999999985" classname="kaplan_meier" name="s_kaplan_meier_works_with_default_arguments"/>
+    <testcase time="0.0100000000000016" classname="kaplan_meier" name="s_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.0209999999999972" classname="kaplan_meier" name="s_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.0109999999999992" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments"/>
+    <testcase time="0.00200000000000244" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments"/>
+    <testcase time="0.041999999999998" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments"/>
+    <testcase time="0.0120000000000005" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.00199999999999889" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.0229999999999997" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.0760000000000005" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table"/>
+    <testcase time="0.0700000000000003" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table"/>
+    <testcase time="0.0650000000000013" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table_with_custom_arguments"/>
+    <testcase time="0.070999999999998" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table_with_custom_arguments"/>
+  </testsuite>
+  <testsuite name="mmrm" timestamp="2025-08-11T15:19:48Z" hostname="114c1d7f0cb0" tests="5" skipped="0" failures="0" errors="0" time="0.276">
+    <testcase time="0.129000000000001" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
+    <testcase time="0.00300000000000011" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
+    <testcase time="0.00300000000000011" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
+    <testcase time="0.00300000000000011" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
+    <testcase time="0.137999999999998" classname="mmrm" name="fit_mmrm_j_works_as_expected"/>
+  </testsuite>
+  <testsuite name="mmrm_rbmi" timestamp="2025-08-11T15:19:48Z" hostname="114c1d7f0cb0" tests="6" skipped="0" failures="0" errors="0" time="0.256">
+    <testcase time="0.157" classname="mmrm_rbmi" name="mmrm_rbmi_works_as_expected"/>
+    <testcase time="0.00200000000000244" classname="mmrm_rbmi" name="mmrm_rbmi_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="mmrm_rbmi" name="mmrm_rbmi_works_as_expected"/>
+    <testcase time="0.0289999999999999" classname="mmrm_rbmi" name="mmrm_rbmi_works_as_expected"/>
+    <testcase time="0.036999999999999" classname="mmrm_rbmi" name="mmrm_rbmi_works_as_expected"/>
+    <testcase time="0.0279999999999987" classname="mmrm_rbmi" name="mmrm_rbmi_works_as_expected"/>
+  </testsuite>
+  <testsuite name="odds_ratio" timestamp="2025-08-11T15:19:49Z" hostname="114c1d7f0cb0" tests="18" skipped="0" failures="0" errors="0" time="0.392">
+    <testcase time="0.0160000000000018" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set"/>
+    <testcase time="0.00600000000000023" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set"/>
+    <testcase time="0.0159999999999982" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set_with_strata"/>
+    <testcase time="0.00600000000000023" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set_with_strata"/>
+    <testcase time="0.00900000000000034" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_non_responders"/>
+    <testcase time="0.00300000000000011" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_non_responders"/>
+    <testcase time="0.0160000000000018" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_one_grp"/>
+    <testcase time="0.00300000000000011" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_one_grp"/>
+    <testcase time="0.00799999999999912" classname="odds_ratio" name="or_glm_j_does_not_fail_with_only_non_responders"/>
+    <testcase time="0.00600000000000023" classname="odds_ratio" name="or_glm_j_does_not_fail_with_only_non_responders"/>
+    <testcase time="0.041999999999998" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis"/>
+    <testcase time="0.0590000000000011" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis"/>
+    <testcase time="0.0360000000000014" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis"/>
+    <testcase time="0.00300000000000011" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis"/>
+    <testcase time="0.0410000000000004" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis"/>
+    <testcase time="0.0899999999999999" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis"/>
+    <testcase time="0.0289999999999999" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis"/>
+    <testcase time="0.00300000000000011" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis"/>
+  </testsuite>
+  <testsuite name="patyrs-eair100" timestamp="2025-08-11T15:19:49Z" hostname="114c1d7f0cb0" tests="4" skipped="0" failures="0" errors="0" time="1.519">
+    <testcase time="0.265999999999998" classname="patyrs_eair100" name="Check_patient_years_numbers_are_giving_expected_result"/>
+    <testcase time="0.419" classname="patyrs_eair100" name="Check_aeir100_numbers_are_giving_expected_result"/>
+    <testcase time="0.417999999999999" classname="patyrs_eair100" name="Check_aeir100_numbers_are_giving_expected_result_when_fup_var_argument_is_changed"/>
+    <testcase time="0.416" classname="patyrs_eair100" name="Check_aeir100_numbers_are_giving_expected_result_when_occ_dy_argument_is_changed"/>
+  </testsuite>
+  <testsuite name="pool_rbmi" timestamp="2025-08-11T15:19:51Z" hostname="114c1d7f0cb0" tests="23" skipped="0" failures="0" errors="0" time="0.078">
+    <testcase time="0.0160000000000018" classname="pool_rbmi" name="mod_pool_internal_rubin_combines_results_correctly"/>
+    <testcase time="0.000999999999997669" classname="pool_rbmi" name="mod_pool_internal_rubin_combines_results_correctly"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="mod_pool_internal_rubin_combines_results_correctly"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="mod_pool_internal_rubin_combines_results_correctly"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="mod_pool_internal_rubin_combines_results_correctly"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="mod_pool_internal_rubin_combines_results_correctly"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="mod_pool_internal_rubin_combines_results_correctly"/>
+    <testcase time="0.00400000000000134" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.000999999999997669" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00199999999999889" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+    <testcase time="0.00300000000000011" classname="pool_rbmi" name="pool_function_processes_and_returns_combined_results"/>
+  </testsuite>
+  <testsuite name="proportions" timestamp="2025-08-11T15:19:51Z" hostname="114c1d7f0cb0" tests="21" skipped="0" failures="0" errors="0" time="0.7">
+    <testcase time="0.0420000000000016" classname="proportions" name="s_proportion_factor_works_as_expected"/>
+    <testcase time="0.0279999999999987" classname="proportions" name="s_proportion_factor_shows_optional_total_row_on_top"/>
+    <testcase time="0.0280000000000022" classname="proportions" name="s_proportion_factor_shows_optional_total_row_in_bottom"/>
+    <testcase time="0.0269999999999975" classname="proportions" name="s_proportion_factor_optionally_uses_number_of_non_missing_levels_as_total"/>
+    <testcase time="0.0360000000000014" classname="proportions" name="s_proportion_logical_works_as_expected"/>
+    <testcase time="0.027000000000001" classname="proportions" name="c_proportion_logical_works_as_expected"/>
+    <testcase time="0.00999999999999801" classname="proportions" name="h_get_design_mat_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="proportions" name="h_get_design_mat_works_as_expected"/>
+    <testcase time="0.00499999999999901" classname="proportions" name="a_proportion_ci_logical_works_as_expected"/>
+    <testcase time="0.022000000000002" classname="proportions" name="a_proportion_ci_logical_works_as_expected"/>
+    <testcase time="0.00900000000000034" classname="proportions" name="a_proportion_ci_factor_works_as_expected"/>
+    <testcase time="0.0339999999999989" classname="proportions" name="a_proportion_ci_factor_works_as_expected"/>
+    <testcase time="0.231999999999999" classname="proportions" name="prop_split_fun_works_as_expected"/>
+    <testcase time="0.0399999999999991" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
+    <testcase time="0.0289999999999999" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
+    <testcase time="0.0250000000000021" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
+    <testcase time="0.00599999999999667" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
+    <testcase time="0.0289999999999999" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
+    <testcase time="0.032" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
+    <testcase time="0.0300000000000011" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
+    <testcase time="0.00600000000000023" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
+  </testsuite>
+  <testsuite name="pruning_functions" timestamp="2025-08-11T15:19:53Z" hostname="114c1d7f0cb0" tests="30" skipped="0" failures="0" errors="0" time="10.805">
+    <testcase time="1.827" classname="pruning_functions" name="count_pruner_is_identical_to_standard_pruning_in_cases_where_we_have_all_0_s"/>
+    <testcase time="3.294" classname="pruning_functions" name="count_pruner_is_identical_to_standard_pruning_in_cases_where_we_have_all_0_s"/>
+    <testcase time="1.39" classname="pruning_functions" name="count_pruner_keeps_everything_if_0_condition_is_not_met"/>
+    <testcase time="0.0350000000000001" classname="pruning_functions" name="count_pruner_with_cat_include_removes_text_correctly"/>
+    <testcase time="0.0340000000000025" classname="pruning_functions" name="count_pruner_with_cat_include_does_nothing_if_text_is_supplied_and_it_is_not_text_that_is_in_the_table"/>
+    <testcase time="0.0629999999999988" classname="pruning_functions" name="count_pruner_does_remove_if_text_is_supplied_and_all_columns_are_0"/>
+    <testcase time="0.0429999999999993" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
+    <testcase time="0.0420000000000016" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
+    <testcase time="0.0630000000000024" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
+    <testcase time="0.00299999999999301" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
+    <testcase time="0.00300000000000011" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
+    <testcase time="0.007000000000005" classname="pruning_functions" name="keep_non_null_rows_pruning_function_or_via_keep_rows"/>
+    <testcase time="0.00300000000000011" classname="pruning_functions" name="keep_non_null_rows_pruning_function_or_via_keep_rows"/>
+    <testcase time="0.220999999999997" classname="pruning_functions" name="test_keep_non_null_rows"/>
+    <testcase time="0.0100000000000051" classname="pruning_functions" name="bspt_pruner_both_fraction_and_diff_from_control_are_NULL"/>
+    <testcase time="0.00799999999999557" classname="pruning_functions" name="bspt_pruner_both_fraction_and_diff_from_control_are_NULL"/>
+    <testcase time="0.231000000000002" classname="pruning_functions" name="bspt_pruner_with_fraction"/>
+    <testcase time="0.344000000000001" classname="pruning_functions" name="bspt_pruner_with_fraction_and_diff_from_control"/>
+    <testcase time="0.579000000000001" classname="pruning_functions" name="bspt_pruner_with_fraction_and_diff_from_control_and_keeprowtext"/>
+    <testcase time="0.00300000000000011" classname="pruning_functions" name="bspt_pruner_with_fraction_and_diff_from_control_and_keeprowtext"/>
+    <testcase time="0.189" classname="pruning_functions" name="count_pruner_in_small_groups"/>
+    <testcase time="1.16999999999999" classname="pruning_functions" name="bspt_pruner_in_AE_like_tables"/>
+    <testcase time="0.00300000000000011" classname="pruning_functions" name="bspt_pruner_in_AE_like_tables"/>
+    <testcase time="0.00300000000000011" classname="pruning_functions" name="bspt_pruner_in_AE_like_tables"/>
+    <testcase time="0.202000000000005" classname="pruning_functions" name="bspt_pruner_with_less_obvious_control_specifications"/>
+    <testcase time="0.960000000000001" classname="pruning_functions" name="bspt_pruner_with_less_obvious_control_specifications"/>
+    <testcase time="0.00299999999999301" classname="pruning_functions" name="bspt_pruner_with_less_obvious_control_specifications"/>
+    <testcase time="0.0460000000000065" classname="pruning_functions" name="check_that_if_all_data_is_pruned_leaving_no_rows_the_outcome_is_the_message"/>
+    <testcase time="0.0109999999999957" classname="pruning_functions" name="check_that_if_message_is_changed_this_is_reflected_in_the_final_table_tree"/>
+    <testcase time="0.0150000000000006" classname="pruning_functions" name="check_that_when_spancols_TRUE_is_used_then_we_have_expected_behaviour"/>
+  </testsuite>
+  <testsuite name="rbmi" timestamp="2025-08-11T15:20:02Z" hostname="114c1d7f0cb0" tests="15" skipped="1" failures="0" errors="0" time="6.742">
+    <testcase time="0.0110000000000028" classname="rbmi" name="find_missing_chg_after_avisit_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="rbmi" name="find_missing_chg_after_avisit_works_as_expected"/>
+    <testcase time="0.00399999999999778" classname="rbmi" name="find_missing_chg_after_avisit_works_as_expected"/>
+    <testcase time="0.00600000000000023" classname="rbmi" name="find_missing_chg_after_avisit_handles_unsorted_input_correctly"/>
+    <testcase time="0.00300000000000011" classname="rbmi" name="find_missing_chg_after_avisit_handles_unsorted_input_correctly"/>
+    <testcase time="0.00900000000000034" classname="rbmi" name="find_missing_chg_after_avisit_validates_input_correctly"/>
+    <testcase time="0.00500000000000256" classname="rbmi" name="find_missing_chg_after_avisit_validates_input_correctly"/>
+    <testcase time="0.00399999999999778" classname="rbmi" name="find_missing_chg_after_avisit_validates_input_correctly"/>
+    <testcase time="0.0069999999999979" classname="rbmi" name="make_rbmi_cluster_returns_NULL_when_cluster_or_cores_is_1"/>
+    <testcase time="2.14" classname="rbmi" name="make_rbmi_cluster_exports_objects_and_loads_packages"/>
+    <testcase time="2.091" classname="rbmi" name="make_rbmi_cluster_handles_existing_cluster"/>
+    <testcase time="0.0309999999999988" classname="rbmi" name="make_rbmi_cluster_rejects_invalid_cluster_or_cores_parameter"/>
+    <testcase time="0.0069999999999979" classname="rbmi" name="par_lapply_works_with_and_without_cluster"/>
+    <testcase time="2.183" classname="rbmi" name="par_lapply_works_with_and_without_cluster"/>
+    <testcase time="0.238000000000007" classname="rbmi" name="make_rbmi_cluster_loads_rbmi_namespaces_correctly">
+      <skipped message="Reason: rbmi package not available in cluster ('test-rbmi.R:193:9')"/>
+    </testcase>
+  </testsuite>
+  <testsuite name="relative_risk" timestamp="2025-08-11T15:20:09Z" hostname="114c1d7f0cb0" tests="8" skipped="0" failures="0" errors="0" time="0.137">
+    <testcase time="0.0349999999999966" classname="relative_risk" name="s_relative_risk_returns_NA_when_one_group_has_no_responders"/>
+    <testcase time="0.00600000000000023" classname="relative_risk" name="s_relative_risk_returns_NA_when_one_group_has_no_responders"/>
+    <testcase time="0.00600000000000023" classname="relative_risk" name="prop_ratio_cmh_works_as_expected"/>
+    <testcase time="0.00600000000000023" classname="relative_risk" name="prop_ratio_cmh_works_as_expected"/>
+    <testcase time="0.00600000000000023" classname="relative_risk" name="prop_ratio_cmh_works_also_with_a_single_stratum"/>
+    <testcase time="0.00600000000000023" classname="relative_risk" name="prop_ratio_cmh_works_also_with_a_single_stratum"/>
+    <testcase time="0.0670000000000002" classname="relative_risk" name="a_relative_risk_in_table_layout_gives_same_results_as_with_SAS"/>
+    <testcase time="0.00499999999999545" classname="relative_risk" name="a_relative_risk_in_table_layout_gives_same_results_as_with_SAS"/>
+  </testsuite>
+  <testsuite name="remove_col_count" timestamp="2025-08-11T15:20:09Z" hostname="114c1d7f0cb0" tests="1" skipped="0" failures="0" errors="0" time="0.093">
+    <testcase time="0.0930000000000035" classname="remove_col_count" name="remove_col_count_works"/>
+  </testsuite>
+  <testsuite name="resp01_functions" timestamp="2025-08-11T15:20:09Z" hostname="114c1d7f0cb0" tests="12" skipped="0" failures="0" errors="0" time="1.066">
+    <testcase time="0.439" classname="resp01_functions" name="resp01_split_fun_fct_works_as_expected"/>
+    <testcase time="0.359999999999999" classname="resp01_functions" name="resp01_split_fun_fct_works_as_expected"/>
+    <testcase time="0.0260000000000034" classname="resp01_functions" name="resp01_counts_cfun_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="resp01_functions" name="resp01_counts_cfun_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="resp01_functions" name="resp01_counts_cfun_works_as_expected"/>
+    <testcase time="0.029999999999994" classname="resp01_functions" name="resp01_a_comp_stat_logical_works_as_expected"/>
+    <testcase time="0.0300000000000011" classname="resp01_functions" name="resp01_a_comp_stat_logical_works_as_expected"/>
+    <testcase time="0.0380000000000038" classname="resp01_functions" name="resp01_a_comp_stat_factor_works_as_expected"/>
+    <testcase time="0.0359999999999943" classname="resp01_functions" name="resp01_a_comp_stat_factor_works_as_expected"/>
+    <testcase time="0.0310000000000059" classname="resp01_functions" name="resp01_acfun_works_as_expected"/>
+    <testcase time="0.0409999999999968" classname="resp01_functions" name="resp01_acfun_works_as_expected"/>
+    <testcase time="0.0290000000000035" classname="resp01_functions" name="resp01_acfun_works_as_expected"/>
+  </testsuite>
+  <testsuite name="response_by_var" timestamp="2025-08-11T15:20:10Z" hostname="114c1d7f0cb0" tests="9" skipped="0" failures="0" errors="0" time="0.742">
+    <testcase time="0.0959999999999965" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.0700000000000003" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.135000000000005" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.070999999999998" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.070999999999998" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.0710000000000051" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.070999999999998" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.0829999999999984" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.0739999999999981" classname="response_by_var" name="response_by_var_various_scenarios"/>
+  </testsuite>
+  <testsuite name="sorting_functions" timestamp="2025-08-11T15:20:11Z" hostname="114c1d7f0cb0" tests="7" skipped="0" failures="0" errors="0" time="8.04">
+    <testcase time="0.564" classname="sorting_functions" name="jj_complex_scorefun_is_identical_to_standard_sorting_spanningheadercolvar_NA"/>
+    <testcase time="0.230000000000004" classname="sorting_functions" name="jj_complex_scorefun_is_identical_to_standard_sorting_spanningheadercolvar_spanhead"/>
+    <testcase time="0.236999999999995" classname="sorting_functions" name="jj_complex_scorefun_sorts_correctly_with_colpath"/>
+    <testcase time="0.301000000000002" classname="sorting_functions" name="jj_complex_scorefun_places_specified_category_at_the_start_firstcat"/>
+    <testcase time="0.305" classname="sorting_functions" name="jj_complex_scorefun_places_specified_category_at_the_end_lastcat"/>
+    <testcase time="3.63" classname="sorting_functions" name="jj_complex_scorefun_uses_first_column_to_sort_usefirstcol"/>
+    <testcase time="2.773" classname="sorting_functions" name="jj_complex_scorefun_uses_first_column_when_no_spanning_header_usefirstcol"/>
+  </testsuite>
+  <testsuite name="split_functions" timestamp="2025-08-11T15:20:19Z" hostname="114c1d7f0cb0" tests="8" skipped="0" failures="0" errors="0" time="0.362">
+    <testcase time="0.0690000000000026" classname="split_functions" name="cond_rm_facets_works"/>
+    <testcase time="0.00500000000000256" classname="split_functions" name="cond_rm_facets_works"/>
+    <testcase time="0.00399999999999778" classname="split_functions" name="cond_rm_facets_works"/>
+    <testcase time="0.00500000000000256" classname="split_functions" name="cond_rm_facets_works"/>
+    <testcase time="0.0919999999999987" classname="split_functions" name="rm_levels_works"/>
+    <testcase time="0.138999999999996" classname="split_functions" name="real_add_overall_facet_works"/>
+    <testcase time="0.0450000000000017" classname="split_functions" name="make_combo_splitfun_works"/>
+    <testcase time="0.00300000000000011" classname="split_functions" name="make_combo_splitfun_works"/>
+  </testsuite>
+  <testsuite name="string_to_title" timestamp="2025-08-11T15:20:19Z" hostname="114c1d7f0cb0" tests="2" skipped="0" failures="0" errors="0" time="0.015">
+    <testcase time="0.00900000000000034" classname="string_to_title" name="string_to_title_works_as_expected_for_string"/>
+    <testcase time="0.00600000000000023" classname="string_to_title" name="string_to_title_works_as_expected_for_character_vector"/>
+  </testsuite>
+  <testsuite name="summarize_ancova" timestamp="2025-08-11T15:20:19Z" hostname="114c1d7f0cb0" tests="7" skipped="0" failures="0" errors="0" time="0.521">
+    <testcase time="0.0309999999999988" classname="summarize_ancova" name="h_ancova_works_as_expected"/>
+    <testcase time="0.00100000000000477" classname="summarize_ancova" name="h_ancova_works_as_expected"/>
+    <testcase time="0.0309999999999988" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
+    <testcase time="0.00199999999999534" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
+    <testcase time="0.0250000000000057" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
+    <testcase time="0.119" classname="summarize_ancova" name="s_summarize_ancova_works_as_expected"/>
+    <testcase time="0.311999999999998" classname="summarize_ancova" name="a_summarize_ancova_j_works_as_expected_in_table_layout"/>
+  </testsuite>
+  <testsuite name="summarize_mmrm" timestamp="2025-08-11T15:20:20Z" hostname="114c1d7f0cb0" tests="14" skipped="0" failures="0" errors="0" time="2.578">
+    <testcase time="0.209000000000003" classname="summarize_mmrm" name="h_summarize_mmrm_works_with_healthy_input"/>
+    <testcase time="0.0519999999999996" classname="summarize_mmrm" name="h_summarize_mmrm_works_with_healthy_input"/>
+    <testcase time="0.120999999999995" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_non_ref_cell"/>
+    <testcase time="0.0380000000000038" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_non_ref_cell"/>
+    <testcase time="0.0120000000000005" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_col_cell"/>
+    <testcase time="0.0289999999999964" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_col_cell"/>
+    <testcase time="0.00900000000000034" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_row_cell"/>
+    <testcase time="0.0230000000000032" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_row_cell"/>
+    <testcase time="0.378999999999998" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_in_table_layout"/>
+    <testcase time="0.140000000000001" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_in_table_layout"/>
+    <testcase time="0.122" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_in_table_layout"/>
+    <testcase time="0.856000000000002" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_below_row_splits"/>
+    <testcase time="0.309999999999995" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_below_row_splits"/>
+    <testcase time="0.278000000000006" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_below_row_splits"/>
+  </testsuite>
+  <testsuite name="summarize_row_counts" timestamp="2025-08-11T15:20:23Z" hostname="114c1d7f0cb0" tests="4" skipped="0" failures="0" errors="0" time="0.512">
+    <testcase time="0.175999999999995" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_without_alt_counts"/>
+    <testcase time="0.0790000000000006" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_without_alt_counts"/>
+    <testcase time="0.167000000000002" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_with_alt_counts"/>
+    <testcase time="0.0900000000000034" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_with_alt_counts"/>
+  </testsuite>
+  <testsuite name="tabulate_lsmeans" timestamp="2025-08-11T15:20:23Z" hostname="114c1d7f0cb0" tests="11" skipped="0" failures="0" errors="0" time="1.758">
+    <testcase time="0.111999999999995" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.00100000000000477" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.0219999999999985" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.0219999999999985" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.0220000000000056" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.104999999999997" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly"/>
+    <testcase time="0.457999999999998" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly"/>
+    <testcase time="0.449000000000005" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly"/>
+    <testcase time="0.450999999999993" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly"/>
+    <testcase time="0.114000000000004" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_ANCOVA_fit_when_not_in_reference_column"/>
+    <testcase time="0.00199999999999534" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_ANCOVA_fit_when_not_in_reference_column"/>
+  </testsuite>
+  <testsuite name="tabulate_lsmeans_wide" timestamp="2025-08-11T15:20:25Z" hostname="114c1d7f0cb0" tests="19" skipped="0" failures="0" errors="0" time="1.833">
+    <testcase time="0.0330000000000013" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
+    <testcase time="0.0230000000000032" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
+    <testcase time="0.0229999999999961" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
+    <testcase time="0.0220000000000056" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
+    <testcase time="0.0229999999999961" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
+    <testcase time="0.0279999999999987" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group"/>
+    <testcase time="0.0230000000000032" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group"/>
+    <testcase time="0.0229999999999961" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group"/>
+    <testcase time="0.0370000000000061" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
+    <testcase time="0.0239999999999938" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
+    <testcase time="0.0230000000000032" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
+    <testcase time="0.0230000000000032" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
+    <testcase time="0.352999999999994" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected"/>
+    <testcase time="0.146000000000001" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected"/>
+    <testcase time="0.152000000000001" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group"/>
+    <testcase time="0.253999999999998" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group"/>
+    <testcase time="0.194000000000003" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group"/>
+    <testcase time="0.307000000000002" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_can_omit_variance_and_p_value_columns"/>
+    <testcase time="0.122" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_can_omit_variance_and_p_value_columns"/>
+  </testsuite>
+  <testsuite name="tabulate_rbmi" timestamp="2025-08-11T15:20:27Z" hostname="114c1d7f0cb0" tests="13" skipped="0" failures="0" errors="0" time="0.32">
+    <testcase time="0.0189999999999984" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_ANCOVA_case"/>
+    <testcase time="0.00900000000000034" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_MMRM_case"/>
+    <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_MMRM_case"/>
+    <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_MMRM_case"/>
+    <testcase time="0.0180000000000007" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_ANCOVA_case"/>
+    <testcase time="0.00900000000000034" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
+    <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
+    <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
+    <testcase time="0.0259999999999962" classname="tabulate_rbmi" name="s_rbmi_lsmeans_works_with_as_expected_with_.in_ref_col_TRUE"/>
+    <testcase time="0.0210000000000008" classname="tabulate_rbmi" name="s_rbmi_lsmeans_works_with_as_expected_with_.in_ref_col_FALSE"/>
+    <testcase time="0.0200000000000031" classname="tabulate_rbmi" name="s_rbmi_lsmeans_also_works_with_show_relative_increase"/>
+    <testcase time="0.0939999999999941" classname="tabulate_rbmi" name="a_rbmi_lsmeans_works_as_expected_in_table_layout"/>
+    <testcase time="0.0920000000000059" classname="tabulate_rbmi" name="a_rbmi_lsmeans_works_as_expected_in_table_layout"/>
+  </testsuite>
+  <testsuite name="tern_utils_default_stats_formats_labels" timestamp="2025-08-11T15:20:27Z" hostname="114c1d7f0cb0" tests="52" skipped="0" failures="0" errors="0" time="0.355">
+    <testcase time="0.00999999999999801" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.0219999999999985" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00200000000000244" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.0219999999999985" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00200000000000244" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.0229999999999961" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00900000000000034" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.0260000000000034" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00499999999999545" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00500000000000256" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00500000000000256" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00399999999999778" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
+    <testcase time="0.00199999999999534" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
+    <testcase time="0.00399999999999778" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
+    <testcase time="0.00500000000000256" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
+    <testcase time="0.00199999999999534" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
+    <testcase time="0.00199999999999534" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
+    <testcase time="0.00499999999999545" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.0219999999999985" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.007000000000005" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_with_labels_in_works_when_adding_levels_to_stats"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_fine_for_cases_with_levels"/>
+    <testcase time="0.00499999999999545" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
+    <testcase time="0.0230000000000032" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
+    <testcase time="0.00399999999999778" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_correctly_combines_labels_in_and_label_attr_from_stats"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".unlist_keep_nulls_works_as_expected_non_recursively"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".unlist_keep_nulls_works_as_expected_non_recursively_with_NA"/>
+    <testcase time="0.0069999999999979" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
+    <testcase time="0.00100000000000477" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
+    <testcase time="0.0259999999999962" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_single_input"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".apply_stat_functions_works_as_expected_without_custom_stat_functions"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".apply_stat_functions_works_as_expected_with_custom_stat_functions"/>
+  </testsuite>
+  <testsuite name="test_proportion_diff" timestamp="2025-08-11T15:20:27Z" hostname="114c1d7f0cb0" tests="32" skipped="0" failures="0" errors="0" time="0.499">
+    <testcase time="0.0320000000000036" classname="test_proportion_diff" name="s_test_proportion_diff_works_as_expected"/>
+    <testcase time="0.0239999999999938" classname="test_proportion_diff" name="s_test_proportion_diff_works_as_expected"/>
+    <testcase time="0.0220000000000056" classname="test_proportion_diff" name="s_test_proportion_diff_works_as_expected"/>
+    <testcase time="0.046999999999997" classname="test_proportion_diff" name="a_test_proportion_diff_works_as_expected_in_table_layout"/>
+    <testcase time="0.0470000000000041" classname="test_proportion_diff" name="a_test_proportion_diff_works_as_expected_in_table_layout"/>
+    <testcase time="0.00599999999999312" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.0220000000000056" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.00199999999999534" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.0210000000000008" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.0210000000000008" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
+    <testcase time="0.0210000000000008" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
+    <testcase time="0.00300000000000011" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
+    <testcase time="0.0219999999999985" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
+    <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
+    <testcase time="0.0219999999999985" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
+    <testcase time="0.00900000000000034" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.0210000000000008" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00199999999999534" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.0210000000000008" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.0210000000000008" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.0210000000000008" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.00900000000000034" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.0249999999999986" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.00300000000000011" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.0219999999999985" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+  </testsuite>
+  <testsuite name="titles_file" timestamp="2025-08-11T15:20:28Z" hostname="114c1d7f0cb0" tests="6" skipped="0" failures="0" errors="0" time="0.052">
+    <testcase time="0.0110000000000028" classname="titles_file" name="title_files_work"/>
+    <testcase time="0.00600000000000023" classname="titles_file" name="title_files_work"/>
+    <testcase time="0.0240000000000009" classname="titles_file" name="title_files_work"/>
+    <testcase time="0.00300000000000011" classname="titles_file" name="title_files_work"/>
+    <testcase time="0.00300000000000011" classname="titles_file" name="title_files_work"/>
+    <testcase time="0.00499999999999545" classname="titles_file" name="title_files_work"/>
+  </testsuite>
+  <testsuite name="tt_to_tblfile" timestamp="2025-08-11T15:20:28Z" hostname="114c1d7f0cb0" tests="58" skipped="0" failures="0" errors="0" time="23.162">
+    <testcase time="0.349000000000004" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00999999999999801" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.198" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00999999999999801" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.234000000000002" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00300000000000011" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="6.602" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00300000000000011" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00200000000000955" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00200000000000955" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00899999999998613" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="6.206" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="4.20999999999999" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00400000000000489" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.108000000000004" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.429000000000002" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00999999999999091" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.0649999999999977" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.161000000000001" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.007000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="4.303" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00200000000000955" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00600000000000023" classname="tt_to_tblfile" name="cwidths_final_adj_calculates_adjusted_column_widths_correctly"/>
+    <testcase time="0.00400000000000489" classname="tt_to_tblfile" name="cwidths_final_adj_calculates_adjusted_column_widths_correctly"/>
+    <testcase time="0.00600000000000023" classname="tt_to_tblfile" name="make_bordmat_row_creates_border_matrix_row_correctly"/>
+    <testcase time="0.000999999999990564" classname="tt_to_tblfile" name="make_bordmat_row_creates_border_matrix_row_correctly"/>
+    <testcase time="0.00300000000000011" classname="tt_to_tblfile" name="make_bordmat_row_creates_border_matrix_row_correctly"/>
+  </testsuite>
+  <testsuite name="unicodify" timestamp="2025-08-11T15:20:51Z" hostname="114c1d7f0cb0" tests="9" skipped="0" failures="0" errors="0" time="0.036">
+    <testcase time="0.0100000000000051" classname="unicodify" name="unicodify_replaces_patterns_with_Unicode_characters"/>
+    <testcase time="0.00300000000000011" classname="unicodify" name="unicodify_replaces_patterns_with_Unicode_characters"/>
+    <testcase time="0.00199999999999534" classname="unicodify" name="unicodify_replaces_patterns_with_Unicode_characters"/>
+    <testcase time="0.00300000000000011" classname="unicodify" name="unicodify_replaces_patterns_with_Unicode_characters"/>
+    <testcase time="0.00300000000000011" classname="unicodify" name="unicodify_replaces_patterns_with_Unicode_characters"/>
+    <testcase time="0.00600000000000023" classname="unicodify" name="unicodify_works_with_the_default_jj_uc_map"/>
+    <testcase time="0.00300000000000011" classname="unicodify" name="unicodify_works_with_the_default_jj_uc_map"/>
+    <testcase time="0.00300000000000011" classname="unicodify" name="unicodify_works_with_the_default_jj_uc_map"/>
+    <testcase time="0.00300000000000011" classname="unicodify" name="unicodify_works_with_the_default_jj_uc_map"/>
+  </testsuite>
+  <testsuite name="varia" timestamp="2025-08-11T15:20:51Z" hostname="114c1d7f0cb0" tests="16" skipped="0" failures="0" errors="0" time="2.724">
+    <testcase time="0.046999999999997" classname="varia" name="a_freq_j_works_old_count_unq_case_"/>
+    <testcase time="0.0380000000000109" classname="varia" name="a_freq_j_works_old_count_unq_case_"/>
+    <testcase time="0.162999999999997" classname="varia" name="a_freq_subcol_j_works_old_case_of_cpct_subcol_"/>
+    <testcase time="0.551999999999992" classname="varia" name="a_freq_combos_j_old_cpct_filter_combos_case_works"/>
+    <testcase time="0.667000000000002" classname="varia" name="_a_freq_j_works"/>
+    <testcase time="0.234999999999999" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
+    <testcase time="0.524000000000001" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
+    <testcase time="0.00999999999999091" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
+    <testcase time="0.00900000000000034" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
+    <testcase time="0.0740000000000123" classname="varia" name="_a_freq_j_works"/>
+    <testcase time="0.10199999999999" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
+    <testcase time="0.0130000000000052" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
+    <testcase time="0.00300000000000011" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
+    <testcase time="0.216999999999999" classname="varia" name="a_summarize_ex_j_works"/>
+    <testcase time="0.0259999999999962" classname="varia" name="a_summarize_ex_j_works"/>
+    <testcase time="0.0439999999999969" classname="varia" name="a_summarize_ex_j_works"/>
+  </testsuite>
+  <testsuite name="visit_levels" timestamp="2025-08-11T15:20:54Z" hostname="114c1d7f0cb0" tests="8" skipped="0" failures="0" errors="0" time="0.051">
+    <testcase time="0.0170000000000101" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
+    <testcase time="0.00499999999999545" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
+    <testcase time="0.00399999999999068" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
+    <testcase time="0.00300000000000011" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
+    <testcase time="0.00900000000000034" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
+    <testcase time="0.00400000000000489" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
+    <testcase time="0.00400000000000489" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
+    <testcase time="0.00499999999999545" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
+  </testsuite>
+  <testsuite name="markup_unicodify" timestamp="2025-08-11T15:20:54Z" hostname="114c1d7f0cb0" tests="1" skipped="0" failures="0" errors="0" time="0.028">
+    <testcase time="0.0280000000000058" classname="markup_unicodify" name="dps_markup_works_with_and_"/>
+  </testsuite>
+</testsuites>
