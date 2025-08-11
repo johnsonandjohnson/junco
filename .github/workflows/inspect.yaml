@@ -63,15 +63,15 @@ jobs:
   #       checking top-level files .* NOTE
   #     # unit-test-report-brand: >-
       #   https://raw.githubusercontent.com/insightsengineering/hex-stickers/main/thumbs/tern.png
-  # coverage:
-  #   name: Coverage 📔
-  #   uses: insightsengineering/r.pkg.template/.github/workflows/test-coverage.yaml@main
-  #   secrets:
-  #     REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
-  #   with:
-  #     deps-installation-method: setup-r-dependencies
-  #     additional-env-vars: |
-  #       NOT_CRAN=true
+  coverage:
+     name: Coverage 📔
+     uses: insightsengineering/r.pkg.template/.github/workflows/test-coverage.yaml@main
+     secrets:
+       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
+     with:
+       deps-installation-method: setup-r-dependencies
+       additional-env-vars: |
+         NOT_CRAN=true
   linter:
     if: github.event_name != 'push'
     name: Linter 🦸‍♀️
