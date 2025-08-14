@@ -1,7 +1,7 @@
 # junco
 
 <!-- start badges -->
-[![Check 🛠](https://github.com/johnsonandjohnson/junco/actions/workflows/inspect.yaml/badge.svg)](https://johnsonandjohnson.github.io/junco/unit-test-report/)
+[![Check 🛠](https://github.com/johnsonandjohnson/junco/actions/workflows/inspect.yaml/badge.svg)](https://johnsonandjohnson.github.io/junco/unit-test-report-non-cran/)
 [![Docs 📚](https://github.com/johnsonandjohnson/junco/actions/workflows/pkgdown.yaml/badge.svg)](https://johnsonandjohnson.github.io/junco/)
 [![Code Coverage 📔](https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/gh-pages/_xml_coverage_reports/badge.svg)](https://johnsonandjohnson.github.io/junco/_xml_coverage_reports/coverage.html)
 
