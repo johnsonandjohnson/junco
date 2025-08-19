@@ -14,7 +14,7 @@
 #'  - spec : named vector with formatting specifications for numerical stats: range, median, mean_sd, sd
 #' @export
 #' @examples
-#' P1_precision <- jjcs_num_formats(d=0)$fmt
+#' P1_precision <- jjcs_num_formats(d = 0)$fmt
 #' jjcs_num_formats(2)$fmt
 #' jjcs_num_formats(2)$spec
 jjcs_num_formats <- function(d, cap = 4) {
