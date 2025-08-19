@@ -22,6 +22,8 @@ articles:
     contents:
     - junco
     - auto_colwidths
+    - formats
+    - varying_precision_design
 reference:
   - title: junco Analysis Functions
     desc: The following functions are the Analysis functions used used to create common table layouts.
