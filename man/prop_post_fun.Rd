@@ -3,7 +3,7 @@
 \name{prop_post_fun}
 \alias{prop_post_fun}
 \alias{prop_split_fun}
-\title{Split Function for Proportion Analysis Columns (TEFCGIS08 e.g.)}
+\title{Split Function for Proportion Analysis Columns}
 \usage{
 prop_post_fun(ret, spl, fulldf, .spl_context)
 
@@ -31,9 +31,6 @@ a split function for use in \link[rtables:split_rows_by]{rtables::split_rows_by}
 }
 \description{
 Here we just split into 3 columns \code{n}, \verb{\%} and \verb{Cum \%}.
-}
-\note{
-This split function is used in the proportion table TEFCGIS08 and similar ones.
 }
 \seealso{
 \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} describing the requirements for this kind of

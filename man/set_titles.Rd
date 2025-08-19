@@ -7,18 +7,15 @@
 set_titles(obj, titles)
 }
 \arguments{
-\item{obj}{The table tree to which the titles and footnotes will be appended.}
+\item{obj}{(\code{TableTree})\cr The TableTree to which the titles and footnotes will be appended.}
 
-\item{titles}{The list object containing the titles and footnotes to be appended.}
+\item{titles}{(\code{list})\cr The list object containing the titles and footnotes to be appended.}
 }
 \value{
-The table tree object specified in the obj argument, with titles
+The TableTree object specified in the obj argument, with titles
 and footnotes appended.
 }
 \description{
 Retrieves titles and footnotes from the list specified in the titles
-argument and appends them to the table tree specified in the obj argument.
-}
-\seealso{
-Used in all template scripts
+argument and appends them to the TableTree specified in the obj argument.
 }

@@ -123,3 +123,70 @@ testthat::test_that("make_combo_splitfun works", {
     expected
   )
 })
+
+testthat::test_that("combine_nonblank works", {
+  # function 'combine_nonblank' is similar to 'real_add_overall_facet'
+  # but the former one excludes the blank levels when computing the total numbers
+  set.seed(123)
+  n_blanks <- 10
+  adsl <- ex_adsl
+  rows_with_blanks <- sample.int(nrow(adsl), n_blanks)
+  adsl$COUNTRY <- as.character(adsl$COUNTRY)
+  adsl[rows_with_blanks, "COUNTRY"] <- " "
+  adsl$COUNTRY <- as.factor(adsl$COUNTRY)
+
+  split_fun <- make_split_fun(post = list(combine_nonblank("Overall", "Overall")))
+
+  lyt <- basic_table() %>%
+    split_rows_by("COUNTRY", split_fun = split_fun) %>%
+    summarize_row_groups() # for simplicity
+
+  tbl <- build_table(lyt, adsl)
+
+  expected <- c(levels(adsl$COUNTRY), "Overall")
+
+  testthat::expect_equal(
+    row.names(tbl),
+    expected
+  )
+
+  result <- cell_values(tbl["Overall", ])[[1]][1]
+  expected <- nrow(adsl) - n_blanks
+
+  testthat::expect_equal(
+    result,
+    expected
+  )
+})
+
+testthat::test_that("rm_blank_levels works", {
+  set.seed(123)
+  n_blanks <- 10
+  adsl <- ex_adsl
+  rows_with_blanks <- sample.int(nrow(adsl), n_blanks)
+  adsl$COUNTRY <- as.character(adsl$COUNTRY)
+  adsl[rows_with_blanks, "COUNTRY"] <- " "
+  adsl$COUNTRY <- as.factor(adsl$COUNTRY)
+
+  split_fun <- make_split_fun(
+    pre = list(rm_blank_levels)
+  )
+
+  lyt <- basic_table() %>%
+    split_rows_by("COUNTRY") %>%
+    summarize_row_groups()
+  tbl <- build_table(lyt, adsl)
+  row_names_before <- rtables::row.names(tbl)
+
+  lyt <- basic_table() %>%
+    split_rows_by("COUNTRY", split_fun = split_fun) %>%
+    summarize_row_groups()
+  tbl <- build_table(lyt, adsl)
+  row_names_after <- rtables::row.names(tbl)
+
+
+  testthat::expect_equal(
+    row_names_before,
+    c(" ", row_names_after)
+  )
+})

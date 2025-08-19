@@ -18,9 +18,9 @@ roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions
 \item \code{iec}: the underlying rounding method is \code{round}
 }}
 
-\item{na_str_dflt}{Character to represent NA value}
+\item{na_str_dflt}{(\code{character})\cr Character to represent NA value}
 
-\item{replace_na_dflt}{logical(1). Should an \code{na_string} of "NA" within
+\item{replace_na_dflt}{(\code{logical(1)})\cr Should an \code{na_string} of "NA" within
 the formatters framework be overridden by \code{na_str_default}? Defaults to
 \code{TRUE}, as a way to have a different default na string behavior from the
 base \code{formatters} framework.}
@@ -30,7 +30,7 @@ base \code{formatters} framework.}
 }
 \description{
 A function factory to generate formatting functions for value
-formatting that support the xx style format and control the rounding method
+formatting that support the xx style format and control the rounding method.
 }
 \examples{
 jjcsformat_xx_SAS <- format_xx_fct(roundmethod = "sas")
@@ -38,7 +38,6 @@ jjcsformat_xx <- jjcsformat_xx_SAS
 rcell(c(1.453), jjcsformat_xx("xx.xx"))
 rcell(c(), jjcsformat_xx("xx.xx"))
 rcell(c(1.453, 2.45638), jjcsformat_xx("xx.xx (xx.xxx)"))
-
 }
 \seealso{
 Other JJCS formats: 

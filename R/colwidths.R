@@ -1,17 +1,17 @@
 ## contribute to formatters
 #' @name inches_to_spaces
-#' @title Conversion of inches to spaces
-#' @param ins numeric. Vector of widths in inches
-#' @param fontspec font_spec. The font specification to use
-#' @param raw logical(1). Should the answer be returned unrounded
+#' @title Conversion of inches to spaces.
+#' @param ins (`numeric`)\cr Vector of widths in inches.
+#' @param fontspec (`font_spec`)\cr The font specification to use.
+#' @param raw (`logical(1)`)\cr Should the answer be returned unrounded
 #'  (`TRUE`), or rounded to the nearest reasonable value (`FALSE`,
-#'  the default)
-#' @param tol numeric(1). The numeric tolerance,  values
+#'  the default).
+#' @param tol (`numeric(1)`)\cr The numeric tolerance. Values
 #'  between an integer `n`, and `n+tol` will be returned
 #'  as `n`, rather than `n+1`, if `raw == FALSE`. Ignored
 #'  when `raw` is `TRUE`.
-#' @return the number of either fractional (`raw = TRUE`) or whole (`raw = FALSE`)
-#'   spaces that will fit within `ins` inches in the specified font
+#' @return The number of either fractional (`raw = TRUE`) or whole (`raw = FALSE`)
+#'   spaces that will fit within `ins` inches in the specified font.
 #' @export
 inches_to_spaces <- function(ins, fontspec, raw = FALSE, tol = sqrt(.Machine$double.eps)) {
   newdev <- open_font_dev(fontspec)
@@ -33,7 +33,7 @@ ttype_wrap_vec <- function(vec, fontspec, width, wordbreak_ok = TRUE, ...) {
   lapply(
     vec,
     wrap_string_ttype,
-    width_spc = width,
+    width = width,
     fontspec = fontspec,
     wordbreak_ok = wordbreak_ok,
     ...
@@ -42,13 +42,13 @@ ttype_wrap_vec <- function(vec, fontspec, width, wordbreak_ok = TRUE, ...) {
 
 #' @name check_wrap_nobreak
 #' @title Check Word Wrapping
-#' @description Check a set of column widths for word-breaking wrap behavior
-#' @param tt TableTree
-#' @param colwidths numeric. Column widths (in numbers of spaces under `fontspec`)
-#' @param fontspec font_spec.
+#' @description Check a set of column widths for word-breaking wrap behavior.
+#' @param tt (`TableTree`)\cr TableTree object
+#' @param colwidths (`numeric`)\cr Column widths (in numbers of spaces under `fontspec`)
+#' @param fontspec (`font_spec`)\cr Font specification object
 #'
 #' @return `TRUE` if the wrap is able to be done without breaking words,
-#' `FALSE` if wordbreaking is required to apply `colwidths`
+#' `FALSE` if wordbreaking is required to apply `colwidths`.
 #' @rdname check_wrap_nobreak
 #' @export
 check_wrap_nobreak <- function(tt, colwidths, fontspec) {
@@ -72,15 +72,15 @@ check_wrap_nobreak <- function(tt, colwidths, fontspec) {
   all(colok)
 }
 
-#' Colwidths for all columns to be forced on one page
+#' Colwidths for all columns to be forced on one page.
 #'
-#' @param tt TableTree object to calculate column widths for
-#' @param fontspec Font specification object
-#' @param col_gap Column gap in spaces
-#' @param rowlabel_width Width of row labels in spaces
-#' @param print_width_ins Print width in inches
-#' @param landscape Whether the output is in landscape orientation
-#' @param lastcol_gap Whether to include a gap after the last column
+#' @param tt (`TableTree`)\cr TableTree object to calculate column widths for
+#' @param fontspec (`font_spec`)\cr Font specification object
+#' @param col_gap (`numeric`)\cr Column gap in spaces
+#' @param rowlabel_width (`numeric`)\cr Width of row labels in spaces
+#' @param print_width_ins (`numeric`)\cr Print width in inches
+#' @param landscape (`logical`)\cr Whether the output is in landscape orientation
+#' @param lastcol_gap (`logical`)\cr Whether to include a gap after the last column
 #' @keywords internal
 smart_colwidths_1page <- function(
     tt,
@@ -290,7 +290,8 @@ make_poss_wdf <- function(
 #' height.
 #' @param verbose (`logical(1)`)\cr Should additional information messages be
 #' displayed during the calculation of the column widths? Defaults to `FALSE`.
-#' @returns A vector of column widths suitable to use in `tt_to_tlgrtf` and
+#' @return
+#' * `listing_column_widths`: a vector of column widths suitable to use in `tt_to_tlgrtf` and
 #' other exporters.
 #' @rdname def_colwidths
 #' @export
@@ -343,9 +344,9 @@ find_free_colspc <- function(curposs, fullposs, thresh = 0.99, skip = integer(),
   curposs
 }
 
-constrict_lbl_lns <- function(curdf, possdf, avail_spc, verbose = TRUE) {
+constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
   old_lbl_lns <- max(curdf$lbl_lines)
-  cols_to_pack <- which(curdf$lbl_lns == old_lbl_lns)
+  cols_to_pack <- which(curdf$lbl_lines == old_lbl_lns)
   olddf <- curdf
   success <- TRUE
   for (ii in cols_to_pack) {
@@ -481,22 +482,22 @@ j_mf_col_widths <- utils::getFromNamespace("mf_col_widths", "formatters")
 #' `def_colwidths` uses heuristics to determine suitable column widths given a
 #' table or listing, and a font.
 #'
-#' @param tt input Tabletree
+#' @param tt input TableTree
 #' @param fontspec Font specification
 #' @param label_width_ins Label Width in Inches.
 #' @param col_gap Column gap in spaces. Defaults to `.5` for listings and `3`
 #'   for tables.
-#' @param type Type of the table tree, used to determine column width calculation method.
+#' @param type Type of the TableTree, used to determine column width calculation method.
 #'
 #' @details Listings are assumed to be rendered landscape on standard A1 paper,
 #'   such that all columns are rendered on one page. Tables are allowed to
 #'   be horizontally paginated, and column widths are determined based only on
 #'   required word wrapping. See the `Automatic Column Widths` vignette for
 #'   a detailed discussion of the algorithms used.
-#' @return a vector of column widths (including the label row pseudo-column in the table
+#' @return
+#' * `def_colwidths`: a vector of column widths (including the label row pseudo-column in the table
 #'   case) suitable for use rendering `tt` in the specified font.
 #' @export
-#'
 def_colwidths <- function(tt,
                           fontspec,
                           label_width_ins = 2,

@@ -13,6 +13,6 @@ h_get_covariate_parts(covariates)
 Character vector of the covariates involved in \code{covariates} specification.
 }
 \description{
-Extraction of Covariate Parts from Character Vector
+Extraction of Covariate Parts from Character Vector.
 }
 \keyword{internal}

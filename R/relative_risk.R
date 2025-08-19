@@ -194,7 +194,7 @@ safe_mh_test <- function(...) {
 #' @inheritParams proposal_argument_convention
 #' @param strata (`factor`)\cr variable with one level per stratum and same length as `rsp`.
 #'
-#' @return a list with elements `rel_risk_ci` and `pval`.
+#' @return A list with elements `rel_risk_ci` and `pval`.
 #' @examples
 #'
 #' set.seed(2)

@@ -7,16 +7,17 @@
 remove_col_count(obj, span_label_var = "rrisk_header")
 }
 \arguments{
-\item{obj}{table tree object}
+\item{obj}{(\code{TableTree})\cr TableTree object.}
 
-\item{span_label_var}{the spanning header text variable value for which column headers will be removed from}
+\item{span_label_var}{(\code{character})\cr
+The spanning header text variable value for which column headers will be removed from.}
 }
 \value{
-table tree object with column counts in specified columns removed
+TableTree object with column counts in specified columns removed.
 }
 \description{
-Remove the N=xx column headers for specified span_label_var columns - default is 'rrisk_header
+Remove the N=xx column headers for specified span_label_var columns - default is 'rrisk_header'.
 }
 \details{
-This works for only the lowest level of column splitting (since colcounts is used)
+This works for only the lowest level of column splitting (since colcounts is used).
 }

@@ -7,16 +7,16 @@
 check_wrap_nobreak(tt, colwidths, fontspec)
 }
 \arguments{
-\item{tt}{TableTree}
+\item{tt}{(\code{TableTree})\cr TableTree object}
 
-\item{colwidths}{numeric. Column widths (in numbers of spaces under \code{fontspec})}
+\item{colwidths}{(\code{numeric})\cr Column widths (in numbers of spaces under \code{fontspec})}
 
-\item{fontspec}{font_spec.}
+\item{fontspec}{(\code{font_spec})\cr Font specification object}
 }
 \value{
 \code{TRUE} if the wrap is able to be done without breaking words,
-\code{FALSE} if wordbreaking is required to apply \code{colwidths}
+\code{FALSE} if wordbreaking is required to apply \code{colwidths}.
 }
 \description{
-Check a set of column widths for word-breaking wrap behavior
+Check a set of column widths for word-breaking wrap behavior.
 }

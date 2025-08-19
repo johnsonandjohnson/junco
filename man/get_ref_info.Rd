@@ -10,9 +10,9 @@ get_ref_info(ref_path, .spl_context, .var = NULL)
 \item{ref_path}{(\code{character})\cr reference group specification as an \code{rtables}
 \code{colpath}, see details.}
 
-\item{.spl_context}{see \link[rtables:spl_context]{rtables::spl_context}.}
+\item{.spl_context}{(\code{data.frame})\cr see \link[rtables:spl_context]{rtables::spl_context}.}
 
-\item{.var}{the variable being analyzed, see \link[rtables:additional_fun_params]{rtables::additional_fun_params}.}
+\item{.var}{(\code{character})\cr the variable being analyzed, see \link[rtables:additional_fun_params]{rtables::additional_fun_params}.}
 }
 \value{
 A list with \code{ref_group} and \code{in_ref_col}, which can be used as
@@ -26,7 +26,7 @@ the corresponding column split hierarchy levels.
 }
 \details{
 The reference group is specified in \code{colpath} hierarchical fashion in \code{ref_path}:
-The first column split variable is the first element, and the level to use is the
+the first column split variable is the first element, and the level to use is the
 second element. It continues until the last column split variable with last
 level to use.
 Note that depending on \code{.var}, either a \code{data.frame} (if \code{.var} is \code{NULL}) or

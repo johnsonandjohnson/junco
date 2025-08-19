@@ -12,7 +12,7 @@ get_titles_from_file(
 )
 }
 \arguments{
-\item{id}{character. The identifier for the table of interest.}
+\item{id}{(\code{character(1)})\cr The identifier for the table of interest.}
 
 \item{file}{(\code{character(1)})\cr A path to CSV or xlsx file containing title
 and footer information for one or more outputs. See Details. Ignored if
@@ -44,7 +44,4 @@ first.
      footer materials where `*` is a positive integer. `TEXT` contains
      the value of the title/footer to be applied.
 }\if{html}{\out{</div>}}
-}
-\seealso{
-Used in all template script
 }

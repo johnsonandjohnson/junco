@@ -2,7 +2,6 @@
 #' @param nm character. names of facets to keep. all other facets will be
 #' removed
 #' @returns a function suitable for use within the `post` portion make_split_fun
-
 rm_other_facets_fact <- function(nm) {
   function(ret, spl, .spl_context, fulldf) {
     keep <- which(names(ret$values) %in% nm)
@@ -17,17 +16,18 @@ rm_other_facets_fact <- function(nm) {
 #' @title Add Overall Facet
 #'
 #' @description
-#' A function to help add an overall facet to your tables
-#' @param name character(1). Name/virtual 'value' for the new facet
-#' @param label character(1). label for the new facet
-#' @note current add_overall_facet is bugged, can use that directly after it's fixed
+#' A function to help add an overall facet to your tables.
+#'
+#' @param name (`character`)\cr Name/virtual 'value' for the new facet.
+#' @param label (`character`)\cr Label for the new facet.
+#'
+#' @note Current add_overall_facet is bugged. Can be used directly after it's fixed
 #' https://github.com/insightsengineering/rtables/issues/768
 #' @examples
+#' splfun <- make_split_fun(post = list(real_add_overall_facet("Total", "Total")))
 #'
-#' splfun <- make_split_fun(post = list(real_add_overall_facet('Total', 'Total')))
 #' @export
-#' @returns function usable directly as a split function.
-#'
+#' @returns Function usable directly as a split function.
 real_add_overall_facet <- function(name, label) {
   function(ret, spl, .spl_context, fulldf) {
     add_to_split_result(
@@ -45,18 +45,17 @@ real_add_overall_facet <- function(name, label) {
 #' @title Split Function Helper
 #'
 #' @description
-#' A function which aids the construction for users to create their own split function for combined columns
-#' @param nm character(1). Name/virtual 'value' for the new facet
-#' @param label character(1). label for the new facet
-#' @param levels character or NULL. The levels to combine into the new facet,
+#' A function which aids the construction for users to create their own split function for combined columns.
+#' @param nm (`character`)\cr Name/virtual 'value' for the new facet.
+#' @param label (`character`)\cr Label for the new facet.
+#' @param levels (`character` or NULL)\cr The levels to combine into the new facet,
 #' or NULL, indicating the facet should include all incoming data.
-#' @param rm_other_facets logical(1). Should facets other than the newly
-#' created one be removed. Defaults to `TRUE`
+#' @param rm_other_facets (`logical`)\cr Should facets other than the newly
+#' created one be removed. Defaults to `TRUE`.
 #' @export
-#' @returns function usable directly as a split function.
+#' @returns Function usable directly as a split function.
 #' @examples
-#' aesevall_spf <- make_combo_splitfun(nm = 'AESEV_ALL', label  = 'Any AE', levels = NULL)
-#'
+#' aesevall_spf <- make_combo_splitfun(nm = "AESEV_ALL", label = "Any AE", levels = NULL)
 make_combo_splitfun <- function(nm, label = nm, levels = NULL, rm_other_facets = TRUE) {
   if (is.null(levels)) {
     fn <- real_add_overall_facet(name = nm, label = label)
@@ -94,7 +93,6 @@ rm_blank_levels <- function(df, spl, ...) {
   df[[var]] <- factor(df[[var]], levels = newlevs)
   df
 }
-
 
 find_torm <- function(spl_ret, torm, torm_regex, keep_matches) {
   if (!is.null(torm)) {
@@ -143,32 +141,33 @@ resolve_ancestor_pos <- function(anc_pos, numrows) {
 
 #' @name cond_rm_facets
 #' @title Conditional Removal of Facets
-#' @param facets character or NULL. Vector of facet names to be removed
+#'
+#' @param facets (`character` or NULL)\cr Vector of facet names to be removed
 #' if condition(s) are met
-#' @param facets_regex character(1). Regular expression to identify facet
+#' @param facets_regex (`character`)\cr Regular expression to identify facet
 #' names to be removed if condition(s) are met.
-#' @param ancestor_pos numeric(1). Row in spl_context to check the condition
+#' @param ancestor_pos (`numeric`)\cr Row in spl_context to check the condition
 #' within. E.g., 1 represents the first split, 2 represents the second split
 #' nested within the first, etc. NA specifies that the conditions
 #' should be checked at all split levels. Negative integers indicate position
 #' counting back from the current one, e.g., -1 indicates the direct parent
 #' (most recent split before this one). Negative and positive/NA positions
 #' cannot be mixed.
-#' @param split character(1) or NULL. If specified, name of the split
+#' @param split (`character` or NULL)\cr If specified, name of the split
 #' at position `ancestor_pos` must be identical to this value for
 #' the removal condition to be met.
-#' @param split_regex character(1) or NULL. If specified, a regular expression
+#' @param split_regex (`character` or NULL)\cr If specified, a regular expression
 #' the name of the split at position `ancestor_pos` must match for
 #' the removal condition to be met. Cannot be specified at the same time
 #' as `split`.
-#' @param value character(1) or NULL. If specified, split (facet) value
+#' @param value (`character` or NULL)\cr If specified, split (facet) value
 #' at position `ancestor_pos` must be identical to this value for
 #' removal condition to be met.
-#' @param value_regex character(1) or NULL. If specified, a regular expression
+#' @param value_regex (`character` or NULL)\cr If specified, a regular expression
 #' the value of the split at position `ancestor_pos` must match for
 #' the removal condition to be met. Cannot be specified at the same time
 #' as `value`.
-#' @param keep_matches logical(1). Given the specified condition is met,
+#' @param keep_matches (`logical`)\cr Given the specified condition is met,
 #' should the facets removed be those matching `facets`/`facets_regex`
 #' (`FALSE`, the default), or those *not* matching (`TRUE`).
 #'
@@ -185,7 +184,7 @@ resolve_ancestor_pos <- function(anc_pos, numrows) {
 #' @note A degenerate table is likely to be returned if all facets
 #' are removed.
 #'
-#' @returns a function suitable for use in `make_split_fun`'s
+#' @returns A function suitable for use in `make_split_fun`'s
 #' `post` argument which encodes the specified condition.
 #' @export
 #' @examples
@@ -305,14 +304,13 @@ cond_rm_facets <- function(
 #' @title Removal of Levels
 #'
 #' @description
-#' custom function for removing level inside pre step in make_split_fun.
+#' Custom function for removing level inside pre step in make_split_fun.
 #'
-#' @param excl Choose which level(s) to remove
-#' @return a function implementing pre-processing split behavior (for use in
+#' @param excl (`character`)\cr Choose which level(s) to remove
+#' @return A function implementing pre-processing split behavior (for use in
 #'   `make_split_fun(pre = )` which removes the levels in `excl` from the data
 #'   before facets are generated.
 #' @export
-#'
 rm_levels <- function(excl) {
   function(df, spl, ...) {
     var <- spl_variable(spl)
@@ -328,13 +326,13 @@ rm_levels <- function(excl) {
 
 #' Shortcut for Creating Custom Column Splits
 #'
-#' This is a short cut for a common use of [rtables::make_split_result()] where you need to create
+#' This is a shortcut for a common use of [rtables::make_split_result()] where you need to create
 #' custom column splits with different labels but using the same full dataset for each column.
 #' It automatically sets up the values, datasplit (using the same full dataset for each column),
 #' and subset_exprs (using TRUE for all subsets) parameters for make_split_result().
 #'
 #' @param ... sequence of named labels for the columns.
-#' @param fulldf (`data.frame`)\cr the `fulldf` which will be used for each column.
+#' @param fulldf (`data.frame`)\cr The `fulldf` which will be used for each column.
 #' @return The result from [rtables::make_split_result()].
 #'
 #' @keywords internal

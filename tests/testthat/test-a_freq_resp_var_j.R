@@ -1,6 +1,6 @@
 library(testthat)
 library(rtables)
-library(dplyr)
+suppressMessages(library(dplyr))
 
 # Create test datasets based on patterns in other test files
 test_that("a_freq_resp_var_j works as expected with basic usage", {
@@ -187,6 +187,38 @@ test_that("a_freq_resp_var_j works with drop_levels parameter", {
         resp_var = "RSP",
         drop_levels = TRUE,
         riskdiff = FALSE # Explicitly set to FALSE to avoid treatment reference issues
+      )
+    )
+
+  # Should not throw an error
+  expect_no_error(build_table(lyt, adrs))
+})
+
+test_that("a_freq_resp_var_j works with riskdiff parameter", {
+  # Create test data with factors
+  adsl <- ex_adsl
+  adrs <- data.frame(
+    USUBJID = rep(adsl$USUBJID[1:20], each = 2),
+    AVISIT = rep(c("WEEK 1", "WEEK 2"), times = 20),
+    ARM = rep(adsl$ARM[1:20], each = 2),
+    COUNTRY = rep(adsl$COUNTRY[1:20], each = 2),
+    SEX = factor(
+      rep(adsl$SEX[1:20], each = 2),
+      levels = c("F", "M", "U", "OTHER")
+    ),
+    RSP = sample(c("Y", "N"), size = 40, replace = TRUE, prob = c(0.3, 0.7))
+  )
+
+  # Create layout with drop_levels = TRUE
+  lyt <- basic_table(show_colcounts = TRUE) %>%
+    split_cols_by("ARM") %>%
+    analyze(
+      "SEX",
+      afun = a_freq_resp_var_j,
+      extra_args = list(
+        resp_var = "RSP",
+        drop_levels = TRUE,
+        ref_path = c("ARM", "B: Placebo")
       )
     )
 

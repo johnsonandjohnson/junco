@@ -4,22 +4,30 @@
 #' A function used for sorting AE tables (and others) as required.
 #' @details
 #' This sort function sorts as follows:
-#' Takes all the columns from a specified spanning column header (default= colspan_trt) and sorts by the last treatment
+#' * Takes all the columns from a specified spanning column header (default= colspan_trt)
+#' and sorts by the last treatment
 #' column within this.
-#' If no spanning column header variable exists (e.g you have only one active treatment arm and have decided to
-#' remove the spanning header from your layout) it will sort by the first treatment column in your table.
-#' This function is not really designed for tables that have sub-columns, however if users wish to override any
-#' default sorting behavior, they can simply specify their own colpath to use for sorting on (default=NULL)
-#' @param spanningheadercolvar name of spanning header variable that defines the active treatment columns.
+#' * If no spanning column header variable exists (e.g you have only one active treatment arm and have decided to
+#' remove the spanning header from your layout), it will sort by the first treatment column in your table.
+#'
+#' This function is not really designed for tables that have sub-columns. However, if users wish to override any
+#' default sorting behavior, they can simply specify their own colpath to use for sorting on (default = NULL)
+#'
+#' @param spanningheadercolvar (`character`)\cr
+#' Name of spanning header variable that defines the active treatment columns.
 #' If you do not have an active treatment spanning header column then user can define this as NA.
-#' @param usefirstcol This allows you to just use the first column of the table to sort on.
-#' @param colpath name of column path that is needed to sort by (default=NULL).
+#' @param usefirstcol (`logical`)\cr
+#' This allows you to just use the first column of the table to sort on.
+#' @param colpath (`character`)\cr
+#' Name of column path that is needed to sort by (default=NULL).
 #' This overrides other arguments if specified
-#' (except firstcat and lastcat which will be applied if requested on this colpath)
-#' @param firstcat If you wish to put any category at the top of the list despite any n's user can specify here.
-#' @param lastcat If you wish to put any category at the bottom of the list despite any n's user can specify here.
+#' (except firstcat and lastcat which will be applied if requested on this colpath).
+#' @param firstcat (`logical`)\cr
+#' If you wish to put any category at the top of the list despite any n's, user can specify it here.
+#' @param lastcat (`logical`)\cr
+#' If you wish to put any category at the bottom of the list despite any n's, user can specify it here.
 #' @export
-#' @returns a function which can be used as a score function (scorefun in `sort_at_path`).
+#' @returns A function which can be used as a score function (scorefun in `sort_at_path`).
 # @examples #result <- sort_at_path(result, c('root', 'AEBODSYS'), scorefun = jj_complex_scorefun())
 #' @examples
 #' ADAE <- data.frame(

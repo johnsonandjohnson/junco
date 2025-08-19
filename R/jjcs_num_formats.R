@@ -3,17 +3,18 @@
 #' @title Numeric Formatting Function
 #'
 #' @description
-#' Formatting setter for selected numerical statistics
+#' Formatting setter for selected numerical statistics.
 #'
-#' @param d precision of individual values
-#' @param cap cap to numerical precision (d > cap -- will use precision as if cap was specified as precision)
+#' @param d (`numeric`)\cr precision of individual values
+#' @param cap (`numeric`)\cr cap to numerical precision (d > cap --
+#' will use precision as if cap was specified as precision)
 #'
 #' @return list:
 #'  - fmt : named vector with formatting function (jjcsformat_xx) for numerical stats: range, median, mean_sd, sd
 #'  - spec : named vector with formatting specifications for numerical stats: range, median, mean_sd, sd
 #' @export
 #' @examples
-#' P1_precision <- jjcs_num_formats(d=0)$fmt
+#' P1_precision <- jjcs_num_formats(d = 0)$fmt
 #' jjcs_num_formats(2)$fmt
 #' jjcs_num_formats(2)$spec
 jjcs_num_formats <- function(d, cap = 4) {

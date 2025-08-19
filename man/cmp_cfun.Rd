@@ -2,7 +2,7 @@
 % Please edit documentation in R/cmp_functions.R
 \name{cmp_cfun}
 \alias{cmp_cfun}
-\title{Summary Analysis Function for Compliance Columns (TEFSCNCMP01 e.g.)}
+\title{Summary Analysis Function for Compliance Columns}
 \usage{
 cmp_cfun(df, labelstr, .spl_context, variables, formats)
 }
@@ -29,13 +29,6 @@ The \code{\link[rtables:in_rows]{rtables::in_rows()}} result with the counts and
 A simple statistics function which prepares the numbers with percentages
 in the required format, for use in a split content row. The denominator here is
 from the expected visits column.
-}
-\details{
-Although this function just returns \code{NULL} it has two uses, for
-the \code{tern} users it provides a documentation of arguments that are
-commonly and consistently used in the framework. For the developer it adds a
-single reference point to import the \code{roxygen} argument description with:
-\verb{@inheritParams proposal_argument_convention}
 }
 \seealso{
 \code{\link[=cmp_post_fun]{cmp_post_fun()}} for the corresponding split function.

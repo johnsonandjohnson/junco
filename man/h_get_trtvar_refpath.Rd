@@ -7,11 +7,11 @@
 h_get_trtvar_refpath(ref_path, .spl_context, df)
 }
 \arguments{
-\item{ref_path}{Reference path for treatment variable.}
+\item{ref_path}{(\code{character})\cr Reference path for treatment variable.}
 
-\item{.spl_context}{Current split context.}
+\item{.spl_context}{(\code{data.frame})\cr Current split context.}
 
-\item{df}{Data frame.}
+\item{df}{(\code{data.frame})\cr Data frame.}
 }
 \value{
 List containing treatment variable details.

@@ -15,29 +15,31 @@ bspt_pruner(
 )
 }
 \arguments{
-\item{fraction}{fraction threshold.  Function will keep all records strictly greater
+\item{fraction}{(\code{proportion})\cr Fraction threshold.
+Function will keep all records strictly greater
 than this threshold.}
 
-\item{keeprowtext}{Row to be excluded from pruning.}
+\item{keeprowtext}{(\code{character})\cr Row to be excluded from pruning.}
 
-\item{reg_expr}{Apply keeprowtext as a regular expression (grepl with fixed = TRUE)}
+\item{reg_expr}{(\code{logical})\cr Apply keeprowtext as a regular expression (grepl with fixed = TRUE)}
 
-\item{control}{Control Group}
+\item{control}{(\code{character})\cr Control Group}
 
-\item{diff_from_control}{Difference from control threshold.}
+\item{diff_from_control}{(\code{numeric})\cr Difference from control threshold.}
 
-\item{only_more_often}{TRUE: Only consider when column pct is more often
+\item{only_more_often}{(\code{logical})\cr TRUE: Only consider when column pct is more often
 than control. FALSE: Also select a row where column pct is less often than
 control and abs(diff) above threshold}
 
-\item{cols}{column path.}
+\item{cols}{(\code{character})\cr Column path.}
 }
 \value{
-function that can be utilized as pruning function in prune_table
+Function that can be utilized as pruning function in prune_table.
 }
 \description{
 This is a pruning constructor function which identifies records to be pruned
-based on the the fraction from the percentages. In addition to just looking at a fraction within an arm
+based on the the fraction from the percentages. In addition to just looking at a
+fraction within an arm,
 this function also allows further flexibility to also prune based on a comparison versus the control arm.
 }
 \examples{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/proportions.R
 \name{prop_table_afun}
 \alias{prop_table_afun}
-\title{Formatted Analysis Function for Proportion Analysis (TEFCGIS08 e.g.)}
+\title{Formatted Analysis Function for Proportion Analysis}
 \usage{
 prop_table_afun(x, .spl_context, formats, add_total_level = FALSE)
 }

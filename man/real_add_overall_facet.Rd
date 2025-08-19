@@ -7,21 +7,21 @@
 real_add_overall_facet(name, label)
 }
 \arguments{
-\item{name}{character(1). Name/virtual 'value' for the new facet}
+\item{name}{(\code{character})\cr Name/virtual 'value' for the new facet.}
 
-\item{label}{character(1). label for the new facet}
+\item{label}{(\code{character})\cr Label for the new facet.}
 }
 \value{
-function usable directly as a split function.
+Function usable directly as a split function.
 }
 \description{
-A function to help add an overall facet to your tables
+A function to help add an overall facet to your tables.
 }
 \note{
-current add_overall_facet is bugged, can use that directly after it's fixed
+Current add_overall_facet is bugged. Can be used directly after it's fixed
 https://github.com/insightsengineering/rtables/issues/768
 }
 \examples{
+splfun <- make_split_fun(post = list(real_add_overall_facet("Total", "Total")))
 
-splfun <- make_split_fun(post = list(real_add_overall_facet('Total', 'Total')))
 }

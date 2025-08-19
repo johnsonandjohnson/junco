@@ -219,13 +219,11 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #'
 #' @title Analysis function 3-column presentation
 #'
-#' @inherit proposal_argument_convention
-#'
 #' @description Analysis functions to produce a 1-row summary presented in
-#' a 3-column layout in the columns: column 1: N, column 2: Value, column 3: change\cr
+#' a 3-column layout in the columns (column 1 = N, column 2 = Value, column 3 = Change).\cr
 #' In the difference columns, only 1 column will be presented : difference + CI\cr
 #' When ancova = `TRUE`, the presented statistics will be based on ANCOVA method (`s_summarize_ancova_j`).\cr
-#' mean and ci (both for Value (column 2) and Chg (column 3)) using statistic `lsmean_ci`\cr
+#' mean and ci (both for Value (column 2) and CHG (column 3)) using statistic `lsmean_ci`\cr
 #' mean and ci for the difference column are based on same ANCOVA model using statistic `lsmean_diffci`\cr
 #' When ancova = `FALSE`, descriptive statistics will be used instead.\cr
 #' In the difference column, the 2-sample t-test will be used.
@@ -249,11 +247,11 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #'   then be an integer.
 #'
 #' @param ancova (`logical`)\cr If FALSE, only descriptive methods will be used. \cr
-#' If TRUE Ancova methods will be used for each of the columns : AVAL, CHG, DIFF. \cr
-#' @param comp_btw_group (`logical`)\cr If TRUE,
+#' If TRUE, ANCOVA methods will be used for each of the columns : AVAL, CHG, DIFF. \cr
+#' @param comp_btw_group (`logical`)\cr If TRUE, comparison between groups will be performed.
 #' \cr When ancova = FALSE, the estimate of between group difference (on CHG)
-#' will be based upon a two-sample t-test. \cr
-#' \cr When ancova = TRUE, the same ancova model will be used for the estimate of between group difference (on CHG).
+#' will be based upon a two-sample t-test.
+#' \cr When ancova = TRUE, the same ANCOVA model will be used for the estimate of between group difference (on CHG).
 #'
 #' @param interaction_y (`character`)\cr Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.
 #' @param interaction_item (`character`)\cr Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.
@@ -276,8 +274,8 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #' @param .stats  (named `list`)\cr column statistics to select for the table.
 #' The following column names are to be used: `col1`, `col23`, `coldiff`.\cr
 #' For `col1`, the following stats can be specified.\cr
-#' For `col23`, only `mean_ci_3d` is available. When ancova=`TRUE` these are LS Means, otherwise, arithmetic means.\cr
-#' For `coldiff`, only `meandiff_ci_3d` is available. When ancova=`TRUE` these
+#' For `col23`, only `mean_ci_3d` is available. When ancova = `TRUE` these are LS Means, otherwise, arithmetic means.\cr
+#' For `coldiff`, only `meandiff_ci_3d` is available. When ancova = `TRUE` these
 #' are LS difference in means, otherwise, difference in means based upon 2-sample t-test.\cr
 #' @param .formats (named `list`)\cr formats for the column statistics. `xx.d` style formats can be used.
 #' @param .formats_fun (named `list`)\cr formatting functions for the column

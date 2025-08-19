@@ -39,7 +39,7 @@ a_lsmeans(
 \item{alternative}{(\code{string})\cr whether \code{two.sided}, or one-sided \code{less} or \code{greater} p-value
 should be displayed.}
 
-\item{show_relative}{should the 'reduction' (\code{control - treatment}, default) or the 'increase'
+\item{show_relative}{(\code{string})\cr should the 'reduction' (\code{control - treatment}, default) or the 'increase'
 (\code{treatment - control}) be shown for the relative change from baseline?}
 
 \item{ref_path}{(\code{character})\cr global reference group specification, see \code{\link[=get_ref_info]{get_ref_info()}}.}
@@ -58,9 +58,11 @@ information on the \code{'auto'} setting.}
 unmodified default behavior. Can be negative.}
 }
 \value{
-for \code{s_lsmeans}, a list containing the same statistics returned by \link[tern.mmrm:tabulate_mmrm]{tern.mmrm::s_mmrm_lsmeans},
-with the additional \code{diff_mean_est_ci} three-dimensional statistic. For \code{a_lsmeans},
-a \code{VertalRowsSection} as returned by \link[rtables:in_rows]{rtables::in_rows}.
+\itemize{
+\item For \code{s_lsmeans}, a list containing the same statistics returned by tern.mmrm::s_mmrm_lsmeans,
+with the additional \code{diff_mean_est_ci} three-dimensional statistic.
+\item For \code{a_lsmeans}, a \code{VertalRowsSection} as returned by \link[rtables:in_rows]{rtables::in_rows}.
+}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}

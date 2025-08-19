@@ -4,7 +4,6 @@
 #' and (optional) relative risk columns
 #'
 #' @inheritParams proposal_argument_convention
-
 #' @param val (`character` or NULL)\cr
 #' When NULL, all levels of the incoming variable (variable used in the `analyze` call)
 #' will be considered.\cr
@@ -74,7 +73,6 @@
 #' }
 #'
 #' @export
-
 #' @importFrom stats setNames
 s_freq_j <- function(
     df,
@@ -376,7 +374,6 @@ s_rel_risk_val_j <- function(
 #' @inheritParams proposal_argument_convention
 #' @param .stats (`character`)\cr statistics to select for the table.
 #' See Value for list of available statistics.
-#'
 #' @param riskdiff (`logical`)\cr
 #' When `TRUE`, risk difference calculations will be performed and
 #' presented (if required risk difference column splits are included).\cr
@@ -390,42 +387,32 @@ s_rel_risk_val_j <- function(
 #' @param method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
 #' @param weights_method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
 #' @param label (`string`)\cr
-#' When `val`is a single `string`,
+#' When `val` has length 1,
 #' the row label to be shown on the output can be specified using this argument.\cr
 #' When `val` is a `character vector`, the `label_map` argument can be specified
 #' to control the row-labels.
-#'
 #' @param labelstr An argument to ensure this function can be used
 #' as a `cfun` in a `summarize_row_groups` call.\cr
 #' It is recommended not to utilize this argument for other purposes.\cr
 #' The label argument could be used instead (if `val` is a single string)\cr
 #' An another approach could be to utilize the `label_map` argument
 #' to control the row labels of the incoming analysis variable.
-#'
-#'
 #' @param label_fstr (`string`)\cr
 #' a sprintf style format string.
-#' It can contain up to one "\%s" which takes the current split value and
+#' It can contain up to one `"%s"`, which takes the current split value and
 #' generates the row/column label.\cr
 #' It will be combined with the `labelstr` argument,
 #' when utilizing this function as
 #' a `cfun` in a `summarize_row_groups` call.\cr
 #' It is recommended not to utilize this argument for other purposes.
 #' The label argument could be used instead (if `val` is a single string)\cr
-#'
 #' @param label_map (`tibble`)\cr
 #' A mapping tibble to translate levels from the incoming variable into
 #' a different row label to be presented on the table.\cr
-
-#'
 #' @param .alt_df_full (`dataframe`)\cr Denominator dataset
 #' for fraction and relative risk calculations.\cr
-#' .alt_df_full is a crucial parameter for the relative risk calculations
-#' if this parameter is not set to utilize `alt_counts_df`,
-#' then the values in the relative risk columns might not be correct.\cr
-#' Once the rtables PR is integrated, this argument gets populated by the rtables
+#' this argument gets populated by the rtables
 #' split machinery (see [rtables::additional_fun_params]).
-#'
 #' @param denom_by (`character`)\cr Variables from row-split
 #' to be used in the denominator derivation.\cr
 #' This controls both `denom = "n_parentdf"` and `denom = "n_altdf"`.\cr
@@ -447,7 +434,6 @@ s_rel_risk_val_j <- function(
 #' @param colgroup The name of the column group variable that is used as source
 #' for denominator calculation.\cr
 #' Required to be specified when `denom = "N_colgroup"`.
-#'
 #' @param addstr2levs string, if not NULL will be appended to the rowlabel for that level,
 #' eg to add ",n (percent)" at the end of the rowlabels
 #'
@@ -597,7 +583,6 @@ s_rel_risk_val_j <- function(
 #' For the others (count_unique_fraction, count_unique_denom_fraction),
 #' the statistic is replaced by the relative risk difference + confidence interval.
 #' @export
-#'
 a_freq_j <- function(
     df,
     labelstr = NULL,
@@ -706,7 +691,7 @@ a_freq_j <- function(
   alt_df <- res_dataprep$alt_df
   parentdf <- res_dataprep$parentdf
   new_denomdf <- res_dataprep$new_denomdf
-  .stats <- .stats
+  .stats <- res_dataprep$.stats
 
   ## prepare for column based split
   col_expr <- .spl_context$cur_col_expr[[1]]
@@ -888,7 +873,7 @@ a_freq_j <- function(
 
   ### add extra blankline to the end of inrows --- as long as section_div is not working as expected
   # nolint start
-   if (!is.null(inrows) && extrablankline ||
+  if (!is.null(inrows) && extrablankline ||
     (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
     inrows <- add_blank_line_rcells(inrows)
   } # nolint end
