@@ -67,11 +67,11 @@
 #'   mutate(ACAT1 = factor(ACAT1, levels = c("0-6 Months", "6-12 Months", "+12 Months")))
 #'
 #' combodf <- tribble(
-#'   ~valname,        ~label,        ~levelcombo,                                  ~exargs,
-#'   "Tot",           "Total",       c("0-6 Months", "6-12 Months", "+12 Months"), list(),
-#'   "A_0-6 Months",  "0-6 Months",  c("0-6 Months", "6-12 Months", "+12 Months"), list(),
+#'   ~valname, ~label, ~levelcombo, ~exargs,
+#'   "Tot", "Total", c("0-6 Months", "6-12 Months", "+12 Months"), list(),
+#'   "A_0-6 Months", "0-6 Months", c("0-6 Months", "6-12 Months", "+12 Months"), list(),
 #'   "B_6-12 Months", "6-12 Months", c("6-12 Months", "+12 Months"), list(),
-#'   "C_+12 Months",  "+12 Months",  c("+12 Months"), list()
+#'   "C_+12 Months", "+12 Months", c("+12 Months"), list()
 #' )
 #'
 #'
