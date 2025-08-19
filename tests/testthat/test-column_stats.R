@@ -70,6 +70,22 @@ test_that("column_stats calculates SD statistic correctly", {
   expect_equal(week1_sd, "7.071")
 })
 
+test_that("column_stats calculates mean_sd statistic correctly", {
+  # Create sample data
+  df <- data.frame(
+    AVISIT = c("Baseline (DB)", "Week 1", "Week 1", "Week 2", "Week 2"),
+    AVAL = c(10, 20, 30, 40, 50),
+    dp = c(1, 1, 1, 1, 1)
+  )
+  # Create context for AVAL mean_sd
+  ctx <- mk_context(c("AVAL", "mean_sd"))
+  fun <- column_stats()
+  rows <- fun(df, "AVISIT", ctx)
+
+  week1_mean_sd <- as.character(rows[["Week 1"]])
+  expect_equal(week1_mean_sd, "25.00 (7.071)")
+})
+
 test_that("column_stats calculates SE statistic correctly", {
   # Create sample data
   df <- data.frame(
@@ -180,6 +196,46 @@ test_that("column_stats handles iec roundmethod correctly", {
 
   expect_equal(result_R, "25.34")
 
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "N",
+    "Week 1",
+    "AVAL"
+  )
+
+  expect_equal(result_R, 2)
+
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "SE",
+    "Week 1",
+    "AVAL"
+  )
+
+  expect_equal(result_R, "5.000")
+
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "SD",
+    "Week 1",
+    "AVAL"
+  )
+
+  expect_equal(result_R, "7.071")
+
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "mean_sd",
+    "Week 1",
+    "AVAL"
+  )
+
+  expect_equal(result_R, "25.34 (7.071)")
+
   # Compare to SAS rounding
   result_SAS <- calc_one_visit(
     df$AVAL[df$AVISIT == "Week 1"],
@@ -191,6 +247,47 @@ test_that("column_stats handles iec roundmethod correctly", {
     exclude_visits = "Baseline (DB)"
   )
   expect_equal(result_SAS, "25.35")
+
+
+  df <- data.frame(
+    AVISIT = c(
+      "Baseline (DB)",
+      "Week 1",
+      "Week 1",
+      "Week 1",
+      "Week 2",
+      "Week 2"
+    ),
+    AVAL = c(10, 20, 30, 40, 50, 60),
+    dp = c(0, 0, 0, 0, 0, 0)
+  )
+
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "Med",
+    "Week 1",
+    "AVAL"
+  )
+  expect_equal(result_R, "30.00")
+
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "Min",
+    "Week 1",
+    "AVAL"
+  )
+  expect_equal(result_R, "20.0")
+
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "Max",
+    "Week 1",
+    "AVAL"
+  )
+  expect_equal(result_R, "40.0")
 })
 
 test_that("calc_N returns NULL for non-AVAL variables", {

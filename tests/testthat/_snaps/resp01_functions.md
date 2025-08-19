@@ -1,4 +1,4 @@
-# resp01_split_fun_fct works as expected
+# resp01_split_fun_fct 1 works as expected
 
     Code
       result
@@ -7,7 +7,7 @@
          Odds Ratio (95% CI)~[super a]   p-value~[super b]   n (%)   95% CI for %   n (%)   95% CI for %   n (%)   95% CI for %
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
----
+# resp01_split_fun_fct 2 works as expected
 
     Code
       col_info(result)
@@ -24,7 +24,7 @@
       C: Combination (ARM) -> prop_ci (ID)
       
 
-# resp01_counts_cfun works as expected
+# resp01_counts_cfun 1 works as expected
 
     Code
       result
@@ -34,21 +34,28 @@
            row_name formatted_cell indent_mod   row_label
       1 Color: Blue              2          0 Color: Blue
 
-# resp01_a_comp_stat_logical works as expected
+# resp01_a_comp_stat_logical or_cmh works as expected
 
     Code
       result
     Output
       rcell: 0.87 (0.61 - 1.24) 
 
----
+# resp01_a_comp_stat_logical or_logistic works as expected
 
     Code
       result
     Output
       rcell: 0.524 
 
-# resp01_a_comp_stat_factor works as expected
+# resp01_a_comp_stat_logical rr works as expected
+
+    Code
+      result
+    Output
+      rcell: 0.94 (0.80 - 1.11) 
+
+# resp01_a_comp_stat_factor or_cmh works as expected
 
     Code
       result
@@ -66,7 +73,7 @@
       8      GBR                             0       GBR
       9      CAN                             0       CAN
 
----
+# resp01_a_comp_stat_factor or_logistic works as expected
 
     Code
       result
@@ -102,7 +109,7 @@
       8      GBR       7 (2.0%)          0       GBR
       9      CAN       7 (2.0%)          0       CAN
 
----
+# resp01_acfun works 2 as expected
 
     Code
       result
@@ -120,7 +127,7 @@
       8      GBR                             0       GBR
       9      CAN                             0       CAN
 
----
+# resp01_acfun 3 works as expected
 
     Code
       result
