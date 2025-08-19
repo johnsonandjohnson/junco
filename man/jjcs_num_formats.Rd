@@ -23,7 +23,7 @@ list:
 Formatting setter for selected numerical statistics.
 }
 \examples{
-P1_precision <- jjcs_num_formats(d=0)$fmt
+P1_precision <- jjcs_num_formats(d = 0)$fmt
 jjcs_num_formats(2)$fmt
 jjcs_num_formats(2)$spec
 }
