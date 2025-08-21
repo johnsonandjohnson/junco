@@ -129,7 +129,7 @@ mpf_to_colspan <- function(
     csph <- lapply(seq_len(nspancols), function(ii) {
       spns <- mf_spans(mpf)[ii, ]
       vals <- strmat[ii, ]
-      jj <- 1 ## could start at 2 cause 1 is row label/topleft space but why complicate thigns
+      jj <- 1 ## could start at 2 cause 1 is row label/topleft space but why complicate things
       ind <- 1
       myrle <- rle(vals)
       while (jj < length(vals)) {
@@ -703,9 +703,8 @@ fixup_bord_mat <- function(brdmat, hstrs) {
 
 setGeneric(
   "make_header_bordmat",
-  function(
-      obj,
-      mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
+  function(obj,
+           mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
     standardGeneric("make_header_bordmat")
   }
 )

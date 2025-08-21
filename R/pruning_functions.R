@@ -121,7 +121,6 @@ safe_prune_table <- function(
 #' @returns  Function that can be utilized as pruning function in prune_table.
 #'
 count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols = c("TRT01A")) {
-
   colpaths <- NULL
 
   function(tt) {

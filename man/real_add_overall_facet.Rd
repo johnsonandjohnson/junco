@@ -22,6 +22,6 @@ Current add_overall_facet is bugged. Can be used directly after it's fixed
 https://github.com/insightsengineering/rtables/issues/768
 }
 \examples{
-splfun <- make_split_fun(post = list(real_add_overall_facet('Total', 'Total')))
+splfun <- make_split_fun(post = list(real_add_overall_facet("Total", "Total")))
 
 }

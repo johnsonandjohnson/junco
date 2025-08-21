@@ -42,11 +42,11 @@
 #'
 #' ADSL <- ADSL |>
 #'   mutate(
-#'      TRTDURY = case_when(
-#'        !is.na(EOSDY) ~ EOSDY,
-#'        TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
-#'      )
-#'    ) |>
+#'     TRTDURY = case_when(
+#'       !is.na(EOSDY) ~ EOSDY,
+#'       TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
+#'     )
+#'   ) |>
 #'   mutate(ACAT1 = case_when(
 #'     TRTDURY < 183 ~ "0-6 Months",
 #'     TRTDURY < 366 ~ "6-12 Months",
@@ -67,11 +67,11 @@
 #'   mutate(ACAT1 = factor(ACAT1, levels = c("0-6 Months", "6-12 Months", "+12 Months")))
 #'
 #' combodf <- tribble(
-#'   ~valname,        ~label,        ~levelcombo,                                  ~exargs,
-#'   "Tot",           "Total",       c("0-6 Months", "6-12 Months", "+12 Months"), list(),
-#'   "A_0-6 Months",  "0-6 Months",  c("0-6 Months", "6-12 Months", "+12 Months"), list(),
-#'   "B_6-12 Months", "6-12 Months", c(              "6-12 Months", "+12 Months"), list(),
-#'   "C_+12 Months",  "+12 Months",  c(                             "+12 Months"), list()
+#'   ~valname, ~label, ~levelcombo, ~exargs,
+#'   "Tot", "Total", c("0-6 Months", "6-12 Months", "+12 Months"), list(),
+#'   "A_0-6 Months", "0-6 Months", c("0-6 Months", "6-12 Months", "+12 Months"), list(),
+#'   "B_6-12 Months", "6-12 Months", c("6-12 Months", "+12 Months"), list(),
+#'   "C_+12 Months", "+12 Months", c("+12 Months"), list()
 #' )
 #'
 #'
@@ -79,17 +79,17 @@
 #'   split_cols_by("ARM") |>
 #'   split_cols_by("ACAT1",
 #'     split_fun = add_combo_levels(combosdf = combodf, trim = FALSE, keep_levels = combodf$valname)
-#'     ) |>
+#'   ) |>
 #'   analyze("TRTEMFL",
-#'           show_labels = "hidden",
-#'           afun = a_freq_combos_j,
-#'           extra_args = list(
-#'             val = "Y",
-#'             label = "Subjects with >= 1 AE",
-#'             combosdf = combodf,
-#'             filter_var = "ACAT1",
-#'             do_not_filter = "Tot"
-#'           )
+#'     show_labels = "hidden",
+#'     afun = a_freq_combos_j,
+#'     extra_args = list(
+#'       val = "Y",
+#'       label = "Subjects with >= 1 AE",
+#'       combosdf = combodf,
+#'       filter_var = "ACAT1",
+#'       do_not_filter = "Tot"
+#'     )
 #'   )
 #'
 #'

@@ -33,7 +33,7 @@ ttype_wrap_vec <- function(vec, fontspec, width, wordbreak_ok = TRUE, ...) {
   lapply(
     vec,
     wrap_string_ttype,
-    width_spc = width,
+    width = width,
     fontspec = fontspec,
     wordbreak_ok = wordbreak_ok,
     ...
@@ -344,9 +344,9 @@ find_free_colspc <- function(curposs, fullposs, thresh = 0.99, skip = integer(),
   curposs
 }
 
-constrict_lbl_lns <- function(curdf, possdf, avail_spc, verbose = TRUE) {
+constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
   old_lbl_lns <- max(curdf$lbl_lines)
-  cols_to_pack <- which(curdf$lbl_lns == old_lbl_lns)
+  cols_to_pack <- which(curdf$lbl_lines == old_lbl_lns)
   olddf <- curdf
   success <- TRUE
   for (ii in cols_to_pack) {
