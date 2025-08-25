@@ -303,11 +303,13 @@ tt_to_tlgrtf <- function(
     validate = TRUE,
     ...) {
   # Validate table structure if requested and not disabled by environment variable
-  if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree") && 
-      Sys.getenv("JUNCO_DISABLE_VALIDATION") != "TRUE") {
+  if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree") &&
+    Sys.getenv("JUNCO_DISABLE_VALIDATION") != "TRUE") {
     if (!rtables::validate_table_struct(tt)) {
-      warning("Invalid table structure detected. This may cause issues in the output. ",
-              "Use validate=FALSE to disable this warning or set JUNCO_DISABLE_VALIDATION=TRUE in your environment.")
+      warning(
+        "Invalid table structure detected. This may cause issues in the output. ",
+        "Use validate=FALSE to disable this warning or set JUNCO_DISABLE_VALIDATION=TRUE in your environment."
+      )
     }
   }
 
@@ -720,9 +722,8 @@ fixup_bord_mat <- function(brdmat, hstrs) {
 
 setGeneric(
   "make_header_bordmat",
-  function(
-      obj,
-      mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
+  function(obj,
+           mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
     standardGeneric("make_header_bordmat")
   }
 )
