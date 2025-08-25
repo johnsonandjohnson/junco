@@ -84,7 +84,8 @@ for what the matrix should contain. Users should only specify this when the
 default behavior does not meet their needs.}
 
 \item{validate}{logical(1). Whether to validate the table structure using
-\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}.}
+\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. This can also be disabled
+globally by setting the environment variable \code{JUNCO_DISABLE_VALIDATION=TRUE}.}
 
 \item{...}{Additional arguments passed to gentlg}
 }
