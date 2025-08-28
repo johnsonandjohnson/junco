@@ -45,11 +45,14 @@ this function also allows further flexibility to also prune based on a compariso
 \examples{
 if (require("pharmaverseadamjnj")) {
   library(dplyr)
+  set.seed(123)
 
   ADSL <- pharmaverseadamjnj::adsl |>
     select(USUBJID, TRT01P, FASFL, SAFFL) |>
     mutate(SAFFL = factor("N", c("Y", "N"))) |>
     mutate(PKFL = factor("N", c("Y", "N")))
+
+  ADSL <- ADSL[sample(nrow(ADSL), 10), ]
 
   lyt <- basic_table() |>
     split_cols_by("TRT01P") |>
