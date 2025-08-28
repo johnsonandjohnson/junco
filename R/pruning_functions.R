@@ -68,45 +68,45 @@ safe_prune_table <- function(
 #'
 #' @examples
 #' if (require("pharmaverseadamjnj")) {
-#' library(dplyr)
+#'   library(dplyr)
 #'
-#' ADSL <- pharmaverseadamjnj::adsl |>
-#'   select(USUBJID, TRT01P, FASFL, SAFFL) |>
-#'   mutate(SAFFL = "N") |>
-#'   mutate(PKFL = "N")
+#'   ADSL <- pharmaverseadamjnj::adsl |>
+#'     select(USUBJID, TRT01P, FASFL, SAFFL) |>
+#'     mutate(SAFFL = "N") |>
+#'     mutate(PKFL = "N")
 #'
-#' lyt <- basic_table() |>
-#'   split_cols_by("TRT01P") |>
-#'   add_overall_col("Total") |>
-#'   analyze("FASFL",
-#'     var_labels = "Analysis set:",
-#'     afun = a_freq_j,
-#'     extra_args = list(label = "Full", val = "Y"),
-#'     show_labels = "visible"
-#'   ) |>
-#'   analyze("SAFFL",
-#'     var_labels = "Analysis set:",
-#'     afun = a_freq_j,
-#'     extra_args = list(label = "Safety", val = "Y"),
-#'     show_labels = "visible"
-#'   ) |>
-#'   analyze("PKFL",
-#'     var_labels = "Analysis set:",
-#'     afun = a_freq_j,
-#'     extra_args = list(label = "PK", val = "Y"),
-#'     show_labels = "visible"
+#'   lyt <- basic_table() |>
+#'     split_cols_by("TRT01P") |>
+#'     add_overall_col("Total") |>
+#'     analyze("FASFL",
+#'       var_labels = "Analysis set:",
+#'       afun = a_freq_j,
+#'       extra_args = list(label = "Full", val = "Y"),
+#'       show_labels = "visible"
+#'     ) |>
+#'     analyze("SAFFL",
+#'       var_labels = "Analysis set:",
+#'       afun = a_freq_j,
+#'       extra_args = list(label = "Safety", val = "Y"),
+#'       show_labels = "visible"
+#'     ) |>
+#'     analyze("PKFL",
+#'       var_labels = "Analysis set:",
+#'       afun = a_freq_j,
+#'       extra_args = list(label = "PK", val = "Y"),
+#'       show_labels = "visible"
+#'     )
+#'
+#'   result <- build_table(lyt, ADSL)
+#'
+#'   result
+#'
+#'   result <- prune_table(
+#'     result,
+#'     prune_func = count_pruner(cat_exclude = c("Safety"), cols = "Total")
 #'   )
 #'
-#' result <- build_table(lyt, ADSL)
-#'
-#' result
-#'
-#' result <- prune_table(
-#'   result,
-#'   prune_func = count_pruner(cat_exclude = c("Safety"), cols = "Total")
-#' )
-#'
-#' result
+#'   result
 #' }
 #' @rdname count_pruner
 #' @returns  Function that can be utilized as pruning function in prune_table.
@@ -215,64 +215,64 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #'
 #' @examples
 #' if (require("pharmaverseadamjnj")) {
-#' library(dplyr)
+#'   library(dplyr)
 #'
-#' ADSL <- pharmaverseadamjnj::adsl |>
-#'   select(USUBJID, TRT01P, FASFL, SAFFL) |>
-#'   mutate(SAFFL = factor("N", c("Y", "N"))) |>
-#'   mutate(PKFL = factor("N", c("Y", "N")))
+#'   ADSL <- pharmaverseadamjnj::adsl |>
+#'     select(USUBJID, TRT01P, FASFL, SAFFL) |>
+#'     mutate(SAFFL = factor("N", c("Y", "N"))) |>
+#'     mutate(PKFL = factor("N", c("Y", "N")))
 #'
-#' lyt <- basic_table() |>
-#'   split_cols_by("TRT01P") |>
-#'   add_overall_col("Total") |>
-#'   split_rows_by(
-#'     "FASFL",
-#'     split_fun = drop_and_remove_levels("N"),
-#'     child_labels = "hidden"
-#'   ) |>
-#'   analyze("FASFL",
-#'     var_labels = "Analysis set:",
-#'     afun = a_freq_j,
-#'     show_labels = "visible",
-#'     extra_args = list(label = "Full", .stats = "count_unique_fraction")
-#'   ) |>
-#'   split_rows_by(
-#'     "SAFFL",
-#'     split_fun = remove_split_levels("N"),
-#'     child_labels = "hidden"
-#'   ) |>
-#'   analyze("SAFFL",
-#'     var_labels = "Analysis set:",
-#'     afun = a_freq_j,
-#'     show_labels = "visible",
-#'     extra_args = list(label = "Safety", .stats = "count_unique_fraction")
-#'   ) |>
-#'   split_rows_by(
-#'     "PKFL",
-#'     split_fun = remove_split_levels("N"),
-#'     child_labels = "hidden"
-#'   ) |>
-#'   analyze("PKFL",
-#'     var_labels = "Analysis set:",
-#'     afun = a_freq_j,
-#'     show_labels = "visible",
-#'     extra_args = list(label = "PK", .stats = "count_unique_fraction")
+#'   lyt <- basic_table() |>
+#'     split_cols_by("TRT01P") |>
+#'     add_overall_col("Total") |>
+#'     split_rows_by(
+#'       "FASFL",
+#'       split_fun = drop_and_remove_levels("N"),
+#'       child_labels = "hidden"
+#'     ) |>
+#'     analyze("FASFL",
+#'       var_labels = "Analysis set:",
+#'       afun = a_freq_j,
+#'       show_labels = "visible",
+#'       extra_args = list(label = "Full", .stats = "count_unique_fraction")
+#'     ) |>
+#'     split_rows_by(
+#'       "SAFFL",
+#'       split_fun = remove_split_levels("N"),
+#'       child_labels = "hidden"
+#'     ) |>
+#'     analyze("SAFFL",
+#'       var_labels = "Analysis set:",
+#'       afun = a_freq_j,
+#'       show_labels = "visible",
+#'       extra_args = list(label = "Safety", .stats = "count_unique_fraction")
+#'     ) |>
+#'     split_rows_by(
+#'       "PKFL",
+#'       split_fun = remove_split_levels("N"),
+#'       child_labels = "hidden"
+#'     ) |>
+#'     analyze("PKFL",
+#'       var_labels = "Analysis set:",
+#'       afun = a_freq_j,
+#'       show_labels = "visible",
+#'       extra_args = list(label = "PK", .stats = "count_unique_fraction")
+#'     )
+#'
+#'   result <- build_table(lyt, ADSL)
+#'
+#'   result
+#'
+#'   result <- prune_table(
+#'     result,
+#'     prune_func = bspt_pruner(
+#'       fraction = 0.05,
+#'       keeprowtext = "Safety",
+#'       cols = c("Total")
+#'     )
 #'   )
 #'
-#' result <- build_table(lyt, ADSL)
-#'
-#' result
-#'
-#' result <- prune_table(
-#'   result,
-#'   prune_func = bspt_pruner(
-#'     fraction = 0.05,
-#'     keeprowtext = "Safety",
-#'     cols = c("Total")
-#'   )
-#' )
-#'
-#' result
+#'   result
 #' }
 #' @rdname bspt_pruner
 #' @returns  Function that can be utilized as pruning function in prune_table.
@@ -458,29 +458,29 @@ lst_slicer <- function(lst, ind, type) {
 #'
 #' @examples
 #' if (require("pharmaverseadamjnj")) {
-#' library(dplyr)
+#'   library(dplyr)
 #'
-#' ADSL <- pharmaverseadamjnj::adsl |>
-#'   select(USUBJID, TRT01P, AGEGR1)
+#'   ADSL <- pharmaverseadamjnj::adsl |>
+#'     select(USUBJID, TRT01P, AGEGR1)
 #'
-#' lyt <- basic_table() |>
-#'   split_cols_by("TRT01P") |>
-#'   analyze(
-#'     "AGEGR1",
-#'     afun = a_freq_j,
-#'     extra_args = list(.stats = "count_unique_fraction")
+#'   lyt <- basic_table() |>
+#'     split_cols_by("TRT01P") |>
+#'     analyze(
+#'       "AGEGR1",
+#'       afun = a_freq_j,
+#'       extra_args = list(.stats = "count_unique_fraction")
+#'     )
+#'
+#'   result <- build_table(lyt, ADSL)
+#'
+#'   result
+#'
+#'   result <- prune_table(
+#'     result,
+#'     prune_func = remove_rows(removerowtext = ">=18 to <65")
 #'   )
 #'
-#' result <- build_table(lyt, ADSL)
-#'
-#' result
-#'
-#' result <- prune_table(
-#'   result,
-#'   prune_func = remove_rows(removerowtext = ">=18 to <65")
-#' )
-#'
-#' result
+#'   result
 #' }
 #' @aliases remove_rows
 #' @returns Function that can be utilized as pruning function in prune_table.
@@ -520,29 +520,29 @@ remove_rows <- function(removerowtext = NULL, reg_expr = FALSE) {
 #'
 #' @examples
 #' if (require("pharmaverseadamjnj")) {
-#' library(dplyr)
+#'   library(dplyr)
 #'
-#' ADSL <- pharmaverseadamjnj::adsl |>
-#'   select(USUBJID, TRT01P, AGE)
+#'   ADSL <- pharmaverseadamjnj::adsl |>
+#'     select(USUBJID, TRT01P, AGE)
 #'
-#' create_blank_line <- function(x) {
-#'   list(
-#'     "Mean" = rcell(mean(x), format = "xx.x"),
-#'     " " = rcell(NULL),
-#'     "Max" = rcell(max(x))
-#'   )
-#' }
+#'   create_blank_line <- function(x) {
+#'     list(
+#'       "Mean" = rcell(mean(x), format = "xx.x"),
+#'       " " = rcell(NULL),
+#'       "Max" = rcell(max(x))
+#'     )
+#'   }
 #'
-#' lyt <- basic_table() |>
-#'   split_cols_by("TRT01P") |>
-#'   analyze("AGE", afun = create_blank_line)
+#'   lyt <- basic_table() |>
+#'     split_cols_by("TRT01P") |>
+#'     analyze("AGE", afun = create_blank_line)
 #'
-#' result <- build_table(lyt, ADSL)
+#'   result <- build_table(lyt, ADSL)
 #'
-#' result
-#' result <- prune_table(result, prune_func = tern::keep_rows(keep_non_null_rows))
+#'   result
+#'   result <- prune_table(result, prune_func = tern::keep_rows(keep_non_null_rows))
 #'
-#' result
+#'   result
 #' }
 #' @rdname keep_non_null_rows
 #' @returns A function that can be utilized as a row_condition in the tern::keep_rows function.
