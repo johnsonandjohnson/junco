@@ -1,6 +1,6 @@
 Package: junco
 Title: Create Common Tables and Listings Used in Clinical Trials
-Version: 0.1.0
+Version: 0.1.2
 Date: 2025-06-20
 Authors@R: c(
     person("Gabriel", "Becker", , "gabembecker@gmail.com", role = c("cre", "aut"),
@@ -68,7 +68,7 @@ Suggests:
     mockery,
     parallel,
     readxl,
-    pharmaverseadam,
-    rlang
+    rlang,
+    pharmaverseadamjnj
 VignetteBuilder: knitr
 Config/testthat/edition: 3

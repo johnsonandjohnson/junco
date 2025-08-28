@@ -30,7 +30,6 @@ based on the count (assumed to be the first statistic displayed when a compound
 statistic (e.g., ## / ## (XX.X percent) is presented).
 }
 \examples{
-
 ADSL <- data.frame(
   USUBJID = c(
     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
@@ -79,5 +78,4 @@ result <- prune_table(
 )
 
 result
-
 }

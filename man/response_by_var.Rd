@@ -50,7 +50,6 @@ This is an analysis function for use within \code{analyze}. Arguments
 the tabulation process.
 }
 \examples{
-
 library(dplyr)
 
 ADAE <- data.frame(

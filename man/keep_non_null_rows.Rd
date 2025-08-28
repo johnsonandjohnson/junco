@@ -18,7 +18,6 @@ columns are NULL, as then the row should not be kept. To be utilized as a
 row_condition in function tern::keep_rows
 }
 \examples{
-
 library(dplyr)
 
 ADSL <- data.frame(

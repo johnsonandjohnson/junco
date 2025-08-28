@@ -288,7 +288,6 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #'
 #'
 #' @examples
-#'
 #' library(dplyr)
 #'
 #' ADEG <- data.frame(

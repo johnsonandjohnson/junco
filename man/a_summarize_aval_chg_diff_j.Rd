@@ -125,7 +125,6 @@ In the difference column, the 2-sample t-test will be used.
 See Description
 }
 \examples{
-
 library(dplyr)
 
 ADEG <- data.frame(

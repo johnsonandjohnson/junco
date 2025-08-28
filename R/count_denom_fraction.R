@@ -22,7 +22,6 @@
 #' @param .format      (`character`)\cr Format for the count/denominator/fraction output.
 #' @param ...          Additional arguments passed to the function.
 #' @examples
-#'
 #' library(dplyr)
 #'
 #' ADAE <- data.frame(

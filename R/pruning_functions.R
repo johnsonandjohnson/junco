@@ -65,9 +65,7 @@ safe_prune_table <- function(
 #' @param  cat_exclude (`character`)\cr Category to be excluded from pruning
 #' @export
 #'
-#'
 #' @examples
-#'
 #' ADSL <- data.frame(
 #'   USUBJID = c(
 #'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
@@ -116,7 +114,6 @@ safe_prune_table <- function(
 #' )
 #'
 #' result
-#'
 #' @rdname count_pruner
 #' @returns  Function that can be utilized as pruning function in prune_table.
 #'
@@ -548,7 +545,6 @@ remove_rows <- function(removerowtext = NULL, reg_expr = FALSE) {
 #' @export
 #'
 #' @examples
-#'
 #' library(dplyr)
 #'
 #' ADSL <- data.frame(
