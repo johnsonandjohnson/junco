@@ -43,67 +43,74 @@ fraction within an arm,
 this function also allows further flexibility to also prune based on a comparison versus the control arm.
 }
 \examples{
-if (require("pharmaverseadamjnj")) {
-  library(dplyr)
-  set.seed(123)
+ADSL <- data.frame(
+  USUBJID = c(
+    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
+  ),
+  TRT01P = c(
+    "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
+    "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
+  ),
+  FASFL = c("Y", "Y", "Y", "Y", "N", "Y", "Y", "Y", "Y", "Y"),
+  SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
+  PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
+)
 
-  ADSL <- pharmaverseadamjnj::adsl |>
-    select(USUBJID, TRT01P, FASFL, SAFFL) |>
-    mutate(SAFFL = factor("N", c("Y", "N"))) |>
-    mutate(PKFL = factor("N", c("Y", "N")))
+ADSL <- ADSL |>
+  dplyr::mutate(TRT01P = as.factor(TRT01P)) |>
+  dplyr::mutate(SAFFL = factor(SAFFL, c("Y", "N"))) |>
+  dplyr::mutate(PKFL = factor(PKFL, c("Y", "N")))
 
-  ADSL <- ADSL[sample(nrow(ADSL), 10), ]
-
-  lyt <- basic_table() |>
-    split_cols_by("TRT01P") |>
-    add_overall_col("Total") |>
-    split_rows_by(
-      "FASFL",
-      split_fun = drop_and_remove_levels("N"),
-      child_labels = "hidden"
-    ) |>
-    analyze("FASFL",
-      var_labels = "Analysis set:",
-      afun = a_freq_j,
-      show_labels = "visible",
-      extra_args = list(label = "Full", .stats = "count_unique_fraction")
-    ) |>
-    split_rows_by(
-      "SAFFL",
-      split_fun = remove_split_levels("N"),
-      child_labels = "hidden"
-    ) |>
-    analyze("SAFFL",
-      var_labels = "Analysis set:",
-      afun = a_freq_j,
-      show_labels = "visible",
-      extra_args = list(label = "Safety", .stats = "count_unique_fraction")
-    ) |>
-    split_rows_by(
-      "PKFL",
-      split_fun = remove_split_levels("N"),
-      child_labels = "hidden"
-    ) |>
-    analyze("PKFL",
-      var_labels = "Analysis set:",
-      afun = a_freq_j,
-      show_labels = "visible",
-      extra_args = list(label = "PK", .stats = "count_unique_fraction")
-    )
-
-  result <- build_table(lyt, ADSL)
-
-  result
-
-  result <- prune_table(
-    result,
-    prune_func = bspt_pruner(
-      fraction = 0.05,
-      keeprowtext = "Safety",
-      cols = c("Total")
-    )
+lyt <- basic_table() |>
+  split_cols_by("TRT01P") |>
+  add_overall_col("Total") |>
+  split_rows_by(
+    "FASFL",
+    split_fun = drop_and_remove_levels("N"),
+    child_labels = "hidden"
+  ) |>
+  analyze("FASFL",
+    var_labels = "Analysis set:",
+    afun = a_freq_j,
+    show_labels = "visible",
+    extra_args = list(label = "Full", .stats = "count_unique_fraction")
+  ) |>
+  split_rows_by(
+    "SAFFL",
+    split_fun = remove_split_levels("N"),
+    child_labels = "hidden"
+  ) |>
+  analyze("SAFFL",
+    var_labels = "Analysis set:",
+    afun = a_freq_j,
+    show_labels = "visible",
+    extra_args = list(label = "Safety", .stats = "count_unique_fraction")
+  ) |>
+  split_rows_by(
+    "PKFL",
+    split_fun = remove_split_levels("N"),
+    child_labels = "hidden"
+  ) |>
+  analyze("PKFL",
+    var_labels = "Analysis set:",
+    afun = a_freq_j,
+    show_labels = "visible",
+    extra_args = list(label = "PK", .stats = "count_unique_fraction")
   )
 
-  result
-}
+result <- build_table(lyt, ADSL)
+
+result
+
+result <- prune_table(
+  result,
+  prune_func = bspt_pruner(
+    fraction = 0.05,
+    keeprowtext = "Safety",
+    cols = c("Total")
+  )
+)
+
+result
 }

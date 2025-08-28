@@ -30,99 +30,113 @@
 #' @returns A function which can be used as a score function (scorefun in `sort_at_path`).
 # @examples #result <- sort_at_path(result, c('root', 'AEBODSYS'), scorefun = jj_complex_scorefun())
 #' @examples
-#' if (require("pharmaverseadamjnj")) {
-#'   library(dplyr)
+#' ADAE <- data.frame(
+#'   USUBJID = c(
+#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
+#'   ),
+#'   AEBODSYS = c(
+#'     "SOC 1", "SOC 2", "SOC 1", "SOC 2", "SOC 2",
+#'     "SOC 2", "SOC 2", "SOC 1", "SOC 2", "SOC 1"
+#'   ),
+#'   AEDECOD = c(
+#'     "Coded Term 2", "Coded Term 1", "Coded Term 3", "Coded Term 4",
+#'     "Coded Term 4", "Coded Term 4", "Coded Term 5", "Coded Term 3",
+#'     "Coded Term 1", "Coded Term 2"
+#'   ),
+#'   TRT01A = c(
+#'     "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
+#'     "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
+#'   ),
+#'   TRTEMFL = c("Y", "Y", "N", "Y", "Y", "Y", "Y", "N", "Y", "Y")
+#' )
 #'
-#'   ADAE <- pharmaverseadamjnj::adae |>
-#'     select(USUBJID, AEBODSYS, AEDECOD, TRT01A, TRTEMFL) |>
-#'     filter(AEBODSYS %in% c("Cardiac disorders", "Nervous system disorders")) |>
-#'     filter(AEDECOD %in% c(
-#'       "DIZZINESS", "SYNCOPE", "SINUS BRADYCARDIA", "PALPITATIONS"
-#'     )) |>
-#'     mutate(colspan_trt = factor(
-#'       if_else(TRT01A == "Placebo", " ", "Active Study Agent"),
-#'       levels = c("Active Study Agent", " ")
-#'     )) |>
-#'     mutate(rrisk_header = "Risk Difference (%) (95% CI)") |>
-#'     mutate(rrisk_label = paste(TRT01A, paste("vs", "Placebo")))
+#' ADAE <- ADAE |>
+#'   dplyr::mutate(TRT01A = as.factor(TRT01A))
 #'
-#'   colspan_trt_map <- create_colspan_map(ADAE,
-#'     non_active_grp = "Placebo",
-#'     non_active_grp_span_lbl = " ",
-#'     active_grp_span_lbl = "Active Study Agent",
-#'     colspan_var = "colspan_trt",
-#'     trt_var = "TRT01A"
-#'   )
+#' ADAE$colspan_trt <- factor(ifelse(ADAE$TRT01A == "Placebo", " ", "Active Study Agent"),
+#'   levels = c("Active Study Agent", " ")
+#' )
 #'
-#'   ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
+#' ADAE$rrisk_header <- "Risk Difference (%) (95% CI)"
+#' ADAE$rrisk_label <- paste(ADAE$TRT01A, paste("vs", "Placebo"))
 #'
-#'   lyt <- basic_table() |>
-#'     split_cols_by(
-#'       "colspan_trt",
-#'       split_fun = trim_levels_to_map(map = colspan_trt_map)
-#'     ) |>
-#'     split_cols_by("TRT01A") |>
-#'     split_cols_by("rrisk_header", nested = FALSE) |>
-#'     split_cols_by(
-#'       "TRT01A",
-#'       labels_var = "rrisk_label",
-#'       split_fun = remove_split_levels("Placebo")
-#'     ) |>
-#'     analyze(
-#'       "TRTEMFL",
-#'       a_freq_j,
-#'       show_labels = "hidden",
-#'       extra_args = list(
-#'         method = "wald",
-#'         label = "Subjects with >=1 AE",
-#'         ref_path = ref_path,
-#'         .stats = "count_unique_fraction"
-#'       )
-#'     ) |>
-#'     split_rows_by("AEBODSYS",
-#'       split_label = "System Organ Class",
-#'       split_fun = trim_levels_in_group("AEDECOD"),
-#'       label_pos = "topleft",
-#'       section_div = c(" "),
-#'       nested = FALSE
-#'     ) |>
-#'     summarize_row_groups(
-#'       "AEBODSYS",
-#'       cfun = a_freq_j,
-#'       extra_args = list(
-#'         method = "wald",
-#'         ref_path = ref_path,
-#'         .stats = "count_unique_fraction"
-#'       )
-#'     ) |>
-#'     analyze(
-#'       "AEDECOD",
-#'       afun = a_freq_j,
-#'       extra_args = list(
-#'         method = "wald",
-#'         ref_path = ref_path,
-#'         .stats = "count_unique_fraction"
-#'       )
+#' colspan_trt_map <- create_colspan_map(ADAE,
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = " ",
+#'   active_grp_span_lbl = "Active Study Agent",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#'
+#' ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
+#'
+#' lyt <- basic_table() |>
+#'   split_cols_by(
+#'     "colspan_trt",
+#'     split_fun = trim_levels_to_map(map = colspan_trt_map)
+#'   ) |>
+#'   split_cols_by("TRT01A") |>
+#'   split_cols_by("rrisk_header", nested = FALSE) |>
+#'   split_cols_by(
+#'     "TRT01A",
+#'     labels_var = "rrisk_label",
+#'     split_fun = remove_split_levels("Placebo")
+#'   ) |>
+#'   analyze(
+#'     "TRTEMFL",
+#'     a_freq_j,
+#'     show_labels = "hidden",
+#'     extra_args = list(
+#'       method = "wald",
+#'       label = "Subjects with >=1 AE",
+#'       ref_path = ref_path,
+#'       .stats = "count_unique_fraction"
 #'     )
-#'
-#'   result <- build_table(lyt, ADAE)
-#'
-#'   result
-#'
-#'   result <- sort_at_path(
-#'     result,
-#'     c("root", "AEBODSYS"),
-#'     scorefun = jj_complex_scorefun()
+#'   ) |>
+#'   split_rows_by("AEBODSYS",
+#'     split_label = "System Organ Class",
+#'     split_fun = trim_levels_in_group("AEDECOD"),
+#'     label_pos = "topleft",
+#'     section_div = c(" "),
+#'     nested = FALSE
+#'   ) |>
+#'   summarize_row_groups(
+#'     "AEBODSYS",
+#'     cfun = a_freq_j,
+#'     extra_args = list(
+#'       method = "wald",
+#'       ref_path = ref_path,
+#'       .stats = "count_unique_fraction"
+#'     )
+#'   ) |>
+#'   analyze(
+#'     "AEDECOD",
+#'     afun = a_freq_j,
+#'     extra_args = list(
+#'       method = "wald",
+#'       ref_path = ref_path,
+#'       .stats = "count_unique_fraction"
+#'     )
 #'   )
 #'
-#'   result <- sort_at_path(
-#'     result,
-#'     c("root", "AEBODSYS", "*", "AEDECOD"),
-#'     scorefun = jj_complex_scorefun()
-#'   )
+#' result <- build_table(lyt, ADAE)
 #'
-#'   result
-#' }
+#' result
+#'
+#' result <- sort_at_path(
+#'   result,
+#'   c("root", "AEBODSYS"),
+#'   scorefun = jj_complex_scorefun()
+#' )
+#'
+#' result <- sort_at_path(
+#'   result,
+#'   c("root", "AEBODSYS", "*", "AEDECOD"),
+#'   scorefun = jj_complex_scorefun()
+#' )
+#'
+#' result
 #' @rdname complex_scoring_function
 #' @aliases jj_complex_scorefun
 jj_complex_scorefun <- function(
