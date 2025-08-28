@@ -21,28 +21,28 @@ provided by the user.
 }
 \examples{
 if (require("pharmaverseadamjnj")) {
-library(dplyr)
+  library(dplyr)
 
-ADSL <- pharmaverseadamjnj::adsl |>
-  select(USUBJID, TRT01P, AGEGR1)
+  ADSL <- pharmaverseadamjnj::adsl |>
+    select(USUBJID, TRT01P, AGEGR1)
 
-lyt <- basic_table() |>
-  split_cols_by("TRT01P") |>
-  analyze(
-    "AGEGR1",
-    afun = a_freq_j,
-    extra_args = list(.stats = "count_unique_fraction")
+  lyt <- basic_table() |>
+    split_cols_by("TRT01P") |>
+    analyze(
+      "AGEGR1",
+      afun = a_freq_j,
+      extra_args = list(.stats = "count_unique_fraction")
+    )
+
+  result <- build_table(lyt, ADSL)
+
+  result
+
+  result <- prune_table(
+    result,
+    prune_func = remove_rows(removerowtext = ">=18 to <65")
   )
 
-result <- build_table(lyt, ADSL)
-
-result
-
-result <- prune_table(
-  result,
-  prune_func = remove_rows(removerowtext = ">=18 to <65")
-)
-
-result
+  result
 }
 }

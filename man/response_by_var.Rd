@@ -51,24 +51,24 @@ the tabulation process.
 }
 \examples{
 if (require("pharmaverseadamjnj")) {
-library(dplyr)
+  library(dplyr)
 
-ADAE <- pharmaverseadamjnj::adae |>
-  select(USUBJID, SEX, TRT01A, TRTEMFL)
+  ADAE <- pharmaverseadamjnj::adae |>
+    select(USUBJID, SEX, TRT01A, TRTEMFL)
 
-lyt <- basic_table() |>
-  split_cols_by("TRT01A") |>
-  analyze(
-    vars = "SEX",
-    var_labels = "Sex, n/Ns (\%)",
-    show_labels = "visible",
-    afun = response_by_var,
-    extra_args = list(resp_var = "TRTEMFL"),
-    nested = FALSE
-  )
+  lyt <- basic_table() |>
+    split_cols_by("TRT01A") |>
+    analyze(
+      vars = "SEX",
+      var_labels = "Sex, n/Ns (\%)",
+      show_labels = "visible",
+      afun = response_by_var,
+      extra_args = list(resp_var = "TRTEMFL"),
+      nested = FALSE
+    )
 
-result <- build_table(lyt, ADAE)
+  result <- build_table(lyt, ADAE)
 
-result
+  result
 }
 }

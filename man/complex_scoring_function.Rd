@@ -52,99 +52,96 @@ default sorting behavior, they can simply specify their own colpath to use for s
 }
 \examples{
 if (require("pharmaverseadamjnj")) {
-library(dplyr)
+  library(dplyr)
 
-ADAE <- pharmaverseadamjnj::adae |>
-  select(USUBJID, AEBODSYS, AEDECOD, TRT01A, TRTEMFL) |>
-  filter(AEBODSYS \%in\% c("Cardiac disorders", "Nervous system disorders")) |>
+  ADAE <- pharmaverseadamjnj::adae |>
+    select(USUBJID, AEBODSYS, AEDECOD, TRT01A, TRTEMFL) |>
+    filter(AEBODSYS \%in\% c("Cardiac disorders", "Nervous system disorders")) |>
+    filter(AEDECOD \%in\% c(
+      "DIZZINESS", "SYNCOPE", "SINUS BRADYCARDIA", "PALPITATIONS"
+    )) |>
+    mutate(colspan_trt = factor(
+      if_else(TRT01A == "Placebo", " ", "Active Study Agent"),
+      levels = c("Active Study Agent", " ")
+    )) |>
+    mutate(rrisk_header = "Risk Difference (\%) (95\% CI)") |>
+    mutate(rrisk_label = paste(TRT01A, paste("vs", "Placebo")))
 
-  filter(AEDECOD \%in\% c(
-    "DIZZINESS", "SYNCOPE", "SINUS BRADYCARDIA", "PALPITATIONS"
-  )) |>
-
-  mutate(colspan_trt = factor(
-    if_else(TRT01A == "Placebo", " ", "Active Study Agent"),
-    levels = c("Active Study Agent", " ")
-  )) |>
-
-  mutate(rrisk_header = "Risk Difference (\%) (95\% CI)") |>
-  mutate(rrisk_label = paste(TRT01A, paste("vs", "Placebo")))
-
-colspan_trt_map <- create_colspan_map(ADAE,
-  non_active_grp = "Placebo",
-  non_active_grp_span_lbl = " ",
-  active_grp_span_lbl = "Active Study Agent",
-  colspan_var = "colspan_trt",
-  trt_var = "TRT01A"
-)
-
-ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
-
-lyt <- basic_table() |>
-  split_cols_by(
-    "colspan_trt",
-    split_fun = trim_levels_to_map(map = colspan_trt_map)
-  ) |>
-  split_cols_by("TRT01A") |>
-  split_cols_by("rrisk_header", nested = FALSE) |>
-  split_cols_by(
-    "TRT01A",
-    labels_var = "rrisk_label",
-    split_fun = remove_split_levels("Placebo")
-  ) |>
-  analyze(
-    "TRTEMFL",
-    a_freq_j,
-    show_labels = "hidden",
-    extra_args = list(
-      method = "wald",
-      label = "Subjects with >=1 AE",
-      ref_path = ref_path,
-      .stats = "count_unique_fraction"
-    )
-  ) |>
-  split_rows_by("AEBODSYS",
-    split_label = "System Organ Class",
-    split_fun = trim_levels_in_group("AEDECOD"),
-    label_pos = "topleft",
-    section_div = c(" "),
-    nested = FALSE
-  ) |>
-  summarize_row_groups(
-    "AEBODSYS",
-    cfun = a_freq_j,
-    extra_args = list(
-      method = "wald",
-      ref_path = ref_path,
-      .stats = "count_unique_fraction"
-    )
-  ) |>
-  analyze(
-    "AEDECOD",
-    afun = a_freq_j,
-    extra_args = list(
-      method = "wald",
-      ref_path = ref_path,
-      .stats = "count_unique_fraction"
-    )
+  colspan_trt_map <- create_colspan_map(ADAE,
+    non_active_grp = "Placebo",
+    non_active_grp_span_lbl = " ",
+    active_grp_span_lbl = "Active Study Agent",
+    colspan_var = "colspan_trt",
+    trt_var = "TRT01A"
   )
 
-result <- build_table(lyt, ADAE)
+  ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
 
-result
+  lyt <- basic_table() |>
+    split_cols_by(
+      "colspan_trt",
+      split_fun = trim_levels_to_map(map = colspan_trt_map)
+    ) |>
+    split_cols_by("TRT01A") |>
+    split_cols_by("rrisk_header", nested = FALSE) |>
+    split_cols_by(
+      "TRT01A",
+      labels_var = "rrisk_label",
+      split_fun = remove_split_levels("Placebo")
+    ) |>
+    analyze(
+      "TRTEMFL",
+      a_freq_j,
+      show_labels = "hidden",
+      extra_args = list(
+        method = "wald",
+        label = "Subjects with >=1 AE",
+        ref_path = ref_path,
+        .stats = "count_unique_fraction"
+      )
+    ) |>
+    split_rows_by("AEBODSYS",
+      split_label = "System Organ Class",
+      split_fun = trim_levels_in_group("AEDECOD"),
+      label_pos = "topleft",
+      section_div = c(" "),
+      nested = FALSE
+    ) |>
+    summarize_row_groups(
+      "AEBODSYS",
+      cfun = a_freq_j,
+      extra_args = list(
+        method = "wald",
+        ref_path = ref_path,
+        .stats = "count_unique_fraction"
+      )
+    ) |>
+    analyze(
+      "AEDECOD",
+      afun = a_freq_j,
+      extra_args = list(
+        method = "wald",
+        ref_path = ref_path,
+        .stats = "count_unique_fraction"
+      )
+    )
 
-result <- sort_at_path(
-  result,
-  c("root", "AEBODSYS"),
-  scorefun = jj_complex_scorefun()
-)
+  result <- build_table(lyt, ADAE)
 
-result <- sort_at_path(
-  result,
-  c("root", "AEBODSYS", "*", "AEDECOD"),
-  scorefun = jj_complex_scorefun()
-)
+  result
 
-result
+  result <- sort_at_path(
+    result,
+    c("root", "AEBODSYS"),
+    scorefun = jj_complex_scorefun()
+  )
+
+  result <- sort_at_path(
+    result,
+    c("root", "AEBODSYS", "*", "AEDECOD"),
+    scorefun = jj_complex_scorefun()
+  )
+
+  result
 }
 }

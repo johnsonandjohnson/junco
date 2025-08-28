@@ -19,28 +19,28 @@ row_condition in function tern::keep_rows
 }
 \examples{
 if (require("pharmaverseadamjnj")) {
-library(dplyr)
+  library(dplyr)
 
-ADSL <- pharmaverseadamjnj::adsl |>
-  select(USUBJID, TRT01P, AGE)
+  ADSL <- pharmaverseadamjnj::adsl |>
+    select(USUBJID, TRT01P, AGE)
 
-create_blank_line <- function(x) {
-  list(
-    "Mean" = rcell(mean(x), format = "xx.x"),
-    " " = rcell(NULL),
-    "Max" = rcell(max(x))
-  )
-}
+  create_blank_line <- function(x) {
+    list(
+      "Mean" = rcell(mean(x), format = "xx.x"),
+      " " = rcell(NULL),
+      "Max" = rcell(max(x))
+    )
+  }
 
-lyt <- basic_table() |>
-  split_cols_by("TRT01P") |>
-  analyze("AGE", afun = create_blank_line)
+  lyt <- basic_table() |>
+    split_cols_by("TRT01P") |>
+    analyze("AGE", afun = create_blank_line)
 
-result <- build_table(lyt, ADSL)
+  result <- build_table(lyt, ADSL)
 
-result
-result <- prune_table(result, prune_func = tern::keep_rows(keep_non_null_rows))
+  result
+  result <- prune_table(result, prune_func = tern::keep_rows(keep_non_null_rows))
 
-result
+  result
 }
 }
