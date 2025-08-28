@@ -68,7 +68,6 @@ Suggests:
     mockery,
     parallel,
     readxl,
-    pharmaverseadam,
     rlang,
     pharmaverseadamjnj
 VignetteBuilder: knitr
