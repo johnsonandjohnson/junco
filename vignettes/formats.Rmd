@@ -36,7 +36,6 @@ knitr::opts_chunk$set(
 # TODO: rtables::as_html / rtables::as_result_df
 
 # update vignette after above TODO addressed
-
 ```
 
 ```{r packages, message=FALSE}
@@ -76,7 +75,7 @@ All of the `afuns` will be for the same simple `sfun` `sfun_simple` as defined b
 It is a reduced version of the `tern` `sfun` `s_summary()`, restricted to 8 out of the 29 statistics only.
 
 ```{r simple sfun}
-sfun_simple <- function(x){
+sfun_simple <- function(x) {
   my_stats <- c("n", "mean", "mean_se", "median", "range", "quantiles", "median_range", "mean_ci_3d")
   stats <- tern:::s_summary(x)
   stats <- stats[my_stats]
@@ -97,26 +96,27 @@ both `.stats` and `.formats` arguments. Inside the analysis function,
 no further manipulations are done on the `.formats` argument.
 
 ```{r simple afun}
-afun_simple <- function(df, 
-                        .var, 
-                        .stats = c("n", "mean", "mean_se", "median", "range"), 
-                        .formats = c("xx", "xx.x", "xx.x (xx.x)", "xx.x", "xx.x - xx.x")){
+afun_simple <- function(df,
+                        .var,
+                        .stats = c("n", "mean", "mean_se", "median", "range"),
+                        .formats = c("xx", "xx.x", "xx.x (xx.x)", "xx.x", "xx.x - xx.x")) {
   x <- df[[.var]]
   stats <- sfun_simple(x)[.stats]
-  
+
   # for completeness, no discussion on this topic
-  .labels_all <- c(n = "N",
+  .labels_all <- c(
+    n = "N",
     mean = "Mean",
     mean_se = "Mean (SE)",
     median = "Median",
     range = "Min - max",
     ## define a format for all stats from the used sfun_simple function
-    quantiles = "Q1 - Q3", 
-    median_range = "Median (min - max)", 
+    quantiles = "Q1 - Q3",
+    median_range = "Median (min - max)",
     mean_ci_3d = "Mean (95%CI)"
   )
-  .labels <- .labels_all[.stats]  
-  
+  .labels <- .labels_all[.stats]
+
   in_rows(.list = stats, .formats = .formats, .labels = .labels)
 }
 ```
@@ -129,20 +129,25 @@ aligned with the order of the `.stats`.
 Both of the below calls work fine with this basic approach. 
 Note an updated format for `mean_se` in the second call.
 ```{r apply afun_simple}
-basic_table() %>% 
-  split_cols_by("ARM") %>% 
-  analyze(vars = "AGE", afun_simple)  %>% 
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(vars = "AGE", afun_simple) %>%
   build_table(adsl)
 
-basic_table() %>% 
-  split_cols_by("ARM") %>% 
-  analyze(vars = "AGE", afun_simple, 
-          extra_args = list(
-            .stats = c("n", "mean", "mean_se", "quantiles"),
-            .formats = c(n = "xx", 
-                         mean = "xx.x",
-                         mean_se = "xx.x (xx.xx)",
-                         quantiles = "xx.x - xx.x"))) %>% 
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(
+    vars = "AGE", afun_simple,
+    extra_args = list(
+      .stats = c("n", "mean", "mean_se", "quantiles"),
+      .formats = c(
+        n = "xx",
+        mean = "xx.x",
+        mean_se = "xx.x (xx.xx)",
+        quantiles = "xx.x - xx.x"
+      )
+    )
+  ) %>%
   build_table(adsl)
 ```
 Below calls will result in errors due to order of .stats and .formats 
@@ -150,23 +155,22 @@ not aligned in the first call, or number of .stats and .formats not the same
 in the second call.
 
 ```{r apply afun_simple issue}
-# basic_table() %>% 
-#   split_cols_by("ARM") %>% 
-#   analyze(vars = "AGE", afun_simple, 
+# basic_table() %>%
+#   split_cols_by("ARM") %>%
+#   analyze(vars = "AGE", afun_simple,
 #           extra_args = list(
 #             .stats = c("n", "mean", "mean_se"),
-#             .formats = c(n = "xx", 
-#                          mean_se = "xx.x (xx.x)", 
-#                          mean = "xx.x")))  %>% 
+#             .formats = c(n = "xx",
+#                          mean_se = "xx.x (xx.x)",
+#                          mean = "xx.x")))  %>%
 #   build_table(adsl)
 
-# basic_table() %>% 
-#   split_cols_by("ARM") %>% 
-#   analyze(vars = "AGE", afun_simple, 
+# basic_table() %>%
+#   split_cols_by("ARM") %>%
+#   analyze(vars = "AGE", afun_simple,
 #           extra_args = list(
-#             .stats = c("n", "mean", "mean_se")))  %>% 
+#             .stats = c("n", "mean", "mean_se")))  %>%
 #   build_table(adsl)
-
 ```
 
 ### improvement 1 to basic approach
@@ -185,29 +189,30 @@ afun_simple2 <- function(df,
                            median = "xx.x",
                            range = "xx.x - xx.x",
                            ## define a format for all stats from the used sfun_simple function
-                           quantiles = "xx.x - xx.x", 
-                           median_range = "xx.x (xx.x - xx.x)", 
+                           quantiles = "xx.x - xx.x",
+                           median_range = "xx.x (xx.x - xx.x)",
                            mean_ci_3d = "xx.x (xx.x - xx.x)"
                          )) {
   x <- df[[.var]]
   stats <- sfun_simple(x)[.stats]
-  
+
   # this line will ensure .formats is restricted to requested .stats
   # and the order of the .formats specification is no longer important
   .formats <- .formats[.stats]
-  
-  .labels_all <- c(n = "N",
+
+  .labels_all <- c(
+    n = "N",
     mean = "Mean",
     mean_se = "Mean (SE)",
     median = "Median",
     range = "Min - max",
     ## define a format for all stats from the used sfun_simple function
-    quantiles = "Q1 - Q3", 
-    median_range = "Median (min - max)", 
+    quantiles = "Q1 - Q3",
+    median_range = "Median (min - max)",
     mean_ci_3d = "Mean (95%CI)"
   )
-  .labels <- .labels_all[.stats]  
-  
+  .labels <- .labels_all[.stats]
+
   in_rows(.list = stats, .formats = .formats, .labels = .labels)
 }
 ```
@@ -216,21 +221,28 @@ With this update, the same code now can be executed.
 ```{r apply afun_simple2 }
 basic_table() %>%
   split_cols_by("ARM") %>%
-  analyze(vars = "AGE", afun_simple2,
-          extra_args = list(
-            .stats = c("n", "mean", "mean_se"),
-            .formats = c(n = "xx",
-                         mean_se = "xx.x (xx.x)",
-                         mean = "xx.x")))  %>%
+  analyze(
+    vars = "AGE", afun_simple2,
+    extra_args = list(
+      .stats = c("n", "mean", "mean_se"),
+      .formats = c(
+        n = "xx",
+        mean_se = "xx.x (xx.x)",
+        mean = "xx.x"
+      )
+    )
+  ) %>%
   build_table(adsl)
 
 basic_table() %>%
   split_cols_by("ARM") %>%
-  analyze(vars = "AGE", afun_simple2,
-          extra_args = list(
-            .stats = c("n", "mean", "quantiles")))  %>%
+  analyze(
+    vars = "AGE", afun_simple2,
+    extra_args = list(
+      .stats = c("n", "mean", "quantiles")
+    )
+  ) %>%
   build_table(adsl)
-
 ```
 
 There are still problems with this approach of `.formats` specifications. 
@@ -257,12 +269,17 @@ Instead, the formats of all 3 requested statistics have to be included.
 ```{r simple_afun2 resolution issue}
 basic_table() %>%
   split_cols_by("ARM") %>%
-  analyze(vars = "AGE", afun_simple2,
-          extra_args = list(
-            .stats = c("n", "mean_se", "quantiles"),
-            .formats = c(mean_se = "xx.x (xx.xx)", 
-                         n = "xx",
-                         quantiles = "xx.x - xx.x")))  %>%
+  analyze(
+    vars = "AGE", afun_simple2,
+    extra_args = list(
+      .stats = c("n", "mean_se", "quantiles"),
+      .formats = c(
+        mean_se = "xx.x (xx.xx)",
+        n = "xx",
+        quantiles = "xx.x - xx.x"
+      )
+    )
+  ) %>%
   build_table(adsl)
 ```
 
@@ -282,45 +299,47 @@ afun_simple3 <- function(df,
                          .formats = NULL) {
   x <- df[[.var]]
   stats <- sfun_simple(x)[.stats]
-  
+
   # set default formats for all stats from the s-function
-  .formats_defaults_all <- c(n = "xx",
+  .formats_defaults_all <- c(
+    n = "xx",
     mean = "xx.x",
     mean_se = "xx.x (xx.x)",
     median = "xx.x",
     range = "xx.x - xx.x",
     ## define a format for all stats from the used sfun_simple function
-    quantiles = "xx.x - xx.x", 
-    median_range = "xx.x (xx.x - xx.x)", 
+    quantiles = "xx.x - xx.x",
+    median_range = "xx.x (xx.x - xx.x)",
     mean_ci_3d = "xx.x (xx.x - xx.x)"
   )
-  
+
   .formats_defaults <- .formats_defaults_all[.stats]
 
   # this line will ensure .formats is restricted to requested .stats
   # and the order of the .formats specification is no longer important
   .formats <- .formats[.stats]
-  
+
   # add the default formats for the stats that had no format defined in .formats
   .formats <- .formats[!is.na(.formats)]
   miss_formats_names <- setdiff(names(.formats_defaults), names(.formats))
   miss_formats <- .formats_defaults[miss_formats_names]
   .formats <- c(.formats, miss_formats)
   .formats <- .formats[.stats]
-  
-  
-  .labels_all <- c(n = "N",
+
+
+  .labels_all <- c(
+    n = "N",
     mean = "Mean",
     mean_se = "Mean (SE)",
     median = "Median",
     range = "Min - max",
     ## define a format for all stats from the used sfun_simple function
-    quantiles = "Q1 - Q3", 
-    median_range = "Median (min - max)", 
+    quantiles = "Q1 - Q3",
+    median_range = "Median (min - max)",
     mean_ci_3d = "Mean (95%CI)"
   )
   .labels <- .labels_all[.stats]
-  
+
   in_rows(.list = stats, .formats = .formats, .labels = .labels)
 }
 ```
@@ -328,12 +347,14 @@ afun_simple3 <- function(df,
 ```{r simple_afun3 }
 basic_table() %>%
   split_cols_by("ARM") %>%
-  analyze(vars = "AGE", afun_simple3,
-          extra_args = list(
-            .stats = c("n", "mean_se", "quantiles"),
-            .formats = c(mean_se = "xx.x (xx.xx)")))  %>%
+  analyze(
+    vars = "AGE", afun_simple3,
+    extra_args = list(
+      .stats = c("n", "mean_se", "quantiles"),
+      .formats = c(mean_se = "xx.x (xx.xx)")
+    )
+  ) %>%
   build_table(adsl)
-
 ```
 With this version of analysis function, the user has all flexibility regarding 
 formatting the statistics, without too much difficulty. All with default formatting.
@@ -341,11 +362,13 @@ formatting the statistics, without too much difficulty. All with default formatt
 ```{r simple_afun3 all default}
 basic_table() %>%
   split_cols_by("ARM") %>%
-  analyze(vars = "AGE", afun_simple3,
-          extra_args = list(
-            .stats = c("n", "mean_se", "quantiles")))  %>%
+  analyze(
+    vars = "AGE", afun_simple3,
+    extra_args = list(
+      .stats = c("n", "mean_se", "quantiles")
+    )
+  ) %>%
   build_table(adsl)
-
 ```
 Or all with user-defined formatting, 
 and anything in between (default for some, user-defined for others).
@@ -353,13 +376,17 @@ and anything in between (default for some, user-defined for others).
 ```{r simple_afun3 all overruled}
 basic_table() %>%
   split_cols_by("ARM") %>%
-  analyze(vars = "AGE", afun_simple3,
-          extra_args = list(
-            .stats = c("n", "mean_se", "quantiles"),
-            .formats = c(mean_se = "xx.x (xx.xx)",
-                         quantiles = "xx.xx - xx.xx")))  %>%
+  analyze(
+    vars = "AGE", afun_simple3,
+    extra_args = list(
+      .stats = c("n", "mean_se", "quantiles"),
+      .formats = c(
+        mean_se = "xx.x (xx.xx)",
+        quantiles = "xx.xx - xx.xx"
+      )
+    )
+  ) %>%
   build_table(adsl)
-
 ```
 
 
@@ -380,12 +407,14 @@ From here onwards examples will be based upon the `tern` function `a_summary()`.
 ```{r a_summary all defaults}
 basic_table() %>%
   split_cols_by("ARM") %>%
-  analyze(vars = "AGE",
-          a_summary,
-          extra_args = list(
-            .stats = c("n", "mean", "mean_se")
-          ))  %>%
-  build_table(adsl) 
+  analyze(
+    vars = "AGE",
+    a_summary,
+    extra_args = list(
+      .stats = c("n", "mean", "mean_se")
+    )
+  ) %>%
+  build_table(adsl)
 ```
 
 ### tern default formats for `a_summary`
@@ -442,12 +471,12 @@ In below call, as no `.formats` argument has been included, the default `tern` f
 basic_table() %>%
   split_cols_by("ARM") %>%
   analyze(
-    vars = "AGE", 
-    a_summary, 
+    vars = "AGE",
+    a_summary,
     extra_args = list(
       .stats = c("n", "mean", "mean_se", "mean_ci")
     )
-  )  %>%
+  ) %>%
   build_table(adsl)
 ```
 
@@ -463,8 +492,8 @@ basic_table() %>%
       .stats = c("n", "mean", "mean_se", "mean_ci"),
       .formats = mycompany_fmt_numeric_vars
     )
-  )  %>%
-  build_table(adsl) 
+  ) %>%
+  build_table(adsl)
 ```
 
 ### junco default formats
@@ -478,10 +507,11 @@ and hence it is less obvious how the format looks like.
 We will discuss the reason of the formatting function in [here](#junco_form_fun_reason)
 
 ```{r junco default formats}
-
 junco_fmt_numeric_vars <- junco_get_formats_from_stats(stats = get_stats(method_groups = "analyze_vars_numeric"))
 
-is_str_style <- sapply(junco_fmt_numeric_vars, function(x){!is.function(x)})
+is_str_style <- sapply(junco_fmt_numeric_vars, function(x) {
+  !is.function(x)
+})
 
 junco_str_style <- junco_fmt_numeric_vars[is_str_style]
 junco_fun_style <- junco_fmt_numeric_vars[!is_str_style]
@@ -490,26 +520,25 @@ names(junco_str_style)
 names(junco_fun_style)
 
 unlist(junco_str_style)
-
 ```
 
 With below approach, by applying the formatting functions to an example, 
 you can get an idea of the formatting specifications from the junco default formats.
 
 ```{r}
- set.seed(1)
- x <- runif(n = 20, min = 10, max = 99)
- stats <- s_summary(x)
- 
- stats_fun <- stats[names(junco_fun_style)]
- 
- stats_fmted <- sapply(names(stats_fun), function(x){
-  fmt <- junco_fun_style[[x]] 
+set.seed(1)
+x <- runif(n = 20, min = 10, max = 99)
+stats <- s_summary(x)
+
+stats_fun <- stats[names(junco_fun_style)]
+
+stats_fmted <- sapply(names(stats_fun), function(x) {
+  fmt <- junco_fun_style[[x]]
   res <- format_value(stats_fun[[x]], fmt)
   res <- gsub("[0-9]", "x", res)
-  })
- 
- stats_fmted
+})
+
+stats_fmted
 ```
 Here is an example where the junco default formats are used in a `tern` `afun`.
 
@@ -523,8 +552,8 @@ basic_table() %>%
       .stats = c("n", "mean", "mean_sd", "mean_ci"),
       .formats = junco_fmt_numeric_vars
     )
-  )  %>%
-  build_table(adsl) 
+  ) %>%
+  build_table(adsl)
 ```
 
 ### junco formats issue {#junco_issues}
@@ -563,9 +592,7 @@ There are 2 reasons why `junco` utilizes formatting function `jjcsformat_xx`.
 The default formats can be consulted via `list_valid_format_labels` and are : 
 
 ```{r valid formats}
-
 list_valid_format_labels()
-
 ```
 
 In prior versions of the supported formats, 
@@ -599,7 +626,6 @@ Once this has been completed, this vignette will be updated accordingly.
 ```{r TODO jjcsformat_xx update, include=FALSE}
 ## TODO : update jjcsformat_xx to utilize round_type from formatters
 ## TODO : update vignette accordingly
-
 ```
 
 ### junco formatting function `jjcsformat_xx`
@@ -622,7 +648,6 @@ z_jjcs <- jjcsformat_xx("xx.x (xx.xx)")
 
 sapply(test, z)
 sapply(test, z_jjcs)
-
 ```
 
 ## Controlling decimal precision
@@ -646,7 +671,7 @@ advs <- ex_advs %>%
     PARAMCD == "DIABP" ~ 0,
     PARAMCD == "PULSE" ~ 1,
     PARAMCD == "RESP" ~ 2
-  )) %>% 
+  )) %>%
   mutate(AVAL2 = round(AVAL, dp))
 ```
 
@@ -660,7 +685,7 @@ to use this feature we have to switch to the layout variant `analyze_vars`.
 ```{r}
 basic_table() %>%
   split_cols_by("ARM") %>%
-  split_rows_by("PARAMCD", split_fun = drop_split_levels) %>% 
+  split_rows_by("PARAMCD", split_fun = drop_split_levels) %>%
   analyze_vars(
     vars = c("AVAL2"),
     .stats = c("n", "mean", "mean_se", "mean_ci"),
@@ -669,7 +694,7 @@ basic_table() %>%
       "mean_se" = "auto",
       "mean_ci" = "auto"
     )
-  )  %>%
+  ) %>%
   build_table(advs)
 ```
 
@@ -711,7 +736,6 @@ format_value(med, "xx.x", round_type = "sas")
 format_rcell(med, format = "xx.x", round_type = "sas")
 
 format_rcell(med, format = "xx.x", round_type = "sas")
-
 ```
 
 ### round_type after table creation
@@ -724,27 +748,31 @@ the rounding approach should be specified or adjusted after the table creation.
 
 
 ```{r simple table}
-adsl <- ex_adsl %>% 
+adsl <- ex_adsl %>%
   filter(SEX %in% c("F", "M"))
 
-test <- adsl %>% 
-  mutate(num_var = case_when(ARMCD == "ARM A" & SEX == "F" ~ 3.75,
-                             ARMCD == "ARM B" & SEX == "F"~ 12.85,
-                             ARMCD == "ARM C" & SEX == "F"~ 1.45,
-                             
-                             ARMCD == "ARM A" & SEX == "M" ~ 2.75,
-                             ARMCD == "ARM B" & SEX == "M"~ 11.85,
-                             ARMCD == "ARM C" & SEX == "M"~ 2.45,
-                             )) %>% 
+test <- adsl %>%
+  mutate(num_var = case_when(
+    ARMCD == "ARM A" & SEX == "F" ~ 3.75,
+    ARMCD == "ARM B" & SEX == "F" ~ 12.85,
+    ARMCD == "ARM C" & SEX == "F" ~ 1.45,
+    ARMCD == "ARM A" & SEX == "M" ~ 2.75,
+    ARMCD == "ARM B" & SEX == "M" ~ 11.85,
+    ARMCD == "ARM C" & SEX == "M" ~ 2.45,
+  )) %>%
   select(USUBJID, ARMCD, SEX, num_var)
 
 
-tbl <- basic_table(show_colcounts = TRUE) %>% 
-  split_cols_by("ARMCD") %>% 
-  split_rows_by("SEX", split_fun = drop_split_levels) %>% 
-  analyze(vars = "num_var",  afun = tern::a_summary, 
-          extra_args = list(.stats = c("n", "mean"),  
-                            .formats = c(mean = "xx.x"))) %>% 
+tbl <- basic_table(show_colcounts = TRUE) %>%
+  split_cols_by("ARMCD") %>%
+  split_rows_by("SEX", split_fun = drop_split_levels) %>%
+  analyze(
+    vars = "num_var", afun = tern::a_summary,
+    extra_args = list(
+      .stats = c("n", "mean"),
+      .formats = c(mean = "xx.x")
+    )
+  ) %>%
   build_table(df = test, alt_counts_df = adsl)
 
 tbl
@@ -791,8 +819,8 @@ This would be an easy way to guarantee consistency in round_type between
 generated tbl, printing tbl in interactive session and exported versions (rtf, html, pdf, ...).
 
 ```{r round_type_to_do, include = FALSE}
-#TODO further discuss with Gabe, and initiate approach
-#TODO once completed ensure vignette is aligned
+# TODO further discuss with Gabe, and initiate approach
+# TODO once completed ensure vignette is aligned
 ```
 
 
