@@ -1,0 +1,817 @@
+---
+title: "Understanding formats in `tern` and `junco` analysis functions"
+date: "2025-09-01"
+author: "Ilse Augustyns"
+output:
+    rmarkdown::html_document:
+        theme: "spacelab"
+        highlight: "kate"
+        toc: true
+        toc_float: true
+vignette: >
+  %\VignetteIndexEntry{formats}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+editor_options:
+  markdown:
+      wrap: 72
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  comment = "#>"
+)
+
+
+# TODO : junco formats for num vars are not according to jj specs - add to backlog!!!
+# Question : would updates impact TLG/tests?
+
+# TODO update varying precision code when design has been chosen
+
+# TODO : update jjcsformat_xx to utilize round_type from formatters
+
+# TODO: discuss issue/proposal for round_type in build_table
+# TODO: rtables::as_html / rtables::as_result_df
+
+# update vignette after above TODO addressed
+
+```
+
+```{r packages, message=FALSE}
+library(tern)
+library(junco)
+library(dplyr)
+```
+
+
+## Introduction
+
+Both `tern` and `junco` R package provides functions to create common analyses 
+from clinical trials in R and these functions have default formatting arguments 
+for displaying the values in the output a specific way.
+
+Format specifications can be based upon the `formatters` build-in format strings, 
+using `xx-style` notation. See `formatters::list_valid_format_labels()` 
+for an overview of the build-in string formats. 
+
+Another approach for 
+format specificiation is via formatting functions. With formatting functions, 
+formats are capable of handling logical statements, allowing for more fine-tuning 
+of the output displayed. 
+
+Depending on what type of value is being displayed, and what that value is, 
+the format of the output will change. 
+See [tern vignette on formatting](https://insightsengineering.github.io/tern/latest-tag/articles/tern_formats.html) 
+for a more in depth article on formatting functions.  
+
+Current vignette goes back to the basics of formatting specifications in custom 
+analysis function, versus `tern`/`junco` analysis functions. 
+
+We will start with demonstratation of various basic approaches for writing an `afun` 
+with an argument `.stats` for the choice of statistics to be presented, 
+and an argument `.formats` for the formats to be used. 
+All of the `afuns` will be for the same simple `sfun` `sfun_simple` as defined below. 
+It is a reduced version of the `tern` `sfun` `s_summary()`, restricted to 8 out of the 29 statistics only.
+
+```{r simple sfun}
+sfun_simple <- function(x){
+  my_stats <- c("n", "mean", "mean_se", "median", "range", "quantiles", "median_range", "mean_ci_3d")
+  stats <- tern:::s_summary(x)
+  stats <- stats[my_stats]
+}
+```
+
+The data that we will use is the following `adsl` dataset, with 1 continuous variable.
+
+```{r datasetup}
+adsl <- ex_adsl %>% select("USUBJID", "ARM", "AGE")
+```
+
+## Format specifications in custom analysis function
+### basic approach
+
+In the most basic approach, the analysis function has defaults defined for 
+both `.stats` and `.formats` arguments. Inside the analysis function, 
+no further manipulations are done on the `.formats` argument.
+
+```{r simple afun}
+afun_simple <- function(df, 
+                        .var, 
+                        .stats = c("n", "mean", "mean_se", "median", "range"), 
+                        .formats = c("xx", "xx.x", "xx.x (xx.x)", "xx.x", "xx.x - xx.x")){
+  x <- df[[.var]]
+  stats <- sfun_simple(x)[.stats]
+  
+  # for completeness, no discussion on this topic
+  .labels_all <- c(n = "N",
+    mean = "Mean",
+    mean_se = "Mean (SE)",
+    median = "Median",
+    range = "Min - max",
+    ## define a format for all stats from the used sfun_simple function
+    quantiles = "Q1 - Q3", 
+    median_range = "Median (min - max)", 
+    mean_ci_3d = "Mean (95%CI)"
+  )
+  .labels <- .labels_all[.stats]  
+  
+  in_rows(.list = stats, .formats = .formats, .labels = .labels)
+}
+```
+
+With this simplistic approach, the user will have the ensure 
+the arguments for `.stats` and `.formats` are aligned regarding specified 
+statistics and formats, and the order of the `.formats` needs to be 
+aligned with the order of the `.stats`.
+
+Both of the below calls work fine with this basic approach. 
+Note an updated format for `mean_se` in the second call.
+```{r apply afun_simple}
+basic_table() %>% 
+  split_cols_by("ARM") %>% 
+  analyze(vars = "AGE", afun_simple)  %>% 
+  build_table(adsl)
+
+basic_table() %>% 
+  split_cols_by("ARM") %>% 
+  analyze(vars = "AGE", afun_simple, 
+          extra_args = list(
+            .stats = c("n", "mean", "mean_se", "quantiles"),
+            .formats = c(n = "xx", 
+                         mean = "xx.x",
+                         mean_se = "xx.x (xx.xx)",
+                         quantiles = "xx.x - xx.x"))) %>% 
+  build_table(adsl)
+```
+Below calls will result in errors due to order of .stats and .formats 
+not aligned in the first call, or number of .stats and .formats not the same
+in the second call.
+
+```{r apply afun_simple issue}
+# basic_table() %>% 
+#   split_cols_by("ARM") %>% 
+#   analyze(vars = "AGE", afun_simple, 
+#           extra_args = list(
+#             .stats = c("n", "mean", "mean_se"),
+#             .formats = c(n = "xx", 
+#                          mean_se = "xx.x (xx.x)", 
+#                          mean = "xx.x")))  %>% 
+#   build_table(adsl)
+
+# basic_table() %>% 
+#   split_cols_by("ARM") %>% 
+#   analyze(vars = "AGE", afun_simple, 
+#           extra_args = list(
+#             .stats = c("n", "mean", "mean_se")))  %>% 
+#   build_table(adsl)
+
+```
+
+### improvement 1 to basic approach
+
+Both issues can be avoided with one simple adjustment to the analysis function 
+definition. See the 1-line code `.formats <- .formats[.stats]`.
+
+```{r afun_simple2}
+afun_simple2 <- function(df,
+                         .var,
+                         .stats = c("n", "mean", "mean_se", "median", "range"),
+                         .formats = c(
+                           n = "xx",
+                           mean = "xx.x",
+                           mean_se = "xx.x (xx.x)",
+                           median = "xx.x",
+                           range = "xx.x - xx.x",
+                           ## define a format for all stats from the used sfun_simple function
+                           quantiles = "xx.x - xx.x", 
+                           median_range = "xx.x (xx.x - xx.x)", 
+                           mean_ci_3d = "xx.x (xx.x - xx.x)"
+                         )) {
+  x <- df[[.var]]
+  stats <- sfun_simple(x)[.stats]
+  
+  # this line will ensure .formats is restricted to requested .stats
+  # and the order of the .formats specification is no longer important
+  .formats <- .formats[.stats]
+  
+  .labels_all <- c(n = "N",
+    mean = "Mean",
+    mean_se = "Mean (SE)",
+    median = "Median",
+    range = "Min - max",
+    ## define a format for all stats from the used sfun_simple function
+    quantiles = "Q1 - Q3", 
+    median_range = "Median (min - max)", 
+    mean_ci_3d = "Mean (95%CI)"
+  )
+  .labels <- .labels_all[.stats]  
+  
+  in_rows(.list = stats, .formats = .formats, .labels = .labels)
+}
+```
+With this update, the same code now can be executed.
+
+```{r apply afun_simple2 }
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(vars = "AGE", afun_simple2,
+          extra_args = list(
+            .stats = c("n", "mean", "mean_se"),
+            .formats = c(n = "xx",
+                         mean_se = "xx.x (xx.x)",
+                         mean = "xx.x")))  %>%
+  build_table(adsl)
+
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(vars = "AGE", afun_simple2,
+          extra_args = list(
+            .stats = c("n", "mean", "quantiles")))  %>%
+  build_table(adsl)
+
+```
+
+There are still problems with this approach of `.formats` specifications. 
+
+If the user is fine with all but one of the default `.formats`, 
+the formats for all requested statistics would have to be provided. 
+
+Eg, we want to include 3 statistics : n, mean_se, quantiles, 
+and only for mean_se we'd like to use another format.
+
+The following code will not work.
+
+```{r simple_afun2 issue}
+# basic_table() %>%
+#   split_cols_by("ARM") %>%
+#   analyze(vars = "AGE", afun_simple2,
+#           extra_args = list(
+#             .stats = c("n", "mean_se", "quantiles"),
+#             .formats = c(mean_se = "xx.x (xx.xx)")))  %>%
+#   build_table(adsl)
+```
+Instead, the formats of all 3 requested statistics have to be included.
+
+```{r simple_afun2 resolution issue}
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(vars = "AGE", afun_simple2,
+          extra_args = list(
+            .stats = c("n", "mean_se", "quantiles"),
+            .formats = c(mean_se = "xx.x (xx.xx)", 
+                         n = "xx",
+                         quantiles = "xx.x - xx.x")))  %>%
+  build_table(adsl)
+```
+
+### improvement 2 to basic approach
+
+In order to avoid that users have to specify all `.formats` when just 1 statistic 
+is not according to the default formatting, the following simple adjustments 
+to the analysis function definition can be made.
+
+Note that the default format definitions are now in the body of the function, 
+rather than in the argument default value.
+
+```{r afun_simple3}
+afun_simple3 <- function(df,
+                         .var,
+                         .stats = c("n", "mean", "mean_se", "median", "range"),
+                         .formats = NULL) {
+  x <- df[[.var]]
+  stats <- sfun_simple(x)[.stats]
+  
+  # set default formats for all stats from the s-function
+  .formats_defaults_all <- c(n = "xx",
+    mean = "xx.x",
+    mean_se = "xx.x (xx.x)",
+    median = "xx.x",
+    range = "xx.x - xx.x",
+    ## define a format for all stats from the used sfun_simple function
+    quantiles = "xx.x - xx.x", 
+    median_range = "xx.x (xx.x - xx.x)", 
+    mean_ci_3d = "xx.x (xx.x - xx.x)"
+  )
+  
+  .formats_defaults <- .formats_defaults_all[.stats]
+
+  # this line will ensure .formats is restricted to requested .stats
+  # and the order of the .formats specification is no longer important
+  .formats <- .formats[.stats]
+  
+  # add the default formats for the stats that had no format defined in .formats
+  .formats <- .formats[!is.na(.formats)]
+  miss_formats_names <- setdiff(names(.formats_defaults), names(.formats))
+  miss_formats <- .formats_defaults[miss_formats_names]
+  .formats <- c(.formats, miss_formats)
+  .formats <- .formats[.stats]
+  
+  
+  .labels_all <- c(n = "N",
+    mean = "Mean",
+    mean_se = "Mean (SE)",
+    median = "Median",
+    range = "Min - max",
+    ## define a format for all stats from the used sfun_simple function
+    quantiles = "Q1 - Q3", 
+    median_range = "Median (min - max)", 
+    mean_ci_3d = "Mean (95%CI)"
+  )
+  .labels <- .labels_all[.stats]
+  
+  in_rows(.list = stats, .formats = .formats, .labels = .labels)
+}
+```
+
+```{r simple_afun3 }
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(vars = "AGE", afun_simple3,
+          extra_args = list(
+            .stats = c("n", "mean_se", "quantiles"),
+            .formats = c(mean_se = "xx.x (xx.xx)")))  %>%
+  build_table(adsl)
+
+```
+With this version of analysis function, the user has all flexibility regarding 
+formatting the statistics, without too much difficulty. All with default formatting.
+
+```{r simple_afun3 all default}
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(vars = "AGE", afun_simple3,
+          extra_args = list(
+            .stats = c("n", "mean_se", "quantiles")))  %>%
+  build_table(adsl)
+
+```
+Or all with user-defined formatting, 
+and anything in between (default for some, user-defined for others).
+
+```{r simple_afun3 all overruled}
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(vars = "AGE", afun_simple3,
+          extra_args = list(
+            .stats = c("n", "mean_se", "quantiles"),
+            .formats = c(mean_se = "xx.x (xx.xx)",
+                         quantiles = "xx.xx - xx.xx")))  %>%
+  build_table(adsl)
+
+```
+
+
+## formatting in `tern` and `junco` analysis functions
+
+The formatting approach in tern function follows the logic of 
+the last version of analysis function, `simple_afun3`, although implemented 
+slightly differently. This difference in coding approach is beyond 
+the scope of the current vignette.  
+
+This implies that when using `tern` defined `afuns`, 
+users have the flexibility to take the formats from an overall default (`tern` default), 
+modify formats for some statistics only, or re-define formats for all statistics.
+
+The latter method is also useful for defining company specific formats, eg at a central location.
+From here onwards examples will be based upon the `tern` function `a_summary()`.
+
+```{r a_summary all defaults}
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(vars = "AGE",
+          a_summary,
+          extra_args = list(
+            .stats = c("n", "mean", "mean_se")
+          ))  %>%
+  build_table(adsl) 
+```
+
+### tern default formats for `a_summary`
+
+The default formats for the numerical summary can be retrieved as per below. 
+For sake of simplicity, we restrict to the same subset of 9 statistics as above: 
+
+"n", "mean", "mean_se", "median", "range", "quantiles", "median_range", 
+"mean_ci", "mean_ci_3d".
+
+```{r tern default formats}
+stats <- c("n", "mean", "mean_se", "median", "range", "quantiles", "median_range", "mean_ci", "mean_ci_3d")
+tern_fmt_numeric_vars <- unlist(get_formats_from_stats(stats = get_stats(method_groups = "analyze_vars_numeric")))[stats]
+
+tern_fmt_numeric_vars
+```
+
+In our company, we have different formatting rules for some of these statistics, 
+eg `mean`, `median`, `quantiles` are to be presented with 1 digit more than the 
+incoming data, and `sd` and `se` with an extra digit more. 
+`range` is to be presented with the same number of digits as the incoming data. 
+Let's assume the incoming are integers. 
+
+Our rule would be: `mean`, `median`, `quantiles` with 1 decimal (`xx.x`) 
+which matches the tern defaults. 
+
+However, we would need updates for formats of `range` as these are to be 
+presented as `integer` (`xx.`), and for `se` and `sd` with 2 decimals (`xx.xx`). 
+
+Also formats for combined statistics 
+(like `mean_sd`, `mean_se`, `median_range`, `mean_ci`) would have to be adjusted accordingly.
+
+A possible approach for this is to define a company specific formats object, 
+eg `mycompany_fmt_numeric_vars` as follows.
+
+```{r company specific default formats}
+mycompany_fmt_numeric_vars <- tern_fmt_numeric_vars
+
+# make required updates
+mycompany_fmt_numeric_vars[c("sd", "se")] <- "xx.xx"
+mycompany_fmt_numeric_vars[c("mean_sd", "mean_se")] <- "xx.x (xx.xx)"
+mycompany_fmt_numeric_vars[c("range")] <- "xx. - xx."
+
+mycompany_fmt_numeric_vars["mean_ci"] <- "(xx.x, xx.x)"
+mycompany_fmt_numeric_vars["mean_ci_3d"] <- "xx.x (xx.x - xx.x)"
+mycompany_fmt_numeric_vars["median_range"] <- "xx.x (xx. - xx.)"
+
+mycompany_fmt_numeric_vars
+```
+
+In below call, as no `.formats` argument has been included, the default `tern` formats are used.
+
+```{r a_summary with tern default formats}
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(
+    vars = "AGE", 
+    a_summary, 
+    extra_args = list(
+      .stats = c("n", "mean", "mean_se", "mean_ci")
+    )
+  )  %>%
+  build_table(adsl)
+```
+
+In below call, the `.formats` argument has been included to use `mycompany` specific formats.
+
+```{r a_summary with company specific formats}
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(
+    vars = "AGE",
+    a_summary,
+    extra_args = list(
+      .stats = c("n", "mean", "mean_se", "mean_ci"),
+      .formats = mycompany_fmt_numeric_vars
+    )
+  )  %>%
+  build_table(adsl) 
+```
+
+### junco default formats
+
+In a similar manner, we can take a look into the `junco` specific formats 
+for numeric analysis statistics.
+
+Note that several of these statistics have the form of a formatting function, 
+and hence it is less obvious how the format looks like.
+
+We will discuss the reason of the formatting function in [here](#junco_form_fun_reason)
+
+```{r junco default formats}
+
+junco_fmt_numeric_vars <- junco_get_formats_from_stats(stats = get_stats(method_groups = "analyze_vars_numeric"))
+
+is_str_style <- sapply(junco_fmt_numeric_vars, function(x){!is.function(x)})
+
+junco_str_style <- junco_fmt_numeric_vars[is_str_style]
+junco_fun_style <- junco_fmt_numeric_vars[!is_str_style]
+
+names(junco_str_style)
+names(junco_fun_style)
+
+unlist(junco_str_style)
+
+```
+
+With below approach, by applying the formatting functions to an example, 
+you can get an idea of the formatting specifications from the junco default formats.
+
+```{r}
+ set.seed(1)
+ x <- runif(n = 20, min = 10, max = 99)
+ stats <- s_summary(x)
+ 
+ stats_fun <- stats[names(junco_fun_style)]
+ 
+ stats_fmted <- sapply(names(stats_fun), function(x){
+  fmt <- junco_fun_style[[x]] 
+  res <- format_value(stats_fun[[x]], fmt)
+  res <- gsub("[0-9]", "x", res)
+  })
+ 
+ stats_fmted
+```
+Here is an example where the junco default formats are used in a `tern` `afun`.
+
+```{r a_summary with junco default formats}
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  analyze(
+    vars = "AGE",
+    a_summary,
+    extra_args = list(
+      .stats = c("n", "mean", "mean_sd", "mean_ci"),
+      .formats = junco_fmt_numeric_vars
+    )
+  )  %>%
+  build_table(adsl) 
+```
+
+### junco formats issue {#junco_issues}
+
+Note that the junco formats are not yet in line with the JJ specifications for 
+core numerical statistics.
+
+The following should be updated (assumption, incoming data has decimal precision of 1)
+
+- mean and median: "xx.xx"
+- sd and se, geom_sd, geom_se: "xx.xxx"
+- mean_sd and mean_se: "xx.xx (xx.xxx)"
+- range: "xx.x, xx.x"
+- median_range: "xx.xx (xx.x - xx.x)"
+
+- cv, mad, iqr: ?
+
+Also, we are mixing default `formatters` specifications (string style formats) 
+with formatting function style format. Although these look very similar, 
+these have differences regarding rounding approach. See next section, and also [section on rounding method](#round_type).
+
+This implies that, until this issue is resolved, users should preferably include 
+`.format` specifications for each of the statistics requested 
+in the table to guarantee the proper formats are being used.
+
+```{r TODO junco formats, include=FALSE}
+## TODO : junco formats for num vars are not according to jj specs - add to backlog!!!
+## Question : would updates impact TLG/tests?
+```
+
+### why formatting functions in junco formats? {#junco_form_fun_reason}
+
+There are 2 reasons why `junco` utilizes formatting function `jjcsformat_xx`.
+
+- Not all of our required formats were supported in `formatters` package. 
+The default formats can be consulted via `list_valid_format_labels` and are : 
+
+```{r valid formats}
+
+list_valid_format_labels()
+
+```
+
+In prior versions of the supported formats, 
+we were missing formats like `xx.x (xx.xx)` and `xx.xx (xx.xxx)`. 
+
+In order to be able to proceed with these missing formats, 
+we introduced formatting function `jjcsformat_xx` to be able to 
+generate outputs with these format requirements.
+
+In the meantime, formatters package has been updated (>= 0.5.11), 
+to include new 2- and 3-d formats, however we are still missing some in the 
+3d-setting (like `xx.x (xx.x, xx.x)` and `xx.xx (xx.xx, xx.xx)`).
+
+- Another reason is the rounding approach, `iec` versus `sas`. 
+In prior versions of the supported formats from `formatters` the rounding method 
+was solely based upon the `base::round` function, which uses IEC rounding. 
+See `?round` for details regarding IEC. 
+
+In our company, we have the preference to align rounding method with SAS. 
+By making usage of formatting functions, rather than the build in formats, 
+we could modify the rounding approach towards SAS based rounding in our 
+custom formatting function `jjcsformat_xx`.
+
+In the meantime, `formatters` package has been updated (>= 0.5.11) to include 
+round_type, and adjustments to `jjcsformat_xx` would be needed 
+to utilize this updated approach, 
+which is work in progress.
+
+Once this has been completed, this vignette will be updated accordingly.
+
+```{r TODO jjcsformat_xx update, include=FALSE}
+## TODO : update jjcsformat_xx to utilize round_type from formatters
+## TODO : update vignette accordingly
+
+```
+
+### junco formatting function `jjcsformat_xx`
+
+Our junco formatting function is similar to the tern formatting function `tern::format_xx`, 
+except for the rounding method.
+It translates an xx style format label into a function that can be applied on 
+actual data.
+
+```{r format_xx examples }
+test1 <- c(1.658, 0.145)
+
+format_xx("xx.x (xx.xx)")(test1)
+jjcsformat_xx("xx.x (xx.xx)")(test1)
+
+test <- list(c(1.658, 0.145), c(1.45, 0.185))
+
+z <- format_xx("xx.x (xx.xx)")
+z_jjcs <- jjcsformat_xx("xx.x (xx.xx)")
+
+sapply(test, z)
+sapply(test, z_jjcs)
+
+```
+
+## Controlling decimal precision
+
+In the above format specification, including the `tern` and `junco` defaults, 
+the decimal precision is included in the formatting string, and the same precision 
+is used for all cell splits.
+
+Often it is required to have different precision specifications for different 
+cell splits. 
+Eg in a laboratory/vital signs table, depending on the decimal precision of 
+the parameter to analyze, different formats have to be applied.
+
+
+```{r advs dataset}
+advs <- ex_advs %>%
+  select(USUBJID, ARM, PARAMCD, PARAM, AVAL, AVISIT, ATPTN) %>%
+  filter(AVISIT == "WEEK 1 DAY 8") %>%
+  filter(PARAMCD %in% c("DIABP", "PULSE", "RESP")) %>%
+  mutate(dp = case_when(
+    PARAMCD == "DIABP" ~ 0,
+    PARAMCD == "PULSE" ~ 1,
+    PARAMCD == "RESP" ~ 2
+  )) %>% 
+  mutate(AVAL2 = round(AVAL, dp))
+```
+
+In `tern` there is an option to include an `auto` format to handle this requirement.
+
+### auto format feature in tern
+
+Note that the `auto` specification cannot be used with `analyze` and `afun = a_summary`, 
+to use this feature we have to switch to the layout variant `analyze_vars`.
+
+```{r}
+basic_table() %>%
+  split_cols_by("ARM") %>%
+  split_rows_by("PARAMCD", split_fun = drop_split_levels) %>% 
+  analyze_vars(
+    vars = c("AVAL2"),
+    .stats = c("n", "mean", "mean_se", "mean_ci"),
+    .formats = c(
+      "mean" = "auto",
+      "mean_se" = "auto",
+      "mean_ci" = "auto"
+    )
+  )  %>%
+  build_table(advs)
+```
+
+In the resulting table, the decimal precision of each parameter is 
+adjusted according to the incoming data.
+
+The only problem we have with current approach is that we cannot control 
+the format specifications to meet our company rules: `mean` has 
+to be presented with 1 decimal more than incoming data, `se` and `sd` with 2 more, etc.
+
+For this reason we need further enhancements to formatting specification 
+approaches in analysis functions for varying decimal precision.
+This is work currently in progress. Once completed it will be incorporated into 
+current vignette.
+
+```{r, include=FALSE}
+## TODO : continue with approach after discussion/agreement on how to implement this in junco in future.
+```
+
+## rounding method: iec vs sas {#round_type}
+### New round_type argument in `formatters`
+
+In `formatters` version 0.5.11 onwards, a new argument `round_type` is available 
+in `formatters::format_value` and all formatting machinery.
+
+For formatting functions, whenever round_type is an argument of the function, 
+it will be passed onto the core formatting behaviour.
+
+
+```{r example}
+df <- data.frame(var1 = c(0.2, 0.2, 0.3, 0.3))
+
+stats <- s_summary(df[["var1"]])
+med <- stats[["median"]]
+
+format_value(med, "xx.x", round_type = "iec")
+format_value(med, "xx.x", round_type = "sas")
+
+format_rcell(med, format = "xx.x", round_type = "sas")
+
+format_rcell(med, format = "xx.x", round_type = "sas")
+
+```
+
+### round_type after table creation
+
+The rounding method should be consistent for an entire table, and more generally, 
+for all tables produced in a specific project.
+Rather than having to be careful with format specifications at each step of the table creation, 
+the rounding approach should be specified or adjusted after the table creation.
+
+
+
+```{r simple table}
+adsl <- ex_adsl %>% 
+  filter(SEX %in% c("F", "M"))
+
+test <- adsl %>% 
+  mutate(num_var = case_when(ARMCD == "ARM A" & SEX == "F" ~ 3.75,
+                             ARMCD == "ARM B" & SEX == "F"~ 12.85,
+                             ARMCD == "ARM C" & SEX == "F"~ 1.45,
+                             
+                             ARMCD == "ARM A" & SEX == "M" ~ 2.75,
+                             ARMCD == "ARM B" & SEX == "M"~ 11.85,
+                             ARMCD == "ARM C" & SEX == "M"~ 2.45,
+                             )) %>% 
+  select(USUBJID, ARMCD, SEX, num_var)
+
+
+tbl <- basic_table(show_colcounts = TRUE) %>% 
+  split_cols_by("ARMCD") %>% 
+  split_rows_by("SEX", split_fun = drop_split_levels) %>% 
+  analyze(vars = "num_var",  afun = tern::a_summary, 
+          extra_args = list(.stats = c("n", "mean"),  
+                            .formats = c(mean = "xx.x"))) %>% 
+  build_table(df = test, alt_counts_df = adsl)
+
+tbl
+```
+
+Vignette https://insightsengineering.github.io/rtables/latest-release/articles/dev-guide/dg_printing.html 
+was usefull for understanding how table tree object get printed.
+
+Printing the table tree object (process behind asking to show/print `tbl` in console) 
+is done by `toString` function, and then apply `cat` function to it.
+The core step where the rounding method is applied is during the conversion 
+of the table tree object into a `MatrixPrintForm` object, by function `formatters::matrix_form`. 
+
+```{r simple table specify round_type}
+tbl_iec <- toString(tbl, round_type = "iec")
+tbl_sas <- toString(tbl, round_type = "sas")
+
+cat(tbl_iec)
+cat(tbl_sas)
+```
+
+As you can see, printing these 2 tables minor numerical differences are 
+presented due to the different rounding approaches.
+
+### Can we set round_type during build_table? {#round_type_issues}
+
+Current approach to switch to non-default rounding method is to initiate 
+a call to `formatters::matrix_form` with `round_type` = "sas".
+This approach however would lead to a disconnect between the table tree object (tbl) 
+and what get's processed later (typically exporting to other format, like rtf, html).
+Not all `rtables` exporters that utilize matrix_form are extended with this new argument, 
+eg: `rtables::as_html` and `rtables::as_result_df`.
+
+Ideally, the rounding method is an `attribute` of the table, that can be 
+controlled by the user at the time of table creation, 
+ie during the build_table step. By default, the rounding method will remain `iec`. 
+
+Companies, like we, that require `sas` rounding, would then have to ensure 
+appropriate rounding is used when calling `build_table`.
+
+Further exports, that would rely on matrix_form, would take the assigned 
+round_type attribute of the table tree object. 
+This would be an easy way to guarantee consistency in round_type between 
+generated tbl, printing tbl in interactive session and exported versions (rtf, html, pdf, ...).
+
+```{r round_type_to_do, include = FALSE}
+#TODO further discuss with Gabe, and initiate approach
+#TODO once completed ensure vignette is aligned
+```
+
+
+## Overall conclusion
+
+Until the work in progression regarding 
+junco default formats [here](#junco_issues) and 
+round_type [here](#round_type_issues) is not completed, 
+users should be conscious of the pitfalls in mixing different formats 
+when using analysis functions from both `tern` and `junco` package. 
+Although `xx.x (xx.xx)` and `jjcsformat_xx("xx.x (xx.xx)")` look very similar, 
+these are not the same.
+
+As already pointed out in [this section](#junco_issues), 
+the safest approach is to ensure format specifications are 
+included for all requested statistics.
+
+
+
+
+
+
