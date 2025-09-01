@@ -68,7 +68,7 @@ for a more in depth article on formatting functions.
 Current vignette goes back to the basics of formatting specifications in custom 
 analysis function, versus `tern`/`junco` analysis functions. 
 
-We will start with demonstratation of various basic approaches for writing an `afun` 
+We will start with demonstration of various basic approaches for writing an `afun` 
 with an argument `.stats` for the choice of statistics to be presented, 
 and an argument `.formats` for the formats to be used. 
 All of the `afuns` will be for the same simple `sfun` `sfun_simple` as defined below. 
