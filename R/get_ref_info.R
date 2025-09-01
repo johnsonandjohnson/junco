@@ -6,8 +6,8 @@
 #'
 #' @param ref_path (`character`)\cr reference group specification as an `rtables`
 #'   `colpath`, see details.
-#' @param .spl_context see [rtables::spl_context].
-#' @param .var the variable being analyzed, see [rtables::additional_fun_params].
+#' @param .spl_context (`data.frame`)\cr see [rtables::spl_context].
+#' @param .var (`character`)\cr the variable being analyzed, see [rtables::additional_fun_params].
 #'
 #' @return A list with `ref_group` and `in_ref_col`, which can be used as
 #'   `.ref_group` and `.in_ref_col` as if being directly passed to an analysis
@@ -15,7 +15,7 @@
 #'
 #' @details
 #' The reference group is specified in `colpath` hierarchical fashion in `ref_path`:
-#' The first column split variable is the first element, and the level to use is the
+#' the first column split variable is the first element, and the level to use is the
 #' second element. It continues until the last column split variable with last
 #' level to use.
 #' Note that depending on `.var`, either a `data.frame` (if `.var` is `NULL`) or

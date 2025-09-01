@@ -12,17 +12,17 @@ count_pruner(
 )
 }
 \arguments{
-\item{count}{count threshold.  Function will keep all records strictly greater
+\item{count}{(\code{numeric})\cr count threshold. Function will keep all records strictly greater
 than this threshold.}
 
-\item{cat_include}{Category to be considered for pruning}
+\item{cat_include}{(\code{character})\cr Category to be considered for pruning}
 
-\item{cat_exclude}{logical Category to be excluded from pruning}
+\item{cat_exclude}{(\code{character})\cr Category to be excluded from pruning}
 
-\item{cols}{column path (character or integer (column indices))}
+\item{cols}{(\code{character})\cr column path (character or integer (column indices))}
 }
 \value{
-function that can be utilized as pruning function in prune_table
+Function that can be utilized as pruning function in prune_table.
 }
 \description{
 This is a pruning constructor function which identifies records to be pruned
@@ -30,7 +30,6 @@ based on the count (assumed to be the first statistic displayed when a compound
 statistic (e.g., ## / ## (XX.X percent) is presented).
 }
 \examples{
-
 ADSL <- data.frame(
   USUBJID = c(
     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
@@ -79,5 +78,4 @@ result <- prune_table(
 )
 
 result
-
 }

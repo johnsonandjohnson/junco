@@ -39,12 +39,12 @@ a_summarize_aval_chg_diff_j(
 that is passed by \code{rtables}.}
 
 \item{ancova}{(\code{logical})\cr If FALSE, only descriptive methods will be used. \cr
-If TRUE Ancova methods will be used for each of the columns : AVAL, CHG, DIFF. \cr}
+If TRUE, ANCOVA methods will be used for each of the columns : AVAL, CHG, DIFF. \cr}
 
-\item{comp_btw_group}{(\code{logical})\cr If TRUE,
+\item{comp_btw_group}{(\code{logical})\cr If TRUE, comparison between groups will be performed.
 \cr When ancova = FALSE, the estimate of between group difference (on CHG)
-will be based upon a two-sample t-test. \cr
-\cr When ancova = TRUE, the same ancova model will be used for the estimate of between group difference (on CHG).}
+will be based upon a two-sample t-test.
+\cr When ancova = TRUE, the same ANCOVA model will be used for the estimate of between group difference (on CHG).}
 
 \item{ref_path}{(\code{character})\cr global reference group specification, see \code{\link[=get_ref_info]{get_ref_info()}}.}
 
@@ -96,8 +96,8 @@ a vector that can contain single variable names (such as 'X1'), and/or interacti
 \item{.stats}{(named \code{list})\cr column statistics to select for the table.
 The following column names are to be used: \code{col1}, \code{col23}, \code{coldiff}.\cr
 For \code{col1}, the following stats can be specified.\cr
-For \code{col23}, only \code{mean_ci_3d} is available. When ancova=\code{TRUE} these are LS Means, otherwise, arithmetic means.\cr
-For \code{coldiff}, only \code{meandiff_ci_3d} is available. When ancova=\code{TRUE} these
+For \code{col23}, only \code{mean_ci_3d} is available. When ancova = \code{TRUE} these are LS Means, otherwise, arithmetic means.\cr
+For \code{coldiff}, only \code{meandiff_ci_3d} is available. When ancova = \code{TRUE} these
 are LS difference in means, otherwise, difference in means based upon 2-sample t-test.\cr}
 
 \item{.formats}{(named \code{list})\cr formats for the column statistics. \code{xx.d} style formats can be used.}
@@ -113,10 +113,10 @@ A function that can be used in an analyze function call
 }
 \description{
 Analysis functions to produce a 1-row summary presented in
-a 3-column layout in the columns: column 1: N, column 2: Value, column 3: change\cr
+a 3-column layout in the columns (column 1 = N, column 2 = Value, column 3 = Change).\cr
 In the difference columns, only 1 column will be presented : difference + CI\cr
 When ancova = \code{TRUE}, the presented statistics will be based on ANCOVA method (\code{s_summarize_ancova_j}).\cr
-mean and ci (both for Value (column 2) and Chg (column 3)) using statistic \code{lsmean_ci}\cr
+mean and ci (both for Value (column 2) and CHG (column 3)) using statistic \code{lsmean_ci}\cr
 mean and ci for the difference column are based on same ANCOVA model using statistic \code{lsmean_diffci}\cr
 When ancova = \code{FALSE}, descriptive statistics will be used instead.\cr
 In the difference column, the 2-sample t-test will be used.
@@ -125,7 +125,6 @@ In the difference column, the 2-sample t-test will be used.
 See Description
 }
 \examples{
-
 library(dplyr)
 
 ADEG <- data.frame(

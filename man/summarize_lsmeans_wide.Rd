@@ -20,7 +20,7 @@ summarize_lsmeans_wide(
 )
 }
 \arguments{
-\item{lyt}{empty layout, i.e. result of \code{\link[rtables:basic_table]{rtables::basic_table()}}}
+\item{lyt}{(\code{layout})\cr empty layout, i.e. result of \code{\link[rtables:basic_table]{rtables::basic_table()}}}
 
 \item{variables}{(named \code{list} of \code{string})\cr list of additional analysis variables.}
 

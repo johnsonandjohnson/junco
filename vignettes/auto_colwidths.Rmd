@@ -23,8 +23,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
-# TODO change to pharmaverse data to parmaversejnj versions
 ```
 ## Introduction
 
@@ -181,9 +179,9 @@ We will use the following data to illustrate:
 ```{R}
 library(rlistings)
 
-adae <- pharmaverseadam::adae
+adae <- pharmaverseadamjnj::adae
 adae$AEOUT <- gsub("/", " / ", adae$AEOUT)
-adsl <- pharmaverseadam::adsl
+adsl <- pharmaverseadamjnj::adsl
 
 adsl <- adsl[, c("USUBJID", setdiff(names(adsl), names(adae)))]
 

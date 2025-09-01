@@ -7,18 +7,18 @@
 par_lapply(cl, fun, x, ...)
 }
 \arguments{
-\item{cl}{Cluster created by \code{\link[parallel:makeCluster]{parallel::makeCluster()}} or \code{NULL}}
+\item{cl}{(\verb{cluster object})\cr Cluster created by \code{\link[parallel:makeCluster]{parallel::makeCluster()}} or \code{NULL}}
 
-\item{fun}{Function to be run}
+\item{fun}{(\code{functions})\cr Function to be run}
 
-\item{x}{object to be looped over}
+\item{x}{(\code{object})\cr Object to be looped over}
 
-\item{...}{extra arguments passed to \code{fun}}
+\item{...}{Extra arguments passed to \code{fun}}
 }
 \value{
 \code{list} of results of calling \code{fun} on elements of \code{x}.
 }
 \description{
 Simple wrapper around \code{lapply} and \code{\link[parallel:clusterApply]{parallel::clusterApplyLB}} to abstract away
-the logic of deciding which one to use
+the logic of deciding which one to use.
 }

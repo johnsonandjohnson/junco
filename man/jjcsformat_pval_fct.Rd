@@ -7,7 +7,7 @@
 jjcsformat_pval_fct(alpha = 0.05)
 }
 \arguments{
-\item{alpha}{\code{number}\cr the significance level to account for during rounding.}
+\item{alpha}{(\code{numeric})\cr the significance level to account for during rounding.}
 }
 \value{
 The p-value in the standard format. If \code{count} is 0, the format is \code{0}.
@@ -20,7 +20,7 @@ is set.
 }
 \description{
 A function factory to generate formatting functions for p-value
-formatting that support rounding close to the significance level specified
+formatting that support rounding close to the significance level specified.
 }
 \examples{
 my_pval_format <- jjcsformat_pval_fct(0.005)

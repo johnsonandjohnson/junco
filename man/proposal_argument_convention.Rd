@@ -111,7 +111,7 @@ defined by this split instruction, or \code{NA_character_} (the default) for no 
 
 \item{show_labels}{(\code{string})\cr label visibility: one of 'default', 'visible' and 'hidden'.}
 
-\item{show_relative}{should the 'reduction' (\code{control - treatment}, default) or the 'increase'
+\item{show_relative}{(\code{string})\cr should the 'reduction' (\code{control - treatment}, default) or the 'increase'
 (\code{treatment - control}) be shown for the relative change from baseline?}
 
 \item{strata}{(\code{character} or \code{NULL})\cr variable names indicating stratification factors.}
