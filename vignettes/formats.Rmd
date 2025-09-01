@@ -779,7 +779,7 @@ tbl
 ```
 
 Vignette https://insightsengineering.github.io/rtables/latest-release/articles/dev-guide/dg_printing.html 
-was usefull for understanding how table tree object get printed.
+was useful for understanding how table tree object get printed.
 
 Printing the table tree object (process behind asking to show/print `tbl` in console) 
 is done by `toString` function, and then apply `cat` function to it.
