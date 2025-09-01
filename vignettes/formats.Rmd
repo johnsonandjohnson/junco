@@ -56,7 +56,7 @@ using `xx-style` notation. See `formatters::list_valid_format_labels()`
 for an overview of the built-in string formats. 
 
 Another approach for 
-format specificiation is via formatting functions. With formatting functions, 
+format specification is via formatting functions. With formatting functions, 
 formats are capable of handling logical statements, allowing for more fine-tuning 
 of the output displayed. 
 
