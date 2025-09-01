@@ -53,7 +53,7 @@ for displaying the values in the output a specific way.
 
 Format specifications can be based upon the `formatters` build-in format strings, 
 using `xx-style` notation. See `formatters::list_valid_format_labels()` 
-for an overview of the build-in string formats. 
+for an overview of the built-in string formats. 
 
 Another approach for 
 format specificiation is via formatting functions. With formatting functions, 
