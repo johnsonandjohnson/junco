@@ -196,3 +196,73 @@ test_that("make_bordmat_row creates border matrix row correctly", {
   # Match the actual output pattern
   expect_equal(result2, c(1, 1, 2, 2, 2))
 })
+
+test_that("tt_to_tlgrtf validates table structure correctly", {
+  # Create an invalid table structure (similar to badtbl in previous test)
+  data(ex_adsl)
+  badlyt <- basic_table() |>
+    split_rows_by("ARM") |>
+    summarize_row_groups()
+
+  badtbl <- build_table(badlyt, ex_adsl)
+
+  # Test that a warning is issued when validate=TRUE
+  expect_warning(
+    tt_to_tlgrtf(badtbl, file = NULL, validate = TRUE),
+    "Invalid table structure detected"
+  )
+
+  # Test that no warning is issued when validate=FALSE
+  expect_no_warning(
+    tt_to_tlgrtf(badtbl, file = NULL, validate = FALSE)
+  )
+
+  # Test that the default behavior (validate=TRUE) issues a warning
+  expect_warning(
+    tt_to_tlgrtf(badtbl, file = NULL),
+    "Invalid table structure detected"
+  )
+})
+
+test_that("tt_to_tlgrtf does not warn for valid table structures", {
+  # Create a valid table structure
+  data(ex_adsl)
+  lyt <- basic_table() |>
+    split_cols_by("ARM") |>
+    analyze("AGE")
+
+  tbl <- build_table(lyt, ex_adsl)
+
+  # Test that no warning is issued for a valid table
+  expect_no_warning(
+    tt_to_tlgrtf(tbl, file = NULL, validate = TRUE)
+  )
+})
+
+test_that("tt_to_tlgrtf respects JUNCO_DISABLE_VALIDATION environment variable", {
+  # Create an invalid table structure
+  data(ex_adsl)
+  badlyt <- basic_table() |>
+    split_rows_by("ARM") |>
+    summarize_row_groups()
+
+  badtbl <- build_table(badlyt, ex_adsl)
+
+  # Save current environment variable state
+  old_env <- Sys.getenv("JUNCO_DISABLE_VALIDATION")
+
+  # Set environment variable to disable validation
+  Sys.setenv(JUNCO_DISABLE_VALIDATION = "TRUE")
+
+  # Test that no warning is issued when environment variable is set
+  expect_no_warning(
+    tt_to_tlgrtf(badtbl, file = NULL, validate = TRUE)
+  )
+
+  # Reset environment variable
+  if (old_env == "") {
+    Sys.unsetenv("JUNCO_DISABLE_VALIDATION")
+  } else {
+    Sys.setenv(JUNCO_DISABLE_VALIDATION = old_env)
+  }
+})
