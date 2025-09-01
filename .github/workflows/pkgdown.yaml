@@ -8,7 +8,7 @@ on:
     types: [published]
   workflow_dispatch:
 
-name: pkgdown.yaml
+name: Docs 📚
 
 permissions: read-all
 
