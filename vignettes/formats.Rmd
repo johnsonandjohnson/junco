@@ -802,7 +802,7 @@ presented due to the different rounding approaches.
 Current approach to switch to non-default rounding method is to initiate 
 a call to `formatters::matrix_form` with `round_type` = "sas".
 This approach however would lead to a disconnect between the table tree object (tbl) 
-and what get's processed later (typically exporting to other format, like rtf, html).
+and what gets processe later (typically exporting to other format, like rtf, html).
 Not all `rtables` exporters that utilize matrix_form are extended with this new argument, 
 eg: `rtables::as_html` and `rtables::as_result_df`.
 
