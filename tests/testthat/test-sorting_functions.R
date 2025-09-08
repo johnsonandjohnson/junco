@@ -16,7 +16,7 @@ tab <- basic_table() %>%
   split_rows_by("STRATA1") %>%
   summarize_row_groups() %>%
   analyze_vars("COUNTRY", .stats = "count_fraction") %>%
-  build_table(DM2)
+  build_table(DM2, round_type = "sas")
 
 #### Tests for jj_complex_scorefun function ####
 testthat::test_that("jj_complex_scorefun is identical to standard sorting: spanningheadercolvar=NA", {
@@ -138,7 +138,7 @@ tab2 <- basic_table() %>%
   split_rows_by("STRATA1") %>%
   summarize_row_groups() %>%
   analyze_vars("COUNTRY", .stats = "count_fraction") %>%
-  build_table(DM2)
+  build_table(DM2, round_type = "sas")
 
 testthat::test_that("jj_complex_scorefun uses first column to sort: usefirstcol", {
   result <- sort_at_path(

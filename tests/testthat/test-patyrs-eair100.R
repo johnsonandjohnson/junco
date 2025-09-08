@@ -72,7 +72,7 @@ test_that("Check patient years numbers are giving expected result", {
       afun = a_patyrs_j,
       extra_args = extra_args
     )
-  tbl1 <- build_table(lyt1, adae, adsl)
+  tbl1 <- build_table(lyt1, adae, adsl, round_type = "sas")
 
   res1 <- cell_values(tbl1[c("TRTDURY", "patyrs"), "A: Drug X"])
   result <- as.numeric(unlist(unname(res1))[[1]])
@@ -105,7 +105,7 @@ test_that("Check aeir100 numbers are giving expected result", {
         ref_path = ref_path
       )
     )
-  tbl1 <- build_table(lyt1, adae, adsl)
+  tbl1 <- build_table(lyt1, adae, adsl, round_type = "sas")
 
   res1 <- cell_values(tbl1["dcd A.1.1.1.1", "A: Drug X"])
   result <- as.numeric(unlist(unname(res1))[[1]])
@@ -158,7 +158,7 @@ test_that("Check aeir100 numbers are giving expected result when fup_var argumen
         ref_path = ref_path
       )
     )
-  tbl1 <- build_table(lyt1, adae, adsl)
+  tbl1 <- build_table(lyt1, adae, adsl, round_type = "sas")
 
   res1 <- cell_values(tbl1["dcd A.1.1.1.1", "A: Drug X"])
   result <- as.numeric(unlist(unname(res1))[[1]])
@@ -211,7 +211,7 @@ test_that("Check aeir100 numbers are giving expected result when occ_dy argument
         ref_path = ref_path
       )
     )
-  tbl1 <- build_table(lyt1, adae, adsl)
+  tbl1 <- build_table(lyt1, adae, adsl, round_type = "sas")
 
   res1 <- cell_values(tbl1["dcd A.1.1.1.1", "A: Drug X"])
   result <- as.numeric(unlist(unname(res1))[[1]])

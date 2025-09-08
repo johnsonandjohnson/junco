@@ -65,7 +65,7 @@ test_that("a_event_free works with default arguments in a table layout", {
         )
       )
   }
-  result <- build_table(lyt, df = adtte_f)
+  result <- build_table(lyt, df = adtte_f, round_type = "sas")
 
   res <- expect_silent(result)
   expect_snapshot(res)
@@ -103,7 +103,7 @@ test_that("a_event_free works with customized arguments in a table layout", {
         )
       )
   }
-  result <- build_table(lyt, df = adtte_f)
+  result <- build_table(lyt, df = adtte_f, round_type = "sas")
 
   res <- expect_silent(result)
   expect_snapshot(res)

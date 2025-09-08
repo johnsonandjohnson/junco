@@ -188,6 +188,6 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
         )
       )
     ) %>%
-    build_table(iris)
+    build_table(iris, round_type = "sas")
   expect_snapshot(result)
 })

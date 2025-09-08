@@ -21,11 +21,11 @@ test_that("a_freq_j with val = NA and denom option", {
     )
 
   # apply to adsl
-  tbl1 <- build_table(lyt1, adsl)
+  tbl1 <- build_table(lyt1, adsl, round_type = "sas")
   expect_snapshot(tbl1)
 
   # apply to adae
-  tbl1b <- build_table(lyt1, adae, adsl)
+  tbl1b <- build_table(lyt1, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1b)
 
   # scenario 1c : denom = .N_col, all values
@@ -41,7 +41,7 @@ test_that("a_freq_j with val = NA and denom option", {
       extra_args = extra_args_2
     )
 
-  tbl1c <- build_table(lyt1c, adae, adsl)
+  tbl1c <- build_table(lyt1c, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1c)
 })
 
@@ -60,11 +60,11 @@ test_that("a_freq_j with specific val (CHN) and denom option", {
     )
 
   # apply to adsl
-  tbl1 <- build_table(lyt1, adsl)
+  tbl1 <- build_table(lyt1, adsl, round_type = "sas")
   expect_snapshot(tbl1)
 
   # apply to adae
-  tbl1b <- build_table(lyt1, adae, adsl)
+  tbl1b <- build_table(lyt1, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1b)
 
   # scenario 1c : denom = .N_col, all values
@@ -81,7 +81,7 @@ test_that("a_freq_j with specific val (CHN) and denom option", {
       extra_args = extra_args_2
     )
 
-  tbl1c <- build_table(lyt1c, adae, adsl)
+  tbl1c <- build_table(lyt1c, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1c)
 })
 
@@ -100,11 +100,11 @@ test_that("a_freq_j with N_only", {
     )
 
   # apply to adsl
-  tbl1 <- build_table(lyt1, adsl)
+  tbl1 <- build_table(lyt1, adsl, round_type = "sas")
   expect_snapshot(tbl1)
 
   # apply to adae
-  tbl1b <- build_table(lyt1, adae, adsl)
+  tbl1b <- build_table(lyt1, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1b)
 })
 
@@ -121,11 +121,11 @@ test_that("a_freq_j with TotCol_only", {
     analyze(vars = "COUNTRY", afun = a_freq_j, extra_args = extra_args_1)
 
   # apply to adsl
-  tbl1 <- build_table(lyt1, adsl)
+  tbl1 <- build_table(lyt1, adsl, round_type = "sas")
   expect_snapshot(tbl1)
 
   # apply to adae
-  tbl1b <- build_table(lyt1, adae, adsl)
+  tbl1b <- build_table(lyt1, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1b)
 })
 
@@ -157,7 +157,7 @@ test_that("a_freq_j as cfun", {
     )
 
   # apply to adae
-  tbl1 <- build_table(lyt1, adae, adsl)
+  tbl1 <- build_table(lyt1, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1)
 
   # scenario 2 : label using label_fstr method works
@@ -178,7 +178,7 @@ test_that("a_freq_j as cfun", {
     )
 
   # apply to adae
-  tbl2 <- build_table(lyt2, adae, adsl)
+  tbl2 <- build_table(lyt2, adae, adsl, round_type = "sas")
   expect_snapshot(tbl2)
 })
 
@@ -207,7 +207,7 @@ test_that("a_freq_j with label map", {
     )
 
   # apply to adae
-  tbl1 <- build_table(lyt1, adae, adsl)
+  tbl1 <- build_table(lyt1, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1)
 
   # scenario 2 : set row label using label parameter
@@ -220,7 +220,7 @@ test_that("a_freq_j with label map", {
       extra_args = extra_args_2
     )
 
-  tbl2 <- build_table(lyt2, adae, adsl)
+  tbl2 <- build_table(lyt2, adae, adsl, round_type = "sas")
   expect_snapshot(tbl2)
 })
 
@@ -239,11 +239,11 @@ test_that("a_freq_j (old count_pats case)", {
     )
 
   # apply to adsl
-  tbl1 <- build_table(lyt1, adsl)
+  tbl1 <- build_table(lyt1, adsl, round_type = "sas")
   expect_snapshot(tbl1)
 
   # apply to adae
-  tbl1b <- build_table(lyt1, adae, adsl)
+  tbl1b <- build_table(lyt1, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1b)
 
   # scenario 1c : denom = .N_col, all values
@@ -259,7 +259,7 @@ test_that("a_freq_j (old count_pats case)", {
       extra_args = extra_args_2
     )
 
-  tbl1c <- build_table(lyt1c, adae, adsl)
+  tbl1c <- build_table(lyt1c, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1c)
 })
 
@@ -278,12 +278,12 @@ test_that("a_freq_j with N_subgroup as denom", {
     )
 
   # applied to adsl
-  tbl1 <- build_table(lyt1, adsl)
+  tbl1 <- build_table(lyt1, adsl, round_type = "sas")
   expect_snapshot(tbl1)
 
   # applied to adae: when denomdf is not specified in the layout,
   # it will take Nsubgroup from df, not from alt_counts_df
-  tbl1b <- build_table(lyt1, adae, adsl)
+  tbl1b <- build_table(lyt1, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1b)
 
   # applied to adae: with denomdf specified in layout
@@ -303,7 +303,7 @@ test_that("a_freq_j with N_subgroup as denom", {
       extra_args = extra_args_2
     )
 
-  tbl1c <- build_table(lyt1c, adae, adsl)
+  tbl1c <- build_table(lyt1c, adae, adsl, round_type = "sas")
   expect_snapshot(tbl1c)
 })
 
@@ -435,7 +435,7 @@ test_that("a_freq_j with N_trt as denom - special situation", {
     )
 
   ## main focus of this test is on the denominator
-  tbl <- build_table(lyt, adaeall, alt_counts_df = adsl_)
+  tbl <- build_table(lyt, adaeall, alt_counts_df = adsl_, round_type = "sas")
   expect_snapshot(tbl)
 
   ## additionally check if the denominator values are as expected
@@ -461,7 +461,7 @@ test_that("a_freq_j with keep_levels (CHN, NGA) ", {
     analyze(vars = "COUNTRY", afun = a_freq_j, extra_args = extra_args_1)
 
   # apply to adsl
-  tbl1 <- build_table(lyt1, adsl)
+  tbl1 <- build_table(lyt1, adsl, round_type = "sas")
   expect_snapshot(tbl1)
 
   # Also keep the original test to verify the specific row names

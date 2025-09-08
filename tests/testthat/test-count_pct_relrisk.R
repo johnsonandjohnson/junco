@@ -103,7 +103,7 @@ test_that("a_freq_j with val = NA and denom option", {
     )
 
   # apply to adsl - here it is not yet critical to set parameter denom
-  tbl1 <- build_table(lyt1, adsl)
+  tbl1 <- build_table(lyt1, adsl, round_type = "sas")
   res1 <- cell_values(tbl1["CHN", "A: Drug X"])
   res1_val <- unlist(unname(res1[[DrugX_column_val]]))
   res1_rr <- res1[[DrugX_column_rr]] %>% as.numeric()
@@ -153,7 +153,7 @@ test_that("a_freq_j with val = NA and denom option", {
       afun = a_freq_j,
       extra_args = extra_args
     )
-  tbl1b <- build_table(lyt1b, adae, adsl)
+  tbl1b <- build_table(lyt1b, adae, adsl, round_type = "sas")
   res1b <- cell_values(tbl1b["CHN", "A: Drug X"])
   res1b_val <- unlist(unname(res1b[[DrugX_column_val]]))
   res1b_rr <- res1b[[DrugX_column_rr]] %>% as.numeric()
@@ -202,7 +202,7 @@ test_that("a_freq_j with val = NA and denom option", {
       afun = a_freq_j,
       extra_args = extra_args
     )
-  tbl1c <- build_table(lyt1c, adae, adsl)
+  tbl1c <- build_table(lyt1c, adae, adsl, round_type = "sas")
 
   res1c <- cell_values(tbl1c["CHN", "A: Drug X"])
   res1c_val <- unlist(unname(res1c[[DrugX_column_val]]))
@@ -271,7 +271,7 @@ test_that("a_freq_j with risk difference method cmh", {
       extra_args = extra_args
     )
 
-  tbl1d <- build_table(lyt1d, adae, adsl)
+  tbl1d <- build_table(lyt1d, adae, adsl, round_type = "sas")
 
   res1d <- cell_values(tbl1d["CHN", "A: Drug X"])
   res1d_val <- unlist(unname(res1d[[DrugX_column_val]]))
@@ -373,7 +373,7 @@ test_that("a_freq_j with N_subgroup as denom", {
     )
 
   # applied to adsl
-  tbl1 <- build_table(lyt1, adsl)
+  tbl1 <- build_table(lyt1, adsl, round_type = "sas")
   tbl1x <- tbl1[
     c("SEX", "F", "COUNTRY", "count_unique_denom_fraction.CHN"),
     seq_len(ncol(tbl1))
@@ -421,7 +421,7 @@ test_that("a_freq_j with N_subgroup as denom", {
 
   # applied to adae: HERE, when denomdf is not specified in the layout,
   # it will take Nsubgroup from df, not from alt_counts_df
-  tbl1b <- build_table(lyt1, adae, adsl)
+  tbl1b <- build_table(lyt1, adae, adsl, round_type = "sas")
   tbl1bx <- tbl1b[
     c("SEX", "F", "COUNTRY", "count_unique_denom_fraction.CHN"),
     seq_len(ncol(tbl1b))
@@ -490,7 +490,7 @@ test_that("a_freq_j with N_subgroup as denom", {
       extra_args = extra_args_2
     )
 
-  tbl1c <- build_table(lyt1c, adae, adsl)
+  tbl1c <- build_table(lyt1c, adae, adsl, round_type = "sas")
   tbl1cx <- tbl1c[
     c("SEX", "F", "COUNTRY", "count_unique_denom_fraction.CHN"),
     seq_len(ncol(tbl1c))

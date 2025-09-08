@@ -58,7 +58,7 @@ test_that("get_ref_info works with a df analysis function", {
       extra_args = list(ref_path = ref_path),
       afun = result_afun
     )
-  result <- build_table(lyt, dm)
+  result <- build_table(lyt, dm, round_type = "sas")
   expect_snapshot(result)
 
   # Compare with non-hierarchical layout.
@@ -69,7 +69,7 @@ test_that("get_ref_info works with a df analysis function", {
       extra_args = list(ref_path = ref_path),
       afun = standard_afun
     )
-  std_result <- build_table(std_lyt, dm)
+  std_result <- build_table(std_lyt, dm, round_type = "sas")
   expect_snapshot(std_result)
 })
 
@@ -120,7 +120,7 @@ test_that("get_ref_info works with a vector analysis function", {
       extra_args = list(ref_path = ref_path),
       afun = result_afun
     )
-  result <- build_table(lyt, dm)
+  result <- build_table(lyt, dm, round_type = "sas")
   expect_snapshot(result)
 
   # Compare with non-hierarchical layout.
@@ -131,7 +131,7 @@ test_that("get_ref_info works with a vector analysis function", {
       extra_args = list(ref_path = ref_path),
       afun = standard_afun
     )
-  std_result <- build_table(std_lyt, dm)
+  std_result <- build_table(std_lyt, dm, round_type = "sas")
   expect_snapshot(std_result)
 
   # Keep one explicit check to verify the relationship between the two outputs

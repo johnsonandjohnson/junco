@@ -142,7 +142,7 @@ test_that("a_summarize_aval_chg_diff_j works as expected", {
     )
 
   # Test that the table builds without errors
-  result <- expect_no_error(build_table(lyt, ADEG))
+  result <- expect_no_error(build_table(lyt, ADEG, round_type = "sas"))
 
   # Check that the result is a valid rtable
   expect_s4_class(result, "TableTree")
@@ -279,7 +279,7 @@ test_that("a_summarize_aval_chg_diff_j works with ancova = TRUE", {
     )
 
   # Test that the table builds without errors
-  result <- expect_no_error(build_table(lyt, ADEG))
+  result <- expect_no_error(build_table(lyt, ADEG, round_type = "sas"))
 
   # Check that the result is a valid rtable
   expect_s4_class(result, "TableTree")

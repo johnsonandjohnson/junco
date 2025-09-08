@@ -292,4 +292,4 @@ lyt <- basic_table() |>
     )
   )
 
-build_table(lyt, dat)
+build_table(lyt, dat, round_type = "sas")

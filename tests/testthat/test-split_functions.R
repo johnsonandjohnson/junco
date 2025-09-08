@@ -30,7 +30,7 @@ testthat::test_that("cond_rm_facets works", {
     split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
     split_cols_by("ARM", split_fun = mysplit)
 
-  tbl <- build_table(lyt, adsl)
+  tbl <- build_table(lyt, adsl, round_type = "sas")
   cols <- make_col_df(tbl, visible_only = TRUE)$name
 
   expected <- c("A: Drug X", "C: Combination", "Combined", "B: Placebo")
@@ -59,7 +59,7 @@ testthat::test_that("rm_levels works", {
     split_rows_by("COUNTRY", split_fun = split_fun) %>%
     summarize_row_groups() # for simplicity
 
-  tbl <- build_table(lyt, adsl)
+  tbl <- build_table(lyt, adsl, round_type = "sas")
 
   expected <- setdiff(levels(adsl$COUNTRY), c("JPN", "USA", "NGA"))
 
@@ -80,7 +80,7 @@ testthat::test_that("real_add_overall_facet works", {
     split_rows_by("COUNTRY", split_fun = split_fun) %>%
     summarize_row_groups() # for simplicity
 
-  tbl <- build_table(lyt, adsl)
+  tbl <- build_table(lyt, adsl, round_type = "sas")
 
   expected <- c(levels(adsl$COUNTRY), "Overall")
 
@@ -104,7 +104,7 @@ testthat::test_that("make_combo_splitfun works", {
     split_rows_by("COUNTRY", split_fun = split_fun) %>%
     summarize_row_groups() # for simplicity
 
-  tbl <- build_table(lyt, adsl)
+  tbl <- build_table(lyt, adsl, round_type = "sas")
 
   expected <- "Some Combined Countries"
 
@@ -141,7 +141,7 @@ testthat::test_that("combine_nonblank works", {
     split_rows_by("COUNTRY", split_fun = split_fun) %>%
     summarize_row_groups() # for simplicity
 
-  tbl <- build_table(lyt, adsl)
+  tbl <- build_table(lyt, adsl, round_type = "sas")
 
   expected <- c(levels(adsl$COUNTRY), "Overall")
 
@@ -175,13 +175,13 @@ testthat::test_that("rm_blank_levels works", {
   lyt <- basic_table() %>%
     split_rows_by("COUNTRY") %>%
     summarize_row_groups()
-  tbl <- build_table(lyt, adsl)
+  tbl <- build_table(lyt, adsl, round_type = "sas")
   row_names_before <- rtables::row.names(tbl)
 
   lyt <- basic_table() %>%
     split_rows_by("COUNTRY", split_fun = split_fun) %>%
     summarize_row_groups()
-  tbl <- build_table(lyt, adsl)
+  tbl <- build_table(lyt, adsl, round_type = "sas")
   row_names_after <- rtables::row.names(tbl)
 
 

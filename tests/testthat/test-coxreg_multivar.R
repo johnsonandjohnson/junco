@@ -110,13 +110,13 @@ test_that("summarize_coxreg_multivar works as expected with custom options", {
         ties = "breslow"
       ),
       formats = list(
-        coef_se = jjcsformat_xx("xx. (xx.)"),
+        coef_se = jjcsformat_xx("xx.x (xx.x)"),
         hr_est = jjcsformat_xx("xx.xxxx"),
         hr_ci = jjcsformat_xx("(xx.x, xx.x)"),
         pval = jjcsformat_pval_fct(0.1)
       )
     )
-  result <- expect_silent(build_table(lyt, anl))
+  result <- expect_silent(build_table(lyt, anl, round_type = "sas"))
   expect_snapshot(result)
 })
 
