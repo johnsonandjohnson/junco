@@ -359,6 +359,7 @@ tt_to_tlgrtf <- function(
     } else {
       hrdmpf <- tt
     }
+    round_type <- get_round_type(tt)
     pags <- paginate_to_mpfs(
       tt,
       fontspec = fontspec,
@@ -370,7 +371,8 @@ tt_to_tlgrtf <- function(
       margins = margins,
       lpp = NULL,
       nosplitin = nosplitin,
-      verbose = verbose
+      verbose = verbose,
+      round_type = round_type
     ) ##
     if (has_force_pag(tt)) {
       nslices <- which(
