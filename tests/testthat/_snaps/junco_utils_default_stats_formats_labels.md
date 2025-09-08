@@ -14,14 +14,13 @@
       $quantiles_upper
       function(
               x,
-              output = c("ascii", "html"),
+              output,
               round_type = c("sas", "iec"),
-              #na_str = na_str_dflt
-              na_str) {
-            # if (anyNA(na_str) || (replace_na_dflt && any(na_str == "NA"))) {
-            #   na_inds <- which(is.na(na_str) | (replace_na_dflt & na_str == "NA"))
-            #   na_str[na_inds] <- rep(na_str_dflt, length.out = length(na_str))[na_inds]
-            # }
+              na_str = na_str_dflt) {
+            if (anyNA(na_str) || (replace_na_dflt && any(na_str == "NA"))) {
+              na_inds <- which(is.na(na_str) | (replace_na_dflt & na_str == "NA"))
+              na_str[na_inds] <- rep(na_str_dflt, length.out = length(na_str))[na_inds]
+            }
             if (length(x) == 0 || isTRUE(all(x == ""))) {
               return(NULL)
             } else if (!length(positions[[1]]) == length(x)) {
@@ -31,10 +30,9 @@
             }
             
             round_type <- match.arg(round_type)
-            if (verbose) print(paste0("round_type in rtable_format: ", round_type))
             
-            values <- Map(y = x, fun = roundings, na_str = na_str, output = output, function(y, fun, na_str, output)
-              fun(y, na_str = na_str, round_type = round_type, output = output))
+            values <- Map(y = x, fun = roundings, na_str = na_str, function(y, fun, na_str, output)
+              fun(y, na_str = na_str, round_type = round_type))
             
             regmatches(x = str, m = positions)[[1]] <- values
             return(str)
