@@ -249,6 +249,10 @@ get_ncol <- function(tt) {
 #'  and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #'  for what the matrix should contain. Users should only specify this when the
 #'  default behavior does not meet their needs.
+#' @param round_type (`"iec"` or `"sas"`)\cr the type of rounding to perform. iec,
+#'   the default, peforms rounding compliant with IEC 60559, while
+#'   sas performs nearest-value rounding consistent with rounding within SAS.
+#'   See `?formatters::format_value` for more details.
 #' @import rlistings
 #' @rdname tt_to_tlgrtf
 #' @export
@@ -293,6 +297,7 @@ tt_to_tlgrtf <- function(
     combined_rtf = FALSE,
     one_table = TRUE,
     border_mat = make_header_bordmat(obj = tt),
+    round_type = get_round_type(tt),
     ...) {
   orientation <- match.arg(orientation)
   newdev <- open_font_dev(fontspec)
@@ -353,13 +358,13 @@ tt_to_tlgrtf <- function(
       )
     }
     if (methods::is(tt, "VTableTree")) {
-      hdrmpf <- matrix_form(tt[1, ])
+      hdrmpf <- matrix_form(tt[1, ], round_type = round_type)
     } else if (methods::is(tt, "list") && methods::is(tt[[1]], "MatrixPrintForm")) {
       hdrmpf <- tt[[1]]
     } else {
       hrdmpf <- tt
     }
-    round_type <- get_round_type(tt)
+    
     pags <- paginate_to_mpfs(
       tt,
       fontspec = fontspec,
@@ -540,7 +545,8 @@ tt_to_tlgrtf <- function(
       utils::head(tt, 1),
       indent_rownames = FALSE,
       expand_newlines = FALSE,
-      fontspec = fontspec
+      fontspec = fontspec,
+      round_type = round_type
     )
     colinfo <- mpf_to_colspan(
       mpf,
