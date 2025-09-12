@@ -30,7 +30,7 @@ Formatting fraction, count and denominator values
 \details{
 Formats a 3-dimensional value such that percent values
 near 0 or 100\% are formatted as .e.g, \code{"<0.1\%"} and
-\code{">99.9\%"}, where the cutoff is controled by \code{d}, and
+\code{">99.9\%"}, where the cutoff is controlled by \code{d}, and
 formatted as \code{"xx.x\% (xx/xx)"} otherwise, with the
 precision of the percent also controlled by \code{d}.
 }

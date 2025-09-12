@@ -1,0 +1,13 @@
+---
+name: ✨ Feature Request
+description: Request or propose a new feature
+title: "[Feature Request]: <title>"
+labels: ["enhancement"]
+body:
+  - type: textarea
+    attributes:
+      label: Feature description
+      description: |
+        Do not use this form to ask a question, or ask for assistance.
+        Is your feature request related to a problem? Please describe with a clear and concise description of the problem. \n\n
+        Could you describe the solution you would like? Please provide a clear and concise description of what you want to happen.
