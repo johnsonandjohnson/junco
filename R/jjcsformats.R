@@ -258,7 +258,7 @@ jjcsformat_count_denom_fraction <- function(
 #' @details
 #' Formats a 3-dimensional value such that percent values
 #' near 0 or 100% are formatted as .e.g, `"<0.1%"` and
-#' `">99.9%"`, where the cutoff is controlled by `d`, and
+#' `">99.9%"`, where the cutoff is controled by `d`, and
 #' formatted as `"xx.x% (xx/xx)"` otherwise, with the
 #' precision of the percent also controlled by `d`.
 #'

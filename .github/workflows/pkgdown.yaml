@@ -4,16 +4,11 @@ on:
   push:
     branches: [main]
   pull_request:
-      types:
-      - opened
-      - synchronize
-      - reopened
-      - ready_for_review
   release:
     types: [published]
   workflow_dispatch:
 
-name: Docs 📚
+name: pkgdown.yaml
 
 permissions: read-all
 
