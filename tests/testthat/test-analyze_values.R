@@ -33,7 +33,7 @@ test_that("analyze_values correctly modifies layout with proper formats", {
   )
 
   # Build the table
-  tbl <- build_table(modified_lyt, mock_data)
+  tbl <- build_table(modified_lyt, mock_data, round_type = "sas")
 
   # Check that the table has the expected structure
   expect_true("AGE" %in% row.names(tbl))

@@ -19,7 +19,7 @@ testthat::test_that("remove_col_count works", {
     split_cols_by("set2", nested = FALSE) %>%
     split_cols_by("ARM", split_fun = remove_split_levels("B: Placebo"))
 
-  tbl <- build_table(lyt, adsl)
+  tbl <- build_table(lyt, adsl, round_type = "sas")
 
   tbl2 <- remove_col_count(tbl, span_label_var = "set2")
 

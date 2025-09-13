@@ -354,7 +354,7 @@ test_that("a_relative_risk in table layout gives same results as with SAS", {
       )
     )
 
-  result <- build_table(lyt, dat)
+  result <- build_table(lyt, dat, round_type = "sas")
   first_row <- as.list(result[
     c("Response", "rel_risk_ci"),
     c("Treatment", "A")

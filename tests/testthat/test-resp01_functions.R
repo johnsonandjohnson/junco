@@ -8,7 +8,7 @@ test_that("resp01_split_fun_fct 1 works as expected", {
   result <- basic_table() %>%
     split_cols_by("ARM", split_fun = add_overall_level("Overall")) %>%
     split_cols_by("ID", split_fun = split_fun) |>
-    build_table(formatters::DM)
+    build_table(formatters::DM, round_type = "sas")
   expect_snapshot(result)
 })
 
@@ -20,7 +20,7 @@ test_that("resp01_split_fun_fct 2 works as expected", {
   result <- basic_table() %>%
     split_cols_by("ARM", split_fun = add_overall_level("Overall")) %>%
     split_cols_by("ID", split_fun = split_fun) |>
-    build_table(formatters::DM)
+    build_table(formatters::DM, round_type = "sas")
   expect_snapshot(col_info(result))
 })
 

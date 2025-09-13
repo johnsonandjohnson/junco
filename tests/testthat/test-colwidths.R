@@ -37,7 +37,7 @@ lyt <- basic_table() |>
     show_labels = "visible"
   )
 
-tt <- build_table(lyt, ADSL)
+tt <- build_table(lyt, ADSL, round_type = "sas")
 
 test_that("ttype_wrap_vec works as expected", {
   result <- ttype_wrap_vec(vec = c(1, 2, 3, 4) %>% as.character(), fontspec = fontspec, width = 2)

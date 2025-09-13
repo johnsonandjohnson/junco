@@ -8,7 +8,7 @@ tab <- basic_table() %>%
   split_rows_by("STRATA1") %>%
   summarize_row_groups() %>%
   analyze_vars("COUNTRY", .stats = "count_fraction") %>%
-  build_table(formatters::DM)
+  build_table(formatters::DM, round_type = "sas")
 
 trtvar <- "ARM"
 ctrl_grp <- "B: Placebo"
@@ -130,7 +130,7 @@ testthat::test_that("test keep_non_null_rows", {
     split_rows_by("ARM") %>%
     analyze("ARM", afun = xnull_cell_fn, show_labels = "hidden") %>%
     analyze("STRATA1", show_labels = "hidden") %>%
-    build_table(formatters::DM)
+    build_table(formatters::DM, round_type = "sas")
 
   result <- prune_table(tabsx, keep_rows(keep_non_null_rows))
 
@@ -138,7 +138,7 @@ testthat::test_that("test keep_non_null_rows", {
     split_cols_by("ARM") %>%
     split_rows_by("ARM") %>%
     analyze("STRATA1") %>%
-    build_table(formatters::DM)
+    build_table(formatters::DM, round_type = "sas")
 
   expected <- tabsx2
 
@@ -177,7 +177,7 @@ testthat::test_that("bspt_pruner with fraction", {
   tab_bspt_pruner <- basic_table() %>%
     split_cols_by("ARM") %>%
     analyze_vars("COUNTRY", .stats = "count_fraction") %>%
-    build_table(formatters::DM)
+    build_table(formatters::DM, round_type = "sas")
 
   result <- prune_table(
     tab_bspt_pruner,
@@ -197,7 +197,7 @@ testthat::test_that("bspt_pruner with fraction and diff_from_control", {
   tab_bspt_pruner <- basic_table() %>%
     split_cols_by("ARM") %>%
     analyze_vars("COUNTRY", .stats = "count_fraction") %>%
-    build_table(formatters::DM)
+    build_table(formatters::DM, round_type = "sas")
 
   result <- prune_table(
     tab_bspt_pruner,
@@ -219,7 +219,7 @@ testthat::test_that("bspt_pruner with fraction and diff_from_control and keeprow
   tab_bspt_pruner <- basic_table() %>%
     split_cols_by("ARM") %>%
     analyze_vars("COUNTRY", .stats = "count_fraction") %>%
-    build_table(formatters::DM)
+    build_table(formatters::DM, round_type = "sas")
 
   result1 <- prune_table(
     tab_bspt_pruner,
@@ -280,7 +280,7 @@ testthat::test_that("count_pruner in small groups", {
       split_fun = remove_split_levels("B: Placebo")
     ) %>%
     analyze("COUNTRY", afun = a_freq_j, extra_args = extra_args) %>%
-    build_table(DM_sub)
+    build_table(DM_sub, round_type = "sas")
 
   result <- prune_table(
     tab_bspt_pruner,
@@ -402,7 +402,7 @@ testthat::test_that("bspt_pruner in AE like tables", {
       show_labels = "hidden",
       extra_args = extra_args_rr
     ) %>%
-    build_table(my_adae, my_adsl)
+    build_table(my_adae, my_adsl, round_type = "sas")
 
   result1 <- safe_prune_table(
     tbl1,
@@ -461,7 +461,7 @@ testthat::test_that("bspt_pruner with less obvious control specifications", {
     split_cols_by("ARM") %>%
     split_cols_by("SEX") %>%
     analyze_vars("COUNTRY", .stats = "count_fraction") %>%
-    build_table(DM_sub)
+    build_table(DM_sub, round_type = "sas")
 
   rps_label <- make_row_df(tab_bspt_pruner)$label
 
@@ -516,7 +516,7 @@ my_DM <- formatters::DM %>%
 my_tab <- basic_table() %>%
   split_cols_by("ARM") %>%
   analyze("AGE") %>%
-  build_table(my_DM)
+  build_table(my_DM, round_type = "sas")
 
 testthat::test_that("check that if all data is pruned leaving no rows, the outcome is the message", {
   # create an empty table tree so we can see that safe_prune_table returns the message the user specified

@@ -28,7 +28,7 @@ test_that("a_freq_resp_var_j works as expected with basic usage", {
     )
 
   # Build the table
-  tbl <- build_table(lyt, adrs)
+  tbl <- build_table(lyt, adrs, round_type = "sas")
   expect_true(!is.null(tbl))
 
   # Extract and check one cell for basic validation
@@ -66,7 +66,7 @@ test_that("a_freq_resp_var_j works with factor responses", {
     )
 
   # Should not throw an error
-  expect_no_error(build_table(lyt, adrs))
+  expect_no_error(build_table(lyt, adrs, round_type = "sas"))
 })
 
 test_that("a_freq_resp_var_j handles missing values correctly", {
@@ -98,7 +98,7 @@ test_that("a_freq_resp_var_j handles missing values correctly", {
     )
 
   # Should not throw an error
-  expect_no_error(suppressWarnings(build_table(lyt, adrs)))
+  expect_no_error(suppressWarnings(build_table(lyt, adrs, round_type = "sas")))
 })
 
 test_that("a_freq_resp_var_j errors on invalid responses", {
@@ -130,7 +130,7 @@ test_that("a_freq_resp_var_j errors on invalid responses", {
 
   # Should throw an error about invalid response values
   expect_error(
-    build_table(lyt, adrs),
+    build_table(lyt, adrs, round_type = "sas"),
     "resp_var must contain only Y/N values"
   )
 })
@@ -157,7 +157,7 @@ test_that("a_freq_resp_var_j errors when resp_var is null", {
 
   # Should throw an error about missing resp_var
   expect_error(
-    build_table(lyt, adrs),
+    build_table(lyt, adrs, round_type = "sas"),
     "resp_var cannot be NULL."
   )
 })
@@ -191,7 +191,7 @@ test_that("a_freq_resp_var_j works with drop_levels parameter", {
     )
 
   # Should not throw an error
-  expect_no_error(build_table(lyt, adrs))
+  expect_no_error(build_table(lyt, adrs, round_type = "sas"))
 })
 
 test_that("a_freq_resp_var_j works with riskdiff parameter", {
@@ -223,5 +223,5 @@ test_that("a_freq_resp_var_j works with riskdiff parameter", {
     )
 
   # Should not throw an error
-  expect_no_error(build_table(lyt, adrs))
+  expect_no_error(build_table(lyt, adrs, round_type = "sas"))
 })

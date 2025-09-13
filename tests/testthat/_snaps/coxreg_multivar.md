@@ -80,10 +80,10 @@
                                                    Coeff. (SE)   p-value   Estimate     50% CI  
       ——————————————————————————————————————————————————————————————————————————————————————————
       Model Parameter                                                                           
-        Treatment (B: Placebo vs. A: Drug X)          0 (0)      <0.001     1.5170    (1.4, 1.6)
-        Treatment (C: Combination vs. A: Drug X)      1 (0)      <0.001     1.9203    (1.8, 2.1)
-        Sex (M vs. F)                                 0 (0)       0.099     0.8813    (0.8, 0.9)
-        Age                                           0 (0)       0.646     1.0024    (1.0, 1.0)
+        Treatment (B: Placebo vs. A: Drug X)        0.4 (0.1)    <0.001     1.5170    (1.4, 1.6)
+        Treatment (C: Combination vs. A: Drug X)    0.7 (0.1)    <0.001     1.9203    (1.8, 2.1)
+        Sex (M vs. F)                              -0.1 (0.1)     0.099     0.8813    (0.8, 0.9)
+        Age                                         0.0 (0.0)     0.646     1.0024    (1.0, 1.0)
 
 # summarize_coxreg_multivar works with row splits
 

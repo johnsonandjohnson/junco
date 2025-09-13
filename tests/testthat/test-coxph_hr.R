@@ -70,7 +70,7 @@ test_that("a_coxph_hr works with custom arguments and stratification factors", {
         .stats = c("hr_ci_3d", "pvalue")
       )
     ) %>%
-    build_table(df = adtte_f)
+    build_table(df = adtte_f, round_type = "sas")
 
   res <- expect_silent(result)
   expect_snapshot(res)
@@ -101,7 +101,7 @@ test_that("a_coxph_hr works with stratification factors for Log-Rank test", {
         .stats = c("hr_ci_3d", "pvalue")
       )
     ) %>%
-    build_table(df = adtte_f)
+    build_table(df = adtte_f, round_type = "sas")
 
   res <- expect_silent(result)
   expect_snapshot(res)
