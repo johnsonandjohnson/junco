@@ -364,7 +364,7 @@ tt_to_tlgrtf <- function(
     } else {
       hrdmpf <- tt
     }
-    
+
     pags <- paginate_to_mpfs(
       tt,
       fontspec = fontspec,
