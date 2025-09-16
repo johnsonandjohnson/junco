@@ -12,7 +12,7 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = cont
     x1 <- x1[!is.na(x1)]
     x2 <- x2[!is.na(x2)]
 
-    if ((length(x1) > 1 && length(x2) > 1)) {
+    if ((length(x1) > 1 && length(x2) > 1) && !(var(x1) == 0 & var(x2) == 0)){
       ttest_stat <- stats::t.test(x1, x2, conf.level = control$conf_level)
 
       stat <- ttest_stat[c("estimate", "conf.int")]
