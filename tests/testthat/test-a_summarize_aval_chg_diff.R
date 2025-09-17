@@ -27,7 +27,8 @@ test_that("a_summarize_aval_chg_diff_j comp_btw_group = FALSE works as expected"
     split_cols_by("ARM") %>%
     split_rows_by("PARAMCD") %>%
     split_rows_by("AVISIT", child_labels = "hidden") %>%
-    split_cols_by_multivar(multivars, varlabels = c("n/N (%)", "Mean (95% CI)", "Mean Change From Baseline (95% CI)")) %>%
+    split_cols_by_multivar(multivars,
+                           varlabels = c("n/N (%)", "Mean (95% CI)", "Mean Change From Baseline (95% CI)")) %>%
     analyze("STUDYID", afun = a_summarize_aval_chg_diff_j, extra_args = extra_args_3col)
 
   tbl <- expect_silent(build_table(lyt, advs, alt_counts_df = adsl))
@@ -47,7 +48,8 @@ test_that("a_summarize_aval_chg_diff_j comp_btw_group = FALSE works as expected"
     split_cols_by("ARM") %>%
     split_rows_by("PARAMCD") %>%
     split_rows_by("AVISIT", child_labels = "hidden") %>%
-    split_cols_by_multivar(multivars, varlabels = c("n/N (%)", "Mean (95% CI)", "Mean Change From Baseline (95% CI)")) %>%
+    split_cols_by_multivar(multivars,
+                           varlabels = c("n/N (%)", "Mean (95% CI)", "Mean Change From Baseline (95% CI)")) %>%
     analyze("STUDYID", afun = a_summarize_aval_chg_diff_j, extra_args = extra_args_3col2)
 
   tbl2 <- build_table(lyt2, advs, alt_counts_df = adsl)
@@ -126,7 +128,8 @@ test_that("a_summarize_aval_chg_diff_j t-test sparse data works as expected", {
     split_cols_by("ARM", show_colcounts = TRUE) %>%
     split_rows_by("PARAMCD") %>%
     split_rows_by("AVISIT", child_labels = "hidden") %>%
-    split_cols_by_multivar(multivars, varlabels = c("n/N (%)", "Mean (95% CI)", "Mean Change From Baseline (95% CI)")) %>%
+    split_cols_by_multivar(multivars,
+                           varlabels = c("n/N (%)", "Mean (95% CI)", "Mean Change From Baseline (95% CI)")) %>%
     split_cols_by("rrisk_header", nested = FALSE) %>%
     split_cols_by("ARM",
       split_fun = remove_split_levels(ctrl_grp), labels_var = "rrisk_label",
