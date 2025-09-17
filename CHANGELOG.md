@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.1.1] - 2025-09-17
 
+* Fixed bug in s_summarize_desc_j function to handle sparse data (zero variance) cases (#78)
+
 
 ## [0.1.1] - 2025-07-28
 
