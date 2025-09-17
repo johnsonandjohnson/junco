@@ -4,20 +4,23 @@ library(dplyr)
 library(tern)
 
 test_that("a_summarize_aval_chg_diff_j comp_btw_group = FALSE works as expected", {
-
   adsl <- ex_adsl
   advs <- ex_advs %>%
     filter(PARAMCD %in% c("DIABP", "PULSE")) %>%
     filter(AVISIT %in% c("BASELINE", "WEEK 1 DAY 8", "WEEK 2 DAY 15")) %>%
-    mutate(PARAMCD = droplevels(PARAMCD),
-           AVISIT = droplevels(AVISIT))
+    mutate(
+      PARAMCD = droplevels(PARAMCD),
+      AVISIT = droplevels(AVISIT)
+    )
 
   multivars <- c("AVAL", "AVAL", "CHG")
-  extra_args_3col <- list(d = 1,
-                          ancova = FALSE,
-                          comp_btw_group = TRUE,
-                          ref_path = c("ARM", "B: Placebo"),
-                          multivars = multivars)
+  extra_args_3col <- list(
+    d = 1,
+    ancova = FALSE,
+    comp_btw_group = TRUE,
+    ref_path = c("ARM", "B: Placebo"),
+    multivars = multivars
+  )
 
 
   lyt <- basic_table() %>%
@@ -32,10 +35,12 @@ test_that("a_summarize_aval_chg_diff_j comp_btw_group = FALSE works as expected"
   expect_snapshot(tbl)
 
   # this one also ran fine prior hotfix78
-  extra_args_3col2 <- list(d = 1,
-                           ancova = FALSE,
-                           comp_btw_group = FALSE,
-                           multivars = multivars)
+  extra_args_3col2 <- list(
+    d = 1,
+    ancova = FALSE,
+    comp_btw_group = FALSE,
+    multivars = multivars
+  )
 
 
   lyt2 <- basic_table() %>%
@@ -48,26 +53,29 @@ test_that("a_summarize_aval_chg_diff_j comp_btw_group = FALSE works as expected"
   tbl2 <- build_table(lyt2, advs, alt_counts_df = adsl)
   expect_s4_class(tbl2, "TableTree")
   expect_snapshot(tbl2)
-
 })
 
 test_that("a_summarize_aval_chg_diff_j t-test sparse data works as expected", {
-
   ctrl_grp <- "B: Placebo"
-  trtvar<- "ARM"
+  trtvar <- "ARM"
 
   adsl <- ex_adsl %>%
     select(STUDYID, USUBJID, ARM) %>%
-    mutate(colspan_trt = factor(ifelse(ARM == ctrl_grp, " ", "Active treatment"),
-                                levels = c(" ", "Active treatment")),
-           rrisk_header = "Difference in Mean Change (95% CI)",
-           rrisk_label = paste0(ARM, " vs ", ctrl_grp))
+    mutate(
+      colspan_trt = factor(ifelse(ARM == ctrl_grp, " ", "Active treatment"),
+        levels = c(" ", "Active treatment")
+      ),
+      rrisk_header = "Difference in Mean Change (95% CI)",
+      rrisk_label = paste0(ARM, " vs ", ctrl_grp)
+    )
 
   advs <- ex_advs %>%
     filter(PARAMCD %in% c("DIABP", "PULSE")) %>%
     filter(AVISIT %in% c("BASELINE", "WEEK 1 DAY 8", "WEEK 2 DAY 15")) %>%
-    mutate(PARAMCD = droplevels(PARAMCD),
-           AVISIT = droplevels(AVISIT))
+    mutate(
+      PARAMCD = droplevels(PARAMCD),
+      AVISIT = droplevels(AVISIT)
+    )
 
   advs <- advs %>%
     inner_join(adsl)
@@ -81,30 +89,36 @@ test_that("a_summarize_aval_chg_diff_j t-test sparse data works as expected", {
     pull(USUBJID)
 
   advs_2 <- advs %>%
-    mutate(AVAL = case_when(PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & !(USUBJID %in% select_sub) ~ NA_real_,
-                            PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & (USUBJID %in% select_sub) & ARM == "A: Drug X" ~ 50,
-                            PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & (USUBJID %in% select_sub) & ARM == "B: Placebo" ~ 45,
-                            TRUE ~ AVAL)) %>%
-    mutate(CHG = case_when(PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & !(USUBJID %in% select_sub) ~ NA_real_,
-                           PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & (USUBJID %in% select_sub) & ARM == "A: Drug X" ~ -5,
-                           PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & (USUBJID %in% select_sub) & ARM == "B: Placebo" ~ -7,
-                           TRUE ~ CHG))
+    mutate(AVAL = case_when(
+      PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & !(USUBJID %in% select_sub) ~ NA_real_,
+      PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & (USUBJID %in% select_sub) & ARM == "A: Drug X" ~ 50,
+      PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & (USUBJID %in% select_sub) & ARM == "B: Placebo" ~ 45,
+      TRUE ~ AVAL
+    )) %>%
+    mutate(CHG = case_when(
+      PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & !(USUBJID %in% select_sub) ~ NA_real_,
+      PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & (USUBJID %in% select_sub) & ARM == "A: Drug X" ~ -5,
+      PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & (USUBJID %in% select_sub) & ARM == "B: Placebo" ~ -7,
+      TRUE ~ CHG
+    ))
 
   colspan_trt_map <- create_colspan_map(adsl,
-                                        non_active_grp = ctrl_grp,
-                                        non_active_grp_span_lbl = " ",
-                                        active_grp_span_lbl = "Active treatment",
-                                        colspan_var = "colspan_trt",
-                                        trt_var = trtvar
+    non_active_grp = ctrl_grp,
+    non_active_grp_span_lbl = " ",
+    active_grp_span_lbl = "Active treatment",
+    colspan_var = "colspan_trt",
+    trt_var = trtvar
   )
 
 
   multivars <- c("AVAL", "AVAL", "CHG")
-  extra_args_3col <- list(d = 1,
-                          ancova = FALSE,
-                          comp_btw_group = TRUE,
-                          ref_path = c("colspan_trt", " ","ARM", "B: Placebo"),
-                          multivars = multivars)
+  extra_args_3col <- list(
+    d = 1,
+    ancova = FALSE,
+    comp_btw_group = TRUE,
+    ref_path = c("colspan_trt", " ", "ARM", "B: Placebo"),
+    multivars = multivars
+  )
 
 
   lyt <- basic_table() %>%
@@ -113,11 +127,10 @@ test_that("a_summarize_aval_chg_diff_j t-test sparse data works as expected", {
     split_rows_by("PARAMCD") %>%
     split_rows_by("AVISIT", child_labels = "hidden") %>%
     split_cols_by_multivar(multivars, varlabels = c("n/N (%)", "Mean (95% CI)", "Mean Change From Baseline (95% CI)")) %>%
-
     split_cols_by("rrisk_header", nested = FALSE) %>%
     split_cols_by("ARM",
-                  split_fun = remove_split_levels(ctrl_grp), labels_var = "rrisk_label",
-                  show_colcounts = FALSE
+      split_fun = remove_split_levels(ctrl_grp), labels_var = "rrisk_label",
+      show_colcounts = FALSE
     ) %>%
     ### difference columns : just 1 column & analysis needs to be done on change
     split_cols_by_multivar(multivars[3], varlabels = c(" ")) %>%
