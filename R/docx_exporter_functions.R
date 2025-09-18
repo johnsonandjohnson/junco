@@ -409,6 +409,11 @@ my_tt_to_flextable <- function(tt,
     tblid <- three_dots$tblid
     ts_tbl <- paste0(tblid, ":\t", ts_tbl)
     
+    flx_fpt <- .extract_font_and_size_from_flx(flx)
+    title_style <- flx_fpt$fpt
+    title_style$font.size <- title_style$font.size + 1 # 10
+    title_style$bold <- bold_titles
+    
     flx <- .add_titles_as_header(flx,
                                  # all_titles = formatters::all_titles(tt), 
                                  all_titles = ts_tbl, 
@@ -417,7 +422,14 @@ my_tt_to_flextable <- function(tt,
                         i = length(formatters::all_titles(tt)),
                         border.bottom = border,
                         border.top = border # NOTE: added this line
-                        )
+                        ) %>% 
+      flextable::fontsize(part = "header", i = 1, size = title_style$font.size)
+    
+    
+    # flx %>% flextable::style(part = "header", i = 1,
+    #                          pr_p = officer::fp_par(word_style = "centered"),
+    #                          pr_t = officer::fp_text(color = "red"),
+    #                          pr_c = officer::fp_cell(background.color = "blue"))
     # END
   }
   final_cwidths <- total_page_width * colwidths/sum(colwidths)
