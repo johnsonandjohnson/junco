@@ -277,23 +277,56 @@ my_tt_to_flextable <- function(tt,
     }
   }
   hdr[hdr == ""] <- " "
-  flx <- flx %>% flextable::set_header_labels(values = setNames(as.vector(hdr[hnum, 
-                                                                              , drop = TRUE]), names(content)))
+  flx <- flx %>% flextable::set_header_labels(
+    values = setNames(as.vector(hdr[hnum, , drop = TRUE]), names(content)))
+  
   if (hnum > 1) {
     for (i in seq(hnum - 1, 1)) {
       sel <- formatters::spans_to_viscell(spans[i, ])
       flx <- flextable::add_header_row(flx, top = TRUE, 
                                        values = as.vector(hdr[i, sel]),
                                        colwidths = as.integer(spans[i, sel]))
+      
+      # NOTE: this block of code calculates where to put horizontal borders
+      # within the Header in the first row
+      if (i == 1) {
+        
+        col_widths_in_header <- as.integer(spans[i, sel]) # c(1, 3, 1)
+        l_pos <- c()
+        cnt <- 1
+        for (j in col_widths_in_header) {
+          if (j > 1) {
+            l_pos <- c(l_pos, cnt)
+          }
+          cnt <- cnt + j
+        }
+        
+        # l_pos <- list()
+        # cnt <- 1
+        # for (j in seq(1, length(col_widths_in_header))) {
+        #   cur_cw <- col_widths_in_header[j]
+        #   if (cur_cw > 1) {
+        #     start_pos <- cnt
+        #     end_pos <- cnt + cur_cw - 1
+        #     l_pos[[cnt]] <- c(start_pos, end_pos)
+        #   }
+        #   cnt <- cnt + cur_cw
+        # }
+        # keep <- !(lapply(l_pos, is.null) %>% unlist())
+        # l_pos <- l_pos[keep]
+        
+      }
+      # END
+      
     }
   }
   nr_body <- flextable::nrow_part(flx, part = "body")
   nr_header <- flextable::nrow_part(flx, part = "header")
   flx <- flx %>% .remove_hborder(part = "header", w = "all") %>% 
     .add_hborder("header", ii = c(0, hnum), border = border)
-  # Note: this line of code is new, it adds the missing
-  # border in the header under "Active Study Agent"
-  # flx <- flextable::hline(flx, i = 1, j = 2:4, border = border, part = "header")
+  
+  # NOTE: this line of code adds the border in the Header under "Active Study Agent"
+  flx <- flx %>% flextable::hline(part = "header", i = 1, j = l_pos, border = border)
   
   flx <- flx %>%
     .apply_alignments(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") %>%
