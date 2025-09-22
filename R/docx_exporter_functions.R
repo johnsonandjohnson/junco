@@ -1,8 +1,101 @@
 
+
+interpret_cell_content <- function(s, sep = "{") {
+  
+  closing_sep <- ifelse(sep == "{", "}", "]")
+  
+  j <- 1
+  res <- ""
+  matches <- gregexpr(paste0("~\\", sep), s)[[1]]
+  if (length(matches) == 1 && matches == -1) {
+    # no regexp to interpret, return cell content as is
+    return(s)
+  }
+  
+  start_pos <- matches[1]
+  for (start_pos in matches) {
+    close_pos <- regexpr(closing_sep, substr(s, start_pos, nchar(s)))
+    if (close_pos != -1) {
+      close_pos <- close_pos + start_pos - 1
+      content_within_curly_brackets <- substr(s, start_pos + 2, close_pos - 1) # e.g. "super a"
+      method_to_apply <- gsub(" .*", "", content_within_curly_brackets) #e.g. "super"
+      flextable_command <- switch(method_to_apply,
+                                  "super" = "flextable::as_sup",
+                                  "sub" = "flextable::as_sub",
+                                  method_to_apply
+      )
+      
+      r <- c(start_pos + 2 + nchar(method_to_apply), close_pos - 1)
+      text_to_interpret <- substr(s, r[1], r[2]) # e.g. " a"
+      text_to_interpret <- trimws(x =  text_to_interpret, which = "left")
+      if (res == "") {
+        res <- paste0("'", substr(s, j, start_pos - 1), "', ", flextable_command,"('", text_to_interpret, "')")
+      } else {
+        res <- paste0(res, ", '", substr(s, j, start_pos - 1), "', ", flextable_command, "('", text_to_interpret, "')")
+      }
+      j <- r[2] + 2
+    }
+  }
+  if (j < nchar(s)) {
+    # just append the rest of the sentence
+    res <- paste0(res, ", '", substr(s, j, nchar(s)), "'")
+    j <- nchar(s) + 1
+  }
+  res <- paste0("flextable::as_paragraph(", res, ")")
+  res
+}
+
+
+interpret_all_cell_content <- function(flx) {
+  
+  # Title and Headers
+  tmp <- flx$header$dataset
+  for (i in seq(nrow(tmp))) {
+    for (j in seq(ncol(tmp))) {
+      s <- tmp[i, j]
+      res <- interpret_cell_content(s)
+      if (s != res) {
+        flx <- flextable::compose(flx, part = "header", i = i, j = j, value = eval(parse(text = res)))
+      }
+    }
+  }
+  
+  # Body
+  tmp <- flx$body$dataset
+  for (i in seq(nrow(tmp))) {
+    s <- tmp[i, 1]
+    res <- interpret_cell_content(s, sep = "[")
+    if (s != res) {
+      flx <- flextable::compose(flx, part = "body", i = i, j = 1, value = eval(parse(text = res)))
+    }
+  }
+  
+  # Footers
+  tmp <- flx$footer$dataset
+  for (i in seq(nrow(tmp))) {
+    s <- tmp[i, 1]
+    res <- interpret_cell_content(s)
+    if (s != res) {
+      flx <- flextable::compose(flx, part = "footer", i = i, j = 1, value = eval(parse(text = res)))
+    }
+  }
+  
+  flx
+}
+
+
+
+my_pg_width_by_orient <- function(orientation = "portrait") {
+  if (orientation == "landscape") {
+    return(8.82)
+  }
+  return(6.38)
+}
+
 # based on rtables.officer::theme_docx_default
 my_theme_docx_default <- function(font = "Arial",
                                   font_size = 9,
-                                  cell_margins = c(rtables.officer::word_mm_to_pt(1.9), rtables.officer::word_mm_to_pt(1.9), 0, 0),
+                                  cell_margins = c(0, 0, 0, 0),
                                   bold = c("header", "content_rows", "label_rows", "top_left"),
                                   bold_manual = NULL, border = flextable::fp_border_default(width = 0.5)) {
   function(flx, ...) {
@@ -34,6 +127,7 @@ my_theme_docx_default <- function(font = "Arial",
       flextable::valign(j = 1, valign = "bottom", part = "all") %>%
       flextable::valign(j = 1, valign = "bottom", part = "header") %>%
       flextable::valign(j = seq(2, tbl_ncol_body), valign = "bottom", part = "header")
+    flx <- flextable::padding(flx, part = "header", padding = 0)
     flx <- rtables.officer:::.apply_indentation_and_margin(flx, cell_margins = cell_margins, 
                                          tbl_row_class = tbl_row_class, tbl_ncol_body = tbl_ncol_body)
     if (any(tbl_row_class == "LabelRow")) {
@@ -109,7 +203,8 @@ my_tt_to_flextable <- function(tt,
                                max_width = cpp,
                                total_page_height = 10, 
                                # total_page_width = 10,
-                               total_page_width = junco:::pg_width_by_orient(orientation == "landscape"),
+                               # total_page_width = junco:::pg_width_by_orient(orientation == "landscape"),
+                               total_page_width = my_pg_width_by_orient(orientation),
                                autofit_to_page = TRUE,
                                orientation = "portrait",
                                tblid
@@ -243,8 +338,8 @@ my_tt_to_flextable <- function(tt,
     mpf_aligns <- new_mpf_aligns
   }
   # END
-  flx <- flextable::qflextable(content) %>% rtables.officer:::.remove_hborder(part = "body", 
-                                                            w = "bottom")
+  flx <- flextable::qflextable(content) %>%
+    rtables.officer:::.remove_hborder(part = "body", w = "bottom")
   # NOTE:
   # this is to add a horizontal line above the Title
   # rtables.officer::add_flextable_separators()
@@ -462,7 +557,8 @@ my_tt_to_flextable <- function(tt,
                         border.bottom = border,
                         border.top = border # NOTE: added this line
                         ) %>% 
-      flextable::fontsize(part = "header", i = 1, size = title_style$font.size)
+      flextable::fontsize(part = "header", i = 1, size = title_style$font.size) %>% 
+      flextable::padding(part = "header", i = 1, padding.left = 0)
     
     
     # flx %>% flextable::style(part = "header", i = 1,
@@ -512,15 +608,18 @@ my_tt_to_flextable <- function(tt,
     title_style <- flx_fpt$fpt
     title_style$font.size <- title_style$font.size + 1 # 10
     title_style$bold <- bold_titles
-    flx <- flx %>% set_caption(as_paragraph(as_chunk(
-      ts_tbl, title_style)),
+    flx <- flx %>% flextable::set_caption(
+      flextable::as_paragraph(flextable::as_chunk(ts_tbl, title_style)),
       word_stylename = "Caption",
       style = "Caption",
       fp_p = officer::fp_par(text.align = "left"),
-      align_with_table = F)
+      align_with_table = F
+    )
   }
   # END
   
+  # convert the super- and sub-scripts
+  flx <- interpret_all_cell_content(flx)
   
   
   flx
@@ -636,7 +735,8 @@ my_export_as_docx <- function(tt,
       # page_width <- section_properties$page_size$width
       # NOTE: page_width = 6.38 inches, not 8.5 inches
       # page_width <- 6.38
-      page_width <- junco:::pg_width_by_orient(section_properties$page_size$orient == "landscape")
+      # page_width <- junco:::pg_width_by_orient(section_properties$page_size$orient == "landscape")
+      page_width <- my_pg_width_by_orient(section_properties$page_size$orient)
       # END
       dflx <- dim(flx)
       if (abs(sum(unname(dflx$widths)) - page_width) > 0.01) {
