@@ -280,8 +280,8 @@ my_tt_to_flextable <- function(tt,
     tabs <- rtables::paginate_table(tt, fontspec = fontspec, 
                                     lpp = lpp, cpp = cpp, tf_wrap = tf_wrap, max_width = max_width, 
                                     ...)
-    cinds <- lapply(tabs, function(tb) c(1, .figure_out_colinds(tb, 
-                                                                tt) + 1L))
+    cinds <- lapply(tabs, function(tb) 
+      c(1, rtables.officer:::.figure_out_colinds(tb, tt) + 1L))
     args$colwidths <- NULL
     args$tt <- NULL
     cl <- if (!is.null(colwidths)) {
@@ -515,11 +515,12 @@ my_tt_to_flextable <- function(tt,
     "[", tidytlg:::getFileName(), "]",
     toupper(format(Sys.time(), format = "%d%b%Y, %H:%M"))
   )
-  n_footnotes <- length(footers_with_blank_line) + 1
+  n_footnotes <- ifelse(!exists("footers_with_blank_line"), 1, length(footers_with_blank_line) + 1)
   flx <- flextable::add_footer_lines(flx, values = footer_text) %>%
     flextable::fontsize(part = "footer", i = n_footnotes, size = 8) %>%
     flextable::align(part = "footer", i = n_footnotes, align = "right") %>%
-    rtables.officer:::.remove_hborder(part = "footer", w = "bottom")
+    rtables.officer:::.remove_hborder(part = "footer", w = "bottom") %>% 
+    rtables.officer:::.add_hborder(part = "footer", ii = n_footnotes - 1, border = border)
   # END
   
   
