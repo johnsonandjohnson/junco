@@ -62,22 +62,20 @@ interpret_all_cell_content <- function(flx) {
   
   # Body
   tmp <- flx$body$dataset
-  for (i in seq(nrow(tmp))) {
+  idx <- which(grepl("~\\[", tmp[, 1]), arr.ind = TRUE)
+  for (i in idx) {
     s <- tmp[i, 1]
     res <- interpret_cell_content(s, sep = "[")
-    if (s != res) {
-      flx <- flextable::compose(flx, part = "body", i = i, j = 1, value = eval(parse(text = res)))
-    }
+    flx <- flextable::compose(flx, part = "body", i = i, j = 1, value = eval(parse(text = res)))
   }
   
   # Footers
   tmp <- flx$footer$dataset
-  for (i in seq(nrow(tmp))) {
+  idx <- which(grepl("~\\{", tmp[, 1]), arr.ind = TRUE)
+  for (i in idx) {
     s <- tmp[i, 1]
     res <- interpret_cell_content(s)
-    if (s != res) {
-      flx <- flextable::compose(flx, part = "footer", i = i, j = 1, value = eval(parse(text = res)))
-    }
+    flx <- flextable::compose(flx, part = "footer", i = i, j = 1, value = eval(parse(text = res)))
   }
   
   flx
