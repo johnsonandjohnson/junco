@@ -266,3 +266,29 @@ test_that("tt_to_tlgrtf respects JUNCO_DISABLE_VALIDATION environment variable",
     Sys.setenv(JUNCO_DISABLE_VALIDATION = old_env)
   }
 })
+
+test_that("more top left than col headers works", {
+  data <- data.frame(
+    TRT01A = "Dummy Treatment A",
+    SEX = "M",
+    AGEGR1 = "<65 years",
+    RACE = "white",
+    AGE = 65, 
+    empty_split = " "
+  )
+
+  lyt <- basic_table() |>
+    split_cols_by("empty_split") |>
+    split_cols_by("TRT01A") |>
+    split_rows_by("SEX", label_pos = "topleft") |>
+    split_rows_by("AGEGR1", label_pos = "topleft") |>
+    split_rows_by("RACE", label_pos = "topleft") |>
+    analyze("AGE")
+
+  tbl <- build_table(lyt, data)
+  tmpfile  <- tempfile()
+  expect_silent(tt_to_tlgrtf(tbl, file = tmpfile))
+  expect_true(file.exists(paste0(tmpfile, ".rtf")))
+  unlink(tmpfile)
+
+})
