@@ -1,0 +1,149 @@
+
+# Core Issue
+
+A way to specify how formats should be resolved based on split context.
+
+## Afun approach
+
+```{r, eval = FALSE}
+
+fmt_lookup_fun <- function(df, .var,  ..., .spl_context) {
+    ## a few options here:
+    ## dynamically calculate it based on empirical precision
+    
+    
+
+}
+
+
+general_afun <- function(df,
+                         ...,
+                         .var,
+                         .df_row,
+                         .stats = NULL,
+                         .formats = NULL,
+                         .labels = NULL,
+                         .indent_mods = NULL,
+                         format_lookup = NULL, #fmt_lookup_fun,
+                         .spl_context) {
+    if (!is.null(format_lookup)) 
+        fmt <- format_lookup(df, .var,  ..., .stats, .spl_context) #.formats?
+    # ...
+}
+```
+
+
+# `rtables` `analyze` approach
+
+## Version 1: format column
+
+``` {r, eval = FALSE}
+
+analyze <- function(lyt,
+                    vars,
+                    afun = simple_analysis,
+                    var_labels = vars,
+                    ## really wish I hadn't named this table_names
+                    ## but can't break backwards compat :(
+                    table_names = vars,
+                    parent_name = NULL,
+                    format = NULL,
+                    na_str = NA_character_,
+                    nested = TRUE,
+                    ## can't name this na_rm symbol conflict with possible afuns!!
+                    inclNAs = FALSE,
+                    extra_args = list(),
+                    show_labels = c("default", "visible", "hidden"),
+                    indent_mod = 0L,
+                    section_div = NA_character_,
+                    format_col = NULL) {
+    ## ...
+}
+
+lyt <- basic_table() |>
+    split_rows_by("PARAMCD") |>
+    analyze("AVAR", afun = mean, format_col = "AVAR_fmt")
+```
+
+### Issues:
+
+- Need to figure out precedence of `format` vs `format_col`
+- Need to figure out if `format_col` is applied when the `RowsVerticalSection` already has formatting info in it.
+
+```{r}
+library(tern)
+myafun <- function(x, ..., .formats = NULL) {
+
+    in_rows(.list = list(mean = mean(x)), .formats = .formats)
+}
+
+lyt <- basic_table() |>
+    analyze("AGE", a_summary, extra_args = list(.stats = "mean", .formats = character()), format = "xx.xx")
+
+build_table(lyt, DM)
+```
+
+Currently `tern` mandatorily applies default formatting within its afuns that then can't be over-ridden at the `analyze` call level. We'd need to make a PR that added the ability to turn that off for this approach to allow us to use tern functions with `format_col`.
+
+Needs to be a list column because we need to be able to specify formats for multiple rows output from our afun.
+
+## Version 2: format lookup fun or similar
+
+specify function instead of df column, takes split context var, stats and other stuff.
+
+### Issues
+
+- Need to figure out what exactly our format lookup function will return
+- Still need to change all the `tern` functions so that auto formatting can be turned off.
+- What should we do about "stat name" resolution/ lookup fun/column returning more formats than needed? tern approach?
+
+
+
+# testing
+
+
+```{r}
+
+
+afun <- function(x) {
+    in_rows(mean = mean(x), range = range(x))
+}
+
+lyt  <- basic_table() |>
+    analyze("AGE", afun, format = c("xx.x", "xx.x - xx.x"))
+
+build_table(lyt, DM)
+```
+
+## For experimenting
+
+```{R, eval = FALSE}
+no_auto_fmt <- structure(character(), class = "no_auto_format")
+```
+
+use `inherits(.formats)` to see if it is class "no_auto_format" or not.
+
+```
+> no_auto_fmt <- structure(character(), class = "no_auto_format")
+> no_auto_fmt
+character(0)
+attr(,"class")
+[1] "no_auto_format"
+> names(no_auto_fmt)
+NULL
+> class(no_auto_fmt)
+[1] "no_auto_format"
+> inherits(no_auto_fmt, "no_auto_format")
+[1] TRUE
+> inherits(no_auto_fmt, "glm")
+[1] FALSE
+```
+
+make `tern:::get_formats_from_stats` and `tern:::apply_auto_formatting` return `NULL` if they receive the sentinel value. Would this allow us to not change any of the tern afuns?
+
+***What about the weird `x_stats <- x_stats %>% .unlist_keep_nulls() %>% setNames(names(.formats))` line???***
+
+Keep `get_formats_from_stats` the same except have it (re-) mark its return value with the
+"no_auto_format" class and then have `apply_auto_formatting` return `NULL` if it receives that class regardless of contents.
+
+Test this approach with the `format` argument to `analyze`, as that will have the same precedence as our new `format_col` or `format_lookup_fun` (name probably to change) once we add it.
