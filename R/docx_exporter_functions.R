@@ -611,7 +611,7 @@ my_tt_to_flextable <- function(tt,
       flextable::as_paragraph(flextable::as_chunk(ts_tbl, title_style)),
       word_stylename = "Caption",
       style = "Caption",
-      fp_p = officer::fp_par(text.align = "left"),
+      fp_p = officer::fp_par(text.align = "left", border.top = border),
       align_with_table = F
     )
   }
