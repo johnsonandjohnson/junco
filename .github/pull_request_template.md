@@ -8,4 +8,4 @@ Fixes #nn
 ## Checks
 
 - [ ] (Have you updated the changelog.md ?)
-- [ ] (Have you included proper unit tests for the new functionalities introduces ?)
+- [ ] (Have you included proper unit tests for the new functionalities introduced ?)
