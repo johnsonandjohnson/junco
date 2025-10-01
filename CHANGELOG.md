@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.1.1] - 2025-09-17
 
 * Fixed bug in s_summarize_desc_j function to handle sparse data (zero variance) cases (#78)
+* Fixed bug in tt_to_tblfile.R to handle tables where topleft section is longer than column headers (#80)
 
 
 ## [0.1.1] - 2025-07-28
