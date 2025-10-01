@@ -707,9 +707,8 @@ fixup_bord_mat <- function(brdmat, hstrs) {
 
 setGeneric(
   "make_header_bordmat",
-  function(
-      obj,
-      mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
+  function(obj,
+           mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
     standardGeneric("make_header_bordmat")
   }
 )
