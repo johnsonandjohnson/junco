@@ -273,7 +273,7 @@ test_that("more top left than col headers works", {
     SEX = "M",
     AGEGR1 = "<65 years",
     RACE = "white",
-    AGE = 65, 
+    AGE = 65,
     empty_split = " "
   )
 
