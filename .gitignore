@@ -33,3 +33,4 @@ programs_external/*
 .vscode/settings.json
 .idea/*
 temp_ilse/*
+localFile1.txt
