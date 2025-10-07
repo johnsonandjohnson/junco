@@ -357,11 +357,11 @@ tt_to_tlgrtf <- function(
       )
     }
     if (methods::is(tt, "VTableTree")) {
-      hdrmpf <- matrix_form(tt[1, , keep_topleft = TRUE])
+      hdrmpf <- matrix_form(tt[1, ])
     } else if (methods::is(tt, "list") && methods::is(tt[[1]], "MatrixPrintForm")) {
       hdrmpf <- tt[[1]]
     } else {
-      hdrmpf <- tt
+      hrdmpf <- tt
     }
     pags <- paginate_to_mpfs(
       tt,
@@ -707,8 +707,9 @@ fixup_bord_mat <- function(brdmat, hstrs) {
 
 setGeneric(
   "make_header_bordmat",
-  function(obj,
-           mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
+  function(
+      obj,
+      mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
     standardGeneric("make_header_bordmat")
   }
 )
