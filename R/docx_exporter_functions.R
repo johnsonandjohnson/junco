@@ -174,7 +174,7 @@ my_theme_docx_default <- function(font = "Arial",
       flextable::valign(j = 1, valign = "bottom", part = "all") %>%
       flextable::valign(j = 1, valign = "bottom", part = "header") %>%
       flextable::valign(j = seq(2, tbl_ncol_body), valign = "bottom", part = "header")
-    flx <- flextable::padding(flx, part = "header", padding = 0)
+    flx <- flextable::padding(flx, part = "header", padding = 0, j = -1)
     flx <- rtables.officer:::.apply_indentation_and_margin(flx, cell_margins = cell_margins, 
                                          tbl_row_class = tbl_row_class, tbl_ncol_body = tbl_ncol_body)
     if (any(tbl_row_class == "LabelRow")) {
@@ -642,10 +642,17 @@ my_tt_to_flextable <- function(tt,
                               part = "body")
   }
   for (i in seq_len(nr_header)) {
+    # NOTE: conversion ratio
+    # 1 inches = 72 points = 25.4 mm
+    # I'd like 0.1 inches every 2 spaces
+    # 0.05 inches = 3.6 points = 1.27 mm
     leading_spaces_count <- nchar(hdr[i, 1]) - 
       nchar(stringi::stri_replace(hdr[i, 1], regex = "^ +", ""))
-    header_indent_size <- leading_spaces_count * rtables.officer::word_mm_to_pt(1)
+    header_indent_size <- leading_spaces_count * rtables.officer::word_mm_to_pt(1.27)
     hdr[i, 1] <- stringi::stri_replace(hdr[i, 1], regex = "^ +", "")
+    
+    flx <- flextable::compose(flx, i = i, j = 1, value = flextable::as_paragraph(hdr[i, 1]), part = "header")
+    
     # NOTE: this line adds the left padding to each row column 1 (Header only)
     flx <- flextable::padding(flx, i = i, j = 1,
                               padding.left = header_indent_size + left_right_fixed_margins,
