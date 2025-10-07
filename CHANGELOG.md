@@ -5,9 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.1.1] - 2025-09-17
+## [0.1.1.1] - 2025-10-01
 
-* Fixed bug in s_summarize_desc_j function to handle sparse data (zero variance) cases (#78)
+- Fixed bug in s_summarize_desc_j function to handle sparse data (zero variance) cases (#78)
+- Fixed bug in tt_to_tblfile.R to handle tables where topleft section is longer than column headers (#80)
+- Fixed bug in h_freq_funs.R related to handling NA values in flag_var column of h_subset_combo function (#31)
 
 
 ## [0.1.1] - 2025-07-28
