@@ -2,10 +2,9 @@
 
 <!--- Replace `#nnn` with your issue link for reference. -->
 
-Fixes #nn
+Fixes #nnn
 
 
 ## Checks
 
 - [ ] (Have you updated the changelog.md ?)
-- [ ] (Have you included proper unit tests for the new functionalities introduced ?)
