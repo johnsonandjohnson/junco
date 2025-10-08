@@ -1,3 +1,50 @@
+
+add_hanging_indent_first_column <- function(flx, column_widths, hanging_indent = 0.06) {
+  
+  # will need:
+  # - table of indentations -> flx$body$styles$pars$padding.left$data
+  # - list of column widths -> flx$body$colwidths
+  
+  table_of_paddings <- flx$body$styles$pars$padding.left$data
+  cw_in_inches <- column_widths[1]
+  
+  for (i in seq_len(nrow(table_of_paddings))) {
+    
+    # left_padding_in_inches <- (27/9)*0.125
+    left_padding_in_inches <- (table_of_paddings[[i, 1]]/9)*0.125
+    # this is the available space for the string to be displayed at a particular level,
+    # which is equal to the width of the first column, minus the left padding at that level
+    available_space_in_inches <- cw_in_inches - left_padding_in_inches
+    
+    # s <- "Study agent permanently discontinued"
+    s <- flx$body$dataset[[i, 1]]
+    # in 1.84 inches fits 38 characters approx
+    w <- (available_space_in_inches*38)/1.84
+    # 1.99 inches (column width) - 4 (level)
+    # w should be between 52-61
+    
+    new_s <- 
+      formatters::wrap_string_ttype(str = s,
+                                    width = w,
+                                    fontspec = formatters::font_spec("Times", 9L, 1.2),
+                                    collapse = "\n\t", wordbreak_ok = FALSE)
+    
+    browser()
+    
+    if (grepl("\n\t", new_s)) {
+      # insert new_s in row = i, j = 1
+      flx <- flextable::compose(flx, part = "body", i = i, j = 1,
+                                value = flextable::as_paragraph(new_s))
+      # insert a tab stop at current indentation level + hanging indent
+      flx <- flextable::tab_settings(flx, part = "body", i = i, j = 1,
+                                     value = officer::fp_tabs(officer::fp_tab(pos = left_padding_in_inches + hanging_indent, style = "left")))
+      
+    }
+  }
+  
+  return(flx)
+}
+
 insert_title_hanging_indent <- function(flx, title, orientation, border, bold_titles) {
   
   w <- ifelse(orientation == "portrait", 155, 215)
@@ -741,6 +788,7 @@ my_tt_to_flextable <- function(tt,
   }
   final_cwidths <- total_page_width * colwidths/sum(colwidths)
   flx <- flextable::width(flx, width = final_cwidths)
+  flx <- add_hanging_indent_first_column(flx = flx, column_widths = final_cwidths)
   flx <- flextable::set_table_properties(
     flx,
     layout = ifelse(autofit_to_page, 
