@@ -1,6 +1,9 @@
 
 wrap_string_with_indent <- function(text, max_width_inch,
-                                    font_family = "Times New Roman", font_size = 9, dpi = 96) {
+                                    font_family = "Times New Roman",
+                                    font_size = 9,
+                                    hanging_indent = 0.06,
+                                    dpi = 96) {
   # Convert inches to pixels
   max_width_px <- max_width_inch * dpi
   
@@ -10,16 +13,26 @@ wrap_string_with_indent <- function(text, max_width_inch,
   current_line <- ""
   current_width <- 0
   lines <- c()
+  we_are_in_second_line <- FALSE
   
   for (word in words) {
     test_line <- if (nchar(current_line) > 0) paste(current_line, word) else word
-    test_width <- systemfonts::string_width(test_line, family = font_family, size = font_size)
+    test_width <- systemfonts::string_width(test_line,
+                                            family = font_family,
+                                            size = font_size)
     
     if (test_width <= max_width_px) {
       current_line <- test_line
     } else {
       lines <- c(lines, current_line)
       current_line <- paste0("\t", word)
+      if (!we_are_in_second_line) {
+        we_are_in_second_line <- TRUE
+        # from the second line onwards, the available space is reduced
+        # by the hanging indent (only once)
+        max_width_inch <- max_width_inch - hanging_indent
+        max_width_px <- max_width_inch * dpi
+      }
     }
   }
   
@@ -61,7 +74,9 @@ add_hanging_indent_first_column <- function(flx, column_widths, hanging_indent =
     #                                 fontspec = formatters::font_spec("Times", 9L, 1.2),
     #                                 collapse = "\n\t", wordbreak_ok = FALSE)
     
-    new_s <- wrap_string_with_indent(s, max_width_inch = available_space_in_inches, dpi = 72)
+    new_s <- wrap_string_with_indent(s,
+                                     max_width_inch = available_space_in_inches,
+                                     dpi = 78)
     
     if (grepl("\n\t", new_s)) {
       # insert new_s in row = i, j = 1
