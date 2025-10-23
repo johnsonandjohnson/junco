@@ -10,23 +10,20 @@ test_that("a_maxlev produces correct numbers for single treatment per subject", 
   my_adsl <- ex_adsl[, c("USUBJID", "ARM", "ACTARM")]
   my_adae <- ex_adae[, c("USUBJID", "ARM", "ACTARM", "AESEV")]
 
-  my_adae <- my_adae %>%
-    mutate(AESEV := stringi::stri_trans_totitle(
-      AESEV,
-      opts_brkiter = stringi::stri_opts_brkiter(type = "word")
-    )) %>%
+  my_adae <- my_adae |>
+    mutate(AESEV := string_to_title(AESEV)) |>
     mutate(
       AESEV := ordered(AESEV, levels = c("Missing", "Mild", "Moderate", "Severe"))
     )
 
-  lyt <- basic_table() %>%
-    split_cols_by("ARM") %>%
-    add_overall_col("Total") %>%
-    split_rows_by("AESEV", split_fun = aesevall_spf) %>%
+  lyt <- basic_table() |>
+    split_cols_by("ARM") |>
+    add_overall_col("Total") |>
+    split_rows_by("AESEV", split_fun = aesevall_spf) |>
     summarize_row_groups(
       "AESEV",
       cfun = a_maxlev, extra_args = list(denom_df = my_adsl, any_level = TRUE)
-    ) %>%
+    ) |>
     analyze("AESEV", afun = a_maxlev, extra_args = list(denom_df = my_adsl))
 
   res <- expect_silent(build_table(lyt, my_adae))
@@ -58,15 +55,15 @@ test_that("a_maxlev produces correct numbers for sequence of treatments (missing
     TRT = factor(rep(c("a", "b", "c"), times = 5))
   )
 
-  lyt <- basic_table() %>%
-    split_cols_by("TRT") %>%
-    add_overall_col("Total") %>%
-    split_rows_by("AESEV", split_fun = aesevall_spf) %>%
+  lyt <- basic_table() |>
+    split_cols_by("TRT") |>
+    add_overall_col("Total") |>
+    split_rows_by("AESEV", split_fun = aesevall_spf) |>
     summarize_row_groups(
       "AESEV",
       cfun = a_maxlev,
       extra_args = list(id = "ID", denom_df = my_adsl, any_level = TRUE)
-    ) %>%
+    ) |>
     analyze(
       "AESEV",
       afun = a_maxlev,
@@ -102,15 +99,15 @@ test_that("a_maxlev produces correct numbers for sequence of treatments (all val
     TRT = factor(rep(c("a", "b", "c"), times = 3))
   )
 
-  lyt <- basic_table() %>%
-    split_cols_by("TRT") %>%
-    add_overall_col("Total") %>%
-    split_rows_by("AESEV", split_fun = aesevall_spf) %>%
+  lyt <- basic_table() |>
+    split_cols_by("TRT") |>
+    add_overall_col("Total") |>
+    split_rows_by("AESEV", split_fun = aesevall_spf) |>
     summarize_row_groups(
       "AESEV",
       cfun = a_maxlev,
       extra_args = list(id = "ID", denom_df = my_adsl, any_level = TRUE)
-    ) %>%
+    ) |>
     analyze(
       "AESEV",
       afun = a_maxlev,
@@ -146,10 +143,10 @@ test_that("a_maxlev produces correct numbers when any_level is active for custom
     TRT = factor(rep(c("a", "b", "c"), times = 3))
   )
 
-  lyt <- basic_table() %>%
-    split_cols_by("TRT") %>%
-    add_overall_col("Tot") %>%
-    split_rows_by("AESEV", split_fun = aesevall_spf) %>%
+  lyt <- basic_table() |>
+    split_cols_by("TRT") |>
+    add_overall_col("Total") |>
+    split_rows_by("AESEV", split_fun = aesevall_spf) |>
     summarize_row_groups(
       "AESEV",
       cfun = a_maxlev,
@@ -179,15 +176,15 @@ test_that("a_maxlev throws an error for not ordered variable", {
     TRT = factor(rep(c("a", "b", "c"), times = 5))
   )
 
-  lyt <- basic_table() %>%
-    split_cols_by("TRT") %>%
-    add_overall_col("Total") %>%
-    split_rows_by("AESEV", split_fun = aesevall_spf) %>%
+  lyt <- basic_table() |>
+    split_cols_by("TRT") |>
+    add_overall_col("Total") |>
+    split_rows_by("AESEV", split_fun = aesevall_spf) |>
     summarize_row_groups(
       "AESEV",
       cfun = a_maxlev,
       extra_args = list(id = "ID", denom_df = my_adsl, any_level = TRUE)
-    ) %>%
+    ) |>
     analyze(
       "AESEV",
       afun = a_maxlev,
