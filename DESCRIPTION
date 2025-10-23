@@ -58,7 +58,8 @@ Imports:
     assertthat,
     rtables.officer,
     flextable,
-    officer
+    officer,
+    xml2
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
