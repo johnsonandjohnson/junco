@@ -1,9 +1,71 @@
 
-wrap_string_with_indent <- function(text, max_width_inch,
+add_title_style_caption <- function(doc) {
+  # this function modifies the XML of the docx to add the "Caption" style to the Title
+  
+  doc$doc_obj$get() %>%
+    xml2::xml_child(1) %>%
+    xml2::xml_child(1) %>%
+    xml2::xml_child(3) %>%
+    xml2::xml_child(2) %>%
+    xml2::xml_child(2) %>%
+    xml2::xml_child(1) %>%
+    xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"')
+  
+}
+
+add_little_gap_bottom_borders_spanning_headers <- function(flx, border = flextable::fp_border_default(width = 0.75, color = "black")) {
+  
+  spanning_headers <- flx$header$spans$rows
+  # if there is a row in 'spanning_headers' containing more than one number
+  # that is > 1 (i.e. a spanning header), and there was a bottom border in those positions:
+  # - get that row
+  # - get the positions (columns)
+  # - insert in that row and those columns the cell margins
+  
+  pos_little_gaps <- apply(spanning_headers, 1, function(row) {
+    which(row > 1)
+  })
+  
+  for (i in seq(1, length(pos_little_gaps))) {
+    j <- pos_little_gaps[[i]]
+    if (length(j) > 1 && 
+        all(flx$header$styles$cells$border.width.bottom$data[i, j] > 0)) {
+      flx <- flextable::style(
+        x = flx,
+        part = "header",
+        i = i,
+        j = j,
+        pr_c = officer::fp_cell(margin.right = 3, margin.left = 3, vertical.align = "bottom"),
+        pr_p = officer::fp_par(border.bottom = border, text.align = "center")
+      )
+    }
+  }
+  
+  return(flx)
+  
+}
+
+
+wrap_string_with_indent <- function(text,
+                                    max_width_inch,
                                     font_family = "Times New Roman",
                                     font_size = 9,
                                     hanging_indent = 0.06,
                                     dpi = 96) {
+  
+  # NOTE: this function converts 'text' into another string with '\n\t' inserted
+  # to simulate the hanging indent
+  # This function is applied to the first column of the body
+  # Steps: given 'max_width_inch' (available space in inches to show text
+  #        in a particular cell):
+  # - convert it to pixels
+  # - split 'text' into words
+  # - for each word, calculate the width in pixels with systemfonts::string_width(font)
+  #     - if it fits in available space, concatenate it with existing line
+  #     - if it doesn't fit, store the line in list and create a new line
+  #     - if we are now in second line, decrease available space by 0.06 inches
+  # 5. in the end, paste/merge all lines and return concatenated lines
+  
   # Convert inches to pixels
   max_width_px <- max_width_inch * dpi
   
@@ -92,7 +154,80 @@ add_hanging_indent_first_column <- function(flx, column_widths, hanging_indent =
   return(flx)
 }
 
-insert_title_hanging_indent <- function(flx, title, orientation, border, bold_titles) {
+
+insert_title_hanging_indent_v2 <- function(flx,
+                                        title,
+                                        orientation,
+                                        border = flextable::fp_border_default(width = 0.75, color = "black"),
+                                        bold_titles = TRUE,
+                                        dpi = 72) {
+  
+  
+  flx_fpt <- rtables.officer:::.extract_font_and_size_from_flx(flx)
+  title_style <- flx_fpt$fpt
+  title_font_size <- title_style$font.size + 1 # 10
+  title_font_family <- title_style$font.family
+  w <- ifelse(orientation == "portrait", 155, 215)
+  new_title <-
+    formatters::wrap_string_ttype(
+      str = title,
+      width =  w,
+      # fontspec = formatters::font_spec("Times", 10L, 1.2),
+      fontspec = formatters::font_spec(title_font_family, title_font_size, 1.2),
+      collapse = "\t",
+      wordbreak_ok = FALSE
+    )
+  
+  new_title <- sub(":", ":\t", new_title)
+  
+  # NOTE: conversion ratio
+  # 3.175 mm = 9 ms word points = 0.125 inches
+  # multiply everything by 6.4 so we end up with 0.8 inches
+  # 20.32 mm = 57.6 ms word points = 0.8 inches
+  indent_size <- rtables.officer::word_mm_to_pt(20.32)
+
+  flx <-
+    rtables.officer:::.add_titles_as_header(flx, all_titles = new_title, bold = bold_titles) %>% 
+    flextable::padding(part = "header", i = 1, padding.left = 0) %>% 
+    flextable::fontsize(part = "header", i = 1, size = title_font_size) %>% 
+    flextable::border(part = "header", i = 1, border.top = border, border.bottom = border)
+  
+  # NOTE: if output ID + ":" is less than 0.8 inches,
+  # set tab stop "left" at pos = 0.8
+  # else, set tab stop "decimal" at pos = 0.5
+  
+  temp <- sub(":.*", ":", new_title)
+  width_pixels <- systemfonts::string_width(temp,
+                                            family = title_font_family,
+                                            size = title_font_size,
+                                            bold = bold_titles)
+  # Convert pixels to inches
+  # max_width_px <- max_width_inch * dpi
+  width_inches <- width_pixels / dpi
+  
+  # if (width_inches < 0.8) {
+  #   flx <- flx %>% 
+  #     flextable::tab_settings(i = 1, j = 1, part = "header",
+  #                             value = officer::fp_tabs(officer::fp_tab(pos = 0.8, style = "left")))
+  # } else {
+  #   flx <- flx %>% 
+  #     flextable::tab_settings(i = 1, j = 1, part = "header",
+  #                             value = officer::fp_tabs(officer::fp_tab(pos = 0.5)))
+  # }
+  flx <- flx %>% 
+    flextable::tab_settings(i = 1, j = 1, part = "header",
+                            value = officer::fp_tabs(officer::fp_tab(pos = 0.8, style = "left")))
+  
+  
+  return(flx)
+}
+
+insert_title_hanging_indent <- function(flx,
+                                        title,
+                                        orientation,
+                                        border = flextable::fp_border_default(width = 0.75, color = "black"),
+                                        bold_titles = TRUE,
+                                        dpi = 72) {
   
   w <- ifelse(orientation == "portrait", 155, 215)
   new_title <- 
@@ -130,8 +265,34 @@ insert_title_hanging_indent <- function(flx, title, orientation, border, bold_ti
     flextable::fontsize(part = "header", i = 1, size = title_font_size) %>% 
     flextable::border(part = "header", i = 1, border.top = border)
   
+  # NOTE: if output ID + ":" is less than 0.8 inches,
+  # set tab stop "left" at pos = 0.8
+  # else, set tab stop "decimal" at pos = 0.5
+  
+  temp <- res[1]
+  temp <- sub(":.*", ":", temp)
+  font_family <- title_style$font.family
+  width_pixels <- systemfonts::string_width(temp,
+                                            family = font_family,
+                                            size = title_font_size,
+                                            bold = bold_titles)
+  # Convert pixels to inches
+  # max_width_px <- max_width_inch * dpi
+  width_inches <- width_pixels / dpi
+  
+  if (width_inches < 0.8) {
+    flx <- flx %>% 
+      flextable::tab_settings(i = 1, j = 1, part = "header",
+                              value = officer::fp_tabs(officer::fp_tab(pos = 0.8, style = "left")))
+  } else {
+    flx <- flx %>% 
+      flextable::tab_settings(i = 1, j = 1, part = "header",
+                              value = officer::fp_tabs(officer::fp_tab(pos = 0.5)))
+  }
+  
   # add the line that separates the Title from the Header
   flx <- flx %>% flextable::border(part = "header", i = length(res), border.bottom = border)
+  
   
   return(flx)
 }
@@ -221,7 +382,8 @@ interpret_all_cell_content <- function(flx) {
 
 my_pg_width_by_orient <- function(orientation = "portrait") {
   if (orientation == "landscape") {
-    return(8.82)
+    # return(8.82)
+    return(8.88)
   }
   return(6.38)
 }
@@ -260,8 +422,8 @@ my_theme_docx_default <- function(font = "Arial",
     
     # NOTE: the following line sets tab stop = 0.5 inches in the Title,
     # necessary for the gap just after ":" to match the RTF
-    flx <- flextable::tab_settings(flx, i = 1, j = 1, part = "header",
-                                   value = officer::fp_tabs(officer::fp_tab(pos = 0.8, style = "left")))
+    # flx <- flextable::tab_settings(flx, i = 1, j = 1, part = "header",
+    #                                value = officer::fp_tabs(officer::fp_tab(pos = 0.8, style = "left")))
     
     flx <- flx %>%
       flextable::valign(j = seq(2, tbl_ncol_body), valign = "bottom", part = "body") %>%
@@ -360,7 +522,7 @@ my_tt_to_flextable <- function(tt,
                                orientation = "portrait",
                                tblid,
                                nosplitin = character(),
-                               string_map = default_str_map,
+                               string_map = junco::default_str_map,
                                reduce_first_col_indentation = FALSE
                                ) {
   
@@ -385,7 +547,7 @@ my_tt_to_flextable <- function(tt,
     label_width_ins <- 2
     tlgtype <- junco:::tlg_type(tt)
     col_gap <- ifelse(tlgtype == "Listing", .5, 3)
-    colwidths <- def_colwidths(
+    colwidths <- junco::def_colwidths(
       tt,
       fontspec,
       col_gap = col_gap,
@@ -463,7 +625,7 @@ my_tt_to_flextable <- function(tt,
         }
       )
     }
-    border_mat <- make_header_bordmat(obj = tt)
+    border_mat <- junco:::make_header_bordmat(obj = tt)
     pag_bord_mats <- lapply(
       seq_along(pags),
       function(i) {
@@ -472,7 +634,7 @@ my_tt_to_flextable <- function(tt,
         } else {
           partmpf <- pags[[i]][[1]]
         }
-        subset_border_mat(border_mat, hdrmpf, partmpf)
+        junco:::subset_border_mat(border_mat, hdrmpf, partmpf)
       }
     )
     ret <- lapply(
@@ -798,42 +960,27 @@ my_tt_to_flextable <- function(tt,
   if (titles_as_header &&
       length(formatters::all_titles(tt)) > 0 &&
       any(nzchar(formatters::all_titles(tt)))) {
-    # NOTE: the following block appends the Table ID to the Title
-    # and adds the line on top
+    # NOTE: the following block appends the Table ID to the Title,
+    # inserts the Title with the hanging indent as part of the Header,
+    # and adds the borders above and below the Title
     ts_tbl <- formatters::all_titles(tt)
     ts_tbl <- paste0(tblid, ":", ts_tbl)
     
     
-    flx <- insert_title_hanging_indent(flx = flx, title = ts_tbl,
+    flx <- insert_title_hanging_indent_v2(flx = flx,
+                                       title = ts_tbl,
                                        orientation = orientation,
-                                       border = border, bold_titles = bold_titles)
-    
-    
-    # flx_fpt <- rtables.officer:::.extract_font_and_size_from_flx(flx)
-    # title_style <- flx_fpt$fpt
-    # title_style$font.size <- title_style$font.size + 1 # 10
-    # title_style$bold <- bold_titles
-    # 
-    # flx <- rtables.officer:::.add_titles_as_header(flx,
-    #                              # all_titles = formatters::all_titles(tt), 
-    #                              all_titles = ts_tbl, 
-    #                              bold = bold_titles) %>%
-    #   flextable::border(part = "header",
-    #                     i = length(formatters::all_titles(tt)),
-    #                     border.bottom = border,
-    #                     border.top = border # NOTE: added this line
-    #                     ) %>% 
-    #   flextable::fontsize(part = "header", i = 1, size = title_style$font.size) %>% 
-    #   flextable::padding(part = "header", i = 1, padding.left = 0)
-    
-    
-    # flx %>% flextable::style(part = "header", i = 1,
-    #                          pr_p = officer::fp_par(word_style = "centered"),
-    #                          pr_t = officer::fp_text(color = "red"),
-    #                          pr_c = officer::fp_cell(background.color = "blue"))
+                                       border = border,
+                                       bold_titles = bold_titles)
     # END
   }
-  final_cwidths <- total_page_width * colwidths/sum(colwidths)
+  # NOTE: here, even though page width is 8.88 inches, table width has 
+  # to be 8.82 inches, so leave a gap of 0.03 inches on both sides
+  if (orientation == "landscape") {
+    final_cwidths <- (total_page_width - 0.03*2 ) * colwidths/sum(colwidths)
+  } else {
+    final_cwidths <- total_page_width * colwidths/sum(colwidths)
+  }
   flx <- flextable::width(flx, width = final_cwidths)
   flx <- add_hanging_indent_first_column(flx = flx, column_widths = final_cwidths)
   flx <- flextable::set_table_properties(
@@ -853,7 +1000,7 @@ my_tt_to_flextable <- function(tt,
     }
     new_trailing_sep[length(new_trailing_sep)] <- NA
     flx <- rtables.officer::add_flextable_separators(flx, new_trailing_sep,
-                                    border = officer::fp_border(width = 1, color = "grey60"),
+                                    border = border,
                                     padding = 0) # NOTE: here, we used to have padding = 10
     # END
   }
@@ -864,20 +1011,51 @@ my_tt_to_flextable <- function(tt,
   # the following block adds the Title with its own style
   # rtables.officer::add_flextable_separators(ft = flx, trailing_sep = c("-", rep(NA, 29)), border = border)
   # flextable::hline(flx, i = NULL, j = NULL, border = border, part = "header")
-  if (!titles_as_header) {
-    ts_tbl <- formatters::all_titles(tt)
-    # three_dots <- list(...)
-    # tblid <- three_dots$tblid
-    ts_tbl <- paste0(tblid, ":\t", ts_tbl)
+  if (isFALSE(titles_as_header)) {
+    
+    title <- formatters::all_titles(tt)
+    title <- paste0(tblid, ":\t", title)
+        
+    w <- ifelse(orientation == "portrait", 155, 215)
+    new_title <- formatters::wrap_string_ttype(str = title,
+                width =  w, 
+                fontspec = formatters::font_spec("Times", 10L, 1.2),
+                collapse = "\n\t",
+                wordbreak_ok = FALSE)
+    new_title <- sub(": ", ":\t", new_title)
+
+    # 3.175 mm = 9 ms word points = 0.125 inches
+    # multiply everything by 10
+    # 31.75 mm = 90 ms word points = 1.25 inches
+    # rtables.officer::word_mm_to_pt(31.75)
+    # argument "padding" is in MS Word points
+    # e.g. padding = 90 means 1.25 inches
+    # we want padding left and right = 0.125 inches, then
+    # padding left and right has to be 9
+    # page_gutter_width <- junco:::gutter_width # 0.12 inches
+    # inches_to_points <- function(x) {
+    #   (90/1.25) * x
+    # }
+    p <- ifelse(orientation == "portrait", 4.32, 7.8)
+    # p <- inches_to_points(page_gutter_width) # 8.64
+    fpp <- officer::fp_par(
+      text.align = "left", 
+      padding.left = p,
+      padding.right = p,
+      border.top = border
+    )
+    
     flx_fpt <- rtables.officer:::.extract_font_and_size_from_flx(flx)
     title_style <- flx_fpt$fpt
     title_style$font.size <- title_style$font.size + 1 # 10
     title_style$bold <- bold_titles
     flx <- flx %>% flextable::set_caption(
-      flextable::as_paragraph(flextable::as_chunk(ts_tbl, title_style)),
+      # caption = title,
+      # caption = "a caption",
+      caption = flextable::as_paragraph(flextable::as_chunk(new_title, title_style)),
       word_stylename = "Caption",
-      style = "Caption",
-      fp_p = officer::fp_par(text.align = "left", border.top = border),
+      # style = "Caption",
+      fp_p = fpp,
       align_with_table = F
     )
   }
@@ -889,8 +1067,9 @@ my_tt_to_flextable <- function(tt,
   # flx$header$dataset <- apply(flx$header$dataset, 1:2, junco:::strmodify) %>% as.data.frame()
   # flx$body$dataset <- apply(flx$body$dataset, 1:2, junco:::strmodify) %>% as.data.frame()
   # flx$footer$dataset <- apply(flx$footer$dataset, 1:2, junco:::strmodify) %>% as.data.frame()
-  
-  
+
+  #  NOTE: add the little gap between the bottom borders of 2 spanning headers
+  flx <- add_little_gap_bottom_borders_spanning_headers(flx, border)
   
   flx
 }
@@ -906,12 +1085,13 @@ my_export_as_docx <- function(tt,
                                 page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0)
                               ),
                               doc_metadata = NULL,
-                              template_file = NULL,
+                              template_file = "doc/template_file.docx",
+                              # template_file = NULL,
                               orientation = "portrait",
                               tblid,
                               paginate = FALSE,
                               nosplitin = character(),
-                              string_map = default_str_map,
+                              string_map = junco::default_str_map,
                               combined_docx = FALSE,
                               ...) 
 {
@@ -1007,7 +1187,11 @@ my_export_as_docx <- function(tt,
     stop("tt must be a TableTree/listing_df, a flextable, or a list of TableTree/listing_df or flextable objects.")
   }
   if (isFALSE(titles_as_header) || isFALSE(integrate_footers)) {
-    flx_fpt <- rtables.officer:::.extract_font_and_size_from_flx(flex_tbl_list[[1]])
+    if (inherits(flex_tbl_list[[1]], "list")) {
+      flx_fpt <- rtables.officer:::.extract_font_and_size_from_flx(flex_tbl_list[[1]][[1]])
+    } else {
+      flx_fpt <- rtables.officer:::.extract_font_and_size_from_flx(flex_tbl_list[[1]])
+    }
   }
   if (!is.null(template_file) && !file.exists(template_file)) {
     template_file <- NULL
@@ -1041,6 +1225,7 @@ my_export_as_docx <- function(tt,
   } else {
     if (!is.null(template_file)) {
       doc <- officer::read_docx(template_file)
+      doc <- officer::body_remove(doc)
     }
     else {
       doc <- officer::read_docx()
@@ -1051,6 +1236,11 @@ my_export_as_docx <- function(tt,
         # page_width <- section_properties$page_size$width
         # page_width <- junco:::pg_width_by_orient(section_properties$page_size$orient == "landscape")
         page_width <- my_pg_width_by_orient(section_properties$page_size$orient)
+        # NOTE: here, even though page width is 8.88 inches, table width has 
+        # to be 8.82 inches, so leave a gap of 0.03 inches on both sides
+        if (orientation == "landscape") {
+          page_width <- (page_width - 0.03 * 2)
+        }
         dflx <- dim(flx)
         if (abs(sum(unname(dflx$widths)) - page_width) > 0.01) {
           warning("The total table width does not match the page width. The column widths", 
@@ -1062,8 +1252,7 @@ my_export_as_docx <- function(tt,
       }
       flx
     })
-    # NOTE:
-    # the following block adds the Title
+    # NOTE: the following block adds the Title
     # if (isFALSE(titles_as_header) && inherits(tt2, "VTableTree")) {
     #   ts_tbl <- formatters::all_titles(tt2)
     #   if (length(ts_tbl) > 0) {
@@ -1098,6 +1287,11 @@ my_export_as_docx <- function(tt,
       doc <- do.call(officer::set_doc_properties, c(list(x = doc), 
                                                     doc_metadata))
     }
+
+    
+    add_title_style_caption(doc)
+    
+    
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
   }
