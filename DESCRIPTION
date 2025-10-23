@@ -55,7 +55,10 @@ Imports:
     emmeans,
     mmrm,
     rbmi (>= 1.3.0),
-    assertthat
+    assertthat,
+    rtables.officer,
+    flextable,
+    officer
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)

@@ -2,14 +2,30 @@
 add_title_style_caption <- function(doc) {
   # this function modifies the XML of the docx to add the "Caption" style to the Title
   
-  doc$doc_obj$get() %>%
+  pages_indexes <- doc$doc_obj$get() %>%
     xml2::xml_child(1) %>%
-    xml2::xml_child(1) %>%
-    xml2::xml_child(3) %>%
-    xml2::xml_child(2) %>%
-    xml2::xml_child(2) %>%
-    xml2::xml_child(1) %>%
-    xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"')
+    xml2::xml_children()
+  pages_indexes <- seq(1, length(pages_indexes), 2)
+  
+  for (page_idx in pages_indexes) {
+    doc$doc_obj$get() %>%
+      xml2::xml_child(1) %>%
+      xml2::xml_child(page_idx) %>%
+      xml2::xml_child(3) %>%
+      xml2::xml_child(2) %>%
+      xml2::xml_child(2) %>%
+      xml2::xml_child(1) %>%
+      xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"')
+  }
+  
+  # doc$doc_obj$get() %>%
+  #   xml2::xml_child(1) %>%
+  #   xml2::xml_child(1) %>%
+  #   xml2::xml_child(3) %>%
+  #   xml2::xml_child(2) %>%
+  #   xml2::xml_child(2) %>%
+  #   xml2::xml_child(1) %>%
+  #   xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"')
   
 }
 
