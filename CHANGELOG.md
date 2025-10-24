@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.2] - 2025-08-20
 
 ### Added
+- Add `a_maxlev()` to be able calculate count and percentage of the maximum level of an ordered factor per subject
 - fix bug for not selecting NA records in `h_subset_combo()`
 - Remove `brackets_to_rtf()`
 - Update pruning_functions.R
