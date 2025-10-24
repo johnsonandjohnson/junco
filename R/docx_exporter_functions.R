@@ -1,22 +1,32 @@
 
-add_title_style_caption <- function(doc) {
+add_title_style_caption <- function(doc, tblid) {
   # this function modifies the XML of the docx to add the "Caption" style to the Title
   
-  pages_indexes <- doc$doc_obj$get() %>%
-    xml2::xml_child(1) %>%
-    xml2::xml_children()
-  pages_indexes <- seq(1, length(pages_indexes), 2)
   
-  for (page_idx in pages_indexes) {
-    doc$doc_obj$get() %>%
-      xml2::xml_child(1) %>%
-      xml2::xml_child(page_idx) %>%
-      xml2::xml_child(3) %>%
-      xml2::xml_child(2) %>%
-      xml2::xml_child(2) %>%
-      xml2::xml_child(1) %>%
-      xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"')
-  }
+  # x <- doc$doc_obj$get()
+  # s_xpath <- paste0("//*[contains(text(),'", toupper(tblid), "')]")
+  # x <- x %>% xml2::xml_find_all(s_xpath)
+  # x <- x %>% xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"')
+  
+  # x %>% xml2::xml_find_first("//*[contains(text(),'TSFLAB01')]") %>%
+  #   xml2::xml_parent() %>% xml2::xml_parent() %>% xml2::xml_child(1)
+  
+  
+  # pages_indexes <- doc$doc_obj$get() %>%
+  #   xml2::xml_child(1) %>%
+  #   xml2::xml_children()
+  # pages_indexes <- seq(1, length(pages_indexes), 2)
+  # 
+  # for (page_idx in pages_indexes) {
+  #   doc$doc_obj$get() %>%
+  #     xml2::xml_child(1) %>%
+  #     xml2::xml_child(page_idx) %>%
+  #     xml2::xml_child(3) %>%
+  #     xml2::xml_child(2) %>%
+  #     xml2::xml_child(2) %>%
+  #     xml2::xml_child(1) %>%
+  #     xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"')
+  # }
   
   # doc$doc_obj$get() %>%
   #   xml2::xml_child(1) %>%
@@ -688,7 +698,8 @@ my_tt_to_flextable <- function(tt,
         l_ft <- list()
         for (vi in seq(1, length(full_pag_i))) {
           ii <- as.integer(rownames(full_pag_i[[vi]]$row_info)) + cum_ii
-          subt <- tt[ii, jj, drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE, reindex_refs = FALSE]
+          subt <- tt[ii, jj, drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE,
+                     reindex_refs = FALSE]
           sub_ft <- my_tt_to_flextable(
             # tt = full_pag_i,
             tt = subt,
@@ -1109,11 +1120,7 @@ my_export_as_docx <- function(tt,
                               nosplitin = character(),
                               string_map = junco::default_str_map,
                               combined_docx = FALSE,
-                              ...) 
-{
-  
-  # tt2 <- tt
-  
+                              ...) {
   
   checkmate::assert_flag(add_page_break)
   do_tt_error <- FALSE
@@ -1147,27 +1154,6 @@ my_export_as_docx <- function(tt,
                           nosplitin = nosplitin,
                           string_map = string_map,
                           ...)
-    
-    # NOTE: an attempt to left align only column headers and cell values
-    # tt <- tt |>
-    #   flextable::valign(valign = "bottom", part = "body") |>
-    #   flextable::align(align = "center", part = "body")
-    # tt <- tt |>
-    #   flextable::mk_par(j = 2,
-    #                     as_paragraph(
-    #                       as_chunk(latin_name, 
-    #                                props = fp_text_default(color = "#C32900", bold = TRUE)))
-    #                     )
-    
-    # NOTE: an attempt to set line spacing = 0
-    # tt %>% flextable::style(i = ~!is.na(variable),
-    #                         pr_t = flextable::fp_text_default(bold = TRUE),
-    #                         pr_p = officer::fp_par(text.align = "left", padding = 5, line_spacing = 1.5))
-    # 
-    # tt <- tt %>% flextable::style(pr_p = officer::fp_par(line_spacing = 1))
-    
-    
-    
   }
   if (inherits(tt, "flextable")) {
     flex_tbl_list <- list(tt)
@@ -1268,17 +1254,6 @@ my_export_as_docx <- function(tt,
       }
       flx
     })
-    # NOTE: the following block adds the Title
-    # if (isFALSE(titles_as_header) && inherits(tt2, "VTableTree")) {
-    #   ts_tbl <- formatters::all_titles(tt2)
-    #   if (length(ts_tbl) > 0) {
-    #     title_style <- flx_fpt$fpt
-    #     title_style$font.size <- title_style$font.size + 1 # 10
-    #     title_style$bold <- TRUE
-    #     doc <- rtables.officer:::add_text_par(doc, ts_tbl, title_style)
-    #   }
-    # }
-    # END
     for (ii in seq(1, length(flex_tbl_list))) {
       flex_tbl_i <- flex_tbl_list[[ii]]
       # NOTE: this align = "left" is the alignment of the entire table relative to the page,
@@ -1305,7 +1280,7 @@ my_export_as_docx <- function(tt,
     }
 
     
-    add_title_style_caption(doc)
+    # add_title_style_caption(doc, tblid)
     
     
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
