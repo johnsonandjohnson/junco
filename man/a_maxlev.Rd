@@ -90,15 +90,21 @@ my_adsl <- data.frame(
   TRT = factor(rep(c("a", "b", "c"), times = 5))
 )
 
-lyt <- basic_table() \%>\%
-  split_cols_by("TRT") \%>\%
-  add_overall_col("Total") \%>\%
-  split_rows_by("AESEV", split_fun = aesevall_spf) \%>\%
+aesevall_spf <- make_combo_splitfun(
+  nm = "AESEV_ALL",
+  label = "Any AE",
+  levels = NULL,
+)
+
+lyt <- basic_table() |>
+  split_cols_by("TRT") |>
+  add_overall_col("Total") |>
+  split_rows_by("AESEV", split_fun = aesevall_spf) |>
   summarize_row_groups(
     "AESEV",
     cfun = a_maxlev,
     extra_args = list(id = "ID", denom_df = my_adsl, any_level = TRUE)
-  ) \%>\%
+  ) |>
   analyze(
     "AESEV",
     afun = a_maxlev,
