@@ -38,6 +38,7 @@ reference:
     - a_proportion_ci_factor
     - a_proportion_ci_logical
     - a_summarize_aval_chg_diff_j
+    - a_maxlev
     - rbmi_analyse
     - analyze_values
     - rbmi_ancova
