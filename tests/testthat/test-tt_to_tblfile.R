@@ -290,5 +290,4 @@ test_that("more top left than col headers works", {
   expect_silent(tt_to_tlgrtf(tbl, file = tmpfile))
   expect_true(file.exists(paste0(tmpfile, ".rtf")))
   unlink(tmpfile)
-
 })
