@@ -758,8 +758,8 @@ h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, co
   }
 
   # get the string related to combosdf text from colid it is the last part of the column id after the .  eg 'Active
-  # Study Agent.Xanomeline High Dose.Thru 3 months' colid_str is 'Thru 3 months' colid_str <- stringr::str_split_i(colid,
-  # '\\.', i = -1)
+  # Study Agent.Xanomeline High Dose.Thru 3 months' colid_str is 'Thru 3 months' 
+  # colid_str <- stringr::str_split_i(colid, '\\.', i = -1)
   colid_str <- tail(unlist(strsplit(colid, "\\.")), 1)
 
   filter_val <- combosdf[combosdf$valname == colid_str, ]$label
