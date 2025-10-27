@@ -81,6 +81,8 @@ reference:
     - h_get_trtvar_refpath
     - rbmi_mmrm_single_info
     - rbmi_pool
+    - s_cmhrms_j
+    - a_cmhrms_j
 
   - title: junco Formatting Functions
     desc: The following functions are the junco formatting functions used to create common table layouts.
