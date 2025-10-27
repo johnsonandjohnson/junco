@@ -42,7 +42,7 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
   inputdf[[.var]] <- droplevels(inputdf[[.var]])
 
   strata <- variables$strata
-  
+
   if (!is.null(strata) && length(strata) > 0) {
     get_covariates <- utils::getFromNamespace("get_covariates", "tern")
     var_list <- get_covariates(strata)
