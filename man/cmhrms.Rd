@@ -55,8 +55,12 @@ information on the \code{'auto'} setting.}
 }
 }
 \description{
-Note that method used (vcdExtra::CMHtest) is more sensitive to sparse data in the stratification factors than proc freq from SAS.
-See \url{https://psiaims.github.io/CAMIS/Comp/r-sas_cmh.html} for a comparison overview.
+Note that the underlying method used for the calculation of the row mean score test (vcdExtra::CMHtest)
+has more problems with sparse data (in the stratification factors) than proc freq from SAS.
+This would result in singularity problems in the underlying calculations,
+leading to unability to compute the p-value.
+In this case, missing values are returned as alternative.
+See \url{https://psiaims.github.io/CAMIS/Comp/r-sas_cmh.html} for a comparison overview between R and SAS.
 }
 \section{Functions}{
 \itemize{
