@@ -410,6 +410,11 @@ h_upd_dfrow <- function(
     excl_levels <- NULL
   }
 
+  if (is.null(val) && !is.null(label_map)){
+    split_info <- .spl_context[c("split", "value")]
+    val <- h_restrict_val(df_row, .var, label_map, split_info)
+  }
+  
   if (!is.null(val)) {
     # do not yet restrict to val levels, only update factors to the requested levels df_row <-
     df_row <- h_update_factor(df_row, .var, val)
@@ -763,4 +768,44 @@ h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, co
   }
 
   return(df)
+}
+
+
+#' @noRd
+#' @param df_row Data frame row to update.
+#' @param .var Variable name.
+#' @param label_map Mapping for labels.
+#' @param split_info Current split information.
+#'
+#' @return Restriction of val to appropriate levels from label_map
+h_restrict_val <- function(df_row, .var, label_map, split_info){
+  val <- NULL
+  xval_row <- unique(df_row[[.var]])
+  xval_map <- label_map$value
+ 
+  diff <- setdiff(xval_row, xval_map)
+
+  if (length(diff) == 0){
+    ### if label_map has a variable from row split, apply current splits on label_map tibble as well
+    rowsplits <- split_info$split
+    
+    label_map_split <- intersect(names(label_map), rowsplits)
+    
+    if (!(length(label_map_split) == 0)) {
+      for (i in seq_along(label_map_split)) {
+        cursplvar <- label_map_split[i]
+        cid <- match(cursplvar, rowsplits)
+        cursplval <- split_info$value[cid]
+        
+        label_map <- label_map[label_map[[cursplvar]] == cursplval, ]
+      }
+    }
+    
+    if ("var" %in% names(label_map)) {
+      label_map <- label_map[label_map[["var"]] == .var, ]
+    }
+    
+    val <- label_map$value
+  }
+  return(val)
 }
