@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update pruning_functions.R
 - update `string_to_title()` to handle factors (#26)
 - Export `rbmi_pool()` #22
+- Add functionality to `a_freq_j()` to process `val` = NULL from levels specified in `label_map`. #95
 
 ### Changed
 - Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify
