@@ -286,7 +286,7 @@ test_that("more top left than col headers works", {
     analyze("AGE")
 
   tbl <- build_table(lyt, data)
-  tmpfile  <- tempfile()
+  tmpfile <- tempfile()
   expect_silent(tt_to_tlgrtf(tbl, file = tmpfile))
   expect_true(file.exists(paste0(tmpfile, ".rtf")))
   unlink(tmpfile)
