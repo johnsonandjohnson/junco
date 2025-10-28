@@ -1,42 +1,55 @@
 
-add_title_style_caption <- function(doc, tblid) {
+add_vertical_pagination <- function(tt, flx, newrows) {
+  # this function updates flx by calling flextable::keep_with_next()
+  
+  # calculate where to add the page breaks
+  df <- junco:::tt_to_tbldf(tt = tt)
+  idx_page_breaks <- as.integer(df$row_type == "VALUE" & duplicated(df$roworder))
+  idx <- which(newrows == 1)
+  new_idx_page_breaks <- idx_page_breaks
+  for (i in rev(idx)) {
+    new_idx_page_breaks <- append(new_idx_page_breaks, 0, after = i - 2)
+  }
+  new_idx_page_breaks <- which(new_idx_page_breaks == 1)
+  
+  # update the flextable
+  flx <- flx %>% flextable::keep_with_next(value = TRUE, part = "body")
+  flx <- flx %>%
+    flextable::keep_with_next(i = new_idx_page_breaks - 1, value = FALSE, part = "body")
+  
+  return(flx)
+}
+
+
+add_title_style_caption <- function(doc, string_to_look_for) {
+  
   # this function modifies the XML of the docx to add the "Caption" style to the Title
   
+  s_xpath <- paste0("//*[contains(text(),'", string_to_look_for, "')]")
+  x <- doc$doc_obj$get() %>% 
+    xml2::xml_find_first(s_xpath)
   
-  # x <- doc$doc_obj$get()
-  # s_xpath <- paste0("//*[contains(text(),'", toupper(tblid), "')]")
-  # x <- x %>% xml2::xml_find_all(s_xpath)
-  # x <- x %>% xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"')
+  # look for a parent 'w:pPr'
+  # this parent should have a first child 'w:pStyle w:val="Caption"'
+  x <- x %>% xml2::xml_parent()
+  children <- x %>% xml2::xml_children()
+  while(!any(xml2::xml_name(children) == "pPr")) {
+    x <- x %>% xml2::xml_parent()
+    children <- x %>% xml2::xml_children()
+  }
   
-  # x %>% xml2::xml_find_first("//*[contains(text(),'TSFLAB01')]") %>%
-  #   xml2::xml_parent() %>% xml2::xml_parent() %>% xml2::xml_child(1)
+  child_i <- which(xml2::xml_name(children) == "pPr") %>% head(1)
+  x <- x %>% xml2::xml_child(child_i)
+  x %>% xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"', .where = 0)
   
-  
-  # pages_indexes <- doc$doc_obj$get() %>%
+  # s_xpath <- paste0("//*[contains(text(),'", string_to_look_for, "')]")
+  # x <- doc$doc_obj$get() %>% 
+  #   xml2::xml_find_first(s_xpath)
+  # x %>%
+  #   xml2::xml_parent() %>%
+  #   xml2::xml_parent() %>%
   #   xml2::xml_child(1) %>%
-  #   xml2::xml_children()
-  # pages_indexes <- seq(1, length(pages_indexes), 2)
-  # 
-  # for (page_idx in pages_indexes) {
-  #   doc$doc_obj$get() %>%
-  #     xml2::xml_child(1) %>%
-  #     xml2::xml_child(page_idx) %>%
-  #     xml2::xml_child(3) %>%
-  #     xml2::xml_child(2) %>%
-  #     xml2::xml_child(2) %>%
-  #     xml2::xml_child(1) %>%
-  #     xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"')
-  # }
-  
-  # doc$doc_obj$get() %>%
-  #   xml2::xml_child(1) %>%
-  #   xml2::xml_child(1) %>%
-  #   xml2::xml_child(3) %>%
-  #   xml2::xml_child(2) %>%
-  #   xml2::xml_child(2) %>%
-  #   xml2::xml_child(1) %>%
-  #   xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"')
-  
+  #   xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"', .where = 0)
 }
 
 add_little_gap_bottom_borders_spanning_headers <- function(flx, border = flextable::fp_border_default(width = 0.75, color = "black")) {
@@ -254,6 +267,10 @@ insert_title_hanging_indent <- function(flx,
                                         border = flextable::fp_border_default(width = 0.75, color = "black"),
                                         bold_titles = TRUE,
                                         dpi = 72) {
+  # NOTE: this function will be replaced in favor of insert_title_hanging_indent()
+  # for now we keep it as a backup
+  # The main difference is that this function splits the title into 2 lines if it's long,
+  # whereas insert_title_hanging_indent() doesn't
   
   w <- ifelse(orientation == "portrait", 155, 215)
   new_title <- 
@@ -691,58 +708,93 @@ my_tt_to_flextable <- function(tt,
         
         # Note: slice the big table into multiple subtables, by rows and columns
         jj <- pgi_for_cw$col_info$label
-        cum_ii <- 0
-        # for each page (vertical pagination), splice tt into subt,
-        # and convert each subt into a flextable
-        # return a list of flextables
-        l_ft <- list()
-        for (vi in seq(1, length(full_pag_i))) {
-          ii <- as.integer(rownames(full_pag_i[[vi]]$row_info)) + cum_ii
-          subt <- tt[ii, jj, drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE,
-                     reindex_refs = FALSE]
-          sub_ft <- my_tt_to_flextable(
-            # tt = full_pag_i,
-            tt = subt,
-            theme = theme,
-            border = border,
-            indent_size = indent_size,
-            titles_as_header = titles_as_header,
-            bold_titles = bold_titles,
-            integrate_footers = integrate_footers,
-            counts_in_newline = counts_in_newline,
-            paginate = FALSE,
-            fontspec = fontspec,
-            lpp = lpp,
-            cpp = cpp,
-            ... = ...,
-            # colwidths = junco:::j_mf_col_widths(pgi_for_cw),
-            colwidths = NULL,
-            tf_wrap = tf_wrap,
-            max_width = max_width,
-            total_page_height = total_page_height,
-            total_page_width = total_page_width,
-            autofit_to_page = autofit_to_page,
-            orientation = orientation,
-            tblid = fname,
-            nosplitin = nosplitin,
-            string_map = string_map,
-            reduce_first_col_indentation = (length(full_pag_i) > 1)
-          )
-          
-          # NOTE: if we are not in the last page, remove the footers
-          # in the future, if we want the footers in all pages,
-          # it can be adjusted here
-          if (vi < length(full_pag_i)) {
-            sub_ft <- flextable::delete_part(x = sub_ft, part = "footer")
-            sub_ft <- sub_ft %>% rtables.officer:::.remove_hborder(part = "body", w = "bottom")
-          }
-          
-          l_ft[[vi]] <- sub_ft
-          
-          cum_ii <- tail(ii, 1)
-        }
+        subt <- tt[, jj, drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE,
+                   reindex_refs = FALSE]
+        sub_ft <- my_tt_to_flextable(
+          # tt = full_pag_i,
+          tt = subt,
+          theme = theme,
+          border = border,
+          indent_size = indent_size,
+          titles_as_header = titles_as_header,
+          bold_titles = bold_titles,
+          integrate_footers = integrate_footers,
+          counts_in_newline = counts_in_newline,
+          paginate = FALSE,
+          # paginate = (is.list(full_pag_i) && length(full_pag_i) > 1),
+          fontspec = fontspec,
+          lpp = lpp,
+          cpp = cpp,
+          ... = ...,
+          # colwidths = junco:::j_mf_col_widths(pgi_for_cw),
+          colwidths = NULL,
+          tf_wrap = tf_wrap,
+          max_width = max_width,
+          total_page_height = total_page_height,
+          total_page_width = total_page_width,
+          autofit_to_page = autofit_to_page,
+          orientation = orientation,
+          tblid = fname,
+          nosplitin = nosplitin,
+          string_map = string_map,
+          reduce_first_col_indentation = (length(full_pag_i) > 1)
+        )
         
-        return(l_ft)
+        return(sub_ft)
+        
+        
+        # cum_ii <- 0
+        # # for each page (vertical pagination), splice tt into subt,
+        # # and convert each subt into a flextable
+        # # return a list of flextables
+        # l_ft <- list()
+        # for (vi in seq(1, length(full_pag_i))) {
+        #   ii <- as.integer(rownames(full_pag_i[[vi]]$row_info)) + cum_ii
+        #   subt <- tt[ii, jj, drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE,
+        #              reindex_refs = FALSE]
+        #   sub_ft <- my_tt_to_flextable(
+        #     # tt = full_pag_i,
+        #     tt = subt,
+        #     theme = theme,
+        #     border = border,
+        #     indent_size = indent_size,
+        #     titles_as_header = titles_as_header,
+        #     bold_titles = bold_titles,
+        #     integrate_footers = integrate_footers,
+        #     counts_in_newline = counts_in_newline,
+        #     paginate = FALSE,
+        #     fontspec = fontspec,
+        #     lpp = lpp,
+        #     cpp = cpp,
+        #     ... = ...,
+        #     # colwidths = junco:::j_mf_col_widths(pgi_for_cw),
+        #     colwidths = NULL,
+        #     tf_wrap = tf_wrap,
+        #     max_width = max_width,
+        #     total_page_height = total_page_height,
+        #     total_page_width = total_page_width,
+        #     autofit_to_page = autofit_to_page,
+        #     orientation = orientation,
+        #     tblid = fname,
+        #     nosplitin = nosplitin,
+        #     string_map = string_map,
+        #     reduce_first_col_indentation = (length(full_pag_i) > 1)
+        #   )
+        #   
+        #   # NOTE: if we are not in the last page, remove the footers
+        #   # in the future, if we want the footers in all pages,
+        #   # it can be adjusted here
+        #   if (vi < length(full_pag_i)) {
+        #     sub_ft <- flextable::delete_part(x = sub_ft, part = "footer")
+        #     sub_ft <- sub_ft %>% rtables.officer:::.remove_hborder(part = "body", w = "bottom")
+        #   }
+        #   
+        #   l_ft[[vi]] <- sub_ft
+        #   
+        #   cum_ii <- tail(ii, 1)
+        # }
+        # 
+        # return(l_ft)
         
       }
     )
@@ -752,7 +804,6 @@ my_tt_to_flextable <- function(tt,
     }
     return(ret)
   }
-  
   
   matform <- rtables::matrix_form(tt, fontspec = fontspec, 
                                   indent_rownames = FALSE)
@@ -1033,6 +1084,10 @@ my_tt_to_flextable <- function(tt,
   }
   flx <- flextable::fix_border_issues(flx)
   
+  # NOTE: add the vertical pagination break pages
+  flx <- add_vertical_pagination(tt = tt, flx = flx, newrows = newrows)
+  # END
+  
   
   # NOTE:
   # the following block adds the Title with its own style
@@ -1278,10 +1333,9 @@ my_export_as_docx <- function(tt,
       doc <- do.call(officer::set_doc_properties, c(list(x = doc), 
                                                     doc_metadata))
     }
-
     
-    # add_title_style_caption(doc, tblid)
-    
+    string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
+    add_title_style_caption(doc, string_to_look_for)
     
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
