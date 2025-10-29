@@ -38,9 +38,17 @@ add_title_style_caption <- function(doc, string_to_look_for) {
     children <- x %>% xml2::xml_children()
   }
   
+  # set style "Caption"
   child_i <- which(xml2::xml_name(children) == "pPr") %>% head(1)
   x <- x %>% xml2::xml_child(child_i)
   x %>% xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"', .where = 0)
+  
+  # set hanging indent of 0.8 inches
+  children <- x %>% xml2::xml_children()
+  child_i <- which(xml2::xml_name(children) == "ind") %>% head(1)
+  x <- x %>% xml2::xml_child(child_i)
+  xml2::xml_set_attr(x, "w:hanging", 1152)
+  xml2::xml_set_attr(x, "w:left", 1152)
   
   # s_xpath <- paste0("//*[contains(text(),'", string_to_look_for, "')]")
   # x <- doc$doc_obj$get() %>% 
@@ -193,6 +201,36 @@ add_hanging_indent_first_column <- function(flx, column_widths, hanging_indent =
   return(flx)
 }
 
+insert_title_hanging_indent_v3 <- function(flx,
+                                           title,
+                                           border = flextable::fp_border_default(width = 0.75, color = "black")) {
+  # this version of the function inserts the Title as a header but does not attempt
+  # to simulate the hanging indent. Instead, it adds the string as is, and the hanging indent
+  # will be handled further downstream when exporting to docx by manipulating the XML.
+  # see function "add_title_style_caption()"
+  
+  flx_fpt <- rtables.officer:::.extract_font_and_size_from_flx(flx)
+  title_style <- flx_fpt$fpt
+  title_font_size <- title_style$font.size + 1 # 10
+  title_font_family <- title_style$font.family
+  
+  new_title <- sub(":", ":\t", title)
+  
+  flx <-
+    rtables.officer:::.add_titles_as_header(flx, all_titles = new_title) %>% 
+    flextable::padding(part = "header", i = 1, padding.left = 0) %>% 
+    flextable::fontsize(part = "header", i = 1, size = title_font_size) %>% 
+    flextable::border(part = "header", i = 1, border.top = border, border.bottom = border)
+  
+  flx <- flx %>% 
+    flextable::tab_settings(i = 1, j = 1, part = "header",
+                            value = officer::fp_tabs(
+                              officer::fp_tab(pos = 0.8, style = "left")))
+  
+  flx <- flextable::style(x = flx, part = "header", i = 1, pr_p = officer::fp_par(word_style = "Caption"))
+  
+  return(flx)
+}
 
 insert_title_hanging_indent_v2 <- function(flx,
                                         title,
@@ -200,6 +238,15 @@ insert_title_hanging_indent_v2 <- function(flx,
                                         border = flextable::fp_border_default(width = 0.75, color = "black"),
                                         bold_titles = TRUE,
                                         dpi = 72) {
+  # this version of the function inserts the Title as a header but attempts
+  # to simulate the hanging indent by inserting "\t" whenever the string
+  # must be broken into a next line.
+  # The widths of these tabs (which must be 0.8 inches) is controlled
+  # using function flextable::tab_settings()
+  # The problem with this version is that the Title will contain "\t" characters
+  # which can be problematic when creating the bookmarks
+  # The preferable version is insert_title_hanging_indent_v3()
+  # but we keep this function as a backup
   
   
   flx_fpt <- rtables.officer:::.extract_font_and_size_from_flx(flx)
@@ -218,12 +265,6 @@ insert_title_hanging_indent_v2 <- function(flx,
     )
   
   new_title <- sub(":", ":\t", new_title)
-  
-  # NOTE: conversion ratio
-  # 3.175 mm = 9 ms word points = 0.125 inches
-  # multiply everything by 6.4 so we end up with 0.8 inches
-  # 20.32 mm = 57.6 ms word points = 0.8 inches
-  indent_size <- rtables.officer::word_mm_to_pt(20.32)
 
   flx <-
     rtables.officer:::.add_titles_as_header(flx, all_titles = new_title, bold = bold_titles) %>% 
@@ -267,10 +308,14 @@ insert_title_hanging_indent <- function(flx,
                                         border = flextable::fp_border_default(width = 0.75, color = "black"),
                                         bold_titles = TRUE,
                                         dpi = 72) {
-  # NOTE: this function will be replaced in favor of insert_title_hanging_indent()
-  # for now we keep it as a backup
-  # The main difference is that this function splits the title into 2 lines if it's long,
-  # whereas insert_title_hanging_indent() doesn't
+  # this version of the function inserts the Title as a header but attempts
+  # to simulate the hanging indent by splitting the Title
+  # into 2 parts: the first part is the first line with no left indentation,
+  # and the second part is the rest of lines with left indentation = 0.8 inches.
+  # The problem is that it inserts 1 or 2 lines depending of the length of the Title,
+  # which can be hard to control. This will also be problematic when creating the bookmarks
+  # The preferable version is insert_title_hanging_indent_v3()
+  # but we keep this function as a backup
   
   w <- ifelse(orientation == "portrait", 155, 215)
   new_title <- 
@@ -1045,11 +1090,14 @@ my_tt_to_flextable <- function(tt,
     ts_tbl <- paste0(tblid, ":", ts_tbl)
     
     
-    flx <- insert_title_hanging_indent_v2(flx = flx,
-                                       title = ts_tbl,
-                                       orientation = orientation,
-                                       border = border,
-                                       bold_titles = bold_titles)
+    # flx <- insert_title_hanging_indent_v2(flx = flx,
+    #                                    title = ts_tbl,
+    #                                    orientation = orientation,
+    #                                    border = border,
+    #                                    bold_titles = bold_titles)
+    flx <- insert_title_hanging_indent_v3(flx = flx,
+                                          title = ts_tbl,
+                                          border = border)
     # END
   }
   # NOTE: here, even though page width is 8.88 inches, table width has 
