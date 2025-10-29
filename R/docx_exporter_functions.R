@@ -1,10 +1,12 @@
 
-add_vertical_pagination <- function(tt, flx, newrows) {
+add_vertical_pagination <- function(tt, flx) {
   # this function updates flx by calling flextable::keep_with_next()
   
   # calculate where to add the page breaks
   df <- junco:::tt_to_tbldf(tt = tt)
-  idx_page_breaks <- as.integer(df$row_type == "VALUE" & duplicated(df$roworder))
+  newrows <- df$newrows
+  # idx_page_breaks <- as.integer(df$row_type == "VALUE" & duplicated(df$roworder))
+  idx_page_breaks <- as.integer(df$row_type == "VALUE" & df$newrows == 1)
   idx <- which(newrows == 1)
   new_idx_page_breaks <- idx_page_breaks
   for (i in rev(idx)) {
@@ -13,11 +15,53 @@ add_vertical_pagination <- function(tt, flx, newrows) {
   new_idx_page_breaks <- which(new_idx_page_breaks == 1)
   
   # update the flextable
-  flx <- flx %>% flextable::keep_with_next(value = TRUE, part = "body")
+  
+  # flx <- flx %>% flextable::keep_with_next(value = TRUE, part = "body")
+  # flx <- flx %>%
+  #   flextable::keep_with_next(i = new_idx_page_breaks - 1, value = FALSE, part = "body")
+  
   flx <- flx %>%
-    flextable::keep_with_next(i = new_idx_page_breaks - 1, value = FALSE, part = "body")
+    flextable::keep_with_next(i = new_idx_page_breaks, value = TRUE, part = "body")
+  
+  # remove the lines just above the beginning of the chunk
+  # these lines are expected to be all blank
+  # they are not needed because there will be a page break in their place
+  # i.e. flx$body$dataset[new_idx_page_breaks - 1, ] should be all blank
+  
+  # flx <- flx %>% flextable::delete_rows(part = "body", i = new_idx_page_breaks - 1)
+  
+  mask <- flx$body$dataset[new_idx_page_breaks - 1, ] %>% apply(1, function(x) {
+    all(x == "")
+  })
+  lines_to_remove <- new_idx_page_breaks[mask] - 1
+  flx <- flx %>% flextable::delete_rows(part = "body", i = lines_to_remove)
   
   return(flx)
+}
+
+add_vertical_pagination_XML <- function(doc) {
+  
+  # look for all nodes '<w:keepNext/>'
+  l_x <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:keepNext")
+  
+  # look for a parent 'w:pPr'
+  # this parent should have a first child 'w:pageBreakBefore'
+  for (x in l_x) {
+    siblings <- x %>% xml2::xml_siblings()
+    
+    has_jc_left <- any(
+      sapply(siblings, function(node) {
+        xml2::xml_name(node) == "jc" && xml2::xml_attr(node, "val") == "left"
+      })
+    )
+    
+    if (has_jc_left) {
+      # insert pageBreakBefore only if one of the siblings is:
+      # <w:jc w:val="left"/>
+      # i.e. the first column in that row
+      x %>% xml2::xml_add_sibling(.value = 'w:pageBreakBefore')
+    }
+  }
 }
 
 
@@ -1133,7 +1177,7 @@ my_tt_to_flextable <- function(tt,
   flx <- flextable::fix_border_issues(flx)
   
   # NOTE: add the vertical pagination break pages
-  flx <- add_vertical_pagination(tt = tt, flx = flx, newrows = newrows)
+  flx <- add_vertical_pagination(tt = tt, flx = flx)
   # END
   
   
@@ -1384,6 +1428,7 @@ my_export_as_docx <- function(tt,
     
     string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
     add_title_style_caption(doc, string_to_look_for)
+    add_vertical_pagination_XML(doc)
     
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
