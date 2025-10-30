@@ -1177,7 +1177,9 @@ my_tt_to_flextable <- function(tt,
   flx <- flextable::fix_border_issues(flx)
   
   # NOTE: add the vertical pagination break pages
-  flx <- add_vertical_pagination(tt = tt, flx = flx)
+  if (paginate) {
+    flx <- add_vertical_pagination(tt = tt, flx = flx)
+  }
   # END
   
   
@@ -1428,7 +1430,9 @@ my_export_as_docx <- function(tt,
     
     string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
     add_title_style_caption(doc, string_to_look_for)
-    add_vertical_pagination_XML(doc)
+    if (paginate) {
+      add_vertical_pagination_XML(doc)
+    }
     
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
