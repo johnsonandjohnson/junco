@@ -1,5 +1,12 @@
 
-add_vertical_pagination <- function(tt, flx) {
+
+dps_markup_df_docx <- tibble::tibble(
+  keyword = c("super", "sub"),
+  replace_by = c("flextable::as_sup", "flextable::as_sub")
+)
+
+insert_keepNext_vertical_pagination <- function(tt, flx) {
+  
   # this function updates flx by calling flextable::keep_with_next()
   
   # calculate where to add the page breaks
@@ -429,82 +436,107 @@ insert_title_hanging_indent <- function(flx,
   return(flx)
 }
 
-interpret_cell_content <- function(s, sep = "{") {
+# interpret_cell_content("Any AE~[super a]~[sub bds]")
+# [1] "flextable::as_paragraph('Any AE', flextable::as_sup('a'), '', flextable::as_sub('bds'))"
+# interpret_cell_content("Any AE~{super a}~[sub bds]other ~{super b}b")
+# [1] "flextable::as_paragraph('Any AE', flextable::as_sup('a'), '', flextable::as_sub('bds'), 'other ', flextable::as_sup('b'), 'b')"
+# interpret_cell_content("~{super a} The event experienced by the subject with the worst severity is used.")
+# [1] "flextable::as_paragraph('', flextable::as_sup('a'), ' The event experienced by the subject with the worst severity is used.')"
+interpret_cell_content <- function(str_before, markup_df_docx = dps_markup_df_docx) {
   
-  closing_sep <- ifelse(sep == "{", "}", "]")
+  pos_start <- gregexpr("~\\{|~\\[", str_before)[[1]]
+  pos_end <- gregexpr("\\}|\\]", str_before)[[1]]
+  pos_end <- pos_end %>% lapply(function(x) {
+    y <- which(pos_start < x)
+    if (length(y) <= 0) {
+      return(NA)
+    }
+    return(pos_end[max(y)])
+  }) %>% unlist()
+  pos <- data.frame(pos_start = pos_start, pos_end = pos_end)
+  pos <- pos %>% dplyr::filter(!is.na(pos_end))
+  pos$replacement <- ""
   
-  j <- 1
-  res <- ""
-  matches <- gregexpr(paste0("~\\", sep), s)[[1]]
-  if (length(matches) == 1 && matches == -1) {
-    # no regexp to interpret, return cell content as is
-    return(s)
-  }
-  
-  start_pos <- matches[1]
-  for (start_pos in matches) {
-    close_pos <- regexpr(closing_sep, substr(s, start_pos, nchar(s)))
-    if (close_pos != -1) {
-      close_pos <- close_pos + start_pos - 1
-      content_within_curly_brackets <- substr(s, start_pos + 2, close_pos - 1) # e.g. "super a"
-      method_to_apply <- gsub(" .*", "", content_within_curly_brackets) #e.g. "super"
-      flextable_command <- switch(method_to_apply,
-                                  "super" = "flextable::as_sup",
-                                  "sub" = "flextable::as_sub",
-                                  method_to_apply
-      )
-      
-      r <- c(start_pos + 2 + nchar(method_to_apply), close_pos - 1)
-      text_to_interpret <- substr(s, r[1], r[2]) # e.g. " a"
-      text_to_interpret <- trimws(x =  text_to_interpret, which = "left")
-      if (res == "") {
-        res <- paste0("'", substr(s, j, start_pos - 1), "', ", flextable_command,"('", text_to_interpret, "')")
-      } else {
-        res <- paste0(res, ", '", substr(s, j, start_pos - 1), "', ", flextable_command, "('", text_to_interpret, "')")
+  for (i in seq_len(nrow(pos))) {
+    text_inside_brackets <- 
+      substr(str_before, pos[i, "pos_start"] + 2, pos[i, "pos_end"] - 1)
+    if (grepl(" ", text_inside_brackets)) {
+      operation <- sub(pattern = " .*", "", text_inside_brackets)
+      operation <- trimws(x = operation)
+      text_after_operation <-
+        sub("^[^[:space:]]*\\s", "", text_inside_brackets)
+      text_after_operation <- trimws(x = text_after_operation)
+      if (operation %in% markup_df_docx[["keyword"]]) {
+        idx <- which(operation == markup_df_docx[["keyword"]]) %>% head(1)
+        new_op <- as.character(markup_df_docx[idx, "replace_by"])
+        pos[i, "replacement"] <- 
+          paste0(", ", new_op, "('", text_after_operation, "'), ")
       }
-      j <- r[2] + 2
     }
   }
-  if (j < nchar(s)) {
-    # just append the rest of the sentence
-    res <- paste0(res, ", '", substr(s, j, nchar(s)), "'")
-    j <- nchar(s) + 1
+  
+  # from now on we only need 'str_before' and 'pos'
+  res <- ""
+  j <- 1
+  for (i in seq_len(nrow(pos))) {
+    res <- paste0(res, "'", substr(str_before, j, pos[i, "pos_start"] - 1), "'")
+    res <- paste0(res, pos[i, "replacement"])
+    j <- pos[i, "pos_end"] + 1
   }
+  if (j <= nchar(str_before)) {
+    res <- paste0(res, "'", substr(str_before, j, nchar(str_before)), "'")
+  } else {
+    res <- sub(", $", "", res)
+  }
+  
   res <- paste0("flextable::as_paragraph(", res, ")")
   res
 }
 
 
-interpret_all_cell_content <- function(flx) {
+interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx) {
+  
+  pattern <- "~\\[|~\\{"
   
   # Title and Headers
   tmp <- flx$header$dataset
-  for (i in seq(nrow(tmp))) {
-    for (j in seq(ncol(tmp))) {
-      s <- tmp[i, j]
-      res <- interpret_cell_content(s)
-      if (s != res) {
-        flx <- flextable::compose(flx, part = "header", i = i, j = j, value = eval(parse(text = res)))
-      }
-    }
+  matches <- as.data.frame(lapply(tmp, function(col) grepl(pattern, col)))
+  locations <- which(as.matrix(matches), arr.ind = TRUE)
+  for (idx in seq_len(nrow(locations))) {
+    i <- locations[idx, "row"]
+    j <- locations[idx, "col"]
+    str_before <- tmp[i, j]
+    str_after <- interpret_cell_content(str_before, markup_df_docx)
+    flx <- flextable::compose(flx, part = "header", i = i, j = j,
+                              value = eval(parse(text = str_after)))
   }
   
   # Body
   tmp <- flx$body$dataset
-  idx <- which(grepl("~\\[", tmp[, 1]), arr.ind = TRUE)
-  for (i in idx) {
-    s <- tmp[i, 1]
-    res <- interpret_cell_content(s, sep = "[")
-    flx <- flextable::compose(flx, part = "body", i = i, j = 1, value = eval(parse(text = res)))
+  # only look in the first column of the body
+  matches <- as.data.frame(lapply(tmp[, 1] %>% as.data.frame(), function(col) grepl(pattern, col)))
+  locations <- which(as.matrix(matches), arr.ind = TRUE)
+  for (idx in seq_len(nrow(locations))) {
+    i <- locations[idx, "row"]
+    j <- locations[idx, "col"]
+    str_before <- tmp[i, j]
+    str_after <- interpret_cell_content(str_before, markup_df_docx)
+    flx <- flextable::compose(flx, part = "body", i = i, j = j,
+                              value = eval(parse(text = str_after)))
   }
   
   # Footers
   tmp <- flx$footer$dataset
-  idx <- which(grepl("~\\{", tmp[, 1]), arr.ind = TRUE)
-  for (i in idx) {
-    s <- tmp[i, 1]
-    res <- interpret_cell_content(s)
-    flx <- flextable::compose(flx, part = "footer", i = i, j = 1, value = eval(parse(text = res)))
+  # only look in the first column of the footer
+  matches <- as.data.frame(lapply(tmp[, 1] %>% as.data.frame(), function(col) grepl(pattern, col)))
+  locations <- which(as.matrix(matches), arr.ind = TRUE)
+  for (idx in seq_len(nrow(locations))) {
+    i <- locations[idx, "row"]
+    j <- locations[idx, "col"]
+    str_before <- tmp[i, j]
+    str_after <- interpret_cell_content(str_before, markup_df_docx)
+    flx <- flextable::compose(flx, part = "footer", i = i, j = j,
+                              value = eval(parse(text = str_after)))
   }
   
   flx
@@ -655,6 +687,7 @@ my_tt_to_flextable <- function(tt,
                                tblid,
                                nosplitin = character(),
                                string_map = junco::default_str_map,
+                               markup_df_docx = dps_markup_df_docx,
                                reduce_first_col_indentation = FALSE
                                ) {
   
@@ -826,6 +859,7 @@ my_tt_to_flextable <- function(tt,
           tblid = fname,
           nosplitin = nosplitin,
           string_map = string_map,
+          markup_df_docx = markup_df_docx,
           reduce_first_col_indentation = (length(full_pag_i) > 1)
         )
         
@@ -867,6 +901,7 @@ my_tt_to_flextable <- function(tt,
         #     tblid = fname,
         #     nosplitin = nosplitin,
         #     string_map = string_map,
+        #     markup_df_docx = markup_df_docx,
         #     reduce_first_col_indentation = (length(full_pag_i) > 1)
         #   )
         #   
@@ -1177,8 +1212,21 @@ my_tt_to_flextable <- function(tt,
   flx <- flextable::fix_border_issues(flx)
   
   # NOTE: add the vertical pagination break pages
-  if (paginate) {
-    flx <- add_vertical_pagination(tt = tt, flx = flx)
+  pags <- formatters::paginate_to_mpfs(
+    tt,
+    fontspec = fontspec,
+    landscape = orientation == "landscape",
+    colwidths = colwidths_2,
+    col_gap = col_gap,
+    pg_width = my_pg_width_by_orient(orientation),
+    pg_height = NULL,
+    margins = rep(0, 4),
+    lpp = NULL,
+    nosplitin = nosplitin,
+    verbose = F
+  )
+  if (!is.null(names(pags))) {
+    flx <- insert_keepNext_vertical_pagination(tt = tt, flx = flx)
   }
   # END
   
@@ -1238,7 +1286,7 @@ my_tt_to_flextable <- function(tt,
   # END
   
   # NOTE: convert the super- and sub-scripts
-  flx <- interpret_all_cell_content(flx)
+  flx <- interpret_all_cell_content(flx, markup_df_docx)
   # NOTE: convert the '>=', '<=', etc symbols
   # flx$header$dataset <- apply(flx$header$dataset, 1:2, junco:::strmodify) %>% as.data.frame()
   # flx$body$dataset <- apply(flx$body$dataset, 1:2, junco:::strmodify) %>% as.data.frame()
@@ -1268,6 +1316,7 @@ my_export_as_docx <- function(tt,
                               paginate = FALSE,
                               nosplitin = character(),
                               string_map = junco::default_str_map,
+                              markup_df_docx = dps_markup_df_docx,
                               combined_docx = FALSE,
                               ...) {
   
@@ -1289,6 +1338,7 @@ my_export_as_docx <- function(tt,
       tblid = paste0(tblid, "allparts"),
       paginate = FALSE,
       string_map = string_map,
+      markup_df_docx = markup_df_docx,
       combined_docx = FALSE,
       ... = ...
     )
@@ -1302,6 +1352,7 @@ my_export_as_docx <- function(tt,
                           paginate = paginate,
                           nosplitin = nosplitin,
                           string_map = string_map,
+                          markup_df_docx = markup_df_docx,
                           ...)
   }
   if (inherits(tt, "flextable")) {
@@ -1320,6 +1371,7 @@ my_export_as_docx <- function(tt,
                                 paginate = paginate,
                                 nosplitin = nosplitin,
                                 string_map = string_map,
+                                markup_df_docx = markup_df_docx,
                                 ...), 
                               SIMPLIFY = FALSE)
     }
@@ -1368,6 +1420,8 @@ my_export_as_docx <- function(tt,
         tblid = fname,
         paginate = FALSE,
         nosplitin = nosplitin,
+        string_map = string_map,
+        markup_df_docx = markup_df_docx,
         combined_docx = FALSE,
         ... = ...
       )
@@ -1430,9 +1484,7 @@ my_export_as_docx <- function(tt,
     
     string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
     add_title_style_caption(doc, string_to_look_for)
-    if (paginate) {
-      add_vertical_pagination_XML(doc)
-    }
+    add_vertical_pagination_XML(doc)
     
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
