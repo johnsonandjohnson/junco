@@ -16,11 +16,21 @@ a_cmhrms_j(
   .df_row,
   ...,
   variables,
+  collapse_combo = TRUE,
   .stats = "pvalue",
   .formats = NULL
 )
 
-s_cmhrms_j(df, .var, .ref_group, .in_ref_col, ..., .df_row, variables)
+s_cmhrms_j(
+  df,
+  .var,
+  .ref_group,
+  .in_ref_col,
+  ...,
+  .df_row,
+  variables,
+  collapse_combo = TRUE
+)
 }
 \arguments{
 \item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
@@ -42,6 +52,8 @@ that is passed by \code{rtables}.}
 \item{...}{additional arguments for the lower level functions.}
 
 \item{variables}{(\code{list})\cr list with arm and strata variable names.}
+
+\item{collapse_combo}{(\code{logical})\cr If TRUE, multiple arm levels from df will be combined into 1 level.}
 
 \item{.stats}{(\code{character})\cr statistics to select for the table.}
 

@@ -23,12 +23,17 @@ NULL
 #' @order 3
 #' @inheritParams proposal_argument_convention
 #' @param variables (`list`)\cr list with arm and strata variable names.
+#' @param collapse_combo (`logical`)\cr If TRUE, multiple arm levels from df will be combined into 1 level.
 #' @importFrom vcdExtra CMHtest
 #'
-s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variables) {
+s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variables, collapse_combo = TRUE) {
   x <- .df_row[[.var]]
   x <- x[!is.na(x)]
 
+  colvar <- variables$arm
+  if (collapse_combo && length(unique(df[[colvar]]))>=2){
+    df[[colvar]] <- "Combined"
+  }
   pwdf <- rbind(df, .ref_group)
   if (.in_ref_col) {
     # overall p-value -- however not needed on output?
@@ -37,8 +42,8 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
     # pairwise p-value
     inputdf <- pwdf
   }
-  colvar <- variables$arm
-  inputdf[[colvar]] <- droplevels(inputdf[[colvar]])
+  
+  inputdf[[colvar]] <- as.character(inputdf[[colvar]])
   inputdf[[.var]] <- droplevels(inputdf[[.var]])
 
   strata <- variables$strata
@@ -57,7 +62,7 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
 
   x_stats <- list()
 
-  if (length(x) == 0) {
+  if (length(x) == 0 || length(unique(inputdf[[colvar]])) < 2) {
     pval <- numeric(0)
   } else {
     x_stats_cmh <-
@@ -108,6 +113,7 @@ a_cmhrms_j <- function(df, .var,
                        .df_row,
                        ...,
                        variables,
+                       collapse_combo = TRUE,
                        .stats = "pvalue",
                        .formats = NULL) {
   dots_extra_args <- list(...)
@@ -125,6 +131,7 @@ a_cmhrms_j <- function(df, .var,
         .in_ref_col = .in_ref_col,
         .df_row = list(.df_row),
         variables = list(variables),
+        collapse_combo = collapse_combo,
         dots_extra_args
       )
     )
