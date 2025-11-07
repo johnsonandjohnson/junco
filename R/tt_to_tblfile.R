@@ -297,7 +297,7 @@ tt_to_tlgrtf <- function(
     combined_rtf = FALSE,
     one_table = TRUE,
     border_mat = make_header_bordmat(obj = tt),
-    round_type = get_round_type(tt),
+    round_type = NULL,
     ...) {
   orientation <- match.arg(orientation)
   newdev <- open_font_dev(fontspec)
@@ -305,6 +305,9 @@ tt_to_tlgrtf <- function(
     on.exit(close_font_dev())
   }
 
+  if (is.null(round_type) && tlgtype == "Table"){
+    round_type <- round_type(tt)
+  }
   if (tlgtype == "Listing" && nrow(tt) == 0) {
     dat <- as.list(c("No data to report", rep("", ncol(tt) - 1)))
     names(dat) <- names(tt)
@@ -434,6 +437,7 @@ tt_to_tlgrtf <- function(
           string_map = string_map,
           markup_df = markup_df,
           border_mat = pag_bord_mats[[i]],
+          round_type = round_type,
           ...
         )
       }
@@ -456,6 +460,7 @@ tt_to_tlgrtf <- function(
           colwidths = colwidths, ## this is largely ignored see note in docs
           # colwidths are already on the pags since they are mpfs
           border_mat = pag_bord_mats,
+          round_type = round_type,
           ...
         )
       } else if (!is.null(file)) { # only one page after pagination

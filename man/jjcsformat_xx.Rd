@@ -75,8 +75,8 @@ fmt2 <- jjcsformat_xx("xx.x (xx.xxx)")
 is.function(fmt2)
 value <- c(1.65, 8.645)
 format_value(value, fmt2, round_type = "sas")
-format_value(value, fmt2, round_type = "iec") 
-#only possible when resulting format is a function
+format_value(value, fmt2, round_type = "iec")
+# only possible when resulting format is a function
 fmt2(value, round_type = "sas")
 
 value <- c(1.65, NA)

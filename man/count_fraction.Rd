@@ -55,7 +55,7 @@ jjcsformat_fraction_count_denom(c(7, 10, 0.7))
 jjcsformat_fraction_count_denom(c(70000, 70001, 70000 / 70001))
 jjcsformat_fraction_count_denom(c(235, 235, 235 / 235))
 fmt <- jjcsformat_cnt_den_fract_fct(type = "fraction_count_denom", d = 2)
-fmt(c(23, 235, 23 / 235)) 
+fmt(c(23, 235, 23 / 235))
 }
 \seealso{
 Other JJCS formatting functions: 

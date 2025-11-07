@@ -26,7 +26,7 @@ tt_to_tlgrtf(
   combined_rtf = FALSE,
   one_table = TRUE,
   border_mat = make_header_bordmat(obj = tt),
-  round_type = get_round_type(tt),
+  round_type = NULL,
   ...
 )
 }

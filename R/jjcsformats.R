@@ -136,11 +136,10 @@ jjcsformat_cnt_den_fract_fct <- function(d = 1,
                                          verbose = FALSE) {
   type <- match.arg(type)
 
-  function(
-      x,
-      round_type = c("sas", "iec"),
-      output,
-      ...) {
+  function(x,
+           round_type = c("sas", "iec"),
+           output,
+           ...) {
     attr(x, "label") <- NULL
     if (any(is.na(x))) {
       return("-")
