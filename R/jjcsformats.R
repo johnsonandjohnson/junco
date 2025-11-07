@@ -58,10 +58,10 @@ jjcsformat_xx <- function(
     )
     x_positions <- regmatches(x = str, m = positions)[[1]]
 
-    roundings <- lapply(X = x_positions, function(fmt) {
-      rounding <- function(x,
-                           na_str,
-                           round_type) {
+    single_rounding <- function(fmt) {
+      function(x,
+               na_str,
+               round_type) {
         if (fmt %in% formatters:::formats_1d) {
           res <- format_value(x,
             fmt,
@@ -75,7 +75,10 @@ jjcsformat_xx <- function(
         }
         res
       }
-      return(rounding)
+    }
+
+    roundings <- lapply(X = x_positions, function(fmt) {
+      single_rounding(fmt)
     })
 
     rtable_format <-
@@ -140,7 +143,7 @@ jjcsformat_cnt_den_fract_fct <- function(d = 1,
            round_type = c("sas", "iec"),
            output,
            ...) {
-    attr(x, "label") <- NULL
+    obj_label(x) <- NULL
     if (any(is.na(x))) {
       return("-")
     }
@@ -172,7 +175,7 @@ jjcsformat_cnt_den_fract_fct <- function(d = 1,
       fmt_cd <- paste0(count, "/", denom)
     }
 
-    if (verbose) print(paste0("round_type used: ", round_type))
+    if (verbose) message(paste0("round_type used: ", round_type))
 
     fmtpct <- format_value(100 * fraction,
       format = paste0("xx.", strrep("x", times = d)),
@@ -180,50 +183,25 @@ jjcsformat_cnt_den_fract_fct <- function(d = 1,
       round_type = round_type
     )
 
+    fmtpct_p2 <- fmtpct
+    # deal with special cases
+    if (fraction == 1) {
+      fmtpct_p2 <- "100.0"
+    } else if (fmtpct == format(100, nsmall = d)) {
+      fmtpct_p2 <- paste0(">", 100 - 10**(-d))
+    } else if (count != 0 && fmtpct == format(0, nsmall = d)) {
+      fmtpct_p2 <- paste0("<", 10**(-d))
+    }
 
-    if (type %in% c("count_fraction", "count_denom_fraction")) {
-      result <- if (count == 0) {
-        if (type == "count_fraction") {
-          "0"
-        } else {
-          paste0(fmt_cd, " (", fmtpct, "%)")
-        }
-      } else if (fraction == 1) {
-        ## per conventions still report as 100.0%
-        paste0(fmt_cd, " (100.0%)")
-      } else if (fmtpct == format(0, nsmall = d)) {
-        # else if (100*x[2] < 10**(-d)) {
-        ### example pct = 0.09999 ### <0.1% (even if fmtpct == 0.1,
-        # but the actual value of pct <0.1)
-        paste0(fmt_cd, " (<", 10**(-d), "%)")
-      } else if (fmtpct == format(100, nsmall = d)) {
-        # else if (100*x[2] > 100-10**(-d)) {
-        ### example pct = 99.90001 ### >99.9% (even if fmtpct == 99.9,
-        # but the actual value of pct >99.9)
-        paste0(fmt_cd, " (>", 100 - 10**(-d), "%)")
-      } else {
-        paste0(fmt_cd, " (", fmtpct, "%)")
-      }
+    fmtpct_p2 <- paste0(fmtpct_p2, "%")
+    fmtpct_p <- paste0(" (", fmtpct_p2, ")")
+
+    result <- if (type == "fraction_count_denom") {
+      paste0(fmtpct_p2, " (", fmt_cd, ")")
+    } else if (count == 0 && type == "count_fraction") {
+      0
     } else {
-      # type == fraction_count_denom
-      result <- if (count == 0) {
-        "0"
-      } else if (fraction == 1) {
-        ## per conventions still report as 100.0%
-        paste0("100.0% (", fmt_cd, ")")
-      } else if (fmtpct == format(0, nsmall = d)) {
-        # else if (100*x[2] < 10**(-d)) {
-        ### example pct = 0.09999 ### <0.1% (even if fmtpct == 0.1,
-        # but the actual value of pct <0.1)
-        paste0("<", 10**(-d), "%) (", fmt_cd, ")")
-      } else if (fmtpct == format(100, nsmall = d)) {
-        # else if (100*x[2] > 100-10**(-d)) {
-        ### example pct = 99.90001 ### >99.9% (even if fmtpct == 99.9,
-        # but the actual value of pct >99.9)
-        paste0(">", 100 - 10**(-d), "% (", fmt_cd, ")")
-      } else {
-        paste0(fmtpct, "% (", fmt_cd, ")")
-      }
+      paste0(fmt_cd, fmtpct_p)
     }
 
     return(result)
