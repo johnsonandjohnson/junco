@@ -694,7 +694,6 @@ my_tt_to_flextable <- function(tt,
                                pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE)
                                ) {
   
-  
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
   }
@@ -991,6 +990,10 @@ my_tt_to_flextable <- function(tt,
     mpf_aligns[mpf_aligns == "dec_left"] <- "left"
     mpf_aligns[mpf_aligns == "dec_right"] <- "right"
   }
+  if (tlgtype == "Listing") {
+    # NOTE: left-align the first column for listings
+    mpf_aligns[, 1] <- "left"
+  }
   content <- as.data.frame(body[-seq_len(hnum), , drop = FALSE])
   content[content == ""] <- " "
   # NOTE:
@@ -1209,6 +1212,22 @@ my_tt_to_flextable <- function(tt,
                                           border = border)
     # END
   }
+  
+  
+  # NOTE: if it's a listing, set font size = 8 (instead of 9) to Body and Headers
+  # except the Titles
+  if (tlgtype == "Listing") {
+    header_start_pos <- length(formatters::all_titles(tt)) + 1
+    header_end_pos <- nrow(flx$header$dataset)
+    flx <- flextable::fontsize(
+      flx,
+      part = "header",
+      i = seq(header_start_pos, header_end_pos),
+      size = 8
+    )
+    flx <- flextable::fontsize(flx, part = "body", size = 8)
+  }
+  
   # NOTE: here, even though page width is 8.88 inches, table width has 
   # to be 8.82 inches, so leave a gap of 0.03 inches on both sides
   if (orientation == "landscape") {
@@ -1242,21 +1261,23 @@ my_tt_to_flextable <- function(tt,
   flx <- flextable::fix_border_issues(flx)
   
   # NOTE: add the vertical pagination break pages
-  pags <- formatters::paginate_to_mpfs(
-    tt,
-    fontspec = fontspec,
-    landscape = orientation == "landscape",
-    colwidths = colwidths_2,
-    col_gap = col_gap,
-    pg_width = my_pg_width_by_orient(orientation),
-    pg_height = NULL,
-    margins = rep(0, 4),
-    lpp = NULL,
-    nosplitin = nosplitin,
-    verbose = F
-  )
-  if (!is.null(names(pags))) {
-    flx <- insert_keepNext_vertical_pagination(tt = tt, flx = flx)
+  if (nrow(tt) > 1) {
+    pags <- formatters::paginate_to_mpfs(
+      tt,
+      fontspec = fontspec,
+      landscape = orientation == "landscape",
+      colwidths = colwidths_2,
+      col_gap = col_gap,
+      pg_width = my_pg_width_by_orient(orientation),
+      pg_height = NULL,
+      margins = rep(0, 4),
+      lpp = NULL,
+      nosplitin = nosplitin,
+      verbose = F
+    )
+    if (!is.null(names(pags))) {
+      flx <- insert_keepNext_vertical_pagination(tt = tt, flx = flx)
+    }
   }
   # END
   
