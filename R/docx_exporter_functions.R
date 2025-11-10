@@ -688,8 +688,12 @@ my_tt_to_flextable <- function(tt,
                                nosplitin = character(),
                                string_map = junco::default_str_map,
                                markup_df_docx = dps_markup_df_docx,
-                               reduce_first_col_indentation = FALSE
+                               reduce_first_col_indentation = FALSE,
+                               tlgtype = junco:::tlg_type(tt),
+                               col_gap = ifelse(tlgtype == "Listing", .5, 3),
+                               pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE)
                                ) {
+  
   
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
@@ -705,13 +709,36 @@ my_tt_to_flextable <- function(tt,
   checkmate::assert_number(total_page_height, lower = 1)
   checkmate::assert_numeric(colwidths, lower = 0, len = ncol(tt) + 1, null.ok = TRUE)
   
+  
+  if (tlgtype == "Listing" && nrow(tt) == 0) {
+    dat <- as.list(c("No data to report", rep("", ncol(tt) - 1)))
+    names(dat) <- names(tt)
+    df <- as.data.frame(dat)
+    formatters::var_labels(df) <- formatters::var_labels(tt)
+    
+    # titles <- formatters::all_titles(tt)
+    titles <- list()
+    titles$title <- main_title(tt)
+    titles$subtitles <- subtitles(tt)
+    titles$main_footer <- main_footer(tt)
+    titles$prov_footer <- prov_footer(tt)
+    
+    tt <- rlistings::as_listing(
+      df,
+      key_cols = rlistings::get_keycols(tt),
+      disp_cols = rlistings::listing_dispcols(tt)
+    )
+    tt <- set_titles(tt, titles)
+  }
+  
+  
   if (is.null(colwidths)) {
     # NOTE: calculate page width and column widths
     # total_page_width <- junco:::pg_width_by_orient(orientation == "landscape")
     
     label_width_ins <- 2
-    tlgtype <- junco:::tlg_type(tt)
-    col_gap <- ifelse(tlgtype == "Listing", .5, 3)
+    # tlgtype <- junco:::tlg_type(tt)
+    # col_gap <- ifelse(tlgtype == "Listing", .5, 3)
     colwidths <- junco::def_colwidths(
       tt,
       fontspec,
@@ -860,7 +887,10 @@ my_tt_to_flextable <- function(tt,
           nosplitin = nosplitin,
           string_map = string_map,
           markup_df_docx = markup_df_docx,
-          reduce_first_col_indentation = (length(full_pag_i) > 1)
+          reduce_first_col_indentation = (length(full_pag_i) > 1),
+          tlgtype = tlgtype,
+          col_gap = col_gap,
+          pagenum = pagenum
         )
         
         return(sub_ft)
@@ -902,7 +932,10 @@ my_tt_to_flextable <- function(tt,
         #     nosplitin = nosplitin,
         #     string_map = string_map,
         #     markup_df_docx = markup_df_docx,
-        #     reduce_first_col_indentation = (length(full_pag_i) > 1)
+        #     reduce_first_col_indentation = (length(full_pag_i) > 1),
+        #     tlgtype = tlgtype,
+        #     col_gap = col_gap,
+        #     pagenum = pagenum
         #   )
         #   
         #   # NOTE: if we are not in the last page, remove the footers
@@ -938,6 +971,7 @@ my_tt_to_flextable <- function(tt,
   rdf <- rtables::make_row_df(tt)
   
   # NOTE: convert the '>=', '<=', etc symbols
+  body[, 1] <- gsub("^[[:space:]]+", "", body[, 1])
   body <- junco:::strmodify(body, string_map)
   
   
@@ -1120,22 +1154,18 @@ my_tt_to_flextable <- function(tt,
   
   footers_with_blank_line <- c()
   if (length(matform$ref_footnotes) > 0 && isTRUE(integrate_footers)) {
-    # NOTE: add 2 line above and below footnotes
     footers_with_blank_line <- c("", matform$ref_footnotes)
+    footers_with_blank_line <- junco:::strmodify(footers_with_blank_line, string_map)
     flx <- flextable::add_footer_lines(flx, values = footers_with_blank_line) %>% 
       rtables.officer:::.add_hborder(part = "body", ii = nrow(content), border = border) %>% 
       rtables.officer:::.add_hborder(part = "footer", ii = length(footers_with_blank_line), border = border)
-    
-
   }
   if (length(formatters::all_footers(tt)) > 0 && isTRUE(integrate_footers)) {
-    # NOTE: add 2 line above and below footnotes
     footers_with_blank_line <- c("", formatters::all_footers(tt))
+    footers_with_blank_line <- junco:::strmodify(footers_with_blank_line, string_map)
     flx <- flextable::add_footer_lines(flx, values = footers_with_blank_line) %>% 
       rtables.officer:::.add_hborder(part = "body", ii = nrow(content), border = border) %>% 
       rtables.officer:::.add_hborder(part = "footer", ii = length(footers_with_blank_line), border = border)
-    
-    
   }
   
   # NOTE: the following block adds the footer, this is, the last line below footnotes
@@ -1318,6 +1348,9 @@ my_export_as_docx <- function(tt,
                               string_map = junco::default_str_map,
                               markup_df_docx = dps_markup_df_docx,
                               combined_docx = FALSE,
+                              tlgtype = junco:::tlg_type(tt),
+                              col_gap = ifelse(tlgtype == "Listing", .5, 3),
+                              pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
                               ...) {
   
   checkmate::assert_flag(add_page_break)
@@ -1340,6 +1373,9 @@ my_export_as_docx <- function(tt,
       string_map = string_map,
       markup_df_docx = markup_df_docx,
       combined_docx = FALSE,
+      tlgtype = "Table",
+      col_gap = col_gap,
+      pagenum = pagenum,
       ... = ...
     )
   }
@@ -1353,6 +1389,9 @@ my_export_as_docx <- function(tt,
                           nosplitin = nosplitin,
                           string_map = string_map,
                           markup_df_docx = markup_df_docx,
+                          tlgtype = tlgtype,
+                          col_gap = col_gap,
+                          pagenum = pagenum,
                           ...)
   }
   if (inherits(tt, "flextable")) {
@@ -1372,6 +1411,9 @@ my_export_as_docx <- function(tt,
                                 nosplitin = nosplitin,
                                 string_map = string_map,
                                 markup_df_docx = markup_df_docx,
+                                tlgtype = tlgtype,
+                                col_gap = col_gap,
+                                pagenum = pagenum,
                                 ...), 
                               SIMPLIFY = FALSE)
     }
@@ -1423,6 +1465,9 @@ my_export_as_docx <- function(tt,
         string_map = string_map,
         markup_df_docx = markup_df_docx,
         combined_docx = FALSE,
+        tlgtype = tlgtype,
+        col_gap = col_gap,
+        pagenum = pagenum,
         ... = ...
       )
     }
