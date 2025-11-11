@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.858914450035945" branch-rate="0" lines-covered="4779" lines-valid="5564" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-10-07 13:39:04.148607">
+<coverage line-rate="0.858914450035945" branch-rate="0" lines-covered="4779" lines-valid="5564" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-11-11 14:46:27.036773">
   <sources>
     <source>/__w/junco/junco/junco</source>
   </sources>
@@ -5576,15 +5576,15 @@
                 <line number="224" hits="474" branch="false"/>
                 <line number="225" hits="474" branch="false"/>
                 <line number="227" hits="474" branch="false"/>
-                <line number="228" hits="313" branch="false"/>
+                <line number="228" hits="316" branch="false"/>
                 <line number="230" hits="474" branch="false"/>
                 <line number="232" hits="474" branch="false"/>
                 <line number="233" hits="473" branch="false"/>
                 <line number="235" hits="1" branch="false"/>
                 <line number="238" hits="474" branch="false"/>
-                <line number="241" hits="7" branch="false"/>
+                <line number="241" hits="4" branch="false"/>
                 <line number="242" hits="474" branch="false"/>
-                <line number="243" hits="313" branch="false"/>
+                <line number="243" hits="316" branch="false"/>
                 <line number="244" hits="474" branch="false"/>
                 <line number="246" hits="1" branch="false"/>
                 <line number="247" hits="474" branch="false"/>
@@ -5830,15 +5830,15 @@
             <line number="224" hits="474" branch="false"/>
             <line number="225" hits="474" branch="false"/>
             <line number="227" hits="474" branch="false"/>
-            <line number="228" hits="313" branch="false"/>
+            <line number="228" hits="316" branch="false"/>
             <line number="230" hits="474" branch="false"/>
             <line number="232" hits="474" branch="false"/>
             <line number="233" hits="473" branch="false"/>
             <line number="235" hits="1" branch="false"/>
             <line number="238" hits="474" branch="false"/>
-            <line number="241" hits="7" branch="false"/>
+            <line number="241" hits="4" branch="false"/>
             <line number="242" hits="474" branch="false"/>
-            <line number="243" hits="313" branch="false"/>
+            <line number="243" hits="316" branch="false"/>
             <line number="244" hits="474" branch="false"/>
             <line number="246" hits="1" branch="false"/>
             <line number="247" hits="474" branch="false"/>
