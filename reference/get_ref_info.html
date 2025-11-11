@@ -57,18 +57,18 @@ the corresponding column split hierarchy levels.</p>
 
 
 <dt id="arg--spl-context">.spl_context<a class="anchor" aria-label="anchor" href="#arg--spl-context"></a></dt>
-<dd><p>see <a href="https://insightsengineering.github.io/rtables/latest-release/reference/spl_context.html" class="external-link">rtables::spl_context</a>.</p></dd>
+<dd><p>see <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/spl_context.html" class="external-link">rtables::spl_context</a>.</p></dd>
 
 
 <dt id="arg--var">.var<a class="anchor" aria-label="anchor" href="#arg--var"></a></dt>
-<dd><p>the variable being analyzed, see <a href="https://insightsengineering.github.io/rtables/latest-release/reference/additional_fun_params.html" class="external-link">rtables::additional_fun_params</a>.</p></dd>
+<dd><p>the variable being analyzed, see <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html" class="external-link">rtables::additional_fun_params</a>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A list with <code>ref_group</code> and <code>in_ref_col</code>, which can be used as
 <code>.ref_group</code> and <code>.in_ref_col</code> as if being directly passed to an analysis
-function by <code>rtables</code>, see <a href="https://insightsengineering.github.io/rtables/latest-release/reference/additional_fun_params.html" class="external-link">rtables::additional_fun_params</a>.</p>
+function by <code>rtables</code>, see <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html" class="external-link">rtables::additional_fun_params</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -98,8 +98,8 @@ a vector (otherwise) is returned. This allows usage for analysis functions with
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">standard_afun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">.ref_group</span>, <span class="va">.in_ref_col</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/in_rows.html" class="external-link">in_rows</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">"Difference of Averages"</span> <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/rcell.html" class="external-link">non_ref_rcell</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html" class="external-link">in_rows</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"Difference of Averages"</span> <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/rcell.html" class="external-link">non_ref_rcell</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.ref_group</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      is_ref <span class="op">=</span> <span class="va">.in_ref_col</span>,</span></span>
 <span class="r-in"><span>      format <span class="op">=</span> <span class="st">"xx.xx"</span></span></span>
@@ -114,19 +114,19 @@ a vector (otherwise) is returned. This allows usage for analysis functions with
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ref_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"colspan_trt"</span>, <span class="st">" "</span>, <span class="st">"ARM"</span>, <span class="st">"B: Placebo"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"colspan_trt"</span>,</span></span>
-<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/trim_levels_to_map.html" class="external-link">trim_levels_to_map</a></span><span class="op">(</span>map <span class="op">=</span> <span class="va">colspan_trt_map</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/trim_levels_to_map.html" class="external-link">trim_levels_to_map</a></span><span class="op">(</span>map <span class="op">=</span> <span class="va">colspan_trt_map</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"AGE"</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ref_path <span class="op">=</span> <span class="va">ref_path</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">result_afun</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">dm</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">dm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                              Active Study Agent                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          A: Drug X   C: Combination   B: Placebo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ————————————————————————————————————————————————————————————————</span>
@@ -142,7 +142,7 @@ a vector (otherwise) is returned. This allows usage for analysis functions with
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

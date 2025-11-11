@@ -59,7 +59,7 @@
 
 
 <dl><dt id="arg-lyt">lyt<a class="anchor" aria-label="anchor" href="#arg-lyt"></a></dt>
-<dd><p>empty layout, i.e. result of <code><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">rtables::basic_table()</a></code></p></dd>
+<dd><p>empty layout, i.e. result of <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">rtables::basic_table()</a></code></p></dd>
 
 
 <dt id="arg-variables">variables<a class="anchor" aria-label="anchor" href="#arg-variables"></a></dt>
@@ -119,7 +119,7 @@ information on the <code>'auto'</code> setting.</p></dd>
 <span class="r-in"><span>  weights_emmeans <span class="op">=</span> <span class="st">"equal"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">anl</span> <span class="op">&lt;-</span> <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">summarize_lsmeans_wide</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    variables <span class="op">=</span> <span class="va">variables</span>,</span></span>
 <span class="r-in"><span>    ref_level <span class="op">=</span> <span class="va">fit</span><span class="op">$</span><span class="va">ref_level</span>,</span></span>
@@ -127,7 +127,7 @@ information on the <code>'auto'</code> setting.</p></dd>
 <span class="r-in"><span>    pval_sided <span class="op">=</span> <span class="st">"2"</span>,</span></span>
 <span class="r-in"><span>    conf_level <span class="op">=</span> <span class="fl">0.8</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-release/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">anl</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">anl</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            Reference Group             Testing Group                                                     Testing - Reference                   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Treatment   N    LS Mean   Treatment   N    LS Mean   M. S. Error   Error DF   LS Mean    SE       80% CI      2-sided p-value~[super a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span>
@@ -149,7 +149,7 @@ information on the <code>'auto'</code> setting.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

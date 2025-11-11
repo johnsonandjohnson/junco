@@ -1,0 +1,73 @@
+# Pruning Function to accommodate removal of completely NULL rows within a table
+
+Condition function on individual analysis rows. Flag as FALSE when all
+columns are NULL, as then the row should not be kept. To be utilized as
+a row_condition in function tern::keep_rows
+
+## Usage
+
+``` r
+keep_non_null_rows(tr)
+```
+
+## Arguments
+
+- tr:
+
+  table tree object
+
+## Value
+
+a function that can be utilized as a row_condition in the
+tern::keep_rows function
+
+## Examples
+
+``` r
+library(dplyr)
+
+ADSL <- data.frame(
+  USUBJID = c(
+    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
+    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
+  ),
+  TRT01P = c(
+    "ARMA", "ARMB", "ARMA", "ARMB", "ARMB", "Placebo",
+    "Placebo", "Placebo", "ARMA", "ARMB"
+  ),
+  AGE = c(34, 56, 75, 81, 45, 75, 48, 19, 32, 31),
+  SAFFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N"),
+  PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
+)
+
+ADSL <- ADSL |>
+  mutate(TRT01P = as.factor(TRT01P))
+
+create_blank_line <- function(x) {
+  list(
+    "Mean" = rcell(mean(x), format = "xx.x"),
+    " " = rcell(NULL),
+    "Max" = rcell(max(x))
+  )
+}
+
+lyt <- basic_table() |>
+  split_cols_by("TRT01P") |>
+  analyze("AGE", afun = create_blank_line)
+
+result <- build_table(lyt, ADSL)
+
+result
+#>        ARMA   ARMB   Placebo
+#> ————————————————————————————
+#> Mean   47.0   53.2    47.3  
+#>                             
+#> Max     75     81      75   
+result <- prune_table(result, prune_func = tern::keep_rows(keep_non_null_rows))
+
+result
+#>        ARMA   ARMB   Placebo
+#> ————————————————————————————
+#> Mean   47.0   53.2    47.3  
+#> Max     75     81      75   
+```
