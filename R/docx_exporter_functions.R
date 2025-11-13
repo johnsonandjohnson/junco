@@ -665,6 +665,7 @@ my_theme_docx_default <- function(font = "Arial",
 #' This function is based on rtables.officer::tt_to_flextable()
 #'
 #' @param tt a TableTree object
+#' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
 #' @param theme (optional) a function factory. See my_theme_docx_default()
 #' or rtables.officer::theme_docx_default() for more details.
 #' @param border (optional) an fp_border object.
@@ -686,7 +687,6 @@ my_theme_docx_default <- function(font = "Arial",
 #' Set to 6.38 ("portrait") or 8.88 ("landscape").
 #' @param autofit_to_page (optional) Default = TRUE. Not used and set to FALSE internally.
 #' @param orientation (optional). Set to "portrait" (Tables) or "landscape" (Listings).
-#' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
 #' @param nosplitin (optional) Default = character(). Named list.
 #' @param string_map (optional) Default = default_str_map.
 #' @param markup_df_docx (optional) Default = dps_markup_df_docx.
@@ -698,6 +698,7 @@ my_theme_docx_default <- function(font = "Arial",
 #' @returns a flextable object.
 #' @export
 my_tt_to_flextable <- function(tt,
+                               tblid,
                                theme = my_theme_docx_default(
                                  font = "Times New Roman",
                                  font_size = 9L,
@@ -724,7 +725,6 @@ my_tt_to_flextable <- function(tt,
                                orientation = ifelse(tlgtype == "Table",
                                                     "portrait",
                                                     "landscape"),
-                               tblid,
                                nosplitin = character(),
                                string_map = junco::default_str_map,
                                markup_df_docx = dps_markup_df_docx,
@@ -1010,7 +1010,7 @@ my_tt_to_flextable <- function(tt,
   rdf <- rtables::make_row_df(tt)
   
   # NOTE: convert the '>=', '<=', etc symbols
-  body[, 1] <- gsub("^[[:space:]]+", "", body[, 1])
+  # body[, 1] <- gsub("^[[:space:]]+", "", body[, 1])
   body <- junco:::strmodify(body, string_map)
   
   
@@ -1408,6 +1408,7 @@ my_tt_to_flextable <- function(tt,
 #' This function is based on rtables.officer::export_as_docx()
 #'
 #' @param tt a TableTree object to export.
+#' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
 #' @param output_dir a directory path to save the docx.
 #' @param add_page_break (optional) Default = FALSE.
 #' @param titles_as_header (optional) Default = TRUE.
@@ -1420,7 +1421,6 @@ my_tt_to_flextable <- function(tt,
 #' @param template_file (optional). Default = "doc/template_file.docx".
 #' Paragraph styles are inherited from this file.
 #' @param orientation (optional). Set to "portrait" (Tables) or "landscape" (Listings).
-#' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
 #' @param paginate (optional) Default = FALSE.
 #' @param nosplitin (optional) Default = character(). Named list.
 #' @param string_map (optional) Default = default_str_map.
@@ -1434,6 +1434,7 @@ my_tt_to_flextable <- function(tt,
 #'
 #' @export
 my_export_as_docx <- function(tt,
+                              tblid,
                               output_dir,
                               add_page_break = FALSE,
                               titles_as_header = TRUE, 
@@ -1443,12 +1444,12 @@ my_export_as_docx <- function(tt,
                                 page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
                               ),
                               doc_metadata = NULL,
-                              template_file = "doc/template_file.docx",
+                              template_file = system.file("template_file.docx", package = "junco"),
+                              # template_file = "doc/template_file.docx",
                               # template_file = NULL,
                               orientation = ifelse(tlgtype == "Table",
                                                    "portrait",
                                                    "landscape"),
-                              tblid,
                               paginate = FALSE,
                               nosplitin = character(),
                               string_map = junco::default_str_map,

@@ -6,6 +6,7 @@
 \usage{
 my_tt_to_flextable(
   tt,
+  tblid,
   theme = my_theme_docx_default(font = "Times New Roman", font_size = 9L, bold = NULL),
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   indent_size = NULL,
@@ -25,7 +26,6 @@ my_tt_to_flextable(
   total_page_width = my_pg_width_by_orient(orientation),
   autofit_to_page = TRUE,
   orientation = ifelse(tlgtype == "Table", "portrait", "landscape"),
-  tblid,
   nosplitin = character(),
   string_map = junco::default_str_map,
   markup_df_docx = dps_markup_df_docx,
@@ -37,6 +37,8 @@ my_tt_to_flextable(
 }
 \arguments{
 \item{tt}{a TableTree object}
+
+\item{tblid}{Character. Output ID to be displayed in the Title and last line of footer.}
 
 \item{theme}{(optional) a function factory. See my_theme_docx_default()
 or rtables.officer::theme_docx_default() for more details.}
@@ -77,8 +79,6 @@ Set to 6.38 ("portrait") or 8.88 ("landscape").}
 \item{autofit_to_page}{(optional) Default = TRUE. Not used and set to FALSE internally.}
 
 \item{orientation}{(optional). Set to "portrait" (Tables) or "landscape" (Listings).}
-
-\item{tblid}{Character. Output ID to be displayed in the Title and last line of footer.}
 
 \item{nosplitin}{(optional) Default = character(). Named list.}
 

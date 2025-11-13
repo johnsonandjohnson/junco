@@ -6,6 +6,7 @@
 \usage{
 my_export_as_docx(
   tt,
+  tblid,
   output_dir,
   add_page_break = FALSE,
   titles_as_header = TRUE,
@@ -14,9 +15,8 @@ my_export_as_docx(
     height = 8.5, orient = orientation), page_margins = officer::page_mar(bottom = 1, top
     = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)),
   doc_metadata = NULL,
-  template_file = "doc/template_file.docx",
+  template_file = system.file("template_file.docx", package = "junco"),
   orientation = ifelse(tlgtype == "Table", "portrait", "landscape"),
-  tblid,
   paginate = FALSE,
   nosplitin = character(),
   string_map = junco::default_str_map,
@@ -30,6 +30,8 @@ my_export_as_docx(
 }
 \arguments{
 \item{tt}{a TableTree object to export.}
+
+\item{tblid}{Character. Output ID to be displayed in the Title and last line of footer.}
 
 \item{output_dir}{a directory path to save the docx.}
 
@@ -50,8 +52,6 @@ No need to be specified by end user.}
 Paragraph styles are inherited from this file.}
 
 \item{orientation}{(optional). Set to "portrait" (Tables) or "landscape" (Listings).}
-
-\item{tblid}{Character. Output ID to be displayed in the Title and last line of footer.}
 
 \item{paginate}{(optional) Default = FALSE.}
 
