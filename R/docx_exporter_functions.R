@@ -660,7 +660,43 @@ my_theme_docx_default <- function(font = "Arial",
 }
 
 
-# based on rtables.officer::tt_to_flextable
+#' Convert a TableTree object to a flextable
+#' 
+#' This function is based on rtables.officer::tt_to_flextable()
+#'
+#' @param tt a TableTree object
+#' @param theme (optional) a function factory. See my_theme_docx_default()
+#' or rtables.officer::theme_docx_default() for more details.
+#' @param border (optional) an fp_border object.
+#' @param indent_size (optional) Numeric. Not used and set to 9 points internally.
+#' @param titles_as_header (optional) Default = TRUE.
+#' @param bold_titles (optional) Default = TRUE.
+#' @param integrate_footers (optional) Default = TRUE.
+#' @param counts_in_newline (optional) Default = FALSE.
+#' @param paginate (optional) Default = FALSE.
+#' @param fontspec (optional) a font_spec object.
+#' @param lpp (optional) Default = NULL. Not used.
+#' @param cpp (optional) Default = NULL. Not used.
+#' @param ... other arguments.
+#' @param colwidths (optional) Default = NULL.
+#' @param tf_wrap (optional) Default = FALSE. Not used.
+#' @param max_width (optional) Default = NULL. Not used.
+#' @param total_page_height (optional) Default = 10. Not used.
+#' @param total_page_width (optional). No need to be specified by end user.
+#' Set to 6.38 ("portrait") or 8.88 ("landscape").
+#' @param autofit_to_page (optional) Default = TRUE. Not used and set to FALSE internally.
+#' @param orientation (optional). Set to "portrait" (Tables) or "landscape" (Listings).
+#' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
+#' @param nosplitin (optional) Default = character(). Named list.
+#' @param string_map (optional) Default = default_str_map.
+#' @param markup_df_docx (optional) Default = dps_markup_df_docx.
+#' @param reduce_first_col_indentation (optional) Default = FALSE.
+#' @param tlgtype (optional). No need to be specified by end user.
+#' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
+#' @param pagenum (optional). Default = FALSE (Tables) or TRUE (Listings).
+#'
+#' @returns a flextable object.
+#' @export
 my_tt_to_flextable <- function(tt,
                                theme = my_theme_docx_default(
                                  font = "Times New Roman",
@@ -1367,7 +1403,36 @@ my_tt_to_flextable <- function(tt,
   flx
 }
 
-# based on rtables.officer::export_as_docx
+#' Export a TableTree object into docx
+#' 
+#' This function is based on rtables.officer::export_as_docx()
+#'
+#' @param tt a TableTree object to export.
+#' @param output_dir a directory path to save the docx.
+#' @param add_page_break (optional) Default = FALSE.
+#' @param titles_as_header (optional) Default = TRUE.
+#' @param integrate_footers (optional) Default = TRUE.
+#' @param section_properties (optional). A "prop_section" object containing
+#' information about page size, orientation, margins, etc.
+#' See officer::prop_section() for more details.
+#' No need to be specified by end user.
+#' @param doc_metadata (optional). Default = NULL.
+#' @param template_file (optional). Default = "doc/template_file.docx".
+#' Paragraph styles are inherited from this file.
+#' @param orientation (optional). Set to "portrait" (Tables) or "landscape" (Listings).
+#' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
+#' @param paginate (optional) Default = FALSE.
+#' @param nosplitin (optional) Default = character(). Named list.
+#' @param string_map (optional) Default = default_str_map.
+#' @param markup_df_docx (optional) Default = dps_markup_df_docx.
+#' @param combined_docx (optional). Default = FALSE. Whether to also export an "allparts"
+#' docx version.
+#' @param tlgtype (optional). No need to be specified by end user.
+#' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
+#' @param pagenum (optional). Default = FALSE (Tables) or TRUE (Listings).
+#' @param ... other parameters.
+#'
+#' @export
 my_export_as_docx <- function(tt,
                               output_dir,
                               add_page_break = FALSE,
