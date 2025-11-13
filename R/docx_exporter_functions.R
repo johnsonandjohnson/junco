@@ -446,12 +446,12 @@ interpret_cell_content <- function(str_before, markup_df_docx = dps_markup_df_do
   
   pos_start <- gregexpr("~\\{|~\\[", str_before)[[1]]
   pos_end <- gregexpr("\\}|\\]", str_before)[[1]]
-  pos_end <- pos_end %>% lapply(function(x) {
-    y <- which(pos_start < x)
+  pos_end <- pos_start %>% lapply(function(x) {
+    y <- which(pos_end > x)
     if (length(y) <= 0) {
       return(NA)
     }
-    return(pos_end[max(y)])
+    return(pos_end[min(y)])
   }) %>% unlist()
   pos <- data.frame(pos_start = pos_start, pos_end = pos_end)
   pos <- pos %>% dplyr::filter(!is.na(pos_end))
@@ -499,9 +499,11 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
   pattern <- "~\\[|~\\{"
   
   # Title and Headers
-  tmp <- flx$header$dataset
-  matches <- as.data.frame(lapply(tmp, function(col) grepl(pattern, col)))
-  locations <- which(as.matrix(matches), arr.ind = TRUE)
+  # tmp <- flx$header$dataset
+  # matches <- as.data.frame(lapply(tmp, function(col) grepl(pattern, col)))
+  # locations <- which(as.matrix(matches), arr.ind = TRUE)
+  tmp <- flx$header$content$data %>% apply(1:2, function(x) return(x[[1]]$txt))
+  locations <- which(apply(tmp, 1:2, function(x) grepl(pattern, x)), arr.ind = TRUE)
   for (idx in seq_len(nrow(locations))) {
     i <- locations[idx, "row"]
     j <- locations[idx, "col"]
@@ -683,7 +685,9 @@ my_tt_to_flextable <- function(tt,
                                # total_page_width = junco:::pg_width_by_orient(orientation == "landscape"),
                                total_page_width = my_pg_width_by_orient(orientation),
                                autofit_to_page = TRUE,
-                               orientation = "portrait",
+                               orientation = ifelse(tlgtype == "Table",
+                                                    "portrait",
+                                                    "landscape"),
                                tblid,
                                nosplitin = character(),
                                string_map = junco::default_str_map,
@@ -994,6 +998,7 @@ my_tt_to_flextable <- function(tt,
     # NOTE: left-align the first column for listings
     mpf_aligns[, 1] <- "left"
   }
+  
   content <- as.data.frame(body[-seq_len(hnum), , drop = FALSE])
   content[content == ""] <- " "
   # NOTE:
@@ -1098,10 +1103,11 @@ my_tt_to_flextable <- function(tt,
     flx <- flx %>% flextable::hline(part = "header", i = i, j = j, border = border)
   }
   # END
-  
+
   flx <- flx %>%
     rtables.officer:::.apply_alignments(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") %>%
     rtables.officer:::.apply_alignments(mpf_aligns[-seq_len(hnum), , drop = FALSE], "body")
+  
   checkmate::check_number(indent_size, null.ok = TRUE)
   if (is.null(indent_size)) {
     indent_size <- matform$indent_size * rtables.officer::word_mm_to_pt(1)
@@ -1184,6 +1190,15 @@ my_tt_to_flextable <- function(tt,
   
   flx <- rtables.officer:::.apply_themes(flx, theme = theme, tbl_row_class = rtables::make_row_df(tt)$node_class)
   
+  # NOTE: for Listings, vertical alignment is "top" for the whole body
+  if (tlgtype == "Listing") {
+    # flx <- flextable::style(x = flx, part = "body", pr_c = officer::fp_cell(vertical.align = "top"))
+    flx <- flx %>% flextable::valign(part = "body", valign = "top")
+    flx <- flx %>% flextable::align(part = "body", j = 1, align = "left")
+    flx <- flx %>% flextable::align(part = "body", j = -1, align = "center")
+  }
+  # END
+  
   if (is.null(fontspec)) {
     fontspec <- rtables.officer:::.extract_fontspec(flx)
   }
@@ -1214,8 +1229,8 @@ my_tt_to_flextable <- function(tt,
   }
   
   
-  # NOTE: if it's a listing, set font size = 8 (instead of 9) to Body and Headers
-  # except the Titles
+  # NOTE: if it's a listing, set font size = 8 (instead of 9) everywhere
+  # except the Titles, which remain font size = 10
   if (tlgtype == "Listing") {
     header_start_pos <- length(formatters::all_titles(tt)) + 1
     header_end_pos <- nrow(flx$header$dataset)
@@ -1226,6 +1241,7 @@ my_tt_to_flextable <- function(tt,
       size = 8
     )
     flx <- flextable::fontsize(flx, part = "body", size = 8)
+    flx <- flextable::fontsize(flx, part = "footer", size = 8)
   }
   
   # NOTE: here, even though page width is 8.88 inches, table width has 
@@ -1236,7 +1252,9 @@ my_tt_to_flextable <- function(tt,
     final_cwidths <- total_page_width * colwidths/sum(colwidths)
   }
   flx <- flextable::width(flx, width = final_cwidths)
-  flx <- add_hanging_indent_first_column(flx = flx, column_widths = final_cwidths)
+  if (tlgtype == "Table") {
+    flx <- add_hanging_indent_first_column(flx = flx, column_widths = final_cwidths)
+  }
   flx <- flextable::set_table_properties(
     flx,
     layout = ifelse(autofit_to_page, 
@@ -1357,12 +1375,14 @@ my_export_as_docx <- function(tt,
                               integrate_footers = TRUE,
                               section_properties = officer::prop_section(
                                 page_size = officer::page_size(width = 11, height = 8.5, orient = orientation),
-                                page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0)
+                                page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
                               ),
                               doc_metadata = NULL,
                               template_file = "doc/template_file.docx",
                               # template_file = NULL,
-                              orientation = "portrait",
+                              orientation = ifelse(tlgtype == "Table",
+                                                   "portrait",
+                                                   "landscape"),
                               tblid,
                               paginate = FALSE,
                               nosplitin = character(),
@@ -1501,6 +1521,20 @@ my_export_as_docx <- function(tt,
     else {
       doc <- officer::read_docx()
     }
+    
+    # NOTE: the following block adds the page numbering
+    if (tlgtype == "Listing") {
+      formatted_par <- officer::fpar(
+        "Listing Page ",
+        officer::run_word_field("Page", prop = officer::fp_text(font.size = 8, font.family = "Times New Roman")),
+        " of ",
+        officer::run_word_field("NumPages", prop = officer::fp_text(font.size = 8, font.family = "Times New Roman")), 
+        fp_p = officer::fp_par(text.align = "right"),
+        fp_t = officer::fp_text(font.size = 8, font.family = "Times New Roman"))
+      footer_default <- officer::block_list(formatted_par)
+      section_properties$footer_default <- footer_default
+    }
+    # END
     doc <- officer::body_set_default_section(doc, section_properties)
     flex_tbl_list <- lapply(flex_tbl_list, function(flx) {
       if (flx$properties$layout != "autofit") {
