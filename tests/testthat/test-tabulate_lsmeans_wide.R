@@ -43,7 +43,7 @@ test_that("lsmeans_wide_cfun works as expected", {
     formats = list()
   )
   expect_snapshot(result)
-
+  
   result <- lsmeans_wide_cfun(
     df,
     labelstr = "Day 15 (DB)",
@@ -99,6 +99,20 @@ test_that("lsmeans_wide_cfun works as expected", {
     ref_level = "Placebo",
     treatment_levels = "Seltorexant 20 mg",
     pval_sided = "1",
+    formats = list()
+  )
+  expect_snapshot(result)
+  
+  result <- lsmeans_wide_cfun(
+    df,
+    labelstr = "Day 15 (DB)",
+    .spl_context = data.frame(
+      cur_col_split_val = I(list(c("reference_group", "se")))
+    ),
+    conf_level = 0.9,
+    variables = list(arm = "TRT01P", visit = "AVISIT"),
+    ref_level = "Placebo",
+    treatment_levels = "Seltorexant 20 mg",
     formats = list()
   )
   expect_snapshot(result)

@@ -76,7 +76,13 @@ lsmeans_wide_second_split_fun_fct <- function(pval_sided, conf_level, include_pv
   post_fun <- function(ret, spl, fulldf, .spl_context) {
     colset <- .spl_context[nrow(.spl_context), "value"][[1]]
     if (colset %in% c("reference_group", "testing_group")) {
-      short_split_result(treatment = "Treatment", n = "N", lsmean = "LS Mean", fulldf = fulldf)
+      short_split_result(
+        treatment = "Treatment", 
+        n = "N", 
+        lsmean = "LS Mean",
+        se = "SE",
+        fulldf = fulldf
+      )
     } else if (colset == "variance") {
       short_split_result(mse = "M. S. Error", df = "Error DF", fulldf = fulldf)
     } else {
@@ -89,7 +95,12 @@ lsmeans_wide_second_split_fun_fct <- function(pval_sided, conf_level, include_pv
           fulldf = fulldf
         )
       } else {
-        short_split_result(lsmean = "LS Mean", se = "SE", ci = f_conf_level(conf_level), fulldf = fulldf)
+        short_split_result(
+          lsmean = "LS Mean", 
+          se = "SE", 
+          ci = f_conf_level(conf_level), 
+          fulldf = fulldf
+        )
       }
     }
   }
@@ -136,8 +147,10 @@ lsmeans_wide_cfun <- function(
       pad_in_rows(this_level, .formats = "xx")
     } else if (this_col_split[2] == "n") {
       pad_in_rows(df$n[has_this_level], .formats = "xx")
-    } else {
+    } else if (this_col_split[2] == "lsmean") {
       pad_in_rows(df$estimate_est[has_this_level], .formats = formats$lsmean)
+    } else {
+      pad_in_rows(df$se_est[has_this_level], .formats = formats$se)
     }
   } else if (this_col_split[1] == "variance") {
     has_trt <- df[[variables$arm]] %in% treatment_levels
