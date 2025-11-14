@@ -198,4 +198,44 @@ test_that("h_subset_combo works correctly", {
   expect_equal(nrow(result3), 2) # All rows with Flag="Y" and Treatment="Drug A"
 })
 
-# TODO: fix this test_that("h_create_altdf works correctly")
+test_that("h_subset_combo handles NA values in flag_var correctly", {
+  # Create test data with NA values in Flag column
+  df <- data.frame(
+    ID = 1:5,
+    Treatment = c("Drug A", "Drug B", "Drug A", "Drug B", "Drug A"),
+    Period = c("Week 1", "Week 2", "Week 3", "Week 1", "Week 2"),
+    Flag = c("Y", "N", "N", NA, "N")
+  )
+
+  combosdf <- data.frame(
+    valname = c("Week 1", "Week 2", "Week 3"),
+    label = c("Week 1", "Week 2", "Week 3")
+  )
+
+  # Test with flag filtering when NA values are present
+  result <- h_subset_combo(
+    df,
+    combosdf,
+    do_not_filter = NULL,
+    filter_var = "Period",
+    flag_var = "Flag",
+    colid = "Treatment.Drug A.Week 1"
+  )
+
+  # Should only include rows where Flag is "Y" and Period is "Week 1"
+  expect_equal(nrow(result), 1)
+  expect_equal(result$ID, 1)
+
+  # Verify that NA values in Flag column are properly excluded
+  result2 <- h_subset_combo(
+    df,
+    combosdf,
+    do_not_filter = NULL,
+    filter_var = "Period",
+    flag_var = "Flag",
+    colid = "Treatment.Drug A.Week 2"
+  )
+
+  # Should return 0 rows as there are no rows with Flag="Y" and Period="Week 2" for Drug A
+  expect_equal(nrow(result2), 0)
+})
