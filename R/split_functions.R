@@ -233,14 +233,15 @@ resolve_ancestor_pos <- function(anc_pos, numrows) {
 #'
 #' stopifnot(identical(cell_values(tbl2), cell_values(tbl3)))
 cond_rm_facets <- function(
-    facets = NULL,
-    facets_regex = NULL,
-    ancestor_pos = 1,
-    split = NULL,
-    split_regex = NULL,
-    value = NULL,
-    value_regex = NULL,
-    keep_matches = FALSE) {
+  facets = NULL,
+  facets_regex = NULL,
+  ancestor_pos = 1,
+  split = NULL,
+  split_regex = NULL,
+  value = NULL,
+  value_regex = NULL,
+  keep_matches = FALSE
+) {
   ## detect errors/miscalling which don't even require us to have the facets
   if (is.null(split) && is.null(split_regex) && is.null(value) && is.null(value_regex)) {
     stop(
