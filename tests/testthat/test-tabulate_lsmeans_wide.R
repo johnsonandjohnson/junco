@@ -43,7 +43,7 @@ test_that("lsmeans_wide_cfun works as expected", {
     formats = list()
   )
   expect_snapshot(result)
-  
+
   result <- lsmeans_wide_cfun(
     df,
     labelstr = "Day 15 (DB)",
@@ -102,7 +102,7 @@ test_that("lsmeans_wide_cfun works as expected", {
     formats = list()
   )
   expect_snapshot(result)
-  
+
   result <- lsmeans_wide_cfun(
     df,
     labelstr = "Day 15 (DB)",
