@@ -5,6 +5,43 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
+remove_security_popup_page_numbers <- function(doc, tlgtype = "Table") {
+  
+  # if we are working with listings, we previously had added
+  # the page numbers using officer::run_word_field()
+  # the problem with this function is that it inserts in the XML
+  # the field w:dirty="true", see:
+  # https://github.com/davidgohel/officer/blob/master/R/ooxml_run_objects.R#L225
+  # w:dirty="true" tells Word that the current "Page" and "NumPages" fields
+  # are outdated and need to updated.
+  # when trying to open such docx, a security pop up emerges saying:
+  # "This document contains fields that may refer to other files. Do you want
+  # to update the fields in the document?"
+  # To disable that pop up, we just need to remove field w:dirty="true".
+  # This functions does that.
+  
+  # this function must only be run for Word docs that
+  # contain page numbers in the footers, i.e. listings
+  # look for all nodes with attribute w:dirty="true"
+  # for example:
+  # [1] <w:fldChar w:fldCharType="begin" w:dirty="NULL"/>
+  # [2] <w:instrText xml:space="preserve" w:dirty="NULL">Page</w:instrText>
+  # [3] <w:fldChar w:fldCharType="end" w:dirty="NULL"/>
+  # [4] <w:fldChar w:fldCharType="begin" w:dirty="NULL"/>
+  # [5] <w:instrText xml:space="preserve" w:dirty="NULL">NumPages</w:instrText>
+  # [6] <w:fldChar w:fldCharType="end" w:dirty="NULL"/>
+  # and remove that attribute
+  
+  if (tlgtype != "Listing") {
+    return(invisible(NULL))
+  }
+  
+  l_x <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
+  for (x in l_x) {
+    xml2::xml_set_attr(x = x, attr = "w:dirty", value = "NULL")
+  }
+}
+
 insert_keepNext_vertical_pagination <- function(tt, flx) {
   
   # this function updates flx by calling flextable::keep_with_next()
@@ -1595,7 +1632,7 @@ my_export_as_docx <- function(tt,
         officer::run_word_field("Page", prop = officer::fp_text(font.size = 8, font.family = "Times New Roman")),
         " of ",
         officer::run_word_field("NumPages", prop = officer::fp_text(font.size = 8, font.family = "Times New Roman")), 
-        fp_p = officer::fp_par(text.align = "right"),
+        fp_p = officer::fp_par(text.align = "right", padding.top = 12),
         fp_t = officer::fp_text(font.size = 8, font.family = "Times New Roman"))
       footer_default <- officer::block_list(formatted_par)
       section_properties$footer_default <- footer_default
@@ -1651,6 +1688,7 @@ my_export_as_docx <- function(tt,
     string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
     add_title_style_caption(doc, string_to_look_for)
     add_vertical_pagination_XML(doc)
+    remove_security_popup_page_numbers(doc = doc, tlgtype = tlgtype)
     
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
