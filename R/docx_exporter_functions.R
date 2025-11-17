@@ -114,29 +114,33 @@ add_title_style_caption <- function(doc, string_to_look_for) {
   # this function modifies the XML of the docx to add the "Caption" style to the Title
   
   s_xpath <- paste0("//*[contains(text(),'", string_to_look_for, "')]")
-  x <- doc$doc_obj$get() %>% 
-    xml2::xml_find_first(s_xpath)
+  l_x <- doc$doc_obj$get() %>% 
+    xml2::xml_find_all(s_xpath)
   
-  # look for a parent 'w:pPr'
-  # this parent should have a first child 'w:pStyle w:val="Caption"'
-  x <- x %>% xml2::xml_parent()
-  children <- x %>% xml2::xml_children()
-  while(!any(xml2::xml_name(children) == "pPr")) {
-    x <- x %>% xml2::xml_parent()
+  for (x2 in l_x) {
+    # look for a parent 'w:pPr'
+    # this parent should have a first child 'w:pStyle w:val="Caption"'
+    x <- x2 %>% xml2::xml_parent()
     children <- x %>% xml2::xml_children()
+    while(!any(xml2::xml_name(children) == "pPr")) {
+      x <- x %>% xml2::xml_parent()
+      children <- x %>% xml2::xml_children()
+    }
+    
+    # set style "Caption"
+    child_i <- which(xml2::xml_name(children) == "pPr") %>% head(1)
+    x <- x %>% xml2::xml_child(child_i)
+    x %>% xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"', .where = 0)
+    
+    # set hanging indent of 0.8 inches
+    children <- x %>% xml2::xml_children()
+    child_i <- which(xml2::xml_name(children) == "ind") %>% head(1)
+    x <- x %>% xml2::xml_child(child_i)
+    xml2::xml_set_attr(x, "w:hanging", 1152)
+    xml2::xml_set_attr(x, "w:left", 1152)
   }
   
-  # set style "Caption"
-  child_i <- which(xml2::xml_name(children) == "pPr") %>% head(1)
-  x <- x %>% xml2::xml_child(child_i)
-  x %>% xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"', .where = 0)
   
-  # set hanging indent of 0.8 inches
-  children <- x %>% xml2::xml_children()
-  child_i <- which(xml2::xml_name(children) == "ind") %>% head(1)
-  x <- x %>% xml2::xml_child(child_i)
-  xml2::xml_set_attr(x, "w:hanging", 1152)
-  xml2::xml_set_attr(x, "w:left", 1152)
   
   # s_xpath <- paste0("//*[contains(text(),'", string_to_look_for, "')]")
   # x <- doc$doc_obj$get() %>% 
@@ -321,11 +325,11 @@ insert_title_hanging_indent_v3 <- function(flx,
 }
 
 insert_title_hanging_indent_v2 <- function(flx,
-                                        title,
-                                        orientation,
-                                        border = flextable::fp_border_default(width = 0.75, color = "black"),
-                                        bold_titles = TRUE,
-                                        dpi = 72) {
+                                           title,
+                                           orientation,
+                                           border = flextable::fp_border_default(width = 0.75, color = "black"),
+                                           bold_titles = TRUE,
+                                           dpi = 72) {
   # this version of the function inserts the Title as a header but attempts
   # to simulate the hanging indent by inserting "\t" whenever the string
   # must be broken into a next line.
@@ -353,7 +357,7 @@ insert_title_hanging_indent_v2 <- function(flx,
     )
   
   new_title <- sub(":", ":\t", new_title)
-
+  
   flx <-
     rtables.officer:::.add_titles_as_header(flx, all_titles = new_title, bold = bold_titles) %>% 
     flextable::padding(part = "header", i = 1, padding.left = 0) %>% 
@@ -635,7 +639,7 @@ my_theme_docx_default <- function(font = "Arial",
       flextable::valign(j = seq(2, tbl_ncol_body), valign = "bottom", part = "header")
     flx <- flextable::padding(flx, part = "header", padding = 0, j = -1)
     flx <- rtables.officer:::.apply_indentation_and_margin(flx, cell_margins = cell_margins, 
-                                         tbl_row_class = tbl_row_class, tbl_ncol_body = tbl_ncol_body)
+                                                           tbl_row_class = tbl_row_class, tbl_ncol_body = tbl_ncol_body)
     if (any(tbl_row_class == "LabelRow")) {
       flx <- flextable::padding(flx, j = 1, i = which(tbl_row_class == "LabelRow"),
                                 padding.top = 0,
@@ -769,7 +773,7 @@ my_tt_to_flextable <- function(tt,
                                tlgtype = junco:::tlg_type(tt),
                                col_gap = ifelse(tlgtype == "Listing", .5, 3),
                                pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE)
-                               ) {
+) {
   
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
@@ -1176,7 +1180,7 @@ my_tt_to_flextable <- function(tt,
     flx <- flx %>% flextable::hline(part = "header", i = i, j = j, border = border)
   }
   # END
-
+  
   flx <- flx %>%
     rtables.officer:::.apply_alignments(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") %>%
     rtables.officer:::.apply_alignments(mpf_aligns[-seq_len(hnum), , drop = FALSE], "body")
@@ -1253,7 +1257,7 @@ my_tt_to_flextable <- function(tt,
   # NOTE: the following block adds the footer, this is, the last line below footnotes
   footer_text <- paste0(
     "[", tolower(tblid), ".docx]",
-    "[", tidytlg:::getFileName(), "]",
+    "[", tidytlg:::getFileName(), "] ",
     toupper(format(Sys.time(), format = "%d%b%Y, %H:%M"))
   )
   flx <- flextable::add_footer_lines(flx, values = footer_text)
@@ -1345,8 +1349,8 @@ my_tt_to_flextable <- function(tt,
     }
     new_trailing_sep[length(new_trailing_sep)] <- NA
     flx <- rtables.officer::add_flextable_separators(flx, new_trailing_sep,
-                                    border = border,
-                                    padding = 0) # NOTE: here, we used to have padding = 10
+                                                     border = border,
+                                                     padding = 0) # NOTE: here, we used to have padding = 10
     # END
   }
   flx <- flextable::fix_border_issues(flx)
@@ -1381,15 +1385,15 @@ my_tt_to_flextable <- function(tt,
     
     title <- formatters::all_titles(tt)
     title <- paste0(tblid, ":\t", title)
-        
+    
     w <- ifelse(orientation == "portrait", 155, 215)
     new_title <- formatters::wrap_string_ttype(str = title,
-                width =  w, 
-                fontspec = formatters::font_spec("Times", 10L, 1.2),
-                collapse = "\n\t",
-                wordbreak_ok = FALSE)
+                                               width =  w, 
+                                               fontspec = formatters::font_spec("Times", 10L, 1.2),
+                                               collapse = "\n\t",
+                                               wordbreak_ok = FALSE)
     new_title <- sub(": ", ":\t", new_title)
-
+    
     # 3.175 mm = 9 ms word points = 0.125 inches
     # multiply everything by 10
     # 31.75 mm = 90 ms word points = 1.25 inches
@@ -1433,7 +1437,7 @@ my_tt_to_flextable <- function(tt,
   # flx$header$dataset <- apply(flx$header$dataset, 1:2, junco:::strmodify) %>% as.data.frame()
   # flx$body$dataset <- apply(flx$body$dataset, 1:2, junco:::strmodify) %>% as.data.frame()
   # flx$footer$dataset <- apply(flx$footer$dataset, 1:2, junco:::strmodify) %>% as.data.frame()
-
+  
   #  NOTE: add the little gap between the bottom borders of 2 spanning headers
   flx <- add_little_gap_bottom_borders_spanning_headers(flx, border)
   
@@ -1501,42 +1505,19 @@ my_export_as_docx <- function(tt,
   do_tt_error <- FALSE
   
   
-  if (combined_docx) {
-    my_export_as_docx(
-      tt = tt,
-      output_dir = output_dir,
-      add_page_break = add_page_break,
-      titles_as_header = titles_as_header,
-      integrate_footers = integrate_footers,
-      section_properties = section_properties,
-      doc_metadata = doc_metadata,
-      template_file = template_file,
-      orientation = orientation,
-      tblid = paste0(tblid, "allparts"),
-      paginate = FALSE,
-      string_map = string_map,
-      markup_df_docx = markup_df_docx,
-      combined_docx = FALSE,
-      tlgtype = "Table",
-      col_gap = col_gap,
-      pagenum = pagenum,
-      ... = ...
-    )
-  }
-  
   if (inherits(tt, "VTableTree") || inherits(tt, "listing_df")) {
     tt <- my_tt_to_flextable(tt, titles_as_header = titles_as_header, 
-                          integrate_footers = integrate_footers, 
-                          tblid = tblid,
-                          orientation = orientation,
-                          paginate = paginate,
-                          nosplitin = nosplitin,
-                          string_map = string_map,
-                          markup_df_docx = markup_df_docx,
-                          tlgtype = tlgtype,
-                          col_gap = col_gap,
-                          pagenum = pagenum,
-                          ...)
+                             integrate_footers = integrate_footers, 
+                             tblid = tblid,
+                             orientation = orientation,
+                             paginate = paginate,
+                             nosplitin = nosplitin,
+                             string_map = string_map,
+                             markup_df_docx = markup_df_docx,
+                             tlgtype = tlgtype,
+                             col_gap = col_gap,
+                             pagenum = pagenum,
+                             ...)
   }
   if (inherits(tt, "flextable")) {
     flex_tbl_list <- list(tt)
@@ -1584,6 +1565,36 @@ my_export_as_docx <- function(tt,
   }
   if (!is.null(template_file) && !file.exists(template_file)) {
     template_file <- NULL
+  }
+  
+  if (combined_docx) {
+    if (length(flex_tbl_list) > 1) {
+      my_export_as_docx(
+        tt = flex_tbl_list,
+        output_dir = output_dir,
+        add_page_break = TRUE,
+        titles_as_header = titles_as_header,
+        integrate_footers = integrate_footers,
+        section_properties = section_properties,
+        doc_metadata = doc_metadata,
+        template_file = template_file,
+        orientation = orientation,
+        tblid = paste0(tblid, "allparts"),
+        paginate = FALSE,
+        string_map = string_map,
+        markup_df_docx = markup_df_docx,
+        combined_docx = FALSE,
+        tlgtype = "Table",
+        col_gap = col_gap,
+        pagenum = pagenum,
+        ... = ...
+      )
+    } else {
+      message(
+        "Table ", tblid, ": No combined DOCX created, output fit within one part."
+      )
+    }
+    
   }
   
   if (paginate && length(flex_tbl_list) > 1) {
@@ -1662,6 +1673,13 @@ my_export_as_docx <- function(tt,
     })
     for (ii in seq(1, length(flex_tbl_list))) {
       flex_tbl_i <- flex_tbl_list[[ii]]
+      if (endsWith(tblid, "allparts")) {
+        tmp <- gsub(pattern = ".*:\t", replacement = paste0(tblid, ":\t"), flex_tbl_i$header$dataset[1, 1])
+        flex_tbl_i <- flextable::compose(flex_tbl_i, part = "header", i = 1, value = flextable::as_paragraph(tmp))
+        n_footer_lines <- flextable::nrow_part(flex_tbl_i, part = "footer")
+        tmp <- gsub(pattern = "^\\[.*\\.docx\\]", replacement = paste0("[", tolower(tblid), ".docx]"), flex_tbl_i$footer$dataset[n_footer_lines, 1])
+        flex_tbl_i <- flextable::compose(flex_tbl_i, part = "footer", i = n_footer_lines, value = flextable::as_paragraph(tmp))
+      }
       # NOTE: this align = "left" is the alignment of the entire table relative to the page,
       # not the content within the table
       # calculate vertical pagination, where to place the new page breaks
@@ -1684,8 +1702,11 @@ my_export_as_docx <- function(tt,
       doc <- do.call(officer::set_doc_properties, c(list(x = doc), 
                                                     doc_metadata))
     }
-    
-    string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
+    if (endsWith(tblid, "allparts")) {
+      string_to_look_for <- paste0(tblid, ":")
+    } else {
+      string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
+    }
     add_title_style_caption(doc, string_to_look_for)
     add_vertical_pagination_XML(doc)
     remove_security_popup_page_numbers(doc = doc, tlgtype = tlgtype)
