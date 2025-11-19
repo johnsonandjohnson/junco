@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update pruning_functions.R
 - update `string_to_title()` to handle factors (#26)
 - Export `rbmi_pool()` #22
+- Add functionality to `a_freq_j()` to process `val` = NULL from levels specified in `label_map`. #95
 
 ### Changed
 - Added standard error (SE) column for each treatment arm's least square (LS) means estimate to the `summarize_lsmeans_wide()` layout.
