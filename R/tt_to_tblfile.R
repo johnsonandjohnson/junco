@@ -627,11 +627,11 @@ tt_to_tlgrtf <- function(
     warning = function(w) NULL
   )
 
-
   on.exit(
     tryCatch(Sys.setlocale("LC_ALL", old_locale), error = function(e) NULL),
     add = TRUE
   )
+
   tidytlg::gentlg(
     df,
     tlf = tlgtype,
