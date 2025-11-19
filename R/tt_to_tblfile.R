@@ -618,6 +618,20 @@ tt_to_tlgrtf <- function(
     )
   }
 
+  # Ensure UTF-8 locale while generating RTF to avoid CI/platform encoding diffs
+  old_locale <- Sys.getlocale("LC_ALL")
+
+  tryCatch(
+    Sys.setlocale("LC_ALL", "en_US.UTF-8"),
+    error = function(e) NULL,
+    warning = function(w) NULL
+  )
+
+
+  on.exit(
+    tryCatch(Sys.setlocale("LC_ALL", old_locale), error = function(e) NULL),
+    add = TRUE
+  )
   tidytlg::gentlg(
     df,
     tlf = tlgtype,
