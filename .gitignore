@@ -26,8 +26,8 @@ tests/testthat/table.csv
 *.rprof
 *.diff
 ./*.rtf
-programs_internal/*
-programs_external/*
+inst/extdata/example*.csv
+inst/extdata/example*.rtf
 
 #IDE
 .vscode/settings.json
