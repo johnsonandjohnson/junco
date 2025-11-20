@@ -90,6 +90,10 @@ find_missing_chg_after_avisit <- function(df) {
 #' }
 #' @export
 make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = NULL) {
+  if (!requireNamespace("rbmi", quietly = TRUE)) {
+    stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
+  }
+
   if (is.numeric(cluster_or_cores) && cluster_or_cores == 1) {
     return(NULL)
   } else if (is.numeric(cluster_or_cores)) {
@@ -371,6 +375,10 @@ par_lapply <- function(cl, fun, x, ...) {
 #' @export
 rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., cluster_or_cores = 1, .validate = TRUE) {
   # nocov
+
+  if (!requireNamespace("rbmi", quietly = TRUE)) {
+    stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
+  }
 
   if (.validate) rbmi::validate(imputations)
 

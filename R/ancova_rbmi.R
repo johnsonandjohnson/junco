@@ -71,6 +71,9 @@ rbmi_ancova <- function(
     vars,
     visits = NULL,
     weights = c("counterfactual", "equal", "proportional_em", "proportional")) {
+  if (!requireNamespace("rbmi", quietly = TRUE)) {
+    stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
+  }
   outcome <- vars[["outcome"]]
   group <- vars[["group"]]
   covariates <- vars[["covariates"]]
@@ -131,6 +134,9 @@ rbmi_ancova_single <- function(
     group,
     covariates,
     weights = c("counterfactual", "equal", "proportional_em", "proportional")) {
+  if (!requireNamespace("rbmi", quietly = TRUE)) {
+    stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
+  }
   checkmate::assert_string(outcome)
   checkmate::assert_string(group)
   weights <- match.arg(weights)

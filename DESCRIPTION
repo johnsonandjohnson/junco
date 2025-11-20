@@ -1,6 +1,6 @@
 Package: junco
 Title: Create Common Tables and Listings Used in Clinical Trials
-Version: 0.1.1
+Version: 0.1.2
 Date: 2025-06-20
 Authors@R: c(
     person("Gabriel", "Becker", , "gabembecker@gmail.com", role = c("cre", "aut"),
@@ -54,7 +54,6 @@ Imports:
     utils,
     emmeans,
     mmrm,
-    rbmi (>= 1.3.0),
     assertthat
 Encoding: UTF-8
 Language: en-US
@@ -69,6 +68,7 @@ Suggests:
     parallel,
     readxl,
     pharmaverseadam,
-    rlang
+    rlang,
+    rbmi (>= 1.3.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
