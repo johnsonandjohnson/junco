@@ -7,18 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.2] - 2025-08-20
 
-### Added
-- Add `a_maxlev()` to be able calculate count and percentage of the maximum level of an ordered factor per subject
-- fix bug for not selecting NA records in `h_subset_combo()`
+### Added and Removed
+- Add `a_maxlev()` to be able to calculate count and percentage of the maximum level of an ordered factor per subject
 - Remove `brackets_to_rtf()`
-- Update pruning_functions.R
-- update `string_to_title()` to handle factors (#26)
 - Export `rbmi_pool()` #22
+- Added standard error (SE) column for each treatment arm's least square (LS) means estimate to the `summarize_lsmeans_wide()` layout.
+
 
 ### Changed
-- Added standard error (SE) column for each treatment arm's least square (LS) means estimate to the `summarize_lsmeans_wide()` layout.
 - Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify
 - Replace {pharmaverseadam} with {pharmaverseadamjnj}
+- Update pruning_functions.R
+- update `string_to_title()` to handle factors (#26)
+
+### Fixed
+- Fixes #102 bug inappropriate warnings from `cond_rm_facets` function
+- Fix bug for not selecting NA records in `h_subset_combo()`
 
 ## [0.1.1] - 2025-07-28
 

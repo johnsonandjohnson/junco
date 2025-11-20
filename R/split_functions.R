@@ -233,14 +233,15 @@ resolve_ancestor_pos <- function(anc_pos, numrows) {
 #'
 #' stopifnot(identical(cell_values(tbl2), cell_values(tbl3)))
 cond_rm_facets <- function(
-    facets = NULL,
-    facets_regex = NULL,
-    ancestor_pos = 1,
-    split = NULL,
-    split_regex = NULL,
-    value = NULL,
-    value_regex = NULL,
-    keep_matches = FALSE) {
+  facets = NULL,
+  facets_regex = NULL,
+  ancestor_pos = 1,
+  split = NULL,
+  split_regex = NULL,
+  value = NULL,
+  value_regex = NULL,
+  keep_matches = FALSE
+) {
   ## detect errors/miscalling which don't even require us to have the facets
   if (is.null(split) && is.null(split_regex) && is.null(value) && is.null(value_regex)) {
     stop(
@@ -259,38 +260,36 @@ cond_rm_facets <- function(
     ancestor_pos <- resolve_ancestor_pos(ancestor_pos, NROW(.spl_context))
     torm_ind <- find_torm(ret, facets, facets_regex, keep_matches = keep_matches)
     fct_abbrev <- ifelse(is.null(facets_regex), paste(facets, collapse = ", "), facets_regex)
-    if (length(torm_ind) == 0) {
-      # nocov start
-      warning(
-        "No facets matched removal criteria [",
-        fct_abbrev,
-        "] ",
+    if (.check_rem_cond(split, split_regex, .spl_context, ancestor_pos, type = "split") &&
+      .check_rem_cond(value, value_regex, .spl_context, ancestor_pos, type = "value")) {
+      no_rm_msg <- paste0(
+        "No facets matched removal criteria [", fct_abbrev, "] ",
         "in function created with cond_rm_facets.\n",
         "Occured at path: ",
-        spl_context_to_disp_path(.spl_context),
-        call. = FALSE
+        rtables::spl_context_to_disp_path(.spl_context)
       )
-      # nocov end
-    } else if (length(torm_ind) == length(ret$datasplit)) {
-      # nocov start
-      warning(
+
+      all_rm_msg <- paste0(
         "All facets matched removal criteria [",
-        fct_abbrev,
-        "] in function created with cond_rm_facets. ",
+        fct_abbrev, "] in function created with cond_rm_facets. ",
         "This will result in a degenerate table (if the condition ",
         "is met) within row splitting and in table-creation failing ",
         "entirely in column splitting.\n",
         "Occured at path: ",
-        spl_context_to_disp_path(.spl_context),
-        call. = FALSE
+        rtables::spl_context_to_disp_path(.spl_context)
       )
-      # nocov end
-    }
-    if (
-      .check_rem_cond(split, split_regex, .spl_context, ancestor_pos, type = "split") &&
-        .check_rem_cond(value, value_regex, .spl_context, ancestor_pos, type = "value")
-    ) {
-      ## find_torm handles the keep matching case, so by this point torm_ind is always the ones to remove
+
+      if ((length(torm_ind) == 0 && !keep_matches) ||
+
+        (length(torm_ind) == length(ret$datasplit) && keep_matches)) {
+        warning(no_rm_msg, call. = FALSE)
+      } else if ((length(torm_ind) == 0 && keep_matches) ||
+
+        (length(torm_ind) == length(ret$datasplit) && !keep_matches)) {
+        warning(all_rm_msg, call. = FALSE)
+      }
+      ## find_torm handles the keep matching case, so
+      ## by this point torm_ind is always the ones to remove
       ret <- lapply(ret, function(part) part[-torm_ind])
     }
 
