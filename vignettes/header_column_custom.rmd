@@ -1,0 +1,691 @@
+---
+title: "Column Header Customizations"
+date: "2025-11-18"
+output:
+    rmarkdown::html_document:
+        theme: "spacelab"
+        highlight: "kate"
+        toc: true
+        toc_float: true
+vignette: >
+  %\VignetteIndexEntry{Column Header Customizations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+editor_options:
+  markdown:
+      wrap: 72
+---
+
+```{r setup, include = FALSE}
+#to modify, you need to run once to modify inst/extdata files
+#then reinstall package to update system files
+#then you can rerun the vignette and that would bring the update to it
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE
+)
+
+library(junco)
+library(rlistings)
+library(tibble)
+
+# Function to convert RTF to PDF using RDCOMClient from github if available
+# Only works on Windows and requires RDCOMClient package
+rtf_to_pdf <- function(infile, outfile = NULL) {
+  if (is.null(outfile)) {
+    outfile <- sub("\\.rtf$", ".pdf", infile)
+  }
+
+  # Check if RDCOMClient is available and we're on Windows
+  if (.Platform$OS.type == "windows" && requireNamespace("RDCOMClient", quietly = TRUE)) {
+    # Normalize paths
+    infile_norm <- normalizePath(infile, mustWork = TRUE)
+    outfile_norm <- normalizePath(outfile, mustWork = FALSE)
+
+    # Suppress any warnings during conversion
+    tryCatch({
+      word <- RDCOMClient::COMCreate("Word.Application")
+      doc <- word$Documents()$Open(infile_norm, ConfirmConversions = FALSE)
+
+      doc$SaveAs(
+        FileName = outfile_norm,
+        FileFormat = 17 # 17 = wdFormatPDF
+      )
+
+      doc$Close()
+      word$Quit()
+
+      # Verify the file exists before returning
+      if (file.exists(outfile)) {
+        return(outfile)
+      } else {
+        warning("PDF file was not created successfully")
+        return(infile)  # Return infile instead of NULL if PDF creation fails
+      }
+    }, error = function(e) {
+      warning(paste("Error in PDF conversion:", e$message))
+      return(infile)  # Return infile if there's an error
+    })
+  } else {
+    # If RDCOMClient is not available or not on Windows, just return the RTF file path
+    # This allows the vignette to build without errors in environments where RDCOMClient is not available
+    message("RDCOMClient not available or not on Windows. Skipping PDF conversion.")
+    return(infile)
+  }
+}
+
+```
+
+## Introduction
+
+Within clinical trial reporting, there is often the need to incorporate
+study-specific components to the column header space of a table. Common
+study-specific column header components may include the following:
+
+-   Inserting a New Line within Table & Listing Column Header Text
+-   Custom Table Column Header Border Matrix
+-   Addition of Superscript or Other Symbol
+
+The purpose of this vignette is to provide clear, concise examples of
+how to achieve each study-specific component.
+
+## Inserting a New Line within Column Header Text
+
+Sometimes it is necessary to insert a new line within text in the column
+header so that the column header information is presented according to
+the table or listing specification.
+
+In the following example data, there is a desire to insert a new line
+between the drug name and the dose level for the "Example Drug" drug. In
+this case, the text "Example Drug" is to appear on a different line than
+the dose levels (i.e. "5 mg", "10 mg", "20 mg").
+
+```{r}
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+adsl
+```
+
+Depending on the file format required (i.e. .rtf or .docx) the data will
+require different updates.
+
+### Table .rtf File
+
+If a .rtf file is to be created for the table, the junco::tt_to_tlgrtf
+is to be called. In this example, by default, when calling
+junco::tt_to_tlgrtf, the drug name as well as the dose level will appear
+on the same line.
+
+```{r, echo=TRUE}
+library(junco)
+
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+lyt <- basic_table(
+  show_colcounts = FALSE,
+  colcount_format = "N=xx"
+) |>
+  ### first columns
+  split_cols_by("TRT01A",,
+                show_colcounts = FALSE
+  ) |>
+  ### analyze height
+  analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
+
+result <- build_table(lyt, adsl)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "example1")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape")
+```
+
+```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/extdata/example1.pdf")
+```
+
+In order to get the dose level to appear on a new line, then the TRT01A
+variable values will need to be updated to include the text "\\line"
+between the drug name and dose level.
+
+```{r, echo=TRUE}
+library(junco)
+
+adsl <- data.frame(TRT01A = c("Example Drug\\line 5 mg",
+                              "Example Drug\\line 10 mg",
+                              "Example Drug\\line 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+lyt <- basic_table(
+  show_colcounts = FALSE,
+  colcount_format = "N=xx"
+) |>
+  ### first columns
+  split_cols_by("TRT01A",,
+                show_colcounts = FALSE
+  ) |>
+  ### analyze height
+  analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
+
+result <- build_table(lyt, adsl)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "example2")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape")
+```
+
+```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/example2.pdf")
+```
+
+### Listing .rtf File
+
+If a .rtf file is to be created for the listing, new lines can be
+inserted into the column header by updating the variable label that
+corresponds with the column of interest.
+
+By default, there is no new line inserted within any of the variable
+labels.
+
+```{r, echo=TRUE}
+library(junco)
+library(rlistings)
+
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+attr(adsl$TRT01A, "label") <- "Actual Treatment for Period 01"
+attr(adsl$SUBJECT, "label") <- "Subject"
+attr(adsl$HEIGHT, "label") <- "Height (in)"
+
+result <- rlistings::as_listing(
+  df = adsl,
+  key_cols = c("TRT01A", "SUBJECT"),
+  disp_cols = "HEIGHT"
+)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "example3")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape")
+```
+
+```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/example3.pdf")
+```
+
+By adding in "\\line" to the TRT01A variable label, a new line is
+inserted after "Actual Treatment".
+
+```{r, echo=TRUE}
+library(junco)
+library(rlistings)
+
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+attr(adsl$TRT01A, "label") <- "Actual Treatment\\line for Period 01"
+attr(adsl$SUBJECT, "label") <- "Subject"
+attr(adsl$HEIGHT, "label") <- "Height (in)"
+
+result <- rlistings::as_listing(
+  df = adsl,
+  key_cols = c("TRT01A", "SUBJECT"),
+  disp_cols = "HEIGHT"
+)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "example4")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape")
+```
+
+```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/example4.pdf")
+```
+
+## Custom Table Column Header Border Matrix
+
+When creating a table using junco::tt_to_tlgrtf, there is a set of
+default assumptions in place that determine how the borders are crafted
+within the table column header space. There are times when the table specification calls for a border matrix that is not based on the default assumptions. Below is an example of how to create a border matrix that produces the user required table.
+
+```{r, echo=TRUE}
+library(junco)
+
+adsl <- data.frame(span = c("Example Drug Low Dose",
+                               "Example Drug Low Dose",
+                               "Example Drug High Dose",
+                               " "),
+                   TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+lyt <- basic_table(
+  show_colcounts = FALSE,
+  colcount_format = "N=xx"
+) |>
+  ### first level in column header
+  split_cols_by("span",,
+                show_colcounts = FALSE
+  ) |>
+  ### second level in column header
+  split_cols_by("TRT01A",,
+                show_colcounts = FALSE
+  ) |>
+  ### analyze height
+  analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
+
+result <- build_table(lyt, adsl)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "example5")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape")
+```
+
+```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/example5.pdf")
+```
+
+In the resulting output, the "Example Drug High Dose" spanning header
+does not include an underline beneath the text at the bottom of the
+cell. It's important for us to understand what the default border matrix
+looks like. This can be achieved by calling the
+junco:::make_header_bordmat function.
+
+```{r}
+header_border <- junco:::make_header_bordmat(obj = result)
+header_border
+```
+
+It can be observed that the first row, and fourth column in the border
+matrix contains a value of 0. In order to have a bottom border present
+under "Example Drug High Dose", a value other than 0 or 2 must be
+specified. This is because "Example Drug High Dose" is expected to have it's own spanning header, and the value specified in the border matrix must be unique to the cell. The border can be updated as follows.
+
+```{r}
+header_border[1, 4] <- 4
+header_border
+```
+
+Now, if the junco::tt_to_tlgrtf function is called with the "border_mat"
+argument specified, the new user-defined border matrix can be provided
+to specify the desired column header borders.
+
+```{r, echo=TRUE}
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "example6")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape",
+             border_mat = header_border)
+```
+```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/example6.pdf")
+```
+
+## Addition of Superscript or Other Symbol
+Sometimes it is necessary to insert a superscript or other symbol within text in the column
+header so that the column header information is presented according to
+the table or listing specification. This can be achieved using the junco package by specifying a markup data frame in the export function call.
+
+In the junco package, there is a default markup data frame for each exporter function, which contains common markup that translates to symbols/characters that may be desired in an output. The default markup data frame contains markup to insert superscripts, insert subscripts, and can remove optional text.
+
+The default markup file for junco::tt_to_tlgrtf is as follows.
+```{r}
+library(tibble)
+
+dps_markup_df <- tibble::tribble(
+  ~keyword,
+  ~rtfstart,
+  ~rtfend,
+  "super",
+  "\\super",
+  "\\nosupersub",
+  "sub",
+  "\\sub",
+  "\\nosupersub",
+  "optional",
+  "",
+  ""
+)
+
+dps_markup_df
+```
+
+If additional markup is to be considered, then a custom markup data frame can be created and specified in the exporter function call.
+
+In the following example data, there is a desire to insert a superscript "a"
+at the end the drug name for the "Example Drug" drug in reference to a footnote present at the end of the table.
+
+```{r}
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+adsl
+```
+
+Depending on the file format required (i.e. .rtf or .docx) the data will
+require different updates, according to the markup that is required.
+
+### Table .rtf File
+
+If a .rtf file is to be created for the table, the junco::tt_to_tlgrtf
+is to be called. In this example, when calling junco::tt_to_tlgrtf, the "markup_df" argument has the default "dps_markup_df" object specified. In the code below, the drug name will not contain a superscript "a". This is because the TRT01A variable values do not have the "~[super a]" present anywhere in the value.
+
+```{r, echo=TRUE}
+library(junco)
+
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+lyt <- basic_table(
+  show_colcounts = FALSE,
+  colcount_format = "N=xx"
+) |>
+  ### first columns
+  split_cols_by("TRT01A",,
+                show_colcounts = FALSE
+  ) |>
+  ### analyze height
+  analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
+
+result <- build_table(lyt, adsl)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "example7")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape",
+             markup_df = dps_markup_df)
+```
+
+```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/example7.pdf")
+```
+
+In order to get the superscript "a" to appear, the TRT01A
+variable values will need to be updated to include the text "~[super a]"
+between the drug name and dose level.
+
+```{r, echo=TRUE}
+library(junco)
+
+adsl <- data.frame(TRT01A = c("Example Drug~[super a] 5 mg",
+                              "Example Drug~[super a] 10 mg",
+                              "Example Drug~[super a] 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+lyt <- basic_table(
+  show_colcounts = FALSE,
+  colcount_format = "N=xx"
+) |>
+  ### first columns
+  split_cols_by("TRT01A",,
+                show_colcounts = FALSE
+  ) |>
+  ### analyze height
+  analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
+
+result <- build_table(lyt, adsl)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "example8")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape",
+             markup_df = dps_markup_df)
+```
+
+```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/example8.pdf")
+```
+
+### Listing .rtf File
+
+If a .rtf file is to be created for the listing, a superscript "a" can be
+inserted into the column header by updating the variable label that
+corresponds with the column of interest.
+
+By default, there is superscript "a" inserted within any of the variable
+labels.
+
+```{r, echo=TRUE}
+library(junco)
+library(rlistings)
+
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+attr(adsl$TRT01A, "label") <- "Actual Treatment for Period 01"
+attr(adsl$SUBJECT, "label") <- "Subject"
+attr(adsl$HEIGHT, "label") <- "Height (in)"
+
+result <- rlistings::as_listing(
+  df = adsl,
+  key_cols = c("TRT01A", "SUBJECT"),
+  disp_cols = "HEIGHT"
+)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "example9")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape")
+```
+
+```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/example9.pdf")
+```
+
+By adding in "~[super a]" to the TRT01A variable label, a superscript "a" is
+added to the column label.
+
+```{r, echo=TRUE}
+library(junco)
+library(rlistings)
+
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+attr(adsl$TRT01A, "label") <- "Actual Treatment for Period 01~[super a]"
+attr(adsl$SUBJECT, "label") <- "Subject"
+attr(adsl$HEIGHT, "label") <- "Height (in)"
+
+result <- rlistings::as_listing(
+  df = adsl,
+  key_cols = c("TRT01A", "SUBJECT"),
+  disp_cols = "HEIGHT"
+)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "example10")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape")
+```
+
+```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/example10.pdf")
+```
