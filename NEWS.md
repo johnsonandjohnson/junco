@@ -1,9 +1,13 @@
-# junco 0.1.1
+# junco 0.1.2
 
-## Initial CRAN release
+## New features
 
-* First release of the junco package for Table and Listing (TL) Reporting
-* Provides functions to produce tables and listings in R
-* Built on the rtables package framework
+* None
 
-* Includes integration with formatters, rtables, tidytlg, and tern packages
+## Bug fixes
+
+* None
+
+## Other changes
+
+* Moved 'rbmi' from 'Imports' to 'Suggests' and made package fully functional without it

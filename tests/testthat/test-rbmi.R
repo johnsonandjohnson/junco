@@ -1,8 +1,12 @@
 suppressPackageStartupMessages({
   library(testthat)
-  library(rbmi)
   library(dplyr)
 })
+
+# Skip all tests if rbmi is not available
+if (!requireNamespace("rbmi", quietly = TRUE)) {
+  skip("rbmi package not available")
+}
 
 
 test_that("find_missing_chg_after_avisit works as expected", {
@@ -185,7 +189,7 @@ test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
       {
         cluster_has_rbmi <- all(unlist(parallel::clusterEvalQ(
           cl,
-          requireNamesapce("rbmi")
+          requireNamespace("rbmi")
         )))
       },
       error = function(e) {

@@ -1,6 +1,11 @@
 library(tibble)
 library(dplyr)
 
+# Skip all tests if rbmi is not available
+if (!requireNamespace("rbmi", quietly = TRUE)) {
+  skip("rbmi package not available")
+}
+
 f2n <- function(x) as.numeric(x) - 1
 
 test_that("rbmi_ancova_single works also with multiple treatment arms", {

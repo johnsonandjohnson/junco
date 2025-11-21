@@ -1,5 +1,10 @@
 library(broom)
 
+# Skip all tests if rbmi is not available
+if (!requireNamespace("rbmi", quietly = TRUE)) {
+  skip("rbmi package not available")
+}
+
 # rbmi_test_data ----
 
 rbmi_test_data_ancova <- structure(
