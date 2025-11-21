@@ -27,7 +27,7 @@
 #' 3. Extract the 'treatment effect' & least square means for each treatment group
 #'    vs the control group.
 #'
-#' In order to meet the formatting standards set by the analyse() function from the rbmi package, the results will be 
+#' In order to meet the formatting standards set by the analyse() function from the rbmi package, the results will be
 #' collapsed
 #' into a single list suffixed by the visit name, e.g.:
 #' ```
