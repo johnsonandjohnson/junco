@@ -329,8 +329,8 @@ par_lapply <- function(cl, fun, x, ...) {
 #' @return An `analysis` object, as defined by `rbmi`, representing the desired
 #' analysis applied to each of the imputed datasets in `imputations`.
 #' @examples
-#' @examplesIf requireNamespace("rbmi", quietly = TRUE)
-#' # Only run this example if rbmi is available
+#' \dontrun{
+#' # This example requires the rbmi package
 #' library(rbmi)
 #' library(dplyr)
 #'
@@ -377,6 +377,7 @@ par_lapply <- function(cl, fun, x, ...) {
 #' imputeObj <- impute(drawObj, references)
 #'
 #' rbmi_analyse(imputations = imputeObj, vars = vars)
+#' }
 #' @export
 rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., cluster_or_cores = 1, .validate = TRUE) {
   # nocov

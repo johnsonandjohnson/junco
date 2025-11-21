@@ -123,10 +123,12 @@ rbmi_ancova <- function(
 #' @return a list containing `var` with variance estimates as well as
 #' `trt_*` and `lsm_*` entries. See [rbmi_ancova()] for full details.
 #' @examples
-#' @examplesIf requireNamespace("rbmi", quietly = TRUE)
+#' \dontrun{
+#' # This example requires the rbmi package
 #' iris2 <- iris[iris$Species %in% c("versicolor", "virginica"), ]
 #' iris2$Species <- factor(iris2$Species)
 #' rbmi_ancova_single(iris2, "Sepal.Length", "Species", c("Petal.Length * Petal.Width"))
+#' }
 #'
 #' @seealso [rbmi_ancova()]
 rbmi_ancova_single <- function(

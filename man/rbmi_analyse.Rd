@@ -172,8 +172,8 @@ parallel::clusterStop(cl)
 }
 
 \examples{
-if (requireNamespace("rbmi", quietly = TRUE)) {
-# Only run this example if rbmi is available
+\dontrun{
+# This example requires the rbmi package
 library(rbmi)
 library(dplyr)
 
