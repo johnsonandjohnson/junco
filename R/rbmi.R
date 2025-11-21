@@ -193,7 +193,7 @@ par_lapply <- function(cl, fun, x, ...) {
 #' `fun` must return a named list with each element itself being a
 #' list containing a single
 #' numeric element called `est` (or additionally `se` and `df` if
-#' you had originally specified [rbmi::method_bayes()] or [rbmi::method_approxbayes()])
+#' you had originally specified the method_bayes() or method_approxbayes() functions from the rbmi package)
 #' i.e.:
 #' \preformatted{
 #' myfun <- function(dat, ...) {
