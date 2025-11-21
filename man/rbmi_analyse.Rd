@@ -56,7 +56,7 @@ via \code{...}.
 \code{fun} must return a named list with each element itself being a
 list containing a single
 numeric element called \code{est} (or additionally \code{se} and \code{df} if
-you had originally specified \code{\link[rbmi:method]{rbmi::method_bayes()}} or \code{\link[rbmi:method]{rbmi::method_approxbayes()}})
+you had originally specified \code{\link[rbmi:method_bayes]{rbmi::method_bayes()}} or \code{\link[rbmi:method_approxbayes]{rbmi::method_approxbayes()}})
 i.e.:
 \preformatted{
 myfun <- function(dat, ...) {
@@ -165,6 +165,8 @@ parallel::clusterStop(cl)
 }
 
 \examples{
+if (requireNamespace("rbmi", quietly = TRUE)) {
+# Only run this example if rbmi is available
 library(rbmi)
 library(dplyr)
 
@@ -211,6 +213,7 @@ references <- c("DRUG" = "PLACEBO", "PLACEBO" = "PLACEBO")
 imputeObj <- impute(drawObj, references)
 
 rbmi_analyse(imputations = imputeObj, vars = vars)
+}
 }
 \seealso{
 \code{\link[rbmi:extract_imputed_dfs]{rbmi::extract_imputed_dfs()}} for manually extracting imputed
