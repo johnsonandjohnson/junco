@@ -13,12 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Export `rbmi_pool()` #22
 - Added standard error (SE) column for each treatment arm's least square (LS) means estimate to the `summarize_lsmeans_wide()` layout.
 
-
 ### Changed
 - Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify
 - Replace {pharmaverseadam} with {pharmaverseadamjnj}
 - Update pruning_functions.R
-- update `string_to_title()` to handle factors (#26)
+- Update `string_to_title()` to handle factors (#26)
+- Replaced `denom_df` with `.alt_df_full` in `a_maxlev()`.
 
 ### Fixed
 - Fixes #102 bug inappropriate warnings from `cond_rm_facets` function
