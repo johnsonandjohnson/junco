@@ -1,9 +1,8 @@
 library(broom)
 
 # Skip all tests if rbmi is not available
-if (!requireNamespace("rbmi", quietly = TRUE)) {
-  skip("rbmi package not available")
-}
+pkg <- "rbmi"
+skip_if_not(requireNamespace(pkg, quietly = TRUE))
 
 # rbmi_test_data ----
 

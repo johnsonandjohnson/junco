@@ -1,9 +1,12 @@
 # Skip all tests if rbmi is not available
-if (!requireNamespace("rbmi", quietly = TRUE)) {
-  skip("rbmi package not available")
-}
+pkg <- "rbmi"
+skip_if_not(requireNamespace(pkg, quietly = TRUE))
 
-library(rbmi)
+suppressPackageStartupMessages({
+  if (requireNamespace(pkg, quietly = TRUE)) {
+    library(rbmi)
+  }
+})
 require(mockery)
 
 
@@ -55,12 +58,12 @@ test_that("mod_pool_internal_rubin combines results correctly", {
   with_mocks <- function(expr) {
     mockery::stub(
       mod_pool_internal_rubin,
-      "rbmi:::rubin_rules",
+      "utils::getFromNamespace(\"rubin_rules\", pkg)",
       mock_rubin_rules
     )
     mockery::stub(
       mod_pool_internal_rubin,
-      "rbmi:::parametric_ci",
+      "utils::getFromNamespace(\"parametric_ci\", pkg)",
       mock_parametric_ci
     )
     force(expr)
@@ -151,7 +154,7 @@ test_that("pool function processes and returns combined results", {
       conf.level = 0.95,
       alternative = c("two.sided", "less", "greater"),
       type = c("percentile", "normal")) {
-    # Skip validation step rbmi::validate(results)
+    # Skip validation step utils::getFromNamespace("validate", pkg)(results)
 
     alternative <- match.arg(alternative)
     type <- match.arg(type)

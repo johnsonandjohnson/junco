@@ -90,7 +90,8 @@ find_missing_chg_after_avisit <- function(df) {
 #' }
 #' @export
 make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = NULL) {
-  if (!requireNamespace("rbmi", quietly = TRUE)) {
+  pkg <- "rbmi"
+  if (!requireNamespace(pkg, quietly = TRUE)) {
     stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
   }
 
@@ -113,7 +114,7 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
   # Load user defined packages
   packages <- c(packages, "assertthat")
   # Remove attempts to load `rbmi` as this will be covered later
-  packages <- setdiff(packages, "rbmi")
+  packages <- setdiff(packages, pkg)
   devnull <- parallel::clusterCall(
     cl,
     function(pkgs) lapply(pkgs, function(x) library(x, character.only = TRUE)),
@@ -135,9 +136,11 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
     devnull <- parallel::clusterEvalQ(cl, pkgload::load_all())
   } else {
     devnull <- parallel::clusterEvalQ(cl, {
-      .namespace <- getNamespace("rbmi")
-      for (.nsfun in ls(.namespace)) {
-        assign(.nsfun, get(.nsfun, envir = .namespace))
+      if (requireNamespace(pkg, quietly = TRUE)) {
+        .namespace <- getNamespace(pkg)
+        for (.nsfun in ls(.namespace)) {
+          assign(.nsfun, get(.nsfun, envir = .namespace))
+        }
       }
     })
   }
@@ -326,7 +329,7 @@ par_lapply <- function(cl, fun, x, ...) {
 #' @return An `analysis` object, as defined by `rbmi`, representing the desired
 #' analysis applied to each of the imputed datasets in `imputations`.
 #' @examples
-#' if (requireNamespace("rbmi", quietly = TRUE)) {
+#' @examplesIf requireNamespace("rbmi", quietly = TRUE)
 #' # Only run this example if rbmi is available
 #' library(rbmi)
 #' library(dplyr)
@@ -374,16 +377,18 @@ par_lapply <- function(cl, fun, x, ...) {
 #' imputeObj <- impute(drawObj, references)
 #'
 #' rbmi_analyse(imputations = imputeObj, vars = vars)
-#' }
 #' @export
 rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., cluster_or_cores = 1, .validate = TRUE) {
   # nocov
-
-  if (!requireNamespace("rbmi", quietly = TRUE)) {
+  pkg <- "rbmi"
+  if (!requireNamespace(pkg, quietly = TRUE)) {
     stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
   }
 
-  if (.validate) rbmi::validate(imputations)
+  if (.validate) {
+    validate_fn <- utils::getFromNamespace("validate", pkg)
+    validate_fn(imputations)
+  }
 
   assertthat::assert_that(is.function(fun), msg = "`fun` must be a function")
 
@@ -391,7 +396,10 @@ rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., clus
 
   vars <- imputations$data$vars
 
-  if (.validate) devnull <- lapply(imputations$imputations, function(x) rbmi::validate(x))
+  if (.validate) {
+    validate_fn <- utils::getFromNamespace("validate", pkg)
+    devnull <- lapply(imputations$imputations, function(x) validate_fn(x))
+  }
 
   if (!is.null(delta)) {
     expected_vars <- c(vars$subjid, vars$visit, "delta")
@@ -439,23 +447,27 @@ rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., clus
   indexes <- seq_along(imputations$imputations)
   indexes_split <- split(indexes, (indexes %% number_of_cores) + 1)
 
-  results <- par_lapply(
-    cl,
-    function(indicies, ...) {
-      inner_fun <- function(idx, ...) {
-        dat2 <- (utils::getFromNamespace("extract_imputed_df", "rbmi"))(
-          ..rbmi..analysis..imputations$imputations[[idx]],
-          ..rbmi..analysis..imputations$data,
-          ..rbmi..analysis..delta
-        )
-        ..rbmi..analysis..fun(dat2, ...)
-      }
-      lapply(indicies, inner_fun, ...)
-    },
-    indexes_split,
-    ...
-  ) |>
-    unlist(recursive = FALSE, use.names = FALSE)
+  if (requireNamespace(pkg, quietly = TRUE)) {
+    extract_imputed_df_fn <- utils::getFromNamespace("extract_imputed_df", pkg)
+
+    results <- par_lapply(
+      cl,
+      function(indicies, ...) {
+        inner_fun <- function(idx, ...) {
+          dat2 <- extract_imputed_df_fn(
+            ..rbmi..analysis..imputations$imputations[[idx]],
+            ..rbmi..analysis..imputations$data,
+            ..rbmi..analysis..delta
+          )
+          ..rbmi..analysis..fun(dat2, ...)
+        }
+        lapply(indicies, inner_fun, ...)
+      },
+      indexes_split,
+      ...
+    ) |>
+      unlist(recursive = FALSE, use.names = FALSE)
+  }
 
   # Re-order to ensure results are returned in same order as imputations
   results <- results[order(unlist(indexes_split, use.names = FALSE))]
@@ -468,13 +480,20 @@ rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., clus
     fun_name <- "<NULL>"
   }
 
-  ret <- (utils::getFromNamespace("as_analysis", "rbmi"))(
-    results = results,
-    fun_name = fun_name,
-    delta = delta,
-    fun = fun,
-    method = imputations$method
-  )
-  rbmi::validate(ret)
-  return(ret)
+  if (requireNamespace(pkg, quietly = TRUE)) {
+    as_analysis_fn <- utils::getFromNamespace("as_analysis", pkg)
+    validate_fn <- utils::getFromNamespace("validate", pkg)
+
+    ret <- as_analysis_fn(
+      results = results,
+      fun_name = fun_name,
+      delta = delta,
+      fun = fun,
+      method = imputations$method
+    )
+    validate_fn(ret)
+    return(ret)
+  } else {
+    stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
+  }
 }

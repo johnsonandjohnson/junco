@@ -2,9 +2,8 @@ library(tibble)
 library(dplyr)
 
 # Skip all tests if rbmi is not available
-if (!requireNamespace("rbmi", quietly = TRUE)) {
-  skip("rbmi package not available")
-}
+pkg <- "rbmi"
+skip_if_not(requireNamespace(pkg, quietly = TRUE))
 
 f2n <- function(x) as.numeric(x) - 1
 

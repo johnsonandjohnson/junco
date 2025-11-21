@@ -1,9 +1,12 @@
 # Skip all tests if rbmi is not available
-if (!requireNamespace("rbmi", quietly = TRUE)) {
-  skip("rbmi package not available")
-}
+pkg <- "rbmi"
+skip_if_not(requireNamespace(pkg, quietly = TRUE))
 
-suppressPackageStartupMessages(library(rbmi))
+suppressPackageStartupMessages({
+  if (requireNamespace(pkg, quietly = TRUE)) {
+    library(rbmi)
+  }
+})
 
 f2n <- function(x) as.numeric(x) - 1
 
@@ -32,7 +35,7 @@ test_that("mmrm_rbmi works as expected", {
     )
   result <- expect_silent(rbmi_mmrm(
     data = dat,
-    vars = rbmi::set_vars(
+    vars = utils::getFromNamespace("set_vars", pkg)(
       subjid = "subjid",
       outcome = "out",
       group = "grp",

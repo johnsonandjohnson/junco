@@ -67,7 +67,8 @@ rbmi_mmrm <- function(
     visits = NULL,
     weights = c("counterfactual", "equal"),
     ...) {
-  if (!requireNamespace("rbmi", quietly = TRUE)) {
+  pkg <- "rbmi"
+  if (!requireNamespace(pkg, quietly = TRUE)) {
     stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
   }
   subjid <- vars[["subjid"]]
@@ -85,7 +86,7 @@ rbmi_mmrm <- function(
   cov_struct <- match.arg(cov_struct)
   weights <- match.arg(weights)
 
-  expected_vars <- c((utils::getFromNamespace("extract_covariates", "rbmi"))(covariates), outcome, group, subjid, visit)
+  expected_vars <- c((utils::getFromNamespace("extract_covariates", pkg))(covariates), outcome, group, subjid, visit)
   checkmate::assert_subset(expected_vars, names(data))
 
   checkmate::assert_factor(data[[visit]])

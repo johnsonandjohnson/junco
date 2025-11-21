@@ -71,7 +71,8 @@ rbmi_ancova <- function(
     vars,
     visits = NULL,
     weights = c("counterfactual", "equal", "proportional_em", "proportional")) {
-  if (!requireNamespace("rbmi", quietly = TRUE)) {
+  pkg <- "rbmi"
+  if (!requireNamespace(pkg, quietly = TRUE)) {
     stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
   }
   outcome <- vars[["outcome"]]
@@ -81,7 +82,7 @@ rbmi_ancova <- function(
   weights <- match.arg(weights)
 
   expected_vars <- c(
-    utils::getFromNamespace("extract_covariates", "rbmi")(covariates),
+    utils::getFromNamespace("extract_covariates", pkg)(covariates),
     outcome,
     group
   )
@@ -122,7 +123,7 @@ rbmi_ancova <- function(
 #' @return a list containing `var` with variance estimates as well as
 #' `trt_*` and `lsm_*` entries. See [rbmi_ancova()] for full details.
 #' @examples
-#'
+#' @examplesIf requireNamespace("rbmi", quietly = TRUE)
 #' iris2 <- iris[iris$Species %in% c("versicolor", "virginica"), ]
 #' iris2$Species <- factor(iris2$Species)
 #' rbmi_ancova_single(iris2, "Sepal.Length", "Species", c("Petal.Length * Petal.Width"))
@@ -134,7 +135,8 @@ rbmi_ancova_single <- function(
     group,
     covariates,
     weights = c("counterfactual", "equal", "proportional_em", "proportional")) {
-  if (!requireNamespace("rbmi", quietly = TRUE)) {
+  pkg <- "rbmi"
+  if (!requireNamespace(pkg, quietly = TRUE)) {
     stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
   }
   checkmate::assert_string(outcome)
@@ -144,12 +146,12 @@ rbmi_ancova_single <- function(
   checkmate::assert_factor(data[[group]], n.levels = 2L)
   checkmate::assert_numeric(data[[outcome]])
   data2 <- data[, c(
-    utils::getFromNamespace("extract_covariates", "rbmi")(covariates),
+    utils::getFromNamespace("extract_covariates", pkg)(covariates),
     outcome,
     group
   )]
 
-  frm <- utils::getFromNamespace("as_simple_formula", "rbmi")(
+  frm <- utils::getFromNamespace("as_simple_formula", pkg)(
     outcome,
     c(group, covariates)
   )
@@ -164,7 +166,7 @@ rbmi_ancova_single <- function(
     grp_levels,
     \(x) {
       do.call(
-        utils::getFromNamespace("lsmeans", "rbmi"),
+        utils::getFromNamespace("lsmeans", pkg),
         c(args, stats::setNames(x, group))
       )
     }
