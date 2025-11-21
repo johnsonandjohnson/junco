@@ -1,7 +1,8 @@
-## R CMD check results
+── R CMD check results ─────────────────────────────────── junco 0.1.2 ────
+Duration: 3m 31.5s
 
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
-* We've moved 'rbmi' to Suggests and the package now works without it.
 
 ## Test environments
 

@@ -67,10 +67,11 @@
 #' @seealso The set_vars() function from the rbmi package
 #' @export
 rbmi_ancova <- function(
-    data,
-    vars,
-    visits = NULL,
-    weights = c("counterfactual", "equal", "proportional_em", "proportional")) {
+  data,
+  vars,
+  visits = NULL,
+  weights = c("counterfactual", "equal", "proportional_em", "proportional")
+) {
   pkg <- "rbmi"
   if (!requireNamespace(pkg, quietly = TRUE)) {
     stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
@@ -132,11 +133,12 @@ rbmi_ancova <- function(
 #'
 #' @seealso [rbmi_ancova()]
 rbmi_ancova_single <- function(
-    data,
-    outcome,
-    group,
-    covariates,
-    weights = c("counterfactual", "equal", "proportional_em", "proportional")) {
+  data,
+  outcome,
+  group,
+  covariates,
+  weights = c("counterfactual", "equal", "proportional_em", "proportional")
+) {
   pkg <- "rbmi"
   if (!requireNamespace(pkg, quietly = TRUE)) {
     stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
