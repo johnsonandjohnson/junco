@@ -1,10 +1,19 @@
-## R CMD check results
+── R CMD check results ─────────────────────────────────── junco 0.1.2 ────
+Duration: 3m 31.5s
 
-0 errors | 0 warnings | 0 note
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
-* This is a new release.
 
-The maintainers of the formatters, rbmi, and tern packages have 
-formally granted permission for the use of non-exported functions
-from their packages, as well as the inclusion of modified versions
-of functions derived from their code in junco.
+## Test environments
+
+* local Windows install, R 4.5.0
+* ubuntu 22.04 (on GitHub Actions), R 4.5.0
+* win-builder (devel)
+
+## Downstream dependencies
+
+There are currently no downstream dependencies for this package.
+
+## Changes in this version
+
+* Removed 'rbmi' from 'Imports' and made package fully functional without it

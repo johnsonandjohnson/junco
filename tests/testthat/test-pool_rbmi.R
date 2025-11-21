@@ -1,4 +1,12 @@
-library(rbmi)
+# Skip all tests if rbmi is not available
+pkg <- "rbmi"
+skip_if_not(requireNamespace(pkg, quietly = TRUE))
+
+suppressPackageStartupMessages({
+  if (requireNamespace(pkg, quietly = TRUE)) {
+    library(rbmi)
+  }
+})
 require(mockery)
 
 
@@ -19,14 +27,13 @@ test_that("mod_pool_internal_rubin combines results correctly", {
     )
   }
 
-  mock_parametric_ci <- function(
-      point,
-      se,
-      alpha,
-      alternative,
-      qfun,
-      pfun,
-      df) {
+  mock_parametric_ci <- function(point,
+                                 se,
+                                 alpha,
+                                 alternative,
+                                 qfun,
+                                 pfun,
+                                 df) {
     q_val <- qfun(1 - alpha / 2, df = df)
     ci <- switch(alternative,
       "two.sided" = c(point - q_val * se, point + q_val * se),
@@ -50,12 +57,12 @@ test_that("mod_pool_internal_rubin combines results correctly", {
   with_mocks <- function(expr) {
     mockery::stub(
       mod_pool_internal_rubin,
-      "rbmi:::rubin_rules",
+      "utils::getFromNamespace(\"rubin_rules\", pkg)",
       mock_rubin_rules
     )
     mockery::stub(
       mod_pool_internal_rubin,
-      "rbmi:::parametric_ci",
+      "utils::getFromNamespace(\"parametric_ci\", pkg)",
       mock_parametric_ci
     )
     force(expr)
@@ -141,12 +148,11 @@ test_that("pool function processes and returns combined results", {
     method = list(D = 1)
   )
 
-  pool_no_validate <- function(
-      results,
-      conf.level = 0.95,
-      alternative = c("two.sided", "less", "greater"),
-      type = c("percentile", "normal")) {
-    # Skip validation step rbmi::validate(results)
+  pool_no_validate <- function(results,
+                               conf.level = 0.95,
+                               alternative = c("two.sided", "less", "greater"),
+                               type = c("percentile", "normal")) {
+    # Skip validation step utils::getFromNamespace("validate", pkg)(results)
 
     alternative <- match.arg(alternative)
     type <- match.arg(type)
