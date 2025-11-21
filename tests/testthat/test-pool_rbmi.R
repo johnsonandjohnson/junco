@@ -27,14 +27,13 @@ test_that("mod_pool_internal_rubin combines results correctly", {
     )
   }
 
-  mock_parametric_ci <- function(
-      point,
-      se,
-      alpha,
-      alternative,
-      qfun,
-      pfun,
-      df) {
+  mock_parametric_ci <- function(point,
+                                 se,
+                                 alpha,
+                                 alternative,
+                                 qfun,
+                                 pfun,
+                                 df) {
     q_val <- qfun(1 - alpha / 2, df = df)
     ci <- switch(alternative,
       "two.sided" = c(point - q_val * se, point + q_val * se),
@@ -149,11 +148,10 @@ test_that("pool function processes and returns combined results", {
     method = list(D = 1)
   )
 
-  pool_no_validate <- function(
-      results,
-      conf.level = 0.95,
-      alternative = c("two.sided", "less", "greater"),
-      type = c("percentile", "normal")) {
+  pool_no_validate <- function(results,
+                               conf.level = 0.95,
+                               alternative = c("two.sided", "less", "greater"),
+                               type = c("percentile", "normal")) {
     # Skip validation step utils::getFromNamespace("validate", pkg)(results)
 
     alternative <- match.arg(alternative)
