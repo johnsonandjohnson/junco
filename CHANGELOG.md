@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `a_maxlev()` to be able to calculate count and percentage of the maximum level of an ordered factor per subject
 - Remove `brackets_to_rtf()`
 - Export `rbmi_pool()` #22
+- Add functionality to `a_freq_j()` to process `val` = NULL from levels specified in `label_map`. #95
+- Add `a_cmhrms_j()` to support p-value from CMH row mean score test. #97
 - Added standard error (SE) column for each treatment arm's least square (LS) means estimate to the `summarize_lsmeans_wide()` layout.
 
 
