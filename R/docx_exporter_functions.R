@@ -1887,6 +1887,12 @@ export_graph_as_docx <- function(g = NULL,
   }
   
   # set the Footers
+  if (!is.null(footers)) {
+    footers <- c("", footers)
+  }
+  for (line in footers) {
+    flx <- flextable::add_footer_lines(flx, values = line)
+  }
   footer_text <- paste0(
     "[", tolower(tblid), ".docx]",
     "[", tidytlg:::getFileName(), "] ",
@@ -1901,19 +1907,24 @@ export_graph_as_docx <- function(g = NULL,
   flx <- flx %>% 
     flextable::align(part = "body", align = "center")
   flx <- flx %>% flextable::valign(part = "body", valign = "top")
-  n_footnotes <- flextable::nrow_part(flx, "footer")
+  nrow_footers <- flextable::nrow_part(flx, "footer")
   flx <- flx %>%
-    flextable::fontsize(part = "footer", i = n_footnotes, size = 8) %>%
-    flextable::align(part = "footer", i = n_footnotes, align = "right") %>%
+    flextable::fontsize(part = "footer", size = 8) %>%
+    flextable::align(part = "footer", i = nrow_footers, align = "right") %>%
     flextable::padding(padding = 0, part = "footer")
   flx <- flx %>% 
     flextable::font(fontname = "Times New Roman", part = "all")
   flx <- flx %>% 
     flextable::border(part = "header", i = 1,
                     border.top = border, border.bottom = border) %>% 
-    flextable::border(part = "body",
-                      i = nrow_body,
+    flextable::border(part = "body", i = nrow_body,
                       border.bottom = border)
+  if (nrow_footers > 1) {
+    flx <- flx %>% 
+      flextable::border(part = "footer", i = nrow_footers - 1,
+                        border.bottom = border)
+  }
+  
   w <- ifelse(orientation == "portrait", 6.38, 8.82)
   flx <- flx %>% flextable::width(width = w)
   flx <- flextable::padding(flx, part = "all", padding = 0)
