@@ -1922,6 +1922,9 @@ export_graph_as_docx <- function(g = NULL,
   w <- ifelse(orientation == "portrait", 6.38, 8.82)
   flx <- flx %>% flextable::width(width = w)
   flx <- flextable::padding(flx, part = "all", padding = 0)
+  # add a little paragraph padding on top so that the figures don't overlap
+  # with the bottom border of the Titles
+  flx <- flextable::padding(flx, part = "body", padding.top = 1)
   
   
   # EXPORT AS DOCX ----
