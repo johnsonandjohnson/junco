@@ -1867,6 +1867,11 @@ export_graph_as_docx <- function(g = NULL,
     as.data.frame() %>% 
     flextable::flextable()
   flx <- flx %>% flextable::delete_part("header")
+  nrow_body <- flextable::nrow_part(x = flx, part = "body")
+  
+  # set the Title
+  ts_tbl <- paste0(tblid, ":", title)
+  flx <- insert_title_hanging_indent_v3(flx = flx, title = ts_tbl)
   
   # set the Body (the plots)
   for (i in seq_along(plotnames)) {
@@ -1879,14 +1884,7 @@ export_graph_as_docx <- function(g = NULL,
       value = flextable::as_paragraph(
         flextable::as_image(src = f, width = plotwidth, height = plotheight, unit = "in"))
     )
-    flx <- flextable::autofit(flx)
   }
-  
-  flx <- flx %>% flextable::autofit()
-  
-  # set the Title
-  ts_tbl <- paste0(tblid, ":", title)
-  flx <- insert_title_hanging_indent_v3(flx = flx, title = ts_tbl)
   
   # set the Footers
   footer_text <- paste0(
@@ -1903,13 +1901,10 @@ export_graph_as_docx <- function(g = NULL,
   flx <- flx %>% 
     flextable::align(part = "body", align = "center")
   flx <- flx %>% flextable::valign(part = "body", valign = "top")
-  # n_footnotes <- nrow(flx$footer$dataset)
   n_footnotes <- flextable::nrow_part(flx, "footer")
   flx <- flx %>%
     flextable::fontsize(part = "footer", i = n_footnotes, size = 8) %>%
     flextable::align(part = "footer", i = n_footnotes, align = "right") %>%
-    # rtables.officer:::.remove_hborder(part = "footer", w = "bottom") %>% 
-    # rtables.officer:::.add_hborder(part = "footer", ii = n_footnotes - 1, border = border) %>% 
     flextable::padding(padding = 0, part = "footer")
   flx <- flx %>% 
     flextable::font(fontname = "Times New Roman", part = "all")
@@ -1917,14 +1912,18 @@ export_graph_as_docx <- function(g = NULL,
     flextable::border(part = "header", i = 1,
                     border.top = border, border.bottom = border) %>% 
     flextable::border(part = "body",
-                      i = flextable::nrow_part(x = flx, part = "body"),
+                      i = nrow_body,
                       border.bottom = border)
   w <- ifelse(orientation == "portrait", 6.38, 8.82)
   flx <- flx %>% flextable::width(width = w)
   flx <- flextable::padding(flx, part = "all", padding = 0)
   # add a little paragraph padding on top so that the figures don't overlap
   # with the bottom border of the Titles
-  flx <- flextable::padding(flx, part = "body", padding.top = 1)
+  if (nrow_body > 1) {
+    flx <- flextable::padding(flx, part = "body", i = seq(2, nrow_body),
+                              padding.top = 1)
+  }
+  
   
   
   # EXPORT AS DOCX ----
@@ -1937,11 +1936,8 @@ export_graph_as_docx <- function(g = NULL,
   doc <- officer::body_remove(doc)
   doc <- officer::body_set_default_section(doc, section_properties)
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
-  # string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
   string_to_look_for <- paste0(tblid, ":")
   add_title_style_caption(doc, string_to_look_for)
-  # add_vertical_pagination_XML(doc)
-  # remove_security_popup_page_numbers(doc = doc, tlgtype = tlgtype)
   print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
 }
 
