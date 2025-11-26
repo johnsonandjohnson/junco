@@ -325,10 +325,16 @@ insert_title_hanging_indent_v3 <- function(flx,
   # will be handled further downstream when exporting to docx by manipulating the XML.
   # see function "add_title_style_caption()"
   
-  flx_fpt <- rtables.officer:::.extract_font_and_size_from_flx(flx)
-  title_style <- flx_fpt$fpt
-  title_font_size <- title_style$font.size + 1 # 10
-  title_font_family <- title_style$font.family
+  if (flextable::nrow_part(flx, "header") == 0) {
+    title_font_size <- 10
+    title_font_family <- "Times New Roman"
+  } else {
+    flx_fpt <- rtables.officer:::.extract_font_and_size_from_flx(flx)
+    title_style <- flx_fpt$fpt
+    title_font_size <- title_style$font.size + 1 # 10
+    title_font_family <- title_style$font.family
+  }
+
   
   new_title <- sub(":", ":\t", title)
   
@@ -1751,6 +1757,189 @@ my_export_as_docx <- function(tt,
   }
   
   
+}
+
+
+#' export_graph_as_docx
+#' 
+#' Export graph in DOCX format
+#'
+#' @param g (optional) Default = NULL. A ggplot2 object, or a list 
+#' of them, to export. At least one of [g, plotnames] must be provided.
+#' If both are provided, 'g' precedes and 'plotnames' will be ignored.
+#' @param plotnames (optional) Default = NULL. A file path, or a list of them,
+#' to previously saved .png files. These will be opened and
+#' exported in the output file. At least one of [g, plotnames] must be provided.
+#' If both are provided, 'g' precedes and 'plotnames' will be ignored.
+#' @param tblid Character. Output ID that will appear in the Title and footer.
+#' @param output_dir Character. File path where to save the output.
+#' @param plotwidth (optional) Default = NULL. Plot size in units expressed by
+#' the units argument. If not supplied, uses the size of the current graphics device.
+#' @param plotheight (optional) Default = NULL. Plot size in units expressed by
+#' the units argument. If not supplied, uses the size of the current graphics device.
+#' @param units (optional) Default = "in". One of the following units in which the 
+#' plotwidth and plotheight arguments are expressed: "in", "cm", "mm" or "px".
+#' @param orientation (optional) Default = "portrait".
+#' One of: "portrait", "landscape".
+#' @param title (optional) Default = NULL. Character, or list of them,
+#' with the titles to be displayed.
+#' @param footers (optional) Default = NULL. Character, or list of them,
+#' with the footers to be displayed.
+#'
+#' @export
+export_graph_as_docx <- function(g = NULL,
+                                 plotnames = NULL,
+                                 tblid,
+                                 output_dir,
+                                 plotwidth = NULL,
+                                 plotheight = NULL,
+                                 units = c("in", "cm", "mm", "px")[1],
+                                 orientation = "portrait",
+                                 border = flextable::fp_border_default(width = 0.75, color = "black"),
+                                 title = NULL,
+                                 footers = NULL) {
+  
+  # TREATMENT OF ARGUMENTS ----
+  
+  if (is.null(g) && is.null(plotnames)) {
+    stop("Both arguments 'g' and 'plotnames' are NULL. Please provide at least one.")
+  }
+  
+  if (!is.null(g) && !is.null(plotnames)) {
+    message("Both arguments 'g' and 'plotnames' are not NULL. Argument 'g' precedes and 'plotnames' will be ignored.")
+    plotnames <- NULL
+  }
+  
+  if (!is.null(g)) {
+    if (length(g) == 1) {
+      g <- list(g)
+    }
+    
+    for (e in g) {
+      checkmate::assert_true(ggplot2::is.ggplot(e))
+    }
+  }
+  
+  if (!is.null(plotnames)) {
+    if (length(plotnames) == 1) {
+      plotnames <- list(plotnames)
+    }
+    
+    for (e in plotnames) {
+      checkmate::assert_character(e)
+      checkmate::assert_file_exists(e)
+    }
+  }
+  
+  checkmate::assert_character(tblid)
+  checkmate::assert_character(output_dir)
+  checkmate::assert_directory_exists(output_dir)
+  checkmate::assert_numeric(plotwidth, null.ok = TRUE)
+  checkmate::assert_numeric(plotheight, null.ok = TRUE)
+  checkmate::assert_choice(units, choices = c("in", "cm", "mm", "px"))
+  checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
+  checkmate::assert_character(title)
+  checkmate::assert_character(footers, null.ok = TRUE)
+  
+  if (is.null(plotnames)) {
+    # we have to save the ggplot2 objects (argument 'g') as temporary files
+    # and save those paths
+    plotnames <- list()
+    for (e in g) {
+      temp_file <- paste0(base::tempfile(), ".png")
+      ggplot2::ggsave(
+        filename = basename(temp_file),
+        path = dirname(temp_file),
+        plot = e,
+        device = "png",
+        width = plotwidth %||% NA,
+        height = plotheight %||% NA,
+        units = units %||% NA
+      )
+      plotnames <- append(plotnames, temp_file)
+    }
+  }
+  
+  # CREATION OF THE FLEXTABLE ----
+  
+  # create initial flextable with just 1 column
+  flx <- matrix(nrow = length(plotnames), ncol = 1) %>%
+    as.data.frame() %>% 
+    flextable::flextable()
+  flx <- flx %>% flextable::delete_part("header")
+  
+  # set the Body (the plots)
+  for (i in seq_along(plotnames)) {
+    f <- plotnames[[i]]
+    flx <- flextable::compose(
+      flx,
+      part = "body",
+      i = i,
+      j = 1,
+      value = flextable::as_paragraph(
+        flextable::as_image(src = f, width = plotwidth, height = plotheight, unit = "in"))
+    )
+    flx <- flextable::autofit(flx)
+  }
+  
+  flx <- flx %>% flextable::autofit()
+  
+  # set the Title
+  ts_tbl <- paste0(tblid, ":", title)
+  flx <- insert_title_hanging_indent_v3(flx = flx, title = ts_tbl)
+  
+  # set the Footers
+  footer_text <- paste0(
+    "[", tolower(tblid), ".docx]",
+    "[", tidytlg:::getFileName(), "] ",
+    toupper(format(Sys.time(), format = "%d%b%Y, %H:%M"))
+  )
+  flx <- flextable::add_footer_lines(flx, values = footer_text)
+
+  # style the flextable
+  flx <- flx %>% flextable::border_remove()
+  flx <- flx %>%
+    flextable::fontsize(part = "header", size = 10)
+  flx <- flx %>% 
+    flextable::align(part = "body", align = "center")
+  flx <- flx %>% flextable::valign(part = "body", valign = "top")
+  # n_footnotes <- nrow(flx$footer$dataset)
+  n_footnotes <- flextable::nrow_part(flx, "footer")
+  flx <- flx %>%
+    flextable::fontsize(part = "footer", i = n_footnotes, size = 8) %>%
+    flextable::align(part = "footer", i = n_footnotes, align = "right") %>%
+    # rtables.officer:::.remove_hborder(part = "footer", w = "bottom") %>% 
+    # rtables.officer:::.add_hborder(part = "footer", ii = n_footnotes - 1, border = border) %>% 
+    flextable::padding(padding = 0, part = "footer")
+  flx <- flx %>% 
+    flextable::font(fontname = "Times New Roman", part = "all")
+  flx <- flx %>% 
+    flextable::border(part = "header", i = 1,
+                    border.top = border, border.bottom = border) %>% 
+    flextable::border(part = "body",
+                      i = flextable::nrow_part(x = flx, part = "body"),
+                      border.bottom = border)
+  w <- ifelse(orientation == "portrait", 6.38, 8.82)
+  flx <- flx %>% flextable::width(width = w)
+  flx <- flextable::padding(flx, part = "all", padding = 0)
+  
+  
+  # EXPORT AS DOCX ----
+  template_file <- system.file("template_file.docx", package = "junco")
+  section_properties <- officer::prop_section(
+    page_size = officer::page_size(width = 11, height = 8.5, orient = orientation),
+    page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
+  )
+  doc <- officer::read_docx(template_file)
+  doc <- officer::body_remove(doc)
+  doc <- officer::body_set_default_section(doc, section_properties)
+  doc <- flextable::body_add_flextable(doc, flx, align = "center")
+  # string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
+  string_to_look_for <- paste0(tblid, ":")
+  add_title_style_caption(doc, string_to_look_for)
+  # add_vertical_pagination_XML(doc)
+  # remove_security_popup_page_numbers(doc = doc, tlgtype = tlgtype)
+  print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
 }
 
 
