@@ -533,7 +533,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/jun
 ```
 
 ## Adding a Combined Column to a Table
-Sometime it is necessary to add a combined column to a table, which contains aggregated data from multiple columns.
+Sometimes it is necessary to add a combined column to a table, which contains aggregated data from multiple columns.
 
 The creation of a combined column can be achieved by leveraging `rtables::add_combo_facet`. In the example below, we want to add a column named "Combined", that aggregates the data from the "Example Drug 5 mg", "Example Drug 10 mg", and "Example Drug 20 mg" columns. This can be achieved by creating an object named "add_combo", that calls `rtables::add_combo_facet`, which creates a new column from other columns in the table. A split function can then be constructed using `rtables::make_split_fun`, where the "post" argument contains the "add_combo" object, which calls `rtables::add_combo_facet`. The split function is then included in the `rtables::split_cols_by` function call for the TRT01A variable.
 
@@ -787,7 +787,7 @@ tt_to_tlgrtf(result,
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
 
 # Display the PDF
-knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/extdata/example1.pdf")
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/example1.pdf")
 ```
 
 In order to get the dose level to appear on a new line, then the TRT01A
@@ -1441,6 +1441,7 @@ tt_to_tlgrtf(result,
              file = temp)
 ```
 
+
 ```{r page_breaks_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 # Convert RTF to PDF
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
@@ -1448,6 +1449,7 @@ temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
 # Display the PDF
 knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/examplepagebreak.pdf")
 ```
+> **Note:** Scroll down to see
 
 ## Manually Splitting Large Listing Files into Multiple Smaller Files
 In rare cases, the listing files produced are large in size (e.g. >20 MB). There can be multiple reasons why this occurs, but a common example is that there is a need to present longitudinal data for a large trial. In this scenario, it might be beneficial to create multiple smaller files instead of a single large file. This can be achieved by subsetting the data and then calling the necessary exporter function multiple times.
@@ -1483,10 +1485,10 @@ result <- rlistings::as_listing(
   disp_cols = "HEIGHT"
 )
 
-keep <- result[, "TRT01A"] %in% c("Example Drug 5 mg",
-                                   "Example Drug 10 mg")
+keep <- result$TRT01A %in% c("Example Drug 5 mg", "Example Drug 10 mg")
 
 result1 <- result[keep, ]
+
 
 # Create temporary RTF
 temp1 <- file.path("..", "inst", "extdata", "examplelistingmultiplefilesPART1OF2")
@@ -1497,14 +1499,14 @@ tt_to_tlgrtf(result1,
 )
 
 
-keep <- result[, "TRT01A"] %in% c("Example Drug 20 mg",
-                                   "Placebo")
+keep <- result$TRT01A %in% c("Example Drug 20 mg", "Placebo")
 
 result2 <- result[keep, ]
 
 
 # Create temporary RTF
 temp2 <- file.path("..", "inst", "extdata", "examplelistingmultiplefilesPART2OF2")
+
 tt_to_tlgrtf(result2,
   file = temp2,
   orientation = "landscape"
