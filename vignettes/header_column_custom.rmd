@@ -32,7 +32,7 @@ knitr::opts_chunk$set(
 library(junco)
 library(rlistings)
 library(tibble)
-library(RDCOMClient)
+
 # Function to convert RTF to PDF using RDCOMClient from github if available
 # Only works on Windows and requires RDCOMClient package
 rtf_to_pdf <- function(infile, outfile = NULL) {
@@ -48,6 +48,7 @@ rtf_to_pdf <- function(infile, outfile = NULL) {
 
     # Suppress any warnings during conversion
     tryCatch({
+      library(RDCOMClient)
       word <- RDCOMClient::COMCreate("Word.Application")
       doc <- word$Documents()$Open(infile_norm, ConfirmConversions = FALSE)
 
