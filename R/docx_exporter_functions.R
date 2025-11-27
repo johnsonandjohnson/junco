@@ -1773,31 +1773,33 @@ my_export_as_docx <- function(tt,
 #' If both are provided, 'g' precedes and 'plotnames' will be ignored.
 #' @param tblid Character. Output ID that will appear in the Title and footer.
 #' @param output_dir Character. File path where to save the output.
-#' @param plotwidth (optional) Default = NULL. Plot size in units expressed by
-#' the units argument. If not supplied, uses the size of the current graphics device.
-#' @param plotheight (optional) Default = NULL. Plot size in units expressed by
-#' the units argument. If not supplied, uses the size of the current graphics device.
-#' @param units (optional) Default = "in". One of the following units in which the 
-#' plotwidth and plotheight arguments are expressed: "in", "cm", "mm" or "px".
-#' @param orientation (optional) Default = "portrait".
-#' One of: "portrait", "landscape".
 #' @param title (optional) Default = NULL. Character, or list of them,
 #' with the titles to be displayed.
 #' @param footers (optional) Default = NULL. Character, or list of them,
 #' with the footers to be displayed.
+#' @param orientation (optional) Default = "portrait".
+#' One of: "portrait", "landscape".
+#' @param plotwidth (optional) Default = 8. Plot size in units expressed by
+#' the units argument. If not supplied, uses the size of the current graphics device.
+#' @param plotheight (optional) Default = 5.51. Plot size in units expressed by
+#' the units argument. If not supplied, uses the size of the current graphics device.
+#' @param units (optional) Default = "in". One of the following units in which the 
+#' plotwidth and plotheight arguments are expressed: "in", "cm", "mm" or "px".
+#' @param border (optional). An fp_border object to use as borders for the Title
+#' and Footers.
 #'
 #' @export
 export_graph_as_docx <- function(g = NULL,
                                  plotnames = NULL,
                                  tblid,
                                  output_dir,
-                                 plotwidth = NULL,
-                                 plotheight = NULL,
-                                 units = c("in", "cm", "mm", "px")[1],
-                                 orientation = "portrait",
-                                 border = flextable::fp_border_default(width = 0.75, color = "black"),
                                  title = NULL,
-                                 footers = NULL) {
+                                 footers = NULL,
+                                 orientation = "portrait",
+                                 plotwidth = 8,
+                                 plotheight = 5.51,
+                                 units = c("in", "cm", "mm", "px")[1],
+                                 border = flextable::fp_border_default(width = 0.75, color = "black")) {
   
   # TREATMENT OF ARGUMENTS ----
   
