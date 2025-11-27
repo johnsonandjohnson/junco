@@ -1483,18 +1483,25 @@ result <- rlistings::as_listing(
   disp_cols = "HEIGHT"
 )
 
-result1 <- result %>%
-  filter('TRT01A' %in% c("Example Drug 5 mg","Example Drug 10 mg"))
+keep <- result[, "TRT01A"] %in% c("Example Drug 5 mg",
+                                   "Example Drug 10 mg")
+
+result1 <- result[keep, ]
 
 # Create temporary RTF
 temp1 <- file.path("..", "inst", "extdata", "examplelistingmultiplefilesPART1OF2")
+
 tt_to_tlgrtf(result1,
   file = temp1,
   orientation = "landscape"
 )
 
-result2 <- result %>%
-  filter(TRT01A %in% c("Example Drug 20 mg","Placebo"))
+
+keep <- result[, "TRT01A"] %in% c("Example Drug 20 mg",
+                                   "Placebo")
+
+result2 <- result[keep, ]
+
 
 # Create temporary RTF
 temp2 <- file.path("..", "inst", "extdata", "examplelistingmultiplefilesPART2OF2")
