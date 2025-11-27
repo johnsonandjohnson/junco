@@ -54,7 +54,6 @@ Imports:
     utils,
     emmeans,
     mmrm,
-    rbmi (>= 1.3.0),
     assertthat
 Encoding: UTF-8
 Language: en-US
