@@ -32,7 +32,7 @@ knitr::opts_chunk$set(
 library(junco)
 library(rlistings)
 library(tibble)
-
+library(RDCOMClient)
 # Function to convert RTF to PDF using RDCOMClient from github if available
 # Only works on Windows and requires RDCOMClient package
 rtf_to_pdf <- function(infile, outfile = NULL) {
@@ -83,15 +83,625 @@ rtf_to_pdf <- function(infile, outfile = NULL) {
 ## Introduction
 
 Within clinical trial reporting, there is often the need to incorporate
-study-specific components to the column header space of a table. Common
-study-specific column header components may include the following:
+custom components to the tables and listings being created. Common
+custom components may include the following:
 
--   Inserting a New Line within Table & Listing Column Header Text
+-   Page Orientation (Portrait vs. Landscape)
+-   Adjusting the Font Size of a Table
+-   Adding a Spanning Column Header to a Table
+-   Adding a Combined Treatment Column to a Table
+-   Inserting a New Line within Table & Listing Text
 -   Custom Table Column Header Border Matrix
 -   Addition of Superscript or Other Symbol
+-   Grouping of Columns for Tables Containing Many Columns
+-   Inserting Page Breaks in Tables
+-   Manually Splitting Large Table & Listing Files into Multiple Smaller Files
 
 The purpose of this vignette is to provide clear, concise examples of
-how to achieve each study-specific component.
+how to achieve each custom component.
+
+## Page Orientation (Portrait vs. Landscape)
+Sometimes when creating a table, there are many columns that need to be presented. In this scenario, it might be beneficial for the resulting output file to have an orientation of landscape. As a result, the page is wider, allowing the information to be more readable.
+
+### .rtf File
+In the .rtf exporter function, `junco::tt_to_tlgrtf`, by default, the page orientation is set to portrait. If landscape orientation is required, then the orientation can be adjusted by including the `orientation` argument and specifying a value of "landscape".
+
+```{r page_orientation_example}
+library(junco)
+
+adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo",
+                                     "Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo"),
+                                   levels = c("Example Drug 5 mg",
+                                              "Example Drug 10 mg",
+                                              "Example Drug 20 mg",
+                                              "Placebo"
+                                              )
+                              ),
+                   USUBJID = c("1",
+                               "2",
+                               "3",
+                               "4",
+                               "5",
+                               "6",
+                               "7",
+                               "8"),
+                   RESPONSE = factor(c("Yes",
+                                       "No",
+                                       "Yes",
+                                       "Yes",
+                                       "Yes",
+                                       "No",
+                                       "Yes",
+                                       "No"),
+                                     levels = c("Yes",
+                                                "No")
+                              ),
+                   SEX = factor(c("Male",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Male"),
+                                levels = c("Male",
+                                           "Female")
+                           )
+) |>
+  var_relabel(RESPONSE = "Response")
+
+lyt <- basic_table(
+  show_colcounts = TRUE,
+  colcount_format = "N=xx"
+) |>
+  ### first columns
+  split_cols_by("TRT01A",
+                show_colcounts = FALSE
+  ) |>
+  ### create table body row sections based on SEX
+  split_rows_by("SEX",
+                section_div = c(" "),
+                page_by = TRUE,
+                split_fun = drop_split_levels
+                ) |>
+  summarize_row_groups("SEX",
+                       cfun =a_freq_j,
+                       extra_args = list(denom = "n_df",
+                                         denom_by = "SEX",
+                                         riskdiff = FALSE,
+                                         extrablankline = TRUE,
+                                         .stats = c("count_unique")
+                                         )
+                       ) |>
+  ### analyze height
+  analyze("RESPONSE",
+          var_labels = c("Response"),
+          show_labels = "visible",
+          afun = a_freq_j,
+          extra_args = list(denom = "n_df",
+                            denom_by = "SEX",
+                            riskdiff = FALSE,
+                            .stats = c("count_unique_fraction")
+                            )
+          )
+
+result <- build_table(lyt, adsl)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "exampleorientation")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape")
+```
+
+```{r page_orientation_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/exampleorientation.pdf")
+```
+
+## Adjusting the Font Size of a Table or Listing
+By default, the font type and size for the body of tables is Times New Roman 9-pt. If a font size of 8-pt is required for a table, then the font size can be adjusted as necessary. Other font sizes are not currently supported for tables. For listings, the default font size is 8-pt. Other font sizes are not currently supported for listings.
+
+### Table .rtf File
+
+To display the body of tables in Times New Roman 8-pt for .rtf files, the `junco::tt_to_tlgrtf` function an be called with the `fontspec` argument included. The `fontspec` argument will specify a `formatters::font_spec` function call.
+
+Example of Table with Font Size of 8-pt
+```{r font_size_example}
+library(junco)
+
+adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo",
+                                     "Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo"),
+                                   levels = c("Example Drug 5 mg",
+                                              "Example Drug 10 mg",
+                                              "Example Drug 20 mg",
+                                              "Placebo"
+                                              )
+                              ),
+                   USUBJID = c("1",
+                               "2",
+                               "3",
+                               "4",
+                               "5",
+                               "6",
+                               "7",
+                               "8"),
+                   RESPONSE = factor(c("Yes",
+                                       "No",
+                                       "Yes",
+                                       "Yes",
+                                       "Yes",
+                                       "No",
+                                       "Yes",
+                                       "No"),
+                                     levels = c("Yes",
+                                                "No")
+                              ),
+                   SEX = factor(c("Male",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Male"),
+                                levels = c("Male",
+                                           "Female")
+                           )
+) |>
+  var_relabel(RESPONSE = "Response")
+
+lyt <- basic_table(
+  show_colcounts = TRUE,
+  colcount_format = "N=xx"
+) |>
+  ### first columns
+  split_cols_by("TRT01A",
+                show_colcounts = FALSE
+  ) |>
+  ### create table body row sections based on SEX
+  split_rows_by("SEX",
+                section_div = c(" "),
+                page_by = TRUE,
+                split_fun = drop_split_levels
+                ) |>
+  summarize_row_groups("SEX",
+                       cfun =a_freq_j,
+                       extra_args = list(denom = "n_df",
+                                         denom_by = "SEX",
+                                         riskdiff = FALSE,
+                                         extrablankline = TRUE,
+                                         .stats = c("count_unique")
+                                         )
+                       ) |>
+  ### analyze height
+  analyze("RESPONSE",
+          var_labels = c("Response"),
+          show_labels = "visible",
+          afun = a_freq_j,
+          extra_args = list(denom = "n_df",
+                            denom_by = "SEX",
+                            riskdiff = FALSE,
+                            .stats = c("count_unique_fraction")
+                            )
+          )
+
+result <- build_table(lyt, adsl)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "examplefontsize")
+tt_to_tlgrtf(result,
+             file = temp,
+             fontspec = formatters::font_spec("Times", 8, 1.2))
+```
+
+```{r font_size_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/examplefontsize.pdf")
+```
+
+## Adding a Spanning Column Header to a Table
+Sometimes, it is necessary to include a spanning header in the column header space. This is common when there is a need to group specific columns together under a common category text. A common example of this is when a spanning header such as "Active Study Agent" is to be displayed above all active treatments for a given study. To display the spanning header, a variable needs to be included in the data to represent the spanning header. Subsequently, a column header treatment map needs to be created to identify which spanning headers and columns are to be present in the resulting table output. For simple studies, the `junco::create_colspan_map` function can be leveraged to achieve the creation of the treatment map.
+
+In the code below, the variable `colspan_trt` is being created to identify the spanning header text. In this example, the "Example Drug 5 mg", "Example Drug 10 mg", and "Example Drug 20 mg" columns are to be displayed beneath a spanning header of "Active Study Agent". Then, the treatment map is being created by calling `junco::create_colspan_map`.
+```{r spanning_header_setup}
+library(junco)
+
+adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo",
+                                     "Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo"),
+                                   levels = c("Example Drug 5 mg",
+                                              "Example Drug 10 mg",
+                                              "Example Drug 20 mg",
+                                              "Placebo"
+                                              )
+                              ),
+                   colspan_trt = factor(c("Active Study Agent",
+                                          "Active Study Agent",
+                                          "Active Study Agent",
+                                          " ",
+                                          "Active Study Agent",
+                                          "Active Study Agent",
+                                          "Active Study Agent",
+                                          " "),
+                                        levels = c(
+                                          "Active Study Agent",
+                                          " "
+                                        )
+                                        ),
+                   USUBJID = c("1",
+                               "2",
+                               "3",
+                               "4",
+                               "5",
+                               "6",
+                               "7",
+                               "8"),
+                   RESPONSE = factor(c("Yes",
+                                       "No",
+                                       "Yes",
+                                       "Yes",
+                                       "Yes",
+                                       "No",
+                                       "Yes",
+                                       "No"),
+                                     levels = c("Yes",
+                                                "No")
+                              ),
+                   SEX = factor(c("Male",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Male"),
+                                levels = c("Male",
+                                           "Female")
+                           )
+) |>
+  var_relabel(RESPONSE = "Response")
+
+adsl
+
+  colspan_trt_map <- create_colspan_map(adsl,
+                                      non_active_grp = "Placebo",
+                                      non_active_grp_span_lbl = " ",
+                                      active_grp_span_lbl = "Active Study Agent",
+                                      colspan_var = "colspan_trt",
+                                      trt_var = "TRT01A")
+
+  colspan_trt_map
+```
+
+The full code to generate the output with the spanning column header is as follows.
+```{r spanning_header_example}
+library(junco)
+
+adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo",
+                                     "Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo"),
+                                   levels = c("Example Drug 5 mg",
+                                              "Example Drug 10 mg",
+                                              "Example Drug 20 mg",
+                                              "Placebo"
+                                              )
+                              ),
+                   colspan_trt = factor(c("Active Study Agent",
+                                          "Active Study Agent",
+                                          "Active Study Agent",
+                                          " ",
+                                          "Active Study Agent",
+                                          "Active Study Agent",
+                                          "Active Study Agent",
+                                          " "),
+                                        levels = c(
+                                          "Active Study Agent",
+                                          " "
+                                        )
+                                        ),
+                   USUBJID = c("1",
+                               "2",
+                               "3",
+                               "4",
+                               "5",
+                               "6",
+                               "7",
+                               "8"),
+                   RESPONSE = factor(c("Yes",
+                                       "No",
+                                       "Yes",
+                                       "Yes",
+                                       "Yes",
+                                       "No",
+                                       "Yes",
+                                       "No"),
+                                     levels = c("Yes",
+                                                "No")
+                              ),
+                   SEX = factor(c("Male",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Male"),
+                                levels = c("Male",
+                                           "Female")
+                           )
+) |>
+  var_relabel(RESPONSE = "Response")
+
+  # Set up levels and label for the required combined column
+  add_combo <- add_combo_facet("Combined",
+    label = "Combined",
+    levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
+  )
+
+  mysplit <- make_split_fun(post = list(add_combo))
+
+  colspan_trt_map <- create_colspan_map(adsl,
+                                      non_active_grp = "Placebo",
+                                      non_active_grp_span_lbl = " ",
+                                      active_grp_span_lbl = "Active Study Agent",
+                                      colspan_var = "colspan_trt",
+                                      trt_var = "TRT01A")
+
+lyt <- basic_table(
+  show_colcounts = TRUE,
+  colcount_format = "N=xx"
+) |>
+  split_cols_by("colspan_trt",
+                split_fun = trim_levels_to_map(map = colspan_trt_map)
+  ) |>
+  split_cols_by("TRT01A",
+                show_colcounts = FALSE,
+                split_fun = mysplit
+  ) |>
+  ### create table body row sections based on SEX
+  split_rows_by("SEX",
+                section_div = c(" "),
+                page_by = TRUE,
+                split_fun = drop_split_levels
+                ) |>
+  summarize_row_groups("SEX",
+                       cfun =a_freq_j,
+                       extra_args = list(denom = "n_df",
+                                         denom_by = "SEX",
+                                         riskdiff = FALSE,
+                                         extrablankline = TRUE,
+                                         .stats = c("count_unique")
+                                         )
+                       ) |>
+  ### analyze height
+  analyze("RESPONSE",
+          var_labels = c("Response"),
+          show_labels = "visible",
+          afun = a_freq_j,
+          extra_args = list(denom = "n_df",
+                            denom_by = "SEX",
+                            riskdiff = FALSE,
+                            .stats = c("count_unique_fraction")
+                            )
+          )
+
+result <- build_table(lyt, adsl)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "examplespanningheader1")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape")
+```
+
+```{r spanning_header_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/examplespanningheader1.pdf")
+```
+
+## Adding a Combined Column to a Table
+Sometime it is necessary to add a combined column to a table, which contains aggregated data from multiple columns.
+
+The creation of a combined column can be achieved by leveraging `rtables::add_combo_facet`. In the example below, we want to add a column named "Combined", that aggregates the data from the "Example Drug 5 mg", "Example Drug 10 mg", and "Example Drug 20 mg" columns. This can be achieved by creating an object named "add_combo", that calls `rtables::add_combo_facet`, which creates a new column from other columns in the table. A split function can then be constructed using `rtables::make_split_fun`, where the "post" argument contains the "add_combo" object, which calls `rtables::add_combo_facet`. The split function is then included in the `rtables::split_cols_by` function call for the TRT01A variable.
+
+The snippet of code of interest is as follows.
+```{r combined_column_snippet, eval=FALSE}
+add_combo <- add_combo_facet("Combined",
+    label = "Combined",
+    levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
+  )
+
+  mysplit <- make_split_fun(post = list(add_combo))
+```
+
+The code above creates the desired column, however, the issue is that the resulting output produces a "Combined" column under each spanning header, and as a result, 2 "Combined" columns are created. The "Combined" column of interest is the one appearing beneath the "Active Study Agent" spanning header. We need additional code to remove the "Combined" column that lives in the other spanning header value of " ". This can be achieved by creating an object that calls `junco::cond_rm_facets`, which removes user-specified columns from facets. A split function can then be constructed using `rtables::make_split_fun`, where the "post" argument contains the "add_combo" object, which calls `rtables::add_combo_facet`, and the "rm_combo_from_placebo" object, which calls `junco::cond_rm_facets`. Similar to above, the split function is then included in the `rtables::split_cols_by` function call for the TRT01A variable.
+
+The additional code required for to produce the desired result is as follows.
+```{r combined_column_additional, eval=FALSE}
+  # choose if any facets need to be removed - e.g remove the combined column for placebo
+  rm_combo_from_placebo <- cond_rm_facets(
+    facets = "Combined",
+    ancestor_pos = NA,
+    value = " ",
+    split = "colspan_trt"
+  )
+
+  mysplit <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))
+```
+
+The full code to generate the output with the desired "Combined" column is as follows.
+```{r combined_column_example}
+library(junco)
+
+adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo",
+                                     "Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo"),
+                                   levels = c("Example Drug 5 mg",
+                                              "Example Drug 10 mg",
+                                              "Example Drug 20 mg",
+                                              "Placebo"
+                                              )
+                              ),
+                   colspan_trt = factor(c("Active Study Agent",
+                                          "Active Study Agent",
+                                          "Active Study Agent",
+                                          " ",
+                                          "Active Study Agent",
+                                          "Active Study Agent",
+                                          "Active Study Agent",
+                                          " "),
+                                        levels = c(
+                                          "Active Study Agent",
+                                          " "
+                                        )
+                                        ),
+                   USUBJID = c("1",
+                               "2",
+                               "3",
+                               "4",
+                               "5",
+                               "6",
+                               "7",
+                               "8"),
+                   RESPONSE = factor(c("Yes",
+                                       "No",
+                                       "Yes",
+                                       "Yes",
+                                       "Yes",
+                                       "No",
+                                       "Yes",
+                                       "No"),
+                                     levels = c("Yes",
+                                                "No")
+                              ),
+                   SEX = factor(c("Male",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Male"),
+                                levels = c("Male",
+                                           "Female")
+                           )
+) |>
+  var_relabel(RESPONSE = "Response")
+
+  # Set up levels and label for the required combined column
+  add_combo <- add_combo_facet("Combined",
+    label = "Combined",
+    levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
+  )
+
+  # choose if any facets need to be removed - e.g remove the combined column for placebo
+  rm_combo_from_placebo <- cond_rm_facets(
+    facets = "Combined",
+    ancestor_pos = NA,
+    value = " ",
+    split = "colspan_trt"
+  )
+
+  mysplit <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))
+
+  colspan_trt_map <- create_colspan_map(adsl,
+                                      non_active_grp = "Placebo",
+                                      non_active_grp_span_lbl = " ",
+                                      active_grp_span_lbl = "Active Study Agent",
+                                      colspan_var = "colspan_trt",
+                                      trt_var = "TRT01A")
+
+lyt <- basic_table(
+  show_colcounts = TRUE,
+  colcount_format = "N=xx"
+) |>
+  split_cols_by("colspan_trt",
+                split_fun = trim_levels_to_map(map = colspan_trt_map)
+  ) |>
+  split_cols_by("TRT01A",
+                show_colcounts = FALSE,
+                split_fun = mysplit
+  ) |>
+  ### create table body row sections based on SEX
+  split_rows_by("SEX",
+                section_div = c(" "),
+                page_by = TRUE,
+                split_fun = drop_split_levels
+                ) |>
+  summarize_row_groups("SEX",
+                       cfun =a_freq_j,
+                       extra_args = list(denom = "n_df",
+                                         denom_by = "SEX",
+                                         riskdiff = FALSE,
+                                         extrablankline = TRUE,
+                                         .stats = c("count_unique")
+                                         )
+                       ) |>
+  ### analyze height
+  analyze("RESPONSE",
+          var_labels = c("Response"),
+          show_labels = "visible",
+          afun = a_freq_j,
+          extra_args = list(denom = "n_df",
+                            denom_by = "SEX",
+                            riskdiff = FALSE,
+                            .stats = c("count_unique_fraction")
+                            )
+          )
+
+result <- build_table(lyt, adsl)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "examplecombinedcolumn2")
+tt_to_tlgrtf(result,
+             file = temp,
+             orientation = "landscape")
+```
+
+```{r combined_column_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/examplecombinedcolumn2.pdf")
+```
 
 ## Inserting a New Line within Column Header Text
 
@@ -104,7 +714,7 @@ between the drug name and the dose level for the "Example Drug" drug. In
 this case, the text "Example Drug" is to appear on a different line than
 the dose levels (i.e. "5 mg", "10 mg", "20 mg").
 
-```{r}
+```{r newline_data}
 adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
                               "Example Drug 10 mg",
                               "Example Drug 20 mg",
@@ -133,7 +743,7 @@ is to be called. In this example, by default, when calling
 junco::tt_to_tlgrtf, the drug name as well as the dose level will appear
 on the same line.
 
-```{r, echo=TRUE}
+```{r newline_default_example, echo=TRUE}
 library(junco)
 
 adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
@@ -171,7 +781,7 @@ tt_to_tlgrtf(result,
              orientation = "landscape")
 ```
 
-```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r newline_default_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 # Convert RTF to PDF
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
 
@@ -183,7 +793,7 @@ In order to get the dose level to appear on a new line, then the TRT01A
 variable values will need to be updated to include the text "\\line"
 between the drug name and dose level.
 
-```{r, echo=TRUE}
+```{r newline_table_rtf, echo=TRUE}
 library(junco)
 
 adsl <- data.frame(TRT01A = c("Example Drug\\line 5 mg",
@@ -221,7 +831,7 @@ tt_to_tlgrtf(result,
              orientation = "landscape")
 ```
 
-```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r newline_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 # Convert RTF to PDF
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
 
@@ -238,7 +848,7 @@ corresponds with the column of interest.
 By default, there is no new line inserted within any of the variable
 labels.
 
-```{r, echo=TRUE}
+```{r newline_listing_default, echo=TRUE}
 library(junco)
 library(rlistings)
 
@@ -274,7 +884,7 @@ tt_to_tlgrtf(result,
              orientation = "landscape")
 ```
 
-```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r newline_listing_default_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 # Convert RTF to PDF
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
 
@@ -285,7 +895,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/jun
 By adding in "\\line" to the TRT01A variable label, a new line is
 inserted after "Actual Treatment".
 
-```{r, echo=TRUE}
+```{r newline_listing_rtf, echo=TRUE}
 library(junco)
 library(rlistings)
 
@@ -321,7 +931,7 @@ tt_to_tlgrtf(result,
              orientation = "landscape")
 ```
 
-```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r newline_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 # Convert RTF to PDF
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
 
@@ -335,7 +945,7 @@ When creating a table using junco::tt_to_tlgrtf, there is a set of
 default assumptions in place that determine how the borders are crafted
 within the table column header space. There are times when the table specification calls for a border matrix that is not based on the default assumptions. Below is an example of how to create a border matrix that produces the user required table.
 
-```{r, echo=TRUE}
+```{r border_matrix_example, echo=TRUE}
 library(junco)
 
 adsl <- data.frame(span = c("Example Drug Low Dose",
@@ -381,7 +991,7 @@ tt_to_tlgrtf(result,
              orientation = "landscape")
 ```
 
-```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r border_matrix_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 # Convert RTF to PDF
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
 
@@ -395,7 +1005,7 @@ cell. It's important for us to understand what the default border matrix
 looks like. This can be achieved by calling the
 junco:::make_header_bordmat function.
 
-```{r}
+```{r border_matrix_get}
 header_border <- junco:::make_header_bordmat(obj = result)
 header_border
 ```
@@ -405,7 +1015,7 @@ matrix contains a value of 0. In order to have a bottom border present
 under "Example Drug High Dose", a value other than 0 or 2 must be
 specified. This is because "Example Drug High Dose" is expected to have it's own spanning header, and the value specified in the border matrix must be unique to the cell. The border can be updated as follows.
 
-```{r}
+```{r border_matrix_update}
 header_border[1, 4] <- 4
 header_border
 ```
@@ -414,7 +1024,7 @@ Now, if the junco::tt_to_tlgrtf function is called with the "border_mat"
 argument specified, the new user-defined border matrix can be provided
 to specify the desired column header borders.
 
-```{r, echo=TRUE}
+```{r border_matrix_apply, echo=TRUE}
 # Create temporary RTF
 temp <- file.path("..", "inst", "extdata", "example6")
 tt_to_tlgrtf(result,
@@ -422,7 +1032,7 @@ tt_to_tlgrtf(result,
              orientation = "landscape",
              border_mat = header_border)
 ```
-```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r border_matrix_apply_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 
 # Convert RTF to PDF
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
@@ -439,7 +1049,7 @@ the table or listing specification. This can be achieved using the junco package
 In the junco package, there is a default markup data frame for each exporter function, which contains common markup that translates to symbols/characters that may be desired in an output. The default markup data frame contains markup to insert superscripts, insert subscripts, and can remove optional text.
 
 The default markup file for junco::tt_to_tlgrtf is as follows.
-```{r}
+```{r markup_dataframe}
 library(tibble)
 
 dps_markup_df <- tibble::tribble(
@@ -465,7 +1075,7 @@ If additional markup is to be considered, then a custom markup data frame can be
 In the following example data, there is a desire to insert a superscript "a"
 at the end the drug name for the "Example Drug" drug in reference to a footnote present at the end of the table.
 
-```{r}
+```{r superscript_data}
 adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
                               "Example Drug 10 mg",
                               "Example Drug 20 mg",
@@ -492,7 +1102,7 @@ require different updates, according to the markup that is required.
 If a .rtf file is to be created for the table, the junco::tt_to_tlgrtf
 is to be called. In this example, when calling junco::tt_to_tlgrtf, the "markup_df" argument has the default "dps_markup_df" object specified. In the code below, the drug name will not contain a superscript "a". This is because the TRT01A variable values do not have the "~[super a]" present anywhere in the value.
 
-```{r, echo=TRUE}
+```{r superscript_default_example, echo=TRUE}
 library(junco)
 
 adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
@@ -531,7 +1141,7 @@ tt_to_tlgrtf(result,
              markup_df = dps_markup_df)
 ```
 
-```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r superscript_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 # Convert RTF to PDF
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
 
@@ -543,7 +1153,7 @@ In order to get the superscript "a" to appear, the TRT01A
 variable values will need to be updated to include the text "~[super a]"
 between the drug name and dose level.
 
-```{r, echo=TRUE}
+```{r superscript_table_rtf, echo=TRUE}
 library(junco)
 
 adsl <- data.frame(TRT01A = c("Example Drug~[super a] 5 mg",
@@ -582,7 +1192,7 @@ tt_to_tlgrtf(result,
              markup_df = dps_markup_df)
 ```
 
-```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r superscript_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 # Convert RTF to PDF
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
 
@@ -599,7 +1209,7 @@ corresponds with the column of interest.
 By default, there is superscript "a" inserted within any of the variable
 labels.
 
-```{r, echo=TRUE}
+```{r superscript_listing_default_example, echo=TRUE}
 library(junco)
 library(rlistings)
 
@@ -635,7 +1245,7 @@ tt_to_tlgrtf(result,
              orientation = "landscape")
 ```
 
-```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r superscript_listing_default_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 # Convert RTF to PDF
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
 
@@ -646,7 +1256,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/jun
 By adding in "~[super a]" to the TRT01A variable label, a superscript "a" is
 added to the column label.
 
-```{r, echo=TRUE}
+```{r superscript_listing_rtf, echo=TRUE}
 library(junco)
 library(rlistings)
 
@@ -682,10 +1292,223 @@ tt_to_tlgrtf(result,
              orientation = "landscape")
 ```
 
-```{r, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r superscript_listing_rtf_display2, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 # Convert RTF to PDF
 temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
 
 # Display the PDF
 knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/example10.pdf")
+```
+
+## Grouping of Columns for Tables Containing Many Columns
+
+In some cases, there are tables that are required that contain many columns. As a result, it's possible that the table might need to be split into multiple files so that the information can be presented in a readable manner. Oftentimes, it's important to keep certain information grouped together in the same file. The following is an example of this scenario.
+
+### Table .rtf File
+By default, the `junco::tt_to_tlgrtf` function determines the appropriate place to break the columns so that the created files contain an appropriate number of columns that contain readable data. The default logic might not be ideal, as sometimes columns that make sense to be grouped together to appear within the same file, are not. This can be seen in the example call below, where the race information for the "Placebo" treatment group is split across files.
+
+```{r grouping_columns_example1, eval=FALSE}
+################################################################################
+# Convert to tbl file and output table
+################################################################################
+
+tt_to_tlgrtf(string_map = string_map, tt = result,
+             file = paste0(getwd(), "/aetablemultipledocs1"), orientation = "landscape"
+)
+```
+
+When calling the `junco::tt_to_tlgrtf` function, the nosplitin argument can be included, and the user can specify a variable in which the associated columns should be grouped together in the same file. Now, all the sub columns for the "Placebo" treatment group (e.g. each unique TRT01A value), are kept together within the same file.
+
+```{r grouping_columns_example2, eval=FALSE}
+################################################################################
+# Convert to tbl file and output table
+################################################################################
+
+tt_to_tlgrtf(string_map = string_map, tt = result,
+             file = paste0(getwd(), "/aetablemultipledocs2"), orientation = "landscape",
+             nosplitin = list(cols = c(trtvar))
+)
+```
+
+If there is a need to provide a single .rtf file that contains the multiple "part" .rtf files, then the `junco::tt_to_tlgrtf` function can be called with the "combined_rtf" argument included with a value of "TRUE". In this case, both the multiple "part" .rtf files and the single .rtf file with all "parts" appended will be created.
+
+```{r grouping_columns_example3, eval=FALSE}
+################################################################################
+# Convert to tbl file and output table
+################################################################################
+
+tt_to_tlgrtf(string_map = string_map, tt = result,
+             file = paste0(getwd(), "/aetablemultipledocs3"), orientation = "landscape",
+             nosplitin = list(cols = c(trtvar)),
+             combined_rtf = TRUE
+)
+```
+
+## Inserting Page Breaks in Tables
+It is sometimes necessary to insert page breaks into tables, to indicate that a new grouping of rows is occurring. This can be achieved by including `rtables::split_rows_by` within the layout definition and specifying the `page_by` argument with a value of "TRUE". In the following example, the table is being split by the SEX variable. When specifying `page_by` = "TRUE", each new observed value of SEX (and the subsequent rows generated form the `rtables::analyze` function call) will be separated by a page break.
+
+```{r page_breaks_example}
+library(junco)
+
+adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo",
+                                     "Example Drug 5 mg",
+                                     "Example Drug 10 mg",
+                                     "Example Drug 20 mg",
+                                     "Placebo"),
+                                   levels = c("Example Drug 5 mg",
+                                              "Example Drug 10 mg",
+                                              "Example Drug 20 mg",
+                                              "Placebo"
+                                              )
+                              ),
+                   USUBJID = c("1",
+                               "2",
+                               "3",
+                               "4",
+                               "5",
+                               "6",
+                               "7",
+                               "8"),
+                   RESPONSE = factor(c("Yes",
+                                       "No",
+                                       "Yes",
+                                       "Yes",
+                                       "Yes",
+                                       "No",
+                                       "Yes",
+                                       "No"),
+                                     levels = c("Yes",
+                                                "No")
+                              ),
+                   SEX = factor(c("Male",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Female",
+                                  "Male",
+                                  "Female",
+                                  "Male"),
+                                levels = c("Male",
+                                           "Female")
+                           )
+) |>
+  var_relabel(RESPONSE = "Response")
+
+lyt <- basic_table(
+  show_colcounts = TRUE,
+  colcount_format = "N=xx"
+) |>
+  ### first columns
+  split_cols_by("TRT01A",
+                show_colcounts = FALSE
+  ) |>
+  ### create table body row sections based on SEX
+  split_rows_by("SEX",
+                section_div = c(" "),
+                page_by = TRUE,
+                split_fun = drop_split_levels
+                ) |>
+  summarize_row_groups("SEX",
+                       cfun =a_freq_j,
+                       extra_args = list(denom = "n_df",
+                                         denom_by = "SEX",
+                                         riskdiff = FALSE,
+                                         extrablankline = TRUE,
+                                         .stats = c("count_unique")
+                                         )
+                       ) |>
+  ### analyze height
+  analyze("RESPONSE",
+          var_labels = c("Response"),
+          show_labels = "visible",
+          afun = a_freq_j,
+          extra_args = list(denom = "n_df",
+                            denom_by = "SEX",
+                            riskdiff = FALSE,
+                            .stats = c("count_unique_fraction")
+                            )
+          )
+
+result <- build_table(lyt, adsl)
+
+# Create temporary RTF
+temp <- file.path("..", "inst", "extdata", "examplepagebreak")
+tt_to_tlgrtf(result,
+             file = temp)
+```
+
+```{r page_breaks_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf <- rtf_to_pdf(paste0(temp, ".rtf"), paste0(temp, ".pdf"))
+
+# Display the PDF
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/examplepagebreak.pdf")
+```
+
+## Manually Splitting Large Listing Files into Multiple Smaller Files
+In rare cases, the listing files produced are large in size (e.g. >20 MB). There can be multiple reasons why this occurs, but a common example is that there is a need to present longitudinal data for a large trial. In this scenario, it might be beneficial to create multiple smaller files instead of a single large file. This can be achieved by subsetting the data and then calling the necessary exporter function multiple times.
+
+### Listing .rtf File
+The `junco::tt_to_tlgrtf` function can be called multiple times to produce multiple .rtf files.
+
+```{r split_files_example}
+library(junco)
+library(rlistings)
+
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+) |>
+  formatters::var_relabel(TRT01A = "Actual Treatment for Period 01~[super a]") |>
+  formatters::var_relabel(SUBJECT = "Subject") |>
+  formatters::var_relabel(HEIGHT = "Height (in)")
+
+result <- rlistings::as_listing(
+  df = adsl,
+  key_cols = c("TRT01A", "SUBJECT"),
+  disp_cols = "HEIGHT"
+)
+
+result1 <- result %>%
+  filter('TRT01A' %in% c("Example Drug 5 mg","Example Drug 10 mg"))
+
+# Create temporary RTF
+temp1 <- file.path("..", "inst", "extdata", "examplelistingmultiplefilesPART1OF2")
+tt_to_tlgrtf(result1,
+  file = temp1,
+  orientation = "landscape"
+)
+
+result2 <- result %>%
+  filter(TRT01A %in% c("Example Drug 20 mg","Placebo"))
+
+# Create temporary RTF
+temp2 <- file.path("..", "inst", "extdata", "examplelistingmultiplefilesPART2OF2")
+tt_to_tlgrtf(result2,
+  file = temp2,
+  orientation = "landscape"
+)
+```
+
+```{r split_files_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+# Convert RTF to PDF
+temp_pdf1 <- rtf_to_pdf(paste0(temp1, ".rtf"), paste0(temp1, ".pdf"))
+temp_pdf2 <- rtf_to_pdf(paste0(temp2, ".rtf"), paste0(temp2, ".pdf"))
+
+# Display the PDFs
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/examplelistingmultiplefilesPART1OF2.pdf")
+knitr::include_graphics("https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/main/inst/extdata/examplelistingmultiplefilesPART2OF2.pdf")
 ```
