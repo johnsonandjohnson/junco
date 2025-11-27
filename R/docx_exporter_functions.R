@@ -1849,15 +1849,28 @@ export_graph_as_docx <- function(g = NULL,
     plotnames <- list()
     for (e in g) {
       temp_file <- paste0(base::tempfile(), ".png")
-      ggplot2::ggsave(
-        filename = basename(temp_file),
-        path = dirname(temp_file),
-        plot = e,
-        device = "png",
-        width = plotwidth %||% NA,
-        height = plotheight %||% NA,
-        units = units %||% NA
+      
+      # ggplot2::ggsave(
+      #   filename = basename(temp_file),
+      #   path = dirname(temp_file),
+      #   plot = e,
+      #   device = "png",
+      #   width = plotwidth %||% NA,
+      #   height = plotheight %||% NA,
+      #   units = units %||% NA
+      # )
+      
+      png(temp_file,
+          width  = 22,
+          height = 14,
+          units  = "cm",
+          res    = 300,
+          type   = "cairo"
       )
+      print(temp_file) ### print png path and name in log
+      print(e)
+      dev.off()
+      
       plotnames <- append(plotnames, temp_file)
     }
   }
