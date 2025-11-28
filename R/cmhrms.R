@@ -97,7 +97,7 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
       pval <- rmeans_pval
     }
   }
-  x_stats <- list(pvalue = with_label(pval, "p-value"))
+  x_stats <- list(pval = with_label(pval, "p-value"))
   return(x_stats)
 }
 
@@ -114,8 +114,10 @@ a_cmhrms_j <- function(df, .var,
                        ...,
                        variables,
                        collapse_combo = TRUE,
-                       .stats = "pvalue",
-                       .formats = NULL) {
+                       .stats = NULL,
+                       .formats = NULL,
+                       .indent_mods = NULL,
+                       .labels = NULL) {
   dots_extra_args <- list(...)
   ref <- get_ref_info(ref_path, .spl_context)
   .in_ref_col <- ref$in_ref_col
@@ -136,11 +138,13 @@ a_cmhrms_j <- function(df, .var,
       )
     )
 
-  .format <- .formats[[.stats]]
-  if (is.null(.format)) {
-    .format <- tern_default_formats[.stats]
-  }
-
-  inr <- in_rows(.list = x_stats, .formats = .format)
-  inr
+  # Format according to specifications
+  format_stats(
+    x_stats,
+    method_groups = "cmhrms",
+    stats_in = .stats,
+    formats_in = .formats,
+    labels_in = .labels,
+    indents_in = .indent_mods
+  )
 }

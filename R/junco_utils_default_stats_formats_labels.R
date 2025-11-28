@@ -184,6 +184,7 @@ format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in
 #'
 #' @export
 junco_default_stats <- list(
+  cmhrms = c("pval"),
   coxph_hr = c("n_tot", "n_tot_events", "hr", "hr_ci", "hr_ci_3d", "pvalue", "lr_stat_df"),
   event_free = c("pt_at_risk", "event_free_rate", "rate_se", "rate_ci", "event_free_ci"),
   kaplan_meier = c("quantiles_lower", "median_ci_3d", "quantiles_upper", "range_with_cens_info"),
