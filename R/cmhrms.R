@@ -21,7 +21,6 @@ NULL
 #' @inheritParams proposal_argument_convention
 #' @param variables (`list`)\cr list with arm and strata variable names.
 #' @param collapse_combo (`logical`)\cr If TRUE, multiple arm levels from df will be combined into 1 level.
-#' @importFrom vcdExtra CMHtest
 #'
 s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variables, collapse_combo = TRUE) {
   x <- .df_row[[.var]]
