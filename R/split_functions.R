@@ -345,13 +345,27 @@ short_split_result <- function(..., fulldf) {
 
 #' Predicate to Check if Split Should be Excluded
 #' 
-#' @param exclude_levels (`list`)\cr A named list where names correspond to split variables
-#'   and values are vectors of levels to exclude.
 #' @inheritParams proposal_argument_convention
 #' @returns `TRUE` if the current split context matches any of the exclude levels, 
 #'   `FALSE` otherwise.
 #' 
 #' @keywords internal
+#' @examples 
+#' 
+#' do_exclude_split(
+#'   exclude_levels = list(AVISIT = "Baseline"),
+#'   .spl_context = data.frame(
+#'     split = c("AVISIT", "ARM"),
+#'     value = c("Week 4", "Placebo")
+#'   )
+#' )
+#' do_exclude_split(
+#'   exclude_levels = list(AVISIT = "Baseline"),
+#'   .spl_context = data.frame(
+#'     split = c("AVISIT", "ARM"),
+#'     value = c("Baseline", "Placebo")
+#'   )
+#' )
 do_exclude_split <- function(exclude_levels, .spl_context) {
   checkmate::assert_list(exclude_levels, names = "unique")
   checkmate::assert_data_frame(.spl_context)

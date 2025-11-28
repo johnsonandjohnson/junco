@@ -148,3 +148,41 @@ a_cmhrms_j <- function(df, .var,
     indents_in = .indent_mods
   )
 }
+
+#' @describeIn cmhrms Wrapper for the `afun` which can exclude
+#'   row split levels from producing the analysis. These have to be specified in the 
+#'   `exclude_levels` argument, see `?do_exclude_split` for details.
+#' @export
+#' @order 3
+a_cmhrms_j_with_exclude <- function(
+  df,
+  exclude_levels,
+  .var,
+  .spl_context,
+  .ref_group,
+  .in_ref_col,
+  .df_row,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .indent_mods = NULL,
+  .labels = NULL
+) {
+  if (do_exclude_split(exclude_levels, .spl_context)) {
+    NULL
+  } else {
+    a_cmhrms_j(
+      df = df,
+      .var = .var,
+      .spl_context = .spl_context,
+      .ref_group = .ref_group,
+      .in_ref_col = .in_ref_col,
+      .df_row = .df_row,
+      ...,
+      .stats = .stats,
+      .formats = .formats,
+      .indent_mods = .indent_mods,
+      .labels = .labels
+    )
+  }
+}

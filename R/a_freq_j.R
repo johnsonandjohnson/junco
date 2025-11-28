@@ -880,3 +880,42 @@ a_freq_j <- function(
 
   return(inrows)
 }
+
+#' @describeIn a_freq_j Wrapper for the `afun` which can exclude
+#'   row split levels from producing the analysis. These have to be specified in the 
+#'   `exclude_levels` argument, see `?do_exclude_split` for details.
+#' @export
+a_freq_j_with_exclude <- function(
+  df,
+  labelstr = NULL,
+  exclude_levels,
+  .var = NA,
+  .spl_context,
+  .df_row,
+  .N_col,
+  .alt_df_full,
+  .stats = "count_unique_denom_fraction",
+  .formats = NULL,
+  .indent_mods = NULL,
+  .labels_n = NULL,
+  ...
+) {
+  if (do_exclude_split(exclude_levels, .spl_context)) {
+    NULL
+  } else {
+    a_freq_j(
+      df = df,
+      labelstr = labelstr,
+      .var = .var,
+      .spl_context = .spl_context,
+      .df_row = .df_row,
+      .N_col = .N_col,
+      .alt_df_full = .alt_df_full,
+      .stats = .stats,
+      .formats = .formats,
+      .indent_mods = .indent_mods,
+      .labels_n = .labels_n,
+      ...
+    )
+  }
+}
