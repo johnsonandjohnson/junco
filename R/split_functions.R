@@ -342,3 +342,28 @@ short_split_result <- function(..., fulldf) {
   subset_exprs <- replicate(n = length(labels), list(expression(TRUE)))
   make_split_result(values = values, labels = labels, datasplit = datasplit, subset_exprs = subset_exprs)
 }
+
+#' Predicate to Check if Split Should be Excluded
+#' 
+#' @param exclude_levels (`list`)\cr A named list where names correspond to split variables
+#'   and values are vectors of levels to exclude.
+#' @inheritParams proposal_argument_convention
+#' @returns `TRUE` if the current split context matches any of the exclude levels, 
+#'   `FALSE` otherwise.
+#' 
+#' @keywords internal
+do_exclude_split <- function(exclude_levels, .spl_context) {
+  checkmate::assert_list(exclude_levels, names = "unique")
+  checkmate::assert_data_frame(.spl_context)
+
+  split_vals <- .spl_context[, c("split", "value")]
+  split_vals_list <- as.list(split_vals$value) |>
+    stats::setNames(split_vals$split)
+  found_splits <- intersect(names(split_vals_list), names(exclude_levels))
+  for (split_var in found_splits) {
+    if (any(split_vals_list[[split_var]] %in% exclude_levels[[split_var]])) {
+      return(TRUE)
+    }
+  }
+  FALSE
+}

@@ -190,3 +190,28 @@ testthat::test_that("rm_blank_levels works", {
     c(" ", row_names_after)
   )
 })
+
+testthat::test_that("do_exclude_split works", {
+  exclude_levels <- list(
+    "COUNTRY" = c("USA", "CAN"),
+    "ARM" = c("B: Placebo")
+  )
+
+  spl_context1 <- data.frame(
+    split = c("STUDY", "COUNTRY"),
+    value = c("Study 1", "USA")
+  )
+  expect_true(do_exclude_split(exclude_levels, spl_context1))
+
+  spl_context2 <- data.frame(
+    split = c("STUDY", "COUNTRY"),
+    value = c("Study 1", "MEX")
+  )
+  expect_false(do_exclude_split(exclude_levels, spl_context2))
+
+  spl_context3 <- data.frame(
+    split = c("STUDY", "COUNTRY", "ARM"),
+    value = c("Study 1", "MEX", "B: Placebo")
+  )
+  expect_true(do_exclude_split(exclude_levels, spl_context3))
+})
