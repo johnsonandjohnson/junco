@@ -31,12 +31,12 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
     df[[colvar]] <- "Combined"
   }
   pwdf <- rbind(df, .ref_group)
-  if (.in_ref_col) {
+  inputdf <- if (.in_ref_col) {
     # overall p-value -- however not needed on output?
-    inputdf <- .df_row
+    .df_row
   } else {
     # pairwise p-value
-    inputdf <- pwdf
+    pwdf
   }
   
   inputdf[[colvar]] <- as.character(inputdf[[colvar]])
@@ -50,16 +50,14 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
     assert_df_with_variables(.df_row, var_list)
   }
   strata_part <- paste(strata, collapse = " + ")
-  if (strata_part != "") {
-    formula <- stats::as.formula(paste0("Freq ~ ", colvar, " + ", .var, " | ", strata_part))
+  formula <- if (strata_part != "") {
+    stats::as.formula(paste0("Freq ~ ", colvar, " + ", .var, " | ", strata_part))
   } else {
-    formula <- stats::as.formula(paste0("Freq ~ ", colvar, " + ", .var))
+    stats::as.formula(paste0("Freq ~ ", colvar, " + ", .var))
   }
 
-  x_stats <- list()
-
-  if (length(x) == 0 || length(unique(inputdf[[colvar]])) < 2) {
-    pval <- numeric(0)
+  pval <- if (length(x) == 0 || length(unique(inputdf[[colvar]])) < 2) {
+    numeric(0)
   } else {
     x_stats_cmh <-
       tryCatch(
@@ -88,15 +86,13 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
       rmeans_pval <- NA
     }
     if (.in_ref_col) {
-      pval <- numeric(0)
+      numeric(0)
     } else {
-      pval <- rmeans_pval
+      rmeans_pval
     }
   }
-  x_stats <- list(pval = with_label(pval, "p-value"))
-  return(x_stats)
+  list(pval = with_label(pval, "p-value"))
 }
-
 
 #' @describeIn cmhrms Formatted analysis function which is used as `afun`.
 #' @export
