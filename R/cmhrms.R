@@ -1,17 +1,14 @@
 #' Cochran-Mantel-Haenszel Row Mean Scores test
 #'
-#' Note that the underlying method used for the calculation of the row mean score test (vcdExtra::CMHtest)
-#' has more problems with sparse data (in the stratification factors) than proc freq from SAS.
-#' This would result in singularity problems in the underlying calculations,
-#' leading to unability to compute the p-value.
-#' In this case, missing values are returned as alternative.
-#' See <https://psiaims.github.io/CAMIS/Comp/r-sas_cmh.html> for a comparison overview between R and SAS.
+#' See <https://psiaims.github.io/CAMIS/Comp/r-sas_cmh.html> for a general comparison 
+#' overview between R and SAS.
+#' 
 #' @inheritParams proposal_argument_convention
 #'
 #' @name cmhrms
 #' @return
 #' * `s_cmhrms_j` a single element list containing the p-value from row mean score test.
-#' * `a_cmhrms_j` a VerticalRowsSection object (single row).
+#' * `a_cmhrms_j` a `VerticalRowsSection`` object (single row).
 #' @order 1
 NULL
 
