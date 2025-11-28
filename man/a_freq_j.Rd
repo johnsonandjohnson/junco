@@ -3,6 +3,7 @@
 \name{a_freq_j}
 \alias{a_freq_j}
 \alias{s_freq_j}
+\alias{a_freq_j_with_exclude}
 \title{Analysis/statistical function for count and percentage in core columns
 and (optional) relative risk columns}
 \usage{
@@ -58,6 +59,22 @@ a_freq_j(
   restr_columns = NULL,
   colgroup = NULL,
   countsource = c("df", "altdf")
+)
+
+a_freq_j_with_exclude(
+  df,
+  labelstr = NULL,
+  exclude_levels,
+  .var = NA,
+  .spl_context,
+  .df_row,
+  .N_col,
+  .alt_df_full,
+  .stats = "count_unique_denom_fraction",
+  .formats = NULL,
+  .indent_mods = NULL,
+  .labels_n = NULL,
+  ...
 )
 }
 \arguments{
@@ -206,6 +223,11 @@ If not NULL, columns not defined in \code{restr_columns} will be blanked out.}
 \item{colgroup}{The name of the column group variable that is used as source
 for denominator calculation.\cr
 Required to be specified when \code{denom = "N_colgroup"}.}
+
+\item{exclude_levels}{(\code{list})\cr A named list where names correspond to split variables
+and values are vectors of levels to exclude.}
+
+\item{...}{additional arguments for the lower level functions.}
 }
 \value{
 \itemize{
@@ -258,6 +280,13 @@ as it cannot be retrieved directly from the column layout definition.
 This higher row-level split is specified in the argument \code{denom_by}.\cr
 }
 }
+\section{Functions}{
+\itemize{
+\item \code{a_freq_j_with_exclude()}: Wrapper for the \code{afun} which can exclude
+row split levels from producing the analysis. These have to be specified in the
+\code{exclude_levels} argument, see \code{?do_exclude_split} for details.
+
+}}
 \examples{
 library(dplyr)
 

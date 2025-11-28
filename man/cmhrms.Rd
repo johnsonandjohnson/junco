@@ -4,6 +4,7 @@
 \alias{cmhrms}
 \alias{a_cmhrms_j}
 \alias{s_cmhrms_j}
+\alias{a_cmhrms_j_with_exclude}
 \title{Cochran-Mantel-Haenszel Row Mean Scores test}
 \usage{
 a_cmhrms_j(
@@ -17,8 +18,10 @@ a_cmhrms_j(
   ...,
   variables,
   collapse_combo = TRUE,
-  .stats = "pvalue",
-  .formats = NULL
+  .stats = NULL,
+  .formats = NULL,
+  .indent_mods = NULL,
+  .labels = NULL
 )
 
 s_cmhrms_j(
@@ -29,7 +32,22 @@ s_cmhrms_j(
   ...,
   .df_row,
   variables,
-  collapse_combo = TRUE
+  collapse_combo = FALSE
+)
+
+a_cmhrms_j_with_exclude(
+  df,
+  exclude_levels,
+  .var,
+  .spl_context,
+  .ref_group,
+  .in_ref_col,
+  .df_row,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .indent_mods = NULL,
+  .labels = NULL
 )
 }
 \arguments{
@@ -53,26 +71,31 @@ that is passed by \code{rtables}.}
 
 \item{variables}{(\code{list})\cr list with arm and strata variable names.}
 
-\item{collapse_combo}{(\code{logical})\cr If TRUE, multiple arm levels from df will be combined into 1 level.}
+\item{collapse_combo}{(\code{logical})\cr If TRUE, multiple arm levels from df
+will be combined into 1 level.}
 
 \item{.stats}{(\code{character})\cr statistics to select for the table.}
 
 \item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
 information on the \code{'auto'} setting.}
+
+\item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
+unmodified default behavior. Can be negative.}
+
+\item{.labels}{(named \code{character})\cr labels for the statistics (without indent).}
+
+\item{exclude_levels}{(\code{list})\cr A named list where names correspond to split variables
+and values are vectors of levels to exclude.}
 }
 \value{
 \itemize{
 \item \code{s_cmhrms_j} a single element list containing the p-value from row mean score test.
-\item \code{a_cmhrms_j} a VerticalRowsSection object (single row).
+\item \code{a_cmhrms_j} a \code{VerticalRowsSection} object (single row).
 }
 }
 \description{
-Note that the underlying method used for the calculation of the row mean score test (vcdExtra::CMHtest)
-has more problems with sparse data (in the stratification factors) than proc freq from SAS.
-This would result in singularity problems in the underlying calculations,
-leading to unability to compute the p-value.
-In this case, missing values are returned as alternative.
-See \url{https://psiaims.github.io/CAMIS/Comp/r-sas_cmh.html} for a comparison overview between R and SAS.
+See \url{https://psiaims.github.io/CAMIS/Comp/r-sas_cmh.html} for a general comparison
+overview between R and SAS.
 }
 \section{Functions}{
 \itemize{
@@ -80,5 +103,9 @@ See \url{https://psiaims.github.io/CAMIS/Comp/r-sas_cmh.html} for a comparison o
 
 \item \code{s_cmhrms_j()}: Statistics function for the calculation of the p-value
 based upon the row mean scores test.
+
+\item \code{a_cmhrms_j_with_exclude()}: Wrapper for the \code{afun} which can exclude
+row split levels from producing the analysis. These have to be specified in the
+\code{exclude_levels} argument, see \code{?do_exclude_split} for details.
 
 }}
