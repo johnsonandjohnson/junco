@@ -69,7 +69,7 @@ a_freq_j_with_exclude(
   .spl_context,
   .df_row,
   .N_col,
-  .alt_df_full,
+  .alt_df_full = NULL,
   .stats = "count_unique_denom_fraction",
   .formats = NULL,
   .indent_mods = NULL,
