@@ -10,7 +10,6 @@
 * Enhanced documentation
 * Updated dependencies
 
-
 # junco 0.1.1
 
 ## Initial CRAN release

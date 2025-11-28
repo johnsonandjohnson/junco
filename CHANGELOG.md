@@ -11,10 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `a_maxlev()` to be able to calculate count and percentage of the maximum level of an ordered factor per subject
 - Remove `brackets_to_rtf()`
 - Export `rbmi_pool()` #22
-- Add functionality to `a_freq_j()` to process `val` = NULL from levels specified in `label_map`. #95
-- Add `a_cmhrms_j()` to support p-value from CMH row mean score test. #97
+- Add functionality to `a_freq_j()` to process `val = NULL` from levels specified in `label_map`, as well as the modified version `a_freq_j_with_exclude()` that allows to exclude the analysis from specified row splits. #95
+- Add `a_cmhrms_j()` to support p-value from CMH row mean score test, as well as the modified version `a_cmhrms_j_with_exclude()` that allows to exclude the analysis from specified row splits. #97
 - Added standard error (SE) column for each treatment arm's least square (LS) means estimate to the `summarize_lsmeans_wide()` layout.
-
+- Added the internal function `do_exclude_split()` to facilitate the exclusion of specified row splits from analysis functions.
 
 ### Changed
 - Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify
