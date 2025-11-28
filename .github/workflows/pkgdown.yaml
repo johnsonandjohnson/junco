@@ -4,11 +4,16 @@ on:
   push:
     branches: [main]
   pull_request:
+      types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
   release:
     types: [published]
   workflow_dispatch:
 
-name: pkgdown.yaml
+name: Docs 📚
 
 permissions: read-all
 
@@ -33,7 +38,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
+          extra-packages: any::pkgdown@2.2.0, local::.
           needs: website
 
       - name: Build site
