@@ -8,7 +8,7 @@
 #' @name cmhrms
 #' @return
 #' * `s_cmhrms_j` a single element list containing the p-value from row mean score test.
-#' * `a_cmhrms_j` a `VerticalRowsSection`` object (single row).
+#' * `a_cmhrms_j` a `VerticalRowsSection` object (single row).
 #' @order 1
 NULL
 
@@ -20,14 +20,15 @@ NULL
 #' @order 3
 #' @inheritParams proposal_argument_convention
 #' @param variables (`list`)\cr list with arm and strata variable names.
-#' @param collapse_combo (`logical`)\cr If TRUE, multiple arm levels from df will be combined into 1 level.
+#' @param collapse_combo (`logical`)\cr If TRUE, multiple arm levels from df 
+#'   will be combined into 1 level.
 #'
-s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variables, collapse_combo = TRUE) {
-  x <- .df_row[[.var]]
-  x <- x[!is.na(x)]
+s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variables, collapse_combo = FALSE) {
+  checkmate::assert_list(variables)
+  checkmate::assert_names(names(variables), must.include = "arm")
 
   colvar <- variables$arm
-  if (collapse_combo && length(unique(df[[colvar]]))>=2){
+  if (collapse_combo && length(unique(df[[colvar]])) >= 2) {
     df[[colvar]] <- "Combined"
   }
   pwdf <- rbind(df, .ref_group)
@@ -40,7 +41,7 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
   }
   
   inputdf[[colvar]] <- as.character(inputdf[[colvar]])
-  inputdf[[.var]] <- droplevels(inputdf[[.var]])
+  inputdf[[.var]] <- droplevels(factor(inputdf[[.var]]))
 
   strata <- variables$strata
 
@@ -56,7 +57,7 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
     stats::as.formula(paste0("Freq ~ ", colvar, " + ", .var))
   }
 
-  pval <- if (length(x) == 0 || length(unique(inputdf[[colvar]])) < 2) {
+  pval <- if (length(na.omit(df[[.var]])) == 0 || length(unique(inputdf[[colvar]])) < 2) {
     numeric(0)
   } else {
     x_stats_cmh <-
@@ -73,13 +74,13 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
         }
       )
 
-    if ((strata_part != "")) {
-      x_stats_cmh <- x_stats_cmh$ALL$table
+    x_stats_cmh <- if ((strata_part != "")) {
+      x_stats_cmh$ALL$table
     } else {
-      x_stats_cmh <- x_stats_cmh$table
+      x_stats_cmh$table
     }
 
-    rmeans <- x_stats_cmh["rmeans", ]
+    rmeans <- x_stats_cmh["rmeans", , drop = FALSE]
     rmeans_pval <- rmeans[["Prob"]]
 
     if (is.null(x_stats_cmh)) {
