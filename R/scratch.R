@@ -43,7 +43,7 @@ a_freq_j_with_exclude <- function(df, labelstr = NULL, exclude_levels,
 
 a_cmhrms_j_with_exclude <- function(df, exclude_levels, .var, .spl_context, 
                                     .ref_group, .in_ref_col, .df_row, ...,
-                                    .stats = "pvalue", .formats = NULL) {
+                                    .stats = NULL, .formats = NULL, .indent_mods = NULL, .labels = NULL) {
   if (do_exclude_split(exclude_levels, .spl_context)) {
     NULL
   } else {
@@ -56,7 +56,9 @@ a_cmhrms_j_with_exclude <- function(df, exclude_levels, .var, .spl_context,
       .df_row = .df_row, 
       ...,
       .stats = .stats, 
-      .formats = .formats
+      .formats = .formats,
+      .indent_mods = .indent_mods,
+      .labels = .labels
     )
   }
 }
