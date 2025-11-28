@@ -1,5 +1,5 @@
 [format]
-line-width = 80
+line-width = 120
 indent-width = 2
 indent-style = "space"
 line-ending = "auto"
@@ -7,5 +7,3 @@ persistent-line-breaks = true
 exclude = ["**"]
 default-exclude = true
 skip = []
-table = []
-default-table = true
