@@ -49,3 +49,4 @@ pkgdown
 ^[^/]*\.R$
 ^.*\.rtf$
 ^CHANGELOG\.md$
+^air\.toml$
