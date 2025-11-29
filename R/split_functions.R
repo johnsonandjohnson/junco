@@ -344,14 +344,14 @@ short_split_result <- function(..., fulldf) {
 }
 
 #' Predicate to Check if Split Should be Excluded
-#' 
+#'
 #' @inheritParams proposal_argument_convention
-#' @returns `TRUE` if the current split context matches any of the exclude levels, 
+#' @returns `TRUE` if the current split context matches any of the exclude levels,
 #'   `FALSE` otherwise.
-#' 
+#'
 #' @keywords internal
-#' @examples 
-#' 
+#' @examples
+#'
 #' do_exclude_split(
 #'   exclude_levels = list(AVISIT = "Baseline"),
 #'   .spl_context = data.frame(

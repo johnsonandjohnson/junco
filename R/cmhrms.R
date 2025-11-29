@@ -1,8 +1,8 @@
 #' Cochran-Mantel-Haenszel Row Mean Scores test
 #'
-#' See <https://psiaims.github.io/CAMIS/Comp/r-sas_cmh.html> for a general comparison 
+#' See <https://psiaims.github.io/CAMIS/Comp/r-sas_cmh.html> for a general comparison
 #' overview between R and SAS.
-#' 
+#'
 #' @inheritParams proposal_argument_convention
 #'
 #' @name cmhrms
@@ -20,7 +20,7 @@ NULL
 #' @order 3
 #' @inheritParams proposal_argument_convention
 #' @param variables (`list`)\cr list with arm and strata variable names.
-#' @param collapse_combo (`logical`)\cr If TRUE, multiple arm levels from df 
+#' @param collapse_combo (`logical`)\cr If TRUE, multiple arm levels from df
 #'   will be combined into 1 level.
 #'
 s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variables, collapse_combo = FALSE) {
@@ -39,7 +39,7 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
     # pairwise p-value
     pwdf
   }
-  
+
   inputdf[[colvar]] <- as.character(inputdf[[colvar]])
   inputdf[[.var]] <- droplevels(factor(inputdf[[.var]]))
 
@@ -143,7 +143,7 @@ a_cmhrms_j <- function(df, .var,
 }
 
 #' @describeIn cmhrms Wrapper for the `afun` which can exclude
-#'   row split levels from producing the analysis. These have to be specified in the 
+#'   row split levels from producing the analysis. These have to be specified in the
 #'   `exclude_levels` argument, see `?do_exclude_split` for details.
 #' @export
 #' @order 3
