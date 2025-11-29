@@ -787,7 +787,7 @@ h_restrict_val <- function(df_row, .var, label_map, split_info) {
   diff <- setdiff(xval_row, xval_map)
 
   if (length(diff) == 0) {
-    # If label_map has a variable from row split, apply 
+    # If label_map has a variable from row split, apply
     # current splits on label_map tibble as well.
     rowsplits <- split_info$split
 
