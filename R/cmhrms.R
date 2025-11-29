@@ -80,7 +80,7 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
       x_stats_cmh$table
     }
 
-    rmeans <- x_stats_cmh["rmeans", , drop = FALSE]
+    rmeans <- x_stats_cmh["rmeans", , drop = TRUE]
     rmeans_pval <- rmeans[["Prob"]]
 
     if (is.null(x_stats_cmh)) {
