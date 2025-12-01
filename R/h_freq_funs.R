@@ -12,8 +12,6 @@ get_ctrl_subset <- function(df, trt_var, ctrl_grp) {
 }
 
 
-
-
 #' Create Alternative Data Frame
 #'
 #' Creates an alternative data frame based on the current split context.
@@ -334,19 +332,20 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
 #' @noRd
 #' @keywords internal
 h_upd_dfrow <- function(
-    df_row,
-    .var,
-    val,
-    excl_levels,
-    drop_levels,
-    new_levels,
-    new_levels_after,
-    addstr2levs,
-    label,
-    label_map,
-    labelstr,
-    label_fstr,
-    .spl_context) {
+  df_row,
+  .var,
+  val,
+  excl_levels,
+  drop_levels,
+  new_levels,
+  new_levels_after,
+  addstr2levs,
+  label,
+  label_map,
+  labelstr,
+  label_fstr,
+  .spl_context
+) {
   if (!is.null(label) && !is.null(label_map)) {
     stop("a_freq_j: label and label_map cannot be used together.")
   }
@@ -408,6 +407,11 @@ h_upd_dfrow <- function(
 
     val <- obs_levs
     excl_levels <- NULL
+  }
+
+  if (is.null(val) && !is.null(label_map)) {
+    split_info <- .spl_context[c("split", "value")]
+    val <- h_restrict_val(df_row, .var, label_map, split_info)
   }
 
   if (!is.null(val)) {
@@ -524,27 +528,28 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
 #' @param .stats Statistics to compute.
 #' @return List containing prepared data frames and values.
 h_a_freq_dataprep <- function(
-    df,
-    labelstr = NULL,
-    .var = NA,
-    val = NULL,
-    drop_levels = FALSE,
-    excl_levels = NULL,
-    new_levels = NULL,
-    new_levels_after = FALSE,
-    addstr2levs = NULL,
-    .df_row,
-    .spl_context,
-    .N_col,
-    id = "USUBJID",
-    denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
-    variables,
-    label = NULL,
-    label_fstr = NULL,
-    label_map = NULL,
-    .alt_df_full = NULL,
-    denom_by = NULL,
-    .stats) {
+  df,
+  labelstr = NULL,
+  .var = NA,
+  val = NULL,
+  drop_levels = FALSE,
+  excl_levels = NULL,
+  new_levels = NULL,
+  new_levels_after = FALSE,
+  addstr2levs = NULL,
+  .df_row,
+  .spl_context,
+  .N_col,
+  id = "USUBJID",
+  denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
+  variables,
+  label = NULL,
+  label_fstr = NULL,
+  label_map = NULL,
+  .alt_df_full = NULL,
+  denom_by = NULL,
+  .stats
+) {
   denom <- match.arg(denom)
 
   df <- df[!is.na(df[[.var]]), ]
@@ -631,15 +636,16 @@ h_a_freq_dataprep <- function(
 #' @noRd
 #' @keywords internal
 h_a_freq_prepinrows <- function(
-    x_stats,
-    .stats_adj,
-    .formats,
-    labelstr,
-    label_fstr,
-    label,
-    .indent_mods,
-    .labels_n,
-    na_str) {
+  x_stats,
+  .stats_adj,
+  .formats,
+  labelstr,
+  label_fstr,
+  label,
+  .indent_mods,
+  .labels_n,
+  na_str
+) {
   # Fill in formatting defaults
 
   x_stats <- x_stats[.stats_adj]
@@ -752,7 +758,8 @@ h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, co
   }
 
   # get the string related to combosdf text from colid it is the last part of the column id after the .  eg 'Active
-  # Study Agent.Xanomeline High Dose.Thru 3 months' colid_str is 'Thru 3 months' colid_str <- stringr::str_split_i(colid,
+  # Study Agent.Xanomeline High Dose.Thru 3 months' colid_str is 'Thru 3 months'
+  # colid_str <- stringr::str_split_i(colid,
   # '\\.', i = -1)
   colid_str <- tail(unlist(strsplit(colid, "\\.")), 1)
 
@@ -763,4 +770,44 @@ h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, co
   }
 
   return(df)
+}
+
+#' @noRd
+#' @param df_row Data frame row to update.
+#' @param .var Variable name.
+#' @param label_map Mapping for labels.
+#' @param split_info Current split information.
+#'
+#' @return Restriction of val to appropriate levels from `label_map`.
+h_restrict_val <- function(df_row, .var, label_map, split_info) {
+  val <- NULL
+  xval_row <- unique(df_row[[.var]])
+  xval_map <- label_map$value
+
+  diff <- setdiff(xval_row, xval_map)
+
+  if (length(diff) == 0) {
+    # If label_map has a variable from row split, apply
+    # current splits on label_map tibble as well.
+    rowsplits <- split_info$split
+
+    label_map_split <- intersect(names(label_map), rowsplits)
+
+    if (length(label_map_split) != 0) {
+      for (i in seq_along(label_map_split)) {
+        cursplvar <- label_map_split[i]
+        cid <- match(cursplvar, rowsplits)
+        cursplval <- split_info$value[cid]
+
+        label_map <- label_map[label_map[[cursplvar]] == cursplval, ]
+      }
+    }
+
+    if ("var" %in% names(label_map)) {
+      label_map <- label_map[label_map[["var"]] == .var, ]
+    }
+
+    val <- label_map$value
+  }
+  val
 }
