@@ -15,14 +15,12 @@ test_that("get_stats works as expected", {
 })
 
 
-
 test_that("get_formats_from_stats works as expected", {
   sts <- c("quantiles_upper", "range_with_cens_info")
   res <- junco_get_formats_from_stats(sts)
 
   expect_snapshot(normalize_fun(res$quantiles_upper))
   expect_snapshot(normalize_fun(res$range_with_cens_info))
-
 })
 
 test_that("get_labels_from_stats works as expected", {
