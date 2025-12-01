@@ -57,7 +57,7 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
     stats::as.formula(paste0("Freq ~ ", colvar, " + ", .var))
   }
 
-  pval <- if (length(na.omit(df[[.var]])) == 0 || length(unique(inputdf[[colvar]])) < 2) {
+  pval <- if (length(stats::na.omit(df[[.var]])) == 0 || length(unique(inputdf[[colvar]])) < 2) {
     numeric(0)
   } else {
     x_stats_cmh <-
