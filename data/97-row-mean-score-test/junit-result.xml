@@ -1,748 +1,710 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="a_freq_j" timestamp="2025-11-29T06:53:14Z" hostname="4a2988df4dfb" tests="3" skipped="3" failures="0" errors="0" time="0.591">
-    <testcase time="0.152" classname="a_freq_j" name="a_freq_j_with_label_map_works_in_a_table_layout_as_expected">
+  <testsuite name="a_freq_j" timestamp="2025-12-01T09:33:51Z" hostname="a9253eef8ca4" tests="3" skipped="2" failures="0" errors="0" time="0.581">
+    <testcase time="0.151" classname="a_freq_j" name="a_freq_j_with_label_map_works_in_a_table_layout_as_expected">
       <skipped message="Reason: empty test ('test-a_freq_j.R:1:1')"/>
     </testcase>
-    <testcase time="0.205" classname="a_freq_j" name="a_freq_j_with_label_map_restricts_the_values_according_to_row_split_and_label_map">
+    <testcase time="0.201" classname="a_freq_j" name="a_freq_j_with_label_map_restricts_the_values_according_to_row_split_and_label_map">
       <skipped message="Reason: empty test ('test-a_freq_j.R:25:1')"/>
     </testcase>
-    <testcase time="0.234" classname="a_freq_j" name="a_freq_j_with_exclude_allows_to_exclude_row_split_levels_from_the_analysis">
-      <skipped message="Reason: On CRAN ('test-a_freq_j.R:52:1')"/>
-    </testcase>
+    <testcase time="0.229" classname="a_freq_j" name="a_freq_j_with_exclude_allows_to_exclude_row_split_levels_from_the_analysis"/>
   </testsuite>
-  <testsuite name="a_freq_resp_var_j" timestamp="2025-11-29T06:53:15Z" hostname="4a2988df4dfb" tests="9" skipped="0" failures="0" errors="0" time="0.504">
-    <testcase time="0.105" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_as_expected_with_basic_usage"/>
-    <testcase time="0.0339999999999998" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_as_expected_with_basic_usage"/>
-    <testcase time="0.00300000000000011" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_as_expected_with_basic_usage"/>
-    <testcase time="0.0680000000000001" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_factor_responses"/>
-    <testcase time="0.0749999999999997" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_handles_missing_values_correctly"/>
-    <testcase time="0.0450000000000004" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_errors_on_invalid_responses"/>
-    <testcase time="0.0429999999999997" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_errors_when_resp_var_is_null"/>
-    <testcase time="0.0630000000000002" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_drop_levels_parameter"/>
-    <testcase time="0.0680000000000001" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_riskdiff_parameter"/>
+  <testsuite name="a_freq_resp_var_j" timestamp="2025-12-01T09:33:52Z" hostname="a9253eef8ca4" tests="9" skipped="0" failures="0" errors="0" time="0.479">
+    <testcase time="0.093" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_as_expected_with_basic_usage"/>
+    <testcase time="0.0329999999999999" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_as_expected_with_basic_usage"/>
+    <testcase time="0.004" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_as_expected_with_basic_usage"/>
+    <testcase time="0.0649999999999999" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_factor_responses"/>
+    <testcase time="0.0720000000000001" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_handles_missing_values_correctly"/>
+    <testcase time="0.0449999999999999" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_errors_on_invalid_responses"/>
+    <testcase time="0.0409999999999999" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_errors_when_resp_var_is_null"/>
+    <testcase time="0.0609999999999999" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_drop_levels_parameter"/>
+    <testcase time="0.0649999999999999" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_riskdiff_parameter"/>
   </testsuite>
-  <testsuite name="a_maxlev" timestamp="2025-11-29T06:53:15Z" hostname="4a2988df4dfb" tests="9" skipped="0" failures="0" errors="0" time="0.669">
-    <testcase time="0.179" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_single_treatment_per_subject"/>
+  <testsuite name="a_maxlev" timestamp="2025-12-01T09:33:52Z" hostname="a9253eef8ca4" tests="9" skipped="0" failures="0" errors="0" time="0.654">
+    <testcase time="0.174" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_single_treatment_per_subject"/>
     <testcase time="0.0569999999999999" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_single_treatment_per_subject"/>
-    <testcase time="0.0900000000000003" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_missing_values_"/>
-    <testcase time="0.0509999999999997" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_missing_values_"/>
-    <testcase time="0.0920000000000001" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_all_values_are_missing_for_one_treatement_"/>
-    <testcase time="0.052" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_all_values_are_missing_for_one_treatement_"/>
-    <testcase time="0.0610000000000004" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_when_any_level_is_active_for_custom_level_excl._"/>
-    <testcase time="0.0349999999999993" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_when_any_level_is_active_for_custom_level_excl._"/>
-    <testcase time="0.0520000000000005" classname="a_maxlev" name="a_maxlev_throws_an_error_for_not_ordered_variable"/>
+    <testcase time="0.0859999999999999" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_missing_values_"/>
+    <testcase time="0.0499999999999998" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_missing_values_"/>
+    <testcase time="0.0890000000000004" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_all_values_are_missing_for_one_treatement_"/>
+    <testcase time="0.0509999999999997" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_all_values_are_missing_for_one_treatement_"/>
+    <testcase time="0.0620000000000003" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_when_any_level_is_active_for_custom_level_excl._"/>
+    <testcase time="0.0339999999999998" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_when_any_level_is_active_for_custom_level_excl._"/>
+    <testcase time="0.0510000000000002" classname="a_maxlev" name="a_maxlev_throws_an_error_for_not_ordered_variable"/>
   </testsuite>
-  <testsuite name="a_summarize_aval_chg_diff" timestamp="2025-11-29T06:53:16Z" hostname="4a2988df4dfb" tests="7" skipped="0" failures="0" errors="0" time="0.39">
-    <testcase time="0.0229999999999997" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
-    <testcase time="0.136" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
-    <testcase time="0.00100000000000033" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
-    <testcase time="0.00499999999999989" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
-    <testcase time="0.22" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_with_ancova_TRUE"/>
-    <testcase time="0.00100000000000033" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_with_ancova_TRUE"/>
-    <testcase time="0.00399999999999956" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_with_ancova_TRUE"/>
+  <testsuite name="a_summarize_aval_chg_diff" timestamp="2025-12-01T09:33:53Z" hostname="a9253eef8ca4" tests="7" skipped="0" failures="0" errors="0" time="0.415">
+    <testcase time="0.0209999999999999" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
+    <testcase time="0.134" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
+    <testcase time="0.00199999999999978" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
+    <testcase time="0.00399999999999956" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
+    <testcase time="0.248" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_with_ancova_TRUE"/>
+    <testcase time="0.00199999999999978" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_with_ancova_TRUE"/>
+    <testcase time="0.00400000000000045" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_with_ancova_TRUE"/>
   </testsuite>
-  <testsuite name="analyze_values" timestamp="2025-11-29T06:53:16Z" hostname="4a2988df4dfb" tests="7" skipped="0" failures="0" errors="0" time="0.116">
+  <testsuite name="analyze_values" timestamp="2025-12-01T09:33:54Z" hostname="a9253eef8ca4" tests="7" skipped="0" failures="0" errors="0" time="0.126">
     <testcase time="0.0179999999999998" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
-    <testcase time="0.0840000000000005" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
-    <testcase time="0.00300000000000011" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
-    <testcase time="0.00300000000000011" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
+    <testcase time="0.093" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
+    <testcase time="0.00400000000000045" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
     <testcase time="0.00199999999999978" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
     <testcase time="0.00300000000000011" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
     <testcase time="0.00300000000000011" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
+    <testcase time="0.00299999999999923" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats"/>
   </testsuite>
-  <testsuite name="ancova" timestamp="2025-11-29T06:53:16Z" hostname="4a2988df4dfb" tests="3" skipped="1" failures="0" errors="0" time="0.4">
-    <testcase time="0.213" classname="ancova" name="fit_ancova_works_as_expected"/>
+  <testsuite name="ancova" timestamp="2025-12-01T09:33:54Z" hostname="a9253eef8ca4" tests="3" skipped="0" failures="0" errors="0" time="0.727">
+    <testcase time="0.193000000000001" classname="ancova" name="fit_ancova_works_as_expected"/>
     <testcase time="0.00199999999999978" classname="ancova" name="fit_ancova_works_as_expected"/>
-    <testcase time="0.185" classname="ancova" name="fit_ancova_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-ancova.R:4:1')"/>
+    <testcase time="0.532" classname="ancova" name="fit_ancova_works_as_expected"/>
+  </testsuite>
+  <testsuite name="ancova_rbmi" timestamp="2025-12-01T09:33:54Z" hostname="a9253eef8ca4" tests="2" skipped="0" failures="0" errors="2" time="0.095">
+    <testcase time="0.0309999999999997" classname="ancova_rbmi" name="rbmi_ancova_single_works_also_with_multiple_treatment_arms">
+      <error type="error" message="&lt;packageNotFoundError/error/condition&gt; ('test-ancova_rbmi.R:16:3')">&lt;packageNotFoundError/error/condition&gt;
+Error in `loadNamespace(name)`: there is no package called 'rbmi'
+Backtrace:
+     x
+  1. \-junco::rbmi_ancova_single(...) at test-ancova_rbmi.R:16:3
+  2.   +-...[]
+  3.   +-tibble:::`[.tbl_df`(...)
+  4.   \-utils::getFromNamespace("extract_covariates", "rbmi")
+  5.     \-base::asNamespace(ns)
+  6.       \-base::getNamespace(ns)
+  7.         +-.Internal(getRegisteredNamespace(name)) %||% ...
+  8.         \-base::loadNamespace(name)
+  9.           \-base::withRestarts(stop(cond), retry_loadNamespace = function() NULL)
+ 10.             \-base (local) withOneRestart(expr, restarts[[1L]])
+ 11.               \-base (local) doWithOneRestart(return(expr), restart)</error>
+    </testcase>
+    <testcase time="0.0640000000000001" classname="ancova_rbmi" name="ancova_now_works_also_with_multiple_treatment_arms">
+      <error type="error" message="&lt;packageNotFoundError/error/condition&gt; ('test-ancova_rbmi.R:44:3')">&lt;packageNotFoundError/error/condition&gt;
+Error in `loadNamespace(name)`: there is no package called 'rbmi'
+Backtrace:
+    x
+ 1. \-junco::rbmi_ancova(...) at test-ancova_rbmi.R:44:3
+ 2.   \-utils::getFromNamespace("extract_covariates", "rbmi")
+ 3.     \-base::asNamespace(ns)
+ 4.       \-base::getNamespace(ns)
+ 5.         +-.Internal(getRegisteredNamespace(name)) %||% ...
+ 6.         \-base::loadNamespace(name)
+ 7.           \-base::withRestarts(stop(cond), retry_loadNamespace = function() NULL)
+ 8.             \-base (local) withOneRestart(expr, restarts[[1L]])
+ 9.               \-base (local) doWithOneRestart(return(expr), restart)</error>
     </testcase>
   </testsuite>
-  <testsuite name="ancova_rbmi" timestamp="2025-11-29T06:53:17Z" hostname="4a2988df4dfb" tests="2" skipped="2" failures="0" errors="0" time="0.054">
-    <testcase time="0.0369999999999999" classname="ancova_rbmi" name="rbmi_ancova_single_works_also_with_multiple_treatment_arms">
-      <skipped message="Reason: {rbmi} is not installed. ('test-ancova_rbmi.R:16:3')"/>
-    </testcase>
-    <testcase time="0.0170000000000003" classname="ancova_rbmi" name="ancova_now_works_also_with_multiple_treatment_arms">
-      <skipped message="Reason: {rbmi} is not installed. ('test-ancova_rbmi.R:44:3')"/>
-    </testcase>
-  </testsuite>
-  <testsuite name="blank_line" timestamp="2025-11-29T06:53:17Z" hostname="4a2988df4dfb" tests="15" skipped="1" failures="0" errors="0" time="0.783">
-    <testcase time="0.279" classname="blank_line" name="insert_blank_line_works_as_expected"/>
-    <testcase time="0.103" classname="blank_line" name="insert_blank_line_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-blank_line.R:1:1')"/>
-    </testcase>
-    <testcase time="0.245" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
-    <testcase time="0.134" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+  <testsuite name="blank_line" timestamp="2025-12-01T09:33:55Z" hostname="a9253eef8ca4" tests="15" skipped="0" failures="0" errors="0" time="0.764">
+    <testcase time="0.288" classname="blank_line" name="insert_blank_line_works_as_expected"/>
+    <testcase time="0.0960000000000001" classname="blank_line" name="insert_blank_line_works_as_expected"/>
+    <testcase time="0.231" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.127" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
     <testcase time="0.00300000000000011" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
     <testcase time="0.00300000000000011" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
-    <testcase time="0.00299999999999923" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
-    <testcase time="0.00400000000000045" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00300000000000011" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00300000000000011" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
     <testcase time="0.00199999999999978" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
-    <testcase time="0.000999999999999446" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00199999999999978" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
     <testcase time="0.00100000000000033" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
     <testcase time="0.00100000000000033" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
     <testcase time="0.000999999999999446" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
-    <testcase time="0.00200000000000067" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
-    <testcase time="0.000999999999999446" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00100000000000033" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
+    <testcase time="0.00199999999999978" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names"/>
   </testsuite>
-  <testsuite name="cmhrms" timestamp="2025-11-29T06:53:18Z" hostname="4a2988df4dfb" tests="12" skipped="2" failures="0" errors="0" time="0.417">
-    <testcase time="0.107" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
+  <testsuite name="cmhrms" timestamp="2025-12-01T09:33:55Z" hostname="a9253eef8ca4" tests="12" skipped="0" failures="0" errors="0" time="0.364">
+    <testcase time="0.0819999999999999" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
     <testcase time="0.00600000000000023" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
+    <testcase time="0.00400000000000045" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
     <testcase time="0.00499999999999989" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
-    <testcase time="0.016" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
-    <testcase time="0.00699999999999967" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
+    <testcase time="0.00599999999999934" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
     <testcase time="0.00300000000000011" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
-    <testcase time="0.00300000000000011" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
-    <testcase time="0.00300000000000011" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
-    <testcase time="0.0489999999999995" classname="cmhrms" name="a_cmhrms_j_works_in_a_table_layout_as_expected"/>
-    <testcase time="0.103000000000001" classname="cmhrms" name="a_cmhrms_j_works_in_a_table_layout_as_expected">
-      <skipped message="Reason: On CRAN ('test-cmhrms.R:62:1')"/>
-    </testcase>
-    <testcase time="0.0800000000000001" classname="cmhrms" name="a_cmhrms_j_with_exclude_works_in_a_table_layout_as_expected"/>
-    <testcase time="0.0349999999999993" classname="cmhrms" name="a_cmhrms_j_with_exclude_works_in_a_table_layout_as_expected">
-      <skipped message="Reason: On CRAN ('test-cmhrms.R:85:1')"/>
-    </testcase>
+    <testcase time="0.00200000000000067" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
+    <testcase time="0.00299999999999923" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
+    <testcase time="0.0430000000000001" classname="cmhrms" name="a_cmhrms_j_works_in_a_table_layout_as_expected"/>
+    <testcase time="0.109" classname="cmhrms" name="a_cmhrms_j_works_in_a_table_layout_as_expected"/>
+    <testcase time="0.0640000000000001" classname="cmhrms" name="a_cmhrms_j_with_exclude_works_in_a_table_layout_as_expected"/>
+    <testcase time="0.0369999999999999" classname="cmhrms" name="a_cmhrms_j_with_exclude_works_in_a_table_layout_as_expected"/>
   </testsuite>
-  <testsuite name="cmp_functions" timestamp="2025-11-29T06:53:18Z" hostname="4a2988df4dfb" tests="4" skipped="4" failures="0" errors="0" time="0.282">
-    <testcase time="0.222" classname="cmp_functions" name="cmp_split_fun_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-cmp_functions.R:1:1')"/>
-    </testcase>
-    <testcase time="0.0209999999999999" classname="cmp_functions" name="cmp_cfun_works_correctly_for_expected_column">
-      <skipped message="Reason: On CRAN ('test-cmp_functions.R:8:1')"/>
-    </testcase>
-    <testcase time="0.0200000000000005" classname="cmp_functions" name="cmp_cfun_works_correctly_for_received_column">
-      <skipped message="Reason: On CRAN ('test-cmp_functions.R:23:1')"/>
-    </testcase>
-    <testcase time="0.0189999999999992" classname="cmp_functions" name="cmp_cfun_works_correctly_for_missing_column">
-      <skipped message="Reason: On CRAN ('test-cmp_functions.R:41:1')"/>
-    </testcase>
+  <testsuite name="cmp_functions" timestamp="2025-12-01T09:33:56Z" hostname="a9253eef8ca4" tests="4" skipped="0" failures="0" errors="0" time="0.245">
+    <testcase time="0.203" classname="cmp_functions" name="cmp_split_fun_works_as_expected"/>
+    <testcase time="0.0190000000000001" classname="cmp_functions" name="cmp_cfun_works_correctly_for_expected_column"/>
+    <testcase time="0.0110000000000001" classname="cmp_functions" name="cmp_cfun_works_correctly_for_received_column"/>
+    <testcase time="0.0119999999999996" classname="cmp_functions" name="cmp_cfun_works_correctly_for_missing_column"/>
   </testsuite>
-  <testsuite name="column_stats" timestamp="2025-11-29T06:53:18Z" hostname="4a2988df4dfb" tests="29" skipped="0" failures="0" errors="0" time="0.138">
-    <testcase time="0.0200000000000005" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
-    <testcase time="0.00399999999999956" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
-    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+  <testsuite name="column_stats" timestamp="2025-12-01T09:33:56Z" hostname="a9253eef8ca4" tests="29" skipped="0" failures="0" errors="0" time="0.119">
+    <testcase time="0.0110000000000001" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+    <testcase time="0.00400000000000045" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+    <testcase time="0.00299999999999923" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+    <testcase time="0.00100000000000033" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
     <testcase time="0.00100000000000033" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
     <testcase time="0.000999999999999446" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
-    <testcase time="0.00200000000000067" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
-    <testcase time="0.00499999999999989" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
-    <testcase time="0.00999999999999979" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00600000000000023" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
     <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
-    <testcase time="0.00199999999999978" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
     <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
-    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_calculates_SD_statistic_correctly"/>
-    <testcase time="0.00700000000000056" classname="column_stats" name="column_stats_calculates_mean_sd_statistic_correctly"/>
-    <testcase time="0.00800000000000001" classname="column_stats" name="column_stats_calculates_SE_statistic_correctly"/>
+    <testcase time="0.000999999999999446" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00700000000000056" classname="column_stats" name="column_stats_calculates_SD_statistic_correctly"/>
+    <testcase time="0.00800000000000001" classname="column_stats" name="column_stats_calculates_mean_sd_statistic_correctly"/>
+    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_calculates_SE_statistic_correctly"/>
     <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
     <testcase time="0.00400000000000045" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
-    <testcase time="0.00399999999999956" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
-    <testcase time="0.00700000000000056" classname="column_stats" name="column_stats_handles_BASE_variable_correctly"/>
-    <testcase time="0.00299999999999923" classname="column_stats" name="column_stats_handles_BASE_variable_correctly"/>
-    <testcase time="0.00600000000000023" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
-    <testcase time="0.00400000000000045" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
+    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_handles_BASE_variable_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_BASE_variable_correctly"/>
+    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
     <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
     <testcase time="0.00299999999999923" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
-    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
-    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
-    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
-    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
-    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
+    <testcase time="0.00200000000000067" classname="column_stats" name="column_stats_handles_iec_roundmethod_correctly"/>
     <testcase time="0.00599999999999934" classname="column_stats" name="calc_N_returns_NULL_for_non_AVAL_variables"/>
   </testsuite>
-  <testsuite name="colwidths" timestamp="2025-11-29T06:53:18Z" hostname="4a2988df4dfb" tests="11" skipped="1" failures="0" errors="0" time="0.535">
-    <testcase time="0.147" classname="colwidths" name="ttype_wrap_vec_works_as_expected"/>
-    <testcase time="0.0550000000000006" classname="colwidths" name="check_wrap_nobreak_works_as_expected"/>
+  <testsuite name="colwidths" timestamp="2025-12-01T09:33:56Z" hostname="a9253eef8ca4" tests="11" skipped="0" failures="0" errors="0" time="0.576">
+    <testcase time="0.202" classname="colwidths" name="ttype_wrap_vec_works_as_expected"/>
+    <testcase time="0.0530000000000008" classname="colwidths" name="check_wrap_nobreak_works_as_expected"/>
     <testcase time="0.0489999999999995" classname="colwidths" name="check_wrap_nobreak_works_as_expected"/>
-    <testcase time="0.0730000000000004" classname="colwidths" name="def_colwidths_works_as_expected"/>
-    <testcase time="0.117" classname="colwidths" name="listing_column_widths_works_as_expected"/>
+    <testcase time="0.077" classname="colwidths" name="def_colwidths_works_as_expected"/>
+    <testcase time="0.104" classname="colwidths" name="listing_column_widths_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="colwidths" name="listing_column_widths_works_as_expected"/>
-    <testcase time="0.0529999999999999" classname="colwidths" name="find_free_colspc_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-colwidths.R:101:1')"/>
-    </testcase>
-    <testcase time="0.0189999999999992" classname="colwidths" name="smart_colwidths_1page_works_as_expected"/>
-    <testcase time="0.00400000000000045" classname="colwidths" name="smart_colwidths_1page_works_as_expected"/>
-    <testcase time="0.00699999999999967" classname="colwidths" name="smart_colwidths_1page_works_as_expected"/>
+    <testcase time="0.0510000000000002" classname="colwidths" name="find_free_colspc_works_as_expected"/>
+    <testcase time="0.0149999999999997" classname="colwidths" name="smart_colwidths_1page_works_as_expected"/>
+    <testcase time="0.00499999999999989" classname="colwidths" name="smart_colwidths_1page_works_as_expected"/>
+    <testcase time="0.00900000000000034" classname="colwidths" name="smart_colwidths_1page_works_as_expected"/>
     <testcase time="0.00800000000000001" classname="colwidths" name="spaces_to_inches_works_as_expected"/>
   </testsuite>
-  <testsuite name="count_pct" timestamp="2025-11-29T06:53:19Z" hostname="4a2988df4dfb" tests="12" skipped="10" failures="0" errors="0" time="7.771">
-    <testcase time="0.615" classname="count_pct" name="a_freq_j_with_val_NA_and_denom_option">
-      <skipped message="Reason: On CRAN ('test-count_pct.R:10:1')"/>
-    </testcase>
-    <testcase time="0.338" classname="count_pct" name="a_freq_j_with_specific_val_CHN_and_denom_option">
-      <skipped message="Reason: On CRAN ('test-count_pct.R:48:1')"/>
-    </testcase>
-    <testcase time="0.32" classname="count_pct" name="a_freq_j_with_N_only">
-      <skipped message="Reason: On CRAN ('test-count_pct.R:89:1')"/>
-    </testcase>
-    <testcase time="0.372999999999999" classname="count_pct" name="a_freq_j_with_TotCol_only">
-      <skipped message="Reason: On CRAN ('test-count_pct.R:112:1')"/>
-    </testcase>
-    <testcase time="2.2" classname="count_pct" name="a_freq_j_as_cfun">
-      <skipped message="Reason: On CRAN ('test-count_pct.R:133:1')"/>
-    </testcase>
-    <testcase time="0.241" classname="count_pct" name="a_freq_j_with_label_map">
-      <skipped message="Reason: On CRAN ('test-count_pct.R:185:1')"/>
-    </testcase>
-    <testcase time="0.815999999999999" classname="count_pct" name="a_freq_j_old_count_pats_case_">
-      <skipped message="Reason: On CRAN ('test-count_pct.R:228:1')"/>
-    </testcase>
-    <testcase time="1.5" classname="count_pct" name="a_freq_j_with_N_subgroup_as_denom">
-      <skipped message="Reason: On CRAN ('test-count_pct.R:267:1')"/>
-    </testcase>
-    <testcase time="1.248" classname="count_pct" name="a_freq_j_with_N_trt_as_denom_special_situation"/>
-    <testcase time="0.000999999999999446" classname="count_pct" name="a_freq_j_with_N_trt_as_denom_special_situation">
-      <skipped message="Reason: On CRAN ('test-count_pct.R:311:1')"/>
-    </testcase>
-    <testcase time="0.118" classname="count_pct" name="a_freq_j_with_keep_levels_CHN_NGA_"/>
-    <testcase time="0.000999999999999446" classname="count_pct" name="a_freq_j_with_keep_levels_CHN_NGA_">
-      <skipped message="Reason: On CRAN ('test-count_pct.R:453:1')"/>
-    </testcase>
+  <testsuite name="count_pct" timestamp="2025-12-01T09:33:57Z" hostname="a9253eef8ca4" tests="24" skipped="0" failures="0" errors="0" time="7.384">
+    <testcase time="0.176" classname="count_pct" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.175999999999999" classname="count_pct" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.179" classname="count_pct" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.108000000000001" classname="count_pct" name="a_freq_j_with_specific_val_CHN_and_denom_option"/>
+    <testcase time="0.0979999999999999" classname="count_pct" name="a_freq_j_with_specific_val_CHN_and_denom_option"/>
+    <testcase time="0.116" classname="count_pct" name="a_freq_j_with_specific_val_CHN_and_denom_option"/>
+    <testcase time="0.154" classname="count_pct" name="a_freq_j_with_N_only"/>
+    <testcase time="0.143000000000001" classname="count_pct" name="a_freq_j_with_N_only"/>
+    <testcase time="0.179" classname="count_pct" name="a_freq_j_with_TotCol_only"/>
+    <testcase time="0.180999999999999" classname="count_pct" name="a_freq_j_with_TotCol_only"/>
+    <testcase time="1.076" classname="count_pct" name="a_freq_j_as_cfun"/>
+    <testcase time="1.058" classname="count_pct" name="a_freq_j_as_cfun"/>
+    <testcase time="0.125999999999999" classname="count_pct" name="a_freq_j_with_label_map"/>
+    <testcase time="0.109" classname="count_pct" name="a_freq_j_with_label_map"/>
+    <testcase time="0.390000000000001" classname="count_pct" name="a_freq_j_old_count_pats_case_"/>
+    <testcase time="0.166" classname="count_pct" name="a_freq_j_old_count_pats_case_"/>
+    <testcase time="0.171999999999999" classname="count_pct" name="a_freq_j_old_count_pats_case_"/>
+    <testcase time="0.479000000000001" classname="count_pct" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.485999999999999" classname="count_pct" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.492000000000001" classname="count_pct" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="1.106" classname="count_pct" name="a_freq_j_with_N_trt_as_denom_special_situation"/>
+    <testcase time="0.0960000000000001" classname="count_pct" name="a_freq_j_with_N_trt_as_denom_special_situation"/>
+    <testcase time="0.114000000000001" classname="count_pct" name="a_freq_j_with_keep_levels_CHN_NGA_"/>
+    <testcase time="0.00399999999999956" classname="count_pct" name="a_freq_j_with_keep_levels_CHN_NGA_"/>
   </testsuite>
-  <testsuite name="count_pct_relrisk" timestamp="2025-11-29T06:53:27Z" hostname="4a2988df4dfb" tests="14" skipped="0" failures="0" errors="0" time="3.149">
-    <testcase time="0.258000000000001" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
+  <testsuite name="count_pct_relrisk" timestamp="2025-12-01T09:34:04Z" hostname="a9253eef8ca4" tests="14" skipped="0" failures="0" errors="0" time="3.05">
+    <testcase time="0.237" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
     <testcase time="0.00300000000000011" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
-    <testcase time="0.212999999999999" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.213999999999999" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
     <testcase time="0.0140000000000011" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
-    <testcase time="0.205" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
+    <testcase time="0.201000000000001" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
     <testcase time="0.00399999999999956" classname="count_pct_relrisk" name="a_freq_j_with_val_NA_and_denom_option"/>
-    <testcase time="0.218999999999999" classname="count_pct_relrisk" name="a_freq_j_with_risk_difference_method_cmh"/>
-    <testcase time="0.00699999999999967" classname="count_pct_relrisk" name="a_freq_j_with_risk_difference_method_cmh"/>
-    <testcase time="0.740000000000002" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.228" classname="count_pct_relrisk" name="a_freq_j_with_risk_difference_method_cmh"/>
+    <testcase time="0.0139999999999993" classname="count_pct_relrisk" name="a_freq_j_with_risk_difference_method_cmh"/>
+    <testcase time="0.700000000000001" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
     <testcase time="0.00300000000000011" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
-    <testcase time="0.750999999999998" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.721" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
     <testcase time="0.00300000000000011" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
-    <testcase time="0.725999999999999" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
+    <testcase time="0.704999999999998" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
     <testcase time="0.00300000000000011" classname="count_pct_relrisk" name="a_freq_j_with_N_subgroup_as_denom"/>
   </testsuite>
-  <testsuite name="coxph_hr" timestamp="2025-11-29T06:53:30Z" hostname="4a2988df4dfb" tests="8" skipped="3" failures="0" errors="0" time="0.308">
+  <testsuite name="coxph_hr" timestamp="2025-12-01T09:34:07Z" hostname="a9253eef8ca4" tests="8" skipped="0" failures="0" errors="0" time="0.289">
     <testcase time="0.032" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
-    <testcase time="0.0120000000000005" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
-    <testcase time="0.00800000000000267" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
-    <testcase time="0.000999999999997669" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors">
-      <skipped message="Reason: On CRAN ('test-coxph_hr.R:5:1')"/>
-    </testcase>
-    <testcase time="0.0770000000000017" classname="coxph_hr" name="a_coxph_hr_works_with_custom_arguments_and_stratification_factors"/>
-    <testcase time="0.0569999999999986" classname="coxph_hr" name="a_coxph_hr_works_with_custom_arguments_and_stratification_factors">
-      <skipped message="Reason: On CRAN ('test-coxph_hr.R:48:1')"/>
-    </testcase>
-    <testcase time="0.0760000000000005" classname="coxph_hr" name="a_coxph_hr_works_with_stratification_factors_for_Log_Rank_test"/>
-    <testcase time="0.0449999999999982" classname="coxph_hr" name="a_coxph_hr_works_with_stratification_factors_for_Log_Rank_test">
-      <skipped message="Reason: On CRAN ('test-coxph_hr.R:79:1')"/>
-    </testcase>
+    <testcase time="0.00700000000000145" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
+    <testcase time="0.00799999999999912" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
+    <testcase time="0.00799999999999912" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
+    <testcase time="0.0730000000000004" classname="coxph_hr" name="a_coxph_hr_works_with_custom_arguments_and_stratification_factors"/>
+    <testcase time="0.0429999999999993" classname="coxph_hr" name="a_coxph_hr_works_with_custom_arguments_and_stratification_factors"/>
+    <testcase time="0.0660000000000025" classname="coxph_hr" name="a_coxph_hr_works_with_stratification_factors_for_Log_Rank_test"/>
+    <testcase time="0.0519999999999996" classname="coxph_hr" name="a_coxph_hr_works_with_stratification_factors_for_Log_Rank_test"/>
   </testsuite>
-  <testsuite name="coxreg_multivar" timestamp="2025-11-29T06:53:30Z" hostname="4a2988df4dfb" tests="13" skipped="6" failures="0" errors="0" time="1.701">
-    <testcase time="0.0800000000000018" classname="coxreg_multivar" name="h_extract_coxreg_multivar_works_as_expected"/>
-    <testcase time="0.207000000000001" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected"/>
-    <testcase time="0.0449999999999982" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-coxreg_multivar.R:29:1')"/>
-    </testcase>
-    <testcase time="0.497" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected"/>
-    <testcase time="0.0500000000000007" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-coxreg_multivar.R:37:1')"/>
-    </testcase>
-    <testcase time="0.0339999999999989" classname="coxreg_multivar" name="tefos03_afun_works_as_expected"/>
-    <testcase time="0.00800000000000267" classname="coxreg_multivar" name="tefos03_afun_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-coxreg_multivar.R:47:1')"/>
-    </testcase>
-    <testcase time="0.157" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_defaults"/>
-    <testcase time="0.0670000000000002" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_defaults">
-      <skipped message="Reason: On CRAN ('test-coxreg_multivar.R:76:1')"/>
-    </testcase>
-    <testcase time="0.110999999999997" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_custom_options"/>
-    <testcase time="0.0670000000000002" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_custom_options">
-      <skipped message="Reason: On CRAN ('test-coxreg_multivar.R:94:1')"/>
-    </testcase>
+  <testsuite name="coxreg_multivar" timestamp="2025-12-01T09:34:07Z" hostname="a9253eef8ca4" tests="15" skipped="0" failures="0" errors="0" time="1.619">
+    <testcase time="0.0700000000000003" classname="coxreg_multivar" name="h_extract_coxreg_multivar_works_as_expected"/>
+    <testcase time="0.201000000000001" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected"/>
+    <testcase time="0.00899999999999679" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected"/>
+    <testcase time="0.027000000000001" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected"/>
+    <testcase time="0.463000000000001" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected"/>
+    <testcase time="0.00999999999999801" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected"/>
+    <testcase time="0.0420000000000016" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected"/>
+    <testcase time="0.0239999999999974" classname="coxreg_multivar" name="tefos03_afun_works_as_expected"/>
+    <testcase time="0.00900000000000034" classname="coxreg_multivar" name="tefos03_afun_works_as_expected"/>
+    <testcase time="0.145" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_defaults"/>
+    <testcase time="0.0680000000000014" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_defaults"/>
+    <testcase time="0.103000000000002" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_custom_options"/>
+    <testcase time="0.0679999999999978" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_custom_options"/>
     <testcase time="0.240000000000002" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_with_row_splits"/>
-    <testcase time="0.137999999999998" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_with_row_splits">
-      <skipped message="Reason: On CRAN ('test-coxreg_multivar.R:123:1')"/>
-    </testcase>
+    <testcase time="0.140000000000001" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_with_row_splits"/>
   </testsuite>
-  <testsuite name="estimate_proportion_diff" timestamp="2025-11-29T06:53:32Z" hostname="4a2988df4dfb" tests="5" skipped="2" failures="0" errors="0" time="0.153">
-    <testcase time="0.0229999999999997" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
-    <testcase time="0.0130000000000017" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
-    <testcase time="0.0109999999999992" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-estimate_proportion_diff.R:1:1')"/>
-    </testcase>
-    <testcase time="0.0489999999999995" classname="estimate_proportion_diff" name="a_proportion_diff_j_works_as_expected_in_a_table_layout"/>
-    <testcase time="0.0570000000000022" classname="estimate_proportion_diff" name="a_proportion_diff_j_works_as_expected_in_a_table_layout">
-      <skipped message="Reason: On CRAN ('test-estimate_proportion_diff.R:36:1')"/>
-    </testcase>
+  <testsuite name="estimate_proportion_diff" timestamp="2025-12-01T09:34:09Z" hostname="a9253eef8ca4" tests="6" skipped="0" failures="0" errors="0" time="0.141">
+    <testcase time="0.0129999999999981" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
+    <testcase time="0.0199999999999996" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
+    <testcase time="0.0199999999999996" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
+    <testcase time="0.0370000000000026" classname="estimate_proportion_diff" name="a_proportion_diff_j_works_as_expected_in_a_table_layout"/>
+    <testcase time="0.0479999999999983" classname="estimate_proportion_diff" name="a_proportion_diff_j_works_as_expected_in_a_table_layout"/>
   </testsuite>
-  <testsuite name="event_free" timestamp="2025-11-29T06:53:32Z" hostname="4a2988df4dfb" tests="8" skipped="4" failures="0" errors="0" time="0.395">
-    <testcase time="0.0359999999999978" classname="event_free" name="s_event_free_works_with_default_arguments"/>
-    <testcase time="0.00600000000000023" classname="event_free" name="s_event_free_works_with_default_arguments">
-      <skipped message="Reason: On CRAN ('test-event_free.R:1:1')"/>
-    </testcase>
-    <testcase time="0.0199999999999996" classname="event_free" name="s_event_free_works_with_percent_format"/>
-    <testcase time="0.00600000000000023" classname="event_free" name="s_event_free_works_with_percent_format">
-      <skipped message="Reason: On CRAN ('test-event_free.R:21:1')"/>
-    </testcase>
-    <testcase time="0.105" classname="event_free" name="a_event_free_works_with_default_arguments_in_a_table_layout"/>
-    <testcase time="0.0640000000000001" classname="event_free" name="a_event_free_works_with_default_arguments_in_a_table_layout">
-      <skipped message="Reason: On CRAN ('test-event_free.R:42:1')"/>
-    </testcase>
-    <testcase time="0.108000000000001" classname="event_free" name="a_event_free_works_with_customized_arguments_in_a_table_layout"/>
-    <testcase time="0.0500000000000007" classname="event_free" name="a_event_free_works_with_customized_arguments_in_a_table_layout">
-      <skipped message="Reason: On CRAN ('test-event_free.R:74:1')"/>
-    </testcase>
+  <testsuite name="event_free" timestamp="2025-12-01T09:34:09Z" hostname="a9253eef8ca4" tests="8" skipped="0" failures="0" errors="0" time="0.356">
+    <testcase time="0.0190000000000019" classname="event_free" name="s_event_free_works_with_default_arguments"/>
+    <testcase time="0.00799999999999912" classname="event_free" name="s_event_free_works_with_default_arguments"/>
+    <testcase time="0.00999999999999801" classname="event_free" name="s_event_free_works_with_percent_format"/>
+    <testcase time="0.00700000000000145" classname="event_free" name="s_event_free_works_with_percent_format"/>
+    <testcase time="0.0960000000000001" classname="event_free" name="a_event_free_works_with_default_arguments_in_a_table_layout"/>
+    <testcase time="0.0609999999999999" classname="event_free" name="a_event_free_works_with_default_arguments_in_a_table_layout"/>
+    <testcase time="0.105" classname="event_free" name="a_event_free_works_with_customized_arguments_in_a_table_layout"/>
+    <testcase time="0.0500000000000007" classname="event_free" name="a_event_free_works_with_customized_arguments_in_a_table_layout"/>
   </testsuite>
-  <testsuite name="get_ref_info" timestamp="2025-11-29T06:53:32Z" hostname="4a2988df4dfb" tests="3" skipped="2" failures="0" errors="0" time="0.533">
-    <testcase time="0.206" classname="get_ref_info" name="get_ref_info_works_with_a_df_analysis_function">
-      <skipped message="Reason: On CRAN ('test-get_ref_info.R:6:1')"/>
-    </testcase>
-    <testcase time="0.326000000000001" classname="get_ref_info" name="get_ref_info_works_with_a_vector_analysis_function"/>
-    <testcase time="0.000999999999997669" classname="get_ref_info" name="get_ref_info_works_with_a_vector_analysis_function">
-      <skipped message="Reason: On CRAN ('test-get_ref_info.R:77:1')"/>
-    </testcase>
+  <testsuite name="get_ref_info" timestamp="2025-12-01T09:34:09Z" hostname="a9253eef8ca4" tests="5" skipped="0" failures="0" errors="0" time="0.491">
+    <testcase time="0.109999999999999" classname="get_ref_info" name="get_ref_info_works_with_a_df_analysis_function"/>
+    <testcase time="0.0739999999999981" classname="get_ref_info" name="get_ref_info_works_with_a_df_analysis_function"/>
+    <testcase time="0.135999999999999" classname="get_ref_info" name="get_ref_info_works_with_a_vector_analysis_function"/>
+    <testcase time="0.0940000000000012" classname="get_ref_info" name="get_ref_info_works_with_a_vector_analysis_function"/>
+    <testcase time="0.0770000000000017" classname="get_ref_info" name="get_ref_info_works_with_a_vector_analysis_function"/>
   </testsuite>
-  <testsuite name="h_freq_funs" timestamp="2025-11-29T06:53:33Z" hostname="4a2988df4dfb" tests="22" skipped="0" failures="0" errors="0" time="0.116">
-    <testcase time="0.022000000000002" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
+  <testsuite name="h_freq_funs" timestamp="2025-12-01T09:34:10Z" hostname="a9253eef8ca4" tests="22" skipped="0" failures="0" errors="0" time="0.105">
+    <testcase time="0.0129999999999981" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
-    <testcase time="0.0069999999999979" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
-    <testcase time="0.00400000000000134" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
+    <testcase time="0.00700000000000145" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
-    <testcase time="0.00400000000000134" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
+    <testcase time="0.00399999999999778" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
     <testcase time="0.00600000000000023" classname="h_freq_funs" name="h_colexpr_substr_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_colexpr_substr_works_correctly"/>
-    <testcase time="0.00299999999999656" classname="h_freq_funs" name="h_colexpr_substr_works_correctly"/>
-    <testcase time="0.00700000000000145" classname="h_freq_funs" name="h_get_label_map_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_colexpr_substr_works_correctly"/>
+    <testcase time="0.00600000000000023" classname="h_freq_funs" name="h_get_label_map_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_get_label_map_works_correctly"/>
-    <testcase time="0.00700000000000145" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
-    <testcase time="0.00399999999999778" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
+    <testcase time="0.00799999999999912" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
     <testcase time="0.00400000000000134" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
     <testcase time="0.00399999999999778" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
-    <testcase time="0.00700000000000145" classname="h_freq_funs" name="h_restrict_val_works_if_there_are_more_values_in_df_row_than_in_map"/>
-    <testcase time="0.00600000000000023" classname="h_freq_funs" name="h_restrict_val_works_if_there_are_less_values_in_df_row_than_in_map"/>
+    <testcase time="0.00600000000000023" classname="h_freq_funs" name="h_restrict_val_works_if_there_are_more_values_in_df_row_than_in_map"/>
+    <testcase time="0.00700000000000145" classname="h_freq_funs" name="h_restrict_val_works_if_there_are_less_values_in_df_row_than_in_map"/>
     <testcase time="0.00700000000000145" classname="h_freq_funs" name="h_restrict_val_works_with_row_split"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_restrict_val_works_with_row_split"/>
   </testsuite>
-  <testsuite name="jjcs_num_formats" timestamp="2025-11-29T06:53:33Z" hostname="4a2988df4dfb" tests="9" skipped="3" failures="0" errors="0" time="0.78">
-    <testcase time="0.0589999999999975" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
-    <testcase time="0.00500000000000256" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
-    <testcase time="0.331" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
-    <testcase time="0.00700000000000145" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
-    <testcase time="0.00799999999999912" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
-    <testcase time="0.0300000000000011" classname="jjcs_num_formats" name="jjcs_num_formats_works">
-      <skipped message="Reason: On CRAN ('test-jjcs_num_formats.R:10:1')"/>
-    </testcase>
-    <testcase time="0.0350000000000001" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
-    <testcase time="0.152999999999999" classname="jjcs_num_formats" name="jjcsformats_NA_works">
-      <skipped message="Reason: On CRAN ('test-jjcs_num_formats.R:120:1')"/>
-    </testcase>
-    <testcase time="0.152000000000001" classname="jjcs_num_formats" name="jjcsformats_count_fraction_works">
-      <skipped message="Reason: On CRAN ('test-jjcs_num_formats.R:204:1')"/>
-    </testcase>
+  <testsuite name="jjcs_num_formats" timestamp="2025-12-01T09:34:10Z" hostname="a9253eef8ca4" tests="16" skipped="0" failures="0" errors="0" time="0.738">
+    <testcase time="0.0409999999999968" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.00800000000000267" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.0069999999999979" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.116" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.194000000000003" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.00499999999999901" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.00600000000000023" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.0139999999999993" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.036999999999999" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.0210000000000008" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.00700000000000145" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.032" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.0459999999999994" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.0210000000000008" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.0629999999999988" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.120000000000001" classname="jjcs_num_formats" name="jjcsformats_count_fraction_works"/>
   </testsuite>
-  <testsuite name="jjcsformats" timestamp="2025-11-29T06:53:34Z" hostname="4a2988df4dfb" tests="14" skipped="3" failures="0" errors="0" time="0.478">
-    <testcase time="0.305" classname="jjcsformats" name="jjjcs_formats_work">
-      <skipped message="Reason: On CRAN ('test-jjcsformats.R:12:1')"/>
-    </testcase>
-    <testcase time="0.0159999999999982" classname="jjcsformats" name="roundmethod_support_works"/>
-    <testcase time="0.00400000000000134" classname="jjcsformats" name="roundmethod_support_works"/>
-    <testcase time="0.0109999999999992" classname="jjcsformats" name="roundmethod_support_works"/>
-    <testcase time="0.00500000000000256" classname="jjcsformats" name="roundmethod_support_works"/>
-    <testcase time="0.00499999999999901" classname="jjcsformats" name="roundmethod_support_works"/>
-    <testcase time="0.00499999999999901" classname="jjcsformats" name="roundmethod_support_works"/>
-    <testcase time="0.00400000000000134" classname="jjcsformats" name="roundmethod_support_works"/>
-    <testcase time="0.00399999999999778" classname="jjcsformats" name="roundmethod_support_works"/>
+  <testsuite name="jjcsformats" timestamp="2025-12-01T09:34:11Z" hostname="a9253eef8ca4" tests="17" skipped="0" failures="0" errors="0" time="0.47">
+    <testcase time="0.216999999999999" classname="jjcsformats" name="jjjcs_formats_work"/>
+    <testcase time="0.0199999999999996" classname="jjcsformats" name="jjjcs_formats_work"/>
+    <testcase time="0.022000000000002" classname="jjcsformats" name="jjjcs_formats_work"/>
+    <testcase time="0.0619999999999976" classname="jjcsformats" name="jjjcs_formats_work"/>
+    <testcase time="0.00800000000000267" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00299999999999656" classname="jjcsformats" name="roundmethod_support_works"/>
     <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
-    <testcase time="0.0340000000000025" classname="jjcsformats" name="jjcsformat_range_fct_is_formatting_ranges_as_expected">
-      <skipped message="Reason: On CRAN ('test-jjcsformats.R:155:1')"/>
-    </testcase>
-    <testcase time="0.0609999999999999" classname="jjcsformats" name="jjcsformat_pval_fct_works">
-      <skipped message="Reason: On CRAN ('test-jjcsformats.R:165:1')"/>
-    </testcase>
-    <testcase time="0.0150000000000006" classname="jjcsformats" name="jjcsformat_xx_works_also_for_empty_cells"/>
-    <testcase time="0.00599999999999667" classname="jjcsformats" name="jjcsformat_xx_works_also_for_cells_with_0_length_vectors"/>
+    <testcase time="0.00400000000000134" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.00400000000000134" classname="jjcsformats" name="roundmethod_support_works"/>
+    <testcase time="0.046999999999997" classname="jjcsformats" name="jjcsformat_range_fct_is_formatting_ranges_as_expected"/>
+    <testcase time="0.0570000000000022" classname="jjcsformats" name="jjcsformat_pval_fct_works"/>
+    <testcase time="0.00600000000000023" classname="jjcsformats" name="jjcsformat_xx_works_also_for_empty_cells"/>
+    <testcase time="0.00499999999999901" classname="jjcsformats" name="jjcsformat_xx_works_also_for_cells_with_0_length_vectors"/>
   </testsuite>
-  <testsuite name="junco_utils_default_stats_formats_labels" timestamp="2025-11-29T06:53:34Z" hostname="4a2988df4dfb" tests="6" skipped="5" failures="0" errors="0" time="0.097">
-    <testcase time="0.0130000000000017" classname="junco_utils_default_stats_formats_labels" name="get_stats_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-junco_utils_default_stats_formats_labels.R:6:1')"/>
+  <testsuite name="junco_utils_default_stats_formats_labels" timestamp="2025-12-01T09:34:11Z" hostname="a9253eef8ca4" tests="6" skipped="0" failures="1" errors="0" time="0.164">
+    <testcase time="0.0160000000000018" classname="junco_utils_default_stats_formats_labels" name="get_stats_works_as_expected"/>
+    <testcase time="0.0849999999999973" classname="junco_utils_default_stats_formats_labels" name="get_formats_from_stats_works_as_expected">
+      <failure type="failure" message="Snapshot of code has changed: ('test-junco_utils_default_stats_formats_labels.R:18:3')">Snapshot of code has changed:
+old[2:40] vs new[2:38]
+    res
+  Output
+    $quantiles_upper
+-   function(x, output, na_str = na_str_dflt) {
+-         if (anyNA(na_str) || (replace_na_dflt &amp;&amp; any(na_str == "NA"))) {
+-           na_inds &lt;- which(is.na(na_str) | (replace_na_dflt &amp; na_str == "NA"))
++   function (x, output, na_str = na_str_dflt) 
++   {
++       if (anyNA(na_str) || (replace_na_dflt &amp;&amp; any(na_str == "NA"))) {
++           na_inds &lt;- which(is.na(na_str) | (replace_na_dflt &amp; na_str == 
++               "NA"))
+            na_str[na_inds] &lt;- rep(na_str_dflt, length.out = length(na_str))[na_inds]
+-         }
++       }
+-         if (length(x) == 0 || isTRUE(all(x == ""))) {
++       if (length(x) == 0 || isTRUE(all(x == ""))) {
+            return(NULL)
+-         } else if (!length(positions[[1]]) == length(x)) {
+-           stop(
+-             "Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats."
+-           )
+-         }
+-   
+-         values &lt;- Map(y = x, fun = roundings, na_str = na_str, function(y, fun, na_str) fun(y, na_str = na_str))
+-         regmatches(x = str, m = positions)[[1]] &lt;- values
+-         return(str)
++       }
++       else if (!length(positions[[1]]) == length(x)) {
++           stop("Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats.")
+        }
++       values &lt;- Map(y = x, fun = roundings, na_str = na_str, function(y, 
++           fun, na_str) fun(y, na_str = na_str))
++       regmatches(x = str, m = positions)[[1]] &lt;- values
++       return(str)
++   }
+    &lt;environment: base&gt;
+    
+    $range_with_cens_info
+-   function(x, ...) {
+-       checkmate::assert_numeric(
+-         x,
+-         len = 4L,
+-         finite = TRUE,
+-         any.missing = FALSE
+-       )
++   function (x, ...) 
++   {
++       checkmate::assert_numeric(x, len = 4L, finite = TRUE, any.missing = FALSE)
+        checkmate::assert_true(all(x[c(3, 4)] %in% c(0, 1)))
+-   
+        res &lt;- vapply(x[c(1, 2)], format_xx, character(1))
+-       if (x[3] == 1) res[1] &lt;- paste0(res[1], "+")
+-       if (x[4] == 1) res[2] &lt;- paste0(res[2], "+")
++       if (x[3] == 1) 
++           res[1] &lt;- paste0(res[1], "+")
++       if (x[4] == 1) 
++           res[2] &lt;- paste0(res[2], "+")
+        paste0("(", res[1], ", ", res[2], ")")
+-     }
++   }
+    &lt;environment: base&gt;
+    
+</failure>
     </testcase>
-    <testcase time="0.0180000000000007" classname="junco_utils_default_stats_formats_labels" name="get_formats_from_stats_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-junco_utils_default_stats_formats_labels.R:11:1')"/>
-    </testcase>
-    <testcase time="0.0219999999999985" classname="junco_utils_default_stats_formats_labels" name="get_labels_from_stats_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-junco_utils_default_stats_formats_labels.R:21:1')"/>
-    </testcase>
-    <testcase time="0.0210000000000008" classname="junco_utils_default_stats_formats_labels" name="get_label_attr_from_stats_works_as_expected"/>
-    <testcase time="0.00499999999999901" classname="junco_utils_default_stats_formats_labels" name="get_label_attr_from_stats_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-junco_utils_default_stats_formats_labels.R:27:1')"/>
-    </testcase>
-    <testcase time="0.0180000000000007" classname="junco_utils_default_stats_formats_labels" name="get_indents_from_stats_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-junco_utils_default_stats_formats_labels.R:36:1')"/>
-    </testcase>
+    <testcase time="0.0350000000000001" classname="junco_utils_default_stats_formats_labels" name="get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.00700000000000145" classname="junco_utils_default_stats_formats_labels" name="get_label_attr_from_stats_works_as_expected"/>
+    <testcase time="0.00900000000000034" classname="junco_utils_default_stats_formats_labels" name="get_label_attr_from_stats_works_as_expected"/>
+    <testcase time="0.0120000000000005" classname="junco_utils_default_stats_formats_labels" name="get_indents_from_stats_works_as_expected"/>
   </testsuite>
-  <testsuite name="kaplan_meier" timestamp="2025-11-29T06:53:34Z" hostname="4a2988df4dfb" tests="14" skipped="6" failures="0" errors="0" time="0.384">
-    <testcase time="0.0259999999999998" classname="kaplan_meier" name="s_kaplan_meier_works_with_default_arguments"/>
-    <testcase time="0.00499999999999901" classname="kaplan_meier" name="s_kaplan_meier_works_with_default_arguments">
-      <skipped message="Reason: On CRAN ('test-kaplan_meier.R:3:1')"/>
-    </testcase>
-    <testcase time="0.0190000000000019" classname="kaplan_meier" name="s_kaplan_meier_works_with_customized_arguments"/>
-    <testcase time="0.00499999999999901" classname="kaplan_meier" name="s_kaplan_meier_works_with_customized_arguments">
-      <skipped message="Reason: On CRAN ('test-kaplan_meier.R:20:1')"/>
-    </testcase>
-    <testcase time="0.0190000000000019" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments"/>
+  <testsuite name="kaplan_meier" timestamp="2025-12-01T09:34:11Z" hostname="a9253eef8ca4" tests="14" skipped="0" failures="0" errors="0" time="0.357">
+    <testcase time="0.0199999999999996" classname="kaplan_meier" name="s_kaplan_meier_works_with_default_arguments"/>
+    <testcase time="0.00799999999999912" classname="kaplan_meier" name="s_kaplan_meier_works_with_default_arguments"/>
+    <testcase time="0.0100000000000016" classname="kaplan_meier" name="s_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.00799999999999912" classname="kaplan_meier" name="s_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.0109999999999992" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments"/>
     <testcase time="0.00199999999999889" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments"/>
-    <testcase time="0.0169999999999995" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments">
-      <skipped message="Reason: On CRAN ('test-kaplan_meier.R:44:1')"/>
-    </testcase>
-    <testcase time="0.0199999999999996" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
-    <testcase time="0.00100000000000122" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
-    <testcase time="0.00799999999999912" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments">
-      <skipped message="Reason: On CRAN ('test-kaplan_meier.R:63:1')"/>
-    </testcase>
-    <testcase time="0.0860000000000021" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table"/>
-    <testcase time="0.0519999999999996" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table">
-      <skipped message="Reason: On CRAN ('test-kaplan_meier.R:87:1')"/>
-    </testcase>
-    <testcase time="0.0659999999999989" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table_with_custom_arguments"/>
-    <testcase time="0.0579999999999998" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table_with_custom_arguments">
-      <skipped message="Reason: On CRAN ('test-kaplan_meier.R:117:1')"/>
-    </testcase>
+    <testcase time="0.0190000000000019" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments"/>
+    <testcase time="0.0120000000000005" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.00199999999999889" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.00900000000000034" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.0790000000000006" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table"/>
+    <testcase time="0.0619999999999976" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table"/>
+    <testcase time="0.0579999999999998" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table_with_custom_arguments"/>
+    <testcase time="0.0569999999999986" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table_with_custom_arguments"/>
   </testsuite>
-  <testsuite name="markup_unicodify" timestamp="2025-11-29T06:53:35Z" hostname="4a2988df4dfb" tests="1" skipped="1" failures="0" errors="0" time="0.023">
-    <testcase time="0.0229999999999997" classname="markup_unicodify" name="dps_markup_works_with_and_">
-      <skipped message="Reason: On CRAN ('test-markup_unicodify.R:1:1')"/>
-    </testcase>
+  <testsuite name="markup_unicodify" timestamp="2025-12-01T09:34:12Z" hostname="a9253eef8ca4" tests="1" skipped="0" failures="0" errors="0" time="0.02">
+    <testcase time="0.0200000000000031" classname="markup_unicodify" name="dps_markup_works_with_and_"/>
   </testsuite>
-  <testsuite name="mmrm" timestamp="2025-11-29T06:53:35Z" hostname="4a2988df4dfb" tests="5" skipped="2" failures="0" errors="0" time="0.265">
-    <testcase time="0.123999999999999" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
+  <testsuite name="mmrm" timestamp="2025-12-01T09:34:12Z" hostname="a9253eef8ca4" tests="5" skipped="0" failures="0" errors="0" time="0.253">
+    <testcase time="0.117999999999999" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
+    <testcase time="0.00400000000000134" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
     <testcase time="0.00300000000000011" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
     <testcase time="0.00300000000000011" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
-    <testcase time="0.00100000000000122" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values">
-      <skipped message="Reason: On CRAN ('test-mmrm.R:3:1')"/>
-    </testcase>
-    <testcase time="0.134" classname="mmrm" name="fit_mmrm_j_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-mmrm.R:42:1')"/>
-    </testcase>
-    <testcase time="0.0169999999999995" classname="character(0)" name="_unnamed_">
-      <skipped message="Reason: {rbmi} is not installed. ('test-mmrm_rbmi.R:1:1')"/>
+    <testcase time="0.125" classname="mmrm" name="fit_mmrm_j_works_as_expected"/>
+    <testcase time="0.0399999999999991" classname="character(0)" name="_unnamed_">
+      <error type="error" message="&lt;packageNotFoundError/error/condition&gt; ('test-mmrm_rbmi.R:1:1')">&lt;packageNotFoundError/error/condition&gt;
+Error in `library(rbmi)`: there is no package called 'rbmi'
+Backtrace:
+    x
+ 1. +-base::suppressPackageStartupMessages(library(rbmi)) at test-mmrm_rbmi.R:1:1
+ 2. | \-base::withCallingHandlers(expr, packageStartupMessage = function(c) tryInvokeRestart("muffleMessage"))
+ 3. \-base::library(rbmi)</error>
     </testcase>
   </testsuite>
-  <testsuite name="odds_ratio" timestamp="2025-11-29T06:53:35Z" hostname="4a2988df4dfb" tests="19" skipped="3" failures="0" errors="0" time="0.329">
-    <testcase time="0.0229999999999997" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set"/>
+  <testsuite name="odds_ratio" timestamp="2025-12-01T09:34:12Z" hostname="a9253eef8ca4" tests="19" skipped="0" failures="0" errors="1" time="0.388">
+    <testcase time="0.0289999999999999" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set"/>
     <testcase time="0.00499999999999901" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set"/>
-    <testcase time="0.0150000000000006" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set_with_strata"/>
-    <testcase time="0.00500000000000256" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set_with_strata"/>
-    <testcase time="0.00899999999999679" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_non_responders"/>
+    <testcase time="0.0160000000000018" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set_with_strata"/>
+    <testcase time="0.00499999999999901" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set_with_strata"/>
+    <testcase time="0.00900000000000034" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_non_responders"/>
     <testcase time="0.00300000000000011" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_non_responders"/>
-    <testcase time="0.00500000000000256" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_one_grp"/>
+    <testcase time="0.00600000000000023" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_one_grp"/>
     <testcase time="0.00300000000000011" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_one_grp"/>
     <testcase time="0.00799999999999912" classname="odds_ratio" name="or_glm_j_does_not_fail_with_only_non_responders"/>
-    <testcase time="0.00499999999999901" classname="odds_ratio" name="or_glm_j_does_not_fail_with_only_non_responders"/>
-    <testcase time="0.0410000000000004" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis"/>
-    <testcase time="0.0740000000000016" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis"/>
+    <testcase time="0.00600000000000023" classname="odds_ratio" name="or_glm_j_does_not_fail_with_only_non_responders"/>
+    <testcase time="0.0519999999999996" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis"/>
+    <testcase time="0.0429999999999993" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis"/>
+    <testcase time="0.0350000000000001" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis"/>
     <testcase time="0.00300000000000011" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis"/>
-    <testcase time="0.000999999999997669" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis">
-      <skipped message="Reason: On CRAN ('test-odds_ratio.R:115:1')"/>
-    </testcase>
-    <testcase time="0.0489999999999995" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis"/>
-    <testcase time="0.0590000000000011" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis"/>
+    <testcase time="0.0429999999999993" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis"/>
+    <testcase time="0.0370000000000026" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis"/>
+    <testcase time="0.041999999999998" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis"/>
     <testcase time="0.00300000000000011" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis"/>
-    <testcase time="0.00100000000000122" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis">
-      <skipped message="Reason: On CRAN ('test-odds_ratio.R:154:1')"/>
+  </testsuite>
+  <testsuite name="patyrs-eair100" timestamp="2025-12-01T09:34:12Z" hostname="a9253eef8ca4" tests="4" skipped="0" failures="0" errors="0" time="1.515">
+    <testcase time="0.245000000000001" classname="patyrs_eair100" name="Check_patient_years_numbers_are_giving_expected_result"/>
+    <testcase time="0.449999999999999" classname="patyrs_eair100" name="Check_aeir100_numbers_are_giving_expected_result"/>
+    <testcase time="0.402000000000001" classname="patyrs_eair100" name="Check_aeir100_numbers_are_giving_expected_result_when_fup_var_argument_is_changed"/>
+    <testcase time="0.417999999999999" classname="patyrs_eair100" name="Check_aeir100_numbers_are_giving_expected_result_when_occ_dy_argument_is_changed"/>
+    <testcase time="0.0289999999999999" classname="character(0)" name="_unnamed_">
+      <error type="error" message="&lt;packageNotFoundError/error/condition&gt; ('test-pool_rbmi.R:1:1')">&lt;packageNotFoundError/error/condition&gt;
+Error in `library(rbmi)`: there is no package called 'rbmi'
+Backtrace:
+    x
+ 1. \-base::library(rbmi) at test-pool_rbmi.R:1:1</error>
     </testcase>
   </testsuite>
-  <testsuite name="patyrs-eair100" timestamp="2025-11-29T06:53:36Z" hostname="4a2988df4dfb" tests="4" skipped="0" failures="0" errors="0" time="1.497">
-    <testcase time="0.27" classname="patyrs_eair100" name="Check_patient_years_numbers_are_giving_expected_result"/>
-    <testcase time="0.402999999999999" classname="patyrs_eair100" name="Check_aeir100_numbers_are_giving_expected_result"/>
-    <testcase time="0.420000000000002" classname="patyrs_eair100" name="Check_aeir100_numbers_are_giving_expected_result_when_fup_var_argument_is_changed"/>
-    <testcase time="0.404" classname="patyrs_eair100" name="Check_aeir100_numbers_are_giving_expected_result_when_occ_dy_argument_is_changed"/>
-    <testcase time="0.00799999999999912" classname="character(0)" name="_unnamed_">
-      <skipped message="Reason: {rbmi} is not installed. ('test-pool_rbmi.R:1:1')"/>
-    </testcase>
-  </testsuite>
-  <testsuite name="proportions" timestamp="2025-11-29T06:53:37Z" hostname="4a2988df4dfb" tests="18" skipped="12" failures="0" errors="0" time="0.573">
-    <testcase time="0.0240000000000009" classname="proportions" name="s_proportion_factor_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-proportions.R:1:1')"/>
-    </testcase>
-    <testcase time="0.027000000000001" classname="proportions" name="s_proportion_factor_shows_optional_total_row_on_top">
-      <skipped message="Reason: On CRAN ('test-proportions.R:9:1')"/>
-    </testcase>
-    <testcase time="0.0269999999999975" classname="proportions" name="s_proportion_factor_shows_optional_total_row_in_bottom">
-      <skipped message="Reason: On CRAN ('test-proportions.R:18:1')"/>
-    </testcase>
-    <testcase time="0.0199999999999996" classname="proportions" name="s_proportion_factor_optionally_uses_number_of_non_missing_levels_as_total">
-      <skipped message="Reason: On CRAN ('test-proportions.R:28:1')"/>
-    </testcase>
-    <testcase time="0.0190000000000019" classname="proportions" name="s_proportion_logical_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-proportions.R:39:1')"/>
-    </testcase>
-    <testcase time="0.0180000000000007" classname="proportions" name="c_proportion_logical_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-proportions.R:47:1')"/>
-    </testcase>
-    <testcase time="0.0749999999999993" classname="proportions" name="h_get_design_mat_works_as_expected"/>
+  <testsuite name="proportions" timestamp="2025-12-01T09:34:14Z" hostname="a9253eef8ca4" tests="22" skipped="0" failures="0" errors="1" time="0.458">
+    <testcase time="0.0300000000000011" classname="proportions" name="s_proportion_factor_works_as_expected"/>
+    <testcase time="0.0119999999999969" classname="proportions" name="s_proportion_factor_shows_optional_total_row_on_top"/>
+    <testcase time="0.0120000000000005" classname="proportions" name="s_proportion_factor_shows_optional_total_row_in_bottom"/>
+    <testcase time="0.0130000000000017" classname="proportions" name="s_proportion_factor_optionally_uses_number_of_non_missing_levels_as_total"/>
+    <testcase time="0.0109999999999992" classname="proportions" name="s_proportion_logical_works_as_expected"/>
+    <testcase time="0.0120000000000005" classname="proportions" name="c_proportion_logical_works_as_expected"/>
+    <testcase time="0.00900000000000034" classname="proportions" name="h_get_design_mat_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="proportions" name="h_get_design_mat_works_as_expected"/>
     <testcase time="0.00600000000000023" classname="proportions" name="a_proportion_ci_logical_works_as_expected"/>
-    <testcase time="0.00600000000000023" classname="proportions" name="a_proportion_ci_logical_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-proportions.R:80:1')"/>
-    </testcase>
-    <testcase time="0.0169999999999995" classname="proportions" name="a_proportion_ci_factor_works_as_expected"/>
-    <testcase time="0.00700000000000145" classname="proportions" name="a_proportion_ci_factor_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-proportions.R:92:1')"/>
-    </testcase>
-    <testcase time="0.242000000000001" classname="proportions" name="prop_split_fun_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-proportions.R:105:1')"/>
-    </testcase>
-    <testcase time="0.036999999999999" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
-    <testcase time="0.00100000000000122" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row">
-      <skipped message="Reason: On CRAN ('test-proportions.R:112:1')"/>
-    </testcase>
-    <testcase time="0.0339999999999989" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
-    <testcase time="0.00199999999999889" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row">
-      <skipped message="Reason: On CRAN ('test-proportions.R:170:1')"/>
-    </testcase>
+    <testcase time="0.0069999999999979" classname="proportions" name="a_proportion_ci_logical_works_as_expected"/>
+    <testcase time="0.00900000000000034" classname="proportions" name="a_proportion_ci_factor_works_as_expected"/>
+    <testcase time="0.00900000000000034" classname="proportions" name="a_proportion_ci_factor_works_as_expected"/>
+    <testcase time="0.225000000000001" classname="proportions" name="prop_split_fun_works_as_expected"/>
+    <testcase time="0.0120000000000005" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
+    <testcase time="0.00900000000000034" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
+    <testcase time="0.00899999999999679" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
+    <testcase time="0.00600000000000023" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
+    <testcase time="0.0130000000000017" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
+    <testcase time="0.00799999999999912" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
+    <testcase time="0.00900000000000034" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
+    <testcase time="0.00499999999999901" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
   </testsuite>
-  <testsuite name="pruning_functions" timestamp="2025-11-29T06:53:39Z" hostname="4a2988df4dfb" tests="30" skipped="0" failures="0" errors="0" time="10.272">
-    <testcase time="1.529" classname="pruning_functions" name="count_pruner_is_identical_to_standard_pruning_in_cases_where_we_have_all_0_s"/>
-    <testcase time="2.686" classname="pruning_functions" name="count_pruner_is_identical_to_standard_pruning_in_cases_where_we_have_all_0_s"/>
-    <testcase time="1.149" classname="pruning_functions" name="count_pruner_keeps_everything_if_0_condition_is_not_met"/>
-    <testcase time="0.0560000000000009" classname="pruning_functions" name="count_pruner_with_cat_include_removes_text_correctly"/>
-    <testcase time="0.0309999999999988" classname="pruning_functions" name="count_pruner_with_cat_include_does_nothing_if_text_is_supplied_and_it_is_not_text_that_is_in_the_table"/>
-    <testcase time="0.0620000000000012" classname="pruning_functions" name="count_pruner_does_remove_if_text_is_supplied_and_all_columns_are_0"/>
-    <testcase time="0.0539999999999985" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
-    <testcase time="0.0489999999999995" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
-    <testcase time="0.0640000000000001" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
+  <testsuite name="pruning_functions" timestamp="2025-12-01T09:34:16Z" hostname="a9253eef8ca4" tests="30" skipped="0" failures="0" errors="0" time="10.006">
+    <testcase time="1.49" classname="pruning_functions" name="count_pruner_is_identical_to_standard_pruning_in_cases_where_we_have_all_0_s"/>
+    <testcase time="2.64" classname="pruning_functions" name="count_pruner_is_identical_to_standard_pruning_in_cases_where_we_have_all_0_s"/>
+    <testcase time="1.131" classname="pruning_functions" name="count_pruner_keeps_everything_if_0_condition_is_not_met"/>
+    <testcase time="0.0370000000000026" classname="pruning_functions" name="count_pruner_with_cat_include_removes_text_correctly"/>
+    <testcase time="0.0299999999999976" classname="pruning_functions" name="count_pruner_with_cat_include_does_nothing_if_text_is_supplied_and_it_is_not_text_that_is_in_the_table"/>
+    <testcase time="0.0779999999999994" classname="pruning_functions" name="count_pruner_does_remove_if_text_is_supplied_and_all_columns_are_0"/>
+    <testcase time="0.0430000000000028" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
+    <testcase time="0.041999999999998" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
+    <testcase time="0.0839999999999996" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
     <testcase time="0.00300000000000011" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
     <testcase time="0.00300000000000011" classname="pruning_functions" name="remove_rows_does_remove_if_text_is_supplied_as_fixed_and_text_is_matched"/>
-    <testcase time="0.00700000000000145" classname="pruning_functions" name="keep_non_null_rows_pruning_function_or_via_keep_rows"/>
-    <testcase time="0.00300000000000011" classname="pruning_functions" name="keep_non_null_rows_pruning_function_or_via_keep_rows"/>
-    <testcase time="0.248999999999999" classname="pruning_functions" name="test_keep_non_null_rows"/>
-    <testcase time="0.0100000000000016" classname="pruning_functions" name="bspt_pruner_both_fraction_and_diff_from_control_are_NULL"/>
-    <testcase time="0.00799999999999912" classname="pruning_functions" name="bspt_pruner_both_fraction_and_diff_from_control_are_NULL"/>
-    <testcase time="0.254000000000001" classname="pruning_functions" name="bspt_pruner_with_fraction"/>
-    <testcase time="0.387" classname="pruning_functions" name="bspt_pruner_with_fraction_and_diff_from_control"/>
-    <testcase time="0.652000000000001" classname="pruning_functions" name="bspt_pruner_with_fraction_and_diff_from_control_and_keeprowtext"/>
-    <testcase time="0.00300000000000011" classname="pruning_functions" name="bspt_pruner_with_fraction_and_diff_from_control_and_keeprowtext"/>
-    <testcase time="0.195" classname="pruning_functions" name="count_pruner_in_small_groups"/>
-    <testcase time="1.593" classname="pruning_functions" name="bspt_pruner_in_AE_like_tables"/>
+    <testcase time="0.00799999999999912" classname="pruning_functions" name="keep_non_null_rows_pruning_function_or_via_keep_rows"/>
+    <testcase time="0.00200000000000244" classname="pruning_functions" name="keep_non_null_rows_pruning_function_or_via_keep_rows"/>
+    <testcase time="0.238" classname="pruning_functions" name="test_keep_non_null_rows"/>
+    <testcase time="0.00900000000000034" classname="pruning_functions" name="bspt_pruner_both_fraction_and_diff_from_control_are_NULL"/>
+    <testcase time="0.0189999999999984" classname="pruning_functions" name="bspt_pruner_both_fraction_and_diff_from_control_are_NULL"/>
+    <testcase time="0.248000000000001" classname="pruning_functions" name="bspt_pruner_with_fraction"/>
+    <testcase time="0.382999999999999" classname="pruning_functions" name="bspt_pruner_with_fraction_and_diff_from_control"/>
+    <testcase time="0.641000000000002" classname="pruning_functions" name="bspt_pruner_with_fraction_and_diff_from_control_and_keeprowtext"/>
+    <testcase time="0.00499999999999545" classname="pruning_functions" name="bspt_pruner_with_fraction_and_diff_from_control_and_keeprowtext"/>
+    <testcase time="0.200000000000003" classname="pruning_functions" name="count_pruner_in_small_groups"/>
+    <testcase time="1.498" classname="pruning_functions" name="bspt_pruner_in_AE_like_tables"/>
     <testcase time="0.00300000000000011" classname="pruning_functions" name="bspt_pruner_in_AE_like_tables"/>
     <testcase time="0.00300000000000011" classname="pruning_functions" name="bspt_pruner_in_AE_like_tables"/>
-    <testcase time="0.213000000000001" classname="pruning_functions" name="bspt_pruner_with_less_obvious_control_specifications"/>
-    <testcase time="0.926000000000002" classname="pruning_functions" name="bspt_pruner_with_less_obvious_control_specifications"/>
+    <testcase time="0.193000000000005" classname="pruning_functions" name="bspt_pruner_with_less_obvious_control_specifications"/>
+    <testcase time="0.901999999999994" classname="pruning_functions" name="bspt_pruner_with_less_obvious_control_specifications"/>
     <testcase time="0.00300000000000011" classname="pruning_functions" name="bspt_pruner_with_less_obvious_control_specifications"/>
-    <testcase time="0.0519999999999996" classname="pruning_functions" name="check_that_if_all_data_is_pruned_leaving_no_rows_the_outcome_is_the_message"/>
-    <testcase time="0.0109999999999957" classname="pruning_functions" name="check_that_if_message_is_changed_this_is_reflected_in_the_final_table_tree"/>
-    <testcase time="0.0140000000000029" classname="pruning_functions" name="check_that_when_spancols_TRUE_is_used_then_we_have_expected_behaviour"/>
-    <testcase time="0.0069999999999979" classname="character(0)" name="_unnamed_">
-      <skipped message="Reason: {rbmi} is not installed. ('test-rbmi.R:3:3')"/>
+    <testcase time="0.0459999999999994" classname="pruning_functions" name="check_that_if_all_data_is_pruned_leaving_no_rows_the_outcome_is_the_message"/>
+    <testcase time="0.0100000000000051" classname="pruning_functions" name="check_that_if_message_is_changed_this_is_reflected_in_the_final_table_tree"/>
+    <testcase time="0.0139999999999958" classname="pruning_functions" name="check_that_when_spancols_TRUE_is_used_then_we_have_expected_behaviour"/>
+    <testcase time="0.0290000000000035" classname="character(0)" name="_unnamed_">
+      <error type="error" message="&lt;packageNotFoundError/error/condition&gt; ('test-rbmi.R:3:3')">&lt;packageNotFoundError/error/condition&gt;
+Error in `library(rbmi)`: there is no package called 'rbmi'
+Backtrace:
+    x
+ 1. +-base::suppressPackageStartupMessages(...) at test-rbmi.R:1:1
+ 2. | \-base::withCallingHandlers(expr, packageStartupMessage = function(c) tryInvokeRestart("muffleMessage"))
+ 3. \-base::library(rbmi) at test-rbmi.R:3:3</error>
     </testcase>
   </testsuite>
-  <testsuite name="relative_risk" timestamp="2025-11-29T06:53:48Z" hostname="4a2988df4dfb" tests="9" skipped="1" failures="0" errors="0" time="0.129">
-    <testcase time="0.0200000000000031" classname="relative_risk" name="s_relative_risk_returns_NA_when_one_group_has_no_responders"/>
-    <testcase time="0.00499999999999545" classname="relative_risk" name="s_relative_risk_returns_NA_when_one_group_has_no_responders"/>
+  <testsuite name="relative_risk" timestamp="2025-12-01T09:34:24Z" hostname="a9253eef8ca4" tests="9" skipped="0" failures="0" errors="1" time="0.16">
+    <testcase time="0.0249999999999986" classname="relative_risk" name="s_relative_risk_returns_NA_when_one_group_has_no_responders"/>
+    <testcase time="0.00600000000000023" classname="relative_risk" name="s_relative_risk_returns_NA_when_one_group_has_no_responders"/>
     <testcase time="0.00600000000000023" classname="relative_risk" name="prop_ratio_cmh_works_as_expected"/>
     <testcase time="0.00600000000000023" classname="relative_risk" name="prop_ratio_cmh_works_as_expected"/>
-    <testcase time="0.007000000000005" classname="relative_risk" name="prop_ratio_cmh_works_also_with_a_single_stratum"/>
-    <testcase time="0.00499999999999545" classname="relative_risk" name="prop_ratio_cmh_works_also_with_a_single_stratum"/>
-    <testcase time="0.0670000000000002" classname="relative_risk" name="a_relative_risk_in_table_layout_gives_same_results_as_with_SAS"/>
-    <testcase time="0.00600000000000023" classname="relative_risk" name="a_relative_risk_in_table_layout_gives_same_results_as_with_SAS"/>
+    <testcase time="0.0069999999999979" classname="relative_risk" name="prop_ratio_cmh_works_also_with_a_single_stratum"/>
+    <testcase time="0.00600000000000023" classname="relative_risk" name="prop_ratio_cmh_works_also_with_a_single_stratum"/>
+    <testcase time="0.0710000000000051" classname="relative_risk" name="a_relative_risk_in_table_layout_gives_same_results_as_with_SAS"/>
+    <testcase time="0.00399999999999778" classname="relative_risk" name="a_relative_risk_in_table_layout_gives_same_results_as_with_SAS"/>
   </testsuite>
-  <testsuite name="remove_col_count" timestamp="2025-11-29T06:53:48Z" hostname="4a2988df4dfb" tests="1" skipped="0" failures="0" errors="0" time="0.092">
-    <testcase time="0.0919999999999987" classname="remove_col_count" name="remove_col_count_works"/>
+  <testsuite name="remove_col_count" timestamp="2025-12-01T09:34:25Z" hostname="a9253eef8ca4" tests="1" skipped="0" failures="0" errors="0" time="0.09">
+    <testcase time="0.0900000000000034" classname="remove_col_count" name="remove_col_count_works"/>
   </testsuite>
-  <testsuite name="resp01_functions" timestamp="2025-11-29T06:53:48Z" hostname="4a2988df4dfb" tests="13" skipped="11" failures="0" errors="0" time="1.021">
-    <testcase time="0.419000000000004" classname="resp01_functions" name="resp01_split_fun_fct_1_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-resp01_functions.R:3:1')"/>
-    </testcase>
-    <testcase time="0.359000000000002" classname="resp01_functions" name="resp01_split_fun_fct_2_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-resp01_functions.R:15:1')"/>
-    </testcase>
-    <testcase time="0.019999999999996" classname="resp01_functions" name="resp01_counts_cfun_1_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-resp01_functions.R:27:1')"/>
-    </testcase>
-    <testcase time="0.0150000000000006" classname="resp01_functions" name="resp01_counts_cfun_2_works_as_expected"/>
-    <testcase time="0.0069999999999979" classname="resp01_functions" name="resp01_counts_cfun_3_works_as_expected"/>
-    <testcase time="0.0130000000000052" classname="resp01_functions" name="resp01_a_comp_stat_logical_or_cmh_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-resp01_functions.R:70:1')"/>
-    </testcase>
-    <testcase time="0.0249999999999986" classname="resp01_functions" name="resp01_a_comp_stat_logical_or_logistic_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-resp01_functions.R:98:1')"/>
-    </testcase>
-    <testcase time="0.0210000000000008" classname="resp01_functions" name="resp01_a_comp_stat_logical_rr_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-resp01_functions.R:126:1')"/>
-    </testcase>
-    <testcase time="0.0279999999999987" classname="resp01_functions" name="resp01_a_comp_stat_factor_or_cmh_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-resp01_functions.R:155:1')"/>
-    </testcase>
-    <testcase time="0.0319999999999965" classname="resp01_functions" name="resp01_a_comp_stat_factor_or_logistic_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-resp01_functions.R:177:1')"/>
-    </testcase>
-    <testcase time="0.0230000000000032" classname="resp01_functions" name="resp01_acfun_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-resp01_functions.R:200:1')"/>
-    </testcase>
-    <testcase time="0.0289999999999964" classname="resp01_functions" name="resp01_acfun_works_2_as_expected">
-      <skipped message="Reason: On CRAN ('test-resp01_functions.R:224:1')"/>
-    </testcase>
-    <testcase time="0.0300000000000011" classname="resp01_functions" name="resp01_acfun_3_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-resp01_functions.R:256:1')"/>
-    </testcase>
+  <testsuite name="resp01_functions" timestamp="2025-12-01T09:34:25Z" hostname="a9253eef8ca4" tests="13" skipped="0" failures="0" errors="0" time="0.929">
+    <testcase time="0.406999999999996" classname="resp01_functions" name="resp01_split_fun_fct_1_works_as_expected"/>
+    <testcase time="0.338000000000001" classname="resp01_functions" name="resp01_split_fun_fct_2_works_as_expected"/>
+    <testcase time="0.0120000000000005" classname="resp01_functions" name="resp01_counts_cfun_1_works_as_expected"/>
+    <testcase time="0.00600000000000023" classname="resp01_functions" name="resp01_counts_cfun_2_works_as_expected"/>
+    <testcase time="0.00600000000000023" classname="resp01_functions" name="resp01_counts_cfun_3_works_as_expected"/>
+    <testcase time="0.0219999999999985" classname="resp01_functions" name="resp01_a_comp_stat_logical_or_cmh_works_as_expected"/>
+    <testcase time="0.017000000000003" classname="resp01_functions" name="resp01_a_comp_stat_logical_or_logistic_works_as_expected"/>
+    <testcase time="0.0139999999999958" classname="resp01_functions" name="resp01_a_comp_stat_logical_rr_works_as_expected"/>
+    <testcase time="0.0240000000000009" classname="resp01_functions" name="resp01_a_comp_stat_factor_or_cmh_works_as_expected"/>
+    <testcase time="0.0240000000000009" classname="resp01_functions" name="resp01_a_comp_stat_factor_or_logistic_works_as_expected"/>
+    <testcase time="0.0189999999999984" classname="resp01_functions" name="resp01_acfun_works_as_expected"/>
+    <testcase time="0.0240000000000009" classname="resp01_functions" name="resp01_acfun_works_2_as_expected"/>
+    <testcase time="0.0159999999999982" classname="resp01_functions" name="resp01_acfun_3_works_as_expected"/>
   </testsuite>
-  <testsuite name="response_by_var" timestamp="2025-11-29T06:53:49Z" hostname="4a2988df4dfb" tests="5" skipped="1" failures="0" errors="0" time="0.644">
-    <testcase time="0.103999999999999" classname="response_by_var" name="response_by_var_various_scenarios"/>
-    <testcase time="0.231000000000002" classname="response_by_var" name="response_by_var_various_scenarios"/>
-    <testcase time="0.121000000000002" classname="response_by_var" name="response_by_var_various_scenarios"/>
-    <testcase time="0.125999999999998" classname="response_by_var" name="response_by_var_various_scenarios"/>
-    <testcase time="0.0619999999999976" classname="response_by_var" name="response_by_var_various_scenarios">
-      <skipped message="Reason: On CRAN ('test-response_by_var.R:18:1')"/>
-    </testcase>
+  <testsuite name="response_by_var" timestamp="2025-12-01T09:34:26Z" hostname="a9253eef8ca4" tests="9" skipped="0" failures="0" errors="0" time="0.641">
+    <testcase time="0.0970000000000013" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.0549999999999997" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.114000000000004" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.0670000000000002" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.0539999999999949" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.0660000000000025" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.054000000000002" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.0769999999999982" classname="response_by_var" name="response_by_var_various_scenarios"/>
+    <testcase time="0.0570000000000022" classname="response_by_var" name="response_by_var_various_scenarios"/>
   </testsuite>
-  <testsuite name="sorting_functions" timestamp="2025-11-29T06:53:50Z" hostname="4a2988df4dfb" tests="7" skipped="0" failures="0" errors="0" time="7.821">
-    <testcase time="0.555" classname="sorting_functions" name="jj_complex_scorefun_is_identical_to_standard_sorting_spanningheadercolvar_NA"/>
-    <testcase time="0.228999999999999" classname="sorting_functions" name="jj_complex_scorefun_is_identical_to_standard_sorting_spanningheadercolvar_spanhead"/>
-    <testcase time="0.231000000000002" classname="sorting_functions" name="jj_complex_scorefun_sorts_correctly_with_colpath"/>
-    <testcase time="0.292999999999999" classname="sorting_functions" name="jj_complex_scorefun_places_specified_category_at_the_start_firstcat"/>
-    <testcase time="0.298000000000002" classname="sorting_functions" name="jj_complex_scorefun_places_specified_category_at_the_end_lastcat"/>
-    <testcase time="3.526" classname="sorting_functions" name="jj_complex_scorefun_uses_first_column_to_sort_usefirstcol"/>
-    <testcase time="2.689" classname="sorting_functions" name="jj_complex_scorefun_uses_first_column_when_no_spanning_header_usefirstcol"/>
+  <testsuite name="sorting_functions" timestamp="2025-12-01T09:34:26Z" hostname="a9253eef8ca4" tests="7" skipped="0" failures="0" errors="0" time="7.676">
+    <testcase time="0.533999999999999" classname="sorting_functions" name="jj_complex_scorefun_is_identical_to_standard_sorting_spanningheadercolvar_NA"/>
+    <testcase time="0.225000000000001" classname="sorting_functions" name="jj_complex_scorefun_is_identical_to_standard_sorting_spanningheadercolvar_spanhead"/>
+    <testcase time="0.227999999999994" classname="sorting_functions" name="jj_complex_scorefun_sorts_correctly_with_colpath"/>
+    <testcase time="0.289999999999999" classname="sorting_functions" name="jj_complex_scorefun_places_specified_category_at_the_start_firstcat"/>
+    <testcase time="0.297000000000004" classname="sorting_functions" name="jj_complex_scorefun_places_specified_category_at_the_end_lastcat"/>
+    <testcase time="3.481" classname="sorting_functions" name="jj_complex_scorefun_uses_first_column_to_sort_usefirstcol"/>
+    <testcase time="2.621" classname="sorting_functions" name="jj_complex_scorefun_uses_first_column_when_no_spanning_header_usefirstcol"/>
   </testsuite>
-  <testsuite name="split_functions" timestamp="2025-11-29T06:53:57Z" hostname="4a2988df4dfb" tests="14" skipped="0" failures="0" errors="0" time="0.755">
-    <testcase time="0.0690000000000026" classname="split_functions" name="cond_rm_facets_works"/>
-    <testcase time="0.00499999999999545" classname="split_functions" name="cond_rm_facets_works"/>
-    <testcase time="0.00400000000000489" classname="split_functions" name="cond_rm_facets_works"/>
+  <testsuite name="split_functions" timestamp="2025-12-01T09:34:34Z" hostname="a9253eef8ca4" tests="14" skipped="0" failures="0" errors="0" time="0.751">
+    <testcase time="0.0750000000000028" classname="split_functions" name="cond_rm_facets_works"/>
+    <testcase time="0.00500000000000256" classname="split_functions" name="cond_rm_facets_works"/>
     <testcase time="0.00399999999999778" classname="split_functions" name="cond_rm_facets_works"/>
-    <testcase time="0.0910000000000011" classname="split_functions" name="rm_levels_works"/>
-    <testcase time="0.134" classname="split_functions" name="real_add_overall_facet_works"/>
-    <testcase time="0.0429999999999993" classname="split_functions" name="make_combo_splitfun_works"/>
+    <testcase time="0.00500000000000256" classname="split_functions" name="cond_rm_facets_works"/>
+    <testcase time="0.0889999999999986" classname="split_functions" name="rm_levels_works"/>
+    <testcase time="0.122999999999998" classname="split_functions" name="real_add_overall_facet_works"/>
+    <testcase time="0.0420000000000016" classname="split_functions" name="make_combo_splitfun_works"/>
     <testcase time="0.00300000000000011" classname="split_functions" name="make_combo_splitfun_works"/>
-    <testcase time="0.127000000000002" classname="split_functions" name="combine_nonblank_works"/>
+    <testcase time="0.131" classname="split_functions" name="combine_nonblank_works"/>
     <testcase time="0.0379999999999967" classname="split_functions" name="combine_nonblank_works"/>
-    <testcase time="0.224000000000004" classname="split_functions" name="rm_blank_levels_works"/>
+    <testcase time="0.222000000000001" classname="split_functions" name="rm_blank_levels_works"/>
     <testcase time="0.0069999999999979" classname="split_functions" name="do_exclude_split_works"/>
-    <testcase time="0.00300000000000011" classname="split_functions" name="do_exclude_split_works"/>
+    <testcase time="0.00400000000000489" classname="split_functions" name="do_exclude_split_works"/>
     <testcase time="0.00300000000000011" classname="split_functions" name="do_exclude_split_works"/>
   </testsuite>
-  <testsuite name="string_to_title" timestamp="2025-11-29T06:53:58Z" hostname="4a2988df4dfb" tests="4" skipped="0" failures="0" errors="0" time="0.029">
+  <testsuite name="string_to_title" timestamp="2025-12-01T09:34:35Z" hostname="a9253eef8ca4" tests="4" skipped="0" failures="0" errors="0" time="0.028">
     <testcase time="0.00999999999999801" classname="string_to_title" name="string_to_title_works_as_expected_for_string"/>
-    <testcase time="0.0069999999999979" classname="string_to_title" name="string_to_title_works_as_expected_for_character_vector"/>
+    <testcase time="0.00600000000000023" classname="string_to_title" name="string_to_title_works_as_expected_for_character_vector"/>
     <testcase time="0.00600000000000023" classname="string_to_title" name="string_to_title_works_as_expected_for_factors"/>
     <testcase time="0.00600000000000023" classname="string_to_title" name="string_to_title_works_as_expected_for_factors_missing_levels_"/>
   </testsuite>
-  <testsuite name="summarize_ancova" timestamp="2025-11-29T06:53:58Z" hostname="4a2988df4dfb" tests="9" skipped="2" failures="0" errors="0" time="0.367">
-    <testcase time="0.0230000000000032" classname="summarize_ancova" name="h_ancova_works_as_expected"/>
-    <testcase time="0.000999999999997669" classname="summarize_ancova" name="h_ancova_works_as_expected"/>
-    <testcase time="0.0200000000000031" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
-    <testcase time="0.000999999999997669" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
+  <testsuite name="summarize_ancova" timestamp="2025-12-01T09:34:35Z" hostname="a9253eef8ca4" tests="9" skipped="0" failures="0" errors="0" time="0.386">
+    <testcase time="0.0229999999999961" classname="summarize_ancova" name="h_ancova_works_as_expected"/>
+    <testcase time="0.00100000000000477" classname="summarize_ancova" name="h_ancova_works_as_expected"/>
+    <testcase time="0.019999999999996" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
+    <testcase time="0.00200000000000244" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
     <testcase time="0.0150000000000006" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
     <testcase time="0.00500000000000256" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
     <testcase time="0.000999999999997669" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
-    <testcase time="0.0589999999999975" classname="summarize_ancova" name="s_summarize_ancova_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-summarize_ancova.R:126:1')"/>
-    </testcase>
-    <testcase time="0.242000000000004" classname="summarize_ancova" name="a_summarize_ancova_j_works_as_expected_in_table_layout">
-      <skipped message="Reason: On CRAN ('test-summarize_ancova.R:145:1')"/>
-    </testcase>
+    <testcase time="0.0829999999999984" classname="summarize_ancova" name="s_summarize_ancova_works_as_expected"/>
+    <testcase time="0.236000000000004" classname="summarize_ancova" name="a_summarize_ancova_j_works_as_expected_in_table_layout"/>
   </testsuite>
-  <testsuite name="summarize_mmrm" timestamp="2025-11-29T06:53:59Z" hostname="4a2988df4dfb" tests="12" skipped="6" failures="0" errors="0" time="2.418">
-    <testcase time="0.216999999999999" classname="summarize_mmrm" name="h_summarize_mmrm_works_with_healthy_input"/>
-    <testcase time="0.0279999999999987" classname="summarize_mmrm" name="h_summarize_mmrm_works_with_healthy_input">
-      <skipped message="Reason: On CRAN ('test-summarize_mmrm.R:15:1')"/>
-    </testcase>
-    <testcase time="0.125999999999998" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_non_ref_cell"/>
-    <testcase time="0.0130000000000052" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_non_ref_cell">
-      <skipped message="Reason: On CRAN ('test-summarize_mmrm.R:33:1')"/>
-    </testcase>
-    <testcase time="0.0189999999999984" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_col_cell"/>
-    <testcase time="0.00399999999999778" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_col_cell">
-      <skipped message="Reason: On CRAN ('test-summarize_mmrm.R:70:1')"/>
-    </testcase>
-    <testcase time="0.0159999999999982" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_row_cell"/>
-    <testcase time="0.00500000000000256" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_row_cell">
-      <skipped message="Reason: On CRAN ('test-summarize_mmrm.R:107:1')"/>
-    </testcase>
-    <testcase time="0.375999999999998" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_in_table_layout"/>
-    <testcase time="0.211000000000006" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_in_table_layout">
-      <skipped message="Reason: On CRAN ('test-summarize_mmrm.R:144:1')"/>
-    </testcase>
-    <testcase time="0.853999999999999" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_below_row_splits"/>
-    <testcase time="0.548999999999999" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_below_row_splits">
-      <skipped message="Reason: On CRAN ('test-summarize_mmrm.R:177:1')"/>
-    </testcase>
+  <testsuite name="summarize_mmrm" timestamp="2025-12-01T09:34:35Z" hostname="a9253eef8ca4" tests="14" skipped="0" failures="0" errors="0" time="2.381">
+    <testcase time="0.200999999999993" classname="summarize_mmrm" name="h_summarize_mmrm_works_with_healthy_input"/>
+    <testcase time="0.0370000000000061" classname="summarize_mmrm" name="h_summarize_mmrm_works_with_healthy_input"/>
+    <testcase time="0.119" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_non_ref_cell"/>
+    <testcase time="0.0219999999999985" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_non_ref_cell"/>
+    <testcase time="0.0219999999999985" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_col_cell"/>
+    <testcase time="0.0150000000000006" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_col_cell"/>
+    <testcase time="0.0069999999999979" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_row_cell"/>
+    <testcase time="0.007000000000005" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_row_cell"/>
+    <testcase time="0.351999999999997" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_in_table_layout"/>
+    <testcase time="0.119" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_in_table_layout"/>
+    <testcase time="0.100000000000001" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_in_table_layout"/>
+    <testcase time="0.838000000000001" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_below_row_splits"/>
+    <testcase time="0.286999999999999" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_below_row_splits"/>
+    <testcase time="0.254999999999995" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_below_row_splits"/>
   </testsuite>
-  <testsuite name="summarize_row_counts" timestamp="2025-11-29T06:54:01Z" hostname="4a2988df4dfb" tests="4" skipped="0" failures="0" errors="0" time="0.516">
-    <testcase time="0.186" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_without_alt_counts"/>
-    <testcase time="0.0769999999999982" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_without_alt_counts"/>
-    <testcase time="0.173999999999999" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_with_alt_counts"/>
-    <testcase time="0.0790000000000006" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_with_alt_counts"/>
+  <testsuite name="summarize_row_counts" timestamp="2025-12-01T09:34:37Z" hostname="a9253eef8ca4" tests="4" skipped="0" failures="0" errors="0" time="0.483">
+    <testcase time="0.160000000000004" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_without_alt_counts"/>
+    <testcase time="0.0859999999999985" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_without_alt_counts"/>
+    <testcase time="0.160000000000004" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_with_alt_counts"/>
+    <testcase time="0.0769999999999982" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_with_alt_counts"/>
   </testsuite>
-  <testsuite name="tabulate_lsmeans" timestamp="2025-11-29T06:54:02Z" hostname="4a2988df4dfb" tests="7" skipped="2" failures="0" errors="0" time="1.618">
-    <testcase time="0.112000000000002" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
-    <testcase time="0.000999999999997669" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
-    <testcase time="0.0129999999999981" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column">
-      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans.R:1:1')"/>
-    </testcase>
-    <testcase time="0.114000000000004" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly"/>
-    <testcase time="1.296" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly">
-      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans.R:49:1')"/>
-    </testcase>
-    <testcase time="0.0799999999999983" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_ANCOVA_fit_when_not_in_reference_column"/>
-    <testcase time="0.00200000000000244" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_ANCOVA_fit_when_not_in_reference_column"/>
+  <testsuite name="tabulate_lsmeans" timestamp="2025-12-01T09:34:38Z" hostname="a9253eef8ca4" tests="11" skipped="0" failures="0" errors="0" time="1.572">
+    <testcase time="0.119999999999997" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.00100000000000477" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.00799999999999557" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.00800000000000267" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.0069999999999979" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.103000000000002" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly"/>
+    <testcase time="0.420000000000002" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly"/>
+    <testcase time="0.410999999999994" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly"/>
+    <testcase time="0.420000000000002" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly"/>
+    <testcase time="0.0730000000000004" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_ANCOVA_fit_when_not_in_reference_column"/>
+    <testcase time="0.00100000000000477" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_ANCOVA_fit_when_not_in_reference_column"/>
   </testsuite>
-  <testsuite name="tabulate_lsmeans_wide" timestamp="2025-11-29T06:54:03Z" hostname="4a2988df4dfb" tests="10" skipped="6" failures="0" errors="0" time="1.677">
-    <testcase time="0.0450000000000017" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans_wide.R:3:1')"/>
-    </testcase>
-    <testcase time="0.0309999999999988" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group">
-      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans_wide.R:121:1')"/>
-    </testcase>
-    <testcase time="0.0360000000000014" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case">
-      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans_wide.R:194:1')"/>
-    </testcase>
-    <testcase time="0.333999999999996" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected"/>
-    <testcase time="0.155999999999999" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans_wide.R:281:1')"/>
-    </testcase>
-    <testcase time="0.114000000000004" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group"/>
-    <testcase time="0.308999999999997" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group"/>
-    <testcase time="0.192999999999998" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group">
-      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans_wide.R:310:1')"/>
-    </testcase>
-    <testcase time="0.32" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_can_omit_variance_and_p_value_columns"/>
-    <testcase time="0.138999999999996" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_can_omit_variance_and_p_value_columns">
-      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans_wide.R:355:1')"/>
-    </testcase>
+  <testsuite name="tabulate_lsmeans_wide" timestamp="2025-12-01T09:34:39Z" hostname="a9253eef8ca4" tests="20" skipped="0" failures="0" errors="0" time="1.565">
+    <testcase time="0.019999999999996" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
+    <testcase time="0.00800000000000267" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
+    <testcase time="0.00799999999999557" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
+    <testcase time="0.00800000000000267" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
+    <testcase time="0.0069999999999979" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
+    <testcase time="0.00800000000000267" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
+    <testcase time="0.0129999999999981" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group"/>
+    <testcase time="0.00800000000000267" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group"/>
+    <testcase time="0.00799999999999557" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group"/>
+    <testcase time="0.0130000000000052" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
+    <testcase time="0.00799999999999557" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
+    <testcase time="0.00800000000000267" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
+    <testcase time="0.00800000000000267" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
+    <testcase time="0.322999999999993" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected"/>
+    <testcase time="0.151000000000003" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected"/>
+    <testcase time="0.103999999999999" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group"/>
+    <testcase time="0.280000000000001" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group"/>
+    <testcase time="0.189" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group"/>
+    <testcase time="0.267000000000003" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_can_omit_variance_and_p_value_columns"/>
+    <testcase time="0.125999999999998" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_can_omit_variance_and_p_value_columns"/>
   </testsuite>
-  <testsuite name="tabulate_rbmi" timestamp="2025-11-29T06:54:05Z" hostname="4a2988df4dfb" tests="13" skipped="1" failures="0" errors="0" time="0.334">
-    <testcase time="0.0320000000000036" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_ANCOVA_case"/>
-    <testcase time="0.00999999999999801" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_MMRM_case"/>
+  <testsuite name="tabulate_rbmi" timestamp="2025-12-01T09:34:41Z" hostname="a9253eef8ca4" tests="13" skipped="0" failures="0" errors="0" time="0.308">
+    <testcase time="0.0219999999999985" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_ANCOVA_case"/>
+    <testcase time="0.00900000000000034" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_MMRM_case"/>
     <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_MMRM_case"/>
     <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_MMRM_case"/>
-    <testcase time="0.019999999999996" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_ANCOVA_case"/>
-    <testcase time="0.0100000000000051" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
+    <testcase time="0.0180000000000007" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_ANCOVA_case"/>
+    <testcase time="0.00900000000000034" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
     <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
     <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
-    <testcase time="0.0189999999999984" classname="tabulate_rbmi" name="s_rbmi_lsmeans_works_with_as_expected_with_.in_ref_col_TRUE"/>
+    <testcase time="0.0169999999999959" classname="tabulate_rbmi" name="s_rbmi_lsmeans_works_with_as_expected_with_.in_ref_col_TRUE"/>
     <testcase time="0.0200000000000031" classname="tabulate_rbmi" name="s_rbmi_lsmeans_works_with_as_expected_with_.in_ref_col_FALSE"/>
-    <testcase time="0.0219999999999985" classname="tabulate_rbmi" name="s_rbmi_lsmeans_also_works_with_show_relative_increase"/>
-    <testcase time="0.107999999999997" classname="tabulate_rbmi" name="a_rbmi_lsmeans_works_as_expected_in_table_layout"/>
-    <testcase time="0.0810000000000031" classname="tabulate_rbmi" name="a_rbmi_lsmeans_works_as_expected_in_table_layout">
-      <skipped message="Reason: On CRAN ('test-tabulate_rbmi.R:284:1')"/>
-    </testcase>
+    <testcase time="0.0200000000000031" classname="tabulate_rbmi" name="s_rbmi_lsmeans_also_works_with_show_relative_increase"/>
+    <testcase time="0.103999999999999" classname="tabulate_rbmi" name="a_rbmi_lsmeans_works_as_expected_in_table_layout"/>
+    <testcase time="0.0769999999999982" classname="tabulate_rbmi" name="a_rbmi_lsmeans_works_as_expected_in_table_layout"/>
   </testsuite>
-  <testsuite name="tern_utils_default_stats_formats_labels" timestamp="2025-11-29T06:54:05Z" hostname="4a2988df4dfb" tests="49" skipped="4" failures="0" errors="0" time="0.288">
-    <testcase time="0.0229999999999961" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+  <testsuite name="tern_utils_default_stats_formats_labels" timestamp="2025-12-01T09:34:41Z" hostname="a9253eef8ca4" tests="52" skipped="0" failures="0" errors="0" time="0.241">
+    <testcase time="0.0109999999999957" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
     <testcase time="0.007000000000005" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.0069999999999979" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.00999999999999801" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.00399999999999778" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00199999999999534" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.007000000000005" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00199999999999534" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00200000000000244" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00800000000000267" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00499999999999545" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.00100000000000477" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults">
-      <skipped message="Reason: On CRAN ('test-tern_utils_default_stats_formats_labels.R:15:1')"/>
-    </testcase>
-    <testcase time="0.0159999999999982" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
-    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
-    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
     <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
-    <testcase time="0.00399999999999778" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
     <testcase time="0.00500000000000256" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
-    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
+    <testcase time="0.00499999999999545" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00400000000000489" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00500000000000256" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
     <testcase time="0.00399999999999778" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
-    <testcase time="0.00500000000000256" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
+    <testcase time="0.00400000000000489" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
     <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
@@ -751,211 +713,207 @@
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
-    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.00499999999999545" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
     <testcase time="0.0069999999999979" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
-    <testcase time="0.00399999999999778" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
-    <testcase time="0.000999999999997669" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-tern_utils_default_stats_formats_labels.R:142:1')"/>
-    </testcase>
-    <testcase time="0.0160000000000053" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_with_labels_in_works_when_adding_levels_to_stats"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.007000000000005" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_with_labels_in_works_when_adding_levels_to_stats"/>
     <testcase time="0.0069999999999979" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_fine_for_cases_with_levels"/>
     <testcase time="0.00500000000000256" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
     <testcase time="0.00799999999999557" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
-    <testcase time="0.00400000000000489" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
-    <testcase time="0.000999999999997669" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-tern_utils_default_stats_formats_labels.R:253:1')"/>
-    </testcase>
-    <testcase time="0.0169999999999959" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_correctly_combines_labels_in_and_label_attr_from_stats"/>
-    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".unlist_keep_nulls_works_as_expected_non_recursively"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_correctly_combines_labels_in_and_label_attr_from_stats"/>
+    <testcase time="0.0069999999999979" classname="tern_utils_default_stats_formats_labels" name=".unlist_keep_nulls_works_as_expected_non_recursively"/>
     <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".unlist_keep_nulls_works_as_expected_non_recursively_with_NA"/>
-    <testcase time="0.007000000000005" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
-    <testcase time="0.00199999999999534" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
+    <testcase time="0.00200000000000244" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
-    <testcase time="0.00900000000000034" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_single_input">
-      <skipped message="Reason: On CRAN ('test-tern_utils_default_stats_formats_labels.R:315:1')"/>
-    </testcase>
-    <testcase time="0.017000000000003" classname="tern_utils_default_stats_formats_labels" name=".apply_stat_functions_works_as_expected_without_custom_stat_functions"/>
-    <testcase time="0.0069999999999979" classname="tern_utils_default_stats_formats_labels" name=".apply_stat_functions_works_as_expected_with_custom_stat_functions"/>
+    <testcase time="0.00999999999999801" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_single_input"/>
+    <testcase time="0.007000000000005" classname="tern_utils_default_stats_formats_labels" name=".apply_stat_functions_works_as_expected_without_custom_stat_functions"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".apply_stat_functions_works_as_expected_with_custom_stat_functions"/>
   </testsuite>
-  <testsuite name="test_proportion_diff" timestamp="2025-11-29T06:54:05Z" hostname="4a2988df4dfb" tests="22" skipped="6" failures="0" errors="0" time="0.285">
-    <testcase time="0.0420000000000016" classname="test_proportion_diff" name="s_test_proportion_diff_works_as_expected">
-      <skipped message="Reason: On CRAN ('test-test_proportion_diff.R:1:1')"/>
-    </testcase>
-    <testcase time="0.0480000000000018" classname="test_proportion_diff" name="a_test_proportion_diff_works_as_expected_in_table_layout"/>
-    <testcase time="0.0339999999999989" classname="test_proportion_diff" name="a_test_proportion_diff_works_as_expected_in_table_layout">
-      <skipped message="Reason: On CRAN ('test-test_proportion_diff.R:40:1')"/>
-    </testcase>
-    <testcase time="0.0169999999999959" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
-    <testcase time="0.00800000000000267" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+  <testsuite name="test_proportion_diff" timestamp="2025-12-01T09:34:42Z" hostname="a9253eef8ca4" tests="32" skipped="0" failures="0" errors="0" time="0.25">
+    <testcase time="0.0189999999999984" classname="test_proportion_diff" name="s_test_proportion_diff_works_as_expected"/>
+    <testcase time="0.00900000000000034" classname="test_proportion_diff" name="s_test_proportion_diff_works_as_expected"/>
+    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="s_test_proportion_diff_works_as_expected"/>
+    <testcase time="0.046999999999997" classname="test_proportion_diff" name="a_test_proportion_diff_works_as_expected_in_table_layout"/>
+    <testcase time="0.0320000000000036" classname="test_proportion_diff" name="a_test_proportion_diff_works_as_expected_in_table_layout"/>
     <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
-    <testcase time="0.00500000000000256" classname="test_proportion_diff" name="prop_chisq_returns_right_result">
-      <skipped message="Reason: On CRAN ('test-test_proportion_diff.R:68:1')"/>
-    </testcase>
-    <testcase time="0.0169999999999959" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
+    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.00199999999999534" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
     <testcase time="0.007000000000005" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
-    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
-    <testcase time="0.00499999999999545" classname="test_proportion_diff" name="prop_cmh_returns_right_result">
-      <skipped message="Reason: On CRAN ('test-test_proportion_diff.R:91:1')"/>
-    </testcase>
-    <testcase time="0.0200000000000031" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00199999999999534" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
+    <testcase time="0.007000000000005" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
+    <testcase time="0.00199999999999534" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
+    <testcase time="0.007000000000005" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
+    <testcase time="0.00900000000000034" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00199999999999534" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
     <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00999999999999801" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00999999999999801" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation">
-      <skipped message="Reason: On CRAN ('test-test_proportion_diff.R:112:1')"/>
-    </testcase>
-    <testcase time="0.0169999999999959" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
-    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00500000000000256" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00199999999999534" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.007000000000005" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00499999999999545" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
     <testcase time="0.007000000000005" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
-    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_fisher_returns_right_result">
-      <skipped message="Reason: On CRAN ('test-test_proportion_diff.R:171:1')"/>
-    </testcase>
+    <testcase time="0.00199999999999534" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.007000000000005" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.00199999999999534" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.007000000000005" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
   </testsuite>
-  <testsuite name="titles_file" timestamp="2025-11-29T06:54:06Z" hostname="4a2988df4dfb" tests="6" skipped="0" failures="0" errors="0" time="0.068">
+  <testsuite name="titles_file" timestamp="2025-12-01T09:34:42Z" hostname="a9253eef8ca4" tests="6" skipped="0" failures="0" errors="0" time="0.052">
+    <testcase time="0.0120000000000005" classname="titles_file" name="title_files_work"/>
+    <testcase time="0.00599999999999312" classname="titles_file" name="title_files_work"/>
     <testcase time="0.0240000000000009" classname="titles_file" name="title_files_work"/>
-    <testcase time="0.00600000000000023" classname="titles_file" name="title_files_work"/>
-    <testcase time="0.0259999999999962" classname="titles_file" name="title_files_work"/>
-    <testcase time="0.00399999999999778" classname="titles_file" name="title_files_work"/>
+    <testcase time="0.00200000000000244" classname="titles_file" name="title_files_work"/>
     <testcase time="0.00300000000000011" classname="titles_file" name="title_files_work"/>
     <testcase time="0.00500000000000256" classname="titles_file" name="title_files_work"/>
   </testsuite>
-  <testsuite name="tt_to_tblfile" timestamp="2025-11-29T06:54:06Z" hostname="4a2988df4dfb" tests="65" skipped="1" failures="18" errors="0" time="36.111">
-    <testcase time="6.411" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_input_Table_and_fontspec_size_8"/>
-    <testcase time="0.192999999999998" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_an_empty_listing">
+  <testsuite name="tt_to_tblfile" timestamp="2025-12-01T09:34:42Z" hostname="a9253eef8ca4" tests="71" skipped="0" failures="18" errors="0" time="34.867">
+    <testcase time="5.995" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_input_Table_and_fontspec_size_8"/>
+    <testcase time="0.176000000000002" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_an_empty_listing">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testemptylisting.rtf' ('test-tt_to_tblfile.R:52:3')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testemptylisting.rtf'</failure>
     </testcase>
-    <testcase time="0.0110000000000028" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_an_empty_listing"/>
-    <testcase time="0.00499999999999545" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_an_empty_listing"/>
-    <testcase time="0.0130000000000052" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
-    <testcase time="1.85599999999999" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
-    <testcase time="0.423000000000002" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
-    <testcase time="0.00300000000000011" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
+    <testcase time="0.00999999999999801" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_an_empty_listing"/>
+    <testcase time="0.00500000000000256" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_an_empty_listing"/>
+    <testcase time="0.0109999999999957" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
+    <testcase time="1.76900000000001" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
+    <testcase time="0.399000000000001" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
     <testcase time="0.00399999999999778" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
-    <testcase time="6.629" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
-    <testcase time="0.007000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
+    <testcase time="0.00399999999999778" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
+    <testcase time="6.31300000000001" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00699999999999079" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part1of7.rtf' ('test-tt_to_tblfile.R:98:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part1of7.rtf'</failure>
     </testcase>
-    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
-    <testcase time="0.00699999999999079" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
+    <testcase time="0.0109999999999957" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00100000000000477" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00799999999999557" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part2of7.rtf' ('test-tt_to_tblfile.R:98:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part2of7.rtf'</failure>
     </testcase>
     <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
-    <testcase time="0.007000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00600000000000023" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part3of7.rtf' ('test-tt_to_tblfile.R:98:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part3of7.rtf'</failure>
     </testcase>
-    <testcase time="0.019999999999996" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
-    <testcase time="0.0120000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00600000000000023" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part4of7.rtf' ('test-tt_to_tblfile.R:98:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part4of7.rtf'</failure>
     </testcase>
-    <testcase time="0.0150000000000006" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
-    <testcase time="0.00699999999999079" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00600000000000023" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part5of7.rtf' ('test-tt_to_tblfile.R:98:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part5of7.rtf'</failure>
     </testcase>
-    <testcase time="0.0110000000000099" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
-    <testcase time="0.00699999999999079" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00600000000000023" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part6of7.rtf' ('test-tt_to_tblfile.R:98:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part6of7.rtf'</failure>
     </testcase>
     <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
-    <testcase time="0.007000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00600000000000023" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part7of7.rtf' ('test-tt_to_tblfile.R:98:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test2part7of7.rtf'</failure>
     </testcase>
-    <testcase time="0.0109999999999957" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
-    <testcase time="0.00100000000000477" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
-      <skipped message="Reason: On CRAN ('test-tt_to_tblfile.R:84:1')"/>
-    </testcase>
-    <testcase time="8.782" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE"/>
-    <testcase time="0.00799999999999557" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE">
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="0.00199999999999534" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table"/>
+    <testcase time="8.458" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE"/>
+    <testcase time="0.007000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test3allparts.rtf' ('test-tt_to_tblfile.R:116:3')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test3allparts.rtf'</failure>
     </testcase>
-    <testcase time="0.0110000000000099" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE"/>
-    <testcase time="4.37299999999999" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE"/>
-    <testcase time="0.00500000000000966" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE"/>
-    <testcase time="0.103999999999999" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE"/>
-    <testcase time="0.271000000000001" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE"/>
+    <testcase time="4.259" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE"/>
+    <testcase time="0.00499999999999545" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE"/>
+    <testcase time="0.108999999999995" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE"/>
+    <testcase time="0.292000000000002" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test1.rtf' ('test-tt_to_tblfile.R:131:3')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test1.rtf'</failure>
     </testcase>
-    <testcase time="0.0109999999999957" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
-    <testcase time="0.204999999999998" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
+    <testcase time="0.0120000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.210000000000008" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test1b.rtf' ('test-tt_to_tblfile.R:132:3')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/test1b.rtf'</failure>
     </testcase>
-    <testcase time="0.0109999999999957" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
-    <testcase time="0.228999999999999" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
-    <testcase time="0.00300000000000011" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
-    <testcase time="0.372" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
+    <testcase time="0.0120000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.231999999999999" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00399999999999068" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.374000000000009" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/listing1.rtf' ('test-tt_to_tblfile.R:137:3')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/listing1.rtf'</failure>
     </testcase>
-    <testcase time="0.0110000000000099" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
-    <testcase time="0.0519999999999925" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
-    <testcase time="4.319" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
-    <testcase time="0.007000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
+    <testcase time="0.0109999999999957" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.063999999999993" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="4.32300000000001" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00699999999999079" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart1of6.rtf' ('test-tt_to_tblfile.R:160:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart1of6.rtf'</failure>
     </testcase>
-    <testcase time="0.00999999999999091" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
-    <testcase time="0.007000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
+    <testcase time="0.0110000000000099" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00699999999999079" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart2of6.rtf' ('test-tt_to_tblfile.R:160:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart2of6.rtf'</failure>
     </testcase>
     <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
-    <testcase time="0.007000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
+    <testcase time="0.00800000000000978" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart3of6.rtf' ('test-tt_to_tblfile.R:160:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart3of6.rtf'</failure>
     </testcase>
-    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
-    <testcase time="0.00699999999999079" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
+    <testcase time="0.0109999999999957" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.00799999999999557" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart4of6.rtf' ('test-tt_to_tblfile.R:160:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart4of6.rtf'</failure>
     </testcase>
-    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
     <testcase time="0.007000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart5of6.rtf' ('test-tt_to_tblfile.R:160:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart5of6.rtf'</failure>
     </testcase>
-    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
-    <testcase time="0.00699999999999079" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
+    <testcase time="0.0109999999999957" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.007000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
       <failure type="failure" message="Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart6of6.rtf' ('test-tt_to_tblfile.R:160:5')">Adding new file snapshot: 'tests/testthat/_snaps/tt_to_tblfile/testpagebypart6of6.rtf'</failure>
     </testcase>
-    <testcase time="0.0100000000000051" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
+    <testcase time="0.0109999999999957" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error"/>
     <testcase time="0.00600000000000023" classname="tt_to_tblfile" name="cwidths_final_adj_calculates_adjusted_column_widths_correctly"/>
     <testcase time="0.00400000000000489" classname="tt_to_tblfile" name="cwidths_final_adj_calculates_adjusted_column_widths_correctly"/>
     <testcase time="0.00699999999999079" classname="tt_to_tblfile" name="make_bordmat_row_creates_border_matrix_row_correctly"/>
     <testcase time="0.00100000000000477" classname="tt_to_tblfile" name="make_bordmat_row_creates_border_matrix_row_correctly"/>
     <testcase time="0.00300000000000011" classname="tt_to_tblfile" name="make_bordmat_row_creates_border_matrix_row_correctly"/>
-    <testcase time="0.265000000000001" classname="tt_to_tblfile" name="tt_to_tlgrtf_validates_table_structure_correctly"/>
-    <testcase time="0.207999999999998" classname="tt_to_tblfile" name="tt_to_tlgrtf_validates_table_structure_correctly"/>
-    <testcase time="0.197000000000003" classname="tt_to_tblfile" name="tt_to_tlgrtf_validates_table_structure_correctly"/>
-    <testcase time="0.254999999999995" classname="tt_to_tblfile" name="tt_to_tlgrtf_does_not_warn_for_valid_table_structures"/>
-    <testcase time="0.25800000000001" classname="tt_to_tblfile" name="tt_to_tlgrtf_respects_JUNCO_DISABLE_VALIDATION_environment_variable"/>
-    <testcase time="0.347999999999999" classname="tt_to_tblfile" name="more_top_left_than_col_headers_works"/>
-    <testcase time="0.00399999999999068" classname="tt_to_tblfile" name="more_top_left_than_col_headers_works"/>
+    <testcase time="0.262" classname="tt_to_tblfile" name="tt_to_tlgrtf_validates_table_structure_correctly"/>
+    <testcase time="0.206000000000003" classname="tt_to_tblfile" name="tt_to_tlgrtf_validates_table_structure_correctly"/>
+    <testcase time="0.200999999999993" classname="tt_to_tblfile" name="tt_to_tlgrtf_validates_table_structure_correctly"/>
+    <testcase time="0.263000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_does_not_warn_for_valid_table_structures"/>
+    <testcase time="0.260000000000005" classname="tt_to_tblfile" name="tt_to_tlgrtf_respects_JUNCO_DISABLE_VALIDATION_environment_variable"/>
+    <testcase time="0.346999999999994" classname="tt_to_tblfile" name="more_top_left_than_col_headers_works"/>
+    <testcase time="0.00300000000000011" classname="tt_to_tblfile" name="more_top_left_than_col_headers_works"/>
   </testsuite>
-  <testsuite name="varia" timestamp="2025-11-29T06:54:42Z" hostname="4a2988df4dfb" tests="16" skipped="0" failures="0" errors="0" time="2.575">
-    <testcase time="0.0490000000000066" classname="varia" name="a_freq_j_works_old_count_unq_case_"/>
-    <testcase time="0.0379999999999967" classname="varia" name="a_freq_j_works_old_count_unq_case_"/>
+  <testsuite name="varia" timestamp="2025-12-01T09:35:17Z" hostname="a9253eef8ca4" tests="16" skipped="0" failures="0" errors="0" time="2.565">
+    <testcase time="0.0500000000000114" classname="varia" name="a_freq_j_works_old_count_unq_case_"/>
+    <testcase time="0.0369999999999919" classname="varia" name="a_freq_j_works_old_count_unq_case_"/>
     <testcase time="0.155000000000001" classname="varia" name="a_freq_subcol_j_works_old_case_of_cpct_subcol_"/>
-    <testcase time="0.537000000000006" classname="varia" name="a_freq_combos_j_old_cpct_filter_combos_case_works"/>
-    <testcase time="0.608999999999995" classname="varia" name="_a_freq_j_works"/>
-    <testcase time="0.224000000000004" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
-    <testcase time="0.521000000000001" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
+    <testcase time="0.534999999999997" classname="varia" name="a_freq_combos_j_old_cpct_filter_combos_case_works"/>
+    <testcase time="0.617000000000004" classname="varia" name="_a_freq_j_works"/>
+    <testcase time="0.230000000000004" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
+    <testcase time="0.483999999999995" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
     <testcase time="0.00900000000000034" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
-    <testcase time="0.00799999999999557" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
-    <testcase time="0.0699999999999932" classname="varia" name="_a_freq_j_works"/>
-    <testcase time="0.0840000000000032" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
-    <testcase time="0.0130000000000052" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
+    <testcase time="0.00900000000000034" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
+    <testcase time="0.0799999999999983" classname="varia" name="_a_freq_j_works"/>
+    <testcase time="0.0829999999999984" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
+    <testcase time="0.01400000000001" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
     <testcase time="0.00300000000000011" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
-    <testcase time="0.195999999999998" classname="varia" name="a_summarize_ex_j_works"/>
-    <testcase time="0.0249999999999915" classname="varia" name="a_summarize_ex_j_works"/>
-    <testcase time="0.034000000000006" classname="varia" name="a_summarize_ex_j_works"/>
+    <testcase time="0.200999999999993" classname="varia" name="a_summarize_ex_j_works"/>
+    <testcase time="0.0250000000000057" classname="varia" name="a_summarize_ex_j_works"/>
+    <testcase time="0.0330000000000013" classname="varia" name="a_summarize_ex_j_works"/>
   </testsuite>
-  <testsuite name="visit_levels" timestamp="2025-11-29T06:54:44Z" hostname="4a2988df4dfb" tests="8" skipped="0" failures="0" errors="0" time="0.043">
-    <testcase time="0.0120000000000005" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
+  <testsuite name="visit_levels" timestamp="2025-12-01T09:35:19Z" hostname="a9253eef8ca4" tests="8" skipped="0" failures="0" errors="0" time="0.042">
+    <testcase time="0.0109999999999957" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
+    <testcase time="0.00400000000000489" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
+    <testcase time="0.0029999999999859" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
     <testcase time="0.00300000000000011" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
-    <testcase time="0.00300000000000011" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
-    <testcase time="0.00300000000000011" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
-    <testcase time="0.00900000000000034" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
+    <testcase time="0.00800000000000978" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
     <testcase time="0.00499999999999545" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
     <testcase time="0.00300000000000011" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
-    <testcase time="0.00500000000000966" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
+    <testcase time="0.00499999999999545" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
   </testsuite>
 </testsuites>
