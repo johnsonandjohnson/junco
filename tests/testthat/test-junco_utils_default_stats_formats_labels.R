@@ -16,8 +16,6 @@ test_that("get_formats_from_stats works as expected", {
   expect_snapshot_value(res$quantiles_upper, style = "json")
   environment(res[["range_with_cens_info"]]) <- baseenv()
   expect_snapshot_value(res$range_with_cens_info, style = "json")
-
-
 })
 
 test_that("get_labels_from_stats works as expected", {
