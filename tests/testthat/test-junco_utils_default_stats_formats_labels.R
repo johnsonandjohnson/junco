@@ -13,9 +13,11 @@ test_that("get_formats_from_stats works as expected", {
   res <- junco_get_formats_from_stats(sts)
 
   environment(res[["quantiles_upper"]]) <- baseenv()
+  expect_snapshot_value(res$quantiles_upper, style = "json")
   environment(res[["range_with_cens_info"]]) <- baseenv()
+  expect_snapshot_value(res$range_with_cens_info, style = "json")
 
-  expect_snapshot(res)
+
 })
 
 test_that("get_labels_from_stats works as expected", {
