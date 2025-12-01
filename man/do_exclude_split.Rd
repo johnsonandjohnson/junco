@@ -37,4 +37,3 @@ do_exclude_split(
   )
 )
 }
-\keyword{internal}
