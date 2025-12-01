@@ -112,6 +112,7 @@ reference:
     - cond_rm_facets
     - create_colspan_map
     - create_colspan_var
+    - do_exclude_split
     - make_combo_splitfun
     - real_add_overall_facet
 
