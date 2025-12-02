@@ -15,7 +15,7 @@ ADSL <- data.frame(
   PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
 )
 
-lyt <- basic_table() |>
+lyt <- basic_table(round_type = "sas") |>
   split_cols_by("TRT01P") |>
   add_overall_col("Total") |>
   analyze("FASFL",
@@ -37,7 +37,7 @@ lyt <- basic_table() |>
     show_labels = "visible"
   )
 
-tt <- build_table(lyt, ADSL, round_type = "sas")
+tt <- build_table(lyt, ADSL)
 
 test_that("ttype_wrap_vec works as expected", {
   result <- ttype_wrap_vec(vec = c(1, 2, 3, 4) %>% as.character(), fontspec = fontspec, width = 2)

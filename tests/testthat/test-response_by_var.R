@@ -16,7 +16,7 @@ adsl <- adsl %>%
   mutate(TRTEMFL = ifelse(is.na(TRTEMFL), "N", "Y"))
 
 test_that("response_by_var various scenarios", {
-  lyt <- basic_table(show_colcounts = TRUE) %>%
+  lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(
       vars = "SEX",
@@ -28,7 +28,7 @@ test_that("response_by_var various scenarios", {
     )
 
   ## Scenario 1: TRTEMFL has no missing values and values Y/N
-  tbl <- build_table(lyt, adsl, round_type = "sas")
+  tbl <- build_table(lyt, adsl)
   res1 <- cell_values(tbl[c("SEX", "F"), "A: Drug X"])
   res1 <- unlist(unname(res1))
 
@@ -47,7 +47,7 @@ test_that("response_by_var various scenarios", {
   adsl2$TRTEMFL <- ifelse(adsl2$TRTEMFL == "Y", "Y", NA)
   adsl2$TRTEMFL <- factor(adsl2$TRTEMFL, levels = "Y")
 
-  tbl2 <- build_table(lyt, adsl2, round_type = "sas")
+  tbl2 <- build_table(lyt, adsl2)
   expect_snapshot(tbl2)
 
   ## Scenario 3: TRTEMFL has missing values and Y only, and analysis variable has missing values
@@ -56,7 +56,7 @@ test_that("response_by_var various scenarios", {
   adsl3$TRTEMFL <- factor(adsl3$TRTEMFL, levels = "Y")
   adsl3$SEX[1:10] <- NA_character_
 
-  tbl3 <- build_table(lyt, adsl3, round_type = "sas")
+  tbl3 <- build_table(lyt, adsl3)
   res3 <- cell_values(tbl3[c("SEX", "F"), "A: Drug X"])
   res3 <- unlist(unname(res3))
 
@@ -75,7 +75,7 @@ test_that("response_by_var various scenarios", {
   adsl4$SEX[1:10] <- NA_character_
   adsl4$TRTEMFL[8:15] <- NA_character_
 
-  tbl4 <- build_table(lyt, adsl4, round_type = "sas")
+  tbl4 <- build_table(lyt, adsl4)
   res4 <- cell_values(tbl4[c("SEX", "F"), "A: Drug X"])
   res4 <- unlist(unname(res4))
 
@@ -96,7 +96,7 @@ test_that("response_by_var various scenarios", {
     levels = c(levels(adsl5$SEX), "extra level")
   )
 
-  tbl5 <- build_table(lyt, adsl5, round_type = "sas")
+  tbl5 <- build_table(lyt, adsl5)
   res5 <- cell_values(tbl5[c("SEX", "extra level"), "A: Drug X"])
   res5 <- unlist(unname(res5))
 

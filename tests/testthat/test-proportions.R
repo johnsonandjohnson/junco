@@ -103,9 +103,9 @@ test_that("a_proportion_ci_factor works as expected", {
 })
 
 test_that("prop_split_fun works as expected", {
-  result <- basic_table() %>%
+  result <- basic_table(round_type = "sas") %>%
     split_cols_by("ID", split_fun = prop_split_fun) |>
-    build_table(formatters::DM, round_type = "sas")
+    build_table(formatters::DM)
   expect_snapshot(result)
 })
 

@@ -2,7 +2,7 @@ library(rtables)
 
 test_that("analyze_values correctly modifies layout with proper formats", {
   # Create a simple layout
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     split_cols_by("ARM")
 
   # Define variables to analyze
@@ -33,7 +33,7 @@ test_that("analyze_values correctly modifies layout with proper formats", {
   )
 
   # Build the table
-  tbl <- build_table(modified_lyt, mock_data, round_type = "sas")
+  tbl <- build_table(modified_lyt, mock_data)
 
   # Check that the table has the expected structure
   expect_true("AGE" %in% row.names(tbl))

@@ -94,7 +94,7 @@ test_that("a_summarize_aval_chg_diff_j works as expected", {
 
   ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     ### first columns
     split_cols_by(
       "colspan_trt",
@@ -142,7 +142,7 @@ test_that("a_summarize_aval_chg_diff_j works as expected", {
     )
 
   # Test that the table builds without errors
-  result <- expect_no_error(build_table(lyt, ADEG, round_type = "sas"))
+  result <- expect_no_error(build_table(lyt, ADEG))
 
   # Check that the result is a valid rtable
   expect_s4_class(result, "TableTree")
@@ -230,7 +230,7 @@ test_that("a_summarize_aval_chg_diff_j works with ancova = TRUE", {
   )
   ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     ### first columns
     split_cols_by(
       "colspan_trt",
@@ -279,7 +279,7 @@ test_that("a_summarize_aval_chg_diff_j works with ancova = TRUE", {
     )
 
   # Test that the table builds without errors
-  result <- expect_no_error(build_table(lyt, ADEG, round_type = "sas"))
+  result <- expect_no_error(build_table(lyt, ADEG))
 
   # Check that the result is a valid rtable
   expect_s4_class(result, "TableTree")

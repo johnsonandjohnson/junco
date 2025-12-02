@@ -1,7 +1,7 @@
 test_that("insert_blank_line works as expected", {
   ADSL <- ex_adsl
 
-  lyt <- basic_table() |>
+  lyt <- basic_table(round_type = "sas") |>
     split_cols_by("ARM") |>
     split_rows_by("STRATA1") |>
     analyze(vars = "AGE", afun = function(x) {
@@ -23,7 +23,7 @@ test_that("insert_blank_line works as expected", {
     })
 
   # We don't want to see any warning about duplicate table names here.
-  tbl <- expect_silent(build_table(lyt, ADSL, round_type = "sas"))
+  tbl <- expect_silent(build_table(lyt, ADSL))
   tbl
 
   # We expect 6 blank lines: after mean and range, for each of the
@@ -34,7 +34,7 @@ test_that("insert_blank_line works as expected", {
 test_that("insert_blank_line optionally uses custom table names", {
   ADSL <- ex_adsl
 
-  lyt <- basic_table() |>
+  lyt <- basic_table(round_type = "sas") |>
     split_cols_by("ARM") |>
     split_rows_by("STRATA1") |>
     analyze(vars = "AGE", afun = function(x) {
@@ -56,7 +56,7 @@ test_that("insert_blank_line optionally uses custom table names", {
     })
 
   # We don't want to see any warning about duplicate table names here.
-  tbl <- expect_silent(build_table(lyt, ADSL, round_type = "sas"))
+  tbl <- expect_silent(build_table(lyt, ADSL))
   tbl
 
   # We expect 6 blank lines: after mean and range, for each of the

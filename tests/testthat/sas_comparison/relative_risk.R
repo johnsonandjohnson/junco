@@ -261,7 +261,7 @@ dat <- data.frame(
   ))
 )
 
-lyt <- basic_table() |>
+lyt <- basic_table(round_type = "sas") |>
   split_cols_by("Treatment", ref_group = "B") |>
   analyze(
     vars = "Response",
@@ -292,4 +292,4 @@ lyt <- basic_table() |>
     )
   )
 
-build_table(lyt, dat, round_type = "sas")
+build_table(lyt, dat)

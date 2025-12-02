@@ -10,13 +10,13 @@ DM2$spanhead <- factor(
   levels = c("This is a Spanning Header", " ")
 )
 
-tab <- basic_table() %>%
+tab <- basic_table(round_type = "sas") %>%
   split_cols_by("spanhead", split_fun = trim_levels_in_group("ARM")) %>%
   split_cols_by("ARM") %>%
   split_rows_by("STRATA1") %>%
   summarize_row_groups() %>%
   analyze_vars("COUNTRY", .stats = "count_fraction") %>%
-  build_table(DM2, round_type = "sas")
+  build_table(DM2)
 
 #### Tests for jj_complex_scorefun function ####
 testthat::test_that("jj_complex_scorefun is identical to standard sorting: spanningheadercolvar=NA", {
@@ -131,14 +131,14 @@ testthat::test_that("jj_complex_scorefun places specified category at the end: l
   testthat::expect_identical(result, expected)
 })
 
-tab2 <- basic_table() %>%
+tab2 <- basic_table(round_type = "sas") %>%
   split_cols_by("spanhead", split_fun = trim_levels_in_group("ARM")) %>%
   split_cols_by("ARM") %>%
   split_cols_by("RACE") %>%
   split_rows_by("STRATA1") %>%
   summarize_row_groups() %>%
   analyze_vars("COUNTRY", .stats = "count_fraction") %>%
-  build_table(DM2, round_type = "sas")
+  build_table(DM2)
 
 testthat::test_that("jj_complex_scorefun uses first column to sort: usefirstcol", {
   result <- sort_at_path(

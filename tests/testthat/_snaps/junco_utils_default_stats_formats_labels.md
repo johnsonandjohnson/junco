@@ -40,7 +40,7 @@
       <environment: base>
       
       $range_with_cens_info
-      function(x, output, round_type = c("iec", "sas"), ...) {
+      function(x, output, round_type = valid_round_type, ...) {
           round_type <- match.arg(round_type)
           checkmate::assert_numeric(
             x,

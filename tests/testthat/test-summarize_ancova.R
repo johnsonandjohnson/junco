@@ -143,7 +143,7 @@ test_that("s_summarize_ancova works as expected", {
 })
 
 test_that("a_summarize_ancova_j  works as expected in table layout", {
-  result <- basic_table() %>%
+  result <- basic_table(round_type = "sas") %>%
     split_cols_by("Species") %>%
     add_colcounts() %>%
     analyze(
@@ -188,6 +188,6 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
         )
       )
     ) %>%
-    build_table(iris, round_type = "sas")
+    build_table(iris)
   expect_snapshot(result)
 })

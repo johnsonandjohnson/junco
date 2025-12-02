@@ -244,7 +244,12 @@ test_that("jjcsformats count_fraction works", {
       na_str = rep("NA", 1)
     )
     format_value(rep(NA, 3), format = jjcsformat_xx("xx.x (xx.x, xx.x)"), round_type = "sas", na_str = "NA")
-    format_value(c(1, rep(NA, 2)), format = jjcsformat_xx("xx.x (xx.x, xx.x)"), round_type = "sas", na_str = rep("NE", 10))
+    format_value(
+      c(1, rep(NA, 2)),
+      format = jjcsformat_xx("xx.x (xx.x, xx.x)"),
+      round_type = "sas",
+      na_str = rep("NE", 10)
+    )
     format_value(
       c(1, rep(NA, 2)),
       format = jjcsformat_xx("xx.x (xx.x, xx.x)"),

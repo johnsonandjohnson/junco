@@ -100,7 +100,7 @@ test_that("summarize_coxreg_multivar works as expected with custom options", {
     arm = "ARM",
     covariates = c("SEX", "AGE")
   )
-  lyt <- basic_table() |>
+  lyt <- basic_table(round_type = "sas") |>
     summarize_coxreg_multivar(
       var = "STUDYID",
       variables = variables,
@@ -116,7 +116,7 @@ test_that("summarize_coxreg_multivar works as expected with custom options", {
         pval = jjcsformat_pval_fct(0.1)
       )
     )
-  result <- expect_silent(build_table(lyt, anl, round_type = "sas"))
+  result <- expect_silent(build_table(lyt, anl))
   expect_snapshot(result)
 })
 

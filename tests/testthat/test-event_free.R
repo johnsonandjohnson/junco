@@ -47,7 +47,7 @@ test_that("a_event_free works with default arguments in a table layout", {
       is_event = CNSR == 0
     )
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     split_cols_by(var = "ARMCD")
   for (time_point in c(3, 4, 5)) {
     lyt <- lyt |>
@@ -65,7 +65,7 @@ test_that("a_event_free works with default arguments in a table layout", {
         )
       )
   }
-  result <- build_table(lyt, df = adtte_f, round_type = "sas")
+  result <- build_table(lyt, df = adtte_f)
 
   res <- expect_silent(result)
   expect_snapshot(res)
@@ -79,7 +79,7 @@ test_that("a_event_free works with customized arguments in a table layout", {
       is_event = CNSR == 0
     )
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     split_cols_by(var = "ARMCD")
   for (time_point in c(5, 1, 7)) {
     lyt <- lyt |>
@@ -103,7 +103,7 @@ test_that("a_event_free works with customized arguments in a table layout", {
         )
       )
   }
-  result <- build_table(lyt, df = adtte_f, round_type = "sas")
+  result <- build_table(lyt, df = adtte_f)
 
   res <- expect_silent(result)
   expect_snapshot(res)
