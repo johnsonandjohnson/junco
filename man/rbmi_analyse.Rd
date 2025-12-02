@@ -173,7 +173,6 @@ parallel::clusterStop(cl)
 
 \examples{
 if (requireNamespace("rbmi", quietly = TRUE)) {
-# Only run this example if rbmi is available
 library(rbmi)
 library(dplyr)
 

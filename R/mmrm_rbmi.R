@@ -67,9 +67,7 @@ rbmi_mmrm <- function(
     visits = NULL,
     weights = c("counterfactual", "equal"),
     ...) {
-  if (!requireNamespace("rbmi", quietly = TRUE)) {
-    stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
-  }
+  assert_rbmi()
   subjid <- vars[["subjid"]]
   outcome <- vars[["outcome"]]
   group <- vars[["group"]]

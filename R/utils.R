@@ -50,3 +50,18 @@ check_alt_df_full <- function(argument, values, .alt_df_full) {
     name, argument
   ))
 }
+
+
+#' Assert that rbmi package is installed
+#'
+#' @description
+#' Checks if the 'rbmi' package is installed and stops with an error message if it's not.
+#'
+#' @return Invisible NULL if rbmi is installed
+#' @keywords internal
+assert_rbmi <- function() {
+  if (!requireNamespace("rbmi", quietly = TRUE)) {
+    stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
+  }
+  invisible(NULL)
+}

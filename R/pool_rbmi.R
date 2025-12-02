@@ -5,9 +5,7 @@ rbmi_pool <- function(
     conf.level = 0.95,
     alternative = c("two.sided", "less", "greater"),
     type = c("percentile", "normal")) {
-  if (!requireNamespace("rbmi", quietly = TRUE)) {
-    stop("The 'rbmi' package is needed for this function to work. Please install it.", call. = FALSE)
-  }
+  assert_rbmi()
 
   rbmi::validate(results)
 
