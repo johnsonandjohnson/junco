@@ -291,10 +291,10 @@ par_lapply <- function(cl, fun, x, ...) {
 #' Conversely using parallelisation if your samples
 #' are smaller than this may lead to longer run times than just running it sequentially.
 #'
-#' It is important to note that the implementation of parallel processing within the analyse() function from the rbmi package
-#' has
-#' been optimised around the assumption that the parallel processes will be spawned on the same
-#' machine and not a remote cluster. One such optimisation is that the required data is saved to
+#' It is important to note that the implementation of parallel processing within the analyse()
+#' function from the rbmi package has been optimised around the assumption that the parallel
+#' processes will be spawned on the same machine and not a remote cluster.
+#' One such optimisation is that the required data is saved to
 #' a temporary file on the local disk from which it is then read into each sub-process. This is
 #' done to avoid the overhead of transferring the data over the network. Our assumption is that
 #' if you are at the stage where you need to be parallelising your analysis over a remote cluster
