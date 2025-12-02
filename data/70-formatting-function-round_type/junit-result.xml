@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="a_freq_j" timestamp="2025-12-02T17:47:24Z" hostname="067c13e018b7" tests="3" skipped="0" failures="0" errors="0" time="0.698">
-    <testcase time="0.283" classname="a_freq_j" name="a_freq_j_with_label_map_works_in_a_table_layout_as_expected"/>
-    <testcase time="0.25" classname="a_freq_j" name="a_freq_j_with_label_map_restricts_the_values_according_to_row_split_and_label_map"/>
-    <testcase time="0.165" classname="a_freq_j" name="a_freq_j_with_exclude_allows_to_exclude_row_split_levels_from_the_analysis"/>
+  <testsuite name="a_freq_j" timestamp="2025-12-02T17:48:39Z" hostname="26293a5cdb06" tests="3" skipped="3" failures="0" errors="0" time="0.736">
+    <testcase time="0.278" classname="a_freq_j" name="a_freq_j_with_label_map_works_in_a_table_layout_as_expected">
+      <skipped message="Reason: On CRAN ('test-a_freq_j.R:1:1')"/>
+    </testcase>
+    <testcase time="0.279" classname="a_freq_j" name="a_freq_j_with_label_map_restricts_the_values_according_to_row_split_and_label_map">
+      <skipped message="Reason: On CRAN ('test-a_freq_j.R:26:1')"/>
+    </testcase>
+    <testcase time="0.179" classname="a_freq_j" name="a_freq_j_with_exclude_allows_to_exclude_row_split_levels_from_the_analysis">
+      <skipped message="Reason: On CRAN ('test-a_freq_j.R:54:1')"/>
+    </testcase>
   </testsuite>
-  <testsuite name="a_freq_resp_var_j" timestamp="2025-12-02T17:47:25Z" hostname="067c13e018b7" tests="7" skipped="0" failures="0" errors="7" time="0.444">
-    <testcase time="0.04" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_as_expected_with_basic_usage">
+  <testsuite name="a_freq_resp_var_j" timestamp="2025-12-02T17:48:39Z" hostname="26293a5cdb06" tests="7" skipped="0" failures="0" errors="7" time="0.446">
+    <testcase time="0.0489999999999999" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_as_expected_with_basic_usage">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-a_freq_resp_var_j.R:19:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -21,7 +27,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.089" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_factor_responses">
+    <testcase time="0.081" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_factor_responses">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-a_freq_resp_var_j.R:57:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -36,7 +42,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0750000000000002" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_handles_missing_values_correctly">
+    <testcase time="0.0630000000000002" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_handles_missing_values_correctly">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-a_freq_resp_var_j.R:89:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -51,7 +57,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0600000000000001" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_errors_on_invalid_responses">
+    <testcase time="0.0630000000000002" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_errors_on_invalid_responses">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-a_freq_resp_var_j.R:120:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -66,7 +72,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0649999999999999" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_errors_when_resp_var_is_null">
+    <testcase time="0.0680000000000001" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_errors_when_resp_var_is_null">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-a_freq_resp_var_j.R:151:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -81,7 +87,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.052" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_drop_levels_parameter">
+    <testcase time="0.0549999999999997" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_drop_levels_parameter">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-a_freq_resp_var_j.R:181:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -96,7 +102,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0630000000000002" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_riskdiff_parameter">
+    <testcase time="0.0670000000000002" classname="a_freq_resp_var_j" name="a_freq_resp_var_j_works_with_riskdiff_parameter">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-a_freq_resp_var_j.R:213:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -112,8 +118,8 @@ Backtrace:
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="a_maxlev" timestamp="2025-12-02T17:47:25Z" hostname="067c13e018b7" tests="8" skipped="0" failures="0" errors="1" time="0.55">
-    <testcase time="0.0949999999999998" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_single_treatment_per_subject">
+  <testsuite name="a_maxlev" timestamp="2025-12-02T17:48:40Z" hostname="26293a5cdb06" tests="8" skipped="0" failures="0" errors="1" time="0.565">
+    <testcase time="0.104" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_single_treatment_per_subject">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'lyt' in selecting a method for function 'split_cols': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-a_maxlev.R:19:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'lyt' in selecting a method for function 'split_cols': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -139,17 +145,17 @@ Backtrace:
  20. \-base::.handleSimpleError(...)
  21.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.12" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_missing_values_"/>
-    <testcase time="0.0529999999999999" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_missing_values_"/>
-    <testcase time="0.089" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_all_values_are_missing_for_one_treatement_"/>
-    <testcase time="0.0529999999999999" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_all_values_are_missing_for_one_treatement_"/>
-    <testcase time="0.0569999999999999" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_when_any_level_is_active_for_custom_level_excl._"/>
-    <testcase time="0.0330000000000004" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_when_any_level_is_active_for_custom_level_excl._"/>
-    <testcase time="0.0499999999999998" classname="a_maxlev" name="a_maxlev_throws_an_error_for_not_ordered_variable"/>
+    <testcase time="0.117" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_missing_values_"/>
+    <testcase time="0.0549999999999997" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_missing_values_"/>
+    <testcase time="0.0900000000000003" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_all_values_are_missing_for_one_treatement_"/>
+    <testcase time="0.0539999999999998" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_for_sequence_of_treatments_all_values_are_missing_for_one_treatement_"/>
+    <testcase time="0.0590000000000002" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_when_any_level_is_active_for_custom_level_excl._"/>
+    <testcase time="0.0349999999999997" classname="a_maxlev" name="a_maxlev_produces_correct_numbers_when_any_level_is_active_for_custom_level_excl._"/>
+    <testcase time="0.0510000000000002" classname="a_maxlev" name="a_maxlev_throws_an_error_for_not_ordered_variable"/>
   </testsuite>
-  <testsuite name="a_summarize_aval_chg_diff" timestamp="2025-12-02T17:47:26Z" hostname="067c13e018b7" tests="3" skipped="0" failures="0" errors="2" time="0.23">
-    <testcase time="0.016" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
-    <testcase time="0.0259999999999998" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected">
+  <testsuite name="a_summarize_aval_chg_diff" timestamp="2025-12-02T17:48:40Z" hostname="26293a5cdb06" tests="3" skipped="0" failures="0" errors="2" time="0.24">
+    <testcase time="0.0209999999999999" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected"/>
+    <testcase time="0.0209999999999999" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_as_expected">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-a_summarize_aval_chg_diff.R:97:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -192,7 +198,7 @@ Backtrace:
  37. \-base::.handleSimpleError(...)
  38.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.188" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_with_ancova_TRUE">
+    <testcase time="0.198" classname="a_summarize_aval_chg_diff" name="a_summarize_aval_chg_diff_j_works_with_ancova_TRUE">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-a_summarize_aval_chg_diff.R:233:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -236,7 +242,7 @@ Backtrace:
  38.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="analyze_values" timestamp="2025-12-02T17:47:26Z" hostname="067c13e018b7" tests="1" skipped="0" failures="0" errors="1" time="0.185">
+  <testsuite name="analyze_values" timestamp="2025-12-02T17:48:41Z" hostname="26293a5cdb06" tests="1" skipped="0" failures="0" errors="1" time="0.185">
     <testcase time="0.185" classname="analyze_values" name="analyze_values_correctly_modifies_layout_with_proper_formats">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-analyze_values.R:5:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
@@ -248,47 +254,23 @@ Backtrace:
  5.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="ancova" timestamp="2025-12-02T17:47:26Z" hostname="067c13e018b7" tests="3" skipped="0" failures="0" errors="0" time="0.794">
-    <testcase time="0.283" classname="ancova" name="fit_ancova_works_as_expected"/>
-    <testcase time="0.000999999999999446" classname="ancova" name="fit_ancova_works_as_expected"/>
-    <testcase time="0.51" classname="ancova" name="fit_ancova_works_as_expected"/>
-  </testsuite>
-  <testsuite name="ancova_rbmi" timestamp="2025-12-02T17:47:27Z" hostname="067c13e018b7" tests="2" skipped="0" failures="0" errors="2" time="0.074">
-    <testcase time="0.0290000000000008" classname="ancova_rbmi" name="rbmi_ancova_single_works_also_with_multiple_treatment_arms">
-      <error type="error" message="&lt;packageNotFoundError/error/condition&gt; ('test-ancova_rbmi.R:16:3')">&lt;packageNotFoundError/error/condition&gt;
-Error in `loadNamespace(name)`: there is no package called 'rbmi'
-Backtrace:
-     x
-  1. \-junco::rbmi_ancova_single(...) at test-ancova_rbmi.R:16:3
-  2.   +-...[]
-  3.   +-tibble:::`[.tbl_df`(...)
-  4.   \-utils::getFromNamespace("extract_covariates", "rbmi")
-  5.     \-base::asNamespace(ns)
-  6.       \-base::getNamespace(ns)
-  7.         +-.Internal(getRegisteredNamespace(name)) %||% ...
-  8.         \-base::loadNamespace(name)
-  9.           \-base::withRestarts(stop(cond), retry_loadNamespace = function() NULL)
- 10.             \-base (local) withOneRestart(expr, restarts[[1L]])
- 11.               \-base (local) doWithOneRestart(return(expr), restart)</error>
-    </testcase>
-    <testcase time="0.0449999999999999" classname="ancova_rbmi" name="ancova_now_works_also_with_multiple_treatment_arms">
-      <error type="error" message="&lt;packageNotFoundError/error/condition&gt; ('test-ancova_rbmi.R:44:3')">&lt;packageNotFoundError/error/condition&gt;
-Error in `loadNamespace(name)`: there is no package called 'rbmi'
-Backtrace:
-    x
- 1. \-junco::rbmi_ancova(...) at test-ancova_rbmi.R:44:3
- 2.   \-utils::getFromNamespace("extract_covariates", "rbmi")
- 3.     \-base::asNamespace(ns)
- 4.       \-base::getNamespace(ns)
- 5.         +-.Internal(getRegisteredNamespace(name)) %||% ...
- 6.         \-base::loadNamespace(name)
- 7.           \-base::withRestarts(stop(cond), retry_loadNamespace = function() NULL)
- 8.             \-base (local) withOneRestart(expr, restarts[[1L]])
- 9.               \-base (local) doWithOneRestart(return(expr), restart)</error>
+  <testsuite name="ancova" timestamp="2025-12-02T17:48:41Z" hostname="26293a5cdb06" tests="3" skipped="1" failures="0" errors="0" time="0.426">
+    <testcase time="0.252" classname="ancova" name="fit_ancova_works_as_expected"/>
+    <testcase time="0.00100000000000033" classname="ancova" name="fit_ancova_works_as_expected"/>
+    <testcase time="0.173" classname="ancova" name="fit_ancova_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-ancova.R:4:1')"/>
     </testcase>
   </testsuite>
-  <testsuite name="blank_line" timestamp="2025-12-02T17:47:27Z" hostname="067c13e018b7" tests="2" skipped="0" failures="0" errors="2" time="0.099">
-    <testcase time="0.0599999999999996" classname="blank_line" name="insert_blank_line_works_as_expected">
+  <testsuite name="ancova_rbmi" timestamp="2025-12-02T17:48:41Z" hostname="26293a5cdb06" tests="2" skipped="2" failures="0" errors="0" time="0.051">
+    <testcase time="0.0339999999999998" classname="ancova_rbmi" name="rbmi_ancova_single_works_also_with_multiple_treatment_arms">
+      <skipped message="Reason: {rbmi} is not installed. ('test-ancova_rbmi.R:16:3')"/>
+    </testcase>
+    <testcase time="0.0170000000000003" classname="ancova_rbmi" name="ancova_now_works_also_with_multiple_treatment_arms">
+      <skipped message="Reason: {rbmi} is not installed. ('test-ancova_rbmi.R:44:3')"/>
+    </testcase>
+  </testsuite>
+  <testsuite name="blank_line" timestamp="2025-12-02T17:48:41Z" hostname="26293a5cdb06" tests="2" skipped="0" failures="0" errors="2" time="0.079">
+    <testcase time="0.0329999999999995" classname="blank_line" name="insert_blank_line_works_as_expected">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'vars_in_layout': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'vars_in_layout': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-blank_line.R:4:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'vars_in_layout': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'vars_in_layout': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -324,7 +306,7 @@ Backtrace:
  30. \-base::.handleSimpleError(...)
  31.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0389999999999997" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names">
+    <testcase time="0.0460000000000003" classname="blank_line" name="insert_blank_line_optionally_uses_custom_table_names">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'vars_in_layout': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'vars_in_layout': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-blank_line.R:37:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'vars_in_layout': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'vars_in_layout': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -361,16 +343,16 @@ Backtrace:
  31.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="cmhrms" timestamp="2025-12-02T17:47:27Z" hostname="067c13e018b7" tests="10" skipped="0" failures="0" errors="2" time="0.276">
-    <testcase time="0.100000000000001" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
-    <testcase time="0.00499999999999989" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
+  <testsuite name="cmhrms" timestamp="2025-12-02T17:48:41Z" hostname="26293a5cdb06" tests="10" skipped="0" failures="0" errors="2" time="0.352">
+    <testcase time="0.122" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
+    <testcase time="0.00600000000000023" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
     <testcase time="0.00399999999999956" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
     <testcase time="0.00500000000000078" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_and_without_strata"/>
     <testcase time="0.00599999999999934" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
-    <testcase time="0.00300000000000011" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
-    <testcase time="0.00199999999999978" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
-    <testcase time="0.00300000000000011" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
-    <testcase time="0.0579999999999998" classname="cmhrms" name="a_cmhrms_j_works_in_a_table_layout_as_expected">
+    <testcase time="0.00200000000000067" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
+    <testcase time="0.00299999999999923" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
+    <testcase time="0.00200000000000067" classname="cmhrms" name="s_cmhrms_j_works_as_expected_with_empty_data_set_or_in_reference_column"/>
+    <testcase time="0.0519999999999996" classname="cmhrms" name="a_cmhrms_j_works_in_a_table_layout_as_expected">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-cmhrms.R:81:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -408,7 +390,7 @@ Backtrace:
  32.                             +-base::do.call(f, args)
  33.                             \-junco (local) `&lt;fn&gt;`(`&lt;dbl&gt;`, na_str = "NA", round_type = "iec")</error>
     </testcase>
-    <testcase time="0.0900000000000007" classname="cmhrms" name="a_cmhrms_j_with_exclude_works_in_a_table_layout_as_expected">
+    <testcase time="0.15" classname="cmhrms" name="a_cmhrms_j_with_exclude_works_in_a_table_layout_as_expected">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-cmhrms.R:107:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -456,8 +438,8 @@ Backtrace:
  42.                                     \-junco (local) `&lt;fn&gt;`(`&lt;dbl&gt;`, na_str = "NA", round_type = "iec")</error>
     </testcase>
   </testsuite>
-  <testsuite name="cmp_functions" timestamp="2025-12-02T17:47:27Z" hostname="067c13e018b7" tests="4" skipped="0" failures="0" errors="1" time="0.112">
-    <testcase time="0.04" classname="cmp_functions" name="cmp_split_fun_works_as_expected">
+  <testsuite name="cmp_functions" timestamp="2025-12-02T17:48:42Z" hostname="26293a5cdb06" tests="4" skipped="3" failures="0" errors="1" time="0.129">
+    <testcase time="0.0410000000000004" classname="cmp_functions" name="cmp_split_fun_works_as_expected">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-cmp_functions.R:2:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -469,41 +451,47 @@ Backtrace:
  6. \-base::.handleSimpleError(...)
  7.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0489999999999995" classname="cmp_functions" name="cmp_cfun_works_correctly_for_expected_column"/>
-    <testcase time="0.0120000000000005" classname="cmp_functions" name="cmp_cfun_works_correctly_for_received_column"/>
-    <testcase time="0.0109999999999992" classname="cmp_functions" name="cmp_cfun_works_correctly_for_missing_column"/>
+    <testcase time="0.0460000000000003" classname="cmp_functions" name="cmp_cfun_works_correctly_for_expected_column">
+      <skipped message="Reason: On CRAN ('test-cmp_functions.R:8:1')"/>
+    </testcase>
+    <testcase time="0.0209999999999999" classname="cmp_functions" name="cmp_cfun_works_correctly_for_received_column">
+      <skipped message="Reason: On CRAN ('test-cmp_functions.R:23:1')"/>
+    </testcase>
+    <testcase time="0.0209999999999999" classname="cmp_functions" name="cmp_cfun_works_correctly_for_missing_column">
+      <skipped message="Reason: On CRAN ('test-cmp_functions.R:41:1')"/>
+    </testcase>
   </testsuite>
-  <testsuite name="column_stats" timestamp="2025-12-02T17:47:27Z" hostname="067c13e018b7" tests="29" skipped="0" failures="0" errors="0" time="0.118">
-    <testcase time="0.0110000000000001" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
-    <testcase time="0.00400000000000045" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+  <testsuite name="column_stats" timestamp="2025-12-02T17:48:42Z" hostname="26293a5cdb06" tests="29" skipped="0" failures="0" errors="0" time="0.141">
+    <testcase time="0.0289999999999999" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+    <testcase time="0.00399999999999956" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
     <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
+    <testcase time="0.00200000000000067" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
     <testcase time="0.000999999999999446" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
     <testcase time="0.00100000000000033" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
-    <testcase time="0.00199999999999978" classname="column_stats" name="column_stats_returns_correct_row_values_for_AVAL_mean"/>
-    <testcase time="0.00499999999999989" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00600000000000023" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00299999999999923" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
     <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
-    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
-    <testcase time="0.00100000000000033" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
-    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
-    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_calculates_SD_statistic_correctly"/>
-    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_calculates_mean_sd_statistic_correctly"/>
-    <testcase time="0.00700000000000056" classname="column_stats" name="column_stats_calculates_SE_statistic_correctly"/>
-    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
+    <testcase time="0.00200000000000067" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00199999999999978" classname="column_stats" name="column_stats_excludes_Baseline_for_CHG_stat_N"/>
+    <testcase time="0.00800000000000001" classname="column_stats" name="column_stats_calculates_SD_statistic_correctly"/>
+    <testcase time="0.00800000000000001" classname="column_stats" name="column_stats_calculates_mean_sd_statistic_correctly"/>
+    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_calculates_SE_statistic_correctly"/>
+    <testcase time="0.00800000000000001" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
+    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
     <testcase time="0.00400000000000045" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
-    <testcase time="0.00299999999999923" classname="column_stats" name="column_stats_calculates_Med_Min_Max_correctly"/>
-    <testcase time="0.00700000000000056" classname="column_stats" name="column_stats_handles_BASE_variable_correctly"/>
-    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_BASE_variable_correctly"/>
-    <testcase time="0.00599999999999934" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
+    <testcase time="0.00800000000000001" classname="column_stats" name="column_stats_handles_BASE_variable_correctly"/>
+    <testcase time="0.00199999999999978" classname="column_stats" name="column_stats_handles_BASE_variable_correctly"/>
+    <testcase time="0.00699999999999967" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
     <testcase time="0.00400000000000045" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
     <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
     <testcase time="0.00199999999999978" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
     <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
     <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
-    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
-    <testcase time="0.00300000000000011" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
-    <testcase time="0.00299999999999923" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
-    <testcase time="0.00600000000000023" classname="column_stats" name="calc_N_returns_NULL_for_non_AVAL_variables"/>
-    <testcase time="0.0460000000000003" classname="character(0)" name="_unnamed_">
+    <testcase time="0.00399999999999956" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
+    <testcase time="0.00199999999999978" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
+    <testcase time="0.00199999999999978" classname="column_stats" name="column_stats_handles_iec_round_type_correctly"/>
+    <testcase time="0.00700000000000056" classname="column_stats" name="calc_N_returns_NULL_for_non_AVAL_variables"/>
+    <testcase time="0.0479999999999992" classname="character(0)" name="_unnamed_">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'split_cols': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-colwidths.R:18:1')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'split_cols': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -532,8 +520,8 @@ Backtrace:
  23.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="count_pct" timestamp="2025-12-02T17:47:28Z" hostname="067c13e018b7" tests="11" skipped="0" failures="0" errors="11" time="1.097">
-    <testcase time="0.0439999999999996" classname="count_pct" name="a_freq_j_with_val_NA_and_denom_option">
+  <testsuite name="count_pct" timestamp="2025-12-02T17:48:42Z" hostname="26293a5cdb06" tests="11" skipped="0" failures="0" errors="11" time="1.087">
+    <testcase time="0.0390000000000006" classname="count_pct" name="a_freq_j_with_val_NA_and_denom_option">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-count_pct.R:15:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -548,7 +536,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0550000000000006" classname="count_pct" name="a_freq_j_with_specific_val_CHN_and_denom_option">
+    <testcase time="0.0640000000000001" classname="count_pct" name="a_freq_j_with_specific_val_CHN_and_denom_option">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-count_pct.R:54:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -563,7 +551,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0549999999999997" classname="count_pct" name="a_freq_j_with_N_only">
+    <testcase time="0.0579999999999998" classname="count_pct" name="a_freq_j_with_N_only">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-count_pct.R:94:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -578,7 +566,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0609999999999999" classname="count_pct" name="a_freq_j_with_TotCol_only">
+    <testcase time="0.0590000000000002" classname="count_pct" name="a_freq_j_with_TotCol_only">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'split_cols': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-count_pct.R:118:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function 'split_cols': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -597,7 +585,7 @@ Backtrace:
  13. \-base::.handleSimpleError(...)
  14.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0670000000000002" classname="count_pct" name="a_freq_j_as_cfun">
+    <testcase time="0.0759999999999996" classname="count_pct" name="a_freq_j_as_cfun">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-count_pct.R:145:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -620,7 +608,7 @@ Backtrace:
  17. \-base::.handleSimpleError(...)
  18.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0750000000000002" classname="count_pct" name="a_freq_j_with_label_map">
+    <testcase time="0.0800000000000001" classname="count_pct" name="a_freq_j_with_label_map">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-count_pct.R:201:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -635,7 +623,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0589999999999993" classname="count_pct" name="a_freq_j_old_count_pats_case_">
+    <testcase time="0.0579999999999998" classname="count_pct" name="a_freq_j_old_count_pats_case_">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-count_pct.R:233:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -650,7 +638,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0570000000000004" classname="count_pct" name="a_freq_j_with_N_subgroup_as_denom">
+    <testcase time="0.0650000000000004" classname="count_pct" name="a_freq_j_with_N_subgroup_as_denom">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-count_pct.R:271:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -669,7 +657,7 @@ Backtrace:
  13. \-base::.handleSimpleError(...)
  14.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.423" classname="count_pct" name="a_freq_j_with_N_trt_as_denom_special_situation">
+    <testcase time="0.432" classname="count_pct" name="a_freq_j_with_N_trt_as_denom_special_situation">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-count_pct.R:420:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -695,7 +683,7 @@ Backtrace:
  20. \-base::.handleSimpleError(...)
  21.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.155" classname="count_pct" name="a_freq_j_with_keep_levels_CHN_NGA_">
+    <testcase time="0.108" classname="count_pct" name="a_freq_j_with_keep_levels_CHN_NGA_">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-count_pct.R:459:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -710,7 +698,7 @@ Backtrace:
   9. \-base::.handleSimpleError(...)
  10.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0949999999999998" classname="character(0)" name="_unnamed_">
+    <testcase time="0.0970000000000004" classname="character(0)" name="_unnamed_">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-count_pct_relrisk.R:24:1')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -733,12 +721,14 @@ Backtrace:
  17.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="coxph_hr" timestamp="2025-12-02T17:47:29Z" hostname="067c13e018b7" tests="7" skipped="0" failures="0" errors="3" time="0.348">
-    <testcase time="0.0999999999999996" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
-    <testcase time="0.00700000000000056" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
-    <testcase time="0.00800000000000001" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
-    <testcase time="0.00800000000000001" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
-    <testcase time="0.0139999999999993" classname="coxph_hr" name="a_coxph_hr_works_with_custom_arguments_and_stratification_factors">
+  <testsuite name="coxph_hr" timestamp="2025-12-02T17:48:43Z" hostname="26293a5cdb06" tests="7" skipped="1" failures="0" errors="3" time="0.356">
+    <testcase time="0.102" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
+    <testcase time="0.0119999999999996" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
+    <testcase time="0.00900000000000034" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors"/>
+    <testcase time="0.000999999999999446" classname="coxph_hr" name="s_coxph_hr_works_with_default_arguments_and_no_stratification_factors">
+      <skipped message="Reason: On CRAN ('test-coxph_hr.R:5:1')"/>
+    </testcase>
+    <testcase time="0.024" classname="coxph_hr" name="a_coxph_hr_works_with_custom_arguments_and_stratification_factors">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-coxph_hr.R:53:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -755,7 +745,7 @@ Backtrace:
  11. \-base::.handleSimpleError(...)
  12.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.116000000000001" classname="coxph_hr" name="a_coxph_hr_works_with_stratification_factors_for_Log_Rank_test">
+    <testcase time="0.111000000000001" classname="coxph_hr" name="a_coxph_hr_works_with_stratification_factors_for_Log_Rank_test">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-coxph_hr.R:84:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -773,15 +763,17 @@ Backtrace:
  12.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="coxreg_multivar" timestamp="2025-12-02T17:47:29Z" hostname="067c13e018b7" tests="12" skipped="0" failures="0" errors="4" time="1.4">
-    <testcase time="0.165" classname="coxreg_multivar" name="h_extract_coxreg_multivar_works_as_expected"/>
-    <testcase time="0.199" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected"/>
-    <testcase time="0.00900000000000034" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected"/>
-    <testcase time="0.0359999999999996" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected"/>
-    <testcase time="0.458" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected"/>
-    <testcase time="0.0169999999999995" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected"/>
-    <testcase time="0.0460000000000003" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected"/>
-    <testcase time="0.0250000000000004" classname="coxreg_multivar" name="tefos03_afun_works_as_expected"/>
+  <testsuite name="coxreg_multivar" timestamp="2025-12-02T17:48:43Z" hostname="26293a5cdb06" tests="10" skipped="2" failures="0" errors="4" time="1.43">
+    <testcase time="0.175999999999999" classname="coxreg_multivar" name="h_extract_coxreg_multivar_works_as_expected"/>
+    <testcase time="0.218" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected"/>
+    <testcase time="0.0330000000000004" classname="coxreg_multivar" name="tefos03_first_split_fun_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-coxreg_multivar.R:29:1')"/>
+    </testcase>
+    <testcase time="0.482" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected"/>
+    <testcase time="0.048" classname="coxreg_multivar" name="tefos03_second_split_fun_fct_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-coxreg_multivar.R:37:1')"/>
+    </testcase>
+    <testcase time="0.0419999999999998" classname="coxreg_multivar" name="tefos03_afun_works_as_expected"/>
     <testcase time="0.0199999999999996" classname="coxreg_multivar" name="tefos03_afun_works_as_expected">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'x' in selecting a method for function 'print': object 'valid_round_type' not found ('test-coxreg_multivar.R:73:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'x' in selecting a method for function 'print': object 'valid_round_type' not found
 Backtrace:
@@ -823,7 +815,7 @@ Backtrace:
  35. \-base::.handleSimpleError(...)
  36.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.169" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_defaults">
+    <testcase time="0.158" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_as_expected_with_defaults">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-coxreg_multivar.R:90:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -880,7 +872,7 @@ Backtrace:
  13. \-base::.handleSimpleError(...)
  14.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.217000000000001" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_with_row_splits">
+    <testcase time="0.214" classname="coxreg_multivar" name="summarize_coxreg_multivar_works_with_row_splits">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-coxreg_multivar.R:138:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -925,20 +917,27 @@ Backtrace:
  39.                                     \-junco (local) `&lt;fn&gt;`(0.0163917309329948, na_str = "NA", round_type = "iec")</error>
     </testcase>
   </testsuite>
-  <testsuite name="estimate_proportion_diff" timestamp="2025-12-02T17:47:30Z" hostname="067c13e018b7" tests="6" skipped="0" failures="0" errors="0" time="0.157">
-    <testcase time="0.0380000000000003" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
-    <testcase time="0.0199999999999996" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
-    <testcase time="0.00300000000000011" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
-    <testcase time="0.0199999999999996" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
-    <testcase time="0.0359999999999996" classname="estimate_proportion_diff" name="a_proportion_diff_j_works_as_expected_in_a_table_layout"/>
-    <testcase time="0.0400000000000009" classname="estimate_proportion_diff" name="a_proportion_diff_j_works_as_expected_in_a_table_layout"/>
+  <testsuite name="estimate_proportion_diff" timestamp="2025-12-02T17:48:45Z" hostname="26293a5cdb06" tests="5" skipped="2" failures="0" errors="0" time="0.148">
+    <testcase time="0.0459999999999994" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
+    <testcase time="0.0140000000000011" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected"/>
+    <testcase time="0.0109999999999992" classname="estimate_proportion_diff" name="s_proportion_diff_j_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-estimate_proportion_diff.R:1:1')"/>
+    </testcase>
+    <testcase time="0.0470000000000006" classname="estimate_proportion_diff" name="a_proportion_diff_j_works_as_expected_in_a_table_layout"/>
+    <testcase time="0.0299999999999994" classname="estimate_proportion_diff" name="a_proportion_diff_j_works_as_expected_in_a_table_layout">
+      <skipped message="Reason: On CRAN ('test-estimate_proportion_diff.R:36:1')"/>
+    </testcase>
   </testsuite>
-  <testsuite name="event_free" timestamp="2025-12-02T17:47:30Z" hostname="067c13e018b7" tests="6" skipped="0" failures="0" errors="2" time="0.09">
-    <testcase time="0.0190000000000001" classname="event_free" name="s_event_free_works_with_default_arguments"/>
-    <testcase time="0.00799999999999912" classname="event_free" name="s_event_free_works_with_default_arguments"/>
-    <testcase time="0.00999999999999979" classname="event_free" name="s_event_free_works_with_percent_format"/>
-    <testcase time="0.00699999999999967" classname="event_free" name="s_event_free_works_with_percent_format"/>
-    <testcase time="0.0130000000000017" classname="event_free" name="a_event_free_works_with_default_arguments_in_a_table_layout">
+  <testsuite name="event_free" timestamp="2025-12-02T17:48:45Z" hostname="26293a5cdb06" tests="6" skipped="2" failures="0" errors="2" time="0.122">
+    <testcase time="0.0289999999999999" classname="event_free" name="s_event_free_works_with_default_arguments"/>
+    <testcase time="0.00500000000000078" classname="event_free" name="s_event_free_works_with_default_arguments">
+      <skipped message="Reason: On CRAN ('test-event_free.R:1:1')"/>
+    </testcase>
+    <testcase time="0.0190000000000001" classname="event_free" name="s_event_free_works_with_percent_format"/>
+    <testcase time="0.00600000000000023" classname="event_free" name="s_event_free_works_with_percent_format">
+      <skipped message="Reason: On CRAN ('test-event_free.R:21:1')"/>
+    </testcase>
+    <testcase time="0.020999999999999" classname="event_free" name="a_event_free_works_with_default_arguments_in_a_table_layout">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-event_free.R:50:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -948,7 +947,7 @@ Backtrace:
  4. \-base::.handleSimpleError(...)
  5.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0329999999999995" classname="event_free" name="a_event_free_works_with_customized_arguments_in_a_table_layout">
+    <testcase time="0.0419999999999998" classname="event_free" name="a_event_free_works_with_customized_arguments_in_a_table_layout">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-event_free.R:82:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -959,8 +958,8 @@ Backtrace:
  5.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="get_ref_info" timestamp="2025-12-02T17:47:31Z" hostname="067c13e018b7" tests="2" skipped="0" failures="0" errors="2" time="0.073">
-    <testcase time="0.0399999999999991" classname="get_ref_info" name="get_ref_info_works_with_a_df_analysis_function">
+  <testsuite name="get_ref_info" timestamp="2025-12-02T17:48:45Z" hostname="26293a5cdb06" tests="2" skipped="0" failures="0" errors="2" time="0.076">
+    <testcase time="0.0419999999999998" classname="get_ref_info" name="get_ref_info_works_with_a_df_analysis_function">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-get_ref_info.R:50:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -978,7 +977,7 @@ Backtrace:
  12. \-base::.handleSimpleError(...)
  13.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0330000000000013" classname="get_ref_info" name="get_ref_info_works_with_a_vector_analysis_function">
+    <testcase time="0.0340000000000007" classname="get_ref_info" name="get_ref_info_works_with_a_vector_analysis_function">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-get_ref_info.R:112:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -997,69 +996,67 @@ Backtrace:
  13.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="h_freq_funs" timestamp="2025-12-02T17:47:31Z" hostname="067c13e018b7" tests="22" skipped="0" failures="0" errors="0" time="0.128">
-    <testcase time="0.0350000000000001" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
-    <testcase time="0.00299999999999834" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
+  <testsuite name="h_freq_funs" timestamp="2025-12-02T17:48:45Z" hostname="26293a5cdb06" tests="22" skipped="0" failures="0" errors="0" time="0.131">
+    <testcase time="0.0280000000000005" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
-    <testcase time="0.00700000000000145" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
-    <testcase time="0.00399999999999956" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
+    <testcase time="0.00399999999999956" classname="h_freq_funs" name="h_update_factor_works_correctly"/>
+    <testcase time="0.00699999999999967" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
     <testcase time="0.00399999999999956" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
+    <testcase time="0.00399999999999956" classname="h_freq_funs" name="h_df_add_newlevels_works_correctly"/>
     <testcase time="0.00600000000000023" classname="h_freq_funs" name="h_colexpr_substr_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_colexpr_substr_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_colexpr_substr_works_correctly"/>
-    <testcase time="0.00600000000000023" classname="h_freq_funs" name="h_get_label_map_works_correctly"/>
-    <testcase time="0.00399999999999956" classname="h_freq_funs" name="h_get_label_map_works_correctly"/>
-    <testcase time="0.00699999999999967" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
+    <testcase time="0.00699999999999967" classname="h_freq_funs" name="h_get_label_map_works_correctly"/>
+    <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_get_label_map_works_correctly"/>
+    <testcase time="0.0080000000000009" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
     <testcase time="0.00399999999999956" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
-    <testcase time="0.00399999999999956" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
-    <testcase time="0.00400000000000134" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
-    <testcase time="0.00600000000000023" classname="h_freq_funs" name="h_restrict_val_works_if_there_are_more_values_in_df_row_than_in_map"/>
-    <testcase time="0.00599999999999845" classname="h_freq_funs" name="h_restrict_val_works_if_there_are_less_values_in_df_row_than_in_map"/>
-    <testcase time="0.00700000000000145" classname="h_freq_funs" name="h_restrict_val_works_with_row_split"/>
+    <testcase time="0.00999999999999979" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
+    <testcase time="0.00500000000000078" classname="h_freq_funs" name="h_subset_combo_works_correctly"/>
+    <testcase time="0.00699999999999967" classname="h_freq_funs" name="h_restrict_val_works_if_there_are_more_values_in_df_row_than_in_map"/>
+    <testcase time="0.00600000000000023" classname="h_freq_funs" name="h_restrict_val_works_if_there_are_less_values_in_df_row_than_in_map"/>
+    <testcase time="0.00699999999999967" classname="h_freq_funs" name="h_restrict_val_works_with_row_split"/>
     <testcase time="0.00300000000000011" classname="h_freq_funs" name="h_restrict_val_works_with_row_split"/>
   </testsuite>
-  <testsuite name="jjcs_num_formats" timestamp="2025-12-02T17:47:31Z" hostname="067c13e018b7" tests="16" skipped="0" failures="0" errors="0" time="0.84">
-    <testcase time="0.0349999999999984" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
-    <testcase time="0.00600000000000023" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+  <testsuite name="jjcs_num_formats" timestamp="2025-12-02T17:48:45Z" hostname="26293a5cdb06" tests="9" skipped="3" failures="0" errors="0" time="0.821">
+    <testcase time="0.0389999999999997" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
     <testcase time="0.00500000000000078" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
-    <testcase time="0.132" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
-    <testcase time="0.243" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
-    <testcase time="0.00499999999999901" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
+    <testcase time="0.359999999999999" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
     <testcase time="0.00600000000000023" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
     <testcase time="0.00699999999999967" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
-    <testcase time="0.0450000000000017" classname="jjcs_num_formats" name="jjcs_num_formats_works"/>
-    <testcase time="0.0249999999999986" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
-    <testcase time="0.00700000000000145" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
-    <testcase time="0.0379999999999985" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
-    <testcase time="0.0510000000000002" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
-    <testcase time="0.0229999999999997" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
-    <testcase time="0.0620000000000012" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
-    <testcase time="0.15" classname="jjcs_num_formats" name="jjcsformats_count_fraction_works"/>
+    <testcase time="0.0350000000000001" classname="jjcs_num_formats" name="jjcs_num_formats_works">
+      <skipped message="Reason: On CRAN ('test-jjcs_num_formats.R:10:1')"/>
+    </testcase>
+    <testcase time="0.0389999999999997" classname="jjcs_num_formats" name="jjcsformats_NA_works"/>
+    <testcase time="0.167" classname="jjcs_num_formats" name="jjcsformats_NA_works">
+      <skipped message="Reason: On CRAN ('test-jjcs_num_formats.R:124:1')"/>
+    </testcase>
+    <testcase time="0.163" classname="jjcs_num_formats" name="jjcsformats_count_fraction_works">
+      <skipped message="Reason: On CRAN ('test-jjcs_num_formats.R:219:1')"/>
+    </testcase>
   </testsuite>
-  <testsuite name="jjcsformats" timestamp="2025-12-02T17:47:32Z" hostname="067c13e018b7" tests="20" skipped="0" failures="0" errors="3" time="0.654">
-    <testcase time="0.193" classname="jjcsformats" name="jjjcs_formats_work"/>
-    <testcase time="0.0199999999999996" classname="jjcsformats" name="jjjcs_formats_work"/>
-    <testcase time="0.0220000000000002" classname="jjcsformats" name="jjjcs_formats_work"/>
-    <testcase time="0.0570000000000004" classname="jjcsformats" name="jjjcs_formats_work"/>
-    <testcase time="0.00699999999999967" classname="jjcsformats" name="round_type_support_works"/>
+  <testsuite name="jjcsformats" timestamp="2025-12-02T17:48:46Z" hostname="26293a5cdb06" tests="17" skipped="1" failures="0" errors="3" time="0.683">
+    <testcase time="0.304" classname="jjcsformats" name="jjjcs_formats_work">
+      <skipped message="Reason: On CRAN ('test-jjcsformats.R:12:1')"/>
+    </testcase>
+    <testcase time="0.016" classname="jjcsformats" name="round_type_support_works"/>
     <testcase time="0.00300000000000011" classname="jjcsformats" name="round_type_support_works"/>
-    <testcase time="0.00300000000000011" classname="jjcsformats" name="round_type_support_works"/>
-    <testcase time="0.00300000000000011" classname="jjcsformats" name="round_type_support_works"/>
+    <testcase time="0.00399999999999956" classname="jjcsformats" name="round_type_support_works"/>
     <testcase time="0.00300000000000011" classname="jjcsformats" name="round_type_support_works"/>
     <testcase time="0.00399999999999956" classname="jjcsformats" name="round_type_support_works"/>
     <testcase time="0.00300000000000011" classname="jjcsformats" name="round_type_support_works"/>
     <testcase time="0.00300000000000011" classname="jjcsformats" name="round_type_support_works"/>
-    <testcase time="0.00399999999999956" classname="jjcsformats" name="round_type_support_works"/>
-    <testcase time="0.0660000000000007" classname="jjcsformats" name="jjcsformat_range_fct_is_formatting_ranges_as_expected">
+    <testcase time="0.00400000000000134" classname="jjcsformats" name="round_type_support_works"/>
+    <testcase time="0.00300000000000011" classname="jjcsformats" name="round_type_support_works"/>
+    <testcase time="0.0679999999999996" classname="jjcsformats" name="jjcsformat_range_fct_is_formatting_ranges_as_expected">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-jjcsformats.R:157:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
     x
  1. \-junco (local) my_range_format(c(0.35235, 99.2342, 1, 1))</error>
     </testcase>
-    <testcase time="0.205" classname="jjcsformats" name="jjcsformat_pval_fct_works">
+    <testcase time="0.209" classname="jjcsformats" name="jjcsformat_pval_fct_works">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-jjcsformats.R:166:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
     x
@@ -1067,7 +1064,7 @@ Backtrace:
     </testcase>
     <testcase time="0.0199999999999996" classname="jjcsformats" name="some_special_cases_for_jjcsformat_pval_fct"/>
     <testcase time="0.00300000000000011" classname="jjcsformats" name="some_special_cases_for_jjcsformat_pval_fct"/>
-    <testcase time="0.00699999999999967" classname="jjcsformats" name="some_special_cases_for_jjcsformat_pval_fct">
+    <testcase time="0.0080000000000009" classname="jjcsformats" name="some_special_cases_for_jjcsformat_pval_fct">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-jjcsformats.R:196:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -1083,108 +1080,38 @@ Backtrace:
  10.     \-junco (local) `&lt;fn&gt;`(1.23e-06, na_str = "NE", round_type = "iec")</error>
     </testcase>
     <testcase time="0.0220000000000002" classname="jjcsformats" name="jjcsformat_xx_works_also_for_empty_cells"/>
-    <testcase time="0.00600000000000023" classname="jjcsformats" name="jjcsformat_xx_works_also_for_cells_with_0_length_vectors"/>
+    <testcase time="0.00599999999999845" classname="jjcsformats" name="jjcsformat_xx_works_also_for_cells_with_0_length_vectors"/>
   </testsuite>
-  <testsuite name="junco_utils_default_stats_formats_labels" timestamp="2025-12-02T17:47:32Z" hostname="067c13e018b7" tests="6" skipped="0" failures="1" errors="0" time="0.149">
-    <testcase time="0.0149999999999988" classname="junco_utils_default_stats_formats_labels" name="get_stats_works_as_expected"/>
-    <testcase time="0.093" classname="junco_utils_default_stats_formats_labels" name="get_formats_from_stats_works_as_expected">
-      <failure type="failure" message="Snapshot of code has changed: ('test-junco_utils_default_stats_formats_labels.R:18:3')">Snapshot of code has changed:
-old[2:51] vs new[2:44]
-    res
-  Output
-    $quantiles_upper
--   function(x,
--                  output,
--                  round_type = c("sas", "iec"),
--                  na_str = na_str_dflt) {
--           if (anyNA(na_str) || (replace_na_dflt &amp;&amp; any(na_str == "NA"))) {
--             na_inds &lt;- which(is.na(na_str) | (replace_na_dflt &amp; na_str == "NA"))
--             na_str[na_inds] &lt;- rep(na_str_dflt, length.out = length(na_str))[na_inds]
--           }
--           if (length(x) == 0 || isTRUE(all(x == ""))) {
--             return(NULL)
--           } else if (!length(positions[[1]]) == length(x)) {
--             stop(
--               "Error: input str in call to jjcsformat_xx must contain same number of xx as the number of stats."
--             )
--           }
--   
--           round_type &lt;- match.arg(round_type)
--   
--           values &lt;- Map(y = x, fun = roundings, na_str = na_str, function(y, fun, na_str, output) {
--             fun(y, na_str = na_str, round_type = round_type)
--           })
--   
--           regmatches(x = str, m = positions)[[1]] &lt;- values
--           return(str)
--         }
-+   function (x, output, round_type = c("sas", "iec"), na_str = na_str_dflt) 
-+   {
-+       if (anyNA(na_str) || (replace_na_dflt &amp;&amp; any(na_str == "NA"))) {
-+           na_inds &lt;- which(is.na(na_str) | (replace_na_dflt &amp; na_str == 
-+               "NA"))
-+           na_str[na_inds] &lt;- rep(na_str_dflt, length.out = length(na_str))[na_inds]
-+       }
-+       if (length(x) == 0 || isTRUE(all(x == ""))) {
-+           return(NULL)
-+       }
-+       else if (!length(positions[[1]]) == length(x)) {
-+           stop("Error: input str in call to jjcsformat_xx must contain same number of xx as the number of stats.")
-+       }
-+       round_type &lt;- match.arg(round_type)
-+       values &lt;- Map(y = x, fun = roundings, na_str = na_str, function(y, 
-+           fun, na_str, output) {
-+           fun(y, na_str = na_str, round_type = round_type)
-+       })
-+       regmatches(x = str, m = positions)[[1]] &lt;- values
-+       return(str)
-+   }
-    &lt;environment: base&gt;
-    
-    $range_with_cens_info
--   function(x, output, round_type = valid_round_type, ...) {
-+   function (x, output, round_type = valid_round_type, ...) 
-+   {
-        round_type &lt;- match.arg(round_type)
--       checkmate::assert_numeric(
--         x,
--         len = 4L,
--         finite = TRUE,
--         any.missing = FALSE
--       )
-+       checkmate::assert_numeric(x, len = 4L, finite = TRUE, any.missing = FALSE)
-        checkmate::assert_true(all(x[c(3, 4)] %in% c(0, 1)))
--   
-        res &lt;- vapply(x[c(1, 2)], FUN = function(x) {
--         format_value(x, format_xx, round_type = round_type)
-+           format_value(x, format_xx, round_type = round_type)
-        }, character(1))
--       if (x[3] == 1) res[1] &lt;- paste0(res[1], "+")
--       if (x[4] == 1) res[2] &lt;- paste0(res[2], "+")
-+       if (x[3] == 1) 
-+           res[1] &lt;- paste0(res[1], "+")
-+       if (x[4] == 1) 
-+           res[2] &lt;- paste0(res[2], "+")
-        paste0("(", res[1], ", ", res[2], ")")
--     }
-+   }
-    &lt;environment: base&gt;
-    
-</failure>
+  <testsuite name="junco_utils_default_stats_formats_labels" timestamp="2025-12-02T17:48:47Z" hostname="26293a5cdb06" tests="6" skipped="5" failures="0" errors="0" time="0.095">
+    <testcase time="0.0140000000000011" classname="junco_utils_default_stats_formats_labels" name="get_stats_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-junco_utils_default_stats_formats_labels.R:6:1')"/>
     </testcase>
-    <testcase time="0.0200000000000014" classname="junco_utils_default_stats_formats_labels" name="get_labels_from_stats_works_as_expected"/>
-    <testcase time="0.00499999999999901" classname="junco_utils_default_stats_formats_labels" name="get_label_attr_from_stats_works_as_expected"/>
-    <testcase time="0.00600000000000023" classname="junco_utils_default_stats_formats_labels" name="get_label_attr_from_stats_works_as_expected"/>
-    <testcase time="0.00999999999999979" classname="junco_utils_default_stats_formats_labels" name="get_indents_from_stats_works_as_expected"/>
+    <testcase time="0.0190000000000001" classname="junco_utils_default_stats_formats_labels" name="get_formats_from_stats_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-junco_utils_default_stats_formats_labels.R:11:1')"/>
+    </testcase>
+    <testcase time="0.0169999999999995" classname="junco_utils_default_stats_formats_labels" name="get_labels_from_stats_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-junco_utils_default_stats_formats_labels.R:21:1')"/>
+    </testcase>
+    <testcase time="0.0139999999999993" classname="junco_utils_default_stats_formats_labels" name="get_label_attr_from_stats_works_as_expected"/>
+    <testcase time="0.00600000000000023" classname="junco_utils_default_stats_formats_labels" name="get_label_attr_from_stats_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-junco_utils_default_stats_formats_labels.R:27:1')"/>
+    </testcase>
+    <testcase time="0.0250000000000004" classname="junco_utils_default_stats_formats_labels" name="get_indents_from_stats_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-junco_utils_default_stats_formats_labels.R:36:1')"/>
+    </testcase>
   </testsuite>
-  <testsuite name="kaplan_meier" timestamp="2025-12-02T17:47:32Z" hostname="067c13e018b7" tests="12" skipped="0" failures="0" errors="4" time="0.472">
-    <testcase time="0.0169999999999995" classname="kaplan_meier" name="s_kaplan_meier_works_with_default_arguments"/>
-    <testcase time="0.00700000000000145" classname="kaplan_meier" name="s_kaplan_meier_works_with_default_arguments"/>
-    <testcase time="0.00999999999999979" classname="kaplan_meier" name="s_kaplan_meier_works_with_customized_arguments"/>
-    <testcase time="0.00600000000000023" classname="kaplan_meier" name="s_kaplan_meier_works_with_customized_arguments"/>
-    <testcase time="0.0109999999999992" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments"/>
+  <testsuite name="kaplan_meier" timestamp="2025-12-02T17:48:47Z" hostname="26293a5cdb06" tests="12" skipped="2" failures="0" errors="4" time="0.28">
+    <testcase time="0.0269999999999992" classname="kaplan_meier" name="s_kaplan_meier_works_with_default_arguments"/>
+    <testcase time="0.00500000000000078" classname="kaplan_meier" name="s_kaplan_meier_works_with_default_arguments">
+      <skipped message="Reason: On CRAN ('test-kaplan_meier.R:3:1')"/>
+    </testcase>
+    <testcase time="0.0190000000000001" classname="kaplan_meier" name="s_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.00600000000000023" classname="kaplan_meier" name="s_kaplan_meier_works_with_customized_arguments">
+      <skipped message="Reason: On CRAN ('test-kaplan_meier.R:20:1')"/>
+    </testcase>
+    <testcase time="0.0199999999999996" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments"/>
     <testcase time="0.00200000000000067" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments"/>
-    <testcase time="0.250999999999999" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments">
+    <testcase time="0.020999999999999" classname="kaplan_meier" name="a_kaplan_meier_works_with_default_arguments">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'x' in selecting a method for function 'print': object 'valid_round_type' not found ('test-kaplan_meier.R:60:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'x' in selecting a method for function 'print': object 'valid_round_type' not found
 Backtrace:
      x
@@ -1225,9 +1152,9 @@ Backtrace:
  35. \-base::.handleSimpleError(...)
  36.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0329999999999995" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
-    <testcase time="0.00200000000000067" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
-    <testcase time="0.0199999999999996" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments">
+    <testcase time="0.0340000000000007" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.00199999999999889" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments"/>
+    <testcase time="0.0210000000000008" classname="kaplan_meier" name="a_kaplan_meier_works_with_customized_arguments">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'x' in selecting a method for function 'print': object 'valid_round_type' not found ('test-kaplan_meier.R:84:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'x' in selecting a method for function 'print': object 'valid_round_type' not found
 Backtrace:
      x
@@ -1268,7 +1195,7 @@ Backtrace:
  35. \-base::.handleSimpleError(...)
  36.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0350000000000001" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table">
+    <testcase time="0.0440000000000005" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-kaplan_meier.R:98:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -1285,7 +1212,7 @@ Backtrace:
  11. \-base::.handleSimpleError(...)
  12.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0779999999999994" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table_with_custom_arguments">
+    <testcase time="0.0789999999999988" classname="kaplan_meier" name="a_kaplan_meier_works_inside_analyze_in_table_with_custom_arguments">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-kaplan_meier.R:128:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -1303,37 +1230,37 @@ Backtrace:
  12.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="markup_unicodify" timestamp="2025-12-02T17:47:33Z" hostname="067c13e018b7" tests="1" skipped="0" failures="0" errors="0" time="0.117">
-    <testcase time="0.117000000000001" classname="markup_unicodify" name="dps_markup_works_with_and_"/>
-  </testsuite>
-  <testsuite name="mmrm" timestamp="2025-12-02T17:47:33Z" hostname="067c13e018b7" tests="5" skipped="0" failures="0" errors="0" time="0.238">
-    <testcase time="0.116999999999999" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
-    <testcase time="0.00300000000000011" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
-    <testcase time="0.00300000000000011" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
-    <testcase time="0.00300000000000011" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
-    <testcase time="0.112" classname="mmrm" name="fit_mmrm_j_works_as_expected"/>
-    <testcase time="0.027000000000001" classname="character(0)" name="_unnamed_">
-      <error type="error" message="&lt;packageNotFoundError/error/condition&gt; ('test-mmrm_rbmi.R:1:1')">&lt;packageNotFoundError/error/condition&gt;
-Error in `library(rbmi)`: there is no package called 'rbmi'
-Backtrace:
-    x
- 1. +-base::suppressPackageStartupMessages(library(rbmi)) at test-mmrm_rbmi.R:1:1
- 2. | \-base::withCallingHandlers(expr, packageStartupMessage = function(c) tryInvokeRestart("muffleMessage"))
- 3. \-base::library(rbmi)</error>
+  <testsuite name="markup_unicodify" timestamp="2025-12-02T17:48:47Z" hostname="26293a5cdb06" tests="1" skipped="1" failures="0" errors="0" time="0.129">
+    <testcase time="0.129000000000001" classname="markup_unicodify" name="dps_markup_works_with_and_">
+      <skipped message="Reason: On CRAN ('test-markup_unicodify.R:1:1')"/>
     </testcase>
   </testsuite>
-  <testsuite name="odds_ratio" timestamp="2025-12-02T17:47:33Z" hostname="067c13e018b7" tests="13" skipped="0" failures="0" errors="3" time="0.244">
-    <testcase time="0.0329999999999995" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set"/>
-    <testcase time="0.00600000000000023" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set"/>
-    <testcase time="0.0149999999999988" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set_with_strata"/>
-    <testcase time="0.00500000000000078" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set_with_strata"/>
-    <testcase time="0.0080000000000009" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_non_responders"/>
-    <testcase time="0.00299999999999834" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_non_responders"/>
-    <testcase time="0.00600000000000023" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_one_grp"/>
+  <testsuite name="mmrm" timestamp="2025-12-02T17:48:47Z" hostname="26293a5cdb06" tests="5" skipped="2" failures="0" errors="0" time="0.487">
+    <testcase time="0.122999999999999" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
+    <testcase time="0.00300000000000011" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
+    <testcase time="0.00300000000000011" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values"/>
+    <testcase time="0.000999999999999446" classname="mmrm" name="get_mmrm_lsmeans_can_calculate_the_LS_mean_results_including_one_and_two_sided_p_values">
+      <skipped message="Reason: On CRAN ('test-mmrm.R:3:1')"/>
+    </testcase>
+    <testcase time="0.357000000000001" classname="mmrm" name="fit_mmrm_j_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-mmrm.R:42:1')"/>
+    </testcase>
+    <testcase time="0.0169999999999995" classname="character(0)" name="_unnamed_">
+      <skipped message="Reason: {rbmi} is not installed. ('test-mmrm_rbmi.R:1:1')"/>
+    </testcase>
+  </testsuite>
+  <testsuite name="odds_ratio" timestamp="2025-12-02T17:48:48Z" hostname="26293a5cdb06" tests="13" skipped="1" failures="0" errors="2" time="0.219">
+    <testcase time="0.0229999999999997" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set"/>
+    <testcase time="0.00500000000000078" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set"/>
+    <testcase time="0.016" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set_with_strata"/>
+    <testcase time="0.00499999999999901" classname="odds_ratio" name="s_odds_ratio_j_returns_NA_when_one_group_has_no_responders_and_option_set_with_strata"/>
+    <testcase time="0.00900000000000034" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_non_responders"/>
+    <testcase time="0.00200000000000067" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_non_responders"/>
+    <testcase time="0.00599999999999845" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_one_grp"/>
     <testcase time="0.00300000000000011" classname="odds_ratio" name="s_odds_ratio_j_does_not_fail_with_only_one_grp"/>
-    <testcase time="0.00699999999999967" classname="odds_ratio" name="or_glm_j_does_not_fail_with_only_non_responders"/>
+    <testcase time="0.0080000000000009" classname="odds_ratio" name="or_glm_j_does_not_fail_with_only_non_responders"/>
     <testcase time="0.00600000000000023" classname="odds_ratio" name="or_glm_j_does_not_fail_with_only_non_responders"/>
-    <testcase time="0.0500000000000007" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis">
+    <testcase time="0.0459999999999994" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_unstratified_analysis">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-odds_ratio.R:134:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -1371,7 +1298,7 @@ Backtrace:
  32.                             +-base::do.call(f, args)
  33.                             \-junco (local) `&lt;fn&gt;`(0.685405666682906, na_str = "NA", round_type = "iec")</error>
     </testcase>
-    <testcase time="0.0749999999999993" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis">
+    <testcase time="0.0730000000000004" classname="odds_ratio" name="a_odds_ratio_j_works_in_a_table_layout_as_expected_for_CMH_analysis">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-odds_ratio.R:175:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -1409,7 +1336,7 @@ Backtrace:
  32.                             +-base::do.call(f, args)
  33.                             \-junco (local) `&lt;fn&gt;`(0.52414187539191, na_str = "NA", round_type = "iec")</error>
     </testcase>
-    <testcase time="0.16" classname="character(0)" name="_unnamed_">
+    <testcase time="0.167999999999999" classname="character(0)" name="_unnamed_">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-patyrs-eair100.R:50:1')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -1431,28 +1358,40 @@ Backtrace:
  16. \-base::.handleSimpleError(...)
  17.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.088000000000001" classname="character(0)" name="_unnamed_">
-      <error type="error" message="&lt;packageNotFoundError/error/condition&gt; ('test-pool_rbmi.R:1:1')">&lt;packageNotFoundError/error/condition&gt;
-Error in `library(rbmi)`: there is no package called 'rbmi'
-Backtrace:
-    x
- 1. \-base::library(rbmi) at test-pool_rbmi.R:1:1</error>
+    <testcase time="0.0709999999999997" classname="character(0)" name="_unnamed_">
+      <skipped message="Reason: {rbmi} is not installed. ('test-pool_rbmi.R:1:1')"/>
     </testcase>
   </testsuite>
-  <testsuite name="proportions" timestamp="2025-12-02T17:47:34Z" hostname="067c13e018b7" tests="23" skipped="0" failures="0" errors="3" time="0.493">
-    <testcase time="0.0289999999999999" classname="proportions" name="s_proportion_factor_works_as_expected"/>
-    <testcase time="0.0129999999999999" classname="proportions" name="s_proportion_factor_shows_optional_total_row_on_top"/>
-    <testcase time="0.0169999999999995" classname="proportions" name="s_proportion_factor_shows_optional_total_row_in_bottom"/>
-    <testcase time="0.0120000000000005" classname="proportions" name="s_proportion_factor_optionally_uses_number_of_non_missing_levels_as_total"/>
-    <testcase time="0.00999999999999979" classname="proportions" name="s_proportion_logical_works_as_expected"/>
-    <testcase time="0.0109999999999992" classname="proportions" name="c_proportion_logical_works_as_expected"/>
-    <testcase time="0.00900000000000034" classname="proportions" name="h_get_design_mat_works_as_expected"/>
+  <testsuite name="proportions" timestamp="2025-12-02T17:48:48Z" hostname="26293a5cdb06" tests="19" skipped="11" failures="0" errors="2" time="0.606">
+    <testcase time="0.0240000000000009" classname="proportions" name="s_proportion_factor_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-proportions.R:1:1')"/>
+    </testcase>
+    <testcase time="0.0220000000000002" classname="proportions" name="s_proportion_factor_shows_optional_total_row_on_top">
+      <skipped message="Reason: On CRAN ('test-proportions.R:9:1')"/>
+    </testcase>
+    <testcase time="0.0199999999999996" classname="proportions" name="s_proportion_factor_shows_optional_total_row_in_bottom">
+      <skipped message="Reason: On CRAN ('test-proportions.R:18:1')"/>
+    </testcase>
+    <testcase time="0.0259999999999998" classname="proportions" name="s_proportion_factor_optionally_uses_number_of_non_missing_levels_as_total">
+      <skipped message="Reason: On CRAN ('test-proportions.R:28:1')"/>
+    </testcase>
+    <testcase time="0.0180000000000007" classname="proportions" name="s_proportion_logical_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-proportions.R:39:1')"/>
+    </testcase>
+    <testcase time="0.0190000000000001" classname="proportions" name="c_proportion_logical_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-proportions.R:47:1')"/>
+    </testcase>
+    <testcase time="0.0739999999999998" classname="proportions" name="h_get_design_mat_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="proportions" name="h_get_design_mat_works_as_expected"/>
-    <testcase time="0.00500000000000078" classname="proportions" name="a_proportion_ci_logical_works_as_expected"/>
-    <testcase time="0.00699999999999967" classname="proportions" name="a_proportion_ci_logical_works_as_expected"/>
-    <testcase time="0.00799999999999912" classname="proportions" name="a_proportion_ci_factor_works_as_expected"/>
-    <testcase time="0.0080000000000009" classname="proportions" name="a_proportion_ci_factor_works_as_expected"/>
-    <testcase time="0.0109999999999992" classname="proportions" name="prop_split_fun_works_as_expected">
+    <testcase time="0.00600000000000023" classname="proportions" name="a_proportion_ci_logical_works_as_expected"/>
+    <testcase time="0.00499999999999901" classname="proportions" name="a_proportion_ci_logical_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-proportions.R:80:1')"/>
+    </testcase>
+    <testcase time="0.0170000000000012" classname="proportions" name="a_proportion_ci_factor_works_as_expected"/>
+    <testcase time="0.00799999999999912" classname="proportions" name="a_proportion_ci_factor_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-proportions.R:92:1')"/>
+    </testcase>
+    <testcase time="0.0199999999999996" classname="proportions" name="prop_split_fun_works_as_expected">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-proportions.R:106:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -1464,15 +1403,15 @@ Backtrace:
  6. \-base::.handleSimpleError(...)
  7.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.043000000000001" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
-    <testcase time="0.00799999999999912" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
-    <testcase time="0.0080000000000009" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
-    <testcase time="0.00499999999999901" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
-    <testcase time="0.0120000000000005" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
-    <testcase time="0.0080000000000009" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
-    <testcase time="0.0129999999999999" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
-    <testcase time="0.00499999999999901" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
-    <testcase time="0.0400000000000009" classname="character(0)" name="_unnamed_">
+    <testcase time="0.0690000000000008" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row"/>
+    <testcase time="0.000999999999999446" classname="proportions" name="prop_table_afun_works_as_expected_with_total_row">
+      <skipped message="Reason: On CRAN ('test-proportions.R:112:1')"/>
+    </testcase>
+    <testcase time="0.0340000000000007" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row"/>
+    <testcase time="0.000999999999999446" classname="proportions" name="prop_table_afun_works_as_expected_by_default_without_total_row">
+      <skipped message="Reason: On CRAN ('test-proportions.R:170:1')"/>
+    </testcase>
+    <testcase time="0.0510000000000002" classname="character(0)" name="_unnamed_">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-pruning_functions.R:5:1')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -1502,24 +1441,18 @@ Backtrace:
  24. \-base::.handleSimpleError(...)
  25.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0889999999999986" classname="character(0)" name="_unnamed_">
-      <error type="error" message="&lt;packageNotFoundError/error/condition&gt; ('test-rbmi.R:3:3')">&lt;packageNotFoundError/error/condition&gt;
-Error in `library(rbmi)`: there is no package called 'rbmi'
-Backtrace:
-    x
- 1. +-base::suppressPackageStartupMessages(...) at test-rbmi.R:1:1
- 2. | \-base::withCallingHandlers(expr, packageStartupMessage = function(c) tryInvokeRestart("muffleMessage"))
- 3. \-base::library(rbmi) at test-rbmi.R:3:3</error>
+    <testcase time="0.0760000000000005" classname="character(0)" name="_unnamed_">
+      <skipped message="Reason: {rbmi} is not installed. ('test-rbmi.R:3:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="relative_risk" timestamp="2025-12-02T17:47:34Z" hostname="067c13e018b7" tests="9" skipped="0" failures="0" errors="3" time="0.199">
-    <testcase time="0.0289999999999999" classname="relative_risk" name="s_relative_risk_returns_NA_when_one_group_has_no_responders"/>
-    <testcase time="0.00500000000000078" classname="relative_risk" name="s_relative_risk_returns_NA_when_one_group_has_no_responders"/>
+  <testsuite name="relative_risk" timestamp="2025-12-02T17:48:49Z" hostname="26293a5cdb06" tests="9" skipped="1" failures="0" errors="2" time="0.189">
+    <testcase time="0.0190000000000001" classname="relative_risk" name="s_relative_risk_returns_NA_when_one_group_has_no_responders"/>
+    <testcase time="0.00499999999999901" classname="relative_risk" name="s_relative_risk_returns_NA_when_one_group_has_no_responders"/>
     <testcase time="0.00600000000000023" classname="relative_risk" name="prop_ratio_cmh_works_as_expected"/>
     <testcase time="0.00600000000000023" classname="relative_risk" name="prop_ratio_cmh_works_as_expected"/>
+    <testcase time="0.00699999999999967" classname="relative_risk" name="prop_ratio_cmh_works_also_with_a_single_stratum"/>
     <testcase time="0.00600000000000023" classname="relative_risk" name="prop_ratio_cmh_works_also_with_a_single_stratum"/>
-    <testcase time="0.00599999999999845" classname="relative_risk" name="prop_ratio_cmh_works_also_with_a_single_stratum"/>
-    <testcase time="0.0120000000000005" classname="relative_risk" name="a_relative_risk_in_table_layout_gives_same_results_as_with_SAS">
+    <testcase time="0.0129999999999999" classname="relative_risk" name="a_relative_risk_in_table_layout_gives_same_results_as_with_SAS">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-relative_risk.R:344:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -1534,8 +1467,8 @@ Backtrace:
  9.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="remove_col_count" timestamp="2025-12-02T17:47:34Z" hostname="067c13e018b7" tests="1" skipped="0" failures="0" errors="1" time="0.033">
-    <testcase time="0.0330000000000013" classname="remove_col_count" name="remove_col_count_works">
+  <testsuite name="remove_col_count" timestamp="2025-12-02T17:48:49Z" hostname="26293a5cdb06" tests="1" skipped="0" failures="0" errors="1" time="0.034">
+    <testcase time="0.0340000000000007" classname="remove_col_count" name="remove_col_count_works">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-remove_col_count.R:12:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -1558,8 +1491,8 @@ Backtrace:
  17.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="resp01_functions" timestamp="2025-12-02T17:47:34Z" hostname="067c13e018b7" tests="13" skipped="0" failures="0" errors="4" time="0.42">
-    <testcase time="0.0889999999999986" classname="resp01_functions" name="resp01_split_fun_fct_1_works_as_expected">
+  <testsuite name="resp01_functions" timestamp="2025-12-02T17:48:49Z" hostname="26293a5cdb06" tests="13" skipped="7" failures="0" errors="4" time="0.483">
+    <testcase time="0.0919999999999987" classname="resp01_functions" name="resp01_split_fun_fct_1_works_as_expected">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-resp01_functions.R:8:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -1575,7 +1508,7 @@ Backtrace:
  10. \-base::.handleSimpleError(...)
  11.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0560000000000009" classname="resp01_functions" name="resp01_split_fun_fct_2_works_as_expected">
+    <testcase time="0.0579999999999998" classname="resp01_functions" name="resp01_split_fun_fct_2_works_as_expected">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-resp01_functions.R:20:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -1591,11 +1524,15 @@ Backtrace:
  10. \-base::.handleSimpleError(...)
  11.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0540000000000003" classname="resp01_functions" name="resp01_counts_cfun_1_works_as_expected"/>
-    <testcase time="0.00599999999999845" classname="resp01_functions" name="resp01_counts_cfun_2_works_as_expected"/>
+    <testcase time="0.0600000000000005" classname="resp01_functions" name="resp01_counts_cfun_1_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-resp01_functions.R:27:1')"/>
+    </testcase>
+    <testcase time="0.016" classname="resp01_functions" name="resp01_counts_cfun_2_works_as_expected"/>
     <testcase time="0.00600000000000023" classname="resp01_functions" name="resp01_counts_cfun_3_works_as_expected"/>
-    <testcase time="0.0200000000000014" classname="resp01_functions" name="resp01_a_comp_stat_logical_or_cmh_works_as_expected"/>
-    <testcase time="0.0249999999999986" classname="resp01_functions" name="resp01_a_comp_stat_logical_or_logistic_works_as_expected">
+    <testcase time="0.0129999999999999" classname="resp01_functions" name="resp01_a_comp_stat_logical_or_cmh_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-resp01_functions.R:70:1')"/>
+    </testcase>
+    <testcase time="0.0350000000000001" classname="resp01_functions" name="resp01_a_comp_stat_logical_or_logistic_works_as_expected">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-resp01_functions.R:123:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -1630,9 +1567,13 @@ Backtrace:
  29.                       +-base::do.call(f, args)
  30.                       \-junco (local) `&lt;fn&gt;`(`&lt;dbl&gt;`, na_str = "NA", round_type = "iec")</error>
     </testcase>
-    <testcase time="0.032" classname="resp01_functions" name="resp01_a_comp_stat_logical_rr_works_as_expected"/>
-    <testcase time="0.0200000000000014" classname="resp01_functions" name="resp01_a_comp_stat_factor_or_cmh_works_as_expected"/>
-    <testcase time="0.0329999999999995" classname="resp01_functions" name="resp01_a_comp_stat_factor_or_logistic_works_as_expected">
+    <testcase time="0.0329999999999995" classname="resp01_functions" name="resp01_a_comp_stat_logical_rr_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-resp01_functions.R:126:1')"/>
+    </testcase>
+    <testcase time="0.0300000000000011" classname="resp01_functions" name="resp01_a_comp_stat_factor_or_cmh_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-resp01_functions.R:155:1')"/>
+    </testcase>
+    <testcase time="0.0499999999999989" classname="resp01_functions" name="resp01_a_comp_stat_factor_or_logistic_works_as_expected">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'x' in selecting a method for function 'print': object 'valid_round_type' not found ('test-resp01_functions.R:197:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'x' in selecting a method for function 'print': object 'valid_round_type' not found
 Backtrace:
      x
@@ -1673,12 +1614,18 @@ Backtrace:
  35. \-base::.handleSimpleError(...)
  36.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.036999999999999" classname="resp01_functions" name="resp01_acfun_works_as_expected"/>
-    <testcase time="0.027000000000001" classname="resp01_functions" name="resp01_acfun_works_2_as_expected"/>
-    <testcase time="0.0150000000000006" classname="resp01_functions" name="resp01_acfun_3_works_as_expected"/>
+    <testcase time="0.0370000000000008" classname="resp01_functions" name="resp01_acfun_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-resp01_functions.R:200:1')"/>
+    </testcase>
+    <testcase time="0.0299999999999994" classname="resp01_functions" name="resp01_acfun_works_2_as_expected">
+      <skipped message="Reason: On CRAN ('test-resp01_functions.R:224:1')"/>
+    </testcase>
+    <testcase time="0.0229999999999997" classname="resp01_functions" name="resp01_acfun_3_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-resp01_functions.R:256:1')"/>
+    </testcase>
   </testsuite>
-  <testsuite name="response_by_var" timestamp="2025-12-02T17:47:35Z" hostname="067c13e018b7" tests="1" skipped="0" failures="0" errors="1" time="0.024">
-    <testcase time="0.0239999999999991" classname="response_by_var" name="response_by_var_various_scenarios">
+  <testsuite name="response_by_var" timestamp="2025-12-02T17:48:49Z" hostname="26293a5cdb06" tests="1" skipped="0" failures="0" errors="1" time="0.034">
+    <testcase time="0.0340000000000007" classname="response_by_var" name="response_by_var_various_scenarios">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-response_by_var.R:19:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -1692,7 +1639,7 @@ Backtrace:
  8. \-base::.handleSimpleError(...)
  9.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0969999999999995" classname="character(0)" name="_unnamed_">
+    <testcase time="0.103999999999999" classname="character(0)" name="_unnamed_">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-sorting_functions.R:13:1')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -1723,8 +1670,8 @@ Backtrace:
  25.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="split_functions" timestamp="2025-12-02T17:47:35Z" hostname="067c13e018b7" tests="10" skipped="0" failures="0" errors="7" time="0.481">
-    <testcase time="0.0840000000000014" classname="split_functions" name="cond_rm_facets_works">
+  <testsuite name="split_functions" timestamp="2025-12-02T17:48:49Z" hostname="26293a5cdb06" tests="10" skipped="0" failures="0" errors="7" time="0.504">
+    <testcase time="0.0830000000000002" classname="split_functions" name="cond_rm_facets_works">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-split_functions.R:25:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -1738,7 +1685,7 @@ Backtrace:
  8. \-base::.handleSimpleError(...)
  9.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0619999999999994" classname="split_functions" name="rm_levels_works">
+    <testcase time="0.0700000000000003" classname="split_functions" name="rm_levels_works">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': unused argument (round_type = &quot;sas&quot;) ('test-split_functions.R:59:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -1752,7 +1699,7 @@ Backtrace:
  8. \-base::.handleSimpleError(...)
  9.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0499999999999989" classname="split_functions" name="real_add_overall_facet_works">
+    <testcase time="0.048" classname="split_functions" name="real_add_overall_facet_works">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': unused argument (round_type = &quot;sas&quot;) ('test-split_functions.R:80:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -1766,7 +1713,7 @@ Backtrace:
  8. \-base::.handleSimpleError(...)
  9.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0450000000000017" classname="split_functions" name="make_combo_splitfun_works">
+    <testcase time="0.0530000000000008" classname="split_functions" name="make_combo_splitfun_works">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': unused argument (round_type = &quot;sas&quot;) ('test-split_functions.R:104:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -1780,7 +1727,7 @@ Backtrace:
  8. \-base::.handleSimpleError(...)
  9.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0459999999999994" classname="split_functions" name="combine_nonblank_works">
+    <testcase time="0.0489999999999995" classname="split_functions" name="combine_nonblank_works">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': unused argument (round_type = &quot;sas&quot;) ('test-split_functions.R:141:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -1794,7 +1741,7 @@ Backtrace:
  8. \-base::.handleSimpleError(...)
  9.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0510000000000002" classname="split_functions" name="rm_blank_levels_works">
+    <testcase time="0.0499999999999989" classname="split_functions" name="rm_blank_levels_works">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': unused argument (round_type = &quot;sas&quot;) ('test-split_functions.R:176:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'lyt' in selecting a method for function '.add_row_summary': error in evaluating the argument 'obj' in selecting a method for function 'next_rpos': unused argument (round_type = "sas")
 Backtrace:
     x
@@ -1808,26 +1755,28 @@ Backtrace:
  8. \-base::.handleSimpleError(...)
  9.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
-    <testcase time="0.0399999999999991" classname="split_functions" name="do_exclude_split_works"/>
+    <testcase time="0.0410000000000004" classname="split_functions" name="do_exclude_split_works"/>
     <testcase time="0.00300000000000011" classname="split_functions" name="do_exclude_split_works"/>
     <testcase time="0.00300000000000011" classname="split_functions" name="do_exclude_split_works"/>
   </testsuite>
-  <testsuite name="string_to_title" timestamp="2025-12-02T17:47:35Z" hostname="067c13e018b7" tests="4" skipped="0" failures="0" errors="0" time="0.028">
-    <testcase time="0.00999999999999979" classname="string_to_title" name="string_to_title_works_as_expected_for_string"/>
+  <testsuite name="string_to_title" timestamp="2025-12-02T17:48:50Z" hostname="26293a5cdb06" tests="4" skipped="0" failures="0" errors="0" time="0.033">
+    <testcase time="0.0150000000000006" classname="string_to_title" name="string_to_title_works_as_expected_for_string"/>
     <testcase time="0.00600000000000023" classname="string_to_title" name="string_to_title_works_as_expected_for_character_vector"/>
     <testcase time="0.00600000000000023" classname="string_to_title" name="string_to_title_works_as_expected_for_factors"/>
-    <testcase time="0.00600000000000023" classname="string_to_title" name="string_to_title_works_as_expected_for_factors_missing_levels_"/>
+    <testcase time="0.00599999999999845" classname="string_to_title" name="string_to_title_works_as_expected_for_factors_missing_levels_"/>
   </testsuite>
-  <testsuite name="summarize_ancova" timestamp="2025-12-02T17:47:35Z" hostname="067c13e018b7" tests="9" skipped="0" failures="0" errors="1" time="0.166">
-    <testcase time="0.0220000000000002" classname="summarize_ancova" name="h_ancova_works_as_expected"/>
+  <testsuite name="summarize_ancova" timestamp="2025-12-02T17:48:50Z" hostname="26293a5cdb06" tests="9" skipped="1" failures="0" errors="1" time="0.144">
+    <testcase time="0.0240000000000009" classname="summarize_ancova" name="h_ancova_works_as_expected"/>
     <testcase time="0.000999999999999446" classname="summarize_ancova" name="h_ancova_works_as_expected"/>
-    <testcase time="0.0200000000000014" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
-    <testcase time="0.000999999999999446" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
-    <testcase time="0.020999999999999" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
-    <testcase time="0.00400000000000134" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
-    <testcase time="0.000999999999999446" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
-    <testcase time="0.0820000000000007" classname="summarize_ancova" name="s_summarize_ancova_works_as_expected"/>
-    <testcase time="0.0139999999999993" classname="summarize_ancova" name="a_summarize_ancova_j_works_as_expected_in_table_layout">
+    <testcase time="0.0199999999999996" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
+    <testcase time="0.00200000000000067" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
+    <testcase time="0.0150000000000006" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
+    <testcase time="0.00399999999999956" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
+    <testcase time="0.00200000000000067" classname="summarize_ancova" name="s_ancova_j_works_as_expected"/>
+    <testcase time="0.0519999999999996" classname="summarize_ancova" name="s_summarize_ancova_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-summarize_ancova.R:126:1')"/>
+    </testcase>
+    <testcase time="0.0239999999999991" classname="summarize_ancova" name="a_summarize_ancova_j_works_as_expected_in_table_layout">
       <error type="error" message="Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = &quot;sas&quot;) ('test-summarize_ancova.R:146:3')">Error in `h(simpleError(msg, call))`: error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'last_rowsplit': error in evaluating the argument 'obj' in selecting a method for function 'next_cpos': unused argument (round_type = "sas")
 Backtrace:
      x
@@ -1851,16 +1800,24 @@ Backtrace:
  18.   \-base (local) h(simpleError(msg, call))</error>
     </testcase>
   </testsuite>
-  <testsuite name="summarize_mmrm" timestamp="2025-12-02T17:47:36Z" hostname="067c13e018b7" tests="10" skipped="0" failures="0" errors="2" time="1.689">
-    <testcase time="0.363" classname="summarize_mmrm" name="h_summarize_mmrm_works_with_healthy_input"/>
-    <testcase time="0.0370000000000008" classname="summarize_mmrm" name="h_summarize_mmrm_works_with_healthy_input"/>
-    <testcase time="0.119999999999999" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_non_ref_cell"/>
-    <testcase time="0.0220000000000002" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_non_ref_cell"/>
-    <testcase time="0.011000000000001" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_col_cell"/>
-    <testcase time="0.0139999999999993" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_col_cell"/>
-    <testcase time="0.00699999999999967" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_row_cell"/>
-    <testcase time="0.00699999999999967" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_row_cell"/>
-    <testcase time="0.336" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_in_table_layout">
+  <testsuite name="summarize_mmrm" timestamp="2025-12-02T17:48:50Z" hostname="26293a5cdb06" tests="10" skipped="4" failures="0" errors="2" time="1.706">
+    <testcase time="0.371" classname="summarize_mmrm" name="h_summarize_mmrm_works_with_healthy_input"/>
+    <testcase time="0.0199999999999996" classname="summarize_mmrm" name="h_summarize_mmrm_works_with_healthy_input">
+      <skipped message="Reason: On CRAN ('test-summarize_mmrm.R:15:1')"/>
+    </testcase>
+    <testcase time="0.133000000000001" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_non_ref_cell"/>
+    <testcase time="0.0129999999999999" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_non_ref_cell">
+      <skipped message="Reason: On CRAN ('test-summarize_mmrm.R:33:1')"/>
+    </testcase>
+    <testcase time="0.0199999999999996" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_col_cell"/>
+    <testcase time="0.00300000000000011" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_col_cell">
+      <skipped message="Reason: On CRAN ('test-summarize_mmrm.R:70:1')"/>
+    </testcase>
+    <testcase time="0.0169999999999995" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_row_cell"/>
+    <testcase time="0.00500000000000078" classname="summarize_mmrm" name="s_summarize_mmrm_works_with_healthy_input_in_ref_row_cell">
+      <skipped message="Reason: On CRAN ('test-summarize_mmrm.R:107:1')"/>
+    </testcase>
+    <testcase time="0.362" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_in_table_layout">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-summarize_mmrm.R:167:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -1896,7 +1853,7 @@ Backtrace:
  30.                                     +-base::do.call(f, args)
  31.                                     \-junco (local) `&lt;fn&gt;`(`&lt;dbl&gt;`, na_str = "NA", round_type = "iec")</error>
     </testcase>
-    <testcase time="0.772" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_below_row_splits">
+    <testcase time="0.762" classname="summarize_mmrm" name="a_summarize_mmrm_works_as_expected_below_row_splits">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-summarize_mmrm.R:201:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -1939,20 +1896,20 @@ Backtrace:
  37.                                             \-junco (local) `&lt;fn&gt;`(`&lt;dbl&gt;`, na_str = "NA", round_type = "iec")</error>
     </testcase>
   </testsuite>
-  <testsuite name="summarize_row_counts" timestamp="2025-12-02T17:47:37Z" hostname="067c13e018b7" tests="4" skipped="0" failures="0" errors="0" time="0.516">
-    <testcase time="0.192" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_without_alt_counts"/>
-    <testcase time="0.0760000000000005" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_without_alt_counts"/>
-    <testcase time="0.173" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_with_alt_counts"/>
-    <testcase time="0.0749999999999993" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_with_alt_counts"/>
+  <testsuite name="summarize_row_counts" timestamp="2025-12-02T17:48:52Z" hostname="26293a5cdb06" tests="4" skipped="0" failures="0" errors="0" time="0.548">
+    <testcase time="0.193999999999999" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_without_alt_counts"/>
+    <testcase time="0.108000000000001" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_without_alt_counts"/>
+    <testcase time="0.169" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_with_alt_counts"/>
+    <testcase time="0.077" classname="summarize_row_counts" name="summarize_row_counts_works_as_expected_with_alt_counts"/>
   </testsuite>
-  <testsuite name="tabulate_lsmeans" timestamp="2025-12-02T17:47:38Z" hostname="067c13e018b7" tests="9" skipped="0" failures="0" errors="1" time="0.501">
-    <testcase time="0.116" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
-    <testcase time="0.000999999999999446" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
-    <testcase time="0.0080000000000009" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
-    <testcase time="0.00699999999999967" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
-    <testcase time="0.00699999999999967" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
-    <testcase time="0.102" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly"/>
-    <testcase time="0.157000000000002" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly">
+  <testsuite name="tabulate_lsmeans" timestamp="2025-12-02T17:48:52Z" hostname="26293a5cdb06" tests="7" skipped="1" failures="0" errors="1" time="0.513">
+    <testcase time="0.120999999999999" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.00200000000000067" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column"/>
+    <testcase time="0.0120000000000005" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_MMRM_fit_when_not_in_reference_column">
+      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans.R:1:1')"/>
+    </testcase>
+    <testcase time="0.113000000000001" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly"/>
+    <testcase time="0.160999999999998" classname="tabulate_lsmeans" name="summarize_lsmeans_can_show_two_and_one_sided_p_values_correctly">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-tabulate_lsmeans.R:89:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -1988,24 +1945,20 @@ Backtrace:
  30.                                     +-base::do.call(f, args)
  31.                                     \-junco (local) `&lt;fn&gt;`(`&lt;dbl&gt;`, na_str = "NA", round_type = "iec")</error>
     </testcase>
-    <testcase time="0.101999999999997" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_ANCOVA_fit_when_not_in_reference_column"/>
-    <testcase time="0.00100000000000122" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_ANCOVA_fit_when_not_in_reference_column"/>
+    <testcase time="0.103000000000002" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_ANCOVA_fit_when_not_in_reference_column"/>
+    <testcase time="0.000999999999997669" classname="tabulate_lsmeans" name="s_lsmeans_works_as_expected_with_ANCOVA_fit_when_not_in_reference_column"/>
   </testsuite>
-  <testsuite name="tabulate_lsmeans_wide" timestamp="2025-12-02T17:47:38Z" hostname="067c13e018b7" tests="18" skipped="0" failures="0" errors="2" time="1.242">
-    <testcase time="0.0199999999999996" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
-    <testcase time="0.00800000000000267" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
-    <testcase time="0.00799999999999912" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
-    <testcase time="0.00799999999999912" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
-    <testcase time="0.00700000000000145" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
-    <testcase time="0.00799999999999912" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected"/>
-    <testcase time="0.0120000000000005" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group"/>
-    <testcase time="0.00799999999999912" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group"/>
-    <testcase time="0.00900000000000034" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group"/>
-    <testcase time="0.0120000000000005" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
-    <testcase time="0.0069999999999979" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
-    <testcase time="0.00800000000000267" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
-    <testcase time="0.00799999999999912" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case"/>
-    <testcase time="0.32" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected">
+  <testsuite name="tabulate_lsmeans_wide" timestamp="2025-12-02T17:48:53Z" hostname="26293a5cdb06" tests="8" skipped="4" failures="0" errors="2" time="1.278">
+    <testcase time="0.0460000000000029" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans_wide.R:3:1')"/>
+    </testcase>
+    <testcase time="0.032" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group">
+      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans_wide.R:121:1')"/>
+    </testcase>
+    <testcase time="0.036999999999999" classname="tabulate_lsmeans_wide" name="lsmeans_wide_cfun_works_as_expected_with_more_than_one_treatment_group_for_MMRM_case">
+      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans_wide.R:194:1')"/>
+    </testcase>
+    <testcase time="0.34" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-tabulate_lsmeans_wide.R:306:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -2049,8 +2002,8 @@ Backtrace:
  38.                                     +-base::do.call(f, args)
  39.                                     \-junco (local) `&lt;fn&gt;`(0.00149127890654534, na_str = "", round_type = "iec")</error>
     </testcase>
-    <testcase time="0.125999999999998" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group"/>
-    <testcase time="0.260000000000002" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group">
+    <testcase time="0.129000000000001" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group"/>
+    <testcase time="0.268000000000001" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_works_as_expected_with_more_than_1_treatment_group">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-tabulate_lsmeans_wide.R:351:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -2094,22 +2047,24 @@ Backtrace:
  38.                                     +-base::do.call(f, args)
  39.                                     \-junco (local) `&lt;fn&gt;`(0.0435100319641615, na_str = "", round_type = "iec")</error>
     </testcase>
-    <testcase time="0.298999999999999" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_can_omit_variance_and_p_value_columns"/>
-    <testcase time="0.114000000000001" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_can_omit_variance_and_p_value_columns"/>
+    <testcase time="0.309999999999999" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_can_omit_variance_and_p_value_columns"/>
+    <testcase time="0.116" classname="tabulate_lsmeans_wide" name="summarize_lsmeans_wide_can_omit_variance_and_p_value_columns">
+      <skipped message="Reason: On CRAN ('test-tabulate_lsmeans_wide.R:355:1')"/>
+    </testcase>
   </testsuite>
-  <testsuite name="tabulate_rbmi" timestamp="2025-12-02T17:47:39Z" hostname="067c13e018b7" tests="12" skipped="0" failures="0" errors="1" time="0.22">
-    <testcase time="0.0199999999999996" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_ANCOVA_case"/>
+  <testsuite name="tabulate_rbmi" timestamp="2025-12-02T17:48:54Z" hostname="26293a5cdb06" tests="12" skipped="0" failures="0" errors="1" time="0.229">
+    <testcase time="0.0300000000000011" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_ANCOVA_case"/>
     <testcase time="0.00900000000000034" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_MMRM_case"/>
     <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_MMRM_case"/>
     <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="h_tidy_pool_is_produced_correctly_for_MMRM_case"/>
-    <testcase time="0.0169999999999995" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_ANCOVA_case"/>
-    <testcase time="0.0169999999999995" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
+    <testcase time="0.0189999999999984" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_ANCOVA_case"/>
+    <testcase time="0.00900000000000034" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
     <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
-    <testcase time="0.00199999999999889" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
-    <testcase time="0.0160000000000018" classname="tabulate_rbmi" name="s_rbmi_lsmeans_works_with_as_expected_with_.in_ref_col_TRUE"/>
+    <testcase time="0.00300000000000011" classname="tabulate_rbmi" name="tidy.pool_is_produced_correctly_for_MMRM_case"/>
+    <testcase time="0.0250000000000021" classname="tabulate_rbmi" name="s_rbmi_lsmeans_works_with_as_expected_with_.in_ref_col_TRUE"/>
     <testcase time="0.0189999999999984" classname="tabulate_rbmi" name="s_rbmi_lsmeans_works_with_as_expected_with_.in_ref_col_FALSE"/>
-    <testcase time="0.0190000000000019" classname="tabulate_rbmi" name="s_rbmi_lsmeans_also_works_with_show_relative_increase"/>
-    <testcase time="0.0919999999999987" classname="tabulate_rbmi" name="a_rbmi_lsmeans_works_as_expected_in_table_layout">
+    <testcase time="0.0199999999999996" classname="tabulate_rbmi" name="s_rbmi_lsmeans_also_works_with_show_relative_increase"/>
+    <testcase time="0.0860000000000021" classname="tabulate_rbmi" name="a_rbmi_lsmeans_works_as_expected_in_table_layout">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-tabulate_rbmi.R:306:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -2154,65 +2109,70 @@ Backtrace:
  39.                                     \-junco (local) `&lt;fn&gt;`(0.893177242657404, na_str = "NA", round_type = "iec")</error>
     </testcase>
   </testsuite>
-  <testsuite name="tern_utils_default_stats_formats_labels" timestamp="2025-12-02T17:47:40Z" hostname="067c13e018b7" tests="52" skipped="0" failures="0" errors="0" time="0.262">
-    <testcase time="0.0340000000000025" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.0069999999999979" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.00199999999999889" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+  <testsuite name="tern_utils_default_stats_formats_labels" timestamp="2025-12-02T17:48:54Z" hostname="26293a5cdb06" tests="49" skipped="4" failures="0" errors="0" time="0.304">
+    <testcase time="0.0449999999999982" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
     <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.00200000000000244" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.0069999999999979" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.00100000000000122" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.00700000000000145" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.00399999999999778" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00499999999999901" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
+    <testcase time="0.00900000000000034" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults"/>
-    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00100000000000122" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_defaults">
+      <skipped message="Reason: On CRAN ('test-tern_utils_default_stats_formats_labels.R:15:1')"/>
+    </testcase>
+    <testcase time="0.0159999999999982" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00200000000000244" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
-    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
-    <testcase time="0.00400000000000134" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
     <testcase time="0.00499999999999901" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
-    <testcase time="0.00399999999999778" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
-    <testcase time="0.00500000000000256" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
-    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
+    <testcase time="0.00499999999999901" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00400000000000134" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_well_with_pval"/>
+    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
+    <testcase time="0.00199999999999889" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
     <testcase time="0.00499999999999901" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
     <testcase time="0.00400000000000134" classname="tern_utils_default_stats_formats_labels" name="tern_get_stats_works_as_expected_for_selection_of_stats"/>
     <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
-    <testcase time="0.00199999999999889" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
-    <testcase time="0.0109999999999992" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
+    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_formats_from_stats_works_as_expected"/>
+    <testcase time="0.00499999999999901" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
     <testcase time="0.00799999999999912" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
-    <testcase time="0.00400000000000134" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected"/>
-    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_with_labels_in_works_when_adding_levels_to_stats"/>
-    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_fine_for_cases_with_levels"/>
+    <testcase time="0.00100000000000122" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-tern_utils_default_stats_formats_labels.R:142:1')"/>
+    </testcase>
+    <testcase time="0.0239999999999974" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_with_labels_in_works_when_adding_levels_to_stats"/>
+    <testcase time="0.00700000000000145" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_works_fine_for_cases_with_levels"/>
     <testcase time="0.00499999999999901" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
-    <testcase time="0.0069999999999979" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
+    <testcase time="0.00800000000000267" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
+    <testcase time="0.00299999999999656" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
-    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
-    <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected"/>
-    <testcase time="0.00500000000000256" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_correctly_combines_labels_in_and_label_attr_from_stats"/>
+    <testcase time="0.00100000000000122" classname="tern_utils_default_stats_formats_labels" name="tern_get_indents_from_stats_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-tern_utils_default_stats_formats_labels.R:253:1')"/>
+    </testcase>
+    <testcase time="0.0160000000000018" classname="tern_utils_default_stats_formats_labels" name="tern_get_labels_from_stats_correctly_combines_labels_in_and_label_attr_from_stats"/>
     <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".unlist_keep_nulls_works_as_expected_non_recursively"/>
-    <testcase time="0.0069999999999979" classname="tern_utils_default_stats_formats_labels" name=".unlist_keep_nulls_works_as_expected_non_recursively_with_NA"/>
+    <testcase time="0.00599999999999667" classname="tern_utils_default_stats_formats_labels" name=".unlist_keep_nulls_works_as_expected_non_recursively_with_NA"/>
     <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
-    <testcase time="0.00100000000000122" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
+    <testcase time="0.00200000000000244" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
     <testcase time="0.00300000000000011" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_list"/>
-    <testcase time="0.00999999999999801" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_single_input"/>
-    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".apply_stat_functions_works_as_expected_without_custom_stat_functions"/>
-    <testcase time="0.00600000000000023" classname="tern_utils_default_stats_formats_labels" name=".apply_stat_functions_works_as_expected_with_custom_stat_functions"/>
+    <testcase time="0.00900000000000034" classname="tern_utils_default_stats_formats_labels" name=".split_std_from_custom_stats_works_as_expected_with_a_single_input">
+      <skipped message="Reason: On CRAN ('test-tern_utils_default_stats_formats_labels.R:315:1')"/>
+    </testcase>
+    <testcase time="0.014999999999997" classname="tern_utils_default_stats_formats_labels" name=".apply_stat_functions_works_as_expected_without_custom_stat_functions"/>
+    <testcase time="0.00700000000000145" classname="tern_utils_default_stats_formats_labels" name=".apply_stat_functions_works_as_expected_with_custom_stat_functions"/>
   </testsuite>
-  <testsuite name="test_proportion_diff" timestamp="2025-12-02T17:47:40Z" hostname="067c13e018b7" tests="31" skipped="0" failures="0" errors="1" time="0.239">
-    <testcase time="0.0169999999999995" classname="test_proportion_diff" name="s_test_proportion_diff_works_as_expected"/>
-    <testcase time="0.00799999999999912" classname="test_proportion_diff" name="s_test_proportion_diff_works_as_expected"/>
-    <testcase time="0.00700000000000145" classname="test_proportion_diff" name="s_test_proportion_diff_works_as_expected"/>
-    <testcase time="0.0489999999999995" classname="test_proportion_diff" name="a_test_proportion_diff_works_as_expected_in_table_layout">
+  <testsuite name="test_proportion_diff" timestamp="2025-12-02T17:48:55Z" hostname="26293a5cdb06" tests="21" skipped="5" failures="0" errors="1" time="0.25">
+    <testcase time="0.027000000000001" classname="test_proportion_diff" name="s_test_proportion_diff_works_as_expected">
+      <skipped message="Reason: On CRAN ('test-test_proportion_diff.R:1:1')"/>
+    </testcase>
+    <testcase time="0.0599999999999987" classname="test_proportion_diff" name="a_test_proportion_diff_works_as_expected_in_table_layout">
       <error type="error" message="Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found ('test-test_proportion_diff.R:61:3')">Error in `eval(formal.args[[as.character(substitute(arg))]], envir = sys.frame(sysP))`: object 'valid_round_type' not found
 Backtrace:
      x
@@ -2250,49 +2210,49 @@ Backtrace:
  32.                             +-base::do.call(f, args)
  33.                             \-junco (local) `&lt;fn&gt;`(`&lt;dbl&gt;`, na_str = "NA", round_type = "iec")</error>
     </testcase>
-    <testcase time="0.0280000000000022" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
-    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
-    <testcase time="0.00100000000000122" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
-    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
-    <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.0289999999999999" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
     <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_chisq_returns_right_result"/>
+    <testcase time="0.00499999999999901" classname="test_proportion_diff" name="prop_chisq_returns_right_result">
+      <skipped message="Reason: On CRAN ('test-test_proportion_diff.R:68:1')"/>
+    </testcase>
+    <testcase time="0.0150000000000006" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
     <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
     <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
-    <testcase time="0.00199999999999889" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
-    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
-    <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
-    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_cmh_returns_right_result"/>
-    <testcase time="0.00800000000000267" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00199999999999889" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00499999999999901" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00199999999999889" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00500000000000256" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00499999999999901" classname="test_proportion_diff" name="prop_cmh_returns_right_result">
+      <skipped message="Reason: On CRAN ('test-test_proportion_diff.R:91:1')"/>
+    </testcase>
+    <testcase time="0.0169999999999995" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.000999999999997669" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.0100000000000016" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
     <testcase time="0.00100000000000122" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00700000000000145" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
-    <testcase time="0.00499999999999901" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
-    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
-    <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
-    <testcase time="0.0069999999999979" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
-    <testcase time="0.00200000000000244" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
-    <testcase time="0.0120000000000005" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.00999999999999801" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00199999999999889" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation"/>
+    <testcase time="0.00500000000000256" classname="test_proportion_diff" name="prop_cmh_also_works_when_there_are_strata_with_just_one_observation">
+      <skipped message="Reason: On CRAN ('test-test_proportion_diff.R:112:1')"/>
+    </testcase>
+    <testcase time="0.0150000000000006" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.00600000000000023" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.00599999999999667" classname="test_proportion_diff" name="prop_fisher_returns_right_result"/>
+    <testcase time="0.0120000000000005" classname="test_proportion_diff" name="prop_fisher_returns_right_result">
+      <skipped message="Reason: On CRAN ('test-test_proportion_diff.R:171:1')"/>
+    </testcase>
   </testsuite>
-  <testsuite name="titles_file" timestamp="2025-12-02T17:47:40Z" hostname="067c13e018b7" tests="6" skipped="0" failures="0" errors="0" time="0.053">
-    <testcase time="0.0139999999999993" classname="titles_file" name="title_files_work"/>
-    <testcase time="0.00499999999999901" classname="titles_file" name="title_files_work"/>
+  <testsuite name="titles_file" timestamp="2025-12-02T17:48:55Z" hostname="26293a5cdb06" tests="6" skipped="0" failures="0" errors="0" time="0.065">
     <testcase time="0.0240000000000009" classname="titles_file" name="title_files_work"/>
+    <testcase time="0.00499999999999901" classname="titles_file" name="title_files_work"/>
+    <testcase time="0.0250000000000021" classname="titles_file" name="title_files_work"/>
     <testcase time="0.00300000000000011" classname="titles_file" name="title_files_work"/>
     <testcase time="0.00300000000000011" classname="titles_file" name="title_files_work"/>
-    <testcase time="0.00399999999999778" classname="titles_file" name="title_files_work"/>
+    <testcase time="0.00499999999999901" classname="titles_file" name="title_files_work"/>
   </testsuite>
-  <testsuite name="tt_to_tblfile" timestamp="2025-12-02T17:47:40Z" hostname="067c13e018b7" tests="19" skipped="0" failures="1" errors="8" time="10.034">
-    <testcase time="2.321" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_input_Table_and_fontspec_size_8">
+  <testsuite name="tt_to_tblfile" timestamp="2025-12-02T17:48:55Z" hostname="26293a5cdb06" tests="19" skipped="0" failures="1" errors="8" time="10.701">
+    <testcase time="2.437" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_input_Table_and_fontspec_size_8">
       <failure type="failure" message="Expected `rtf_out_wrapper(tbl_wide, &quot;testfontsize8&quot;, fontspec = fontspec)` not to throw any errors. ('test-tt_to_tblfile.R:47:3')">Expected `rtf_out_wrapper(tbl_wide, "testfontsize8", fontspec = fontspec)` not to throw any errors.
 Actually got a &lt;simpleError&gt; with message:
   could not find function "obj_round_type"</failure>
     </testcase>
-    <testcase time="0.146999999999998" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_an_empty_listing">
+    <testcase time="0.148" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_an_empty_listing">
       <error type="error" message="Error in `obj_round_type(tt)`: could not find function &quot;obj_round_type&quot; ('test-tt_to_tblfile.R:52:3')">Error in `obj_round_type(tt)`: could not find function "obj_round_type"
 Backtrace:
      x
@@ -2309,12 +2269,12 @@ Backtrace:
  11.           \-formatters (local) FUN(X[[i]], ...)
  12.             \-base::match.arg(round_type)</error>
     </testcase>
-    <testcase time="0.0360000000000014" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
-    <testcase time="1.823" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
-    <testcase time="0.416" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
-    <testcase time="0.00300000000000011" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
-    <testcase time="0.00399999999999778" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
-    <testcase time="2.524" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
+    <testcase time="0.0289999999999999" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
+    <testcase time="1.864" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
+    <testcase time="0.416999999999998" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
+    <testcase time="0.00900000000000034" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
+    <testcase time="0.00600000000000023" classname="tt_to_tblfile" name="get_ncol_works_as_expected"/>
+    <testcase time="2.425" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_wide_table">
       <error type="error" message="Error in `obj_round_type(tt)`: could not find function &quot;obj_round_type&quot; ('test-tt_to_tblfile.R:96:3')">Error in `obj_round_type(tt)`: could not find function "obj_round_type"
 Backtrace:
      x
@@ -2352,7 +2312,7 @@ Backtrace:
  32.                           \-formatters::format_value(...)
  33.                             \-base::match.arg(round_type)</error>
     </testcase>
-    <testcase time="2.156" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE">
+    <testcase time="2.713" classname="tt_to_tblfile" name="tt_to_tlgrtf_works_with_argument_combined_rtf_TRUE">
       <error type="error" message="Error in `obj_round_type(tt)`: could not find function &quot;obj_round_type&quot; ('test-tt_to_tblfile.R:115:3')">Error in `obj_round_type(tt)`: could not find function "obj_round_type"
 Backtrace:
      x
@@ -2390,7 +2350,7 @@ Backtrace:
  32.                           \-formatters::format_value(...)
  33.                             \-base::match.arg(round_type)</error>
     </testcase>
-    <testcase time="0.107000000000003" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
+    <testcase time="0.137999999999998" classname="tt_to_tblfile" name="tt_to_tlgrtf_converts_table_tree_to_tlg_without_error">
       <error type="error" message="Error in `obj_round_type(tt)`: could not find function &quot;obj_round_type&quot; ('test-tt_to_tblfile.R:131:3')">Error in `obj_round_type(tt)`: could not find function "obj_round_type"
 Backtrace:
      x
@@ -2417,12 +2377,12 @@ Backtrace:
  21.                     \-formatters::format_value(...)
  22.                       \-base::match.arg(round_type)</error>
     </testcase>
-    <testcase time="0.0259999999999998" classname="tt_to_tblfile" name="cwidths_final_adj_calculates_adjusted_column_widths_correctly"/>
+    <testcase time="0.0390000000000015" classname="tt_to_tblfile" name="cwidths_final_adj_calculates_adjusted_column_widths_correctly"/>
     <testcase time="0.00399999999999778" classname="tt_to_tblfile" name="cwidths_final_adj_calculates_adjusted_column_widths_correctly"/>
     <testcase time="0.00600000000000023" classname="tt_to_tblfile" name="make_bordmat_row_creates_border_matrix_row_correctly"/>
     <testcase time="0.00100000000000122" classname="tt_to_tblfile" name="make_bordmat_row_creates_border_matrix_row_correctly"/>
     <testcase time="0.00300000000000011" classname="tt_to_tblfile" name="make_bordmat_row_creates_border_matrix_row_correctly"/>
-    <testcase time="0.100999999999999" classname="tt_to_tblfile" name="tt_to_tlgrtf_validates_table_structure_correctly">
+    <testcase time="0.0949999999999989" classname="tt_to_tblfile" name="tt_to_tlgrtf_validates_table_structure_correctly">
       <error type="error" message="Error in `obj_round_type(tt)`: could not find function &quot;obj_round_type&quot; ('test-tt_to_tblfile.R:210:3')">Error in `obj_round_type(tt)`: could not find function "obj_round_type"
 Backtrace:
      x
@@ -2455,7 +2415,7 @@ Backtrace:
  27.                         \-formatters::format_value(...)
  28.                           \-base::match.arg(round_type)</error>
     </testcase>
-    <testcase time="0.100999999999999" classname="tt_to_tblfile" name="tt_to_tlgrtf_does_not_warn_for_valid_table_structures">
+    <testcase time="0.105" classname="tt_to_tblfile" name="tt_to_tlgrtf_does_not_warn_for_valid_table_structures">
       <error type="error" message="Error in `obj_round_type(tt)`: could not find function &quot;obj_round_type&quot; ('test-tt_to_tblfile.R:237:3')">Error in `obj_round_type(tt)`: could not find function "obj_round_type"
 Backtrace:
      x
@@ -2486,7 +2446,7 @@ Backtrace:
  25.                   \-formatters::format_value(...)
  26.                     \-base::match.arg(round_type)</error>
     </testcase>
-    <testcase time="0.108000000000001" classname="tt_to_tblfile" name="tt_to_tlgrtf_respects_JUNCO_DISABLE_VALIDATION_environment_variable">
+    <testcase time="0.111000000000001" classname="tt_to_tblfile" name="tt_to_tlgrtf_respects_JUNCO_DISABLE_VALIDATION_environment_variable">
       <error type="error" message="Error in `obj_round_type(tt)`: could not find function &quot;obj_round_type&quot; ('test-tt_to_tblfile.R:258:3')">Error in `obj_round_type(tt)`: could not find function "obj_round_type"
 Backtrace:
      x
@@ -2522,7 +2482,7 @@ Backtrace:
  30.                         \-formatters::format_value(...)
  31.                           \-base::match.arg(round_type)</error>
     </testcase>
-    <testcase time="0.147000000000002" classname="tt_to_tblfile" name="more_top_left_than_col_headers_works">
+    <testcase time="0.151" classname="tt_to_tblfile" name="more_top_left_than_col_headers_works">
       <error type="error" message="Error in `obj_round_type(tt)`: could not find function &quot;obj_round_type&quot; ('test-tt_to_tblfile.R:290:3')">Error in `obj_round_type(tt)`: could not find function "obj_round_type"
 Backtrace:
      x
@@ -2572,32 +2532,32 @@ Backtrace:
  44.                                               \-base::match.arg(round_type)</error>
     </testcase>
   </testsuite>
-  <testsuite name="varia" timestamp="2025-12-02T17:47:50Z" hostname="067c13e018b7" tests="16" skipped="0" failures="0" errors="0" time="2.55">
-    <testcase time="0.0719999999999992" classname="varia" name="a_freq_j_works_old_count_unq_case_"/>
-    <testcase time="0.036999999999999" classname="varia" name="a_freq_j_works_old_count_unq_case_"/>
-    <testcase time="0.158000000000001" classname="varia" name="a_freq_subcol_j_works_old_case_of_cpct_subcol_"/>
-    <testcase time="0.538" classname="varia" name="a_freq_combos_j_old_cpct_filter_combos_case_works"/>
-    <testcase time="0.602999999999998" classname="varia" name="_a_freq_j_works"/>
-    <testcase time="0.226000000000003" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
-    <testcase time="0.474" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
-    <testcase time="0.00899999999999679" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
+  <testsuite name="varia" timestamp="2025-12-02T17:49:06Z" hostname="26293a5cdb06" tests="16" skipped="0" failures="0" errors="0" time="2.562">
+    <testcase time="0.0749999999999993" classname="varia" name="a_freq_j_works_old_count_unq_case_"/>
+    <testcase time="0.0380000000000003" classname="varia" name="a_freq_j_works_old_count_unq_case_"/>
+    <testcase time="0.158999999999999" classname="varia" name="a_freq_subcol_j_works_old_case_of_cpct_subcol_"/>
+    <testcase time="0.533000000000001" classname="varia" name="a_freq_combos_j_old_cpct_filter_combos_case_works"/>
+    <testcase time="0.606000000000002" classname="varia" name="_a_freq_j_works"/>
+    <testcase time="0.223999999999997" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
+    <testcase time="0.478000000000002" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
+    <testcase time="0.0100000000000016" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
     <testcase time="0.00900000000000034" classname="varia" name="a_freq_j_works_old_count_subject_case_"/>
-    <testcase time="0.0690000000000026" classname="varia" name="_a_freq_j_works"/>
-    <testcase time="0.0909999999999975" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
+    <testcase time="0.0769999999999982" classname="varia" name="_a_freq_j_works"/>
+    <testcase time="0.0859999999999985" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
     <testcase time="0.0130000000000017" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
     <testcase time="0.00300000000000011" classname="varia" name="a_freq_j_works_old_a_countpat_newlevels_case_"/>
-    <testcase time="0.190999999999999" classname="varia" name="a_summarize_ex_j_works"/>
-    <testcase time="0.0249999999999986" classname="varia" name="a_summarize_ex_j_works"/>
+    <testcase time="0.193999999999999" classname="varia" name="a_summarize_ex_j_works"/>
+    <testcase time="0.0250000000000021" classname="varia" name="a_summarize_ex_j_works"/>
     <testcase time="0.032" classname="varia" name="a_summarize_ex_j_works"/>
   </testsuite>
-  <testsuite name="visit_levels" timestamp="2025-12-02T17:47:53Z" hostname="067c13e018b7" tests="8" skipped="0" failures="0" errors="0" time="0.049">
-    <testcase time="0.0180000000000007" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
-    <testcase time="0.00400000000000134" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
+  <testsuite name="visit_levels" timestamp="2025-12-02T17:49:08Z" hostname="26293a5cdb06" tests="8" skipped="0" failures="0" errors="0" time="0.044">
+    <testcase time="0.0119999999999969" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
     <testcase time="0.00300000000000011" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
     <testcase time="0.00300000000000011" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
-    <testcase time="0.00799999999999912" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
-    <testcase time="0.00499999999999901" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
-    <testcase time="0.00400000000000134" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
-    <testcase time="0.00400000000000134" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
+    <testcase time="0.00300000000000011" classname="visit_levels" name="get_visit_levels_returns_visit_levels_in_correct_order"/>
+    <testcase time="0.00900000000000034" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
+    <testcase time="0.00500000000000256" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
+    <testcase time="0.00300000000000011" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
+    <testcase time="0.00599999999999667" classname="visit_levels" name="get_visit_levels_validates_input_correctly"/>
   </testsuite>
 </testsuites>
