@@ -47,4 +47,3 @@ pkgdown
 ^output$
 ^junco_tlg_template_scripts$
 ^[^/]*\.R$
-^.*\.rtf$
