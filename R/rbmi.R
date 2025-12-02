@@ -374,16 +374,11 @@ par_lapply <- function(cl, fun, x, ...) {
 #' }
 #' @export
 rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., cluster_or_cores = 1, .validate = TRUE) {
-  # nocov
-
+  # nocov start
   assert_rbmi()
-
   if (.validate) rbmi::validate(imputations)
-
   assertthat::assert_that(is.function(fun), msg = "`fun` must be a function")
-
   assertthat::assert_that(is.null(delta) | is.data.frame(delta), msg = "`delta` must be NULL or a data.frame")
-
   vars <- imputations$data$vars
 
   if (.validate) devnull <- lapply(imputations$imputations, function(x) rbmi::validate(x))
@@ -472,4 +467,5 @@ rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., clus
   )
   rbmi::validate(ret)
   return(ret)
+  # nocov end
 }
