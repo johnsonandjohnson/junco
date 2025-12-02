@@ -189,7 +189,7 @@ add_little_gap_bottom_borders_spanning_headers <- function(flx, border = flextab
     which(row > 1)
   })
   
-  for (i in seq(1, length(pos_little_gaps))) {
+  for (i in seq_along(pos_little_gaps)) {
     j <- pos_little_gaps[[i]]
     if (length(j) > 1 && 
         all(flx$header$styles$cells$border.width.bottom$data[i, j] > 0)) {
@@ -314,6 +314,18 @@ add_hanging_indent_first_column <- function(flx, column_widths, hanging_indent =
     }
   }
   
+  return(flx)
+}
+
+insert_footer_text <- function(flx, tblid) {
+  if (is.null(getOption("docx.add_datetime")) || isTRUE(getOption("docx.add_datetime"))) {
+    footer_text <- paste0(
+      "[", tolower(tblid), ".docx]",
+      "[", tidytlg:::getFileName(), "] ",
+      toupper(format(Sys.time(), format = "%d%b%Y, %H:%M"))
+    )
+    flx <- flextable::add_footer_lines(flx, values = footer_text)
+  }
   return(flx)
 }
 
@@ -515,6 +527,12 @@ insert_title_hanging_indent_v3 <- function(flx,
 # [1] "flextable::as_paragraph('', flextable::as_sup('a'), ' The event experienced by the subject with the worst severity is used.')"
 interpret_cell_content <- function(str_before, markup_df_docx = dps_markup_df_docx) {
   
+  if (inherits(str_before, "list") && length(str_before) == 1 &&
+      inherits(str_before[[1]], "character") && length(str_before[[1]]) > 1) {
+    str_before <- paste(str_before[[1]], collapse = "")
+  }
+  
+  
   pos_start <- gregexpr("~\\{|~\\[", str_before)[[1]]
   pos_end <- gregexpr("\\}|\\]", str_before)[[1]]
   pos_end <- pos_start %>% lapply(function(x) {
@@ -591,14 +609,15 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
   }
   
   # Body
-  tmp <- flx$body$dataset
   # only look in the first column of the body
-  matches <- as.data.frame(lapply(tmp[, 1] %>% as.data.frame(), function(col) grepl(pattern, col)))
-  locations <- which(as.matrix(matches), arr.ind = TRUE)
-  for (idx in seq_len(nrow(locations))) {
-    i <- locations[idx, "row"]
-    j <- locations[idx, "col"]
-    str_before <- tmp[i, j]
+  # tmp <- flx$body$dataset
+  tmp <- flx$body$content$data[, 1] %>% lapply(function(x) x$txt)
+  tmp <- tmp %>% lapply(function(x) paste(x, collapse = "")) %>% unlist()
+  locations <- which(grepl(pattern, tmp))
+  for (idx in seq_along(locations)) {
+    i <- locations[idx]
+    j <- 1
+    str_before <- tmp[i]
     str_after <- interpret_cell_content(str_before, markup_df_docx)
     flx <- flextable::compose(flx, part = "body", i = i, j = j,
                               value = eval(parse(text = str_after)))
@@ -724,13 +743,19 @@ my_theme_docx_default <- function(font = "Times New Roman",
     flx <- rtables.officer:::.apply_bold_manual(flx, bold_manual)
     
     # NOTE: the following block styles the footer and footnotes
-    n_footnotes <- nrow(flx$footer$dataset)
-    flx <- flx %>%
-      flextable::fontsize(part = "footer", i = n_footnotes, size = 8) %>%
-      flextable::align(part = "footer", i = n_footnotes, align = "right") %>%
-      rtables.officer:::.remove_hborder(part = "footer", w = "bottom") %>% 
-      rtables.officer:::.add_hborder(part = "footer", ii = n_footnotes - 1, border = border) %>% 
-      flextable::padding(padding = 0, part = "footer")
+    # n_footnotes <- nrow(flx$footer$dataset)
+    n_footnotes <- flextable::nrow_part(flx, "footer")
+    if (n_footnotes > 0) {
+      if (is.null(getOption("docx.add_datetime")) || isTRUE(getOption("docx.add_datetime"))) {
+        flx <- flx %>%
+          flextable::fontsize(part = "footer", i = n_footnotes, size = 8) %>%
+          flextable::align(part = "footer", i = n_footnotes, align = "right") %>%
+          rtables.officer:::.remove_hborder(part = "footer", w = "bottom") %>% 
+          rtables.officer:::.add_hborder(part = "footer", ii = n_footnotes - 1, border = border)
+      }
+      flx <- flx %>%
+        flextable::padding(padding = 0, part = "footer")
+    }
     # END
     
     flx
@@ -1294,12 +1319,8 @@ my_tt_to_flextable <- function(tt,
   }
   
   # NOTE: the following block adds the footer, this is, the last line below footnotes
-  footer_text <- paste0(
-    "[", tolower(tblid), ".docx]",
-    "[", tidytlg:::getFileName(), "] ",
-    toupper(format(Sys.time(), format = "%d%b%Y, %H:%M"))
-  )
-  flx <- flextable::add_footer_lines(flx, values = footer_text)
+  flx <- insert_footer_text(flx, tblid)
+
   # here you can use ii = nrow(content), nr_body, ...
   flx <- flx %>%
     rtables.officer:::.add_hborder(part = "body", ii = nr_body, border = border)
@@ -1867,7 +1888,6 @@ export_graph_as_docx <- function(g = NULL,
           res    = 300,
           type   = "cairo"
       )
-      print(temp_file) ### print png path and name in log
       print(e)
       dev.off()
       
@@ -1908,12 +1928,9 @@ export_graph_as_docx <- function(g = NULL,
   for (line in footers) {
     flx <- flextable::add_footer_lines(flx, values = line)
   }
-  footer_text <- paste0(
-    "[", tolower(tblid), ".docx]",
-    "[", tidytlg:::getFileName(), "] ",
-    toupper(format(Sys.time(), format = "%d%b%Y, %H:%M"))
-  )
-  flx <- flextable::add_footer_lines(flx, values = footer_text)
+
+  flx <- insert_footer_text(flx, tblid)
+
 
   # style the flextable
   flx <- flx %>% flextable::border_remove()
