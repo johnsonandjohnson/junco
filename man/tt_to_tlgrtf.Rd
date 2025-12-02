@@ -26,7 +26,7 @@ tt_to_tlgrtf(
   combined_rtf = FALSE,
   one_table = TRUE,
   border_mat = make_header_bordmat(obj = tt),
-  round_type = NULL,
+  round_type = obj_round_type(tt),
   validate = TRUE,
   ...
 )
@@ -87,7 +87,7 @@ default behavior does not meet their needs.}
 \item{round_type}{(\code{"iec"} or \code{"sas"})\cr the type of rounding to perform. iec,
 the default, peforms rounding compliant with IEC 60559, while
 sas performs nearest-value rounding consistent with rounding within SAS.
-See \code{?formatters::format_value} for more details.}
+See \verb{[formatters::format_value()]} for more details.}
 
 \item{validate}{logical(1). Whether to validate the table structure using
 \code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. This can also be disabled

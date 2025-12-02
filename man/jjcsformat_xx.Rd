@@ -69,7 +69,7 @@ is.function(fmt)
 fmt
 format_value(value[1], fmt, round_type = "sas")
 format_value(value[1], fmt, round_type = "iec")
-fmt(value[1])
+if (is.function(fmt)) fmt(value[1])
 
 fmt2 <- jjcsformat_xx("xx.x (xx.xxx)")
 is.function(fmt2)
@@ -77,11 +77,11 @@ value <- c(1.65, 8.645)
 format_value(value, fmt2, round_type = "sas")
 format_value(value, fmt2, round_type = "iec")
 # only possible when resulting format is a function
-fmt2(value, round_type = "sas")
+if (is.function(fmt2)) fmt2(value, round_type = "sas")
 
 value <- c(1.65, NA)
 format_value(value, fmt2, round_type = "iec", na_str = c("ne1", "ne2"))
-fmt2(value, round_type = "iec", na_str = c("ne1", "ne2"))
+if (is.function(fmt2)) fmt2(value, round_type = "iec", na_str = c("ne1", "ne2"))
 my_pval_format <- jjcsformat_pval_fct(0.005)
 my_pval_format(0.2802359)
 my_pval_format(0.0048)
