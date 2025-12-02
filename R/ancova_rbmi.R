@@ -67,10 +67,11 @@
 #' @seealso The set_vars() function from the rbmi package
 #' @export
 rbmi_ancova <- function(
-    data,
-    vars,
-    visits = NULL,
-    weights = c("counterfactual", "equal", "proportional_em", "proportional")) {
+  data,
+  vars,
+  visits = NULL,
+  weights = c("counterfactual", "equal", "proportional_em", "proportional")
+) {
   assert_rbmi()
   outcome <- vars[["outcome"]]
   group <- vars[["group"]]
@@ -127,11 +128,12 @@ rbmi_ancova <- function(
 #'
 #' @seealso [rbmi_ancova()]
 rbmi_ancova_single <- function(
-    data,
-    outcome,
-    group,
-    covariates,
-    weights = c("counterfactual", "equal", "proportional_em", "proportional")) {
+  data,
+  outcome,
+  group,
+  covariates,
+  weights = c("counterfactual", "equal", "proportional_em", "proportional")
+) {
   assert_rbmi()
   checkmate::assert_string(outcome)
   checkmate::assert_string(group)

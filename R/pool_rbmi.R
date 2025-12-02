@@ -1,10 +1,11 @@
 #' @note: This has been forked from the `rbmi` package, mainly to support in addition
 #'   the pooling of variance estimates.
 rbmi_pool <- function(
-    results,
-    conf.level = 0.95,
-    alternative = c("two.sided", "less", "greater"),
-    type = c("percentile", "normal")) {
+  results,
+  conf.level = 0.95,
+  alternative = c("two.sided", "less", "greater"),
+  type = c("percentile", "normal")
+) {
   assert_rbmi()
 
   rbmi::validate(results)
