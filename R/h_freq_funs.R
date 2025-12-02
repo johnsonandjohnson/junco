@@ -332,19 +332,20 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
 #' @noRd
 #' @keywords internal
 h_upd_dfrow <- function(
-    df_row,
-    .var,
-    val,
-    excl_levels,
-    drop_levels,
-    new_levels,
-    new_levels_after,
-    addstr2levs,
-    label,
-    label_map,
-    labelstr,
-    label_fstr,
-    .spl_context) {
+  df_row,
+  .var,
+  val,
+  excl_levels,
+  drop_levels,
+  new_levels,
+  new_levels_after,
+  addstr2levs,
+  label,
+  label_map,
+  labelstr,
+  label_fstr,
+  .spl_context
+) {
   if (!is.null(label) && !is.null(label_map)) {
     stop("a_freq_j: label and label_map cannot be used together.")
   }
@@ -527,27 +528,28 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
 #' @param .stats Statistics to compute.
 #' @return List containing prepared data frames and values.
 h_a_freq_dataprep <- function(
-    df,
-    labelstr = NULL,
-    .var = NA,
-    val = NULL,
-    drop_levels = FALSE,
-    excl_levels = NULL,
-    new_levels = NULL,
-    new_levels_after = FALSE,
-    addstr2levs = NULL,
-    .df_row,
-    .spl_context,
-    .N_col,
-    id = "USUBJID",
-    denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
-    variables,
-    label = NULL,
-    label_fstr = NULL,
-    label_map = NULL,
-    .alt_df_full = NULL,
-    denom_by = NULL,
-    .stats) {
+  df,
+  labelstr = NULL,
+  .var = NA,
+  val = NULL,
+  drop_levels = FALSE,
+  excl_levels = NULL,
+  new_levels = NULL,
+  new_levels_after = FALSE,
+  addstr2levs = NULL,
+  .df_row,
+  .spl_context,
+  .N_col,
+  id = "USUBJID",
+  denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
+  variables,
+  label = NULL,
+  label_fstr = NULL,
+  label_map = NULL,
+  .alt_df_full = NULL,
+  denom_by = NULL,
+  .stats
+) {
   denom <- match.arg(denom)
 
   df <- df[!is.na(df[[.var]]), ]
@@ -634,15 +636,16 @@ h_a_freq_dataprep <- function(
 #' @noRd
 #' @keywords internal
 h_a_freq_prepinrows <- function(
-    x_stats,
-    .stats_adj,
-    .formats,
-    labelstr,
-    label_fstr,
-    label,
-    .indent_mods,
-    .labels_n,
-    na_str) {
+  x_stats,
+  .stats_adj,
+  .formats,
+  labelstr,
+  label_fstr,
+  label,
+  .indent_mods,
+  .labels_n,
+  na_str
+) {
   # Fill in formatting defaults
 
   x_stats <- x_stats[.stats_adj]

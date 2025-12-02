@@ -7,10 +7,11 @@
 #' @return `tt` represented as a `tbl` data.frame suitable for passing
 #'   to [tidytlg::gentlg] via the `huxme` argument.
 tt_to_tbldf <- function(
-    tt,
-    fontspec = font_spec("Times", 9L, 1),
-    string_map = default_str_map,
-    markup_df = dps_markup_df) {
+  tt,
+  fontspec = font_spec("Times", 9L, 1),
+  string_map = default_str_map,
+  markup_df = dps_markup_df
+) {
   if (!validate_table_struct(tt)) {
     stop(
       "invalid table structure. summarize_row_groups without ",
@@ -108,9 +109,10 @@ tlg_type <- function(tt) {
 }
 
 mpf_to_colspan <- function(
-    mpf,
-    string_map = default_str_map,
-    markup_df = dps_markup_df) {
+  mpf,
+  string_map = default_str_map,
+  markup_df = dps_markup_df
+) {
   if (!methods::is(mpf, "MatrixPrintForm")) {
     stop("figure out how to make this an mpf (MatrixPrintForm) first.")
   }
@@ -271,38 +273,39 @@ get_ncol <- function(tt) {
 #' @return If `file` is non-NULL, this is called for the side-effect of writing
 #'   one or more RTF files. Otherwise, returns a list of `huxtable` objects.
 tt_to_tlgrtf <- function(
+  tt,
+  file = NULL,
+  orientation = c("portrait", "landscape"),
+  colwidths = def_colwidths(
     tt,
-    file = NULL,
-    orientation = c("portrait", "landscape"),
-    colwidths = def_colwidths(
-      tt,
-      fontspec,
-      col_gap = col_gap,
-      label_width_ins = label_width_ins,
-      type = tlgtype
-    ),
-    label_width_ins = 2,
-    watermark = NULL,
-    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-    fontspec = font_spec("Times", 9L, 1.2),
-    pg_width = pg_width_by_orient(orientation == "landscape"),
-    margins = c(0, 0, 0, 0),
-    paginate = tlg_type(tt) == "Table",
-    col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    nosplitin = list(
-      row = character(),
-      col = character()
-    ),
-    verbose = FALSE,
-    tlgtype = tlg_type(tt),
-    string_map = default_str_map,
-    markup_df = dps_markup_df,
-    combined_rtf = FALSE,
-    one_table = TRUE,
-    border_mat = make_header_bordmat(obj = tt),
-    round_type = obj_round_type(tt),
-    validate = TRUE,
-    ...) {
+    fontspec,
+    col_gap = col_gap,
+    label_width_ins = label_width_ins,
+    type = tlgtype
+  ),
+  label_width_ins = 2,
+  watermark = NULL,
+  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+  fontspec = font_spec("Times", 9L, 1.2),
+  pg_width = pg_width_by_orient(orientation == "landscape"),
+  margins = c(0, 0, 0, 0),
+  paginate = tlg_type(tt) == "Table",
+  col_gap = ifelse(tlgtype == "Listing", .5, 3),
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  verbose = FALSE,
+  tlgtype = tlg_type(tt),
+  string_map = default_str_map,
+  markup_df = dps_markup_df,
+  combined_rtf = FALSE,
+  one_table = TRUE,
+  border_mat = make_header_bordmat(obj = tt),
+  round_type = obj_round_type(tt),
+  validate = TRUE,
+  ...
+) {
   # Validate table structure if requested and not disabled by environment variable
   # nolint start
   if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree") &&
@@ -705,8 +708,9 @@ fixup_bord_mat <- function(brdmat, hstrs) {
 }
 
 .make_header_bordmat <- function(
-    obj,
-    mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
+  obj,
+  mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)
+) {
   spns <- mf_spans(mpf)
   nlh <- mf_nlheader(mpf)
   nrh <- mf_nrheader(mpf)
