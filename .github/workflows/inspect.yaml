@@ -23,8 +23,6 @@ jobs:
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
     with:
-      extra-repositories: |
-        https://insightsengineering.r-universe.dev/
       deps-installation-method: setup-r-dependencies
       additional-env-vars: |
         _R_CHECK_CRAN_INCOMING_REMOTE_=false
@@ -47,8 +45,6 @@ jobs:
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
     with:
-      extra-repositories: |
-        https://insightsengineering.r-universe.dev/
       deps-installation-method: setup-r-dependencies
       additional-env-vars: |
         _R_CHECK_CRAN_INCOMING_REMOTE_=false
