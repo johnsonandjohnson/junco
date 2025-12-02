@@ -38,6 +38,7 @@ reference:
     - a_proportion_ci_factor
     - a_proportion_ci_logical
     - a_summarize_aval_chg_diff_j
+    - a_maxlev
     - rbmi_analyse
     - analyze_values
     - rbmi_ancova
@@ -80,6 +81,8 @@ reference:
     - h_get_trtvar_refpath
     - rbmi_mmrm_single_info
     - rbmi_pool
+    - s_cmhrms_j
+    - a_cmhrms_j
 
   - title: junco Formatting Functions
     desc: The following functions are the junco formatting functions used to create common table layouts.
@@ -109,6 +112,7 @@ reference:
     - cond_rm_facets
     - create_colspan_map
     - create_colspan_var
+    - do_exclude_split
     - make_combo_splitfun
     - real_add_overall_facet
 

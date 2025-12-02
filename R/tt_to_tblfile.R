@@ -253,6 +253,9 @@ get_ncol <- function(tt) {
 #'   the default, peforms rounding compliant with IEC 60559, while
 #'   sas performs nearest-value rounding consistent with rounding within SAS.
 #'   See `?formatters::format_value` for more details.
+#' @param validate logical(1). Whether to validate the table structure using
+#'  `rtables::validate_table_struct()`. Defaults to `TRUE`. This can also be disabled
+#'  globally by setting the environment variable `JUNCO_DISABLE_VALIDATION=TRUE`.
 #' @import rlistings
 #' @rdname tt_to_tlgrtf
 #' @export
@@ -298,7 +301,20 @@ tt_to_tlgrtf <- function(
     one_table = TRUE,
     border_mat = make_header_bordmat(obj = tt),
     round_type = NULL,
+    validate = TRUE,
     ...) {
+  # Validate table structure if requested and not disabled by environment variable
+  # nolint start
+  if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree") &&
+    Sys.getenv("JUNCO_DISABLE_VALIDATION") != "TRUE") {
+    if (!rtables::validate_table_struct(tt)) {
+      warning(
+        "Invalid table structure detected. This may cause issues in the output. ",
+        "Use validate=FALSE to disable this warning or set JUNCO_DISABLE_VALIDATION=TRUE in your environment."
+      )
+    }
+  } # nolint end
+
   orientation <- match.arg(orientation)
   newdev <- open_font_dev(fontspec)
   if (newdev) {
@@ -361,7 +377,7 @@ tt_to_tlgrtf <- function(
       )
     }
     if (methods::is(tt, "VTableTree")) {
-      hdrmpf <- matrix_form(tt[1, ], round_type = round_type)
+      hdrmpf <- matrix_form(tt[1, , keep_topleft = TRUE], round_type = round_type)
     } else if (methods::is(tt, "list") && methods::is(tt[[1]], "MatrixPrintForm")) {
       hdrmpf <- tt[[1]]
     } else {

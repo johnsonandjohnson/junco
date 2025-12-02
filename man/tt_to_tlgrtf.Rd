@@ -26,6 +26,7 @@ tt_to_tlgrtf(
   combined_rtf = FALSE,
   one_table = TRUE,
   border_mat = make_header_bordmat(obj = tt),
+  validate = TRUE,
   round_type = NULL,
   ...
 )
@@ -82,6 +83,10 @@ default) or as separate tables. End users will not generally need to set this.}
 and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}
 for what the matrix should contain. Users should only specify this when the
 default behavior does not meet their needs.}
+
+\item{validate}{logical(1). Whether to validate the table structure using
+\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. This can also be disabled
+globally by setting the environment variable \code{JUNCO_DISABLE_VALIDATION=TRUE}.}
 
 \item{round_type}{(\code{"iec"} or \code{"sas"})\cr the type of rounding to perform. iec,
 the default, peforms rounding compliant with IEC 60559, while
