@@ -38,11 +38,10 @@
 #' format_value(value, fmt2, round_type = "iec", na_str = c("ne1", "ne2"))
 #' if (is.function(fmt2)) fmt2(value, round_type = "iec", na_str = c("ne1", "ne2"))
 jjcsformat_xx <- function(
-  str,
-  na_str = na_str_dflt,
-  na_str_dflt = "NE",
-  replace_na_dflt = TRUE
-) {
+    str,
+    na_str = na_str_dflt,
+    na_str_dflt = "NE",
+    replace_na_dflt = TRUE) {
   if (grepl("xxx.", str, fixed = TRUE)) {
     stop("Error: jjcsformat_xx do not use xxx. in input str, replace by xx. instead.")
   }
