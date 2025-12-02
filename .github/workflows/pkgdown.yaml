@@ -39,7 +39,7 @@ jobs:
             https://insightsengineering.r-universe.dev/
 
       - name: Install rbmi
-        run: install.packages('rbmi', repos = c('https://insightsengineering.r-universe.dev')
+        run: install.packages('rbmi', repos = c('https://insightsengineering.r-universe.dev'))
         shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
