@@ -11,6 +11,7 @@
 #'    the formatters framework be overridden by `na_str_default`? Defaults to
 #'    `TRUE`, as a way to have a different default na string behavior from the
 #'    base `formatters` framework.
+#' @param na_str String for NA values. 
 #' @return Either a supported format string, or a formatting function that can be
 #' used as format in `formatters::format_value`
 #' @family JJCS formatting functions
@@ -63,13 +64,13 @@ jjcsformat_xx <- function(
       function(x,
                na_str,
                round_type) {
-        if (fmt %in% formatters:::formats_1d) {
+        if (fmt %in% list_valid_format_labels()$`1d`) {
           res <- format_value(x,
             fmt,
             na_str = na_str[1],
             round_type = round_type
           )
-        } else if (fmt %in% c("xx.xxxxx", "xx.xxxxxx", "xx.xxxxxxx")) {
+        } else if (fmt %in% paste0("xx.", strrep("x", times = 5:12))) {
           # p-value fmt sometimes might need more digits
           d <- nchar(sub(".*\\.", "", fmt))
           res <- round_fmt(x, digits = d, round_type = round_type, na_str = na_str[1])
@@ -126,6 +127,13 @@ jjcsformat_xx <- function(
 #' @param x (`numeric vector`)\cr Vector with elements `num` and `fraction` or `num`, `denom` and `fraction`.
 #' @param d (`numeric(1)`)\cr Number of digits to round fraction to (default = 1)
 #' @param ... Additional arguments passed to other methods.
+#' @param type (`character(1`)\cr One of `count_fraction`, `count_denom_fraction`, `fraction_count_denom`, 
+#' to specify the type of format the function will represent.
+#' @param verbose (`logical`)\cr Whether to print verbose output
+#' @param round_type (`character(1)`)\cr the type of rounding to perform. 
+#' See [formatters::format_value()] for more details.
+#' @param output (`string`)\cr output type.
+#' See [formatters::format_value()] for more details. 
 #' @return A formatting function to format input into string in the format `count / denom (ratio percent)`. If `count`
 #' is 0, the format is `0`. If fraction is >0.99, the format is
 #' `count / denom (>99.9 percent)`
@@ -292,11 +300,15 @@ jjcsformat_pval_fct <- function(alpha = 0.05) {
       ">0.999"
     } else {
       res <- format_value(x, jjcsformat_xx(xx_format), round_type = round_type)
-      while (as.numeric(res) == alpha && x < alpha) {
+      while (as.numeric(res) == alpha && x < alpha && 
+             xx_format != paste0("xx.", strrep("x", times = 10))) {
         # Increase precision by 1 digit until the result
         # is different from threshold alpha.
         xx_format <- paste0(xx_format, "x")
         res <- format_value(x, jjcsformat_xx(xx_format), round_type = round_type)
+      }
+      if (xx_format == paste0("xx.", strrep("x", times = 10))){
+        # produce message eg "stopped increasing precision for p-value"?
       }
       res
     }

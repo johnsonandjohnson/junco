@@ -258,4 +258,16 @@
       jjcsformat_pval_fct(5e-04)(NA_real_, na_str = "ne")
     Output
       [1] "ne"
+    Code
+      jjcsformat_pval_fct(0.005)(0.004999999)
+    Output
+      [1] "0.004999999"
+    Code
+      jjcsformat_pval_fct(0.005)(0.0049999999)
+    Output
+      [1] "0.0049999999"
+    Code
+      jjcsformat_pval_fct(0.005)(0.00499999999)
+    Output
+      [1] "0.0050000000"
 

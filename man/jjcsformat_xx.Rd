@@ -21,6 +21,8 @@ jjcsformat_range_fct(str)
 \item{str}{(\code{string})\cr the format specifying the number of digits to be used,
 for the range values, e.g. \code{"xx.xx"}.}
 
+\item{na_str}{String for NA values.}
+
 \item{na_str_dflt}{Character to represent NA value}
 
 \item{replace_na_dflt}{logical(1). Should an \code{na_string} of "NA" within

@@ -23,7 +23,18 @@ jjcsformat_fraction_count_denom(x, round_type = c("sas", "iec"), output, ...)
 \arguments{
 \item{d}{(\code{numeric(1)})\cr Number of digits to round fraction to (default = 1)}
 
+\item{type}{(\verb{character(1})\cr One of \code{count_fraction}, \code{count_denom_fraction}, \code{fraction_count_denom},
+to specify the type of format the function will represent.}
+
+\item{verbose}{(\code{logical})\cr Whether to print verbose output}
+
 \item{x}{(\verb{numeric vector})\cr Vector with elements \code{num} and \code{fraction} or \code{num}, \code{denom} and \code{fraction}.}
+
+\item{round_type}{(\code{character(1)})\cr the type of rounding to perform.
+See \code{\link[formatters:format_value]{formatters::format_value()}} for more details.}
+
+\item{output}{(\code{string})\cr output type.
+See \code{\link[formatters:format_value]{formatters::format_value()}} for more details.}
 
 \item{...}{Additional arguments passed to other methods.}
 }

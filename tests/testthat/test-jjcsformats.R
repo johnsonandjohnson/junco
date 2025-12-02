@@ -178,6 +178,9 @@ test_that("jjcsformat_pval_fct works", {
     jjcsformat_pval_fct(0)(0.9990000001)
     jjcsformat_pval_fct(0)(NA_real_, na_str = "ne")
     jjcsformat_pval_fct(0.0005)(NA_real_, na_str = "ne")
+    jjcsformat_pval_fct(0.005)(0.004999999)
+    jjcsformat_pval_fct(0.005)(0.0049999999)
+    jjcsformat_pval_fct(0.005)(0.00499999999)
   })
 })
 
