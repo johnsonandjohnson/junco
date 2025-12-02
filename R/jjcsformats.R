@@ -37,10 +37,11 @@
 #' format_value(value, fmt2, round_type = "iec", na_str = c("ne1", "ne2"))
 #' fmt2(value, round_type = "iec", na_str = c("ne1", "ne2"))
 jjcsformat_xx <- function(
-    str,
-    na_str = na_str_dflt,
-    na_str_dflt = "NE",
-    replace_na_dflt = TRUE) {
+  str,
+  na_str = na_str_dflt,
+  na_str_dflt = "NE",
+  replace_na_dflt = TRUE
+) {
   if (grepl("xxx.", str, fixed = TRUE)) {
     stop("Error: jjcsformat_xx do not use xxx. in input str, replace by xx. instead.")
   }
@@ -111,8 +112,6 @@ jjcsformat_xx <- function(
     return(rtable_format)
   }
 }
-
-
 
 
 #' @name count and fraction related formatting functions
@@ -240,7 +239,6 @@ jjcsformat_count_denom_fraction <- jjcsformat_cnt_den_fract_fct(type = "count_de
 #' fmt <- jjcsformat_cnt_den_fract_fct(type = "fraction_count_denom", d = 2)
 #' fmt(c(23, 235, 23 / 235))
 jjcsformat_fraction_count_denom <- jjcsformat_cnt_den_fract_fct(type = "fraction_count_denom")
-
 
 
 #' @title Function factory for p-value formatting

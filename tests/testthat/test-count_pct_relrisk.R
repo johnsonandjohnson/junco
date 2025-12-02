@@ -57,10 +57,11 @@ wald_diff <- function(inputs) {
 }
 
 count_unique_subjects <- function(
-    df,
-    id = "USUBJID",
-    sub_set = NULL,
-    var = NULL) {
+  df,
+  id = "USUBJID",
+  sub_set = NULL,
+  var = NULL
+) {
   if (!is.null(sub_set)) {
     df <- subset(df, sub_set)
   }
@@ -235,10 +236,6 @@ test_that("a_freq_j with val = NA and denom option", {
     expected1c_rr
   )
 })
-
-
-
-
 
 
 test_that("a_freq_j with risk difference method cmh", {
