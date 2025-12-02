@@ -195,8 +195,8 @@ test_that("some special cases for jjcsformat_pval_fct", {
     "jjcsformat_pval_fct: argument alpha should be 0 or at least 0.001."
   )
   expect_error(
-    format_value(NA_real_, format = jjcsformat_pval_fct(0.0005), na_str = "NE")?
-    "jjcsformat_pval_fct: argument alpha should be 0 or at least 0.001."
+    format_value(NA_real_, format = jjcsformat_pval_fct(0.0005), na_str = "NE"),
+      "jjcsformat_pval_fct: argument alpha should be 0 or at least 0.001."
   )
 })
 
