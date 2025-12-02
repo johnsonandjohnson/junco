@@ -1,7 +1,8 @@
 library(broom)
 
-# Skip all tests if rbmi is not available
-if (!requireNamespace("rbmi", quietly = TRUE)) {
+if (requireNamespace("rbmi", quietly = TRUE)) {
+  suppressPackageStartupMessages(library(rbmi))
+} else {
   skip("rbmi package not available")
 }
 
