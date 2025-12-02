@@ -148,19 +148,18 @@ a_cmhrms_j <- function(df, .var,
 #' @export
 #' @order 3
 a_cmhrms_j_with_exclude <- function(
-  df,
-  exclude_levels,
-  .var,
-  .spl_context,
-  .ref_group,
-  .in_ref_col,
-  .df_row,
-  ...,
-  .stats = NULL,
-  .formats = NULL,
-  .indent_mods = NULL,
-  .labels = NULL
-) {
+    df,
+    exclude_levels,
+    .var,
+    .spl_context,
+    .ref_group,
+    .in_ref_col,
+    .df_row,
+    ...,
+    .stats = NULL,
+    .formats = NULL,
+    .indent_mods = NULL,
+    .labels = NULL) {
   if (do_exclude_split(exclude_levels, .spl_context)) {
     NULL
   } else {

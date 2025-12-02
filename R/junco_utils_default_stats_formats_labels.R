@@ -46,11 +46,10 @@ NULL
 #'
 #' @export
 junco_get_stats <- function(
-  method_groups = "analyze_vars_numeric",
-  stats_in = NULL,
-  custom_stats_in = NULL,
-  add_pval = FALSE
-) {
+    method_groups = "analyze_vars_numeric",
+    stats_in = NULL,
+    custom_stats_in = NULL,
+    add_pval = FALSE) {
   tern_get_stats(
     method_groups = method_groups,
     stats_in = stats_in,
@@ -97,11 +96,10 @@ junco_get_formats_from_stats <- function(stats, formats_in = NULL, levels_per_st
 #'
 #' @export
 junco_get_labels_from_stats <- function(
-  stats,
-  labels_in = NULL,
-  levels_per_stats = NULL,
-  label_attr_from_stats = NULL
-) {
+    stats,
+    labels_in = NULL,
+    levels_per_stats = NULL,
+    label_attr_from_stats = NULL) {
   tern_get_labels_from_stats(
     stats = stats,
     labels_in = labels_in,

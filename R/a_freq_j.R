@@ -75,19 +75,18 @@
 #' @export
 #' @importFrom stats setNames
 s_freq_j <- function(
-  df,
-  .var,
-  .df_row,
-  val = NULL,
-  drop_levels = FALSE,
-  excl_levels = NULL,
-  alt_df,
-  parent_df,
-  id = "USUBJID",
-  denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
-  .N_col,
-  countsource = c("df", "altdf")
-) {
+    df,
+    .var,
+    .df_row,
+    val = NULL,
+    drop_levels = FALSE,
+    excl_levels = NULL,
+    alt_df,
+    parent_df,
+    id = "USUBJID",
+    denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
+    .N_col,
+    countsource = c("df", "altdf")) {
   if (is.na(.var) || is.null(.var)) {
     stop("Argument .var cannot be NA or NULL.")
   }
@@ -206,19 +205,18 @@ s_freq_j <- function(
 }
 
 s_rel_risk_levii_j <- function(
-  levii,
-  df,
-  .var,
-  ref_df,
-  ref_denom_df,
-  .in_ref_col,
-  curgrp_denom_df,
-  id,
-  variables,
-  conf_level,
-  method,
-  weights_method
-) {
+    levii,
+    df,
+    .var,
+    ref_df,
+    ref_denom_df,
+    .in_ref_col,
+    curgrp_denom_df,
+    id,
+    variables,
+    conf_level,
+    method,
+    weights_method) {
   dfii <- df[df[[.var]] == levii & !is.na(df[[.var]]), ]
   ref_dfii <- ref_df[ref_df[[.var]] == levii & !is.na(ref_df[[.var]]), ]
 
@@ -250,32 +248,31 @@ s_rel_risk_levii_j <- function(
 
 
 s_rel_risk_val_j <- function(
-  df,
-  .var,
-  .df_row,
-  ctrl_grp,
-  cur_trt_grp,
-  trt_var,
-  val = NULL,
-  drop_levels = FALSE,
-  excl_levels = NULL,
-  denom_df,
-  id = "USUBJID",
-  riskdiff = TRUE,
-  variables = list(strata = NULL),
-  conf_level = 0.95,
-  method = c(
-    "waldcc",
-    "wald",
-    "cmh",
-    "ha",
-    "newcombe",
-    "newcombecc",
-    "strat_newcombe",
-    "strat_newcombecc"
-  ),
-  weights_method = "cmh"
-) {
+    df,
+    .var,
+    .df_row,
+    ctrl_grp,
+    cur_trt_grp,
+    trt_var,
+    val = NULL,
+    drop_levels = FALSE,
+    excl_levels = NULL,
+    denom_df,
+    id = "USUBJID",
+    riskdiff = TRUE,
+    variables = list(strata = NULL),
+    conf_level = 0.95,
+    method = c(
+      "waldcc",
+      "wald",
+      "cmh",
+      "ha",
+      "newcombe",
+      "newcombecc",
+      "strat_newcombe",
+      "strat_newcombecc"
+    ),
+    weights_method = "cmh") {
   if (drop_levels) {
     obs_levs <- unique(.df_row[[.var]])
     obs_levs <- intersect(levels(.df_row[[.var]]), obs_levs)
@@ -587,51 +584,50 @@ s_rel_risk_val_j <- function(
 #' the statistic is replaced by the relative risk difference + confidence interval.
 #' @export
 a_freq_j <- function(
-  df,
-  labelstr = NULL,
-  .var = NA,
-  val = NULL,
-  drop_levels = FALSE,
-  excl_levels = NULL,
-  new_levels = NULL,
-  new_levels_after = FALSE,
-  addstr2levs = NULL,
-  .df_row,
-  .spl_context,
-  .N_col,
-  id = "USUBJID",
-  denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
-  riskdiff = TRUE,
-  ref_path = NULL,
-  variables = list(strata = NULL),
-  conf_level = 0.95,
-  method = c(
-    "wald",
-    "waldcc",
-    "cmh",
-    "ha",
-    "newcombe",
-    "newcombecc",
-    "strat_newcombe",
-    "strat_newcombecc"
-  ),
-  weights_method = "cmh",
-  label = NULL,
-  label_fstr = NULL,
-  label_map = NULL,
-  .alt_df_full = NULL,
-  denom_by = NULL,
-  .stats = c("count_unique_denom_fraction"),
-  .formats = NULL,
-  .indent_mods = NULL,
-  na_str = rep("NA", 3),
-  .labels_n = NULL,
-  extrablankline = FALSE,
-  extrablanklineafter = NULL,
-  restr_columns = NULL,
-  colgroup = NULL,
-  countsource = c("df", "altdf")
-) {
+    df,
+    labelstr = NULL,
+    .var = NA,
+    val = NULL,
+    drop_levels = FALSE,
+    excl_levels = NULL,
+    new_levels = NULL,
+    new_levels_after = FALSE,
+    addstr2levs = NULL,
+    .df_row,
+    .spl_context,
+    .N_col,
+    id = "USUBJID",
+    denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
+    riskdiff = TRUE,
+    ref_path = NULL,
+    variables = list(strata = NULL),
+    conf_level = 0.95,
+    method = c(
+      "wald",
+      "waldcc",
+      "cmh",
+      "ha",
+      "newcombe",
+      "newcombecc",
+      "strat_newcombe",
+      "strat_newcombecc"
+    ),
+    weights_method = "cmh",
+    label = NULL,
+    label_fstr = NULL,
+    label_map = NULL,
+    .alt_df_full = NULL,
+    denom_by = NULL,
+    .stats = c("count_unique_denom_fraction"),
+    .formats = NULL,
+    .indent_mods = NULL,
+    na_str = rep("NA", 3),
+    .labels_n = NULL,
+    extrablankline = FALSE,
+    extrablanklineafter = NULL,
+    restr_columns = NULL,
+    colgroup = NULL,
+    countsource = c("df", "altdf")) {
   denom <- match.arg(denom)
   method <- match.arg(method)
 
@@ -890,20 +886,19 @@ a_freq_j <- function(
 #'   `exclude_levels` argument, see `?do_exclude_split` for details.
 #' @export
 a_freq_j_with_exclude <- function(
-  df,
-  labelstr = NULL,
-  exclude_levels,
-  .var = NA,
-  .spl_context,
-  .df_row,
-  .N_col,
-  .alt_df_full = NULL,
-  .stats = "count_unique_denom_fraction",
-  .formats = NULL,
-  .indent_mods = NULL,
-  .labels_n = NULL,
-  ...
-) {
+    df,
+    labelstr = NULL,
+    exclude_levels,
+    .var = NA,
+    .spl_context,
+    .df_row,
+    .N_col,
+    .alt_df_full = NULL,
+    .stats = "count_unique_denom_fraction",
+    .formats = NULL,
+    .indent_mods = NULL,
+    .labels_n = NULL,
+    ...) {
   if (do_exclude_split(exclude_levels, .spl_context)) {
     NULL
   } else {

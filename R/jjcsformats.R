@@ -23,7 +23,7 @@
 #' fmt
 #' format_value(value[1], fmt, round_type = "sas")
 #' format_value(value[1], fmt, round_type = "iec")
-#' fmt(value[1])
+#' if (is.function(fmt)) fmt(value[1])
 #'
 #' fmt2 <- jjcsformat_xx("xx.x (xx.xxx)")
 #' is.function(fmt2)
@@ -31,17 +31,16 @@
 #' format_value(value, fmt2, round_type = "sas")
 #' format_value(value, fmt2, round_type = "iec")
 #' # only possible when resulting format is a function
-#' fmt2(value, round_type = "sas")
+#' if (is.function(fmt2)) fmt2(value, round_type = "sas")
 #'
 #' value <- c(1.65, NA)
 #' format_value(value, fmt2, round_type = "iec", na_str = c("ne1", "ne2"))
-#' fmt2(value, round_type = "iec", na_str = c("ne1", "ne2"))
+#' if (is.function(fmt2)) fmt2(value, round_type = "iec", na_str = c("ne1", "ne2"))
 jjcsformat_xx <- function(
-  str,
-  na_str = na_str_dflt,
-  na_str_dflt = "NE",
-  replace_na_dflt = TRUE
-) {
+    str,
+    na_str = na_str_dflt,
+    na_str_dflt = "NE",
+    replace_na_dflt = TRUE) {
   if (grepl("xxx.", str, fixed = TRUE)) {
     stop("Error: jjcsformat_xx do not use xxx. in input str, replace by xx. instead.")
   }
@@ -271,7 +270,7 @@ jjcsformat_fraction_count_denom <- jjcsformat_cnt_den_fract_fct(type = "fraction
 jjcsformat_pval_fct <- function(alpha = 0.05) {
   checkmate::assert_number(alpha, lower = 0, upper = 1)
 
-  function(x, round_type = c("iec", "sas"), na_str, ...) {
+  function(x, round_type = valid_round_type, na_str, ...) {
     round_type <- match.arg(round_type)
     checkmate::assert_number(
       x,
@@ -329,7 +328,7 @@ jjcsformat_pval_fct <- function(alpha = 0.05) {
 jjcsformat_range_fct <- function(str) {
   format_xx <- jjcsformat_xx(str)
 
-  function(x, output, round_type = c("iec", "sas"), ...) {
+  function(x, output, round_type = valid_round_type, ...) {
     round_type <- match.arg(round_type)
     checkmate::assert_numeric(
       x,
