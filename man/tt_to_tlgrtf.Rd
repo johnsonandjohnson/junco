@@ -85,7 +85,7 @@ for what the matrix should contain. Users should only specify this when the
 default behavior does not meet their needs.}
 
 \item{round_type}{(\code{"iec"} or \code{"sas"})\cr the type of rounding to perform. iec,
-the default, peforms rounding compliant with IEC 60559, while
+the default, performs rounding compliant with IEC 60559, while
 sas performs nearest-value rounding consistent with rounding within SAS.
 See \verb{[formatters::format_value()]} for more details.}
 

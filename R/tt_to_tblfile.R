@@ -252,7 +252,7 @@ get_ncol <- function(tt) {
 #'  for what the matrix should contain. Users should only specify this when the
 #'  default behavior does not meet their needs.
 #' @param round_type (`"iec"` or `"sas"`)\cr the type of rounding to perform. iec,
-#'   the default, peforms rounding compliant with IEC 60559, while
+#'   the default, performs rounding compliant with IEC 60559, while
 #'   sas performs nearest-value rounding consistent with rounding within SAS.
 #'   See `[formatters::format_value()]` for more details.
 #' @param validate logical(1). Whether to validate the table structure using
