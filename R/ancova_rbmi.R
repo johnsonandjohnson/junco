@@ -122,9 +122,11 @@ rbmi_ancova <- function(
 #' `trt_*` and `lsm_*` entries. See [rbmi_ancova()] for full details.
 #' @examples
 #'
-#' iris2 <- iris[iris$Species %in% c("versicolor", "virginica"), ]
-#' iris2$Species <- factor(iris2$Species)
-#' rbmi_ancova_single(iris2, "Sepal.Length", "Species", c("Petal.Length * Petal.Width"))
+#' if (requireNamespace("rbmi", quietly = TRUE)) {
+#'   iris2 <- iris[iris$Species %in% c("versicolor", "virginica"), ]
+#'   iris2$Species <- factor(iris2$Species)
+#'   rbmi_ancova_single(iris2, "Sepal.Length", "Species", c("Petal.Length * Petal.Width"))
+#' }
 #'
 #' @seealso [rbmi_ancova()]
 rbmi_ancova_single <- function(
