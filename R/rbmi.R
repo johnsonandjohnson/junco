@@ -325,52 +325,52 @@ par_lapply <- function(cl, fun, x, ...) {
 #' analysis applied to each of the imputed datasets in `imputations`.
 #' @examples
 #' if (requireNamespace("rbmi", quietly = TRUE)) {
-#' library(rbmi)
-#' library(dplyr)
+#'   library(rbmi)
+#'   library(dplyr)
 #'
-#' dat <- antidepressant_data
-#' dat$GENDER <- as.factor(dat$GENDER)
-#' dat$POOLINV <- as.factor(dat$POOLINV)
-#' set.seed(123)
-#' pat_ids <- sample(levels(dat$PATIENT), nlevels(dat$PATIENT) / 4)
-#' dat <- dat |>
-#'   filter(PATIENT %in% pat_ids) |>
-#'   droplevels()
-#' dat <- expand_locf(
-#'   dat,
-#'   PATIENT = levels(dat$PATIENT),
-#'   VISIT = levels(dat$VISIT),
-#'   vars = c("BASVAL", "THERAPY"),
-#'   group = c("PATIENT"),
-#'   order = c("PATIENT", "VISIT")
-#' )
-#' dat_ice <- dat %>%
-#'   arrange(PATIENT, VISIT) %>%
-#'   filter(is.na(CHANGE)) %>%
-#'   group_by(PATIENT) %>%
-#'   slice(1) %>%
-#'   ungroup() %>%
-#'   select(PATIENT, VISIT) %>%
-#'   mutate(strategy = "JR")
-#' dat_ice <- dat_ice[-which(dat_ice$PATIENT == 3618), ]
-#' vars <- set_vars(
-#'   outcome = "CHANGE",
-#'   visit = "VISIT",
-#'   subjid = "PATIENT",
-#'   group = "THERAPY",
-#'   covariates = c("THERAPY")
-#' )
-#' drawObj <- draws(
-#'   data = dat,
-#'   data_ice = dat_ice,
-#'   vars = vars,
-#'   method = method_condmean(type = "jackknife", covariance = "csh"),
-#'   quiet = TRUE
-#' )
-#' references <- c("DRUG" = "PLACEBO", "PLACEBO" = "PLACEBO")
-#' imputeObj <- impute(drawObj, references)
+#'   dat <- antidepressant_data
+#'   dat$GENDER <- as.factor(dat$GENDER)
+#'   dat$POOLINV <- as.factor(dat$POOLINV)
+#'   set.seed(123)
+#'   pat_ids <- sample(levels(dat$PATIENT), nlevels(dat$PATIENT) / 4)
+#'   dat <- dat |>
+#'     filter(PATIENT %in% pat_ids) |>
+#'     droplevels()
+#'   dat <- expand_locf(
+#'     dat,
+#'     PATIENT = levels(dat$PATIENT),
+#'     VISIT = levels(dat$VISIT),
+#'     vars = c("BASVAL", "THERAPY"),
+#'     group = c("PATIENT"),
+#'     order = c("PATIENT", "VISIT")
+#'   )
+#'   dat_ice <- dat %>%
+#'     arrange(PATIENT, VISIT) %>%
+#'     filter(is.na(CHANGE)) %>%
+#'     group_by(PATIENT) %>%
+#'     slice(1) %>%
+#'     ungroup() %>%
+#'     select(PATIENT, VISIT) %>%
+#'     mutate(strategy = "JR")
+#'   dat_ice <- dat_ice[-which(dat_ice$PATIENT == 3618), ]
+#'   vars <- set_vars(
+#'     outcome = "CHANGE",
+#'     visit = "VISIT",
+#'     subjid = "PATIENT",
+#'     group = "THERAPY",
+#'     covariates = c("THERAPY")
+#'   )
+#'   drawObj <- draws(
+#'     data = dat,
+#'     data_ice = dat_ice,
+#'     vars = vars,
+#'     method = method_condmean(type = "jackknife", covariance = "csh"),
+#'     quiet = TRUE
+#'   )
+#'   references <- c("DRUG" = "PLACEBO", "PLACEBO" = "PLACEBO")
+#'   imputeObj <- impute(drawObj, references)
 #'
-#' rbmi_analyse(imputations = imputeObj, vars = vars)
+#'   rbmi_analyse(imputations = imputeObj, vars = vars)
 #' }
 #' @export
 rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., cluster_or_cores = 1, .validate = TRUE) {

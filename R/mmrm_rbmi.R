@@ -61,12 +61,13 @@
 #' @seealso The set_vars() function from the rbmi package
 #' @export
 rbmi_mmrm <- function(
-    data,
-    vars,
-    cov_struct = c("us", "toep", "cs", "ar1"),
-    visits = NULL,
-    weights = c("counterfactual", "equal"),
-    ...) {
+  data,
+  vars,
+  cov_struct = c("us", "toep", "cs", "ar1"),
+  visits = NULL,
+  weights = c("counterfactual", "equal"),
+  ...
+) {
   assert_rbmi()
   subjid <- vars[["subjid"]]
   outcome <- vars[["outcome"]]
