@@ -11,7 +11,7 @@ a_maxlev(
   .var,
   .spl_context,
   id = "USUBJID",
-  denom_df,
+  .alt_df_full = NULL,
   any_level = FALSE,
   any_level_exclude = "Missing",
   ...
@@ -32,10 +32,12 @@ that is passed by \code{rtables}.}
 
 \item{id}{(\code{string})\cr subject variable name.}
 
-\item{denom_df}{(\code{data.frame})\cr
-A dataset used to compute the denominator for proportions. Required when
-the same subject appears multiple times in the dataset due to treatment
-sequences.}
+\item{.alt_df_full}{(\code{dataframe})\cr A dataset used to compute the
+denominator for proportions. This is required when the same subject appears
+multiple times in the dataset due to treatment sequences.
+\code{colnames(.alt_df_full)} must be a superset of \code{id}.
+This argument gets populated by the rtables split machinery
+(see \link[rtables:additional_fun_params]{rtables::additional_fun_params}).}
 
 \item{any_level}{(\code{flag})\cr
 Should be set to \code{TRUE} when the function is used as a \code{cfun}.}
@@ -103,12 +105,12 @@ lyt <- basic_table() |>
   summarize_row_groups(
     "AESEV",
     cfun = a_maxlev,
-    extra_args = list(id = "ID", denom_df = my_adsl, any_level = TRUE)
+    extra_args = list(id = "ID", any_level = TRUE)
   ) |>
   analyze(
     "AESEV",
     afun = a_maxlev,
-    extra_args = list(id = "ID", denom_df = my_adsl)
+    extra_args = list(id = "ID")
   )
-build_table(lyt, my_adae)
+build_table(lyt, my_adae, alt_counts_df = my_adsl)
 }

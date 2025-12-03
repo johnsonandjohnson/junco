@@ -20,7 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Replace {pharmaverseadam} with {pharmaverseadamjnj}
 - Update pruning_functions.R
-- update `string_to_title()` to handle factors (#26)
+- Update `string_to_title()` to handle factors (#26)
+- Replaced `denom_df` with `.alt_df_full` in `a_maxlev()`.
 
 ### Fixed
 - Fixes #102 bug inappropriate warnings from `cond_rm_facets` function
