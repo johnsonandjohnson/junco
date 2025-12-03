@@ -20,12 +20,12 @@ export_graph_as_docx(
 }
 \arguments{
 \item{g}{(optional) Default = NULL. A ggplot2 object, or a list
-of them, to export. At least one of \link{g, plotnames} must be provided.
+of them, to export. At least one of \code{g} or \code{plotnames} must be provided.
 If both are provided, 'g' precedes and 'plotnames' will be ignored.}
 
 \item{plotnames}{(optional) Default = NULL. A file path, or a list of them,
 to previously saved .png files. These will be opened and
-exported in the output file. At least one of \link{g, plotnames} must be provided.
+exported in the output file. At least one of \code{g} or \code{plotnames} must be provided.
 If both are provided, 'g' precedes and 'plotnames' will be ignored.}
 
 \item{tblid}{Character. Output ID that will appear in the Title and footer.}
@@ -59,7 +59,10 @@ and Footers.}
 Export graph in DOCX format. See notes to understand why this is experimental.
 }
 \note{
-This function is experimental because it has been tested with a few examples
-(considering different edge cases) but further UATs are needed to be considered
-production-ready.
+This function has been tested for common use cases but may not work or have
+unexpected or undesired behavior in corner cases. As such it is not considered
+fully production ready and is being made available for further testing
+and early adoption. Please report any issues you encounter to the developers.
+This function may be removed from junco in the future if the functionality
+is merged into \code{rtables.officer}.
 }

@@ -135,7 +135,7 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
   # basic example
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
-    res <- tt_to_flextable_j(tt = ls1, tblid = "output ID")
+    res <- tt_to_flextable_j(tt = ls1, tblid = "output ID", orientation = "landscape")
   )
   options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
@@ -153,7 +153,7 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
   ls1b <- set_titles(ls1, tab_titles)
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
-    res <- tt_to_flextable_j(tt = ls1b, tblid = "output ID")
+    res <- tt_to_flextable_j(tt = ls1b, tblid = "output ID", orientation = "landscape")
   )
   options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
@@ -204,7 +204,7 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
 
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
-    res <- tt_to_flextable_j(tt = ls1c, tblid = "output ID")
+    res <- tt_to_flextable_j(tt = ls1c, tblid = "output ID", orientation = "landscape")
   )
   options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)

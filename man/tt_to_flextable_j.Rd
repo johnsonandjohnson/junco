@@ -2,7 +2,7 @@
 % Please edit documentation in R/docx_exporter_functions.R
 \name{tt_to_flextable_j}
 \alias{tt_to_flextable_j}
-\title{Convert a TableTree object to a flextable}
+\title{Convert a VTableTree or a listing_df object to a flextable}
 \usage{
 tt_to_flextable_j(
   tt,
@@ -25,7 +25,7 @@ tt_to_flextable_j(
   total_page_height = 10,
   total_page_width = my_pg_width_by_orient(orientation),
   autofit_to_page = TRUE,
-  orientation = ifelse(tlgtype == "Table", "portrait", "landscape"),
+  orientation = "portrait",
   nosplitin = character(),
   string_map = junco::default_str_map,
   markup_df_docx = dps_markup_df_docx,
@@ -36,7 +36,7 @@ tt_to_flextable_j(
 )
 }
 \arguments{
-\item{tt}{a TableTree object}
+\item{tt}{a VTableTree or a listing_df object}
 
 \item{tblid}{Character. Output ID to be displayed in the Title and last line of footer.}
 
@@ -78,7 +78,8 @@ Set to 6.38 ("portrait") or 8.88 ("landscape").}
 
 \item{autofit_to_page}{(optional) Default = TRUE. Not used and set to FALSE internally.}
 
-\item{orientation}{(optional). Set to "portrait" (Tables) or "landscape" (Listings).}
+\item{orientation}{(optional) Default = "portrait".
+One of: "portrait", "landscape".}
 
 \item{nosplitin}{(optional) Default = character(). Named list.}
 
@@ -104,7 +105,10 @@ This function is based on \code{\link[rtables.officer:tt_to_flextable]{rtables.o
 See notes to understand why this is experimental.
 }
 \note{
-This function is experimental because it has been tested with a few examples
-(considering different edge cases) but further UATs are needed to be considered
-production-ready.
+This function has been tested for common use cases but may not work or have
+unexpected or undesired behavior in corner cases. As such it is not considered
+fully production ready and is being made available for further testing
+and early adoption. Please report any issues you encounter to the developers.
+This function may be removed from junco in the future if the functionality
+is merged into \code{rtables.officer}.
 }

@@ -2,12 +2,13 @@
 % Please edit documentation in R/docx_exporter_functions.R
 \name{export_as_docx_j}
 \alias{export_as_docx_j}
-\title{Export a TableTree object into docx}
+\title{Export a VTableTree or a listing_df object into docx}
 \usage{
 export_as_docx_j(
   tt,
   tblid,
   output_dir,
+  theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
   add_page_break = FALSE,
   titles_as_header = TRUE,
   integrate_footers = TRUE,
@@ -29,11 +30,14 @@ export_as_docx_j(
 )
 }
 \arguments{
-\item{tt}{a TableTree object to export.}
+\item{tt}{a VTableTree or a listing_df object to export.}
 
 \item{tblid}{Character. Output ID to be displayed in the Title and last line of footer.}
 
 \item{output_dir}{a directory path to save the docx.}
+
+\item{theme}{(optional) a function factory. See theme_docx_default_j()
+or rtables.officer::theme_docx_default() for more details.}
 
 \item{add_page_break}{(optional) Default = FALSE.}
 
@@ -80,7 +84,10 @@ This function is based on \code{\link[rtables.officer:export_as_docx]{rtables.of
 See notes to understand why this is experimental.
 }
 \note{
-This function is experimental because it has been tested with a few examples
-(considering different edge cases) but further UATs are needed to be considered
-production-ready.
+This function has been tested for common use cases but may not work or have
+unexpected or undesired behavior in corner cases. As such it is not considered
+fully production ready and is being made available for further testing
+and early adoption. Please report any issues you encounter to the developers.
+This function may be removed from junco in the future if the functionality
+is merged into \code{rtables.officer}.
 }
