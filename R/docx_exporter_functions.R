@@ -1,29 +1,4 @@
 
-
-make_row_df_2 <- function (tt, fontspec = font_spec(), ...) {
-  
-  new_dev <- open_font_dev(fontspec)
-  if (new_dev) {
-    on.exit(close_font_dev())
-  }
-  
-  make_row_df(tt = tt, fontspec = fontspec, ...)
-  
-}
-
-matrix_form_2 <- function (obj, fontspec = NULL, ...) {
-  
-  new_dev <- open_font_dev(fontspec)
-  if (new_dev) {
-    on.exit(close_font_dev())
-  }
-  
-  matrix_form(obj = obj, fontspec = fontspec, ...)
-  
-}
-
-
-
 dps_markup_df_docx <- tibble::tibble(
   keyword = c("super", "sub"),
   replace_by = c("flextable::as_sup", "flextable::as_sub")
@@ -652,7 +627,7 @@ my_pg_width_by_orient <- function(orientation = "portrait") {
 }
 
 # based on rtables.officer::theme_docx_default
-my_theme_docx_default <- function(font = "Times New Roman",
+theme_docx_default_j <- function(font = "Times New Roman",
                                   font_size = 9L,
                                   cell_margins = c(0, 0, 0, 0),
                                   bold = c("header", "content_rows", "label_rows", "top_left"),
@@ -769,7 +744,7 @@ my_theme_docx_default <- function(font = "Times New Roman",
 #'
 #' @param tt a TableTree object
 #' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
-#' @param theme (optional) a function factory. See my_theme_docx_default()
+#' @param theme (optional) a function factory. See theme_docx_default_j()
 #' or rtables.officer::theme_docx_default() for more details.
 #' @param border (optional) an fp_border object.
 #' @param indent_size (optional) Numeric. Not used and set to 9 points internally.
@@ -800,9 +775,9 @@ my_theme_docx_default <- function(font = "Times New Roman",
 #'
 #' @returns a flextable object.
 #' @export
-my_tt_to_flextable <- function(tt,
+tt_to_flextable_j <- function(tt,
                                tblid,
-                               theme = my_theme_docx_default(
+                               theme = theme_docx_default_j(
                                  font = "Times New Roman",
                                  font_size = 9L,
                                  bold = NULL
@@ -913,8 +888,7 @@ my_tt_to_flextable <- function(tt,
       )
     }
     if (methods::is(tt, "VTableTree")) {
-      # hdrmpf <- rtables::matrix_form(tt[1, ])
-      hdrmpf <- matrix_form_2(tt[1, ])
+      hdrmpf <- rtables::matrix_form(tt[1, ])
     } else if (methods::is(tt, "list") && methods::is(tt[[1]], "MatrixPrintForm")) {
       hdrmpf <- tt[[1]]
     } else {
@@ -1001,7 +975,7 @@ my_tt_to_flextable <- function(tt,
         jj <- pgi_for_cw$col_info$label
         subt <- tt[, jj, drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE,
                    reindex_refs = FALSE]
-        sub_ft <- my_tt_to_flextable(
+        sub_ft <- tt_to_flextable_j(
           # tt = full_pag_i,
           tt = subt,
           theme = theme,
@@ -1047,7 +1021,7 @@ my_tt_to_flextable <- function(tt,
         #   ii <- as.integer(rownames(full_pag_i[[vi]]$row_info)) + cum_ii
         #   subt <- tt[ii, jj, drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE,
         #              reindex_refs = FALSE]
-        #   sub_ft <- my_tt_to_flextable(
+        #   sub_ft <- tt_to_flextable_j(
         #     # tt = full_pag_i,
         #     tt = subt,
         #     theme = theme,
@@ -1105,14 +1079,12 @@ my_tt_to_flextable <- function(tt,
   }
   
   
-  # matform <- rtables::matrix_form(tt, fontspec = fontspec, indent_rownames = FALSE)
-  matform <- matrix_form_2(tt, fontspec = fontspec, indent_rownames = FALSE)
+  matform <- rtables::matrix_form(tt, fontspec = fontspec, indent_rownames = FALSE)
   body <- formatters::mf_strings(matform)
   spans <- formatters::mf_spans(matform)
   mpf_aligns <- formatters::mf_aligns(matform)
   hnum <- formatters::mf_nlheader(matform)
-  # rdf <- rtables::make_row_df(tt)
-  rdf <- make_row_df_2(tt)
+  rdf <- rtables::make_row_df(tt)
   
   # NOTE: convert the '>=', '<=', etc symbols
   # body[, 1] <- gsub("^[[:space:]]+", "", body[, 1])
@@ -1325,7 +1297,6 @@ my_tt_to_flextable <- function(tt,
   flx <- flx %>%
     rtables.officer:::.add_hborder(part = "body", ii = nr_body, border = border)
   
-  # flx <- rtables.officer:::.apply_themes(flx, theme = theme, tbl_row_class = rtables::make_row_df(tt)$node_class)
   flx <- rtables.officer:::.apply_themes(flx, theme = theme, tbl_row_class = rdf$node_class)
   
   # NOTE: for Listings, vertical alignment is "top" for the whole body
@@ -1535,7 +1506,7 @@ my_tt_to_flextable <- function(tt,
 #' @param ... other parameters.
 #'
 #' @export
-my_export_as_docx <- function(tt,
+export_as_docx_j <- function(tt,
                               tblid,
                               output_dir,
                               add_page_break = FALSE,
@@ -1567,7 +1538,7 @@ my_export_as_docx <- function(tt,
   
   
   if (inherits(tt, "VTableTree") || inherits(tt, "listing_df")) {
-    tt <- my_tt_to_flextable(tt, titles_as_header = titles_as_header, 
+    tt <- tt_to_flextable_j(tt, titles_as_header = titles_as_header, 
                              integrate_footers = integrate_footers, 
                              tblid = tblid,
                              orientation = orientation,
@@ -1586,7 +1557,7 @@ my_export_as_docx <- function(tt,
   else if (inherits(tt, "list")) {
     if (inherits(tt[[1]], "VTableTree") || inherits(tt[[1]], 
                                                     "listing_df")) {
-      flex_tbl_list <- mapply(my_tt_to_flextable,
+      flex_tbl_list <- mapply(tt_to_flextable_j,
                               tt = tt, 
                               MoreArgs = list(
                                 titles_as_header = titles_as_header, 
@@ -1630,7 +1601,7 @@ my_export_as_docx <- function(tt,
   
   if (combined_docx) {
     if (length(flex_tbl_list) > 1) {
-      my_export_as_docx(
+      export_as_docx_j(
         tt = flex_tbl_list,
         output_dir = output_dir,
         add_page_break = TRUE,
@@ -1665,7 +1636,7 @@ my_export_as_docx <- function(tt,
       fmti <- paste0("%0", ceiling(log(length(flex_tbl_list), base = 10)), "d")
       fname <- paste0(tolower(tblid), "part", sprintf(fmti, i), "of", length(flex_tbl_list))
       # fname <- paste0(dirname(file), "/", fname)
-      my_export_as_docx(
+      export_as_docx_j(
         tt = flex_tbl_i,
         output_dir = output_dir,
         add_page_break = add_page_break,
@@ -1725,7 +1696,7 @@ my_export_as_docx <- function(tt,
         if (abs(sum(unname(dflx$widths)) - page_width) > 0.01) {
           warning("The total table width does not match the page width. The column widths", 
                   " will be resized to fit the page. Please consider modifying the parameter", 
-                  " total_page_width in my_tt_to_flextable().")
+                  " total_page_width in tt_to_flextable_j().")
           final_cwidths <- page_width * unname(dflx$widths)/sum(unname(dflx$widths))
           flx <- flextable::width(flx, width = final_cwidths)
         }
@@ -1750,8 +1721,7 @@ my_export_as_docx <- function(tt,
       }
     }
     if (isFALSE(integrate_footers) && inherits(tt, "VTableTree")) {
-      # matform <- rtables::matrix_form(tt, indent_rownames = TRUE)
-      matform <- matrix_form_2(tt, indent_rownames = TRUE)
+      matform <- rtables::matrix_form(tt, indent_rownames = TRUE)
       if (length(matform$ref_footnotes) > 0) {
         doc <- rtables.officer:::add_text_par(doc, matform$ref_footnotes, flx_fpt$fpt_footer)
       }

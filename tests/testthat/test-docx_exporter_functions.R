@@ -64,17 +64,17 @@ snapshot_test_flextable <- function(res) {
 }
 
 
-testthat::test_that("my_tt_to_flextable() works fine with Tables", {
+testthat::test_that("tt_to_flextable_j() works fine with Tables", {
 
   testthat::expect_error(
-    my_tt_to_flextable(tt = adsl, tblid = "output ID"),
+    tt_to_flextable_j(tt = adsl, tblid = "output ID"),
     "Input object is not an rtables' or rlistings' object."
   )
 
   # basic example
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
-    res <- my_tt_to_flextable(tt = tbl1, tblid = "output ID")
+    res <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   )
   options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
@@ -83,7 +83,7 @@ testthat::test_that("my_tt_to_flextable() works fine with Tables", {
   # example with titles and footers
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
-    res <- my_tt_to_flextable(tt = tbl1b, tblid = "output ID")
+    res <- tt_to_flextable_j(tt = tbl1b, tblid = "output ID")
   )
   options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
@@ -93,7 +93,7 @@ testthat::test_that("my_tt_to_flextable() works fine with Tables", {
   # example with superscript and >=
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
-    res <- my_tt_to_flextable(tt = tbl1c, tblid = "output ID")
+    res <- tt_to_flextable_j(tt = tbl1c, tblid = "output ID")
   )
   options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
@@ -101,7 +101,7 @@ testthat::test_that("my_tt_to_flextable() works fine with Tables", {
 
 })
 
-testthat::test_that("my_tt_to_flextable() works fine with Listings", {
+testthat::test_that("tt_to_flextable_j() works fine with Listings", {
 
   lsting <- adae %>%
     dplyr::select(USUBJID, AGE, SEX, RACE, ARM) %>%
@@ -135,7 +135,7 @@ testthat::test_that("my_tt_to_flextable() works fine with Listings", {
   # basic example
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
-    res <- my_tt_to_flextable(tt = ls1, tblid = "output ID")
+    res <- tt_to_flextable_j(tt = ls1, tblid = "output ID")
   )
   options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
@@ -153,7 +153,7 @@ testthat::test_that("my_tt_to_flextable() works fine with Listings", {
   ls1b <- set_titles(ls1, tab_titles)
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
-    res <- my_tt_to_flextable(tt = ls1b, tblid = "output ID")
+    res <- tt_to_flextable_j(tt = ls1b, tblid = "output ID")
   )
   options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
@@ -204,7 +204,7 @@ testthat::test_that("my_tt_to_flextable() works fine with Listings", {
 
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
-    res <- my_tt_to_flextable(tt = ls1c, tblid = "output ID")
+    res <- tt_to_flextable_j(tt = ls1c, tblid = "output ID")
   )
   options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
@@ -251,7 +251,7 @@ testthat::test_that("remove_security_popup_page_numbers() removes dirty='true'",
 
 testthat::test_that("add_title_style_caption() adds a new XML node w:pStyle w:val='Caption'", {
   options(docx.add_datetime = FALSE)
-  flx <- my_tt_to_flextable(tt = tbl1, tblid = "output ID")
+  flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   options(docx.add_datetime = TRUE)
 
   flx <- junco:::insert_title_hanging_indent_v3(flx, "output id:this is a veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery long title")
@@ -286,7 +286,7 @@ testthat::test_that("my_pg_width_by_orient() returns what it should", {
 
 testthat::test_that("insert_footer_text() adds a footer line to a flextable", {
   options(docx.add_datetime = FALSE)
-  flx <- my_tt_to_flextable(tt = tbl1c, tblid = "output ID")
+  flx <- tt_to_flextable_j(tt = tbl1c, tblid = "output ID")
   options(docx.add_datetime = TRUE)
   n_footer_lines_1 <- flx %>% flextable::nrow_part(part = "footer")
   footer_lines_1 <- flx$footer$dataset
@@ -331,7 +331,7 @@ testthat::test_that("interpret_cell_content() returns what it should", {
 
 testthat::test_that("interpret_all_cell_content() is interpreting markups correctly", {
   options(docx.add_datetime = FALSE)
-  flx <- my_tt_to_flextable(tt = tbl1, tblid = "output ID")
+  flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   options(docx.add_datetime = TRUE)
 
   flx <- insert_title_hanging_indent_v3(flx,
@@ -357,7 +357,7 @@ testthat::test_that("interpret_all_cell_content() is interpreting markups correc
 
 testthat::test_that("insert_title_hanging_indent_v3() adds the title correctly", {
   options(docx.add_datetime = FALSE)
-  flx <- my_tt_to_flextable(tt = tbl1, tblid = "output ID")
+  flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   options(docx.add_datetime = TRUE)
 
   res <- insert_title_hanging_indent_v3(flx, "output id:this is a test title")
@@ -367,7 +367,7 @@ testthat::test_that("insert_title_hanging_indent_v3() adds the title correctly",
 
 testthat::test_that("add_hanging_indent_first_column() works correctly", {
   options(docx.add_datetime = FALSE)
-  flx <- my_tt_to_flextable(tt = tbl1, tblid = "output ID")
+  flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   options(docx.add_datetime = TRUE)
 
   flx$body$dataset[1, 1] <- "Republic of China"
@@ -399,7 +399,7 @@ testthat::test_that("wrap_string_with_indent() works correctly", {
 testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works correctly", {
 
   options(docx.add_datetime = FALSE)
-  flx <- my_tt_to_flextable(tt = tbl1, tblid = "output ID")
+  flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   options(docx.add_datetime = TRUE)
 
 
@@ -419,7 +419,7 @@ testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works corr
 })
 
 
-testthat::test_that("my_export_as_docx() works with pagination", {
+testthat::test_that("export_as_docx_j() works with pagination", {
   
   # create a TableTree with a few pages
   colspan_trt_map <- data.frame(
@@ -514,7 +514,7 @@ testthat::test_that("my_export_as_docx() works with pagination", {
   # export it as docx
   output_dir <- tempdir()
   options(docx.add_datetime = FALSE)
-  my_export_as_docx(result,
+  export_as_docx_j(result,
                     output_dir = output_dir,
                     orientation = "landscape",
                     tblid = "test1234",
