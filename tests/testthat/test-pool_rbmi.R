@@ -25,20 +25,24 @@ test_that("mod_pool_internal_rubin combines results correctly", {
     )
   }
 
-  mock_parametric_ci <- function(point,
-                                 se,
-                                 alpha,
-                                 alternative,
-                                 qfun,
-                                 pfun,
-                                 df) {
+  mock_parametric_ci <- function(
+    point,
+    se,
+    alpha,
+    alternative,
+    qfun,
+    pfun,
+    df
+  ) {
     q_val <- qfun(1 - alpha / 2, df = df)
-    ci <- switch(alternative,
+    ci <- switch(
+      alternative,
       "two.sided" = c(point - q_val * se, point + q_val * se),
       "less" = c(-Inf, point + q_val * se),
       "greater" = c(point - q_val * se, Inf)
     )
-    p_val <- switch(alternative,
+    p_val <- switch(
+      alternative,
       "two.sided" = 2 * pfun(-abs((point) / se), df = df),
       "less" = pfun(point / se, df = df),
       "greater" = pfun(-point / se, df = df)
@@ -146,10 +150,12 @@ test_that("pool function processes and returns combined results", {
     method = list(D = 1)
   )
 
-  pool_no_validate <- function(results,
-                               conf.level = 0.95,
-                               alternative = c("two.sided", "less", "greater"),
-                               type = c("percentile", "normal")) {
+  pool_no_validate <- function(
+    results,
+    conf.level = 0.95,
+    alternative = c("two.sided", "less", "greater"),
+    type = c("percentile", "normal")
+  ) {
     # Skip validation step rbmi::validate(results)
 
     alternative <- match.arg(alternative)
@@ -238,4 +244,116 @@ test_that("pool function processes and returns combined results", {
   expect_equal(res$pars$param2$se, 0.3)
   expect_equal(res$pars$param2$pvalue, 0.02)
   expect_equal(res$pars$param2$df, median(mock_results$param2$df))
+})
+
+test_that("Pool (Rubin) works as expected when se = NA in analysis model", {
+  set.seed(101)
+
+  mu <- 0
+  sd <- 1
+  n <- 2000
+  vals <- rnorm(n, mu, sd)
+  real_mu <- mean(vals)
+
+  runanalysis <- function(x) {
+    list("p1" = list(est = mean(x), se = NA, df = NA))
+  }
+
+  results_bayes <- rbmi_as_analysis(
+    method = rbmi::method_bayes(n_samples = 5000),
+    results = lapply(
+      seq_len(5000),
+      function(x) runanalysis(sample(vals, size = n, replace = TRUE))
+    )
+  )
+  bayes <- rbmi_pool(results_bayes)
+  bayes2 <- rbmi_pool(results_bayes, conf.level = 0.8)
+  bayes3 <- rbmi_pool(results_bayes, alternative = "greater")
+
+  expect_equal(
+    bayes$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = NA
+    ),
+    tolerance = 1e-2
+  )
+
+  expect_equal(
+    bayes2$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = NA
+    ),
+    tolerance = 1e-2
+  )
+
+  expect_equal(
+    bayes3$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = NA
+    ),
+    tolerance = 1e-2
+  )
+
+  runanalysis <- function(x) {
+    list("p1" = list(est = mean(x), se = NA, df = Inf))
+  }
+
+  results_bayes <- rbmi_as_analysis(
+    method = rbmi::method_bayes(n_samples = 5000),
+    results = lapply(
+      seq_len(5000),
+      function(x) runanalysis(sample(vals, size = n, replace = TRUE))
+    )
+  )
+  bayes <- rbmi_pool(results_bayes)
+  bayes2 <- rbmi_pool(results_bayes, conf.level = 0.8)
+  bayes3 <- rbmi_pool(results_bayes, alternative = "greater")
+
+  expect_equal(
+    bayes$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = NA
+    ),
+    tolerance = 1e-2
+  )
+
+  expect_equal(
+    bayes2$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = NA
+    ),
+    tolerance = 1e-2
+  )
+
+  expect_equal(
+    bayes3$pars$p1,
+    list(
+      est = real_mu,
+      ci = as.numeric(c(NA, NA)),
+      se = as.numeric(NA),
+      pvalue = as.numeric(NA),
+      df = NA
+    ),
+    tolerance = 1e-2
+  )
 })
