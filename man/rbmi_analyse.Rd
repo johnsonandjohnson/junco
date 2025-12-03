@@ -23,10 +23,12 @@ datasets prior to running \code{fun}. See details.}
 
 \item{...}{Additional arguments passed onto \code{fun}.}
 
-\item{cluster_or_cores}{The number of parallel processes to use when running this function. Can also be a
+\item{cluster_or_cores}{(\code{numeric} or \verb{cluster object})\cr
+The number of parallel processes to use when running this function. Can also be a
 cluster object created by \code{\link[=make_rbmi_cluster]{make_rbmi_cluster()}}. See the parallelisation section below.}
 
-\item{.validate}{Should \code{imputations} be checked to ensure it conforms to the required format
+\item{.validate}{(\code{logical})\cr
+Should \code{imputations} be checked to ensure it conforms to the required format
 (default = \code{TRUE}) ? Can gain a small performance increase if this is set to \code{FALSE} when
 analysing a large number of samples.}
 }
@@ -178,47 +180,47 @@ if (requireNamespace("rbmi", quietly = TRUE)) {
   library(rbmi)
   library(dplyr)
 
-  dat <- antidepressant_data
-  dat$GENDER <- as.factor(dat$GENDER)
-  dat$POOLINV <- as.factor(dat$POOLINV)
-  set.seed(123)
-  pat_ids <- sample(levels(dat$PATIENT), nlevels(dat$PATIENT) / 4)
-  dat <- dat |>
-    filter(PATIENT \%in\% pat_ids) |>
-    droplevels()
-  dat <- expand_locf(
-    dat,
-    PATIENT = levels(dat$PATIENT),
-    VISIT = levels(dat$VISIT),
-    vars = c("BASVAL", "THERAPY"),
-    group = c("PATIENT"),
-    order = c("PATIENT", "VISIT")
-  )
-  dat_ice <- dat \%>\%
-    arrange(PATIENT, VISIT) \%>\%
-    filter(is.na(CHANGE)) \%>\%
-    group_by(PATIENT) \%>\%
-    slice(1) \%>\%
-    ungroup() \%>\%
-    select(PATIENT, VISIT) \%>\%
-    mutate(strategy = "JR")
-  dat_ice <- dat_ice[-which(dat_ice$PATIENT == 3618), ]
-  vars <- set_vars(
-    outcome = "CHANGE",
-    visit = "VISIT",
-    subjid = "PATIENT",
-    group = "THERAPY",
-    covariates = c("THERAPY")
-  )
-  drawObj <- draws(
-    data = dat,
-    data_ice = dat_ice,
-    vars = vars,
-    method = method_condmean(type = "jackknife", covariance = "csh"),
-    quiet = TRUE
-  )
-  references <- c("DRUG" = "PLACEBO", "PLACEBO" = "PLACEBO")
-  imputeObj <- impute(drawObj, references)
+dat <- antidepressant_data
+dat$GENDER <- as.factor(dat$GENDER)
+dat$POOLINV <- as.factor(dat$POOLINV)
+set.seed(123)
+pat_ids <- sample(levels(dat$PATIENT), nlevels(dat$PATIENT) / 4)
+dat <- dat |>
+  filter(PATIENT \%in\% pat_ids) |>
+  droplevels()
+dat <- expand_locf(
+  dat,
+  PATIENT = levels(dat$PATIENT),
+  VISIT = levels(dat$VISIT),
+  vars = c("BASVAL", "THERAPY"),
+  group = c("PATIENT"),
+  order = c("PATIENT", "VISIT")
+)
+dat_ice <- dat |>
+  arrange(PATIENT, VISIT) |>
+  filter(is.na(CHANGE)) |>
+  group_by(PATIENT) |>
+  slice(1) |>
+  ungroup() |>
+  select(PATIENT, VISIT) |>
+  mutate(strategy = "JR")
+dat_ice <- dat_ice[-which(dat_ice$PATIENT == 3618), ]
+vars <- set_vars(
+  outcome = "CHANGE",
+  visit = "VISIT",
+  subjid = "PATIENT",
+  group = "THERAPY",
+  covariates = c("THERAPY")
+)
+drawObj <- draws(
+  data = dat,
+  data_ice = dat_ice,
+  vars = vars,
+  method = method_condmean(type = "jackknife", covariance = "csh"),
+  quiet = TRUE
+)
+references <- c("DRUG" = "PLACEBO", "PLACEBO" = "PLACEBO")
+imputeObj <- impute(drawObj, references)
 
   rbmi_analyse(imputations = imputeObj, vars = vars)
 }

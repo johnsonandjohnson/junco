@@ -12,7 +12,7 @@ rbmi_pool(
 )
 }
 \arguments{
-\item{results}{an analysis object created by \code{\link[rbmi:analyse]{rbmi::analyse()}}.}
+\item{results}{an analysis object created by \code{\link[=analyse]{analyse()}}.}
 
 \item{conf.level}{confidence level of the returned confidence interval.
 Must be a single number between 0 and 1. Default is 0.95.}
@@ -23,8 +23,8 @@ must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"less"}.}
 \item{type}{a character string of either \code{"percentile"} (default) or
 \code{"normal"}. Determines what method should be used to calculate the bootstrap
 confidence intervals. See details.
-Only used if \code{rbmi::method_condmean(type = "bootstrap")} was specified
-in the original call to \code{\link[rbmi:draws]{rbmi::draws()}}.}
+Only used if \code{method_condmean(type = "bootstrap")} was specified
+in the original call to draws().}
 }
 \value{
 A list of class \code{pool}.
@@ -34,5 +34,5 @@ Pool analysis results obtained from the imputed datasets
 }
 \details{
 This has been forked from the \code{rbmi} package, mainly to support in
-addition the pooling of variance estimates. See \code{\link[rbmi:pool]{rbmi::pool()}} for more details.
+addition the pooling of variance estimates. See \code{\link[=pool]{pool()}} for more details.
 }
