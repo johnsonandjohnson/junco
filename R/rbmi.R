@@ -44,7 +44,9 @@ find_missing_chg_after_avisit <- function(df) {
   visit_levels_missing <- as.integer(df[is.na(df$CHG), ]$AVISIT)
 
   # Missing visits at the end.
-  visit_levels_missing_end <- visit_levels_missing[visit_levels_missing > visit_levels_max_available]
+  visit_levels_missing_end <- visit_levels_missing[
+    visit_levels_missing > visit_levels_max_available
+  ]
 
   # Return first one if there is any.
   if (length(visit_levels_missing_end)) {
@@ -89,7 +91,11 @@ find_missing_chg_after_avisit <- function(df) {
 #' closeAllConnections()
 #' }
 #' @export
-make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = NULL) {
+make_rbmi_cluster <- function(
+  cluster_or_cores = 1,
+  objects = NULL,
+  packages = NULL
+) {
   assert_rbmi()
 
   if (is.numeric(cluster_or_cores) && cluster_or_cores == 1) {
@@ -99,7 +105,10 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
   } else if (methods::is(cluster_or_cores, "cluster")) {
     cl <- cluster_or_cores
   } else {
-    stop(sprintf("`cluster_or_cores` has unsupported class of: %s", paste(class(cluster_or_cores), collapse = ", ")))
+    stop(sprintf(
+      "`cluster_or_cores` has unsupported class of: %s",
+      paste(class(cluster_or_cores), collapse = ", ")
+    ))
   }
 
   # Load user defined objects into the globalname space
@@ -109,7 +118,7 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
   }
 
   # Load user defined packages
-  packages <- c(packages, "assertthat")
+  packages <- c(packages, "assertthat", "junco")
   # Remove attempts to load `rbmi` as this will be covered later
   packages <- setdiff(packages, "rbmi")
   devnull <- parallel::clusterCall(
@@ -122,7 +131,10 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
   parallel::clusterSetRNGStream(cl, sample.int(1))
 
   # If user has previously configured `rbmi` sub-processes then early exit
-  exported_rbmi <- unlist(parallel::clusterEvalQ(cl, exists("..exported..parallel..rbmi")))
+  exported_rbmi <- unlist(parallel::clusterEvalQ(
+    cl,
+    exists("..exported..parallel..rbmi")
+  ))
   if (all(exported_rbmi)) {
     return(cl)
   }
@@ -375,21 +387,38 @@ par_lapply <- function(cl, fun, x, ...) {
 #'   rbmi_analyse(imputations = imputeObj, vars = vars)
 #' }
 #' @export
-rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., cluster_or_cores = 1, .validate = TRUE) {
+rbmi_analyse <- function(
+  imputations,
+  fun = rbmi_ancova,
+  delta = NULL,
+  ...,
+  cluster_or_cores = 1,
+  .validate = TRUE
+) {
   # nocov start
   assert_rbmi()
-  if (.validate) rbmi::validate(imputations)
+  if (.validate) {
+    rbmi::validate(imputations)
+  }
   assertthat::assert_that(is.function(fun), msg = "`fun` must be a function")
-  assertthat::assert_that(is.null(delta) | is.data.frame(delta), msg = "`delta` must be NULL or a data.frame")
+  assertthat::assert_that(
+    is.null(delta) | is.data.frame(delta),
+    msg = "`delta` must be NULL or a data.frame"
+  )
   vars <- imputations$data$vars
 
-  if (.validate) devnull <- lapply(imputations$imputations, function(x) rbmi::validate(x))
+  if (.validate) {
+    devnull <- lapply(imputations$imputations, function(x) rbmi::validate(x))
+  }
 
   if (!is.null(delta)) {
     expected_vars <- c(vars$subjid, vars$visit, "delta")
     assertthat::assert_that(
       all(expected_vars %in% names(delta)),
-      msg = sprintf("The following variables must exist witin `delta`: `%s`", paste0(expected_vars, collapse = "`, `"))
+      msg = sprintf(
+        "The following variables must exist witin `delta`: `%s`",
+        paste0(expected_vars, collapse = "`, `")
+      )
     )
   }
 
@@ -408,7 +437,11 @@ rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., clus
   if (methods::is(cl, "cluster")) {
     ..rbmi..analysis..data..path <- tempfile()
     saveRDS(objects, file = ..rbmi..analysis..data..path, compress = FALSE)
-    devnull <- parallel::clusterExport(cl, "..rbmi..analysis..data..path", environment())
+    devnull <- parallel::clusterExport(
+      cl,
+      "..rbmi..analysis..data..path",
+      environment()
+    )
     devnull <- parallel::clusterEvalQ(cl, {
       ..rbmi..analysis..objects <- readRDS(..rbmi..analysis..data..path)
       list2env(..rbmi..analysis..objects, envir = environment())
