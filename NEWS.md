@@ -1,4 +1,4 @@
-# junco 0.1.3
+# junco 0.1.2
 
 ## New features
 
