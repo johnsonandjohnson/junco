@@ -36,6 +36,8 @@
 #' @param data (`data.frame`)\cr the dataset containing the variables to summarize.
 #' @param df (`data.frame`)\cr data set containing all analysis variables.
 #' @param draw (`flag`)\cr whether the plot should be drawn.
+#' @param exclude_levels (`list`)\cr A named list where names correspond to split variables
+#'   and values are vectors of levels to exclude.
 #' @param grp (`factor`)\cr defining the groups.
 #' @param groups_lists (named `list` of `list`)\cr optionally contains for each `subgroups` variable a
 #'   list, which specifies the new group levels via the names and the
