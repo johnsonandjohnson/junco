@@ -71,7 +71,7 @@ Suggests:
     pharmaverseadam,
     rlang,
     rbmi (>= 1.3.0),
-    tidyr
+    tidyr,
     rlang,
     pharmaverseadamjnj
 VignetteBuilder: knitr
