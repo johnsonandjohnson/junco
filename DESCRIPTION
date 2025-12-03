@@ -70,7 +70,8 @@ Suggests:
     readxl,
     pharmaverseadam,
     rlang,
-    rbmi (>= 1.3.0)
+    rbmi (>= 1.3.0),
+    tidyr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Additional_repositories: https://insightsengineering.r-universe.dev/
