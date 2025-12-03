@@ -5,7 +5,9 @@ if (requireNamespace("rbmi", quietly = TRUE)) {
 }
 
 library(rbmi)
-require(mockery)
+suppressMessages(require(mockery))
+
+as_analysis <- getFromNamespace("as_analysis", "rbmi")
 
 
 test_that("mod_pool_internal_rubin combines results correctly", {

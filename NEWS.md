@@ -2,11 +2,13 @@
 
 ## New features
 
-* None
+* Added validation of table structure in `tt_to_tlgrtf()` using `rtables::validate_table_struct()` with a warning if the structure is invalid
 
-## Bug fixes
+## Minor improvements and bug fixes
 
-* None
+* Bug fixes and minor improvements
+* Enhanced documentation
+* Updated dependencies
 
 ## Other changes
 

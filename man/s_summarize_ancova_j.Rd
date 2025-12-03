@@ -21,7 +21,7 @@ a_summarize_ancova_j(
 s_summarize_ancova_j(df, .var, .df_row, .ref_group, .in_ref_col, ...)
 }
 \arguments{
-\item{df}{: need to check on how to inherit params from tern::s_ancova}
+\item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
 \item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
@@ -51,14 +51,14 @@ by a statistics function.}
 \item \code{a_summarize_ancova_j()} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
 }
 
-returns the statistics from tern::s_summary(x), appended with a new statistics based upon ANCOVA
+returns the statistics from \code{tern::s_summary(x)}, appended with a new statistics based upon ANCOVA
 }
 \description{
-Combination of tern::s_summary, and ANCOVA based estimates for mean and diff between columns,
-based on ANCOVA function \code{s_ancova_j}
+Combination of \link[tern:analyze_variables]{tern::s_summary}, and ANCOVA based estimates for mean and diff between columns,
+based on ANCOVA function \code{s_ancova_j}.
 }
 \details{
-Combination of tern::s_summary, and ANCOVA based estimates for mean and diff between columns,
+Combination of \link[tern:analyze_variables]{tern::s_summary}, and ANCOVA based estimates for mean and diff between columns,
 based on ANCOVA function \code{s_ancova_j}
 }
 \section{Functions}{

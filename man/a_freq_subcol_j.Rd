@@ -50,13 +50,13 @@ will be considered.\cr
 When no values are observed (eg zero row input df),
 a row with row-label \verb{No data reported} will be included in the table.}
 
-\item{subcol_split}{Text to search colid to determine whether further subsetting
+\item{subcol_split}{(\code{string})\cr text to search colid to determine whether further subsetting
 should be performed.}
 
-\item{subcol_var}{Name of variable containing to be searched for the text
+\item{subcol_var}{(\code{string})\cr name of variable containing to be searched for the text
 identified in subcol_val argument.}
 
-\item{subcol_val}{Value to use to perform further data sub-setting.}
+\item{subcol_val}{(\code{string})\cr value to use to perform further data sub-setting.}
 
 \item{.df_row}{(\code{data.frame})\cr data frame across all of the columns for the given row split.}
 
@@ -83,14 +83,14 @@ This higher row-level split is specified in the argument \code{denom_by}.\cr
 }}
 
 \item{label}{(\code{string})\cr
-When \code{val}is a single \code{string},
+When \code{val} has length 1,
 the row label to be shown on the output can be specified using this argument.\cr
 When \code{val} is a \verb{character vector}, the \code{label_map} argument can be specified
 to control the row-labels.}
 
 \item{label_fstr}{(\code{string})\cr
 a sprintf style format string.
-It can contain up to one "\\%s" which takes the current split value and
+It can contain up to one \code{"\%s"}, which takes the current split value and
 generates the row/column label.\cr
 It will be combined with the \code{labelstr} argument,
 when utilizing this function as
@@ -104,10 +104,7 @@ a different row label to be presented on the table.\cr}
 
 \item{.alt_df_full}{(\code{dataframe})\cr Denominator dataset
 for fraction and relative risk calculations.\cr
-.alt_df_full is a crucial parameter for the relative risk calculations
-if this parameter is not set to utilize \code{alt_counts_df},
-then the values in the relative risk columns might not be correct.\cr
-Once the rtables PR is integrated, this argument gets populated by the rtables
+this argument gets populated by the rtables
 split machinery (see \link[rtables:additional_fun_params]{rtables::additional_fun_params}).}
 
 \item{denom_by}{(\code{character})\cr Variables from row-split
@@ -136,4 +133,46 @@ list of requested statistics with formatted \code{rtables::CellValue()}.\cr
 \description{
 Analysis function count and percentage with extra column-subsetting in
 selected columns (controlled by subcol_* arguments)
+}
+\examples{
+library(dplyr)
+
+ADSL <- ex_adsl |>
+  select(USUBJID, ARM)
+
+ADSL$COLSPAN_REL <- "AEs"
+
+ADAE <- ex_adae |>
+  select(USUBJID, ARM, AEDECOD, AREL)
+
+ADAE <- ADAE |>
+  mutate(
+    AEREL = case_when(
+      AREL == "Y" ~ "RELATED",
+      AREL == "N" ~ "NOT RELATED"
+    ),
+    AEREL = factor(AEREL),
+    COLSPAN_REL = "AEs"
+  )
+
+combodf <- tribble(
+  ~valname,  ~label,        ~levelcombo, ~exargs,
+  "RELATED", "Related AEs", c("AEs"),    list()
+)
+
+lyt <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("COLSPAN_REL", split_fun = add_combo_levels(combodf, trim = TRUE)) |>
+  split_cols_by("ARM") |>
+  analyze("AEDECOD",
+    afun = a_freq_subcol_j,
+    extra_args = list(
+      subcol_split = "RELATED",
+      subcol_var = "AEREL",
+      subcol_val = "RELATED"
+    )
+  )
+
+result <- build_table(lyt, ADAE, alt_counts_df = ADSL)
+
+result
 }

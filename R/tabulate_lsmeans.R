@@ -14,9 +14,11 @@
 #'   * P-value sidedness can be chosen
 #'
 #' @name tabulate_lsmeans
-#' @return for `s_lsmeans`, a list containing the same statistics returned by [tern.mmrm::s_mmrm_lsmeans],
-#' with the additional `diff_mean_est_ci` three-dimensional statistic. For `a_lsmeans`,
-#' a `VertalRowsSection` as returned by [rtables::in_rows].
+#' @return
+#' * For `s_lsmeans`, a list containing the same statistics returned by tern.mmrm::s_mmrm_lsmeans,
+#' with the additional `diff_mean_est_ci` three-dimensional statistic.
+#' * For `a_lsmeans`, a `VertalRowsSection` as returned by [rtables::in_rows].
+#'
 #' @examples
 #' result <- fit_mmrm_j(
 #'   vars = list(

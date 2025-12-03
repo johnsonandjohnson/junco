@@ -13,16 +13,17 @@ rbmi_ancova_single(
 )
 }
 \arguments{
-\item{data}{A \code{data.frame} containing the data to be used in the model.}
+\item{data}{(\code{data.frame})\cr A \code{data.frame} containing the data to be used in the model.}
 
-\item{outcome}{string, the name of the outcome variable in \code{data}.}
+\item{outcome}{(\code{string})\cr name of the outcome variable in \code{data}.}
 
-\item{group}{string, the name of the group variable in \code{data}.}
+\item{group}{(\code{string})\cr name of the group variable in \code{data}.}
 
-\item{covariates}{character vector containing the name of any additional covariates
+\item{covariates}{(\verb{character vector})\cr character vector containing the
+name of any additional covariates
 to be included in the model as well as any interaction terms.}
 
-\item{weights}{Character, either \code{"counterfactual"} (default), \code{"equal"},
+\item{weights}{(\code{character})\cr Character, either \code{"counterfactual"} (default), \code{"equal"},
 \code{"proportional_em"} or \code{"proportional"}.
 Specifies the weighting strategy to be used when calculating the lsmeans.
 See the weighting section for more details.}

@@ -26,20 +26,21 @@ tt_to_tlgrtf(
   combined_rtf = FALSE,
   one_table = TRUE,
   border_mat = make_header_bordmat(obj = tt),
+  validate = TRUE,
   ...
 )
 }
 \arguments{
-\item{tt}{TableTree object to convert to RTF}
+\item{tt}{(\code{TableTree})\cr TableTree object to convert to RTF}
 
-\item{file}{character(1). File to create, including path, but excluding
+\item{file}{(\code{character(1)})\cr File to create, including path, but excluding
 .rtf extension.}
 
-\item{orientation}{Orientation of the output ("portrait" or "landscape")}
+\item{orientation}{(\code{character})\cr Orientation of the output ("portrait" or "landscape")}
 
-\item{colwidths}{Column widths for the table}
+\item{colwidths}{(\code{numeric} vector)\cr Column widths for the table}
 
-\item{label_width_ins}{Label width in inches}
+\item{label_width_ins}{(\code{numeric})\cr Label width in inches}
 
 \item{watermark}{(optional) String containing the desired watermark for
 RTF outputs. Vectorized.}
@@ -48,39 +49,43 @@ RTF outputs. Vectorized.}
 right side of the footer section in the format page x/y.
 Vectorized. (Default = FALSE)}
 
-\item{fontspec}{Font specification object}
+\item{fontspec}{(\code{font_spec})\cr Font specification object}
 
-\item{pg_width}{Page width in inches}
+\item{pg_width}{(\code{numeric})\cr Page width in inches}
 
-\item{margins}{Margins in inches (top, right, bottom, left)}
+\item{margins}{(\code{numeric} vector)\cr Margins in inches (top, right, bottom, left)}
 
-\item{paginate}{Whether to paginate the output}
+\item{paginate}{(\code{logical})\cr Whether to paginate the output}
 
-\item{col_gap}{Column gap in spaces}
+\item{col_gap}{(\code{numeric})\cr Column gap in spaces}
 
-\item{nosplitin}{list(row=, col=). Path elements whose children should not be paginated within
+\item{nosplitin}{(\code{list})\cr list(row=, col=). Path elements whose children should not be paginated within
 if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
 all the associated columns don't fit on a single page.}
 
-\item{verbose}{Whether to print verbose output}
+\item{verbose}{(\code{logical})\cr Whether to print verbose output}
 
-\item{tlgtype}{Type of the output (Table, Listing, or Figure)}
+\item{tlgtype}{(\code{character})\cr Type of the output (Table, Listing, or Figure)}
 
-\item{string_map}{Unicode mapping for special characters}
+\item{string_map}{(\code{data.frame})\cr Unicode mapping for special characters}
 
-\item{markup_df}{Data frame containing markup information}
+\item{markup_df}{(\code{data.frame})\cr Data frame containing markup information}
 
-\item{combined_rtf}{logical(1). In the case where the result is broken up into multiple
+\item{combined_rtf}{(\code{logical(1)})\cr In the case where the result is broken up into multiple
 parts due to width, should a combined rtf file also be created. Defaults to \code{FALSE}.}
 
-\item{one_table}{logical(1). If \code{tt} is a (non-\code{MatrixPrintForm}) list,
+\item{one_table}{(\code{logical(1)})\cr If \code{tt} is a (non-\code{MatrixPrintForm}) list,
 should the parts be added to the rtf within a single table (\code{TRUE}, the
 default) or as separate tables. End users will not generally need to set this.}
 
-\item{border_mat}{matrix. A \verb{m x k} matrix where m is the number of columns of \code{tt}
+\item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of columns of \code{tt}
 and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}
 for what the matrix should contain. Users should only specify this when the
 default behavior does not meet their needs.}
+
+\item{validate}{logical(1). Whether to validate the table structure using
+\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. This can also be disabled
+globally by setting the environment variable \code{JUNCO_DISABLE_VALIDATION=TRUE}.}
 
 \item{...}{Additional arguments passed to gentlg}
 }
@@ -105,7 +110,4 @@ in colwidths would take up is preserved and all other columns equally
 split the remaining available width. This will cause, e.g., the
 elements within the allparts rtf generated when \code{combined_rtf} is \code{TRUE}
 to differ visually from the content of the individual part rtfs.
-}
-\seealso{
-Used in all table and listing scripts
 }

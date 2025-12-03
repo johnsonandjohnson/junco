@@ -2,14 +2,14 @@
 % Please edit documentation in R/jjcsformats.R
 \name{jjcsformat_fraction_count_denom}
 \alias{jjcsformat_fraction_count_denom}
-\title{Formatting fraction, count and denominator values}
+\title{Formatting fraction, count and denominator values.}
 \usage{
 jjcsformat_fraction_count_denom(x, d = 1, roundmethod = c("sas", "iec"), ...)
 }
 \arguments{
-\item{x}{\code{numeric}\cr with elements \code{num} and \code{fraction} or \code{num}, \code{denom} and \code{fraction}.}
+\item{x}{(\verb{numeric vector})\cr Vector with elements \code{num} and \code{fraction} or \code{num}, \code{denom} and \code{fraction}.}
 
-\item{d}{numeric(1). Number of digits to round fraction to (default=1)}
+\item{d}{(\code{numeric(1)})\cr Number of digits to round fraction to (default = 1)}
 
 \item{roundmethod}{(\code{string})\cr choice of rounding methods. Options are:
 \itemize{
@@ -25,7 +25,7 @@ roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions
 with special cased values as described in Details above.
 }
 \description{
-Formatting fraction, count and denominator values
+Formatting fraction, count and denominator values.
 }
 \details{
 Formats a 3-dimensional value such that percent values

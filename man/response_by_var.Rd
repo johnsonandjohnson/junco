@@ -16,21 +16,21 @@ response_by_var(
 )
 }
 \arguments{
-\item{df}{Name of dataframe being analyzed.}
+\item{df}{(\code{data.frame})\cr Name of dataframe being analyzed.}
 
-\item{labelstr}{Custom label for the variable being analyzed.}
+\item{labelstr}{(\verb{character vector})\cr Custom label for the variable being analyzed.}
 
-\item{.var}{Name of the variable being analyzed. Records with non-missing
+\item{.var}{(\code{character})\cr Name of the variable being analyzed. Records with non-missing
 values will be counted in the denominator.}
 
-\item{.N_col}{numeric(1). The total for the current column.}
+\item{.N_col}{(\code{numeric})\cr The total for the current column.}
 
-\item{resp_var}{Name of variable, for which, records with a value of 'Y'
+\item{resp_var}{(\code{character})\cr Name of variable, for which, records with a value of 'Y'
 will be counted in the numerator.}
 
-\item{id}{Name of column in df which will have patient identifiers}
+\item{id}{(\code{character})\cr Name of column in df which will have patient identifiers}
 
-\item{.format}{Format for the count/denominator/fraction output.}
+\item{.format}{(\code{character})\cr Format for the count/denominator/fraction output.}
 
 \item{...}{Additional arguments passed to the function.}
 }
@@ -38,7 +38,7 @@ will be counted in the numerator.}
 a \code{RowsVerticalSection} for use by the internal tabulation machinery of \code{rtables}
 }
 \description{
-Derives the count_denom_fraction statistic (i.e., 'xx /xx (xx.x percent)' )
+Derives the count_denom_fraction statistic (i.e., 'xx /xx (xx.x percent)' )\cr
 Summarizes the number of unique subjects with a response = 'Y' for a given variable
 (e.g. TRTEMFL) within each category of another variable (e.g., SEX).
 Note that the denominator is derived using input df,
@@ -50,7 +50,6 @@ This is an analysis function for use within \code{analyze}. Arguments
 the tabulation process.
 }
 \examples{
-
 library(dplyr)
 
 ADAE <- data.frame(

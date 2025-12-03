@@ -1,5 +1,8 @@
 #' Helper for Finding AVISIT after which CHG are all Missing
 #'
+#' @description
+#' Helper for Finding AVISIT after which CHG are all Missing.
+#'
 #' @param df (`data.frame`)\cr with `CHG` and `AVISIT` variables.
 #'
 #' @return A string with either the factor level after which `AVISIT` is all missing,
@@ -60,19 +63,24 @@ find_missing_chg_after_avisit <- function(df) {
 
 #' Create a `rbmi` ready cluster
 #'
-#' @param cluster_or_cores Number of parallel processes to use or an existing cluster to make use of
-#' @param objects a named list of objects to export into the sub-processes
-#' @param packages a character vector of libraries to load in the sub-processes
-#'
+#' @description
 #' This function is a wrapper around `parallel::makePSOCKcluster()` but takes
 #' care of configuring `rbmi` to be used in the sub-processes as well as loading
 #' user defined objects and libraries and setting the seed for reproducibility.
 #'
-#' @return If `cluster_or_cores` is `1` this function will return `NULL`. If `cluster_or_cores`
-#'   is a number greater than `1`, a cluster with `cluster_or_cores`  cores is returned.
+#' @param cluster_or_cores (`integer` or `cluster object`)\cr
+#' Number of parallel processes to use or an existing cluster to make use of
+#' @param objects (`list`)\cr A named list of objects to export into the sub-processes
+#' @param packages (`character vector`)\cr
+#' A character vector of libraries to load in the sub-processes
 #'
-#' If `cluster_or_cores` is a cluster created via `parallel::makeCluster()` then this function
-#' returns it after inserting the relevant `rbmi` objects into the existing cluster.
+#' @return
+#' * If `cluster_or_cores` is `1`, this function will return `NULL`.
+#' * If `cluster_or_cores` is a number greater than `1`,
+#' a cluster with `cluster_or_cores` cores is returned.
+#' * If `cluster_or_cores` is a cluster created via `parallel::makeCluster()`,
+#' then this function returns it after inserting the relevant `rbmi` objects
+#' into the existing cluster.
 #'
 #' @examples
 #' \dontrun{
@@ -96,6 +104,7 @@ make_rbmi_cluster <- function(
   objects = NULL,
   packages = NULL
 ) {
+  # nocov start
   assert_rbmi()
 
   if (is.numeric(cluster_or_cores) && cluster_or_cores == 1) {
@@ -158,16 +167,18 @@ make_rbmi_cluster <- function(
   })
 
   return(cl)
-}
+} # nocov end
 
 #' Parallelise Lapply
 #'
+#' @description
 #' Simple wrapper around `lapply` and [`parallel::clusterApplyLB`] to abstract away
-#' the logic of deciding which one to use
-#' @param cl Cluster created by [`parallel::makeCluster()`] or `NULL`
-#' @param fun Function to be run
-#' @param x object to be looped over
-#' @param ... extra arguments passed to `fun`
+#' the logic of deciding which one to use.
+#'
+#' @param cl (`cluster object`)\cr Cluster created by [`parallel::makeCluster()`] or `NULL`
+#' @param fun (`functions`)\cr Function to be run
+#' @param x (`object`)\cr Object to be looped over
+#' @param ... Extra arguments passed to `fun`
 #' @return `list` of results of calling `fun` on elements of `x`.
 par_lapply <- function(cl, fun, x, ...) {
   result <- if (is.null(cl)) {
@@ -269,9 +280,11 @@ par_lapply <- function(cl, fun, x, ...) {
 #' @param delta A `data.frame` containing the delta transformation to be applied to the imputed
 #' datasets prior to running `fun`. See details.
 #' @param ... Additional arguments passed onto `fun`.
-#' @param cluster_or_cores The number of parallel processes to use when running this function. Can also be a
+#' @param cluster_or_cores (`numeric` or `cluster object`)\cr
+#' The number of parallel processes to use when running this function. Can also be a
 #' cluster object created by [`make_rbmi_cluster()`]. See the parallelisation section below.
-#' @param .validate Should `imputations` be checked to ensure it conforms to the required format
+#' @param .validate (`logical`)\cr
+#' Should `imputations` be checked to ensure it conforms to the required format
 #' (default = `TRUE`) ? Can gain a small performance increase if this is set to `FALSE` when
 #' analysing a large number of samples.
 #'
@@ -342,47 +355,47 @@ par_lapply <- function(cl, fun, x, ...) {
 #'   library(rbmi)
 #'   library(dplyr)
 #'
-#'   dat <- antidepressant_data
-#'   dat$GENDER <- as.factor(dat$GENDER)
-#'   dat$POOLINV <- as.factor(dat$POOLINV)
-#'   set.seed(123)
-#'   pat_ids <- sample(levels(dat$PATIENT), nlevels(dat$PATIENT) / 4)
-#'   dat <- dat |>
-#'     filter(PATIENT %in% pat_ids) |>
-#'     droplevels()
-#'   dat <- expand_locf(
-#'     dat,
-#'     PATIENT = levels(dat$PATIENT),
-#'     VISIT = levels(dat$VISIT),
-#'     vars = c("BASVAL", "THERAPY"),
-#'     group = c("PATIENT"),
-#'     order = c("PATIENT", "VISIT")
-#'   )
-#'   dat_ice <- dat %>%
-#'     arrange(PATIENT, VISIT) %>%
-#'     filter(is.na(CHANGE)) %>%
-#'     group_by(PATIENT) %>%
-#'     slice(1) %>%
-#'     ungroup() %>%
-#'     select(PATIENT, VISIT) %>%
-#'     mutate(strategy = "JR")
-#'   dat_ice <- dat_ice[-which(dat_ice$PATIENT == 3618), ]
-#'   vars <- set_vars(
-#'     outcome = "CHANGE",
-#'     visit = "VISIT",
-#'     subjid = "PATIENT",
-#'     group = "THERAPY",
-#'     covariates = c("THERAPY")
-#'   )
-#'   drawObj <- draws(
-#'     data = dat,
-#'     data_ice = dat_ice,
-#'     vars = vars,
-#'     method = method_condmean(type = "jackknife", covariance = "csh"),
-#'     quiet = TRUE
-#'   )
-#'   references <- c("DRUG" = "PLACEBO", "PLACEBO" = "PLACEBO")
-#'   imputeObj <- impute(drawObj, references)
+#' dat <- antidepressant_data
+#' dat$GENDER <- as.factor(dat$GENDER)
+#' dat$POOLINV <- as.factor(dat$POOLINV)
+#' set.seed(123)
+#' pat_ids <- sample(levels(dat$PATIENT), nlevels(dat$PATIENT) / 4)
+#' dat <- dat |>
+#'   filter(PATIENT %in% pat_ids) |>
+#'   droplevels()
+#' dat <- expand_locf(
+#'   dat,
+#'   PATIENT = levels(dat$PATIENT),
+#'   VISIT = levels(dat$VISIT),
+#'   vars = c("BASVAL", "THERAPY"),
+#'   group = c("PATIENT"),
+#'   order = c("PATIENT", "VISIT")
+#' )
+#' dat_ice <- dat |>
+#'   arrange(PATIENT, VISIT) |>
+#'   filter(is.na(CHANGE)) |>
+#'   group_by(PATIENT) |>
+#'   slice(1) |>
+#'   ungroup() |>
+#'   select(PATIENT, VISIT) |>
+#'   mutate(strategy = "JR")
+#' dat_ice <- dat_ice[-which(dat_ice$PATIENT == 3618), ]
+#' vars <- set_vars(
+#'   outcome = "CHANGE",
+#'   visit = "VISIT",
+#'   subjid = "PATIENT",
+#'   group = "THERAPY",
+#'   covariates = c("THERAPY")
+#' )
+#' drawObj <- draws(
+#'   data = dat,
+#'   data_ice = dat_ice,
+#'   vars = vars,
+#'   method = method_condmean(type = "jackknife", covariance = "csh"),
+#'   quiet = TRUE
+#' )
+#' references <- c("DRUG" = "PLACEBO", "PLACEBO" = "PLACEBO")
+#' imputeObj <- impute(drawObj, references)
 #'
 #'   rbmi_analyse(imputations = imputeObj, vars = vars)
 #' }

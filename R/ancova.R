@@ -1,6 +1,6 @@
 #' `ANCOVA` Analysis
 #'
-#' Does the `ANCOVA` analysis, separately for each visit.
+#' Performs the `ANCOVA` analysis, separately for each visit.
 #'
 #' @param vars (named `list` of `string` or `character`)\cr specifying the variables in the `ANCOVA` analysis.
 #'   The following elements need to be included as character vectors and match corresponding columns

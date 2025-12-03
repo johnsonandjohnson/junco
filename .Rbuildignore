@@ -49,3 +49,4 @@ pkgdown
 ^[^/]*\.R$
 ^\.vscode$
 ^[.]?air[.]toml$
+^CHANGELOG\.md$

@@ -22,6 +22,3 @@ Modified layout.
 \description{
 Shortcut Layout Function for Standard Continuous Variable Analysis
 }
-\note{
-This is used in \code{tefmad01} and \code{tefmad03a} e.g.
-}

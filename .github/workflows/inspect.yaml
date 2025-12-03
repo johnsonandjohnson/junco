@@ -1,5 +1,5 @@
 ---
-name: Check 🛠
+name: Inspection 🛠
 
 on:
   pull_request:
