@@ -46,10 +46,11 @@ NULL
 #'
 #' @export
 junco_get_stats <- function(
-    method_groups = "analyze_vars_numeric",
-    stats_in = NULL,
-    custom_stats_in = NULL,
-    add_pval = FALSE) {
+  method_groups = "analyze_vars_numeric",
+  stats_in = NULL,
+  custom_stats_in = NULL,
+  add_pval = FALSE
+) {
   tern_get_stats(
     method_groups = method_groups,
     stats_in = stats_in,
@@ -96,10 +97,11 @@ junco_get_formats_from_stats <- function(stats, formats_in = NULL, levels_per_st
 #'
 #' @export
 junco_get_labels_from_stats <- function(
-    stats,
-    labels_in = NULL,
-    levels_per_stats = NULL,
-    label_attr_from_stats = NULL) {
+  stats,
+  labels_in = NULL,
+  levels_per_stats = NULL,
+  label_attr_from_stats = NULL
+) {
   tern_get_labels_from_stats(
     stats = stats,
     labels_in = labels_in,
@@ -184,6 +186,7 @@ format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in
 #'
 #' @export
 junco_default_stats <- list(
+  cmhrms = c("pval"),
   coxph_hr = c("n_tot", "n_tot_events", "hr", "hr_ci", "hr_ci_3d", "pvalue", "lr_stat_df"),
   event_free = c("pt_at_risk", "event_free_rate", "rate_se", "rate_ci", "event_free_ci"),
   kaplan_meier = c("quantiles_lower", "median_ci_3d", "quantiles_upper", "range_with_cens_info"),

@@ -26,6 +26,7 @@ clusterApplyLB
 clusterStop
 cmh
 CMH
+CMHtest
 cmp
 coef
 coefs
@@ -131,6 +132,7 @@ params
 parentdf
 pos
 pre
+proc
 propdiff
 pval
 rbmi
@@ -156,6 +158,7 @@ rsp
 rtables
 rtf
 RTF
+rtfs
 savse
 scorefun
 sd
@@ -197,13 +200,16 @@ trtvar
 TrueType
 tt
 ucl
+unability
 unicode
 unlist
 Unlist
 unrounded
 unstratified
+vcdExtra
 vcov
 Vectorized
+VerticalRowsSection
 wordbreaking
 xlsx
 XLSX

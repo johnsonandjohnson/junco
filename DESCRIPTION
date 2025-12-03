@@ -1,7 +1,7 @@
 Package: junco
 Title: Create Common Tables and Listings Used in Clinical Trials
 Version: 0.1.2
-Date: 2025-11-20
+Date: 2025-12-04
 Authors@R: c(
     person("Gabriel", "Becker", , "gabembecker@gmail.com", role = c("cre", "aut"),
            comment = "Original creator of the package, and author of included formatters functions"),
@@ -54,7 +54,8 @@ Imports:
     utils,
     emmeans,
     mmrm,
-    assertthat
+    assertthat,
+    vcdExtra
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)

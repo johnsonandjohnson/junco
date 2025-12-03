@@ -50,3 +50,4 @@ pkgdown
 ^\.vscode$
 ^[.]?air[.]toml$
 ^CHANGELOG\.md$
+^air\.toml$
