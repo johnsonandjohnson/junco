@@ -54,5 +54,12 @@ plotwidth and plotheight arguments are expressed: "in", "cm", "mm" or "px".}
 and Footers.}
 }
 \description{
-Export graph in DOCX format
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+Export graph in DOCX format. See notes to understand why this is experimental.
+}
+\note{
+This function is experimental because it has been tested with a few examples
+(considering different edge cases) but further UATs are needed to be considered
+production-ready.
 }

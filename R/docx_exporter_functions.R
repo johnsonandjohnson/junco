@@ -740,7 +740,10 @@ theme_docx_default_j <- function(font = "Times New Roman",
 
 #' Convert a TableTree object to a flextable
 #' 
-#' This function is based on rtables.officer::tt_to_flextable()
+#' @description `r lifecycle::badge('experimental')`
+#' 
+#' This function is based on [rtables.officer::tt_to_flextable()].
+#' See notes to understand why this is experimental.
 #'
 #' @param tt a TableTree object
 #' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
@@ -772,6 +775,11 @@ theme_docx_default_j <- function(font = "Times New Roman",
 #' @param tlgtype (optional). No need to be specified by end user.
 #' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
 #' @param pagenum (optional). Default = FALSE (Tables) or TRUE (Listings).
+#' 
+#' @note
+#' This function is experimental because it has been tested with a few examples
+#' (considering different edge cases) but further UATs are needed to be considered
+#' production-ready.
 #'
 #' @returns a flextable object.
 #' @export
@@ -1478,8 +1486,11 @@ tt_to_flextable_j <- function(tt,
 
 #' Export a TableTree object into docx
 #' 
-#' This function is based on rtables.officer::export_as_docx()
-#'
+#' @description `r lifecycle::badge('experimental')`
+#' 
+#' This function is based on [rtables.officer::export_as_docx()].
+#' See notes to understand why this is experimental.
+#' 
 #' @param tt a TableTree object to export.
 #' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
 #' @param output_dir a directory path to save the docx.
@@ -1504,6 +1515,11 @@ tt_to_flextable_j <- function(tt,
 #' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
 #' @param pagenum (optional). Default = FALSE (Tables) or TRUE (Listings).
 #' @param ... other parameters.
+#' 
+#' @note
+#' This function is experimental because it has been tested with a few examples
+#' (considering different edge cases) but further UATs are needed to be considered
+#' production-ready.
 #'
 #' @export
 export_as_docx_j <- function(tt,
@@ -1753,7 +1769,9 @@ export_as_docx_j <- function(tt,
 
 #' export_graph_as_docx
 #' 
-#' Export graph in DOCX format
+#' @description `r lifecycle::badge('experimental')`
+#' 
+#' Export graph in DOCX format. See notes to understand why this is experimental.
 #'
 #' @param g (optional) Default = NULL. A ggplot2 object, or a list 
 #' of them, to export. At least one of [g, plotnames] must be provided.
@@ -1778,6 +1796,11 @@ export_as_docx_j <- function(tt,
 #' plotwidth and plotheight arguments are expressed: "in", "cm", "mm" or "px".
 #' @param border (optional). An fp_border object to use as borders for the Title
 #' and Footers.
+#' 
+#' @note
+#' This function is experimental because it has been tested with a few examples
+#' (considering different edge cases) but further UATs are needed to be considered
+#' production-ready.
 #'
 #' @export
 export_graph_as_docx <- function(g = NULL,

@@ -116,13 +116,12 @@ reference:
     - make_combo_splitfun
     - real_add_overall_facet
 
-  - title: junco Functions For titles/footnotes and generating .rtfs
-    desc: The following utility functions help to add titles/footnotes and generate the .rtf files.
+  - title: junco Functions For titles/footnotes
+    desc: The following utility functions help to add titles/footnotes.
     contents:
     - def_colwidths
     - get_titles_from_file
     - set_titles
-    - tt_to_tlgrtf
 
   - title: junco Miscellaneous Functions
     desc: The following functions are other miscellaneous junco functions used to create common table layouts.
@@ -141,3 +140,11 @@ reference:
     - rm_other_facets_fact
     - smart_colwidths_1page
     - tt_to_tbldf
+  
+  - title: junco Functions For generating .rtfs, .docxs and HTMLs
+    desc: The following utility functions help to generate the .rtfs, .docxs and HTMLs.
+    contents:
+    - tt_to_tlgrtf
+    - tt_to_flextable_j
+    - export_as_docx_j
+    - export_graph_as_docx

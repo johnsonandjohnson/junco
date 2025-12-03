@@ -73,5 +73,13 @@ docx version.}
 \item{...}{other parameters.}
 }
 \description{
-This function is based on rtables.officer::export_as_docx()
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+This function is based on \code{\link[rtables.officer:export_as_docx]{rtables.officer::export_as_docx()}}.
+See notes to understand why this is experimental.
+}
+\note{
+This function is experimental because it has been tested with a few examples
+(considering different edge cases) but further UATs are needed to be considered
+production-ready.
 }

@@ -98,5 +98,13 @@ Set to 6.38 ("portrait") or 8.88 ("landscape").}
 a flextable object.
 }
 \description{
-This function is based on rtables.officer::tt_to_flextable()
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+This function is based on \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::tt_to_flextable()}}.
+See notes to understand why this is experimental.
+}
+\note{
+This function is experimental because it has been tested with a few examples
+(considering different edge cases) but further UATs are needed to be considered
+production-ready.
 }
