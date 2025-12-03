@@ -1504,7 +1504,8 @@ tt_to_flextable_j <- function(tt,
 #' @param doc_metadata (optional). Default = NULL.
 #' @param template_file (optional). Default = "doc/template_file.docx".
 #' Paragraph styles are inherited from this file.
-#' @param orientation (optional). Set to "portrait" (Tables) or "landscape" (Listings).
+#' @param orientation (optional) Default = "portrait".
+#' One of: "portrait", "landscape".
 #' @param paginate (optional) Default = FALSE.
 #' @param nosplitin (optional) Default = character(). Named list.
 #' @param string_map (optional) Default = default_str_map.
@@ -1534,11 +1535,7 @@ export_as_docx_j <- function(tt,
                               ),
                               doc_metadata = NULL,
                               template_file = system.file("template_file.docx", package = "junco"),
-                              # template_file = "doc/template_file.docx",
-                              # template_file = NULL,
-                              orientation = ifelse(tlgtype == "Table",
-                                                   "portrait",
-                                                   "landscape"),
+                              orientation = "portrait",
                               paginate = FALSE,
                               nosplitin = character(),
                               string_map = junco::default_str_map,

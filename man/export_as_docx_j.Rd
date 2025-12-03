@@ -16,7 +16,7 @@ export_as_docx_j(
     = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)),
   doc_metadata = NULL,
   template_file = system.file("template_file.docx", package = "junco"),
-  orientation = ifelse(tlgtype == "Table", "portrait", "landscape"),
+  orientation = "portrait",
   paginate = FALSE,
   nosplitin = character(),
   string_map = junco::default_str_map,
@@ -51,7 +51,8 @@ No need to be specified by end user.}
 \item{template_file}{(optional). Default = "doc/template_file.docx".
 Paragraph styles are inherited from this file.}
 
-\item{orientation}{(optional). Set to "portrait" (Tables) or "landscape" (Listings).}
+\item{orientation}{(optional) Default = "portrait".
+One of: "portrait", "landscape".}
 
 \item{paginate}{(optional) Default = FALSE.}
 
