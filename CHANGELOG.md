@@ -17,18 +17,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the internal function `do_exclude_split()` to facilitate the exclusion of specified row splits from analysis functions.
 - Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify
 
+
 ### Changed
 - Replace {pharmaverseadam} with {pharmaverseadamjnj}
 - Update pruning_functions.R
 - Update `string_to_title()` to handle factors (#26)
-- Replaced `denom_df` with `.alt_df_full` in `a_maxlev()`.
+- Moved rbmi to suggest
 
 ### Fixed
 - Fixes #102 bug inappropriate warnings from `cond_rm_facets` function
 - Fix bug for not selecting NA records in `h_subset_combo()`
 
-## [0.1.2] - 2025-11-20
-- Removed rbmi
 
 ## [0.1.1] - 2025-07-28
 
