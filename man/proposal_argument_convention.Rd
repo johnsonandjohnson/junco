@@ -60,6 +60,9 @@ should be displayed.}
 
 \item{draw}{(\code{flag})\cr whether the plot should be drawn.}
 
+\item{exclude_levels}{(\code{list})\cr A named list where names correspond to split variables
+and values are vectors of levels to exclude.}
+
 \item{grp}{(\code{factor})\cr defining the groups.}
 
 \item{groups_lists}{(named \code{list} of \code{list})\cr optionally contains for each \code{subgroups} variable a

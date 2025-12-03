@@ -249,6 +249,9 @@ get_ncol <- function(tt) {
 #'  and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #'  for what the matrix should contain. Users should only specify this when the
 #'  default behavior does not meet their needs.
+#' @param validate logical(1). Whether to validate the table structure using
+#'  `rtables::validate_table_struct()`. Defaults to `TRUE`. This can also be disabled
+#'  globally by setting the environment variable `JUNCO_DISABLE_VALIDATION=TRUE`.
 #' @import rlistings
 #' @rdname tt_to_tlgrtf
 #' @export
@@ -293,7 +296,20 @@ tt_to_tlgrtf <- function(
     combined_rtf = FALSE,
     one_table = TRUE,
     border_mat = make_header_bordmat(obj = tt),
+    validate = TRUE,
     ...) {
+  # Validate table structure if requested and not disabled by environment variable
+  # nolint start
+  if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree") &&
+    Sys.getenv("JUNCO_DISABLE_VALIDATION") != "TRUE") {
+    if (!rtables::validate_table_struct(tt)) {
+      warning(
+        "Invalid table structure detected. This may cause issues in the output. ",
+        "Use validate=FALSE to disable this warning or set JUNCO_DISABLE_VALIDATION=TRUE in your environment."
+      )
+    }
+  } # nolint end
+
   orientation <- match.arg(orientation)
   newdev <- open_font_dev(fontspec)
   if (newdev) {
@@ -353,7 +369,7 @@ tt_to_tlgrtf <- function(
       )
     }
     if (methods::is(tt, "VTableTree")) {
-      hdrmpf <- matrix_form(tt[1, ])
+      hdrmpf <- matrix_form(tt[1, , keep_topleft = TRUE])
     } else if (methods::is(tt, "list") && methods::is(tt[[1]], "MatrixPrintForm")) {
       hdrmpf <- tt[[1]]
     } else {
