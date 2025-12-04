@@ -14,7 +14,7 @@
       $quantiles_upper
       function(x,
                      output,
-                     round_type = c("sas", "iec"),
+                     round_type = valid_round_type,
                      na_str = na_str_dflt) {
               if (anyNA(na_str) || (replace_na_dflt && any(na_str == "NA"))) {
                 na_inds <- which(is.na(na_str) | (replace_na_dflt & na_str == "NA"))

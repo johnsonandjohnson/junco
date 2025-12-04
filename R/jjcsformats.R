@@ -38,11 +38,10 @@
 #' format_value(value, fmt2, round_type = "iec", na_str = c("ne1", "ne2"))
 #' if (is.function(fmt2)) fmt2(value, round_type = "iec", na_str = c("ne1", "ne2"))
 jjcsformat_xx <- function(
-  str,
-  na_str = na_str_dflt,
-  na_str_dflt = "NE",
-  replace_na_dflt = TRUE
-) {
+    str,
+    na_str = na_str_dflt,
+    na_str_dflt = "NE",
+    replace_na_dflt = TRUE) {
   if (grepl("xxx.", str, fixed = TRUE)) {
     stop("Error: jjcsformat_xx do not use xxx. in input str, replace by xx. instead.")
   }
@@ -86,7 +85,7 @@ jjcsformat_xx <- function(
     rtable_format <-
       function(x,
                output,
-               round_type = c("sas", "iec"),
+               round_type = valid_round_type,
                na_str = na_str_dflt) {
         if (anyNA(na_str) || (replace_na_dflt && any(na_str == "NA"))) {
           na_inds <- which(is.na(na_str) | (replace_na_dflt & na_str == "NA"))
@@ -147,7 +146,7 @@ jjcsformat_cnt_den_fract_fct <- function(d = 1,
   type <- match.arg(type)
 
   function(x,
-           round_type = c("sas", "iec"),
+           round_type = valid_round_type,
            output,
            ...) {
     obj_label(x) <- NULL

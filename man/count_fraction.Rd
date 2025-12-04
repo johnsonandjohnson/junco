@@ -14,11 +14,11 @@ jjcsformat_cnt_den_fract_fct(
   verbose = FALSE
 )
 
-jjcsformat_count_fraction(x, round_type = c("sas", "iec"), output, ...)
+jjcsformat_count_fraction(x, round_type = valid_round_type, output, ...)
 
-jjcsformat_count_denom_fraction(x, round_type = c("sas", "iec"), output, ...)
+jjcsformat_count_denom_fraction(x, round_type = valid_round_type, output, ...)
 
-jjcsformat_fraction_count_denom(x, round_type = c("sas", "iec"), output, ...)
+jjcsformat_fraction_count_denom(x, round_type = valid_round_type, output, ...)
 }
 \arguments{
 \item{d}{(\code{numeric(1)})\cr Number of digits to round fraction to (default = 1)}
