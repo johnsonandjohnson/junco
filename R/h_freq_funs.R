@@ -779,7 +779,7 @@ h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, co
 #' @param label_map Mapping for labels.
 #' @param split_info Current split information.
 #'
-#' @return Restriction of val to appropriate levels from label_map
+#' @return Restriction of val to appropriate levels from `label_map`.
 h_restrict_val <- function(df_row, .var, label_map, split_info) {
   val <- NULL
   xval_row <- unique(df_row[[.var]])
@@ -788,12 +788,13 @@ h_restrict_val <- function(df_row, .var, label_map, split_info) {
   diff <- setdiff(xval_row, xval_map)
 
   if (length(diff) == 0) {
-    ### if label_map has a variable from row split, apply current splits on label_map tibble as well
+    # If label_map has a variable from row split, apply
+    # current splits on label_map tibble as well.
     rowsplits <- split_info$split
 
     label_map_split <- intersect(names(label_map), rowsplits)
 
-    if (!(length(label_map_split) == 0)) {
+    if (length(label_map_split) != 0) {
       for (i in seq_along(label_map_split)) {
         cursplvar <- label_map_split[i]
         cid <- match(cursplvar, rowsplits)
@@ -809,5 +810,5 @@ h_restrict_val <- function(df_row, .var, label_map, split_info) {
 
     val <- label_map$value
   }
-  return(val)
+  val
 }
