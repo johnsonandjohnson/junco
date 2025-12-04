@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update pruning_functions.R
 - Update `string_to_title()` to handle factors (#26)
 - Moved rbmi to suggest
+- Replaced `denom_df` with `.alt_df_full` in `a_maxlev()`.
 
 ### Fixed
 - Fixes #102 bug inappropriate warnings from `cond_rm_facets` function
