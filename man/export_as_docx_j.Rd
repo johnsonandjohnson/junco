@@ -73,8 +73,8 @@ docx version.}
 
 \item{col_gap}{(optional). Default = 3 (Tables) or 0.5 (Listings).}
 
-\item{pagenum}{(optional). Default = TRUE for Listings and FALSE for
-everything else.}
+\item{pagenum}{(optional). Whether to display page numbers. Only applicable
+to listings (i.e. for tables and figures this argument is ignored).}
 
 \item{...}{other parameters.}
 }

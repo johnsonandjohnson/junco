@@ -45,8 +45,8 @@ tt_to_tlgrtf(
 \item{watermark}{(optional) String containing the desired watermark for
 RTF outputs. Vectorized.}
 
-\item{pagenum}{(\code{logical})\cr Whether to add page numbers to the output. By default,
-page numbers will only be added to listings.}
+\item{pagenum}{(\code{logical})\cr Whether to add page numbers to the output.
+Only applicable to listings (i.e. it is ignored for tables and figures).}
 
 \item{fontspec}{(\code{font_spec})\cr Font specification object}
 

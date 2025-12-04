@@ -4,7 +4,8 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
-remove_security_popup_page_numbers <- function(doc, tlgtype = "Table") {
+remove_security_popup_page_numbers <- function(doc, tlgtype = "Table",
+                                               pagenum = tlgtype == "Listing") {
 
   # if we are working with listings, we previously had added
   # the page numbers using officer::run_word_field()
@@ -31,7 +32,7 @@ remove_security_popup_page_numbers <- function(doc, tlgtype = "Table") {
   # [6] <w:fldChar w:fldCharType="end" w:dirty="true"/>
   # and remove that attribute
 
-  if (tlgtype != "Listing") {
+  if (tlgtype != "Listing" || isFALSE(pagenum)) {
     return(invisible(NULL))
   }
 
@@ -1217,8 +1218,8 @@ tt_to_flextable_j <- function(
 #' docx version.
 #' @param tlgtype (optional). No need to be specified by end user.
 #' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
-#' @param pagenum (optional). Default = TRUE for Listings and FALSE for
-#' everything else.
+#' @param pagenum (optional). Whether to display page numbers. Only applicable
+#' to listings (i.e. for tables and figures this argument is ignored).
 #' @param ... other parameters.
 #'
 #' @note
@@ -1261,6 +1262,9 @@ export_as_docx_j <- function(
 
   checkmate::assert_flag(add_page_break)
   do_tt_error <- FALSE
+  if (tlgtype != "Listing") {
+    pagenum <- FALSE
+  }
 
 
   if (inherits(tt, "VTableTree") || inherits(tt, "listing_df")) {
@@ -1391,7 +1395,7 @@ export_as_docx_j <- function(
     }
 
     # NOTE: the following block adds the page numbering
-    if (tlgtype == "Listing") {
+    if (tlgtype == "Listing" && pagenum) {
       # nolint start
       formatted_par <- officer::fpar(
         "Listing Page ",
@@ -1472,7 +1476,7 @@ export_as_docx_j <- function(
     }
     add_title_style_caption(doc, string_to_look_for)
     add_vertical_pagination_XML(doc)
-    remove_security_popup_page_numbers(doc = doc, tlgtype = tlgtype)
+    remove_security_popup_page_numbers(doc, tlgtype, pagenum)
 
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)

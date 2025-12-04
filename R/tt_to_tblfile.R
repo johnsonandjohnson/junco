@@ -226,8 +226,8 @@ get_ncol <- function(tt) {
 #' @param orientation (`character`)\cr Orientation of the output ("portrait" or "landscape")
 #' @param colwidths (`numeric` vector)\cr Column widths for the table
 #' @param label_width_ins (`numeric`)\cr Label width in inches
-#' @param pagenum (`logical`)\cr Whether to add page numbers to the output. By default,
-#' page numbers will only be added to listings.
+#' @param pagenum (`logical`)\cr Whether to add page numbers to the output.
+#' Only applicable to listings (i.e. it is ignored for tables and figures).
 #' @param fontspec (`font_spec`)\cr Font specification object
 #' @param pg_width (`numeric`)\cr Page width in inches
 #' @param margins (`numeric` vector)\cr Margins in inches (top, right, bottom, left)
@@ -312,6 +312,9 @@ tt_to_tlgrtf <- function(
     }
   } # nolint end
 
+  if (tlgtype != "Listing") {
+    pagenum <- FALSE
+  }
   orientation <- match.arg(orientation)
   newdev <- open_font_dev(fontspec)
   if (newdev) {
