@@ -12,7 +12,7 @@ titledf <- tribble(
 write.csv(titledf, file = file.path(tdir, "titles.csv"), row.names = FALSE)
 
 test_that("title files work", {
-  res <- get_titles_from_file("tbl001", input_path = tdir)
+  suppressMessages(res <- get_titles_from_file("tbl001", input_path = tdir))
   expect_identical(
     res,
     list(
@@ -22,7 +22,7 @@ test_that("title files work", {
       prov_footer = NULL
     )
   )
-  expect_warning(get_titles_from_file("lololol", input_path = tdir))
+  expect_warning(suppressMessages(get_titles_from_file("lololol", input_path = tdir)))
 
   lyt <- basic_table() |>
     analyze("AGE")

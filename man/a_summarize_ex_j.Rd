@@ -51,14 +51,14 @@ by a statistics function.}
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
 that is passed by \code{rtables}.}
 
-\item{comp_btw_group}{(\code{logical})\cr If TRUE,
-\cr When ancova = FALSE, the estimate of between group difference (on CHG) will be based upon two-sample t-test. \cr
-\cr When ancova = TRUE, the same ancova model will be used for the estimate of between group difference (on CHG).}
+\item{comp_btw_group}{(\code{logical})\cr If TRUE, comparison between groups will be performed.
+\cr When ancova = FALSE, the estimate of between group difference (on CHG) will be based upon two-sample t-test.
+\cr When ancova = TRUE, the same ANCOVA model will be used for the estimate of between group difference (on CHG).}
 
 \item{ref_path}{(\code{character})\cr global reference group specification, see \code{\link[=get_ref_info]{get_ref_info()}}.}
 
 \item{ancova}{(\code{logical})\cr If FALSE, only descriptive methods will be used. \cr
-If TRUE Ancova methods will be used for each of the columns : AVAL, CHG, DIFF. \cr}
+If TRUE, ANCOVA methods will be used for each of the columns : AVAL, CHG, DIFF. \cr}
 
 \item{interaction_y}{(\code{character})\cr Will be passed onto the \code{tern} function \code{s_ancova}, when ancova = TRUE.}
 
@@ -66,7 +66,7 @@ If TRUE Ancova methods will be used for each of the columns : AVAL, CHG, DIFF. \
 
 \item{conf_level}{(\code{proportion})\cr Confidence level of the interval}
 
-\item{daysconv}{conversion required to get the values into days
+\item{daysconv}{(\code{numeric})\cr conversion required to get the values into days
 (i.e 1 if original PARAMCD unit is days, 30.4375 if original PARAMCD unit is in months)}
 
 \item{variables}{(named list of strings)\cr
@@ -100,80 +100,77 @@ unmodified default behavior. Can be negative.}
 A function to create the appropriate statistics needed for exposure table
 }
 \details{
-Creates statistics needed for standard exposure table
+Creates statistics needed for standard exposure table.
 This includes differences and 95\% CI and total treatment years.
-This is designed to be used as an analysis (afun in \code{analyze}) function.
-
-Creates statistics needed for table. This includes differences and 95\% CI and total treatment years.
 This is designed to be used as an analysis (afun in \code{analyze}) function.
 }
 \section{Functions}{
 \itemize{
-\item \code{s_summarize_ex_j()}: Statistics function needed for the exposure tables
+\item \code{s_summarize_ex_j()}: Statistics function needed for the exposure tables.
 
 \item \code{a_summarize_ex_j()}: Formatted analysis function which is used as \code{afun}.
 
 }}
 \examples{
 library(dplyr)
+ADEX <- ex_adsl |> select(USUBJID, ARM, TRTSDTM, EOSSTT, EOSDY)
 
-ADEX <- data.frame(
-  USUBJID = c(
-    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-  ),
-  TRT01A = c(
-    "ARMA", "ARMA", "ARMA", "ARMA", "ARMA",
-    "Placebo", "Placebo", "Placebo", "ARMA", "ARMA"
-  ),
-  AVAL = c(56, 78, 67, 87, 88, 93, 39, 87, 65, 55)
-)
+trtvar <- "ARM"
+ctrl_grp <- "B: Placebo"
+cutoffd <- as.Date("2023-09-24")
 
 ADEX <- ADEX |>
-  mutate(TRT01A = as.factor(TRT01A))
-
-ADEX$colspan_trt <- factor(ifelse(ADEX$TRT01A == "Placebo", " ", "Active Study Agent"),
-  levels = c("Active Study Agent", " ")
-)
-
-ADEX$diff_header <- "Difference in Means (95\% CI)"
-ADEX$diff_label <- paste(ADEX$TRT01A, paste("vs", "Placebo"))
+  create_colspan_var(
+    non_active_grp          = ctrl_grp,
+    non_active_grp_span_lbl = " ",
+    active_grp_span_lbl     = "Active Study Agent",
+    colspan_var             = "colspan_trt",
+    trt_var                 = trtvar
+  ) |>
+  mutate(
+    diff_header = "Difference in Means (95\% CI)",
+    diff_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
+    TRTDURY = case_when(
+      !is.na(EOSDY) ~ EOSDY,
+      TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
+    )
+  )
 
 colspan_trt_map <- create_colspan_map(ADEX,
-  non_active_grp = "Placebo",
+  non_active_grp = ctrl_grp,
   non_active_grp_span_lbl = " ",
   active_grp_span_lbl = "Active Study Agent",
   colspan_var = "colspan_trt",
-  trt_var = "TRT01A"
+  trt_var = trtvar
 )
-ref_path <- c("colspan_trt", "", "TRT01A", "Placebo")
+
+ref_path <- c("colspan_trt", "", trtvar, ctrl_grp)
 
 lyt <- basic_table() |>
   split_cols_by(
     "colspan_trt",
     split_fun = trim_levels_to_map(map = colspan_trt_map)
   ) |>
-  split_cols_by("TRT01A") |>
+  split_cols_by(trtvar) |>
   split_cols_by("diff_header", nested = FALSE) |>
   split_cols_by(
-    "TRT01A",
-    split_fun = remove_split_levels("Placebo"),
+    trtvar,
+    split_fun = remove_split_levels(ctrl_grp),
     labels_var = "diff_label"
   ) |>
-  analyze("AVAL",
+  analyze("EOSDY",
     afun = a_summarize_ex_j, var_labels = "Duration of treatment (Days)",
     show_labels = "visible",
     indent_mod = 0L,
     extra_args = list(
       daysconv = 1,
       ref_path = ref_path,
-      variables = list(arm = "TRT01A", covariates = NULL),
+      variables = list(arm = trtvar, covariates = NULL),
       ancova = TRUE,
       comp_btw_group = TRUE
     )
   )
 
-result <- build_table(lyt, ADEX)
-
+result <- build_table(lyt, ADEX, alt_counts_df = ADEX)
 result
 }

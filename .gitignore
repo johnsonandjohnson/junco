@@ -26,10 +26,14 @@ tests/testthat/table.csv
 *.rprof
 *.diff
 ./*.rtf
-inst/extdata/example*.csv
-inst/extdata/example*.rtf
+programs_internal/*
+programs_external/*
 
 #IDE
 .vscode/settings.json
 .idea/*
 temp_ilse/*
+
+#Air
+air.toml
+.vscode/extensions.json

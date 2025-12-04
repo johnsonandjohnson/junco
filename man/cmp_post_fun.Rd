@@ -3,7 +3,7 @@
 \name{cmp_post_fun}
 \alias{cmp_post_fun}
 \alias{cmp_split_fun}
-\title{Split Function for Compliance Columns (TEFSCNCMP01 e.g.)}
+\title{Split Function for Compliance Columns}
 \usage{
 cmp_post_fun(ret, spl, fulldf, .spl_context)
 
@@ -33,9 +33,6 @@ when creating proportion-based tables with compliance columns.
 }
 \description{
 Here we just split into 3 columns for expected, received and missing visits.
-}
-\note{
-This split function is used in the proportion table TEFSCNCMP01 and similar ones.
 }
 \seealso{
 \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} describing the requirements for this kind of

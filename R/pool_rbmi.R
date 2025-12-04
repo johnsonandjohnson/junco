@@ -1,10 +1,33 @@
-#' @note: This has been forked from the `rbmi` package, mainly to support in addition
-#'   the pooling of variance estimates.
+#' Pool analysis results obtained from the imputed datasets
+#'
+#' @details This has been forked from the `rbmi` package, mainly to support in
+#' addition the pooling of variance estimates. See [pool()] for more details.
+#'
+#' @param results an analysis object created by [analyse()].
+#'
+#' @param conf.level confidence level of the returned confidence interval.
+#' Must be a single number between 0 and 1. Default is 0.95.
+#'
+#' @param alternative a character string specifying the alternative hypothesis,
+#' must be one of `"two.sided"` (default), `"greater"` or `"less"`.
+#'
+#' @param type a character string of either `"percentile"` (default) or
+#' `"normal"`. Determines what method should be used to calculate the bootstrap
+#' confidence intervals. See details.
+#' Only used if `method_condmean(type = "bootstrap")` was specified
+#' in the original call to draws().
+#'
+#' @returns A list of class `pool`.
+#'
+#' @export
 rbmi_pool <- function(
-    results,
-    conf.level = 0.95,
-    alternative = c("two.sided", "less", "greater"),
-    type = c("percentile", "normal")) {
+  results,
+  conf.level = 0.95,
+  alternative = c("two.sided", "less", "greater"),
+  type = c("percentile", "normal")
+) {
+  assert_rbmi()
+
   rbmi::validate(results)
 
   alternative <- match.arg(alternative)

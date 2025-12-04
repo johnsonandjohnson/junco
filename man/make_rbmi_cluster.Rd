@@ -7,25 +7,28 @@
 make_rbmi_cluster(cluster_or_cores = 1, objects = NULL, packages = NULL)
 }
 \arguments{
-\item{cluster_or_cores}{Number of parallel processes to use or an existing cluster to make use of}
+\item{cluster_or_cores}{(\code{integer} or \verb{cluster object})\cr
+Number of parallel processes to use or an existing cluster to make use of}
 
-\item{objects}{a named list of objects to export into the sub-processes}
+\item{objects}{(\code{list})\cr A named list of objects to export into the sub-processes}
 
-\item{packages}{a character vector of libraries to load in the sub-processes
-
-This function is a wrapper around \code{parallel::makePSOCKcluster()} but takes
-care of configuring \code{rbmi} to be used in the sub-processes as well as loading
-user defined objects and libraries and setting the seed for reproducibility.}
+\item{packages}{(\verb{character vector})\cr
+A character vector of libraries to load in the sub-processes}
 }
 \value{
-If \code{cluster_or_cores} is \code{1} this function will return \code{NULL}. If \code{cluster_or_cores}
-is a number greater than \code{1}, a cluster with \code{cluster_or_cores}  cores is returned.
-
-If \code{cluster_or_cores} is a cluster created via \code{parallel::makeCluster()} then this function
-returns it after inserting the relevant \code{rbmi} objects into the existing cluster.
+\itemize{
+\item If \code{cluster_or_cores} is \code{1}, this function will return \code{NULL}.
+\item If \code{cluster_or_cores} is a number greater than \code{1},
+a cluster with \code{cluster_or_cores} cores is returned.
+\item If \code{cluster_or_cores} is a cluster created via \code{parallel::makeCluster()},
+then this function returns it after inserting the relevant \code{rbmi} objects
+into the existing cluster.
+}
 }
 \description{
-Create a \code{rbmi} ready cluster
+This function is a wrapper around \code{parallel::makePSOCKcluster()} but takes
+care of configuring \code{rbmi} to be used in the sub-processes as well as loading
+user defined objects and libraries and setting the seed for reproducibility.
 }
 \examples{
 \dontrun{

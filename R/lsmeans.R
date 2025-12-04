@@ -1,7 +1,7 @@
 #' Helpers for Processing Least Square Means
 #'
-#' @param fit result of model fitting function, e.g. [mmrm::mmrm()] or [stats::lm()].
 #' @inheritParams fit_mmrm_j
+#' @param fit result of model fitting function, e.g. [mmrm::mmrm()] or [stats::lm()].
 #' @param averages (`list`)\cr optional named list of visit levels which should be averaged
 #'   and reported along side the single visits.
 #' @param weights (`string`)\cr argument from [emmeans::emmeans()], 'counterfactual' by default.
@@ -87,6 +87,7 @@ h_get_average_visit_specs <- function(emmeans_res, vars, averages, fit) {
 #'
 #' @note The difference here compared to the original tern.mmrm::h_get_spec_visit_estimates()
 #'   function is that additional arguments for [emmeans::contrast()] can be passed via the
+#'   dots (`...`) argument.
 #'   Once this has been added to the `tern.mmrm` package then its functions can be used instead.
 #'
 #' @param tests (`flag`)\cr whether to add test results to the estimates.

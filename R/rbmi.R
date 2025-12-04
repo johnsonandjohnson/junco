@@ -1,5 +1,8 @@
 #' Helper for Finding AVISIT after which CHG are all Missing
 #'
+#' @description
+#' Helper for Finding AVISIT after which CHG are all Missing.
+#'
 #' @param df (`data.frame`)\cr with `CHG` and `AVISIT` variables.
 #'
 #' @return A string with either the factor level after which `AVISIT` is all missing,
@@ -44,7 +47,9 @@ find_missing_chg_after_avisit <- function(df) {
   visit_levels_missing <- as.integer(df[is.na(df$CHG), ]$AVISIT)
 
   # Missing visits at the end.
-  visit_levels_missing_end <- visit_levels_missing[visit_levels_missing > visit_levels_max_available]
+  visit_levels_missing_end <- visit_levels_missing[
+    visit_levels_missing > visit_levels_max_available
+  ]
 
   # Return first one if there is any.
   if (length(visit_levels_missing_end)) {
@@ -58,19 +63,24 @@ find_missing_chg_after_avisit <- function(df) {
 
 #' Create a `rbmi` ready cluster
 #'
-#' @param cluster_or_cores Number of parallel processes to use or an existing cluster to make use of
-#' @param objects a named list of objects to export into the sub-processes
-#' @param packages a character vector of libraries to load in the sub-processes
-#'
+#' @description
 #' This function is a wrapper around `parallel::makePSOCKcluster()` but takes
 #' care of configuring `rbmi` to be used in the sub-processes as well as loading
 #' user defined objects and libraries and setting the seed for reproducibility.
 #'
-#' @return If `cluster_or_cores` is `1` this function will return `NULL`. If `cluster_or_cores`
-#'   is a number greater than `1`, a cluster with `cluster_or_cores`  cores is returned.
+#' @param cluster_or_cores (`integer` or `cluster object`)\cr
+#' Number of parallel processes to use or an existing cluster to make use of
+#' @param objects (`list`)\cr A named list of objects to export into the sub-processes
+#' @param packages (`character vector`)\cr
+#' A character vector of libraries to load in the sub-processes
 #'
-#' If `cluster_or_cores` is a cluster created via `parallel::makeCluster()` then this function
-#' returns it after inserting the relevant `rbmi` objects into the existing cluster.
+#' @return
+#' * If `cluster_or_cores` is `1`, this function will return `NULL`.
+#' * If `cluster_or_cores` is a number greater than `1`,
+#' a cluster with `cluster_or_cores` cores is returned.
+#' * If `cluster_or_cores` is a cluster created via `parallel::makeCluster()`,
+#' then this function returns it after inserting the relevant `rbmi` objects
+#' into the existing cluster.
 #'
 #' @examples
 #' \dontrun{
@@ -89,7 +99,14 @@ find_missing_chg_after_avisit <- function(df) {
 #' closeAllConnections()
 #' }
 #' @export
-make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = NULL) {
+make_rbmi_cluster <- function(
+  cluster_or_cores = 1,
+  objects = NULL,
+  packages = NULL
+) {
+  # nocov start
+  assert_rbmi()
+
   if (is.numeric(cluster_or_cores) && cluster_or_cores == 1) {
     return(NULL)
   } else if (is.numeric(cluster_or_cores)) {
@@ -97,7 +114,10 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
   } else if (methods::is(cluster_or_cores, "cluster")) {
     cl <- cluster_or_cores
   } else {
-    stop(sprintf("`cluster_or_cores` has unsupported class of: %s", paste(class(cluster_or_cores), collapse = ", ")))
+    stop(sprintf(
+      "`cluster_or_cores` has unsupported class of: %s",
+      paste(class(cluster_or_cores), collapse = ", ")
+    ))
   }
 
   # Load user defined objects into the globalname space
@@ -107,7 +127,7 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
   }
 
   # Load user defined packages
-  packages <- c(packages, "assertthat")
+  packages <- c(packages, "assertthat", "junco")
   # Remove attempts to load `rbmi` as this will be covered later
   packages <- setdiff(packages, "rbmi")
   devnull <- parallel::clusterCall(
@@ -120,7 +140,10 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
   parallel::clusterSetRNGStream(cl, sample.int(1))
 
   # If user has previously configured `rbmi` sub-processes then early exit
-  exported_rbmi <- unlist(parallel::clusterEvalQ(cl, exists("..exported..parallel..rbmi")))
+  exported_rbmi <- unlist(parallel::clusterEvalQ(
+    cl,
+    exists("..exported..parallel..rbmi")
+  ))
   if (all(exported_rbmi)) {
     return(cl)
   }
@@ -144,16 +167,18 @@ make_rbmi_cluster <- function(cluster_or_cores = 1, objects = NULL, packages = N
   })
 
   return(cl)
-}
+} # nocov end
 
 #' Parallelise Lapply
 #'
+#' @description
 #' Simple wrapper around `lapply` and [`parallel::clusterApplyLB`] to abstract away
-#' the logic of deciding which one to use
-#' @param cl Cluster created by [`parallel::makeCluster()`] or `NULL`
-#' @param fun Function to be run
-#' @param x object to be looped over
-#' @param ... extra arguments passed to `fun`
+#' the logic of deciding which one to use.
+#'
+#' @param cl (`cluster object`)\cr Cluster created by [`parallel::makeCluster()`] or `NULL`
+#' @param fun (`functions`)\cr Function to be run
+#' @param x (`object`)\cr Object to be looped over
+#' @param ... Extra arguments passed to `fun`
 #' @return `list` of results of calling `fun` on elements of `x`.
 par_lapply <- function(cl, fun, x, ...) {
   result <- if (is.null(cl)) {
@@ -168,7 +193,7 @@ par_lapply <- function(cl, fun, x, ...) {
 #'
 #' @description
 #' This function takes multiple imputed datasets (as generated by
-#' the [rbmi::impute()] function) and runs an analysis function on
+#' the impute() function from the rbmi package) and runs an analysis function on
 #' each of them.
 #'
 #' @importFrom assertthat assert_that
@@ -189,7 +214,7 @@ par_lapply <- function(cl, fun, x, ...) {
 #' `fun` must return a named list with each element itself being a
 #' list containing a single
 #' numeric element called `est` (or additionally `se` and `df` if
-#' you had originally specified [rbmi::method_bayes()] or [rbmi::method_approxbayes()])
+#' you had originally specified the method_bayes() or method_approxbayes() functions from the rbmi package)
 #' i.e.:
 #' \preformatted{
 #' myfun <- function(dat, ...) {
@@ -212,17 +237,17 @@ par_lapply <- function(cl, fun, x, ...) {
 #' }
 #'
 #' Please note that the `vars$subjid` column (as defined in the original call to
-#' [rbmi::draws()]) will be scrambled in the data.frames that are provided to `fun`.
+#' the draws() function from the rbmi package) will be scrambled in the data.frames that are provided to `fun`.
 #' This is to say they will not contain the original subject values and as such
 #' any hard coding of subject ids is strictly to be avoided.
 #'
 #' By default `fun` is the [rbmi_ancova()] function.
 #' Please note that this function
-#' requires that a `vars` object, as created by [rbmi::set_vars()], is provided via
-#' the `vars` argument e.g. `rbmi_analyse(imputeObj, vars = rbmi::set_vars(...))`. Please
+#' requires that a `vars` object, as created by the set_vars() function from the rbmi package, is provided via
+#' the `vars` argument e.g. `rbmi_analyse(imputeObj, vars = set_vars(...))`. Please
 #' see the documentation for [rbmi_ancova()] for full details.
 #' Please also note that the theoretical justification for the conditional mean imputation
-#' method (`method = method_condmean()` in [rbmi::draws()]) relies on the fact that ANCOVA is
+#' method (`method = method_condmean()` in the draws() function from the rbmi package) relies on the fact that ANCOVA is
 #' a linear transformation of the outcomes.
 #' Thus care is required when applying alternative analysis functions in this setting.
 #'
@@ -230,7 +255,7 @@ par_lapply <- function(cl, fun, x, ...) {
 #' to the outcome variable in the imputed datasets prior to the analysis.
 #' This is typically used for sensitivity or tipping point analyses. The
 #' delta dataset must contain columns `vars$subjid`, `vars$visit` (as specified
-#' in the original call to [rbmi::draws()]) and `delta`. Essentially this `data.frame`
+#' in the original call to the draws() function from the rbmi package) and `delta`. Essentially this `data.frame`
 #' is merged onto the imputed dataset by `vars$subjid` and `vars$visit` and then
 #' the outcome variable is modified by:
 #'
@@ -241,23 +266,25 @@ par_lapply <- function(cl, fun, x, ...) {
 #' Please note that in order to provide maximum flexibility, the `delta` argument
 #' can be used to modify any/all outcome values including those that were not
 #' imputed. Care must be taken when defining offsets. It is recommend that you
-#' use the helper function [rbmi::delta_template()] to define the delta datasets as
+#' use the helper function delta_template() from the rbmi package to define the delta datasets as
 #' this provides utility variables such as `is_missing` which can be used to identify
 #' exactly which visits have been imputed.
 #'
-#' @seealso [rbmi::extract_imputed_dfs()] for manually extracting imputed
+#' @seealso The extract_imputed_dfs() function from the rbmi package for manually extracting imputed
 #' datasets.
-#' @seealso [rbmi::delta_template()] for creating delta data.frames.
+#' @seealso The delta_template() function from the rbmi package for creating delta data.frames.
 #' @seealso [rbmi_ancova()] for the default analysis function.
 #'
-#' @param imputations An `imputations` object as created by [rbmi::impute()].
+#' @param imputations An `imputations` object as created by the impute() function from the rbmi package.
 #' @param fun An analysis function to be applied to each imputed dataset. See details.
 #' @param delta A `data.frame` containing the delta transformation to be applied to the imputed
 #' datasets prior to running `fun`. See details.
 #' @param ... Additional arguments passed onto `fun`.
-#' @param cluster_or_cores The number of parallel processes to use when running this function. Can also be a
+#' @param cluster_or_cores (`numeric` or `cluster object`)\cr
+#' The number of parallel processes to use when running this function. Can also be a
 #' cluster object created by [`make_rbmi_cluster()`]. See the parallelisation section below.
-#' @param .validate Should `imputations` be checked to ensure it conforms to the required format
+#' @param .validate (`logical`)\cr
+#' Should `imputations` be checked to ensure it conforms to the required format
 #' (default = `TRUE`) ? Can gain a small performance increase if this is set to `FALSE` when
 #' analysing a large number of samples.
 #'
@@ -285,12 +312,14 @@ par_lapply <- function(cl, fun, x, ...) {
 #' Note that there is significant overhead both with setting up the sub-processes and with
 #' transferring data back-and-forth between the main process and the sub-processes. As such
 #' parallelisation of the `rbmi_analyse()` function tends to only be worth it when you have
-#' `> 2000` samples generated by [rbmi::draws()]. Conversely using parallelisation if your samples
+#' `> 2000` samples generated by the draws() function from the rbmi package.
+#' Conversely using parallelisation if your samples
 #' are smaller than this may lead to longer run times than just running it sequentially.
 #'
-#' It is important to note that the implementation of parallel processing within [rbmi::analyse()`] has
-#' been optimised around the assumption that the parallel processes will be spawned on the same
-#' machine and not a remote cluster. One such optimisation is that the required data is saved to
+#' It is important to note that the implementation of parallel processing within the analyse()
+#' function from the rbmi package has been optimised around the assumption that the parallel
+#' processes will be spawned on the same machine and not a remote cluster.
+#' One such optimisation is that the required data is saved to
 #' a temporary file on the local disk from which it is then read into each sub-process. This is
 #' done to avoid the overhead of transferring the data over the network. Our assumption is that
 #' if you are at the stage where you need to be parallelising your analysis over a remote cluster
@@ -322,71 +351,87 @@ par_lapply <- function(cl, fun, x, ...) {
 #' @return An `analysis` object, as defined by `rbmi`, representing the desired
 #' analysis applied to each of the imputed datasets in `imputations`.
 #' @examples
-#' library(rbmi)
-#' library(dplyr)
+#' if (requireNamespace("rbmi", quietly = TRUE)) {
+#'   library(rbmi)
+#'   library(dplyr)
 #'
-#' dat <- antidepressant_data
-#' dat$GENDER <- as.factor(dat$GENDER)
-#' dat$POOLINV <- as.factor(dat$POOLINV)
-#' set.seed(123)
-#' pat_ids <- sample(levels(dat$PATIENT), nlevels(dat$PATIENT) / 4)
-#' dat <- dat |>
-#'   filter(PATIENT %in% pat_ids) |>
-#'   droplevels()
-#' dat <- expand_locf(
-#'   dat,
-#'   PATIENT = levels(dat$PATIENT),
-#'   VISIT = levels(dat$VISIT),
-#'   vars = c("BASVAL", "THERAPY"),
-#'   group = c("PATIENT"),
-#'   order = c("PATIENT", "VISIT")
-#' )
-#' dat_ice <- dat %>%
-#'   arrange(PATIENT, VISIT) %>%
-#'   filter(is.na(CHANGE)) %>%
-#'   group_by(PATIENT) %>%
-#'   slice(1) %>%
-#'   ungroup() %>%
-#'   select(PATIENT, VISIT) %>%
-#'   mutate(strategy = "JR")
-#' dat_ice <- dat_ice[-which(dat_ice$PATIENT == 3618), ]
-#' vars <- set_vars(
-#'   outcome = "CHANGE",
-#'   visit = "VISIT",
-#'   subjid = "PATIENT",
-#'   group = "THERAPY",
-#'   covariates = c("THERAPY")
-#' )
-#' drawObj <- draws(
-#'   data = dat,
-#'   data_ice = dat_ice,
-#'   vars = vars,
-#'   method = method_condmean(type = "jackknife", covariance = "csh"),
-#'   quiet = TRUE
-#' )
-#' references <- c("DRUG" = "PLACEBO", "PLACEBO" = "PLACEBO")
-#' imputeObj <- impute(drawObj, references)
+#'   dat <- antidepressant_data
+#'   dat$GENDER <- as.factor(dat$GENDER)
+#'   dat$POOLINV <- as.factor(dat$POOLINV)
+#'   set.seed(123)
+#'   pat_ids <- sample(levels(dat$PATIENT), nlevels(dat$PATIENT) / 4)
+#'   dat <- dat |>
+#'     filter(PATIENT %in% pat_ids) |>
+#'     droplevels()
+#'   dat <- expand_locf(
+#'     dat,
+#'     PATIENT = levels(dat$PATIENT),
+#'     VISIT = levels(dat$VISIT),
+#'     vars = c("BASVAL", "THERAPY"),
+#'     group = c("PATIENT"),
+#'     order = c("PATIENT", "VISIT")
+#'   )
+#'   dat_ice <- dat |>
+#'     arrange(PATIENT, VISIT) |>
+#'     filter(is.na(CHANGE)) |>
+#'     group_by(PATIENT) |>
+#'     slice(1) |>
+#'     ungroup() |>
+#'     select(PATIENT, VISIT) |>
+#'     mutate(strategy = "JR")
+#'   dat_ice <- dat_ice[-which(dat_ice$PATIENT == 3618), ]
+#'   vars <- set_vars(
+#'     outcome = "CHANGE",
+#'     visit = "VISIT",
+#'     subjid = "PATIENT",
+#'     group = "THERAPY",
+#'     covariates = c("THERAPY")
+#'   )
+#'   drawObj <- draws(
+#'     data = dat,
+#'     data_ice = dat_ice,
+#'     vars = vars,
+#'     method = method_condmean(type = "jackknife", covariance = "csh"),
+#'     quiet = TRUE
+#'   )
+#'   references <- c("DRUG" = "PLACEBO", "PLACEBO" = "PLACEBO")
+#'   imputeObj <- impute(drawObj, references)
 #'
-#' rbmi_analyse(imputations = imputeObj, vars = vars)
+#'   rbmi_analyse(imputations = imputeObj, vars = vars)
+#' }
 #' @export
-rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., cluster_or_cores = 1, .validate = TRUE) {
-  # nocov
-
-  if (.validate) rbmi::validate(imputations)
-
+rbmi_analyse <- function(
+  imputations,
+  fun = rbmi_ancova,
+  delta = NULL,
+  ...,
+  cluster_or_cores = 1,
+  .validate = TRUE
+) {
+  # nocov start
+  assert_rbmi()
+  if (.validate) {
+    rbmi::validate(imputations)
+  }
   assertthat::assert_that(is.function(fun), msg = "`fun` must be a function")
-
-  assertthat::assert_that(is.null(delta) | is.data.frame(delta), msg = "`delta` must be NULL or a data.frame")
-
+  assertthat::assert_that(
+    is.null(delta) | is.data.frame(delta),
+    msg = "`delta` must be NULL or a data.frame"
+  )
   vars <- imputations$data$vars
 
-  if (.validate) devnull <- lapply(imputations$imputations, function(x) rbmi::validate(x))
+  if (.validate) {
+    devnull <- lapply(imputations$imputations, function(x) rbmi::validate(x))
+  }
 
   if (!is.null(delta)) {
     expected_vars <- c(vars$subjid, vars$visit, "delta")
     assertthat::assert_that(
       all(expected_vars %in% names(delta)),
-      msg = sprintf("The following variables must exist witin `delta`: `%s`", paste0(expected_vars, collapse = "`, `"))
+      msg = sprintf(
+        "The following variables must exist witin `delta`: `%s`",
+        paste0(expected_vars, collapse = "`, `")
+      )
     )
   }
 
@@ -405,7 +450,11 @@ rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., clus
   if (methods::is(cl, "cluster")) {
     ..rbmi..analysis..data..path <- tempfile()
     saveRDS(objects, file = ..rbmi..analysis..data..path, compress = FALSE)
-    devnull <- parallel::clusterExport(cl, "..rbmi..analysis..data..path", environment())
+    devnull <- parallel::clusterExport(
+      cl,
+      "..rbmi..analysis..data..path",
+      environment()
+    )
     devnull <- parallel::clusterEvalQ(cl, {
       ..rbmi..analysis..objects <- readRDS(..rbmi..analysis..data..path)
       list2env(..rbmi..analysis..objects, envir = environment())
@@ -466,4 +515,5 @@ rbmi_analyse <- function(imputations, fun = rbmi_ancova, delta = NULL, ..., clus
   )
   rbmi::validate(ret)
   return(ret)
+  # nocov end
 }

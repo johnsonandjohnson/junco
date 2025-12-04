@@ -4,7 +4,6 @@
 #' @param formats (`list`)\cr formats including `mean_sd`, `median` and `range`
 #'   specifications.
 #'
-#' @note This is used in `tefmad01` and `tefmad03a` e.g.
 #' @return Modified layout.
 #' @export
 analyze_values <- function(lyt, vars, ..., formats) {

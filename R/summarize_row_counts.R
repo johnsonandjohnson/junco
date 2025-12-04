@@ -29,8 +29,8 @@ c_row_counts_alt <- function(df, labelstr, label_fstr, .alt_df) {
 #'   `alt_counts_df` (`TRUE`) or from `df` (`FALSE`).
 #'
 #' @return A modified layout where the latest row split now has a row group
-#'   summaries (as created by [rtables::summarize_row_groups] for the counts.
-#'   for the counts.
+#'   summaries (as created by [rtables::summarize_row_groups] for the counts).
+#'
 #' @export
 #' @examples
 #' basic_table() |>

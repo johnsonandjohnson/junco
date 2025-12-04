@@ -18,7 +18,7 @@ arguments.}
 The \code{\link[rtables:rcell]{rtables::rcell()}} result.
 }
 \description{
-Formatted Analysis Function For Proportion Confidence Interval for Factor
+Formatted Analysis Function For Proportion Confidence Interval for Factor.
 }
 \examples{
 a_proportion_ci_factor(

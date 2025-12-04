@@ -179,6 +179,7 @@ a_test_proportion_diff <- function(
 #' Helper functions to implement various tests on the difference between two proportions.
 #'
 #' @param tbl (`matrix`)\cr matrix with two groups in rows and the binary response (`TRUE`/`FALSE`) in columns.
+#' @param alternative (`character`)\cr alternative hypothesis as defined by [stats::prop.test()]
 #'
 #' @return A p-value.
 #'
@@ -202,7 +203,7 @@ prop_chisq <- function(tbl, alternative) {
 #' @describeIn h_prop_diff_test Performs stratified Cochran-Mantel-Haenszel test.
 #'  Internally calls [stats::mantelhaen.test()].
 #'
-#' @note strata with less than five observations will result in a warning and
+#' @note Strata with less than five observations will result in a warning and
 #'  possibly incorrect results; strata with less than two observations are
 #'  automatically discarded.
 #'
