@@ -26,10 +26,12 @@
 #'  `df[[.var]]` is included in the final count and percentage statistics.
 #'
 #' @inheritParams proposal_argument_convention
-#' @param denom_df (`data.frame`)\cr
-#'  A dataset used to compute the denominator for proportions. Required when
-#'  the same subject appears multiple times in the dataset due to treatment
-#'  sequences.
+#' @param .alt_df_full (`dataframe`)\cr A dataset used to compute the
+#'  denominator for proportions. This is required when the same subject appears
+#'  multiple times in the dataset due to treatment sequences.
+#'  `colnames(.alt_df_full)` must be a superset of `id`.
+#'  This argument gets populated by the rtables split machinery
+#'  (see [rtables::additional_fun_params]).
 #' @param any_level (`flag`)\cr
 #'  Should be set to `TRUE` when the function is used as a `cfun`.
 #' @param any_level_exclude (`character`)\cr
@@ -66,27 +68,27 @@
 #'   summarize_row_groups(
 #'     "AESEV",
 #'     cfun = a_maxlev,
-#'     extra_args = list(id = "ID", denom_df = my_adsl, any_level = TRUE)
+#'     extra_args = list(id = "ID", any_level = TRUE)
 #'   ) |>
 #'   analyze(
 #'     "AESEV",
 #'     afun = a_maxlev,
-#'     extra_args = list(id = "ID", denom_df = my_adsl)
+#'     extra_args = list(id = "ID")
 #'   )
-#' build_table(lyt, my_adae)
+#' build_table(lyt, my_adae, alt_counts_df = my_adsl)
 a_maxlev <- function(df,
                      labelstr = NULL,
                      .var,
                      .spl_context,
                      id = "USUBJID",
-                     denom_df,
+                     .alt_df_full = NULL,
                      any_level = FALSE,
                      any_level_exclude = "Missing",
                      ...) {
   checkmate::assert_factor(df[[.var]], ordered = TRUE, any.missing = FALSE)
   checkmate::assert_string(id)
   checkmate::assert_subset(id, choices = colnames(df))
-  checkmate::assert_subset(id, choices = colnames(denom_df))
+  checkmate::assert_subset(id, choices = colnames(.alt_df_full))
   checkmate::assert_flag(any_level)
   checkmate::assert_character(any_level_exclude, any.missing = FALSE, unique = TRUE)
 
@@ -109,10 +111,7 @@ a_maxlev <- function(df,
       table(max_per_id)
     }
 
-    # TODO: N is currently computed using the `denom_df` extra argument.
-    # This is a temporary placeholder until the new version of rtables is released,
-    # after which `.alt_count_df` will be available for use in `afun`/`cfun`.
-    cur_col <- subset(denom_df, eval(.spl_context$cur_col_expr[[1]]))
+    cur_col <- subset(.alt_df_full, eval(.spl_context$cur_col_expr[[1]]))
     N <- length(unique(cur_col[[id]]))
     as.list(data.frame(rbind(count_max, count_max / N)))
   } else {
