@@ -299,12 +299,12 @@ jjcsformat_pval_fct <- function(alpha = 0.05) {
     } else if (x > 0.999) {
       ">0.999"
     } else {
-      res <- format_value(x, jjcsformat_xx(xx_format), round_type = round_type)
+      res <- format_value(x, jjcsformat_xx(xx_format), round_type = round_type) # nolint start
       while (as.numeric(res) == alpha && x < alpha &&
         xx_format != paste0("xx.", strrep("x", times = 10))) {
         # Increase precision by 1 digit until the result
         # is different from threshold alpha.
-        xx_format <- paste0(xx_format, "x")
+        xx_format <- paste0(xx_format, "x") # nolint end
         res <- format_value(x, jjcsformat_xx(xx_format), round_type = round_type)
       }
       if (xx_format == paste0("xx.", strrep("x", times = 10))) {
