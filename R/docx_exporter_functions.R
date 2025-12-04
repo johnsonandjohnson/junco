@@ -1217,7 +1217,8 @@ tt_to_flextable_j <- function(
 #' docx version.
 #' @param tlgtype (optional). No need to be specified by end user.
 #' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
-#' @param pagenum (optional). Default = FALSE (Tables) or TRUE (Listings).
+#' @param pagenum (optional). Default = TRUE for Listings and FALSE for
+#' everything else.
 #' @param ... other parameters.
 #'
 #' @note

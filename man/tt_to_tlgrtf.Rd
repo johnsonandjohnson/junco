@@ -45,9 +45,8 @@ tt_to_tlgrtf(
 \item{watermark}{(optional) String containing the desired watermark for
 RTF outputs. Vectorized.}
 
-\item{pagenum}{(optional) Logical. When true page numbers are added on the
-right side of the footer section in the format page x/y.
-Vectorized. (Default = FALSE)}
+\item{pagenum}{(\code{logical})\cr Whether to add page numbers to the output. By default,
+page numbers will only be added to listings.}
 
 \item{fontspec}{(\code{font_spec})\cr Font specification object}
 
