@@ -436,7 +436,39 @@ my_pg_width_by_orient <- function(orientation = "portrait") {
   return(6.38)
 }
 
-# based on rtables.officer::theme_docx_default
+#' Obtain the default theme for the docx following JnJ standars
+#' 
+#' @description `r lifecycle::badge('experimental')`
+#'
+#' This function is based on [rtables.officer::theme_docx_default()].
+#' See notes to understand why this is experimental.
+#' 
+#'
+#' @param font (`string`)\cr font. Defaults to "Times New Roman".
+#' @param font_size (`integer(1)`)\cr font size. Defaults to 9.
+#' @param cell_margins (`numeric(1) or numeric(4)`)\cr 
+#' a numeric or a vector of four numbers indicating 
+#' c("left", "right", "top", "bottom"). It defaults to 0mm in Word pt to all 4 margins.
+#' @param bold (`character`)\cr parts of the table text that should be in bold.
+#' Can be any combination of c("header", "content_rows", "label_rows", "top_left").
+#' The first one renders all column names bold (not topleft content).
+#' The second and third option use formatters::make_row_df() to render
+#' content or/and label rows as bold.
+#' @param bold_manual (`named list or NULL`)\cr list of index lists.
+#' See example for needed structure. Accepted groupings/names are c("header", "body").
+#' @param border (`fp_border`)\cr border to use. Defaults to width = 0.75
+#' and color = "black"
+#' 
+#' @note
+#' This function has been tested for common use cases but may not work or have
+#' unexpected or undesired behavior in corner cases. As such it is not considered
+#' fully production ready and is being made available for further testing
+#' and early adoption. Please report any issues you encounter to the developers.
+#' This function may be removed from junco in the future if the functionality
+#' is merged into `rtables.officer`.
+#'
+#' @returns a function that applies the given theme to a flextable.
+#' @export
 theme_docx_default_j <- function(
     font = "Times New Roman",
     font_size = 9L,
