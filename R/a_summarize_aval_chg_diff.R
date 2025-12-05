@@ -76,20 +76,21 @@ s_aval_chg_col1 <- function(df, .var, denom, .N_col, id, indatavar) {
 }
 
 s_aval_chg_col23_diff <- function(
-    df,
-    .var,
-    .df_row,
-    .ref_group,
-    .in_ref_col,
-    ancova,
-    interaction_y,
-    interaction_item,
-    conf_level,
-    variables,
-    trt_var,
-    ctrl_grp,
-    cur_param,
-    cur_lvl) {
+  df,
+  .var,
+  .df_row,
+  .ref_group,
+  .in_ref_col,
+  ancova,
+  interaction_y,
+  interaction_item,
+  conf_level,
+  variables,
+  trt_var,
+  ctrl_grp,
+  cur_param,
+  cur_lvl
+) {
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
   df <- subset(df, !is.na(df[[.var]]))
   .ref_group <- subset(.ref_group, !is.na(.ref_group[[.var]]))
@@ -378,26 +379,27 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #' @seealso s_summarize_ancova_j
 #' @family Inclusion of ANCOVA Functions
 a_summarize_aval_chg_diff_j <- function(
-    df,
-    .df_row,
-    .spl_context,
-    ancova = FALSE,
-    comp_btw_group = TRUE,
-    ref_path = NULL,
-    .N_col,
-    denom = c("N", ".N_col"),
-    indatavar = NULL,
-    d = 0,
-    id = "USUBJID",
-    interaction_y = FALSE,
-    interaction_item = NULL,
-    conf_level = 0.95,
-    variables = list(arm = "TRT01A", covariates = NULL),
-    format_na_str = "",
-    .stats = list(col1 = "count_denom_frac", col23 = "mean_ci_3d", coldiff = "meandiff_ci_3d"),
-    .formats = list(col1 = NULL, col23 = "xx.dx (xx.dx, xx.dx)", coldiff = "xx.dx (xx.dx, xx.dx)"),
-    .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx, coldiff = jjcsformat_xx),
-    multivars = c("AVAL", "AVAL", "CHG")) {
+  df,
+  .df_row,
+  .spl_context,
+  ancova = FALSE,
+  comp_btw_group = TRUE,
+  ref_path = NULL,
+  .N_col,
+  denom = c("N", ".N_col"),
+  indatavar = NULL,
+  d = 0,
+  id = "USUBJID",
+  interaction_y = FALSE,
+  interaction_item = NULL,
+  conf_level = 0.95,
+  variables = list(arm = "TRT01A", covariates = NULL),
+  format_na_str = "",
+  .stats = list(col1 = "count_denom_frac", col23 = "mean_ci_3d", coldiff = "meandiff_ci_3d"),
+  .formats = list(col1 = NULL, col23 = "xx.dx (xx.dx, xx.dx)", coldiff = "xx.dx (xx.dx, xx.dx)"),
+  .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx, coldiff = jjcsformat_xx),
+  multivars = c("AVAL", "AVAL", "CHG")
+) {
   denom <- match.arg(denom)
 
   if (comp_btw_group && is.null(ref_path)) {
