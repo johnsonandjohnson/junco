@@ -154,7 +154,19 @@ tt_to_flextable_j(result, "exampleorientation", orientation = "landscape")
 ```
 
 ### .docx File
-TBD #TODO
+
+To create a .docx file with landscape orientation, the `junco::export_as_docx_j` function can be called with the `orientation` argument set to "landscape".
+
+```{r orientation_docx}
+export_as_docx_j(result,
+                tblid = "exampleorientation",
+                output_dir = tempdir(),
+                orientation = "landscape")
+```
+
+```{r orientation_docx_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+tt_to_flextable_j(result, "exampleorientation", orientation = "landscape")
+```
 
 ## Adjusting the Font Size of a Table or Listing
 By default, the font type and size for the body of tables is Times New Roman 9-pt. If a font size of 8-pt is required for a table, then the font size can be adjusted as necessary. Other font sizes are not currently supported for tables. For listings, the default font size is 8-pt. Other font sizes are not currently supported for listings.
@@ -261,7 +273,19 @@ tt_to_flextable_j(result, "examplefontsize", fontspec = formatters::font_spec("T
 
 
 ### Table docx File
-TBD #TODO
+
+To export to docx, the `junco::export_as_docx_j` function can be called similarly to `junco::tt_to_tlgrtf`
+
+```{r fontsize_docx}
+export_as_docx_j(result,
+                tblid = "examplefontsize",
+                output_dir = tempdir(),
+                theme = theme_docx_default_j(font = "Times New Roman", font_size = 8L))
+```
+
+```{r fontsize_docx_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+tt_to_flextable_j(result, "examplefontsize", theme = theme_docx_default_j(font = "Times New Roman", font_size = 8L))
+```
 
 ## Adding a Spanning Column Header to a Table
 Sometimes, it is necessary to include a spanning header in the column header space. This is common when there is a need to group specific columns together under a common category text. A common example of this is when a spanning header such as "Active Study Agent" is to be displayed above all active treatments for a given study. To display the spanning header, a variable needs to be included in the data to represent the spanning header. Subsequently, a column header treatment map needs to be created to identify which spanning headers and columns are to be present in the resulting table output. For simple studies, the `junco::create_colspan_map` function can be leveraged to achieve the creation of the treatment map.
@@ -959,8 +983,7 @@ header_border
 ```
 
 Now, if the `junco::tt_to_tlgrtf` function is called with the "border_mat"
-argument included, the new user-defined border matrix can be provided as the argument value
-to specify the desired column header borders.
+argument included, the new user-defined border matrix can be provided as the argument value to specify the desired column header borders.
 
 ```{r custom_border_matrix}
 tt_to_tlgrtf(result,
