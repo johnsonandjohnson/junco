@@ -145,15 +145,13 @@ lyt <- basic_table(
 result <- build_table(lyt, adsl)
 
 tt_to_tlgrtf(result,
-             file = paste0(tempdir(), "/exampleorientation"),
+             file = paste0(getwd(), "/exampleorientation"),
              orientation = "landscape")
 ```
 
 ```{r orientation_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "exampleorientation", orientation = "landscape")
 ```
-
-# Convert RTF to PDF
 
 ### .docx File
 TBD #TODO
@@ -163,7 +161,7 @@ By default, the font type and size for the body of tables is Times New Roman 9-p
 
 ### Table .rtf File
 
-To display the body of tables in Times New Roman 8-pt for .rtf files, the `junco::tt_to_tlgrtf` function an be called with the `fontspec` argument included. The `fontspec` argument will specify a `formatters::font_spec` function call.
+To display the body of tables in Times New Roman 8-pt for .rtf files, the `junco::tt_to_tlgrtf` function can be called with the `fontspec` argument included. The `fontspec` argument will specify a `formatters::font_spec` function call.
 
 Example of Table with Font Size of 8-pt
 ```{r fontsize_rtf}
