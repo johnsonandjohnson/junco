@@ -1,7 +1,7 @@
 ---
 title: "Table & Listing Customizations"
-date: "2025-11-18"
-author: "Joe Kovach"
+date: "2025-12-04"
+author: "Joe Kovach and David Munoz Tord"
 output:
     rmarkdown::html_document:
         theme: "spacelab"
@@ -25,6 +25,8 @@ knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE
 )
+
+options(docx.add_datetime=FALSE)
 
 library(junco)
 library(rlistings)
@@ -57,6 +59,8 @@ custom components may include the following:
 -   Manually Splitting Large Table & Listing Files into Multiple Smaller Files
 
 The purpose of this vignette is to provide clear, concise examples of how to achieve each custom component.
+
+> **Note:** The visual output shown in this HTML vignette may not exactly match what the docx or rtf exporters will actually produce due to differences between HTML and those formats. The HTML outputs displayed here are for demonstration purposes only. Users should run the code examples themselves to see the exact output in their preferred format (docx or rtf).
 
 ## Page Orientation (Portrait vs. Landscape)
 Sometimes when creating a table, there are many columns that need to be presented. In this scenario, it might be beneficial for the resulting output file to have an orientation of landscape. As a result, the page is wider, allowing the information to be more readable.
@@ -152,13 +156,11 @@ lyt <- basic_table(
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
-             file = paste0(getwd(), "/exampleorientation"),
+             file = paste0(tempdir(), "/exampleorientation"),
              orientation = "landscape")
 ```
 
-```{r orientation_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "exampleorientation", orientation = "landscape")
-```
+
 
 ### .docx File
 
@@ -171,10 +173,11 @@ export_as_docx_j(result,
                 output_dir = tempdir(),
                 orientation = "landscape")
 ```
-
-```{r orientation_docx_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r orientation_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "exampleorientation", orientation = "landscape")
 ```
+
+
 
 ## Adjusting the Font Size of a Table or Listing
 By default, the font type and size for the body of tables is Times New Roman 9-pt. If a font size of 8-pt is required for a table, then the font size can be adjusted as necessary. Other font sizes are not currently supported for tables. For listings, the default font size is 8-pt. Other font sizes are not currently supported for listings.
@@ -275,14 +278,12 @@ tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplefontsize"),
              fontspec = formatters::font_spec("Times", 8, 1.2))
 ```
-```{r fontsize_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "examplefontsize", fontspec = formatters::font_spec("Times", 8, 1.2))
-```
+
 
 
 ### Table docx File
 
-To export to docx, the `junco::export_as_docx_j` function can be called similarly to `junco::tt_to_tlgrtf`
+To export to docx, the `junco::export_as_docx_j` function can be called similarly to `junco::tt_to_tlgrtf` with `junco::theme_docx_default_j()`
 
 ```{r fontsize_docx}
 export_as_docx_j(result,
@@ -290,10 +291,11 @@ export_as_docx_j(result,
                 output_dir = tempdir(),
                 theme = theme_docx_default_j(font = "Times New Roman", font_size = 8L))
 ```
-
-```{r fontsize_docx_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "examplefontsize", theme = theme_docx_default_j(font = "Times New Roman", font_size = 8L))
+```{r fontsize_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+tt_to_flextable_j(result, "examplefontsize", fontspec = formatters::font_spec("Times", 8, 1.2))
 ```
+
+
 
 ## Adding a Spanning Column Header to a Table
 Sometimes, it is necessary to include a spanning header in the column header space. This is common when there is a need to group specific columns together under a common category text. A common example of this is when a spanning header such as "Active Study Agent" is to be displayed above all active treatments for a given study. To display the spanning header, a variable needs to be included in the data to represent the spanning header. Subsequently, a column header treatment map needs to be created to identify which spanning headers and columns are to be present in the resulting table output. For simple studies, the `junco::create_colspan_map` function can be leveraged to achieve the creation of the treatment map.
@@ -439,21 +441,8 @@ adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
 ) |>
   var_relabel(RESPONSE = "Response")
 
-  # Set up levels and label for the required combined column
-  add_combo <- add_combo_facet("Combined",
-    label = "Combined",
-    levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
-  )
-
-  # choose if any facets need to be removed - e.g remove the combined column for placebo
-  rm_combo_from_placebo <- cond_rm_facets(
-    facets = "Combined",
-    ancestor_pos = NA,
-    value = " ",
-    split = "colspan_trt"
-  )
-
-  mysplit <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))
+  # No combined column needed for spanning header example
+  mysplit <- make_split_fun()
 
   colspan_trt_map <- create_colspan_map(adsl,
                                       non_active_grp = "Placebo",
@@ -516,7 +505,7 @@ Sometimes it is necessary to add a combined column to a table, which contains ag
 The creation of a combined column can be achieved by leveraging `rtables::add_combo_facet`. In the example below, we want to add a column named "Combined", that aggregates the data from the "Example Drug 5 mg", "Example Drug 10 mg", and "Example Drug 20 mg" columns. This can be achieved by creating an object named "add_combo", that calls `rtables::add_combo_facet`, which creates a new column from other columns in the table. A split function can then be constructed using `rtables::make_split_fun`, where the "post" argument contains the "add_combo" object, which calls `rtables::add_combo_facet`. The split function is then included in the `rtables::split_cols_by` function call for the TRT01A variable.
 
 The snippet of code of interest is as follows.
-```{r combined_column_setup, eval=FALSE}
+```{r combined_column_setup}
 add_combo <- add_combo_facet("Combined",
     label = "Combined",
     levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
@@ -914,15 +903,33 @@ tt_to_tlgrtf(result,
              orientation = "landscape")
 ```
 
+
+
+### Table .docx File
+To export a table with newlines in the column headers to a .docx file, the `junco::export_as_docx_j` function can be called with the same data preparation as for the .rtf file:
+
+```{r newline_table_docx}
+export_as_docx_j(result,
+                tblid = "examplenewline",
+                output_dir = tempdir(),
+                orientation = "landscape")
+```
+
+
+
+### Listing .docx File
+To export a listing with newlines in the column headers to a .docx file, the `junco::export_as_docx_j` function can be called with the same data preparation as for the .rtf file:
+
+```{r newline_listing_docx}
+export_as_docx_j(result,
+                tblid = "examplelistingnewline2",
+                output_dir = tempdir(),
+                orientation = "landscape")
+```
 ```{r newline_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplelistingnewline2", orientation = "landscape")
 ```
 
-### Table .docx File
-TBD
-
-### Listing .docx File
-TBD
 
 ## Custom Table Column Header Border Matrix
 
@@ -1007,12 +1014,23 @@ tt_to_tlgrtf(result,
              orientation = "landscape",
              border_mat = header_border)
 ```
+
+
+### Table .docx File
+To export a table with a custom border matrix to a .docx file, the `junco::export_as_docx_j` function can be called with the `border_mat` argument:
+
+```{r custom_border_matrix_docx}
+export_as_docx_j(result,
+                tblid = "example4",
+                output_dir = tempdir(),
+                orientation = "landscape",
+                border_mat = header_border)
+```
 ```{r custom_border_matrix_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "example4", orientation = "landscape", border_mat = header_border)
 ```
 
-### Table .docx File
-TBD
+
 
 ## Addition of Superscript or Other Symbol
 Sometimes it is necessary to insert a superscript or other symbol within text so that the information is presented according to the table or listing specification. This can be achieved by specifying a markup data frame in the export function call.
@@ -1041,8 +1059,23 @@ dps_markup_df <- tibble::tribble(
 dps_markup_df
 ```
 
-The default markup file for `junco::export_as_docx_j` to produce an .rtf file is as follows.
-TBD
+The default markup file for `junco::export_as_docx_j` to produce a .docx file is as follows.
+```{r default_markup_docx}
+library(tibble)
+
+docx_markup_df <- tibble::tribble(
+  ~keyword,
+  ~replace_by,
+  "super",
+  "flextable::as_sup",
+  "sub",
+  "flextable::as_sub",
+  "optional",
+  ""
+)
+
+docx_markup_df
+```
 
 If additional markup is to be considered, then a custom markup data frame can be created and specified in the exporter function call. #TODO
 
@@ -1156,16 +1189,89 @@ tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplelistingsuperscript2"),
              orientation = "landscape")
 ```
+
+
+
+### Table .docx File
+If a .docx file is to be created for the table, the `junco::export_as_docx_j` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_as_docx_j`, the "markup_df" argument has the default "docx_markup_df" object specified.
+
+In order to get the superscript "a" to appear, the TRT01A variable values will need to be updated to include the text "~[super a]" between the drug name and dose level, just like with the .rtf file:
+
+```{r superscript_table_docx}
+adsl <- data.frame(TRT01A = c("Example Drug~[super a] 5 mg",
+                              "Example Drug~[super a] 10 mg",
+                              "Example Drug~[super a] 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+lyt <- basic_table(
+  show_colcounts = FALSE,
+  colcount_format = "N=xx"
+) |>
+  ### first columns
+  split_cols_by("TRT01A",,
+                show_colcounts = FALSE
+  ) |>
+  ### analyze height
+  analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
+
+result <- build_table(lyt, adsl)
+result <- set_titles(result, titles)
+export_as_docx_j(result,
+                tblid = "example6",
+                output_dir = tempdir(),
+                orientation = "landscape",
+                markup_df = docx_markup_df)
+```
 ```{r superscript_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplelistingsuperscript2", orientation = "landscape")
 ```
 
 
-### Table .docx File
-TBD
-
 ### Listing .docx File
-TBD
+If a .docx file is to be created for the listing, a superscript "a" can be added to the column header by using the `formatters::var_relabel` function with the "~[super a]" markup, just like with the .rtf file:
+
+```{r superscript_listing_docx}
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+) |>
+  formatters::var_relabel(TRT01A = "Actual Treatment for Period 01~[super a]") |>
+  formatters::var_relabel(SUBJECT = "Subject") |>
+  formatters::var_relabel(HEIGHT = "Height (in)")
+
+result <- rlistings::as_listing(
+  df = adsl,
+  key_cols = c("TRT01A", "SUBJECT"),
+  disp_cols = "HEIGHT"
+)
+result <- set_titles(result, titles)
+export_as_docx_j(result,
+                tblid = "examplelistingsuperscript2",
+                output_dir = tempdir(),
+                orientation = "landscape",
+                markup_df = docx_markup_df)
+```
+
 
 ## Grouping of Columns for Tables Containing Many Columns
 
@@ -1534,10 +1640,7 @@ tt_to_tlgrtf(result1,
 )
 
 ```
-```{r split_listing_part1_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result1, "examplelistingmultiplefilesPART1OF2",
-  orientation = "landscape")
-```
+
 ```{r split_listing_part2}
 
 keep <- result$TRT01A %in% c("Example Drug 20 mg", "Placebo")
@@ -1550,11 +1653,35 @@ tt_to_tlgrtf(result2,
 )
 
 ```
+
+
+### Listing .docx File
+The `junco::export_as_docx_j` function can be called multiple times to produce multiple .docx files, similar to the approach used for .rtf files:
+
+```{r split_listing_docx_part1}
+
+export_as_docx_j(result1,
+  tblid = "examplelistingmultiplefilesPART1OF2",
+  output_dir = tempdir(),
+  orientation = "landscape"
+)
+```
+```{r split_listing_part1_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+tt_to_flextable_j(result1, "examplelistingmultiplefilesPART2OF2",
+  orientation = "landscape")
+```
+
+
+```{r split_listing_docx_part2}
+
+export_as_docx_j(result2,
+  tblid = "examplelistingmultiplefilesPART2OF2",
+  output_dir = tempdir(),
+  orientation = "landscape"
+)
+```
+
 ```{r split_listing_part2_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result2, "examplelistingmultiplefilesPART2OF2",
   orientation = "landscape")
 ```
-
-### Listing .docx File
-The `junco::tt_to_tlgdocx` function can be called multiple times to produce multiple .docx files.
-TBD
