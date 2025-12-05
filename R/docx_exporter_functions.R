@@ -484,7 +484,7 @@ theme_docx_default_j <- function(
     }
     checkmate::assert_int(font_size, lower = 6, upper = 12)
     checkmate::assert_string(font)
-    checkmate::assert_subset(bold, eval(formals(theme_docx_default)$bold),
+    checkmate::assert_subset(bold, eval(formals(theme_docx_default_j)$bold),
                              empty.ok = TRUE)
     if (length(cell_margins) == 1) {
       cell_margins <- rep(cell_margins, 4)
