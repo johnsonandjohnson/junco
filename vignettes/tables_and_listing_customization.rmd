@@ -32,6 +32,13 @@ library(tibble)
 
 ```
 
+Need to set up a dummy tittle:
+```{r setup-title, include = FALSE}
+titles <- list(title = "example",
+                     subtitles = NULL,
+                     main_footer = "Dummy Note: On-treatment is defined as ~{optional treatment-emergent}")
+```
+
 ## Introduction
 
 Within clinical trial reporting, there is often the need to incorporate
@@ -143,7 +150,7 @@ lyt <- basic_table(
           )
 
 result <- build_table(lyt, adsl)
-
+result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(getwd(), "/exampleorientation"),
              orientation = "landscape")
@@ -158,6 +165,7 @@ tt_to_flextable_j(result, "exampleorientation", orientation = "landscape")
 To create a .docx file with landscape orientation, the `junco::export_as_docx_j` function can be called with the `orientation` argument set to "landscape".
 
 ```{r orientation_docx}
+
 export_as_docx_j(result,
                 tblid = "exampleorientation",
                 output_dir = tempdir(),
@@ -262,7 +270,7 @@ lyt <- basic_table(
           )
 
 result <- build_table(lyt, adsl)
-
+result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplefontsize"),
              fontspec = formatters::font_spec("Times", 8, 1.2))
@@ -437,7 +445,15 @@ adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
     levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
   )
 
-  mysplit <- make_split_fun(post = list(add_combo))
+  # choose if any facets need to be removed - e.g remove the combined column for placebo
+  rm_combo_from_placebo <- cond_rm_facets(
+    facets = "Combined",
+    ancestor_pos = NA,
+    value = " ",
+    split = "colspan_trt"
+  )
+
+  mysplit <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))
 
   colspan_trt_map <- create_colspan_map(adsl,
                                       non_active_grp = "Placebo",
@@ -485,7 +501,7 @@ lyt <- basic_table(
           )
 
 result <- build_table(lyt, adsl)
-
+result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplespanningheader1"),
              orientation = "landscape")
@@ -627,7 +643,7 @@ lyt <- basic_table(
           )
 
 result <- build_table(lyt, adsl)
-
+result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplecombinedcolumn1"),
              orientation = "landscape")
@@ -777,7 +793,7 @@ lyt <- basic_table(
           )
 
 result <- build_table(lyt, adsl)
-
+result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplecombinedcolumn2"),
              orientation = "landscape")
@@ -850,7 +866,7 @@ lyt <- basic_table(
   analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
 
 result <- build_table(lyt, adsl)
-
+result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/example2"),
              orientation = "landscape")
@@ -892,7 +908,7 @@ result <- rlistings::as_listing(
   key_cols = c("TRT01A", "SUBJECT"),
   disp_cols = "HEIGHT"
 )
-
+result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplelistingnewline2"),
              orientation = "landscape")
@@ -952,7 +968,7 @@ lyt <- basic_table(
   analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
 
 result <- build_table(lyt, adsl)
-
+result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/example3"),
              orientation = "landscape")
@@ -1025,10 +1041,10 @@ dps_markup_df <- tibble::tribble(
 dps_markup_df
 ```
 
-The default markup file for `junco::tt_to_tlgdocx` to produce an .rtf file is as follows.
+The default markup file for `junco::export_as_docx_j` to produce an .rtf file is as follows.
 TBD
 
-If additional markup is to be considered, then a custom markup data frame can be created and specified in the exporter function call.
+If additional markup is to be considered, then a custom markup data frame can be created and specified in the exporter function call. #TODO
 
 In the following example data, there is a desire to insert a superscript "a" at the end the drug name for the "Example Drug" drug in reference to a footnote present at the end of the table.
 
@@ -1090,7 +1106,7 @@ lyt <- basic_table(
   analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
 
 result <- build_table(lyt, adsl)
-
+result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/example6"),
              orientation = "landscape",
@@ -1135,7 +1151,7 @@ result <- rlistings::as_listing(
   key_cols = c("TRT01A", "SUBJECT"),
   disp_cols = "HEIGHT"
 )
-
+result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplelistingsuperscript2"),
              orientation = "landscape")
@@ -1304,7 +1320,7 @@ lyt <- lyt %>%
   append_topleft("  Preferred Term, n (%)")
 
 result <- build_table(lyt, ae, alt_counts_df = adsl)
-
+result <- set_titles(result, titles)
 #########################################################################################
 # Post-Processing step to sort by descending count on chosen active treatment columns.
 # For this table we can use a defined colpath so it takes the appropriate sub-column ("Total")
@@ -1467,7 +1483,7 @@ lyt <- basic_table(
           )
 
 result <- build_table(lyt, adsl)
-
+result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplepagebreak"))
 ```
@@ -1507,7 +1523,7 @@ result <- rlistings::as_listing(
   key_cols = c("TRT01A", "SUBJECT"),
   disp_cols = "HEIGHT"
 )
-
+result <- set_titles(result, titles)
 keep <- result$TRT01A %in% c("Example Drug 5 mg", "Example Drug 10 mg")
 
 result1 <- result[keep, ]
