@@ -613,6 +613,10 @@ theme_docx_default_j <- function(
 #' @param tlgtype (optional). No need to be specified by end user.
 #' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
 #' @param pagenum (optional). Default = FALSE (Tables) or TRUE (Listings).
+#' @param round_type (`"iec"` or `"sas"`)\cr the type of rounding to perform. iec,
+#' the default, performs rounding compliant with IEC 60559, while
+#' sas performs nearest-value rounding consistent with rounding within SAS.
+#' See `[formatters::format_value()]` for more details.
 #'
 #' @note
 #' This function has been tested for common use cases but may not work or have
@@ -652,7 +656,8 @@ tt_to_flextable_j <- function(
     reduce_first_col_indentation = FALSE,
     tlgtype = junco:::tlg_type(tt),
     col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE)) {
+    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+    round_type = formatters::obj_round_type(tt)) {
 
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
@@ -724,7 +729,8 @@ tt_to_flextable_j <- function(
       )
     }
     if (methods::is(tt, "VTableTree")) {
-      hdrmpf <- rtables::matrix_form(tt[1, ])
+      # hdrmpf <- rtables::matrix_form(tt[1, ])
+      hdrmpf <- rtables::matrix_form(tt[1, , keep_topleft = TRUE], round_type = round_type)
     } else if (methods::is(tt, "list") && methods::is(tt[[1]], "MatrixPrintForm")) {
       hdrmpf <- tt[[1]]
     } else {
@@ -742,7 +748,8 @@ tt_to_flextable_j <- function(
       margins = rep(0, 4),
       lpp = NULL,
       nosplitin = nosplitin,
-      verbose = FALSE
+      verbose = FALSE,
+      round_type = round_type
     )
     if (rtables::has_force_pag(tt)) {
       nslices <- which(
@@ -824,7 +831,8 @@ tt_to_flextable_j <- function(
           reduce_first_col_indentation = (length(full_pag_i) > 1),
           tlgtype = tlgtype,
           col_gap = col_gap,
-          pagenum = pagenum
+          pagenum = pagenum,
+          round_type = round_type
         )
 
         return(sub_ft)
@@ -838,7 +846,8 @@ tt_to_flextable_j <- function(
   }
 
 
-  matform <- rtables::matrix_form(tt, fontspec = fontspec, indent_rownames = FALSE)
+  matform <- rtables::matrix_form(tt, fontspec = fontspec,
+                                  indent_rownames = FALSE, round_type = round_type)
   body <- formatters::mf_strings(matform)
   spans <- formatters::mf_spans(matform)
   mpf_aligns <- formatters::mf_aligns(matform)
@@ -1146,7 +1155,8 @@ tt_to_flextable_j <- function(
       margins = rep(0, 4),
       lpp = NULL,
       nosplitin = nosplitin,
-      verbose = FALSE
+      verbose = FALSE,
+      round_type = round_type
     )
     if (!is.null(names(pags))) {
       flx <- insert_keepNext_vertical_pagination(tt = tt, flx = flx)
@@ -1252,6 +1262,10 @@ tt_to_flextable_j <- function(
 #' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
 #' @param pagenum (optional). Whether to display page numbers. Only applicable
 #' to listings (i.e. for tables and figures this argument is ignored).
+#' @param round_type (`"iec"` or `"sas"`)\cr the type of rounding to perform. iec,
+#' the default, performs rounding compliant with IEC 60559, while
+#' sas performs nearest-value rounding consistent with rounding within SAS.
+#' See `[formatters::format_value()]` for more details.
 #' @param ... other parameters.
 #'
 #' @note
@@ -1290,6 +1304,7 @@ export_as_docx_j <- function(
     tlgtype = junco:::tlg_type(tt),
     col_gap = ifelse(tlgtype == "Listing", .5, 3),
     pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+    round_type = formatters::obj_round_type(tt),
     ...) {
 
   checkmate::assert_flag(add_page_break)
@@ -1312,6 +1327,7 @@ export_as_docx_j <- function(
                             col_gap = col_gap,
                             pagenum = pagenum,
                             theme = theme,
+                            round_type = round_type,
                             ...)
   }
   if (inherits(tt, "flextable")) {
@@ -1334,6 +1350,7 @@ export_as_docx_j <- function(
                                      col_gap = col_gap,
                                      pagenum = pagenum,
                                      theme = theme,
+                                     round_type = round_type,
                                      ...),
                               SIMPLIFY = FALSE)
     } else if (inherits(tt[[1]], "flextable") ||
@@ -1380,6 +1397,7 @@ export_as_docx_j <- function(
         tlgtype = "Table",
         col_gap = col_gap,
         pagenum = pagenum,
+        round_type = round_type,
         ... = ...
       )
     } else {
@@ -1415,6 +1433,7 @@ export_as_docx_j <- function(
         tlgtype = tlgtype,
         col_gap = col_gap,
         pagenum = pagenum,
+        round_type = round_type,
         ... = ...
       )
     }
@@ -1482,13 +1501,13 @@ export_as_docx_j <- function(
       # NOTE: this align = "left" is the alignment of the entire table relative to the page,
       # not the content within the table
       # calculate vertical pagination, where to place the new page breaks
-      doc <- flextable::body_add_flextable(doc, flex_tbl_i, align = "center") # NOTE: here it was align = "left" before
+      doc <- flextable::body_add_flextable(doc, flex_tbl_i, align = "center")
       if (isTRUE(add_page_break) && ii < length(flex_tbl_list)) {
         doc <- officer::body_add_break(doc)
       }
     }
     if (isFALSE(integrate_footers) && inherits(tt, "VTableTree")) {
-      matform <- rtables::matrix_form(tt, indent_rownames = TRUE)
+      matform <- rtables::matrix_form(tt, indent_rownames = TRUE, round_type = round_type)
       if (length(matform$ref_footnotes) > 0) {
         doc <- rtables.officer:::add_text_par(doc, matform$ref_footnotes, flx_fpt$fpt_footer)
       }
