@@ -8,7 +8,7 @@ data <- data.frame(
 
 # Start of tests ----
 
-test_that("a_two_tier works silently for ex_adsl data", {
+test_that("a_two_tier works silently for ex_adsl data with simple_analysis", {
   lyt <- basic_table() |>
     split_cols_by("ARM") |>
     split_rows_by("EOSSTT", child_labels = "hidden") |>
@@ -109,6 +109,124 @@ test_that("a_two_tier produces the expected table layout when a level has no obs
       "C", "1", "3", "0", "2", "1", "2"
     ),
     dim = c(7, 4)
+  )
+  expect_identical(res_act, res_exp)
+})
+
+test_that("a_two_tier produces the expected table layout when there are no observations for any level", {
+  lyt <- basic_table() |>
+    split_cols_by("trt") |>
+    split_rows_by("eostt", child_labels = "hidden") |>
+    analyze("eostt",
+      afun = a_two_tier,
+      extra_args = list(
+        grp_fun = simple_analysis,
+        detail_fun = simple_analysis,
+        inner_var = "dcsreas",
+        drill_down_levs = "DISCONTINUED"
+      )
+    )
+
+  data_subset <- subset(data, eostt != "DISCONTINUED")
+
+  res <- expect_silent(build_table(lyt, data_subset))
+  res_act <- matrix_form(res)$string
+  res_exp <- structure(
+    c(
+      "", "COMPLETED", "DISCONTINUED", "ONGOING",
+      "A", "3", "0", "3",
+      "B", "2", "0", "5",
+      "C", "3", "0", "3"
+    ),
+    dim = c(4, 4)
+  )
+  expect_identical(res_act, res_exp)
+})
+
+test_that("a_two_tier produces the expected table layout when there are no observations for any level (use_all_levels)", {
+  lyt <- basic_table() |>
+    split_cols_by("trt") |>
+    split_rows_by("eostt", child_labels = "hidden") |>
+    analyze("eostt",
+      afun = a_two_tier,
+      extra_args = list(
+        grp_fun = simple_analysis,
+        detail_fun = simple_analysis,
+        inner_var = "dcsreas",
+        drill_down_levs = "DISCONTINUED",
+        use_all_levels = TRUE
+      )
+    )
+
+  data_subset <- subset(data, eostt != "DISCONTINUED")
+
+  res <- expect_silent(build_table(lyt, data_subset))
+  res_act <- matrix_form(res)$string
+  res_exp <- structure(
+    c(
+      "", "COMPLETED", "DISCONTINUED", "ONGOING",
+      "A", "3", "0", "3",
+      "B", "2", "0", "5",
+      "C", "3", "0", "3"
+    ),
+    dim = c(4, 4)
+  )
+  expect_identical(res_act, res_exp)
+})
+
+test_that("a_two_tier produces the expected table layout when there is no data at all - only levels", {
+  lyt <- basic_table() |>
+    split_cols_by("trt") |>
+    split_rows_by("eostt", child_labels = "hidden") |>
+    analyze("eostt",
+      afun = a_two_tier,
+      extra_args = list(
+        grp_fun = simple_analysis,
+        detail_fun = simple_analysis,
+        inner_var = "dcsreas",
+        drill_down_levs = "DISCONTINUED"
+      )
+    )
+
+  res <- expect_silent(build_table(lyt, data[0, ]))
+  res_act <- matrix_form(res)$string
+  res_exp <- structure(
+    c(
+      "", "COMPLETED", "DISCONTINUED", "ONGOING",
+      "A", "0", "0", "0",
+      "B", "0", "0", "0",
+      "C", "0", "0", "0"
+    ),
+    dim = c(4, 4)
+  )
+  expect_identical(res_act, res_exp)
+})
+
+test_that("a_two_tier produces the expected table layout when there is no data at all - only levels (use_all_levels)", {
+  lyt <- basic_table() |>
+    split_cols_by("trt") |>
+    split_rows_by("eostt", child_labels = "hidden") |>
+    analyze("eostt",
+      afun = a_two_tier,
+      extra_args = list(
+        grp_fun = simple_analysis,
+        detail_fun = simple_analysis,
+        inner_var = "dcsreas",
+        drill_down_levs = "DISCONTINUED",
+        use_all_levels = TRUE
+      )
+    )
+
+  res <- expect_silent(build_table(lyt, data[0, ]))
+  res_act <- matrix_form(res)$string
+  res_exp <- structure(
+    c(
+      "", "COMPLETED", "DISCONTINUED", "ONGOING",
+      "A", "0", "0", "0",
+      "B", "0", "0", "0",
+      "C", "0", "0", "0"
+    ),
+    dim = c(4, 4)
   )
   expect_identical(res_act, res_exp)
 })
