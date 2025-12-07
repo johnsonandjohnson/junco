@@ -4,7 +4,7 @@ aesevall_spf <- make_combo_splitfun(
   levels = NULL,
 )
 
-#### Actual start of tests
+# Start of tests ----
 
 test_that("a_maxlev produces correct numbers for single treatment per subject", {
   my_adsl <- ex_adsl[, c("USUBJID", "ARM", "ACTARM")]
