@@ -2,7 +2,7 @@ library(dplyr)
 library(tern)
 
 # Pre-processing the table
-tab <- basic_table() %>%
+tab <- basic_table(round_type = "sas") %>%
   split_cols_by("ARM") %>%
   split_rows_by("RACE") %>%
   split_rows_by("STRATA1") %>%
@@ -125,7 +125,7 @@ testthat::test_that("test keep_non_null_rows", {
     rcell(NULL, label = "")
   }
 
-  tabsx <- basic_table() %>%
+  tabsx <- basic_table(round_type = "sas") %>%
     split_cols_by("ARM") %>%
     split_rows_by("ARM") %>%
     analyze("ARM", afun = xnull_cell_fn, show_labels = "hidden") %>%
@@ -134,7 +134,7 @@ testthat::test_that("test keep_non_null_rows", {
 
   result <- prune_table(tabsx, keep_rows(keep_non_null_rows))
 
-  tabsx2 <- basic_table() %>%
+  tabsx2 <- basic_table(round_type = "sas") %>%
     split_cols_by("ARM") %>%
     split_rows_by("ARM") %>%
     analyze("STRATA1") %>%
@@ -174,7 +174,7 @@ testthat::test_that("bspt_pruner both fraction and diff_from_control are NULL", 
 })
 
 testthat::test_that("bspt_pruner with fraction", {
-  tab_bspt_pruner <- basic_table() %>%
+  tab_bspt_pruner <- basic_table(round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze_vars("COUNTRY", .stats = "count_fraction") %>%
     build_table(formatters::DM)
@@ -194,7 +194,7 @@ testthat::test_that("bspt_pruner with fraction", {
 })
 
 testthat::test_that("bspt_pruner with fraction and diff_from_control", {
-  tab_bspt_pruner <- basic_table() %>%
+  tab_bspt_pruner <- basic_table(round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze_vars("COUNTRY", .stats = "count_fraction") %>%
     build_table(formatters::DM)
@@ -216,7 +216,7 @@ testthat::test_that("bspt_pruner with fraction and diff_from_control", {
 })
 
 testthat::test_that("bspt_pruner with fraction and diff_from_control and keeprowtext", {
-  tab_bspt_pruner <- basic_table() %>%
+  tab_bspt_pruner <- basic_table(round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze_vars("COUNTRY", .stats = "count_fraction") %>%
     build_table(formatters::DM)
@@ -270,7 +270,7 @@ testthat::test_that("count_pruner in small groups", {
     ref_path = ref_path
   )
 
-  tab_bspt_pruner <- basic_table(show_colcounts = TRUE) %>%
+  tab_bspt_pruner <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
     split_cols_by("ARM") %>%
     split_cols_by("rrisk_header", nested = FALSE) %>%
@@ -369,7 +369,7 @@ testthat::test_that("bspt_pruner in AE like tables", {
     .stats = "count_unique_fraction"
   )
 
-  tbl1 <- basic_table(show_colcounts = TRUE, top_level_section_div = " ") %>%
+  tbl1 <- basic_table(show_colcounts = TRUE, top_level_section_div = " ", round_type = "sas") %>%
     split_cols_by("colspan", split_fun = trim_levels_in_group("ARM")) %>%
     split_cols_by("ARM") %>%
     split_cols_by("rrisk_header", nested = FALSE) %>%
@@ -457,7 +457,7 @@ testthat::test_that("bspt_pruner with less obvious control specifications", {
     mutate(COUNTRY = factor(as.character(COUNTRY))) %>%
     mutate(SEX = factor(as.character(SEX)))
 
-  tab_bspt_pruner <- basic_table(show_colcounts = TRUE) %>%
+  tab_bspt_pruner <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     split_cols_by("SEX") %>%
     analyze_vars("COUNTRY", .stats = "count_fraction") %>%
@@ -513,7 +513,7 @@ testthat::test_that("bspt_pruner with less obvious control specifications", {
 my_DM <- formatters::DM %>%
   filter(RACE == "THIS LEAVES EMPTY DF")
 
-my_tab <- basic_table() %>%
+my_tab <- basic_table(round_type = "sas") %>%
   split_cols_by("ARM") %>%
   analyze("AGE") %>%
   build_table(my_DM)

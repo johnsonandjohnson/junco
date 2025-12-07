@@ -341,7 +341,7 @@ test_that("a_relative_risk in table layout gives same results as with SAS", {
     ))
   )
 
-  lyt <- basic_table() |>
+  lyt <- basic_table(round_type = "sas") |>
     split_cols_by("Treatment") |>
     analyze(
       vars = "Response",

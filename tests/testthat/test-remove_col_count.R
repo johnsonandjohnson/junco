@@ -12,7 +12,8 @@ testthat::test_that("remove_col_count works", {
   lyt <- basic_table(
     top_level_section_div = " ",
     show_colcounts = TRUE,
-    colcount_format = "N=xx"
+    colcount_format = "N=xx",
+    round_type = "sas"
   ) %>%
     split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
     split_cols_by("ARM") %>%

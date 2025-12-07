@@ -21,7 +21,7 @@ adsl$rrisk_label <- paste(adsl[["ARM"]], "vs Placebo")
 
 adae <- left_join(adae, adsl, by = join_by(USUBJID, ARM))
 
-core_lyt <- basic_table(show_colcounts = TRUE) %>%
+core_lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
   split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
   split_cols_by("ARM") %>%
   split_cols_by("rrisk_header", nested = FALSE) %>%
@@ -57,10 +57,11 @@ wald_diff <- function(inputs) {
 }
 
 count_unique_subjects <- function(
-    df,
-    id = "USUBJID",
-    sub_set = NULL,
-    var = NULL) {
+  df,
+  id = "USUBJID",
+  sub_set = NULL,
+  var = NULL
+) {
   if (!is.null(sub_set)) {
     df <- subset(df, sub_set)
   }
@@ -235,10 +236,6 @@ test_that("a_freq_j with val = NA and denom option", {
     expected1c_rr
   )
 })
-
-
-
-
 
 
 test_that("a_freq_j with risk difference method cmh", {

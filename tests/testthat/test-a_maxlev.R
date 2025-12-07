@@ -16,7 +16,7 @@ test_that("a_maxlev produces correct numbers for single treatment per subject", 
       AESEV := ordered(AESEV, levels = c("Missing", "Mild", "Moderate", "Severe"))
     )
 
-  lyt <- basic_table() |>
+  lyt <- basic_table(round_type = "sas") |>
     split_cols_by("ARM") |>
     add_overall_col("Total") |>
     split_rows_by("AESEV", split_fun = aesevall_spf) |>

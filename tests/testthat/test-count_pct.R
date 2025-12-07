@@ -12,7 +12,7 @@ test_that("a_freq_j with val = NA and denom option", {
   extra_args_1 <- list(
     .stats = c("count_unique_denom_fraction")
   )
-  lyt1 <- basic_table(show_colcounts = TRUE) %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(
       vars = "COUNTRY",
@@ -33,7 +33,7 @@ test_that("a_freq_j with val = NA and denom option", {
     denom = "N_col",
     .stats = c("count_unique_denom_fraction")
   )
-  lyt1c <- basic_table(show_colcounts = TRUE) %>%
+  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(
       vars = "COUNTRY",
@@ -51,7 +51,7 @@ test_that("a_freq_j with specific val (CHN) and denom option", {
     .stats = c("count_unique_denom_fraction"),
     val = "CHN"
   )
-  lyt1 <- basic_table(show_colcounts = TRUE) %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(
       vars = "COUNTRY",
@@ -73,7 +73,7 @@ test_that("a_freq_j with specific val (CHN) and denom option", {
     .stats = c("count_unique_denom_fraction"),
     val = "CHN"
   )
-  lyt1c <- basic_table(show_colcounts = TRUE) %>%
+  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(
       vars = "COUNTRY",
@@ -91,7 +91,7 @@ test_that("a_freq_j with N_only", {
   extra_args_1 <- list(
     .stats = c("count_unique")
   )
-  lyt1 <- basic_table(show_colcounts = TRUE) %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(
       vars = "COUNTRY",
@@ -115,7 +115,7 @@ test_that("a_freq_j with TotCol_only", {
     .stats = c("count_unique"),
     restr_columns = "Total"
   )
-  lyt1 <- basic_table(show_colcounts = TRUE) %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     add_overall_col("Total") %>%
     analyze(vars = "COUNTRY", afun = a_freq_j, extra_args = extra_args_1)
@@ -142,7 +142,7 @@ test_that("a_freq_j as cfun", {
     denom = "N_col",
     .stats = c("count_unique_denom_fraction")
   )
-  lyt1 <- basic_table(show_colcounts = TRUE) %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     split_rows_by("AEBODSYS") %>%
     summarize_row_groups(
@@ -163,7 +163,7 @@ test_that("a_freq_j as cfun", {
   # scenario 2 : label using label_fstr method works
   extra_args_2 <- append(extra_args_1, list(label_fstr = "Bodysystem %s"))
 
-  lyt2 <- basic_table(show_colcounts = TRUE) %>%
+  lyt2 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     split_rows_by("AEBODSYS") %>%
     summarize_row_groups(
@@ -198,7 +198,7 @@ test_that("a_freq_j with label map", {
 
   # scenario 1 : with label_map
   extra_args_1 <- list(label_map = Subjs_with_AEs)
-  lyt1 <- basic_table(show_colcounts = TRUE) %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(
       vars = "TRTEMFL",
@@ -212,7 +212,7 @@ test_that("a_freq_j with label map", {
 
   # scenario 2 : set row label using label parameter
   extra_args_2 <- list(label = "Subjects with >= 1 AE")
-  lyt2 <- basic_table(show_colcounts = TRUE) %>%
+  lyt2 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(
       vars = "TRTEMFL",
@@ -230,7 +230,7 @@ test_that("a_freq_j (old count_pats case)", {
   extra_args_1 <- list(
     .stats = c("count_unique_denom_fraction")
   )
-  lyt1 <- basic_table(show_colcounts = TRUE) %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(
       vars = "COUNTRY",
@@ -251,7 +251,7 @@ test_that("a_freq_j (old count_pats case)", {
     denom = "N_col",
     .stats = c("count_unique_denom_fraction")
   )
-  lyt1c <- basic_table(show_colcounts = TRUE) %>%
+  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(
       vars = "COUNTRY",
@@ -268,7 +268,7 @@ test_that("a_freq_j with N_subgroup as denom", {
   # scenario 1: denom = N_subgroup, all values
   extra_args_1 <- list(denom = "n_df")
 
-  lyt1 <- basic_table(show_colcounts = TRUE) %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     split_rows_by("SEX") %>%
     analyze(
@@ -294,7 +294,7 @@ test_that("a_freq_j with N_subgroup as denom", {
     .stats = c("count_unique_denom_fraction")
   )
 
-  lyt1c <- basic_table(show_colcounts = TRUE) %>%
+  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     split_rows_by("SEX") %>%
     analyze(
@@ -417,7 +417,7 @@ test_that("a_freq_j with N_trt as denom - special situation", {
     colgroup = "ARM",
     riskdiff = FALSE
   )
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     split_cols_by(trtvar, show_colcounts = TRUE) %>%
     split_cols_by("spanheader", split_fun = trim_levels_in_group("ASEV")) %>%
     split_cols_by("ASEV", show_colcounts = TRUE) %>%
@@ -456,7 +456,7 @@ test_that("a_freq_j with keep_levels (CHN, NGA) ", {
     denom = "N_col",
     val = c("CHN", "NGA")
   )
-  lyt1 <- basic_table(show_colcounts = TRUE) %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(vars = "COUNTRY", afun = a_freq_j, extra_args = extra_args_1)
 

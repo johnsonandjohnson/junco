@@ -47,7 +47,7 @@ adsl$rrisk_label <- paste(adsl[["ARM"]], "vs Placebo")
 adae <- left_join(adsl, adae, by = "USUBJID") %>%
   mutate(ASTDY2 = ASTDY + 10)
 
-core_lyt <- basic_table(show_colcounts = FALSE) %>%
+core_lyt <- basic_table(show_colcounts = FALSE, round_type = "sas") %>%
   split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
   split_cols_by("ARM") %>%
   split_cols_by("rrisk_header", nested = FALSE) %>%

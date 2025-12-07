@@ -15,7 +15,7 @@ ADSL <- data.frame(
   PKFL = c("N", "N", "N", "N", "N", "N", "N", "N", "N", "N")
 )
 
-lyt <- basic_table() |>
+lyt <- basic_table(round_type = "sas") |>
   split_cols_by("TRT01P") |>
   add_overall_col("Total") |>
   analyze("FASFL",
