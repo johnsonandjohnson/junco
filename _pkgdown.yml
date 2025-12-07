@@ -39,6 +39,7 @@ reference:
     - a_proportion_ci_logical
     - a_summarize_aval_chg_diff_j
     - a_maxlev
+    - a_two_tier
     - rbmi_analyse
     - analyze_values
     - rbmi_ancova
