@@ -143,7 +143,7 @@ test_that("a_two_tier produces the expected table layout when there are no obser
   expect_identical(res_act, res_exp)
 })
 
-test_that("a_two_tier produces the expected table layout when there are no observations for any level (use_all_levels)", {
+test_that("a_two_tier produces the expected table layout - no observations at any level (use_all_levels)", {
   lyt <- basic_table() |>
     split_cols_by("trt") |>
     split_rows_by("eostt", child_labels = "hidden") |>

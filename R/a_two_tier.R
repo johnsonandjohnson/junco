@@ -40,7 +40,7 @@
 #'   *anywhere in the row group, i.e., within `.df_row`* will be present.
 #' @param grp_fun (`function`)\cr analysis function to be used when generating
 #'   the "group summary" outer rows.
-#' @param detail_fun (`function`)\cr nalysis function to be used when generating
+#' @param detail_fun (`function`)\cr analysis function to be used when generating
 #'   "detail" inner rows.
 #' @param .alt_df_full (`dataframe`)\cr denominator dataset for fraction and
 #'   relative risk calculations.\cr

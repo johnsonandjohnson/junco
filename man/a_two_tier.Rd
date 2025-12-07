@@ -56,7 +56,7 @@ Otherwise (the default), only the levels observed
 \item{grp_fun}{(\code{function})\cr analysis function to be used when generating
 the "group summary" outer rows.}
 
-\item{detail_fun}{(\code{function})\cr nalysis function to be used when generating
+\item{detail_fun}{(\code{function})\cr analysis function to be used when generating
 "detail" inner rows.}
 
 \item{.alt_df_full}{(\code{dataframe})\cr denominator dataset for fraction and
