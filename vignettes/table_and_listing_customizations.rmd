@@ -1532,7 +1532,9 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
 
 ### Visual Output (HTML Representation)
 ```{r multiple_docs_table1_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "aetablemultipledocs1", orientation = "landscape")
+x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs1", orientation = "landscape", paginate= TRUE)
+x[[1]]
+x[[2]]
 ```
 
 When calling the `junco::tt_to_tlgrtf` function, the nosplitin argument can be included, and the user can specify a variable in which the associated columns should be grouped together in the same file. Now, all the sub columns for the "Placebo" treatment group (e.g. each unique TRT01A value), are kept together within the same file.
@@ -1549,9 +1551,12 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
 
 ### Visual Output (HTML Representation)
 ```{r multiple_docs_table2_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "aetablemultipledocs2", orientation = "landscape",
-                  nosplitin = list(cols = c(trtvar))
-)
+x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs2", orientation = "landscape",
+                  nosplitin = list(cols = c(trtvar)), paginate= TRUE)
+x[[1]]
+x[[2]]
+x[[3]]
+
 ```
 
 If there is a need to provide a single .rtf file that contains the multiple “part” .rtf files, then the `junco::tt_to_tlgrtf` function can be called with the "combined_rtf" argument included with a value of "TRUE". In this case, both the multiple "part" .rtf files and the single .rtf file with all "parts" appended will be created.
@@ -1570,9 +1575,11 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
 
 ### Visual Output (HTML Representation)
 ```{r multiple_docs_table3_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "aetablemultipledocs3", orientation = "landscape",
-                  nosplitin = list(cols = c(trtvar)),
-                  combined_rtf = TRUE)
+x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs3", orientation = "landscape",
+                  nosplitin = list(cols = c(trtvar)), combined_rtf = TRUE, paginate = TRUE)
+x[[1]]
+x[[2]]
+x[[3]]
 ```
 
 ### Table .docx File
@@ -1672,8 +1679,12 @@ tt_to_tlgrtf(result,
 ```
 
 ### Visual Output (HTML Representation)
+> **Note:** HTML output notoriously does not handle well page break, so here it is represented in two parts to show the point.
 ```{r page_break_table_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "examplepagebreak")
+male <- result[1:5, keep_titles = TRUE, keep_footers = FALSE]
+tt_to_flextable_j(male, "examplepagebreak")
+female <- result[6:10, keep_titles = TRUE, keep_footers = TRUE]
+tt_to_flextable_j(female, "examplepagebreak")
 ```
 
 ## Manually Splitting Large Listing Files into Multiple Smaller Files
