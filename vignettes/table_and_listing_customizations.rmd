@@ -34,8 +34,9 @@ library(tibble)
 
 ```
 
-Need to set up a dummy tittle:
+
 ```{r setup-title, include = FALSE}
+#Need to set up a dummy tittle and main footer
 titles <- list(title = "example",
                      subtitles = NULL,
                      main_footer = "Dummy Note: On-treatment is defined as ~{optional treatment-emergent}")
