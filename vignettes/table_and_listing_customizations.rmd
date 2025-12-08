@@ -61,7 +61,7 @@ custom components may include the following:
 
 The purpose of this vignette is to provide clear, concise examples of how to achieve each custom component.
 
-> **Note:** The visual output shown in this HTML vignette may not exactly match what the docx or rtf exporters will actually produce due to differences between HTML and those formats. The HTML outputs displayed here are for demonstration purposes only. Users should run the code examples themselves to see the exact output in their preferred format (docx or rtf).
+> **Note:** The visual output shown in this HTML vignette may not exactly match what the .docx or .rtf exporters will actually produce due to differences between HTML and those formats. The HTML outputs displayed here are for demonstration purposes only. Users should run the code examples themselves to see the exact output in their preferred format (.docx or .rtf).
 
 ## Page Orientation (Portrait vs. Landscape)
 Sometimes when creating a table, there are many columns that need to be presented. In this scenario, it might be beneficial for the resulting output file to have an orientation of landscape. As a result, the page is wider, allowing the information to be more readable.
@@ -282,9 +282,9 @@ tt_to_tlgrtf(result,
 
 
 
-### Table docx File
+### Table .docx File
 
-To export to docx, the `junco::export_as_docx_j` function can be called similarly to `junco::tt_to_tlgrtf` with `junco::theme_docx_default_j()`
+To export to .docx, the `junco::export_as_docx_j` function can be called similarly to `junco::tt_to_tlgrtf` with `junco::theme_docx_default_j()`
 
 ```{r fontsize_docx}
 export_as_docx_j(result,
