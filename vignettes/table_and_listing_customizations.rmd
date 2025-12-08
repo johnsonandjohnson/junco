@@ -174,6 +174,8 @@ export_as_docx_j(result,
                 output_dir = tempdir(),
                 orientation = "landscape")
 ```
+
+### Visual Output (HTML Representation)
 ```{r orientation_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "exampleorientation", orientation = "landscape")
 ```
@@ -292,6 +294,8 @@ export_as_docx_j(result,
                 output_dir = tempdir(),
                 theme = theme_docx_default_j(font = "Times New Roman", font_size = 8L))
 ```
+
+### Visual Output (HTML Representation)
 ```{r fontsize_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplefontsize", fontspec = formatters::font_spec("Times", 8, 1.2))
 ```
@@ -496,6 +500,8 @@ tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplespanningheader1"),
              orientation = "landscape")
 ```
+
+### Visual Output (HTML Representation)
 ```{r spanning_header_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplespanningheader1", orientation = "landscape")
 ```
@@ -638,6 +644,8 @@ tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplecombinedcolumn1"),
              orientation = "landscape")
 ```
+
+### Visual Output (HTML Representation)
 ```{r combined_column_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplecombinedcolumn1", orientation = "landscape")
 ```
@@ -788,6 +796,8 @@ tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplecombinedcolumn2"),
              orientation = "landscape")
 ```
+
+### Visual Output (HTML Representation)
 ```{r improved_combined_column_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplecombinedcolumn2", orientation = "landscape")
 ```
@@ -910,7 +920,7 @@ export_as_docx_j(result,
 
 ```
 
-
+### Visual Output (HTML Representation)
 ```{r newline_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "example2", orientation = "landscape")
 ```
@@ -1000,6 +1010,8 @@ export_as_docx_j(result,
                 output_dir = tempdir(),
                 orientation = "landscape")
 ```
+
+### Visual Output (HTML Representation)
 ```{r newline_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplelistingnewline2", orientation = "landscape")
 ```
@@ -1056,6 +1068,8 @@ tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/example3"),
              orientation = "landscape")
 ```
+
+### Visual Output (HTML Representation)
 ```{r border_matrix_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "example3", orientation = "landscape")
 ```
@@ -1102,6 +1116,8 @@ export_as_docx_j(result,
                 orientation = "landscape",
                 border_mat = header_border)
 ```
+
+### Visual Output (HTML Representation)
 ```{r custom_border_matrix_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "example4", orientation = "landscape", border_mat = header_border)
 ```
@@ -1134,26 +1150,7 @@ dps_markup_df <- tibble::tribble(
 
 dps_markup_df
 ```
-
-The default markup file for `junco::export_as_docx_j` to produce a .docx file is as follows.
-```{r default_markup_docx}
-library(tibble)
-
-docx_markup_df <- tibble::tribble(
-  ~keyword,
-  ~replace_by,
-  "super",
-  "flextable::as_sup",
-  "sub",
-  "flextable::as_sub",
-  "optional",
-  ""
-)
-
-docx_markup_df
-```
-
-If additional markup is to be considered, then a custom markup data frame can be created and specified in the exporter function call. #TODO
+If additional markup is to be considered, then a custom markup data frame can be created and specified in the exporter function call.
 
 In the following example data, there is a desire to insert a superscript "a" at the end the drug name for the "Example Drug" drug in reference to a footnote present at the end of the table.
 
@@ -1221,9 +1218,48 @@ tt_to_tlgrtf(result,
              orientation = "landscape",
              markup_df = dps_markup_df)
 ```
+
+
+### Table .docx File
+
+The default markup file for `junco::export_as_docx_j` to produce a .docx file is as follows.
+
+```{r default_markup_docx2}
+library(tibble)
+
+docx_markup_df <- tibble::tribble(
+  ~keyword,
+  ~replace_by,
+  "super",
+  "flextable::as_sup",
+  "sub",
+  "flextable::as_sub",
+  "optional",
+  ""
+)
+
+docx_markup_df
+```
+
+If a .docx file is to be created for the table, the `junco::export_as_docx_j` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_as_docx_j`, the "markup_df" argument has the default "docx_markup_df" object specified.
+
+
+```{r superscript_table_docx}
+export_as_docx_j(result,
+                tblid = "example6",
+                output_dir = tempdir(),
+                orientation = "landscape",
+                markup_df = docx_markup_df)
+```
+
+
+
+
+### Visual Output (HTML Representation)
 ```{r superscript_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "example6", orientation = "landscape",  markup_df = dps_markup_df)
 ```
+
 ### Listing .rtf File
 
 If a .rtf file is to be created for the listing, a superscript "a" can be
@@ -1268,79 +1304,30 @@ tt_to_tlgrtf(result,
 
 
 
-### Table .docx File
+### Listing .docx File
+
+The default markup file for `junco::export_as_docx_j` to produce a .docx file is as follows.
+
+```{r default_markup_docx}
+library(tibble)
+
+docx_markup_df <- tibble::tribble(
+  ~keyword,
+  ~replace_by,
+  "super",
+  "flextable::as_sup",
+  "sub",
+  "flextable::as_sub",
+  "optional",
+  ""
+)
+
+docx_markup_df
+```
+
 If a .docx file is to be created for the table, the `junco::export_as_docx_j` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_as_docx_j`, the "markup_df" argument has the default "docx_markup_df" object specified.
 
-In order to get the superscript "a" to appear, the TRT01A variable values will need to be updated to include the text "~[super a]" between the drug name and dose level, just like with the .rtf file:
-
-```{r superscript_table_docx}
-adsl <- data.frame(TRT01A = c("Example Drug~[super a] 5 mg",
-                              "Example Drug~[super a] 10 mg",
-                              "Example Drug~[super a] 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
-)
-
-lyt <- basic_table(
-  show_colcounts = FALSE,
-  colcount_format = "N=xx"
-) |>
-  ### first columns
-  split_cols_by("TRT01A",,
-                show_colcounts = FALSE
-  ) |>
-  ### analyze height
-  analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
-
-result <- build_table(lyt, adsl)
-result <- set_titles(result, titles)
-export_as_docx_j(result,
-                tblid = "example6",
-                output_dir = tempdir(),
-                orientation = "landscape",
-                markup_df = docx_markup_df)
-```
-```{r superscript_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "examplelistingsuperscript2", orientation = "landscape")
-```
-
-
-### Listing .docx File
-If a .docx file is to be created for the listing, a superscript "a" can be added to the column header by using the `formatters::var_relabel` function with the "~[super a]" markup, just like with the .rtf file:
-
 ```{r superscript_listing_docx}
-adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
-                              "Example Drug 10 mg",
-                              "Example Drug 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
-) |>
-  formatters::var_relabel(TRT01A = "Actual Treatment for Period 01~[super a]") |>
-  formatters::var_relabel(SUBJECT = "Subject") |>
-  formatters::var_relabel(HEIGHT = "Height (in)")
-
-result <- rlistings::as_listing(
-  df = adsl,
-  key_cols = c("TRT01A", "SUBJECT"),
-  disp_cols = "HEIGHT"
-)
-result <- set_titles(result, titles)
 export_as_docx_j(result,
                 tblid = "examplelistingsuperscript2",
                 output_dir = tempdir(),
@@ -1354,6 +1341,7 @@ export_as_docx_j(result,
 In some cases, there are tables that are required that contain many columns. As a result, it's possible that the table might need to be split into multiple files so that the information can be presented in a readable manner. Oftentimes, it's important to keep certain information grouped together in the same file. The following is an example of this scenario.
 
 Data Preparation for example
+
 ```{r multiple_docs_data_prep}
 library(tern)
 library(dplyr)
@@ -1534,6 +1522,8 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
              file = paste0(tempdir(), "/aetablemultipledocs1"), orientation = "landscape"
 )
 ```
+
+### Visual Output (HTML Representation)
 ```{r multiple_docs_table1_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "aetablemultipledocs1", orientation = "landscape")
 ```
@@ -1549,6 +1539,8 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
              nosplitin = list(cols = c(trtvar))
 )
 ```
+
+### Visual Output (HTML Representation)
 ```{r multiple_docs_table2_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "aetablemultipledocs2", orientation = "landscape",
                   nosplitin = list(cols = c(trtvar))
@@ -1568,6 +1560,8 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
              combined_rtf = TRUE
 )
 ```
+
+### Visual Output (HTML Representation)
 ```{r multiple_docs_table3_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "aetablemultipledocs3", orientation = "landscape",
                   nosplitin = list(cols = c(trtvar)),
@@ -1669,6 +1663,8 @@ result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/examplepagebreak"))
 ```
+
+### Visual Output (HTML Representation)
 ```{r page_break_table_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplepagebreak")
 ```
@@ -1742,6 +1738,8 @@ export_as_docx_j(result1,
   orientation = "landscape"
 )
 ```
+
+### Visual Output (HTML Representation)
 ```{r split_listing_part1_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result1, "examplelistingmultiplefilesPART2OF2",
   orientation = "landscape")
@@ -1757,6 +1755,7 @@ export_as_docx_j(result2,
 )
 ```
 
+### Visual Output (HTML Representation)
 ```{r split_listing_part2_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result2, "examplelistingmultiplefilesPART2OF2",
   orientation = "landscape")
