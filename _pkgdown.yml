@@ -22,6 +22,7 @@ articles:
     contents:
     - junco
     - auto_colwidths
+    - table_and_listing_customizations
 reference:
   - title: junco Analysis Functions
     desc: The following functions are the Analysis functions used used to create common table layouts.
