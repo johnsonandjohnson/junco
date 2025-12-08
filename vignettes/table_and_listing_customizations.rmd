@@ -284,7 +284,7 @@ tt_to_tlgrtf(result,
 
 ### Table .docx File
 
-To export to .docx, the `junco::export_as_docx_j` function can be called similarly to `junco::tt_to_tlgrtf` with `junco::theme_docx_default_j()`
+To display the body of tables in Times New Roman 8-pt for .docx files, the junco::export_as_docx_j function can be called with the theme argument included. The theme argument will specify a junco::theme_docx_default_j function call.
 
 ```{r fontsize_docx}
 export_as_docx_j(result,
