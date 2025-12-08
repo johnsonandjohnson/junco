@@ -10,14 +10,17 @@ output:
         toc_float: true
 vignette: >
   %\VignetteIndexEntry{Table & Listing Customizations}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
-editor_options:
-  markdown:
-      wrap: 72
+  %\\VignetteEngine{quarto::quarto_render}
+  %\\VignetteEncoding{UTF-8}
+execute:
+  echo: true
+  collapse: true
+  comment: "#>"
 ---
 
-```{r setup, include = FALSE}
+```{r}
+#| label: setup
+#| include: false
 knitr::opts_chunk$set(
   echo = TRUE,
   collapse = TRUE,
@@ -66,7 +69,7 @@ The purpose of this vignette is to provide clear, concise examples of how to ach
 ## Page Orientation (Portrait vs. Landscape)
 Sometimes when creating a table, there are many columns that need to be presented. In this scenario, it might be beneficial for the resulting output file to have an orientation of landscape. As a result, the page is wider, allowing the information to be more readable.
 
-### .rtf File
+### Table .rtf File
 In the .rtf exporter function, `junco::tt_to_tlgrtf`, by default, the page orientation is set to portrait. If landscape orientation is required, then the orientation can be adjusted by including the `orientation` argument and specifying a value of "landscape".
 
 ```{r orientation_rtf}
@@ -163,7 +166,7 @@ tt_to_tlgrtf(result,
 
 
 
-### .docx File
+###  Table .docx File
 
 To create a .docx file with landscape orientation, the `junco::export_as_docx_j` function can be called with the `orientation` argument set to "landscape".
 
