@@ -1731,19 +1731,6 @@ tt_to_tlgrtf(result1,
 
 ```
 
-```{r split_listing_part2}
-
-keep <- result$TRT01A %in% c("Example Drug 20 mg", "Placebo")
-
-result2 <- result[keep, ]
-
-tt_to_tlgrtf(result2,
-  file = paste0(tempdir(), "/examplelistingmultiplefilesPART2OF2"),
-  orientation = "landscape"
-)
-
-```
-
 
 ### Listing .docx File
 The `junco::export_as_docx_j` function can be called multiple times to produce multiple .docx files, similar to the approach used for .rtf files:
@@ -1763,7 +1750,23 @@ tt_to_flextable_j(result1, "examplelistingmultiplefilesPART2OF2",
   orientation = "landscape")
 ```
 
+### Listing .rtf File 2
 
+```{r split_listing_part2}
+
+keep <- result$TRT01A %in% c("Example Drug 20 mg", "Placebo")
+
+result2 <- result[keep, ]
+
+tt_to_tlgrtf(result2,
+  file = paste0(tempdir(), "/examplelistingmultiplefilesPART2OF2"),
+  orientation = "landscape"
+)
+
+```
+
+
+### Listing .docx File 2
 ```{r split_listing_docx_part2}
 
 export_as_docx_j(result2,
