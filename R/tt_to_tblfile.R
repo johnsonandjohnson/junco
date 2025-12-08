@@ -257,6 +257,10 @@ get_ncol <- function(tt) {
 #'   the default, performs rounding compliant with IEC 60559, while
 #'   sas performs nearest-value rounding consistent with rounding within SAS.
 #'   See `[formatters::format_value()]` for more details.
+#' @param alignments (`list`)\cr List of named lists. Vectorized.
+#' (Default = `list()`) Used to specify individual column or cell alignments.
+#' Each named list contains `row`, `col`, and `value`, which are passed to
+#' [huxtable::set_align()] to set the alignments.
 #' @param validate logical(1). Whether to validate the table structure using
 #'  `rtables::validate_table_struct()`. Defaults to `TRUE`. This can also be disabled
 #'  globally by setting the environment variable `JUNCO_DISABLE_VALIDATION=TRUE`.
@@ -305,9 +309,15 @@ tt_to_tlgrtf <- function(
   one_table = TRUE,
   border_mat = make_header_bordmat(obj = tt),
   round_type = obj_round_type(tt),
+  alignments = list(),
   validate = TRUE,
   ...
 ) {
+  # Validate `alignments` here because of its complicated data structure
+  stopifnot("`alignments` must be a list" = is.list(alignments))
+  for (alignment in alignments) {
+    stopifnot("Each item of `alignments` must be a list" = is.list(alignment))
+  }
   # Validate table structure if requested and not disabled by environment variable
   # nolint start
   if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree") &&
@@ -459,6 +469,7 @@ tt_to_tlgrtf <- function(
           markup_df = markup_df,
           border_mat = pag_bord_mats[[i]],
           round_type = round_type,
+          alignments = alignments,
           ...
         )
       }
@@ -482,6 +493,7 @@ tt_to_tlgrtf <- function(
           # colwidths are already on the pags since they are mpfs
           border_mat = pag_bord_mats,
           round_type = round_type,
+          alignments = alignments,
           ...
         )
       } else if (!is.null(file)) { # only one page after pagination
@@ -657,6 +669,7 @@ tt_to_tlgrtf <- function(
     pagenum = pagenum,
     bottom_borders = border_mat,
     print.hux = !is.null(fname),
+    alignments = alignments,
     ...
   )
 }

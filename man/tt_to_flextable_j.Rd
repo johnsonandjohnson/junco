@@ -33,7 +33,8 @@ tt_to_flextable_j(
   tlgtype = junco:::tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", 0.5, 3),
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-  round_type = formatters::obj_round_type(tt)
+  round_type = formatters::obj_round_type(tt),
+  alignments = list()
 )
 }
 \arguments{
@@ -100,6 +101,10 @@ One of: "portrait", "landscape".}
 the default, performs rounding compliant with IEC 60559, while
 sas performs nearest-value rounding consistent with rounding within SAS.
 See \verb{[formatters::format_value()]} for more details.}
+
+\item{alignments}{(\code{list})\cr List of named lists. Vectorized.
+(Default = \code{list()}) Used to specify individual column or cell alignments.
+Each named list contains \code{row}, \code{col}, and \code{value}.}
 }
 \value{
 a flextable object.

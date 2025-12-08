@@ -99,6 +99,18 @@ testthat::test_that("tt_to_flextable_j() works fine with Tables", {
   snapshot_test_flextable(res)
 
 
+  # example with alignments
+  alignments <- list(
+    list(row = 2, col = 2:4, value = "right"),
+    list(row = 6:7, col = 2, value = "left"),
+    list(row = 8, col = 1, value = "right")
+  )
+  options(docx.add_datetime = FALSE)
+  testthat::expect_no_error(
+    res <- tt_to_flextable_j(tt = tbl1, tblid = "output ID", alignments = alignments)
+  )
+  options(docx.add_datetime = TRUE)
+  snapshot_test_flextable(res)
 })
 
 testthat::test_that("tt_to_flextable_j() works fine with Listings", {

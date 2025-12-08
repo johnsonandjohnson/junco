@@ -12594,6 +12594,4044 @@
     Output
       [1] "<w:body>\n  <w:tbl xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:pic=\"http://schemas.openxmlformats.org/drawingml/2006/picture\">\n    <w:tblPr>\n      <w:tblLayout w:type=\"fixed\"/>\n      <w:jc w:val=\"center\"/>\n      <w:tblLook w:firstRow=\"1\" w:lastRow=\"0\" w:firstColumn=\"0\" w:lastColumn=\"0\" w:noHBand=\"0\" w:noVBand=\"1\"/>\n    </w:tblPr>\n    <w:tblGrid>\n      <w:gridCol w:w=\"2844\"/>\n      <w:gridCol w:w=\"2115\"/>\n      <w:gridCol w:w=\"2115\"/>\n      <w:gridCol w:w=\"2115\"/>\n    </w:tblGrid>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"572\" w:hRule=\"auto\"/><w:tblHeader/></w:trPr>header 1<w:tc><w:tcPr><w:gridSpan w:val=\"4\"/><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"666666\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"666666\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:tabs><w:tab w:val=\"left\" w:leader=\"none\" w:pos=\"1152\"/></w:tabs><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"true\"/><w:u w:val=\"none\"/><w:sz w:val=\"20\"/><w:szCs w:val=\"20\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"true\"/><w:u w:val=\"none\"/><w:sz w:val=\"20\"/><w:szCs w:val=\"20\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">output ID:</w:t></w:r><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"true\"/><w:u w:val=\"none\"/><w:sz w:val=\"20\"/><w:szCs w:val=\"20\"/><w:color w:val=\"000000\"/></w:rPr><w:tab/></w:r><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"true\"/><w:u w:val=\"none\"/><w:sz w:val=\"20\"/><w:szCs w:val=\"20\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">This is the main Title</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"572\" w:hRule=\"auto\"/><w:tblHeader/></w:trPr>header 2<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"72\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\"/></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">A: Drug X (N=134)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">B: Placebo (N=134)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">C: Combination (N=132)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 1<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">CHN</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">74/134 (55.2%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">81/134 (60.4%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">64/132 (48.5%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 2<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">USA</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">10/134 (7.5%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">13/134 (9.7%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">17/132 (12.9%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 3<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">BRA</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">13/134 (9.7%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">7/134 (5.2%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">10/132 (7.6%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 4<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">PAK</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">12/134 (9.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">9/134 (6.7%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">10/132 (7.6%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 5<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">NGA</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">8/134 (6.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">7/134 (5.2%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">11/132 (8.3%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 6<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">RUS</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">5/134 (3.7%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">8/134 (6.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">6/132 (4.5%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 7<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">JPN ≥</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">5/134 (3.7%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">4/134 (3.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">9/132 (6.8%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 8<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">GBR</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">4/134 (3.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">3/134 (2.2%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">2/132 (1.5%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 9<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">CAN</w:t></w:r><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:vertAlign w:val=\"superscript\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">a</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">3/134 (2.2%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">2/134 (1.5%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">3/132 (2.3%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body10<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">CHE</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">0/134 (0.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">0/134 (0.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">0/132 (0.0%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"360\" w:hRule=\"auto\"/></w:trPr>footer 1<w:tc><w:tcPr><w:gridSpan w:val=\"4\"/><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"FFFFFF\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"FFFFFF\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"FFFFFF\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\"/></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"360\" w:hRule=\"auto\"/></w:trPr>footer 2<w:tc><w:tcPr><w:gridSpan w:val=\"4\"/><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"FFFFFF\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"FFFFFF\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"FFFFFF\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"FFFFFF\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\"/></w:r><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:vertAlign w:val=\"superscript\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">a</w:t></w:r><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">Canada</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"360\" w:hRule=\"auto\"/></w:trPr>footer 3<w:tc><w:tcPr><w:gridSpan w:val=\"4\"/><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"FFFFFF\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"FFFFFF\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"FFFFFF\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">This </w:t></w:r><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">text should</w:t></w:r><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\"> stay the same</w:t></w:r></w:p></w:tc></w:tr>\n  </w:tbl>\n  <w:sectPr w:rsidR=\"001379FE\" w:rsidSect=\"00747CCE\">\n    <w:type w:val=\"continuous\"/>\n    <w:pgSz w:w=\"11900\" w:h=\"16840\"/>\n    <w:pgMar w:top=\"1417\" w:right=\"1417\" w:bottom=\"1417\" w:left=\"1417\" w:header=\"708\" w:footer=\"708\" w:gutter=\"0\"/>\n    <w:cols w:space=\"708\"/>\n    <w:docGrid w:linePitch=\"360\"/>\n  </w:sectPr>\n</w:body>"
 
+---
+
+    Code
+      res$header
+    Output
+      $dataset
+        V1 V2 V3 V4
+      1 V1 V2 V3 V4
+      
+      $content
+      $data
+           V1            V2            V3            V4           
+      [1,] data.frame,19 data.frame,19 data.frame,19 data.frame,19
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [[1]]
+        txt font.size italic bold underlined color shading.color font.family
+      1            NA     NA   NA         NA  <NA>          <NA>        <NA>
+        hansi.family eastasia.family cs.family vertical.align width height  url
+      1         <NA>            <NA>      <NA>           <NA>    NA     NA <NA>
+        eq_data word_field_data img_data .chunk_index
+      1    <NA>            <NA>     NULL            1
+      
+      attr(,"class")
+      [1] "paragraph"
+      
+      attr(,"class")
+      [1] "chunkset_struct"
+      
+      $col_keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $colwidths
+            V1       V2       V3       V4 
+      1.974762 1.468413 1.468413 1.468413 
+      
+      $rowheights
+      [1] 0.3969338
+      
+      $hrule
+      [1] "auto"
+      
+      $spans
+      $spans$rows
+           [,1] [,2] [,3] [,4]
+      [1,]    1    1    1    1
+      
+      $spans$columns
+           [,1] [,2] [,3] [,4]
+      [1,]    1    1    1    1
+      
+      
+      $styles
+      $styles$cells
+      $vertical.align
+      $data
+           V1       V2       V3       V4      
+      [1,] "bottom" "bottom" "bottom" "bottom"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "center"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $width
+      $data
+           V1 V2 V3 V4
+      [1,] NA NA NA NA
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] NA
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $height
+      $data
+           V1 V2 V3 V4
+      [1,] NA NA NA NA
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] NA
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.bottom
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.top
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.left
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.right
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.bottom
+      $data
+             V1   V2   V3   V4
+      [1,] 0.75 0.75 0.75 0.75
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.top
+      $data
+             V1   V2   V3   V4
+      [1,] 0.75 0.75 0.75 0.75
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.left
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.right
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.bottom
+      $data
+           V1      V2      V3      V4     
+      [1,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.top
+      $data
+           V1      V2      V3      V4     
+      [1,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.left
+      $data
+           V1      V2      V3      V4     
+      [1,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.right
+      $data
+           V1      V2      V3      V4     
+      [1,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.bottom
+      $data
+           V1      V2      V3      V4     
+      [1,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.top
+      $data
+           V1      V2      V3      V4     
+      [1,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.left
+      $data
+           V1      V2      V3      V4     
+      [1,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.right
+      $data
+           V1      V2      V3      V4     
+      [1,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $text.direction
+      $data
+           V1     V2     V3     V4    
+      [1,] "lrtb" "lrtb" "lrtb" "lrtb"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "lrtb"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $background.color
+      $data
+           V1            V2            V3            V4           
+      [1,] "transparent" "transparent" "transparent" "transparent"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $hrule
+      $data
+           V1     V2     V3     V4    
+      [1,] "auto" "auto" "auto" "auto"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "auto"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      attr(,"class")
+      [1] "cell_struct"
+      
+      $styles$pars
+      $text.align
+      $data
+           V1     V2      V3      V4     
+      [1,] "left" "right" "right" "right"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "left"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.bottom
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.top
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.left
+      $data
+            V1 V2 V3 V4
+      [1,] 3.6  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.right
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $line_spacing
+      $data
+           V1 V2 V3 V4
+      [1,]  1  1  1  1
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 1
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.bottom
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.top
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.left
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.right
+      $data
+           V1 V2 V3 V4
+      [1,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.bottom
+      $data
+           V1      V2      V3      V4     
+      [1,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.top
+      $data
+           V1      V2      V3      V4     
+      [1,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.left
+      $data
+           V1      V2      V3      V4     
+      [1,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.right
+      $data
+           V1      V2      V3      V4     
+      [1,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.bottom
+      $data
+           V1      V2      V3      V4     
+      [1,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.top
+      $data
+           V1      V2      V3      V4     
+      [1,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.left
+      $data
+           V1      V2      V3      V4     
+      [1,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.right
+      $data
+           V1      V2      V3      V4     
+      [1,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $shading.color
+      $data
+           V1            V2            V3            V4           
+      [1,] "transparent" "transparent" "transparent" "transparent"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $keep_with_next
+      $data
+              V1    V2    V3    V4
+      [1,] FALSE FALSE FALSE FALSE
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $tabs
+      $data
+           V1 V2 V3 V4
+      [1,] NA NA NA NA
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] NA
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      attr(,"class")
+      [1] "par_struct"
+      
+      $styles$text
+      $color
+      $data
+           V1      V2      V3      V4     
+      [1,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $font.size
+      $data
+           V1 V2 V3 V4
+      [1,]  9  9  9  9
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 11
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $bold
+      $data
+              V1    V2    V3    V4
+      [1,] FALSE FALSE FALSE FALSE
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $italic
+      $data
+              V1    V2    V3    V4
+      [1,] FALSE FALSE FALSE FALSE
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $underlined
+      $data
+              V1    V2    V3    V4
+      [1,] FALSE FALSE FALSE FALSE
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $font.family
+      $data
+           V1                V2                V3                V4               
+      [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $hansi.family
+      $data
+           V1                V2                V3                V4               
+      [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $eastasia.family
+      $data
+           V1                V2                V3                V4               
+      [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $cs.family
+      $data
+           V1                V2                V3                V4               
+      [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $vertical.align
+      $data
+           V1         V2         V3         V4        
+      [1,] "baseline" "baseline" "baseline" "baseline"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "baseline"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $shading.color
+      $data
+           V1            V2            V3            V4           
+      [1,] "transparent" "transparent" "transparent" "transparent"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 1
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      attr(,"class")
+      [1] "text_struct"
+      
+      
+      attr(,"class")
+      [1] "complex_tabpart"
+
+---
+
+    Code
+      res$body
+    Output
+      $dataset
+          V1             V2             V3             V4
+      1  CHN 74/134 (55.2%) 81/134 (60.4%) 64/132 (48.5%)
+      2  USA  10/134 (7.5%)  13/134 (9.7%) 17/132 (12.9%)
+      3  BRA  13/134 (9.7%)   7/134 (5.2%)  10/132 (7.6%)
+      4  PAK  12/134 (9.0%)   9/134 (6.7%)  10/132 (7.6%)
+      5  NGA   8/134 (6.0%)   7/134 (5.2%)  11/132 (8.3%)
+      6  RUS   5/134 (3.7%)   8/134 (6.0%)   6/132 (4.5%)
+      7  JPN   5/134 (3.7%)   4/134 (3.0%)   9/132 (6.8%)
+      8  GBR   4/134 (3.0%)   3/134 (2.2%)   2/132 (1.5%)
+      9  CAN   3/134 (2.2%)   2/134 (1.5%)   3/132 (2.3%)
+      10 CHE   0/134 (0.0%)   0/134 (0.0%)   0/132 (0.0%)
+      
+      $content
+      $data
+            V1            V2            V3            V4           
+       [1,] data.frame,19 data.frame,19 data.frame,19 data.frame,19
+       [2,] data.frame,19 data.frame,19 data.frame,19 data.frame,19
+       [3,] data.frame,19 data.frame,19 data.frame,19 data.frame,19
+       [4,] data.frame,19 data.frame,19 data.frame,19 data.frame,19
+       [5,] data.frame,19 data.frame,19 data.frame,19 data.frame,19
+       [6,] data.frame,19 data.frame,19 data.frame,19 data.frame,19
+       [7,] data.frame,19 data.frame,19 data.frame,19 data.frame,19
+       [8,] data.frame,19 data.frame,19 data.frame,19 data.frame,19
+       [9,] data.frame,19 data.frame,19 data.frame,19 data.frame,19
+      [10,] data.frame,19 data.frame,19 data.frame,19 data.frame,19
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [[1]]
+        txt font.size italic bold underlined color shading.color font.family
+      1            NA     NA   NA         NA  <NA>          <NA>        <NA>
+        hansi.family eastasia.family cs.family vertical.align width height  url
+      1         <NA>            <NA>      <NA>           <NA>    NA     NA <NA>
+        eq_data word_field_data img_data .chunk_index
+      1    <NA>            <NA>     NULL            1
+      
+      attr(,"class")
+      [1] "paragraph"
+      
+      attr(,"class")
+      [1] "chunkset_struct"
+      
+      $col_keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $colwidths
+            V1       V2       V3       V4 
+      1.974762 1.468413 1.468413 1.468413 
+      
+      $rowheights
+       [1] 0.4285635 0.4285635 0.4285635 0.4285635 0.4285635 0.4285635 0.4285635
+       [8] 0.4285635 0.4285635 0.4285635
+      
+      $hrule
+       [1] "auto" "auto" "auto" "auto" "auto" "auto" "auto" "auto" "auto" "auto"
+      
+      $spans
+      $spans$rows
+            [,1] [,2] [,3] [,4]
+       [1,]    1    1    1    1
+       [2,]    1    1    1    1
+       [3,]    1    1    1    1
+       [4,]    1    1    1    1
+       [5,]    1    1    1    1
+       [6,]    1    1    1    1
+       [7,]    1    1    1    1
+       [8,]    1    1    1    1
+       [9,]    1    1    1    1
+      [10,]    1    1    1    1
+      
+      $spans$columns
+            [,1] [,2] [,3] [,4]
+       [1,]    1    1    1    1
+       [2,]    1    1    1    1
+       [3,]    1    1    1    1
+       [4,]    1    1    1    1
+       [5,]    1    1    1    1
+       [6,]    1    1    1    1
+       [7,]    1    1    1    1
+       [8,]    1    1    1    1
+       [9,]    1    1    1    1
+      [10,]    1    1    1    1
+      
+      
+      $styles
+      $styles$cells
+      $vertical.align
+      $data
+            V1       V2       V3       V4      
+       [1,] "bottom" "bottom" "bottom" "bottom"
+       [2,] "bottom" "bottom" "bottom" "bottom"
+       [3,] "bottom" "bottom" "bottom" "bottom"
+       [4,] "bottom" "bottom" "bottom" "bottom"
+       [5,] "bottom" "bottom" "bottom" "bottom"
+       [6,] "bottom" "bottom" "bottom" "bottom"
+       [7,] "bottom" "bottom" "bottom" "bottom"
+       [8,] "bottom" "bottom" "bottom" "bottom"
+       [9,] "bottom" "bottom" "bottom" "bottom"
+      [10,] "bottom" "bottom" "bottom" "bottom"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "center"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $width
+      $data
+            V1 V2 V3 V4
+       [1,] NA NA NA NA
+       [2,] NA NA NA NA
+       [3,] NA NA NA NA
+       [4,] NA NA NA NA
+       [5,] NA NA NA NA
+       [6,] NA NA NA NA
+       [7,] NA NA NA NA
+       [8,] NA NA NA NA
+       [9,] NA NA NA NA
+      [10,] NA NA NA NA
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] NA
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $height
+      $data
+            V1 V2 V3 V4
+       [1,] NA NA NA NA
+       [2,] NA NA NA NA
+       [3,] NA NA NA NA
+       [4,] NA NA NA NA
+       [5,] NA NA NA NA
+       [6,] NA NA NA NA
+       [7,] NA NA NA NA
+       [8,] NA NA NA NA
+       [9,] NA NA NA NA
+      [10,] NA NA NA NA
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] NA
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.bottom
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.top
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.left
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.right
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.bottom
+      $data
+              V1   V2   V3   V4
+       [1,] 0.00 0.00 0.00 0.00
+       [2,] 0.00 0.00 0.00 0.00
+       [3,] 0.00 0.00 0.00 0.00
+       [4,] 0.00 0.00 0.00 0.00
+       [5,] 0.00 0.00 0.00 0.00
+       [6,] 0.00 0.00 0.00 0.00
+       [7,] 0.00 0.00 0.00 0.00
+       [8,] 0.00 0.00 0.00 0.00
+       [9,] 0.00 0.00 0.00 0.00
+      [10,] 0.75 0.75 0.75 0.75
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.top
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.left
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.right
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.bottom
+      $data
+            V1      V2      V3      V4     
+       [1,] "black" "black" "black" "black"
+       [2,] "black" "black" "black" "black"
+       [3,] "black" "black" "black" "black"
+       [4,] "black" "black" "black" "black"
+       [5,] "black" "black" "black" "black"
+       [6,] "black" "black" "black" "black"
+       [7,] "black" "black" "black" "black"
+       [8,] "black" "black" "black" "black"
+       [9,] "black" "black" "black" "black"
+      [10,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.top
+      $data
+            V1      V2      V3      V4     
+       [1,] "black" "black" "black" "black"
+       [2,] "black" "black" "black" "black"
+       [3,] "black" "black" "black" "black"
+       [4,] "black" "black" "black" "black"
+       [5,] "black" "black" "black" "black"
+       [6,] "black" "black" "black" "black"
+       [7,] "black" "black" "black" "black"
+       [8,] "black" "black" "black" "black"
+       [9,] "black" "black" "black" "black"
+      [10,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.left
+      $data
+            V1      V2      V3      V4     
+       [1,] "black" "black" "black" "black"
+       [2,] "black" "black" "black" "black"
+       [3,] "black" "black" "black" "black"
+       [4,] "black" "black" "black" "black"
+       [5,] "black" "black" "black" "black"
+       [6,] "black" "black" "black" "black"
+       [7,] "black" "black" "black" "black"
+       [8,] "black" "black" "black" "black"
+       [9,] "black" "black" "black" "black"
+      [10,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.right
+      $data
+            V1      V2      V3      V4     
+       [1,] "black" "black" "black" "black"
+       [2,] "black" "black" "black" "black"
+       [3,] "black" "black" "black" "black"
+       [4,] "black" "black" "black" "black"
+       [5,] "black" "black" "black" "black"
+       [6,] "black" "black" "black" "black"
+       [7,] "black" "black" "black" "black"
+       [8,] "black" "black" "black" "black"
+       [9,] "black" "black" "black" "black"
+      [10,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.bottom
+      $data
+            V1      V2      V3      V4     
+       [1,] "solid" "solid" "solid" "solid"
+       [2,] "solid" "solid" "solid" "solid"
+       [3,] "solid" "solid" "solid" "solid"
+       [4,] "solid" "solid" "solid" "solid"
+       [5,] "solid" "solid" "solid" "solid"
+       [6,] "solid" "solid" "solid" "solid"
+       [7,] "solid" "solid" "solid" "solid"
+       [8,] "solid" "solid" "solid" "solid"
+       [9,] "solid" "solid" "solid" "solid"
+      [10,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.top
+      $data
+            V1      V2      V3      V4     
+       [1,] "solid" "solid" "solid" "solid"
+       [2,] "solid" "solid" "solid" "solid"
+       [3,] "solid" "solid" "solid" "solid"
+       [4,] "solid" "solid" "solid" "solid"
+       [5,] "solid" "solid" "solid" "solid"
+       [6,] "solid" "solid" "solid" "solid"
+       [7,] "solid" "solid" "solid" "solid"
+       [8,] "solid" "solid" "solid" "solid"
+       [9,] "solid" "solid" "solid" "solid"
+      [10,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.left
+      $data
+            V1      V2      V3      V4     
+       [1,] "solid" "solid" "solid" "solid"
+       [2,] "solid" "solid" "solid" "solid"
+       [3,] "solid" "solid" "solid" "solid"
+       [4,] "solid" "solid" "solid" "solid"
+       [5,] "solid" "solid" "solid" "solid"
+       [6,] "solid" "solid" "solid" "solid"
+       [7,] "solid" "solid" "solid" "solid"
+       [8,] "solid" "solid" "solid" "solid"
+       [9,] "solid" "solid" "solid" "solid"
+      [10,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.right
+      $data
+            V1      V2      V3      V4     
+       [1,] "solid" "solid" "solid" "solid"
+       [2,] "solid" "solid" "solid" "solid"
+       [3,] "solid" "solid" "solid" "solid"
+       [4,] "solid" "solid" "solid" "solid"
+       [5,] "solid" "solid" "solid" "solid"
+       [6,] "solid" "solid" "solid" "solid"
+       [7,] "solid" "solid" "solid" "solid"
+       [8,] "solid" "solid" "solid" "solid"
+       [9,] "solid" "solid" "solid" "solid"
+      [10,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $text.direction
+      $data
+            V1     V2     V3     V4    
+       [1,] "lrtb" "lrtb" "lrtb" "lrtb"
+       [2,] "lrtb" "lrtb" "lrtb" "lrtb"
+       [3,] "lrtb" "lrtb" "lrtb" "lrtb"
+       [4,] "lrtb" "lrtb" "lrtb" "lrtb"
+       [5,] "lrtb" "lrtb" "lrtb" "lrtb"
+       [6,] "lrtb" "lrtb" "lrtb" "lrtb"
+       [7,] "lrtb" "lrtb" "lrtb" "lrtb"
+       [8,] "lrtb" "lrtb" "lrtb" "lrtb"
+       [9,] "lrtb" "lrtb" "lrtb" "lrtb"
+      [10,] "lrtb" "lrtb" "lrtb" "lrtb"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "lrtb"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $background.color
+      $data
+            V1            V2            V3            V4           
+       [1,] "transparent" "transparent" "transparent" "transparent"
+       [2,] "transparent" "transparent" "transparent" "transparent"
+       [3,] "transparent" "transparent" "transparent" "transparent"
+       [4,] "transparent" "transparent" "transparent" "transparent"
+       [5,] "transparent" "transparent" "transparent" "transparent"
+       [6,] "transparent" "transparent" "transparent" "transparent"
+       [7,] "transparent" "transparent" "transparent" "transparent"
+       [8,] "transparent" "transparent" "transparent" "transparent"
+       [9,] "transparent" "transparent" "transparent" "transparent"
+      [10,] "transparent" "transparent" "transparent" "transparent"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $hrule
+      $data
+            V1     V2     V3     V4    
+       [1,] "auto" "auto" "auto" "auto"
+       [2,] "auto" "auto" "auto" "auto"
+       [3,] "auto" "auto" "auto" "auto"
+       [4,] "auto" "auto" "auto" "auto"
+       [5,] "auto" "auto" "auto" "auto"
+       [6,] "auto" "auto" "auto" "auto"
+       [7,] "auto" "auto" "auto" "auto"
+       [8,] "auto" "auto" "auto" "auto"
+       [9,] "auto" "auto" "auto" "auto"
+      [10,] "auto" "auto" "auto" "auto"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "auto"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      attr(,"class")
+      [1] "cell_struct"
+      
+      $styles$pars
+      $text.align
+      $data
+            V1      V2       V3       V4      
+       [1,] "left"  "center" "center" "center"
+       [2,] "left"  "center" "center" "center"
+       [3,] "left"  "center" "center" "center"
+       [4,] "left"  "left"   "center" "center"
+       [5,] "left"  "left"   "center" "center"
+       [6,] "right" "center" "center" "center"
+       [7,] "left"  "center" "center" "center"
+       [8,] "left"  "center" "center" "center"
+       [9,] "left"  "center" "center" "center"
+      [10,] "left"  "center" "center" "center"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "left"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.bottom
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.top
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.left
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.right
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $line_spacing
+      $data
+            V1 V2 V3 V4
+       [1,]  1  1  1  1
+       [2,]  1  1  1  1
+       [3,]  1  1  1  1
+       [4,]  1  1  1  1
+       [5,]  1  1  1  1
+       [6,]  1  1  1  1
+       [7,]  1  1  1  1
+       [8,]  1  1  1  1
+       [9,]  1  1  1  1
+      [10,]  1  1  1  1
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 1
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.bottom
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.top
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.left
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.right
+      $data
+            V1 V2 V3 V4
+       [1,]  0  0  0  0
+       [2,]  0  0  0  0
+       [3,]  0  0  0  0
+       [4,]  0  0  0  0
+       [5,]  0  0  0  0
+       [6,]  0  0  0  0
+       [7,]  0  0  0  0
+       [8,]  0  0  0  0
+       [9,]  0  0  0  0
+      [10,]  0  0  0  0
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.bottom
+      $data
+            V1      V2      V3      V4     
+       [1,] "black" "black" "black" "black"
+       [2,] "black" "black" "black" "black"
+       [3,] "black" "black" "black" "black"
+       [4,] "black" "black" "black" "black"
+       [5,] "black" "black" "black" "black"
+       [6,] "black" "black" "black" "black"
+       [7,] "black" "black" "black" "black"
+       [8,] "black" "black" "black" "black"
+       [9,] "black" "black" "black" "black"
+      [10,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.top
+      $data
+            V1      V2      V3      V4     
+       [1,] "black" "black" "black" "black"
+       [2,] "black" "black" "black" "black"
+       [3,] "black" "black" "black" "black"
+       [4,] "black" "black" "black" "black"
+       [5,] "black" "black" "black" "black"
+       [6,] "black" "black" "black" "black"
+       [7,] "black" "black" "black" "black"
+       [8,] "black" "black" "black" "black"
+       [9,] "black" "black" "black" "black"
+      [10,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.left
+      $data
+            V1      V2      V3      V4     
+       [1,] "black" "black" "black" "black"
+       [2,] "black" "black" "black" "black"
+       [3,] "black" "black" "black" "black"
+       [4,] "black" "black" "black" "black"
+       [5,] "black" "black" "black" "black"
+       [6,] "black" "black" "black" "black"
+       [7,] "black" "black" "black" "black"
+       [8,] "black" "black" "black" "black"
+       [9,] "black" "black" "black" "black"
+      [10,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.right
+      $data
+            V1      V2      V3      V4     
+       [1,] "black" "black" "black" "black"
+       [2,] "black" "black" "black" "black"
+       [3,] "black" "black" "black" "black"
+       [4,] "black" "black" "black" "black"
+       [5,] "black" "black" "black" "black"
+       [6,] "black" "black" "black" "black"
+       [7,] "black" "black" "black" "black"
+       [8,] "black" "black" "black" "black"
+       [9,] "black" "black" "black" "black"
+      [10,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.bottom
+      $data
+            V1      V2      V3      V4     
+       [1,] "solid" "solid" "solid" "solid"
+       [2,] "solid" "solid" "solid" "solid"
+       [3,] "solid" "solid" "solid" "solid"
+       [4,] "solid" "solid" "solid" "solid"
+       [5,] "solid" "solid" "solid" "solid"
+       [6,] "solid" "solid" "solid" "solid"
+       [7,] "solid" "solid" "solid" "solid"
+       [8,] "solid" "solid" "solid" "solid"
+       [9,] "solid" "solid" "solid" "solid"
+      [10,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.top
+      $data
+            V1      V2      V3      V4     
+       [1,] "solid" "solid" "solid" "solid"
+       [2,] "solid" "solid" "solid" "solid"
+       [3,] "solid" "solid" "solid" "solid"
+       [4,] "solid" "solid" "solid" "solid"
+       [5,] "solid" "solid" "solid" "solid"
+       [6,] "solid" "solid" "solid" "solid"
+       [7,] "solid" "solid" "solid" "solid"
+       [8,] "solid" "solid" "solid" "solid"
+       [9,] "solid" "solid" "solid" "solid"
+      [10,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.left
+      $data
+            V1      V2      V3      V4     
+       [1,] "solid" "solid" "solid" "solid"
+       [2,] "solid" "solid" "solid" "solid"
+       [3,] "solid" "solid" "solid" "solid"
+       [4,] "solid" "solid" "solid" "solid"
+       [5,] "solid" "solid" "solid" "solid"
+       [6,] "solid" "solid" "solid" "solid"
+       [7,] "solid" "solid" "solid" "solid"
+       [8,] "solid" "solid" "solid" "solid"
+       [9,] "solid" "solid" "solid" "solid"
+      [10,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.right
+      $data
+            V1      V2      V3      V4     
+       [1,] "solid" "solid" "solid" "solid"
+       [2,] "solid" "solid" "solid" "solid"
+       [3,] "solid" "solid" "solid" "solid"
+       [4,] "solid" "solid" "solid" "solid"
+       [5,] "solid" "solid" "solid" "solid"
+       [6,] "solid" "solid" "solid" "solid"
+       [7,] "solid" "solid" "solid" "solid"
+       [8,] "solid" "solid" "solid" "solid"
+       [9,] "solid" "solid" "solid" "solid"
+      [10,] "solid" "solid" "solid" "solid"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $shading.color
+      $data
+            V1            V2            V3            V4           
+       [1,] "transparent" "transparent" "transparent" "transparent"
+       [2,] "transparent" "transparent" "transparent" "transparent"
+       [3,] "transparent" "transparent" "transparent" "transparent"
+       [4,] "transparent" "transparent" "transparent" "transparent"
+       [5,] "transparent" "transparent" "transparent" "transparent"
+       [6,] "transparent" "transparent" "transparent" "transparent"
+       [7,] "transparent" "transparent" "transparent" "transparent"
+       [8,] "transparent" "transparent" "transparent" "transparent"
+       [9,] "transparent" "transparent" "transparent" "transparent"
+      [10,] "transparent" "transparent" "transparent" "transparent"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $keep_with_next
+      $data
+               V1    V2    V3    V4
+       [1,] FALSE FALSE FALSE FALSE
+       [2,] FALSE FALSE FALSE FALSE
+       [3,] FALSE FALSE FALSE FALSE
+       [4,] FALSE FALSE FALSE FALSE
+       [5,] FALSE FALSE FALSE FALSE
+       [6,] FALSE FALSE FALSE FALSE
+       [7,] FALSE FALSE FALSE FALSE
+       [8,] FALSE FALSE FALSE FALSE
+       [9,] FALSE FALSE FALSE FALSE
+      [10,] FALSE FALSE FALSE FALSE
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $tabs
+      $data
+            V1 V2 V3 V4
+       [1,] NA NA NA NA
+       [2,] NA NA NA NA
+       [3,] NA NA NA NA
+       [4,] NA NA NA NA
+       [5,] NA NA NA NA
+       [6,] NA NA NA NA
+       [7,] NA NA NA NA
+       [8,] NA NA NA NA
+       [9,] NA NA NA NA
+      [10,] NA NA NA NA
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] NA
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      attr(,"class")
+      [1] "par_struct"
+      
+      $styles$text
+      $color
+      $data
+            V1      V2      V3      V4     
+       [1,] "black" "black" "black" "black"
+       [2,] "black" "black" "black" "black"
+       [3,] "black" "black" "black" "black"
+       [4,] "black" "black" "black" "black"
+       [5,] "black" "black" "black" "black"
+       [6,] "black" "black" "black" "black"
+       [7,] "black" "black" "black" "black"
+       [8,] "black" "black" "black" "black"
+       [9,] "black" "black" "black" "black"
+      [10,] "black" "black" "black" "black"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $font.size
+      $data
+            V1 V2 V3 V4
+       [1,]  9  9  9  9
+       [2,]  9  9  9  9
+       [3,]  9  9  9  9
+       [4,]  9  9  9  9
+       [5,]  9  9  9  9
+       [6,]  9  9  9  9
+       [7,]  9  9  9  9
+       [8,]  9  9  9  9
+       [9,]  9  9  9  9
+      [10,]  9  9  9  9
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 11
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $bold
+      $data
+               V1    V2    V3    V4
+       [1,] FALSE FALSE FALSE FALSE
+       [2,] FALSE FALSE FALSE FALSE
+       [3,] FALSE FALSE FALSE FALSE
+       [4,] FALSE FALSE FALSE FALSE
+       [5,] FALSE FALSE FALSE FALSE
+       [6,] FALSE FALSE FALSE FALSE
+       [7,] FALSE FALSE FALSE FALSE
+       [8,] FALSE FALSE FALSE FALSE
+       [9,] FALSE FALSE FALSE FALSE
+      [10,] FALSE FALSE FALSE FALSE
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $italic
+      $data
+               V1    V2    V3    V4
+       [1,] FALSE FALSE FALSE FALSE
+       [2,] FALSE FALSE FALSE FALSE
+       [3,] FALSE FALSE FALSE FALSE
+       [4,] FALSE FALSE FALSE FALSE
+       [5,] FALSE FALSE FALSE FALSE
+       [6,] FALSE FALSE FALSE FALSE
+       [7,] FALSE FALSE FALSE FALSE
+       [8,] FALSE FALSE FALSE FALSE
+       [9,] FALSE FALSE FALSE FALSE
+      [10,] FALSE FALSE FALSE FALSE
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $underlined
+      $data
+               V1    V2    V3    V4
+       [1,] FALSE FALSE FALSE FALSE
+       [2,] FALSE FALSE FALSE FALSE
+       [3,] FALSE FALSE FALSE FALSE
+       [4,] FALSE FALSE FALSE FALSE
+       [5,] FALSE FALSE FALSE FALSE
+       [6,] FALSE FALSE FALSE FALSE
+       [7,] FALSE FALSE FALSE FALSE
+       [8,] FALSE FALSE FALSE FALSE
+       [9,] FALSE FALSE FALSE FALSE
+      [10,] FALSE FALSE FALSE FALSE
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $font.family
+      $data
+            V1                V2                V3                V4               
+       [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [2,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [3,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [4,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [5,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [6,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [7,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [8,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [9,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      [10,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $hansi.family
+      $data
+            V1                V2                V3                V4               
+       [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [2,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [3,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [4,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [5,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [6,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [7,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [8,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [9,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      [10,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $eastasia.family
+      $data
+            V1                V2                V3                V4               
+       [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [2,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [3,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [4,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [5,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [6,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [7,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [8,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [9,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      [10,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $cs.family
+      $data
+            V1                V2                V3                V4               
+       [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [2,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [3,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [4,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [5,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [6,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [7,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [8,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+       [9,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      [10,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $vertical.align
+      $data
+            V1         V2         V3         V4        
+       [1,] "baseline" "baseline" "baseline" "baseline"
+       [2,] "baseline" "baseline" "baseline" "baseline"
+       [3,] "baseline" "baseline" "baseline" "baseline"
+       [4,] "baseline" "baseline" "baseline" "baseline"
+       [5,] "baseline" "baseline" "baseline" "baseline"
+       [6,] "baseline" "baseline" "baseline" "baseline"
+       [7,] "baseline" "baseline" "baseline" "baseline"
+       [8,] "baseline" "baseline" "baseline" "baseline"
+       [9,] "baseline" "baseline" "baseline" "baseline"
+      [10,] "baseline" "baseline" "baseline" "baseline"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "baseline"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $shading.color
+      $data
+            V1            V2            V3            V4           
+       [1,] "transparent" "transparent" "transparent" "transparent"
+       [2,] "transparent" "transparent" "transparent" "transparent"
+       [3,] "transparent" "transparent" "transparent" "transparent"
+       [4,] "transparent" "transparent" "transparent" "transparent"
+       [5,] "transparent" "transparent" "transparent" "transparent"
+       [6,] "transparent" "transparent" "transparent" "transparent"
+       [7,] "transparent" "transparent" "transparent" "transparent"
+       [8,] "transparent" "transparent" "transparent" "transparent"
+       [9,] "transparent" "transparent" "transparent" "transparent"
+      [10,] "transparent" "transparent" "transparent" "transparent"
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 10
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      attr(,"class")
+      [1] "text_struct"
+      
+      
+      attr(,"class")
+      [1] "complex_tabpart"
+
+---
+
+    Code
+      res$footer
+    Output
+      $dataset
+      [1] V1 V2 V3 V4
+      <0 rows> (or 0-length row.names)
+      
+      $content
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [[1]]
+        txt font.size italic bold underlined color shading.color font.family
+      1            NA     NA   NA         NA  <NA>          <NA>        <NA>
+        hansi.family eastasia.family cs.family vertical.align width height  url
+      1         <NA>            <NA>      <NA>           <NA>    NA     NA <NA>
+        eq_data word_field_data img_data .chunk_index
+      1    <NA>            <NA>     NULL            1
+      
+      attr(,"class")
+      [1] "paragraph"
+      
+      attr(,"class")
+      [1] "chunkset_struct"
+      
+      $col_keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $colwidths
+      [1] 1.974762 1.468413 1.468413 1.468413
+      
+      $rowheights
+      numeric(0)
+      
+      $hrule
+      character(0)
+      
+      $spans
+      $spans$rows
+           [,1] [,2] [,3] [,4]
+      
+      $spans$columns
+           [,1] [,2] [,3] [,4]
+      
+      
+      $styles
+      $styles$cells
+      $vertical.align
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "center"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $width
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] NA
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $height
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] NA
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.bottom
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.top
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.left
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $margin.right
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.bottom
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.top
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.left
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.right
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.bottom
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.top
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.left
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.right
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.bottom
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.top
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.left
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.right
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $text.direction
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "lrtb"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $background.color
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $hrule
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "auto"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      attr(,"class")
+      [1] "cell_struct"
+      
+      $styles$pars
+      $text.align
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "left"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.bottom
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.top
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.left
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $padding.right
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 5
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $line_spacing
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 1
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.bottom
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.top
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.left
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.width.right
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 0
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.bottom
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.top
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.left
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.color.right
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.bottom
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.top
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.left
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $border.style.right
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "solid"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $shading.color
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $keep_with_next
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $tabs
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] NA
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      attr(,"class")
+      [1] "par_struct"
+      
+      $styles$text
+      $color
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "black"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $font.size
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] 11
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $bold
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $italic
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $underlined
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $font.family
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $hansi.family
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $eastasia.family
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $cs.family
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "Arial"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $vertical.align
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "baseline"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      $shading.color
+      $data
+           V1 V2 V3 V4
+      
+      $keys
+      [1] "V1" "V2" "V3" "V4"
+      
+      $nrow
+      [1] 0
+      
+      $ncol
+      [1] 4
+      
+      $default
+      [1] "transparent"
+      
+      attr(,"class")
+      [1] "fpstruct"
+      
+      attr(,"class")
+      [1] "text_struct"
+      
+      
+      attr(,"class")
+      [1] "complex_tabpart"
+
+---
+
+    Code
+      res$col_keys
+    Output
+      [1] "V1" "V2" "V3" "V4"
+
+---
+
+    Code
+      res$caption
+    Output
+      $value
+      NULL
+      
+
+---
+
+    Code
+      res$blanks
+    Output
+      character(0)
+
+---
+
+    Code
+      res$properties
+    Output
+      $layout
+      [1] "fixed"
+      
+      $width
+      [1] 0
+      
+      $align
+      [1] "left"
+      
+      $opts_html
+      $extra_css
+      [1] ""
+      
+      $scroll
+      NULL
+      
+      $extra_class
+      NULL
+      
+      attr(,"class")
+      [1] "opts_ft_html"
+      
+      $opts_word
+      $split
+      [1] FALSE
+      
+      $keep_with_next
+      [1] TRUE
+      
+      attr(,"class")
+      [1] "opts_ft_word"
+      
+      $opts_pdf
+      $tabcolsep
+      [1] 2
+      
+      $arraystretch
+      [1] 1.5
+      
+      $float
+      [1] "none"
+      
+      $default_line_color
+      [1] "black"
+      
+      $caption_repeat
+      [1] TRUE
+      
+      $footer_repeat
+      [1] FALSE
+      
+      $fonts_ignore
+      [1] FALSE
+      
+      attr(,"class")
+      [1] "opts_ft_pdf"
+      
+      $word_title
+      NULL
+      
+      $word_description
+      NULL
+      
+
+---
+
+    Code
+      doc$doc_obj$get() %>% xml2::xml_child(1) %>% as.character()
+    Output
+      [1] "<w:body>\n  <w:tbl xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:pic=\"http://schemas.openxmlformats.org/drawingml/2006/picture\">\n    <w:tblPr>\n      <w:tblLayout w:type=\"fixed\"/>\n      <w:jc w:val=\"center\"/>\n      <w:tblLook w:firstRow=\"1\" w:lastRow=\"0\" w:firstColumn=\"0\" w:lastColumn=\"0\" w:noHBand=\"0\" w:noVBand=\"1\"/>\n    </w:tblPr>\n    <w:tblGrid>\n      <w:gridCol w:w=\"2844\"/>\n      <w:gridCol w:w=\"2115\"/>\n      <w:gridCol w:w=\"2115\"/>\n      <w:gridCol w:w=\"2115\"/>\n    </w:tblGrid>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"572\" w:hRule=\"auto\"/><w:tblHeader/></w:trPr>header 1<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"72\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\"/></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"right\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">A: Drug X (N=134)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"right\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">B: Placebo (N=134)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"right\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">C: Combination (N=132)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 1<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">CHN</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">74/134 (55.2%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">81/134 (60.4%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">64/132 (48.5%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 2<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">USA</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">10/134 (7.5%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">13/134 (9.7%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">17/132 (12.9%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 3<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">BRA</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">13/134 (9.7%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">7/134 (5.2%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">10/132 (7.6%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 4<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">PAK</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">12/134 (9.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">9/134 (6.7%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">10/132 (7.6%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 5<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">NGA</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">8/134 (6.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">7/134 (5.2%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">11/132 (8.3%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 6<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"right\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">RUS</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">5/134 (3.7%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">8/134 (6.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">6/132 (4.5%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 7<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">JPN</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">5/134 (3.7%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">4/134 (3.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">9/132 (6.8%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 8<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">GBR</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">4/134 (3.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">3/134 (2.2%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">2/132 (1.5%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body 9<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">CAN</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">3/134 (2.2%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">2/134 (1.5%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">3/132 (2.3%)</w:t></w:r></w:p></w:tc></w:tr>\n    <w:tr><w:trPr><w:cantSplit/><w:trHeight w:val=\"617\" w:hRule=\"auto\"/></w:trPr>body10<w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"left\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">CHE</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">0/134 (0.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">0/134 (0.0%)</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcBorders><w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders><w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"FFFFFF\"/><w:tcMar><w:top w:w=\"0\" w:type=\"dxa\"/><w:bottom w:w=\"0\" w:type=\"dxa\"/><w:left w:w=\"0\" w:type=\"dxa\"/><w:right w:w=\"0\" w:type=\"dxa\"/></w:tcMar><w:vAlign w:val=\"bottom\"/></w:tcPr><w:p><w:pPr><w:jc w:val=\"center\"/><w:pBdr><w:bottom w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:top w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"none\" w:sz=\"0\" w:space=\"0\" w:color=\"000000\"/></w:pBdr><w:spacing w:after=\"0\" w:before=\"0\" w:line=\"240\"/><w:ind w:left=\"0\" w:right=\"0\" w:firstLine=\"0\" w:firstLineChars=\"0\"/><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr></w:pPr><w:r xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\"><w:rPr><w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:eastAsia=\"Times New Roman\" w:cs=\"Times New Roman\"/><w:i w:val=\"false\"/><w:b w:val=\"false\"/><w:u w:val=\"none\"/><w:sz w:val=\"18\"/><w:szCs w:val=\"18\"/><w:color w:val=\"000000\"/></w:rPr><w:t xml:space=\"preserve\">0/132 (0.0%)</w:t></w:r></w:p></w:tc></w:tr>\n  </w:tbl>\n  <w:sectPr w:rsidR=\"001379FE\" w:rsidSect=\"00747CCE\">\n    <w:type w:val=\"continuous\"/>\n    <w:pgSz w:w=\"11900\" w:h=\"16840\"/>\n    <w:pgMar w:top=\"1417\" w:right=\"1417\" w:bottom=\"1417\" w:left=\"1417\" w:header=\"708\" w:footer=\"708\" w:gutter=\"0\"/>\n    <w:cols w:space=\"708\"/>\n    <w:docGrid w:linePitch=\"360\"/>\n  </w:sectPr>\n</w:body>"
+
 # tt_to_flextable_j() works fine with Listings
 
     Code
