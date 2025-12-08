@@ -113,6 +113,64 @@ testthat::test_that("tt_to_flextable_j() works fine with Tables", {
   snapshot_test_flextable(res)
 })
 
+
+
+testthat::test_that("tt_to_flextable_j() works fine with round_type", {
+  lsting <- adae %>%
+    dplyr::select(USUBJID, AGE, SEX, RACE, ARM, BMRKR1) %>%
+    dplyr::distinct() %>%
+    dplyr::group_by(ARM) %>%
+    dplyr::slice_head(n = 2) %>%
+    dplyr::ungroup()
+  
+  lsting[1, "BMRKR1"] <- 1.865
+  lsting[2, "BMRKR1"] <- 2.985
+  lsting[3, "BMRKR1"] <- -0.001
+  
+  lsting <- lsting %>%
+    dplyr::mutate(
+      AGE = tern::explicit_na(as.character(AGE), ""),
+      SEX = tern::explicit_na(SEX, ""),
+      RACE = explicit_na(RACE, ""),
+      COL0 = explicit_na(.data[["ARM"]], ""),
+      COL1 = explicit_na(USUBJID, ""),
+      COL2 = paste(AGE, SEX, RACE, sep = " / "),
+      COL3 = BMRKR1
+    ) %>%
+    arrange(COL0, COL1)
+  
+  lsting <- formatters::var_relabel(lsting,
+                                    COL0 = "Treatment Group",
+                                    COL1 = "Subject ID",
+                                    COL2 = paste("Age (years)", "Sex", "Race", sep = " / "),
+                                    COL3 = "Biomarker 1"
+  )
+  
+  ls1 <- rlistings::as_listing(
+    df = lsting,
+    key_cols = c("COL0", "COL1"),
+    disp_cols = c("COL0", "COL1", "COL2", "COL3"),
+    col_formatting = list(COL3 = formatters::fmt_config(format = "xx.xx"))
+  )
+  
+  options(docx.add_datetime = FALSE)
+  testthat::expect_no_error(
+    res <- tt_to_flextable_j(tt = ls1, tblid = "output ID", orientation = "landscape", round_type = "iec")
+  )
+  testthat::expect_equal(res$body$dataset[1, "COL3"], "1.86")
+  testthat::expect_equal(res$body$dataset[2, "COL3"], "2.98")
+  testthat::expect_equal(res$body$dataset[3, "COL3"], "-0.00")
+  snapshot_test_flextable(res)
+  testthat::expect_no_error(
+    res <- tt_to_flextable_j(tt = ls1, tblid = "output ID", orientation = "landscape", round_type = "sas")
+  )
+  testthat::expect_equal(res$body$dataset[1, "COL3"], "1.87")
+  testthat::expect_equal(res$body$dataset[2, "COL3"], "2.99")
+  testthat::expect_equal(res$body$dataset[3, "COL3"], "0.00")
+  snapshot_test_flextable(res)
+  options(docx.add_datetime = TRUE)
+})
+
 testthat::test_that("tt_to_flextable_j() works fine with Listings", {
 
   lsting <- adae %>%
@@ -171,7 +229,6 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
   snapshot_test_flextable(res)
 
   # example with superscript and >=
-
   lsting <- adae %>%
     dplyr::select(USUBJID, AGE, SEX, RACE, ARM) %>%
     dplyr::distinct() %>%
@@ -421,8 +478,9 @@ testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works corr
   flx <- flx %>% flextable::align(part = "header", i = 1, align = "center")
   flx <- flx %>% rtables.officer:::.remove_hborder(part = "header")
   flx <- flx %>%
-    flextable::hline(part = "header", i = 1, j = 1) %>%
-    flextable::hline(part = "header", i = 1, j = 3)
+    flextable::border(part = "header",
+                      border.top = flextable::fp_border_default(),
+                      border.bottom = flextable::fp_border_default())
 
   testthat::expect_no_error(
     res <- junco:::add_little_gap_bottom_borders_spanning_headers(flx)

@@ -136,7 +136,7 @@ add_title_style_caption <- function(doc, string_to_look_for) {
 add_little_gap_bottom_borders_spanning_headers <- function(
     flx,
     border = flextable::fp_border_default(width = 0.75, color = "black")) {
-
+  
   spanning_headers <- flx$header$spans$rows
   # if there is a row in 'spanning_headers' containing more than one number
   # that is > 1 (i.e. a spanning header), and there was a bottom border in those positions:
@@ -148,11 +148,18 @@ add_little_gap_bottom_borders_spanning_headers <- function(
     which(row > 1)
   })
 
-
   for (i in seq_along(pos_little_gaps)) {
     j <- pos_little_gaps[[i]]
     if (length(j) > 1 &&
           all(flx$header$styles$cells$border.width.bottom$data[i, j] > 0)) {
+      # remove the border before inserting a paragraph border
+      flx <- flextable::border(
+        x = flx,
+        part = "header",
+        i = i,
+        # j = j,
+        border.bottom = officer::fp_border(color = "white", width = 0.1)
+      )
       flx <- flextable::style(
         x = flx,
         part = "header",
@@ -621,6 +628,11 @@ theme_docx_default_j <- function(
 #' @param alignments (`list`)\cr List of named lists. Vectorized.
 #' (Default = `list()`) Used to specify individual column or cell alignments.
 #' Each named list contains `row`, `col`, and `value`.
+#' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of
+#' columns of `tt` and k is the number of lines the header takes up.
+#' See [junco::make_header_bordmat] for what the matrix should contain.
+#' Users should only specify this when the default behavior does not meet their needs.
+#'
 #'
 #' @note
 #' This function has been tested for common use cases but may not work or have
@@ -662,7 +674,8 @@ tt_to_flextable_j <- function(
     col_gap = ifelse(tlgtype == "Listing", .5, 3),
     pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
     round_type = formatters::obj_round_type(tt),
-    alignments = list()) {
+    alignments = list(),
+    border_mat = make_header_bordmat(obj = tt)) {
 
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
@@ -774,7 +787,6 @@ tt_to_flextable_j <- function(
         }
       )
     }
-    border_mat <- junco:::make_header_bordmat(obj = tt)
     pag_bord_mats <- lapply(
       seq_along(pags),
       function(i) {
@@ -783,7 +795,7 @@ tt_to_flextable_j <- function(
         } else {
           partmpf <- pags[[i]][[1]]
         }
-        junco:::subset_border_mat(border_mat, hdrmpf, partmpf)
+        subset_border_mat(border_mat, hdrmpf, partmpf)
       }
     )
     ret <- lapply(
@@ -843,7 +855,8 @@ tt_to_flextable_j <- function(
           col_gap = col_gap,
           pagenum = pagenum,
           round_type = round_type,
-          alignments = alignments
+          alignments = alignments,
+          border_mat = pag_bord_mats[[i]],
         )
 
         return(sub_ft)
@@ -957,6 +970,8 @@ tt_to_flextable_j <- function(
           hnum <- hnum - 1
           whsnc <- whsnc - 1
           det_nclab <- det_nclab[-row_to_pop, , drop = FALSE]
+          # also remove that row from 'border_mat'
+          border_mat <- border_mat[-row_to_pop, , drop = FALSE]
         }
       }
     }
@@ -967,6 +982,13 @@ tt_to_flextable_j <- function(
   # NOTE: this block of code calculates where to put horizontal borders
   # within the Header
   l_pos <- list()
+  for (i in seq(1, nrow(border_mat))) {
+    for (j in seq(1, ncol(border_mat))) {
+      if (border_mat[i, j] != 0) {
+        l_pos <- append(l_pos, list(c(i, j)))
+      }
+    }
+  }
 
   if (hnum > 1) {
     for (i in seq(hnum - 1, 1)) {
@@ -982,7 +1004,7 @@ tt_to_flextable_j <- function(
         if (cur_width > 1 &&
               !grepl("^N=", as.vector(hdr[i + 1, sel])[j]) &&
               trimws(as.vector(hdr[i, sel])[j]) != "") {
-          l_pos <- append(l_pos, list(c(i, cnt)))
+          # l_pos <- append(l_pos, list(c(i, cnt)))
         }
         cnt <- cnt + cur_width
       }
@@ -990,9 +1012,12 @@ tt_to_flextable_j <- function(
   }
   nr_body <- flextable::nrow_part(flx, part = "body")
   nr_header <- flextable::nrow_part(flx, part = "header")
-  flx <- flx %>%
-    rtables.officer:::.remove_hborder(part = "header", w = "all") %>%
-    rtables.officer:::.add_hborder("header", ii = c(0, hnum), border = border)
+  # flx <- flx %>%
+  #   rtables.officer:::.remove_hborder(part = "header", w = "all") %>%
+  #   rtables.officer:::.add_hborder("header", ii = c(0, hnum), border = border)
+  flx <- flx %>% 
+    flextable::border(part = "header", border = flextable::fp_border_default(width = 0)) %>% 
+    flextable::border(part = "header", i = 1, border.top = border)
 
   for (ij in l_pos) {
     i <- ij[1]
@@ -1299,6 +1324,11 @@ tt_to_flextable_j <- function(
 #' (Default = `list()`) Used to specify individual column or cell alignments.
 #' Each named list contains `row`, `col`, and `value`.
 #' @param ... other parameters.
+#' @param border (optional) an fp_border object.
+#' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of
+#' columns of `tt` and k is the number of lines the header takes up.
+#' See [junco::make_header_bordmat] for what the matrix should contain.
+#' Users should only specify this when the default behavior does not meet their needs.
 #'
 #' @note
 #' This function has been tested for common use cases but may not work or have
@@ -1338,6 +1368,8 @@ export_as_docx_j <- function(
     pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
     round_type = formatters::obj_round_type(tt),
     alignments = list(),
+    border = flextable::fp_border_default(width = 0.75, color = "black"),
+    border_mat = make_header_bordmat(obj = tt),
     ...) {
 
   # Validate `alignments` here because of its complicated data structure
@@ -1368,6 +1400,8 @@ export_as_docx_j <- function(
                             theme = theme,
                             round_type = round_type,
                             alignments = alignments,
+                            border = border,
+                            border_mat = border_mat,
                             ...)
   }
   if (inherits(tt, "flextable")) {
@@ -1392,6 +1426,8 @@ export_as_docx_j <- function(
                                      theme = theme,
                                      round_type = round_type,
                                      alignments = alignments,
+                                     border = border,
+                                     border_mat = border_mat,
                                      ...),
                               SIMPLIFY = FALSE)
     } else if (inherits(tt[[1]], "flextable") ||
@@ -1440,6 +1476,8 @@ export_as_docx_j <- function(
         pagenum = pagenum,
         round_type = round_type,
         alignments = alignments,
+        border = border,
+        border_mat = border_mat,
         ... = ...
       )
     } else {
@@ -1477,6 +1515,8 @@ export_as_docx_j <- function(
         pagenum = pagenum,
         round_type = round_type,
         alignments = alignments,
+        border = border,
+        border_mat = border_mat,
         ... = ...
       )
     }

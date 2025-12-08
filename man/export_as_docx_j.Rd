@@ -28,6 +28,8 @@ export_as_docx_j(
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
   alignments = list(),
+  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border_mat = make_header_bordmat(obj = tt),
   ...
 )
 }
@@ -86,6 +88,13 @@ See \verb{[formatters::format_value()]} for more details.}
 \item{alignments}{(\code{list})\cr List of named lists. Vectorized.
 (Default = \code{list()}) Used to specify individual column or cell alignments.
 Each named list contains \code{row}, \code{col}, and \code{value}.}
+
+\item{border}{(optional) an fp_border object.}
+
+\item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of
+columns of \code{tt} and k is the number of lines the header takes up.
+See \link{make_header_bordmat} for what the matrix should contain.
+Users should only specify this when the default behavior does not meet their needs.}
 
 \item{...}{other parameters.}
 }

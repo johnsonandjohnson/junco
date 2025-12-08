@@ -34,7 +34,8 @@ tt_to_flextable_j(
   col_gap = ifelse(tlgtype == "Listing", 0.5, 3),
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
-  alignments = list()
+  alignments = list(),
+  border_mat = make_header_bordmat(obj = tt)
 )
 }
 \arguments{
@@ -105,6 +106,11 @@ See \verb{[formatters::format_value()]} for more details.}
 \item{alignments}{(\code{list})\cr List of named lists. Vectorized.
 (Default = \code{list()}) Used to specify individual column or cell alignments.
 Each named list contains \code{row}, \code{col}, and \code{value}.}
+
+\item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of
+columns of \code{tt} and k is the number of lines the header takes up.
+See \link{make_header_bordmat} for what the matrix should contain.
+Users should only specify this when the default behavior does not meet their needs.}
 }
 \value{
 a flextable object.
