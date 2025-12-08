@@ -26,6 +26,7 @@ export_as_docx_j(
   tlgtype = junco:::tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", 0.5, 3),
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+  round_type = formatters::obj_round_type(tt),
   ...
 )
 }
@@ -75,6 +76,11 @@ docx version.}
 
 \item{pagenum}{(optional). Whether to display page numbers. Only applicable
 to listings (i.e. for tables and figures this argument is ignored).}
+
+\item{round_type}{(\code{"iec"} or \code{"sas"})\cr the type of rounding to perform. iec,
+the default, performs rounding compliant with IEC 60559, while
+sas performs nearest-value rounding consistent with rounding within SAS.
+See \verb{[formatters::format_value()]} for more details.}
 
 \item{...}{other parameters.}
 }

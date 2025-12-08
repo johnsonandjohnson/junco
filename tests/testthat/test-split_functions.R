@@ -25,7 +25,8 @@ testthat::test_that("cond_rm_facets works", {
   lyt <- basic_table(
     top_level_section_div = " ",
     show_colcounts = TRUE,
-    colcount_format = "N=xx"
+    colcount_format = "N=xx",
+    round_type = "sas"
   ) %>%
     split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
     split_cols_by("ARM", split_fun = mysplit)
@@ -55,7 +56,7 @@ testthat::test_that("rm_levels works", {
     pre = list(rm_levels(excl = c("JPN", "USA", "NGA")))
   )
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     split_rows_by("COUNTRY", split_fun = split_fun) %>%
     summarize_row_groups() # for simplicity
 
@@ -76,7 +77,7 @@ testthat::test_that("real_add_overall_facet works", {
     post = list(real_add_overall_facet("Overall", "Overall"))
   )
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     split_rows_by("COUNTRY", split_fun = split_fun) %>%
     summarize_row_groups() # for simplicity
 
@@ -100,7 +101,7 @@ testthat::test_that("make_combo_splitfun works", {
     levels = c("USA", "CAN")
   )
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     split_rows_by("COUNTRY", split_fun = split_fun) %>%
     summarize_row_groups() # for simplicity
 
@@ -137,7 +138,7 @@ testthat::test_that("combine_nonblank works", {
 
   split_fun <- make_split_fun(post = list(combine_nonblank("Overall", "Overall")))
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     split_rows_by("COUNTRY", split_fun = split_fun) %>%
     summarize_row_groups() # for simplicity
 
@@ -172,13 +173,13 @@ testthat::test_that("rm_blank_levels works", {
     pre = list(rm_blank_levels)
   )
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     split_rows_by("COUNTRY") %>%
     summarize_row_groups()
   tbl <- build_table(lyt, adsl)
   row_names_before <- rtables::row.names(tbl)
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     split_rows_by("COUNTRY", split_fun = split_fun) %>%
     summarize_row_groups()
   tbl <- build_table(lyt, adsl)

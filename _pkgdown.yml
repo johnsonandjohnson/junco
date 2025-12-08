@@ -48,7 +48,6 @@ reference:
     - c_proportion_logical
     - cmp_cfun
     - cmp_post_fun
-    - count_fraction
     - find_missing_chg_after_avisit
     - fit_ancova
     - fit_mmrm_j
@@ -91,10 +90,6 @@ reference:
     - jjcsformat_xx
     - jjcs_num_formats
     - jjcsformat_count_denom_fraction
-    - format_xx_fct
-    - jjcsformat_fraction_count_denom
-    - jjcsformat_pval_fct
-    - jjcsformat_range_fct
     - insert_blank_line
 
   - title: junco Sorting Functions and Pruning Functions

@@ -32,7 +32,8 @@ tt_to_flextable_j(
   reduce_first_col_indentation = FALSE,
   tlgtype = junco:::tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", 0.5, 3),
-  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE)
+  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+  round_type = formatters::obj_round_type(tt)
 )
 }
 \arguments{
@@ -94,6 +95,11 @@ One of: "portrait", "landscape".}
 \item{col_gap}{(optional). Default = 3 (Tables) or 0.5 (Listings).}
 
 \item{pagenum}{(optional). Default = FALSE (Tables) or TRUE (Listings).}
+
+\item{round_type}{(\code{"iec"} or \code{"sas"})\cr the type of rounding to perform. iec,
+the default, performs rounding compliant with IEC 60559, while
+sas performs nearest-value rounding consistent with rounding within SAS.
+See \verb{[formatters::format_value()]} for more details.}
 }
 \value{
 a flextable object.

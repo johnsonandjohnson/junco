@@ -50,7 +50,7 @@ test_that("a_coxph_hr works with custom arguments and stratification factors", {
     dplyr::filter(PARAMCD == "OS") %>%
     dplyr::mutate(is_event = CNSR == 0)
 
-  result <- basic_table() %>%
+  result <- basic_table(round_type = "sas") %>%
     split_cols_by(var = "ARMCD") %>%
     analyze(
       vars = "AVAL",
@@ -81,7 +81,7 @@ test_that("a_coxph_hr works with stratification factors for Log-Rank test", {
     dplyr::filter(PARAMCD == "OS") %>%
     dplyr::mutate(is_event = CNSR == 0)
 
-  result <- basic_table() %>%
+  result <- basic_table(round_type = "sas") %>%
     split_cols_by(var = "ARMCD") %>%
     analyze(
       vars = "AVAL",
