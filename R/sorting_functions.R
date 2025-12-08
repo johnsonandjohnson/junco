@@ -30,6 +30,7 @@
 #' @returns A function which can be used as a score function (scorefun in `sort_at_path`).
 # @examples #result <- sort_at_path(result, c('root', 'AEBODSYS'), scorefun = jj_complex_scorefun())
 #' @examples
+#' library(dplyr)
 #' ADAE <- data.frame(
 #'   USUBJID = c(
 #'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
@@ -70,6 +71,8 @@
 #' )
 #'
 #' ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
+#'
+#' ADSL <- unique(ADAE |> select(USUBJID, "colspan_trt", "rrisk_header", "rrisk_label", "TRT01A"))
 #'
 #' lyt <- basic_table() |>
 #'   split_cols_by(
@@ -120,7 +123,7 @@
 #'     )
 #'   )
 #'
-#' result <- build_table(lyt, ADAE)
+#' result <- build_table(lyt, ADAE, alt_counts_df = ADSL)
 #'
 #' result
 #'
