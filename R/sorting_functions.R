@@ -143,11 +143,12 @@
 #' @rdname complex_scoring_function
 #' @aliases jj_complex_scorefun
 jj_complex_scorefun <- function(
-    spanningheadercolvar = "colspan_trt",
-    usefirstcol = FALSE,
-    colpath = NULL,
-    firstcat = NULL,
-    lastcat = NULL) {
+  spanningheadercolvar = "colspan_trt",
+  usefirstcol = FALSE,
+  colpath = NULL,
+  firstcat = NULL,
+  lastcat = NULL
+) {
   paths <- NULL
 
   function(tt) {
