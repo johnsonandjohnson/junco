@@ -1334,6 +1334,10 @@ export_as_docx_j(result,
                 orientation = "landscape",
                 markup_df = docx_markup_df)
 ```
+### Visual Output (HTML Representation)
+```{r superscript_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+tt_to_flextable_j(result, "examplelistingsuperscript2", orientation = "landscape",  markup_df = dps_markup_df)
+```
 
 
 ## Grouping of Columns for Tables Containing Many Columns
