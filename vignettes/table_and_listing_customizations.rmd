@@ -1113,13 +1113,13 @@ lyt <- basic_table(
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
-             file = paste0(tempdir(), "/example3"),
+             file = paste0(tempdir(), "/bordertable"),
              orientation = "landscape")
 ```
 
 ### Visual Output (HTML Representation)
 ```{r border_matrix_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "example3", orientation = "landscape")
+tt_to_flextable_j(result, "bordertable", orientation = "landscape")
 ```
 
 In the resulting output, the "Example Drug High Dose" spanning header
@@ -1148,7 +1148,7 @@ argument included, the new user-defined border matrix can be provided as the arg
 
 ```{r custom_border_matrix}
 tt_to_tlgrtf(result,
-             file = paste0(tempdir(), "/example4"),
+             file = paste0(tempdir(), "/custombordertable"),
              orientation = "landscape",
              border_mat = header_border)
 ```
@@ -1159,7 +1159,7 @@ To export a table with a custom border matrix to a .docx file, the `junco::expor
 
 ```{r custom_border_matrix_docx}
 export_as_docx_j(result,
-                tblid = "example4",
+                tblid = "custombordertable",
                 output_dir = tempdir(),
                 orientation = "landscape",
                 border_mat = header_border)
@@ -1167,7 +1167,7 @@ export_as_docx_j(result,
 
 ### Visual Output (HTML Representation)
 ```{r custom_border_matrix_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "example4", orientation = "landscape", border_mat = header_border)
+tt_to_flextable_j(result, "custombordertable", orientation = "landscape", border_mat = header_border)
 ```
 
 
@@ -1262,7 +1262,7 @@ lyt <- basic_table(
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
 tt_to_tlgrtf(result,
-             file = paste0(tempdir(), "/example6"),
+             file = paste0(tempdir(), "/superscripttable"),
              orientation = "landscape",
              markup_df = dps_markup_df)
 ```
@@ -1294,7 +1294,7 @@ If a .docx file is to be created for the table, the `junco::export_as_docx_j` is
 
 ```{r superscript_table_docx}
 export_as_docx_j(result,
-                tblid = "example6",
+                tblid = "superscripttable",
                 output_dir = tempdir(),
                 orientation = "landscape",
                 markup_df = docx_markup_df)
@@ -1305,7 +1305,7 @@ export_as_docx_j(result,
 
 ### Visual Output (HTML Representation)
 ```{r superscript_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "example6", orientation = "landscape",  markup_df = dps_markup_df)
+tt_to_flextable_j(result, "superscripttable", orientation = "landscape",  markup_df = dps_markup_df)
 ```
 
 ### Listing .rtf File
