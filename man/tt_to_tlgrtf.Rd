@@ -27,6 +27,7 @@ tt_to_tlgrtf(
   one_table = TRUE,
   border_mat = make_header_bordmat(obj = tt),
   round_type = obj_round_type(tt),
+  alignments = list(),
   validate = TRUE,
   ...
 )
@@ -87,6 +88,11 @@ default behavior does not meet their needs.}
 the default, performs rounding compliant with IEC 60559, while
 sas performs nearest-value rounding consistent with rounding within SAS.
 See \verb{[formatters::format_value()]} for more details.}
+
+\item{alignments}{(\code{list})\cr List of named lists. Vectorized.
+(Default = \code{list()}) Used to specify individual column or cell alignments.
+Each named list contains \code{row}, \code{col}, and \code{value}, which are passed to
+\code{\link[huxtable:align]{huxtable::set_align()}} to set the alignments.}
 
 \item{validate}{logical(1). Whether to validate the table structure using
 \code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. This can also be disabled

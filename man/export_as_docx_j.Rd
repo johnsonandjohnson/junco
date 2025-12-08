@@ -27,6 +27,7 @@ export_as_docx_j(
   col_gap = ifelse(tlgtype == "Listing", 0.5, 3),
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
+  alignments = list(),
   ...
 )
 }
@@ -81,6 +82,10 @@ to listings (i.e. for tables and figures this argument is ignored).}
 the default, performs rounding compliant with IEC 60559, while
 sas performs nearest-value rounding consistent with rounding within SAS.
 See \verb{[formatters::format_value()]} for more details.}
+
+\item{alignments}{(\code{list})\cr List of named lists. Vectorized.
+(Default = \code{list()}) Used to specify individual column or cell alignments.
+Each named list contains \code{row}, \code{col}, and \code{value}.}
 
 \item{...}{other parameters.}
 }

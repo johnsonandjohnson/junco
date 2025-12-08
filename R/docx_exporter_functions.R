@@ -148,6 +148,7 @@ add_little_gap_bottom_borders_spanning_headers <- function(
     which(row > 1)
   })
 
+
   for (i in seq_along(pos_little_gaps)) {
     j <- pos_little_gaps[[i]]
     if (length(j) > 1 &&
@@ -437,17 +438,17 @@ my_pg_width_by_orient <- function(orientation = "portrait") {
 }
 
 #' Obtain the default theme for the docx following JnJ standars
-#' 
+#'
 #' @description `r lifecycle::badge('experimental')`
 #'
 #' This function is based on [rtables.officer::theme_docx_default()].
 #' See notes to understand why this is experimental.
-#' 
+#'
 #'
 #' @param font (`string`)\cr font. Defaults to "Times New Roman".
 #' @param font_size (`integer(1)`)\cr font size. Defaults to 9.
-#' @param cell_margins (`numeric(1) or numeric(4)`)\cr 
-#' a numeric or a vector of four numbers indicating 
+#' @param cell_margins (`numeric(1) or numeric(4)`)\cr
+#' a numeric or a vector of four numbers indicating
 #' c("left", "right", "top", "bottom"). It defaults to 0mm in Word pt to all 4 margins.
 #' @param bold (`character`)\cr parts of the table text that should be in bold.
 #' Can be any combination of c("header", "content_rows", "label_rows", "top_left").
@@ -458,7 +459,7 @@ my_pg_width_by_orient <- function(orientation = "portrait") {
 #' See example for needed structure. Accepted groupings/names are c("header", "body").
 #' @param border (`fp_border`)\cr border to use. Defaults to width = 0.75
 #' and color = "black"
-#' 
+#'
 #' @note
 #' This function has been tested for common use cases but may not work or have
 #' unexpected or undesired behavior in corner cases. As such it is not considered
@@ -617,6 +618,9 @@ theme_docx_default_j <- function(
 #' the default, performs rounding compliant with IEC 60559, while
 #' sas performs nearest-value rounding consistent with rounding within SAS.
 #' See `[formatters::format_value()]` for more details.
+#' @param alignments (`list`)\cr List of named lists. Vectorized.
+#' (Default = `list()`) Used to specify individual column or cell alignments.
+#' Each named list contains `row`, `col`, and `value`.
 #'
 #' @note
 #' This function has been tested for common use cases but may not work or have
@@ -657,7 +661,8 @@ tt_to_flextable_j <- function(
     tlgtype = junco:::tlg_type(tt),
     col_gap = ifelse(tlgtype == "Listing", .5, 3),
     pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-    round_type = formatters::obj_round_type(tt)) {
+    round_type = formatters::obj_round_type(tt),
+    alignments = list()) {
 
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
@@ -672,6 +677,12 @@ tt_to_flextable_j <- function(
   checkmate::assert_number(total_page_width, lower = 1)
   checkmate::assert_number(total_page_height, lower = 1)
   checkmate::assert_numeric(colwidths, lower = 0, len = ncol(tt) + 1, null.ok = TRUE)
+
+  # Validate `alignments` here because of its complicated data structure
+  stopifnot("`alignments` must be a list" = is.list(alignments))
+  for (alignment in alignments) {
+    stopifnot("Each item of `alignments` must be a list" = is.list(alignment))
+  }
 
   if (tlgtype == "Listing" && nrow(tt) == 0) {
     dat <- as.list(c("No data to report", rep("", ncol(tt) - 1)))
@@ -729,7 +740,6 @@ tt_to_flextable_j <- function(
       )
     }
     if (methods::is(tt, "VTableTree")) {
-      # hdrmpf <- rtables::matrix_form(tt[1, ])
       hdrmpf <- rtables::matrix_form(tt[1, , keep_topleft = TRUE], round_type = round_type)
     } else if (methods::is(tt, "list") && methods::is(tt[[1]], "MatrixPrintForm")) {
       hdrmpf <- tt[[1]]
@@ -832,7 +842,8 @@ tt_to_flextable_j <- function(
           tlgtype = tlgtype,
           col_gap = col_gap,
           pagenum = pagenum,
-          round_type = round_type
+          round_type = round_type,
+          alignments = alignments
         )
 
         return(sub_ft)
@@ -853,6 +864,13 @@ tt_to_flextable_j <- function(
   mpf_aligns <- formatters::mf_aligns(matform)
   hnum <- formatters::mf_nlheader(matform)
   rdf <- rtables::make_row_df(tt)
+
+
+  # check if the user passed 'alignments'
+  # if so, overwrite the default ones
+  for (al in alignments) {
+    mpf_aligns[al$row, al$col] <- al$value
+  }
 
   # NOTE: convert the '>=', '<=', etc symbols
   # nolint start
@@ -983,10 +1001,21 @@ tt_to_flextable_j <- function(
   }
   # END
 
-  flx <- flx %>%
-    rtables.officer:::.apply_alignments(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") %>%
-    rtables.officer:::.apply_alignments(mpf_aligns[-seq_len(hnum), , drop = FALSE], "body")
-
+  if (length(alignments) == 0) {
+    flx <- flx %>%
+      rtables.officer:::.apply_alignments(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") %>%
+      # rtables.officer:::.apply_alignments(mpf_aligns[-seq_len(hnum), , drop = FALSE], "body")
+      rtables.officer:::.apply_alignments(mpf_aligns[seq(hnum + 1, nrow(mpf_aligns)), , drop = FALSE], "body")
+  } else {
+    flx <- flx %>%
+      rtables.officer:::.apply_alignments(mpf_aligns[seq_len(hnum), , drop = FALSE], "header")
+    for (i in seq(hnum + 1, nrow(mpf_aligns))) {
+      flx <- flx %>%
+        flextable::align(part = "body", i = i - hnum,
+                         align = mpf_aligns[i, , drop = FALSE])
+    }
+  }
+  
   checkmate::check_number(indent_size, null.ok = TRUE)
   if (is.null(indent_size)) {
     indent_size <- matform$indent_size * rtables.officer::word_mm_to_pt(1)
@@ -1266,6 +1295,9 @@ tt_to_flextable_j <- function(
 #' the default, performs rounding compliant with IEC 60559, while
 #' sas performs nearest-value rounding consistent with rounding within SAS.
 #' See `[formatters::format_value()]` for more details.
+#' @param alignments (`list`)\cr List of named lists. Vectorized.
+#' (Default = `list()`) Used to specify individual column or cell alignments.
+#' Each named list contains `row`, `col`, and `value`.
 #' @param ... other parameters.
 #'
 #' @note
@@ -1305,7 +1337,14 @@ export_as_docx_j <- function(
     col_gap = ifelse(tlgtype == "Listing", .5, 3),
     pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
     round_type = formatters::obj_round_type(tt),
+    alignments = list(),
     ...) {
+
+  # Validate `alignments` here because of its complicated data structure
+  stopifnot("`alignments` must be a list" = is.list(alignments))
+  for (alignment in alignments) {
+    stopifnot("Each item of `alignments` must be a list" = is.list(alignment))
+  }
 
   checkmate::assert_flag(add_page_break)
   do_tt_error <- FALSE
@@ -1328,6 +1367,7 @@ export_as_docx_j <- function(
                             pagenum = pagenum,
                             theme = theme,
                             round_type = round_type,
+                            alignments = alignments,
                             ...)
   }
   if (inherits(tt, "flextable")) {
@@ -1351,6 +1391,7 @@ export_as_docx_j <- function(
                                      pagenum = pagenum,
                                      theme = theme,
                                      round_type = round_type,
+                                     alignments = alignments,
                                      ...),
                               SIMPLIFY = FALSE)
     } else if (inherits(tt[[1]], "flextable") ||
@@ -1398,6 +1439,7 @@ export_as_docx_j <- function(
         col_gap = col_gap,
         pagenum = pagenum,
         round_type = round_type,
+        alignments = alignments,
         ... = ...
       )
     } else {
@@ -1434,6 +1476,7 @@ export_as_docx_j <- function(
         col_gap = col_gap,
         pagenum = pagenum,
         round_type = round_type,
+        alignments = alignments,
         ... = ...
       )
     }
