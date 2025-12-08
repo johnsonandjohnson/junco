@@ -828,6 +828,7 @@ between the drug name and dose level.
 
 ```{r newline_table_rtf}
 library(junco)
+library(rtables)
 
 adsl <- data.frame(TRT01A = c("Example Drug\\line 5 mg",
                               "Example Drug\\line 10 mg",
@@ -861,6 +862,55 @@ tt_to_tlgrtf(result,
              file = paste0(tempdir(), "/example2"),
              orientation = "landscape")
 ```
+
+### Table .docx File
+
+In order to get the dose level to appear on a new line, then the TRT01A
+variable values will need to be updated to include the text "\\n"
+between the drug name and dose level.
+
+
+```{r newline_table_docx}
+library(junco)
+library(rtables)
+
+adsl <- data.frame(TRT01A = c("Example Drug\n 5 mg",
+                              "Example Drug\n 10 mg",
+                              "Example Drug\n 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+lyt <- basic_table(
+  show_colcounts = FALSE,
+  colcount_format = "N=xx"
+) |>
+  ### first columns
+  split_cols_by("TRT01A",,
+                show_colcounts = FALSE
+  ) |>
+  ### analyze height
+  analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
+
+result <- build_table(lyt, adsl)
+result <- set_titles(result, titles)
+
+export_as_docx_j(result,
+                tblid = "examplenewline",
+                output_dir = tempdir(),
+                orientation = "landscape")
+
+```
+
+
 ```{r newline_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "example2", orientation = "landscape")
 ```
@@ -906,22 +956,45 @@ tt_to_tlgrtf(result,
 
 
 
-### Table .docx File
-To export a table with newlines in the column headers to a .docx file, the `junco::export_as_docx_j` function can be called with the same data preparation as for the .rtf file:
-
-```{r newline_table_docx}
-export_as_docx_j(result,
-                tblid = "examplenewline",
-                output_dir = tempdir(),
-                orientation = "landscape")
-```
-
 
 
 ### Listing .docx File
-To export a listing with newlines in the column headers to a .docx file, the `junco::export_as_docx_j` function can be called with the same data preparation as for the .rtf file:
+
+
+If a .docx file is to be created for the listing, new lines can be inserted into the column header by updating the variable label that corresponds with the column of interest.
+
+By adding in "\\n" to the TRT01A variable label, a new line is inserted after "Actual Treatment".
 
 ```{r newline_listing_docx}
+library(junco)
+library(rlistings)
+
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+) |>
+  formatters::var_relabel(TRT01A = "Actual Treatment for\n Period 01") |>
+  formatters::var_relabel(SUBJECT = "Subject") |>
+  formatters::var_relabel(HEIGHT = "Height (in)")
+
+result <- rlistings::as_listing(
+  df = adsl,
+  key_cols = c("TRT01A", "SUBJECT"),
+  disp_cols = "HEIGHT"
+)
+result <- set_titles(result, titles)
+
+
 export_as_docx_j(result,
                 tblid = "examplelistingnewline2",
                 output_dir = tempdir(),
@@ -937,7 +1010,9 @@ tt_to_flextable_j(result, "examplelistingnewline2", orientation = "landscape")
 When creating a table using, there is a set of default assumptions in place that determine how the borders are crafted within the table column header space. There are times when the table specification calls for a border matrix that is not based on the default assumptions. Below is an example of how to create a border matrix that produces the user required table.
 
 ### Table .rtf File
+
 The following is an example of a table created from `junco::tt_to_tlgrtf`.
+
 ```{r border_matrix}
 library(junco)
 
