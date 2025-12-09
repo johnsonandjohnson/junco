@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.3] - 2025-11-28
 
 ### Added and Removed
+- Add `a_two_tier()` analysis function
 - Add `a_maxlev()` to be able to calculate count and percentage of the maximum level of an ordered factor per subject
 - Remove `brackets_to_rtf()`
 - Export `rbmi_pool()` #22
