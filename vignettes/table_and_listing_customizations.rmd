@@ -1293,6 +1293,37 @@ If a .docx file is to be created for the table, the `junco::export_as_docx_j` is
 
 
 ```{r superscript_table_docx}
+library(junco)
+
+adsl <- data.frame(TRT01A = c("Example Drug~[super a] 5 mg",
+                              "Example Drug~[super a] 10 mg",
+                              "Example Drug~[super a] 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+)
+
+lyt <- basic_table(
+  show_colcounts = FALSE,
+  colcount_format = "N=xx"
+) |>
+  ### first columns
+  split_cols_by("TRT01A",,
+                show_colcounts = FALSE
+  ) |>
+  ### analyze height
+  analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
+
+result <- build_table(lyt, adsl)
+result <- set_titles(result, titles)
+
 export_as_docx_j(result,
                 tblid = "superscripttable",
                 output_dir = tempdir(),
@@ -1377,6 +1408,35 @@ If a .docx file is to be created for the table, the `junco::export_as_docx_j` is
 
 ```{r}
 #| label: superscript_listing_docx
+
+library(junco)
+library(rlistings)
+
+adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
+                              "Example Drug 10 mg",
+                              "Example Drug 20 mg",
+                              "Placebo"),
+                   SUBJECT = c("1",
+                               "2",
+                               "3",
+                               "4"),
+                   HEIGHT = c(70,
+                              74,
+                              60,
+                              64
+                   )
+) |>
+  formatters::var_relabel(TRT01A = "Actual Treatment for Period 01~[super a]") |>
+  formatters::var_relabel(SUBJECT = "Subject") |>
+  formatters::var_relabel(HEIGHT = "Height (in)")
+
+result <- rlistings::as_listing(
+  df = adsl,
+  key_cols = c("TRT01A", "SUBJECT"),
+  disp_cols = "HEIGHT"
+)
+result <- set_titles(result, titles)
+
 export_as_docx_j(result,
                 tblid = "examplelistingsuperscript2",
                 output_dir = tempdir(),
@@ -1592,9 +1652,9 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
 #| out-height: "200px"
 x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs1", orientation = "landscape", paginate= TRUE)
 x[[1]]
-cat("<br><br>")
+knitr::asis_output("<br><br>")
 x[[2]]
-cat("<br><br>")
+knitr::asis_output("<br><br>")
 ```
 
 When calling the `junco::tt_to_tlgrtf` function, the nosplitin argument can be included, and the user can specify a variable in which the associated columns should be grouped together in the same file. Now, all the sub columns for the "Placebo" treatment group (e.g. each unique TRT01A value), are kept together within the same file.
@@ -1620,11 +1680,11 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
 x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs2", orientation = "landscape",
                   nosplitin = list(cols = c(trtvar)), paginate= TRUE)
 x[[1]]
-cat("<br><br>")
+knitr::asis_output("<br><br>")
 x[[2]]
-cat("<br><br>")
+knitr::asis_output("<br><br>")
 x[[3]]
-cat("<br><br>")
+knitr::asis_output("<br><br>")
 
 ```
 
@@ -1653,11 +1713,11 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
 x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs3", orientation = "landscape",
                   nosplitin = list(cols = c(trtvar)), combined_rtf = TRUE, paginate = TRUE)
 x[[1]]
-cat("<br><br>")
+knitr::asis_output("<br><br>")
 x[[2]]
-cat("<br><br>")
+knitr::asis_output("<br><br>")
 x[[3]]
-cat("<br><br>")
+knitr::asis_output("<br><br>")
 ```
 
 ### Table .docx File
