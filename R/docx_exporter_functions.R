@@ -137,35 +137,19 @@ add_little_gap_bottom_borders_spanning_headers <- function(
     flx,
     border = flextable::fp_border_default(width = 0.75, color = "black")) {
 
+  n <- nrow(flx$header$styles$cells$border.width.bottom$data)
   spanning_headers <- flx$header$spans$rows
-  # if there is a row in 'spanning_headers' containing more than one number
-  # that is > 1 (i.e. a spanning header), and there was a bottom border in those positions:
-  # - get that row
-  # - get the positions (columns)
-  # - insert in that row and those columns the cell margins
-
-  pos_little_gaps <- apply(spanning_headers, 1, function(row) {
-    which(row > 1)
-  })
-
-  for (i in seq_along(pos_little_gaps)) {
-    j <- pos_little_gaps[[i]]
-    if (length(j) > 1 &&
-          all(flx$header$styles$cells$border.width.bottom$data[i, j] > 0)) {
+  for (i in seq_len(n - 1)) {
+    j <- which(flx$header$styles$cells$border.width.bottom$data[i, ] > 0)
+    if (length(which(spanning_headers[i, j] > 0)) > 1) {
       # remove the border before inserting a paragraph border
       flx <- flextable::border(
         x = flx,
         part = "header",
         i = i,
-        # j = j,
+        j = j,
         border.bottom = officer::fp_border(color = "white", width = 0.1)
       )
-      # it's possible that the 'style()' below removes a top border
-      # recover it before it's removed
-      # border.top <- flextable::fp_border_default(
-      #   width = unique(flx$header$styles$cells$border.width.top$data[i, j]),
-      #   color = unique(flx$header$styles$cells$border.color.top$data[i, j])
-      #   )
       flx <- flextable::style(
         x = flx,
         part = "header",
@@ -180,7 +164,6 @@ add_little_gap_bottom_borders_spanning_headers <- function(
   }
 
   return(flx)
-
 }
 
 
