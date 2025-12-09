@@ -113,7 +113,44 @@ testthat::test_that("tt_to_flextable_j() works fine with Tables", {
   snapshot_test_flextable(res)
 })
 
+testthat::test_that("tt_to_flextable_j() works fine with border_mat", {
+  
+  adsl2 <- adsl %>% dplyr::mutate(colspan_trt = ifelse(ARM == "B: Placebo", " ", "Active Study Agent"))
+  
+  colspan_trt_map <- create_colspan_map(adsl2,
+                                        non_active_grp = "B: Placebo",
+                                        non_active_grp_span_lbl = " ",
+                                        active_grp_span_lbl = "Active Study Agent",
+                                        colspan_var = "colspan_trt",
+                                        trt_var = "ARM"
+  )
+  
+  lyt2 <- basic_table(top_level_section_div = " ",
+                      show_colcounts = TRUE,
+                      colcount_format = "N=xx") %>%
+    split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%
+    split_cols_by("ARM") %>%
+    analyze(
+      vars = "COUNTRY",
+      afun = a_freq_j,
+      extra_args = extra_args_1
+    )
 
+  tbl2 <- build_table(lyt2, adsl2)
+  
+  border_mat <- make_header_bordmat(tbl2)
+  border_mat[2, 4] <- 1
+  
+  options(docx.add_datetime = FALSE)
+  flx1 <- tt_to_flextable_j(tt = tbl2, tblid = "output ID")
+  flx2 <- tt_to_flextable_j(tt = tbl2, tblid = "output ID", border_mat = border_mat)
+  options(docx.add_datetime = TRUE)
+  
+  testthat::expect_equal(flx1$header$styles$cells$border.width.bottom$data[2, 4], c(V4 = 0))
+  testthat::expect_equal(flx2$header$styles$cells$border.width.bottom$data[2, 4], c(V4 = 0.75))
+  
+  snapshot_test_flextable(flx2)
+})
 
 testthat::test_that("tt_to_flextable_j() works fine with round_type", {
   lsting <- adae %>%
@@ -476,14 +513,9 @@ testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works corr
     flextable::add_header_row(values = c("spanning header 1", "spanning header 2"),
                                     colwidths = c(2, 2))
   flx <- flx %>% flextable::align(part = "header", i = 1, align = "center")
-  flx <- flx %>% rtables.officer:::.remove_hborder(part = "header")
-  flx <- flx %>%
-    flextable::border(part = "header",
-                      border.top = flextable::fp_border_default(),
-                      border.bottom = flextable::fp_border_default())
 
   testthat::expect_no_error(
-    res <- junco:::add_little_gap_bottom_borders_spanning_headers(flx)
+    res <- add_little_gap_bottom_borders_spanning_headers(flx)
   )
   snapshot_test_flextable(res)
 })
