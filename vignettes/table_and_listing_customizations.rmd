@@ -1123,8 +1123,6 @@ tt_to_tlgrtf(result,
 ```
 
 ### Visual Output (HTML Representation)
-> **Note:** In this HTML output the spanning line is a single line, instead of 2 lines. However, if you output the .docx or .rtf file using the same tabletree as input, it will be displayed correctly.
-
 ```{r border_matrix_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "bordertable", orientation = "landscape")
 ```
@@ -1173,6 +1171,9 @@ export_as_docx_j(result,
 ```
 
 ### Visual Output (HTML Representation)
+> **Note:** In this HTML output the spanning line is a single line, instead of 2 lines. However, if you output the .docx or .rtf file using the same tabletree as input, it will be displayed correctly.
+
+
 ```{r custom_border_matrix_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "custombordertable", orientation = "landscape", border_mat = header_border)
 ```
