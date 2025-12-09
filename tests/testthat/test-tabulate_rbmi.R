@@ -1,5 +1,11 @@
 library(broom)
 
+if (requireNamespace("rbmi", quietly = TRUE)) {
+  suppressPackageStartupMessages(library(rbmi))
+} else {
+  skip("rbmi package not available")
+}
+
 # rbmi_test_data ----
 
 rbmi_test_data_ancova <- structure(

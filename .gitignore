@@ -33,3 +33,7 @@ programs_external/*
 .vscode/settings.json
 .idea/*
 temp_ilse/*
+
+#Air
+air.toml
+.vscode/extensions.json
