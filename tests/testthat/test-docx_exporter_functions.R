@@ -476,14 +476,9 @@ testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works corr
     flextable::add_header_row(values = c("spanning header 1", "spanning header 2"),
                                     colwidths = c(2, 2))
   flx <- flx %>% flextable::align(part = "header", i = 1, align = "center")
-  flx <- flx %>% rtables.officer:::.remove_hborder(part = "header")
-  flx <- flx %>%
-    flextable::border(part = "header",
-                      border.top = flextable::fp_border_default(),
-                      border.bottom = flextable::fp_border_default())
 
   testthat::expect_no_error(
-    res <- junco:::add_little_gap_bottom_borders_spanning_headers(flx)
+    res <- add_little_gap_bottom_borders_spanning_headers(flx)
   )
   snapshot_test_flextable(res)
 })

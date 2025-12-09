@@ -136,7 +136,7 @@ add_title_style_caption <- function(doc, string_to_look_for) {
 add_little_gap_bottom_borders_spanning_headers <- function(
     flx,
     border = flextable::fp_border_default(width = 0.75, color = "black")) {
-  
+
   spanning_headers <- flx$header$spans$rows
   # if there is a row in 'spanning_headers' containing more than one number
   # that is > 1 (i.e. a spanning header), and there was a bottom border in those positions:
@@ -160,13 +160,21 @@ add_little_gap_bottom_borders_spanning_headers <- function(
         # j = j,
         border.bottom = officer::fp_border(color = "white", width = 0.1)
       )
+      # it's possible that the 'style()' below removes a top border
+      # recover it before it's removed
+      # border.top <- flextable::fp_border_default(
+      #   width = unique(flx$header$styles$cells$border.width.top$data[i, j]),
+      #   color = unique(flx$header$styles$cells$border.color.top$data[i, j])
+      #   )
       flx <- flextable::style(
         x = flx,
         part = "header",
         i = i,
         j = j,
         pr_c = officer::fp_cell(margin.right = 3, margin.left = 3, vertical.align = "bottom"),
-        pr_p = officer::fp_par(border.bottom = border, text.align = "center")
+        pr_p = officer::fp_par(border.bottom = border,
+                               # border.top = border.top,
+                               text.align = "center")
       )
     }
   }
