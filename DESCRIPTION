@@ -78,7 +78,7 @@ Suggests:
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
-    insightsengineering/formatters@1040_rtables_round_type,
-    insightsengineering/rtables@1040_rtables_round_type,
-    insightsengineering/rlistings@1040_rtables_round_type
+    insightsengineering/formatters@main,
+    insightsengineering/rtables@main,
+    insightsengineering/rlistings@main
 Additional_repositories: https://insightsengineering.r-universe.dev/
