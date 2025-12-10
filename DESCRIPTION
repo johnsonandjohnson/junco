@@ -84,5 +84,6 @@ Config/testthat/edition: 3
 Remotes:
     insightsengineering/formatters@main,
     insightsengineering/rtables@main,
-    insightsengineering/rlistings@main
+    insightsengineering/rlistings@main,
+    johnsonandjohnson/pharmaverseadamjnj@main
 Additional_repositories: https://insightsengineering.r-universe.dev/
