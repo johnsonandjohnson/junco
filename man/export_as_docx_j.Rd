@@ -30,6 +30,7 @@ export_as_docx_j(
   alignments = list(),
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
+  watermark = FALSE,
   ...
 )
 }
@@ -95,6 +96,10 @@ Each named list contains \code{row}, \code{col}, and \code{value}.}
 columns of \code{tt} and k is the number of lines the header takes up.
 See \code{\link[junco]{make_header_bordmat}} for what the matrix should contain.
 Users should only specify this when the default behavior does not meet their needs.}
+
+\item{watermark}{(\code{logical})\cr whether to display the watermark "Confidential".
+By default, this is set to FALSE. In the future, this argument will be the
+actual watermark (i.e. a string) to display.}
 
 \item{...}{other parameters.}
 }
