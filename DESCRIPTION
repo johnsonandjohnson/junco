@@ -14,13 +14,11 @@ Authors@R: c(
     person("Ezequiel", "Anokian", , "eanokia1@its.jnj.com", role = c("ctb")),
     person("Renfei", "Mao", , "rmao6@its.jnj.com", role = c("ctb")),
     person("Mrinal", "Das", , "mdas35@its.jnj.com", role = c("ctb")),
-    person("Isaac", "Gravestock", role = "cph",
-           comment = "Author of included rbmi functions"),
     person("Joe", "Zhu", role = "cph",
-           comment = "Author of included tern functions"),
+           comment = "Author of included tern and rtables.officer functions"),
     person("Johnson & Johnson Innovative Medicine", role = c("cph", "fnd")),
     person("F. Hoffmann-La Roche AG", role = c("cph"),
-            comment = "Copyright holder of included formatters, rbmi and tern functions")
+            comment = "Copyright holder of included formatters, rtables.officer and tern functions")
   )
 Description: Structure and formatting requirements for clinical trial table and listing outputs
     vary between pharmaceutical companies. 'junco' provides additional tooling for use alongside
@@ -59,7 +57,10 @@ Imports:
     rtables.officer,
     flextable,
     officer,
-    xml2
+    xml2,
+    ggplot2,
+    stringi,
+    systemfonts
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
