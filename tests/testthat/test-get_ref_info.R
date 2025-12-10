@@ -47,7 +47,7 @@ test_that("get_ref_info works with a df analysis function", {
   # Define the global reference group.
   ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
 
-  lyt <- basic_table() |>
+  lyt <- basic_table(round_type = "sas") |>
     split_cols_by(
       "colspan_trt",
       split_fun = trim_levels_to_map(map = colspan_trt_map)
@@ -62,7 +62,7 @@ test_that("get_ref_info works with a df analysis function", {
   expect_snapshot(result)
 
   # Compare with non-hierarchical layout.
-  std_lyt <- basic_table() |>
+  std_lyt <- basic_table(round_type = "sas") |>
     split_cols_by("ARM", ref_group = "B: Placebo") |>
     analyze(
       "AGE",
@@ -109,7 +109,7 @@ test_that("get_ref_info works with a vector analysis function", {
   # Define the global reference group.
   ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
 
-  lyt <- basic_table() |>
+  lyt <- basic_table(round_type = "sas") |>
     split_cols_by(
       "colspan_trt",
       split_fun = trim_levels_to_map(map = colspan_trt_map)
@@ -124,7 +124,7 @@ test_that("get_ref_info works with a vector analysis function", {
   expect_snapshot(result)
 
   # Compare with non-hierarchical layout.
-  std_lyt <- basic_table() |>
+  std_lyt <- basic_table(round_type = "sas") |>
     split_cols_by("ARM", ref_group = "B: Placebo") |>
     analyze(
       c("AGE", "BMRKR1"),

@@ -77,4 +77,8 @@ Suggests:
     pharmaverseadamjnj
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Remotes:
+    insightsengineering/formatters@1040_rtables_round_type,
+    insightsengineering/rtables@1040_rtables_round_type,
+    insightsengineering/rlistings@1040_rtables_round_type
 Additional_repositories: https://insightsengineering.r-universe.dev/
