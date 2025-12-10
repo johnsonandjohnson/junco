@@ -5,14 +5,12 @@ dps_markup_df_docx <- tibble::tibble(
 )
 
 remove_table_shading <- function(doc) {
-  # by default, Word adds a table shading white, which covers the bookmark
+  # by default, Word adds a table shading white, which covers the watermark
   # the XML nodes responsible for this are:
   # <w:shd w:val="clear" w:color="auto" w:fill="FF00FF"/>
   # if we delete all these nodes, then the table becomes transparent
 
-  xml2::xml_find_all(doc$doc_obj$get(), ".//w:shd")
   xml2::xml_remove(xml2::xml_find_all(doc$doc_obj$get(), ".//w:shd"))
-  xml2::xml_find_all(doc$doc_obj$get(), ".//w:shd")
 }
 
 remove_security_popup_page_numbers <- function(doc, tlgtype = "Table",
