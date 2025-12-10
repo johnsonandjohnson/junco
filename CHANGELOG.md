@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.3] - 2025-11-28
+## [0.1.2] - 2025-12-10
 
 ### Added and Removed
 - Add `a_two_tier()` analysis function
@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixes #102 bug inappropriate warnings from `cond_rm_facets` function
 - Fix bug for not selecting NA records in `h_subset_combo()`
+- Consistent `tt_to_tbldf()` function behavior with invalid structures #116
 
 
 ## [0.1.1] - 2025-07-28
