@@ -10,8 +10,9 @@
 
 - Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify
 - Replace {pharmaverseadam} with {pharmaverseadamjnj}
-- fix bug for not selecting NA records in `h_subset_combo()`
-- update `string_to_title()` to handle factors (#26)
+- Fix bug for not selecting NA records in `h_subset_combo()`
+- Update `string_to_title()` to handle factors (#26)
+- Consistent `tt_to_tbldf()` function behavior with invalid structures (#116)
 
 ## Other changes
 
