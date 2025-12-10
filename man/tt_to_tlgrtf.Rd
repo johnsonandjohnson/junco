@@ -95,8 +95,8 @@ Each named list contains \code{row}, \code{col}, and \code{value}, which are pas
 \code{\link[huxtable:align]{huxtable::set_align()}} to set the alignments.}
 
 \item{validate}{logical(1). Whether to validate the table structure using
-\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. This can also be disabled
-globally by setting the environment variable \code{JUNCO_DISABLE_VALIDATION=TRUE}.}
+\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message
+will be displayed when validation fails.}
 
 \item{...}{Additional arguments passed to gentlg}
 }
