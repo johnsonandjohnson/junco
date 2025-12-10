@@ -83,5 +83,5 @@ VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
     insightsengineering/formatters@main,
-    insightsengineering/rtables@1040_rtables_round_type,
+    insightsengineering/rtables@main,
     insightsengineering/rlistings@main
