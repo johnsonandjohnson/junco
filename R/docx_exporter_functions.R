@@ -4,6 +4,17 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
+remove_table_shading <- function(doc) {
+  # by default, Word adds a table shading white, which covers the bookmark
+  # the XML nodes responsible for this are:
+  # <w:shd w:val="clear" w:color="auto" w:fill="FF00FF"/>
+  # if we delete all these nodes, then the table becomes transparent
+
+  xml2::xml_find_all(doc$doc_obj$get(), ".//w:shd")
+  xml2::xml_remove(xml2::xml_find_all(doc$doc_obj$get(), ".//w:shd"))
+  xml2::xml_find_all(doc$doc_obj$get(), ".//w:shd")
+}
+
 remove_security_popup_page_numbers <- function(doc, tlgtype = "Table",
                                                pagenum = tlgtype == "Listing") {
 
@@ -157,7 +168,6 @@ add_little_gap_bottom_borders_spanning_headers <- function(
         j = j,
         pr_c = officer::fp_cell(margin.right = 3, margin.left = 3, vertical.align = "bottom"),
         pr_p = officer::fp_par(border.bottom = border,
-                               # border.top = border.top,
                                text.align = "center")
       )
     }
@@ -1006,8 +1016,8 @@ tt_to_flextable_j <- function(
   # flx <- flx %>%
   #   rtables.officer:::.remove_hborder(part = "header", w = "all") %>%
   #   rtables.officer:::.add_hborder("header", ii = c(0, hnum), border = border)
-  flx <- flx %>% 
-    flextable::border(part = "header", border = flextable::fp_border_default(width = 0)) %>% 
+  flx <- flx %>%
+    flextable::border(part = "header", border = flextable::fp_border_default(width = 0)) %>%
     flextable::border(part = "header", i = 1, border.top = border)
 
   for (ij in l_pos) {
@@ -1314,12 +1324,15 @@ tt_to_flextable_j <- function(
 #' @param alignments (`list`)\cr List of named lists. Vectorized.
 #' (Default = `list()`) Used to specify individual column or cell alignments.
 #' Each named list contains `row`, `col`, and `value`.
-#' @param ... other parameters.
 #' @param border (optional) an fp_border object.
 #' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of
 #' columns of `tt` and k is the number of lines the header takes up.
 #' See \code{\link[junco]{make_header_bordmat}} for what the matrix should contain.
 #' Users should only specify this when the default behavior does not meet their needs.
+#' @param watermark (`logical`)\cr whether to display the watermark "Confidential".
+#' By default, this is set to FALSE. In the future, this argument will be the
+#' actual watermark (i.e. a string) to display.
+#' @param ... other parameters.
 #'
 #' @note
 #' This function has been tested for common use cases but may not work or have
@@ -1361,6 +1374,7 @@ export_as_docx_j <- function(
     alignments = list(),
     border = flextable::fp_border_default(width = 0.75, color = "black"),
     border_mat = make_header_bordmat(obj = tt),
+    watermark = FALSE,
     ...) {
 
   # Validate `alignments` here because of its complicated data structure
@@ -1370,6 +1384,8 @@ export_as_docx_j <- function(
   }
 
   checkmate::assert_flag(add_page_break)
+  checkmate::assert_flag(watermark)
+
   do_tt_error <- FALSE
   if (tlgtype != "Listing") {
     pagenum <- FALSE
@@ -1469,6 +1485,7 @@ export_as_docx_j <- function(
         alignments = alignments,
         border = border,
         border_mat = border_mat,
+        watermark = watermark,
         ... = ...
       )
     } else {
@@ -1508,10 +1525,22 @@ export_as_docx_j <- function(
         alignments = alignments,
         border = border,
         border_mat = border_mat,
+        watermark = watermark,
         ... = ...
       )
     }
   } else {
+
+    if (isTRUE(watermark)) {
+      template_file <- "template_file_watermark"
+      template_file <- paste0(template_file, "_", orientation)
+      if (pagenum) {
+        template_file <- paste0(template_file, "_pagenum")
+      }
+      template_file <- paste0(template_file, ".docx")
+      template_file <- system.file(template_file, package = "junco")
+    }
+
     if (!is.null(template_file)) {
       doc <- officer::read_docx(template_file)
       doc <- officer::body_remove(doc)
@@ -1534,7 +1563,10 @@ export_as_docx_j <- function(
       section_properties$footer_default <- footer_default
     }
     # END
-    doc <- officer::body_set_default_section(doc, section_properties)
+    if (isFALSE(watermark)) {
+      doc <- officer::body_set_default_section(doc, section_properties)
+    }
+
     flex_tbl_list <- lapply(flex_tbl_list, function(flx) {
       if (flx$properties$layout != "autofit") {
         # nolint start
@@ -1602,6 +1634,9 @@ export_as_docx_j <- function(
     add_title_style_caption(doc, string_to_look_for)
     add_vertical_pagination_XML(doc)
     remove_security_popup_page_numbers(doc, tlgtype, pagenum)
+    if (isTRUE(watermark)) {
+      remove_table_shading(doc)
+    }
 
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
@@ -1761,7 +1796,6 @@ export_graph_as_docx <- function(g = NULL,
   }
 
   flx <- insert_footer_text(flx, tblid)
-
 
   # style the flextable
   flx <- flx %>% flextable::border_remove()
