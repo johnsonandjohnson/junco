@@ -30,7 +30,7 @@ tt_to_flextable_j(
   string_map = junco::default_str_map,
   markup_df_docx = dps_markup_df_docx,
   reduce_first_col_indentation = FALSE,
-  tlgtype = junco:::tlg_type(tt),
+  tlgtype = (utils::getFromNamespace("tlg_type", "junco"))(tt),
   col_gap = ifelse(tlgtype == "Listing", 0.5, 3),
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
@@ -109,7 +109,7 @@ Each named list contains \code{row}, \code{col}, and \code{value}.}
 
 \item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of
 columns of \code{tt} and k is the number of lines the header takes up.
-See \link{make_header_bordmat} for what the matrix should contain.
+See \code{\link[junco]{make_header_bordmat}} for what the matrix should contain.
 Users should only specify this when the default behavior does not meet their needs.}
 }
 \value{

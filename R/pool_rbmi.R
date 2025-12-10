@@ -1,9 +1,9 @@
 #' Pool analysis results obtained from the imputed datasets
 #'
 #' @details This has been forked from the `rbmi` package, mainly to support in
-#' addition the pooling of variance estimates. See [pool()] for more details.
+#' addition the pooling of variance estimates. See pool() for more details.
 #'
-#' @param results an analysis object created by [analyse()].
+#' @param results an analysis object created by analyse().
 #'
 #' @param conf.level confidence level of the returned confidence interval.
 #' Must be a single number between 0 and 1. Default is 0.95.

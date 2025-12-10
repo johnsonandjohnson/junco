@@ -621,7 +621,7 @@ theme_docx_default_j <- function(
 #' Each named list contains `row`, `col`, and `value`.
 #' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of
 #' columns of `tt` and k is the number of lines the header takes up.
-#' See [junco::make_header_bordmat] for what the matrix should contain.
+#' See \code{\link[junco]{make_header_bordmat}} for what the matrix should contain.
 #' Users should only specify this when the default behavior does not meet their needs.
 #'
 #'
@@ -1318,7 +1318,7 @@ tt_to_flextable_j <- function(
 #' @param border (optional) an fp_border object.
 #' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of
 #' columns of `tt` and k is the number of lines the header takes up.
-#' See [junco::make_header_bordmat] for what the matrix should contain.
+#' See \code{\link[junco]{make_header_bordmat}} for what the matrix should contain.
 #' Users should only specify this when the default behavior does not meet their needs.
 #'
 #' @note
