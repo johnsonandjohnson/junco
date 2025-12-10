@@ -12,7 +12,7 @@ rbmi_pool(
 )
 }
 \arguments{
-\item{results}{an analysis object created by rbmi's \code{analyse()}.}
+\item{results}{an analysis object created by \code{\link[=analyse]{analyse()}}.}
 
 \item{conf.level}{confidence level of the returned confidence interval.
 Must be a single number between 0 and 1. Default is 0.95.}
@@ -34,5 +34,5 @@ Pool analysis results obtained from the imputed datasets
 }
 \details{
 This has been forked from the \code{rbmi} package, mainly to support in
-addition the pooling of variance estimates. See \code{pool()} for more details.
+addition the pooling of variance estimates. See \code{\link[=pool]{pool()}} for more details.
 }
