@@ -78,7 +78,6 @@ Suggests:
     rlang,
     rbmi (>= 1.3.0),
     tidyr,
-    rlang,
     pharmaverseadamjnj
 VignetteBuilder: knitr
 Config/testthat/edition: 3
