@@ -92,10 +92,10 @@ Each named list contains \code{row}, \code{col}, and \code{value}.}
 
 \item{border}{(optional) an fp_border object.}
 
-\item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of
-columns of \code{tt} and k is the number of lines the header takes up.
-See \code{\link[junco]{make_header_bordmat}} for what the matrix should contain.
-Users should only specify this when the default behavior does not meet their needs.}
+\item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of columns of \code{tt}
+and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}
+for what the matrix should contain. Users should only specify this when the
+default behavior does not meet their needs.}
 
 \item{watermark}{(\code{logical})\cr whether to display the watermark "Confidential".
 By default, this is set to FALSE. In the future, this argument will be the

@@ -107,10 +107,10 @@ See \verb{[formatters::format_value()]} for more details.}
 (Default = \code{list()}) Used to specify individual column or cell alignments.
 Each named list contains \code{row}, \code{col}, and \code{value}.}
 
-\item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of
-columns of \code{tt} and k is the number of lines the header takes up.
-See \code{\link[junco]{make_header_bordmat}} for what the matrix should contain.
-Users should only specify this when the default behavior does not meet their needs.}
+\item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of columns of \code{tt}
+and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}
+for what the matrix should contain. Users should only specify this when the
+default behavior does not meet their needs.}
 }
 \value{
 a flextable object.
