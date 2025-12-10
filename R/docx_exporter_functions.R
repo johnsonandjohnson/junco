@@ -1728,7 +1728,7 @@ export_graph_as_docx <- function(g = NULL,
     plotnames <- list()
     for (e in g) {
       temp_file <- paste0(base::tempfile(), ".png")
-      png(temp_file,
+      grDevices::png(temp_file,
         width  = 22,
         height = 14,
         units  = "cm",
@@ -1736,7 +1736,7 @@ export_graph_as_docx <- function(g = NULL,
         type   = "cairo"
       )
       print(e)
-      dev.off()
+      grDevices::dev.off()
 
       plotnames <- append(plotnames, temp_file)
     }
