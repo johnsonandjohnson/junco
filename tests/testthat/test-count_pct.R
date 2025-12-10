@@ -12,8 +12,8 @@ test_that("a_freq_j with val = NA and denom option", {
   extra_args_1 <- list(
     .stats = c("count_unique_denom_fraction")
   )
-  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -33,8 +33,8 @@ test_that("a_freq_j with val = NA and denom option", {
     denom = "N_col",
     .stats = c("count_unique_denom_fraction")
   )
-  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
+  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -51,8 +51,8 @@ test_that("a_freq_j with specific val (CHN) and denom option", {
     .stats = c("count_unique_denom_fraction"),
     val = "CHN"
   )
-  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -73,8 +73,8 @@ test_that("a_freq_j with specific val (CHN) and denom option", {
     .stats = c("count_unique_denom_fraction"),
     val = "CHN"
   )
-  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
+  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -91,8 +91,8 @@ test_that("a_freq_j with N_only", {
   extra_args_1 <- list(
     .stats = c("count_unique")
   )
-  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -115,9 +115,9 @@ test_that("a_freq_j with TotCol_only", {
     .stats = c("count_unique"),
     restr_columns = "Total"
   )
-  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
-    add_overall_col("Total") %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
+    add_overall_col("Total") |>
     analyze(vars = "COUNTRY", afun = a_freq_j, extra_args = extra_args_1)
 
   # apply to adsl
@@ -135,21 +135,21 @@ test_that("a_freq_j as cfun", {
   Ncol <- length(unique(adsl_col[["USUBJID"]]))
 
   adae_col <- adae[adae$ARM == "A: Drug X", ]
-  adae_col_bs <- unique(adae_col %>% select(USUBJID, AEBODSYS))
+  adae_col_bs <- unique(adae_col |> select(USUBJID, AEBODSYS))
 
   # scenario 1 :
   extra_args_1 <- list(
     denom = "N_col",
     .stats = c("count_unique_denom_fraction")
   )
-  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
-    split_rows_by("AEBODSYS") %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
+    split_rows_by("AEBODSYS") |>
     summarize_row_groups(
       "AEBODSYS",
       cfun = a_freq_j,
       extra_args = extra_args_1
-    ) %>%
+    ) |>
     analyze(
       vars = "AEDECOD",
       afun = a_freq_j,
@@ -163,14 +163,14 @@ test_that("a_freq_j as cfun", {
   # scenario 2 : label using label_fstr method works
   extra_args_2 <- append(extra_args_1, list(label_fstr = "Bodysystem %s"))
 
-  lyt2 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
-    split_rows_by("AEBODSYS") %>%
+  lyt2 <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
+    split_rows_by("AEBODSYS") |>
     summarize_row_groups(
       "AEBODSYS",
       cfun = a_freq_j,
       extra_args = extra_args_2
-    ) %>%
+    ) |>
     analyze(
       vars = "AEDECOD",
       afun = a_freq_j,
@@ -187,7 +187,7 @@ test_that("a_freq_j with label map", {
   Ncol <- length(unique(adsl_col[["USUBJID"]]))
 
   adae_col <- adae[adae$ARM == "A: Drug X", ]
-  adae_col_sub <- unique(adae_col %>% select(USUBJID))
+  adae_col_sub <- unique(adae_col |> select(USUBJID))
 
   Subjs_with_AEs <- tibble::tribble(
     ~value,
@@ -198,8 +198,8 @@ test_that("a_freq_j with label map", {
 
   # scenario 1 : with label_map
   extra_args_1 <- list(label_map = Subjs_with_AEs)
-  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       vars = "TRTEMFL",
       afun = a_freq_j,
@@ -212,8 +212,8 @@ test_that("a_freq_j with label map", {
 
   # scenario 2 : set row label using label parameter
   extra_args_2 <- list(label = "Subjects with >= 1 AE")
-  lyt2 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
+  lyt2 <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       vars = "TRTEMFL",
       afun = a_freq_j,
@@ -230,8 +230,8 @@ test_that("a_freq_j (old count_pats case)", {
   extra_args_1 <- list(
     .stats = c("count_unique_denom_fraction")
   )
-  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -251,8 +251,8 @@ test_that("a_freq_j (old count_pats case)", {
     denom = "N_col",
     .stats = c("count_unique_denom_fraction")
   )
-  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
+  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -268,9 +268,9 @@ test_that("a_freq_j with N_subgroup as denom", {
   # scenario 1: denom = N_subgroup, all values
   extra_args_1 <- list(denom = "n_df")
 
-  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
-    split_rows_by("SEX") %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
+    split_rows_by("SEX") |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -294,9 +294,9 @@ test_that("a_freq_j with N_subgroup as denom", {
     .stats = c("count_unique_denom_fraction")
   )
 
-  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
-    split_rows_by("SEX") %>%
+  lyt1c <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
+    split_rows_by("SEX") |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -316,14 +316,14 @@ test_that("a_freq_j with N_trt as denom - special situation", {
 
   ### spanning header for severity
 
-  adsl_ <- ex_adsl %>% select(USUBJID, ARM)
-  adae_ <- ex_adae %>% select(USUBJID, ARM, AEBODSYS, AEDECOD, AESEV)
+  adsl_ <- ex_adsl |> select(USUBJID, ARM)
+  adae_ <- ex_adae |> select(USUBJID, ARM, AEBODSYS, AEDECOD, AESEV)
   adae_$TRTEMFL <- "Y"
 
   trtvar <- "ARM"
 
   ## Total column on adsl
-  adsl_ <- adsl_ %>%
+  adsl_ <- adsl_ |>
     mutate(ASEV = factor("Total", levels = c("Total", levels(adae$AESEV))))
   adsl_$spanheader <- factor(
     ifelse(adsl_$ASEV == "Total", " ", "Severity"),
@@ -331,34 +331,34 @@ test_that("a_freq_j with N_trt as denom - special situation", {
   )
 
   ## ae : max severity per subject per SOC
-  adaetot <- adae_ %>%
+  adaetot <- adae_ |>
     mutate(
       AESEV = "Total",
       AEBODSYSx = AEBODSYS
-    ) %>%
-    arrange(USUBJID, AEBODSYS, AEDECOD) %>%
-    group_by(USUBJID, AEBODSYS, AEDECOD) %>%
-    slice(1) %>%
+    ) |>
+    arrange(USUBJID, AEBODSYS, AEDECOD) |>
+    group_by(USUBJID, AEBODSYS, AEDECOD) |>
+    slice(1) |>
     ungroup()
 
   # Take maximum severity - per PT
-  adaemaxpt <- adae_ %>%
-    filter(toupper(AESEV) %in% toupper(c("Mild", "Moderate", "Severe"))) %>%
+  adaemaxpt <- adae_ |>
+    filter(toupper(AESEV) %in% toupper(c("Mild", "Moderate", "Severe"))) |>
     mutate(
       AESEVN = case_when(
         toupper(AESEV) == "MILD" ~ 3,
         toupper(AESEV) == "MODERATE" ~ 2,
         toupper(AESEV) == "SEVERE" ~ 1
       )
-    ) %>%
-    arrange(USUBJID, AEBODSYS, AEDECOD, AESEVN) %>%
-    group_by(USUBJID, AEBODSYS, AEDECOD) %>%
-    slice(1) %>%
+    ) |>
+    arrange(USUBJID, AEBODSYS, AEDECOD, AESEVN) |>
+    group_by(USUBJID, AEBODSYS, AEDECOD) |>
+    slice(1) |>
     ungroup()
 
   # Take maximum severity - per SOC
-  adaemaxsoc <- adae_ %>%
-    filter(toupper(AESEV) %in% toupper(c("Mild", "Moderate", "Severe"))) %>%
+  adaemaxsoc <- adae_ |>
+    filter(toupper(AESEV) %in% toupper(c("Mild", "Moderate", "Severe"))) |>
     mutate(
       AESEVN = case_when(
         toupper(AESEV) == "MILD" ~ 3,
@@ -366,11 +366,11 @@ test_that("a_freq_j with N_trt as denom - special situation", {
         toupper(AESEV) == "SEVERE" ~ 1
       ),
       AEBODSYSx = AEBODSYS
-    ) %>%
-    arrange(USUBJID, AEBODSYS, AESEVN) %>%
-    group_by(USUBJID, AEBODSYS) %>%
-    slice(1) %>%
-    ungroup() %>%
+    ) |>
+    arrange(USUBJID, AEBODSYS, AESEVN) |>
+    group_by(USUBJID, AEBODSYS) |>
+    slice(1) |>
+    ungroup() |>
     select(USUBJID, AEBODSYS, AESEV, AEBODSYSx)
 
   # Merge back in an create a new SOC variable that is only populated
@@ -382,28 +382,28 @@ test_that("a_freq_j with N_trt as denom - special situation", {
   )
 
   # Add total
-  adaetot <- adae_ %>%
+  adaetot <- adae_ |>
     mutate(
       AESEV = "Total",
       AEBODSYSx = AEBODSYS
-    ) %>%
-    arrange(USUBJID, AEBODSYS, AEDECOD) %>%
-    group_by(USUBJID, AEBODSYS, AEDECOD) %>%
-    slice(1) %>%
+    ) |>
+    arrange(USUBJID, AEBODSYS, AEDECOD) |>
+    group_by(USUBJID, AEBODSYS, AEDECOD) |>
+    slice(1) |>
     ungroup()
 
   # Set data together
-  adaeall <- bind_rows(adaemax, adaetot) %>%
+  adaeall <- bind_rows(adaemax, adaetot) |>
     mutate(
       ASEV = factor(
         as.character(AESEV),
         levels = c("Total", levels(ex_adae$AESEV))
       )
-    ) %>%
+    ) |>
     select(USUBJID, TRTEMFL, ASEV, AEBODSYS, AEBODSYSx, AEDECOD)
 
-  adaeall <- adaeall %>%
-    inner_join(., adsl_ %>% select(USUBJID, ARM), by = c("USUBJID"))
+  adaeall <- adaeall |>
+    inner_join(., adsl_ |> select(USUBJID, ARM), by = c("USUBJID"))
 
   adaeall$spanheader <- factor(
     ifelse(adaeall$ASEV == "Total", " ", "Severity"),
@@ -417,17 +417,17 @@ test_that("a_freq_j with N_trt as denom - special situation", {
     colgroup = "ARM",
     riskdiff = FALSE
   )
-  lyt <- basic_table(round_type = "sas") %>%
-    split_cols_by(trtvar, show_colcounts = TRUE) %>%
-    split_cols_by("spanheader", split_fun = trim_levels_in_group("ASEV")) %>%
-    split_cols_by("ASEV", show_colcounts = TRUE) %>%
+  lyt <- basic_table(round_type = "sas") |>
+    split_cols_by(trtvar, show_colcounts = TRUE) |>
+    split_cols_by("spanheader", split_fun = trim_levels_in_group("ASEV")) |>
+    split_cols_by("ASEV", show_colcounts = TRUE) |>
     split_rows_by(
       "AEBODSYS",
       split_label = "System Organ Class",
       split_fun = trim_levels_in_group("AEDECOD"),
       label_pos = "topleft",
       section_div = c(" ")
-    ) %>%
+    ) |>
     summarize_row_groups(
       "AEBODSYSx",
       cfun = a_freq_j,
@@ -456,8 +456,8 @@ test_that("a_freq_j with keep_levels (CHN, NGA) ", {
     denom = "N_col",
     val = c("CHN", "NGA")
   )
-  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
+  lyt1 <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(vars = "COUNTRY", afun = a_freq_j, extra_args = extra_args_1)
 
   # apply to adsl

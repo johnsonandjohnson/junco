@@ -27,8 +27,8 @@ testthat::test_that("cond_rm_facets works", {
     show_colcounts = TRUE,
     colcount_format = "N=xx",
     round_type = "sas"
-  ) %>%
-    split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
+  ) |>
+    split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) |>
     split_cols_by("ARM", split_fun = mysplit)
 
   tbl <- build_table(lyt, adsl)
@@ -56,8 +56,8 @@ testthat::test_that("rm_levels works", {
     pre = list(rm_levels(excl = c("JPN", "USA", "NGA")))
   )
 
-  lyt <- basic_table(round_type = "sas") %>%
-    split_rows_by("COUNTRY", split_fun = split_fun) %>%
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY", split_fun = split_fun) |>
     summarize_row_groups() # for simplicity
 
   tbl <- build_table(lyt, adsl)
@@ -77,8 +77,8 @@ testthat::test_that("real_add_overall_facet works", {
     post = list(real_add_overall_facet("Overall", "Overall"))
   )
 
-  lyt <- basic_table(round_type = "sas") %>%
-    split_rows_by("COUNTRY", split_fun = split_fun) %>%
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY", split_fun = split_fun) |>
     summarize_row_groups() # for simplicity
 
   tbl <- build_table(lyt, adsl)
@@ -101,8 +101,8 @@ testthat::test_that("make_combo_splitfun works", {
     levels = c("USA", "CAN")
   )
 
-  lyt <- basic_table(round_type = "sas") %>%
-    split_rows_by("COUNTRY", split_fun = split_fun) %>%
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY", split_fun = split_fun) |>
     summarize_row_groups() # for simplicity
 
   tbl <- build_table(lyt, adsl)
@@ -138,8 +138,8 @@ testthat::test_that("combine_nonblank works", {
 
   split_fun <- make_split_fun(post = list(combine_nonblank("Overall", "Overall")))
 
-  lyt <- basic_table(round_type = "sas") %>%
-    split_rows_by("COUNTRY", split_fun = split_fun) %>%
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY", split_fun = split_fun) |>
     summarize_row_groups() # for simplicity
 
   tbl <- build_table(lyt, adsl)
@@ -173,14 +173,14 @@ testthat::test_that("rm_blank_levels works", {
     pre = list(rm_blank_levels)
   )
 
-  lyt <- basic_table(round_type = "sas") %>%
-    split_rows_by("COUNTRY") %>%
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY") |>
     summarize_row_groups()
   tbl <- build_table(lyt, adsl)
   row_names_before <- rtables::row.names(tbl)
 
-  lyt <- basic_table(round_type = "sas") %>%
-    split_rows_by("COUNTRY", split_fun = split_fun) %>%
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY", split_fun = split_fun) |>
     summarize_row_groups()
   tbl <- build_table(lyt, adsl)
   row_names_after <- rtables::row.names(tbl)

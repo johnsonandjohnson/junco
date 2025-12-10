@@ -45,8 +45,8 @@ test_that("a_test_proportion_diff works as expected in table layout", {
     strata = factor(rep(c("V", "W", "X", "Y", "Z"), each = 20))
   )
 
-  l <- basic_table() %>%
-    split_cols_by(var = "grp") %>%
+  l <- basic_table() |>
+    split_cols_by(var = "grp") |>
     analyze(
       vars = "rsp",
       afun = a_test_proportion_diff,

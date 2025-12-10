@@ -219,7 +219,7 @@ test_that("Parallelisation works with rbmi_analyse and produces identical result
     c(2, 1, 0.7, 1.5),
     c(0.5, 0.3, 0.2, 0.3, 0.5, 0.4)
   )
-  dat <- get_sim_data(200, sigma, trt = 8) %>%
+  dat <- get_sim_data(200, sigma, trt = 8) |>
     dplyr::mutate(
       outcome = dplyr::if_else(
         rbinom(dplyr::n(), 1, 0.3) == 1 & group == "A",
@@ -228,13 +228,13 @@ test_that("Parallelisation works with rbmi_analyse and produces identical result
       )
     )
 
-  dat_ice <- dat %>%
-    dplyr::group_by(id) %>%
-    dplyr::arrange(id, visit) %>%
-    dplyr::filter(is.na(outcome)) %>%
-    dplyr::slice(1) %>%
-    dplyr::ungroup() %>%
-    dplyr::select(id, visit) %>%
+  dat_ice <- dat |>
+    dplyr::group_by(id) |>
+    dplyr::arrange(id, visit) |>
+    dplyr::filter(is.na(outcome)) |>
+    dplyr::slice(1) |>
+    dplyr::ungroup() |>
+    dplyr::select(id, visit) |>
     dplyr::mutate(strategy = "JR")
 
   vars <- rbmi::set_vars(
@@ -267,7 +267,7 @@ test_that("Parallelisation works with rbmi_analyse and produces identical result
 
   ### Delta 1
 
-  dat_delta_1 <- rbmi::delta_template(imputations = imputeobj) %>%
+  dat_delta_1 <- rbmi::delta_template(imputations = imputeobj) |>
     dplyr::mutate(delta = is_missing * 5)
 
   vars2 <- vars
@@ -312,7 +312,7 @@ test_that("Parallelisation works with rbmi_analyse and produces identical result
 
   ### Delta 2
 
-  dat_delta_2 <- rbmi::delta_template(imputations = imputeobj) %>%
+  dat_delta_2 <- rbmi::delta_template(imputations = imputeobj) |>
     dplyr::mutate(delta = is_missing * 50)
 
   anaobj_d2_t1 <- rbmi_analyse(
