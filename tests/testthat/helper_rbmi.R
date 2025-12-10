@@ -19,7 +19,7 @@ rbmi_as_analysis <- function(
     next_class %in% c("jackknife", "bootstrap", "rubin", "bmlmi")
   )
   x <- list(
-    results = as_class(results, c(next_class, "list")),
+    results = rbmi::as_class(results, c(next_class, "list")),
     delta = delta,
     fun = fun,
     fun_name = fun_name,
