@@ -11,93 +11,17 @@
 #'
 #' @inheritParams proposal_argument_convention
 #' @param method (`string`)\cr one of `chisq`, `cmh`, `cmh_wh`, `fisher` or `schouten`; 
-#'   specifies the test used to calculate the p-value.
+#'   specifies the test used to calculate the p-value. See [tern::s_test_proportion_diff()] 
+#'   for details.
 #' @param .stats (`character`)\cr statistics to select for the table.
 #'
-#' @note These functions have been forked from the `tern` package. Additional features are:
+#' @note This function has been forked from the `tern` package. Additional features are:
 #'
 #'   * Additional `ref_path` argument for flexible reference column path specification.
 #'
 #' @name prop_diff_test
 #' @order 1
 NULL
-
-#' @describeIn prop_diff_test Statistics function which tests the difference between two proportions.
-#'
-#' @return
-#' * `s_test_proportion_diff()` returns a named `list` with a single item `pval` with an attribute `label`
-#'   describing the method used. The p-value tests the null hypothesis that proportions in two groups are the same.
-#'
-#' @keywords internal
-s_test_proportion_diff <- function(
-    df,
-    .var,
-    .ref_group,
-    .in_ref_col,
-    variables = list(strata = NULL),
-    method = c("chisq", "fisher", "cmh"),
-    alternative = c("two.sided", "less", "greater")) {
-  method <- match.arg(method)
-  alternative <- match.arg(alternative)
-  y <- list(pval = list())
-
-  if (!.in_ref_col) {
-    assert_df_with_variables(df, list(rsp = .var))
-    assert_df_with_variables(.ref_group, list(rsp = .var))
-    rsp <- factor(c(.ref_group[[.var]], df[[.var]]), levels = c("TRUE", "FALSE"))
-    grp <- factor(rep(c("ref", "Not-ref"), c(nrow(.ref_group), nrow(df))), levels = c("ref", "Not-ref"))
-
-    if (!is.null(variables$strata) || method == "cmh") {
-      strata <- variables$strata
-      checkmate::assert_false(is.null(strata))
-      strata_vars <- stats::setNames(as.list(strata), strata)
-      assert_df_with_variables(df, strata_vars)
-      assert_df_with_variables(.ref_group, strata_vars)
-      strata <- c(interaction(.ref_group[strata]), interaction(df[strata]))
-    }
-
-    tbl <- switch(method,
-      cmh = table(grp, rsp, strata),
-      table(grp, rsp)
-    )
-
-    y$pval <- switch(method,
-      chisq = prop_chisq(tbl, alternative),
-      cmh = prop_cmh(tbl, alternative),
-      fisher = prop_fisher(tbl, alternative)
-    )
-  }
-
-  y$pval <- with_label(y$pval, d_test_proportion_diff_j(method, alternative))
-  y
-}
-
-#' Description of the difference test between two proportions
-#'
-#' @description `r lifecycle::badge('stable')`
-#'
-#' This is an auxiliary function that describes the analysis in `s_test_proportion_diff`.
-#'
-#' @inheritParams s_test_proportion_diff
-#'
-#' @return A `string` describing the test from which the p-value is derived.
-#'
-#' @export
-d_test_proportion_diff_j <- function(method, alternative) {
-  checkmate::assert_string(method)
-  meth_part <- switch(method,
-    chisq = "Chi-Squared Test",
-    cmh = "Cochran-Mantel-Haenszel Test",
-    fisher = "Fisher's Exact Test",
-    stop(paste(method, "does not have a description"))
-  )
-  alt_part <- switch(alternative,
-    two.sided = "",
-    less = ", 1-sided, direction less",
-    greater = ", 1-sided, direction greater"
-  )
-  paste0("p-value (", meth_part, alt_part, ")")
-}
 
 #' @describeIn prop_diff_test Formatted analysis function which is used as `afun`
 #'
@@ -127,7 +51,7 @@ d_test_proportion_diff_j <- function(method, alternative) {
 #' build_table(l, df = dta)
 #'
 #' @export
-#' @order 2
+#' @order 1
 a_test_proportion_diff <- function(
     df,
     .var,
