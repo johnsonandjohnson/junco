@@ -152,9 +152,9 @@ test_that("s_summarize_ancova works as expected", {
 })
 
 test_that("a_summarize_ancova_j  works as expected in table layout", {
-  result <- basic_table(round_type = "sas") %>%
-    split_cols_by("Species") %>%
-    add_colcounts() %>%
+  result <- basic_table(round_type = "sas") |>
+    split_cols_by("Species") |>
+    add_colcounts() |>
     analyze(
       vars = "Petal.Length",
       afun = a_summarize_ancova_j,
@@ -176,7 +176,7 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
           "pval"
         )
       )
-    ) %>%
+    ) |>
     analyze(
       vars = "Petal.Length",
       afun = a_summarize_ancova_j,
@@ -196,7 +196,7 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
           "pval"
         )
       )
-    ) %>%
+    ) |>
     build_table(iris)
   expect_snapshot(result)
 })

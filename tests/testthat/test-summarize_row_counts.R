@@ -1,11 +1,11 @@
 library(rtables)
 
 test_that("summarize_row_counts works as expected without alt counts", {
-  lyt <- basic_table() %>%
-    split_cols_by("ARM") %>%
-    add_colcounts() %>%
-    split_rows_by("RACE", split_fun = drop_split_levels) %>%
-    summarize_row_counts(label_fstr = "Race: %s", alt_counts = FALSE) %>%
+  lyt <- basic_table() |>
+    split_cols_by("ARM") |>
+    add_colcounts() |>
+    split_rows_by("RACE", split_fun = drop_split_levels) |>
+    summarize_row_counts(label_fstr = "Race: %s", alt_counts = FALSE) |>
     analyze("AGE", afun = list_wrap_x(summary), format = "xx.xx")
 
   res <- expect_silent(build_table(lyt, formatters::DM))
@@ -18,11 +18,11 @@ test_that("summarize_row_counts works as expected without alt counts", {
 })
 
 test_that("summarize_row_counts works as expected with alt counts", {
-  lyt <- basic_table() %>%
-    split_cols_by("ARM") %>%
-    add_colcounts() %>%
-    split_rows_by("RACE", split_fun = drop_split_levels) %>%
-    summarize_row_counts(label_fstr = "RACE value - %s") %>%
+  lyt <- basic_table() |>
+    split_cols_by("ARM") |>
+    add_colcounts() |>
+    split_rows_by("RACE", split_fun = drop_split_levels) |>
+    summarize_row_counts(label_fstr = "RACE value - %s") |>
     analyze("AGE", afun = list_wrap_x(summary), format = "xx.xx")
 
   res <- expect_silent(build_table(
