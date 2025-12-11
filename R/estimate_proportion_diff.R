@@ -41,8 +41,8 @@ NULL
 #' * `s_proportion_diff_j()` returns a named list of elements `diff`,
 #'    `diff_ci`, `diff_est_ci` and `diff_ci_3d`.
 #'
-#' @note When performing an unstratified analysis, methods `'cmh'`, `'strat_newcombe'`,
-#'   and `'strat_newcombecc'` are not permitted.
+#' @note When performing an unstratified analysis, methods `'cmh'`, `'cmh_sato'`, `'cmh_mn'`,
+#'   `'strat_newcombe'`, and `'strat_newcombecc'` are not permitted.
 #'
 #' @examples
 #'
@@ -74,7 +74,10 @@ s_proportion_diff_j <- function(
     .in_ref_col,
     variables = list(strata = NULL),
     conf_level = 0.95,
-    method = c("waldcc", "wald", "cmh", "ha", "newcombe", "newcombecc", "strat_newcombe", "strat_newcombecc"),
+    method = c(
+      "waldcc", "wald", "cmh", "cmh_sato", "cmh_mn", "ha", 
+      "newcombe", "newcombecc", "strat_newcombe", "strat_newcombecc"
+    ),
     weights_method = "cmh") {
   start <- s_proportion_diff(
     df = df,
