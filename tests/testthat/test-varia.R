@@ -428,8 +428,7 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
     mutate(BNRIND = ANRIND) |>
     select(USUBJID, PARAMCD, BNRIND)
 
-  advs <- advs |>
-    left_join(., BNRIND, by = join_by(USUBJID, PARAMCD))
+  advs <- left_join(advs, BNRIND, by = join_by(USUBJID, PARAMCD))
 
   adsl <- adsl |>
     mutate(BNRIND = "N") |>
@@ -447,7 +446,7 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
 
   advs <- advs |>
     left_join(
-      .,
+      advs,
       adsl |> select(USUBJID, ARM, BNRIND_header, BNRIND_header2),
       by = "USUBJID"
     ) |>
