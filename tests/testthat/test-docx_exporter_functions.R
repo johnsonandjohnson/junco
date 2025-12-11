@@ -3,6 +3,12 @@ library(tern)
 library(rtables)
 library(ggplot2)
 
+if (Sys.info()[["sysname"]] != "Windows") {
+  skip("Skip full file on none Windows")
+}
+
+skip_on_cran()
+
 adsl <- ex_adsl
 adae <- ex_adae
 extra_args_1 <- list(
