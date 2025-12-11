@@ -321,7 +321,7 @@ jjcsformat_pval_fct <- function(alpha = 0.05) {
 #'
 #' @param str (`string`)\cr the format specifying the number of digits to be used,
 #'   for the range values, e.g. `"xx.xx"`.
-#'   
+#'
 #' @param censor_char (`string`)\cr the character (of length 1) to be appended to `min` or `max`
 #' @return A function that formats a numeric vector with 4 elements:
 #'   - minimum
