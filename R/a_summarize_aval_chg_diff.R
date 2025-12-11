@@ -157,7 +157,7 @@ s_aval_chg_col23_diff <- function(
 
       # check for in_combo based on .spl_context
       in_combo <- h_in_combo(trt_var, .spl_context)
-    
+
       x_stats <- s_summarize_ancova_j(
         df = df,
         .var = .var,
