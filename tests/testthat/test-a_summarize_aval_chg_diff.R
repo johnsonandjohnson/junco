@@ -57,7 +57,7 @@ test_that("a_summarize_aval_chg_diff_j works as expected", {
     CHG = c(2, 3, -1, 9, -2, 0, 6, -2, 5, 2)
   )
 
-  ADEG <- ADEG %>%
+  ADEG <- ADEG |>
     mutate(
       TRT01A = as.factor(TRT01A),
       STUDYID = as.factor(STUDYID)
@@ -94,40 +94,40 @@ test_that("a_summarize_aval_chg_diff_j works as expected", {
 
   ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
 
-  lyt <- basic_table(round_type = "sas") %>%
+  lyt <- basic_table(round_type = "sas") |>
     ### first columns
     split_cols_by(
       "colspan_trt",
       split_fun = trim_levels_to_map(map = colspan_trt_map)
-    ) %>%
-    split_cols_by("TRT01A") %>%
+    ) |>
+    split_cols_by("TRT01A") |>
     split_rows_by(
       "PARAM",
       label_pos = "topleft",
       split_label = "Blood Pressure",
       section_div = " ",
       split_fun = drop_split_levels
-    ) %>%
+    ) |>
     split_rows_by(
       "AVISIT",
       label_pos = "topleft",
       split_label = "Study Visit",
       split_fun = drop_split_levels,
       child_labels = "hidden"
-    ) %>%
+    ) |>
     ## set up a 3 column split
     split_cols_by_multivar(
       c("AVAL", "AVAL", "CHG"),
       varlabels = c("n/N (%)", "Mean (CI)", "CFB (CI)")
-    ) %>%
-    split_cols_by("rrisk_header", nested = FALSE) %>%
+    ) |>
+    split_cols_by("rrisk_header", nested = FALSE) |>
     split_cols_by(
       "TRT01A",
       split_fun = remove_split_levels("Placebo"),
       labels_var = "rrisk_label"
-    ) %>%
+    ) |>
     ### difference columns : just 1 column & analysis needs to be done on change
-    split_cols_by_multivar(c("CHG"), varlabels = c(" ")) %>%
+    split_cols_by_multivar(c("CHG"), varlabels = c(" ")) |>
     ### the variable passed here in analyze is not used (STUDYID), it is a dummy var passing,
     ### the function a_summarize_aval_chg_diff_j grabs the required vars from cols_by_multivar calls
     analyze(
@@ -207,7 +207,7 @@ test_that("a_summarize_aval_chg_diff_j works with ancova = TRUE", {
     CHG = c(2, 3, -1, 9, -2, 0, 6, -2, 5, 2)
   )
 
-  ADEG <- ADEG %>%
+  ADEG <- ADEG |>
     mutate(
       TRT01A = as.factor(TRT01A),
       STUDYID = as.factor(STUDYID)
@@ -230,40 +230,40 @@ test_that("a_summarize_aval_chg_diff_j works with ancova = TRUE", {
   )
   ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
 
-  lyt <- basic_table(round_type = "sas") %>%
+  lyt <- basic_table(round_type = "sas") |>
     ### first columns
     split_cols_by(
       "colspan_trt",
       split_fun = trim_levels_to_map(map = colspan_trt_map)
-    ) %>%
-    split_cols_by("TRT01A") %>%
+    ) |>
+    split_cols_by("TRT01A") |>
     split_rows_by(
       "PARAM",
       label_pos = "topleft",
       split_label = "Blood Pressure",
       section_div = " ",
       split_fun = drop_split_levels
-    ) %>%
+    ) |>
     split_rows_by(
       "AVISIT",
       label_pos = "topleft",
       split_label = "Study Visit",
       split_fun = drop_split_levels,
       child_labels = "hidden"
-    ) %>%
+    ) |>
     ## set up a 3 column split
     split_cols_by_multivar(
       c("AVAL", "AVAL", "CHG"),
       varlabels = c("n/N (%)", "Mean (CI)", "CFB (CI)")
-    ) %>%
-    split_cols_by("rrisk_header", nested = FALSE) %>%
+    ) |>
+    split_cols_by("rrisk_header", nested = FALSE) |>
     split_cols_by(
       "TRT01A",
       split_fun = remove_split_levels("Placebo"),
       labels_var = "rrisk_label"
-    ) %>%
+    ) |>
     ### difference columns : just 1 column & analysis needs to be done on change
-    split_cols_by_multivar(c("CHG"), varlabels = c(" ")) %>%
+    split_cols_by_multivar(c("CHG"), varlabels = c(" ")) |>
     ### the variable passed here in analyze is not used (STUDYID), it is a dummy var passing,
     ### the function a_summarize_aval_chg_diff_j grabs the required vars from cols_by_multivar calls
     analyze(
