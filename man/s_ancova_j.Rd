@@ -14,7 +14,8 @@ s_ancova_j(
   conf_level,
   interaction_y = FALSE,
   interaction_item = NULL,
-  weights_emmeans = "counterfactual"
+  weights_emmeans = "counterfactual",
+  in_combo = FALSE
 )
 }
 \arguments{
@@ -46,6 +47,11 @@ used to select the specific ANCOVA results. if the interaction is not needed, th
 with arm. if the interaction is not needed, the default option is \code{NULL}.}
 
 \item{weights_emmeans}{(\code{string})\cr argument from \code{\link[emmeans:emmeans]{emmeans::emmeans()}}, \code{"counterfactual"} by default.}
+
+\item{in_combo}{(\code{logical})\cr if \code{TRUE} the model will be restricted to data from reference group and df.
+\cr If \code{FALSE}, it will be evaluated from the input data df to check if in combined column.
+\cr This check from within data is not robust enough to cover sparse data situations, this can be handled more
+securely within a_fun using .spl_context information.}
 }
 \value{
 Returns a named list of 8 statistics (3 extra compared to \code{tern:::s_ancova()}).
@@ -58,6 +64,7 @@ Extension to tern:::s_ancova, 3 extra statistics are returned:
 \item \code{lsmean_diffci}: Difference in mean and associated confidence level in one combined statistic.
 In addition, the LS mean weights can be specified.
 In addition, also a NULL .ref_group can be specified, the lsmean_diff related estimates will be returned as NA.
+In addition, added logic when input df dataset is from a combination of levels of arm variable.
 }
 }
 \examples{

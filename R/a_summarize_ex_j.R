@@ -80,6 +80,7 @@ s_summarize_ex_j <- function(
       .ref_group <- .df_row[.df_row[[trt_var]] == ctrl_grp, ]
 
       if (ancova) {
+        in_combo <- h_in_combo(trt_var, .spl_context)
         # ancova method for diff between group
         x_stats2 <- s_summarize_ancova_j(
           df = df,
@@ -90,7 +91,8 @@ s_summarize_ex_j <- function(
           conf_level = conf_level,
           interaction_y = interaction_y,
           interaction_item = interaction_item,
-          variables = variables
+          variables = variables,
+          in_combo = in_combo
         )
         diffstat <- x_stats2[["lsmean_diffci"]]
       } else {

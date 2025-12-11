@@ -89,7 +89,8 @@ s_aval_chg_col23_diff <- function(
     trt_var,
     ctrl_grp,
     cur_param,
-    cur_lvl) {
+    cur_lvl,
+    .spl_context) {
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
   df <- subset(df, !is.na(df[[.var]]))
   .ref_group <- subset(.ref_group, !is.na(.ref_group[[.var]]))
@@ -154,6 +155,9 @@ s_aval_chg_col23_diff <- function(
         .ref_group[[trt_var]] <- factor(as.character(.ref_group[[trt_var]]), levels = levels(.df_row[[trt_var]]))
       }
 
+      # check for in_combo based on .spl_context
+      in_combo <- h_in_combo(trt_var, .spl_context)
+      
       x_stats <- s_summarize_ancova_j(
         df = df,
         .var = .var,
@@ -163,7 +167,8 @@ s_aval_chg_col23_diff <- function(
         conf_level = conf_level,
         interaction_y = interaction_y,
         interaction_item = interaction_item,
-        variables = variables
+        variables = variables,
+        in_combo = in_combo
       )
     }
   }
@@ -527,7 +532,8 @@ a_summarize_aval_chg_diff_j <- function(
       trt_var = trt_var,
       ctrl_grp = ctrl_grp,
       cur_param = cur_param,
-      cur_lvl = cur_lvl
+      cur_lvl = cur_lvl,
+      .spl_context = .spl_context
     )
 
     if (comp_btw_group && indiffcol) {

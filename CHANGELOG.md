@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added standard error (SE) column for each treatment arm's least square (LS) means estimate to the `summarize_lsmeans_wide()` layout.
 - Added the internal function `do_exclude_split()` to facilitate the exclusion of specified row splits from analysis functions.
 - Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify
+- Add logic to `ancova` functions (`a_summarize_ancova_j()`, `s_ancova_j()` and `s_summarize_ex_j()`) to process model when in a combined column facet. #117
 
 ### Changed
 - Replace {pharmaverseadam} with {pharmaverseadamjnj}

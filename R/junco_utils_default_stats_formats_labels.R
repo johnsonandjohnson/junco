@@ -196,6 +196,7 @@ junco_default_stats <- list(
   summarize_ancova_j = c(
     "n",
     "mean_sd",
+    "mean_ci_3d",
     "median",
     "range",
     "quantiles",

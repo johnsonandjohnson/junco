@@ -46,12 +46,17 @@ h_ancova <- function(
 #' @name s_ancova_j
 #' @inheritParams tern::s_ancova
 #' @param weights_emmeans (`string`)\cr argument from [emmeans::emmeans()], `"counterfactual"` by default.
+#' @param in_combo (`logical`)\cr if `TRUE` the model will be restricted to data from reference group and df.
+#' \cr If `FALSE`, it will be evaluated from the input data df to check if in combined column.
+#' \cr This check from within data is not robust enough to cover sparse data situations, this can be handled more 
+#' securely within a_fun using .spl_context information.
 #' @description Extension to tern:::s_ancova, 3 extra statistics are returned:
 #'   * `lsmean_se`: Marginal mean and estimated SE in the group.
 #'   * `lsmean_ci`: Marginal mean and associated confidence interval in the group.
 #'   * `lsmean_diffci`: Difference in mean and associated confidence level in one combined statistic.
 #'   In addition, the LS mean weights can be specified.
 #'   In addition, also a NULL .ref_group can be specified, the lsmean_diff related estimates will be returned as NA.
+#'   In addition, added logic when input df dataset is from a combination of levels of arm variable.
 #' @export
 #' @return Returns a named list of 8 statistics (3 extra compared to `tern:::s_ancova()`).
 #' @family Inclusion of ANCOVA Functions
@@ -76,13 +81,38 @@ s_ancova_j <- function(
     conf_level,
     interaction_y = FALSE,
     interaction_item = NULL,
-    weights_emmeans = "counterfactual") {
+    weights_emmeans = "counterfactual",
+    in_combo = FALSE) {
   arm <- variables$arm
 
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
   df <- subset(df, !is.na(df[[.var]]))
   .ref_group <- subset(.ref_group, !is.na(.ref_group[[.var]]))
 
+  n_obs_trt_lvls_df <- length(unique(df[[arm]]))
+  in_combo <- (n_obs_trt_lvls_df > 1) || in_combo
+  # note the above check in_combo will not trigger the following situation of being in 
+  # a combined column where the actual data only has 1 observed arm level
+  # if this happens in a situation of 3-levels for arm, the adjustments for sparse data 
+  # would capture the required updates
+  # in a situation of 4-levels for arm, the resulting model would not yet be as wanted
+  # this is the reason of the argument in_combo
+  if (in_combo) {
+    # as per JJ approach in combined group
+    # perform model on data with 2 levels : ref_group + combined group (as single level)
+    # so restrict .df_row to ref_group and df and update factor levels for trt
+    df[[arm]] <- factor(
+      as.character("Combined"),
+      levels = c("Combined", unique(as.character(.ref_group[[arm]])))
+    )
+    .ref_group[[arm]] <- factor(
+      as.character(.ref_group[[arm]]),
+      levels = levels(df[[arm]])
+    )
+    .df_row <- rbind(df, .ref_group)
+    # now we can proceed as before
+  }
+  
   n_obs_trt_lvls <- length(unique(.df_row[[arm]]))
 
   ### sparse data problems with underlying ancova function
@@ -413,6 +443,12 @@ a_summarize_ancova_j <- function(
   # Obtain reference column information
   ref <- get_ref_info(ref_path, .spl_context)
 
+  # check for in_combo based on .spl_context
+  # add to dots_extra_args
+  trtvar <- tail(ref_path, 2)[[1]]
+  in_combo <- h_in_combo(trtvar, .spl_context)
+  dots_extra_args[["in_combo"]] <- in_combo
+  
   # Apply statistics function
   x_stats <- .apply_stat_functions(
     default_stat_fnc = s_summarize_ancova_j,
