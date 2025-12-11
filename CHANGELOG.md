@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.3] - 2025-11-28
 
 ### Added and Removed
+- Add `a_two_tier()` analysis function
 - Add `a_maxlev()` to be able to calculate count and percentage of the maximum level of an ordered factor per subject
 - Remove `brackets_to_rtf()`
 - Export `rbmi_pool()` #22
@@ -17,19 +18,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the internal function `do_exclude_split()` to facilitate the exclusion of specified row splits from analysis functions.
 - Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify
 - Add logic to `ancova` functions (`a_summarize_ancova_j()`, `s_ancova_j()` and `s_summarize_ex_j()`) to process model when in a combined column facet. #117
+- Add extra check for existence of `.alt_df_full` when layout has risk difference column and a row-split (h_create_alt_df) #120.
+
 
 ### Changed
 - Replace {pharmaverseadam} with {pharmaverseadamjnj}
 - Update pruning_functions.R
 - Update `string_to_title()` to handle factors (#26)
+- Moved rbmi to suggest
 - Replaced `denom_df` with `.alt_df_full` in `a_maxlev()`.
 
 ### Fixed
 - Fixes #102 bug inappropriate warnings from `cond_rm_facets` function
 - Fix bug for not selecting NA records in `h_subset_combo()`
 
-## [0.1.2] - 2025-11-20
-- Removed rbmi
 
 ## [0.1.1] - 2025-07-28
 
