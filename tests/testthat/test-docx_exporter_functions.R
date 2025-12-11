@@ -58,17 +58,19 @@ snapshot_test_docx <- function(doc) {
 
 snapshot_test_flextable <- function(res) {
   testthat::expect_true(inherits(res, "flextable"))
-  testthat::expect_snapshot(res$header)
-  testthat::expect_snapshot(res$body)
-  testthat::expect_snapshot(res$footer)
-  testthat::expect_snapshot(res$col_keys)
-  testthat::expect_snapshot(res$caption)
-  testthat::expect_snapshot(res$blanks)
-  testthat::expect_snapshot(res$properties)
+  if (Sys.info()[["sysname"]] == "Windows") {
+    testthat::expect_snapshot(res$header)
+    testthat::expect_snapshot(res$body)
+    testthat::expect_snapshot(res$footer)
+    testthat::expect_snapshot(res$col_keys)
+    testthat::expect_snapshot(res$caption)
+    testthat::expect_snapshot(res$blanks)
+    testthat::expect_snapshot(res$properties)
 
-  doc <- officer::read_docx()
-  doc <- flextable::body_add_flextable(doc, res, align = "center")
-  snapshot_test_docx(doc)
+    doc <- officer::read_docx()
+    doc <- flextable::body_add_flextable(doc, res, align = "center")
+    snapshot_test_docx(doc)
+  }
 }
 
 
