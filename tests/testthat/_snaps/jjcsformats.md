@@ -199,6 +199,10 @@
       my_range_format(c(0.35235, 99.2342, 1, 1))
     Output
       [1] "(0.35+, 99.23+)"
+    Code
+      my_range_format2(c(0.35235, 99.2342, 0, 1))
+    Output
+      [1] "(0.35, 99.23*)"
 
 # jjcsformat_pval_fct works
 

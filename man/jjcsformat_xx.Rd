@@ -15,7 +15,7 @@ jjcsformat_xx(
 
 jjcsformat_pval_fct(alpha = 0.05)
 
-jjcsformat_range_fct(str)
+jjcsformat_range_fct(str, censor_char = "+")
 }
 \arguments{
 \item{str}{(\code{string})\cr the format specifying the number of digits to be used,
@@ -31,6 +31,8 @@ the formatters framework be overridden by \code{na_str_default}? Defaults to
 base \code{formatters} framework.}
 
 \item{alpha}{(\code{numeric})\cr the significance level to account for during rounding.}
+
+\item{censor_char}{(\code{string})\cr the character (of length 1) to be appended to \code{min} or \code{max}}
 }
 \value{
 Either a supported format string, or a formatting function that can be
@@ -51,7 +53,7 @@ A function that formats a numeric vector with 4 elements:
 \item censored minimum? (1 if censored, 0 if event)
 \item censored maximum? (1 if censored, 0 if event)
 The range along with the censoring information is returned as a string
-with the specified numeric format as \verb{(min, max)}, and the \code{+} is appended
+with the specified numeric format as \verb{(min, max)}, and the \code{censor_char} is appended
 to \code{min} or \code{max} if these have been censored.
 }
 }
@@ -97,6 +99,8 @@ my_range_format <- jjcsformat_range_fct("xx.xx")
 my_range_format(c(0.35235, 99.2342, 1, 0))
 my_range_format(c(0.35235, 99.2342, 0, 1))
 my_range_format(c(0.35235, 99.2342, 0, 0))
+my_range_format(c(0.35235, 99.2342, 1, 1))
+my_range_format <- jjcsformat_range_fct("xx.xx", censor_char = "*")
 my_range_format(c(0.35235, 99.2342, 1, 1))
 }
 \seealso{
