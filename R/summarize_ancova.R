@@ -48,7 +48,7 @@ h_ancova <- function(
 #' @param weights_emmeans (`string`)\cr argument from [emmeans::emmeans()], `"counterfactual"` by default.
 #' @param in_combo (`logical`)\cr if `TRUE` the model will be restricted to data from reference group and df.
 #' \cr If `FALSE`, it will be evaluated from the input data df to check if in combined column.
-#' \cr This check from within data is not robust enough to cover sparse data situations, this can be handled more 
+#' \cr This check from within data is not robust enough to cover sparse data situations, this can be handled more
 #' securely within a_fun using .spl_context information.
 #' @description Extension to tern:::s_ancova, 3 extra statistics are returned:
 #'   * `lsmean_se`: Marginal mean and estimated SE in the group.
@@ -91,9 +91,9 @@ s_ancova_j <- function(
 
   n_obs_trt_lvls_df <- length(unique(df[[arm]]))
   in_combo <- (n_obs_trt_lvls_df > 1) || in_combo
-  # note the above check in_combo will not trigger the following situation of being in 
+  # note the above check in_combo will not trigger the following situation of being in
   # a combined column where the actual data only has 1 observed arm level
-  # if this happens in a situation of 3-levels for arm, the adjustments for sparse data 
+  # if this happens in a situation of 3-levels for arm, the adjustments for sparse data
   # would capture the required updates
   # in a situation of 4-levels for arm, the resulting model would not yet be as wanted
   # this is the reason of the argument in_combo
@@ -112,7 +112,7 @@ s_ancova_j <- function(
     .df_row <- rbind(df, .ref_group)
     # now we can proceed as before
   }
-  
+
   n_obs_trt_lvls <- length(unique(.df_row[[arm]]))
 
   ### sparse data problems with underlying ancova function
@@ -448,7 +448,7 @@ a_summarize_ancova_j <- function(
   trtvar <- tail(ref_path, 2)[[1]]
   in_combo <- h_in_combo(trtvar, .spl_context)
   dots_extra_args[["in_combo"]] <- in_combo
-  
+
   # Apply statistics function
   x_stats <- .apply_stat_functions(
     default_stat_fnc = s_summarize_ancova_j,

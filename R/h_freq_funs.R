@@ -194,7 +194,7 @@ h_colexpr_substr <- function(var, col_expr) {
 #' @return TRUE if in a combined column facet.
 #' @noRd
 #' @keywords internal
-h_in_combo <- function(trtvar, .spl_context){
+h_in_combo <- function(trtvar, .spl_context) {
   colexpr_substr <- h_colexpr_substr(trtvar, .spl_context$cur_col_expr[[1]])
   in_combo <- grepl(pattern = "c(", x = colexpr_substr, fixed = TRUE)
 }

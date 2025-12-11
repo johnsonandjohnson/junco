@@ -357,8 +357,8 @@ test_that("s_summarize_ancova works as expected in combined column test 4", {
     )
   )
 
-  lyt <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("carb", split_fun = mycombo) %>%
+  lyt <- basic_table(show_colcounts = TRUE) |>
+    split_cols_by("carb", split_fun = mycombo) |>
     analyze(
       vars = "disp",
       afun = a_summarize_ancova_j,
@@ -386,9 +386,9 @@ test_that("s_summarize_ancova works as expected in combined column test 4", {
   cellvals_carb12_comb <- cellvals[["lsmean_ci"]]$`Carb 1 + 2`
 
   # start checking using underlying s-functions
-  .ref_group <- inputdf %>%
+  .ref_group <- inputdf |>
     filter(carb == "Carb 4")
-  df <- inputdf %>%
+  df <- inputdf |>
     filter(carb %in% c("Carb 1", "Carb 2"))
 
   # for current model specs, reduced combo spec for difference between ref is same as 2-sample t-test
@@ -405,11 +405,11 @@ test_that("s_summarize_ancova works as expected in combined column test 4", {
 
   # estimates of mean for combo group: come from model with 2 levels : the ref Carb 4 and the comp Carb 2
   # prep for model inputs according to specs
-  .ref_group <- inputdf %>%
-    filter(carb == "Carb 4") %>%
+  .ref_group <- inputdf |>
+    filter(carb == "Carb 4") |>
     filter(!is.na(disp))
-  df <- inputdf %>%
-    filter(carb %in% c("Carb 1", "Carb 2")) %>%
+  df <- inputdf |>
+    filter(carb %in% c("Carb 1", "Carb 2")) |>
     filter(!is.na(disp))
 
   .df_row <- rbind(df, .ref_group)
