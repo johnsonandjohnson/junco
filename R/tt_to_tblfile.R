@@ -4,19 +4,36 @@
 #' @param fontspec (`font_spec`)\cr Font specification object
 #' @param string_map (`list`)\cr Unicode mapping for special characters
 #' @param markup_df (`data.frame`)\cr Data frame containing markup information
+#' @param validate logical(1). Whether to validate the table structure using
+#'   `rtables::validate_table_struct()`. Defaults to `TRUE`. If `FALSE`, a message
+#'   will be displayed instead of stopping with an error when validation fails.
 #' @return `tt` represented as a `tbl` data.frame suitable for passing
 #'   to [tidytlg::gentlg] via the `huxme` argument.
 tt_to_tbldf <- function(
   tt,
   fontspec = font_spec("Times", 9L, 1),
   string_map = default_str_map,
-  markup_df = dps_markup_df
+  markup_df = dps_markup_df,
+  validate = TRUE
 ) {
-  if (!validate_table_struct(tt)) {
-    stop(
-      "invalid table structure. summarize_row_groups without ",
-      "analyze below it in layout structure?"
-    )
+  if (validate) {
+    if (!validate_table_struct(tt)) {
+      stop(
+        "Invalid table structure detected. summarize_row_groups without ",
+        "analyze below it in layout structure?"
+      )
+    }
+  } else {
+    if (!validate_table_struct(tt)) {
+      message(
+        "Invalid table structure detected. This may cause issues in the output. ",
+        "The validation process failed, proceed with caution."
+      )
+    } else {
+      message(
+        "Table structure validation succeeded. You should not need to set validate=FALSE."
+      )
+    }
   }
   mpf <- matrix_form(
     tt,
@@ -256,8 +273,8 @@ get_ncol <- function(tt) {
 #'   sas performs nearest-value rounding consistent with rounding within SAS.
 #'   See `[formatters::format_value()]` for more details.
 #' @param validate logical(1). Whether to validate the table structure using
-#'  `rtables::validate_table_struct()`. Defaults to `TRUE`. This can also be disabled
-#'  globally by setting the environment variable `JUNCO_DISABLE_VALIDATION=TRUE`.
+#'  `rtables::validate_table_struct()`. Defaults to `TRUE`. If `FALSE`, a message
+#'  will be displayed when validation fails.
 #' @import rlistings
 #' @rdname tt_to_tlgrtf
 #' @export
@@ -306,17 +323,20 @@ tt_to_tlgrtf <- function(
   validate = TRUE,
   ...
 ) {
-  # Validate table structure if requested and not disabled by environment variable
-  # nolint start
-  if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree") &&
-    Sys.getenv("JUNCO_DISABLE_VALIDATION") != "TRUE") {
+  if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
     if (!rtables::validate_table_struct(tt)) {
-      warning(
+      message(
         "Invalid table structure detected. This may cause issues in the output. ",
-        "Use validate=FALSE to disable this warning or set JUNCO_DISABLE_VALIDATION=TRUE in your environment."
+        "The validation process failed, proceed with caution."
       )
     }
-  } # nolint end
+  } else if (!validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
+    if (rtables::validate_table_struct(tt)) {
+      message(
+        "Table structure validation succeeded. You should not need to set validate=FALSE."
+      )
+    }
+  }
 
   orientation <- match.arg(orientation)
   newdev <- open_font_dev(fontspec)

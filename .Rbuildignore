@@ -47,5 +47,7 @@ pkgdown
 ^output$
 ^junco_tlg_template_scripts$
 ^[^/]*\.R$
+^\.vscode$
+^[.]?air[.]toml$
 ^CHANGELOG\.md$
 ^air\.toml$

@@ -27,7 +27,7 @@ test_that("h_extract_coxreg_multivar works as expected", {
 })
 
 test_that("tefos03_first_split_fun works as expected", {
-  lyt <- basic_table() %>%
+  lyt <- basic_table() |>
     split_cols_by("ID", split_fun = tefos03_first_split_fun)
   result <- expect_silent(build_table(lyt, DM))
   expect_snapshot(col_info(result))
@@ -36,7 +36,7 @@ test_that("tefos03_first_split_fun works as expected", {
 
 test_that("tefos03_second_split_fun_fct works as expected", {
   split_fun <- tefos03_second_split_fun_fct(conf_level = 0.92)
-  lyt <- basic_table() %>%
+  lyt <- basic_table() |>
     split_cols_by("ID", split_fun = tefos03_first_split_fun) |>
     split_cols_by("ID", split_fun = split_fun)
   result <- expect_silent(build_table(lyt, DM))

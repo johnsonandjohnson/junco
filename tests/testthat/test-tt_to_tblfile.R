@@ -121,8 +121,8 @@ test_that("tt_to_tlgrtf works with argument combined_rtf = TRUE", {
 
 test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   # Create a simple table for testing
-  lyt <- basic_table() %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table() |>
+    split_cols_by("ARM") |>
     analyze("AGE")
 
   tbl <- build_table(lyt, ex_adsl)
@@ -142,9 +142,21 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
 
   badtbl <- build_table(badlyt, ex_adsl)
 
-  ## this test is largely meaningless because it doesn't get caught
-  ##  when calling tt_to_tlgrtf directly....
+  ## Test that an error is issued when validate=TRUE (default behavior)
   expect_error(tt_to_tbldf(badtbl))
+  expect_error(tt_to_tbldf(badtbl, validate = TRUE))
+
+  ## Test that a message is issued when validate=FALSE
+  expect_message(
+    tt_to_tbldf(badtbl, validate = FALSE),
+    "Invalid table structure detected"
+  )
+
+  ## Test that a different message is issued for valid tables when validate=FALSE
+  expect_message(
+    tt_to_tbldf(tbl, validate = FALSE),
+    "Table structure validation succeeded"
+  )
 
   lyt_pgby <- basic_table() |>
     split_cols_by("ARM") |>
@@ -206,25 +218,25 @@ test_that("tt_to_tlgrtf validates table structure correctly", {
 
   badtbl <- build_table(badlyt, ex_adsl)
 
-  # Test that a warning is issued when validate=TRUE
-  expect_warning(
+  # Test that a message is issued when validate=TRUE
+  expect_message(
     tt_to_tlgrtf(badtbl, file = NULL, validate = TRUE),
     "Invalid table structure detected"
   )
 
-  # Test that no warning is issued when validate=FALSE
-  expect_no_warning(
+  # Test that no message is issued when validate=FALSE
+  expect_no_message(
     tt_to_tlgrtf(badtbl, file = NULL, validate = FALSE)
   )
 
-  # Test that the default behavior (validate=TRUE) issues a warning
-  expect_warning(
+  # Test that the default behavior (validate=TRUE) issues a message
+  expect_message(
     tt_to_tlgrtf(badtbl, file = NULL),
     "Invalid table structure detected"
   )
 })
 
-test_that("tt_to_tlgrtf does not warn for valid table structures", {
+test_that("tt_to_tlgrtf does not message for valid table structures with validate=TRUE", {
   # Create a valid table structure
   data(ex_adsl)
   lyt <- basic_table() |>
@@ -233,38 +245,31 @@ test_that("tt_to_tlgrtf does not warn for valid table structures", {
 
   tbl <- build_table(lyt, ex_adsl)
 
-  # Test that no warning is issued for a valid table
-  expect_no_warning(
+  # Test that no message is issued for a valid table with validate=TRUE
+  expect_no_message(
     tt_to_tlgrtf(tbl, file = NULL, validate = TRUE)
   )
 })
 
-test_that("tt_to_tlgrtf respects JUNCO_DISABLE_VALIDATION environment variable", {
-  # Create an invalid table structure
+test_that("tt_to_tlgrtf validates valid table structures correctly", {
+  # Create a valid table structure
   data(ex_adsl)
-  badlyt <- basic_table() |>
-    split_rows_by("ARM") |>
-    summarize_row_groups()
+  lyt <- basic_table() |>
+    split_cols_by("ARM") |>
+    analyze("AGE")
 
-  badtbl <- build_table(badlyt, ex_adsl)
+  tbl <- build_table(lyt, ex_adsl)
 
-  # Save current environment variable state
-  old_env <- Sys.getenv("JUNCO_DISABLE_VALIDATION")
-
-  # Set environment variable to disable validation
-  Sys.setenv(JUNCO_DISABLE_VALIDATION = "TRUE")
-
-  # Test that no warning is issued when environment variable is set
-  expect_no_warning(
-    tt_to_tlgrtf(badtbl, file = NULL, validate = TRUE)
+  # Test that a message is issued for valid tables when validate=FALSE
+  expect_message(
+    tt_to_tlgrtf(tbl, file = NULL, validate = FALSE),
+    "Table structure validation succeeded"
   )
 
-  # Reset environment variable
-  if (old_env == "") {
-    Sys.unsetenv("JUNCO_DISABLE_VALIDATION")
-  } else {
-    Sys.setenv(JUNCO_DISABLE_VALIDATION = old_env)
-  }
+  # Test that no message is issued for valid tables when validate=TRUE
+  expect_no_message(
+    tt_to_tlgrtf(tbl, file = NULL, validate = TRUE)
+  )
 })
 
 test_that("more top left than col headers works", {

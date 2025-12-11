@@ -40,7 +40,7 @@ lyt <- basic_table(round_type = "sas") |>
 tt <- build_table(lyt, ADSL)
 
 test_that("ttype_wrap_vec works as expected", {
-  result <- ttype_wrap_vec(vec = c(1, 2, 3, 4) %>% as.character(), fontspec = fontspec, width = 2)
+  result <- ttype_wrap_vec(vec = c(1, 2, 3, 4) |> as.character(), fontspec = fontspec, width = 2)
   # TODO: how do I guess expected_result
   expected_result <- list(
     c("1"),
@@ -70,7 +70,7 @@ test_that("def_colwidths works as expected", {
     ARM = "Description\nOf\nPlanned Arm"
   )
   # nolint start
-  suppressMessages(tt2 <- as_listing(anl, key_cols = c("USUBJID")) %>%
+  suppressMessages(tt2 <- as_listing(anl, key_cols = c("USUBJID")) |>
     add_listing_col("ARM"))
   # nolint end
 
@@ -88,7 +88,7 @@ test_that("listing_column_widths works as expected", {
     ARM = "Description\nOf\nPlanned Arm"
   )
   # nolint start
-  suppressMessages(tt3 <- as_listing(anl, key_cols = c("USUBJID")) %>%
+  suppressMessages(tt3 <- as_listing(anl, key_cols = c("USUBJID")) |>
     add_listing_col("ARM"))
   # nolint end
   mpf <- rlistings::matrix_form(tt3)
@@ -106,7 +106,7 @@ test_that("find_free_colspc works as expected", {
     ARM = "Description\nOf\nPlanned Arm"
   )
   # nolint start
-  suppressMessages(tt4 <- as_listing(anl, key_cols = c("USUBJID")) %>%
+  suppressMessages(tt4 <- as_listing(anl, key_cols = c("USUBJID")) |>
     add_listing_col("ARM"))
   # nolint end
   mpf <- rlistings::matrix_form(tt4)
