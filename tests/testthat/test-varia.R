@@ -444,12 +444,16 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
       )
     )
 
-  advs <- advs |>
-    left_join(
-      advs,
-      adsl |> select(USUBJID, ARM, BNRIND_header, BNRIND_header2),
-      by = "USUBJID"
-    ) |>
+  # Create a temporary variable to store the result of the join
+  advs_joined <- left_join(
+    advs,
+    adsl |> select(USUBJID, ARM, BNRIND_header, BNRIND_header2),
+    by = "USUBJID",
+    relationship = "many-to-many"
+  )
+
+  # Now filter using the temporary variable
+  advs <- advs_joined |>
     filter(ABLFL != "Y")
 
   ANRIND_levels <- levels(advs$ANRIND)
