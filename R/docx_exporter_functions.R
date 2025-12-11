@@ -323,7 +323,7 @@ insert_title_hanging_indent_v3 <- function(flx,
 
 interpret_cell_content <- function(str_before, markup_df_docx = dps_markup_df_docx) {
   if (inherits(str_before, "list") && length(str_before) == 1 &&
-    inherits(str_before[[1]], "character") && length(str_before[[1]]) > 1) {
+        inherits(str_before[[1]], "character") && length(str_before[[1]]) > 1) {
     str_before <- paste(str_before[[1]], collapse = "")
   }
 
@@ -1022,8 +1022,8 @@ tt_to_flextable_j <- function(
       for (j in seq(1, length(col_widths_in_header))) {
         cur_width <- col_widths_in_header[j]
         if (cur_width > 1 &&
-          !grepl("^N=", as.vector(hdr[i + 1, sel])[j]) &&
-          trimws(as.vector(hdr[i, sel])[j]) != "") {}
+              !grepl("^N=", as.vector(hdr[i + 1, sel])[j]) &&
+              trimws(as.vector(hdr[i, sel])[j]) != "") {}
         cnt <- cnt + cur_width
       }
     }
@@ -1170,8 +1170,8 @@ tt_to_flextable_j <- function(
     )
   }
   if (titles_as_header &&
-    length(formatters::all_titles(tt)) > 0 &&
-    any(nzchar(formatters::all_titles(tt)))) {
+        length(formatters::all_titles(tt)) > 0 &&
+        any(nzchar(formatters::all_titles(tt)))) {
     # NOTE: the following block appends the Table ID to the Title,
     # inserts the Title with the hanging indent as part of the Header,
     # and adds the borders above and below the Title
@@ -1467,7 +1467,7 @@ export_as_docx_j <- function(
         SIMPLIFY = FALSE
       )
     } else if (inherits(tt[[1]], "flextable") ||
-      (inherits(tt[[1]], "list") && inherits(tt[[1]][[1]], "flextable"))) {
+                 (inherits(tt[[1]], "list") && inherits(tt[[1]][[1]], "flextable"))) {
       flex_tbl_list <- tt
     } else {
       do_tt_error <- TRUE
