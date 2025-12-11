@@ -145,3 +145,4 @@ reference:
     - tt_to_flextable_j
     - export_as_docx_j
     - export_graph_as_docx
+    - theme_docx_default_j
