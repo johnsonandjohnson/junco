@@ -1,13 +1,13 @@
-calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, roundmethod = c("sas", "iec"), exclude_visits,
+calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, round_type = valid_round_type, exclude_visits,
                            var_names = c("AVAL", "CHG", "BASE")) {
-  roundmethod <- match.arg(roundmethod)
+  round_type <- match.arg(round_type)
   if (is.na(decimal)) {
     decimal <- 0
   }
   if ((varnm == var_names[2] || varnm == var_names[3]) && (visit %in% exclude_visits)) {
     return(NULL)
   }
-  if (roundmethod == "sas") {
+  if (round_type == "sas") {
     switch(statnm,
       N = length(stats::na.omit(datvec)),
       SE = format(

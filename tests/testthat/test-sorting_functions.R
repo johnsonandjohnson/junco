@@ -10,7 +10,7 @@ DM2$spanhead <- factor(
   levels = c("This is a Spanning Header", " ")
 )
 
-tab <- basic_table() %>%
+tab <- basic_table(round_type = "sas") %>%
   split_cols_by("spanhead", split_fun = trim_levels_in_group("ARM")) %>%
   split_cols_by("ARM") %>%
   split_rows_by("STRATA1") %>%
@@ -131,7 +131,7 @@ testthat::test_that("jj_complex_scorefun places specified category at the end: l
   testthat::expect_identical(result, expected)
 })
 
-tab2 <- basic_table() %>%
+tab2 <- basic_table(round_type = "sas") %>%
   split_cols_by("spanhead", split_fun = trim_levels_in_group("ARM")) %>%
   split_cols_by("ARM") %>%
   split_cols_by("RACE") %>%

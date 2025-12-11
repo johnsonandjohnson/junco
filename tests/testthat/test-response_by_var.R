@@ -16,7 +16,7 @@ adsl <- adsl %>%
   mutate(TRTEMFL = ifelse(is.na(TRTEMFL), "N", "Y"))
 
 test_that("response_by_var various scenarios", {
-  lyt <- basic_table(show_colcounts = TRUE) %>%
+  lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
     split_cols_by("ARM") %>%
     analyze(
       vars = "SEX",

@@ -94,7 +94,7 @@ test_that("a_summarize_aval_chg_diff_j works as expected", {
 
   ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     ### first columns
     split_cols_by(
       "colspan_trt",
@@ -230,7 +230,7 @@ test_that("a_summarize_aval_chg_diff_j works with ancova = TRUE", {
   )
   ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") %>%
     ### first columns
     split_cols_by(
       "colspan_trt",

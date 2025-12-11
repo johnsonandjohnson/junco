@@ -95,7 +95,7 @@ test_that("a_kaplan_meier works inside analyze in table", {
     adtte_f$AVAL == max(adtte_f$AVAL[adtte_f$ARMCD == "ARM A"])
   ] <- FALSE
 
-  result <- basic_table() %>%
+  result <- basic_table(round_type = "sas") %>%
     split_cols_by(
       var = "ARMCD"
     ) %>%
@@ -125,7 +125,7 @@ test_that("a_kaplan_meier works inside analyze in table with custom arguments", 
     adtte_f$AVAL == max(adtte_f$AVAL[adtte_f$ARMCD == "ARM A"])
   ] <- FALSE
 
-  result <- basic_table() %>%
+  result <- basic_table(round_type = "sas") %>%
     split_cols_by(
       var = "ARMCD"
     ) %>%
