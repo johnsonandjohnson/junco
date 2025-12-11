@@ -154,11 +154,13 @@ test_that("round_type support works", {
 
 test_that("jjcsformat_range_fct is formatting ranges as expected", {
   my_range_format <- jjcsformat_range_fct("xx.xx")
+  my_range_format2 <- jjcsformat_range_fct("xx.xx", censor_char = "*")
   expect_snapshot({
     my_range_format(c(0.35235, 99.2342, 1, 0))
     my_range_format(c(0.35235, 99.2342, 0, 1))
     my_range_format(c(0.35235, 99.2342, 0, 0))
     my_range_format(c(0.35235, 99.2342, 1, 1))
+    my_range_format2(c(0.35235, 99.2342, 0, 1))
   })
 })
 

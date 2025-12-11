@@ -321,13 +321,15 @@ jjcsformat_pval_fct <- function(alpha = 0.05) {
 #'
 #' @param str (`string`)\cr the format specifying the number of digits to be used,
 #'   for the range values, e.g. `"xx.xx"`.
+#'   
+#' @param censor_char (`string`)\cr the character (of length 1) to be appended to `min` or `max`
 #' @return A function that formats a numeric vector with 4 elements:
 #'   - minimum
 #'   - maximum
 #'   - censored minimum? (1 if censored, 0 if event)
 #'   - censored maximum? (1 if censored, 0 if event)
 #'   The range along with the censoring information is returned as a string
-#'   with the specified numeric format as `(min, max)`, and the `+` is appended
+#'   with the specified numeric format as `(min, max)`, and the `censor_char` is appended
 #'   to `min` or `max` if these have been censored.
 #'
 #' @export
@@ -338,8 +340,11 @@ jjcsformat_pval_fct <- function(alpha = 0.05) {
 #' my_range_format(c(0.35235, 99.2342, 0, 1))
 #' my_range_format(c(0.35235, 99.2342, 0, 0))
 #' my_range_format(c(0.35235, 99.2342, 1, 1))
-jjcsformat_range_fct <- function(str) {
+#' my_range_format <- jjcsformat_range_fct("xx.xx", censor_char = "*")
+#' my_range_format(c(0.35235, 99.2342, 1, 1))
+jjcsformat_range_fct <- function(str, censor_char = "+") {
   format_xx <- jjcsformat_xx(str)
+  checkmate::assert_string(censor_char, na.ok = FALSE, n.chars = 1)
 
   function(x, output, round_type = valid_round_type, ...) {
     round_type <- match.arg(round_type)
@@ -354,8 +359,8 @@ jjcsformat_range_fct <- function(str) {
     res <- vapply(x[c(1, 2)], FUN = function(x) {
       format_value(x, format_xx, round_type = round_type)
     }, character(1))
-    if (x[3] == 1) res[1] <- paste0(res[1], "+")
-    if (x[4] == 1) res[2] <- paste0(res[2], "+")
+    if (x[3] == 1) res[1] <- paste0(res[1], censor_char)
+    if (x[4] == 1) res[2] <- paste0(res[2], censor_char)
     paste0("(", res[1], ", ", res[2], ")")
   }
 }
