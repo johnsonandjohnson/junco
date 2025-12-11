@@ -18,7 +18,7 @@
     Code
       normalize_fun(res$range_with_cens_info)
     Output
-      [1] "{round_type<-match.arg(round_type)checkmate::assert_numeric(x,len=4L,finite=TRUE,any.missing=FALSE)checkmate::assert_true(all(x[c(3,4)]%in%c(0,1)))res<-vapply(x[c(1,2)],FUN=function(x){format_value(x,format_xx,round_type=round_type)},character(1))if(x[3]==1)res[1]<-paste0(res[1],\"+\")if(x[4]==1)res[2]<-paste0(res[2],\"+\")paste0(\"(\",res[1],\",\",res[2],\")\")}"
+      [1] "{round_type<-match.arg(round_type)checkmate::assert_numeric(x,len=4L,finite=TRUE,any.missing=FALSE)checkmate::assert_true(all(x[c(3,4)]%in%c(0,1)))res<-vapply(x[c(1,2)],FUN=function(x){format_value(x,format_xx,round_type=round_type)},character(1))if(x[3]==1)res[1]<-paste0(res[1],censor_char)if(x[4]==1)res[2]<-paste0(res[2],censor_char)paste0(\"(\",res[1],\",\",res[2],\")\")}"
 
 # get_labels_from_stats works as expected
 
