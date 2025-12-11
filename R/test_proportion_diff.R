@@ -10,15 +10,12 @@
 #' alternative hypothesis.
 #'
 #' @inheritParams proposal_argument_convention
-#' @param method (`string`)\cr one of `chisq`, `cmh`, `fisher`; specifies the test used
-#'   to calculate the p-value.
+#' @param method (`string`)\cr one of `chisq`, `cmh`, `cmh_wh`, `fisher` or `schouten`; 
+#'   specifies the test used to calculate the p-value.
 #' @param .stats (`character`)\cr statistics to select for the table.
-#'
-#' @seealso [h_prop_diff_test]
 #'
 #' @note These functions have been forked from the `tern` package. Additional features are:
 #'
-#'   * Additional `alternative` argument for the sidedness of the test.
 #'   * Additional `ref_path` argument for flexible reference column path specification.
 #'
 #' @name prop_diff_test
@@ -172,62 +169,4 @@ a_test_proportion_diff <- function(
     labels_in = .labels,
     indents_in = .indent_mods
   )
-}
-
-#' Helper functions to test proportion differences
-#'
-#' Helper functions to implement various tests on the difference between two proportions.
-#'
-#' @param tbl (`matrix`)\cr matrix with two groups in rows and the binary response (`TRUE`/`FALSE`) in columns.
-#' @param alternative (`character`)\cr alternative hypothesis as defined by [stats::prop.test()]
-#'
-#' @return A p-value.
-#'
-#' @seealso [prop_diff_test()] for implementation of these helper functions.
-#'
-#' @name h_prop_diff_test
-NULL
-
-#' @describeIn h_prop_diff_test Performs Chi-Squared test. Internally calls [stats::prop.test()].
-#'
-#' @keywords internal
-prop_chisq <- function(tbl, alternative) {
-  checkmate::assert_integer(c(ncol(tbl), nrow(tbl)), lower = 2, upper = 2)
-  tbl <- tbl[, c("TRUE", "FALSE")]
-  if (any(colSums(tbl) == 0)) {
-    return(1)
-  }
-  stats::prop.test(tbl, correct = FALSE, alternative = alternative)$p.value
-}
-
-#' @describeIn h_prop_diff_test Performs stratified Cochran-Mantel-Haenszel test.
-#'  Internally calls [stats::mantelhaen.test()].
-#'
-#' @note Strata with less than five observations will result in a warning and
-#'  possibly incorrect results; strata with less than two observations are
-#'  automatically discarded.
-#'
-#' @param ary (`array`, 3 dimensions)\cr array with two groups in rows, the binary response
-#'   (`TRUE`/`FALSE`) in columns, and the strata in the third dimension.
-#'
-#' @keywords internal
-prop_cmh <- function(ary, alternative) {
-  checkmate::assert_array(ary)
-  checkmate::assert_integer(c(ncol(ary), nrow(ary)), lower = 2, upper = 2)
-  checkmate::assert_integer(length(dim(ary)), lower = 3, upper = 3)
-  strata_sizes <- apply(ary, MARGIN = 3, sum)
-  if (any(strata_sizes < 5)) {
-    warning("<5 data points in some strata. CMH test may be incorrect.")
-    ary <- ary[, , strata_sizes > 1]
-  }
-  stats::mantelhaen.test(ary, correct = FALSE, alternative = alternative)$p.value
-}
-
-#' @describeIn h_prop_diff_test Performs the Fisher's exact test. Internally calls [stats::fisher.test()].
-#'
-#' @keywords internal
-prop_fisher <- function(tbl, alternative) {
-  checkmate::assert_integer(c(ncol(tbl), nrow(tbl)), lower = 2, upper = 2)
-  tbl <- tbl[, c("TRUE", "FALSE")]
-  stats::fisher.test(tbl, alternative = alternative)$p.value
 }
