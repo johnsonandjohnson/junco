@@ -2,7 +2,7 @@
 % Please edit documentation in R/docx_exporter_functions.R
 \name{theme_docx_default_j}
 \alias{theme_docx_default_j}
-\title{Obtain the default theme for the docx following JnJ standars}
+\title{Obtain the default theme for the docx}
 \usage{
 theme_docx_default_j(
   font = "Times New Roman",

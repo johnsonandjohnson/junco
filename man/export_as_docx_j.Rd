@@ -90,7 +90,7 @@ See \verb{[formatters::format_value()]} for more details.}
 (Default = \code{list()}) Used to specify individual column or cell alignments.
 Each named list contains \code{row}, \code{col}, and \code{value}.}
 
-\item{border}{(optional) an fp_border object.}
+\item{border}{(optional) an \code{fp_border} object.}
 
 \item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of columns of \code{tt}
 and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}

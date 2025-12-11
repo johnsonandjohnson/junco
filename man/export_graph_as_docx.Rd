@@ -19,7 +19,7 @@ export_graph_as_docx(
 )
 }
 \arguments{
-\item{g}{(optional) Default = NULL. A ggplot2 object, or a list
+\item{g}{(optional) Default = NULL. A \code{ggplot2} object, or a list
 of them, to export. At least one of \code{g} or \code{plotnames} must be provided.
 If both are provided, 'g' precedes and 'plotnames' will be ignored.}
 
@@ -50,7 +50,7 @@ the units argument. If not supplied, uses the size of the current graphics devic
 \item{units}{(optional) Default = "in". One of the following units in which the
 plotwidth and plotheight arguments are expressed: "in", "cm", "mm" or "px".}
 
-\item{border}{(optional). An fp_border object to use as borders for the Title
+\item{border}{(optional). An \code{fp_border} object to use as borders for the Title
 and Footers.}
 }
 \description{

@@ -1119,7 +1119,7 @@ export_as_docx_j(result,
 ```
 
 ### Visual Output (HTML Representation)
-> **Note:** In this HTML output the spanning line is a single line, instead of 2 lines. However, if you output the .docx or .rtf file using the same tabletree as input, it will be displayed correctly.
+> **Note:** In this HTML output the spanning line is a single line, instead of 2 lines. However, if you output the .docx or .rtf file using the same TableTree as input, it will be displayed correctly.
 
 
 ```{r custom_border_matrix_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
@@ -1600,7 +1600,7 @@ x[[2]]
 knitr::asis_output("<br><br>")
 ```
 
-When calling the `junco::tt_to_tlgrtf` function, the nosplitin argument can be included, and the user can specify a variable in which the associated columns should be grouped together in the same file. Now, all the sub columns for the "Placebo" treatment group (e.g. each unique TRT01A value), are kept together within the same file.
+When calling the `junco::tt_to_tlgrtf` function, the `nosplitin` argument can be included, and the user can specify a variable in which the associated columns should be grouped together in the same file. Now, all the sub columns for the "Placebo" treatment group (e.g. each unique TRT01A value), are kept together within the same file.
 ```{r multiple_docs_table2}
 ################################################################################
 # Convert to tbl file and output table
