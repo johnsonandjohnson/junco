@@ -3,9 +3,7 @@ library(tern)
 library(rtables)
 library(ggplot2)
 
-if (Sys.info()[["sysname"]] != "Windows") {
-  skip("Skip full file on none Windows")
-}
+
 
 skip_on_cran()
 
@@ -52,6 +50,12 @@ rtables::label_at_path(tbl1c, c("COUNTRY", "count_unique_denom_fraction.CAN")) <
 rtables::label_at_path(tbl1c, c("COUNTRY", "count_unique_denom_fraction.JPN")) <-
   "JPN >="
 
+snapshot_test_docx <- function(doc) {
+  if (Sys.info()[["sysname"]] == "Windows") {
+    testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
+  }
+}
+
 snapshot_test_flextable <- function(res) {
   testthat::expect_true(inherits(res, "flextable"))
   testthat::expect_snapshot(res$header)
@@ -64,7 +68,7 @@ snapshot_test_flextable <- function(res) {
 
   doc <- officer::read_docx()
   doc <- flextable::body_add_flextable(doc, res, align = "center")
-  testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
+  snapshot_test_docx(doc)
 }
 
 
@@ -660,13 +664,13 @@ testthat::test_that("export_as_docx_j() works with pagination", {
 
   # open the files and check the XML
   doc <- officer::read_docx(paste0(output_dir, "/test1234part1of2.docx"))
-  testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
+  snapshot_test_docx(doc)
 
   doc <- officer::read_docx(paste0(output_dir, "/test1234part2of2.docx"))
-  testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
+  snapshot_test_docx(doc)
 
   doc <- officer::read_docx(paste0(output_dir, "/test1234allparts.docx"))
-  testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
+  snapshot_test_docx(doc)
 
   file.remove(c(
     paste0(output_dir, "/test1234part1of2.docx"),
@@ -811,7 +815,7 @@ testthat::test_that("export_graph_as_docx() works with basic example", {
 
   # open the file and check the XML
   doc <- officer::read_docx(output_docx)
-  testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
+  snapshot_test_docx(doc)
 
   file.remove(c(pn1, pn2, output_docx))
 })
