@@ -10,9 +10,9 @@
 #' alternative hypothesis.
 #'
 #' @inheritParams proposal_argument_convention
-#' @param method (`string`)\cr one of `chisq`, `cmh`, `cmh_wh`, `fisher` or `schouten`;
-#'   specifies the test used to calculate the p-value. See [tern::s_test_proportion_diff()]
-#'   for details.
+#' @param ... Additional arguments passed to [tern::s_test_proportion_diff()], including:
+#'   * `method` (`string`)\cr one of `chisq`, `cmh`, `cmh_wh`, `fisher` or `schouten`;
+#'     specifies the test used to calculate the p-value.
 #' @param .stats (`character`)\cr statistics to select for the table.
 #'
 #' @note This function has been forked from the `tern` package. Additional features are:
