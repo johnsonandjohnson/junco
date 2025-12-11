@@ -14,6 +14,7 @@ Authors@R: c(
     person("Ezequiel", "Anokian", , "eanokia1@its.jnj.com", role = c("ctb")),
     person("Renfei", "Mao", , "rmao6@its.jnj.com", role = c("ctb")),
     person("Mrinal", "Das", , "mdas35@its.jnj.com", role = c("ctb")),
+    person("Wojciech", "Wojciak", , "wwojciak@its.jnj.com", role = c("ctb")),
     person("Isaac", "Gravestock", role = "cph",
            comment = "Author of included rbmi functions"),
     person("Joe", "Zhu", role = "cph",
