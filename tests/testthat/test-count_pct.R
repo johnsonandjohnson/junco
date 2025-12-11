@@ -402,7 +402,8 @@ test_that("a_freq_j with N_trt as denom - special situation", {
     ) |>
     select(USUBJID, TRTEMFL, ASEV, AEBODSYS, AEBODSYSx, AEDECOD)
 
-  adaeall <- inner_join(adaeall, adsl_ %>% select(USUBJID, ARM), by = c("USUBJID"))
+  adaeall <- adaeall |>
+    inner_join(adsl_ |> select(USUBJID, ARM), by = c("USUBJID"), relationship = "many-to-many")
 
   adaeall$spanheader <- factor(
     ifelse(adaeall$ASEV == "Total", " ", "Severity"),
