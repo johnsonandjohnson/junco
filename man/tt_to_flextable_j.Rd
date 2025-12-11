@@ -46,7 +46,7 @@ tt_to_flextable_j(
 \item{theme}{(optional) a function factory. See theme_docx_default_j()
 or rtables.officer::theme_docx_default() for more details.}
 
-\item{border}{(optional) an fp_border object.}
+\item{border}{(optional) an \code{fp_border} object.}
 
 \item{indent_size}{(optional) Numeric. Not used and set to 9 points internally.}
 

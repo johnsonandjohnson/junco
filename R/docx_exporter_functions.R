@@ -451,7 +451,7 @@ my_pg_width_by_orient <- function(orientation = "portrait") {
   return(6.38)
 }
 
-#' Obtain the default theme for the docx following JnJ standars
+#' Obtain the default theme for the docx
 #'
 #' @description `r lifecycle::badge('experimental')`
 #'
@@ -606,7 +606,7 @@ theme_docx_default_j <- function(
 #' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
 #' @param theme (optional) a function factory. See theme_docx_default_j()
 #' or rtables.officer::theme_docx_default() for more details.
-#' @param border (optional) an fp_border object.
+#' @param border (optional) an `fp_border` object.
 #' @param indent_size (optional) Numeric. Not used and set to 9 points internally.
 #' @param titles_as_header (optional) Default = TRUE.
 #' @param bold_titles (optional) Default = TRUE.
@@ -1348,7 +1348,7 @@ tt_to_flextable_j <- function(
 #' @param alignments (`list`)\cr List of named lists. Vectorized.
 #' (Default = `list()`) Used to specify individual column or cell alignments.
 #' Each named list contains `row`, `col`, and `value`.
-#' @param border (optional) an fp_border object.
+#' @param border (optional) an `fp_border` object.
 #' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of columns of `tt`
 #' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #' for what the matrix should contain. Users should only specify this when the
@@ -1690,7 +1690,7 @@ export_as_docx_j <- function(
 #'
 #' Export graph in DOCX format. See notes to understand why this is experimental.
 #'
-#' @param g (optional) Default = NULL. A ggplot2 object, or a list
+#' @param g (optional) Default = NULL. A `ggplot2` object, or a list
 #' of them, to export. At least one of `g` or `plotnames` must be provided.
 #' If both are provided, 'g' precedes and 'plotnames' will be ignored.
 #' @param plotnames (optional) Default = NULL. A file path, or a list of them,
@@ -1711,7 +1711,7 @@ export_as_docx_j <- function(
 #' the units argument. If not supplied, uses the size of the current graphics device.
 #' @param units (optional) Default = "in". One of the following units in which the
 #' plotwidth and plotheight arguments are expressed: "in", "cm", "mm" or "px".
-#' @param border (optional). An fp_border object to use as borders for the Title
+#' @param border (optional). An `fp_border` object to use as borders for the Title
 #' and Footers.
 #'
 #' @note
