@@ -445,10 +445,10 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
     )
 
   advs <- left_join(
-      advs,
-      adsl %>% select(USUBJID, ARM, BNRIND_header, BNRIND_header2),
-      by = "USUBJID"
-    ) |>
+    advs,
+    adsl %>% select(USUBJID, ARM, BNRIND_header, BNRIND_header2),
+    by = "USUBJID"
+  ) |>
     filter(ABLFL != "Y")
 
   ANRIND_levels <- levels(advs$ANRIND)
