@@ -10,8 +10,8 @@
 #' alternative hypothesis.
 #'
 #' @inheritParams proposal_argument_convention
-#' @param method (`string`)\cr one of `chisq`, `cmh`, `cmh_wh`, `fisher` or `schouten`; 
-#'   specifies the test used to calculate the p-value. See [tern::s_test_proportion_diff()] 
+#' @param method (`string`)\cr one of `chisq`, `cmh`, `cmh_wh`, `fisher` or `schouten`;
+#'   specifies the test used to calculate the p-value. See [tern::s_test_proportion_diff()]
 #'   for details.
 #' @param .stats (`character`)\cr statistics to select for the table.
 #'
@@ -53,15 +53,16 @@ NULL
 #' @export
 #' @order 1
 a_test_proportion_diff <- function(
-    df,
-    .var,
-    ref_path,
-    .spl_context,
-    ...,
-    .stats = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  .var,
+  ref_path,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 
