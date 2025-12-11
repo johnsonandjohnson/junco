@@ -14,7 +14,8 @@ tt_to_tbldf <- function(
   fontspec = font_spec("Times", 9L, 1),
   string_map = default_str_map,
   markup_df = dps_markup_df,
-  validate = TRUE) {
+  validate = TRUE
+) {
   if (validate) {
     if (!validate_table_struct(tt)) {
       stop(

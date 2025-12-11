@@ -2,8 +2,8 @@ library(rtables)
 library(dplyr)
 suppressPackageStartupMessages(library(tern))
 
-adsl <- ex_adsl %>% select(USUBJID, ARM, COUNTRY, STRATA1, SEX)
-adae <- ex_adae %>% select(USUBJID, AEDECOD, AEBODSYS, ARM)
+adsl <- ex_adsl |> select(USUBJID, ARM, COUNTRY, STRATA1, SEX)
+adae <- ex_adae |> select(USUBJID, AEDECOD, AEBODSYS, ARM)
 adae$TRTEMFL <- "Y"
 
 trtvar <- "ARM"
@@ -21,10 +21,10 @@ adsl$rrisk_label <- paste(adsl[["ARM"]], "vs Placebo")
 
 adae <- left_join(adae, adsl, by = join_by(USUBJID, ARM))
 
-core_lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-  split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
-  split_cols_by("ARM") %>%
-  split_cols_by("rrisk_header", nested = FALSE) %>%
+core_lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+  split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) |>
+  split_cols_by("ARM") |>
+  split_cols_by("rrisk_header", nested = FALSE) |>
   split_cols_by(
     "ARM",
     labels_var = "rrisk_label",
@@ -96,7 +96,7 @@ test_that("a_freq_j with val = NA and denom option", {
     method = "wald"
   )
 
-  lyt1 <- core_lyt %>%
+  lyt1 <- core_lyt |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -107,7 +107,7 @@ test_that("a_freq_j with val = NA and denom option", {
   tbl1 <- build_table(lyt1, adsl)
   res1 <- cell_values(tbl1["CHN", "A: Drug X"])
   res1_val <- unlist(unname(res1[[DrugX_column_val]]))
-  res1_rr <- res1[[DrugX_column_rr]] %>% as.numeric()
+  res1_rr <- res1[[DrugX_column_rr]] |> as.numeric()
 
   Ncol <- count_unique_subjects(adsl_col)
   N <- count_unique_subjects(adsl_col)
@@ -148,7 +148,7 @@ test_that("a_freq_j with val = NA and denom option", {
     method = "wald"
   )
 
-  lyt1b <- core_lyt %>%
+  lyt1b <- core_lyt |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -157,7 +157,7 @@ test_that("a_freq_j with val = NA and denom option", {
   tbl1b <- build_table(lyt1b, adae, adsl)
   res1b <- cell_values(tbl1b["CHN", "A: Drug X"])
   res1b_val <- unlist(unname(res1b[[DrugX_column_val]]))
-  res1b_rr <- res1b[[DrugX_column_rr]] %>% as.numeric()
+  res1b_rr <- res1b[[DrugX_column_rr]] |> as.numeric()
 
   ### comparison of main columns (similar to tests in test-count_pct.R )
   Ncol <- count_unique_subjects(adsl_col)
@@ -197,7 +197,7 @@ test_that("a_freq_j with val = NA and denom option", {
     method = "wald"
   )
 
-  lyt1c <- core_lyt %>%
+  lyt1c <- core_lyt |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -207,7 +207,7 @@ test_that("a_freq_j with val = NA and denom option", {
 
   res1c <- cell_values(tbl1c["CHN", "A: Drug X"])
   res1c_val <- unlist(unname(res1c[[DrugX_column_val]]))
-  res1c_rr <- res1c[[DrugX_column_rr]] %>% as.numeric()
+  res1c_rr <- res1c[[DrugX_column_rr]] |> as.numeric()
 
   ### comparison of main columns (similar to tests in test-count_pct.R )
   Ncol <- count_unique_subjects(adsl_col)
@@ -261,7 +261,7 @@ test_that("a_freq_j with risk difference method cmh", {
     ref_path = ref_path,
     variables = list(strata = "STRATA1")
   )
-  lyt1d <- core_lyt %>%
+  lyt1d <- core_lyt |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -272,7 +272,7 @@ test_that("a_freq_j with risk difference method cmh", {
 
   res1d <- cell_values(tbl1d["CHN", "A: Drug X"])
   res1d_val <- unlist(unname(res1d[[DrugX_column_val]]))
-  res1d_rr <- res1d[[DrugX_column_rr]] %>% as.numeric()
+  res1d_rr <- res1d[[DrugX_column_rr]] |> as.numeric()
 
   ### comparison of main columns (similar to tests in test-count_pct.R )
   Ncol <- count_unique_subjects(adsl_col)
@@ -297,9 +297,9 @@ test_that("a_freq_j with risk difference method cmh", {
   N_PBO <- count_unique_subjects(adae_colPBO_x)
 
   ### construct input vectors to utilize tern::prop_diff_cmh
-  adae_col_chn <- adae %>%
+  adae_col_chn <- adae |>
     filter(ARM == "A: Drug X" & COUNTRY == "CHN")
-  adae_colPBO_chn <- adae %>%
+  adae_colPBO_chn <- adae |>
     filter(ARM == ctrl_grp & COUNTRY == "CHN")
 
   subj_col <- adsl_col[["USUBJID"]]
@@ -361,8 +361,8 @@ test_that("a_freq_j with N_subgroup as denom", {
     ctrl_grp = ctrl_grp,
     ref_path = ref_path
   )
-  lyt1 <- core_lyt %>%
-    split_rows_by("SEX") %>%
+  lyt1 <- core_lyt |>
+    split_rows_by("SEX") |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -383,7 +383,7 @@ test_that("a_freq_j with N_subgroup as denom", {
     ]
   )
   res1_val <- unlist(unname(res1[[DrugX_column_val]]))
-  res1_rr <- res1[[DrugX_column_rr]] %>% as.numeric()
+  res1_rr <- res1[[DrugX_column_rr]] |> as.numeric()
 
   Ncol <- length(unique(adsl_col[["USUBJID"]]))
   Nsubgroup <- length(unique(adsl_col_subgroup[["USUBJID"]]))
@@ -431,7 +431,7 @@ test_that("a_freq_j with N_subgroup as denom", {
     ]
   )
   res1b_val <- unlist(unname(res1b[[DrugX_column_val]]))
-  res1b_rr <- res1b[[DrugX_column_rr]] %>% as.numeric()
+  res1b_rr <- res1b[[DrugX_column_rr]] |> as.numeric()
 
   Ncol <- length(unique(adsl_col[["USUBJID"]]))
   Nsubgroup <- length(unique(adsl_col_subgroup[["USUBJID"]]))
@@ -479,8 +479,8 @@ test_that("a_freq_j with N_subgroup as denom", {
     ref_path = ref_path
   )
 
-  lyt1c <- core_lyt %>%
-    split_rows_by("SEX") %>%
+  lyt1c <- core_lyt |>
+    split_rows_by("SEX") |>
     analyze(
       vars = "COUNTRY",
       afun = a_freq_j,
@@ -500,7 +500,7 @@ test_that("a_freq_j with N_subgroup as denom", {
     ]
   )
   res1c_val <- unlist(unname(res1c[[DrugX_column_val]]))
-  res1c_rr <- res1c[[DrugX_column_rr]] %>% as.numeric()
+  res1c_rr <- res1c[[DrugX_column_rr]] |> as.numeric()
 
   Ncol <- length(unique(adsl_col[["USUBJID"]]))
   Nsubgroup <- length(unique(adsl_col_subgroup[["USUBJID"]]))

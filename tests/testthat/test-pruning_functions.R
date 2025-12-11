@@ -2,12 +2,12 @@ library(dplyr)
 library(tern)
 
 # Pre-processing the table
-tab <- basic_table(round_type = "sas") %>%
-  split_cols_by("ARM") %>%
-  split_rows_by("RACE") %>%
-  split_rows_by("STRATA1") %>%
-  summarize_row_groups() %>%
-  analyze_vars("COUNTRY", .stats = "count_fraction") %>%
+tab <- basic_table(round_type = "sas") |>
+  split_cols_by("ARM") |>
+  split_rows_by("RACE") |>
+  split_rows_by("STRATA1") |>
+  summarize_row_groups() |>
+  analyze_vars("COUNTRY", .stats = "count_fraction") |>
   build_table(formatters::DM)
 
 trtvar <- "ARM"
@@ -125,19 +125,19 @@ testthat::test_that("test keep_non_null_rows", {
     rcell(NULL, label = "")
   }
 
-  tabsx <- basic_table(round_type = "sas") %>%
-    split_cols_by("ARM") %>%
-    split_rows_by("ARM") %>%
-    analyze("ARM", afun = xnull_cell_fn, show_labels = "hidden") %>%
-    analyze("STRATA1", show_labels = "hidden") %>%
+  tabsx <- basic_table(round_type = "sas") |>
+    split_cols_by("ARM") |>
+    split_rows_by("ARM") |>
+    analyze("ARM", afun = xnull_cell_fn, show_labels = "hidden") |>
+    analyze("STRATA1", show_labels = "hidden") |>
     build_table(formatters::DM)
 
   result <- prune_table(tabsx, keep_rows(keep_non_null_rows))
 
-  tabsx2 <- basic_table(round_type = "sas") %>%
-    split_cols_by("ARM") %>%
-    split_rows_by("ARM") %>%
-    analyze("STRATA1") %>%
+  tabsx2 <- basic_table(round_type = "sas") |>
+    split_cols_by("ARM") |>
+    split_rows_by("ARM") |>
+    analyze("STRATA1") |>
     build_table(formatters::DM)
 
   expected <- tabsx2
@@ -174,9 +174,9 @@ testthat::test_that("bspt_pruner both fraction and diff_from_control are NULL", 
 })
 
 testthat::test_that("bspt_pruner with fraction", {
-  tab_bspt_pruner <- basic_table(round_type = "sas") %>%
-    split_cols_by("ARM") %>%
-    analyze_vars("COUNTRY", .stats = "count_fraction") %>%
+  tab_bspt_pruner <- basic_table(round_type = "sas") |>
+    split_cols_by("ARM") |>
+    analyze_vars("COUNTRY", .stats = "count_fraction") |>
     build_table(formatters::DM)
 
   result <- prune_table(
@@ -194,9 +194,9 @@ testthat::test_that("bspt_pruner with fraction", {
 })
 
 testthat::test_that("bspt_pruner with fraction and diff_from_control", {
-  tab_bspt_pruner <- basic_table(round_type = "sas") %>%
-    split_cols_by("ARM") %>%
-    analyze_vars("COUNTRY", .stats = "count_fraction") %>%
+  tab_bspt_pruner <- basic_table(round_type = "sas") |>
+    split_cols_by("ARM") |>
+    analyze_vars("COUNTRY", .stats = "count_fraction") |>
     build_table(formatters::DM)
 
   result <- prune_table(
@@ -216,9 +216,9 @@ testthat::test_that("bspt_pruner with fraction and diff_from_control", {
 })
 
 testthat::test_that("bspt_pruner with fraction and diff_from_control and keeprowtext", {
-  tab_bspt_pruner <- basic_table(round_type = "sas") %>%
-    split_cols_by("ARM") %>%
-    analyze_vars("COUNTRY", .stats = "count_fraction") %>%
+  tab_bspt_pruner <- basic_table(round_type = "sas") |>
+    split_cols_by("ARM") |>
+    analyze_vars("COUNTRY", .stats = "count_fraction") |>
     build_table(formatters::DM)
 
   result1 <- prune_table(
@@ -253,8 +253,8 @@ testthat::test_that("bspt_pruner with fraction and diff_from_control and keeprow
 })
 
 testthat::test_that("count_pruner in small groups", {
-  DM_sub <- subset(DM, COUNTRY %in% c("USA", "CAN")) %>%
-    mutate(COUNTRY = factor(as.character(COUNTRY))) %>%
+  DM_sub <- subset(DM, COUNTRY %in% c("USA", "CAN")) |>
+    mutate(COUNTRY = factor(as.character(COUNTRY))) |>
     mutate(
       colspan_trt = factor(
         ifelse(ARM == "B: Placebo", " ", "Active Study Agent"),
@@ -270,16 +270,16 @@ testthat::test_that("count_pruner in small groups", {
     ref_path = ref_path
   )
 
-  tab_bspt_pruner <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
-    split_cols_by("ARM") %>%
-    split_cols_by("rrisk_header", nested = FALSE) %>%
+  tab_bspt_pruner <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) |>
+    split_cols_by("ARM") |>
+    split_cols_by("rrisk_header", nested = FALSE) |>
     split_cols_by(
       "ARM",
       labels_var = "rrisk_label",
       split_fun = remove_split_levels("B: Placebo")
-    ) %>%
-    analyze("COUNTRY", afun = a_freq_j, extra_args = extra_args) %>%
+    ) |>
+    analyze("COUNTRY", afun = a_freq_j, extra_args = extra_args) |>
     build_table(DM_sub)
 
   result <- prune_table(
@@ -298,7 +298,7 @@ testthat::test_that("bspt_pruner in AE like tables", {
   my_adsl <- bind_rows(
     as_tibble(cbind(ARM = rep("Group A", 100), USUBJID = paste0("A", 1:100))),
     as_tibble(cbind(ARM = rep("Group B", 100), USUBJID = paste0("B", 1:100)))
-  ) %>%
+  ) |>
     mutate(ARM = factor(ARM))
 
   my_adsl$colspan <- factor(
@@ -316,51 +316,51 @@ testthat::test_that("bspt_pruner in AE like tables", {
 
   my_adae <-
     bind_rows(
-      my_adsl %>%
-        filter(USUBJID %in% c(paste0("A", 1:4), paste0("B", 1:2))) %>%
+      my_adsl |>
+        filter(USUBJID %in% c(paste0("A", 1:4), paste0("B", 1:2))) |>
         mutate(
           AEBODSYS = "BODSYS1",
           AEDECOD = "Decod 1"
         ),
-      my_adsl %>%
-        filter(USUBJID %in% c(paste0("A", 5:6), paste0("B", 3:6))) %>%
+      my_adsl |>
+        filter(USUBJID %in% c(paste0("A", 5:6), paste0("B", 3:6))) |>
         mutate(
           AEBODSYS = "BODSYS1",
           AEDECOD = "Decod 2"
         ),
-      my_adsl %>%
-        filter(USUBJID %in% c(paste0("A", 1:6), paste0("B", 1:4))) %>%
+      my_adsl |>
+        filter(USUBJID %in% c(paste0("A", 1:6), paste0("B", 1:4))) |>
         mutate(
           AEBODSYS = "BODSYS2",
           AEDECOD = "Decod 3"
         ),
-      my_adsl %>%
-        filter(USUBJID %in% c(paste0("A", 1:6), paste0("B", 1:4))) %>%
+      my_adsl |>
+        filter(USUBJID %in% c(paste0("A", 1:6), paste0("B", 1:4))) |>
         mutate(
           AEBODSYS = "BODSYS2",
           AEDECOD = "Decod 4"
         ),
-      my_adsl %>%
-        filter(USUBJID %in% c(paste0("A", 1:6), paste0("B", 1:2))) %>%
+      my_adsl |>
+        filter(USUBJID %in% c(paste0("A", 1:6), paste0("B", 1:2))) |>
         mutate(
           AEBODSYS = "BODSYS3",
           AEDECOD = "Decod 5"
         ),
-      my_adsl %>%
-        filter(USUBJID %in% c(paste0("A", 1:2), paste0("B", 1:6))) %>%
+      my_adsl |>
+        filter(USUBJID %in% c(paste0("A", 1:2), paste0("B", 1:6))) |>
         mutate(
           AEBODSYS = "BODSYS3",
           AEDECOD = "Decod 6"
         ),
-      my_adsl %>%
-        filter(USUBJID %in% c(paste0("A", 1:8), paste0("B", 1:8))) %>%
+      my_adsl |>
+        filter(USUBJID %in% c(paste0("A", 1:8), paste0("B", 1:8))) |>
         mutate(
           AEBODSYS = "BODSYS3",
           AEDECOD = "Decod 7"
         )
-    ) %>%
-    mutate(AEBODSYS = factor(AEBODSYS)) %>%
-    mutate(AEDECOD = factor(AEDECOD)) %>%
+    ) |>
+    mutate(AEBODSYS = factor(AEBODSYS)) |>
+    mutate(AEDECOD = factor(AEDECOD)) |>
     mutate(TRTEMFL = "Y")
 
   extra_args_rr <- list(
@@ -369,39 +369,39 @@ testthat::test_that("bspt_pruner in AE like tables", {
     .stats = "count_unique_fraction"
   )
 
-  tbl1 <- basic_table(show_colcounts = TRUE, top_level_section_div = " ", round_type = "sas") %>%
-    split_cols_by("colspan", split_fun = trim_levels_in_group("ARM")) %>%
-    split_cols_by("ARM") %>%
-    split_cols_by("rrisk_header", nested = FALSE) %>%
+  tbl1 <- basic_table(show_colcounts = TRUE, top_level_section_div = " ", round_type = "sas") |>
+    split_cols_by("colspan", split_fun = trim_levels_in_group("ARM")) |>
+    split_cols_by("ARM") |>
+    split_cols_by("rrisk_header", nested = FALSE) |>
     split_cols_by(
       "ARM",
       labels_var = "rrisk_label",
       split_fun = remove_split_levels("Group B")
-    ) %>%
+    ) |>
     analyze(
       "TRTEMFL",
       afun = a_freq_j,
       show_labels = "hidden",
       extra_args = append(extra_args_rr, list(label = "Subjects with >=1 AE"))
-    ) %>%
+    ) |>
     split_rows_by(
       "AEBODSYS",
       split_fun = trim_levels_in_group("AEDECOD"),
       section_div = c(" "),
       nested = FALSE
-    ) %>%
+    ) |>
     summarize_row_groups(
       "AEBODSYS",
       cfun = a_freq_j,
       extra_args = extra_args_rr
-    ) %>%
+    ) |>
     analyze(
       vars = "AEDECOD",
       afun = a_freq_j,
       indent_mod = 1L,
       show_labels = "hidden",
       extra_args = extra_args_rr
-    ) %>%
+    ) |>
     build_table(my_adae, my_adsl)
 
   result1 <- safe_prune_table(
@@ -453,14 +453,14 @@ testthat::test_that("bspt_pruner in AE like tables", {
 
 
 testthat::test_that("bspt_pruner with less obvious control specifications", {
-  DM_sub <- formatters::DM %>%
-    mutate(COUNTRY = factor(as.character(COUNTRY))) %>%
+  DM_sub <- formatters::DM |>
+    mutate(COUNTRY = factor(as.character(COUNTRY))) |>
     mutate(SEX = factor(as.character(SEX)))
 
-  tab_bspt_pruner <- basic_table(show_colcounts = TRUE, round_type = "sas") %>%
-    split_cols_by("ARM") %>%
-    split_cols_by("SEX") %>%
-    analyze_vars("COUNTRY", .stats = "count_fraction") %>%
+  tab_bspt_pruner <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
+    split_cols_by("SEX") |>
+    analyze_vars("COUNTRY", .stats = "count_fraction") |>
     build_table(DM_sub)
 
   rps_label <- make_row_df(tab_bspt_pruner)$label
@@ -510,12 +510,12 @@ testthat::test_that("bspt_pruner with less obvious control specifications", {
 })
 
 #### Tests for safe_prune_table function####
-my_DM <- formatters::DM %>%
+my_DM <- formatters::DM |>
   filter(RACE == "THIS LEAVES EMPTY DF")
 
-my_tab <- basic_table(round_type = "sas") %>%
-  split_cols_by("ARM") %>%
-  analyze("AGE") %>%
+my_tab <- basic_table(round_type = "sas") |>
+  split_cols_by("ARM") |>
+  analyze("AGE") |>
   build_table(my_DM)
 
 testthat::test_that("check that if all data is pruned leaving no rows, the outcome is the message", {

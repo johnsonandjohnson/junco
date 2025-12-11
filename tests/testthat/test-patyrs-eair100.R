@@ -4,26 +4,26 @@ library(dplyr)
 
 ref_path <- c("ARM", "B: Placebo")
 
-adsl <- ex_adsl %>%
-  mutate(TRTDURY = substring(USUBJID, nchar(USUBJID) - 3 + 1), "-", "") %>%
-  mutate(TRTDURY = sub("-", "", TRTDURY)) %>%
-  mutate(TRTDURY = sub("d", "", TRTDURY)) %>%
-  mutate(TRTDURY = as.numeric(TRTDURY)) %>%
-  mutate(TRTDURY2 = TRTDURY + 25) %>%
+adsl <- ex_adsl |>
+  mutate(TRTDURY = substring(USUBJID, nchar(USUBJID) - 3 + 1), "-", "") |>
+  mutate(TRTDURY = sub("-", "", TRTDURY)) |>
+  mutate(TRTDURY = sub("d", "", TRTDURY)) |>
+  mutate(TRTDURY = as.numeric(TRTDURY)) |>
+  mutate(TRTDURY2 = TRTDURY + 25) |>
   select(USUBJID, ARM, COUNTRY, STRATA1, TRTDURY, TRTDURY2, SEX)
 
-adae <- ex_adae %>%
+adae <- ex_adae |>
   select(USUBJID, AEDECOD, AEBODSYS, ASTDY)
 
 adae$TRTEMFL <- "Y"
 
 # set up occurrence flag for first occurrence of event
-adaefirst <- adae %>%
-  arrange(USUBJID, AEBODSYS, AEDECOD, ASTDY) %>%
-  group_by(USUBJID, AEBODSYS, AEDECOD) %>%
-  slice(1) %>%
-  ungroup() %>%
-  mutate(AOCCPFL = "Y") %>%
+adaefirst <- adae |>
+  arrange(USUBJID, AEBODSYS, AEDECOD, ASTDY) |>
+  group_by(USUBJID, AEBODSYS, AEDECOD) |>
+  slice(1) |>
+  ungroup() |>
+  mutate(AOCCPFL = "Y") |>
   select(USUBJID, AEBODSYS, AEDECOD, ASTDY, AOCCPFL)
 
 adae <- left_join(
@@ -44,13 +44,13 @@ adsl$colspan_trt <- factor(
 adsl$rrisk_header <- "Risk Difference (%) (95% CI)"
 adsl$rrisk_label <- paste(adsl[["ARM"]], "vs Placebo")
 
-adae <- left_join(adsl, adae, by = "USUBJID") %>%
+adae <- left_join(adsl, adae, by = "USUBJID") |>
   mutate(ASTDY2 = ASTDY + 10)
 
-core_lyt <- basic_table(show_colcounts = FALSE, round_type = "sas") %>%
-  split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
-  split_cols_by("ARM") %>%
-  split_cols_by("rrisk_header", nested = FALSE) %>%
+core_lyt <- basic_table(show_colcounts = FALSE, round_type = "sas") |>
+  split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) |>
+  split_cols_by("ARM") |>
+  split_cols_by("rrisk_header", nested = FALSE) |>
   split_cols_by(
     "ARM",
     labels_var = "rrisk_label",
@@ -65,7 +65,7 @@ test_that("Check patient years numbers are giving expected result", {
     label = c("Subject years\u1D43")
   )
 
-  lyt1 <- core_lyt %>%
+  lyt1 <- core_lyt |>
     analyze(
       "TRTDURY",
       nested = FALSE,
@@ -77,10 +77,10 @@ test_that("Check patient years numbers are giving expected result", {
   res1 <- cell_values(tbl1[c("TRTDURY", "patyrs"), "A: Drug X"])
   result <- as.numeric(unlist(unname(res1))[[1]])
 
-  adae_sub <- adae %>%
-    filter(ARM == "A: Drug X") %>%
-    group_by(USUBJID) %>%
-    slice(1) %>%
+  adae_sub <- adae |>
+    filter(ARM == "A: Drug X") |>
+    group_by(USUBJID) |>
+    slice(1) |>
     ungroup()
 
   expected <- sum(adae_sub$TRTDURY)
@@ -92,7 +92,7 @@ test_that("Check patient years numbers are giving expected result", {
 })
 
 test_that("Check aeir100 numbers are giving expected result", {
-  lyt1 <- core_lyt %>%
+  lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
       nested = FALSE,
@@ -110,28 +110,28 @@ test_that("Check aeir100 numbers are giving expected result", {
   res1 <- cell_values(tbl1["dcd A.1.1.1.1", "A: Drug X"])
   result <- as.numeric(unlist(unname(res1))[[1]])
 
-  adae_onecode <- adae %>%
-    filter(AEDECOD == "dcd A.1.1.1.1" & !is.na(AOCCPFL)) %>%
+  adae_onecode <- adae |>
+    filter(AEDECOD == "dcd A.1.1.1.1" & !is.na(AOCCPFL)) |>
     select(USUBJID, AEDECOD, AEBODSYS, ASTDY, TRTEMFL, AOCCPFL)
 
   adae_sub <- left_join(adsl, adae_onecode, by = "USUBJID")
 
-  adae_sub <- adae_sub %>%
-    filter(ARM == "A: Drug X") %>%
-    arrange(USUBJID, AEDECOD, ASTDY) %>%
-    group_by(USUBJID) %>%
-    slice(1) %>%
-    ungroup() %>%
+  adae_sub <- adae_sub |>
+    filter(ARM == "A: Drug X") |>
+    arrange(USUBJID, AEDECOD, ASTDY) |>
+    group_by(USUBJID) |>
+    slice(1) |>
+    ungroup() |>
     mutate(EXP_TIME = if_else(!is.na(ASTDY), (ASTDY / 365.25), TRTDURY))
 
   total_exp_years <- sum(adae_sub$EXP_TIME)
 
-  adae_sub2 <- adae %>%
+  adae_sub2 <- adae |>
     filter(
       AEDECOD == "dcd A.1.1.1.1" & ARM == "A: Drug X" & !is.na(AOCCPFL)
-    ) %>%
-    group_by(USUBJID) %>%
-    slice(1) %>%
+    ) |>
+    group_by(USUBJID) |>
+    slice(1) |>
     ungroup()
 
   number_with_event <- nrow(adae_sub2)
@@ -145,7 +145,7 @@ test_that("Check aeir100 numbers are giving expected result", {
 })
 
 test_that("Check aeir100 numbers are giving expected result when fup_var argument is changed", {
-  lyt1 <- core_lyt %>%
+  lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
       nested = FALSE,
@@ -163,28 +163,28 @@ test_that("Check aeir100 numbers are giving expected result when fup_var argumen
   res1 <- cell_values(tbl1["dcd A.1.1.1.1", "A: Drug X"])
   result <- as.numeric(unlist(unname(res1))[[1]])
 
-  adae_onecode <- adae %>%
-    filter(AEDECOD == "dcd A.1.1.1.1" & !is.na(AOCCPFL)) %>%
+  adae_onecode <- adae |>
+    filter(AEDECOD == "dcd A.1.1.1.1" & !is.na(AOCCPFL)) |>
     select(USUBJID, AEDECOD, AEBODSYS, ASTDY, TRTEMFL, AOCCPFL)
 
   adae_sub <- left_join(adsl, adae_onecode, by = "USUBJID")
 
-  adae_sub <- adae_sub %>%
-    filter(ARM == "A: Drug X") %>%
-    arrange(USUBJID, AEDECOD, ASTDY) %>%
-    group_by(USUBJID) %>%
-    slice(1) %>%
-    ungroup() %>%
+  adae_sub <- adae_sub |>
+    filter(ARM == "A: Drug X") |>
+    arrange(USUBJID, AEDECOD, ASTDY) |>
+    group_by(USUBJID) |>
+    slice(1) |>
+    ungroup() |>
     mutate(EXP_TIME = if_else(!is.na(ASTDY), (ASTDY / 365.25), TRTDURY2))
 
   total_exp_years <- sum(adae_sub$EXP_TIME)
 
-  adae_sub2 <- adae %>%
+  adae_sub2 <- adae |>
     filter(
       AEDECOD == "dcd A.1.1.1.1" & ARM == "A: Drug X" & !is.na(AOCCPFL)
-    ) %>%
-    group_by(USUBJID) %>%
-    slice(1) %>%
+    ) |>
+    group_by(USUBJID) |>
+    slice(1) |>
     ungroup()
 
   number_with_event <- nrow(adae_sub2)
@@ -198,7 +198,7 @@ test_that("Check aeir100 numbers are giving expected result when fup_var argumen
 })
 
 test_that("Check aeir100 numbers are giving expected result when occ_dy argument is changed", {
-  lyt1 <- core_lyt %>%
+  lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
       nested = FALSE,
@@ -216,28 +216,28 @@ test_that("Check aeir100 numbers are giving expected result when occ_dy argument
   res1 <- cell_values(tbl1["dcd A.1.1.1.1", "A: Drug X"])
   result <- as.numeric(unlist(unname(res1))[[1]])
 
-  adae_onecode <- adae %>%
-    filter(AEDECOD == "dcd A.1.1.1.1" & !is.na(AOCCPFL)) %>%
+  adae_onecode <- adae |>
+    filter(AEDECOD == "dcd A.1.1.1.1" & !is.na(AOCCPFL)) |>
     select(USUBJID, AEDECOD, AEBODSYS, ASTDY2, TRTEMFL, AOCCPFL)
 
   adae_sub <- left_join(adsl, adae_onecode, by = "USUBJID")
 
-  adae_sub <- adae_sub %>%
-    filter(ARM == "A: Drug X") %>%
-    arrange(USUBJID, AEDECOD, ASTDY2) %>%
-    group_by(USUBJID) %>%
-    slice(1) %>%
-    ungroup() %>%
+  adae_sub <- adae_sub |>
+    filter(ARM == "A: Drug X") |>
+    arrange(USUBJID, AEDECOD, ASTDY2) |>
+    group_by(USUBJID) |>
+    slice(1) |>
+    ungroup() |>
     mutate(EXP_TIME = if_else(!is.na(ASTDY2), (ASTDY2 / 365.25), TRTDURY2))
 
   total_exp_years <- sum(adae_sub$EXP_TIME)
 
-  adae_sub2 <- adae %>%
+  adae_sub2 <- adae |>
     filter(
       AEDECOD == "dcd A.1.1.1.1" & ARM == "A: Drug X" & !is.na(AOCCPFL)
-    ) %>%
-    group_by(USUBJID) %>%
-    slice(1) %>%
+    ) |>
+    group_by(USUBJID) |>
+    slice(1) |>
     ungroup()
 
   number_with_event <- nrow(adae_sub2)

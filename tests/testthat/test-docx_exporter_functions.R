@@ -1,4 +1,3 @@
-
 library(dplyr)
 library(tern)
 library(rtables)
@@ -56,16 +55,14 @@ snapshot_test_flextable <- function(res) {
   testthat::expect_snapshot(res$caption)
   testthat::expect_snapshot(res$blanks)
   testthat::expect_snapshot(res$properties)
-  
+
   doc <- officer::read_docx()
   doc <- flextable::body_add_flextable(doc, res, align = "center")
   testthat::expect_snapshot(doc$doc_obj$get() %>% xml2::xml_child(1) %>% as.character())
-  
 }
 
 
 testthat::test_that("tt_to_flextable_j() works fine with Tables", {
-
   testthat::expect_error(
     tt_to_flextable_j(tt = adsl, tblid = "output ID"),
     "Input object is not an rtables' or rlistings' object."
@@ -87,7 +84,6 @@ testthat::test_that("tt_to_flextable_j() works fine with Tables", {
   )
   options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
-
 
 
   # example with superscript and >=
@@ -114,20 +110,21 @@ testthat::test_that("tt_to_flextable_j() works fine with Tables", {
 })
 
 testthat::test_that("tt_to_flextable_j() works fine with border_mat", {
-  
   adsl2 <- adsl %>% dplyr::mutate(colspan_trt = ifelse(ARM == "B: Placebo", " ", "Active Study Agent"))
-  
+
   colspan_trt_map <- create_colspan_map(adsl2,
-                                        non_active_grp = "B: Placebo",
-                                        non_active_grp_span_lbl = " ",
-                                        active_grp_span_lbl = "Active Study Agent",
-                                        colspan_var = "colspan_trt",
-                                        trt_var = "ARM"
+    non_active_grp = "B: Placebo",
+    non_active_grp_span_lbl = " ",
+    active_grp_span_lbl = "Active Study Agent",
+    colspan_var = "colspan_trt",
+    trt_var = "ARM"
   )
-  
-  lyt2 <- basic_table(top_level_section_div = " ",
-                      show_colcounts = TRUE,
-                      colcount_format = "N=xx") %>%
+
+  lyt2 <- basic_table(
+    top_level_section_div = " ",
+    show_colcounts = TRUE,
+    colcount_format = "N=xx"
+  ) %>%
     split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%
     split_cols_by("ARM") %>%
     analyze(
@@ -137,18 +134,18 @@ testthat::test_that("tt_to_flextable_j() works fine with border_mat", {
     )
 
   tbl2 <- build_table(lyt2, adsl2)
-  
+
   border_mat <- make_header_bordmat(tbl2)
   border_mat[2, 4] <- 1
-  
+
   options(docx.add_datetime = FALSE)
   flx1 <- tt_to_flextable_j(tt = tbl2, tblid = "output ID")
   flx2 <- tt_to_flextable_j(tt = tbl2, tblid = "output ID", border_mat = border_mat)
   options(docx.add_datetime = TRUE)
-  
+
   testthat::expect_equal(flx1$header$styles$cells$border.width.bottom$data[2, 4], c(V4 = 0))
   testthat::expect_equal(flx2$header$styles$cells$border.width.bottom$data[2, 4], c(V4 = 0.75))
-  
+
   snapshot_test_flextable(flx2)
 })
 
@@ -159,11 +156,11 @@ testthat::test_that("tt_to_flextable_j() works fine with round_type", {
     dplyr::group_by(ARM) %>%
     dplyr::slice_head(n = 2) %>%
     dplyr::ungroup()
-  
+
   lsting[1, "BMRKR1"] <- 1.865
   lsting[2, "BMRKR1"] <- 2.985
   lsting[3, "BMRKR1"] <- -0.001
-  
+
   lsting <- lsting %>%
     dplyr::mutate(
       AGE = tern::explicit_na(as.character(AGE), ""),
@@ -175,21 +172,21 @@ testthat::test_that("tt_to_flextable_j() works fine with round_type", {
       COL3 = BMRKR1
     ) %>%
     arrange(COL0, COL1)
-  
+
   lsting <- formatters::var_relabel(lsting,
-                                    COL0 = "Treatment Group",
-                                    COL1 = "Subject ID",
-                                    COL2 = paste("Age (years)", "Sex", "Race", sep = " / "),
-                                    COL3 = "Biomarker 1"
+    COL0 = "Treatment Group",
+    COL1 = "Subject ID",
+    COL2 = paste("Age (years)", "Sex", "Race", sep = " / "),
+    COL3 = "Biomarker 1"
   )
-  
+
   ls1 <- rlistings::as_listing(
     df = lsting,
     key_cols = c("COL0", "COL1"),
     disp_cols = c("COL0", "COL1", "COL2", "COL3"),
     col_formatting = list(COL3 = formatters::fmt_config(format = "xx.xx"))
   )
-  
+
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
     res <- tt_to_flextable_j(tt = ls1, tblid = "output ID", orientation = "landscape", round_type = "iec")
@@ -207,7 +204,6 @@ testthat::test_that("tt_to_flextable_j() works fine with round_type", {
 })
 
 testthat::test_that("tt_to_flextable_j() works fine with Listings", {
-
   lsting <- adae %>%
     dplyr::select(USUBJID, AGE, SEX, RACE, ARM) %>%
     dplyr::distinct() %>%
@@ -223,13 +219,15 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
       RACE = explicit_na(RACE, ""),
       COL0 = explicit_na(.data[["ARM"]], ""),
       COL1 = explicit_na(USUBJID, ""),
-      COL2 = paste(AGE, SEX, RACE, sep = " / ")) %>%
+      COL2 = paste(AGE, SEX, RACE, sep = " / ")
+    ) %>%
     arrange(COL0, COL1)
 
   lsting <- formatters::var_relabel(lsting,
-                        COL0 = "Treatment Group",
-                        COL1 = "Subject ID",
-                        COL2 = paste("Age (years)", "Sex", "Race", sep = " / "))
+    COL0 = "Treatment Group",
+    COL1 = "Subject ID",
+    COL2 = paste("Age (years)", "Sex", "Race", sep = " / ")
+  )
 
   ls1 <- rlistings::as_listing(
     df = lsting,
@@ -280,13 +278,15 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
       RACE = explicit_na(RACE, ""),
       COL0 = explicit_na(.data[["ARM"]], ""),
       COL1 = explicit_na(USUBJID, ""),
-      COL2 = paste(AGE, SEX, RACE, sep = " / ")) %>%
+      COL2 = paste(AGE, SEX, RACE, sep = " / ")
+    ) %>%
     arrange(COL0, COL1)
 
   lsting <- formatters::var_relabel(lsting,
-                                    COL0 = "Treatment Group",
-                                    COL1 = "Subject ID",
-                                    COL2 = paste("Age~[super a]", "Sex", "Race", sep = " / "))
+    COL0 = "Treatment Group",
+    COL1 = "Subject ID",
+    COL2 = paste("Age~[super a]", "Sex", "Race", sep = " / ")
+  )
 
   ls1c <- rlistings::as_listing(
     df = lsting,
@@ -312,7 +312,6 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
   )
   options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
-
 })
 
 # to compare 2 docx
@@ -320,7 +319,6 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
 # - treat the XML content as string
 # - use snapshot testing against the string
 testthat::test_that("remove_security_popup_page_numbers() removes dirty='true'", {
-
   doc <- officer::read_docx()
   section_properties <- officer::prop_section(
     page_size = officer::page_size(width = 11, height = 8.5, orient = "landscape"),
@@ -334,7 +332,8 @@ testthat::test_that("remove_security_popup_page_numbers() removes dirty='true'",
     " of ",
     officer::run_word_field("NumPages", prop = officer::fp_text(font.size = 8, font.family = "Times New Roman")),
     fp_p = officer::fp_par(text.align = "right", padding.top = 12),
-    fp_t = officer::fp_text(font.size = 8, font.family = "Times New Roman"))
+    fp_t = officer::fp_text(font.size = 8, font.family = "Times New Roman")
+  )
   footer_default <- officer::block_list(formatted_par)
   section_properties$footer_default <- footer_default
   doc <- officer::body_set_default_section(doc, section_properties)
@@ -350,7 +349,6 @@ testthat::test_that("remove_security_popup_page_numbers() removes dirty='true'",
   testthat::expect_equal(length(l_1), 6)
   testthat::expect_equal(length(l_2), 6)
   testthat::expect_equal(length(l_3), 0)
-
 })
 
 testthat::test_that("add_title_style_caption() adds a new XML node w:pStyle w:val='Caption'", {
@@ -394,27 +392,25 @@ testthat::test_that("insert_footer_text() adds a footer line to a flextable", {
   options(docx.add_datetime = TRUE)
   n_footer_lines_1 <- flx %>% flextable::nrow_part(part = "footer")
   footer_lines_1 <- flx$footer$dataset
-  
+
   options(docx.add_datetime = FALSE)
   flx <- insert_footer_text(flx, "output ID")
   options(docx.add_datetime = TRUE)
   n_footer_lines_2 <- flx %>% flextable::nrow_part(part = "footer")
   footer_lines_2 <- flx$footer$dataset
-  
+
   flx <- insert_footer_text(flx, "output ID")
   n_footer_lines_3 <- flx %>% flextable::nrow_part(part = "footer")
   footer_lines_3 <- flx$footer$dataset
-  
+
   testthat::expect_equal(n_footer_lines_1, n_footer_lines_2)
   testthat::expect_true(all.equal(footer_lines_1, footer_lines_2))
-  
+
   testthat::expect_equal(n_footer_lines_1 + 1, n_footer_lines_3)
   testthat::expect_true(all.equal(footer_lines_1, footer_lines_3 %>% head(n_footer_lines_1)))
-  
 })
 
 testthat::test_that("interpret_cell_content() returns what it should", {
-
   res <- junco:::interpret_cell_content("Any AE~[super a]~[sub bds]")
   expected_res <- "flextable::as_paragraph('Any AE', flextable::as_sup('a'), '', flextable::as_sub('bds'))"
   testthat::expect_equal(res, expected_res)
@@ -430,7 +426,6 @@ testthat::test_that("interpret_cell_content() returns what it should", {
   res <- junco:::interpret_cell_content("Note: Adverse events are coded using MedDRA version 26.0.~{optional ; toxicity grade is evaluated according to NCI-CTCAE version &ctcae.}.")
   expected_res <- "flextable::as_paragraph('Note: Adverse events are coded using MedDRA version 26.0.', '; toxicity grade is evaluated according to NCI-CTCAE version &ctcae.', '.')"
   testthat::expect_equal(res, expected_res)
-
 })
 
 testthat::test_that("interpret_all_cell_content() is interpreting markups correctly", {
@@ -439,7 +434,8 @@ testthat::test_that("interpret_all_cell_content() is interpreting markups correc
   options(docx.add_datetime = TRUE)
 
   flx <- insert_title_hanging_indent_v3(flx,
-                                        title = "This is the main Ttl~[super a]")
+    title = "This is the main Ttl~[super a]"
+  )
 
   flx <- flx %>%
     flextable::append_chunks(part = "header", i = 2, j = 2, flextable::as_chunk("~[super b]")) %>%
@@ -450,7 +446,8 @@ testthat::test_that("interpret_all_cell_content() is interpreting markups correc
     flextable::add_footer_lines("~{super b}Drug = Xanomeline") %>%
     flextable::add_footer_lines("~[super c]United States of America")
 
-  flx <- flx %>% flextable::align(part = "footer", align = "left") %>%
+  flx <- flx %>%
+    flextable::align(part = "footer", align = "left") %>%
     flextable::fontsize(part = "footer", size = 8) %>%
     flextable::padding(part = "footer", padding = 0)
 
@@ -482,34 +479,35 @@ testthat::test_that("add_hanging_indent_first_column() works correctly", {
 })
 
 testthat::test_that("wrap_string_with_indent() works correctly", {
-
   res <- junco:::wrap_string_with_indent("this is a veeeeeeeeeeeeeeery long string", max_width_inch = 1)
   expected_res <- "this is a\n\tveeeeeeeeeeeeeeery\n\tlong string"
   testthat::expect_equal(res, expected_res)
 
   res <- junco:::wrap_string_with_indent("Study agent permanently discontinued",
-                                         max_width_inch = 1.99 - 0.375, dpi = 78)
+    max_width_inch = 1.99 - 0.375, dpi = 78
+  )
   expected_res <- "Study agent permanently\n\tdiscontinued"
   testthat::expect_equal(res, expected_res)
 
   res <- junco:::wrap_string_with_indent("Resulting in persistent or significant disability/incapacity",
-                                         max_width_inch = 1.98 - 0.125, dpi = 78)
+    max_width_inch = 1.98 - 0.125, dpi = 78
+  )
   expected_res <- "Resulting in persistent or significant\n\tdisability/incapacity"
   testthat::expect_equal(res, expected_res)
 })
 
 
-
 testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works correctly", {
-
   options(docx.add_datetime = FALSE)
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   options(docx.add_datetime = TRUE)
 
 
   flx <- flx %>%
-    flextable::add_header_row(values = c("spanning header 1", "spanning header 2"),
-                                    colwidths = c(2, 2))
+    flextable::add_header_row(
+      values = c("spanning header 1", "spanning header 2"),
+      colwidths = c(2, 2)
+    )
   flx <- flx %>% flextable::align(part = "header", i = 1, align = "center")
 
   testthat::expect_no_error(
@@ -520,7 +518,6 @@ testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works corr
 
 
 testthat::test_that("export_as_docx_j() works with pagination", {
-  
   # create a TableTree with a few pages
   colspan_trt_map <- data.frame(
     colspan_trt = c("Active Study Agent", "Active Study Agent", " "),
@@ -536,69 +533,80 @@ testthat::test_that("export_as_docx_j() works with pagination", {
   multivars <- c("AVAL", "AVAL", "CHG")
   .ctrl_grp <- "B: Placebo"
   .ref_path <- c("colspan_trt", " ", .trtvar, .ctrl_grp)
-  extra_args_3col <- list(format_na_str = rep("NA", 3), 
-                          d = "decimal", 
-                          ref_path = .ref_path,
-                          ancova = FALSE, 
-                          comp_btw_group = TRUE,
-                          indatavar = "inlbdata",
-                          multivars = multivars)
+  extra_args_3col <- list(
+    format_na_str = rep("NA", 3),
+    d = "decimal",
+    ref_path = .ref_path,
+    ancova = FALSE,
+    comp_btw_group = TRUE,
+    indatavar = "inlbdata",
+    multivars = multivars
+  )
   df$rrisk_header <- "Difference in Mean Change (95% CI)"
   df$rrisk_label <- paste(df[[.trtvar]], paste("vs", .ctrl_grp))
   df$STUDYID <- df$STUDYID %>% as.factor()
   df <- df %>% filter(!is.na(CHG), LBCAT == "CHEMISTRY")
   df$inlbdata <- "Y"
-  
-  
+
+
   # df_alt <- ex_adsl %>% dplyr::mutate(AGEGRP = ifelse(AGE >= 35, ">= 35", "< 35"))
   # df_alt$AGEGRP <- factor(df_alt$AGEGRP, levels = c("< 35", ">= 35"))
   df_alt <- ex_adsl %>% dplyr::mutate(colspan_trt = ifelse(ARM == "B: Placebo", " ", "Active Study Agent"))
   df_alt$colspan_trt <- factor(df_alt$colspan_trt, levels = c("Active Study Agent", " "))
   df_alt$rrisk_header <- "Difference in Mean Change (95% CI)"
   df_alt$STUDYID <- df_alt$STUDYID %>% as.factor()
-  
-  
-  
+
+
   lyt <- basic_table(show_colcounts = FALSE, colcount_format = "N=xx") %>%
     ### first columns
     split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%
     split_cols_by(.trtvar, show_colcounts = TRUE, colcount_format = "N=xx") %>%
-    split_rows_by(.subgrpvar, label_pos = "hidden", section_div = " ",
-                  split_fun = drop_split_levels, page_by = TRUE) %>%
+    split_rows_by(.subgrpvar,
+      label_pos = "hidden", section_div = " ",
+      split_fun = drop_split_levels, page_by = TRUE
+    ) %>%
     ### just show number of subjects in current level of subgrpvar
     ### only show this number in the first AVAL column
-    summarize_row_groups(var = .subgrpvar, cfun = a_freq_j,
-                         extra_args = list(label_fstr = .subgrplbl,
-                                           extrablankline = TRUE,
-                                           restr_columns = "AVAL",
-                                           .stats = c("n_altdf"),
-                                           riskdiff = FALSE, denom_by = .subgrpvar)) %>%
-    split_rows_by("PARAM", label_pos = "topleft", split_label = "Laboratory Test",
-                  section_div = " ", split_fun = drop_split_levels) %>%
+    summarize_row_groups(
+      var = .subgrpvar, cfun = a_freq_j,
+      extra_args = list(
+        label_fstr = .subgrplbl,
+        extrablankline = TRUE,
+        restr_columns = "AVAL",
+        .stats = c("n_altdf"),
+        riskdiff = FALSE, denom_by = .subgrpvar
+      )
+    ) %>%
+    split_rows_by("PARAM",
+      label_pos = "topleft", split_label = "Laboratory Test",
+      section_div = " ", split_fun = drop_split_levels
+    ) %>%
     ## note the child_labels = hidden for AVISIT, these labels will be taken care off by
     ## applying function summarize_aval_chg_diff further in the layout
-    split_rows_by("AVISIT", label_pos = "topleft", split_label = "Study Visit",
-                  split_fun = drop_split_levels, child_labels = "hidden") %>%
+    split_rows_by("AVISIT",
+      label_pos = "topleft", split_label = "Study Visit",
+      split_fun = drop_split_levels, child_labels = "hidden"
+    ) %>%
     ## set up a 3 column split
     split_cols_by_multivar(multivars, varlabels = c("n/N (%)", "Mean (95% CI)", "Mean Change From Baseline (95% CI)")) %>%
     ### restart for the rrisk_header columns - note the nested = FALSE option
     ### also note the child_labels = "hidden" in both PARAM and AVISIT
     split_cols_by("rrisk_header", nested = FALSE) %>%
     split_cols_by(.trtvar,
-                  split_fun = remove_split_levels(.ctrl_grp), labels_var = "rrisk_label",
-                  show_colcounts = TRUE, colcount_format = "N=xx"
+      split_fun = remove_split_levels(.ctrl_grp), labels_var = "rrisk_label",
+      show_colcounts = TRUE, colcount_format = "N=xx"
     ) %>%
     ### difference columns : just 1 column & analysis needs to be done on change
     split_cols_by_multivar(multivars[3], varlabels = c(" ")) %>%
     ### the variable passed here in analyze is not used (STUDYID), it is a dummy var passing,
     ### the function summarize_aval_chg_diff grabs the required vars from cols_by_multivar calls
     analyze("STUDYID",
-            afun = a_summarize_aval_chg_diff_j,
-            extra_args = extra_args_3col
+      afun = a_summarize_aval_chg_diff_j,
+      extra_args = extra_args_3col
     )
   suppressMessages(
     result <- build_table(lyt, df, alt_counts_df = df_alt)
-    )
+  )
   tab_titles <- list(
     "title" = "This is the main Title",
     "subtitles" = NULL,
@@ -609,51 +617,49 @@ testthat::test_that("export_as_docx_j() works with pagination", {
     "prov_footer" = NULL
   )
   result <- set_titles(result, tab_titles)
-  
-  
+
+
   # export it as docx
   output_dir <- tempdir()
   options(docx.add_datetime = FALSE)
   export_as_docx_j(result,
-                    output_dir = output_dir,
-                    orientation = "landscape",
-                    tblid = "test1234",
-                    nosplitin = list(cols = c(.trtvar, "rrisk_header")),
-                    paginate = TRUE,
-                    add_page_break = TRUE,
-                    combined_docx = TRUE
+    output_dir = output_dir,
+    orientation = "landscape",
+    tblid = "test1234",
+    nosplitin = list(cols = c(.trtvar, "rrisk_header")),
+    paginate = TRUE,
+    add_page_break = TRUE,
+    combined_docx = TRUE
   )
   options(docx.add_datetime = TRUE)
-  
+
   # check that the files exist, including the allparts
   testthat::expect_true(file.exists(paste0(output_dir, "/test1234part1of2.docx")))
   testthat::expect_true(file.exists(paste0(output_dir, "/test1234part2of2.docx")))
   testthat::expect_true(file.exists(paste0(output_dir, "/test1234allparts.docx")))
-  
+
   # open the files and check the XML
   doc <- officer::read_docx(paste0(output_dir, "/test1234part1of2.docx"))
   testthat::expect_snapshot(doc$doc_obj$get() %>% xml2::xml_child(1) %>% as.character())
-  
+
   doc <- officer::read_docx(paste0(output_dir, "/test1234part2of2.docx"))
   testthat::expect_snapshot(doc$doc_obj$get() %>% xml2::xml_child(1) %>% as.character())
-  
+
   doc <- officer::read_docx(paste0(output_dir, "/test1234allparts.docx"))
   testthat::expect_snapshot(doc$doc_obj$get() %>% xml2::xml_child(1) %>% as.character())
-  
+
   file.remove(c(
     paste0(output_dir, "/test1234part1of2.docx"),
     paste0(output_dir, "/test1234part2of2.docx"),
     paste0(output_dir, "/test1234allparts.docx")
   ))
-  
 })
 
 
 testthat::test_that("export_graph_as_docx() works with basic example", {
-
   # create a few ggplots
   cbbPalette <- c("#000000", "#E69F00", "#0072B2")
-  
+
   g_facet <- function(df) {
     # bar plot in facet -------------------------------------
     plot1 <- df %>%
@@ -661,7 +667,7 @@ testthat::test_that("export_graph_as_docx() works with basic example", {
       geom_col(position = position_dodge(0.5)) +
       geom_text(aes(label = perc), position = position_dodge(0.5), vjust = -0.5) +
       facet_wrap(~ .data$cat, nrow = 1, strip.position = "bottom") +
-      
+
       # assign colorblind friendly palette
       scale_fill_manual(values = cbbPalette) +
       labs(x = " ", y = "Percentage of Subjects") +
@@ -685,7 +691,7 @@ testthat::test_that("export_graph_as_docx() works with basic example", {
         axis.title = element_text(size = 9)
       )
   }
-  
+
   df1 <- data.frame(
     cat = factor(c(
       rep("0 to <3 months", 3),
@@ -700,64 +706,71 @@ testthat::test_that("export_graph_as_docx() works with basic example", {
       "9 to <12 months", "12 to <15 months", "15 to <18 months", "18 to <21 months"
     )),
     TRT01A = factor(c("Xanomeline (High)", "Xanomeline (Low)", "Placebo (PBO)"),
-                    levels = c("Xanomeline (High)", "Xanomeline (Low)", "Placebo (PBO)")),
+      levels = c("Xanomeline (High)", "Xanomeline (Low)", "Placebo (PBO)")
+    ),
     trt_abb = c("Xan Low", "Xan High", "PBO"),
     n = c(7, 4, 2, 5, 5, 5, 3, 3, 7, 4, 2, 7, 6, 8, 5, 3, 10, 3, 5, 4, 5),
-    total = c(53, 73, 59, 53, 73, 59, 53, 73, 59, 53, 73, 59, 53, 73, 59, 53,
-              73, 59, 53, 73, 59),
-    pern = c(13.2, 5.5, 3.4, 9.4, 6.8, 8.5, 5.7, 4.1, 11.9, 7.5, 2.7,
-             11.9, 11.3, 11.0, 8.5, 5.7, 13.7, 5.1, 9.4, 5.5, 8.5)
+    total = c(
+      53, 73, 59, 53, 73, 59, 53, 73, 59, 53, 73, 59, 53, 73, 59, 53,
+      73, 59, 53, 73, 59
+    ),
+    pern = c(
+      13.2, 5.5, 3.4, 9.4, 6.8, 8.5, 5.7, 4.1, 11.9, 7.5, 2.7,
+      11.9, 11.3, 11.0, 8.5, 5.7, 13.7, 5.1, 9.4, 5.5, 8.5
+    )
   )
   df1$perc <- sprintf("%.1f", df1$pern)
-  
+
   df2 <- data.frame(
     cat = factor(c(
-        rep("21 to <24 months", 3),
-        rep("24 to <27 months", 3),
-        rep("27 to <30 months", 3),
-        rep("30 to <33 months", 3),
-        rep("33 to <36 months", 3),
-        rep("36 to <39 months", 3)
-      ), levels = c(
-        "21 to <24 months", "24 to <27 months", "27 to <30 months",
-        "30 to <33 months", "33 to <36 months", "36 to <39 months")),
+      rep("21 to <24 months", 3),
+      rep("24 to <27 months", 3),
+      rep("27 to <30 months", 3),
+      rep("30 to <33 months", 3),
+      rep("33 to <36 months", 3),
+      rep("36 to <39 months", 3)
+    ), levels = c(
+      "21 to <24 months", "24 to <27 months", "27 to <30 months",
+      "30 to <33 months", "33 to <36 months", "36 to <39 months"
+    )),
     TRT01A = factor(c("Xanomeline (High)", "Xanomeline (Low)", "Placebo (PBO)"),
-                    levels = c("Xanomeline (High)", "Xanomeline (Low)", "Placebo (PBO)")),
+      levels = c("Xanomeline (High)", "Xanomeline (Low)", "Placebo (PBO)")
+    ),
     trt_abb = c("Xan Low", "Xan High", "PBO"),
     n = c(1, 7, 5, 3, 6, 6, 6, 9, 2, 5, 4, 3, 5, 9, 5, 0, 2, 4),
     total = c(53, 73, 59, 53, 73, 59, 53, 73, 59, 53, 73, 59, 53, 73, 59, 53, 73, 59),
     pern = c(1.9, 9.6, 8.5, 5.7, 8.2, 10.2, 11.3, 12.3, 3.4, 9.4, 5.5, 5.1, 9.4, 12.3, 8.5, 0.0, 2.7, 6.8)
   )
   df2$perc <- sprintf("%.1f", df2$pern)
-  
+
   p1 <- g_facet(df1)
   p2 <- g_facet(df2)
-  
+
   # save the ggplots as png
   output_dir <- tempdir()
   pn1 <- paste0(output_dir, "/", "temp_1.png")
   png(pn1,
-      width  = 22,
-      height = 14,
-      units  = "cm",
-      res    = 300,
-      type   = "cairo"
+    width  = 22,
+    height = 14,
+    units  = "cm",
+    res    = 300,
+    type   = "cairo"
   )
   print(p1)
   dev.off()
-  
+
   pn2 <- paste0(output_dir, "/", "temp_2.png")
   png(pn2,
-      width  = 22,
-      height = 14,
-      units  = "cm",
-      res    = 300,
-      type   = "cairo"
+    width  = 22,
+    height = 14,
+    units  = "cm",
+    res    = 300,
+    type   = "cairo"
   )
   print(p2)
   dev.off()
-  
-  
+
+
   # export them as docx
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
@@ -773,17 +786,13 @@ testthat::test_that("export_graph_as_docx() works with basic example", {
   )
   options(docx.add_datetime = TRUE)
   output_docx <- paste0(output_dir, "/testgraph1234.docx")
-  
+
   # check that the file exist
   testthat::expect_true(file.exists(output_docx))
-  
+
   # open the file and check the XML
   doc <- officer::read_docx(output_docx)
   testthat::expect_snapshot(doc$doc_obj$get() %>% xml2::xml_child(1) %>% as.character())
-  
+
   file.remove(c(pn1, pn2, output_docx))
-  
 })
-
-
-
