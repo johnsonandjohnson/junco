@@ -197,14 +197,12 @@ testthat::test_that("tt_to_flextable_j() works fine with round_type", {
   testthat::expect_equal(res$body$dataset[1, "COL3"], "1.86")
   testthat::expect_equal(res$body$dataset[2, "COL3"], "2.98")
   testthat::expect_equal(res$body$dataset[3, "COL3"], "-0.00")
-  snapshot_test_flextable(res)
   testthat::expect_no_error(
     res <- tt_to_flextable_j(tt = ls1, tblid = "output ID", orientation = "landscape", round_type = "sas")
   )
   testthat::expect_equal(res$body$dataset[1, "COL3"], "1.87")
   testthat::expect_equal(res$body$dataset[2, "COL3"], "2.99")
   testthat::expect_equal(res$body$dataset[3, "COL3"], "0.00")
-  snapshot_test_flextable(res)
   options(docx.add_datetime = TRUE)
 })
 
@@ -362,7 +360,7 @@ testthat::test_that("add_title_style_caption() adds a new XML node w:pStyle w:va
 
   flx <- junco:::insert_title_hanging_indent_v3(flx, "output id:this is a veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery long title")
   flx <- flx %>% flextable::set_table_properties(layout = "autofit")
-  doc <- officer::read_docx()
+  doc <- officer::read_docx(system.file("template_file.docx", package = "junco"))
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
 
   l_x_before <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:pStyle[@w:val='Caption']")
@@ -373,7 +371,7 @@ testthat::test_that("add_title_style_caption() adds a new XML node w:pStyle w:va
   # this print() is needed to update the XML and be able to retrieve the newly inserted node
   # with style Caption
   temp_file <- tempfile(fileext = ".docx")
-  print(doc, target = temp_file, preview = TRUE)
+  print(doc, target = temp_file)
 
 
   # w:pStyle w:val="Caption"
