@@ -1,5 +1,11 @@
 library(broom)
 
+if (requireNamespace("rbmi", quietly = TRUE)) {
+  suppressPackageStartupMessages(library(rbmi))
+} else {
+  skip("rbmi package not available")
+}
+
 # rbmi_test_data ----
 
 rbmi_test_data_ancova <- structure(
@@ -284,9 +290,9 @@ test_that("s_rbmi_lsmeans also works with show_relative = increase", {
 test_that("a_rbmi_lsmeans works as expected in table layout", {
   df <- tidy(rbmi_test_data_ancova, visits = c("4", "5"))
 
-  lyt <- basic_table() %>%
-    split_cols_by("group") %>%
-    split_rows_by("visit", split_label = "Visit", label_pos = "topleft") %>%
+  lyt <- basic_table() |>
+    split_cols_by("group") |>
+    split_rows_by("visit", split_label = "Visit", label_pos = "topleft") |>
     analyze(
       "group",
       afun = a_rbmi_lsmeans,

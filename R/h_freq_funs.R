@@ -27,6 +27,13 @@ get_ctrl_subset <- function(df, trt_var, ctrl_grp) {
 #' @noRd
 #' @keywords Internal
 h_create_altdf <- function(.spl_context, .df_row, denomdf, denom_by = NULL, id, variables, denom) {
+  colid <- .spl_context$cur_col_id[[1]]
+  inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
+  if (is.null(denomdf) && denom %in% c("N_col") && length(.spl_context$split) > 1 && inriskdiffcol) {
+    stop("In order to get correct numbers in relative risk column,
+         the alt_counts_df dataset should be passed to build_table")
+  }
+
   ### parent df in the current row-split (all col splits are still in)
   pardf <- .spl_context$full_parent_df[[NROW(.spl_context)]]
 

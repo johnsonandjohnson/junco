@@ -4,7 +4,7 @@ aesevall_spf <- make_combo_splitfun(
   levels = NULL,
 )
 
-#### Actual start of tests
+# Start of tests ----
 
 test_that("a_maxlev produces correct numbers for single treatment per subject", {
   my_adsl <- ex_adsl[, c("USUBJID", "ARM", "ACTARM")]
@@ -22,11 +22,11 @@ test_that("a_maxlev produces correct numbers for single treatment per subject", 
     split_rows_by("AESEV", split_fun = aesevall_spf) |>
     summarize_row_groups(
       "AESEV",
-      cfun = a_maxlev, extra_args = list(denom_df = my_adsl, any_level = TRUE)
+      cfun = a_maxlev, extra_args = list(any_level = TRUE)
     ) |>
-    analyze("AESEV", afun = a_maxlev, extra_args = list(denom_df = my_adsl))
+    analyze("AESEV", afun = a_maxlev)
 
-  res <- expect_silent(build_table(lyt, my_adae))
+  res <- expect_silent(build_table(lyt, my_adae, alt_counts_df = my_adsl))
   res_act <- matrix_form(res)$string
   res_exp <- structure(
     c(
@@ -62,15 +62,15 @@ test_that("a_maxlev produces correct numbers for sequence of treatments (missing
     summarize_row_groups(
       "AESEV",
       cfun = a_maxlev,
-      extra_args = list(id = "ID", denom_df = my_adsl, any_level = TRUE)
+      extra_args = list(id = "ID", any_level = TRUE)
     ) |>
     analyze(
       "AESEV",
       afun = a_maxlev,
-      extra_args = list(id = "ID", denom_df = my_adsl)
+      extra_args = list(id = "ID")
     )
 
-  res <- expect_silent(build_table(lyt, my_adae))
+  res <- expect_silent(build_table(lyt, my_adae, alt_counts_df = my_adsl))
   res_act <- matrix_form(res)$string
   res_exp <- structure(
     c(
@@ -106,15 +106,15 @@ test_that("a_maxlev produces correct numbers for sequence of treatments (all val
     summarize_row_groups(
       "AESEV",
       cfun = a_maxlev,
-      extra_args = list(id = "ID", denom_df = my_adsl, any_level = TRUE)
+      extra_args = list(id = "ID", any_level = TRUE)
     ) |>
     analyze(
       "AESEV",
       afun = a_maxlev,
-      extra_args = list(id = "ID", denom_df = my_adsl)
+      extra_args = list(id = "ID")
     )
 
-  res <- expect_silent(build_table(lyt, my_adae))
+  res <- expect_silent(build_table(lyt, my_adae, alt_counts_df = my_adsl))
   res_act <- matrix_form(res)$string
   res_exp <- structure(
     c(
@@ -150,10 +150,10 @@ test_that("a_maxlev produces correct numbers when any_level is active for custom
     summarize_row_groups(
       "AESEV",
       cfun = a_maxlev,
-      extra_args = list(id = "ID", denom_df = my_adsl, any_level = TRUE, any_level_exclude = "Mild")
+      extra_args = list(id = "ID", any_level = TRUE, any_level_exclude = "Mild")
     )
 
-  res <- expect_silent(build_table(lyt, my_adae))
+  res <- expect_silent(build_table(lyt, my_adae, alt_counts_df = my_adsl))
   res_act <- matrix_form(res)$string
   res_exp <- structure(
     c("", "Any AE", "a", "0", "b", "1 (33.3%)", "c", "1 (33.3%)", "Total", "2 (66.7%)"),
@@ -183,16 +183,16 @@ test_that("a_maxlev throws an error for not ordered variable", {
     summarize_row_groups(
       "AESEV",
       cfun = a_maxlev,
-      extra_args = list(id = "ID", denom_df = my_adsl, any_level = TRUE)
+      extra_args = list(id = "ID", any_level = TRUE)
     ) |>
     analyze(
       "AESEV",
       afun = a_maxlev,
-      extra_args = list(id = "ID", denom_df = my_adsl)
+      extra_args = list(id = "ID")
     )
 
   res <- expect_error(
-    build_table(lyt, my_adae),
+    build_table(lyt, my_adae, alt_counts_df = my_adsl),
     regexp = "*.var.*.[Mm]ust be an ordered factor*."
   )
 })

@@ -51,6 +51,7 @@ This function is not really designed for tables that have sub-columns. However, 
 default sorting behavior, they can simply specify their own colpath to use for sorting on (default = NULL)
 }
 \examples{
+library(dplyr)
 ADAE <- data.frame(
   USUBJID = c(
     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
@@ -91,6 +92,8 @@ colspan_trt_map <- create_colspan_map(ADAE,
 )
 
 ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
+
+ADSL <- unique(ADAE |> select(USUBJID, "colspan_trt", "rrisk_header", "rrisk_label", "TRT01A"))
 
 lyt <- basic_table() |>
   split_cols_by(
@@ -141,7 +144,7 @@ lyt <- basic_table() |>
     )
   )
 
-result <- build_table(lyt, ADAE)
+result <- build_table(lyt, ADAE, alt_counts_df = ADSL)
 
 result
 

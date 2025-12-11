@@ -8,7 +8,8 @@ tt_to_tbldf(
   tt,
   fontspec = font_spec("Times", 9L, 1),
   string_map = default_str_map,
-  markup_df = dps_markup_df
+  markup_df = dps_markup_df,
+  validate = TRUE
 )
 }
 \arguments{
@@ -19,6 +20,10 @@ tt_to_tbldf(
 \item{string_map}{(\code{list})\cr Unicode mapping for special characters}
 
 \item{markup_df}{(\code{data.frame})\cr Data frame containing markup information}
+
+\item{validate}{logical(1). Whether to validate the table structure using
+\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message
+will be displayed instead of stopping with an error when validation fails.}
 }
 \value{
 \code{tt} represented as a \code{tbl} data.frame suitable for passing

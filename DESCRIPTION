@@ -1,7 +1,7 @@
 Package: junco
 Title: Create Common Tables and Listings Used in Clinical Trials
-Version: 0.1.3
-Date: 2025-06-20
+Version: 0.1.2
+Date: 2025-12-04
 Authors@R: c(
     person("Gabriel", "Becker", , "gabembecker@gmail.com", role = c("cre", "aut"),
            comment = "Original creator of the package, and author of included formatters functions"),
@@ -14,6 +14,7 @@ Authors@R: c(
     person("Ezequiel", "Anokian", , "eanokia1@its.jnj.com", role = c("ctb")),
     person("Renfei", "Mao", , "rmao6@its.jnj.com", role = c("ctb")),
     person("Mrinal", "Das", , "mdas35@its.jnj.com", role = c("ctb")),
+    person("Wojciech", "Wojciak", , "wwojciak@its.jnj.com", role = c("ctb")),
     person("Isaac", "Gravestock", role = "cph",
            comment = "Author of included rbmi functions"),
     person("Joe", "Zhu", role = "cph",
@@ -66,13 +67,18 @@ Suggests:
     forcats (>= 1.0.0),
     testthat (>= 3.0.0),
     mockery,
+    mvtnorm,
     parallel,
     readxl,
+    rlang,
+    rbmi (>= 1.3.0),
+    tidyr,
     rlang,
     pharmaverseadamjnj
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
-    insightsengineering/formatters@1040_rtables_round_type,
-    insightsengineering/rtables@1040_rtables_round_type,
-    insightsengineering/rlistings@1040_rtables_round_type
+    insightsengineering/formatters@main,
+    insightsengineering/rtables@main,
+    insightsengineering/rlistings@main
+Additional_repositories: https://insightsengineering.r-universe.dev/
