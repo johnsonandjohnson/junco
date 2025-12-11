@@ -59,7 +59,6 @@ snapshot_test_flextable <- function(res) {
   doc <- officer::read_docx()
   doc <- flextable::body_add_flextable(doc, res, align = "center")
   testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
-
 }
 
 
@@ -111,7 +110,6 @@ testthat::test_that("tt_to_flextable_j() works fine with Tables", {
 })
 
 testthat::test_that("tt_to_flextable_j() works fine with border_mat", {
-
   adsl2 <- adsl |> dplyr::mutate(colspan_trt = ifelse(ARM == "B: Placebo", " ", "Active Study Agent"))
 
   colspan_trt_map <- create_colspan_map(
@@ -123,9 +121,11 @@ testthat::test_that("tt_to_flextable_j() works fine with border_mat", {
     trt_var = "ARM"
   )
 
-  lyt2 <- basic_table(top_level_section_div = " ",
-                      show_colcounts = TRUE,
-                      colcount_format = "N=xx") |>
+  lyt2 <- basic_table(
+    top_level_section_div = " ",
+    show_colcounts = TRUE,
+    colcount_format = "N=xx"
+  ) |>
     split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
     split_cols_by("ARM") |>
     analyze(
@@ -206,7 +206,6 @@ testthat::test_that("tt_to_flextable_j() works fine with round_type", {
 })
 
 testthat::test_that("tt_to_flextable_j() works fine with Listings", {
-
   lsting <- adae |>
     dplyr::select(USUBJID, AGE, SEX, RACE, ARM) |>
     dplyr::distinct() |>
@@ -216,18 +215,21 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
 
 
   lsting <- lsting |>
-    dplyr::mutate(AGE = tern::explicit_na(as.character(AGE), ""),
-                  SEX = tern::explicit_na(SEX, ""),
-                  RACE = explicit_na(RACE, ""),
-                  COL0 = explicit_na(.data[["ARM"]], ""),
-                  COL1 = explicit_na(USUBJID, ""),
-                  COL2 = paste(AGE, SEX, RACE, sep = " / ")) |>
+    dplyr::mutate(
+      AGE = tern::explicit_na(as.character(AGE), ""),
+      SEX = tern::explicit_na(SEX, ""),
+      RACE = explicit_na(RACE, ""),
+      COL0 = explicit_na(.data[["ARM"]], ""),
+      COL1 = explicit_na(USUBJID, ""),
+      COL2 = paste(AGE, SEX, RACE, sep = " / ")
+    ) |>
     arrange(COL0, COL1)
 
   lsting <- formatters::var_relabel(lsting,
-                                    COL0 = "Treatment Group",
-                                    COL1 = "Subject ID",
-                                    COL2 = paste("Age (years)", "Sex", "Race", sep = " / "))
+    COL0 = "Treatment Group",
+    COL1 = "Subject ID",
+    COL2 = paste("Age (years)", "Sex", "Race", sep = " / ")
+  )
 
   ls1 <- rlistings::as_listing(
     df = lsting,
@@ -272,12 +274,14 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
   lsting$ARM <- sub(pattern = "Drug X", replacement = "Drug X~[super b]", x = lsting$ARM)
 
   lsting <- lsting |>
-    dplyr::mutate(AGE = tern::explicit_na(as.character(AGE), ""),
-                  SEX = tern::explicit_na(SEX, ""),
-                  RACE = explicit_na(RACE, ""),
-                  COL0 = explicit_na(.data[["ARM"]], ""),
-                  COL1 = explicit_na(USUBJID, ""),
-                  COL2 = paste(AGE, SEX, RACE, sep = " / ")) |>
+    dplyr::mutate(
+      AGE = tern::explicit_na(as.character(AGE), ""),
+      SEX = tern::explicit_na(SEX, ""),
+      RACE = explicit_na(RACE, ""),
+      COL0 = explicit_na(.data[["ARM"]], ""),
+      COL1 = explicit_na(USUBJID, ""),
+      COL2 = paste(AGE, SEX, RACE, sep = " / ")
+    ) |>
     arrange(COL0, COL1)
 
   lsting <- formatters::var_relabel(lsting,
@@ -326,13 +330,16 @@ testthat::test_that("remove_security_popup_page_numbers() removes dirty='true'",
   # add the page numbers
   formatted_par <-
     officer::fpar("Listing Page ",
-                  officer::run_word_field("Page",
-                                          prop = officer::fp_text(font.size = 8, font.family = "Times New Roman")),
-                  " of ",
-                  officer::run_word_field("NumPages",
-                                          prop = officer::fp_text(font.size = 8, font.family = "Times New Roman")),
-                  fp_p = officer::fp_par(text.align = "right", padding.top = 12),
-                  fp_t = officer::fp_text(font.size = 8, font.family = "Times New Roman"))
+      officer::run_word_field("Page",
+        prop = officer::fp_text(font.size = 8, font.family = "Times New Roman")
+      ),
+      " of ",
+      officer::run_word_field("NumPages",
+        prop = officer::fp_text(font.size = 8, font.family = "Times New Roman")
+      ),
+      fp_p = officer::fp_par(text.align = "right", padding.top = 12),
+      fp_t = officer::fp_text(font.size = 8, font.family = "Times New Roman")
+    )
   footer_default <- officer::block_list(formatted_par)
   section_properties$footer_default <- footer_default
   doc <- officer::body_set_default_section(doc, section_properties)
@@ -512,8 +519,10 @@ testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works corr
 
 
   flx <- flx |>
-    flextable::add_header_row(values = c("spanning header 1", "spanning header 2"),
-                              colwidths = c(2, 2))
+    flextable::add_header_row(
+      values = c("spanning header 1", "spanning header 2"),
+      colwidths = c(2, 2)
+    )
   flx <- flx |> flextable::align(part = "header", i = 1, align = "center")
 
   testthat::expect_no_error(
@@ -524,7 +533,6 @@ testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works corr
 
 
 testthat::test_that("export_as_docx_j() works with pagination", {
-
   # create a TableTree with a few pages
   colspan_trt_map <- data.frame(
     colspan_trt = c("Active Study Agent", "Active Study Agent", " "),
@@ -540,13 +548,15 @@ testthat::test_that("export_as_docx_j() works with pagination", {
   multivars <- c("AVAL", "AVAL", "CHG")
   .ctrl_grp <- "B: Placebo"
   .ref_path <- c("colspan_trt", " ", .trtvar, .ctrl_grp)
-  extra_args_3col <- list(format_na_str = rep("NA", 3),
-                          d = "decimal",
-                          ref_path = .ref_path,
-                          ancova = FALSE,
-                          comp_btw_group = TRUE,
-                          indatavar = "inlbdata",
-                          multivars = multivars)
+  extra_args_3col <- list(
+    format_na_str = rep("NA", 3),
+    d = "decimal",
+    ref_path = .ref_path,
+    ancova = FALSE,
+    comp_btw_group = TRUE,
+    indatavar = "inlbdata",
+    multivars = multivars
+  )
   df$rrisk_header <- "Difference in Mean Change (95% CI)"
   df$rrisk_label <- paste(df[[.trtvar]], paste("vs", .ctrl_grp))
   df$STUDYID <- df$STUDYID |> as.factor()
@@ -562,25 +572,36 @@ testthat::test_that("export_as_docx_j() works with pagination", {
     ### first columns
     split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
     split_cols_by(.trtvar, show_colcounts = TRUE, colcount_format = "N=xx") |>
-    split_rows_by(.subgrpvar, label_pos = "hidden", section_div = " ",
-                  split_fun = drop_split_levels, page_by = TRUE) |>
+    split_rows_by(.subgrpvar,
+      label_pos = "hidden", section_div = " ",
+      split_fun = drop_split_levels, page_by = TRUE
+    ) |>
     ### just show number of subjects in current level of subgrpvar
     ### only show this number in the first AVAL column
-    summarize_row_groups(var = .subgrpvar, cfun = a_freq_j,
-                         extra_args = list(label_fstr = .subgrplbl,
-                                           extrablankline = TRUE,
-                                           restr_columns = "AVAL",
-                                           .stats = c("n_altdf"),
-                                           riskdiff = FALSE, denom_by = .subgrpvar)) |>
-    split_rows_by("PARAM", label_pos = "topleft", split_label = "Laboratory Test",
-                  section_div = " ", split_fun = drop_split_levels) |>
+    summarize_row_groups(
+      var = .subgrpvar, cfun = a_freq_j,
+      extra_args = list(
+        label_fstr = .subgrplbl,
+        extrablankline = TRUE,
+        restr_columns = "AVAL",
+        .stats = c("n_altdf"),
+        riskdiff = FALSE, denom_by = .subgrpvar
+      )
+    ) |>
+    split_rows_by("PARAM",
+      label_pos = "topleft", split_label = "Laboratory Test",
+      section_div = " ", split_fun = drop_split_levels
+    ) |>
     ## note the child_labels = hidden for AVISIT, these labels will be taken care off by
     ## applying function summarize_aval_chg_diff further in the layout
-    split_rows_by("AVISIT", label_pos = "topleft", split_label = "Study Visit",
-                  split_fun = drop_split_levels, child_labels = "hidden") |>
+    split_rows_by("AVISIT",
+      label_pos = "topleft", split_label = "Study Visit",
+      split_fun = drop_split_levels, child_labels = "hidden"
+    ) |>
     ## set up a 3 column split
     split_cols_by_multivar(multivars,
-                           varlabels = c("n/N (%)", "Mean (95% CI)", "Mean Change From Baseline (95% CI)")) |>
+      varlabels = c("n/N (%)", "Mean (95% CI)", "Mean Change From Baseline (95% CI)")
+    ) |>
     ### restart for the rrisk_header columns - note the nested = FALSE option
     ### also note the child_labels = "hidden" in both PARAM and AVISIT
     split_cols_by("rrisk_header", nested = FALSE) |>
@@ -722,8 +743,10 @@ testthat::test_that("export_graph_as_docx() works with basic example", {
       rep("30 to <33 months", 3),
       rep("33 to <36 months", 3),
       rep("36 to <39 months", 3)
-    ), levels = c("21 to <24 months", "24 to <27 months", "27 to <30 months",
-                  "30 to <33 months", "33 to <36 months", "36 to <39 months")),
+    ), levels = c(
+      "21 to <24 months", "24 to <27 months", "27 to <30 months",
+      "30 to <33 months", "33 to <36 months", "36 to <39 months"
+    )),
     TRT01A = factor(c("Xanomeline (High)", "Xanomeline (Low)", "Placebo (PBO)"),
       levels = c("Xanomeline (High)", "Xanomeline (Low)", "Placebo (PBO)")
     ),

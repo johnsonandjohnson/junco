@@ -329,13 +329,14 @@ interpret_cell_content <- function(str_before, markup_df_docx = dps_markup_df_do
 
   pos_start <- gregexpr("~\\{|~\\[", str_before)[[1]]
   pos_end <- gregexpr("\\}|\\]", str_before)[[1]]
-  pos_end <- pos_start |> lapply(function(x) {
-    y <- which(pos_end > x)
-    if (length(y) <= 0) {
-      return(NA)
-    }
-    return(pos_end[min(y)])
-  }) |>
+  pos_end <- pos_start |>
+    lapply(function(x) {
+      y <- which(pos_end > x)
+      if (length(y) <= 0) {
+        return(NA)
+      }
+      return(pos_end[min(y)])
+    }) |>
     unlist()
   pos <- data.frame(pos_start = pos_start, pos_end = pos_end)
   pos <- pos |> dplyr::filter(!is.na(pos_end))
@@ -388,7 +389,9 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
   pattern <- "~\\[|~\\{"
 
   # Title and Headers
-  tmp <- flx$header$content$data |> apply(1:2, function(x) return(x[[1]]$txt))
+  tmp <- flx$header$content$data |> apply(1:2, function(x) {
+    return(x[[1]]$txt)
+  })
   locations <- which(apply(tmp, 1:2, function(x) grepl(pattern, x)), arr.ind = TRUE)
   for (idx in seq_len(nrow(locations))) {
     i <- locations[idx, "row"]
@@ -404,7 +407,9 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
   # Body
   # only look in the first column of the body
   tmp <- flx$body$content$data[, 1] |> lapply(function(x) x$txt)
-  tmp <- tmp |> lapply(function(x) paste(x, collapse = "")) |> unlist()
+  tmp <- tmp |>
+    lapply(function(x) paste(x, collapse = "")) |>
+    unlist()
   locations <- which(grepl(pattern, tmp))
   for (idx in seq_along(locations)) {
     i <- locations[idx]
@@ -418,7 +423,9 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
   }
 
   # Footers
-  tmp <- flx$footer$content$data |> apply(1:2, function(x) return(x[[1]]$txt))
+  tmp <- flx$footer$content$data |> apply(1:2, function(x) {
+    return(x[[1]]$txt)
+  })
   # only look in the first column of the footer
   matches <- as.data.frame(lapply(tmp[, 1] |> as.data.frame(), function(col) grepl(pattern, col)))
   locations <- which(as.matrix(matches), arr.ind = TRUE)
@@ -573,8 +580,10 @@ theme_docx_default_j <- function(
           flextable::fontsize(part = "footer", i = n_footnotes, size = 8) |>
           flextable::align(part = "footer", i = n_footnotes, align = "right") |>
           utils::getFromNamespace(".remove_hborder", "rtables.officer")(part = "footer", w = "bottom") |>
-          utils::getFromNamespace(".add_hborder",
-                                  "rtables.officer")(part = "footer", ii = n_footnotes - 1, border = border)
+          utils::getFromNamespace(
+            ".add_hborder",
+            "rtables.officer"
+          )(part = "footer", ii = n_footnotes - 1, border = border)
       }
       flx <- flx |>
         flextable::padding(padding = 0, part = "footer")
@@ -1036,18 +1045,26 @@ tt_to_flextable_j <- function(
 
   if (length(alignments) == 0) {
     flx <- flx |>
-      utils::getFromNamespace(".apply_alignments",
-                              "rtables.officer")(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") |>
-      utils::getFromNamespace(".apply_alignments",
-                              "rtables.officer")(mpf_aligns[seq(hnum + 1, nrow(mpf_aligns)), , drop = FALSE], "body")
+      utils::getFromNamespace(
+        ".apply_alignments",
+        "rtables.officer"
+      )(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") |>
+      utils::getFromNamespace(
+        ".apply_alignments",
+        "rtables.officer"
+      )(mpf_aligns[seq(hnum + 1, nrow(mpf_aligns)), , drop = FALSE], "body")
   } else {
     flx <- flx |>
-      utils::getFromNamespace(".apply_alignments",
-                              "rtables.officer")(mpf_aligns[seq_len(hnum), , drop = FALSE], "header")
+      utils::getFromNamespace(
+        ".apply_alignments",
+        "rtables.officer"
+      )(mpf_aligns[seq_len(hnum), , drop = FALSE], "header")
     for (i in seq(hnum + 1, nrow(mpf_aligns))) {
       flx <- flx |>
-        flextable::align(part = "body", i = i - hnum,
-                         align = mpf_aligns[i, , drop = FALSE])
+        flextable::align(
+          part = "body", i = i - hnum,
+          align = mpf_aligns[i, , drop = FALSE]
+        )
     }
   }
 
@@ -1112,16 +1129,20 @@ tt_to_flextable_j <- function(
     footers_with_blank_line <- strmodify(footers_with_blank_line, string_map)
     flx <- flextable::add_footer_lines(flx, values = footers_with_blank_line) |>
       utils::getFromNamespace(".add_hborder", "rtables.officer")(part = "body", ii = nrow(content), border = border) |>
-      utils::getFromNamespace(".add_hborder",
-                              "rtables.officer")(part = "footer", ii = length(footers_with_blank_line), border = border)
+      utils::getFromNamespace(
+        ".add_hborder",
+        "rtables.officer"
+      )(part = "footer", ii = length(footers_with_blank_line), border = border)
   }
   if (length(formatters::all_footers(tt)) > 0 && isTRUE(integrate_footers)) {
     footers_with_blank_line <- c("", formatters::all_footers(tt))
     footers_with_blank_line <- strmodify(footers_with_blank_line, string_map)
     flx <- flextable::add_footer_lines(flx, values = footers_with_blank_line) |>
       utils::getFromNamespace(".add_hborder", "rtables.officer")(part = "body", ii = nrow(content), border = border) |>
-      utils::getFromNamespace(".add_hborder",
-                              "rtables.officer")(part = "footer", ii = length(footers_with_blank_line), border = border)
+      utils::getFromNamespace(
+        ".add_hborder",
+        "rtables.officer"
+      )(part = "footer", ii = length(footers_with_blank_line), border = border)
   }
 
   # NOTE: the following block adds the footer, this is, the last line below footnotes
@@ -1830,14 +1851,20 @@ export_graph_as_docx <- function(g = NULL,
   flx <- flx |>
     flextable::font(fontname = "Times New Roman", part = "all")
   flx <- flx |>
-    flextable::border(part = "header", i = 1,
-                      border.top = border, border.bottom = border) |>
-    flextable::border(part = "body", i = nrow_body,
-                      border.bottom = border)
+    flextable::border(
+      part = "header", i = 1,
+      border.top = border, border.bottom = border
+    ) |>
+    flextable::border(
+      part = "body", i = nrow_body,
+      border.bottom = border
+    )
   if (nrow_footers > 1) {
     flx <- flx |>
-      flextable::border(part = "footer", i = nrow_footers - 1,
-                        border.bottom = border)
+      flextable::border(
+        part = "footer", i = nrow_footers - 1,
+        border.bottom = border
+      )
   }
 
   w <- ifelse(orientation == "portrait", 6.38, 8.82)
