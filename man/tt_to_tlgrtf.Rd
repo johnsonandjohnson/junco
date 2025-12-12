@@ -84,10 +84,8 @@ and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_b
 for what the matrix should contain. Users should only specify this when the
 default behavior does not meet their needs.}
 
-\item{round_type}{(\code{"iec"} or \code{"sas"})\cr the type of rounding to perform. iec,
-the default, performs rounding compliant with IEC 60559, while
-sas performs nearest-value rounding consistent with rounding within SAS.
-See \verb{[formatters::format_value()]} for more details.}
+\item{round_type}{(\code{character(1)})\cr the type of rounding to perform.
+See \code{\link[formatters:format_value]{formatters::format_value()}} for more details.}
 
 \item{alignments}{(\code{list})\cr List of named lists. Vectorized.
 (Default = \code{list()}) Used to specify individual column or cell alignments.
