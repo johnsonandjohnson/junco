@@ -11,7 +11,7 @@ on:
     branches:
       - main
 
-name: R-CMD-check.yaml
+name: check
 
 permissions: read-all
 
