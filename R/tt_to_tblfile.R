@@ -17,7 +17,8 @@ tt_to_tbldf <- function(
   string_map = default_str_map,
   markup_df = dps_markup_df,
   round_type = obj_round_type(tt),
-  validate = TRUE) {
+  validate = TRUE
+) {
   if (validate) {
     if (!validate_table_struct(tt)) {
       stop(
@@ -318,38 +319,38 @@ listingdf_dataframe_formats <- function(df, round_type = obj_round_type(df)) {
 #' @return If `file` is non-NULL, this is called for the side-effect of writing
 #'   one or more RTF files. Otherwise, returns a list of `huxtable` objects.
 tt_to_tlgrtf <- function(
+  tt,
+  file = NULL,
+  orientation = c("portrait", "landscape"),
+  colwidths = def_colwidths(
     tt,
-    file = NULL,
-    orientation = c("portrait", "landscape"),
-    colwidths = def_colwidths(
-      tt,
-      fontspec,
-      col_gap = col_gap,
-      label_width_ins = label_width_ins,
-      type = tlgtype
-    ),
-    label_width_ins = 2,
-    watermark = NULL,
-    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-    fontspec = font_spec("Times", 9L, 1.2),
-    pg_width = pg_width_by_orient(orientation == "landscape"),
-    margins = c(0, 0, 0, 0),
-    paginate = tlg_type(tt) == "Table",
-    col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    nosplitin = list(
-      row = character(),
-      col = character()
-    ),
-    verbose = FALSE,
-    tlgtype = tlg_type(tt),
-    string_map = default_str_map,
-    markup_df = dps_markup_df,
-    combined_rtf = FALSE,
-    one_table = TRUE,
-    border_mat = make_header_bordmat(obj = tt),
-    round_type = obj_round_type(tt),
-    validate = TRUE,
-    ...
+    fontspec,
+    col_gap = col_gap,
+    label_width_ins = label_width_ins,
+    type = tlgtype
+  ),
+  label_width_ins = 2,
+  watermark = NULL,
+  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+  fontspec = font_spec("Times", 9L, 1.2),
+  pg_width = pg_width_by_orient(orientation == "landscape"),
+  margins = c(0, 0, 0, 0),
+  paginate = tlg_type(tt) == "Table",
+  col_gap = ifelse(tlgtype == "Listing", .5, 3),
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  verbose = FALSE,
+  tlgtype = tlg_type(tt),
+  string_map = default_str_map,
+  markup_df = dps_markup_df,
+  combined_rtf = FALSE,
+  one_table = TRUE,
+  border_mat = make_header_bordmat(obj = tt),
+  round_type = obj_round_type(tt),
+  validate = TRUE,
+  ...
 ) {
   if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
     if (!rtables::validate_table_struct(tt)) {

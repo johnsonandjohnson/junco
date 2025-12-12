@@ -18,12 +18,13 @@ mk_part_names <- function(nfiles, fname) {
 }
 
 rtf_out_wrapper <- function(
-    tt,
-    filnm,
-    ...,
-    part = 1,
-    combined = FALSE,
-    round_type = obj_round_type(tt)) {
+  tt,
+  filnm,
+  ...,
+  part = 1,
+  combined = FALSE,
+  round_type = obj_round_type(tt)
+) {
   fullfl <- file.path(tempdir(), filnm)
   res <- tt_to_tlgrtf(
     tt,
