@@ -36,19 +36,14 @@ Description: Structure and formatting requirements for clinical trial table and 
 License: Apache License (>= 2)
 URL: https://github.com/johnsonandjohnson/junco, https://johnsonandjohnson.github.io/junco/
 BugReports: https://github.com/johnsonandjohnson/junco/issues
-Remotes:
-    insightsengineering/formatters@main,
-    insightsengineering/rtables@main,
-    insightsengineering/rlistings@main,
-    insightsengineering/tern@main
-Depends: 
+Depends:
     R (>= 4.4),
-    formatters (>= 0.5.6),
+    formatters (>= 0.5.12),
     rtables (>= 0.6.13)
 Imports:
     tidytlg (>= 0.1.5),
     tern (>= 0.9.9),
-    rlistings (>= 0.2.11),
+    rlistings (>= 0.2.13),
     checkmate (>= 2.1.0),
     broom,
     methods,
@@ -75,7 +70,6 @@ Suggests:
     mvtnorm,
     parallel,
     readxl,
-    pharmaverseadam,
     rlang,
     rbmi (>= 1.3.0),
     tidyr,
@@ -87,7 +81,5 @@ Suggests:
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
-    insightsengineering/formatters@main,
-    insightsengineering/rtables@main,
-    insightsengineering/rlistings@main
+    insightsengineering/rtables@main
 Additional_repositories: https://insightsengineering.r-universe.dev/
