@@ -52,7 +52,6 @@ reference:
     - fit_ancova
     - fit_mmrm_j
     - coxph_hr
-    - d_test_proportion_diff_j
     - tabulate_rbmi
     - tabulate_lsmeans
     - h_odds_ratio
