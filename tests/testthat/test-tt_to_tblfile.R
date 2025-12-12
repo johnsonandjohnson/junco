@@ -17,9 +17,21 @@ mk_part_names <- function(nfiles, fname) {
   }
 }
 
-rtf_out_wrapper <- function(tt, filnm, ..., part = 1, combined = FALSE) {
+rtf_out_wrapper <- function(
+    tt,
+    filnm,
+    ...,
+    part = 1,
+    combined = FALSE,
+    round_type = obj_round_type(tt)) {
   fullfl <- file.path(tempdir(), filnm)
-  res <- tt_to_tlgrtf(tt, file = fullfl, ..., combined_rtf = combined)
+  res <- tt_to_tlgrtf(
+    tt,
+    file = fullfl,
+    ...,
+    combined_rtf = combined,
+    round_type = round_type
+  )
   nf <- length(res)
   if (combined) {
     paste0(fullfl, "allparts.rtf")
@@ -31,6 +43,96 @@ rtf_out_wrapper <- function(tt, filnm, ..., part = 1, combined = FALSE) {
     }
     res
   }
+}
+
+# all elements result in different rounding sas vs iec with format xx.xx
+# third element only results in different rounding iec_mod vs iec with format xx.xx
+vals_round_type <- c(1.865, 2.985, -0.001)
+
+vals_round_type_fmt <- function(vals = vals_round_type, round_type = "sas") {
+  mapply(format_value, x = vals, format = "xx.xx", round_type = round_type)
+}
+
+tt_to_test_round_type <- function(vals = vals_round_type, round_type = "iec") {
+  require(dplyr, quietly = TRUE)
+  txtvals_iec <- vals_round_type_fmt(vals = vals, round_type = "iec")
+  txtvals_sas <- vals_round_type_fmt(vals = vals, round_type = "sas")
+
+  # confirmation that at least one of the values result in different format presentation
+  expect_true(any(txtvals_iec != txtvals_sas))
+
+  adsl <- ex_adsl
+
+  adsl <- adsl |>
+    mutate(new_var = case_when(
+      ARMCD == "ARM A" ~ vals[1],
+      ARMCD == "ARM B" ~ vals[2],
+      ARMCD == "ARM C" ~ vals[3]
+    ))
+
+  lyt <- basic_table(show_colcounts = FALSE, round_type = round_type) |>
+    split_cols_by("ARMCD") |>
+    analyze(c("new_var"), function(x) {
+      in_rows(
+        mean = mean(x),
+        .formats = c("xx.xx"),
+        .labels = c("Mean")
+      )
+    })
+
+  tbl <- build_table(lyt, adsl)
+}
+
+listingdf_to_test_round_type <- function(vals = vals_round_type, round_type = "iec") {
+  require(dplyr, quietly = TRUE)
+  txtvals_iec <- vals_round_type_fmt(vals = vals, round_type = "iec")
+  txtvals_sas <- vals_round_type_fmt(vals = vals, round_type = "sas")
+
+  # confirmation that at least one of the values result in different format presentation
+  expect_true(any(txtvals_iec != txtvals_sas))
+
+  lsting <- ex_adae |>
+    dplyr::select(USUBJID, AGE, SEX, RACE, ARM, BMRKR1) |>
+    dplyr::distinct() |>
+    dplyr::group_by(ARM) |>
+    dplyr::slice_head(n = 2) |>
+    dplyr::ungroup()
+
+  lsting[1, "BMRKR1"] <- 1.865
+  lsting[2, "BMRKR1"] <- 2.985
+  lsting[3, "BMRKR1"] <- -0.001
+
+  lsting <- lsting |>
+    dplyr::mutate(
+      AGE = tern::explicit_na(as.character(AGE), ""),
+      SEX = tern::explicit_na(SEX, ""),
+      RACE = explicit_na(RACE, ""),
+      COL0 = explicit_na(.data[["ARM"]], ""),
+      COL1 = explicit_na(USUBJID, ""),
+      COL2 = paste(AGE, SEX, RACE, sep = " / "),
+      COL3 = BMRKR1
+    ) |>
+    arrange(COL0, COL1)
+
+  lsting <- formatters::var_relabel(
+    lsting,
+    COL0 = "Treatment Group",
+    COL1 = "Subject ID",
+    COL2 = paste("Age (years)", "Sex", "Race", sep = " / "),
+    COL3 = "Biomarker 1"
+  )
+
+  ls1 <- rlistings::as_listing(
+    df = lsting,
+    key_cols = c("COL0", "COL1"),
+    disp_cols = c("COL0", "COL1", "COL2", "COL3"),
+    col_formatting = list(COL3 = formatters::fmt_config(format = "xx.xx"))
+  )
+
+  list(
+    df = lsting,
+    lsting = ls1
+  )
 }
 
 test_that("tt_to_tlgrtf works with input Table and fontspec size 8", {
@@ -295,4 +397,72 @@ test_that("more top left than col headers works", {
   expect_silent(tt_to_tlgrtf(tbl, file = tmpfile))
   expect_true(file.exists(paste0(tmpfile, ".rtf")))
   unlink(tmpfile)
+})
+
+test_that("round_type in tt_to_tbldf works as expected for tabletree object", {
+  tbl_iec <- tt_to_test_round_type(round_type = "iec")
+  tbldf <- tt_to_tbldf(tbl_iec)
+  tbldf_sas <- tt_to_tbldf(tbl_iec, round_type = "sas")
+  expect_true(any(tbldf != tbldf_sas))
+  expect_true(all(
+    tbldf[, c("col 1", "col 2", "col 3")] ==
+      vals_round_type_fmt(
+        vals = vals_round_type,
+        round_type = "iec"
+      )
+  ))
+  expect_true(all(
+    tbldf_sas[, c("col 1", "col 2", "col 3")] ==
+      vals_round_type_fmt(
+        vals = vals_round_type,
+        round_type = "sas"
+      )
+  ))
+})
+
+test_that("round_type in tt_to_tlgrtf works as expected for tabletree object", {
+  tbl_iec <- tt_to_test_round_type(round_type = "iec")
+  expect_silent(suppressMessages(rtf_sas <- rtf_out_wrapper(tbl_iec, "test4sas", round_type = "sas")))
+  expect_snapshot_file(rtf_sas, cran = TRUE)
+  expect_silent(suppressMessages(rtf_iec_mod <- rtf_out_wrapper(tbl_iec, "test4iecmod", round_type = "iec_mod")))
+  expect_snapshot_file(rtf_iec_mod, cran = TRUE)
+  expect_silent(suppressMessages(rtf_iec <- rtf_out_wrapper(tbl_iec, "test4iec", round_type = "iec")))
+  expect_snapshot_file(rtf_iec, cran = TRUE)
+
+  # test actual values for sas rounding
+  res_nullfl <- expect_silent(tt_to_tlgrtf(tbl_iec, round_type = "sas", file = NULL))
+
+  vals_from_res_nullfl <- res_nullfl[[1]][[1]]
+  vals_from_res_nullfl <- unname(unlist(vals_from_res_nullfl[3, 2:4]))
+
+  expect_true(all(
+    vals_from_res_nullfl ==
+      vals_round_type_fmt(
+        vals = vals_round_type,
+        round_type = "sas"
+      )
+  ))
+})
+
+test_that("round_type in tt_to_tlgrtf works as expected for listing object", {
+  listdf_iec <- listingdf_to_test_round_type()
+  list_iec <- listdf_iec$lsting
+  df <- listdf_iec$df
+
+  res_nullfl_sas <- expect_silent(tt_to_tlgrtf(list_iec, round_type = "sas", file = NULL))
+  res_nullfl_iec <- expect_silent(tt_to_tlgrtf(list_iec, round_type = "iec", file = NULL))
+  vals_from_res_nullfl_sas <- res_nullfl_sas[[1]][[4]][-c(1:2)]
+  vals_from_res_nullfl_iec <- res_nullfl_iec[[1]][[4]][-c(1:2)]
+
+  expect_identical(
+    vals_round_type_fmt(vals = df[["BMRKR1"]], round_type = "sas"),
+    vals_from_res_nullfl_sas
+  )
+
+  expect_identical(
+    vals_round_type_fmt(vals = df[["BMRKR1"]], round_type = "iec"),
+    vals_from_res_nullfl_iec
+  )
+
+  expect_true(any(vals_from_res_nullfl_iec != vals_from_res_nullfl_sas))
 })
