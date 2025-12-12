@@ -1,4 +1,4 @@
-calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, round_type = valid_round_type, exclude_visits,
+calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, round_type = c("sas", "iec"), exclude_visits,
                            var_names = c("AVAL", "CHG", "BASE")) {
   round_type <- match.arg(round_type)
   if (is.na(decimal)) {
