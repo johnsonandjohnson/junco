@@ -56,7 +56,7 @@ Imports:
     emmeans,
     mmrm,
     assertthat,
-    vcdExtra (== 0.8.7),
+    vcdExtra (>= 0.8.7),
     rtables.officer,
     flextable,
     officer,
