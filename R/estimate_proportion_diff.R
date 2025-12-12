@@ -41,8 +41,8 @@ NULL
 #' * `s_proportion_diff_j()` returns a named list of elements `diff`,
 #'    `diff_ci`, `diff_est_ci` and `diff_ci_3d`.
 #'
-#' @note When performing an unstratified analysis, methods `'cmh'`, `'strat_newcombe'`,
-#'   and `'strat_newcombecc'` are not permitted.
+#' @note When performing an unstratified analysis, methods `'cmh'`, `'cmh_sato'`, `'cmh_mn'`,
+#'   `'strat_newcombe'`, and `'strat_newcombecc'` are not permitted.
 #'
 #' @examples
 #'
@@ -68,14 +68,18 @@ NULL
 #' @export
 #' @order 3
 s_proportion_diff_j <- function(
-    df,
-    .var,
-    .ref_group,
-    .in_ref_col,
-    variables = list(strata = NULL),
-    conf_level = 0.95,
-    method = c("waldcc", "wald", "cmh", "ha", "newcombe", "newcombecc", "strat_newcombe", "strat_newcombecc"),
-    weights_method = "cmh") {
+  df,
+  .var,
+  .ref_group,
+  .in_ref_col,
+  variables = list(strata = NULL),
+  conf_level = 0.95,
+  method = c(
+    "waldcc", "wald", "cmh", "cmh_sato", "cmh_mn", "ha",
+    "newcombe", "newcombecc", "strat_newcombe", "strat_newcombecc"
+  ),
+  weights_method = "cmh"
+) {
   start <- s_proportion_diff(
     df = df,
     .var = .var,
@@ -135,15 +139,16 @@ s_proportion_diff_j <- function(
 #' @export
 #' @order 2
 a_proportion_diff_j <- function(
-    df,
-    .var,
-    ref_path,
-    .spl_context,
-    ...,
-    .stats = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  .var,
+  ref_path,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

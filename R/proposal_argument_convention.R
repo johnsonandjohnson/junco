@@ -52,7 +52,7 @@
 #'   for more information.
 #' @param lyt (`layout`)\cr input layout where analyses will be added to.
 #' @param method (`string`)\cr specifies the test used to calculate the p-value for the difference between
-#'   two proportions. For options, see [s_test_proportion_diff()]. Default is `NULL` so no test is performed.
+#'   two proportions. For options, see [tern::s_test_proportion_diff()]. Default is `NULL` so no test is performed.
 #' @param na.rm (`flag`)\cr whether `NA` values should be removed from `x` prior to analysis.
 #' @param na_level `r lifecycle::badge('deprecated')` Please use the `na_str` argument instead.
 #' @param na_str (`string`)\cr string used to replace all `NA` or empty values in the output.
