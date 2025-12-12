@@ -7,14 +7,14 @@ test_that("s_cmhrms_j works as expected with and without strata", {
     strata = factor(sample(c("C", "D"), nobs, TRUE))
   )
 
-  result_strata <- expect_silent(s_cmhrms_j(
+  result_strata <- s_cmhrms_j(
     df = subset(dta, grp == "B"),
     .df_row = dta,
     .var = "rsp",
     .ref_group = subset(dta, grp == "A"),
     .in_ref_col = FALSE,
     variables = list(arm = "grp", strata = "strata")
-  ))
+  )
   expected_strata <- list(pval = formatters::with_label(0.5241419, "p-value"))
   expect_equal(result_strata, expected_strata, tolerance = 1e-6)
 
