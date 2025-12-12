@@ -56,7 +56,7 @@ Imports:
     emmeans,
     mmrm,
     assertthat,
-    vcdExtra
+    vcdExtra (>= 0.8.7)
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)

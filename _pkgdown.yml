@@ -83,6 +83,7 @@ reference:
     - s_cmhrms_j
     - a_cmhrms_j
     - a_two_tier
+    - prop_diff_test
 
   - title: junco Formatting Functions
     desc: The following functions are the junco formatting functions used to create common table layouts.
