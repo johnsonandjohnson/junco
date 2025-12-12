@@ -53,7 +53,6 @@ reference:
     - fit_ancova
     - fit_mmrm_j
     - coxph_hr
-    - d_test_proportion_diff_j
     - tabulate_rbmi
     - tabulate_lsmeans
     - h_odds_ratio
@@ -84,6 +83,8 @@ reference:
     - rbmi_pool
     - s_cmhrms_j
     - a_cmhrms_j
+    - a_two_tier
+    - prop_diff_test
 
   - title: junco Formatting Functions
     desc: The following functions are the junco formatting functions used to create common table layouts.
@@ -137,7 +138,7 @@ reference:
     - rm_other_facets_fact
     - smart_colwidths_1page
     - tt_to_tbldf
-  
+
   - title: junco Functions For generating .rtfs, .docxs and HTMLs
     desc: The following utility functions help to generate the .rtfs, .docxs and HTMLs.
     contents:
