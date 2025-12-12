@@ -57,7 +57,7 @@ Imports:
     mmrm,
     assertthat,
     vcdExtra (== 0.8.6),
-    rtables.officer,
+    rtables.officer (>= 0.1.0),
     flextable,
     officer,
     xml2,
