@@ -1,11 +1,8 @@
 
 options(rgl.useNULL = TRUE)
-Sys.setenv(RGL_USE_NULL = "TRUE")
-
 
 test_that("s_cmhrms_j works as expected with and without strata", {
   set.seed(12)
-  skip_on_os("linux")
   nobs <- 100
   dta <- data.frame(
     rsp = c(rep(FALSE, nobs / 2), rep(TRUE, nobs / 2)),
