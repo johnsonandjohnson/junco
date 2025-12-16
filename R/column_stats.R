@@ -1,5 +1,5 @@
 calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, round_type = valid_round_type, exclude_visits,
-                               var_names = c("AVAL", "CHG", "BASE")) {
+                           var_names = c("AVAL", "CHG", "BASE")) {
   round_type <- match.arg(round_type)
   if (is.na(decimal)) {
     decimal <- 0
@@ -11,10 +11,13 @@ calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, round_type = v
   switch(statnm,
     N = length(stats::na.omit(datvec)),
     SE = round_fmt(stats::sd(datvec) / sqrt(length(stats::na.omit(datvec))),
-                decimal + 2, round_type = round_type),
+      decimal + 2,
+      round_type = round_type
+    ),
     SD = round_fmt(stats::sd(datvec), decimal + 2, round_type = round_type),
     Mean = round_fmt(mean(datvec), decimal + 1,
-                     round_type = round_type),
+      round_type = round_type
+    ),
     mean_sd = paste0(
       round_fmt(mean(datvec), decimal + 1, round_type = round_type),
       " (",
