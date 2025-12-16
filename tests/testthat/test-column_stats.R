@@ -248,6 +248,18 @@ test_that("column_stats handles iec round_type correctly", {
   )
   expect_equal(result_SAS, "25.35")
 
+   # Compare to SAS rounding
+  result_R_mod <- calc_one_visit(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "Mean",
+    "Week 1",
+    "AVAL",
+    round_type = "iec_mod",
+    exclude_visits = "Baseline (DB)"
+  )
+  expect_equal(result_R_mod, "25.34")
+
 
   df <- data.frame(
     AVISIT = c(

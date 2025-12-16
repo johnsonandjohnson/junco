@@ -1,5 +1,5 @@
-calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, round_type = c("sas", "iec"), exclude_visits,
-                           var_names = c("AVAL", "CHG", "BASE")) {
+calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, round_type = valid_round_type, exclude_visits,
+                               var_names = c("AVAL", "CHG", "BASE")) {
   round_type <- match.arg(round_type)
   if (is.na(decimal)) {
     decimal <- 0
@@ -7,54 +7,24 @@ calc_one_visit <- function(datvec, decimal, statnm, visit, varnm, round_type = c
   if ((varnm == var_names[2] || varnm == var_names[3]) && (visit %in% exclude_visits)) {
     return(NULL)
   }
-  if (round_type == "sas") {
-    switch(statnm,
-      N = length(stats::na.omit(datvec)),
-      SE = format(
-        tidytlg::roundSAS(stats::sd(datvec) / sqrt(length(stats::na.omit(datvec))), decimal + 2),
-        nsmall = decimal + 2
-      ),
-      SD = format(
-        tidytlg::roundSAS(stats::sd(datvec), decimal + 2),
-        nsmall = decimal +
-          2
-      ),
-      Mean = format(tidytlg::roundSAS(mean(datvec), decimal + 1), nsmall = decimal + 1),
-      mean_sd = paste0(
-        format(tidytlg::roundSAS(mean(datvec), decimal + 1), nsmall = decimal + 1),
-        " (",
-        format(
-          tidytlg::roundSAS(stats::sd(datvec), decimal + 2),
-          nsmall = decimal +
-            2
-        ),
-        ")"
-      ),
-      Med = format(tidytlg::roundSAS(stats::median(datvec), decimal + 1), nsmall = decimal + 1),
-      Min = format(tidytlg::roundSAS(min(datvec), decimal), nsmall = decimal),
-      Max = format(tidytlg::roundSAS(max(datvec), decimal), nsmall = decimal)
-    )
-  } else {
-    switch(statnm,
-      N = length(stats::na.omit(datvec)),
-      SE = format(round(stats::sd(datvec) / sqrt(length(stats::na.omit(datvec))), decimal + 2), nsmall = decimal + 2),
-      SD = format(round(stats::sd(datvec), decimal + 2), nsmall = decimal + 2),
-      Mean = format(round(mean(datvec), decimal + 1), nsmall = decimal + 1),
-      mean_sd = paste0(
-        format(round(mean(datvec), decimal + 1), nsmall = decimal + 1),
-        " (",
-        format(
-          round(stats::sd(datvec), decimal + 2),
-          nsmall = decimal +
-            2
-        ),
-        ")"
-      ),
-      Med = format(round(stats::median(datvec), decimal + 1), nsmall = decimal + 1),
-      Min = format(round(min(datvec), decimal), nsmall = decimal),
-      Max = format(round(max(datvec), decimal), nsmall = decimal)
-    )
-  }
+
+  switch(statnm,
+    N = length(stats::na.omit(datvec)),
+    SE = round_fmt(stats::sd(datvec) / sqrt(length(stats::na.omit(datvec))),
+                decimal + 2, round_type = round_type),
+    SD = round_fmt(stats::sd(datvec), decimal + 2, round_type = round_type),
+    Mean = round_fmt(mean(datvec), decimal + 1,
+                     round_type = round_type),
+    mean_sd = paste0(
+      round_fmt(mean(datvec), decimal + 1, round_type = round_type),
+      " (",
+      round_fmt(stats::sd(datvec), decimal + 2, round_type = round_type),
+      ")"
+    ),
+    Med = round_fmt(stats::median(datvec), decimal + 1, round_type = round_type),
+    Min = round_fmt(min(datvec), decimal, round_type = round_type),
+    Max = round_fmt(max(datvec), decimal, round_type = round_type),
+  )
 }
 
 #' @name column_stats
