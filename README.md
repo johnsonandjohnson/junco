@@ -37,11 +37,17 @@ The package provides a range of functionality, such as:
 
 ## Installation
 
-You can install the development version of junco from [GitHub](https://github.com/johnsonandjohnson/junco) with:
+Either you can install the stbale CRAN version
 
 ```r
-# install.packages("remotes")
-remotes::install_github("johnsonandjohnson/junco")
+install.packages("pharmaverseadamjnj") #CRAN Release
+```
+
+Or you can install the development version from GitHub:
+
+```r
+require('remotes')
+remotes::install_github("johnsonandjohnson/junco", ref = "dev") #or for the rolling dev release
 ```
 
 ## Usage
