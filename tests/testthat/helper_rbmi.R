@@ -19,7 +19,7 @@ rbmi_as_analysis <- function(
     next_class %in% c("jackknife", "bootstrap", "rubin", "bmlmi")
   )
   x <- list(
-    results = as_class(results, c(next_class, "list")),
+    results = rbmi::as_class(results, c(next_class, "list")),
     delta = delta,
     fun = fun,
     fun_name = fun_name,
@@ -54,21 +54,21 @@ get_sim_data <- function(n, sigma, trt = 4) {
     )
   )
 
-  dat <- mvtnorm::rmvnorm(n, sigma = sigma) %>%
-    set_col_names(paste0("visit_", 1:nv)) %>%
-    dplyr::as_tibble() %>%
-    dplyr::mutate(id = seq_len(dplyr::n())) %>%
-    tidyr::gather("visit", "outcome", -id) %>%
-    dplyr::mutate(visit = factor(.data$visit)) %>%
-    dplyr::arrange(id, .data$visit) %>%
-    dplyr::left_join(covars, by = "id") %>%
+  dat <- mvtnorm::rmvnorm(n, sigma = sigma) |>
+    set_col_names(paste0("visit_", 1:nv)) |>
+    dplyr::as_tibble() |>
+    dplyr::mutate(id = seq_len(dplyr::n())) |>
+    tidyr::gather("visit", "outcome", -id) |>
+    dplyr::mutate(visit = factor(.data$visit)) |>
+    dplyr::arrange(id, .data$visit) |>
+    dplyr::left_join(covars, by = "id") |>
     dplyr::mutate(
       outcome = .data$outcome +
         5 +
         3 * .data$age +
         3 * f2n(.data$sex) +
         trt * f2n(.data$group)
-    ) %>%
+    ) |>
     dplyr::mutate(id = as.factor(id))
 
   return(dat)

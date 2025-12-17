@@ -164,7 +164,7 @@ test_that("column_stats handles BASE variable correctly", {
   expect_equal(week1_base_mean, "20.00")
 })
 
-test_that("column_stats handles iec roundmethod correctly", {
+test_that("column_stats handles iec round_type correctly", {
   # Create sample data
   df <- data.frame(
     AVISIT = c("Baseline (DB)", "Week 1", "Week 1", "Week 2", "Week 2"),
@@ -180,7 +180,7 @@ test_that("column_stats handles iec roundmethod correctly", {
       statnm,
       visit,
       varnm,
-      roundmethod = "iec",
+      round_type = "iec",
       exclude_visits = "Baseline (DB)"
     )
   }
@@ -243,10 +243,22 @@ test_that("column_stats handles iec roundmethod correctly", {
     "Mean",
     "Week 1",
     "AVAL",
-    roundmethod = "sas",
+    round_type = "sas",
     exclude_visits = "Baseline (DB)"
   )
   expect_equal(result_SAS, "25.35")
+
+  # Compare to SAS rounding
+  result_R_mod <- calc_one_visit(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "Mean",
+    "Week 1",
+    "AVAL",
+    round_type = "iec_mod",
+    exclude_visits = "Baseline (DB)"
+  )
+  expect_equal(result_R_mod, "25.34")
 
 
   df <- data.frame(

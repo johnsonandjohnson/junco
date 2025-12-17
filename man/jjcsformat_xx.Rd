@@ -2,19 +2,109 @@
 % Please edit documentation in R/jjcsformats.R
 \name{jjcsformat_xx}
 \alias{jjcsformat_xx}
-\title{Formatting of values}
+\alias{jjcsformat_pval_fct}
+\alias{jjcsformat_range_fct}
+\title{Utility for specifying custom formats}
 \usage{
-jjcsformat_xx(str, na_str = na_str_dflt)
+jjcsformat_xx(
+  str,
+  na_str = na_str_dflt,
+  na_str_dflt = "NE",
+  replace_na_dflt = TRUE
+)
+
+jjcsformat_pval_fct(alpha = 0.05)
+
+jjcsformat_range_fct(str, censor_char = "+")
 }
 \arguments{
-\item{str}{(\code{character})\cr the formatting that is required specified as a text string, eg "xx.xx"}
+\item{str}{(\code{string})\cr the format specifying the number of digits to be used,
+for the range values, e.g. \code{"xx.xx"}.}
 
-\item{na_str}{(\code{character})\cr Na string that will be passed from \code{formatters} into
-our formatting functions.}
+\item{na_str}{String for NA values.}
+
+\item{na_str_dflt}{Character to represent NA value}
+
+\item{replace_na_dflt}{logical(1). Should an \code{na_string} of "NA" within
+the formatters framework be overridden by \code{na_str_default}? Defaults to
+\code{TRUE}, as a way to have a different default na string behavior from the
+base \code{formatters} framework.}
+
+\item{alpha}{(\code{numeric})\cr the significance level to account for during rounding.}
+
+\item{censor_char}{(\code{string})\cr the character (of length 1) to be appended to \code{min} or \code{max}}
 }
 \value{
-a formatting function with \code{"sas"}-style rounding.
+Either a supported format string, or a formatting function that can be
+used as format in \code{formatters::format_value}
+
+The p-value in the standard format. If \code{count} is 0, the format is \code{0}.
+If it is smaller than 0.001, then \verb{<0.001}, if it is larger than 0.999, then
+\verb{>0.999} is returned. Otherwise, 3 digits are used. In the special case that
+rounding from below would make the string equal to the specified \code{alpha},
+then a higher number of digits is used to be able to still see the difference.
+For example, 0.0048 is not rounded to 0.005 but stays at 0.0048 if \code{alpha = 0.005}
+is set.
+
+A function that formats a numeric vector with 4 elements:
+\itemize{
+\item minimum
+\item maximum
+\item censored minimum? (1 if censored, 0 if event)
+\item censored maximum? (1 if censored, 0 if event)
+The range along with the censoring information is returned as a string
+with the specified numeric format as \verb{(min, max)}, and the \code{censor_char} is appended
+to \code{min} or \code{max} if these have been censored.
+}
 }
 \description{
-jjcs formatting function
+Utility for specifying custom formats that can be used as a format in \code{formatters::format_value}
+
+A function factory to generate formatting functions for p-value
+formatting that support rounding close to the significance level specified.
+
+A function factory to generate formatting functions for range formatting
+that includes information about the censoring of survival times.
 }
+\examples{
+value <- c(1.65, 8.645)
+fmt <- jjcsformat_xx("xx.x")
+is.function(fmt)
+fmt
+format_value(value[1], fmt, round_type = "sas")
+format_value(value[1], fmt, round_type = "iec")
+if (is.function(fmt)) fmt(value[1])
+
+fmt2 <- jjcsformat_xx("xx.x (xx.xxx)")
+is.function(fmt2)
+value <- c(1.65, 8.645)
+format_value(value, fmt2, round_type = "sas")
+format_value(value, fmt2, round_type = "iec")
+# only possible when resulting format is a function
+if (is.function(fmt2)) fmt2(value, round_type = "sas")
+
+value <- c(1.65, NA)
+format_value(value, fmt2, round_type = "iec", na_str = c("ne1", "ne2"))
+if (is.function(fmt2)) fmt2(value, round_type = "iec", na_str = c("ne1", "ne2"))
+my_pval_format <- jjcsformat_pval_fct(0.005)
+my_pval_format(0.2802359)
+my_pval_format(0.0048)
+my_pval_format(0.00499)
+my_pval_format(0.004999999)
+my_pval_format(0.0051)
+my_pval_format(0.0009)
+my_pval_format(0.9991)
+
+my_range_format <- jjcsformat_range_fct("xx.xx")
+my_range_format(c(0.35235, 99.2342, 1, 0))
+my_range_format(c(0.35235, 99.2342, 0, 1))
+my_range_format(c(0.35235, 99.2342, 0, 0))
+my_range_format(c(0.35235, 99.2342, 1, 1))
+my_range_format <- jjcsformat_range_fct("xx.xx", censor_char = "*")
+my_range_format(c(0.35235, 99.2342, 1, 1))
+}
+\seealso{
+Other JJCS formatting functions: 
+\code{\link{count and fraction related formatting functions}}
+}
+\concept{JJCS formatting functions}

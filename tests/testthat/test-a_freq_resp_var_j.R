@@ -16,8 +16,8 @@ test_that("a_freq_resp_var_j works as expected with basic usage", {
   )
 
   # Create the layout based on patterns seen in test-varia.R
-  lyt <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       "SEX",
       afun = a_freq_resp_var_j,
@@ -54,8 +54,8 @@ test_that("a_freq_resp_var_j works with factor responses", {
   )
 
   # Create the layout
-  lyt <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       "SEX",
       afun = a_freq_resp_var_j,
@@ -86,8 +86,8 @@ test_that("a_freq_resp_var_j handles missing values correctly", {
   adrs$SEX[6:10] <- NA
 
   # Create the layout
-  lyt <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       "SEX",
       afun = a_freq_resp_var_j,
@@ -117,8 +117,8 @@ test_that("a_freq_resp_var_j errors on invalid responses", {
   adrs$RSP[1:3] <- "MAYBE"
 
   # Create the layout
-  lyt <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       "SEX",
       afun = a_freq_resp_var_j,
@@ -148,8 +148,8 @@ test_that("a_freq_resp_var_j errors when resp_var is null", {
   )
 
   # Create layout with missing resp_var
-  lyt <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       "SEX",
       afun = a_freq_resp_var_j
@@ -178,8 +178,8 @@ test_that("a_freq_resp_var_j works with drop_levels parameter", {
   )
 
   # Create layout with drop_levels = TRUE
-  lyt <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       "SEX",
       afun = a_freq_resp_var_j,
@@ -210,8 +210,8 @@ test_that("a_freq_resp_var_j works with riskdiff parameter", {
   )
 
   # Create layout with drop_levels = TRUE
-  lyt <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       "SEX",
       afun = a_freq_resp_var_j,

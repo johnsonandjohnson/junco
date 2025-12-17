@@ -6,18 +6,18 @@ adsl <- ex_adsl
 adae <- ex_adae
 adae$TRTEMFL <- "Y"
 
-had_ae <- adae %>%
-  filter(TRTEMFL == "Y") %>%
-  select(USUBJID, TRTEMFL) %>%
+had_ae <- adae |>
+  filter(TRTEMFL == "Y") |>
+  select(USUBJID, TRTEMFL) |>
   distinct(USUBJID, .keep_all = TRUE)
 
-adsl <- adsl %>%
-  left_join(had_ae, by = "USUBJID") %>%
+adsl <- adsl |>
+  left_join(had_ae, by = "USUBJID") |>
   mutate(TRTEMFL = ifelse(is.na(TRTEMFL), "N", "Y"))
 
 test_that("response_by_var various scenarios", {
-  lyt <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table(show_colcounts = TRUE, round_type = "sas") |>
+    split_cols_by("ARM") |>
     analyze(
       vars = "SEX",
       var_labels = "Sex, n/Ns (%)",
@@ -51,7 +51,7 @@ test_that("response_by_var various scenarios", {
   expect_snapshot(tbl2)
 
   ## Scenario 3: TRTEMFL has missing values and Y only, and analysis variable has missing values
-  adsl3 <- adsl %>% select(USUBJID, ARM, SEX, TRTEMFL)
+  adsl3 <- adsl |> select(USUBJID, ARM, SEX, TRTEMFL)
   adsl3$TRTEMFL <- ifelse(adsl3$TRTEMFL == "Y", "Y", NA)
   adsl3$TRTEMFL <- factor(adsl3$TRTEMFL, levels = "Y")
   adsl3$SEX[1:10] <- NA_character_
@@ -71,7 +71,7 @@ test_that("response_by_var various scenarios", {
   expect_snapshot(tbl3)
 
   ## Scenario 4: TRTEMFL has missing values and Y/N, and analysis variable has missing values
-  adsl4 <- adsl %>% select(USUBJID, ARM, SEX, TRTEMFL)
+  adsl4 <- adsl |> select(USUBJID, ARM, SEX, TRTEMFL)
   adsl4$SEX[1:10] <- NA_character_
   adsl4$TRTEMFL[8:15] <- NA_character_
 
@@ -90,7 +90,7 @@ test_that("response_by_var various scenarios", {
   expect_snapshot(tbl4)
 
   ## Scenario 5: Analysis variable has a level not observed in data
-  adsl5 <- adsl %>% select(USUBJID, ARM, SEX, TRTEMFL)
+  adsl5 <- adsl |> select(USUBJID, ARM, SEX, TRTEMFL)
   adsl5$SEX <- factor(
     as.character(adsl5$SEX),
     levels = c(levels(adsl5$SEX), "extra level")

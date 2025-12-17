@@ -1,6 +1,6 @@
 test_that("s_event_free works with default arguments", {
-  adtte_f <- tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
       AVAL = tern::day2month(AVAL),
       is_event = CNSR == 0
@@ -19,8 +19,8 @@ test_that("s_event_free works with default arguments", {
 })
 
 test_that("s_event_free works with percent format", {
-  adtte_f <- tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
       AVAL = tern::day2month(AVAL),
       is_event = CNSR == 0
@@ -40,14 +40,14 @@ test_that("s_event_free works with percent format", {
 })
 
 test_that("a_event_free works with default arguments in a table layout", {
-  adtte_f <- tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
       AVAL = tern::day2month(AVAL),
       is_event = CNSR == 0
     )
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") |>
     split_cols_by(var = "ARMCD")
   for (time_point in c(3, 4, 5)) {
     lyt <- lyt |>
@@ -72,14 +72,14 @@ test_that("a_event_free works with default arguments in a table layout", {
 })
 
 test_that("a_event_free works with customized arguments in a table layout", {
-  adtte_f <- tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
       AVAL = tern::day2month(AVAL),
       is_event = CNSR == 0
     )
 
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") |>
     split_cols_by(var = "ARMCD")
   for (time_point in c(5, 1, 7)) {
     lyt <- lyt |>

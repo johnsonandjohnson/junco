@@ -108,27 +108,27 @@ test_that("jjjcs formats work", {
 ## round type works
 
 
-test_that("roundmethod support works", {
+test_that("round_type support works", {
   val <- 7.05 ## differs for xx.x between round types
   expect_equal(
-    format_value(val, format = jjcsformat_xx("xx.x")),
+    format_value(val, format = jjcsformat_xx("xx.x"), round_type = "sas"),
     format_value(val, format = "xx.x", round_type = "sas")
   ) # nolint start
-  expect_false(format_value(val, format = jjcsformat_xx("xx.x")) ==
+  expect_false(format_value(val, format = jjcsformat_xx("xx.x"), round_type = "sas") ==
     format_value(val, format = "xx.x", round_type = "iec"))
   # nolint end
   val2 <- c(5, 0.9945)
 
   expect_equal(
     format_value(val2, format = "xx (xx.x%)", round_type = "sas"),
-    jjcsformat_count_fraction(val2, roundmethod = "sas")
+    jjcsformat_count_fraction(val2, round_type = "sas")
   )
   expect_equal(
     format_value(val2, format = "xx (xx.x%)", round_type = "iec"),
-    jjcsformat_count_fraction(val2, roundmethod = "iec")
+    jjcsformat_count_fraction(val2, round_type = "iec")
   )
   # nolint start
-  expect_false(jjcsformat_count_fraction(val2, roundmethod = "sas") ==
+  expect_false(jjcsformat_count_fraction(val2, round_type = "sas") ==
     format_value(val2, "xx (xx.x%)", round_type = "iec"))
   # nolint end
   val3 <- c(5, 10, 0.9945)
@@ -137,28 +137,30 @@ test_that("roundmethod support works", {
   add_spcs_fmt <- function(str) gsub("/", " / ", str, fixed = TRUE)
   expect_equal(
     format_value(val3, format = "xx / xx (xx.x%)", round_type = "sas"),
-    add_spcs_fmt(jjcsformat_count_denom_fraction(val3, roundmethod = "sas"))
+    add_spcs_fmt(jjcsformat_count_denom_fraction(val3, round_type = "sas"))
   )
   expect_equal(
     format_value(val3, format = "xx / xx (xx.x%)", round_type = "iec"),
-    add_spcs_fmt(jjcsformat_count_denom_fraction(val3, roundmethod = "iec"))
+    add_spcs_fmt(jjcsformat_count_denom_fraction(val3, round_type = "iec"))
   )
   # nolint start
-  expect_false(add_spcs_fmt(jjcsformat_count_denom_fraction(val3, roundmethod = "sas")) ==
+  expect_false(add_spcs_fmt(jjcsformat_count_denom_fraction(val3, round_type = "sas")) ==
     format_value(val3, "xx / xx (xx.x%)", round_type = "iec"))
 
-  expect_false(jjcsformat_fraction_count_denom(val3, roundmethod = "sas") ==
-    jjcsformat_fraction_count_denom(val3, roundmethod = "iec"))
+  expect_false(jjcsformat_fraction_count_denom(val3, round_type = "sas") ==
+    jjcsformat_fraction_count_denom(val3, round_type = "iec"))
   # nolint end
 })
 
 test_that("jjcsformat_range_fct is formatting ranges as expected", {
   my_range_format <- jjcsformat_range_fct("xx.xx")
+  my_range_format2 <- jjcsformat_range_fct("xx.xx", censor_char = "*")
   expect_snapshot({
     my_range_format(c(0.35235, 99.2342, 1, 0))
     my_range_format(c(0.35235, 99.2342, 0, 1))
     my_range_format(c(0.35235, 99.2342, 0, 0))
     my_range_format(c(0.35235, 99.2342, 1, 1))
+    my_range_format2(c(0.35235, 99.2342, 0, 1))
   })
 })
 
@@ -166,6 +168,7 @@ test_that("jjcsformat_pval_fct works", {
   expect_snapshot({
     jjcsformat_pval_fct(0.005)(0.0048)
     jjcsformat_pval_fct(0.005)(0.00499)
+    jjcsformat_pval_fct(0.005)(0.000499)
     jjcsformat_pval_fct(0)(0.0048)
     jjcsformat_pval_fct(0.05)(0.0048)
     jjcsformat_pval_fct(0.005)(0.0051)
@@ -175,7 +178,27 @@ test_that("jjcsformat_pval_fct works", {
     jjcsformat_pval_fct(0)(0.9999)
     jjcsformat_pval_fct(0)(0.999)
     jjcsformat_pval_fct(0)(0.9990000001)
+    jjcsformat_pval_fct(0)(NA_real_, na_str = "ne")
+    jjcsformat_pval_fct(0.0005)(NA_real_, na_str = "ne")
+    jjcsformat_pval_fct(0.005)(0.004999999)
+    jjcsformat_pval_fct(0.005)(0.0049999999)
+    jjcsformat_pval_fct(0.005)(0.00499999999)
   })
+})
+
+test_that("some special cases for jjcsformat_pval_fct", {
+  expect_identical(
+    format_value(NA_real_, format = jjcsformat_pval_fct(0), na_str = "NE"),
+    "NE"
+  )
+  expect_identical(
+    format_value(NA_real_, format = jjcsformat_pval_fct(0.0005), na_str = "NE"),
+    "NE"
+  )
+  expect_error(
+    format_value(0.00000123, format = jjcsformat_pval_fct(0.0005), na_str = "NE"),
+    "jjcsformat_pval_fct: argument alpha should be 0 or at least 0.001."
+  )
 })
 
 test_that("jjcsformat_xx works also for empty cells", {

@@ -20,6 +20,7 @@ test_that("a_freq_j with label_map works in a table layout as expected", {
       )
     )
   result <- build_table(lyt, dta)
+  expect_snapshot(result)
 })
 
 test_that("a_freq_j with label_map restricts the values according to row split and label_map", {
@@ -47,6 +48,7 @@ test_that("a_freq_j with label_map restricts the values according to row split a
       )
     )
   result <- build_table(lyt, dta)
+  expect_snapshot(result)
 })
 
 test_that("a_freq_j_with_exclude allows to exclude row split levels from the analysis", {

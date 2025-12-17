@@ -5,8 +5,8 @@ test_that("resp01_split_fun_fct 1 works as expected", {
     method = "or_cmh",
     conf_level = 0.95
   )
-  result <- basic_table() %>%
-    split_cols_by("ARM", split_fun = add_overall_level("Overall")) %>%
+  result <- basic_table(round_type = "sas") |>
+    split_cols_by("ARM", split_fun = add_overall_level("Overall")) |>
     split_cols_by("ID", split_fun = split_fun) |>
     build_table(formatters::DM)
   expect_snapshot(result)
@@ -17,8 +17,8 @@ test_that("resp01_split_fun_fct 2 works as expected", {
     method = "rr",
     conf_level = 0.92
   )
-  result <- basic_table() %>%
-    split_cols_by("ARM", split_fun = add_overall_level("Overall")) %>%
+  result <- basic_table(round_type = "sas") |>
+    split_cols_by("ARM", split_fun = add_overall_level("Overall")) |>
     split_cols_by("ID", split_fun = split_fun) |>
     build_table(formatters::DM)
   expect_snapshot(col_info(result))

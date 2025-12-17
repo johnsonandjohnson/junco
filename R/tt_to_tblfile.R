@@ -4,24 +4,46 @@
 #' @param fontspec (`font_spec`)\cr Font specification object
 #' @param string_map (`list`)\cr Unicode mapping for special characters
 #' @param markup_df (`data.frame`)\cr Data frame containing markup information
+#' @param round_type (`character(1)`)\cr the type of rounding to perform.
+#' See [formatters::format_value()] for more details.
+#' @param validate logical(1). Whether to validate the table structure using
+#'   `rtables::validate_table_struct()`. Defaults to `TRUE`. If `FALSE`, a message
+#'   will be displayed instead of stopping with an error when validation fails.
 #' @return `tt` represented as a `tbl` data.frame suitable for passing
 #'   to [tidytlg::gentlg] via the `huxme` argument.
 tt_to_tbldf <- function(
-    tt,
-    fontspec = font_spec("Times", 9L, 1),
-    string_map = default_str_map,
-    markup_df = dps_markup_df) {
-  if (!validate_table_struct(tt)) {
-    stop(
-      "invalid table structure. summarize_row_groups without ",
-      "analyze below it in layout structure?"
-    )
+  tt,
+  fontspec = font_spec("Times", 9L, 1),
+  string_map = default_str_map,
+  markup_df = dps_markup_df,
+  round_type = obj_round_type(tt),
+  validate = TRUE
+) {
+  if (validate) {
+    if (!validate_table_struct(tt)) {
+      stop(
+        "Invalid table structure detected. summarize_row_groups without ",
+        "analyze below it in layout structure?"
+      )
+    }
+  } else {
+    if (!validate_table_struct(tt)) {
+      message(
+        "Invalid table structure detected. This may cause issues in the output. ",
+        "The validation process failed, proceed with caution."
+      )
+    } else {
+      message(
+        "Table structure validation succeeded. You should not need to set validate=FALSE."
+      )
+    }
   }
   mpf <- matrix_form(
     tt,
     indent_rownames = FALSE,
     expand_newlines = FALSE,
-    fontspec = fontspec
+    fontspec = fontspec,
+    round_type = round_type
   )
 
   strmat <- mf_strings(mpf)
@@ -108,9 +130,10 @@ tlg_type <- function(tt) {
 }
 
 mpf_to_colspan <- function(
-    mpf,
-    string_map = default_str_map,
-    markup_df = dps_markup_df) {
+  mpf,
+  string_map = default_str_map,
+  markup_df = dps_markup_df
+) {
   if (!methods::is(mpf, "MatrixPrintForm")) {
     stop("figure out how to make this an mpf (MatrixPrintForm) first.")
   }
@@ -213,6 +236,33 @@ get_ncol <- function(tt) {
   }
 }
 
+# apply format and round_type to columns of a listing_df object and return as a dataframe
+# only for usage as input to gentlg
+listingdf_dataframe_formats <- function(df, round_type = obj_round_type(df)) {
+  if (!is(df, "listing_df")) {
+    return(df)
+  } else {
+    cols <- listing_dispcols(df)
+    df[cols] <- lapply(names(df), function(col) {
+      fmt <- obj_format(df[[col]])
+      if (!is.null(fmt)) {
+        na_str <- obj_na_str(df[[col]])
+        lbl <- obj_label(df[[col]])
+
+        df[[col]] <- sapply(df[[col]], FUN = function(x) {
+          format_value(x, format = fmt, na_str = na_str, round_type = round_type)
+        })
+
+        obj_label(df[[col]]) <- lbl
+      }
+      df[[col]]
+    })
+  }
+
+  class(df) <- "data.frame"
+  df
+}
+
 #' @name tt_to_tlgrtf
 #' @title TableTree to .rtf Conversion
 #' @description
@@ -249,9 +299,11 @@ get_ncol <- function(tt) {
 #'  and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #'  for what the matrix should contain. Users should only specify this when the
 #'  default behavior does not meet their needs.
+#' @param round_type (`character(1)`)\cr the type of rounding to perform.
+#' See [formatters::format_value()] for more details.
 #' @param validate logical(1). Whether to validate the table structure using
-#'  `rtables::validate_table_struct()`. Defaults to `TRUE`. This can also be disabled
-#'  globally by setting the environment variable `JUNCO_DISABLE_VALIDATION=TRUE`.
+#'  `rtables::validate_table_struct()`. Defaults to `TRUE`. If `FALSE`, a message
+#'  will be displayed when validation fails.
 #' @import rlistings
 #' @rdname tt_to_tlgrtf
 #' @export
@@ -267,48 +319,53 @@ get_ncol <- function(tt) {
 #' @return If `file` is non-NULL, this is called for the side-effect of writing
 #'   one or more RTF files. Otherwise, returns a list of `huxtable` objects.
 tt_to_tlgrtf <- function(
+  tt,
+  file = NULL,
+  orientation = c("portrait", "landscape"),
+  colwidths = def_colwidths(
     tt,
-    file = NULL,
-    orientation = c("portrait", "landscape"),
-    colwidths = def_colwidths(
-      tt,
-      fontspec,
-      col_gap = col_gap,
-      label_width_ins = label_width_ins,
-      type = tlgtype
-    ),
-    label_width_ins = 2,
-    watermark = NULL,
-    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-    fontspec = font_spec("Times", 9L, 1.2),
-    pg_width = pg_width_by_orient(orientation == "landscape"),
-    margins = c(0, 0, 0, 0),
-    paginate = tlg_type(tt) == "Table",
-    col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    nosplitin = list(
-      row = character(),
-      col = character()
-    ),
-    verbose = FALSE,
-    tlgtype = tlg_type(tt),
-    string_map = default_str_map,
-    markup_df = dps_markup_df,
-    combined_rtf = FALSE,
-    one_table = TRUE,
-    border_mat = make_header_bordmat(obj = tt),
-    validate = TRUE,
-    ...) {
-  # Validate table structure if requested and not disabled by environment variable
-  # nolint start
-  if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree") &&
-    Sys.getenv("JUNCO_DISABLE_VALIDATION") != "TRUE") {
+    fontspec,
+    col_gap = col_gap,
+    label_width_ins = label_width_ins,
+    type = tlgtype
+  ),
+  label_width_ins = 2,
+  watermark = NULL,
+  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+  fontspec = font_spec("Times", 9L, 1.2),
+  pg_width = pg_width_by_orient(orientation == "landscape"),
+  margins = c(0, 0, 0, 0),
+  paginate = tlg_type(tt) == "Table",
+  col_gap = ifelse(tlgtype == "Listing", .5, 3),
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  verbose = FALSE,
+  tlgtype = tlg_type(tt),
+  string_map = default_str_map,
+  markup_df = dps_markup_df,
+  combined_rtf = FALSE,
+  one_table = TRUE,
+  border_mat = make_header_bordmat(obj = tt),
+  round_type = obj_round_type(tt),
+  validate = TRUE,
+  ...
+) {
+  if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
     if (!rtables::validate_table_struct(tt)) {
-      warning(
+      message(
         "Invalid table structure detected. This may cause issues in the output. ",
-        "Use validate=FALSE to disable this warning or set JUNCO_DISABLE_VALIDATION=TRUE in your environment."
+        "The validation process failed, proceed with caution."
       )
     }
-  } # nolint end
+  } else if (!validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
+    if (rtables::validate_table_struct(tt)) {
+      message(
+        "Table structure validation succeeded. You should not need to set validate=FALSE."
+      )
+    }
+  }
 
   orientation <- match.arg(orientation)
   newdev <- open_font_dev(fontspec)
@@ -369,12 +426,13 @@ tt_to_tlgrtf <- function(
       )
     }
     if (methods::is(tt, "VTableTree")) {
-      hdrmpf <- matrix_form(tt[1, , keep_topleft = TRUE])
+      hdrmpf <- matrix_form(tt[1, , keep_topleft = TRUE], round_type = round_type)
     } else if (methods::is(tt, "list") && methods::is(tt[[1]], "MatrixPrintForm")) {
       hdrmpf <- tt[[1]]
     } else {
-      hrdmpf <- tt
+      hdrmpf <- tt
     }
+
     pags <- paginate_to_mpfs(
       tt,
       fontspec = fontspec,
@@ -386,7 +444,8 @@ tt_to_tlgrtf <- function(
       margins = margins,
       lpp = NULL,
       nosplitin = nosplitin,
-      verbose = verbose
+      verbose = verbose,
+      round_type = round_type
     ) ##
     if (has_force_pag(tt)) {
       nslices <- which(
@@ -443,6 +502,7 @@ tt_to_tlgrtf <- function(
           string_map = string_map,
           markup_df = markup_df,
           border_mat = pag_bord_mats[[i]],
+          round_type = round_type,
           ...
         )
       }
@@ -465,6 +525,7 @@ tt_to_tlgrtf <- function(
           colwidths = colwidths, ## this is largely ignored see note in docs
           # colwidths are already on the pags since they are mpfs
           border_mat = pag_bord_mats,
+          round_type = round_type,
           ...
         )
       } else if (!is.null(file)) { # only one page after pagination
@@ -488,7 +549,8 @@ tt_to_tlgrtf <- function(
         tt_to_tbldf,
         fontspec = fontspec,
         string_map = string_map,
-        markup_df = markup_df
+        markup_df = markup_df,
+        round_type = round_type
       )
       if (one_table) {
         df <- do.call(
@@ -512,11 +574,14 @@ tt_to_tlgrtf <- function(
         tt,
         fontspec = fontspec,
         string_map = string_map,
-        markup_df = markup_df
+        markup_df = markup_df,
+        round_type = round_type
       )
     }
   } else {
     df <- tt[, listing_dispcols(tt)]
+    # apply formats and round_type and return df as a dataframe to input in gentlg
+    df <- listingdf_dataframe_formats(df, round_type = round_type)
   }
 
   ## we only care about the col labels here...
@@ -554,7 +619,8 @@ tt_to_tlgrtf <- function(
       utils::head(tt, 1),
       indent_rownames = FALSE,
       expand_newlines = FALSE,
-      fontspec = fontspec
+      fontspec = fontspec,
+      round_type = round_type
     )
     colinfo <- mpf_to_colspan(
       mpf,
@@ -695,8 +761,9 @@ fixup_bord_mat <- function(brdmat, hstrs) {
 }
 
 .make_header_bordmat <- function(
-    obj,
-    mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)) {
+  obj,
+  mpf = matrix_form(utils::head(obj, 1), expand_newlines = FALSE)
+) {
   spns <- mf_spans(mpf)
   nlh <- mf_nlheader(mpf)
   nrh <- mf_nrheader(mpf)

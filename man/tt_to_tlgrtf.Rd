@@ -26,6 +26,7 @@ tt_to_tlgrtf(
   combined_rtf = FALSE,
   one_table = TRUE,
   border_mat = make_header_bordmat(obj = tt),
+  round_type = obj_round_type(tt),
   validate = TRUE,
   ...
 )
@@ -83,9 +84,12 @@ and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_b
 for what the matrix should contain. Users should only specify this when the
 default behavior does not meet their needs.}
 
+\item{round_type}{(\code{character(1)})\cr the type of rounding to perform.
+See \code{\link[formatters:format_value]{formatters::format_value()}} for more details.}
+
 \item{validate}{logical(1). Whether to validate the table structure using
-\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. This can also be disabled
-globally by setting the environment variable \code{JUNCO_DISABLE_VALIDATION=TRUE}.}
+\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message
+will be displayed when validation fails.}
 
 \item{...}{Additional arguments passed to gentlg}
 }

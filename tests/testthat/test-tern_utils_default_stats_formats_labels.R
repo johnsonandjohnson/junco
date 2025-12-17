@@ -176,7 +176,7 @@ testthat::test_that("tern_get_labels_from_stats works as expected", {
       names(stats_to_do),
       labels_in = c(stats_to_do, "catch_me" = "xx")
     ),
-    stats_to_do %>% as.list()
+    stats_to_do |> as.list()
   )
 })
 
@@ -206,7 +206,7 @@ testthat::test_that("tern_get_labels_from_stats with labels in works when adding
       "count_fraction.a" = "any A",
       "count_fraction.b" = "CF: B",
       "count_fraction.c" = "Lvl c:"
-    ) %>%
+    ) |>
       as.list()
   )
 })
@@ -268,7 +268,7 @@ testthat::test_that("tern_get_indents_from_stats works as expected", {
       c(names(stats_to_do), "n"),
       indents_in = stats_to_do
     ),
-    c(stats_to_do, n = 0L) %>% as.list()
+    c(stats_to_do, n = 0L) |> as.list()
   )
 })
 

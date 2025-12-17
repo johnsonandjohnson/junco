@@ -199,6 +199,10 @@
       my_range_format(c(0.35235, 99.2342, 1, 1))
     Output
       [1] "(0.35+, 99.23+)"
+    Code
+      my_range_format2(c(0.35235, 99.2342, 0, 1))
+    Output
+      [1] "(0.35, 99.23*)"
 
 # jjcsformat_pval_fct works
 
@@ -210,6 +214,10 @@
       jjcsformat_pval_fct(0.005)(0.00499)
     Output
       [1] "0.00499"
+    Code
+      jjcsformat_pval_fct(0.005)(0.000499)
+    Output
+      [1] "<0.001"
     Code
       jjcsformat_pval_fct(0)(0.0048)
     Output
@@ -246,4 +254,24 @@
       jjcsformat_pval_fct(0)(0.9990000001)
     Output
       [1] ">0.999"
+    Code
+      jjcsformat_pval_fct(0)(NA_real_, na_str = "ne")
+    Output
+      [1] "ne"
+    Code
+      jjcsformat_pval_fct(5e-04)(NA_real_, na_str = "ne")
+    Output
+      [1] "ne"
+    Code
+      jjcsformat_pval_fct(0.005)(0.004999999)
+    Output
+      [1] "0.004999999"
+    Code
+      jjcsformat_pval_fct(0.005)(0.0049999999)
+    Output
+      [1] "0.0049999999"
+    Code
+      jjcsformat_pval_fct(0.005)(0.00499999999)
+    Output
+      [1] "0.0050000000"
 
