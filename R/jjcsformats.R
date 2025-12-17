@@ -47,6 +47,10 @@ jjcsformat_xx <- function(
     stop("Error: jjcsformat_xx do not use xxx. in input str, replace by xx. instead.")
   }
 
+  if (identical(str, "default")) {
+    return(str)
+  }
+
   if (is_valid_format(str)) {
     rtable_format <- str
   } else {
