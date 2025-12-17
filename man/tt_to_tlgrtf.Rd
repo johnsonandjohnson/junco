@@ -27,6 +27,7 @@ tt_to_tlgrtf(
   one_table = TRUE,
   border_mat = make_header_bordmat(obj = tt),
   round_type = obj_round_type(tt),
+  alignments = list(),
   validate = TRUE,
   ...
 )
@@ -46,9 +47,8 @@ tt_to_tlgrtf(
 \item{watermark}{(optional) String containing the desired watermark for
 RTF outputs. Vectorized.}
 
-\item{pagenum}{(optional) Logical. When true page numbers are added on the
-right side of the footer section in the format page x/y.
-Vectorized. (Default = FALSE)}
+\item{pagenum}{(\code{logical})\cr Whether to add page numbers to the output.
+Only applicable to listings (i.e. it is ignored for tables and figures).}
 
 \item{fontspec}{(\code{font_spec})\cr Font specification object}
 
@@ -86,6 +86,11 @@ default behavior does not meet their needs.}
 
 \item{round_type}{(\code{character(1)})\cr the type of rounding to perform.
 See \code{\link[formatters:format_value]{formatters::format_value()}} for more details.}
+
+\item{alignments}{(\code{list})\cr List of named lists. Vectorized.
+(Default = \code{list()}) Used to specify individual column or cell alignments.
+Each named list contains \code{row}, \code{col}, and \code{value}, which are passed to
+\code{\link[huxtable:align]{huxtable::set_align()}} to set the alignments.}
 
 \item{validate}{logical(1). Whether to validate the table structure using
 \code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message

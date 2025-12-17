@@ -276,6 +276,8 @@ listingdf_dataframe_formats <- function(df, round_type = obj_round_type(df)) {
 #' @param orientation (`character`)\cr Orientation of the output ("portrait" or "landscape")
 #' @param colwidths (`numeric` vector)\cr Column widths for the table
 #' @param label_width_ins (`numeric`)\cr Label width in inches
+#' @param pagenum (`logical`)\cr Whether to add page numbers to the output.
+#' Only applicable to listings (i.e. it is ignored for tables and figures).
 #' @param fontspec (`font_spec`)\cr Font specification object
 #' @param pg_width (`numeric`)\cr Page width in inches
 #' @param margins (`numeric` vector)\cr Margins in inches (top, right, bottom, left)
@@ -299,6 +301,10 @@ listingdf_dataframe_formats <- function(df, round_type = obj_round_type(df)) {
 #'  and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #'  for what the matrix should contain. Users should only specify this when the
 #'  default behavior does not meet their needs.
+#' @param alignments (`list`)\cr List of named lists. Vectorized.
+#' (Default = `list()`) Used to specify individual column or cell alignments.
+#' Each named list contains `row`, `col`, and `value`, which are passed to
+#' [huxtable::set_align()] to set the alignments.
 #' @param round_type (`character(1)`)\cr the type of rounding to perform.
 #' See [formatters::format_value()] for more details.
 #' @param validate logical(1). Whether to validate the table structure using
@@ -349,6 +355,7 @@ tt_to_tlgrtf <- function(
   one_table = TRUE,
   border_mat = make_header_bordmat(obj = tt),
   round_type = obj_round_type(tt),
+  alignments = list(),
   validate = TRUE,
   ...
 ) {
@@ -367,6 +374,9 @@ tt_to_tlgrtf <- function(
     }
   }
 
+  if (tlgtype != "Listing") {
+    pagenum <- FALSE
+  }
   orientation <- match.arg(orientation)
   newdev <- open_font_dev(fontspec)
   if (newdev) {
@@ -503,6 +513,7 @@ tt_to_tlgrtf <- function(
           markup_df = markup_df,
           border_mat = pag_bord_mats[[i]],
           round_type = round_type,
+          alignments = alignments,
           ...
         )
       }
@@ -526,6 +537,7 @@ tt_to_tlgrtf <- function(
           # colwidths are already on the pags since they are mpfs
           border_mat = pag_bord_mats,
           round_type = round_type,
+          alignments = alignments,
           ...
         )
       } else if (!is.null(file)) { # only one page after pagination
@@ -705,6 +717,7 @@ tt_to_tlgrtf <- function(
     pagenum = pagenum,
     bottom_borders = border_mat,
     print.hux = !is.null(fname),
+    alignments = alignments,
     ...
   )
 }
