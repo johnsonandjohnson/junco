@@ -39,6 +39,7 @@ reference:
     - a_proportion_ci_logical
     - a_summarize_aval_chg_diff_j
     - a_maxlev
+    - a_two_tier
     - rbmi_analyse
     - analyze_values
     - rbmi_ancova
@@ -51,7 +52,6 @@ reference:
     - fit_ancova
     - fit_mmrm_j
     - coxph_hr
-    - d_test_proportion_diff_j
     - tabulate_rbmi
     - tabulate_lsmeans
     - h_odds_ratio
@@ -82,6 +82,8 @@ reference:
     - rbmi_pool
     - s_cmhrms_j
     - a_cmhrms_j
+    - a_two_tier
+    - prop_diff_test
 
   - title: junco Formatting Functions
     desc: The following functions are the junco formatting functions used to create common table layouts.

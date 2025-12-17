@@ -3,7 +3,6 @@
 \name{prop_diff_test}
 \alias{prop_diff_test}
 \alias{a_test_proportion_diff}
-\alias{s_test_proportion_diff}
 \title{Difference test for two proportions}
 \usage{
 a_test_proportion_diff(
@@ -17,16 +16,6 @@ a_test_proportion_diff(
   .labels = NULL,
   .indent_mods = NULL
 )
-
-s_test_proportion_diff(
-  df,
-  .var,
-  .ref_group,
-  .in_ref_col,
-  variables = list(strata = NULL),
-  method = c("chisq", "fisher", "cmh"),
-  alternative = c("two.sided", "less", "greater")
-)
 }
 \arguments{
 \item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
@@ -39,7 +28,11 @@ by a statistics function.}
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
 that is passed by \code{rtables}.}
 
-\item{...}{additional arguments for the lower level functions.}
+\item{...}{Additional arguments passed to \code{\link[tern:prop_diff_test]{tern::s_test_proportion_diff()}}, including:
+\itemize{
+\item \code{method} (\code{string})\cr one of \code{chisq}, \code{cmh}, \code{cmh_wh}, \code{fisher} or \code{schouten};
+specifies the test used to calculate the p-value.
+}}
 
 \item{.stats}{(\code{character})\cr statistics to select for the table.}
 
@@ -50,27 +43,10 @@ information on the \code{'auto'} setting.}
 
 \item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
-
-\item{.ref_group}{(\code{data.frame} or \code{vector})\cr the data corresponding to the reference group.}
-
-\item{.in_ref_col}{(\code{logical})\cr \code{TRUE} when working with the reference level, \code{FALSE} otherwise.}
-
-\item{variables}{(named \code{list} of \code{string})\cr list of additional analysis variables.}
-
-\item{method}{(\code{string})\cr one of \code{chisq}, \code{cmh}, \code{fisher}; specifies the test used
-to calculate the p-value.}
-
-\item{alternative}{(\code{string})\cr whether \code{two.sided}, or one-sided \code{less} or \code{greater} p-value
-should be displayed.}
 }
 \value{
 \itemize{
 \item \code{a_test_proportion_diff()} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
-}
-
-\itemize{
-\item \code{s_test_proportion_diff()} returns a named \code{list} with a single item \code{pval} with an attribute \code{label}
-describing the method used. The p-value tests the null hypothesis that proportions in two groups are the same.
 }
 }
 \description{
@@ -87,13 +63,10 @@ alternative hypothesis.
 \itemize{
 \item \code{a_test_proportion_diff()}: Formatted analysis function which is used as \code{afun}
 
-\item \code{s_test_proportion_diff()}: Statistics function which tests the difference between two proportions.
-
 }}
 \note{
-These functions have been forked from the \code{tern} package. Additional features are:
+This function has been forked from the \code{tern} package. Additional features are:
 \itemize{
-\item Additional \code{alternative} argument for the sidedness of the test.
 \item Additional \code{ref_path} argument for flexible reference column path specification.
 }
 }
@@ -120,7 +93,3 @@ l <- basic_table() |>
 build_table(l, df = dta)
 
 }
-\seealso{
-\link{h_prop_diff_test}
-}
-\keyword{internal}

@@ -5,9 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.3] - 2025-11-28
+## [0.1.2] - 2025-12-10
 
 ### Added and Removed
+- Add `a_two_tier()` analysis function
 - Add `a_maxlev()` to be able to calculate count and percentage of the maximum level of an ordered factor per subject
 - Remove `brackets_to_rtf()`
 - Export `rbmi_pool()` #22
@@ -16,18 +17,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added standard error (SE) column for each treatment arm's least square (LS) means estimate to the `summarize_lsmeans_wide()` layout.
 - Added the internal function `do_exclude_split()` to facilitate the exclusion of specified row splits from analysis functions.
 - Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify
+- Add extra check for existence of `.alt_df_full` when layout has risk difference column and a row-split (h_create_alt_df) #120.
+- Removed `s_test_proportion_diff()` and corresponding helper functions, as they are now available as needed in the `tern` package.
+- Added `cmh_sato` and `cmh_mn` (Cochran-Mantel-Haenszel stratified proportion difference estimation with Sato variance and Miettinen Nurminen method, respectively) `method` options to the `s_proportion_diff_j()` function.
 
 ### Changed
 - Replace {pharmaverseadam} with {pharmaverseadamjnj}
 - Update pruning_functions.R
-- update `string_to_title()` to handle factors (#26)
+- Update `string_to_title()` to handle factors (#26)
+- Moved rbmi to suggest
+- Replaced `denom_df` with `.alt_df_full` in `a_maxlev()`.
 
 ### Fixed
 - Fixes #102 bug inappropriate warnings from `cond_rm_facets` function
 - Fix bug for not selecting NA records in `h_subset_combo()`
+- Consistent `tt_to_tbldf()` function behavior with invalid structures #116
 
-## [0.1.2] - 2025-11-20
-- Removed rbmi
 
 ## [0.1.1] - 2025-07-28
 

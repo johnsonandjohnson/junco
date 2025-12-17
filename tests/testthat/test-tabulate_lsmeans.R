@@ -68,12 +68,12 @@ test_that("summarize_lsmeans can show two- and one-sided p-values correctly", {
     names(df)
   )
 
-  dat_adsl <- mmrm::fev_data %>%
-    select(USUBJID, ARMCD) %>%
+  dat_adsl <- mmrm::fev_data |>
+    select(USUBJID, ARMCD) |>
     unique()
-  start_lyt <- basic_table() %>%
-    split_cols_by("ARMCD") %>%
-    add_colcounts() %>%
+  start_lyt <- basic_table() |>
+    split_cols_by("ARMCD") |>
+    add_colcounts() |>
     split_rows_by("AVISIT")
 
   lyt_two_sided <- start_lyt |>
