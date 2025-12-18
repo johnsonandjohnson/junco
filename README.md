@@ -40,7 +40,7 @@ The package provides a range of functionality, such as:
 Either you can install the stable CRAN version
 
 ```r
-install.packages("pharmaverseadamjnj") #CRAN Release
+install.packages("junco") #CRAN Release
 ```
 
 Or you can install the development version from GitHub:
