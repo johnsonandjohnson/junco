@@ -37,7 +37,7 @@ The package provides a range of functionality, such as:
 
 ## Installation
 
-Either you can install the stbale CRAN version
+Either you can install the stable CRAN version
 
 ```r
 install.packages("pharmaverseadamjnj") #CRAN Release
