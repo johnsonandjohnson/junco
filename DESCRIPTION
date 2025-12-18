@@ -39,7 +39,7 @@ BugReports: https://github.com/johnsonandjohnson/junco/issues
 Depends:
     R (>= 4.4),
     formatters (>= 0.5.12),
-    rtables (>= 0.6.13)
+    rtables (>= 0.6.15)
 Imports:
     tidytlg (>= 0.1.5),
     tern (>= 0.9.9),
@@ -83,6 +83,4 @@ Suggests:
     pharmaverseadamjnj (>= 0.0.2)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-Remotes:
-    insightsengineering/rtables@main
 Additional_repositories: https://insightsengineering.r-universe.dev/
