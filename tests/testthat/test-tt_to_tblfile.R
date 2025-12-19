@@ -452,8 +452,8 @@ test_that("round_type in tt_to_tlgrtf works as expected for listing object", {
 
   res_nullfl_sas <- expect_silent(tt_to_tlgrtf(list_iec, round_type = "sas", file = NULL))
   res_nullfl_iec <- expect_silent(tt_to_tlgrtf(list_iec, round_type = "iec", file = NULL))
-  vals_from_res_nullfl_sas <- res_nullfl_sas[[1]][[4]][-c(1:2)]
-  vals_from_res_nullfl_iec <- res_nullfl_iec[[1]][[4]][-c(1:2)]
+  vals_from_res_nullfl_sas <- res_nullfl_sas[[1]][[4]][-c(1:2,9)]
+  vals_from_res_nullfl_iec <- res_nullfl_iec[[1]][[4]][-c(1:2,9)]
 
   expect_identical(
     vals_round_type_fmt(vals = df[["BMRKR1"]], round_type = "sas"),
