@@ -274,7 +274,7 @@ insert_footer_text <- function(flx, tblid) {
   if (is.null(getOption("docx.add_datetime")) || isTRUE(getOption("docx.add_datetime"))) {
     footer_text <- paste0(
       "[", tolower(tblid), ".docx]",
-      "[", utils::getFromNamespace("getFileName", "tidytlg")(), "] ",
+      "[", utils::getFromNamespace("get_file_name", "tidytlg")(), "] ",
       toupper(format(Sys.time(), format = "%d%b%Y, %H:%M"))
     )
     flx <- flextable::add_footer_lines(flx, values = footer_text)
