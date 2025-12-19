@@ -41,7 +41,7 @@ Depends:
     formatters (>= 0.5.12),
     rtables (>= 0.6.15)
 Imports:
-    tidytlg (>= 0.1.5),
+    tidytlg (>= 0.11.0),
     tern (>= 0.9.10),
     rlistings (>= 0.2.13),
     checkmate (>= 2.1.0),
