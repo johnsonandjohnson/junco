@@ -52,7 +52,6 @@ rtf_out_wrapper <- function(
       res <- res[part]
     }
   }
-  # lapply(res, read_write_hax)
   res
 }
 
