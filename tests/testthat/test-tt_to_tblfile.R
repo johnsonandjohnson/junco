@@ -23,7 +23,10 @@ rtf_transform <- function(vec) {
 
 read_write_hax <- function(fl) {
   txt <- suppressWarnings(readLines(fl))
-  writeLines(txt, fl)
+  txt <- rtf_transform(txt)
+  con <- file(fl, open = "wb")
+  on.exit(close(con))
+  writeLines(txt, fl, sep = "\n")
 }
 
 rtf_out_wrapper <- function(
@@ -52,6 +55,7 @@ rtf_out_wrapper <- function(
       res <- res[part]
     }
   }
+  lapply(res, read_write_hax)
   res
 }
 
