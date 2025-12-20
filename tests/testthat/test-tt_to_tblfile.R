@@ -17,6 +17,15 @@ mk_part_names <- function(nfiles, fname) {
   }
 }
 
+rtf_transform <- function(vec) {
+  gsub("\r", "", fixed = TRUE, vec)
+}
+
+read_write_hax <- function(fl) {
+  txt <- suppressWarnings(readLines(fl))
+  writeLines(txt, fl)
+}
+
 rtf_out_wrapper <- function(
   tt,
   filnm,
@@ -35,15 +44,16 @@ rtf_out_wrapper <- function(
   )
   nf <- length(res)
   if (combined) {
-    paste0(fullfl, "allparts.rtf")
+    res <- paste0(fullfl, "allparts.rtf")
   } else {
     fpaths <- mk_part_names(nf, fullfl)
     res <- paste0(fpaths, ".rtf")
     if (!is.na(part)) {
       res <- res[part]
     }
-    res
   }
+ # lapply(res, read_write_hax)
+  res
 }
 
 # all elements result in different rounding sas vs iec with format xx.xx
@@ -152,7 +162,7 @@ test_that("tt_to_tlgrtf works with input Table and fontspec size 8", {
 
 test_that("tt_to_tlgrtf works with an empty listing", {
   empty_lsting <- as_listing(ex_adsl[numeric(), 1:10])
-  expect_snapshot_file(rtf_out_wrapper(empty_lsting, "testemptylisting"), cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform,rtf_out_wrapper(empty_lsting, "testemptylisting"), cran = TRUE, )
   expect_error(
     tt_to_tlgrtf("hi"),
     "unable to determine tlg type"
@@ -198,8 +208,8 @@ test_that("tt_to_tlgrtf works with wide table", {
   tbl_wide <- build_table(lyt_wide, ex_adsl)
   expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA)))
   for (fl in res_wide) {
-    expect_snapshot_file(fl, cran = TRUE)
-    expect_snapshot_file(gsub("rtf$", "csv", fl))
+    expect_snapshot_file(transform = rtf_transform,fl, cran = TRUE)
+    expect_snapshot_file(transform = rtf_transform,gsub("rtf$", "csv", fl))
   }
 })
 
@@ -216,7 +226,7 @@ test_that("tt_to_tlgrtf works with argument combined_rtf = TRUE", {
 
   tbl_wide <- build_table(lyt_wide, ex_adsl)
   expect_silent(suppressMessages(cmb_fl <- rtf_out_wrapper(tbl_wide, "test3", combined = TRUE)))
-  expect_snapshot_file(cmb_fl, cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform,cmb_fl, cran = TRUE)
   res_nullfl <- expect_silent(tt_to_tlgrtf(tbl_wide, file = NULL))
   expect_equal(length(res_nullfl), 7)
   ## extraneous empty line when we turn off timestamp line fix in next release
@@ -232,13 +242,13 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   tbl <- build_table(lyt, ex_adsl)
 
   # test that it runs without error
-  expect_snapshot_file(rtf_out_wrapper(tbl, "test1"), cran = TRUE)
-  expect_snapshot_file(rtf_out_wrapper(tbl, "test1b", colwidths = 120), cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform,rtf_out_wrapper(tbl, "test1"), cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform,rtf_out_wrapper(tbl, "test1b", colwidths = 120), cran = TRUE)
   expect_no_error(suppressMessages(result <- tt_to_tlgrtf(tbl, file = tempfile())))
   expect_true(is.null(result[[1]]))
 
   lsting <- as_listing(ex_adsl[1:30, 1:10])
-  expect_snapshot_file(rtf_out_wrapper(lsting, "listing1"), cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform,rtf_out_wrapper(lsting, "listing1"), cran = TRUE)
 
   badlyt <- basic_table() |>
     split_rows_by("ARM") |>
@@ -273,7 +283,7 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   tbl_pgby <- build_table(lyt_pgby, ex_adsl)
   expect_silent(suppressMessages(res_pgby <- rtf_out_wrapper(tbl_pgby, "testpageby", part = NA)))
   for (fl in res_pgby) {
-    expect_snapshot_file(fl, cran = TRUE)
+    expect_snapshot_file(transform = rtf_transform,fl, cran = TRUE)
   }
 })
 
@@ -425,11 +435,11 @@ test_that("round_type in tt_to_tbldf works as expected for tabletree object", {
 test_that("round_type in tt_to_tlgrtf works as expected for tabletree object", {
   tbl_iec <- tt_to_test_round_type(round_type = "iec")
   expect_silent(suppressMessages(rtf_sas <- rtf_out_wrapper(tbl_iec, "test4sas", round_type = "sas")))
-  expect_snapshot_file(rtf_sas, cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform, rtf_sas, cran = TRUE)
   expect_silent(suppressMessages(rtf_iec_mod <- rtf_out_wrapper(tbl_iec, "test4iecmod", round_type = "iec_mod")))
-  expect_snapshot_file(rtf_iec_mod, cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform, rtf_iec_mod, cran = TRUE)
   expect_silent(suppressMessages(rtf_iec <- rtf_out_wrapper(tbl_iec, "test4iec", round_type = "iec")))
-  expect_snapshot_file(rtf_iec, cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform, rtf_iec, cran = TRUE)
 
   # test actual values for sas rounding
   res_nullfl <- expect_silent(tt_to_tlgrtf(tbl_iec, round_type = "sas", file = NULL))
