@@ -52,7 +52,7 @@ rtf_out_wrapper <- function(
       res <- res[part]
     }
   }
- # lapply(res, read_write_hax)
+  # lapply(res, read_write_hax)
   res
 }
 
@@ -162,7 +162,7 @@ test_that("tt_to_tlgrtf works with input Table and fontspec size 8", {
 
 test_that("tt_to_tlgrtf works with an empty listing", {
   empty_lsting <- as_listing(ex_adsl[numeric(), 1:10])
-  expect_snapshot_file(transform = rtf_transform,rtf_out_wrapper(empty_lsting, "testemptylisting"), cran = TRUE, )
+  expect_snapshot_file(transform = rtf_transform, rtf_out_wrapper(empty_lsting, "testemptylisting"), cran = TRUE, )
   expect_error(
     tt_to_tlgrtf("hi"),
     "unable to determine tlg type"
@@ -208,8 +208,8 @@ test_that("tt_to_tlgrtf works with wide table", {
   tbl_wide <- build_table(lyt_wide, ex_adsl)
   expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA)))
   for (fl in res_wide) {
-    expect_snapshot_file(transform = rtf_transform,fl, cran = TRUE)
-    expect_snapshot_file(transform = rtf_transform,gsub("rtf$", "csv", fl))
+    expect_snapshot_file(transform = rtf_transform, fl, cran = TRUE)
+    expect_snapshot_file(transform = rtf_transform, gsub("rtf$", "csv", fl))
   }
 })
 
@@ -226,7 +226,7 @@ test_that("tt_to_tlgrtf works with argument combined_rtf = TRUE", {
 
   tbl_wide <- build_table(lyt_wide, ex_adsl)
   expect_silent(suppressMessages(cmb_fl <- rtf_out_wrapper(tbl_wide, "test3", combined = TRUE)))
-  expect_snapshot_file(transform = rtf_transform,cmb_fl, cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform, cmb_fl, cran = TRUE)
   res_nullfl <- expect_silent(tt_to_tlgrtf(tbl_wide, file = NULL))
   expect_equal(length(res_nullfl), 7)
   ## extraneous empty line when we turn off timestamp line fix in next release
@@ -242,13 +242,13 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   tbl <- build_table(lyt, ex_adsl)
 
   # test that it runs without error
-  expect_snapshot_file(transform = rtf_transform,rtf_out_wrapper(tbl, "test1"), cran = TRUE)
-  expect_snapshot_file(transform = rtf_transform,rtf_out_wrapper(tbl, "test1b", colwidths = 120), cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform, rtf_out_wrapper(tbl, "test1"), cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform, rtf_out_wrapper(tbl, "test1b", colwidths = 120), cran = TRUE)
   expect_no_error(suppressMessages(result <- tt_to_tlgrtf(tbl, file = tempfile())))
   expect_true(is.null(result[[1]]))
 
   lsting <- as_listing(ex_adsl[1:30, 1:10])
-  expect_snapshot_file(transform = rtf_transform,rtf_out_wrapper(lsting, "listing1"), cran = TRUE)
+  expect_snapshot_file(transform = rtf_transform, rtf_out_wrapper(lsting, "listing1"), cran = TRUE)
 
   badlyt <- basic_table() |>
     split_rows_by("ARM") |>
@@ -283,7 +283,7 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   tbl_pgby <- build_table(lyt_pgby, ex_adsl)
   expect_silent(suppressMessages(res_pgby <- rtf_out_wrapper(tbl_pgby, "testpageby", part = NA)))
   for (fl in res_pgby) {
-    expect_snapshot_file(transform = rtf_transform,fl, cran = TRUE)
+    expect_snapshot_file(transform = rtf_transform, fl, cran = TRUE)
   }
 })
 
