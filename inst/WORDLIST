@@ -28,6 +28,7 @@ RBMI
 RTF
 Sato
 TEFOS
+TLG
 TLGs
 TRT
 TRTEMFL
@@ -60,6 +61,7 @@ colwidths
 combosdf
 comparator
 csv
+customizations
 dataset's
 datasplit
 denom
@@ -106,6 +108,7 @@ parallelising
 parentdf
 pharmaverseadam
 pharmaverseadamjnj
+pkgdown
 plotheight
 plotnames
 plotwidth
