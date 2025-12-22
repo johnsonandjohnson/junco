@@ -9,7 +9,7 @@ with optional risk difference calculations."><meta property="og:image" content="
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@ with optional risk difference calculations."><meta property="og:image" content="
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Analysis Function for Response Variables</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/a_freq_resp_var_j.R" class="external-link"><code>R/a_freq_resp_var_j.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/a_freq_resp_var_j.R" class="external-link"><code>R/a_freq_resp_var_j.R</code></a></small>
       <div class="d-none name"><code>a_freq_resp_var_j.Rd</code></div>
     </div>
 
@@ -127,15 +127,47 @@ with optional risk difference calculations.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list of rcell objects containing the response statistics.</p>
+    <p>Formatted analysis function which is used as <code>afun</code> in <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">analyze_vars()</a></code>
+and as <code>cfun</code> in <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html" class="external-link">summarize_row_groups()</a></code>.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="va">ex_adsl</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">SEX</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ADAE</span> <span class="op">&lt;-</span> <span class="va">ex_adae</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">SEX</span>, <span class="va">AEBODSYS</span>, <span class="va">AEDECOD</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ADAE</span> <span class="op">&lt;-</span> <span class="va">ADAE</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>TRTEMFL <span class="op">=</span> <span class="st">"Y"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span>show_colcounts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"SEX"</span>,</span></span>
+<span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"visible"</span>,</span></span>
+<span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_freq_resp_var_j</span>,</span></span>
+<span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>resp_var <span class="op">=</span> <span class="st">"TRTEMFL"</span>, riskdiff <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, df <span class="op">=</span> <span class="va">ADAE</span>, alt_counts_df <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">result</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        A: Drug X        B: Placebo     C: Combination</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         (N=134)          (N=134)          (N=132)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> —————————————————————————————————————————————————————————————————————</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SEX                                                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   F                  72/72 (100.0%)   73/73 (100.0%)   61/61 (100.0%)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   M                  46/46 (100.0%)   48/48 (100.0%)   53/53 (100.0%)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   U                   3/3 (100.0%)     2/2 (100.0%)     4/4 (100.0%) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   UNDIFFERENTIATED    1/1 (100.0%)          -           2/2 (100.0%) </span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

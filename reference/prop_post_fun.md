@@ -1,4 +1,4 @@
-# Split Function for Proportion Analysis Columns (TEFCGIS08 e.g.)
+# Split Function for Proportion Analysis Columns
 
 Here we just split into 3 columns `n`, `%` and `Cum %`.
 
@@ -53,11 +53,6 @@ prop_split_fun(df, spl, vals = NULL, labels = NULL, trim = FALSE, .spl_context)
 
 a split function for use in
 [rtables::split_rows_by](https://insightsengineering.github.io/rtables/latest-tag/reference/split_rows_by.html).
-
-## Note
-
-This split function is used in the proportion table TEFCGIS08 and
-similar ones.
 
 ## See also
 

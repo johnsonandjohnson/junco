@@ -69,11 +69,10 @@ a_summarize_ex_j(
 - comp_btw_group:
 
   (`logical`)  
-  If TRUE,  
+  If TRUE, comparison between groups will be performed.  
   When ancova = FALSE, the estimate of between group difference (on CHG)
   will be based upon two-sample t-test.  
-    
-  When ancova = TRUE, the same ancova model will be used for the
+  When ancova = TRUE, the same ANCOVA model will be used for the
   estimate of between group difference (on CHG).
 
 - ref_path:
@@ -86,7 +85,7 @@ a_summarize_ex_j(
 
   (`logical`)  
   If FALSE, only descriptive methods will be used.  
-  If TRUE Ancova methods will be used for each of the columns : AVAL,
+  If TRUE, ANCOVA methods will be used for each of the columns : AVAL,
   CHG, DIFF.  
 
 - interaction_y:
@@ -108,6 +107,7 @@ a_summarize_ex_j(
 
 - daysconv:
 
+  (`numeric`)  
   conversion required to get the values into days (i.e 1 if original
   PARAMCD unit is days, 30.4375 if original PARAMCD unit is in months)
 
@@ -159,18 +159,14 @@ a_summarize_ex_j(
 
 ## Details
 
-Creates statistics needed for standard exposure table This includes
+Creates statistics needed for standard exposure table. This includes
 differences and 95% CI and total treatment years. This is designed to be
 used as an analysis (afun in `analyze`) function.
-
-Creates statistics needed for table. This includes differences and 95%
-CI and total treatment years. This is designed to be used as an analysis
-(afun in `analyze`) function.
 
 ## Functions
 
 - `s_summarize_ex_j()`: Statistics function needed for the exposure
-  tables
+  tables.
 
 - `a_summarize_ex_j()`: Formatted analysis function which is used as
   `afun`.
@@ -179,73 +175,73 @@ CI and total treatment years. This is designed to be used as an analysis
 
 ``` r
 library(dplyr)
+ADEX <- ex_adsl |> select(USUBJID, ARM, TRTSDTM, EOSSTT, EOSDY)
 
-ADEX <- data.frame(
-  USUBJID = c(
-    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-  ),
-  TRT01A = c(
-    "ARMA", "ARMA", "ARMA", "ARMA", "ARMA",
-    "Placebo", "Placebo", "Placebo", "ARMA", "ARMA"
-  ),
-  AVAL = c(56, 78, 67, 87, 88, 93, 39, 87, 65, 55)
-)
+trtvar <- "ARM"
+ctrl_grp <- "B: Placebo"
+cutoffd <- as.Date("2023-09-24")
 
 ADEX <- ADEX |>
-  mutate(TRT01A = as.factor(TRT01A))
-
-ADEX$colspan_trt <- factor(ifelse(ADEX$TRT01A == "Placebo", " ", "Active Study Agent"),
-  levels = c("Active Study Agent", " ")
-)
-
-ADEX$diff_header <- "Difference in Means (95% CI)"
-ADEX$diff_label <- paste(ADEX$TRT01A, paste("vs", "Placebo"))
+  create_colspan_var(
+    non_active_grp          = ctrl_grp,
+    non_active_grp_span_lbl = " ",
+    active_grp_span_lbl     = "Active Study Agent",
+    colspan_var             = "colspan_trt",
+    trt_var                 = trtvar
+  ) |>
+  mutate(
+    diff_header = "Difference in Means (95% CI)",
+    diff_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
+    TRTDURY = case_when(
+      !is.na(EOSDY) ~ EOSDY,
+      TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
+    )
+  )
 
 colspan_trt_map <- create_colspan_map(ADEX,
-  non_active_grp = "Placebo",
+  non_active_grp = ctrl_grp,
   non_active_grp_span_lbl = " ",
   active_grp_span_lbl = "Active Study Agent",
   colspan_var = "colspan_trt",
-  trt_var = "TRT01A"
+  trt_var = trtvar
 )
-ref_path <- c("colspan_trt", "", "TRT01A", "Placebo")
+
+ref_path <- c("colspan_trt", "", trtvar, ctrl_grp)
 
 lyt <- basic_table() |>
   split_cols_by(
     "colspan_trt",
     split_fun = trim_levels_to_map(map = colspan_trt_map)
   ) |>
-  split_cols_by("TRT01A") |>
+  split_cols_by(trtvar) |>
   split_cols_by("diff_header", nested = FALSE) |>
   split_cols_by(
-    "TRT01A",
-    split_fun = remove_split_levels("Placebo"),
+    trtvar,
+    split_fun = remove_split_levels(ctrl_grp),
     labels_var = "diff_label"
   ) |>
-  analyze("AVAL",
+  analyze("EOSDY",
     afun = a_summarize_ex_j, var_labels = "Duration of treatment (Days)",
     show_labels = "visible",
     indent_mod = 0L,
     extra_args = list(
       daysconv = 1,
       ref_path = ref_path,
-      variables = list(arm = "TRT01A", covariates = NULL),
+      variables = list(arm = trtvar, covariates = NULL),
       ancova = TRUE,
       comp_btw_group = TRUE
     )
   )
 
-result <- build_table(lyt, ADEX)
-
+result <- build_table(lyt, ADEX, alt_counts_df = ADEX)
 result
-#>                                     Active Study Agent                    Difference in Means (95% CI)
-#>                                            ARMA             Placebo             ARMA vs Placebo       
-#> ——————————————————————————————————————————————————————————————————————————————————————————————————————
-#> Duration of treatment (Days)                                                                          
-#>   Mean (SD)                           70.86 (13.704)     73.00 (29.597)      -2.14 (-32.33, 28.04)    
-#>   Median                                  67.00              87.00                                    
-#>   Min, max                             55.00, 88.00       39.00, 93.00                                
-#>   Interquartile range                  56.00, 87.00       39.00, 93.00                                
-#>   Total treatment (subject years)      496.0 (1.4)        219.0 (0.6)                                 
+#>                                             Active Study Agent                                            Difference in Means (95% CI)             
+#>                                        A: Drug X        C: Combination       B: Placebo      A: Drug X vs B: Placebo   C: Combination vs B: Placebo
+#> ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+#> Duration of treatment (Days)                                                                                                                       
+#>   Mean (SD)                         599.84 (222.837)   604.51 (212.388)   586.04 (215.985)    13.81 (-43.91, 71.52)       18.48 (-38.71, 75.66)    
+#>   Median                                 731.00             731.00             731.00                                                              
+#>   Min, max                            11.0, 731.0         6.0, 731.0        26.0, 731.0                                                            
+#>   Interquartile range                520.00, 731.00     497.00, 731.00     447.00, 731.00                                                          
+#>   Total treatment (subject years)   64183.0 (175.7)    67101.0 (183.7)    65636.0 (179.7)                                                          
 ```

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,18 +28,57 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.1.1" id="junco-0111">junco 0.1.1.1<a class="anchor" aria-label="anchor" href="#junco-0111"></a></h2>
-<ul><li>Fixed bug in <code>s_summarize_desc_j</code> function to handle sparse data (zero variance) cases (<a href="https://github.com/johnsonandjohnson/junco/issues/78" class="external-link">#78</a>)</li>
+<h2 class="pkg-version" data-toc-text="0.1.2" id="junco-012">junco 0.1.2<a class="anchor" aria-label="anchor" href="#junco-012"></a></h2><p class="text-muted">CRAN release: 2025-12-20</p>
+<div class="section level4">
+<h4 id="new-major-features-0-1-2">New Major features<a class="anchor" aria-label="anchor" href="#new-major-features-0-1-2"></a></h4>
+<ul><li>Add docx exporter for Tables, Listings and Figures.</li>
+<li>Add <code><a href="../reference/cmhrms.html">a_cmhrms_j()</a></code> to support p-value from CMH row mean score test, as well as the modified version <code><a href="../reference/cmhrms.html">a_cmhrms_j_with_exclude()</a></code> that allows to exclude the analysis from specified row splits. <a href="https://github.com/johnsonandjohnson/junco/issues/97" class="external-link">#97</a></li>
+<li>Added standard error (SE) column for each treatment arm’s least square (LS) means estimate to the <code><a href="../reference/summarize_lsmeans_wide.html">summarize_lsmeans_wide()</a></code> layout.</li>
+<li>Add <code><a href="../reference/a_maxlev.html">a_maxlev()</a></code> to be able to calculate count and percentage of the maximum level of an ordered factor per subject</li>
+<li>Added <code>cmh_sato</code> and <code>cmh_mn</code> (Cochran-Mantel-Haenszel stratified proportion difference estimation with Sato variance and Miettinen Nurminen method, respectively) <code>method</code> options to the <code><a href="../reference/prop_diff.html">s_proportion_diff_j()</a></code> function.</li>
+<li>Added formatting function round type (<a href="https://github.com/johnsonandjohnson/junco/issues/76" class="external-link">#76</a>)</li>
 </ul></div>
-  </main></div>
+<div class="section level4">
+<h4 id="minor-changes-0-1-2">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-1-2"></a></h4>
+<ul><li>Add <code><a href="../reference/a_two_tier.html">a_two_tier()</a></code> analysis function</li>
+<li>Remove <code>brackets_to_rtf()</code>
+</li>
+<li>Export <code><a href="../reference/rbmi_pool.html">rbmi_pool()</a></code> <a href="https://github.com/johnsonandjohnson/junco/issues/22" class="external-link">#22</a></li>
+<li>Add functionality to <code><a href="../reference/a_freq_j.html">a_freq_j()</a></code> to process <code>val = NULL</code> from levels specified in <code>label_map</code>, as well as the modified version <code><a href="../reference/a_freq_j.html">a_freq_j_with_exclude()</a></code> that allows to exclude the analysis from specified row splits. <a href="https://github.com/johnsonandjohnson/junco/issues/95" class="external-link">#95</a></li>
+<li>Added the internal function <code><a href="../reference/do_exclude_split.html">do_exclude_split()</a></code> to facilitate the exclusion of specified row splits from analysis functions.</li>
+<li>Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify</li>
+<li>Add extra check for existence of <code>.alt_df_full</code> when layout has risk difference column and a row-split (h_create_alt_df) <a href="https://github.com/johnsonandjohnson/junco/issues/120" class="external-link">#120</a>.</li>
+<li>Add <code>alignments</code> argument in <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code>
+</li>
+<li>Removed <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff_test.html" class="external-link">s_test_proportion_diff()</a></code> and corresponding helper functions, as they are now available as needed in the <code>tern</code> package.</li>
+<li>Replace {pharmaverseadam} with {pharmaverseadamjnj}</li>
+<li>Update pruning_functions.R</li>
+<li>Update <code><a href="../reference/string_to_title.html">string_to_title()</a></code> to handle factors (<a href="https://github.com/johnsonandjohnson/junco/issues/26" class="external-link">#26</a>)</li>
+<li>Moved rbmi to suggest</li>
+<li>Replaced <code>denom_df</code> with <code>.alt_df_full</code> in <code><a href="../reference/a_maxlev.html">a_maxlev()</a></code>.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="fixed-0-1-2">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-2"></a></h4>
+<ul><li>Fixes <a href="https://github.com/johnsonandjohnson/junco/issues/102" class="external-link">#102</a> bug inappropriate warnings from <code>cond_rm_facets</code> function</li>
+<li>Fix bug for not selecting NA records in <code>h_subset_combo()</code>
+</li>
+<li>Consistent <code><a href="../reference/tt_to_tbldf.html">tt_to_tbldf()</a></code> function behavior with invalid structures <a href="https://github.com/johnsonandjohnson/junco/issues/116" class="external-link">#116</a></li>
+</ul></div>
+<div class="section level3">
+<h3 id="other-changes-0-1-2">Other changes<a class="anchor" aria-label="anchor" href="#other-changes-0-1-2"></a></h3>
+<ul><li>Moved ‘rbmi’ from ‘Imports’ to ‘Suggests’ and made package fully functional without it</li>
+</ul></div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

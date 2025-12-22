@@ -1,6 +1,6 @@
 # Numeric Formatting Function
 
-Formatting setter for selected numerical statistics
+Formatting setter for selected numerical statistics.
 
 ## Usage
 
@@ -12,10 +12,12 @@ jjcs_num_formats(d, cap = 4)
 
 - d:
 
+  (`numeric`)  
   precision of individual values
 
 - cap:
 
+  (`numeric`)  
   cap to numerical precision (d \> cap – will use precision as if cap
   was specified as precision)
 
@@ -32,32 +34,13 @@ list:
 ## Examples
 
 ``` r
-P1_precision <- jjcs_num_formats(d=0)$fmt
+P1_precision <- jjcs_num_formats(d = 0)$fmt
 jjcs_num_formats(2)$fmt
 #> $range
-#> function (x, output, na_str = na_str_dflt) 
-#> {
-#>     if (anyNA(na_str) || (replace_na_dflt && any(na_str == "NA"))) {
-#>         na_inds <- which(is.na(na_str) | (replace_na_dflt & na_str == 
-#>             "NA"))
-#>         na_str[na_inds] <- rep(na_str_dflt, length.out = length(na_str))[na_inds]
-#>     }
-#>     if (length(x) == 0 || isTRUE(all(x == ""))) {
-#>         return(NULL)
-#>     }
-#>     else if (!length(positions[[1]]) == length(x)) {
-#>         stop("Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats.")
-#>     }
-#>     values <- Map(y = x, fun = roundings, na_str = na_str, function(y, 
-#>         fun, na_str) fun(y, na_str = na_str))
-#>     regmatches(x = str, m = positions)[[1]] <- values
-#>     return(str)
-#> }
-#> <bytecode: 0x561c8588f578>
-#> <environment: 0x561c856925a8>
+#> [1] "xx.xx, xx.xx"
 #> 
 #> $mean_sd
-#> function (x, output, na_str = na_str_dflt) 
+#> function (x, output, round_type = valid_round_type, na_str = na_str_dflt) 
 #> {
 #>     if (anyNA(na_str) || (replace_na_dflt && any(na_str == "NA"))) {
 #>         na_inds <- which(is.na(na_str) | (replace_na_dflt & na_str == 
@@ -68,59 +51,24 @@ jjcs_num_formats(2)$fmt
 #>         return(NULL)
 #>     }
 #>     else if (!length(positions[[1]]) == length(x)) {
-#>         stop("Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats.")
+#>         stop("Error: input str in call to jjcsformat_xx must contain same number of xx as the number of stats.")
 #>     }
+#>     round_type <- match.arg(round_type)
 #>     values <- Map(y = x, fun = roundings, na_str = na_str, function(y, 
-#>         fun, na_str) fun(y, na_str = na_str))
+#>         fun, na_str, output) {
+#>         fun(y, na_str = na_str, round_type = round_type)
+#>     })
 #>     regmatches(x = str, m = positions)[[1]] <- values
 #>     return(str)
 #> }
-#> <bytecode: 0x561c8588f578>
-#> <environment: 0x561c85347678>
+#> <bytecode: 0x55a393705e08>
+#> <environment: 0x55a38db3cee8>
 #> 
 #> $sd
-#> function (x, output, na_str = na_str_dflt) 
-#> {
-#>     if (anyNA(na_str) || (replace_na_dflt && any(na_str == "NA"))) {
-#>         na_inds <- which(is.na(na_str) | (replace_na_dflt & na_str == 
-#>             "NA"))
-#>         na_str[na_inds] <- rep(na_str_dflt, length.out = length(na_str))[na_inds]
-#>     }
-#>     if (length(x) == 0 || isTRUE(all(x == ""))) {
-#>         return(NULL)
-#>     }
-#>     else if (!length(positions[[1]]) == length(x)) {
-#>         stop("Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats.")
-#>     }
-#>     values <- Map(y = x, fun = roundings, na_str = na_str, function(y, 
-#>         fun, na_str) fun(y, na_str = na_str))
-#>     regmatches(x = str, m = positions)[[1]] <- values
-#>     return(str)
-#> }
-#> <bytecode: 0x561c8588f578>
-#> <environment: 0x561c8530c7e8>
+#> [1] "xx.xxxx"
 #> 
 #> $median
-#> function (x, output, na_str = na_str_dflt) 
-#> {
-#>     if (anyNA(na_str) || (replace_na_dflt && any(na_str == "NA"))) {
-#>         na_inds <- which(is.na(na_str) | (replace_na_dflt & na_str == 
-#>             "NA"))
-#>         na_str[na_inds] <- rep(na_str_dflt, length.out = length(na_str))[na_inds]
-#>     }
-#>     if (length(x) == 0 || isTRUE(all(x == ""))) {
-#>         return(NULL)
-#>     }
-#>     else if (!length(positions[[1]]) == length(x)) {
-#>         stop("Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats.")
-#>     }
-#>     values <- Map(y = x, fun = roundings, na_str = na_str, function(y, 
-#>         fun, na_str) fun(y, na_str = na_str))
-#>     regmatches(x = str, m = positions)[[1]] <- values
-#>     return(str)
-#> }
-#> <bytecode: 0x561c8588f578>
-#> <environment: 0x561c85280448>
+#> [1] "xx.xxx"
 #> 
 jjcs_num_formats(2)$spec
 #>              range            mean_sd                 sd             median 

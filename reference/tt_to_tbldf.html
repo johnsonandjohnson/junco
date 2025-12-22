@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Create TableTree as DataFrame via gentlg</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/tt_to_tblfile.R" class="external-link"><code>R/tt_to_tblfile.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/tt_to_tblfile.R" class="external-link"><code>R/tt_to_tblfile.R</code></a></small>
       <div class="d-none name"><code>tt_to_tbldf.Rd</code></div>
     </div>
 
@@ -42,7 +42,9 @@
 <span>  <span class="va">tt</span>,</span>
 <span>  fontspec <span class="op">=</span> <span class="fu">font_spec</span><span class="op">(</span><span class="st">"Times"</span>, <span class="fl">9L</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  string_map <span class="op">=</span> <span class="va">default_str_map</span>,</span>
-<span>  markup_df <span class="op">=</span> <span class="va">dps_markup_df</span></span>
+<span>  markup_df <span class="op">=</span> <span class="va">dps_markup_df</span>,</span>
+<span>  round_type <span class="op">=</span> <span class="fu">obj_round_type</span><span class="op">(</span><span class="va">tt</span><span class="op">)</span>,</span>
+<span>  validate <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -51,24 +53,35 @@
 
 
 <dl><dt id="arg-tt">tt<a class="anchor" aria-label="anchor" href="#arg-tt"></a></dt>
-<dd><p>TableTree object to convert to a data frame</p></dd>
+<dd><p>(<code>TableTree</code>)<br> TableTree object to convert to a data frame</p></dd>
 
 
 <dt id="arg-fontspec">fontspec<a class="anchor" aria-label="anchor" href="#arg-fontspec"></a></dt>
-<dd><p>Font specification object</p></dd>
+<dd><p>(<code>font_spec</code>)<br> Font specification object</p></dd>
 
 
 <dt id="arg-string-map">string_map<a class="anchor" aria-label="anchor" href="#arg-string-map"></a></dt>
-<dd><p>Unicode mapping for special characters</p></dd>
+<dd><p>(<code>list</code>)<br> Unicode mapping for special characters</p></dd>
 
 
 <dt id="arg-markup-df">markup_df<a class="anchor" aria-label="anchor" href="#arg-markup-df"></a></dt>
-<dd><p>Data frame containing markup information</p></dd>
+<dd><p>(<code>data.frame</code>)<br> Data frame containing markup information</p></dd>
+
+
+<dt id="arg-round-type">round_type<a class="anchor" aria-label="anchor" href="#arg-round-type"></a></dt>
+<dd><p>(<code>character(1)</code>)<br> the type of rounding to perform.
+See <code><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html" class="external-link">formatters::format_value()</a></code> for more details.</p></dd>
+
+
+<dt id="arg-validate">validate<a class="anchor" aria-label="anchor" href="#arg-validate"></a></dt>
+<dd><p>logical(1). Whether to validate the table structure using
+<code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/validate_table_struct.html" class="external-link">rtables::validate_table_struct()</a></code>. Defaults to <code>TRUE</code>. If <code>FALSE</code>, a message
+will be displayed instead of stopping with an error when validation fails.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>tt</code> represented as a "tbl" data.frame suitable for passing
+    <p><code>tt</code> represented as a <code>tbl</code> data.frame suitable for passing
 to <a href="https://pharmaverse.github.io/tidytlg/main/reference/gentlg.html" class="external-link">tidytlg::gentlg</a> via the <code>huxme</code> argument.</p>
     </div>
 
@@ -77,7 +90,7 @@ to <a href="https://pharmaverse.github.io/tidytlg/main/reference/gentlg.html" cl
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -25,16 +25,6 @@ a_test_proportion_diff(
   .labels = NULL,
   .indent_mods = NULL
 )
-
-s_test_proportion_diff(
-  df,
-  .var,
-  .ref_group,
-  .in_ref_col,
-  variables = list(strata = NULL),
-  method = c("chisq", "fisher", "cmh"),
-  alternative = c("two.sided", "less", "greater")
-)
 ```
 
 ## Arguments
@@ -64,7 +54,13 @@ s_test_proportion_diff(
 
 - ...:
 
-  additional arguments for the lower level functions.
+  Additional arguments passed to
+  [`tern::s_test_proportion_diff()`](https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff_test.html),
+  including:
+
+  - `method` (`string`)  
+    one of `chisq`, `cmh`, `cmh_wh`, `fisher` or `schouten`; specifies
+    the test used to calculate the p-value.
 
 - .stats:
 
@@ -88,67 +84,24 @@ s_test_proportion_diff(
   indent modifiers for the labels. Defaults to 0, which corresponds to
   the unmodified default behavior. Can be negative.
 
-- .ref_group:
-
-  (`data.frame` or `vector`)  
-  the data corresponding to the reference group.
-
-- .in_ref_col:
-
-  (`logical`)  
-  `TRUE` when working with the reference level, `FALSE` otherwise.
-
-- variables:
-
-  (named `list` of `string`)  
-  list of additional analysis variables.
-
-- method:
-
-  (`string`)  
-  one of `chisq`, `cmh`, `fisher`; specifies the test used to calculate
-  the p-value.
-
-- alternative:
-
-  (`string`)  
-  whether `two.sided`, or one-sided `less` or `greater` p-value should
-  be displayed.
-
 ## Value
 
 - `a_test_proportion_diff()` returns the corresponding list with
   formatted
   [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
 
-&nbsp;
-
-- `s_test_proportion_diff()` returns a named `list` with a single item
-  `pval` with an attribute `label` describing the method used. The
-  p-value tests the null hypothesis that proportions in two groups are
-  the same.
-
 ## Functions
 
 - `a_test_proportion_diff()`: Formatted analysis function which is used
   as `afun`
 
-- `s_test_proportion_diff()`: Statistics function which tests the
-  difference between two proportions.
-
 ## Note
 
-These functions have been forked from the `tern` package. Additional
+This function has been forked from the `tern` package. Additional
 features are:
-
-- Additional `alternative` argument for the sidedness of the test.
 
 - Additional `ref_path` argument for flexible reference column path
   specification.
-
-## See also
-
-[h_prop_diff_test](https://johnsonandjohnson.github.io/junco/reference/h_prop_diff_test.md)
 
 ## Examples
 

@@ -1,6 +1,6 @@
 # `ANCOVA` Analysis
 
-Does the `ANCOVA` analysis, separately for each visit.
+Performs the `ANCOVA` analysis, separately for each visit.
 
 ## Usage
 

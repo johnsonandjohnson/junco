@@ -1,7 +1,9 @@
 # ANCOVA Summary Function
 
-Combination of tern::s_summary, and ANCOVA based estimates for mean and
-diff between columns, based on ANCOVA function `s_ancova_j`
+Combination of
+[tern::s_summary](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html),
+and ANCOVA based estimates for mean and diff between columns, based on
+ANCOVA function `s_ancova_j`.
 
 ## Usage
 
@@ -26,7 +28,8 @@ s_summarize_ancova_j(df, .var, .df_row, .ref_group, .in_ref_col, ...)
 
 - df:
 
-  : need to check on how to inherit params from tern::s_ancova
+  (`data.frame`)  
+  data set containing all analysis variables.
 
 - .var:
 
@@ -89,13 +92,15 @@ s_summarize_ancova_j(df, .var, .df_row, .ref_group, .in_ref_col, ...)
 - `a_summarize_ancova_j()` returns the corresponding list with formatted
   [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
 
-returns the statistics from tern::s_summary(x), appended with a new
+returns the statistics from `tern::s_summary(x)`, appended with a new
 statistics based upon ANCOVA
 
 ## Details
 
-Combination of tern::s_summary, and ANCOVA based estimates for mean and
-diff between columns, based on ANCOVA function `s_ancova_j`
+Combination of
+[tern::s_summary](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html),
+and ANCOVA based estimates for mean and diff between columns, based on
+ANCOVA function `s_ancova_j`
 
 ## Functions
 
@@ -152,7 +157,7 @@ basic_table() |>
 #> n                                              50                  50                  50        
 #> Mean (SD)                                 1.46 (0.174)        4.26 (0.470)        5.55 (0.552)   
 #> Median                                        1.50                4.35                5.55       
-#> Min, max                                   1.00, 1.90          3.00, 5.10          4.50, 6.90    
+#> Min, max                                    1.0, 1.9            3.0, 5.1            4.5, 6.9     
 #> 25% and 75%-ile                            1.40, 1.60          4.00, 4.60          5.10, 5.90    
 #> Adjusted Mean (SE)                         1.46 (0.06)         4.26 (0.06)         5.55 (0.06)   
 #> Adjusted Mean (95% CI)                  1.46 (1.34, 1.58)   4.26 (4.14, 4.38)   5.55 (5.43, 5.67)
@@ -161,7 +166,7 @@ basic_table() |>
 #> n                                              50                  50                  50        
 #> Mean (SD)                                 1.46 (0.174)        4.26 (0.470)        5.55 (0.552)   
 #> Median                                        1.50                4.35                5.55       
-#> Min, max                                   1.00, 1.90          3.00, 5.10          4.50, 6.90    
+#> Min, max                                    1.0, 1.9            3.0, 5.1            4.5, 6.9     
 #> 25% and 75%-ile                            1.40, 1.60          4.00, 4.60          5.10, 5.90    
 #> Adjusted Mean (SE)                         2.02 (0.08)         4.19 (0.05)         5.07 (0.06)   
 #> Adjusted Mean (95% CI)                  2.02 (1.87, 2.17)   4.19 (4.09, 4.28)   5.07 (4.95, 5.18)

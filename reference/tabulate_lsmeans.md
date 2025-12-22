@@ -61,6 +61,7 @@ a_lsmeans(
 
 - show_relative:
 
+  (`string`)  
   should the 'reduction' (`control - treatment`, default) or the
   'increase' (`treatment - control`) be shown for the relative change
   from baseline?
@@ -101,11 +102,12 @@ a_lsmeans(
 
 ## Value
 
-for `s_lsmeans`, a list containing the same statistics returned by
-tern.mmrm::s_mmrm_lsmeans, with the additional `diff_mean_est_ci`
-three-dimensional statistic. For `a_lsmeans`, a `VertalRowsSection` as
-returned by
-[rtables::in_rows](https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html).
+- For `s_lsmeans`, a list containing the same statistics returned by
+  tern.mmrm::s_mmrm_lsmeans, with the additional `diff_mean_est_ci`
+  three-dimensional statistic.
+
+- For `a_lsmeans`, a `VertalRowsSection` as returned by
+  [rtables::in_rows](https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html).
 
 ## Functions
 

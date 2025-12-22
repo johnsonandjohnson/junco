@@ -11,7 +11,7 @@ or fit_ancova()."><meta property="og:image" content="https://johnsonandjohnson.g
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@ or fit_ancova()."><meta property="og:image" content="https://johnsonandjohnson.g
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Tabulation of Least Square Means Results</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/tabulate_lsmeans.R" class="external-link"><code>R/tabulate_lsmeans.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/tabulate_lsmeans.R" class="external-link"><code>R/tabulate_lsmeans.R</code></a></small>
       <div class="d-none name"><code>tabulate_lsmeans.Rd</code></div>
     </div>
 
@@ -92,7 +92,7 @@ should be displayed.</p></dd>
 
 
 <dt id="arg-show-relative">show_relative<a class="anchor" aria-label="anchor" href="#arg-show-relative"></a></dt>
-<dd><p>should the 'reduction' (<code>control - treatment</code>, default) or the 'increase'
+<dd><p>(<code>string</code>)<br> should the 'reduction' (<code>control - treatment</code>, default) or the 'increase'
 (<code>treatment - control</code>) be shown for the relative change from baseline?</p></dd>
 
 
@@ -125,10 +125,11 @@ unmodified default behavior. Can be negative.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>for <code>s_lsmeans</code>, a list containing the same statistics returned by tern.mmrm::s_mmrm_lsmeans,
-with the additional <code>diff_mean_est_ci</code> three-dimensional statistic. For <code>a_lsmeans</code>,
-a <code>VertalRowsSection</code> as returned by <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html" class="external-link">rtables::in_rows</a>.</p>
-    </div>
+
+<ul><li><p>For <code>s_lsmeans</code>, a list containing the same statistics returned by tern.mmrm::s_mmrm_lsmeans,
+with the additional <code>diff_mean_est_ci</code> three-dimensional statistic.</p></li>
+<li><p>For <code>a_lsmeans</code>, a <code>VertalRowsSection</code> as returned by <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html" class="external-link">rtables::in_rows</a>.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
@@ -314,7 +315,7 @@ are:</p><ul><li><p>Additional <code>ref_path</code> argument for tern.mmrm::summ
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

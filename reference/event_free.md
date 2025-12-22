@@ -96,15 +96,15 @@ s_event_free(
 
 ## Value
 
-for `s_event_free`, a list as returned by the
-[`tern::s_surv_timepoint()`](https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html)
-with an additional three-dimensional statistic `event_free_ci` which
-combines the `event_free_rate` and `rate_ci` statistics.
+- `s_event_free` returns a list as returned by the
+  [`tern::s_surv_timepoint()`](https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html)
+  with an additional three-dimensional statistic `event_free_ci` which
+  combines the `event_free_rate` and `rate_ci` statistics.
 
-For `a_event_free`, analogous to
-[tern::a_surv_timepoint](https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html)
-but with the additional three-dimensional statistic described above
-available via `.stats`.
+- `a_event_free` is analogous to
+  [tern::a_surv_timepoint](https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html)
+  but with the additional three-dimensional statistic described above
+  available via `.stats`.
 
 ## Functions
 

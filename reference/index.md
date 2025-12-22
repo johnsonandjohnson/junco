@@ -25,12 +25,19 @@ common table layouts.
 
 - [`s_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
   [`a_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
+  [`a_freq_j_with_exclude()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
   : Analysis/statistical function for count and percentage in core
   columns and (optional) relative risk columns
 
 - [`a_freq_subcol_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_subcol_j.md)
   : Analysis function count and percentage with extra column-subsetting
   in selected columns (controlled by subcol\_\* arguments)
+
+- [`a_freq_resp_var_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_resp_var_j.md)
+  : Analysis Function for Response Variables
+
+- [`a_eair100_j()`](https://johnsonandjohnson.github.io/junco/reference/a_eair100_j.md)
+  : Exposure-Adjusted Incidence Rate
 
 - [`a_proportion_ci_factor()`](https://johnsonandjohnson.github.io/junco/reference/a_proportion_ci_factor.md)
   : Formatted Analysis Function For Proportion Confidence Interval for
@@ -42,6 +49,13 @@ common table layouts.
 
 - [`a_summarize_aval_chg_diff_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summarize_aval_chg_diff_j.md)
   : Analysis function 3-column presentation
+
+- [`a_maxlev()`](https://johnsonandjohnson.github.io/junco/reference/a_maxlev.md)
+  : Calculate Count and Percentage of the Maximum Level of an Ordered
+  Factor per Subject.
+
+- [`a_two_tier()`](https://johnsonandjohnson.github.io/junco/reference/a_two_tier.md)
+  : Two Tier Analysis Function
 
 - [`rbmi_analyse()`](https://johnsonandjohnson.github.io/junco/reference/rbmi_analyse.md)
   : Analyse Multiple Imputed Datasets
@@ -64,14 +78,11 @@ common table layouts.
   c_function for proportion of `TRUE` in logical vector
 
 - [`cmp_cfun()`](https://johnsonandjohnson.github.io/junco/reference/cmp_cfun.md)
-  : Summary Analysis Function for Compliance Columns (TEFSCNCMP01 e.g.)
+  : Summary Analysis Function for Compliance Columns
 
 - [`cmp_post_fun()`](https://johnsonandjohnson.github.io/junco/reference/cmp_post_fun.md)
   [`cmp_split_fun()`](https://johnsonandjohnson.github.io/junco/reference/cmp_post_fun.md)
-  : Split Function for Compliance Columns (TEFSCNCMP01 e.g.)
-
-- [`jjcsformat_count_fraction()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
-  : Formatting count and fraction values
+  : Split Function for Compliance Columns
 
 - [`find_missing_chg_after_avisit()`](https://johnsonandjohnson.github.io/junco/reference/find_missing_chg_after_avisit.md)
   : Helper for Finding AVISIT after which CHG are all Missing
@@ -90,10 +101,6 @@ common table layouts.
   [`s_coxph_hr()`](https://johnsonandjohnson.github.io/junco/reference/coxph_hr.md)
   : Workaround statistics function to add HR with CI
 
-- [`d_test_proportion_diff_j()`](https://johnsonandjohnson.github.io/junco/reference/d_test_proportion_diff_j.md)
-  **\[stable\]** : Description of the difference test between two
-  proportions
-
 - [`h_tidy_pool()`](https://johnsonandjohnson.github.io/junco/reference/tabulate_rbmi.md)
   [`s_rbmi_lsmeans()`](https://johnsonandjohnson.github.io/junco/reference/tabulate_rbmi.md)
   [`a_rbmi_lsmeans()`](https://johnsonandjohnson.github.io/junco/reference/tabulate_rbmi.md)
@@ -103,9 +110,6 @@ common table layouts.
   [`s_lsmeans()`](https://johnsonandjohnson.github.io/junco/reference/tabulate_lsmeans.md)
   [`a_lsmeans()`](https://johnsonandjohnson.github.io/junco/reference/tabulate_lsmeans.md)
   **\[stable\]** : Tabulation of Least Square Means Results
-
-- [`h_colexpr_substr()`](https://johnsonandjohnson.github.io/junco/reference/h_colexpr_substr.md)
-  : Extract Substring from Column Expression
 
 - [`or_glm_j()`](https://johnsonandjohnson.github.io/junco/reference/h_odds_ratio.md)
   [`or_clogit_j()`](https://johnsonandjohnson.github.io/junco/reference/h_odds_ratio.md)
@@ -138,13 +142,13 @@ common table layouts.
 
 - [`prop_post_fun()`](https://johnsonandjohnson.github.io/junco/reference/prop_post_fun.md)
   [`prop_split_fun()`](https://johnsonandjohnson.github.io/junco/reference/prop_post_fun.md)
-  : Split Function for Proportion Analysis Columns (TEFCGIS08 e.g.)
+  : Split Function for Proportion Analysis Columns
 
 - [`prop_ratio_cmh()`](https://johnsonandjohnson.github.io/junco/reference/prop_ratio_cmh.md)
   : Relative Risk CMH Statistic
 
 - [`prop_table_afun()`](https://johnsonandjohnson.github.io/junco/reference/prop_table_afun.md)
-  : Formatted Analysis Function for Proportion Analysis (TEFCGIS08 e.g.)
+  : Formatted Analysis Function for Proportion Analysis
 
 - [`a_relative_risk()`](https://johnsonandjohnson.github.io/junco/reference/relative_risk.md)
   [`s_relative_risk()`](https://johnsonandjohnson.github.io/junco/reference/relative_risk.md)
@@ -194,61 +198,41 @@ common table layouts.
   [`a_summarize_mmrm()`](https://johnsonandjohnson.github.io/junco/reference/summarize_mmrm.md)
   **\[stable\]** : Dynamic tabulation of MMRM results with tables
 
-- [`h_a_freq_dataprep()`](https://johnsonandjohnson.github.io/junco/reference/h_a_freq_dataprep.md)
-  : A Frequency Data Preparation Function
-
-- [`h_a_freq_prepinrows()`](https://johnsonandjohnson.github.io/junco/reference/h_a_freq_prepinrows.md)
-  : Frequency Preparation in Rows
-
-- [`h_create_altdf()`](https://johnsonandjohnson.github.io/junco/reference/h_create_altdf.md)
-  : Create Alternative Data Frame
-
-- [`h_denom_parentdf()`](https://johnsonandjohnson.github.io/junco/reference/h_denom_parentdf.md)
-  : Get Denominator Parent Data Frame
-
-- [`h_df_add_newlevels()`](https://johnsonandjohnson.github.io/junco/reference/h_df_add_newlevels.md)
-  : Add New Levels to Data Frame
-
-- [`h_get_label_map()`](https://johnsonandjohnson.github.io/junco/reference/h_get_label_map.md)
-  : Get Label Map
-
 - [`h_get_trtvar_refpath()`](https://johnsonandjohnson.github.io/junco/reference/h_get_trtvar_refpath.md)
   : Get Treatment Variable Reference Path
-
-- [`h_subset_combo()`](https://johnsonandjohnson.github.io/junco/reference/h_subset_combo.md)
-  : Subset Combination
-
-- [`h_upd_dfrow()`](https://johnsonandjohnson.github.io/junco/reference/h_upd_dfrow.md)
-  : Update Data Frame Row
-
-- [`h_update_factor()`](https://johnsonandjohnson.github.io/junco/reference/h_update_factor.md)
-  : Update Factor
 
 - [`rbmi_mmrm_single_info()`](https://johnsonandjohnson.github.io/junco/reference/rbmi_mmrm_single_info.md)
   : Extract Single Visit Information from a Fitted MMRM for Multiple
   Imputation Analysis
+
+- [`rbmi_pool()`](https://johnsonandjohnson.github.io/junco/reference/rbmi_pool.md)
+  : Pool analysis results obtained from the imputed datasets
+
+- [`a_cmhrms_j()`](https://johnsonandjohnson.github.io/junco/reference/cmhrms.md)
+  [`s_cmhrms_j()`](https://johnsonandjohnson.github.io/junco/reference/cmhrms.md)
+  [`a_cmhrms_j_with_exclude()`](https://johnsonandjohnson.github.io/junco/reference/cmhrms.md)
+  : Cochran-Mantel-Haenszel Row Mean Scores test
+
+- [`a_test_proportion_diff()`](https://johnsonandjohnson.github.io/junco/reference/prop_diff_test.md)
+  **\[stable\]** : Difference test for two proportions
 
 ## junco Formatting Functions
 
 The following functions are the junco formatting functions used to
 create common table layouts.
 
-- [`jj_uc_map`](https://johnsonandjohnson.github.io/junco/reference/jj_uc_map.md)
-  : Unicode Mapping Table
 - [`jjcsformat_xx()`](https://johnsonandjohnson.github.io/junco/reference/jjcsformat_xx.md)
-  : Formatting of values
+  [`jjcsformat_pval_fct()`](https://johnsonandjohnson.github.io/junco/reference/jjcsformat_xx.md)
+  [`jjcsformat_range_fct()`](https://johnsonandjohnson.github.io/junco/reference/jjcsformat_xx.md)
+  : Utility for specifying custom formats
 - [`jjcs_num_formats()`](https://johnsonandjohnson.github.io/junco/reference/jjcs_num_formats.md)
   : Numeric Formatting Function
-- [`jjcsformat_count_denom_fraction()`](https://johnsonandjohnson.github.io/junco/reference/count_denom_fraction.md)
-  : Formatting count, denominator and fraction values
-- [`format_xx_fct()`](https://johnsonandjohnson.github.io/junco/reference/format_xx_fct.md)
-  : Function factory for xx style formatting
-- [`jjcsformat_fraction_count_denom()`](https://johnsonandjohnson.github.io/junco/reference/fraction_count_denom.md)
-  : Formatting fraction, count and denominator values
-- [`jjcsformat_pval_fct()`](https://johnsonandjohnson.github.io/junco/reference/jjcsformat_pval_fct.md)
-  : Function factory for p-value formatting
-- [`jjcsformat_range_fct()`](https://johnsonandjohnson.github.io/junco/reference/jjcsformat_range_fct.md)
-  : Function factory for range with censoring information formatting
+- [`jjcsformat_cnt_den_fract_fct()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
+  [`jjcsformat_count_fraction()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
+  [`jjcsformat_count_denom_fraction()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
+  [`jjcsformat_fraction_count_denom()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
+  : Formatting functions for count and fraction, and for count
+  denominator and fraction values
 - [`insert_blank_line()`](https://johnsonandjohnson.github.io/junco/reference/insert_blank_line.md)
   : Insertion of Blank Lines in a Layout
 
@@ -284,15 +268,16 @@ create common table layouts.
   : Creation of Column Spanning Mapping Dataframe
 - [`create_colspan_var()`](https://johnsonandjohnson.github.io/junco/reference/colspan_var.md)
   : Creation of Column Spanning Variables
+- [`do_exclude_split()`](https://johnsonandjohnson.github.io/junco/reference/do_exclude_split.md)
+  : Predicate to Check if Split Should be Excluded
 - [`make_combo_splitfun()`](https://johnsonandjohnson.github.io/junco/reference/make_combo_splitfun.md)
   : Split Function Helper
 - [`real_add_overall_facet()`](https://johnsonandjohnson.github.io/junco/reference/real_add_overall_facet.md)
   : Add Overall Facet
 
-## junco Functions For titles/footnotes and generating .rtfs
+## junco Functions For titles/footnotes
 
-The following utility functions help to add titles/footnotes and
-generate the .rtf files.
+The following utility functions help to add titles/footnotes.
 
 - [`listing_column_widths()`](https://johnsonandjohnson.github.io/junco/reference/def_colwidths.md)
   [`def_colwidths()`](https://johnsonandjohnson.github.io/junco/reference/def_colwidths.md)
@@ -301,8 +286,6 @@ generate the .rtf files.
   : Get Titles/Footers For Table From Sources
 - [`set_titles()`](https://johnsonandjohnson.github.io/junco/reference/set_titles.md)
   : Set Output Titles
-- [`tt_to_tlgrtf()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md)
-  : TableTree to .rtf Conversion
 
 ## junco Miscellaneous Functions
 
@@ -325,3 +308,21 @@ create common table layouts.
 
 - [`get_visit_levels()`](https://johnsonandjohnson.github.io/junco/reference/get_visit_levels.md)
   : Get Visit Levels in Order Defined by Numeric Version
+
+## junco Functions For generating .rtfs, .docxs and HTMLs
+
+The following utility functions help to generate the .rtfs, .docxs and
+HTMLs.
+
+- [`tt_to_tlgrtf()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md)
+  : TableTree to .rtf Conversion
+- [`tt_to_flextable_j()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_flextable_j.md)
+  **\[experimental\]** : Convert a VTableTree or a listing_df object to
+  a flextable
+- [`export_as_docx_j()`](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.md)
+  **\[experimental\]** : Export a VTableTree or a listing_df object into
+  docx
+- [`export_graph_as_docx()`](https://johnsonandjohnson.github.io/junco/reference/export_graph_as_docx.md)
+  **\[experimental\]** : export_graph_as_docx
+- [`theme_docx_default_j()`](https://johnsonandjohnson.github.io/junco/reference/theme_docx_default_j.md)
+  **\[experimental\]** : Obtain the default theme for the docx

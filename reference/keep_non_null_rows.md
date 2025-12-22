@@ -14,12 +14,13 @@ keep_non_null_rows(tr)
 
 - tr:
 
-  table tree object
+  (`TableTree`)  
+  The TableTree object to prune.
 
 ## Value
 
-a function that can be utilized as a row_condition in the
-tern::keep_rows function
+A function that can be utilized as a row_condition in the
+tern::keep_rows function.
 
 ## Examples
 

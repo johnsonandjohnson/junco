@@ -1,7 +1,7 @@
 # Formatted Analysis Function For Proportion Confidence Interval for Factor
 
 Formatted Analysis Function For Proportion Confidence Interval for
-Factor
+Factor.
 
 ## Usage
 

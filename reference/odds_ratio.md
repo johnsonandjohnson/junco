@@ -1,6 +1,6 @@
 # Odds ratio estimation
 
-**\[stable\]**
+**\[stable\]** A set of functions for Odds-Ratio (OR) calculation.
 
 ## Usage
 
@@ -185,7 +185,7 @@ a_odds_ratio_j(
 #> ----------------------------
 #>   row_name  formatted_cell indent_mod           row_label
 #> 1    n_tot              50          0             Total n
-#> 2    or_ci NE (0.00 - Inf)          1 Odds Ratio (95% CI)
+#> 2    or_ci NA (0.00 - Inf)          1 Odds Ratio (95% CI)
 #> 3     pval          >0.999          1             p-value
 
 

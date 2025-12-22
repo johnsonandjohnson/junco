@@ -9,7 +9,7 @@ that are used repeatedly to express an analysis."><meta property="og:image" cont
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@ that are used repeatedly to express an analysis."><meta property="og:image" cont
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Standard Arguments</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/proposal_argument_convention.R" class="external-link"><code>R/proposal_argument_convention.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/proposal_argument_convention.R" class="external-link"><code>R/proposal_argument_convention.R</code></a></small>
       <div class="d-none name"><code>proposal_argument_convention.Rd</code></div>
     </div>
 
@@ -146,6 +146,11 @@ should be displayed.</p></dd>
 <dd><p>(<code>flag</code>)<br> whether the plot should be drawn.</p></dd>
 
 
+<dt id="arg-exclude-levels">exclude_levels<a class="anchor" aria-label="anchor" href="#arg-exclude-levels"></a></dt>
+<dd><p>(<code>list</code>)<br> A named list where names correspond to split variables
+and values are vectors of levels to exclude.</p></dd>
+
+
 <dt id="arg-grp">grp<a class="anchor" aria-label="anchor" href="#arg-grp"></a></dt>
 <dd><p>(<code>factor</code>)<br> defining the groups.</p></dd>
 
@@ -185,7 +190,7 @@ for more information.</p></dd>
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>(<code>string</code>)<br> specifies the test used to calculate the p-value for the difference between
-two proportions. For options, see <code><a href="prop_diff_test.html">s_test_proportion_diff()</a></code>. Default is <code>NULL</code> so no test is performed.</p></dd>
+two proportions. For options, see <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff_test.html" class="external-link">tern::s_test_proportion_diff()</a></code>. Default is <code>NULL</code> so no test is performed.</p></dd>
 
 
 <dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
@@ -236,7 +241,7 @@ defined by this split instruction, or <code>NA_character_</code> (the default) f
 
 
 <dt id="arg-show-relative">show_relative<a class="anchor" aria-label="anchor" href="#arg-show-relative"></a></dt>
-<dd><p>should the 'reduction' (<code>control - treatment</code>, default) or the 'increase'
+<dd><p>(<code>string</code>)<br> should the 'reduction' (<code>control - treatment</code>, default) or the 'increase'
 (<code>treatment - control</code>) be shown for the relative change from baseline?</p></dd>
 
 
@@ -291,7 +296,7 @@ single reference point to import the <code>roxygen</code> argument description w
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -36,7 +36,7 @@ summarize_row_counts(lyt, label_fstr = "%s", alt_counts = TRUE)
 A modified layout where the latest row split now has a row group
 summaries (as created by
 [rtables::summarize_row_groups](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
-for the counts. for the counts.
+for the counts).
 
 ## Examples
 

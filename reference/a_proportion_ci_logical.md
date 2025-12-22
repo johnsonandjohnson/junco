@@ -1,7 +1,7 @@
 # Formatted Analysis Function For Proportion Confidence Interval for Logical
 
 Formatted Analysis Function For Proportion Confidence Interval for
-Logical
+Logical.
 
 ## Usage
 

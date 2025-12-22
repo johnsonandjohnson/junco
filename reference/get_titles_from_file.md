@@ -18,7 +18,8 @@ get_titles_from_file(
 
 - id:
 
-  character. The identifier for the table of interest.
+  (`character(1)`)  
+  The identifier for the table of interest.
 
 - file:
 
@@ -56,7 +57,3 @@ supported, with titles.csv being checked first.
          where `IDENTIFIER` has the value `TITLE` for a title and `FOOT*` for
          footer materials where `*` is a positive integer. `TEXT` contains
          the value of the title/footer to be applied.
-
-## See also
-
-Used in all template script

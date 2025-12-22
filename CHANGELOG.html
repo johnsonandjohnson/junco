@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/CHANGELOG.md" class="external-link"><code>CHANGELOG.md</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/CHANGELOG.md" class="external-link"><code>CHANGELOG.md</code></a></small>
     </div>
 
 <div id="changelog" class="section level1">
@@ -36,9 +36,44 @@
 <p>All notable changes to this project will be documented in this file.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/" class="external-link">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html" class="external-link">Semantic Versioning</a>.</p>
 <div class="section level2">
-<h2 id="id_0111---2025-09-17">[0.1.1.1] - 2025-09-17<a class="anchor" aria-label="anchor" href="#id_0111---2025-09-17"></a></h2>
-<ul><li>Fixed bug in s_summarize_desc_j function to handle sparse data (zero variance) cases (#78)</li>
+<h2 id="id_012---2025-12-10">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.2" class="external-link">0.1.2</a> - 2025-12-10<a class="anchor" aria-label="anchor" href="#id_012---2025-12-10"></a></h2>
+<div class="section level3">
+<h3 id="added-and-removed">Added and Removed<a class="anchor" aria-label="anchor" href="#added-and-removed"></a></h3>
+<ul><li>Add <code><a href="reference/a_two_tier.html">a_two_tier()</a></code> analysis function</li>
+<li>Add <code><a href="reference/a_maxlev.html">a_maxlev()</a></code> to be able to calculate count and percentage of the maximum level of an ordered factor per subject</li>
+<li>Remove <code>brackets_to_rtf()</code>
+</li>
+<li>Export <code><a href="reference/rbmi_pool.html">rbmi_pool()</a></code> #22</li>
+<li>Add functionality to <code><a href="reference/a_freq_j.html">a_freq_j()</a></code> to process <code>val = NULL</code> from levels specified in <code>label_map</code>, as well as the modified version <code><a href="reference/a_freq_j.html">a_freq_j_with_exclude()</a></code> that allows to exclude the analysis from specified row splits. #95</li>
+<li>Add <code><a href="reference/cmhrms.html">a_cmhrms_j()</a></code> to support p-value from CMH row mean score test, as well as the modified version <code><a href="reference/cmhrms.html">a_cmhrms_j_with_exclude()</a></code> that allows to exclude the analysis from specified row splits. #97</li>
+<li>Added standard error (SE) column for each treatment arm’s least square (LS) means estimate to the <code><a href="reference/summarize_lsmeans_wide.html">summarize_lsmeans_wide()</a></code> layout.</li>
+<li>Added the internal function <code><a href="reference/do_exclude_split.html">do_exclude_split()</a></code> to facilitate the exclusion of specified row splits from analysis functions.</li>
+<li>Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify</li>
+<li>Add extra check for existence of <code>.alt_df_full</code> when layout has risk difference column and a row-split (h_create_alt_df) #120.</li>
+<li>Add docx exporter for Tables, Listings and Figures.</li>
+<li>Add <code>alignments</code> argument in <code><a href="reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code>
+</li>
+<li>Removed <code>s_test_proportion_diff()</code> and corresponding helper functions, as they are now available as needed in the <code>tern</code> package.</li>
+<li>Added <code>cmh_sato</code> and <code>cmh_mn</code> (Cochran-Mantel-Haenszel stratified proportion difference estimation with Sato variance and Miettinen Nurminen method, respectively) <code>method</code> options to the <code><a href="reference/prop_diff.html">s_proportion_diff_j()</a></code> function.</li>
+<li>Added formatting function round type (#76)</li>
 </ul></div>
+<div class="section level3">
+<h3 id="changed">Changed<a class="anchor" aria-label="anchor" href="#changed"></a></h3>
+<ul><li>Replace {pharmaverseadam} with {pharmaverseadamjnj}</li>
+<li>Update pruning_functions.R</li>
+<li>Update <code><a href="reference/string_to_title.html">string_to_title()</a></code> to handle factors (#26)</li>
+<li>Moved rbmi to suggest</li>
+<li>Replaced <code>denom_df</code> with <code>.alt_df_full</code> in <code><a href="reference/a_maxlev.html">a_maxlev()</a></code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="fixed">Fixed<a class="anchor" aria-label="anchor" href="#fixed"></a></h3>
+<ul><li>Fixes #102 bug inappropriate warnings from <code>cond_rm_facets</code> function</li>
+<li>Fix bug for not selecting NA records in <code>h_subset_combo()</code>
+</li>
+<li>Consistent <code><a href="reference/tt_to_tbldf.html">tt_to_tbldf()</a></code> function behavior with invalid structures #116</li>
+</ul></div>
+</div>
 <div class="section level2">
 <h2 id="id_011---2025-07-28">
 <a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.1" class="external-link">0.1.1</a> - 2025-07-28<a class="anchor" aria-label="anchor" href="#id_011---2025-07-28"></a></h2>
@@ -50,7 +85,7 @@
 <li>Integration with formatters, rtables, tidytlg, and tern packages</li>
 </ul></div>
 <div class="section level3">
-<h3 id="changed">Changed<a class="anchor" aria-label="anchor" href="#changed"></a></h3>
+<h3 id="changed-1">Changed<a class="anchor" aria-label="anchor" href="#changed-1"></a></h3>
 <ul><li>Initial CRAN release</li>
 </ul></div>
 </div>
@@ -61,7 +96,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

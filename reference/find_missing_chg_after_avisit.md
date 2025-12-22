@@ -1,6 +1,6 @@
 # Helper for Finding AVISIT after which CHG are all Missing
 
-Helper for Finding AVISIT after which CHG are all Missing
+Helper for Finding AVISIT after which CHG are all Missing.
 
 ## Usage
 

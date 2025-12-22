@@ -19,24 +19,28 @@ count_pruner(
 
 - count:
 
+  (`numeric`)  
   count threshold. Function will keep all records strictly greater than
   this threshold.
 
 - cat_include:
 
+  (`character`)  
   Category to be considered for pruning
 
 - cat_exclude:
 
-  logical Category to be excluded from pruning
+  (`character`)  
+  Category to be excluded from pruning
 
 - cols:
 
+  (`character`)  
   column path (character or integer (column indices))
 
 ## Value
 
-function that can be utilized as pruning function in prune_table
+Function that can be utilized as pruning function in prune_table.
 
 ## Examples
 

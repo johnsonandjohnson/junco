@@ -32,7 +32,3 @@ analyze_values(lyt, vars, ..., formats)
 ## Value
 
 Modified layout.
-
-## Note
-
-This is used in `tefmad01` and `tefmad03a` e.g.

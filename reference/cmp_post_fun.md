@@ -1,4 +1,4 @@
-# Split Function for Compliance Columns (TEFSCNCMP01 e.g.)
+# Split Function for Compliance Columns
 
 Here we just split into 3 columns for expected, received and missing
 visits.
@@ -59,11 +59,6 @@ cmp_split_fun(df, spl, vals = NULL, labels = NULL, trim = FALSE, .spl_context)
 a split function for use with
 [rtables::split_rows_by](https://insightsengineering.github.io/rtables/latest-tag/reference/split_rows_by.html)
 when creating proportion-based tables with compliance columns.
-
-## Note
-
-This split function is used in the proportion table TEFSCNCMP01 and
-similar ones.
 
 ## See also
 

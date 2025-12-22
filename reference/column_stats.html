@@ -9,7 +9,7 @@ Used in change from baseline tables. This takes the visit names as its row label
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@ Used in change from baseline tables. This takes the visit names as its row label
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Statistics within the column space</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/column_stats.R" class="external-link"><code>R/column_stats.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/column_stats.R" class="external-link"><code>R/column_stats.R</code></a></small>
       <div class="d-none name"><code>column_stats.Rd</code></div>
     </div>
 
@@ -54,29 +54,30 @@ Used in change from baseline tables. This takes the visit names as its row label
 
 
 <dl><dt id="arg-exclude-visits">exclude_visits<a class="anchor" aria-label="anchor" href="#arg-exclude-visits"></a></dt>
-<dd><p>Vector of visit(s) for which you do not want the statistics displayed
+<dd><p>(<code>character vector</code>)<br> Vector of visit(s) for which you do not want the statistics displayed
 in the baseline mean or change from baseline sections of the table.</p></dd>
 
 
 <dt id="arg-var-names">var_names<a class="anchor" aria-label="anchor" href="#arg-var-names"></a></dt>
-<dd><p>Vector of variable names to use instead of the default AVAL, CHG, BASE.
+<dd><p>(<code>character vector</code>)<br> Vector of variable names to use instead of the default AVAL, CHG, BASE.
 The first two elements are treated as main variables with full statistics, and the third element
 is treated as the base variable. By default, the function expects these specific variable names in your data,
 but you can customize them to match your dataset's column names.</p></dd>
 
 
 <dt id="arg-stats">stats<a class="anchor" aria-label="anchor" href="#arg-stats"></a></dt>
-<dd><p>A list with two components, <code>main</code> and <code>base</code>, that define the statistics to be calculated
-for the main variables (default: AVAL, CHG) and the base variable (default: BASE).
-Default for main variables: c(N = "N", mean = "Mean", SD = "SD", SE = "SE", Med = "Med", Min = "Min", Max = "Max")
-Default for base variable: c(mean = "Mean")
+<dd><p>(<code>list</code>)<br> A list with two components, <code>main</code> and <code>base</code>, that define the statistics to be calculated
+for the main variables (default: AVAL, CHG) and the base variable (default: BASE).<br>
+Default for main variables: c(N = "N", mean = "Mean", SD = "SD", SE = "SE",
+Med = "Med", Min = "Min", Max = "Max").<br>
+Default for base variable: c(mean = "Mean").<br>
 You can customize these statistics by providing your own named vectors in the list. The names are used
 internally for calculations, and the values are used as display labels in the table.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>an analysis function (for use with <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">rtables::analyze</a>) implementing
+    <p>An analysis function (for use with <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">rtables::analyze</a>) implementing
 the specified statistics.</p>
     </div>
 
@@ -85,7 +86,7 @@ the specified statistics.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

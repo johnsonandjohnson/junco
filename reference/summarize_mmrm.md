@@ -70,6 +70,7 @@ a_summarize_mmrm(
 
 - show_relative:
 
+  (`string`)  
   should the 'reduction' (`control - treatment`, default) or the
   'increase' (`treatment - control`) be shown for the relative change
   from baseline?

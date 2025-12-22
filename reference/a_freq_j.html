@@ -9,7 +9,7 @@ and (optional) relative risk columns"><meta property="og:image" content="https:/
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@ and (optional) relative risk columns"><meta property="og:image" content="https:/
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Analysis/statistical function for count and percentage in core columns and (optional) relative risk columns</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/a_freq_j.R" class="external-link"><code>R/a_freq_j.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/a_freq_j.R" class="external-link"><code>R/a_freq_j.R</code></a></small>
       <div class="d-none name"><code>a_freq_j.Rd</code></div>
     </div>
 
@@ -93,6 +93,22 @@ and (optional) relative risk columns</p>
 <span>  restr_columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  colgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  countsource <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"df"</span>, <span class="st">"altdf"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">a_freq_j_with_exclude</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  labelstr <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">exclude_levels</span>,</span>
+<span>  .var <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  <span class="va">.spl_context</span>,</span>
+<span>  <span class="va">.df_row</span>,</span>
+<span>  <span class="va">.N_col</span>,</span>
+<span>  .alt_df_full <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .stats <span class="op">=</span> <span class="st">"count_unique_denom_fraction"</span>,</span>
+<span>  .formats <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .indent_mods <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .labels_n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -233,7 +249,7 @@ See <code><a href="https://insightsengineering.github.io/tern/latest-tag/referen
 
 <dt id="arg-label">label<a class="anchor" aria-label="anchor" href="#arg-label"></a></dt>
 <dd><p>(<code>string</code>)<br>
-When <code>val</code>is a single <code>string</code>,
+When <code>val</code> has length 1,
 the row label to be shown on the output can be specified using this argument.<br>
 When <code>val</code> is a <code>character vector</code>, the <code>label_map</code> argument can be specified
 to control the row-labels.</p></dd>
@@ -242,7 +258,7 @@ to control the row-labels.</p></dd>
 <dt id="arg-label-fstr">label_fstr<a class="anchor" aria-label="anchor" href="#arg-label-fstr"></a></dt>
 <dd><p>(<code>string</code>)<br>
 a sprintf style format string.
-It can contain up to one "\<!-- %s" which takes the current split value and -->
+It can contain up to one <code>"%s"</code>, which takes the current split value and
 generates the row/column label.<br>
 It will be combined with the <code>labelstr</code> argument,
 when utilizing this function as
@@ -260,10 +276,7 @@ a different row label to be presented on the table.<br></p></dd>
 <dt id="arg--alt-df-full">.alt_df_full<a class="anchor" aria-label="anchor" href="#arg--alt-df-full"></a></dt>
 <dd><p>(<code>dataframe</code>)<br> Denominator dataset
 for fraction and relative risk calculations.<br>
-.alt_df_full is a crucial parameter for the relative risk calculations
-if this parameter is not set to utilize <code>alt_counts_df</code>,
-then the values in the relative risk columns might not be correct.<br>
-Once the rtables PR is integrated, this argument gets populated by the rtables
+this argument gets populated by the rtables
 split machinery (see <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html" class="external-link">rtables::additional_fun_params</a>).</p></dd>
 
 
@@ -322,6 +335,15 @@ If not NULL, columns not defined in <code>restr_columns</code> will be blanked o
 for denominator calculation.<br>
 Required to be specified when <code>denom = "N_colgroup"</code>.</p></dd>
 
+
+<dt id="arg-exclude-levels">exclude_levels<a class="anchor" aria-label="anchor" href="#arg-exclude-levels"></a></dt>
+<dd><p>(<code>list</code>)<br> A named list where names correspond to split variables
+and values are vectors of levels to exclude.</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>additional arguments for the lower level functions.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -359,6 +381,13 @@ as it cannot be retrieved directly from the column layout definition.</p></li>
 (<code>.row_df</code> from the rtables splitting machinery).<br></p></li>
 <li><p><strong>n_parentdf</strong> Number of patients from a higher row-level split than the current split.<br>
 This higher row-level split is specified in the argument <code>denom_by</code>.<br></p></li>
+</ul></div>
+    <div class="section level2">
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
+
+<ul><li><p><code>a_freq_j_with_exclude()</code>: Wrapper for the <code>afun</code> which can exclude
+row split levels from producing the analysis. These have to be specified in the
+<code>exclude_levels</code> argument, see <code><a href="do_exclude_split.html">?do_exclude_split</a></code> for details.</p></li>
 </ul></div>
 
     <div class="section level2">
@@ -516,7 +545,7 @@ This higher row-level split is specified in the argument <code>denom_by</code>.<
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

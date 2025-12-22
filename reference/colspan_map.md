@@ -1,7 +1,7 @@
 # Creation of Column Spanning Mapping Dataframe
 
 A function used for creating a data frame containing the map that is
-compatible with rtables split function `trim_levels_to_map`
+compatible with rtables split function. `trim_levels_to_map`
 
 ## Usage
 
@@ -21,42 +21,49 @@ create_colspan_map(
 
 - df:
 
+  (`data.frame`)  
   The name of the data frame in which the spanning variable is to be
   appended to
 
 - non_active_grp:
 
+  (`character`)  
   The value(s) of the treatments that represent the non-active or
   comparator treatment groups default value = c('Placebo')
 
 - non_active_grp_span_lbl:
 
+  (`character`)  
   The assigned value of the spanning variable for the non-active or
   comparator treatment groups default value = ”
 
 - active_grp_span_lbl:
 
+  (`character`)  
   The assigned value of the spanning variable for the active treatment
   group(s) default value = 'Active Study Agent'
 
 - colspan_var:
 
+  (`character`)  
   The desired name of the newly created spanning variable default value
   = 'colspan_trt'
 
 - trt_var:
 
+  (`character`)  
   The name of the treatment variable that is used to determine which
   spanning treatment group value to apply. default value = 'TRT01A'
 
 - active_first:
 
+  (`logical`)  
   whether the active columns come first.
 
 ## Value
 
-a data frame that contains the map to be used with rtables split
-function `trim_levels_to_map`
+A data frame that contains the map to be used with rtables split
+function `trim_levels_to_map`.
 
 ## Details
 

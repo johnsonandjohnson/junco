@@ -1,6 +1,6 @@
 # Extraction of Covariate Parts from Character Vector
 
-Extraction of Covariate Parts from Character Vector
+Extraction of Covariate Parts from Character Vector.
 
 ## Usage
 

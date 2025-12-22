@@ -18,50 +18,62 @@ jj_complex_scorefun(
 
 - spanningheadercolvar:
 
-  name of spanning header variable that defines the active treatment
+  (`character`)  
+  Name of spanning header variable that defines the active treatment
   columns. If you do not have an active treatment spanning header column
   then user can define this as NA.
 
 - usefirstcol:
 
+  (`logical`)  
   This allows you to just use the first column of the table to sort on.
 
 - colpath:
 
-  name of column path that is needed to sort by (default=NULL). This
+  (`character`)  
+  Name of column path that is needed to sort by (default=NULL). This
   overrides other arguments if specified (except firstcat and lastcat
-  which will be applied if requested on this colpath)
+  which will be applied if requested on this colpath).
 
 - firstcat:
 
-  If you wish to put any category at the top of the list despite any n's
-  user can specify here.
+  (`logical`)  
+  If you wish to put any category at the top of the list despite any
+  n's, user can specify it here.
 
 - lastcat:
 
+  (`logical`)  
   If you wish to put any category at the bottom of the list despite any
-  n's user can specify here.
+  n's, user can specify it here.
 
 ## Value
 
-a function which can be used as a score function (scorefun in
+A function which can be used as a score function (scorefun in
 `sort_at_path`).
 
 ## Details
 
-This sort function sorts as follows: Takes all the columns from a
-specified spanning column header (default= colspan_trt) and sorts by the
-last treatment column within this. If no spanning column header variable
-exists (e.g you have only one active treatment arm and have decided to
-remove the spanning header from your layout) it will sort by the first
-treatment column in your table. This function is not really designed for
-tables that have sub-columns, however if users wish to override any
-default sorting behavior, they can simply specify their own colpath to
-use for sorting on (default=NULL)
+This sort function sorts as follows:
+
+- Takes all the columns from a specified spanning column header
+  (default= colspan_trt) and sorts by the last treatment column within
+  this.
+
+- If no spanning column header variable exists (e.g you have only one
+  active treatment arm and have decided to remove the spanning header
+  from your layout), it will sort by the first treatment column in your
+  table.
+
+This function is not really designed for tables that have sub-columns.
+However, if users wish to override any default sorting behavior, they
+can simply specify their own colpath to use for sorting on (default =
+NULL)
 
 ## Examples
 
 ``` r
+library(dplyr)
 ADAE <- data.frame(
   USUBJID = c(
     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
@@ -102,6 +114,8 @@ colspan_trt_map <- create_colspan_map(ADAE,
 )
 
 ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
+
+ADSL <- unique(ADAE |> select(USUBJID, "colspan_trt", "rrisk_header", "rrisk_label", "TRT01A"))
 
 lyt <- basic_table() |>
   split_cols_by(
@@ -152,21 +166,21 @@ lyt <- basic_table() |>
     )
   )
 
-result <- build_table(lyt, ADAE)
+result <- build_table(lyt, ADAE, alt_counts_df = ADSL)
 
 result
-#>                          Active Study Agent                            Risk Difference (%) (95% CI)         
-#> System Organ Class        ARMA         ARMB       Placebo       ARMA vs Placebo          ARMB vs Placebo    
-#> ————————————————————————————————————————————————————————————————————————————————————————————————————————————
-#> Subjects with >=1 AE   3 (100.0%)   4 (100.0%)   3 (100.0%)      0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     
-#> SOC 1                  2 (66.7%)    1 (25.0%)    1 (33.3%)       0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     
-#>   Coded Term 2         1 (33.3%)    1 (25.0%)        0        50.0 (-19.3, 100.0)     100.0 (100.0, 100.0)  
-#>   Coded Term 3         1 (33.3%)        0        1 (33.3%)    -50.0 (-100.0, 19.3)   -100.0 (-100.0, -100.0)
-#>                                                                                                             
-#> SOC 2                  1 (33.3%)    3 (75.0%)    2 (66.7%)       0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     
-#>   Coded Term 1         1 (33.3%)    1 (25.0%)        0        100.0 (100.0, 100.0)     33.3 (-20.0, 86.7)   
-#>   Coded Term 4             0        2 (50.0%)    1 (33.3%)    -50.0 (-100.0, 19.3)     16.7 (-70.8, 100.0)  
-#>   Coded Term 5             0            0        1 (33.3%)    -50.0 (-100.0, 19.3)    -50.0 (-100.0, 19.3)  
+#>                          Active Study Agent                          Risk Difference (%) (95% CI)       
+#> System Organ Class        ARMA         ARMB       Placebo       ARMA vs Placebo        ARMB vs Placebo  
+#> ————————————————————————————————————————————————————————————————————————————————————————————————————————
+#> Subjects with >=1 AE   3 (100.0%)   4 (100.0%)   3 (100.0%)      0.0 (0.0, 0.0)        0.0 (0.0, 0.0)   
+#> SOC 1                  2 (66.7%)    1 (25.0%)    1 (33.3%)    33.3 (-42.1, 100.0)    -8.3 (-76.5, 59.8) 
+#>   Coded Term 2         1 (33.3%)    1 (25.0%)        0         33.3 (-20.0, 86.7)    25.0 (-17.4, 67.4) 
+#>   Coded Term 3         1 (33.3%)        0        1 (33.3%)     0.0 (-75.4, 75.4)     -33.3 (-86.7, 20.0)
+#>                                                                                                         
+#> SOC 2                  1 (33.3%)    3 (75.0%)    2 (66.7%)    -33.3 (-100.0, 42.1)    8.3 (-59.8, 76.5) 
+#>   Coded Term 1         1 (33.3%)    1 (25.0%)        0         33.3 (-20.0, 86.7)    25.0 (-17.4, 67.4) 
+#>   Coded Term 4             0        2 (50.0%)    1 (33.3%)    -33.3 (-86.7, 20.0)    16.7 (-55.8, 89.1) 
+#>   Coded Term 5             0            0        1 (33.3%)    -33.3 (-86.7, 20.0)    -33.3 (-86.7, 20.0)
 
 result <- sort_at_path(
   result,
@@ -181,16 +195,16 @@ result <- sort_at_path(
 )
 
 result
-#>                          Active Study Agent                            Risk Difference (%) (95% CI)         
-#> System Organ Class        ARMA         ARMB       Placebo       ARMA vs Placebo          ARMB vs Placebo    
-#> ————————————————————————————————————————————————————————————————————————————————————————————————————————————
-#> Subjects with >=1 AE   3 (100.0%)   4 (100.0%)   3 (100.0%)      0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     
-#> SOC 2                  1 (33.3%)    3 (75.0%)    2 (66.7%)       0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     
-#>   Coded Term 4             0        2 (50.0%)    1 (33.3%)    -50.0 (-100.0, 19.3)     16.7 (-70.8, 100.0)  
-#>   Coded Term 1         1 (33.3%)    1 (25.0%)        0        100.0 (100.0, 100.0)     33.3 (-20.0, 86.7)   
-#>   Coded Term 5             0            0        1 (33.3%)    -50.0 (-100.0, 19.3)    -50.0 (-100.0, 19.3)  
-#>                                                                                                             
-#> SOC 1                  2 (66.7%)    1 (25.0%)    1 (33.3%)       0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     
-#>   Coded Term 2         1 (33.3%)    1 (25.0%)        0        50.0 (-19.3, 100.0)     100.0 (100.0, 100.0)  
-#>   Coded Term 3         1 (33.3%)        0        1 (33.3%)    -50.0 (-100.0, 19.3)   -100.0 (-100.0, -100.0)
+#>                          Active Study Agent                          Risk Difference (%) (95% CI)       
+#> System Organ Class        ARMA         ARMB       Placebo       ARMA vs Placebo        ARMB vs Placebo  
+#> ————————————————————————————————————————————————————————————————————————————————————————————————————————
+#> Subjects with >=1 AE   3 (100.0%)   4 (100.0%)   3 (100.0%)      0.0 (0.0, 0.0)        0.0 (0.0, 0.0)   
+#> SOC 2                  1 (33.3%)    3 (75.0%)    2 (66.7%)    -33.3 (-100.0, 42.1)    8.3 (-59.8, 76.5) 
+#>   Coded Term 4             0        2 (50.0%)    1 (33.3%)    -33.3 (-86.7, 20.0)    16.7 (-55.8, 89.1) 
+#>   Coded Term 1         1 (33.3%)    1 (25.0%)        0         33.3 (-20.0, 86.7)    25.0 (-17.4, 67.4) 
+#>   Coded Term 5             0            0        1 (33.3%)    -33.3 (-86.7, 20.0)    -33.3 (-86.7, 20.0)
+#>                                                                                                         
+#> SOC 1                  2 (66.7%)    1 (25.0%)    1 (33.3%)    33.3 (-42.1, 100.0)    -8.3 (-76.5, 59.8) 
+#>   Coded Term 2         1 (33.3%)    1 (25.0%)        0         33.3 (-20.0, 86.7)    25.0 (-17.4, 67.4) 
+#>   Coded Term 3         1 (33.3%)        0        1 (33.3%)     0.0 (-75.4, 75.4)     -33.3 (-86.7, 20.0)
 ```

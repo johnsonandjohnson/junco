@@ -59,6 +59,22 @@ a_freq_j(
   colgroup = NULL,
   countsource = c("df", "altdf")
 )
+
+a_freq_j_with_exclude(
+  df,
+  labelstr = NULL,
+  exclude_levels,
+  .var = NA,
+  .spl_context,
+  .df_row,
+  .N_col,
+  .alt_df_full = NULL,
+  .stats = "count_unique_denom_fraction",
+  .formats = NULL,
+  .indent_mods = NULL,
+  .labels_n = NULL,
+  ...
+)
 ```
 
 ## Arguments
@@ -218,16 +234,16 @@ a_freq_j(
 - label:
 
   (`string`)  
-  When `val`is a single `string`, the row label to be shown on the
-  output can be specified using this argument.  
+  When `val` has length 1, the row label to be shown on the output can
+  be specified using this argument.  
   When `val` is a `character vector`, the `label_map` argument can be
   specified to control the row-labels.
 
 - label_fstr:
 
   (`string`)  
-  a sprintf style format string. It can contain up to one "\\ generates
-  the row/column label.  
+  a sprintf style format string. It can contain up to one `"%s"`, which
+  takes the current split value and generates the row/column label.  
   It will be combined with the `labelstr` argument, when utilizing this
   function as a `cfun` in a `summarize_row_groups` call.  
   It is recommended not to utilize this argument for other purposes. The
@@ -243,11 +259,7 @@ a_freq_j(
 
   (`dataframe`)  
   Denominator dataset for fraction and relative risk calculations.  
-  .alt_df_full is a crucial parameter for the relative risk calculations
-  if this parameter is not set to utilize `alt_counts_df`, then the
-  values in the relative risk columns might not be correct.  
-  Once the rtables PR is integrated, this argument gets populated by the
-  rtables split machinery (see
+  this argument gets populated by the rtables split machinery (see
   [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html)).
 
 - denom_by:
@@ -311,6 +323,16 @@ a_freq_j(
   The name of the column group variable that is used as source for
   denominator calculation.  
   Required to be specified when `denom = "N_colgroup"`.
+
+- exclude_levels:
+
+  (`list`)  
+  A named list where names correspond to split variables and values are
+  vectors of levels to exclude.
+
+- ...:
+
+  additional arguments for the lower level functions.
 
 ## Value
 
@@ -380,6 +402,14 @@ It must be one of
 - **n_parentdf** Number of patients from a higher row-level split than
   the current split.  
   This higher row-level split is specified in the argument `denom_by`.  
+
+## Functions
+
+- `a_freq_j_with_exclude()`: Wrapper for the `afun` which can exclude
+  row split levels from producing the analysis. These have to be
+  specified in the `exclude_levels` argument, see
+  [`?do_exclude_split`](https://johnsonandjohnson.github.io/junco/reference/do_exclude_split.md)
+  for details.
 
 ## Examples
 

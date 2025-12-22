@@ -9,7 +9,7 @@ containing the hazard ratio estimate together with the confidence interval."><me
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@ containing the hazard ratio estimate together with the confidence interval."><me
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Workaround statistics function to add HR with CI</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/coxph_hr.R" class="external-link"><code>R/coxph_hr.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/coxph_hr.R" class="external-link"><code>R/coxph_hr.R</code></a></small>
       <div class="d-none name"><code>coxph_hr.Rd</code></div>
     </div>
 
@@ -137,17 +137,18 @@ should be displayed.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>for <code>s_coxph_hr</code> a list containing the same statistics returned by <a href="https://insightsengineering.github.io/tern/latest-tag/reference/survival_coxph_pairwise.html" class="external-link">tern::s_coxph_pairwise</a>
-and the additional <code>lr_stat_df</code> statistic. for <code>a_coxph_hr</code>, a <code>VerticalRowsSection</code>
-object.</p>
-    </div>
+
+<ul><li><p><code>s_coxph_hr</code> returns a list containing the same statistics returned by
+<a href="https://insightsengineering.github.io/tern/latest-tag/reference/survival_coxph_pairwise.html" class="external-link">tern::s_coxph_pairwise</a> and the additional <code>lr_stat_df</code> statistic.</p></li>
+<li><p><code>a_coxph_hr</code> returns a <code>VerticalRowsSection</code> object.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
 <ul><li><p><code>a_coxph_hr()</code>: Formatted analysis function which is used as <code>afun</code>.</p></li>
 <li><p><code>s_coxph_hr()</code>: Statistics function forked from <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/survival_coxph_pairwise.html" class="external-link">tern::s_coxph_pairwise()</a></code>.
-the difference is that:</p><ol><li><p>It returns the additional statistic <code>lr_stat_df</code> (log rank statistic with degrees of freedom).</p></li>
-</ol></li>
+The difference is that it returns the additional statistic <code>lr_stat_df</code>
+(log rank statistic with degrees of freedom).</p></li>
 </ul></div>
 
     <div class="section level2">
@@ -256,7 +257,7 @@ the difference is that:</p><ol><li><p>It returns the additional statistic <code>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

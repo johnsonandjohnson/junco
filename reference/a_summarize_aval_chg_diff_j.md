@@ -1,12 +1,13 @@
 # Analysis function 3-column presentation
 
 Analysis functions to produce a 1-row summary presented in a 3-column
-layout in the columns: column 1: N, column 2: Value, column 3: change  
+layout in the columns (column 1 = N, column 2 = Value, column 3 =
+Change).  
 In the difference columns, only 1 column will be presented :
 difference + CI  
 When ancova = `TRUE`, the presented statistics will be based on ANCOVA
 method (`s_summarize_ancova_j`).  
-mean and ci (both for Value (column 2) and Chg (column 3)) using
+mean and ci (both for Value (column 2) and CHG (column 3)) using
 statistic `lsmean_ci`  
 mean and ci for the difference column are based on same ANCOVA model
 using statistic `lsmean_diffci`  
@@ -65,17 +66,16 @@ a_summarize_aval_chg_diff_j(
 
   (`logical`)  
   If FALSE, only descriptive methods will be used.  
-  If TRUE Ancova methods will be used for each of the columns : AVAL,
+  If TRUE, ANCOVA methods will be used for each of the columns : AVAL,
   CHG, DIFF.  
 
 - comp_btw_group:
 
   (`logical`)  
-  If TRUE,  
+  If TRUE, comparison between groups will be performed.  
   When ancova = FALSE, the estimate of between group difference (on CHG)
   will be based upon a two-sample t-test.  
-    
-  When ancova = TRUE, the same ancova model will be used for the
+  When ancova = TRUE, the same ANCOVA model will be used for the
   estimate of between group difference (on CHG).
 
 - ref_path:
@@ -169,11 +169,11 @@ a_summarize_aval_chg_diff_j(
   column statistics to select for the table. The following column names
   are to be used: `col1`, `col23`, `coldiff`.  
   For `col1`, the following stats can be specified.  
-  For `col23`, only `mean_ci_3d` is available. When ancova=`TRUE` these
-  are LS Means, otherwise, arithmetic means.  
-  For `coldiff`, only `meandiff_ci_3d` is available. When ancova=`TRUE`
-  these are LS difference in means, otherwise, difference in means based
-  upon 2-sample t-test.  
+  For `col23`, only `mean_ci_3d` is available. When ancova = `TRUE`
+  these are LS Means, otherwise, arithmetic means.  
+  For `coldiff`, only `meandiff_ci_3d` is available. When ancova =
+  `TRUE` these are LS difference in means, otherwise, difference in
+  means based upon 2-sample t-test.  
 
 - .formats:
 

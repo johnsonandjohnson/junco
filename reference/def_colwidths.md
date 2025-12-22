@@ -61,7 +61,7 @@ def_colwidths(
 
 - tt:
 
-  input Tabletree
+  input TableTree
 
 - label_width_ins:
 
@@ -69,16 +69,19 @@ def_colwidths(
 
 - type:
 
-  Type of the table tree, used to determine column width calculation
+  Type of the TableTree, used to determine column width calculation
   method.
 
 ## Value
 
-A vector of column widths suitable to use in `tt_to_tlgrtf` and other
-exporters.
+- `listing_column_widths`: a vector of column widths suitable to use in
+  `tt_to_tlgrtf` and other exporters.
 
-a vector of column widths (including the label row pseudo-column in the
-table case) suitable for use rendering `tt` in the specified font.
+&nbsp;
+
+- `def_colwidths`: a vector of column widths (including the label row
+  pseudo-column in the table case) suitable for use rendering `tt` in
+  the specified font.
 
 ## Details
 

@@ -35,7 +35,7 @@ prop_ratio_cmh(rsp, grp, strata, conf_level = 0.95)
 
 ## Value
 
-a list with elements `rel_risk_ci` and `pval`.
+A list with elements `rel_risk_ci` and `pval`.
 
 ## Examples
 

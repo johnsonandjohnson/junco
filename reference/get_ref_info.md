@@ -19,11 +19,13 @@ get_ref_info(ref_path, .spl_context, .var = NULL)
 
 - .spl_context:
 
+  (`data.frame`)  
   see
   [rtables::spl_context](https://insightsengineering.github.io/rtables/latest-tag/reference/spl_context.html).
 
 - .var:
 
+  (`character`)  
   the variable being analyzed, see
   [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html).
 
@@ -37,7 +39,7 @@ analysis function by `rtables`, see
 ## Details
 
 The reference group is specified in `colpath` hierarchical fashion in
-`ref_path`: The first column split variable is the first element, and
+`ref_path`: the first column split variable is the first element, and
 the level to use is the second element. It continues until the last
 column split variable with last level to use. Note that depending on
 `.var`, either a `data.frame` (if `.var` is `NULL`) or a vector

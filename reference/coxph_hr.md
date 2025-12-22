@@ -117,10 +117,11 @@ s_coxph_hr(
 
 ## Value
 
-for `s_coxph_hr` a list containing the same statistics returned by
-[tern::s_coxph_pairwise](https://insightsengineering.github.io/tern/latest-tag/reference/survival_coxph_pairwise.html)
-and the additional `lr_stat_df` statistic. for `a_coxph_hr`, a
-`VerticalRowsSection` object.
+- `s_coxph_hr` returns a list containing the same statistics returned by
+  [tern::s_coxph_pairwise](https://insightsengineering.github.io/tern/latest-tag/reference/survival_coxph_pairwise.html)
+  and the additional `lr_stat_df` statistic.
+
+- `a_coxph_hr` returns a `VerticalRowsSection` object.
 
 ## Functions
 
@@ -128,10 +129,8 @@ and the additional `lr_stat_df` statistic. for `a_coxph_hr`, a
 
 - `s_coxph_hr()`: Statistics function forked from
   [`tern::s_coxph_pairwise()`](https://insightsengineering.github.io/tern/latest-tag/reference/survival_coxph_pairwise.html).
-  the difference is that:
-
-  1.  It returns the additional statistic `lr_stat_df` (log rank
-      statistic with degrees of freedom).
+  The difference is that it returns the additional statistic
+  `lr_stat_df` (log rank statistic with degrees of freedom).
 
 ## Examples
 

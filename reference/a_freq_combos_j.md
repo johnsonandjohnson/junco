@@ -68,8 +68,11 @@ a_freq_combos_j(
 
 - combosdf:
 
-  The df which provides the mapping of facets to produce cumulative
-  counts for .N_col.
+  The df which provides the mapping of column facets to produce
+  cumulative counts for .N_col.  
+  In the cell facet, these cumulative records must then be removed from
+  the numerator, which can be done via the filter_var parameter to avoid
+  unwanted counting of events.
 
 - do_not_filter:
 
@@ -140,16 +143,16 @@ a_freq_combos_j(
 - label:
 
   (`string`)  
-  When `val`is a single `string`, the row label to be shown on the
-  output can be specified using this argument.  
+  When `val` has length 1, the row label to be shown on the output can
+  be specified using this argument.  
   When `val` is a `character vector`, the `label_map` argument can be
   specified to control the row-labels.
 
 - label_fstr:
 
   (`string`)  
-  a sprintf style format string. It can contain up to one "\\ generates
-  the row/column label.  
+  a sprintf style format string. It can contain up to one `"%s"`, which
+  takes the current split value and generates the row/column label.  
   It will be combined with the `labelstr` argument, when utilizing this
   function as a `cfun` in a `summarize_row_groups` call.  
   It is recommended not to utilize this argument for other purposes. The
@@ -165,11 +168,7 @@ a_freq_combos_j(
 
   (`dataframe`)  
   Denominator dataset for fraction and relative risk calculations.  
-  .alt_df_full is a crucial parameter for the relative risk calculations
-  if this parameter is not set to utilize `alt_counts_df`, then the
-  values in the relative risk columns might not be correct.  
-  Once the rtables PR is integrated, this argument gets populated by the
-  rtables split machinery (see
+  this argument gets populated by the rtables split machinery (see
   [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html)).
 
 - denom_by:
@@ -213,7 +212,73 @@ a_freq_combos_j(
 list of requested statistics with formatted
 [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).  
 
-## Note
+## Examples
 
-: These extra records must then be removed from the numerator via the
-filter_var parameter to avoid double counting of events.
+``` r
+library(dplyr)
+ADSL <- ex_adsl |> select(USUBJID, ARM, EOSSTT, EOSDT, EOSDY, TRTSDTM)
+
+cutoffd <- as.Date("2023-09-24")
+
+ADSL <- ADSL |>
+  mutate(
+    TRTDURY = case_when(
+      !is.na(EOSDY) ~ EOSDY,
+      TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
+    )
+  ) |>
+  mutate(ACAT1 = case_when(
+    TRTDURY < 183 ~ "0-6 Months",
+    TRTDURY < 366 ~ "6-12 Months",
+    TRUE ~ "+12 Months"
+  )) |>
+  mutate(ACAT1 = factor(ACAT1, levels = c("0-6 Months", "6-12 Months", "+12 Months")))
+
+
+ADAE <- ex_adae |> select(USUBJID, ARM, AEBODSYS, AEDECOD, ASTDY)
+
+ADAE <- ADAE |>
+  mutate(TRTEMFL = "Y") |>
+  mutate(ACAT1 = case_when(
+    ASTDY < 183 ~ "0-6 Months",
+    ASTDY < 366 ~ "6-12 Months",
+    TRUE ~ "+12 Months"
+  )) |>
+  mutate(ACAT1 = factor(ACAT1, levels = c("0-6 Months", "6-12 Months", "+12 Months")))
+
+combodf <- tribble(
+  ~valname, ~label, ~levelcombo, ~exargs,
+  "Tot", "Total", c("0-6 Months", "6-12 Months", "+12 Months"), list(),
+  "A_0-6 Months", "0-6 Months", c("0-6 Months", "6-12 Months", "+12 Months"), list(),
+  "B_6-12 Months", "6-12 Months", c("6-12 Months", "+12 Months"), list(),
+  "C_+12 Months", "+12 Months", c("+12 Months"), list()
+)
+
+
+lyt <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("ARM") |>
+  split_cols_by("ACAT1",
+    split_fun = add_combo_levels(combosdf = combodf, trim = FALSE, keep_levels = combodf$valname)
+  ) |>
+  analyze("TRTEMFL",
+    show_labels = "hidden",
+    afun = a_freq_combos_j,
+    extra_args = list(
+      val = "Y",
+      label = "Subjects with >= 1 AE",
+      combosdf = combodf,
+      filter_var = "ACAT1",
+      do_not_filter = "Tot"
+    )
+  )
+
+
+result <- build_table(lyt, df = ADAE, alt_counts_df = ADSL)
+
+result
+#>                                                     A: Drug X                                                            B: Placebo                                                         C: Combination                          
+#>                              Total          0-6 Months      6-12 Months       +12 Months          Total          0-6 Months      6-12 Months       +12 Months          Total          0-6 Months      6-12 Months       +12 Months  
+#>                             (N=134)          (N=134)          (N=123)          (N=117)           (N=134)          (N=134)          (N=125)          (N=113)           (N=132)          (N=132)          (N=124)          (N=111)    
+#> ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+#> Subjects with >= 1 AE   122/134 (91.0%)   96/134 (71.6%)   75/123 (61.0%)   86/117 (73.5%)   123/134 (91.8%)   95/134 (70.9%)   85/125 (68.0%)   87/113 (77.0%)   120/132 (90.9%)   96/132 (72.7%)   77/124 (62.1%)   89/111 (80.2%)
+```

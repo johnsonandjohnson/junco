@@ -1,11 +1,12 @@
 # Count denom fraction statistic
 
 Derives the count_denom_fraction statistic (i.e., 'xx /xx (xx.x
-percent)' ) Summarizes the number of unique subjects with a response =
-'Y' for a given variable (e.g. TRTEMFL) within each category of another
-variable (e.g., SEX). Note that the denominator is derived using input
-df, in order to have these aligned with alt_source_df, it is expected
-that df includes all subjects.
+percent)' )  
+Summarizes the number of unique subjects with a response = 'Y' for a
+given variable (e.g. TRTEMFL) within each category of another variable
+(e.g., SEX). Note that the denominator is derived using input df, in
+order to have these aligned with alt_source_df, it is expected that df
+includes all subjects.
 
 ## Usage
 
@@ -26,32 +27,39 @@ response_by_var(
 
 - df:
 
+  (`data.frame`)  
   Name of dataframe being analyzed.
 
 - labelstr:
 
+  (`character vector`)  
   Custom label for the variable being analyzed.
 
 - .var:
 
+  (`character`)  
   Name of the variable being analyzed. Records with non-missing values
   will be counted in the denominator.
 
 - .N_col:
 
-  numeric(1). The total for the current column.
+  (`numeric`)  
+  The total for the current column.
 
 - resp_var:
 
+  (`character`)  
   Name of variable, for which, records with a value of 'Y' will be
   counted in the numerator.
 
 - id:
 
+  (`character`)  
   Name of column in df which will have patient identifiers
 
 - .format:
 
+  (`character`)  
   Format for the count/denominator/fraction output.
 
 - ...:

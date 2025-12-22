@@ -1,6 +1,6 @@
 # Junco Extended ANCOVA Function
 
-Extension to tern:::s_ancova, 3 extra statistics are returned
+Extension to tern:::s_ancova, 3 extra statistics are returned:
 
 - `lsmean_se`: Marginal mean and estimated SE in the group.
 
@@ -33,7 +33,8 @@ s_ancova_j(
 
 - df:
 
-  : need to check on how to inherit params from tern::s_ancova
+  (`data.frame`)  
+  data set containing all analysis variables.
 
 - .var:
 
@@ -98,7 +99,7 @@ s_ancova_j(
 
 ## Value
 
-returns a named list of 8 statistics (3 extra compared to
+Returns a named list of 8 statistics (3 extra compared to
 `tern:::s_ancova()`).
 
 ## See also

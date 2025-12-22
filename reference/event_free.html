@@ -11,7 +11,7 @@ confidence interval."><meta property="og:image" content="https://johnsonandjohns
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@ confidence interval."><meta property="og:image" content="https://johnsonandjohns
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Workaround statistics function to time point survival estimate with CI</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/event_free.R" class="external-link"><code>R/event_free.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/event_free.R" class="external-link"><code>R/event_free.R</code></a></small>
       <div class="d-none name"><code>event_free.Rd</code></div>
     </div>
 
@@ -123,12 +123,13 @@ unmodified default behavior. Can be negative.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>for <code>s_event_free</code>, a list as returned by the <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html" class="external-link">tern::s_surv_timepoint()</a></code>
+
+<ul><li><p><code>s_event_free</code> returns a list as returned by the <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html" class="external-link">tern::s_surv_timepoint()</a></code>
 with an additional three-dimensional statistic <code>event_free_ci</code> which
-combines the <code>event_free_rate</code> and <code>rate_ci</code> statistics.</p>
-<p>For <code>a_event_free</code>, analogous to <a href="https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html" class="external-link">tern::a_surv_timepoint</a> but with the additional
-three-dimensional statistic described above  available via <code>.stats</code>.</p>
-    </div>
+combines the <code>event_free_rate</code> and <code>rate_ci</code> statistics.</p></li>
+<li><p><code>a_event_free</code> is analogous to <a href="https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html" class="external-link">tern::a_surv_timepoint</a> but with the additional
+three-dimensional statistic described above  available via <code>.stats</code>.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
@@ -218,7 +219,7 @@ the difference is that it returns the additional statistic <code>event_free_ci</
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

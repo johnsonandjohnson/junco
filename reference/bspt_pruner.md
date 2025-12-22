@@ -2,7 +2,7 @@
 
 This is a pruning constructor function which identifies records to be
 pruned based on the the fraction from the percentages. In addition to
-just looking at a fraction within an arm this function also allows
+just looking at a fraction within an arm, this function also allows
 further flexibility to also prune based on a comparison versus the
 control arm.
 
@@ -24,38 +24,45 @@ bspt_pruner(
 
 - fraction:
 
-  fraction threshold. Function will keep all records strictly greater
+  (`proportion`)  
+  Fraction threshold. Function will keep all records strictly greater
   than this threshold.
 
 - keeprowtext:
 
+  (`character`)  
   Row to be excluded from pruning.
 
 - reg_expr:
 
+  (`logical`)  
   Apply keeprowtext as a regular expression (grepl with fixed = TRUE)
 
 - control:
 
+  (`character`)  
   Control Group
 
 - diff_from_control:
 
+  (`numeric`)  
   Difference from control threshold.
 
 - only_more_often:
 
+  (`logical`)  
   TRUE: Only consider when column pct is more often than control. FALSE:
   Also select a row where column pct is less often than control and
   abs(diff) above threshold
 
 - cols:
 
-  column path.
+  (`character`)  
+  Column path.
 
 ## Value
 
-function that can be utilized as pruning function in prune_table
+Function that can be utilized as pruning function in prune_table.
 
 ## Examples
 

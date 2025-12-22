@@ -21,57 +21,62 @@ cond_rm_facets(
 
 - facets:
 
-  character or NULL. Vector of facet names to be removed if condition(s)
-  are met
+  (`character` or NULL)  
+  Vector of facet names to be removed if condition(s) are met
 
 - facets_regex:
 
-  character(1). Regular expression to identify facet names to be removed
-  if condition(s) are met.
+  (`character`)  
+  Regular expression to identify facet names to be removed if
+  condition(s) are met.
 
 - ancestor_pos:
 
-  numeric(1). Row in spl_context to check the condition within. E.g., 1
-  represents the first split, 2 represents the second split nested
-  within the first, etc. NA specifies that the conditions should be
-  checked at all split levels. Negative integers indicate position
-  counting back from the current one, e.g., -1 indicates the direct
-  parent (most recent split before this one). Negative and positive/NA
-  positions cannot be mixed.
+  (`numeric`)  
+  Row in spl_context to check the condition within. E.g., 1 represents
+  the first split, 2 represents the second split nested within the
+  first, etc. NA specifies that the conditions should be checked at all
+  split levels. Negative integers indicate position counting back from
+  the current one, e.g., -1 indicates the direct parent (most recent
+  split before this one). Negative and positive/NA positions cannot be
+  mixed.
 
 - split:
 
-  character(1) or NULL. If specified, name of the split at position
-  `ancestor_pos` must be identical to this value for the removal
-  condition to be met.
+  (`character` or NULL)  
+  If specified, name of the split at position `ancestor_pos` must be
+  identical to this value for the removal condition to be met.
 
 - split_regex:
 
-  character(1) or NULL. If specified, a regular expression the name of
-  the split at position `ancestor_pos` must match for the removal
-  condition to be met. Cannot be specified at the same time as `split`.
+  (`character` or NULL)  
+  If specified, a regular expression the name of the split at position
+  `ancestor_pos` must match for the removal condition to be met. Cannot
+  be specified at the same time as `split`.
 
 - value:
 
-  character(1) or NULL. If specified, split (facet) value at position
-  `ancestor_pos` must be identical to this value for removal condition
-  to be met.
+  (`character` or NULL)  
+  If specified, split (facet) value at position `ancestor_pos` must be
+  identical to this value for removal condition to be met.
 
 - value_regex:
 
-  character(1) or NULL. If specified, a regular expression the value of
-  the split at position `ancestor_pos` must match for the removal
-  condition to be met. Cannot be specified at the same time as `value`.
+  (`character` or NULL)  
+  If specified, a regular expression the value of the split at position
+  `ancestor_pos` must match for the removal condition to be met. Cannot
+  be specified at the same time as `value`.
 
 - keep_matches:
 
-  logical(1). Given the specified condition is met, should the facets
-  removed be those matching `facets`/`facets_regex` (`FALSE`, the
-  default), or those *not* matching (`TRUE`).
+  (`logical`)  
+  Given the specified condition is met, should the facets removed be
+  those matching `facets`/`facets_regex` (`FALSE`, the default), or
+  those *not* matching (`TRUE`).
 
 ## Value
 
-a function suitable for use in `make_split_fun`'s `post` argument which
+A function suitable for use in `make_split_fun`'s `post` argument which
 encodes the specified condition.
 
 ## Details

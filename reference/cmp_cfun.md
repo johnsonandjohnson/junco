@@ -1,4 +1,4 @@
-# Summary Analysis Function for Compliance Columns (TEFSCNCMP01 e.g.)
+# Summary Analysis Function for Compliance Columns
 
 A simple statistics function which prepares the numbers with percentages
 in the required format, for use in a split content row. The denominator
@@ -48,14 +48,6 @@ cmp_cfun(df, labelstr, .spl_context, variables, formats)
 The
 [`rtables::in_rows()`](https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html)
 result with the counts and proportion statistics.
-
-## Details
-
-Although this function just returns `NULL` it has two uses, for the
-`tern` users it provides a documentation of arguments that are commonly
-and consistently used in the framework. For the developer it adds a
-single reference point to import the `roxygen` argument description
-with: `@inheritParams proposal_argument_convention`
 
 ## See also
 

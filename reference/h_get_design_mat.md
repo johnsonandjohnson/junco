@@ -1,6 +1,6 @@
 # Helper Function to Create Logical Design Matrix from Factor Variable
 
-Helper Function to Create Logical Design Matrix from Factor Variable
+Helper Function to Create Logical Design Matrix from Factor Variable.
 
 ## Usage
 

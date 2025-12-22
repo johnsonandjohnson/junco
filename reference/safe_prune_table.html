@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Safely Prune Table With Empty Table Message If Needed</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/pruning_functions.R" class="external-link"><code>R/pruning_functions.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/pruning_functions.R" class="external-link"><code>R/pruning_functions.R</code></a></small>
       <div class="d-none name"><code>safe_prune_table.Rd</code></div>
     </div>
 
@@ -66,12 +66,12 @@ Defaults to <code>NA</code> which indicates pruning should happen at all levels.
 
 
 <dt id="arg-empty-msg">empty_msg<a class="anchor" aria-label="anchor" href="#arg-empty-msg"></a></dt>
-<dd><p>character(1). The message to place in the table
+<dd><p>(<code>character(1)</code>)<br> The message to place in the table
 if no rows were left after pruning</p></dd>
 
 
 <dt id="arg-spancols">spancols<a class="anchor" aria-label="anchor" href="#arg-spancols"></a></dt>
-<dd><p>logical(1). Should <code>empty_msg</code> be spanned
+<dd><p>(<code>logical(1)</code>)<br> Should <code>empty_msg</code> be spanned
 across the table's columns (<code>TRUE</code>) or placed in the
 rows row label (<code>FALSE</code>). Defaults to <code>FALSE</code> currently.</p></dd>
 
@@ -81,7 +81,7 @@ rows row label (<code>FALSE</code>). Defaults to <code>FALSE</code> currently.</
     <p><code>tt</code> pruned based on the arguments, or, if
 pruning would remove all rows, a TableTree with the
 same column structure, and one row containing the
-empty message spanning all columns</p>
+empty message spanning all columns.</p>
     </div>
 
     <div class="section level2">
@@ -107,7 +107,7 @@ empty message spanning all columns</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

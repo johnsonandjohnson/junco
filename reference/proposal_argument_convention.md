@@ -135,6 +135,12 @@ that are used repeatedly to express an analysis.
   (`flag`)  
   whether the plot should be drawn.
 
+- exclude_levels:
+
+  (`list`)  
+  A named list where names correspond to split variables and values are
+  vectors of levels to exclude.
+
 - grp:
 
   (`factor`)  
@@ -185,7 +191,7 @@ that are used repeatedly to express an analysis.
   (`string`)  
   specifies the test used to calculate the p-value for the difference
   between two proportions. For options, see
-  [`s_test_proportion_diff()`](https://johnsonandjohnson.github.io/junco/reference/prop_diff_test.md).
+  [`tern::s_test_proportion_diff()`](https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff_test.html).
   Default is `NULL` so no test is performed.
 
 - na.rm:
@@ -250,6 +256,7 @@ that are used repeatedly to express an analysis.
 
 - show_relative:
 
+  (`string`)  
   should the 'reduction' (`control - treatment`, default) or the
   'increase' (`treatment - control`) be shown for the relative change
   from baseline?

@@ -13,15 +13,17 @@ remove_rows(removerowtext = NULL, reg_expr = FALSE)
 
 - removerowtext:
 
-  define a text string for which any row with row text will be removed.
+  (`character`)  
+  Define a text string for which any row with row text will be removed.
 
 - reg_expr:
 
+  (`logical`)  
   Apply removerowtext as a regular expression (grepl with fixed = TRUE)
 
 ## Value
 
-function that can be utilized as pruning function in prune_table
+Function that can be utilized as pruning function in prune_table.
 
 ## Examples
 

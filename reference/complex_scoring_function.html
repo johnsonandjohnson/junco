@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Complex Scoring Function</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/sorting_functions.R" class="external-link"><code>R/sorting_functions.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/sorting_functions.R" class="external-link"><code>R/sorting_functions.R</code></a></small>
       <div class="d-none name"><code>complex_scoring_function.Rd</code></div>
     </div>
 
@@ -52,46 +52,52 @@
 
 
 <dl><dt id="arg-spanningheadercolvar">spanningheadercolvar<a class="anchor" aria-label="anchor" href="#arg-spanningheadercolvar"></a></dt>
-<dd><p>name of spanning header variable that defines the active treatment columns.
+<dd><p>(<code>character</code>)<br>
+Name of spanning header variable that defines the active treatment columns.
 If you do not have an active treatment spanning header column then user can define this as NA.</p></dd>
 
 
 <dt id="arg-usefirstcol">usefirstcol<a class="anchor" aria-label="anchor" href="#arg-usefirstcol"></a></dt>
-<dd><p>This allows you to just use the first column of the table to sort on.</p></dd>
+<dd><p>(<code>logical</code>)<br>
+This allows you to just use the first column of the table to sort on.</p></dd>
 
 
 <dt id="arg-colpath">colpath<a class="anchor" aria-label="anchor" href="#arg-colpath"></a></dt>
-<dd><p>name of column path that is needed to sort by (default=NULL).
+<dd><p>(<code>character</code>)<br>
+Name of column path that is needed to sort by (default=NULL).
 This overrides other arguments if specified
-(except firstcat and lastcat which will be applied if requested on this colpath)</p></dd>
+(except firstcat and lastcat which will be applied if requested on this colpath).</p></dd>
 
 
 <dt id="arg-firstcat">firstcat<a class="anchor" aria-label="anchor" href="#arg-firstcat"></a></dt>
-<dd><p>If you wish to put any category at the top of the list despite any n's user can specify here.</p></dd>
+<dd><p>(<code>logical</code>)<br>
+If you wish to put any category at the top of the list despite any n's, user can specify it here.</p></dd>
 
 
 <dt id="arg-lastcat">lastcat<a class="anchor" aria-label="anchor" href="#arg-lastcat"></a></dt>
-<dd><p>If you wish to put any category at the bottom of the list despite any n's user can specify here.</p></dd>
+<dd><p>(<code>logical</code>)<br>
+If you wish to put any category at the bottom of the list despite any n's, user can specify it here.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a function which can be used as a score function (scorefun in <code>sort_at_path</code>).</p>
+    <p>A function which can be used as a score function (scorefun in <code>sort_at_path</code>).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This sort function sorts as follows:
-Takes all the columns from a specified spanning column header (default= colspan_trt) and sorts by the last treatment
-column within this.
-If no spanning column header variable exists (e.g you have only one active treatment arm and have decided to
-remove the spanning header from your layout) it will sort by the first treatment column in your table.
-This function is not really designed for tables that have sub-columns, however if users wish to override any
-default sorting behavior, they can simply specify their own colpath to use for sorting on (default=NULL)</p>
+    <p>This sort function sorts as follows:</p><ul><li><p>Takes all the columns from a specified spanning column header (default= colspan_trt)
+and sorts by the last treatment
+column within this.</p></li>
+<li><p>If no spanning column header variable exists (e.g you have only one active treatment arm and have decided to
+remove the spanning header from your layout), it will sort by the first treatment column in your table.</p></li>
+</ul><p>This function is not really designed for tables that have sub-columns. However, if users wish to override any
+default sorting behavior, they can simply specify their own colpath to use for sorting on (default = NULL)</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ADAE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ADAE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  USUBJID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"XXXXX01"</span>, <span class="st">"XXXXX02"</span>, <span class="st">"XXXXX03"</span>, <span class="st">"XXXXX04"</span>, <span class="st">"XXXXX05"</span>,</span></span>
 <span class="r-in"><span>    <span class="st">"XXXXX06"</span>, <span class="st">"XXXXX07"</span>, <span class="st">"XXXXX08"</span>, <span class="st">"XXXXX09"</span>, <span class="st">"XXXXX10"</span></span></span>
@@ -131,6 +137,8 @@ default sorting behavior, they can simply specify their own colpath to use for s
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ref_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"colspan_trt"</span>, <span class="st">" "</span>, <span class="st">"TRT01A"</span>, <span class="st">"Placebo"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">ADAE</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="st">"colspan_trt"</span>, <span class="st">"rrisk_header"</span>, <span class="st">"rrisk_label"</span>, <span class="st">"TRT01A"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span></span></span>
@@ -181,21 +189,21 @@ default sorting behavior, they can simply specify their own colpath to use for s
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ADAE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ADAE</span>, alt_counts_df <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                          Active Study Agent                            Risk Difference (%) (95% CI)         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> System Organ Class        ARMA         ARMB       Placebo       ARMA vs Placebo          ARMB vs Placebo    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ————————————————————————————————————————————————————————————————————————————————————————————————————————————</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Subjects with &gt;=1 AE   3 (100.0%)   4 (100.0%)   3 (100.0%)      0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SOC 1                  2 (66.7%)    1 (25.0%)    1 (33.3%)       0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 2         1 (33.3%)    1 (25.0%)        0        50.0 (-19.3, 100.0)     100.0 (100.0, 100.0)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 3         1 (33.3%)        0        1 (33.3%)    -50.0 (-100.0, 19.3)   -100.0 (-100.0, -100.0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SOC 2                  1 (33.3%)    3 (75.0%)    2 (66.7%)       0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 1         1 (33.3%)    1 (25.0%)        0        100.0 (100.0, 100.0)     33.3 (-20.0, 86.7)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 4             0        2 (50.0%)    1 (33.3%)    -50.0 (-100.0, 19.3)     16.7 (-70.8, 100.0)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 5             0            0        1 (33.3%)    -50.0 (-100.0, 19.3)    -50.0 (-100.0, 19.3)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          Active Study Agent                          Risk Difference (%) (95% CI)       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> System Organ Class        ARMA         ARMB       Placebo       ARMA vs Placebo        ARMB vs Placebo  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ————————————————————————————————————————————————————————————————————————————————————————————————————————</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Subjects with &gt;=1 AE   3 (100.0%)   4 (100.0%)   3 (100.0%)      0.0 (0.0, 0.0)        0.0 (0.0, 0.0)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SOC 1                  2 (66.7%)    1 (25.0%)    1 (33.3%)    33.3 (-42.1, 100.0)    -8.3 (-76.5, 59.8) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 2         1 (33.3%)    1 (25.0%)        0         33.3 (-20.0, 86.7)    25.0 (-17.4, 67.4) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 3         1 (33.3%)        0        1 (33.3%)     0.0 (-75.4, 75.4)     -33.3 (-86.7, 20.0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SOC 2                  1 (33.3%)    3 (75.0%)    2 (66.7%)    -33.3 (-100.0, 42.1)    8.3 (-59.8, 76.5) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 1         1 (33.3%)    1 (25.0%)        0         33.3 (-20.0, 86.7)    25.0 (-17.4, 67.4) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 4             0        2 (50.0%)    1 (33.3%)    -33.3 (-86.7, 20.0)    16.7 (-55.8, 89.1) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 5             0            0        1 (33.3%)    -33.3 (-86.7, 20.0)    -33.3 (-86.7, 20.0)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/sort_at_path.html" class="external-link">sort_at_path</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">result</span>,</span></span>
@@ -210,18 +218,18 @@ default sorting behavior, they can simply specify their own colpath to use for s
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                          Active Study Agent                            Risk Difference (%) (95% CI)         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> System Organ Class        ARMA         ARMB       Placebo       ARMA vs Placebo          ARMB vs Placebo    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ————————————————————————————————————————————————————————————————————————————————————————————————————————————</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Subjects with &gt;=1 AE   3 (100.0%)   4 (100.0%)   3 (100.0%)      0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SOC 2                  1 (33.3%)    3 (75.0%)    2 (66.7%)       0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 4             0        2 (50.0%)    1 (33.3%)    -50.0 (-100.0, 19.3)     16.7 (-70.8, 100.0)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 1         1 (33.3%)    1 (25.0%)        0        100.0 (100.0, 100.0)     33.3 (-20.0, 86.7)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 5             0            0        1 (33.3%)    -50.0 (-100.0, 19.3)    -50.0 (-100.0, 19.3)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SOC 1                  2 (66.7%)    1 (25.0%)    1 (33.3%)       0.0 (0.0, 0.0)          0.0 (0.0, 0.0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 2         1 (33.3%)    1 (25.0%)        0        50.0 (-19.3, 100.0)     100.0 (100.0, 100.0)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 3         1 (33.3%)        0        1 (33.3%)    -50.0 (-100.0, 19.3)   -100.0 (-100.0, -100.0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          Active Study Agent                          Risk Difference (%) (95% CI)       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> System Organ Class        ARMA         ARMB       Placebo       ARMA vs Placebo        ARMB vs Placebo  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ————————————————————————————————————————————————————————————————————————————————————————————————————————</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Subjects with &gt;=1 AE   3 (100.0%)   4 (100.0%)   3 (100.0%)      0.0 (0.0, 0.0)        0.0 (0.0, 0.0)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SOC 2                  1 (33.3%)    3 (75.0%)    2 (66.7%)    -33.3 (-100.0, 42.1)    8.3 (-59.8, 76.5) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 4             0        2 (50.0%)    1 (33.3%)    -33.3 (-86.7, 20.0)    16.7 (-55.8, 89.1) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 1         1 (33.3%)    1 (25.0%)        0         33.3 (-20.0, 86.7)    25.0 (-17.4, 67.4) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 5             0            0        1 (33.3%)    -33.3 (-86.7, 20.0)    -33.3 (-86.7, 20.0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SOC 1                  2 (66.7%)    1 (25.0%)    1 (33.3%)    33.3 (-42.1, 100.0)    -8.3 (-76.5, 59.8) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 2         1 (33.3%)    1 (25.0%)        0         33.3 (-20.0, 86.7)    25.0 (-17.4, 67.4) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 3         1 (33.3%)        0        1 (33.3%)     0.0 (-75.4, 75.4)     -33.3 (-86.7, 20.0)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -229,7 +237,7 @@ default sorting behavior, they can simply specify their own colpath to use for s
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

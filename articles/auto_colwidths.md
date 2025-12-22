@@ -275,9 +275,9 @@ We will use the following data to illustrate:
 library(rlistings)
 #> Loading required package: tibble
 
-adae <- pharmaverseadam::adae
+adae <- pharmaverseadamjnj::adae
 adae$AEOUT <- gsub("/", " / ", adae$AEOUT)
-adsl <- pharmaverseadam::adsl
+adsl <- pharmaverseadamjnj::adsl
 
 adsl <- adsl[, c("USUBJID", setdiff(names(adsl), names(adae)))]
 
@@ -408,10 +408,10 @@ directly comparable via `export_as_txt` output.
 fspec_times8 <- font_spec("Times", 8, 1)
 cw <- listing_column_widths(lsting, col_gap = 0, fontspec = fspec_times8, verbose = TRUE)
 #> Optimizng Column Widths
-#> Initial lines required: 3979
-#> Available adjustment: 33 spaces
-#> COL 10 width: 26->51 lines req: 3825->1914
-#> COL 6 width: 40->48 lines req: 3415->2974
+#> Initial lines required: 5052
+#> Available adjustment: 46 spaces
+#> COL 8 width: 17->54 lines req: 4764->1191
+#> COL 10 width: 26->35 lines req: 3825->2379
 
 txt <- export_as_txt(lsting,
   pg_width = inches_to_spaces(8.88, fontspec = fspec_times8),
@@ -421,14 +421,14 @@ txt <- export_as_txt(lsting,
 
 txt2 <- strsplit(txt, "\n", fixed = FALSE)[[1]]
 head(txt2)
-#> [1] "Unique Subject    Description of                                                                                                                                                                              Analysis Start    Analysis End                                                                                    "
-#> [2] "  Identifier        Actual Arm        Country    Demographic Information      Severity/Intensity                 Body System or Organ Class                           Dictionary-Derived Term                    Date/Time        Date/Time                 Outcome of Adverse Event                   End of Study Status      "
+#> [1] "Unique Subject    Description of                                                                                                                                                                                                                Analysis End                                                                    "
+#> [2] "  Identifier        Actual Arm        Country    Demographic Information      Severity/Intensity      Body System or Organ Class                 Dictionary-Derived Term                               Analysis Start Date/Time                   Date/Time                   AEOUT                    End of Study Status      "
 #> [3] "————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
-#> [4] "  01-701-1015        Placebo            USA           WHITE / F / 63                 MILD                GENERAL DISORDERS AND ADMINISTRATION SITE                   APPLICATION SITE ERYTHEMA                  2014-01-03           NA                   NOT RECOVERED / NOT RESOLVED                      COMPLETED           "
-#> [5] "                                                                                                                         CONDITIONS                                                                                                                                                                                             "
-#> [6] "                     Placebo            USA           WHITE / F / 63                 MILD                GENERAL DISORDERS AND ADMINISTRATION SITE                   APPLICATION SITE PRURITUS                  2014-01-03           NA                   NOT RECOVERED / NOT RESOLVED                      COMPLETED           "
+#> [4] "  01-701-1015        Placebo            USA          BLACK OR AFRICAN                Mild             Gastrointestinal disorders                        DIARRHOEA                                      2014-01-09 00:00:00 UTC                   2014-01-11           RECOVERED / RESOLVED                  COMPLETED           "
+#> [5] "                                                    AMERICAN / F / 63                                                                                                                                                                             23:59:59                                                                      "
+#> [6] "                     Placebo            USA          BLACK OR AFRICAN                Mild                General disorders and                  APPLICATION SITE PRURITUS                              2014-01-03 00:00:00 UTC                       NA           NOT RECOVERED / NOT RESOLVED              COMPLETED           "
 length(txt2)
-#> [1] 2096
+#> [1] 2665
 ```
 
 Versus giving each column an equal portion of the width (admittedly an
@@ -442,15 +442,15 @@ txtbad <- export_as_txt(lsting,
 )
 txt2bad <- strsplit(txtbad, "\n", fixed = TRUE)[[1]]
 head(txt2bad)
-#> [1] "  Unique Subject Identifier    Description of Actual Arm             Country              Demographic Information        Severity/Intensity       Body System or Organ Class     Dictionary-Derived Term     Analysis Start Date/Time      Analysis End Date/Time      Outcome of Adverse Event        End of Study Status     "
+#> [1] "  Unique Subject Identifier    Description of Actual Arm             Country              Demographic Information        Severity/Intensity       Body System or Organ Class     Dictionary-Derived Term     Analysis Start Date/Time      Analysis End Date/Time                AEOUT                 End of Study Status     "
 #> [2] "———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
-#> [3] "         01-701-1015                    Placebo                        USA                    WHITE / F / 63                    MILD                 GENERAL DISORDERS AND      APPLICATION SITE ERYTHEMA           2014-01-03                       NA              NOT RECOVERED / NOT RESOLVED           COMPLETED          "
-#> [4] "                                                                                                                                                      ADMINISTRATION SITE                                                                                                                                                      "
-#> [5] "                                                                                                                                                          CONDITIONS                                                                                                                                                           "
-#> [6] "                                        Placebo                        USA                    WHITE / F / 63                    MILD                 GENERAL DISORDERS AND      APPLICATION SITE PRURITUS           2014-01-03                       NA              NOT RECOVERED / NOT RESOLVED           COMPLETED          "
+#> [3] "         01-701-1015                    Placebo                        USA              BLACK OR AFRICAN AMERICAN /             Mild              Gastrointestinal disorders            DIARRHOEA             2014-01-09 00:00:00 UTC        2014-01-11 23:59:59         RECOVERED / RESOLVED               COMPLETED          "
+#> [4] "                                                                                                  F / 63                                                                                                                                                                                                                       "
+#> [5] "                                        Placebo                        USA              BLACK OR AFRICAN AMERICAN /             Mild                 General disorders and      APPLICATION SITE PRURITUS     2014-01-03 00:00:00 UTC                NA              NOT RECOVERED / NOT RESOLVED           COMPLETED          "
+#> [6] "                                                                                                  F / 63                                              administration site                                                                                                                                                      "
 length(txt2bad)
-#> [1] 2306
+#> [1] 2394
 ```
 
-So we see that our algorithm saved 9.11 percent of the total lines
+So we see that our algorithm saved -11.32 percent of the total lines
 required by (a set of) naive column widths in this instance.

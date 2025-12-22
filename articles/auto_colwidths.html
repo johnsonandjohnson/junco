@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@ Becker</h4>
             
             <h4 data-toc-skip class="date">2025-06-23</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/vignettes/auto_colwidths.Rmd" class="external-link"><code>vignettes/auto_colwidths.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/vignettes/auto_colwidths.Rmd" class="external-link"><code>vignettes/auto_colwidths.Rmd</code></a></small>
       <div class="d-none name"><code>auto_colwidths.Rmd</code></div>
     </div>
 
@@ -318,9 +318,9 @@ to less than the total available space.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://insightsengineering.github.io/rlistings/" class="external-link">rlistings</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: tibble</span></span>
 <span></span>
-<span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu">pharmaverseadam</span><span class="fu">::</span><span class="va"><a href="https://pharmaverse.github.io/pharmaverseadam/reference/adae.html" class="external-link">adae</a></span></span>
+<span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu">pharmaverseadamjnj</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/pharmaverseadamjnj/man/adae.html" class="external-link">adae</a></span></span>
 <span><span class="va">adae</span><span class="op">$</span><span class="va">AEOUT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"/"</span>, <span class="st">" / "</span>, <span class="va">adae</span><span class="op">$</span><span class="va">AEOUT</span><span class="op">)</span></span>
-<span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu">pharmaverseadam</span><span class="fu">::</span><span class="va"><a href="https://pharmaverse.github.io/pharmaverseadam/reference/adsl.html" class="external-link">adsl</a></span></span>
+<span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu">pharmaverseadamjnj</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/pharmaverseadamjnj/man/adsl.html" class="external-link">adsl</a></span></span>
 <span></span>
 <span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="va">adsl</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span>, <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">adsl</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">adae</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
@@ -328,7 +328,7 @@ to less than the total available space.</p>
 <span><span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/var_labels.html" class="external-link">var_labels</a></span><span class="op">(</span><span class="va">lstdat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/var_labels.html" class="external-link">var_labels</a></span><span class="op">(</span><span class="va">adae</span><span class="op">)</span>, <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/var_labels.html" class="external-link">var_labels</a></span><span class="op">(</span><span class="va">adsl</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">lstdat</span><span class="op">$</span><span class="va">demog</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/with_label.html" class="external-link">with_label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">lstdat</span><span class="op">$</span><span class="va">RACE</span>, <span class="va">lstdat</span><span class="op">$</span><span class="va">SEX</span>, <span class="va">lstdat</span><span class="op">$</span><span class="va">AGE</span>, sep <span class="op">=</span> <span class="st">" / "</span><span class="op">)</span>, <span class="st">"Demographic Information"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">lsting</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rlistings/latest-tag/reference/listings.html" class="external-link">as_listing</a></span><span class="op">(</span><span class="va">lstdat</span>,</span>
+<span><span class="va">lsting</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rlistings/main/reference/listings.html" class="external-link">as_listing</a></span><span class="op">(</span><span class="va">lstdat</span>,</span>
 <span>  key_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span><span class="op">)</span>,</span>
 <span>  disp_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ACTARM"</span>, <span class="st">"COUNTRY"</span>, <span class="st">"demog"</span>, <span class="st">"AESEV"</span>, <span class="st">"AEBODSYS"</span>, <span class="st">"AEDECOD"</span>, <span class="st">"ASTDTM"</span>, <span class="st">"AENDTM"</span>, <span class="st">"AEOUT"</span>, <span class="st">"EOSSTT"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -440,10 +440,10 @@ via <code>export_as_txt</code> output.</p>
 <code class="sourceCode R"><span><span class="va">fspec_times8</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/font_spec.html" class="external-link">font_spec</a></span><span class="op">(</span><span class="st">"Times"</span>, <span class="fl">8</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">cw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/def_colwidths.html">listing_column_widths</a></span><span class="op">(</span><span class="va">lsting</span>, col_gap <span class="op">=</span> <span class="fl">0</span>, fontspec <span class="op">=</span> <span class="va">fspec_times8</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Optimizng Column Widths</span></span>
-<span><span class="co">#&gt; Initial lines required: 3979</span></span>
-<span><span class="co">#&gt; Available adjustment: 33 spaces</span></span>
-<span><span class="co">#&gt; COL 10 width: 26-&gt;51 lines req: 3825-&gt;1914</span></span>
-<span><span class="co">#&gt; COL 6 width: 40-&gt;48 lines req: 3415-&gt;2974</span></span>
+<span><span class="co">#&gt; Initial lines required: 5052</span></span>
+<span><span class="co">#&gt; Available adjustment: 46 spaces</span></span>
+<span><span class="co">#&gt; COL 8 width: 17-&gt;54 lines req: 4764-&gt;1191</span></span>
+<span><span class="co">#&gt; COL 10 width: 26-&gt;35 lines req: 3825-&gt;2379</span></span>
 <span></span>
 <span><span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/export_as_txt.html" class="external-link">export_as_txt</a></span><span class="op">(</span><span class="va">lsting</span>,</span>
 <span>  pg_width <span class="op">=</span> <span class="fu"><a href="../reference/inches_to_spaces.html">inches_to_spaces</a></span><span class="op">(</span><span class="fl">8.88</span>, fontspec <span class="op">=</span> <span class="va">fspec_times8</span><span class="op">)</span>,</span>
@@ -453,14 +453,14 @@ via <code>export_as_txt</code> output.</p>
 <span></span>
 <span><span class="va">txt2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">txt</span>, <span class="st">"\n"</span>, fixed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">txt2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Unique Subject    Description of                                                                                                                                                                              Analysis Start    Analysis End                                                                                    "</span></span>
-<span><span class="co">#&gt; [2] "  Identifier        Actual Arm        Country    Demographic Information      Severity/Intensity                 Body System or Organ Class                           Dictionary-Derived Term                    Date/Time        Date/Time                 Outcome of Adverse Event                   End of Study Status      "</span></span>
+<span><span class="co">#&gt; [1] "Unique Subject    Description of                                                                                                                                                                                                                Analysis End                                                                    "</span></span>
+<span><span class="co">#&gt; [2] "  Identifier        Actual Arm        Country    Demographic Information      Severity/Intensity      Body System or Organ Class                 Dictionary-Derived Term                               Analysis Start Date/Time                   Date/Time                   AEOUT                    End of Study Status      "</span></span>
 <span><span class="co">#&gt; [3] "————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"</span></span>
-<span><span class="co">#&gt; [4] "  01-701-1015        Placebo            USA           WHITE / F / 63                 MILD                GENERAL DISORDERS AND ADMINISTRATION SITE                   APPLICATION SITE ERYTHEMA                  2014-01-03           NA                   NOT RECOVERED / NOT RESOLVED                      COMPLETED           "</span></span>
-<span><span class="co">#&gt; [5] "                                                                                                                         CONDITIONS                                                                                                                                                                                             "</span></span>
-<span><span class="co">#&gt; [6] "                     Placebo            USA           WHITE / F / 63                 MILD                GENERAL DISORDERS AND ADMINISTRATION SITE                   APPLICATION SITE PRURITUS                  2014-01-03           NA                   NOT RECOVERED / NOT RESOLVED                      COMPLETED           "</span></span>
+<span><span class="co">#&gt; [4] "  01-701-1015        Placebo            USA          BLACK OR AFRICAN                Mild             Gastrointestinal disorders                        DIARRHOEA                                      2014-01-09 00:00:00 UTC                   2014-01-11           RECOVERED / RESOLVED                  COMPLETED           "</span></span>
+<span><span class="co">#&gt; [5] "                                                    AMERICAN / F / 63                                                                                                                                                                             23:59:59                                                                      "</span></span>
+<span><span class="co">#&gt; [6] "                     Placebo            USA          BLACK OR AFRICAN                Mild                General disorders and                  APPLICATION SITE PRURITUS                              2014-01-03 00:00:00 UTC                       NA           NOT RECOVERED / NOT RESOLVED              COMPLETED           "</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">txt2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2096</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 2665</span></span></code></pre></div>
 <p>Versus giving each column an equal portion of the width (admittedly
 an ill-conceived strategy)</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -471,15 +471,15 @@ an ill-conceived strategy)</p>
 <span><span class="op">)</span></span>
 <span><span class="va">txt2bad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">txtbad</span>, <span class="st">"\n"</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">txt2bad</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "  Unique Subject Identifier    Description of Actual Arm             Country              Demographic Information        Severity/Intensity       Body System or Organ Class     Dictionary-Derived Term     Analysis Start Date/Time      Analysis End Date/Time      Outcome of Adverse Event        End of Study Status     "</span></span>
+<span><span class="co">#&gt; [1] "  Unique Subject Identifier    Description of Actual Arm             Country              Demographic Information        Severity/Intensity       Body System or Organ Class     Dictionary-Derived Term     Analysis Start Date/Time      Analysis End Date/Time                AEOUT                 End of Study Status     "</span></span>
 <span><span class="co">#&gt; [2] "———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"</span></span>
-<span><span class="co">#&gt; [3] "         01-701-1015                    Placebo                        USA                    WHITE / F / 63                    MILD                 GENERAL DISORDERS AND      APPLICATION SITE ERYTHEMA           2014-01-03                       NA              NOT RECOVERED / NOT RESOLVED           COMPLETED          "</span></span>
-<span><span class="co">#&gt; [4] "                                                                                                                                                      ADMINISTRATION SITE                                                                                                                                                      "</span></span>
-<span><span class="co">#&gt; [5] "                                                                                                                                                          CONDITIONS                                                                                                                                                           "</span></span>
-<span><span class="co">#&gt; [6] "                                        Placebo                        USA                    WHITE / F / 63                    MILD                 GENERAL DISORDERS AND      APPLICATION SITE PRURITUS           2014-01-03                       NA              NOT RECOVERED / NOT RESOLVED           COMPLETED          "</span></span>
+<span><span class="co">#&gt; [3] "         01-701-1015                    Placebo                        USA              BLACK OR AFRICAN AMERICAN /             Mild              Gastrointestinal disorders            DIARRHOEA             2014-01-09 00:00:00 UTC        2014-01-11 23:59:59         RECOVERED / RESOLVED               COMPLETED          "</span></span>
+<span><span class="co">#&gt; [4] "                                                                                                  F / 63                                                                                                                                                                                                                       "</span></span>
+<span><span class="co">#&gt; [5] "                                        Placebo                        USA              BLACK OR AFRICAN AMERICAN /             Mild                 General disorders and      APPLICATION SITE PRURITUS     2014-01-03 00:00:00 UTC                NA              NOT RECOVERED / NOT RESOLVED           COMPLETED          "</span></span>
+<span><span class="co">#&gt; [6] "                                                                                                  F / 63                                              administration site                                                                                                                                                      "</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">txt2bad</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2306</span></span></code></pre></div>
-<p>So we see that our algorithm saved 9.11 percent of the total lines
+<span><span class="co">#&gt; [1] 2394</span></span></code></pre></div>
+<p>So we see that our algorithm saved -11.32 percent of the total lines
 required by (a set of) naive column widths in this instance.</p>
 </div>
 </div>
@@ -490,7 +490,7 @@ required by (a set of) naive column widths in this instance.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

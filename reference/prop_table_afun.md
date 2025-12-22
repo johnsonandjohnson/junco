@@ -1,4 +1,4 @@
-# Formatted Analysis Function for Proportion Analysis (TEFCGIS08 e.g.)
+# Formatted Analysis Function for Proportion Analysis
 
 This function applies to a factor `x` when a column split was prepared
 with

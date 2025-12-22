@@ -1,7 +1,7 @@
 # Set Output Titles
 
 Retrieves titles and footnotes from the list specified in the titles
-argument and appends them to the table tree specified in the obj
+argument and appends them to the TableTree specified in the obj
 argument.
 
 ## Usage
@@ -14,17 +14,15 @@ set_titles(obj, titles)
 
 - obj:
 
-  The table tree to which the titles and footnotes will be appended.
+  (`TableTree`)  
+  The TableTree to which the titles and footnotes will be appended.
 
 - titles:
 
+  (`list`)  
   The list object containing the titles and footnotes to be appended.
 
 ## Value
 
-The table tree object specified in the obj argument, with titles and
+The TableTree object specified in the obj argument, with titles and
 footnotes appended.
-
-## See also
-
-Used in all template scripts

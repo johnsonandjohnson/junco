@@ -12,7 +12,7 @@ pad_in_rows_fct(length_out = NULL, label = "")
 
 - length_out:
 
-  (`count` or `NULL`)  
+  (`numeric` or `NULL`)  
   full length which should be padded by `NA` which will be printed as
   empty strings.
 

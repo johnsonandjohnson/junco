@@ -13,14 +13,17 @@ get_ctrl_subset(df, trt_var, ctrl_grp)
 
 - df:
 
+  (`data.frame`)  
   Data frame to subset.
 
 - trt_var:
 
+  (`character`)  
   Treatment variable name.
 
 - ctrl_grp:
 
+  (`character`)  
   Control group value.
 
 ## Value

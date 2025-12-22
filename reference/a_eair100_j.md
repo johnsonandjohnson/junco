@@ -6,24 +6,6 @@ Rate summary data
 ## Usage
 
 ``` r
-s_eair100_levii_j(
-  levii,
-  df,
-  .df_row,
-  .var,
-  .alt_df_full = NULL,
-  id = "USUBJID",
-  diff = FALSE,
-  conf_level = 0.95,
-  trt_var = NULL,
-  ctrl_grp = NULL,
-  cur_trt_grp = NULL,
-  inriskdiffcol = FALSE,
-  fup_var,
-  occ_var,
-  occ_dy
-)
-
 a_eair100_j(
   df,
   labelstr = NULL,
@@ -49,25 +31,30 @@ a_eair100_j(
 
 ## Arguments
 
-- levii:
-
-  (`string`)  
-  the specific level of the variable to calculate EAIR for.
-
 - df:
 
   (`data.frame`)  
   data set containing all analysis variables.
+
+- labelstr:
+
+  (`string`)  
+  label string for the row.
+
+- .var:
+
+  (`string`)  
+  variable name for analysis.
 
 - .df_row:
 
   (`data.frame`)  
   data frame across all of the columns for the given row split.
 
-- .var:
+- .spl_context:
 
-  (`string`)  
-  variable name for analysis.
+  (`data.frame`)  
+  gives information about ancestor split states.
 
 - .alt_df_full:
 
@@ -78,62 +65,6 @@ a_eair100_j(
 
   (`string`)  
   subject variable name.
-
-- diff:
-
-  (`logical`)  
-  if TRUE, risk difference calculations will be performed.
-
-- conf_level:
-
-  (`proportion`)  
-  confidence level of the interval.
-
-- trt_var:
-
-  (`string`)  
-  treatment variable name.
-
-- ctrl_grp:
-
-  (`string`)  
-  control group value.
-
-- cur_trt_grp:
-
-  (`string`)  
-  current treatment group value.
-
-- inriskdiffcol:
-
-  (`logical`)  
-  flag indicating if the function is called within a risk difference
-  column.
-
-- fup_var:
-
-  (`string`)  
-  variable name for follow-up time.
-
-- occ_var:
-
-  (`string`)  
-  variable name for occurrence.
-
-- occ_dy:
-
-  (`string`)  
-  variable name for occurrence day.
-
-- labelstr:
-
-  (`string`)  
-  label string for the row.
-
-- .spl_context:
-
-  (`data.frame`)  
-  gives information about ancestor split states.
 
 - drop_levels:
 
@@ -175,36 +106,32 @@ a_eair100_j(
   (`string`)  
   string used to replace all NA or empty values in the output.
 
+- conf_level:
+
+  (`proportion`)  
+  confidence level of the interval.
+
+- fup_var:
+
+  (`string`)  
+  variable name for follow-up time.
+
+- occ_var:
+
+  (`string`)  
+  variable name for occurrence.
+
+- occ_dy:
+
+  (`string`)  
+  variable name for occurrence day.
+
 ## Value
-
-- `s_eair100_levii_j()` returns a list containing the following
-  statistics:
-
-  - n_event: Number of events
-
-  - person_years: Total person-years of follow-up
-
-  - eair: Exposure-adjusted incidence rate per 100 person-years
-
-  - eair_diff: Risk difference in EAIR (if diff=TRUE and
-    inriskdiffcol=TRUE)
-
-  - eair_diff_ci: Confidence interval for the risk difference (if
-    diff=TRUE and inriskdiffcol=TRUE)
-
-  .  
-  The list of available statistics (core columns) can also be viewed by
-  running `junco_get_stats("a_eair100_j")`
-
-&nbsp;
 
 - `a_eair100_j` returns the corresponding list with formatted
   [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
 
 ## Functions
-
-- `s_eair100_levii_j()`: calculates exposure-adjusted incidence rates
-  (EAIR) per 100 person-years for a specific level of a variable.
 
 - `a_eair100_j()`: Formatted analysis function for exposure adjusted
   incidence rate summary which is used as `afun` in `analyze` or `cfun`
@@ -228,14 +155,14 @@ ctrl_grp <- "B: Placebo"
 cutoffd <- as.Date("2023-09-24")
 
 
-adexsum <- ex_adsl %>%
+adexsum <- ex_adsl |>
   create_colspan_var(
     non_active_grp          = ctrl_grp,
     non_active_grp_span_lbl = " ",
     active_grp_span_lbl     = "Active Study Agent",
     colspan_var             = "colspan_trt",
     trt_var                 = trtvar
-  ) %>%
+  ) |>
   mutate(
     rrisk_header = "Risk Difference (95% CI)",
     rrisk_label = paste(!!rlang::sym(trtvar), "vs", ctrl_grp),
@@ -243,19 +170,19 @@ adexsum <- ex_adsl %>%
       !is.na(EOSDY) ~ EOSDY,
       TRUE ~ as.integer(cutoffd - as.Date(TRTSDTM) + 1)
     )
-  ) %>%
+  ) |>
   select(USUBJID, !!rlang::sym(trtvar), colspan_trt, rrisk_header, rrisk_label, TRTDURY)
 
 adexsum$TRTDURY <- as.numeric(adexsum$TRTDURY)
 
-adae <- ex_adae %>%
-  group_by(USUBJID, AEDECOD) %>%
-  select(USUBJID, AEDECOD, ASTDY) %>%
-  mutate(rwnum = row_number()) %>%
+adae <- ex_adae |>
+  group_by(USUBJID, AEDECOD) |>
+  select(USUBJID, AEDECOD, ASTDY) |>
+  mutate(rwnum = row_number()) |>
   mutate(AOCCPFL = case_when(
     rwnum == 1 ~ "Y",
     TRUE ~ NA
-  )) %>%
+  )) |>
   filter(AOCCPFL == "Y")
 
 aefup <- left_join(adae, adexsum, by = "USUBJID")
@@ -270,17 +197,20 @@ colspan_trt_map <- create_colspan_map(adexsum,
 
 ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
 
+################################################################################
+# Define layout and build table:
+################################################################################
 
-lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") %>%
-  split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) %>%
-  split_cols_by(trtvar) %>%
-  split_cols_by("rrisk_header", nested = FALSE) %>%
-  split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) %>%
+lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_section_div = " ") |>
+  split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
+  split_cols_by(trtvar) |>
+  split_cols_by("rrisk_header", nested = FALSE) |>
+  split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) |>
   analyze("TRTDURY",
     nested = FALSE,
     show_labels = "hidden",
     afun = a_patyrs_j
-  ) %>%
+  ) |>
   analyze(
     vars = "AEDECOD",
     nested = FALSE,

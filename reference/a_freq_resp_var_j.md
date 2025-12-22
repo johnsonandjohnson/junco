@@ -104,4 +104,39 @@ a_freq_resp_var_j(
 
 ## Value
 
-A list of rcell objects containing the response statistics.
+Formatted analysis function which is used as `afun` in
+[`analyze_vars()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html)
+and as `cfun` in
+[`summarize_row_groups()`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html).
+
+## Examples
+
+``` r
+library(dplyr)
+ADSL <- ex_adsl |> select(USUBJID, ARM, SEX)
+
+ADAE <- ex_adae |> select(USUBJID, ARM, SEX, AEBODSYS, AEDECOD)
+
+ADAE <- ADAE |>
+  mutate(TRTEMFL = "Y")
+
+lyt <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("ARM") |>
+  analyze("SEX",
+    show_labels = "visible",
+    afun = a_freq_resp_var_j,
+    extra_args = list(resp_var = "TRTEMFL", riskdiff = FALSE)
+  )
+
+result <- build_table(lyt, df = ADAE, alt_counts_df = ADSL)
+
+result
+#>                        A: Drug X        B: Placebo     C: Combination
+#>                         (N=134)          (N=134)          (N=132)    
+#> —————————————————————————————————————————————————————————————————————
+#> SEX                                                                  
+#>   F                  72/72 (100.0%)   73/73 (100.0%)   61/61 (100.0%)
+#>   M                  46/46 (100.0%)   48/48 (100.0%)   53/53 (100.0%)
+#>   U                   3/3 (100.0%)     2/2 (100.0%)     4/4 (100.0%) 
+#>   UNDIFFERENTIATED    1/1 (100.0%)          -           2/2 (100.0%) 
+```

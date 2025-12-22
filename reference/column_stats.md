@@ -19,11 +19,13 @@ column_stats(
 
 - exclude_visits:
 
+  (`character vector`)  
   Vector of visit(s) for which you do not want the statistics displayed
   in the baseline mean or change from baseline sections of the table.
 
 - var_names:
 
+  (`character vector`)  
   Vector of variable names to use instead of the default AVAL, CHG,
   BASE. The first two elements are treated as main variables with full
   statistics, and the third element is treated as the base variable. By
@@ -32,17 +34,19 @@ column_stats(
 
 - stats:
 
+  (`list`)  
   A list with two components, `main` and `base`, that define the
   statistics to be calculated for the main variables (default: AVAL,
-  CHG) and the base variable (default: BASE). Default for main
-  variables: c(N = "N", mean = "Mean", SD = "SD", SE = "SE", Med =
-  "Med", Min = "Min", Max = "Max") Default for base variable: c(mean =
-  "Mean") You can customize these statistics by providing your own named
-  vectors in the list. The names are used internally for calculations,
-  and the values are used as display labels in the table.
+  CHG) and the base variable (default: BASE).  
+  Default for main variables: c(N = "N", mean = "Mean", SD = "SD", SE =
+  "SE", Med = "Med", Min = "Min", Max = "Max").  
+  Default for base variable: c(mean = "Mean").  
+  You can customize these statistics by providing your own named vectors
+  in the list. The names are used internally for calculations, and the
+  values are used as display labels in the table.
 
 ## Value
 
-an analysis function (for use with
+An analysis function (for use with
 [rtables::analyze](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html))
 implementing the specified statistics.

@@ -11,7 +11,7 @@ statistic (e.g., ## / ## (XX.X percent) is presented)."><meta property="og:image
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@ statistic (e.g., ## / ## (XX.X percent) is presented)."><meta property="og:image
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Count Pruner</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/pruning_functions.R" class="external-link"><code>R/pruning_functions.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/pruning_functions.R" class="external-link"><code>R/pruning_functions.R</code></a></small>
       <div class="d-none name"><code>count_pruner.Rd</code></div>
     </div>
 
@@ -57,31 +57,30 @@ statistic (e.g., ## / ## (XX.X percent) is presented).</p>
 
 
 <dl><dt id="arg-count">count<a class="anchor" aria-label="anchor" href="#arg-count"></a></dt>
-<dd><p>count threshold.  Function will keep all records strictly greater
+<dd><p>(<code>numeric</code>)<br> count threshold. Function will keep all records strictly greater
 than this threshold.</p></dd>
 
 
 <dt id="arg-cat-include">cat_include<a class="anchor" aria-label="anchor" href="#arg-cat-include"></a></dt>
-<dd><p>Category to be considered for pruning</p></dd>
+<dd><p>(<code>character</code>)<br> Category to be considered for pruning</p></dd>
 
 
 <dt id="arg-cat-exclude">cat_exclude<a class="anchor" aria-label="anchor" href="#arg-cat-exclude"></a></dt>
-<dd><p>logical Category to be excluded from pruning</p></dd>
+<dd><p>(<code>character</code>)<br> Category to be excluded from pruning</p></dd>
 
 
 <dt id="arg-cols">cols<a class="anchor" aria-label="anchor" href="#arg-cols"></a></dt>
-<dd><p>column path (character or integer (column indices))</p></dd>
+<dd><p>(<code>character</code>)<br> column path (character or integer (column indices))</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>function that can be utilized as pruning function in prune_table</p>
+    <p>Function that can be utilized as pruning function in prune_table.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  USUBJID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"XXXXX01"</span>, <span class="st">"XXXXX02"</span>, <span class="st">"XXXXX03"</span>, <span class="st">"XXXXX04"</span>, <span class="st">"XXXXX05"</span>,</span></span>
 <span class="r-in"><span>    <span class="st">"XXXXX06"</span>, <span class="st">"XXXXX07"</span>, <span class="st">"XXXXX08"</span>, <span class="st">"XXXXX09"</span>, <span class="st">"XXXXX10"</span></span></span>
@@ -143,7 +142,6 @@ than this threshold.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Full          3/3 (100.0%)   3/4 (75.0%)   3/3 (100.0%)   9/10 (90.0%)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Analysis set:                                                           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Safety         0/3 (0.0%)    0/4 (0.0%)     0/3 (0.0%)    0/10 (0.0%) </span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -151,7 +149,7 @@ than this threshold.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

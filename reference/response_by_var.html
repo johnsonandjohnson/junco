@@ -15,7 +15,7 @@ in order to have these aligned with alt_source_df, it is expected that df includ
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,12 +36,12 @@ in order to have these aligned with alt_source_df, it is expected that df includ
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Count denom fraction statistic</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/count_denom_fraction.R" class="external-link"><code>R/count_denom_fraction.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/count_denom_fraction.R" class="external-link"><code>R/count_denom_fraction.R</code></a></small>
       <div class="d-none name"><code>response_by_var.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p>Derives the count_denom_fraction statistic (i.e., 'xx /xx (xx.x percent)' )
+    <p>Derives the count_denom_fraction statistic (i.e., 'xx /xx (xx.x percent)' )<br>
 Summarizes the number of unique subjects with a response = 'Y' for a given variable
 (e.g. TRTEMFL) within each category of another variable (e.g., SEX).
 Note that the denominator is derived using input df,
@@ -67,33 +67,33 @@ in order to have these aligned with alt_source_df, it is expected that df includ
 
 
 <dl><dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
-<dd><p>Name of dataframe being analyzed.</p></dd>
+<dd><p>(<code>data.frame</code>)<br> Name of dataframe being analyzed.</p></dd>
 
 
 <dt id="arg-labelstr">labelstr<a class="anchor" aria-label="anchor" href="#arg-labelstr"></a></dt>
-<dd><p>Custom label for the variable being analyzed.</p></dd>
+<dd><p>(<code>character vector</code>)<br> Custom label for the variable being analyzed.</p></dd>
 
 
 <dt id="arg--var">.var<a class="anchor" aria-label="anchor" href="#arg--var"></a></dt>
-<dd><p>Name of the variable being analyzed. Records with non-missing
+<dd><p>(<code>character</code>)<br> Name of the variable being analyzed. Records with non-missing
 values will be counted in the denominator.</p></dd>
 
 
 <dt id="arg--n-col">.N_col<a class="anchor" aria-label="anchor" href="#arg--n-col"></a></dt>
-<dd><p>numeric(1). The total for the current column.</p></dd>
+<dd><p>(<code>numeric</code>)<br> The total for the current column.</p></dd>
 
 
 <dt id="arg-resp-var">resp_var<a class="anchor" aria-label="anchor" href="#arg-resp-var"></a></dt>
-<dd><p>Name of variable, for which, records with a value of 'Y'
+<dd><p>(<code>character</code>)<br> Name of variable, for which, records with a value of 'Y'
 will be counted in the numerator.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
-<dd><p>Name of column in df which will have patient identifiers</p></dd>
+<dd><p>(<code>character</code>)<br> Name of column in df which will have patient identifiers</p></dd>
 
 
 <dt id="arg--format">.format<a class="anchor" aria-label="anchor" href="#arg--format"></a></dt>
-<dd><p>Format for the count/denominator/fraction output.</p></dd>
+<dd><p>(<code>character</code>)<br> Format for the count/denominator/fraction output.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -113,8 +113,7 @@ the tabulation process.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ADAE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  USUBJID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
@@ -164,7 +163,7 @@ the tabulation process.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -15,7 +15,7 @@ A stratification variable can be supplied via the strata element of the variable
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@ A stratification variable can be supplied via the strata element of the variable
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Proportion difference estimation</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/estimate_proportion_diff.R" class="external-link"><code>R/estimate_proportion_diff.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/estimate_proportion_diff.R" class="external-link"><code>R/estimate_proportion_diff.R</code></a></small>
       <div class="d-none name"><code>prop_diff.Rd</code></div>
     </div>
 
@@ -69,8 +69,8 @@ A stratification variable can be supplied via the <code>strata</code> element of
 <span>  <span class="va">.in_ref_col</span>,</span>
 <span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
 <span>  conf_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"waldcc"</span>, <span class="st">"wald"</span>, <span class="st">"cmh"</span>, <span class="st">"ha"</span>, <span class="st">"newcombe"</span>, <span class="st">"newcombecc"</span>, <span class="st">"strat_newcombe"</span>,</span>
-<span>    <span class="st">"strat_newcombecc"</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"waldcc"</span>, <span class="st">"wald"</span>, <span class="st">"cmh"</span>, <span class="st">"cmh_sato"</span>, <span class="st">"cmh_mn"</span>, <span class="st">"ha"</span>, <span class="st">"newcombe"</span>,</span>
+<span>    <span class="st">"newcombecc"</span>, <span class="st">"strat_newcombe"</span>, <span class="st">"strat_newcombecc"</span><span class="op">)</span>,</span>
 <span>  weights_method <span class="op">=</span> <span class="st">"cmh"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -159,8 +159,8 @@ in terms of responder proportion.</p></li>
 from <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff.html" class="external-link">tern::a_proportion_diff()</a></code>. The functions here are a copy from the <code>tern</code> package
 with additional features:</p><ul><li><p>Additional statistic <code>diff_est_ci</code> is returned.</p></li>
 <li><p><code>ref_path</code> needs to be provided as extra argument to specify the control group column.</p></li>
-</ul><p>When performing an unstratified analysis, methods <code>'cmh'</code>, <code>'strat_newcombe'</code>,
-and <code>'strat_newcombecc'</code> are not permitted.</p>
+</ul><p>When performing an unstratified analysis, methods <code>'cmh'</code>, <code>'cmh_sato'</code>, <code>'cmh_mn'</code>,
+<code>'strat_newcombe'</code>, and <code>'strat_newcombecc'</code> are not permitted.</p>
     </div>
 
     <div class="section level2">
@@ -269,7 +269,7 @@ and <code>'strat_newcombecc'</code> are not permitted.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

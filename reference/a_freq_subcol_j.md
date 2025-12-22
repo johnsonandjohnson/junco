@@ -67,17 +67,20 @@ a_freq_subcol_j(
 
 - subcol_split:
 
-  Text to search colid to determine whether further subsetting should be
+  (`string`)  
+  text to search colid to determine whether further subsetting should be
   performed.
 
 - subcol_var:
 
-  Name of variable containing to be searched for the text identified in
+  (`string`)  
+  name of variable containing to be searched for the text identified in
   subcol_val argument.
 
 - subcol_val:
 
-  Value to use to perform further data sub-setting.
+  (`string`)  
+  value to use to perform further data sub-setting.
 
 - .df_row:
 
@@ -129,16 +132,16 @@ a_freq_subcol_j(
 - label:
 
   (`string`)  
-  When `val`is a single `string`, the row label to be shown on the
-  output can be specified using this argument.  
+  When `val` has length 1, the row label to be shown on the output can
+  be specified using this argument.  
   When `val` is a `character vector`, the `label_map` argument can be
   specified to control the row-labels.
 
 - label_fstr:
 
   (`string`)  
-  a sprintf style format string. It can contain up to one "\\ generates
-  the row/column label.  
+  a sprintf style format string. It can contain up to one `"%s"`, which
+  takes the current split value and generates the row/column label.  
   It will be combined with the `labelstr` argument, when utilizing this
   function as a `cfun` in a `summarize_row_groups` call.  
   It is recommended not to utilize this argument for other purposes. The
@@ -154,11 +157,7 @@ a_freq_subcol_j(
 
   (`dataframe`)  
   Denominator dataset for fraction and relative risk calculations.  
-  .alt_df_full is a crucial parameter for the relative risk calculations
-  if this parameter is not set to utilize `alt_counts_df`, then the
-  values in the relative risk columns might not be correct.  
-  Once the rtables PR is integrated, this argument gets populated by the
-  rtables split machinery (see
+  this argument gets populated by the rtables split machinery (see
   [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html)).
 
 - denom_by:
@@ -201,3 +200,62 @@ a_freq_subcol_j(
 
 list of requested statistics with formatted
 [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).  
+
+## Examples
+
+``` r
+library(dplyr)
+
+ADSL <- ex_adsl |>
+  select(USUBJID, ARM)
+
+ADSL$COLSPAN_REL <- "AEs"
+
+ADAE <- ex_adae |>
+  select(USUBJID, ARM, AEDECOD, AREL)
+
+ADAE <- ADAE |>
+  mutate(
+    AEREL = case_when(
+      AREL == "Y" ~ "RELATED",
+      AREL == "N" ~ "NOT RELATED"
+    ),
+    AEREL = factor(AEREL),
+    COLSPAN_REL = "AEs"
+  )
+
+combodf <- tribble(
+  ~valname,  ~label,        ~levelcombo, ~exargs,
+  "RELATED", "Related AEs", c("AEs"),    list()
+)
+
+lyt <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("COLSPAN_REL", split_fun = add_combo_levels(combodf, trim = TRUE)) |>
+  split_cols_by("ARM") |>
+  analyze("AEDECOD",
+    afun = a_freq_subcol_j,
+    extra_args = list(
+      subcol_split = "RELATED",
+      subcol_var = "AEREL",
+      subcol_val = "RELATED"
+    )
+  )
+
+result <- build_table(lyt, ADAE, alt_counts_df = ADSL)
+
+result
+#>                                       AEs                                            Related AEs                   
+#>                   A: Drug X        B: Placebo     C: Combination     A: Drug X        B: Placebo     C: Combination
+#>                    (N=134)          (N=134)          (N=132)          (N=134)          (N=134)          (N=132)    
+#> ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+#> dcd A.1.1.1.1   50/134 (37.3%)   45/134 (33.6%)   63/132 (47.7%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) 
+#> dcd A.1.1.1.2   48/134 (35.8%)   48/134 (35.8%)   50/132 (37.9%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) 
+#> dcd B.1.1.1.1   47/134 (35.1%)   49/134 (36.6%)   43/132 (32.6%)   47/134 (35.1%)   49/134 (36.6%)   43/132 (32.6%)
+#> dcd B.2.1.2.1   49/134 (36.6%)   44/134 (32.8%)   52/132 (39.4%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) 
+#> dcd B.2.2.3.1   48/134 (35.8%)   54/134 (40.3%)   51/132 (38.6%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) 
+#> dcd C.1.1.1.3   43/134 (32.1%)   46/134 (34.3%)   43/132 (32.6%)   43/134 (32.1%)   46/134 (34.3%)   43/132 (32.6%)
+#> dcd C.2.1.2.1   35/134 (26.1%)   48/134 (35.8%)   55/132 (41.7%)   35/134 (26.1%)   48/134 (35.8%)   55/132 (41.7%)
+#> dcd D.1.1.1.1   50/134 (37.3%)   42/134 (31.3%)   51/132 (38.6%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) 
+#> dcd D.1.1.4.2   48/134 (35.8%)   42/134 (31.3%)   50/132 (37.9%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) 
+#> dcd D.2.1.5.3   47/134 (35.1%)   58/134 (43.3%)   57/132 (43.2%)   47/134 (35.1%)   58/134 (43.3%)   57/132 (43.2%)
+```

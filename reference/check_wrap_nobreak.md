@@ -1,6 +1,6 @@
 # Check Word Wrapping
 
-Check a set of column widths for word-breaking wrap behavior
+Check a set of column widths for word-breaking wrap behavior.
 
 ## Usage
 
@@ -12,17 +12,20 @@ check_wrap_nobreak(tt, colwidths, fontspec)
 
 - tt:
 
-  TableTree
+  (`TableTree`)  
+  TableTree object
 
 - colwidths:
 
-  numeric. Column widths (in numbers of spaces under `fontspec`)
+  (`numeric`)  
+  Column widths (in numbers of spaces under `fontspec`)
 
 - fontspec:
 
-  font_spec.
+  (`font_spec`)  
+  Font specification object
 
 ## Value
 
 `TRUE` if the wrap is able to be done without breaking words, `FALSE` if
-wordbreaking is required to apply `colwidths`
+wordbreaking is required to apply `colwidths`.

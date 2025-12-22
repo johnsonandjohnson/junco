@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Conditional Removal of Facets</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/split_functions.R" class="external-link"><code>R/split_functions.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/split_functions.R" class="external-link"><code>R/split_functions.R</code></a></small>
       <div class="d-none name"><code>cond_rm_facets.Rd</code></div>
     </div>
 
@@ -55,17 +55,17 @@
 
 
 <dl><dt id="arg-facets">facets<a class="anchor" aria-label="anchor" href="#arg-facets"></a></dt>
-<dd><p>character or NULL. Vector of facet names to be removed
+<dd><p>(<code>character</code> or NULL)<br> Vector of facet names to be removed
 if condition(s) are met</p></dd>
 
 
 <dt id="arg-facets-regex">facets_regex<a class="anchor" aria-label="anchor" href="#arg-facets-regex"></a></dt>
-<dd><p>character(1). Regular expression to identify facet
+<dd><p>(<code>character</code>)<br> Regular expression to identify facet
 names to be removed if condition(s) are met.</p></dd>
 
 
 <dt id="arg-ancestor-pos">ancestor_pos<a class="anchor" aria-label="anchor" href="#arg-ancestor-pos"></a></dt>
-<dd><p>numeric(1). Row in spl_context to check the condition
+<dd><p>(<code>numeric</code>)<br> Row in spl_context to check the condition
 within. E.g., 1 represents the first split, 2 represents the second split
 nested within the first, etc. NA specifies that the conditions
 should be checked at all split levels. Negative integers indicate position
@@ -75,40 +75,40 @@ cannot be mixed.</p></dd>
 
 
 <dt id="arg-split">split<a class="anchor" aria-label="anchor" href="#arg-split"></a></dt>
-<dd><p>character(1) or NULL. If specified, name of the split
+<dd><p>(<code>character</code> or NULL)<br> If specified, name of the split
 at position <code>ancestor_pos</code> must be identical to this value for
 the removal condition to be met.</p></dd>
 
 
 <dt id="arg-split-regex">split_regex<a class="anchor" aria-label="anchor" href="#arg-split-regex"></a></dt>
-<dd><p>character(1) or NULL. If specified, a regular expression
+<dd><p>(<code>character</code> or NULL)<br> If specified, a regular expression
 the name of the split at position <code>ancestor_pos</code> must match for
 the removal condition to be met. Cannot be specified at the same time
 as <code>split</code>.</p></dd>
 
 
 <dt id="arg-value">value<a class="anchor" aria-label="anchor" href="#arg-value"></a></dt>
-<dd><p>character(1) or NULL. If specified, split (facet) value
+<dd><p>(<code>character</code> or NULL)<br> If specified, split (facet) value
 at position <code>ancestor_pos</code> must be identical to this value for
 removal condition to be met.</p></dd>
 
 
 <dt id="arg-value-regex">value_regex<a class="anchor" aria-label="anchor" href="#arg-value-regex"></a></dt>
-<dd><p>character(1) or NULL. If specified, a regular expression
+<dd><p>(<code>character</code> or NULL)<br> If specified, a regular expression
 the value of the split at position <code>ancestor_pos</code> must match for
 the removal condition to be met. Cannot be specified at the same time
 as <code>value</code>.</p></dd>
 
 
 <dt id="arg-keep-matches">keep_matches<a class="anchor" aria-label="anchor" href="#arg-keep-matches"></a></dt>
-<dd><p>logical(1). Given the specified condition is met,
+<dd><p>(<code>logical</code>)<br> Given the specified condition is met,
 should the facets removed be those matching <code>facets</code>/<code>facets_regex</code>
 (<code>FALSE</code>, the default), or those <em>not</em> matching (<code>TRUE</code>).</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a function suitable for use in <code>make_split_fun</code>'s
+    <p>A function suitable for use in <code>make_split_fun</code>'s
 <code>post</code> argument which encodes the specified condition.</p>
     </div>
     <div class="section level2">
@@ -189,7 +189,7 @@ are removed.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

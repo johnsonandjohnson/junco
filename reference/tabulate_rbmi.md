@@ -97,9 +97,13 @@ a_rbmi_lsmeans(
 
 ## Value
 
-The `data.frame` with results of pooled analysis for a single visit.
+- `h_tidy_pool()` returns a `data.frame` with results of pooled analysis
+  for a single visit.
 
-A list of statistics extracted from a tidied LS means data frame.
+&nbsp;
+
+- `s_rbmi_lsmeans()` returns a list of statistics extracted from a
+  tidied LS means data frame.
 
 ## Functions
 

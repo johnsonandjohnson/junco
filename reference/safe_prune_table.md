@@ -35,20 +35,20 @@ safe_prune_table(
 
 - empty_msg:
 
-  character(1). The message to place in the table if no rows were left
-  after pruning
+  (`character(1)`)  
+  The message to place in the table if no rows were left after pruning
 
 - spancols:
 
-  logical(1). Should `empty_msg` be spanned across the table's columns
-  (`TRUE`) or placed in the rows row label (`FALSE`). Defaults to
-  `FALSE` currently.
+  (`logical(1)`)  
+  Should `empty_msg` be spanned across the table's columns (`TRUE`) or
+  placed in the rows row label (`FALSE`). Defaults to `FALSE` currently.
 
 ## Value
 
 `tt` pruned based on the arguments, or, if pruning would remove all
 rows, a TableTree with the same column structure, and one row containing
-the empty message spanning all columns
+the empty message spanning all columns.
 
 ## Examples
 

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>TableTree to .rtf Conversion</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/tt_to_tblfile.R" class="external-link"><code>R/tt_to_tblfile.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.2-rc1/R/tt_to_tblfile.R" class="external-link"><code>R/tt_to_tblfile.R</code></a></small>
       <div class="d-none name"><code>tt_to_tlgrtf.Rd</code></div>
     </div>
 
@@ -60,6 +60,9 @@
 <span>  combined_rtf <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  one_table <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  border_mat <span class="op">=</span> <span class="fu">make_header_bordmat</span><span class="op">(</span>obj <span class="op">=</span> <span class="va">tt</span><span class="op">)</span>,</span>
+<span>  round_type <span class="op">=</span> <span class="fu">obj_round_type</span><span class="op">(</span><span class="va">tt</span><span class="op">)</span>,</span>
+<span>  alignments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  validate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -69,24 +72,24 @@
 
 
 <dl><dt id="arg-tt">tt<a class="anchor" aria-label="anchor" href="#arg-tt"></a></dt>
-<dd><p>TableTree object to convert to RTF</p></dd>
+<dd><p>(<code>TableTree</code>)<br> TableTree object to convert to RTF</p></dd>
 
 
 <dt id="arg-file">file<a class="anchor" aria-label="anchor" href="#arg-file"></a></dt>
-<dd><p>character(1). File to create, including path, but excluding
+<dd><p>(<code>character(1)</code>)<br> File to create, including path, but excluding
 .rtf extension.</p></dd>
 
 
 <dt id="arg-orientation">orientation<a class="anchor" aria-label="anchor" href="#arg-orientation"></a></dt>
-<dd><p>Orientation of the output ("portrait" or "landscape")</p></dd>
+<dd><p>(<code>character</code>)<br> Orientation of the output ("portrait" or "landscape")</p></dd>
 
 
 <dt id="arg-colwidths">colwidths<a class="anchor" aria-label="anchor" href="#arg-colwidths"></a></dt>
-<dd><p>Column widths for the table</p></dd>
+<dd><p>(<code>numeric</code> vector)<br> Column widths for the table</p></dd>
 
 
 <dt id="arg-label-width-ins">label_width_ins<a class="anchor" aria-label="anchor" href="#arg-label-width-ins"></a></dt>
-<dd><p>Label width in inches</p></dd>
+<dd><p>(<code>numeric</code>)<br> Label width in inches</p></dd>
 
 
 <dt id="arg-watermark">watermark<a class="anchor" aria-label="anchor" href="#arg-watermark"></a></dt>
@@ -95,69 +98,86 @@ RTF outputs. Vectorized.</p></dd>
 
 
 <dt id="arg-pagenum">pagenum<a class="anchor" aria-label="anchor" href="#arg-pagenum"></a></dt>
-<dd><p>(optional) Logical. When true page numbers are added on the
-right side of the footer section in the format page x/y.
-Vectorized. (Default = FALSE)</p></dd>
+<dd><p>(<code>logical</code>)<br> Whether to add page numbers to the output.
+Only applicable to listings (i.e. it is ignored for tables and figures).</p></dd>
 
 
 <dt id="arg-fontspec">fontspec<a class="anchor" aria-label="anchor" href="#arg-fontspec"></a></dt>
-<dd><p>Font specification object</p></dd>
+<dd><p>(<code>font_spec</code>)<br> Font specification object</p></dd>
 
 
 <dt id="arg-pg-width">pg_width<a class="anchor" aria-label="anchor" href="#arg-pg-width"></a></dt>
-<dd><p>Page width in inches</p></dd>
+<dd><p>(<code>numeric</code>)<br> Page width in inches</p></dd>
 
 
 <dt id="arg-margins">margins<a class="anchor" aria-label="anchor" href="#arg-margins"></a></dt>
-<dd><p>Margins in inches (top, right, bottom, left)</p></dd>
+<dd><p>(<code>numeric</code> vector)<br> Margins in inches (top, right, bottom, left)</p></dd>
 
 
 <dt id="arg-paginate">paginate<a class="anchor" aria-label="anchor" href="#arg-paginate"></a></dt>
-<dd><p>Whether to paginate the output</p></dd>
+<dd><p>(<code>logical</code>)<br> Whether to paginate the output</p></dd>
 
 
 <dt id="arg-col-gap">col_gap<a class="anchor" aria-label="anchor" href="#arg-col-gap"></a></dt>
-<dd><p>Column gap in spaces</p></dd>
+<dd><p>(<code>numeric</code>)<br> Column gap in spaces</p></dd>
 
 
 <dt id="arg-nosplitin">nosplitin<a class="anchor" aria-label="anchor" href="#arg-nosplitin"></a></dt>
-<dd><p>list(row=, col=). Path elements whose children should not be paginated within
+<dd><p>(<code>list</code>)<br> list(row=, col=). Path elements whose children should not be paginated within
 if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
 all the associated columns don't fit on a single page.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>Whether to print verbose output</p></dd>
+<dd><p>(<code>logical</code>)<br> Whether to print verbose output</p></dd>
 
 
 <dt id="arg-tlgtype">tlgtype<a class="anchor" aria-label="anchor" href="#arg-tlgtype"></a></dt>
-<dd><p>Type of the output (Table, Listing, or Figure)</p></dd>
+<dd><p>(<code>character</code>)<br> Type of the output (Table, Listing, or Figure)</p></dd>
 
 
 <dt id="arg-string-map">string_map<a class="anchor" aria-label="anchor" href="#arg-string-map"></a></dt>
-<dd><p>Unicode mapping for special characters</p></dd>
+<dd><p>(<code>data.frame</code>)<br> Unicode mapping for special characters</p></dd>
 
 
 <dt id="arg-markup-df">markup_df<a class="anchor" aria-label="anchor" href="#arg-markup-df"></a></dt>
-<dd><p>Data frame containing markup information</p></dd>
+<dd><p>(<code>data.frame</code>)<br> Data frame containing markup information</p></dd>
 
 
 <dt id="arg-combined-rtf">combined_rtf<a class="anchor" aria-label="anchor" href="#arg-combined-rtf"></a></dt>
-<dd><p>logical(1). In the case where the result is broken up into multiple
+<dd><p>(<code>logical(1)</code>)<br> In the case where the result is broken up into multiple
 parts due to width, should a combined rtf file also be created. Defaults to <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg-one-table">one_table<a class="anchor" aria-label="anchor" href="#arg-one-table"></a></dt>
-<dd><p>logical(1). If <code>tt</code> is a (non-<code>MatrixPrintForm</code>) list,
+<dd><p>(<code>logical(1)</code>)<br> If <code>tt</code> is a (non-<code>MatrixPrintForm</code>) list,
 should the parts be added to the rtf within a single table (<code>TRUE</code>, the
 default) or as separate tables. End users will not generally need to set this.</p></dd>
 
 
 <dt id="arg-border-mat">border_mat<a class="anchor" aria-label="anchor" href="#arg-border-mat"></a></dt>
-<dd><p>matrix. A <code>m x k</code> matrix where m is the number of columns of <code>tt</code>
+<dd><p>(<code>matrix</code>)<br> A <code>m x k</code> matrix where m is the number of columns of <code>tt</code>
 and k is the number of lines the header takes up. See <a href="https://pharmaverse.github.io/tidytlg/main/reference/add_bottom_borders.html" class="external-link">tidytlg::add_bottom_borders</a>
 for what the matrix should contain. Users should only specify this when the
 default behavior does not meet their needs.</p></dd>
+
+
+<dt id="arg-round-type">round_type<a class="anchor" aria-label="anchor" href="#arg-round-type"></a></dt>
+<dd><p>(<code>character(1)</code>)<br> the type of rounding to perform.
+See <code><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html" class="external-link">formatters::format_value()</a></code> for more details.</p></dd>
+
+
+<dt id="arg-alignments">alignments<a class="anchor" aria-label="anchor" href="#arg-alignments"></a></dt>
+<dd><p>(<code>list</code>)<br> List of named lists. Vectorized.
+(Default = <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>) Used to specify individual column or cell alignments.
+Each named list contains <code>row</code>, <code>col</code>, and <code>value</code>, which are passed to
+<code><a href="https://hughjonesd.github.io/huxtable/reference/align.html" class="external-link">huxtable::set_align()</a></code> to set the alignments.</p></dd>
+
+
+<dt id="arg-validate">validate<a class="anchor" aria-label="anchor" href="#arg-validate"></a></dt>
+<dd><p>logical(1). Whether to validate the table structure using
+<code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/validate_table_struct.html" class="external-link">rtables::validate_table_struct()</a></code>. Defaults to <code>TRUE</code>. If <code>FALSE</code>, a message
+will be displayed when validation fails.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -185,17 +205,13 @@ split the remaining available width. This will cause, e.g., the
 elements within the allparts rtf generated when <code>combined_rtf</code> is <code>TRUE</code>
 to differ visually from the content of the individual part rtfs.</p>
     </div>
-    <div class="section level2">
-    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Used in all table and listing scripts</p></div>
-    </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

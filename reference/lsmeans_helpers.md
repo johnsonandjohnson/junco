@@ -128,5 +128,5 @@ The difference here compared to the original
 tern.mmrm::h_get_spec_visit_estimates() function is that additional
 arguments for
 [`emmeans::contrast()`](https://rvlenth.github.io/emmeans/reference/contrast.html)
-can be passed via the Once this has been added to the `tern.mmrm`
-package then its functions can be used instead.
+can be passed via the dots (`...`) argument. Once this has been added to
+the `tern.mmrm` package then its functions can be used instead.
