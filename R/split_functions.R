@@ -260,7 +260,13 @@ cond_rm_facets <- function(
     ancestor_pos <- resolve_ancestor_pos(ancestor_pos, NROW(.spl_context))
     torm_ind <- find_torm(ret, facets, facets_regex, keep_matches = keep_matches)
     fct_abbrev <- ifelse(is.null(facets_regex), paste(facets, collapse = ", "), facets_regex)
-    if (.check_rem_cond(split, split_regex, .spl_context, ancestor_pos, type = "split") && .check_rem_cond(value, value_regex, .spl_context, ancestor_pos, type = "value")) {
+    split_match <- .check_rem_cond(
+      split, split_regex, .spl_context, ancestor_pos, type = "split"
+    )
+    value_match <- .check_rem_cond(
+      value, value_regex, .spl_context, ancestor_pos, type = "value"
+    )
+    if (split_match && value_match) {
       no_rm_msg <- paste0(
         "No facets matched removal criteria [", fct_abbrev, "] ",
         "in function created with cond_rm_facets.\n",
@@ -277,10 +283,14 @@ cond_rm_facets <- function(
         "Occured at path: ",
         rtables::spl_context_to_disp_path(.spl_context)
       )
+      no_rm_case <- (length(torm_ind) == 0 && !keep_matches) ||
+        (length(torm_ind) == length(ret$datasplit) && keep_matches)
+      all_rm_case <- (length(torm_ind) == 0 && keep_matches) ||
+        (length(torm_ind) == length(ret$datasplit) && !keep_matches)
 
-      if ((length(torm_ind) == 0 && !keep_matches) || (length(torm_ind) == length(ret$datasplit) && keep_matches)) {
+      if (no_rm_case) {
         warning(no_rm_msg, call. = FALSE)
-      } else if ((length(torm_ind) == 0 && keep_matches) || (length(torm_ind) == length(ret$datasplit) && !keep_matches)) {
+      } else if (all_rm_case) {
         warning(all_rm_msg, call. = FALSE)
       }
       ## find_torm handles the keep matching case, so
