@@ -12,7 +12,7 @@
 #' When multiple levels, only those levels/values of the incoming variable
 #' will be considered.\cr
 #' When no values are observed (eg zero row input df),
-#' a row with row-label `No data reported` will be included in the table.
+#' a row with row-label `No data to report` will be included in the table.
 #' @param drop_levels (`logical`)\cr If `TRUE` non-observed levels
 #' (based upon .df_row) will not be included.\cr
 #' Cannot be used together with `val`.
