@@ -194,8 +194,11 @@ This controls both \code{denom = "n_parentdf"} and \code{denom = "n_altdf"}.\cr
 When \code{denom = "n_altdf"}, the denominator is derived from \code{.alt_df_full}
 in combination with \code{denom_by} argument}
 
-\item{.stats}{(\code{character})\cr statistics to select for the table.
-See Value for list of available statistics.}
+\item{.stats}{(\code{character})\cr Statistics to include in the table. May contain one or more of:
+\code{"count"}, \code{"count_unique"}, \code{"count_unique_fraction"},
+\code{"count_unique_denom_fraction"}, \code{"n_df"}, \code{"n_altdf"},
+\code{"n_rowdf"}, \code{"n_parentdf"}, \code{"denom"}.
+See Value for the full list of available statistics.}
 
 \item{.formats}{(named 'character' or 'list')\cr
 formats for the statistics.}
