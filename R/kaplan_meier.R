@@ -80,9 +80,9 @@ s_kaplan_meier <- function(df, .var, is_event, control = control_surv_time()) {
   range_event <- range_noinf(x_event, na.rm = TRUE)
   range <- range_noinf(x, na.rm = TRUE)
 
-  lower_censored <- any_censored && 
+  lower_censored <- any_censored &&
     (no_event || as.numeric(range_censor[1] < range_event[1]))
-  upper_censored <- any_censored && 
+  upper_censored <- any_censored &&
     (no_event || as.numeric(range_censor[2] > range_event[2]))
   range_with_cens_info <- c(range, lower_censored, upper_censored)
 

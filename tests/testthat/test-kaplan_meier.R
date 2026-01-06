@@ -50,7 +50,7 @@ test_that("s_kaplan_meier returns correct censoring indicators in edge cases", {
     )
 
   # Case 1: All events
-  adtte_f_all_events <- adtte_f |> 
+  adtte_f_all_events <- adtte_f |>
     dplyr::mutate(is_event = TRUE)
   result_all_events <- expect_silent(s_kaplan_meier(
     adtte_f_all_events,
@@ -58,12 +58,12 @@ test_that("s_kaplan_meier returns correct censoring indicators in edge cases", {
     is_event = "is_event"
   ))
   expect_identical(
-    result_all_events$range_with_cens_info[c(3, 4)], 
+    result_all_events$range_with_cens_info[c(3, 4)],
     c(0, 0) # No censored observations, so the range is also not censored.
   )
 
   # Case 2: All censored
-  adtte_f_all_censored <- adtte_f |> 
+  adtte_f_all_censored <- adtte_f |>
     dplyr::mutate(is_event = FALSE)
   result_all_censored <- expect_silent(s_kaplan_meier(
     adtte_f_all_censored,
@@ -71,7 +71,7 @@ test_that("s_kaplan_meier returns correct censoring indicators in edge cases", {
     is_event = "is_event"
   ))
   expect_identical(
-    result_all_censored$range_with_cens_info[c(3, 4)], 
+    result_all_censored$range_with_cens_info[c(3, 4)],
     c(1, 1) # All observations are censored, so the range is also censored.
   )
 })
