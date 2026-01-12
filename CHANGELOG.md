@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.3] - 2026-01-12
 
 ### Changed
-- Vignettes: switch to rmarkdown::html_vignette and fix internal link to package index (../html/00Index.html) to address CRAN NOTES.
+- Address CRAN NOTES.
 
 ## [0.1.2] - 2025-12-10
 
