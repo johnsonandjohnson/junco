@@ -99,7 +99,7 @@ Just like `tern` analyze functions, the `junco` analysis functions offer various
 
 Examples of the `junco` analysis functions are `a_freq_j`, `a_freq_subcol_j`, `a_summarize_aval_chg_diff_j` or  `a_summarize_ex_j`.
 
-A complete list of analysis functions can be found in [the junco website functions reference](../reference/index.html).
+A complete list of analysis functions can be found in [the junco website functions reference](../reference/00Index.html).
 
 ## Tabulation Examples using `a_freq_j`
 
