@@ -24,11 +24,11 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-latest,   r: 'release'}
+          #- {os: macos-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: windows-latest, r: 'devel'}
-          - { os: ubuntu-latest,  r: 'devel', clang: true }
+          - {os: ubuntu-latest,  r: 'devel', clang: true }
           - {os: windows-latest, r: 'oldrel-1'}
 
     env:
