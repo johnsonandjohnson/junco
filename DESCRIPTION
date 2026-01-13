@@ -1,12 +1,7 @@
 Package: junco
 Title: Create Common Tables and Listings Used in Clinical Trials
-<<<<<<< HEAD
-Version: 0.1.3
+Version: 0.1.4
 Date: 2026-01-12
-=======
-Version: 0.1.2.9000
-Date: 2025-12-04
->>>>>>> 8f497475074eca12d04d15eb3bd6aa039e31c965
 Authors@R: c(
     person("Gabriel", "Becker", , "gabembecker@gmail.com", role = c("cre", "aut"),
            comment = "Original creator of the package, and author of included formatters functions"),
