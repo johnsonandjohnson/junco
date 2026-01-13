@@ -17,6 +17,8 @@
 #' @param conf_level (`proportion`)\cr confidence level of the interval.
 #' @param method (`character`)\cr method for calculating confidence intervals.
 #' @param weights_method (`character`)\cr method for calculating weights.
+#' @param .formats (`character` or NULL)\cr formats to apply to the statistics. If NULL, default formats will be used.
+#' @param na_str (`character`)\cr string to use for NA values. Defaults to `rep("NA", 3)`.
 #' @param ... Additional arguments passed to other functions.
 #'
 #' @return Formatted analysis function which is used as `afun` in `analyze_vars()`
@@ -68,6 +70,8 @@ a_freq_resp_var_j <- function(
       "strat_newcombecc"
     ),
     weights_method = formals(s_proportion_diff)$weights_method,
+    .formats = NULL,
+    na_str = rep("NA", 3),
     ...) {
   # ---- Derive statistics: xx / xx (xx.x%)
 
@@ -166,7 +170,9 @@ a_freq_resp_var_j <- function(
 
       .stat <- "count_unique_denom_fraction"
       x_stat <- rslt[[.stat]]$Y
-      rslt <- rcell(x_stat, format = jjcsformat_count_denom_fraction)
+      # use .formats if provided, otherwise default to jjcsformat_count_denom_fraction
+      fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction else .formats
+      rslt <- rcell(x_stat, format = fmt)
     } else {
       # use the risk differenc function s_rel_risk_val_j on the current level of the incoming variable (.var)
       # note that the response variable will become .var in the below call
@@ -192,10 +198,12 @@ a_freq_resp_var_j <- function(
         weights_method = weights_method
       )
       x_stat <- rslt[["rr_ci_3d"]]$Y
+      # use .formats if provided, otherwise default to rr format
+      fmt <- if (is.null(.formats)) jjcsformat_xx("xx.x (xx.x, xx.x)") else .formats
       rslt <- rcell(
         x_stat,
-        format = jjcsformat_xx("xx.x (xx.x, xx.x)"),
-        format_na_str = rep("NA", 3)
+        format = fmt,
+        format_na_str = na_str
       )
     }
 
