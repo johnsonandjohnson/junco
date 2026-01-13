@@ -3,7 +3,7 @@
 **\[experimental\]**
 
 This function is based on
-[`rtables.officer::export_as_docx()`](https://insightsengineering.github.io/rtables.officer/latest-tag/reference/export_as_docx.html).
+[`rtables.officer::export_as_docx()`](https://insightsengineering.github.io/rtables.officer/latest-release/reference/export_as_docx.html).
 See notes to understand why this is experimental.
 
 ## Usage

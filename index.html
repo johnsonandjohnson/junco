@@ -68,31 +68,57 @@
 <p>The junco R package contains analysis functions to create tables and listings used for clinical trial reporting. It complements the tern package by providing additional statistical analysis capabilities.</p>
 <p>The package provides a range of functionality, such as:</p>
 <ul>
-<li>Statistical analysis (ANCOVA, MMRM, Cox regression, Kaplan-Meier)</li>
+<li>Statistical analysis (ANCOVA, MMRM, Cox regression, Kaplan-Meier, CMH stratified proportion difference estimation)</li>
 <li>Calculation of odds ratios, relative risks, and proportion differences</li>
 <li>Event incidence rate analysis</li>
+<li>Support optional SAS (to-nearest-value) and IEC (to-nearest-even) rounding</li>
 <li>Frequency tabulations and summarizations</li>
 <li>Reference-based multiple imputation (RBMI) for handling missing data</li>
-<li>Production-ready RTF exporter for listings and tables (see <a href="https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.html">tt_to_tbldf</a>)</li>
+<li>Production-ready RTF and DOCX exporter for listings and tables (see <a href="https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.html">tt_to_tbldf</a> and <a href="https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.html">junco::export_as_docx_j</a>)</li>
 <li>Creation of tables, listings, and graphs (TLGs)</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Either you can install the stbale CRAN version</p>
+<p>Either you can install the stable CRAN version</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pharmaverseadamjnj"</span><span class="op">)</span> <span class="co">#CRAN Release</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"junco"</span><span class="op">)</span> <span class="co">#CRAN Release</span></span></code></pre></div>
 <p>Or you can install the development version from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org" class="external-link">'remotes'</a></span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"johnsonandjohnson/junco"</span>, ref <span class="op">=</span> <span class="st">"dev"</span><span class="op">)</span> <span class="co">#or for the rolling dev release</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"johnsonandjohnson/junco"</span>, ref <span class="op">=</span> <span class="st">"dev"</span><span class="op">)</span> <span class="co">#for the rolling dev release</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>To understand how to use this package, please refer to the <a href="https://johnsonandjohnson.github.io/junco/articles/junco.html">junco article</a>, which provides multiple examples of code implementation.</p>
-<p>See package vignettes <code>browseVignettes(package = "junco")</code> for usage of this package.</p>
+<p>To understand how to use this package, please refer to the vignettes (also available on the pkgdown site). You can list them locally with:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/browseVignettes.html" class="external-link">browseVignettes</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"junco"</span><span class="op">)</span></span></code></pre></div>
+<p>Key vignettes and what they cover:</p>
+<ul>
+<li>Getting started with junco — overview and basic workflow
+<ul>
+<li>Article: <a href="https://johnsonandjohnson.github.io/junco/articles/junco.html" class="uri">https://johnsonandjohnson.github.io/junco/articles/junco.html</a>
+</li>
+<li>What you’ll learn: how to set up data, create common analyses, and produce TLG-ready outputs using core helpers.</li>
+</ul>
+</li>
+<li>Table and listing customizations — controlling layouts and styles
+<ul>
+<li>Article: <a href="https://johnsonandjohnson.github.io/junco/articles/table_and_listing_customizations.html" class="uri">https://johnsonandjohnson.github.io/junco/articles/table_and_listing_customizations.html</a>
+</li>
+<li>What you’ll learn: how to customize headers, footers, column formatting, pagination, and how to export tables and listing to RTF and DOCX.</li>
+</ul>
+</li>
+<li>Auto column widths — making table columns fit content automatically
+<ul>
+<li>Article: <a href="https://johnsonandjohnson.github.io/junco/articles/auto_colwidths.html" class="uri">https://johnsonandjohnson.github.io/junco/articles/auto_colwidths.html</a>
+</li>
+<li>What you’ll learn: techniques and options for automatically sizing column widths for cleaner RTF/DOCX outputs.</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

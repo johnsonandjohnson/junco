@@ -37,38 +37,62 @@ package by providing additional statistical analysis capabilities.
 
 The package provides a range of functionality, such as:
 
-- Statistical analysis (ANCOVA, MMRM, Cox regression, Kaplan-Meier)
+- Statistical analysis (ANCOVA, MMRM, Cox regression, Kaplan-Meier, CMH
+  stratified proportion difference estimation)
 - Calculation of odds ratios, relative risks, and proportion differences
 - Event incidence rate analysis
+- Support optional SAS (to-nearest-value) and IEC (to-nearest-even)
+  rounding
 - Frequency tabulations and summarizations
 - Reference-based multiple imputation (RBMI) for handling missing data
-- Production-ready RTF exporter for listings and tables (see
-  [tt_to_tbldf](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.html))
+- Production-ready RTF and DOCX exporter for listings and tables (see
+  [tt_to_tbldf](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.html)
+  and
+  [junco::export_as_docx_j](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.html))
 - Creation of tables, listings, and graphs (TLGs)
 
 ## Installation
 
-Either you can install the stbale CRAN version
+Either you can install the stable CRAN version
 
 ``` r
-install.packages("pharmaverseadamjnj") #CRAN Release
+install.packages("junco") #CRAN Release
 ```
 
 Or you can install the development version from GitHub:
 
 ``` r
 require('remotes')
-remotes::install_github("johnsonandjohnson/junco", ref = "dev") #or for the rolling dev release
+remotes::install_github("johnsonandjohnson/junco", ref = "dev") #for the rolling dev release
 ```
 
 ## Usage
 
-To understand how to use this package, please refer to the [junco
-article](https://johnsonandjohnson.github.io/junco/articles/junco.html),
-which provides multiple examples of code implementation.
+To understand how to use this package, please refer to the vignettes
+(also available on the pkgdown site). You can list them locally with:
 
-See package vignettes `browseVignettes(package = "junco")` for usage of
-this package.
+``` r
+browseVignettes(package = "junco")
+```
+
+Key vignettes and what they cover:
+
+- Getting started with junco — overview and basic workflow
+  - Article:
+    <https://johnsonandjohnson.github.io/junco/articles/junco.html>
+  - What you’ll learn: how to set up data, create common analyses, and
+    produce TLG-ready outputs using core helpers.
+- Table and listing customizations — controlling layouts and styles
+  - Article:
+    <https://johnsonandjohnson.github.io/junco/articles/table_and_listing_customizations.html>
+  - What you’ll learn: how to customize headers, footers, column
+    formatting, pagination, and how to export tables and listing to RTF
+    and DOCX.
+- Auto column widths — making table columns fit content automatically
+  - Article:
+    <https://johnsonandjohnson.github.io/junco/articles/auto_colwidths.html>
+  - What you’ll learn: techniques and options for automatically sizing
+    column widths for cleaner RTF/DOCX outputs.
 
 # Package index
 

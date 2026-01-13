@@ -3,7 +3,7 @@
 **\[experimental\]**
 
 This function is based on
-[`rtables.officer::theme_docx_default()`](https://insightsengineering.github.io/rtables.officer/latest-tag/reference/tt_to_flextable.html).
+[`rtables.officer::theme_docx_default()`](https://insightsengineering.github.io/rtables.officer/latest-release/reference/tt_to_flextable.html).
 See notes to understand why this is experimental.
 
 ## Usage
