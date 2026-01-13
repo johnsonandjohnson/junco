@@ -20,6 +20,8 @@ a_freq_resp_var_j(
   method = c("wald", "waldcc", "cmh", "ha", "newcombe", "newcombecc", "strat_newcombe",
     "strat_newcombecc"),
   weights_method = formals(s_proportion_diff)$weights_method,
+  .formats = NULL,
+  na_str = rep("NA", 3),
   ...
 )
 }
@@ -51,6 +53,10 @@ a_freq_resp_var_j(
 \item{method}{(\code{character})\cr method for calculating confidence intervals.}
 
 \item{weights_method}{(\code{character})\cr method for calculating weights.}
+
+\item{.formats}{(\code{character} or NULL)\cr formats to apply to the statistics. If NULL, default formats will be used.}
+
+\item{na_str}{(\code{character})\cr string to use for NA values. Defaults to \code{rep("NA", 3)}.}
 
 \item{...}{Additional arguments passed to other functions.}
 }
