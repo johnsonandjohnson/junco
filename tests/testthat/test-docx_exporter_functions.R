@@ -399,12 +399,6 @@ testthat::test_that("add_title_style_caption() adds a new XML node w:pStyle w:va
   testthat::expect_equal(length(l_x_after), 1)
 })
 
-testthat::test_that("my_pg_width_by_orient() returns what it should", {
-  res <- junco:::my_pg_width_by_orient(orientation = "portrait")
-  testthat::expect_equal(res, 6.38)
-  res <- junco:::my_pg_width_by_orient(orientation = "landscape")
-  testthat::expect_equal(res, 8.88)
-})
 
 testthat::test_that("insert_footer_text() adds a footer line to a flextable", {
   options(docx.add_datetime = FALSE)

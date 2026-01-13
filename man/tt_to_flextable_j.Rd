@@ -18,13 +18,13 @@ tt_to_flextable_j(
   fontspec = formatters::font_spec("Times", 9L, 1.2),
   lpp = NULL,
   cpp = NULL,
-  ...,
-  colwidths = NULL,
+  colwidths = def_colwidths(tt, fontspec, col_gap = col_gap, label_width_ins =
+    label_width_ins, type = tlgtype),
+  label_width_ins = 2,
   tf_wrap = !is.null(cpp),
   max_width = cpp,
   total_page_height = 10,
-  total_page_width = my_pg_width_by_orient(orientation),
-  autofit_to_page = TRUE,
+  total_page_width = pg_width_by_orient(orientation == "landscape"),
   orientation = "portrait",
   nosplitin = character(),
   string_map = junco::default_str_map,
@@ -35,7 +35,8 @@ tt_to_flextable_j(
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
   alignments = list(),
-  border_mat = make_header_bordmat(obj = tt)
+  border_mat = make_header_bordmat(obj = tt),
+  ...
 )
 }
 \arguments{
@@ -66,9 +67,9 @@ or rtables.officer::theme_docx_default() for more details.}
 
 \item{cpp}{(optional) Default = NULL. Not used.}
 
-\item{...}{other arguments.}
+\item{colwidths}{(\code{numeric} vector)\cr Column widths for the table}
 
-\item{colwidths}{(optional) Default = NULL.}
+\item{label_width_ins}{(\code{numeric})\cr Label width in inches}
 
 \item{tf_wrap}{(optional) Default = FALSE. Not used.}
 
@@ -78,8 +79,6 @@ or rtables.officer::theme_docx_default() for more details.}
 
 \item{total_page_width}{(optional). No need to be specified by end user.
 Set to 6.38 ("portrait") or 8.88 ("landscape").}
-
-\item{autofit_to_page}{(optional) Default = TRUE. Not used and set to FALSE internally.}
 
 \item{orientation}{(optional) Default = "portrait".
 One of: "portrait", "landscape".}
@@ -111,6 +110,8 @@ Each named list contains \code{row}, \code{col}, and \code{value}.}
 and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}
 for what the matrix should contain. Users should only specify this when the
 default behavior does not meet their needs.}
+
+\item{...}{other arguments.}
 }
 \value{
 a flextable object.

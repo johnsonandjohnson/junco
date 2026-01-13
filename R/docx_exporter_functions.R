@@ -443,12 +443,50 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
   flx
 }
 
+my_insert_empty_rows <- function(huxme, newrows) {
+  # this is a simplified version of tidytlg:::insert_empty_rows()
+  # https://github.com/pharmaverse/tidytlg/blob/main/R/insert_empty_rows.R
+  # This is to avoid calling a non-exported function
+  
+  assertthat::assert_that(nrow(huxme) == length(newrows))
+  
+  data_columns <- names(huxme)
+  emptyrow <- huxme[NA, ][1, ]
+  emptyrow[, data_columns] <- ""
+  cum_sum <- cumsum(newrows)
+  df_chunks <- split(huxme, cum_sum)
+  df_chunks <- lapply(df_chunks, function(chunk) {
+    rbind(chunk, emptyrow)
+  })
+  names(df_chunks) <- NULL
+  merged_df <- do.call(rbind, df_chunks)
+  merged_df <- merged_df[-nrow(merged_df), ]
+  attr(merged_df, "row.names") <- as.integer(seq_len(nrow(merged_df)))
+  return(merged_df)
+}
 
-my_pg_width_by_orient <- function(orientation = "portrait") {
-  if (orientation == "landscape") {
-    return(8.88)
+my_apply_alignments <- function(flx, aligns_df, part) {
+  # this is a copy of rtables.officer:::.apply_alignments()
+  # https://github.com/insightsengineering/rtables.officer/blob/main/R/as_flextable.R#L504
+  # This is to avoid calling a non-exported function
+  
+  # List of characters you want to search for
+  search_chars <- unique(c(aligns_df))
+  
+  # Loop through each character and find its indexes
+  for (char in search_chars) {
+    indexes <- which(aligns_df == char, arr.ind = TRUE)
+    tmp_inds <- as.data.frame(indexes)
+    flx <- flx |>
+      flextable::align(
+        i = tmp_inds[["row"]],
+        j = tmp_inds[["col"]],
+        align = char,
+        part = part
+      )
   }
-  return(6.38)
+  
+  flx
 }
 
 #' Obtain the default theme for the docx
@@ -605,7 +643,6 @@ theme_docx_default_j <- function(
 #' @param theme (optional) a function factory. See theme_docx_default_j()
 #' or rtables.officer::theme_docx_default() for more details.
 #' @param border (optional) an `fp_border` object.
-#' @param indent_size (optional) Numeric. Not used and set to 9 points internally.
 #' @param titles_as_header (optional) Default = TRUE.
 #' @param bold_titles (optional) Default = TRUE.
 #' @param integrate_footers (optional) Default = TRUE.
@@ -614,20 +651,21 @@ theme_docx_default_j <- function(
 #' @param fontspec (optional) a font_spec object.
 #' @param lpp (optional) Default = NULL. Not used.
 #' @param cpp (optional) Default = NULL. Not used.
-#' @param ... other arguments.
-#' @param colwidths (optional) Default = NULL.
+#' @param colwidths (`numeric` vector)\cr Column widths for the table
+#' @param label_width_ins (`numeric`)\cr Label width in inches
 #' @param tf_wrap (optional) Default = FALSE. Not used.
 #' @param max_width (optional) Default = NULL. Not used.
 #' @param total_page_height (optional) Default = 10. Not used.
 #' @param total_page_width (optional). No need to be specified by end user.
 #' Set to 6.38 ("portrait") or 8.88 ("landscape").
-#' @param autofit_to_page (optional) Default = TRUE. Not used and set to FALSE internally.
 #' @param orientation (optional) Default = "portrait".
 #' One of: "portrait", "landscape".
 #' @param nosplitin (optional) Default = character(). Named list.
 #' @param string_map (optional) Default = default_str_map.
 #' @param markup_df_docx (optional) Default = dps_markup_df_docx.
-#' @param reduce_first_col_indentation (optional) Default = FALSE.
+#' @param reduce_first_col_indentation (optional) Default = FALSE. Flag to reduce
+#' by 1 the indentation if we have vertical pagination. No need to be specified by
+#' the end user.
 #' @param tlgtype (optional). No need to be specified by end user.
 #' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
 #' @param pagenum (optional). Default = FALSE (Tables) or TRUE (Listings).
@@ -642,6 +680,7 @@ theme_docx_default_j <- function(
 #' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #' for what the matrix should contain. Users should only specify this when the
 #' default behavior does not meet their needs.
+#' @param ... other arguments.
 #'
 #'
 #' @note
@@ -659,7 +698,6 @@ tt_to_flextable_j <- function(
   tblid,
   theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
   border = flextable::fp_border_default(width = 0.75, color = "black"),
-  indent_size = NULL,
   titles_as_header = TRUE,
   bold_titles = TRUE,
   integrate_footers = TRUE,
@@ -668,13 +706,18 @@ tt_to_flextable_j <- function(
   fontspec = formatters::font_spec("Times", 9L, 1.2),
   lpp = NULL,
   cpp = NULL,
-  ...,
-  colwidths = NULL,
+  colwidths = def_colwidths(
+    tt,
+    fontspec,
+    col_gap = col_gap,
+    label_width_ins = label_width_ins,
+    type = tlgtype
+  ),
+  label_width_ins = 2,
   tf_wrap = !is.null(cpp),
   max_width = cpp,
   total_page_height = 10,
-  total_page_width = my_pg_width_by_orient(orientation),
-  autofit_to_page = TRUE,
+  total_page_width = pg_width_by_orient(orientation == "landscape"),
   orientation = "portrait",
   nosplitin = character(),
   string_map = junco::default_str_map,
@@ -685,8 +728,8 @@ tt_to_flextable_j <- function(
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
   alignments = list(),
-  border_mat = make_header_bordmat(obj = tt)
-) {
+  border_mat = make_header_bordmat(obj = tt),
+  ...) {
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
   }
@@ -696,7 +739,6 @@ tt_to_flextable_j <- function(
   checkmate::assert_flag(titles_as_header)
   checkmate::assert_flag(integrate_footers)
   checkmate::assert_flag(counts_in_newline)
-  checkmate::assert_flag(autofit_to_page)
   checkmate::assert_number(total_page_width, lower = 1)
   checkmate::assert_number(total_page_height, lower = 1)
   checkmate::assert_numeric(colwidths, lower = 0, len = ncol(tt) + 1, null.ok = TRUE)
@@ -727,33 +769,17 @@ tt_to_flextable_j <- function(
     tt <- set_titles(tt, titles)
   }
 
-  if (is.null(colwidths)) {
-    # NOTE: calculate page width and column widths
 
-    label_width_ins <- 2
-    colwidths <- junco::def_colwidths(
-      tt,
-      fontspec,
-      col_gap = col_gap,
-      label_width_ins = label_width_ins,
-      type = tlgtype
+  colwidths_2 <- colwidths
+  if (tlgtype == "Table") {
+    colwidths <- cwidths_final_adj(
+      labwidth_ins = label_width_ins,
+      total_width = total_page_width,
+      colwidths = colwidths[-1]
     )
-    colwidths_2 <- colwidths
-    if (tlgtype == "Table") {
-      colwidths <- utils::getFromNamespace("cwidths_final_adj", "junco")(
-        labwidth_ins = label_width_ins,
-        total_width = total_page_width,
-        colwidths = colwidths[-1]
-      )
-    }
-    colwidths <- (colwidths / sum(colwidths)) * total_page_width
-    # END
   }
+  colwidths <- (colwidths / sum(colwidths)) * total_page_width
 
-
-  autofit_to_page <- FALSE
-  # NOTE
-  left_right_fixed_margins <- rtables.officer::word_mm_to_pt(1.9)
 
   if (paginate) {
     ## implies type Table
@@ -776,7 +802,7 @@ tt_to_flextable_j <- function(
       landscape = orientation == "landscape",
       colwidths = colwidths_2,
       col_gap = col_gap,
-      pg_width = my_pg_width_by_orient(orientation),
+      pg_width = pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
       margins = rep(0, 4),
       lpp = NULL,
@@ -841,7 +867,6 @@ tt_to_flextable_j <- function(
           tt = subt,
           theme = theme,
           border = border,
-          indent_size = indent_size,
           titles_as_header = titles_as_header,
           bold_titles = bold_titles,
           integrate_footers = integrate_footers,
@@ -856,7 +881,6 @@ tt_to_flextable_j <- function(
           max_width = max_width,
           total_page_height = total_page_height,
           total_page_width = total_page_width,
-          autofit_to_page = autofit_to_page,
           orientation = orientation,
           tblid = fname,
           nosplitin = nosplitin,
@@ -882,9 +906,11 @@ tt_to_flextable_j <- function(
   }
 
 
-  matform <- rtables::matrix_form(tt,
+  matform <- rtables::matrix_form(
+    tt,
     fontspec = fontspec,
-    indent_rownames = FALSE, round_type = round_type
+    indent_rownames = FALSE,
+    round_type = round_type
   )
   body <- formatters::mf_strings(matform)
   spans <- formatters::mf_spans(matform)
@@ -892,12 +918,6 @@ tt_to_flextable_j <- function(
   hnum <- formatters::mf_nlheader(matform)
   rdf <- rtables::make_row_df(tt)
 
-
-  # check if the user passed 'alignments'
-  # if so, overwrite the default ones
-  for (al in alignments) {
-    mpf_aligns[al$row, al$col] <- al$value
-  }
 
   # NOTE: convert the '>=', '<=', etc symbols
   body <- strmodify(body, string_map)
@@ -928,7 +948,7 @@ tt_to_flextable_j <- function(
   content[content == ""] <- " "
   # NOTE:
   # insert blank lines previously calculated
-  content <- utils::getFromNamespace("insert_empty_rows", "tidytlg")(content, newrows)
+  content <- my_insert_empty_rows(content, newrows)
   # update 'mpf_aligns'
   idx <- which(newrows == 1)
   # NOTE: here, it is important to traverse 'idx' in reverse order
@@ -943,7 +963,7 @@ tt_to_flextable_j <- function(
   # END
 
   flx <- flextable::qflextable(content) |>
-    utils::getFromNamespace(".remove_hborder", "rtables.officer")(part = "body", w = "bottom")
+    flextable::border_remove()
 
   hdr <- body[seq_len(hnum), , drop = FALSE]
   if (hnum > 1) {
@@ -1031,8 +1051,8 @@ tt_to_flextable_j <- function(
   nr_body <- flextable::nrow_part(flx, part = "body")
   nr_header <- flextable::nrow_part(flx, part = "header")
   flx <- flx |>
-    flextable::border(part = "header", border = flextable::fp_border_default(width = 0)) |>
-    flextable::border(part = "header", i = 1, border.top = border)
+    flextable::border(part = "header", i = 1, border.top = border) |>
+    flextable::border(part = "body", i = nr_body, border.bottom = border)
 
   for (ij in l_pos) {
     i <- ij[1]
@@ -1041,41 +1061,38 @@ tt_to_flextable_j <- function(
   }
   # END
 
+
+  # check if the user passed 'alignments'
+  # if so, overwrite the default ones
+  for (al in alignments) {
+    mpf_aligns[al$row, al$col] <- al$value
+  }
   if (length(alignments) == 0) {
     flx <- flx |>
-      utils::getFromNamespace(
-        ".apply_alignments",
-        "rtables.officer"
-      )(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") |>
-      utils::getFromNamespace(
-        ".apply_alignments",
-        "rtables.officer"
-      )(mpf_aligns[seq(hnum + 1, nrow(mpf_aligns)), , drop = FALSE], "body")
+      my_apply_alignments(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") |>
+      my_apply_alignments(mpf_aligns[-seq_len(hnum), , drop = FALSE], "body")
   } else {
-    flx <- flx |>
-      utils::getFromNamespace(
-        ".apply_alignments",
-        "rtables.officer"
-      )(mpf_aligns[seq_len(hnum), , drop = FALSE], "header")
-    for (i in seq(hnum + 1, nrow(mpf_aligns))) {
+    # iterate for each row in the header
+    for (i in seq_len(hnum)) {
       flx <- flx |>
         flextable::align(
-          part = "body", i = i - hnum,
+          part = "header", i = i,
           align = mpf_aligns[i, , drop = FALSE]
+        )
+    }
+    # iterate for each column in the body
+    for (j in seq_len(ncol(mpf_aligns))) {
+      flx <- flx |>
+        flextable::align(
+          part = "body", j = j,
+          align = mpf_aligns[-seq_len(hnum), j, drop = FALSE]
         )
     }
   }
 
-  checkmate::check_number(indent_size, null.ok = TRUE)
-  if (is.null(indent_size)) {
-    indent_size <- matform$indent_size * rtables.officer::word_mm_to_pt(1)
-  } else {
-    indent_size <- indent_size * rtables.officer::word_mm_to_pt(1)
-  }
-  # NOTE:
+  # NOTE: 3.175mm = 9 ms word points = 0.125 inches
   flx <- flextable::line_spacing(flx, space = 0, part = "body")
   indent_size <- rtables.officer::word_mm_to_pt(3.175)
-  left_right_fixed_margins <- 0
   updated_indents <- rdf$indent
   idx <- which(newrows == 1)
   # NOTE: here, it is important to traverse 'idx' in reverse order
@@ -1091,12 +1108,13 @@ tt_to_flextable_j <- function(
     updated_indents[which(updated_indents < 0)] <- 0
   }
   for (i in seq_len(nr_body)) {
-    # NOTE: this line adds the left padding to each row column 1 (Body only)
+    # NOTE: this line adds the left padding to each row in column 1 (Body only)
     flx <- flextable::padding(flx,
       i = i, j = 1,
-      padding.left = indent_size * updated_indents[[i]] + left_right_fixed_margins, # NOTE:
-      padding.right = left_right_fixed_margins,
-      padding.top = 0, padding.bottom = 0,
+      padding.left = indent_size * updated_indents[[i]],
+      padding.right = 0,
+      padding.top = 0,
+      padding.bottom = 0,
       part = "body"
     )
   }
@@ -1112,26 +1130,27 @@ tt_to_flextable_j <- function(
 
     flx <- flextable::compose(flx, i = i, j = 1, value = flextable::as_paragraph(hdr[i, 1]), part = "header")
 
-    # NOTE: this line adds the left padding to each row column 1 (Header only)
+    # NOTE: this line adds the left padding to each row in column 1 (Header only)
     flx <- flextable::padding(flx,
       i = i, j = 1,
-      padding.left = header_indent_size + left_right_fixed_margins,
-      padding.right = left_right_fixed_margins,
+      padding.left = header_indent_size,
+      padding.right = 0,
       part = "header"
     )
   }
 
+  browser()
   footers_with_blank_line <- c()
-  if (length(matform$ref_footnotes) > 0 && isTRUE(integrate_footers)) {
-    footers_with_blank_line <- c("", matform$ref_footnotes)
-    footers_with_blank_line <- strmodify(footers_with_blank_line, string_map)
-    flx <- flextable::add_footer_lines(flx, values = footers_with_blank_line) |>
-      utils::getFromNamespace(".add_hborder", "rtables.officer")(part = "body", ii = nrow(content), border = border) |>
-      utils::getFromNamespace(
-        ".add_hborder",
-        "rtables.officer"
-      )(part = "footer", ii = length(footers_with_blank_line), border = border)
-  }
+  # if (length(matform$ref_footnotes) > 0 && isTRUE(integrate_footers)) {
+  #   footers_with_blank_line <- c("", matform$ref_footnotes)
+  #   footers_with_blank_line <- strmodify(footers_with_blank_line, string_map)
+  #   flx <- flextable::add_footer_lines(flx, values = footers_with_blank_line) |>
+  #     utils::getFromNamespace(".add_hborder", "rtables.officer")(part = "body", ii = nrow(content), border = border) |>
+  #     utils::getFromNamespace(
+  #       ".add_hborder",
+  #       "rtables.officer"
+  #     )(part = "footer", ii = length(footers_with_blank_line), border = border)
+  # }
   if (length(formatters::all_footers(tt)) > 0 && isTRUE(integrate_footers)) {
     footers_with_blank_line <- c("", formatters::all_footers(tt))
     footers_with_blank_line <- strmodify(footers_with_blank_line, string_map)
@@ -1213,6 +1232,7 @@ tt_to_flextable_j <- function(
   if (tlgtype == "Table") {
     flx <- add_hanging_indent_first_column(flx = flx, column_widths = final_cwidths)
   }
+  autofit_to_page <- FALSE
   flx <- flextable::set_table_properties(flx,
     layout = ifelse(autofit_to_page, "autofit", "fixed"),
     align = "left", opts_word = list(split = FALSE, keep_with_next = TRUE)
@@ -1244,7 +1264,7 @@ tt_to_flextable_j <- function(
       landscape = orientation == "landscape",
       colwidths = colwidths_2,
       col_gap = col_gap,
-      pg_width = my_pg_width_by_orient(orientation),
+      pg_width = pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
       margins = rep(0, 4),
       lpp = NULL,
@@ -1598,7 +1618,7 @@ export_as_docx_j <- function(
 
     flex_tbl_list <- lapply(flex_tbl_list, function(flx) {
       if (flx$properties$layout != "autofit") {
-        page_width <- my_pg_width_by_orient(section_properties$page_size$orient)
+        page_width <- pg_width_by_orient(section_properties$page_size$orient == "landscape")
         # NOTE: here, even though page width is 8.88 inches, table width has
         # to be 8.82 inches, so leave a gap of 0.03 inches on both sides
         if (orientation == "landscape") {
