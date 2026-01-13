@@ -123,14 +123,28 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
   function(tt) {
     # Do not ever prune the following rows.  a row that should be kept in the table will get the value of FALSE
 
+    # preemptive pruning
+    # if current row is a "ContentRow" that contains all zeros,
+    # return TRUE (i.e. prune current row and all its children)
+    preemptive_pruning_possible <- FALSE
+    if (methods::is(tt, "TableTree")) {
+      children_types <- make_row_df(tt) |> pull(node_class)
+      if (length(which(children_types == "ContentRow")) == 1 &&
+            children_types[1] == "ContentRow") {
+        preemptive_pruning_possible <- TRUE
+      }
+    }
+
+
     if ( # nolint start
-      !methods::is(tt, "TableRow") ||
+      !preemptive_pruning_possible && (
+        !methods::is(tt, "TableRow") ||
         methods::is(tt, "LabelRow") ||
         obj_label(tt) == " " ||
         (!is.null(cat_include) &&
-          !obj_label(tt) %in% cat_include) ||
+         !obj_label(tt) %in% cat_include) ||
         (!is.null(cat_exclude) && obj_label(tt) %in% cat_exclude)
-    ) { # nolint end
+      )) { # nolint end
       return(FALSE)
     }
 
@@ -161,7 +175,13 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
     ## only continue if at least one non relative risk column selected
     if (any(cp_nonrelrisk)) {
       # get cell_values of non rel risk columns
-      cell_vals <- cell_values(tt)[cp_nonrelrisk]
+      if (preemptive_pruning_possible) {
+        cell_vals <- cell_values(tt)[cp_nonrelrisk] |> head(1)
+        cell_vals <- cell_vals[[1]]
+      } else {
+        cell_vals <- cell_values(tt)[cp_nonrelrisk]
+      }
+
 
       len_cell_vals <- lapply(cell_vals, function(x) {
         length(x)
