@@ -1,5 +1,5 @@
 test_that("cmp_split_fun works as expected", {
-  result <- basic_table() %>%
+  result <- basic_table(round_type = "sas") |>
     split_cols_by("ID", split_fun = cmp_split_fun) |>
     build_table(formatters::DM)
   expect_snapshot(result)

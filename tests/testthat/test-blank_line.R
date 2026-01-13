@@ -1,7 +1,7 @@
 test_that("insert_blank_line works as expected", {
   ADSL <- ex_adsl
 
-  lyt <- basic_table() |>
+  lyt <- basic_table(round_type = "sas") |>
     split_cols_by("ARM") |>
     split_rows_by("STRATA1") |>
     analyze(vars = "AGE", afun = function(x) {
@@ -34,7 +34,7 @@ test_that("insert_blank_line works as expected", {
 test_that("insert_blank_line optionally uses custom table names", {
   ADSL <- ex_adsl
 
-  lyt <- basic_table() |>
+  lyt <- basic_table(round_type = "sas") |>
     split_cols_by("ARM") |>
     split_rows_by("STRATA1") |>
     analyze(vars = "AGE", afun = function(x) {
@@ -64,7 +64,7 @@ test_that("insert_blank_line optionally uses custom table names", {
   tbl_string <- mf_strings(matrix_form(tbl))
   tbl_row_paths <- row_paths(tbl)
   for (row in c(5, 8, 14, 17, 23, 26)) {
-    expect_identical(tbl_string[row, ], rep("", length = 4))
+    expect_identical(tbl_string[row, ], rep("", length.out = 4))
   }
   for (row in c(4, 13, 22)) {
     checkmate::expect_subset("Gap1", tbl_row_paths[[row]])

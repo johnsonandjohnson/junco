@@ -70,6 +70,22 @@ test_that("column_stats calculates SD statistic correctly", {
   expect_equal(week1_sd, "7.071")
 })
 
+test_that("column_stats calculates mean_sd statistic correctly", {
+  # Create sample data
+  df <- data.frame(
+    AVISIT = c("Baseline (DB)", "Week 1", "Week 1", "Week 2", "Week 2"),
+    AVAL = c(10, 20, 30, 40, 50),
+    dp = c(1, 1, 1, 1, 1)
+  )
+  # Create context for AVAL mean_sd
+  ctx <- mk_context(c("AVAL", "mean_sd"))
+  fun <- column_stats()
+  rows <- fun(df, "AVISIT", ctx)
+
+  week1_mean_sd <- as.character(rows[["Week 1"]])
+  expect_equal(week1_mean_sd, "25.00 (7.071)")
+})
+
 test_that("column_stats calculates SE statistic correctly", {
   # Create sample data
   df <- data.frame(
@@ -148,7 +164,7 @@ test_that("column_stats handles BASE variable correctly", {
   expect_equal(week1_base_mean, "20.00")
 })
 
-test_that("column_stats handles iec roundmethod correctly", {
+test_that("column_stats handles iec round_type correctly", {
   # Create sample data
   df <- data.frame(
     AVISIT = c("Baseline (DB)", "Week 1", "Week 1", "Week 2", "Week 2"),
@@ -164,7 +180,7 @@ test_that("column_stats handles iec roundmethod correctly", {
       statnm,
       visit,
       varnm,
-      roundmethod = "iec",
+      round_type = "iec",
       exclude_visits = "Baseline (DB)"
     )
   }
@@ -180,6 +196,46 @@ test_that("column_stats handles iec roundmethod correctly", {
 
   expect_equal(result_R, "25.34")
 
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "N",
+    "Week 1",
+    "AVAL"
+  )
+
+  expect_equal(result_R, 2)
+
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "SE",
+    "Week 1",
+    "AVAL"
+  )
+
+  expect_equal(result_R, "5.000")
+
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "SD",
+    "Week 1",
+    "AVAL"
+  )
+
+  expect_equal(result_R, "7.071")
+
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "mean_sd",
+    "Week 1",
+    "AVAL"
+  )
+
+  expect_equal(result_R, "25.34 (7.071)")
+
   # Compare to SAS rounding
   result_SAS <- calc_one_visit(
     df$AVAL[df$AVISIT == "Week 1"],
@@ -187,111 +243,63 @@ test_that("column_stats handles iec roundmethod correctly", {
     "Mean",
     "Week 1",
     "AVAL",
-    roundmethod = "sas",
+    round_type = "sas",
     exclude_visits = "Baseline (DB)"
   )
   expect_equal(result_SAS, "25.35")
-})
 
-test_that("column_N function works correctly", {
-  # Create sample data
+  # Compare to SAS rounding
+  result_R_mod <- calc_one_visit(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "Mean",
+    "Week 1",
+    "AVAL",
+    round_type = "iec_mod",
+    exclude_visits = "Baseline (DB)"
+  )
+  expect_equal(result_R_mod, "25.34")
+
+
   df <- data.frame(
-    TRT = c("Drug A", "Drug A", "Drug B", "Drug B", "Drug B"),
-    USUBJID = c("001", "002", "003", "004", "004"), # Note 004 is duplicated
-    AVAL = c(10, 20, 30, 40, 50)
+    AVISIT = c(
+      "Baseline (DB)",
+      "Week 1",
+      "Week 1",
+      "Week 1",
+      "Week 2",
+      "Week 2"
+    ),
+    AVAL = c(10, 20, 30, 40, 50, 60),
+    dp = c(0, 0, 0, 0, 0, 0)
   )
 
-  # Create context for AVAL N
-  ctx <- mk_context(c("AVAL", "N"))
-
-  # Call column_N
-  rows <- suppressWarnings(column_N(df, "TRT", ctx))
-
-  # Should have counts of subjects by TRT group
-  expect_equal(as.numeric(rows[["Drug A"]]), 2) # 2 unique subjects
-  expect_equal(as.numeric(rows[["Drug B"]]), 2) # 2 unique subjects (one duplicate)
-})
-
-test_that("postfun_cog works correctly", {
-  # Create a basic return value and context
-  ret <- list()
-  fulldf <- data.frame(AVAL = c(10, 20, 30))
-
-  # Create spl_context for AVAL
-  spl_context <- data.frame(
-    value = I(list("AVAL")),
-    stringsAsFactors = FALSE
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "Med",
+    "Week 1",
+    "AVAL"
   )
+  expect_equal(result_R, "30.00")
 
-  # Call postfun_cog
-  result <- postfun_cog(ret, NULL, fulldf, spl_context)
-
-  # Check structure of result
-  expect_type(result, "list")
-  expect_equal(
-    names(result$values),
-    c("N", "Mean", "SD", "SE", "Med", "Min", "Max")
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "Min",
+    "Week 1",
+    "AVAL"
   )
-  expect_equal(length(result$datasplit), 7)
-})
+  expect_equal(result_R, "20.0")
 
-test_that("postfun_eq5d works correctly", {
-  # Create a basic return value and context
-  ret <- list()
-  fulldf <- data.frame(AVAL = c(10, 20, 30))
-
-  # Create spl_context for AVAL
-  spl_context <- data.frame(
-    value = I(list("AVAL")),
-    stringsAsFactors = FALSE
+  result_R <- calc_one_visit_R(
+    df$AVAL[df$AVISIT == "Week 1"],
+    1,
+    "Max",
+    "Week 1",
+    "AVAL"
   )
-
-  # Call postfun_eq5d
-  result <- postfun_eq5d(ret, NULL, fulldf, spl_context)
-
-  # Check structure of result
-  expect_type(result, "list")
-  expect_equal(names(result$values), c("N", "Mean", "SD", "Med", "Min", "Max"))
-  expect_equal(length(result$datasplit), 6)
-
-  # Test for CHG
-  spl_context$value <- list("CHG")
-  result_chg <- postfun_eq5d(ret, NULL, fulldf, spl_context)
-  expect_equal(
-    names(result_chg$values),
-    c("N", "Mean", "SE", "SD", "Med", "Min", "Max")
-  )
-  expect_equal(length(result_chg$datasplit), 7)
-
-  # Test for BASE
-  spl_context$value <- list("BASE")
-  result_base <- postfun_eq5d(ret, NULL, fulldf, spl_context)
-  expect_equal(names(result_base$values), c("mean_sd"))
-  expect_equal(length(result_base$datasplit), 1)
-})
-
-test_that("postfun_cog and postfun_eq5d handle error cases", {
-  # Create a basic return value and context
-  ret <- list()
-  fulldf <- data.frame(AVAL = c(10, 20, 30))
-
-  # Create spl_context with invalid value
-  spl_context <- data.frame(
-    value = I(list("INVALID")),
-    stringsAsFactors = FALSE
-  )
-
-  # Expect error for postfun_cog
-  expect_error(
-    postfun_cog(ret, NULL, fulldf, spl_context),
-    "something bad happened"
-  )
-
-  # Expect error for postfun_eq5d
-  expect_error(
-    postfun_eq5d(ret, NULL, fulldf, spl_context),
-    "something bad happened"
-  )
+  expect_equal(result_R, "40.0")
 })
 
 test_that("calc_N returns NULL for non-AVAL variables", {

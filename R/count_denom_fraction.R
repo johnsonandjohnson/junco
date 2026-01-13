@@ -1,7 +1,7 @@
 #' @name  response_by_var
 #' @title Count denom fraction statistic
 #'
-#' @description Derives the count_denom_fraction statistic (i.e., 'xx /xx (xx.x percent)' )
+#' @description Derives the count_denom_fraction statistic (i.e., 'xx /xx (xx.x percent)' )\cr
 #'              Summarizes the number of unique subjects with a response = 'Y' for a given variable
 #'              (e.g. TRTEMFL) within each category of another variable (e.g., SEX).
 #'              Note that the denominator is derived using input df,
@@ -11,20 +11,17 @@
 #'          `df`, `.var` will be populated automatically by rtables during
 #'          the tabulation process.
 #'
-#' @param df           Name of dataframe being analyzed.
-#' @param labelstr     Custom label for the variable being analyzed.
-#' @param .var         Name of the variable being analyzed. Records with non-missing
+#' @param df           (`data.frame`)\cr Name of dataframe being analyzed.
+#' @param labelstr     (`character vector`)\cr Custom label for the variable being analyzed.
+#' @param .var         (`character`)\cr Name of the variable being analyzed. Records with non-missing
 #'                     values will be counted in the denominator.
-#' @param .N_col numeric(1). The total for the current column.
-#' @param resp_var     Name of variable, for which, records with a value of 'Y'
+#' @param .N_col       (`numeric`)\cr The total for the current column.
+#' @param resp_var     (`character`)\cr Name of variable, for which, records with a value of 'Y'
 #'                     will be counted in the numerator.
-#' @param id           Name of column in df which will have patient identifiers
-#' @param .format      Format for the count/denominator/fraction output.
+#' @param id           (`character`)\cr Name of column in df which will have patient identifiers
+#' @param .format      (`character`)\cr Format for the count/denominator/fraction output.
 #' @param ...          Additional arguments passed to the function.
-# @examples #analyze(vars='AGEGR1_DECODE', var_labels = 'Age group (years), n/Ns (%)', afun = response_by_var,
-# extra_args = list(resp_var = 'TRTEMFL'))
 #' @examples
-#'
 #' library(dplyr)
 #'
 #' ADAE <- data.frame(
@@ -65,7 +62,6 @@
 #' result
 #' @return a `RowsVerticalSection` for use by the internal tabulation machinery of `rtables`
 #' @export
-
 response_by_var <- function(
     df,
     labelstr = NULL,

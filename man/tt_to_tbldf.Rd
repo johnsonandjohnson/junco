@@ -8,20 +8,29 @@ tt_to_tbldf(
   tt,
   fontspec = font_spec("Times", 9L, 1),
   string_map = default_str_map,
-  markup_df = dps_markup_df
+  markup_df = dps_markup_df,
+  round_type = obj_round_type(tt),
+  validate = TRUE
 )
 }
 \arguments{
-\item{tt}{TableTree object to convert to a data frame}
+\item{tt}{(\code{TableTree})\cr TableTree object to convert to a data frame}
 
-\item{fontspec}{Font specification object}
+\item{fontspec}{(\code{font_spec})\cr Font specification object}
 
-\item{string_map}{Unicode mapping for special characters}
+\item{string_map}{(\code{list})\cr Unicode mapping for special characters}
 
-\item{markup_df}{Data frame containing markup information}
+\item{markup_df}{(\code{data.frame})\cr Data frame containing markup information}
+
+\item{round_type}{(\code{character(1)})\cr the type of rounding to perform.
+See \code{\link[formatters:format_value]{formatters::format_value()}} for more details.}
+
+\item{validate}{logical(1). Whether to validate the table structure using
+\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message
+will be displayed instead of stopping with an error when validation fails.}
 }
 \value{
-\code{tt} represented as a "tbl" data.frame suitable for passing
+\code{tt} represented as a \code{tbl} data.frame suitable for passing
 to \link[tidytlg:gentlg]{tidytlg::gentlg} via the \code{huxme} argument.
 }
 \description{

@@ -2,7 +2,7 @@ library(rtables)
 
 test_that("analyze_values correctly modifies layout with proper formats", {
   # Create a simple layout
-  lyt <- basic_table() %>%
+  lyt <- basic_table(round_type = "sas") |>
     split_cols_by("ARM")
 
   # Define variables to analyze

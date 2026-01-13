@@ -23,7 +23,7 @@ required format. Note that the value is in percent already.}
 The \code{\link[rtables:rcell]{rtables::rcell()}} result.
 }
 \description{
-Formatted Analysis Function For Proportion Confidence Interval for Logical
+Formatted Analysis Function For Proportion Confidence Interval for Logical.
 }
 \examples{
 a_proportion_ci_logical(

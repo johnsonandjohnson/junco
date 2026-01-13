@@ -60,6 +60,9 @@ should be displayed.}
 
 \item{draw}{(\code{flag})\cr whether the plot should be drawn.}
 
+\item{exclude_levels}{(\code{list})\cr A named list where names correspond to split variables
+and values are vectors of levels to exclude.}
+
 \item{grp}{(\code{factor})\cr defining the groups.}
 
 \item{groups_lists}{(named \code{list} of \code{list})\cr optionally contains for each \code{subgroups} variable a
@@ -82,7 +85,7 @@ for more information.}
 \item{lyt}{(\code{layout})\cr input layout where analyses will be added to.}
 
 \item{method}{(\code{string})\cr specifies the test used to calculate the p-value for the difference between
-two proportions. For options, see \code{\link[=s_test_proportion_diff]{s_test_proportion_diff()}}. Default is \code{NULL} so no test is performed.}
+two proportions. For options, see \code{\link[tern:prop_diff_test]{tern::s_test_proportion_diff()}}. Default is \code{NULL} so no test is performed.}
 
 \item{na.rm}{(\code{flag})\cr whether \code{NA} values should be removed from \code{x} prior to analysis.}
 
@@ -111,7 +114,7 @@ defined by this split instruction, or \code{NA_character_} (the default) for no 
 
 \item{show_labels}{(\code{string})\cr label visibility: one of 'default', 'visible' and 'hidden'.}
 
-\item{show_relative}{should the 'reduction' (\code{control - treatment}, default) or the 'increase'
+\item{show_relative}{(\code{string})\cr should the 'reduction' (\code{control - treatment}, default) or the 'increase'
 (\code{treatment - control}) be shown for the relative change from baseline?}
 
 \item{strata}{(\code{character} or \code{NULL})\cr variable names indicating stratification factors.}

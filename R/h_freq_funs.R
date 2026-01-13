@@ -1,32 +1,14 @@
-#' Non-blank Sentinel
-#'
-#' @keywords internal
-non_blank_sentinel <- structure("", class = "non_blank_sentinel")
-
 #' Get Control Subset
 #'
 #' Retrieves a subset of the DataFrame based on treatment variable and control group.
 #'
-#' @param df Data frame to subset.
-#' @param trt_var Treatment variable name.
-#' @param ctrl_grp Control group value.
+#' @param df (`data.frame`)\cr Data frame to subset.
+#' @param trt_var (`character`)\cr Treatment variable name.
+#' @param ctrl_grp (`character`)\cr Control group value.
 #' @return Subset of the data frame.
 #' @keywords internal
 get_ctrl_subset <- function(df, trt_var, ctrl_grp) {
   df[df[[trt_var]] == ctrl_grp, ]
-}
-
-
-# sfunction to perform counting of records or subjects on an incoming df and .alt_df
-
-#' Null Function
-#'
-#' A function that returns NULL.
-#'
-#' @return NULL
-#' @keywords internal
-null_fn <- function(...) {
-  NULL
 }
 
 
@@ -42,8 +24,16 @@ null_fn <- function(...) {
 #' @param variables Variables to include in the analysis.
 #' @param denom Denominator type.
 #' @return Grand parent dataset.
-#' @export
+#' @noRd
+#' @keywords Internal
 h_create_altdf <- function(.spl_context, .df_row, denomdf, denom_by = NULL, id, variables, denom) {
+  colid <- .spl_context$cur_col_id[[1]]
+  inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
+  if (is.null(denomdf) && denom %in% c("N_col") && length(.spl_context$split) > 1 && inriskdiffcol) {
+    stop("In order to get correct numbers in relative risk column,
+         the alt_counts_df dataset should be passed to build_table")
+  }
+
   ### parent df in the current row-split (all col splits are still in)
   pardf <- .spl_context$full_parent_df[[NROW(.spl_context)]]
 
@@ -114,7 +104,7 @@ no_data_to_report_str <- "No data to report"
 #' @param val Values to keep.
 #' @param excl_levels Levels to exclude from the factor.
 #' @return Updated data frame.
-#' @export
+#' @noRd
 h_update_factor <- function(df, .var, val = NULL, excl_levels = NULL) {
   if (!is.factor(df[[.var]]) || (is.null(val) && is.null(excl_levels))) {
     return(df)
@@ -156,7 +146,8 @@ h_update_factor <- function(df, .var, val = NULL, excl_levels = NULL) {
 #' @param var Variable to extract from the expression.
 #' @param col_expr Column expression string.
 #' @return Substring corresponding to the variable.
-#' @export
+#' @noRd
+#' @keywords internal
 h_colexpr_substr <- function(var, col_expr) {
   # reconstructing the strings is not an option as doesn't work for combined columns facets
   cur_col_expr <- as.character(col_expr)
@@ -202,7 +193,8 @@ h_colexpr_substr <- function(var, col_expr) {
 #' @param denom Denominator type.
 #' @param denom_by Denominator grouping variable.
 #' @return Parent data frame.
-#' @export
+#' @noRd
+#' @keywords internal
 h_denom_parentdf <- function(.spl_context, denom, denom_by) {
   if (denom != "n_parentdf") {
     return(NULL)
@@ -229,7 +221,8 @@ h_denom_parentdf <- function(.spl_context, denom, denom_by) {
 #' @param addstr2levs String to add to new levels.
 #' @param new_levels_after Boolean, indicating if new levels should be added after existing levels.
 #' @return Updated data frame.
-#' @export
+#' @noRd
+#' @keywords internal
 h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_levels_after) {
   varvec <- df[[.var]]
 
@@ -293,9 +286,9 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
 #'
 #' Retrieves the treatment variable reference path from the provided context.
 #'
-#' @param ref_path Reference path for treatment variable.
-#' @param .spl_context Current split context.
-#' @param df Data frame.
+#' @param ref_path (`character`)\cr Reference path for treatment variable.
+#' @param .spl_context (`data.frame`)\cr Current split context.
+#' @param df (`data.frame`)\cr Data frame.
 #' @return List containing treatment variable details.
 #' @export
 h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
@@ -343,21 +336,23 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
 #' @param label_fstr Format string for labels.
 #' @param .spl_context Current split context.
 #' @return List containing updated data frames and values.
-#' @export
+#' @noRd
+#' @keywords internal
 h_upd_dfrow <- function(
-    df_row,
-    .var,
-    val,
-    excl_levels,
-    drop_levels,
-    new_levels,
-    new_levels_after,
-    addstr2levs,
-    label,
-    label_map,
-    labelstr,
-    label_fstr,
-    .spl_context) {
+  df_row,
+  .var,
+  val,
+  excl_levels,
+  drop_levels,
+  new_levels,
+  new_levels_after,
+  addstr2levs,
+  label,
+  label_map,
+  labelstr,
+  label_fstr,
+  .spl_context
+) {
   if (!is.null(label) && !is.null(label_map)) {
     stop("a_freq_j: label and label_map cannot be used together.")
   }
@@ -421,6 +416,11 @@ h_upd_dfrow <- function(
     excl_levels <- NULL
   }
 
+  if (is.null(val) && !is.null(label_map)) {
+    split_info <- .spl_context[c("split", "value")]
+    val <- h_restrict_val(df_row, .var, label_map, split_info)
+  }
+
   if (!is.null(val)) {
     # do not yet restrict to val levels, only update factors to the requested levels df_row <-
     df_row <- h_update_factor(df_row, .var, val)
@@ -470,7 +470,8 @@ h_upd_dfrow <- function(
 #' @param .var Variable name.
 #' @param split_info Current split information.
 #' @return Mapped labels.
-#' @export
+#' @noRd
+#' @keywords internal
 h_get_label_map <- function(.labels, label_map, .var, split_info) {
   if (!is.null(label_map)) {
     if (!all(c("split", "value") %in% names(split_info))) {
@@ -510,7 +511,7 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
 #' A Frequency Data Preparation Function
 #'
 #' Prepares frequency data for analysis.
-#'
+#' @noRd
 #' @param df Data frame to prepare.
 #' @param labelstr Label string.
 #' @param .var Variable name.
@@ -533,29 +534,29 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
 #' @param denom_by Denominator grouping variable.
 #' @param .stats Statistics to compute.
 #' @return List containing prepared data frames and values.
-#' @export
 h_a_freq_dataprep <- function(
-    df,
-    labelstr = NULL,
-    .var = NA,
-    val = NULL,
-    drop_levels = FALSE,
-    excl_levels = NULL,
-    new_levels = NULL,
-    new_levels_after = FALSE,
-    addstr2levs = NULL,
-    .df_row,
-    .spl_context,
-    .N_col,
-    id = "USUBJID",
-    denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
-    variables,
-    label = NULL,
-    label_fstr = NULL,
-    label_map = NULL,
-    .alt_df_full = NULL,
-    denom_by = NULL,
-    .stats) {
+  df,
+  labelstr = NULL,
+  .var = NA,
+  val = NULL,
+  drop_levels = FALSE,
+  excl_levels = NULL,
+  new_levels = NULL,
+  new_levels_after = FALSE,
+  addstr2levs = NULL,
+  .df_row,
+  .spl_context,
+  .N_col,
+  id = "USUBJID",
+  denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
+  variables,
+  label = NULL,
+  label_fstr = NULL,
+  label_map = NULL,
+  .alt_df_full = NULL,
+  denom_by = NULL,
+  .stats
+) {
   denom <- match.arg(denom)
 
   df <- df[!is.na(df[[.var]]), ]
@@ -628,7 +629,7 @@ h_a_freq_dataprep <- function(
 #' Frequency Preparation in Rows
 #'
 #' Prepares frequency data in rows based on provided parameters.
-#'
+#' @noRd
 #' @param x_stats Statistics data.
 #' @param .stats_adj Adjusted statistics.
 #' @param .formats Format settings.
@@ -639,17 +640,19 @@ h_a_freq_dataprep <- function(
 #' @param .labels_n Labels for statistics.
 #' @param na_str String for NA values.
 #' @return List containing prepared statistics, formats, labels, and indentation.
-#' @export
+#' @noRd
+#' @keywords internal
 h_a_freq_prepinrows <- function(
-    x_stats,
-    .stats_adj,
-    .formats,
-    labelstr,
-    label_fstr,
-    label,
-    .indent_mods,
-    .labels_n,
-    na_str) {
+  x_stats,
+  .stats_adj,
+  .formats,
+  labelstr,
+  label_fstr,
+  label,
+  .indent_mods,
+  .labels_n,
+  na_str
+) {
   # Fill in formatting defaults
 
   x_stats <- x_stats[.stats_adj]
@@ -747,7 +750,7 @@ h_a_freq_prepinrows <- function(
 #' Subset Combination
 #'
 #' Subsets a data frame based on specified combination criteria.
-#'
+#' @noRd
 #' @param df Data frame to subset.
 #' @param combosdf Data frame containing combinations.
 #' @param do_not_filter Variables to not filter.
@@ -755,24 +758,63 @@ h_a_freq_prepinrows <- function(
 #' @param flag_var Flag variable for filtering.
 #' @param colid Column ID for identification.
 #' @return Subsetted data frame.
-#' @export
 h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, colid) {
   ### this is the core code for subsetting to appropriate combo level
   if (!is.null(flag_var)) {
-    df <- df[df[[flag_var]] == "Y", ]
+    df <- df[df[[flag_var]] %in% "Y", ]
   }
 
   # get the string related to combosdf text from colid it is the last part of the column id after the .  eg 'Active
-  # Study Agent.Apalutamide.Thru 3 months' colid_str is 'Thru 3 months' colid_str <- stringr::str_split_i(colid,
+  # Study Agent.Xanomeline High Dose.Thru 3 months' colid_str is 'Thru 3 months'
+  # colid_str <- stringr::str_split_i(colid,
   # '\\.', i = -1)
   colid_str <- tail(unlist(strsplit(colid, "\\.")), 1)
 
   filter_val <- combosdf[combosdf$valname == colid_str, ]$label
 
   if (!(colid_str %in% do_not_filter)) {
-    df <- df |>
-      dplyr::filter(get(filter_var) == filter_val)
+    df <- df[df[[filter_var]] %in% filter_val, ]
   }
 
   return(df)
+}
+
+#' @noRd
+#' @param df_row Data frame row to update.
+#' @param .var Variable name.
+#' @param label_map Mapping for labels.
+#' @param split_info Current split information.
+#'
+#' @return Restriction of val to appropriate levels from `label_map`.
+h_restrict_val <- function(df_row, .var, label_map, split_info) {
+  val <- NULL
+  xval_row <- unique(df_row[[.var]])
+  xval_map <- label_map$value
+
+  diff <- setdiff(xval_row, xval_map)
+
+  if (length(diff) == 0) {
+    # If label_map has a variable from row split, apply
+    # current splits on label_map tibble as well.
+    rowsplits <- split_info$split
+
+    label_map_split <- intersect(names(label_map), rowsplits)
+
+    if (length(label_map_split) != 0) {
+      for (i in seq_along(label_map_split)) {
+        cursplvar <- label_map_split[i]
+        cid <- match(cursplvar, rowsplits)
+        cursplval <- split_info$value[cid]
+
+        label_map <- label_map[label_map[[cursplvar]] == cursplval, ]
+      }
+    }
+
+    if ("var" %in% names(label_map)) {
+      label_map <- label_map[label_map[["var"]] == .var, ]
+    }
+
+    val <- label_map$value
+  }
+  val
 }

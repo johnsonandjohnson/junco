@@ -1,8 +1,13 @@
 suppressPackageStartupMessages({
   library(testthat)
-  library(rbmi)
   library(dplyr)
 })
+
+if (requireNamespace("rbmi", quietly = TRUE)) {
+  suppressPackageStartupMessages(library(rbmi))
+} else {
+  skip("rbmi package not available")
+}
 
 
 test_that("find_missing_chg_after_avisit works as expected", {
@@ -185,7 +190,7 @@ test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
       {
         cluster_has_rbmi <- all(unlist(parallel::clusterEvalQ(
           cl,
-          requireNamesapce("rbmi")
+          requireNamespace("rbmi")
         )))
       },
       error = function(e) {
@@ -206,4 +211,160 @@ test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
 
     parallel::stopCluster(cl)
   }
+})
+
+test_that("Parallelisation works with rbmi_analyse and produces identical results", {
+  set.seed(4642)
+  sigma <- as_vcov(
+    c(2, 1, 0.7, 1.5),
+    c(0.5, 0.3, 0.2, 0.3, 0.5, 0.4)
+  )
+  dat <- get_sim_data(200, sigma, trt = 8) |>
+    dplyr::mutate(
+      outcome = dplyr::if_else(
+        rbinom(dplyr::n(), 1, 0.3) == 1 & group == "A",
+        NA_real_,
+        outcome
+      )
+    )
+
+  dat_ice <- dat |>
+    dplyr::group_by(id) |>
+    dplyr::arrange(id, visit) |>
+    dplyr::filter(is.na(outcome)) |>
+    dplyr::slice(1) |>
+    dplyr::ungroup() |>
+    dplyr::select(id, visit) |>
+    dplyr::mutate(strategy = "JR")
+
+  vars <- rbmi::set_vars(
+    outcome = "outcome",
+    group = "group",
+    strategy = "strategy",
+    subjid = "id",
+    visit = "visit",
+    covariates = c("age", "sex", "visit * group")
+  )
+
+  set.seed(984)
+  drawobj <- rbmi::draws(
+    data = dat,
+    data_ice = dat_ice,
+    vars = vars,
+    method = rbmi::method_condmean(n_samples = 6, type = "bootstrap"),
+    quiet = TRUE
+  )
+
+  imputeobj <- rbmi::impute(
+    draws = drawobj,
+    references = c("A" = "B", "B" = "B")
+  )
+
+  #
+  # Here we set up a bunch of different analysis objects using different
+  # of parallelisation methods and different dat_delta objects
+  #
+
+  ### Delta 1
+
+  dat_delta_1 <- rbmi::delta_template(imputations = imputeobj) |>
+    dplyr::mutate(delta = is_missing * 5)
+
+  vars2 <- vars
+  vars2$covariates <- c("age", "sex")
+
+  anaobj_d1_t1 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi_ancova,
+    vars = vars2,
+    delta = dat_delta_1
+  )
+
+  anaobj_d1_t2 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi_ancova,
+    vars = vars2,
+    delta = dat_delta_1,
+    cluster_or_cores = 2
+  )
+
+  var <- 20
+  inner_fun <- function(...) {
+    x <- as_factor(var) # forcats::as_factor
+    rbmi_ancova(...)
+  }
+  outer_fun <- function(...) {
+    inner_fun(...)
+  }
+
+  cl <- make_rbmi_cluster(
+    2,
+    objects = list(var = var, inner_fun = inner_fun),
+    "forcats"
+  )
+  anaobj_d1_t3 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi_ancova,
+    vars = vars2,
+    delta = dat_delta_1,
+    cluster_or_cores = cl
+  )
+
+  ### Delta 2
+
+  dat_delta_2 <- rbmi::delta_template(imputations = imputeobj) |>
+    dplyr::mutate(delta = is_missing * 50)
+
+  anaobj_d2_t1 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi_ancova,
+    vars = vars2,
+    delta = dat_delta_2
+  )
+  anaobj_d2_t3 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi_ancova,
+    vars = vars2,
+    delta = dat_delta_2,
+    cluster_or_cores = cl
+  )
+
+  ### Delta 3 (no delta)
+
+  anaobj_d3_t1 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi_ancova,
+    vars = vars2
+  )
+  anaobj_d3_t3 <- rbmi_analyse(
+    imputeobj,
+    fun = rbmi_ancova,
+    vars = vars2,
+    cluster_or_cores = cl
+  )
+
+  ## Check for internal consistency
+  expect_equal(anaobj_d1_t1, anaobj_d1_t2)
+  expect_equal(anaobj_d1_t1, anaobj_d1_t3)
+  expect_equal(anaobj_d1_t2, anaobj_d1_t3)
+
+  expect_equal(anaobj_d2_t1, anaobj_d2_t3)
+
+  expect_equal(anaobj_d3_t1, anaobj_d3_t3)
+
+  ## Check that they differ (as different deltas have been used)
+  ## Main thing is sanity checking that the embedded delta
+  ## in the parallel processes hasn't lingered and impacted
+  ## future results
+
+  # First assert consistency
+  expect_true(identical(anaobj_d1_t1$results, anaobj_d1_t3$results))
+  expect_true(identical(anaobj_d2_t1$results, anaobj_d2_t3$results))
+  expect_true(identical(anaobj_d3_t1$results, anaobj_d3_t3$results))
+
+  # The ensure they are different
+  expect_false(identical(anaobj_d1_t1$results, anaobj_d2_t1$results))
+  expect_false(identical(anaobj_d1_t1$results, anaobj_d3_t1$results))
+  expect_false(identical(anaobj_d2_t1$results, anaobj_d3_t1$results))
+  parallel::stopCluster(cl)
 })

@@ -199,3 +199,78 @@ test_that("h_subset_combo works correctly", {
 })
 
 # TODO: fix this test_that("h_create_altdf works correctly")
+
+test_that("h_restrict_val works if there are more values in df_row than in map", {
+  df_row <- data.frame(
+    Group = c("A", "A", "B", "B"),
+    Value = c(1, 2, 1, 2)
+  )
+  label_map <- data.frame(
+    value = c("A", "C"),
+    label = c("Label A", "Label C")
+  )
+  result <- h_restrict_val(
+    df_row,
+    .var = "Group",
+    label_map = label_map,
+    split_info = list(split = "root", value = "root")
+  )
+  expected <- NULL
+  expect_identical(result, expected)
+  # TODO: Is it correct that we want NULL here as result?
+})
+
+test_that("h_restrict_val works if there are less values in df_row than in map", {
+  df_row <- data.frame(
+    Group = c("A", "A", "B", "B"),
+    Value = c(1, 2, 1, 2)
+  )
+  label_map <- data.frame(
+    value = c("A", "B", "C"),
+    label = c("Label A", "Label B", "Label C")
+  )
+  result <- h_restrict_val(
+    df_row,
+    .var = "Group",
+    label_map = label_map,
+    split_info = list(split = "root", value = "root")
+  )
+  expected <- c("A", "B", "C")
+  expect_identical(result, expected)
+})
+
+test_that("h_restrict_val works with row split", {
+  df_row <- data.frame(
+    Visit = c("Baseline", "Week 1", "Baseline", "Week 1"),
+    Group = c("A", "A", "B", "B"),
+    Value = c(1, 2, 1, 2)
+  )
+  label_map <- data.frame(
+    Visit = rep(c("Baseline", "Week 1"), each = 3),
+    value = c("A", "B", "C", "D", "E", "F"),
+    label = c("Label A", "Label B", "Label C", "Label D", "Label E", "Label F")
+  )
+  result <- h_restrict_val(
+    df_row,
+    .var = "Group",
+    label_map = label_map,
+    split_info = data.frame(
+      split = c("root", "Visit"),
+      value = c("root", "Baseline")
+    )
+  )
+  expected <- c("A", "B", "C")
+  expect_identical(result, expected)
+
+  result2 <- h_restrict_val(
+    df_row,
+    .var = "Group",
+    label_map = label_map,
+    split_info = data.frame(
+      split = c("root", "Visit"),
+      value = c("root", "Week 1")
+    )
+  )
+  expected2 <- c("D", "E", "F")
+  expect_identical(result2, expected2)
+})

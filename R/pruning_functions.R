@@ -4,10 +4,10 @@
 #'
 #' @inheritParams rtables::prune_table
 #'
-#' @param empty_msg character(1). The message to place in the table
+#' @param empty_msg (`character(1)`)\cr The message to place in the table
 #' if no rows were left after pruning
 #'
-#' @param spancols logical(1). Should `empty_msg` be spanned
+#' @param spancols (`logical(1)`)\cr Should `empty_msg` be spanned
 #' across the table's columns (`TRUE`) or placed in the
 #' rows row label (`FALSE`). Defaults to `FALSE` currently.
 #'
@@ -15,7 +15,7 @@
 #' @return `tt` pruned based on the arguments, or, if
 #' pruning would remove all rows, a TableTree with the
 #' same column structure, and one row containing the
-#' empty message spanning all columns
+#' empty message spanning all columns.
 #'
 #' @export
 #' @examples
@@ -58,16 +58,14 @@ safe_prune_table <- function(
 #' based on the count (assumed to be the first statistic displayed when a compound
 #' statistic (e.g., ## / ## (XX.X percent) is presented).
 #'
-#' @param  count   count threshold.  Function will keep all records strictly greater
+#' @param  count   (`numeric`)\cr count threshold. Function will keep all records strictly greater
 #'                 than this threshold.
-#' @param  cols    column path (character or integer (column indices))
-#' @param  cat_include     Category to be considered for pruning
-#' @param  cat_exclude logical Category to be excluded from pruning
+#' @param  cols    (`character`)\cr column path (character or integer (column indices))
+#' @param  cat_include     (`character`)\cr Category to be considered for pruning
+#' @param  cat_exclude (`character`)\cr Category to be excluded from pruning
 #' @export
 #'
-#'
 #' @examples
-#'
 #' ADSL <- data.frame(
 #'   USUBJID = c(
 #'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
@@ -116,11 +114,12 @@ safe_prune_table <- function(
 #' )
 #'
 #' result
-#'
 #' @rdname count_pruner
-#' @returns  function that can be utilized as pruning function in prune_table
+#' @returns  Function that can be utilized as pruning function in prune_table.
 #'
 count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols = c("TRT01A")) {
+  colpaths <- NULL
+
   function(tt) {
     # Do not ever prune the following rows.  a row that should be kept in the table will get the value of FALSE
 
@@ -144,7 +143,10 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
     # init return value to FALSE (not remove row)
     remove <- FALSE
 
-    colpaths <- col_paths(tt)
+    if (is.null(colpaths)) {
+      colpaths <<- col_paths(tt)
+    }
+
     # identify non relative risk columns as in rrisk columns first element is not a count, but diff percentage with
     # small total columns and count > 0 (eg count = 1, n per group = 10), you can run into count1 = 1, countpbo =
     # 0, diffpct = 10, this row should not be considered though
@@ -199,16 +201,18 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #'
 #' @description
 #' This is a pruning constructor function which identifies records to be pruned
-#' based on the the fraction from the percentages. In addition to just looking at a fraction within an arm
+#' based on the the fraction from the percentages. In addition to just looking at a
+#' fraction within an arm,
 #' this function also allows further flexibility to also prune based on a comparison versus the control arm.
-#' @param  fraction   fraction threshold.  Function will keep all records strictly greater
+#' @param  fraction   (`proportion`)\cr Fraction threshold.
+#' Function will keep all records strictly greater
 #'                 than this threshold.
-#' @param  cols    column path.
-#' @param  keeprowtext     Row to be excluded from pruning.
-#' @param reg_expr Apply keeprowtext as a regular expression (grepl with fixed = TRUE)
-#' @param  control        Control Group
-#' @param  diff_from_control  Difference from control threshold.
-#' @param  only_more_often    TRUE: Only consider when column pct is more often
+#' @param  cols    (`character`)\cr Column path.
+#' @param  keeprowtext     (`character`)\cr Row to be excluded from pruning.
+#' @param reg_expr (`logical`)\cr Apply keeprowtext as a regular expression (grepl with fixed = TRUE)
+#' @param  control        (`character`)\cr Control Group
+#' @param  diff_from_control  (`numeric`)\cr Difference from control threshold.
+#' @param  only_more_often    (`logical`)\cr TRUE: Only consider when column pct is more often
 #' than control. FALSE: Also select a row where column pct is less often than
 #' control and abs(diff) above threshold
 #'
@@ -287,7 +291,7 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #'
 #' result
 #' @rdname bspt_pruner
-#' @returns  function that can be utilized as pruning function in prune_table
+#' @returns  Function that can be utilized as pruning function in prune_table.
 #'
 bspt_pruner <- function(
     fraction = 0.05,
@@ -462,11 +466,11 @@ lst_slicer <- function(lst, ind, type) {
 #' @description
 #' This function will remove all rows of a table based on the row text
 #' provided by the user.
-#' @param  removerowtext  define a text string for which any row with row text will be removed.
-#' @param reg_expr Apply removerowtext as a regular expression (grepl with fixed = TRUE)
+#' @param  removerowtext  (`character`)\cr Define a text string for which any row with row text will be removed.
+#' @param reg_expr (`logical`)\cr Apply removerowtext as a regular expression
+#' (grepl with fixed = TRUE)
 #' @export
 #' @rdname remove_rows
-#'
 #'
 #' @examples
 #' ADSL <- data.frame(
@@ -505,7 +509,7 @@ lst_slicer <- function(lst, ind, type) {
 #'
 #' result
 #' @aliases remove_rows
-#' @returns function that can be utilized as pruning function in prune_table
+#' @returns Function that can be utilized as pruning function in prune_table.
 #'
 remove_rows <- function(removerowtext = NULL, reg_expr = FALSE) {
   function(tt) {
@@ -537,12 +541,10 @@ remove_rows <- function(removerowtext = NULL, reg_expr = FALSE) {
 #' columns are NULL, as then the row should not be kept. To be utilized as a
 #' row_condition in function tern::keep_rows
 #'
-#' @param  tr      table tree object
+#' @param  tr      (`TableTree`)\cr The TableTree object to prune.
 #' @export
 #'
-#'
 #' @examples
-#'
 #' library(dplyr)
 #'
 #' ADSL <- data.frame(
@@ -581,7 +583,7 @@ remove_rows <- function(removerowtext = NULL, reg_expr = FALSE) {
 #'
 #' result
 #' @rdname keep_non_null_rows
-#' @returns a function that can be utilized as a row_condition in the tern::keep_rows function
+#' @returns A function that can be utilized as a row_condition in the tern::keep_rows function.
 #'
 keep_non_null_rows <- function(tr) {
   if (methods::is(tr, "DataRow")) {

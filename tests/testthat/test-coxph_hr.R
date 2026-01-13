@@ -3,11 +3,11 @@ library(survival)
 
 
 test_that("s_coxph_hr works with default arguments and no stratification factors", {
-  adtte_f <- tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(is_event = CNSR == 0)
-  df <- adtte_f %>% dplyr::filter(ARMCD == "ARM A")
-  df_ref <- adtte_f %>% dplyr::filter(ARMCD == "ARM B")
+  df <- adtte_f |> dplyr::filter(ARMCD == "ARM A")
+  df_ref <- adtte_f |> dplyr::filter(ARMCD == "ARM B")
 
   result <- s_coxph_hr(
     df = df,
@@ -46,12 +46,12 @@ test_that("s_coxph_hr works with default arguments and no stratification factors
 })
 
 test_that("a_coxph_hr works with custom arguments and stratification factors", {
-  adtte_f <- tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(is_event = CNSR == 0)
 
-  result <- basic_table() %>%
-    split_cols_by(var = "ARMCD") %>%
+  result <- basic_table(round_type = "sas") |>
+    split_cols_by(var = "ARMCD") |>
     analyze(
       vars = "AVAL",
       afun = a_coxph_hr,
@@ -69,7 +69,7 @@ test_that("a_coxph_hr works with custom arguments and stratification factors", {
         ref_path = c("ARMCD", "ARM A"),
         .stats = c("hr_ci_3d", "pvalue")
       )
-    ) %>%
+    ) |>
     build_table(df = adtte_f)
 
   res <- expect_silent(result)
@@ -77,12 +77,12 @@ test_that("a_coxph_hr works with custom arguments and stratification factors", {
 })
 
 test_that("a_coxph_hr works with stratification factors for Log-Rank test", {
-  adtte_f <- tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(is_event = CNSR == 0)
 
-  result <- basic_table() %>%
-    split_cols_by(var = "ARMCD") %>%
+  result <- basic_table(round_type = "sas") |>
+    split_cols_by(var = "ARMCD") |>
     analyze(
       vars = "AVAL",
       afun = a_coxph_hr,
@@ -100,7 +100,7 @@ test_that("a_coxph_hr works with stratification factors for Log-Rank test", {
         ref_path = c("ARMCD", "ARM A"),
         .stats = c("hr_ci_3d", "pvalue")
       )
-    ) %>%
+    ) |>
     build_table(df = adtte_f)
 
   res <- expect_silent(result)

@@ -12,7 +12,7 @@ testthat::test_that("a_freq_j works (old count_unq case)", {
     top_level_section_div = " ",
     show_colcounts = TRUE,
     colcount_format = "N=xx"
-  ) %>%
+  ) |>
     analyze(
       "TRTEMFL",
       afun = a_freq_j,
@@ -36,7 +36,7 @@ testthat::test_that("a_freq_j works (old count_unq case)", {
     top_level_section_div = " ",
     show_colcounts = TRUE,
     colcount_format = "N=xx"
-  ) %>%
+  ) |>
     analyze(
       "TRTEMFL",
       afun = a_freq_j,
@@ -58,7 +58,7 @@ testthat::test_that("a_freq_j works (old count_unq case)", {
 
 testthat::test_that("a_freq_subcol_j works (old case of cpct_subcol)", {
   adsl <- ex_adsl
-  adae <- ex_adae %>% dplyr::select(USUBJID, AEBODSYS, AEDECOD, AREL)
+  adae <- ex_adae |> dplyr::select(USUBJID, AEBODSYS, AEDECOD, AREL)
   adae$TRTEMFL <- "Y"
 
   adsl$COLSPAN_REL <- "AEs"
@@ -87,12 +87,12 @@ testthat::test_that("a_freq_subcol_j works (old case of cpct_subcol)", {
     top_level_section_div = " ",
     show_colcounts = TRUE,
     colcount_format = "N=xx"
-  ) %>%
+  ) |>
     split_cols_by(
       "COLSPAN_REL",
       split_fun = add_combo_levels(combodf, trim = TRUE)
-    ) %>%
-    split_cols_by("ARM") %>%
+    ) |>
+    split_cols_by("ARM") |>
     analyze(
       "TRTEMFL",
       afun = a_freq_subcol_j,
@@ -125,7 +125,7 @@ testthat::test_that("a_freq_subcol_j works (old case of cpct_subcol)", {
 })
 
 testthat::test_that("a_freq_combos_j (old cpct_filter_combos case) works", {
-  adsl <- ex_adsl %>%
+  adsl <- ex_adsl |>
     mutate(
       months = (EOSDY + 30) / 30.4375,
       ACAT1 = case_when(
@@ -139,16 +139,16 @@ testthat::test_that("a_freq_combos_j (old cpct_filter_combos case) works", {
         ACAT1,
         levels = c("Within 3 months", "4 to 12 months", "Beyond 13 months")
       )
-    ) %>%
+    ) |>
     select(USUBJID, ARM, EOSDY, ACAT1, months)
 
-  adae <- ex_adae %>% dplyr::select(USUBJID, AEBODSYS, AEDECOD, ASTDY, ARM)
+  adae <- ex_adae |> dplyr::select(USUBJID, AEBODSYS, AEDECOD, ASTDY, ARM)
   adae$TRTEMFL <- "Y"
   adae$TRTEMFL <- factor(adae$TRTEMFL)
 
-  adae <- adae %>%
+  adae <- adae |>
     # ACAT1 derivation
-    mutate(months = (ASTDY + 30) / 30.4375) %>%
+    mutate(months = (ASTDY + 30) / 30.4375) |>
     mutate(
       ACAT1 = case_when(
         months <= 3 ~ "Within 3 months",
@@ -156,7 +156,7 @@ testthat::test_that("a_freq_combos_j (old cpct_filter_combos case) works", {
         months > 12 ~ "Beyond 13 months",
         .default = NA_character_
       )
-    ) %>%
+    ) |>
     mutate(
       ACAT1 = factor(
         ACAT1,
@@ -167,11 +167,11 @@ testthat::test_that("a_freq_combos_j (old cpct_filter_combos case) works", {
           NA
         )
       )
-    ) %>%
-    select(-months) %>%
+    ) |>
+    select(-months) |>
     # first occurrence derivation
-    arrange(USUBJID, ASTDY) %>%
-    group_by(USUBJID) %>%
+    arrange(USUBJID, ASTDY) |>
+    group_by(USUBJID) |>
     mutate(AOCCFL = case_when(row_number() == 1 ~ "Y"))
 
   # This df generates facets for column space : levels from adsl ACAT1 need to be cumulative
@@ -211,8 +211,8 @@ testthat::test_that("a_freq_combos_j (old cpct_filter_combos case) works", {
     "Subjects with >= 1 AE"
   )
 
-  lyt <- basic_table(top_level_section_div = " ", show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table(top_level_section_div = " ", show_colcounts = TRUE) |>
+    split_cols_by("ARM") |>
     split_cols_by(
       "ACAT1",
       split_fun = add_combo_levels(
@@ -220,7 +220,7 @@ testthat::test_that("a_freq_combos_j (old cpct_filter_combos case) works", {
         trim = FALSE,
         keep_levels = combodf$valname
       )
-    ) %>%
+    ) |>
     analyze(
       "TRTEMFL",
       nested = FALSE,
@@ -247,20 +247,20 @@ testthat::test_that("a_freq_combos_j (old cpct_filter_combos case) works", {
 
   n_denom <- nrow(
     unique(
-      adsl %>%
+      adsl |>
         filter(
           ARM == "A: Drug X" &
             ACAT1 %in% c("4 to 12 months", "Beyond 13 months")
-        ) %>%
+        ) |>
         select(USUBJID)
     )
   )
 
   n_val <- nrow(unique(
-    adae %>%
+    adae |>
       filter(
         ARM == "A: Drug X" & ACAT1 %in% c("4 to 12 months") & AOCCFL == "Y"
-      ) %>%
+      ) |>
       select(USUBJID)
   ))
 
@@ -283,7 +283,7 @@ testthat::test_that("`a_freq_j()` works", {
   adsl$rrisk_header <- "Risk Difference (%) (95% CI)"
   adsl$rrisk_label <- paste(adsl[["ARM"]], "vs Placebo")
 
-  advs <- ex_advs %>% select(USUBJID, PARAMCD, PARAM, AVISIT, ANRIND)
+  advs <- ex_advs |> select(USUBJID, PARAMCD, PARAM, AVISIT, ANRIND)
   advs <- dplyr::inner_join(advs, adsl, by = c("USUBJID"))
 
   advs <- advs[advs$AVISIT %in% c("BASELINE", "WEEK 1 DAY 8"), ]
@@ -291,9 +291,9 @@ testthat::test_that("`a_freq_j()` works", {
   advs$AVISIT <- factor(as.character(advs$AVISIT))
   advs$PARAM <- factor(as.character(advs$PARAM))
 
-  advs <- advs %>%
-    group_by(ARM, PARAMCD, AVISIT) %>%
-    arrange(USUBJID) %>%
+  advs <- advs |>
+    group_by(ARM, PARAMCD, AVISIT) |>
+    arrange(USUBJID) |>
     mutate(id = row_number())
 
   # set ANRIND to missing for first 10 subjects from each arm
@@ -311,17 +311,17 @@ testthat::test_that("`a_freq_j()` works", {
   lyt <- basic_table(
     show_colcounts = TRUE,
     colcount_format = "N=xx"
-  ) %>%
-    split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
-    split_cols_by("ARM") %>%
-    split_cols_by("rrisk_header", nested = FALSE) %>%
+  ) |>
+    split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) |>
+    split_cols_by("ARM") |>
+    split_cols_by("rrisk_header", nested = FALSE) |>
     split_cols_by(
       "ARM",
       labels_var = "rrisk_label",
       split_fun = remove_split_levels("B: Placebo")
-    ) %>%
-    split_rows_by("PARAM", label_pos = "topleft", section_div = " ") %>%
-    split_rows_by("AVISIT") %>%
+    ) |>
+    split_rows_by("PARAM", label_pos = "topleft", section_div = " ") |>
+    split_rows_by("AVISIT") |>
     analyze(
       "ANRIND",
       afun = a_freq_j,
@@ -340,19 +340,19 @@ testthat::test_that("`a_freq_j()` works", {
 
   n_expected <- as.double(
     table(
-      advs %>%
-        ungroup() %>%
+      advs |>
+        ungroup() |>
         filter(
           PARAM == "Diastolic Blood Pressure" &
             AVISIT == "WEEK 1 DAY 8" &
             !is.na(ANRIND)
-        ) %>%
+        ) |>
         mutate(
           ARM = factor(
             as.character(ARM),
             levels = c("A: Drug X", "C: Combination", "B: Placebo")
           )
-        ) %>%
+        ) |>
         select(ARM)
     )
   )
@@ -384,10 +384,10 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
   )
 
   # scenario 1: cfun - subgroup coming from adsl, not df
-  lyt1 <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
-    split_rows_by("SEX") %>%
-    summarize_row_groups("SEX", cfun = a_freq_j, extra_args = extra_args_1) %>%
+  lyt1 <- basic_table(show_colcounts = TRUE) |>
+    split_cols_by("ARM") |>
+    split_rows_by("SEX") |>
+    summarize_row_groups("SEX", cfun = a_freq_j, extra_args = extra_args_1) |>
     analyze(
       "TRTEMFL",
       afun = simple_afun,
@@ -405,10 +405,10 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
   ## 2 cell value : content + n
 
   n_1 <- nrow(unique(
-    adsl %>% filter(ARM == "B: Placebo" & SEX == "F") %>% select(USUBJID)
+    adsl |> filter(ARM == "B: Placebo" & SEX == "F") |> select(USUBJID)
   ))
   n_2 <- nrow(unique(
-    adae %>% filter(ARM == "B: Placebo" & SEX == "F") %>% select(USUBJID)
+    adae |> filter(ARM == "B: Placebo" & SEX == "F") |> select(USUBJID)
   ))
 
   expected1 <- c(n_1, n_2)
@@ -416,28 +416,27 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
   testthat::expect_identical(result1, expected1)
 
   # scenario 2: shift table for lab/vs
-  advs <- ex_advs %>%
-    select(USUBJID, PARAMCD, PARAM, ANRIND, AVAL, BASE, ABLFL, AVISIT) %>%
+  advs <- ex_advs |>
+    select(USUBJID, PARAMCD, PARAM, ANRIND, AVAL, BASE, ABLFL, AVISIT) |>
     filter(PARAMCD == "DIABP" & (AVISIT == "WEEK 1 DAY 8" | ABLFL == "Y"))
   ### remove subjects from advs, so that N is not same as from adsl
 
   advs <- advs[!(advs$USUBJID %in% adsl$USUBJID[1:10]), ]
 
-  BNRIND <- advs %>%
-    filter(ABLFL == "Y") %>%
-    mutate(BNRIND = ANRIND) %>%
+  BNRIND <- advs |>
+    filter(ABLFL == "Y") |>
+    mutate(BNRIND = ANRIND) |>
     select(USUBJID, PARAMCD, BNRIND)
 
-  advs <- advs %>%
-    left_join(., BNRIND, by = join_by(USUBJID, PARAMCD))
+  advs <- left_join(advs, BNRIND, by = join_by(USUBJID, PARAMCD))
 
-  adsl <- adsl %>%
-    mutate(BNRIND = "N") %>%
+  adsl <- adsl |>
+    mutate(BNRIND = "N") |>
     mutate(BNRIND = factor(BNRIND, levels = c("N", levels(advs$ANRIND))))
   adsl$BNRIND_header <- " "
   adsl$BNRIND_header2 <- "Baseline NRIND"
 
-  advs <- advs %>%
+  advs <- advs |>
     mutate(
       BNRIND = factor(
         as.character(BNRIND),
@@ -445,29 +444,33 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
       )
     )
 
-  advs <- advs %>%
-    left_join(
-      .,
-      adsl %>% select(USUBJID, ARM, BNRIND_header, BNRIND_header2),
-      by = "USUBJID"
-    ) %>%
+  # Create a temporary variable to store the result of the join
+  advs_joined <- left_join(
+    advs,
+    adsl |> select(USUBJID, ARM, BNRIND_header, BNRIND_header2),
+    by = "USUBJID",
+    relationship = "many-to-many"
+  )
+
+  # Now filter using the temporary variable
+  advs <- advs_joined |>
     filter(ABLFL != "Y")
 
   ANRIND_levels <- levels(advs$ANRIND)
 
-  lyt <- basic_table(show_colcounts = FALSE) %>%
+  lyt <- basic_table(show_colcounts = FALSE) |>
     ## to ensure N column is not under the Baseline column span header
-    split_cols_by("BNRIND_header") %>%
-    split_cols_by("BNRIND", split_fun = keep_split_levels("N")) %>%
-    split_cols_by("BNRIND_header2", nested = FALSE) %>%
+    split_cols_by("BNRIND_header") |>
+    split_cols_by("BNRIND", split_fun = keep_split_levels("N")) |>
+    split_cols_by("BNRIND_header2", nested = FALSE) |>
     split_cols_by(
       "BNRIND",
       split_fun = make_split_fun(
         pre = list(rm_levels(excl = "N")),
         post = list(add_overall_facet("TOTAL", "Total"))
       )
-    ) %>%
-    split_rows_by("ARM", child_labels = "hidden") %>%
+    ) |>
+    split_rows_by("ARM", child_labels = "hidden") |>
     # these counts will be checked as result1/expected1
     summarize_row_groups(
       var = "ARM",
@@ -479,14 +482,14 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
         restr_columns = "N",
         extrablanklineafter = "C: Combination"
       )
-    ) %>%
-    split_rows_by("PARAM", nested = FALSE, split_fun = drop_split_levels) %>%
+    ) |>
+    split_rows_by("PARAM", nested = FALSE, split_fun = drop_split_levels) |>
     split_rows_by(
       "ARM",
       label_pos = "hidden",
       split_label = "Treatment Group",
       section_div = " "
-    ) %>%
+    ) |>
     # these counts will be checked as result2/expected2
     summarize_row_groups(
       "ARM",
@@ -496,7 +499,7 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
         .stats = "denom",
         restr_columns = "N"
       )
-    ) %>%
+    ) |>
     # these counts will be checked as result3/expected3
     analyze(
       "ANRIND",
@@ -541,10 +544,10 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
     )
   )))
   expected2 <- unname(unlist(as.list(table(
-    advs %>%
+    advs |>
       filter(
         PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & ARM == "C: Combination"
-      ) %>%
+      ) |>
       select(ARM)
   )))["C: Combination"])
 
@@ -564,10 +567,10 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
     )
   ))
   expected3 <- table(
-    advs %>%
+    advs |>
       filter(
         PARAMCD == "DIABP" & AVISIT == "WEEK 1 DAY 8" & ARM == "B: Placebo"
-      ) %>%
+      ) |>
       select(BNRIND, ANRIND)
   )["NORMAL", "HIGH"]
 
@@ -582,8 +585,8 @@ testthat::test_that("`a_freq_j()` works", {
   adsl <- ex_adsl
   adae <- ex_adae
 
-  lyt <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table(show_colcounts = TRUE) |>
+    split_cols_by("ARM") |>
     analyze(
       vars = "STUDYID",
       afun = a_freq_j,
@@ -614,8 +617,8 @@ testthat::test_that("a_freq_j works (old a_countpat_newlevels case)", {
 
   new_BMRKR2_levels <- list(c("Medium - High"), list(c("MEDIUM", "HIGH")))
 
-  lyt <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table(show_colcounts = TRUE) |>
+    split_cols_by("ARM") |>
     ### add extra combined level for BMRKR2
     analyze(
       vars = "BMRKR2",
@@ -644,8 +647,8 @@ testthat::test_that("a_freq_j works (old a_countpat_newlevels case)", {
   testthat::expect_identical(result_label, expected_label)
 
   expected_value <- table(
-    adsl %>%
-      filter(ARM == "A: Drug X") %>%
+    adsl |>
+      filter(ARM == "A: Drug X") |>
       select(BMRKR2)
   )
 
@@ -694,15 +697,15 @@ testthat::test_that("a_summarize_ex_j works", {
     top_level_section_div = " ",
     show_colcounts = TRUE,
     colcount_format = "N=xx"
-  ) %>%
-    split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
-    split_cols_by("ARM") %>%
-    split_cols_by("diff_header", nested = FALSE) %>%
+  ) |>
+    split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) |>
+    split_cols_by("ARM") |>
+    split_cols_by("diff_header", nested = FALSE) |>
     split_cols_by(
       "ARM",
       split_fun = remove_split_levels("B: Placebo"),
       labels_var = "diff_label"
-    ) %>%
+    ) |>
     analyze(
       "EOSDY",
       afun = a_summarize_ex_j,
@@ -720,7 +723,7 @@ testthat::test_that("a_summarize_ex_j works", {
 
   tbl <- build_table(lyt, adsl)
 
-  rps <- make_row_df(tbl) %>%
+  rps <- make_row_df(tbl) |>
     filter(node_class == "DataRow")
 
   result_1 <- unname(cell_values(tbl[, c(
@@ -735,7 +738,7 @@ testthat::test_that("a_summarize_ex_j works", {
   }))
   names(result_1[[4]]) <- NULL
 
-  xx_1 <- adsl %>% filter(ARM == "C: Combination" & !is.na(EOSDY))
+  xx_1 <- adsl |> filter(ARM == "C: Combination" & !is.na(EOSDY))
   xx_1. <- xx_1[["EOSDY"]]
 
   ## quantiles rather than IQR, label misleading
@@ -774,7 +777,7 @@ testthat::test_that("a_summarize_ex_j works", {
   }))
   names(result_2[[4]]) <- NULL
 
-  xx_2 <- adsl %>% filter(ARM == "B: Placebo" & !is.na(EOSDY))
+  xx_2 <- adsl |> filter(ARM == "B: Placebo" & !is.na(EOSDY))
   xx_2. <- xx_2[["EOSDY"]]
 
   ## quantiles rather than IQR, label misleading
@@ -807,7 +810,7 @@ testthat::test_that("a_summarize_ex_j works", {
   attr(result_3, "label") <- NULL
 
   df <- xx_1
-  .df_row <- adsl %>% filter(!is.na(EOSDY))
+  .df_row <- adsl |> filter(!is.na(EOSDY))
   .ref_group <- xx_2
   .in_ref_col <- FALSE
 

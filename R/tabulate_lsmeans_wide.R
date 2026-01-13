@@ -1,6 +1,6 @@
 #' Function Factory to Create Padded In Rows Content
 #'
-#' @param length_out (`count` or `NULL`)\cr full length which should be padded
+#' @param length_out (`numeric` or `NULL`)\cr full length which should be padded
 #'   by `NA` which will be printed as empty strings.
 #' @param label (`string`)\cr row label to be used for the first row only.
 #'
@@ -76,7 +76,13 @@ lsmeans_wide_second_split_fun_fct <- function(pval_sided, conf_level, include_pv
   post_fun <- function(ret, spl, fulldf, .spl_context) {
     colset <- .spl_context[nrow(.spl_context), "value"][[1]]
     if (colset %in% c("reference_group", "testing_group")) {
-      short_split_result(treatment = "Treatment", n = "N", lsmean = "LS Mean", fulldf = fulldf)
+      short_split_result(
+        treatment = "Treatment",
+        n = "N",
+        lsmean = "LS Mean",
+        se = "SE",
+        fulldf = fulldf
+      )
     } else if (colset == "variance") {
       short_split_result(mse = "M. S. Error", df = "Error DF", fulldf = fulldf)
     } else {
@@ -89,7 +95,12 @@ lsmeans_wide_second_split_fun_fct <- function(pval_sided, conf_level, include_pv
           fulldf = fulldf
         )
       } else {
-        short_split_result(lsmean = "LS Mean", se = "SE", ci = f_conf_level(conf_level), fulldf = fulldf)
+        short_split_result(
+          lsmean = "LS Mean",
+          se = "SE",
+          ci = f_conf_level(conf_level),
+          fulldf = fulldf
+        )
       }
     }
   }
@@ -114,15 +125,16 @@ lsmeans_wide_second_split_fun_fct <- function(pval_sided, conf_level, include_pv
 #'
 #' @keywords internal
 lsmeans_wide_cfun <- function(
-    df,
-    labelstr,
-    .spl_context,
-    variables,
-    ref_level,
-    treatment_levels,
-    pval_sided = c("2", "1", "-1"),
-    conf_level,
-    formats) {
+  df,
+  labelstr,
+  .spl_context,
+  variables,
+  ref_level,
+  treatment_levels,
+  pval_sided = c("2", "1", "-1"),
+  conf_level,
+  formats
+) {
   this_col_split <- .spl_context[nrow(.spl_context), "cur_col_split_val"][[1]]
   pad_in_rows <- pad_in_rows_fct(length_out = length(treatment_levels), label = labelstr)
   if (this_col_split[1] %in% c("reference_group", "testing_group")) {
@@ -136,8 +148,10 @@ lsmeans_wide_cfun <- function(
       pad_in_rows(this_level, .formats = "xx")
     } else if (this_col_split[2] == "n") {
       pad_in_rows(df$n[has_this_level], .formats = "xx")
-    } else {
+    } else if (this_col_split[2] == "lsmean") {
       pad_in_rows(df$estimate_est[has_this_level], .formats = formats$lsmean)
+    } else {
+      pad_in_rows(df$se_est[has_this_level], .formats = formats$se)
     }
   } else if (this_col_split[1] == "variance") {
     has_trt <- df[[variables$arm]] %in% treatment_levels
@@ -176,7 +190,7 @@ lsmeans_wide_cfun <- function(
 #'
 #' @inheritParams proposal_argument_convention
 #' @inheritParams lsmeans_wide_cfun
-#' @param lyt empty layout, i.e. result of [rtables::basic_table()]
+#' @param lyt (`layout`)\cr empty layout, i.e. result of [rtables::basic_table()]
 #' @param include_variance (`flag`)\cr whether to include the variance statistics
 #'   (M.S. error and d.f.).
 #' @param include_pval (`flag`)\cr whether to include the p-value column.
@@ -208,23 +222,24 @@ lsmeans_wide_cfun <- function(
 #'   ) |>
 #'   build_table(df = anl)
 summarize_lsmeans_wide <- function(
-    lyt,
-    variables,
-    ref_level,
-    treatment_levels,
-    conf_level,
-    pval_sided = "2",
-    include_variance = TRUE,
-    include_pval = TRUE,
-    formats = list(
-      lsmean = jjcsformat_xx("xx.x"),
-      mse = jjcsformat_xx("xx.x"),
-      df = jjcsformat_xx("xx."),
-      lsmean_diff = jjcsformat_xx("xx.x"),
-      se = jjcsformat_xx("xx.xx"),
-      ci = jjcsformat_xx("(xx.xx, xx.xx)"),
-      pval = jjcsformat_pval_fct(0)
-    )) {
+  lyt,
+  variables,
+  ref_level,
+  treatment_levels,
+  conf_level,
+  pval_sided = "2",
+  include_variance = TRUE,
+  include_pval = TRUE,
+  formats = list(
+    lsmean = jjcsformat_xx("xx.x"),
+    mse = jjcsformat_xx("xx.x"),
+    df = jjcsformat_xx("xx."),
+    lsmean_diff = jjcsformat_xx("xx.x"),
+    se = jjcsformat_xx("xx.xx"),
+    ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+    pval = jjcsformat_pval_fct(0)
+  )
+) {
   # Check that all required format elements are present in the formats parameter
   checkmate::assert_names(
     names(formats),

@@ -1,15 +1,15 @@
 library(tern)
 
 test_that("s_kaplan_meier works with default arguments", {
-  adtte_f <- tern::tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern::tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
       AVAL = tern::day2month(AVAL),
       is_event = CNSR == 0
     )
 
   result <- expect_silent(s_kaplan_meier(
-    df = adtte_f %>% dplyr::filter(ARMCD == "ARM B"),
+    df = adtte_f |> dplyr::filter(ARMCD == "ARM B"),
     .var = "AVAL",
     is_event = "is_event"
   ))
@@ -18,8 +18,8 @@ test_that("s_kaplan_meier works with default arguments", {
 })
 
 test_that("s_kaplan_meier works with customized arguments", {
-  adtte_f <- tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
       AVAL = tern::day2month(AVAL),
       is_event = CNSR == 0
@@ -42,8 +42,8 @@ test_that("s_kaplan_meier works with customized arguments", {
 })
 
 test_that("a_kaplan_meier works with default arguments", {
-  adtte_f <- tern::tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern::tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
       AVAL = tern::day2month(AVAL),
       is_event = CNSR == 0
@@ -61,8 +61,8 @@ test_that("a_kaplan_meier works with default arguments", {
 })
 
 test_that("a_kaplan_meier works with customized arguments", {
-  adtte_f <- tern::tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern::tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
       AVAL = tern::day2month(AVAL),
       is_event = CNSR == 0
@@ -85,8 +85,8 @@ test_that("a_kaplan_meier works with customized arguments", {
 })
 
 test_that("a_kaplan_meier works inside analyze in table", {
-  adtte_f <- tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
       AVAL = tern::day2month(AVAL),
       is_event = CNSR == 0
@@ -95,10 +95,10 @@ test_that("a_kaplan_meier works inside analyze in table", {
     adtte_f$AVAL == max(adtte_f$AVAL[adtte_f$ARMCD == "ARM A"])
   ] <- FALSE
 
-  result <- basic_table() %>%
+  result <- basic_table(round_type = "sas") |>
     split_cols_by(
       var = "ARMCD"
-    ) %>%
+    ) |>
     analyze(
       vars = "AVAL",
       afun = a_kaplan_meier,
@@ -107,7 +107,7 @@ test_that("a_kaplan_meier works inside analyze in table", {
       extra_args = list(
         is_event = "is_event"
       )
-    ) %>%
+    ) |>
     build_table(df = adtte_f)
 
   res <- expect_silent(result)
@@ -115,8 +115,8 @@ test_that("a_kaplan_meier works inside analyze in table", {
 })
 
 test_that("a_kaplan_meier works inside analyze in table with custom arguments", {
-  adtte_f <- tern_ex_adtte %>%
-    dplyr::filter(PARAMCD == "OS") %>%
+  adtte_f <- tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
       AVAL = tern::day2month(AVAL),
       is_event = CNSR == 0
@@ -125,10 +125,10 @@ test_that("a_kaplan_meier works inside analyze in table with custom arguments", 
     adtte_f$AVAL == max(adtte_f$AVAL[adtte_f$ARMCD == "ARM A"])
   ] <- FALSE
 
-  result <- basic_table() %>%
+  result <- basic_table(round_type = "sas") |>
     split_cols_by(
       var = "ARMCD"
-    ) %>%
+    ) |>
     analyze(
       vars = "AVAL",
       afun = a_kaplan_meier,
@@ -144,7 +144,7 @@ test_that("a_kaplan_meier works inside analyze in table with custom arguments", 
         .labels = c(range_with_cens_info = "Min and Max"),
         .indent_mods = c(median_ci_3d = 3L)
       )
-    ) %>%
+    ) |>
     build_table(df = adtte_f)
 
   res <- expect_silent(result)

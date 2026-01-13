@@ -13,35 +13,45 @@ jj_complex_scorefun(
 )
 }
 \arguments{
-\item{spanningheadercolvar}{name of spanning header variable that defines the active treatment columns.
+\item{spanningheadercolvar}{(\code{character})\cr
+Name of spanning header variable that defines the active treatment columns.
 If you do not have an active treatment spanning header column then user can define this as NA.}
 
-\item{usefirstcol}{This allows you to just use the first column of the table to sort on.}
+\item{usefirstcol}{(\code{logical})\cr
+This allows you to just use the first column of the table to sort on.}
 
-\item{colpath}{name of column path that is needed to sort by (default=NULL).
+\item{colpath}{(\code{character})\cr
+Name of column path that is needed to sort by (default=NULL).
 This overrides other arguments if specified
-(except firstcat and lastcat which will be applied if requested on this colpath)}
+(except firstcat and lastcat which will be applied if requested on this colpath).}
 
-\item{firstcat}{If you wish to put any category at the top of the list despite any n's user can specify here.}
+\item{firstcat}{(\code{logical})\cr
+If you wish to put any category at the top of the list despite any n's, user can specify it here.}
 
-\item{lastcat}{If you wish to put any category at the bottom of the list despite any n's user can specify here.}
+\item{lastcat}{(\code{logical})\cr
+If you wish to put any category at the bottom of the list despite any n's, user can specify it here.}
 }
 \value{
-a function which can be used as a score function (scorefun in \code{sort_at_path}).
+A function which can be used as a score function (scorefun in \code{sort_at_path}).
 }
 \description{
 A function used for sorting AE tables (and others) as required.
 }
 \details{
 This sort function sorts as follows:
-Takes all the columns from a specified spanning column header (default= colspan_trt) and sorts by the last treatment
+\itemize{
+\item Takes all the columns from a specified spanning column header (default= colspan_trt)
+and sorts by the last treatment
 column within this.
-If no spanning column header variable exists (e.g you have only one active treatment arm and have decided to
-remove the spanning header from your layout) it will sort by the first treatment column in your table.
-This function is not really designed for tables that have sub-columns, however if users wish to override any
-default sorting behavior, they can simply specify their own colpath to use for sorting on (default=NULL)
+\item If no spanning column header variable exists (e.g you have only one active treatment arm and have decided to
+remove the spanning header from your layout), it will sort by the first treatment column in your table.
+}
+
+This function is not really designed for tables that have sub-columns. However, if users wish to override any
+default sorting behavior, they can simply specify their own colpath to use for sorting on (default = NULL)
 }
 \examples{
+library(dplyr)
 ADAE <- data.frame(
   USUBJID = c(
     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
@@ -82,6 +92,8 @@ colspan_trt_map <- create_colspan_map(ADAE,
 )
 
 ref_path <- c("colspan_trt", " ", "TRT01A", "Placebo")
+
+ADSL <- unique(ADAE |> select(USUBJID, "colspan_trt", "rrisk_header", "rrisk_label", "TRT01A"))
 
 lyt <- basic_table() |>
   split_cols_by(
@@ -132,7 +144,7 @@ lyt <- basic_table() |>
     )
   )
 
-result <- build_table(lyt, ADAE)
+result <- build_table(lyt, ADAE, alt_counts_df = ADSL)
 
 result
 

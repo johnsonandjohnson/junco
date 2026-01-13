@@ -3,6 +3,7 @@
 \name{a_freq_j}
 \alias{a_freq_j}
 \alias{s_freq_j}
+\alias{a_freq_j_with_exclude}
 \title{Analysis/statistical function for count and percentage in core columns
 and (optional) relative risk columns}
 \usage{
@@ -58,6 +59,22 @@ a_freq_j(
   restr_columns = NULL,
   colgroup = NULL,
   countsource = c("df", "altdf")
+)
+
+a_freq_j_with_exclude(
+  df,
+  labelstr = NULL,
+  exclude_levels,
+  .var = NA,
+  .spl_context,
+  .df_row,
+  .N_col,
+  .alt_df_full = NULL,
+  .stats = "count_unique_denom_fraction",
+  .formats = NULL,
+  .indent_mods = NULL,
+  .labels_n = NULL,
+  ...
 )
 }
 \arguments{
@@ -147,14 +164,14 @@ See \code{?tern::s_proportion_diff} for details.}
 \item{weights_method}{Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr}
 
 \item{label}{(\code{string})\cr
-When \code{val}is a single \code{string},
+When \code{val} has length 1,
 the row label to be shown on the output can be specified using this argument.\cr
 When \code{val} is a \verb{character vector}, the \code{label_map} argument can be specified
 to control the row-labels.}
 
 \item{label_fstr}{(\code{string})\cr
 a sprintf style format string.
-It can contain up to one "\\%s" which takes the current split value and
+It can contain up to one \code{"\%s"}, which takes the current split value and
 generates the row/column label.\cr
 It will be combined with the \code{labelstr} argument,
 when utilizing this function as
@@ -168,10 +185,7 @@ a different row label to be presented on the table.\cr}
 
 \item{.alt_df_full}{(\code{dataframe})\cr Denominator dataset
 for fraction and relative risk calculations.\cr
-.alt_df_full is a crucial parameter for the relative risk calculations
-if this parameter is not set to utilize \code{alt_counts_df},
-then the values in the relative risk columns might not be correct.\cr
-Once the rtables PR is integrated, this argument gets populated by the rtables
+this argument gets populated by the rtables
 split machinery (see \link[rtables:additional_fun_params]{rtables::additional_fun_params}).}
 
 \item{denom_by}{(\code{character})\cr Variables from row-split
@@ -209,6 +223,11 @@ If not NULL, columns not defined in \code{restr_columns} will be blanked out.}
 \item{colgroup}{The name of the column group variable that is used as source
 for denominator calculation.\cr
 Required to be specified when \code{denom = "N_colgroup"}.}
+
+\item{exclude_levels}{(\code{list})\cr A named list where names correspond to split variables
+and values are vectors of levels to exclude.}
+
+\item{...}{additional arguments for the lower level functions.}
 }
 \value{
 \itemize{
@@ -261,6 +280,13 @@ as it cannot be retrieved directly from the column layout definition.
 This higher row-level split is specified in the argument \code{denom_by}.\cr
 }
 }
+\section{Functions}{
+\itemize{
+\item \code{a_freq_j_with_exclude()}: Wrapper for the \code{afun} which can exclude
+row split levels from producing the analysis. These have to be specified in the
+\code{exclude_levels} argument, see \code{?do_exclude_split} for details.
+
+}}
 \examples{
 library(dplyr)
 

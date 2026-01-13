@@ -46,10 +46,11 @@ NULL
 #'
 #' @export
 junco_get_stats <- function(
-    method_groups = "analyze_vars_numeric",
-    stats_in = NULL,
-    custom_stats_in = NULL,
-    add_pval = FALSE) {
+  method_groups = "analyze_vars_numeric",
+  stats_in = NULL,
+  custom_stats_in = NULL,
+  add_pval = FALSE
+) {
   tern_get_stats(
     method_groups = method_groups,
     stats_in = stats_in,
@@ -96,10 +97,11 @@ junco_get_formats_from_stats <- function(stats, formats_in = NULL, levels_per_st
 #'
 #' @export
 junco_get_labels_from_stats <- function(
-    stats,
-    labels_in = NULL,
-    levels_per_stats = NULL,
-    label_attr_from_stats = NULL) {
+  stats,
+  labels_in = NULL,
+  levels_per_stats = NULL,
+  label_attr_from_stats = NULL
+) {
   tern_get_labels_from_stats(
     stats = stats,
     labels_in = labels_in,
@@ -184,6 +186,7 @@ format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in
 #'
 #' @export
 junco_default_stats <- list(
+  cmhrms = c("pval"),
   coxph_hr = c("n_tot", "n_tot_events", "hr", "hr_ci", "hr_ci_3d", "pvalue", "lr_stat_df"),
   event_free = c("pt_at_risk", "event_free_rate", "rate_se", "rate_ci", "event_free_ci"),
   kaplan_meier = c("quantiles_lower", "median_ci_3d", "quantiles_upper", "range_with_cens_info"),
@@ -254,6 +257,7 @@ junco_default_formats_start <- c(
   adj_mean_ci = jjcsformat_xx("(xx.xxx, xx.xxx)"),
   adj_mean_est_ci = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)"),
   change = "xx.x%",
+  cv = jjcsformat_xx("xx.xx"),
   diff = jjcsformat_xx("xx.x"),
   diff_ci = jjcsformat_xx("(xx.x, xx.x)"),
   diff_est_ci = jjcsformat_xx("xx.x (xx.x, xx.x)"),
@@ -262,6 +266,10 @@ junco_default_formats_start <- c(
   diff_mean_est_ci = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)"),
   event_free_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   event_free_rate = jjcsformat_xx("xx.xx"),
+  geom_sd = jjcsformat_xx("xx.xxx"),
+  geom_se = jjcsformat_xx("xx.xxx"),
+  geom_mean_sd = jjcsformat_xx("xx.xx (xx.xxx)"),
+  geom_mean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
   hr = jjcsformat_xx("xx.xx"),
   hr_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
   hr_ci_3d = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
@@ -272,10 +280,14 @@ junco_default_formats_start <- c(
   lsmean_diffci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   lsmean_diff_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
   lsmean_se = jjcsformat_xx("xx.xx (xx.xx)"),
+  mean = jjcsformat_xx("xx.xx"),
   mean_sd = jjcsformat_xx("xx.xx (xx.xxx)"),
+  mean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  mean_pval = jjcsformat_pval_fct(0),
   median = jjcsformat_xx("xx.xx"),
   median_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
   median_ci_3d = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  median_range = jjcsformat_xx("xx.xx (xx.x, xx.x)"),
   n = jjcsformat_xx("xx."),
   n_tot = jjcsformat_xx("xx."),
   n_tot_events = jjcsformat_xx("xx."),
@@ -285,12 +297,14 @@ junco_default_formats_start <- c(
   pvalue = jjcsformat_pval_fct(0),
   p_value = jjcsformat_pval_fct(0),
   quantiles = jjcsformat_xx("xx.xx, xx.xx"),
-  range = jjcsformat_xx("xx.xx, xx.xx"),
+  range = jjcsformat_xx("xx.x, xx.x"),
   range_with_cens_info = jjcsformat_range_fct("xx.xx"),
   rate_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
   rate_se = jjcsformat_xx("xx.xx"),
   rel_risk_ci = jjcsformat_xx("xx.xx (xx.xx - xx.xx)"),
   quantiles_upper = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  sd = jjcsformat_xx("xx.xxx"),
+  se = jjcsformat_xx("xx.xxx"),
   n_altdf = "xx",
   n_df = "xx",
   n_rowdf = "xx",

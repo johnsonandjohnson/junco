@@ -1,46 +1,61 @@
-#' @title Function factory for xx style formatting
-#' @description A function factory to generate formatting functions for value
-#' formatting that support the xx style format and control the rounding method
+#' @name jjcsformat_xx
+#' @title Utility for specifying custom formats
 #'
-#' @param roundmethod (`string`)\cr choice of rounding methods. Options are:
-#'   * `sas`: the underlying rounding method is `tidytlg::roundSAS`, where \cr
-#'   roundSAS comes from this Stack Overflow post https://stackoverflow.com/questions/12688717/round-up-from-5
-#'   * `iec`: the underlying rounding method is `round`
+#' @description
 #'
+#' Utility for specifying custom formats that can be used as a format in `formatters::format_value`
+#'
+#' @param str The formatting that is required specified as a text string, eg "xx.xx"
 #' @param na_str_dflt Character to represent NA value
 #' @param replace_na_dflt logical(1). Should an `na_string` of "NA" within
 #'    the formatters framework be overridden by `na_str_default`? Defaults to
 #'    `TRUE`, as a way to have a different default na string behavior from the
 #'    base `formatters` framework.
-#' @return `format_xx_fct()` format function that can be used in rtables formatting calls
+#' @param na_str String for NA values.
+#' @return Either a supported format string, or a formatting function that can be
+#' used as format in `formatters::format_value`
+#' @family JJCS formatting functions
+#' @rdname jjcsformat_xx
 #' @export
-#'
-#' @family JJCS formats
 #' @examples
-#' jjcsformat_xx_SAS <- format_xx_fct(roundmethod = "sas")
-#' jjcsformat_xx <- jjcsformat_xx_SAS
-#' rcell(c(1.453), jjcsformat_xx("xx.xx"))
-#' rcell(c(), jjcsformat_xx("xx.xx"))
-#' rcell(c(1.453, 2.45638), jjcsformat_xx("xx.xx (xx.xxx)"))
+#' value <- c(1.65, 8.645)
+#' fmt <- jjcsformat_xx("xx.x")
+#' is.function(fmt)
+#' fmt
+#' format_value(value[1], fmt, round_type = "sas")
+#' format_value(value[1], fmt, round_type = "iec")
+#' if (is.function(fmt)) fmt(value[1])
 #'
-format_xx_fct <- function(roundmethod = c("sas", "iec"), na_str_dflt = "NE",
-                          replace_na_dflt = TRUE) {
-  roundmethod <- match.arg(roundmethod)
-
-  if (roundmethod == "sas") {
-    roundfunc <- tidytlg::roundSAS
-  } else {
-    roundfunc <- round
+#' fmt2 <- jjcsformat_xx("xx.x (xx.xxx)")
+#' is.function(fmt2)
+#' value <- c(1.65, 8.645)
+#' format_value(value, fmt2, round_type = "sas")
+#' format_value(value, fmt2, round_type = "iec")
+#' # only possible when resulting format is a function
+#' if (is.function(fmt2)) fmt2(value, round_type = "sas")
+#'
+#' value <- c(1.65, NA)
+#' format_value(value, fmt2, round_type = "iec", na_str = c("ne1", "ne2"))
+#' if (is.function(fmt2)) fmt2(value, round_type = "iec", na_str = c("ne1", "ne2"))
+jjcsformat_xx <- function(
+  str,
+  na_str = na_str_dflt,
+  na_str_dflt = "NE",
+  replace_na_dflt = TRUE
+) {
+  if (grepl("xxx.", str, fixed = TRUE)) {
+    stop("Error: jjcsformat_xx do not use xxx. in input str, replace by xx. instead.")
   }
 
-  fnct <- function(str, na_str = na_str_dflt) {
-    if (grepl("xxx.", str, fixed = TRUE)) {
-      stop(
-        "Error: jjcs_format_xx: do not use xxx. in input str, replace by xx. instead."
-      )
-    }
+  if (identical(str, "default")) {
+    return(str)
+  }
+
+  if (is_valid_format(str)) {
+    rtable_format <- str
+  } else {
     if (!grepl("xx", str, fixed = TRUE)) {
-      stop("Error: jjcs_format_xx: input str must contain xx.")
+      stop("Error: jjcsformat_xx input str must contain xx.")
     }
     positions <- gregexpr(
       pattern = "xx\\.?x*",
@@ -48,282 +63,202 @@ format_xx_fct <- function(roundmethod = c("sas", "iec"), na_str_dflt = "NE",
       perl = TRUE
     )
     x_positions <- regmatches(x = str, m = positions)[[1]]
-    ### str is splitted into pieces as xx. xx xx.xxx
-    ### xx is no rounding
-    ### xx. rounding to integer
-    ### xx.x rounding to 1 decimal, etc
 
-    no_round <- function(x, na_str = na_str_dflt) {
-      if (is.na(x)) {
-        return(na_str)
-      } else {
-        return(x)
-      }
-    }
-
-    roundings <- lapply(X = x_positions, function(x) {
-      y <- strsplit(split = "\\.", x = x)[[1]]
-      ### "xx.x" will result in c("xx","x")
-      ### "xx." will result in "xx"
-      ### "xx" will remain "xx"
-
-      if (x == "xx") {
-        rounding <- no_round
-      } else {
-        rounding <- function(x, na_str = na_str_dflt) {
-          if (is.na(x)) {
-            return(na_str)
-          } else {
-            format(
-              roundfunc(x, digits = ifelse(length(y) > 1, nchar(y[2]), 0)),
-              nsmall = ifelse(length(y) > 1, nchar(y[2]), 0)
-            )
-          }
+    single_rounding <- function(fmt) {
+      function(x,
+               na_str,
+               round_type) {
+        if (fmt %in% list_valid_format_labels()$`1d`) {
+          res <- format_value(x,
+            fmt,
+            na_str = na_str[1],
+            round_type = round_type
+          )
+        } else if (fmt %in% paste0("xx.", strrep("x", times = 5:12))) {
+          # p-value fmt sometimes might need more digits
+          d <- nchar(sub(".*\\.", "", fmt))
+          res <- round_fmt(x, digits = d, round_type = round_type, na_str = na_str[1])
         }
+        res
       }
-      return(rounding)
+    }
+
+    roundings <- lapply(X = x_positions, function(fmt) {
+      single_rounding(fmt)
     })
-    rtable_format <- function(x, output, na_str = na_str_dflt) {
-      if (anyNA(na_str) || (replace_na_dflt && any(na_str == "NA"))) {
-        na_inds <- which(is.na(na_str) | (replace_na_dflt & na_str == "NA"))
-        na_str[na_inds] <- rep(na_str_dflt, length.out = length(na_str))[na_inds]
-      }
-      if (length(x) == 0 || isTRUE(all(x == ""))) {
-        return(NULL)
-      } else if (!length(positions[[1]]) == length(x)) {
-        stop(
-          "Error: input str in call to jjcs_format_xx must contain same number of xx as the number of stats."
-        )
+
+    rtable_format <-
+      function(x,
+               output,
+               round_type = valid_round_type,
+               na_str = na_str_dflt) {
+        if (anyNA(na_str) || (replace_na_dflt && any(na_str == "NA"))) {
+          na_inds <- which(is.na(na_str) | (replace_na_dflt & na_str == "NA"))
+          na_str[na_inds] <- rep(na_str_dflt, length.out = length(na_str))[na_inds]
+        }
+        if (length(x) == 0 || isTRUE(all(x == ""))) {
+          return(NULL)
+        } else if (!length(positions[[1]]) == length(x)) {
+          stop(
+            "Error: input str in call to jjcsformat_xx must contain same number of xx as the number of stats."
+          )
+        }
+
+        round_type <- match.arg(round_type)
+
+        values <- Map(y = x, fun = roundings, na_str = na_str, function(y, fun, na_str, output) {
+          fun(y, na_str = na_str, round_type = round_type)
+        })
+
+        regmatches(x = str, m = positions)[[1]] <- values
+        return(str)
       }
 
-      values <- Map(y = x, fun = roundings, na_str = na_str, function(y, fun, na_str) fun(y, na_str = na_str))
-      regmatches(x = str, m = positions)[[1]] <- values
-      return(str)
-    }
     return(rtable_format)
   }
-  return(fnct)
 }
 
 
-jjcsformat_xx_SAS <- format_xx_fct(roundmethod = "sas")
-jjcsformat_xx_R <- format_xx_fct(roundmethod = "iec")
-
-
-### if we ever decide to switch rounding method, we just have to update jjcsformat_xx here
-
-#' @title Formatting of values
-#' @name jjcsformat_xx
-#' @description jjcs formatting function
-#' @param str The formatting that is required specified as a text string, eg "xx.xx"
-#' @param na_str character. Na string that will be passed from `formatters` into
-#'    our formatting functions.
-#' @return a formatting function with `"sas"`-style rounding.
-#' @export
-jjcsformat_xx <- jjcsformat_xx_SAS
-
-#' @name count_fraction
-#' @title Formatting count and fraction values
+#' @name count and fraction related formatting functions
+#' @title Formatting functions for count and fraction, and for count denominator and fraction values
 #'
 #' @description
 #'
 #' Formats a count together with fraction (and/or denominator) with special
 #' consideration when count is 0, or fraction is 1.
-#' \cr See also: tern::format_count_fraction_fixed_dp()
+#' \cr See also: [tern::format_count_fraction_fixed_dp()]
 #'
-#' @inheritParams format_xx_fct
-#' @param x `numeric`\cr with elements `num` and `fraction` or `num`, `denom` and `fraction`.
-#' @param d numeric(1). Number of digits to round fraction to (default=1)
+#' @param x (`numeric vector`)\cr Vector with elements `num` and `fraction` or `num`, `denom` and `fraction`.
+#' @param d (`numeric(1)`)\cr Number of digits to round fraction to (default = 1)
 #' @param ... Additional arguments passed to other methods.
-#' @return A string in the format `count / denom (ratio percent)`. If `count`
+#' @param type (`character(1`)\cr One of `count_fraction`, `count_denom_fraction`, `fraction_count_denom`,
+#' to specify the type of format the function will represent.
+#' @param verbose (`logical`)\cr Whether to print verbose output
+#' @param round_type (`character(1)`)\cr the type of rounding to perform.
+#' See [formatters::format_value()] for more details.
+#' @param output (`string`)\cr output type.
+#' See [formatters::format_value()] for more details.
+#' @return A formatting function to format input into string in the format `count / denom (ratio percent)`. If `count`
 #' is 0, the format is `0`. If fraction is >0.99, the format is
 #' `count / denom (>99.9 percent)`
-#' @family JJCS formats
+#' @family JJCS formatting functions
+#' @rdname count_fraction
+#' @export
+
+jjcsformat_cnt_den_fract_fct <- function(d = 1,
+                                         type = c("count_fraction", "count_denom_fraction", "fraction_count_denom"),
+                                         verbose = FALSE) {
+  type <- match.arg(type)
+
+  function(x,
+           round_type = valid_round_type,
+           output,
+           ...) {
+    obj_label(x) <- NULL
+    if (any(is.na(x))) {
+      return("-")
+    }
+
+    round_type <- match.arg(round_type)
+
+    checkmate::assert_vector(x)
+    count <- x[1]
+    checkmate::assert_integerish(count)
+
+    fraction <- switch(type,
+      "count_fraction" = x[2],
+      "count_denom_fraction" = x[3],
+      "fraction_count_denom" = x[3]
+    )
+
+
+    assert_proportion_value(
+      fraction,
+      include_boundaries = TRUE
+    )
+
+    if (isTRUE(all.equal(fraction, 1))) fraction <- 1
+
+    if (type == "count_fraction") fmt_cd <- format_value(x = count, format = "xx")
+    if (type %in% c("count_denom_fraction", "fraction_count_denom")) {
+      denom <- x[2]
+      checkmate::assert_integerish(denom)
+      fmt_cd <- paste0(count, "/", denom)
+    }
+
+    if (verbose) message(paste0("round_type used: ", round_type))
+
+    fmtpct <- format_value(100 * fraction,
+      format = paste0("xx.", strrep("x", times = d)),
+      output = "ascii",
+      round_type = round_type
+    )
+
+    fmtpct_p2 <- fmtpct
+    # deal with special cases
+    if (fraction == 1) {
+      fmtpct_p2 <- "100.0"
+    } else if (fmtpct == format(100, nsmall = d)) {
+      fmtpct_p2 <- paste0(">", 100 - 10**(-d))
+    } else if (count != 0 && fmtpct == format(0, nsmall = d)) {
+      fmtpct_p2 <- paste0("<", 10**(-d))
+    }
+
+    fmtpct_p2 <- paste0(fmtpct_p2, "%")
+    fmtpct_p <- paste0(" (", fmtpct_p2, ")")
+
+    result <- if (type == "fraction_count_denom") {
+      paste0(fmtpct_p2, " (", fmt_cd, ")")
+    } else if (count == 0 && type == "count_fraction") {
+      0
+    } else {
+      paste0(fmt_cd, fmtpct_p)
+    }
+
+    return(result)
+  }
+}
+
 #' @rdname count_fraction
 #' @export
 #' @examples
+#'
 #' jjcsformat_count_fraction(c(7, 0.7))
-#' jjcsformat_count_fraction(c(70000, 0.9999999))
-#' jjcsformat_count_fraction(c(70000, 1))
-#'
-jjcsformat_count_fraction <- function(
-    x,
-    d = 1,
-    roundmethod = c("sas", "iec"),
-    ...) {
-  roundmethod <- match.arg(roundmethod)
-  attr(x, "label") <- NULL
-  if (any(is.na(x))) {
-    return("-")
-  }
+#' jjcsformat_count_fraction(c(70000, 70000 / 70001))
+#' jjcsformat_count_fraction(c(235, 235 / 235))
+#' fmt <- jjcsformat_cnt_den_fract_fct(type = "count_fraction", d = 2)
+#' fmt(c(23, 23 / 235))
+jjcsformat_count_fraction <- jjcsformat_cnt_den_fract_fct(type = "count_fraction")
 
-  checkmate::assert_vector(x)
-  checkmate::assert_integerish(x[1])
-  assert_proportion_value(
-    x[2],
-    include_boundaries = TRUE
-  )
-
-  fraction <- x[2]
-
-  if (isTRUE(all.equal(fraction, 1))) fraction <- 1
-
-  if (roundmethod == "sas") {
-    fmtpct <- format(tidytlg::roundSAS(fraction * 100, d), nsmall = d)
-  } else {
-    fmtpct <- format(round(fraction * 100, d), nsmall = d)
-  }
-
-  result <- if (x[1] == 0) {
-    "0"
-  } else if (fraction == 1) {
-    ## per conventions still report as 100.0%
-    paste0(x[1], " (100.0%)")
-  } else if (fmtpct == format(0, nsmall = d)) {
-    # else if (100*x[2] < 10**(-d)) {
-    ### example pct = 0.09999 ### <0.1% (even if fmtpct == 0.1,
-    # but the actual value of pct <0.1)
-    paste0(x[1], " (<", 10**(-d), "%)")
-  } else if (fmtpct == format(100, nsmall = d)) {
-    # else if (100*x[2] > 100-10**(-d)) {
-    ### example pct = 99.90001 ### >99.9% (even if fmtpct == 99.9,
-    # but the actual value of pct >99.9)
-    paste0(x[1], " (>", 100 - 10**(-d), "%)")
-  } else {
-    paste0(x[1], " (", fmtpct, "%)")
-  }
-  return(result)
-}
-
-#' @title Formatting count, denominator and fraction values
-#'
-#' @inheritParams count_fraction
-#' @param ... Additional arguments passed to other methods.
+#' @rdname count_fraction
 #' @export
-#' @rdname count_denom_fraction
-#' @return `x`, formatted into a string with the appropriate
-#' format and `d` digits of precision.
 #' @examples
+#'
 #' jjcsformat_count_denom_fraction(c(7, 10, 0.7))
 #' jjcsformat_count_denom_fraction(c(70000, 70001, 70000 / 70001))
 #' jjcsformat_count_denom_fraction(c(235, 235, 235 / 235))
-jjcsformat_count_denom_fraction <- function(
-    x,
-    d = 1,
-    roundmethod = c("sas", "iec"),
-    ...) {
-  roundmethod <- match.arg(roundmethod)
-  attr(x, "label") <- NULL
-  if (any(is.na(x))) {
-    return("-")
-  }
-  checkmate::assert_vector(x)
-  checkmate::assert_integerish(x[1])
-  assert_proportion_value(
-    x[3],
-    include_boundaries = TRUE
-  )
+#' fmt <- jjcsformat_cnt_den_fract_fct(type = "count_denom_fraction", d = 2)
+#' fmt(c(23, 235, 23 / 235))
+jjcsformat_count_denom_fraction <- jjcsformat_cnt_den_fract_fct(type = "count_denom_fraction")
 
-  fraction <- x[3]
-  if (x[2] == x[1]) fraction <- 1
-
-  fmt_x12 <- paste0(x[1], "/", x[2])
-
-  if (roundmethod == "sas") {
-    fmtpct <- format(tidytlg::roundSAS(fraction * 100, d), nsmall = d)
-  } else {
-    fmtpct <- format(round(fraction * 100, d), nsmall = d)
-  }
-
-  result <- if (x[1] == 0) {
-    # "0"
-    # same as in general situation
-    paste0(fmt_x12, " (", fmtpct, "%)")
-  } else if (100 * fraction == 100) {
-    paste0(fmt_x12, " (100.0%)")
-  } else if (100 * fraction < 10**(-d)) {
-    ### example pct = 0.09999 ### <0.1% (even if fmtpct == 0.1, but the actual value of pct <0.1)
-    paste0(fmt_x12, " (<", 10**(-d), "%)")
-  } else if (100 * fraction > 100 - 10**(-d)) {
-    ### example pct = 99.90001 ### >99.9% (even if fmtpct == 99.9, but the actual value of pct >99.9)
-    paste0(fmt_x12, " (>", 100 - 10**(-d), "%)")
-  } else {
-    paste0(fmt_x12, " (", fmtpct, "%)")
-  }
-  return(result)
-}
-
-#' @title Formatting fraction, count and denominator values
-#'
-#' @details
-#' Formats a 3-dimensional value such that percent values
-#' near 0 or 100% are formatted as .e.g, `"<0.1%"` and
-#' `">99.9%"`, where the cutoff is controlled by `d`, and
-#' formatted as `"xx.x% (xx/xx)"` otherwise, with the
-#' precision of the percent also controlled by `d`.
-#'
-#' @inheritParams count_fraction
-#' @param ... Additional arguments passed to other methods.
+#' @rdname count_fraction
 #' @export
-#' @rdname fraction_count_denom
-#' @return `x` formatted as a string with `d` digits of precision,
-#' with special cased values as described in Details above.
 #' @examples
+#'
 #' jjcsformat_fraction_count_denom(c(7, 10, 0.7))
 #' jjcsformat_fraction_count_denom(c(70000, 70001, 70000 / 70001))
 #' jjcsformat_fraction_count_denom(c(235, 235, 235 / 235))
-jjcsformat_fraction_count_denom <- function(
-    x,
-    d = 1,
-    roundmethod = c("sas", "iec"),
-    ...) {
-  roundmethod <- match.arg(roundmethod)
-  attr(x, "label") <- NULL
-  if (any(is.na(x))) {
-    return("-")
-  }
-  checkmate::assert_vector(x)
-  checkmate::assert_integerish(x[1])
-  assert_proportion_value(
-    x[3],
-    include_boundaries = TRUE
-  )
+#' fmt <- jjcsformat_cnt_den_fract_fct(type = "fraction_count_denom", d = 2)
+#' fmt(c(23, 235, 23 / 235))
+jjcsformat_fraction_count_denom <- jjcsformat_cnt_den_fract_fct(type = "fraction_count_denom")
 
-  fraction <- x[3]
-  if (x[2] == x[1]) fraction <- 1
-
-  fmt_x12 <- paste0(x[1], "/", x[2])
-
-  if (roundmethod == "sas") {
-    fmtpct <- format(tidytlg::roundSAS(fraction * 100, d), nsmall = d)
-  } else {
-    fmtpct <- format(round(fraction * 100, d), nsmall = d)
-  }
-
-  result <- if (x[1] == 0) {
-    # "0"
-    # same as in general situation
-    paste0("(", fmt_x12, ")")
-  } else if (100 * fraction == 100) {
-    paste0("100.0%", " (", fmt_x12, ")")
-  } else if (100 * fraction < 10**(-d)) {
-    ### example pct = 0.09999 ### <0.1% (even if fmtpct == 0.1, but the actual value of pct <0.1)
-    paste0("<", 10**(-d), "%", " (", fmt_x12, ")")
-  } else if (100 * fraction > 100 - 10**(-d)) {
-    ### example pct = 99.90001 ### >99.9% (even if fmtpct == 99.9, but the actual value of pct >99.9)
-    paste0(">", 100 - 10**(-d), "%", " (", fmt_x12, ")")
-  } else {
-    paste0(fmtpct, "%", " (", fmt_x12, ")")
-  }
-  return(result)
-}
 
 #' @title Function factory for p-value formatting
 #'
 #' @description A function factory to generate formatting functions for p-value
-#' formatting that support rounding close to the significance level specified
+#' formatting that support rounding close to the significance level specified.
 #'
-#' @param alpha `number`\cr the significance level to account for during rounding.
+#' @param alpha (`numeric`)\cr the significance level to account for during rounding.
 #' @return The p-value in the standard format. If `count` is 0, the format is `0`.
 #'   If it is smaller than 0.001, then `<0.001`, if it is larger than 0.999, then
 #'   `>0.999` is returned. Otherwise, 3 digits are used. In the special case that
@@ -332,7 +267,7 @@ jjcsformat_fraction_count_denom <- function(
 #'   For example, 0.0048 is not rounded to 0.005 but stays at 0.0048 if `alpha = 0.005`
 #'   is set.
 #'
-#' @family JJCS formats
+#' @rdname jjcsformat_xx
 #' @export
 #'
 #' @examples
@@ -348,27 +283,36 @@ jjcsformat_fraction_count_denom <- function(
 jjcsformat_pval_fct <- function(alpha = 0.05) {
   checkmate::assert_number(alpha, lower = 0, upper = 1)
 
-  function(x, ...) {
+  function(x, round_type = valid_round_type, na_str, ...) {
+    round_type <- match.arg(round_type)
     checkmate::assert_number(
       x,
       lower = 0,
       upper = 1 + .Machine$double.eps, # Be a bit tolerant here.
       na.ok = TRUE
     )
+    xx_format <- "xx.xxx"
+    if (!is.na(x) && alpha < 0.001 && alpha > 0) {
+      stop("jjcsformat_pval_fct: argument alpha should be 0 or at least 0.001.")
+    }
+
     if (is.na(x)) {
-      "NE"
+      format_value(x, jjcsformat_xx(xx_format), na_str = na_str)
     } else if (x < 0.001) {
       "<0.001"
     } else if (x > 0.999) {
       ">0.999"
     } else {
-      xx_format <- "xx.xxx"
-      res <- jjcsformat_xx(xx_format)(x)
-      while (as.numeric(res) == alpha && x < alpha) {
+      res <- format_value(x, jjcsformat_xx(xx_format), round_type = round_type) # nolint start
+      while (as.numeric(res) == alpha && x < alpha &&
+        xx_format != paste0("xx.", strrep("x", times = 10))) {
         # Increase precision by 1 digit until the result
         # is different from threshold alpha.
-        xx_format <- paste0(xx_format, "x")
-        res <- jjcsformat_xx(xx_format)(x)
+        xx_format <- paste0(xx_format, "x") # nolint end
+        res <- format_value(x, jjcsformat_xx(xx_format), round_type = round_type)
+      }
+      if (xx_format == paste0("xx.", strrep("x", times = 10))) {
+        # produce message eg "stopped increasing precision for p-value"?
       }
       res
     }
@@ -379,30 +323,35 @@ jjcsformat_pval_fct <- function(alpha = 0.05) {
 #' @description A function factory to generate formatting functions for range formatting
 #'   that includes information about the censoring of survival times.
 #'
-#' @param str `string`\cr the format specifying the number of digits to be used,
+#' @param str (`string`)\cr the format specifying the number of digits to be used,
 #'   for the range values, e.g. `"xx.xx"`.
+#'
+#' @param censor_char (`string`)\cr the character (of length 1) to be appended to `min` or `max`
 #' @return A function that formats a numeric vector with 4 elements:
 #'   - minimum
 #'   - maximum
 #'   - censored minimum? (1 if censored, 0 if event)
 #'   - censored maximum? (1 if censored, 0 if event)
 #'   The range along with the censoring information is returned as a string
-#'   with the specified numeric format as `(min, max)`, and the `+` is appended
+#'   with the specified numeric format as `(min, max)`, and the `censor_char` is appended
 #'   to `min` or `max` if these have been censored.
 #'
-#' @family JJCS formats
 #' @export
-#'
+#' @rdname jjcsformat_xx
 #' @examples
 #' my_range_format <- jjcsformat_range_fct("xx.xx")
 #' my_range_format(c(0.35235, 99.2342, 1, 0))
 #' my_range_format(c(0.35235, 99.2342, 0, 1))
 #' my_range_format(c(0.35235, 99.2342, 0, 0))
 #' my_range_format(c(0.35235, 99.2342, 1, 1))
-jjcsformat_range_fct <- function(str) {
+#' my_range_format <- jjcsformat_range_fct("xx.xx", censor_char = "*")
+#' my_range_format(c(0.35235, 99.2342, 1, 1))
+jjcsformat_range_fct <- function(str, censor_char = "+") {
   format_xx <- jjcsformat_xx(str)
+  checkmate::assert_string(censor_char, na.ok = FALSE, n.chars = 1)
 
-  function(x, ...) {
+  function(x, output, round_type = valid_round_type, ...) {
+    round_type <- match.arg(round_type)
     checkmate::assert_numeric(
       x,
       len = 4L,
@@ -411,9 +360,11 @@ jjcsformat_range_fct <- function(str) {
     )
     checkmate::assert_true(all(x[c(3, 4)] %in% c(0, 1)))
 
-    res <- vapply(x[c(1, 2)], format_xx, character(1))
-    if (x[3] == 1) res[1] <- paste0(res[1], "+")
-    if (x[4] == 1) res[2] <- paste0(res[2], "+")
+    res <- vapply(x[c(1, 2)], FUN = function(x) {
+      format_value(x, format_xx, round_type = round_type)
+    }, character(1))
+    if (x[3] == 1) res[1] <- paste0(res[1], censor_char)
+    if (x[4] == 1) res[2] <- paste0(res[2], censor_char)
     paste0("(", res[1], ", ", res[2], ")")
   }
 }

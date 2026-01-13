@@ -1,3 +1,9 @@
+if (requireNamespace("rbmi", quietly = TRUE)) {
+  suppressPackageStartupMessages(library(rbmi))
+} else {
+  skip("rbmi package not available")
+}
+
 suppressPackageStartupMessages(library(rbmi))
 
 f2n <- function(x) as.numeric(x) - 1

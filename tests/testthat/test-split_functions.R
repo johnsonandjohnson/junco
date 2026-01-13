@@ -25,9 +25,10 @@ testthat::test_that("cond_rm_facets works", {
   lyt <- basic_table(
     top_level_section_div = " ",
     show_colcounts = TRUE,
-    colcount_format = "N=xx"
-  ) %>%
-    split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) %>%
+    colcount_format = "N=xx",
+    round_type = "sas"
+  ) |>
+    split_cols_by("colspan_trt", split_fun = trim_levels_in_group("ARM")) |>
     split_cols_by("ARM", split_fun = mysplit)
 
   tbl <- build_table(lyt, adsl)
@@ -55,8 +56,8 @@ testthat::test_that("rm_levels works", {
     pre = list(rm_levels(excl = c("JPN", "USA", "NGA")))
   )
 
-  lyt <- basic_table() %>%
-    split_rows_by("COUNTRY", split_fun = split_fun) %>%
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY", split_fun = split_fun) |>
     summarize_row_groups() # for simplicity
 
   tbl <- build_table(lyt, adsl)
@@ -76,8 +77,8 @@ testthat::test_that("real_add_overall_facet works", {
     post = list(real_add_overall_facet("Overall", "Overall"))
   )
 
-  lyt <- basic_table() %>%
-    split_rows_by("COUNTRY", split_fun = split_fun) %>%
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY", split_fun = split_fun) |>
     summarize_row_groups() # for simplicity
 
   tbl <- build_table(lyt, adsl)
@@ -100,8 +101,8 @@ testthat::test_that("make_combo_splitfun works", {
     levels = c("USA", "CAN")
   )
 
-  lyt <- basic_table() %>%
-    split_rows_by("COUNTRY", split_fun = split_fun) %>%
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY", split_fun = split_fun) |>
     summarize_row_groups() # for simplicity
 
   tbl <- build_table(lyt, adsl)
@@ -122,4 +123,96 @@ testthat::test_that("make_combo_splitfun works", {
     cell_values(tbl),
     expected
   )
+})
+
+testthat::test_that("combine_nonblank works", {
+  # function 'combine_nonblank' is similar to 'real_add_overall_facet'
+  # but the former one excludes the blank levels when computing the total numbers
+  set.seed(123)
+  n_blanks <- 10
+  adsl <- ex_adsl
+  rows_with_blanks <- sample.int(nrow(adsl), n_blanks)
+  adsl$COUNTRY <- as.character(adsl$COUNTRY)
+  adsl[rows_with_blanks, "COUNTRY"] <- " "
+  adsl$COUNTRY <- as.factor(adsl$COUNTRY)
+
+  split_fun <- make_split_fun(post = list(combine_nonblank("Overall", "Overall")))
+
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY", split_fun = split_fun) |>
+    summarize_row_groups() # for simplicity
+
+  tbl <- build_table(lyt, adsl)
+
+  expected <- c(levels(adsl$COUNTRY), "Overall")
+
+  testthat::expect_equal(
+    row.names(tbl),
+    expected
+  )
+
+  result <- cell_values(tbl["Overall", ])[[1]][1]
+  expected <- nrow(adsl) - n_blanks
+
+  testthat::expect_equal(
+    result,
+    expected
+  )
+})
+
+testthat::test_that("rm_blank_levels works", {
+  set.seed(123)
+  n_blanks <- 10
+  adsl <- ex_adsl
+  rows_with_blanks <- sample.int(nrow(adsl), n_blanks)
+  adsl$COUNTRY <- as.character(adsl$COUNTRY)
+  adsl[rows_with_blanks, "COUNTRY"] <- " "
+  adsl$COUNTRY <- as.factor(adsl$COUNTRY)
+
+  split_fun <- make_split_fun(
+    pre = list(rm_blank_levels)
+  )
+
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY") |>
+    summarize_row_groups()
+  tbl <- build_table(lyt, adsl)
+  row_names_before <- rtables::row.names(tbl)
+
+  lyt <- basic_table(round_type = "sas") |>
+    split_rows_by("COUNTRY", split_fun = split_fun) |>
+    summarize_row_groups()
+  tbl <- build_table(lyt, adsl)
+  row_names_after <- rtables::row.names(tbl)
+
+
+  testthat::expect_equal(
+    row_names_before,
+    c(" ", row_names_after)
+  )
+})
+
+testthat::test_that("do_exclude_split works", {
+  exclude_levels <- list(
+    "COUNTRY" = c("USA", "CAN"),
+    "ARM" = c("B: Placebo")
+  )
+
+  spl_context1 <- data.frame(
+    split = c("STUDY", "COUNTRY"),
+    value = c("Study 1", "USA")
+  )
+  expect_true(do_exclude_split(exclude_levels, spl_context1))
+
+  spl_context2 <- data.frame(
+    split = c("STUDY", "COUNTRY"),
+    value = c("Study 1", "MEX")
+  )
+  expect_false(do_exclude_split(exclude_levels, spl_context2))
+
+  spl_context3 <- data.frame(
+    split = c("STUDY", "COUNTRY", "ARM"),
+    value = c("Study 1", "MEX", "B: Placebo")
+  )
+  expect_true(do_exclude_split(exclude_levels, spl_context3))
 })

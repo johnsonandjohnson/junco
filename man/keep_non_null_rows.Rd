@@ -7,10 +7,10 @@
 keep_non_null_rows(tr)
 }
 \arguments{
-\item{tr}{table tree object}
+\item{tr}{(\code{TableTree})\cr The TableTree object to prune.}
 }
 \value{
-a function that can be utilized as a row_condition in the tern::keep_rows function
+A function that can be utilized as a row_condition in the tern::keep_rows function.
 }
 \description{
 Condition function on individual analysis rows. Flag as FALSE when all
@@ -18,7 +18,6 @@ columns are NULL, as then the row should not be kept. To be utilized as a
 row_condition in function tern::keep_rows
 }
 \examples{
-
 library(dplyr)
 
 ADSL <- data.frame(
