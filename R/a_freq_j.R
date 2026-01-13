@@ -12,7 +12,7 @@
 #' When multiple levels, only those levels/values of the incoming variable
 #' will be considered.\cr
 #' When no values are observed (eg zero row input df),
-#' a row with row-label `No data reported` will be included in the table.
+#' a row with row-label `No data to report` will be included in the table.
 #' @param drop_levels (`logical`)\cr If `TRUE` non-observed levels
 #' (based upon .df_row) will not be included.\cr
 #' Cannot be used together with `val`.
@@ -375,8 +375,11 @@ s_rel_risk_val_j <- function(
 #'
 #'
 #' @inheritParams proposal_argument_convention
-#' @param .stats (`character`)\cr statistics to select for the table.
-#' See Value for list of available statistics.
+#' @param .stats (`character`)\cr Statistics to include in the table. May contain one or more of:
+#' `"count"`, `"count_unique"`, `"count_unique_fraction"`,
+#' `"count_unique_denom_fraction"`, `"n_df"`, `"n_altdf"`,
+#' `"n_rowdf"`, `"n_parentdf"`, `"denom"`.
+#' See Value for the full list of available statistics.
 #' @param riskdiff (`logical`)\cr
 #' When `TRUE`, risk difference calculations will be performed and
 #' presented (if required risk difference column splits are included).\cr

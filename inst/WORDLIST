@@ -20,7 +20,6 @@ Lapply
 MMRM
 Miettinen
 Nurminen
-Optimality
 PARAMCD
 Parallelisation
 Parallelise
@@ -37,7 +36,6 @@ Toeplitz
 TrueType
 Unlist
 VTableTree
-Vectorized
 XLSX
 afun
 allparts
@@ -119,8 +117,6 @@ pseudocolumn
 px
 rbmi
 removerowtext
-repo
-reproducibility
 responder
 responders
 rlistings
