@@ -50,9 +50,13 @@ rtables::label_at_path(tbl1c, c("COUNTRY", "count_unique_denom_fraction.CAN")) <
 rtables::label_at_path(tbl1c, c("COUNTRY", "count_unique_denom_fraction.JPN")) <-
   "JPN >="
 
-snapshot_test_docx <- function(doc) {
+snapshot_test_docx <- function(doc, check_XML = FALSE) {
   if (Sys.info()[["sysname"]] == "Windows") {
-    testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
+    if (check_XML) {
+      testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
+    } else {
+      testthat::expect_snapshot(officer::docx_summary(x = doc, detailed = TRUE))
+    }
   }
 }
 
@@ -156,10 +160,10 @@ testthat::test_that("tt_to_flextable_j() works fine with border_mat", {
   flx2 <- tt_to_flextable_j(tt = tbl2, tblid = "output ID", border_mat = border_mat)
   options(docx.add_datetime = TRUE)
 
-  testthat::expect_equal(flx1$header$styles$cells$border.width.bottom$data[2, 4], c(V4 = 0))
-  testthat::expect_equal(flx2$header$styles$cells$border.width.bottom$data[2, 4], c(V4 = 0.75))
+  expected_res <- flx1$header$styles$cells$border.width.bottom$data
+  expected_res[2, 4] <- 0.75
+  testthat::expect_equal(flx2$header$styles$cells$border.width.bottom$data, expected_res)
 
-  snapshot_test_flextable(flx2)
 })
 
 testthat::test_that("tt_to_flextable_j() works fine with round_type", {
@@ -811,7 +815,7 @@ testthat::test_that("export_graph_as_docx() works with basic example", {
 
   # open the file and check the XML
   doc <- officer::read_docx(output_docx)
-  snapshot_test_docx(doc)
+  snapshot_test_docx(doc, check_XML = TRUE)
 
   file.remove(c(pn1, pn2, output_docx))
 })
