@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.3] - 2026-01-12
+
+### Changed
+- Address CRAN NOTES.
+
 ## [0.1.2] - 2025-12-10
 
 ### Added and Removed
@@ -24,17 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `cmh_sato` and `cmh_mn` (Cochran-Mantel-Haenszel stratified proportion difference estimation with Sato variance and Miettinen Nurminen method, respectively) `method` options to the `s_proportion_diff_j()` function.
 - Added formatting function round type (#76)
 
-### Changed
-- Replace {pharmaverseadam} with {pharmaverseadamjnj}
-- Update pruning_functions.R
-- Update `string_to_title()` to handle factors (#26)
-- Moved rbmi to suggest
-- Replaced `denom_df` with `.alt_df_full` in `a_maxlev()`.
-
-### Fixed
-- Fixes #102 bug inappropriate warnings from `cond_rm_facets` function
-- Fix bug for not selecting NA records in `h_subset_combo()`
-- Consistent `tt_to_tbldf()` function behavior with invalid structures #116
+* Fixed bug in s_summarize_desc_j function to handle sparse data (zero variance) cases (#78)
 
 
 ## [0.1.1] - 2025-07-28
@@ -48,5 +43,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Initial CRAN release
 
+[0.1.3]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.3
 [0.1.2]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.2
 [0.1.1]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.1
