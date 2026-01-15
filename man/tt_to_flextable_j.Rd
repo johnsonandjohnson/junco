@@ -9,7 +9,6 @@ tt_to_flextable_j(
   tblid,
   theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
   border = flextable::fp_border_default(width = 0.75, color = "black"),
-  indent_size = NULL,
   titles_as_header = TRUE,
   bold_titles = TRUE,
   integrate_footers = TRUE,
@@ -18,8 +17,7 @@ tt_to_flextable_j(
   fontspec = formatters::font_spec("Times", 9L, 1.2),
   lpp = NULL,
   cpp = NULL,
-  colwidths = def_colwidths(tt, fontspec, col_gap = col_gap, label_width_ins =
-    label_width_ins, type = tlgtype),
+  colwidths = NULL,
   label_width_ins = 2,
   tf_wrap = !is.null(cpp),
   max_width = cpp,
@@ -27,10 +25,10 @@ tt_to_flextable_j(
   total_page_width = pg_width_by_orient(orientation == "landscape"),
   orientation = "portrait",
   nosplitin = character(),
-  string_map = junco::default_str_map,
+  string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   reduce_first_col_indentation = FALSE,
-  tlgtype = (utils::getFromNamespace("tlg_type", "junco"))(tt),
+  tlgtype = tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", 0.5, 3),
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
@@ -48,8 +46,6 @@ tt_to_flextable_j(
 or rtables.officer::theme_docx_default() for more details.}
 
 \item{border}{(optional) an \code{fp_border} object.}
-
-\item{indent_size}{(optional) Numeric. Not used and set to 9 points internally.}
 
 \item{titles_as_header}{(optional) Default = TRUE.}
 
@@ -89,7 +85,9 @@ One of: "portrait", "landscape".}
 
 \item{markup_df_docx}{(optional) Default = dps_markup_df_docx.}
 
-\item{reduce_first_col_indentation}{(optional) Default = FALSE.}
+\item{reduce_first_col_indentation}{(optional) Default = FALSE. Flag to reduce
+by 1 the indentation if we have vertical pagination. No need to be specified by
+the end user.}
 
 \item{tlgtype}{(optional). No need to be specified by end user.}
 

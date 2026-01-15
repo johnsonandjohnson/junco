@@ -23,7 +23,7 @@ export_as_docx_j(
   string_map = junco::default_str_map,
   markup_df_docx = dps_markup_df_docx,
   combined_docx = FALSE,
-  tlgtype = (utils::getFromNamespace("tlg_type", "junco"))(tt),
+  tlgtype = tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", 0.5, 3),
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
