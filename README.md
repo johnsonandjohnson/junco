@@ -33,7 +33,7 @@ The package provides a range of functionality, such as:
 - Support optional SAS (to-nearest-value) and IEC (to-nearest-even) rounding
 - Frequency tabulations and summarizations
 - Reference-based multiple imputation (RBMI) for handling missing data
-- Production-ready RTF and DOCX exporter for listings and tables (see [tt_to_tbldf](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.html) and [ junco::export_as_docx_j](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.html))
+- Production-ready RTF and DOCX exporter for listings and tables (see [tt_to_tbldf](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.html) and [export_as_docx_j](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.html))
 - Creation of tables, listings, and graphs (TLGs)
 
 ## Installation
@@ -64,6 +64,17 @@ Key vignettes and what they cover:
 - Getting started with junco — overview and basic workflow
   - Article: https://johnsonandjohnson.github.io/junco/articles/junco.html
   - What you’ll learn: how to set up data, create common analyses, and produce TLG-ready outputs using core helpers.
+To understand how to use this package, please refer to the vignettes (also available on the pkgdown site). You can list them locally with:
+
+```r
+browseVignettes(package = "junco")
+```
+
+Key vignettes and what they cover:
+
+- Getting started with junco — overview and basic workflow
+  - Article: https://johnsonandjohnson.github.io/junco/articles/junco.html
+  - What you’ll learn: how to set up data, create common analyses, and produce TLG-ready outputs using core helpers.
 
 - Table and listing customizations — controlling layouts and styles
   - Article: https://johnsonandjohnson.github.io/junco/articles/table_and_listing_customizations.html
@@ -72,3 +83,18 @@ Key vignettes and what they cover:
 - Auto column widths — making table columns fit content automatically
   - Article: https://johnsonandjohnson.github.io/junco/articles/auto_colwidths.html
   - What you’ll learn: techniques and options for automatically sizing column widths for cleaner RTF/DOCX outputs.
+
+### TLG Catalog — browse examples and outputs
+
+Explore a curated catalog of Tables, Listings, and Graphs (TLGs) generated with `junco` and companion tooling:
+
+- TLG Catalog: https://johnsonandjohnson.github.io/TLG_Catalog
+
+What you’ll find there:
+
+- Realistic TLG outputs to help you preview what specific functions produce.
+- Pointers to the underlying function calls and key arguments used to create each artifact.
+- Context on when to use each approach (e.g., by analysis type or endpoint).
+
+Tip: Use the catalog alongside the vignettes above and the function reference to quickly identify the right helper for your analysis, 
+then adapt the showcased code to your study’s data and conventions.
