@@ -1,8 +1,8 @@
 # Changelog
 
-## junco 0.1.2
+## junco 0.1.3
 
-CRAN release: 2025-12-20
+CRAN release: 2026-01-15
 
 #### New Major features
 
@@ -29,6 +29,11 @@ CRAN release: 2025-12-20
   function.
 - Added formatting function round type
   ([\#76](https://github.com/johnsonandjohnson/junco/issues/76))
+
+#### Changed
+
+- Vignettes: switch to rmarkdown::html_vignette and fix internal link to
+  package index to address CRAN NOTES.
 
 #### Minor changes
 

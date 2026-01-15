@@ -100,9 +100,8 @@ statistical projects.
 Examples of the `junco` analysis functions are `a_freq_j`,
 `a_freq_subcol_j`, `a_summarize_aval_chg_diff_j` or `a_summarize_ex_j`.
 
-A complete list of analysis functions can be found in [the junco website
-functions
-reference](https://johnsonandjohnson.github.io/junco/reference/index.md).
+A complete list of analysis functions can be found in the
+\$\$\`junco\`\$\$ package documentation.
 
 ## Tabulation Examples using `a_freq_j`
 

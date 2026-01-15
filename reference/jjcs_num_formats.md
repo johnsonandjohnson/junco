@@ -61,8 +61,8 @@ jjcs_num_formats(2)$fmt
 #>     regmatches(x = str, m = positions)[[1]] <- values
 #>     return(str)
 #> }
-#> <bytecode: 0x55b899dba498>
-#> <environment: 0x55b898ed54b8>
+#> <bytecode: 0x564f95c133e0>
+#> <environment: 0x564f9568b478>
 #> 
 #> $sd
 #> [1] "xx.xxxx"

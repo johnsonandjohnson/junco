@@ -11,7 +11,7 @@ each of them."><meta property="og:image" content="https://johnsonandjohnson.gith
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@ each of them."><meta property="og:image" content="https://johnsonandjohnson.gith
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Analyse Multiple Imputed Datasets</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/rbmi.R" class="external-link"><code>R/rbmi.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v0.1.3/R/rbmi.R" class="external-link"><code>R/rbmi.R</code></a></small>
       <div class="d-none name"><code>rbmi_analyse.Rd</code></div>
     </div>
 
@@ -233,7 +233,7 @@ datasets.</p>
 <span class="r-in"><span>  <span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">PATIENT</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">pat_ids</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rbmi/latest-tag/reference/expand.html" class="external-link">expand_locf</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rbmi/man/expand.html" class="external-link">expand_locf</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">dat</span>,</span></span>
 <span class="r-in"><span>    PATIENT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">PATIENT</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    VISIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">VISIT</span><span class="op">)</span>,</span></span>
@@ -250,22 +250,22 @@ datasets.</p>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">PATIENT</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>strategy <span class="op">=</span> <span class="st">"JR"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">dat_ice</span> <span class="op">&lt;-</span> <span class="va">dat_ice</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">dat_ice</span><span class="op">$</span><span class="va">PATIENT</span> <span class="op">==</span> <span class="fl">3618</span><span class="op">)</span>, <span class="op">]</span></span></span>
-<span class="r-in"><span>  <span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rbmi/latest-tag/reference/set_vars.html" class="external-link">set_vars</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rbmi/man/set_vars.html" class="external-link">set_vars</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    outcome <span class="op">=</span> <span class="st">"CHANGE"</span>,</span></span>
 <span class="r-in"><span>    visit <span class="op">=</span> <span class="st">"VISIT"</span>,</span></span>
 <span class="r-in"><span>    subjid <span class="op">=</span> <span class="st">"PATIENT"</span>,</span></span>
 <span class="r-in"><span>    group <span class="op">=</span> <span class="st">"THERAPY"</span>,</span></span>
 <span class="r-in"><span>    covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"THERAPY"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">drawObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rbmi/latest-tag/reference/draws.html" class="external-link">draws</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">drawObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rbmi/man/draws.html" class="external-link">draws</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    data <span class="op">=</span> <span class="va">dat</span>,</span></span>
 <span class="r-in"><span>    data_ice <span class="op">=</span> <span class="va">dat_ice</span>,</span></span>
 <span class="r-in"><span>    vars <span class="op">=</span> <span class="va">vars</span>,</span></span>
-<span class="r-in"><span>    method <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rbmi/latest-tag/reference/method.html" class="external-link">method_condmean</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"jackknife"</span>, covariance <span class="op">=</span> <span class="st">"csh"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rbmi/man/method.html" class="external-link">method_condmean</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"jackknife"</span>, covariance <span class="op">=</span> <span class="st">"csh"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    quiet <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">references</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DRUG"</span> <span class="op">=</span> <span class="st">"PLACEBO"</span>, <span class="st">"PLACEBO"</span> <span class="op">=</span> <span class="st">"PLACEBO"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">imputeObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rbmi/latest-tag/reference/impute.html" class="external-link">impute</a></span><span class="op">(</span><span class="va">drawObj</span>, <span class="va">references</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">imputeObj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rbmi/man/impute.html" class="external-link">impute</a></span><span class="op">(</span><span class="va">drawObj</span>, <span class="va">references</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="fu">rbmi_analyse</span><span class="op">(</span>imputations <span class="op">=</span> <span class="va">imputeObj</span>, vars <span class="op">=</span> <span class="va">vars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
