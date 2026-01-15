@@ -13,7 +13,7 @@ remove_table_shading_XML <- function(doc) {
 }
 
 remove_security_popup_page_numbers_XML <- function(doc, tlgtype = "Table",
-                                               pagenum = tlgtype == "Listing") {
+                                                   pagenum = tlgtype == "Listing") {
   # if we are working with listings, we previously had added
   # the page numbers using officer::run_word_field()
   # the problem with this function is that it inserts in the XML
@@ -293,7 +293,7 @@ insert_title_as_header <- function(flx,
   # see function "add_title_style_caption_XML()"
 
   new_title <- sub(":", ":\t", title)
-  
+
   flx <- flx |>
     flextable::add_header_lines(values = new_title, top = TRUE) |>
     flextable::align(part = "header", i = 1, align = "left") |>
@@ -511,15 +511,15 @@ theme_docx_default_j <- function(
       flextable::valign(j = 1, valign = "bottom", part = "header") |>
       flextable::valign(j = seq(2, tbl_ncol_body), valign = "bottom", part = "header")
     flx <- flextable::padding(flx, part = "header", padding = 0, j = -1)
-    flx <- flx %>% flextable::padding(padding.top = cell_margins[3], 
-                                      padding.bottom = cell_margins[4], part = "body")
-    flx <- flextable::padding(flx, j = seq(2, tbl_ncol_body), 
+    flx <- flx |> flextable::padding(padding.top = cell_margins[3],
+                                     padding.bottom = cell_margins[4], part = "body")
+    flx <- flextable::padding(flx, j = seq(2, tbl_ncol_body),
                               padding.left = cell_margins[1], padding.right = cell_margins[2])
-    flx <- flx %>% flextable::padding(j = seq(1, tbl_ncol_body), 
-                                      padding.top = cell_margins[3],
-                                      padding.bottom = cell_margins[4], 
-                                      part = "header")
-    
+    flx <- flx |> flextable::padding(j = seq(1, tbl_ncol_body),
+                                     padding.top = cell_margins[3],
+                                     padding.bottom = cell_margins[4],
+                                     part = "header")
+
     if (any(tbl_row_class == "LabelRow")) {
       flx <- flextable::padding(flx,
         j = 1, i = which(tbl_row_class == "LabelRow"),
@@ -647,36 +647,36 @@ theme_docx_default_j <- function(
 #' @returns a flextable object.
 #' @export
 tt_to_flextable_j <- function(
-  tt,
-  tblid,
-  theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
-  titles_as_header = TRUE,
-  bold_titles = TRUE,
-  integrate_footers = TRUE,
-  counts_in_newline = FALSE,
-  paginate = FALSE,
-  fontspec = formatters::font_spec("Times", 9L, 1.2),
-  lpp = NULL,
-  cpp = NULL,
-  colwidths = NULL,
-  label_width_ins = 2,
-  tf_wrap = !is.null(cpp),
-  max_width = cpp,
-  total_page_height = 10,
-  total_page_width = pg_width_by_orient(orientation == "landscape"),
-  orientation = "portrait",
-  nosplitin = character(),
-  string_map = default_str_map,
-  markup_df_docx = dps_markup_df_docx,
-  reduce_first_col_indentation = FALSE,
-  tlgtype = tlg_type(tt),
-  col_gap = ifelse(tlgtype == "Listing", .5, 3),
-  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-  round_type = formatters::obj_round_type(tt),
-  alignments = list(),
-  border_mat = make_header_bordmat(obj = tt),
-  ...) {
+    tt,
+    tblid,
+    theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
+    border = flextable::fp_border_default(width = 0.75, color = "black"),
+    titles_as_header = TRUE,
+    bold_titles = TRUE,
+    integrate_footers = TRUE,
+    counts_in_newline = FALSE,
+    paginate = FALSE,
+    fontspec = formatters::font_spec("Times", 9L, 1.2),
+    lpp = NULL,
+    cpp = NULL,
+    colwidths = NULL,
+    label_width_ins = 2,
+    tf_wrap = !is.null(cpp),
+    max_width = cpp,
+    total_page_height = 10,
+    total_page_width = pg_width_by_orient(orientation == "landscape"),
+    orientation = "portrait",
+    nosplitin = character(),
+    string_map = default_str_map,
+    markup_df_docx = dps_markup_df_docx,
+    reduce_first_col_indentation = FALSE,
+    tlgtype = tlg_type(tt),
+    col_gap = ifelse(tlgtype == "Listing", .5, 3),
+    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+    round_type = formatters::obj_round_type(tt),
+    alignments = list(),
+    border_mat = make_header_bordmat(obj = tt),
+    ...) {
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
   }
@@ -715,7 +715,7 @@ tt_to_flextable_j <- function(
     )
     tt <- set_titles(tt, titles)
   }
-  
+
   if (is.null(colwidths)) {
     colwidths <- def_colwidths(
       tt,
@@ -1113,8 +1113,8 @@ tt_to_flextable_j <- function(
 
   # apply theme
   flx <- do.call(theme, list(flx))
-  
-  
+
+
   # NOTE: for Listings, vertical alignment is "top" for the whole body
   if (tlgtype == "Listing") {
     flx <- flx |> flextable::valign(part = "body", valign = "top")
@@ -1447,7 +1447,7 @@ export_as_docx_j <- function(
     .extract_font_and_size_from_flx <- utils::getFromNamespace(
       ".extract_font_and_size_from_flx",
       "rtables.officer"
-      )
+    )
     if (inherits(flex_tbl_list[[1]], "list")) {
       flx_fpt <- .extract_font_and_size_from_flx(flex_tbl_list[[1]][[1]])
     } else {
