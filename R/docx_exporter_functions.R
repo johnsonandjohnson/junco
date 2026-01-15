@@ -732,8 +732,8 @@ tt_to_flextable_j <- function(
         colwidths = colwidths[-1]
       )
     }
+    colwidths <- (colwidths / sum(colwidths)) * total_page_width
   }
-  colwidths <- (colwidths / sum(colwidths)) * total_page_width
 
 
   if (paginate) {
