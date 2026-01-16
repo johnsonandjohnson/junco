@@ -447,20 +447,23 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
 #' See notes to understand why this is experimental.
 #'
 #'
-#' @param font (`string`)\cr font. Defaults to "Times New Roman".
-#' @param font_size (`integer(1)`)\cr font size. Defaults to 9.
+#' @param font (`string`)\cr (optional) Default = "Times New Roman".
+#' @param font_size (`integer(1)`)\cr (optional) Default = 9.
 #' @param cell_margins (`numeric(1) or numeric(4)`)\cr
-#' a numeric or a vector of four numbers indicating
-#' c("left", "right", "top", "bottom"). It defaults to 0mm in Word pt to all 4 margins.
-#' @param bold (`character`)\cr parts of the table text that should be in bold.
+#' A numeric or a vector of four numbers indicating
+#' c("left", "right", "top", "bottom").\cr
+#' (optional) Default = c(0, 0, 0, 0).
+#' @param bold (`character`)\cr Parts of the table text that should be in bold.
 #' Can be any combination of c("header", "content_rows", "label_rows", "top_left").
 #' The first one renders all column names bold (not topleft content).
-#' The second and third option use formatters::make_row_df() to render
-#' content or/and label rows as bold.
-#' @param bold_manual (`named list or NULL`)\cr list of index lists.
-#' See example for needed structure. Accepted groupings/names are c("header", "body").
-#' @param border (`fp_border`)\cr border to use. Defaults to width = 0.75
-#' and color = "black"
+#' The second and third option use [formatters::make_row_df()] to render
+#' content or/and label rows as bold.\cr
+#' (optional) Default = \code{c("header", "content_rows", "label_rows", "top_left")}
+#' @param bold_manual (`named list`)\cr List of index lists.
+#' See example for needed structure. Accepted groupings/names are c("header", "body").\cr
+#' (optional) Default = NULL.
+#' @param border (`fp_border`)\cr Border to use (default =
+#' \code{flextable::fp_border_default(width = 0.75, color = "black")}).
 #'
 #' @note
 #' This function has been tested for common use cases but may not work or have
@@ -470,7 +473,7 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
 #' This function may be removed from junco in the future if the functionality
 #' is merged into `rtables.officer`.
 #'
-#' @returns a function that applies the given theme to a flextable.
+#' @returns A function that applies the given theme to a flextable.
 #' @export
 theme_docx_default_j <- function(
   font = "Times New Roman",
@@ -584,55 +587,54 @@ theme_docx_default_j <- function(
 }
 
 
-#' Convert a VTableTree or a listing_df object to a flextable
+#' Convert a TableTree or a listing_df object to a flextable
 #'
 #' @description `r lifecycle::badge('experimental')`
 #'
 #' This function is based on [rtables.officer::tt_to_flextable()].
 #' See notes to understand why this is experimental.
 #'
-#' @param tt a VTableTree or a listing_df object
-#' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
-#' @param theme (optional) a function factory. See theme_docx_default_j()
-#' or rtables.officer::theme_docx_default() for more details.
-#' @param border (optional) an `fp_border` object.
-#' @param titles_as_header (optional) Default = TRUE.
-#' @param bold_titles (optional) Default = TRUE.
-#' @param integrate_footers (optional) Default = TRUE.
-#' @param counts_in_newline (optional) Default = FALSE.
-#' @param paginate (optional) Default = FALSE.
-#' @param fontspec (optional) a font_spec object.
-#' @param lpp (optional) Default = NULL. Not used.
-#' @param cpp (optional) Default = NULL. Not used.
-#' @param colwidths (`numeric` vector)\cr Column widths for the table
-#' @param label_width_ins (`numeric`)\cr Label width in inches
-#' @param tf_wrap (optional) Default = FALSE. Not used.
-#' @param max_width (optional) Default = NULL. Not used.
-#' @param total_page_height (optional) Default = 10. Not used.
-#' @param total_page_width (optional). No need to be specified by end user.
+#' @param tt (`TableTree` or `listing_df`)\cr The object to convert to flextable.
+#' @param tblid (`character`)\cr Output ID to be displayed in the title and last line of footer.
+#' @param theme (function factory)\cr The theme to apply to the flextable
+#' (default = [junco::theme_docx_default_j()]).\cr
+#' See [junco::theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
+#' for more details.
+#' @param border (`fp_border`)\cr Border to use (default =
+#' \code{flextable::fp_border_default(width = 0.75, color = "black")}).
+#' @param titles_as_header (`logical`)\cr (optional) Default = TRUE.
+#' @param bold_titles (`logical`)\cr (optional) Default = TRUE.
+#' @param integrate_footers (`logical`)\cr (optional) Default = TRUE.
+#' @param counts_in_newline (`logical`)\cr (optional) Default = FALSE.
+#' @param paginate (`logical`)\cr (optional) Default = TRUE for TableTree and FALSE otherwise.
+#' @param fontspec (`font_spec`)\cr Font specification object.
+#' @param colwidths (`numeric`)\cr Column widths for the table.
+#' @param label_width_ins (`numeric`)\cr Label width in inches.
+#' @param total_page_width (`numeric`)\cr (optional). No need to be specified by end user.
 #' Set to 6.38 ("portrait") or 8.88 ("landscape").
-#' @param orientation (optional) Default = "portrait".
+#' @param orientation (`character`)\cr (optional) Default = "portrait".
 #' One of: "portrait", "landscape".
-#' @param nosplitin (optional) Default = character(). Named list.
-#' @param string_map (optional) Default = default_str_map.
-#' @param markup_df_docx (optional) Default = dps_markup_df_docx.
-#' @param reduce_first_col_indentation (optional) Default = FALSE. Flag to reduce
-#' by 1 the indentation if we have vertical pagination. No need to be specified by
-#' the end user.
-#' @param tlgtype (optional). No need to be specified by end user.
-#' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
-#' @param pagenum (optional). Default = FALSE (Tables) or TRUE (Listings).
+#' @param nosplitin (`list`)\cr list(row=, col=). Path elements whose children should not be paginated within
+#' if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
+#' all the associated columns don't fit on a single page.
+#' @param string_map (`tibble`)\cr (optional) Default = default_str_map.
+#' @param markup_df_docx (`tibble`)\cr (optional) Default = dps_markup_df_docx.
+#' @param reduce_first_col_indentation (`logical`)\cr (optional) Default = FALSE.
+#' Whether to reduce by 1 the indentation if we have vertical pagination.
+#' No need to be specified by the end user.
+#' @param tlgtype (`character`)\cr (optional). No need to be specified by end user.
+#' @param col_gap (`numeric`)\cr (optional). Default = 3 (Tables) or 0.5 (Listings).
 #' @param round_type (`"iec"` or `"sas"`)\cr the type of rounding to perform. iec,
 #' the default, performs rounding compliant with IEC 60559, while
 #' sas performs nearest-value rounding consistent with rounding within SAS.
 #' See `[formatters::format_value()]` for more details.
-#' @param alignments (`list`)\cr List of named lists. Vectorized.
+#' @param alignments (`list`)\cr (optional) List of named lists. Vectorized.
 #' (Default = `list()`) Used to specify individual column or cell alignments.
 #' Each named list contains `row`, `col`, and `value`.
-#' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of columns of `tt`
-#' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
-#' for what the matrix should contain. Users should only specify this when the
-#' default behavior does not meet their needs.
+#' @param border_mat (`matrix`)\cr (optional) A `m x k` matrix where m is the number of
+#' columns of `tt` and k is the number of lines the header takes up.
+#' See [tidytlg::add_bottom_borders] for what the matrix should contain.
+#' Users should only specify this when the default behavior does not meet their needs.
 #' @param ... other arguments.
 #'
 #'
@@ -655,15 +657,10 @@ tt_to_flextable_j <- function(
     bold_titles = TRUE,
     integrate_footers = TRUE,
     counts_in_newline = FALSE,
-    paginate = FALSE,
+    paginate = tlg_type(tt) == "Table",
     fontspec = formatters::font_spec("Times", 9L, 1.2),
-    lpp = NULL,
-    cpp = NULL,
     colwidths = NULL,
     label_width_ins = 2,
-    tf_wrap = !is.null(cpp),
-    max_width = cpp,
-    total_page_height = 10,
     total_page_width = pg_width_by_orient(orientation == "landscape"),
     orientation = "portrait",
     nosplitin = character(),
@@ -672,7 +669,6 @@ tt_to_flextable_j <- function(
     reduce_first_col_indentation = FALSE,
     tlgtype = tlg_type(tt),
     col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
     round_type = formatters::obj_round_type(tt),
     alignments = list(),
     border_mat = make_header_bordmat(obj = tt),
@@ -687,7 +683,6 @@ tt_to_flextable_j <- function(
   checkmate::assert_flag(integrate_footers)
   checkmate::assert_flag(counts_in_newline)
   checkmate::assert_number(total_page_width, lower = 1)
-  checkmate::assert_number(total_page_height, lower = 1)
   checkmate::assert_numeric(colwidths, lower = 0, len = ncol(tt) + 1, null.ok = TRUE)
 
   # Validate `alignments` here because of its complicated data structure
@@ -760,7 +755,6 @@ tt_to_flextable_j <- function(
       pg_width = pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
       margins = rep(0, 4),
-      lpp = NULL,
       nosplitin = nosplitin,
       verbose = FALSE,
       round_type = round_type
@@ -828,13 +822,7 @@ tt_to_flextable_j <- function(
           counts_in_newline = counts_in_newline,
           paginate = FALSE,
           fontspec = fontspec,
-          lpp = lpp,
-          cpp = cpp,
-          ... = ...,
           colwidths = NULL,
-          tf_wrap = tf_wrap,
-          max_width = max_width,
-          total_page_height = total_page_height,
           total_page_width = total_page_width,
           orientation = orientation,
           tblid = fname,
@@ -844,10 +832,10 @@ tt_to_flextable_j <- function(
           reduce_first_col_indentation = (length(full_pag_i) > 1),
           tlgtype = tlgtype,
           col_gap = col_gap,
-          pagenum = pagenum,
           round_type = round_type,
           alignments = alignments,
           border_mat = pag_bord_mats[[i]],
+          ... = ...
         )
 
         return(sub_ft)
@@ -1211,7 +1199,6 @@ tt_to_flextable_j <- function(
       pg_width = pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
       margins = rep(0, 4),
-      lpp = NULL,
       nosplitin = nosplitin,
       verbose = FALSE,
       round_type = round_type
@@ -1277,41 +1264,51 @@ tt_to_flextable_j <- function(
 #' This function is based on [rtables.officer::export_as_docx()].
 #' See notes to understand why this is experimental.
 #'
-#' @param tt a VTableTree or a listing_df object to export.
-#' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
-#' @param output_dir a directory path to save the docx.
-#' @param theme (optional) a function factory. See theme_docx_default_j()
-#' or rtables.officer::theme_docx_default() for more details.
-#' @param add_page_break (optional) Default = FALSE.
-#' @param titles_as_header (optional) Default = TRUE.
-#' @param integrate_footers (optional) Default = TRUE.
-#' @param section_properties (optional). A "prop_section" object containing
-#' information about page size, orientation, margins, etc.
-#' See officer::prop_section() for more details.
+#' @param tt (`TableTree` or `listing_df`)\cr the object to export.
+#' @param tblid (`character`)\cr Output ID to be displayed in the title and last line of footer.
+#' @param output_dir (`character`)\cr a directory path to save the docx.
+#' @param theme (function factory)\cr The theme to apply to the flextable
+#' (default = [junco::theme_docx_default_j()]).\cr
+#' See [junco::theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
+#' for more details.
+#' @param add_page_break (`logical`)\cr (optional) Default = FALSE.
+#' @param titles_as_header (`logical`)\cr (optional) Default = TRUE.
+#' @param integrate_footers (`logical`)\cr (optional) Default = TRUE.
+#' @param section_properties (`prop_section`)\cr (optional) A "prop_section" object
+#' containing information about page size, orientation, margins, etc.
+#' See [officer::prop_section()] for more details.
 #' No need to be specified by end user.
-#' @param doc_metadata (optional). Default = NULL.
-#' @param template_file (optional). Default = "doc/template_file.docx".
-#' Paragraph styles are inherited from this file.
-#' @param orientation (optional) Default = "portrait".
+#' @param doc_metadata (list of `string`)\cr Any value that can be used as metadata
+#' by [officer::set_doc_properties()]. Important text values are title, subject,
+#' creator, and description, while created is a date object.\cr
+#' (optional) Default = NULL.
+#' @param template_file (`character`)\cr Template file that `officer` will use as a starting
+#' point for the final document. Document attaches the table and uses the defaults
+#' defined in the template file. Paragraph styles are inherited from this file.\cr
+#' (optional) Default = "doc/template_file.docx".
+#' @param orientation (`character`)\cr (optional) Default = "portrait".
 #' One of: "portrait", "landscape".
-#' @param paginate (optional) Default = FALSE.
-#' @param nosplitin (optional) Default = character(). Named list.
-#' @param string_map (optional) Default = default_str_map.
-#' @param markup_df_docx (optional) Default = dps_markup_df_docx.
-#' @param combined_docx (optional). Default = FALSE. Whether to also export an "allparts"
-#' docx version.
-#' @param tlgtype (optional). No need to be specified by end user.
-#' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
-#' @param pagenum (optional). Whether to display page numbers. Only applicable
+#' @param paginate (`logical`)\cr (optional) Default = TRUE for TableTree and FALSE otherwise.
+#' @param nosplitin (`list`)\cr list(row=, col=). Path elements whose children should not be paginated within
+#' if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
+#' all the associated columns don't fit on a single page.
+#' @param string_map (`tibble`)\cr (optional) Default = default_str_map.
+#' @param markup_df_docx (`tibble`)\cr (optional) Default = dps_markup_df_docx.
+#' @param combined_docx (`logical`)\cr Whether to also export an "allparts" docx version.\cr
+#' (optional) Default = FALSE.
+#' @param tlgtype (`character`)\cr (optional). No need to be specified by end user.
+#' @param col_gap (`numeric`)\cr (optional). Default = 3 (Tables) or 0.5 (Listings).
+#' @param pagenum (`logical`)\cr (optional). Whether to display page numbers. Only applicable
 #' to listings (i.e. for tables and figures this argument is ignored).
 #' @param round_type (`"iec"` or `"sas"`)\cr the type of rounding to perform. iec,
 #' the default, performs rounding compliant with IEC 60559, while
 #' sas performs nearest-value rounding consistent with rounding within SAS.
 #' See `[formatters::format_value()]` for more details.
-#' @param alignments (`list`)\cr List of named lists. Vectorized.
+#' @param alignments (`list`)\cr (optional) List of named lists. Vectorized.
 #' (Default = `list()`) Used to specify individual column or cell alignments.
 #' Each named list contains `row`, `col`, and `value`.
-#' @param border (optional) an `fp_border` object.
+#' @param border (`fp_border`)\cr Border to use (default =
+#' \code{flextable::fp_border_default(width = 0.75, color = "black")}).
 #' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of columns of `tt`
 #' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #' for what the matrix should contain. Users should only specify this when the
@@ -1349,7 +1346,7 @@ export_as_docx_j <- function(
   doc_metadata = NULL,
   template_file = system.file("template_file.docx", package = "junco"),
   orientation = "portrait",
-  paginate = FALSE,
+  paginate = tlg_type(tt) == "Table",
   nosplitin = character(),
   string_map = junco::default_str_map,
   markup_df_docx = dps_markup_df_docx,
@@ -1391,7 +1388,6 @@ export_as_docx_j <- function(
       markup_df_docx = markup_df_docx,
       tlgtype = tlgtype,
       col_gap = col_gap,
-      pagenum = pagenum,
       theme = theme,
       round_type = round_type,
       alignments = alignments,
@@ -1421,7 +1417,6 @@ export_as_docx_j <- function(
             markup_df_docx = markup_df_docx,
             tlgtype = tlgtype,
             col_gap = col_gap,
-            pagenum = pagenum,
             theme = theme,
             round_type = round_type,
             alignments = alignments,
@@ -1660,29 +1655,29 @@ export_as_docx_j <- function(
 #'
 #' Export graph in DOCX format. See notes to understand why this is experimental.
 #'
-#' @param g (optional) Default = NULL. A `ggplot2` object, or a list
+#' @param g (`ggplot2`)\cr (optional) Default = NULL. A `ggplot2` object, or a list
 #' of them, to export. At least one of `g` or `plotnames` must be provided.
 #' If both are provided, 'g' precedes and 'plotnames' will be ignored.
-#' @param plotnames (optional) Default = NULL. A file path, or a list of them,
+#' @param plotnames (`character`)\cr (optional) Default = NULL. A file path, or a list of them,
 #' to previously saved .png files. These will be opened and
 #' exported in the output file. At least one of `g` or `plotnames` must be provided.
 #' If both are provided, 'g' precedes and 'plotnames' will be ignored.
-#' @param tblid Character. Output ID that will appear in the Title and footer.
-#' @param output_dir Character. File path where to save the output.
-#' @param title (optional) Default = NULL. Character, or list of them,
+#' @param tblid (`character`)\cr Output ID to be displayed in the title and footer.
+#' @param output_dir (`character`)\cr a directory path to save the docx.
+#' @param title (`character`)\cr (optional) Default = NULL. Character, or list of them,
 #' with the titles to be displayed.
-#' @param footers (optional) Default = NULL. Character, or list of them,
-#' with the footers to be displayed.
-#' @param orientation (optional) Default = "portrait".
+#' @param footers (`character`)\cr (optional) Default = NULL. A list of footers
+#' to be displayed.
+#' @param orientation (`character`)\cr (optional) Default = "portrait".
 #' One of: "portrait", "landscape".
-#' @param plotwidth (optional) Default = 8. Plot size in units expressed by
+#' @param plotwidth (`numeric`)\cr (optional) Default = 8. Plot size in units expressed by
 #' the units argument. If not supplied, uses the size of the current graphics device.
-#' @param plotheight (optional) Default = 5.51. Plot size in units expressed by
+#' @param plotheight (`numeric`)\cr (optional) Default = 5.51. Plot size in units expressed by
 #' the units argument. If not supplied, uses the size of the current graphics device.
-#' @param units (optional) Default = "in". One of the following units in which the
-#' plotwidth and plotheight arguments are expressed: "in", "cm", "mm" or "px".
-#' @param border (optional). An `fp_border` object to use as borders for the Title
-#' and Footers.
+#' @param units (`character`)\cr (optional) Default = "in".
+#' One of the following units in which the plotwidth and plotheight arguments
+#' are expressed: "in", "cm", "mm" or "px".
+#' @param border (`fp_border`)\cr (optional). Border to use for the title and footers.
 #'
 #' @note
 #' This function has been tested for common use cases but may not work or have
