@@ -29,6 +29,8 @@ tt_to_tlgrtf(
   round_type = obj_round_type(tt),
   alignments = list(),
   validate = TRUE,
+  export_csv = TRUE,
+  output_csv_directory = NULL,
   ...
 )
 }
@@ -92,9 +94,17 @@ See \code{\link[formatters:format_value]{formatters::format_value()}} for more d
 Each named list contains \code{row}, \code{col}, and \code{value}, which are passed to
 \code{\link[huxtable:align]{huxtable::set_align()}} to set the alignments.}
 
-\item{validate}{logical(1). Whether to validate the table structure using
+\item{validate}{(\code{logical(1)})\cr Whether to validate the table structure using
 \code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message
 will be displayed when validation fails.}
+
+\item{export_csv}{(\code{logical(1)})\cr Whether to export the object as a csv representation.
+Default = TRUE.}
+
+\item{output_csv_directory}{(\code{character(1)})\cr the directory to export the csv.
+Default = NULL. Ignored if export_csv = FALSE.
+If NULL or attempting to export in a non-existent directory, the csv will be exported
+in the same directory as the .rtf file.}
 
 \item{...}{Additional arguments passed to gentlg}
 }
