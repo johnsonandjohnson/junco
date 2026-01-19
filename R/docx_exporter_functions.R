@@ -845,6 +845,10 @@ tt_to_flextable_j <- function(
     if (is.null(file) && length(pags) > 1) {
       ret <- unlist(ret, recursive = FALSE)
     }
+    
+    if (length(ret) == 1) {
+      ret <- ret[[1]]
+    }
     return(ret)
   }
 
