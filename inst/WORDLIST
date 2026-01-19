@@ -20,7 +20,6 @@ Lapply
 MMRM
 Miettinen
 Nurminen
-Optimality
 PARAMCD
 Parallelisation
 Parallelise
@@ -28,6 +27,7 @@ RBMI
 RTF
 Sato
 TEFOS
+TLG
 TLGs
 TRT
 TRTEMFL
@@ -36,7 +36,6 @@ Toeplitz
 TrueType
 Unlist
 VTableTree
-Vectorized
 XLSX
 afun
 allparts
@@ -60,6 +59,7 @@ colwidths
 combosdf
 comparator
 csv
+customizations
 dataset's
 datasplit
 denom
@@ -106,6 +106,7 @@ parallelising
 parentdf
 pharmaverseadam
 pharmaverseadamjnj
+pkgdown
 plotheight
 plotnames
 plotwidth
@@ -116,8 +117,6 @@ pseudocolumn
 px
 rbmi
 removerowtext
-repo
-reproducibility
 responder
 responders
 rlistings
@@ -153,3 +152,4 @@ unrounded
 unstratified
 wordbreaking
 xlsx
+rmarkdown
