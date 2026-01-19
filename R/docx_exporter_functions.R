@@ -1104,7 +1104,7 @@ tt_to_flextable_j <- function(
   flx <- insert_footer_text(flx, tblid)
 
   # apply theme
-  flx <- do.call(theme, list(flx))
+  flx <- do.call(theme, list(flx, tbl_row_class = rdf$node_class))
 
 
   # NOTE: for Listings, vertical alignment is "top" for the whole body
