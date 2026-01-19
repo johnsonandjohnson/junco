@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed `s_kaplan_meier()` range censoring indicator handling to no longer produce `NA` values in the output when either all subjects are censored or none are censored.
 
+### Changed
+- refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
+
 ## [0.1.3] - 2026-01-12
 
 ### Changed
