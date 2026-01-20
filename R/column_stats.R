@@ -151,4 +151,3 @@ postfun_eq5d <- function(ret, spl, fulldf, .spl_context) {
   }
   ret
 }
-
