@@ -1,6 +1,6 @@
 #' Extract the left-hand side of a formula
 #'
-#' @keywords internal
+#' @export
 leftside <- function(x) {
   checkmate::assert_formula(x)
   res <- x[[2L]]

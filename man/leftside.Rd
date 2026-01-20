@@ -9,4 +9,3 @@ leftside(x)
 \description{
 Extract the left-hand side of a formula
 }
-\keyword{internal}
