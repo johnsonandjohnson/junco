@@ -92,3 +92,62 @@ calc_N <- function(datvec, statnm, trt, varnm) {
   }
   length(stats::na.omit(datvec))
 }
+
+
+#' Post-processing split function for EQ-5D style column statistics
+#'
+#' This helper is designed to be used in the `post` argument of
+#' [rtables::make_split_fun()] to expand a column facet (e.g. AVAL/BASE/CHG)
+#' into the specific statistics to be analyzed for each subfacet. It returns a
+#' split result instructing rtables which values/labels/subsets to create.
+#'
+#' Typical usage is to construct a split function like:
+#'
+#' - `mysplitfun <- rtables::make_split_fun(post = list(junco::postfun_eq5d))`
+#'
+#' Then use `mysplitfun` in your table layout where you split columns by a
+#' variable whose levels are one of "AVAL", "BASE", or "CHG" and want to
+#' analyze different statistics for each.
+#'
+#' @param ret ignored; placeholder to match the signature expected by
+#'   [rtables::make_split_fun()].
+#' @param spl ignored; placeholder to match the signature expected by
+#'   [rtables::make_split_fun()].
+#' @param fulldf (`data.frame`) full data used for the split; passed through to
+#'   [rtables::make_split_result()].
+#' @param .spl_context split context environment provided by rtables; used here
+#'   to determine the current column level.
+#'
+#' @return A result from [rtables::make_split_result()] selecting EQ-5D style
+#'   statistics for the current column level.
+#' @seealso [rtables::make_split_fun()], [rtables::make_split_result()].
+#' @export
+postfun_eq5d <- function(ret, spl, fulldf, .spl_context) {
+  all_expr <- expression(TRUE)
+  colset <- .spl_context[nrow(.spl_context), "value"][[1]]
+  if (colset == "AVAL") {
+    ret <- make_split_result(
+      values = c(N = "N", mean = "Mean", SD = "SD", Med = "Med", Min = "Min", Max = "Max"),
+      labels = c(N = "N", mean = "Mean", SD = "SD", Med = "Med", Min = "Min", Max = "Max"),
+      datasplit = list(N = fulldf, mean = fulldf, SD = fulldf, Med = fulldf, Min = fulldf, Max = fulldf),
+      subset_exprs = list(all_expr, all_expr, all_expr, all_expr, all_expr, all_expr)
+    )
+  } else if (colset == "BASE") {
+    ret <- make_split_result(
+      values = c(mean_sd = "mean_sd"),
+      labels = c(mean_sd = "Base Mean (SD)"),
+      datasplit = list(mean_sd = fulldf),
+      subset_exprs = list(all_expr)
+    )
+  } else if (colset == "CHG") {
+    ret <- make_split_result(
+      values = c(N = "N", mean = "Mean", SE = "SE", SD = "SD", Med = "Med", Min = "Min", Max = "Max"),
+      labels = c(N = "N", mean = "Mean", SE = "SE", SD = "SD", Med = "Med", Min = "Min", Max = "Max"),
+      datasplit = list(N = fulldf, mean = fulldf, SE = fulldf, SD = fulldf, Med = fulldf, Min = fulldf, Max = fulldf),
+      subset_exprs = list(all_expr, all_expr, all_expr, all_expr, all_expr, all_expr, all_expr)
+    )
+  } else {
+    stop("something bad happened :(")
+  }
+  ret
+}
