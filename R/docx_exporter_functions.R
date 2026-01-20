@@ -3,6 +3,73 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
+export_as_csv <- function(tlgtype, export_csv, tt2, col_gap, orientation,
+                          nosplitin, round_type, string_map, markup_df,
+                          output_csv_directory, output_dir, tblid) {
+  if (tlgtype == "Table" && export_csv && methods::is(tt2, "VTableTree")) {
+
+    fontspec <- formatters::font_spec("Times", 9L, 1.2)
+    label_width_ins <- 2
+    colwidths <- def_colwidths(
+      tt2,
+      fontspec,
+      col_gap = col_gap,
+      label_width_ins = label_width_ins,
+      type = tlgtype
+    )
+    colwidths_2 <- colwidths
+    pags <- formatters::paginate_to_mpfs(
+      tt2,
+      fontspec = fontspec,
+      landscape = orientation == "landscape",
+      colwidths = colwidths_2,
+      col_gap = col_gap,
+      pg_width = pg_width_by_orient(orientation == "landscape"),
+      pg_height = NULL,
+      margins = rep(0, 4),
+      lpp = NULL,
+      nosplitin = nosplitin,
+      verbose = FALSE,
+      round_type = round_type
+    )
+
+    if (is.list(pags) && !methods::is(pags, "MatrixPrintForm")) {
+      df <- lapply(
+        pags,
+        tt_to_tbldf,
+        fontspec = fontspec,
+        string_map = string_map,
+        markup_df = markup_df,
+        round_type = round_type
+      )
+    } else {
+      df <- tt_to_tbldf(
+        pags,
+        fontspec = fontspec,
+        string_map = string_map,
+        markup_df = markup_df,
+        round_type = round_type
+      )
+    }
+    for (i in seq_along(df)) {
+      if (!is.null(tblid) && length(df) > 1) {
+        fmti <- paste0("%0", ceiling(log(length(df), base = 10)), "d")
+        fname <- paste0(tblid, "part", sprintf(fmti, i), "of", length(df))
+      } else {
+        fname <- tblid
+      }
+      output_csv_filename <- get_output_csv_filename(output_csv_directory,
+                                                     output_dir,
+                                                     tolower(fname))
+      utils::write.csv(
+        df[[i]],
+        file = output_csv_filename,
+        row.names = FALSE,
+      )
+    }
+  }
+}
+
 remove_table_shading <- function(doc) {
   # by default, Word adds a table shading white, which covers the watermark
   # the XML nodes responsible for this are:
@@ -1354,6 +1421,14 @@ tt_to_flextable_j <- function(
 #' @param watermark (`logical`)\cr whether to display the watermark "Confidential".
 #' By default, this is set to FALSE. In the future, this argument will be the
 #' actual watermark (i.e. a string) to display.
+#' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
+#' Default = TRUE.
+#' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
+#' Default = NULL. Only used if export_csv = TRUE.
+#' If NULL or attempting to export in a non-existent directory, the csv will be exported
+#' in the same directory as the .rtf file.
+#' @param markup_df (`data.frame`)\cr Data frame containing markup information.
+#' Only used if export_csv = TRUE.
 #' @param ... other parameters.
 #'
 #' @note
@@ -1397,6 +1472,9 @@ export_as_docx_j <- function(
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
   watermark = FALSE,
+  export_csv = TRUE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
   ...
 ) {
   # Validate `alignments` here because of its complicated data structure
@@ -1407,13 +1485,15 @@ export_as_docx_j <- function(
 
   checkmate::assert_flag(add_page_break)
   checkmate::assert_flag(watermark)
+  checkmate::assert_flag(export_csv)
+  checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
 
   do_tt_error <- FALSE
   if (tlgtype != "Listing") {
     pagenum <- FALSE
   }
 
-
+  tt2 <- tt
   if (inherits(tt, "VTableTree") || inherits(tt, "listing_df")) {
     tt <- tt_to_flextable_j(tt,
       titles_as_header = titles_as_header,
@@ -1515,7 +1595,10 @@ export_as_docx_j <- function(
         border = border,
         border_mat = border_mat,
         watermark = watermark,
-        ... = ...
+        export_csv = FALSE,
+        output_csv_directory = output_csv_directory,
+        markup_df = markup_df,
+        ...
       )
     } else {
       message(
@@ -1555,7 +1638,12 @@ export_as_docx_j <- function(
         border = border,
         border_mat = border_mat,
         watermark = watermark,
-        ... = ...
+        export_csv = export_csv && i == 1,
+        output_csv_directory = output_csv_directory,
+        markup_df = markup_df,
+        tt_to_export_as_csv = tt2,
+        tblid_original = tolower(tblid),
+        ...
       )
     }
   } else {
@@ -1678,6 +1766,21 @@ export_as_docx_j <- function(
 
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
+
+    if (export_csv) {
+      args <- list(...)
+      tt_to_export_as_csv <- args$tt_to_export_as_csv
+      tblid_original <- args$tblid_original
+      if (is.null(tt_to_export_as_csv) || is.null(tblid_original)) {
+        tt_to_export_as_csv <- tt2
+        tblid_original <- tblid
+      }
+      export_as_csv(tlgtype = tlgtype, export_csv = export_csv, tt2 = tt_to_export_as_csv,
+                    col_gap = col_gap, orientation = orientation, nosplitin = nosplitin,
+                    round_type = round_type, string_map = string_map, markup_df = markup_df,
+                    output_csv_directory = output_csv_directory, output_dir = output_dir,
+                    tblid = tblid_original)
+    }
   }
 }
 

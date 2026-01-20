@@ -31,6 +31,9 @@ export_as_docx_j(
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
   watermark = FALSE,
+  export_csv = TRUE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
   ...
 )
 }
@@ -100,6 +103,17 @@ default behavior does not meet their needs.}
 \item{watermark}{(\code{logical})\cr whether to display the watermark "Confidential".
 By default, this is set to FALSE. In the future, this argument will be the
 actual watermark (i.e. a string) to display.}
+
+\item{export_csv}{(\code{logical(1)})\cr Whether to export the object as a csv representation.
+Default = TRUE.}
+
+\item{output_csv_directory}{(\code{character(1)})\cr the directory to export the csv.
+Default = NULL. Only used if export_csv = TRUE.
+If NULL or attempting to export in a non-existent directory, the csv will be exported
+in the same directory as the .rtf file.}
+
+\item{markup_df}{(\code{data.frame})\cr Data frame containing markup information.
+Only used if export_csv = TRUE.}
 
 \item{...}{other parameters.}
 }
