@@ -14,7 +14,7 @@ tt_to_flextable_j(
   bold_titles = TRUE,
   integrate_footers = TRUE,
   counts_in_newline = FALSE,
-  paginate = FALSE,
+  paginate = tlg_type(tt) == "Table",
   fontspec = formatters::font_spec("Times", 9L, 1.2),
   lpp = NULL,
   cpp = NULL,

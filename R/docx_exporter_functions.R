@@ -3,71 +3,59 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
-export_as_csv <- function(tlgtype, export_csv, tt2, col_gap, orientation,
-                          nosplitin, round_type, string_map, markup_df,
-                          output_csv_directory, output_dir, tblid) {
-  if (tlgtype == "Table" && export_csv && methods::is(tt2, "VTableTree")) {
+export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
+                          string_map, markup_df, round_type,
+                          output_csv_directory, output_dir, fname) {
 
-    fontspec <- formatters::font_spec("Times", 9L, 1.2)
-    label_width_ins <- 2
-    colwidths <- def_colwidths(
-      tt2,
-      fontspec,
-      col_gap = col_gap,
-      label_width_ins = label_width_ins,
-      type = tlgtype
-    )
-    colwidths_2 <- colwidths
-    pags <- formatters::paginate_to_mpfs(
-      tt2,
-      fontspec = fontspec,
-      landscape = orientation == "landscape",
-      colwidths = colwidths_2,
-      col_gap = col_gap,
-      pg_width = pg_width_by_orient(orientation == "landscape"),
-      pg_height = NULL,
-      margins = rep(0, 4),
-      lpp = NULL,
-      nosplitin = nosplitin,
-      verbose = FALSE,
-      round_type = round_type
-    )
-
-    if (is.list(pags) && !methods::is(pags, "MatrixPrintForm")) {
-      df <- lapply(
-        pags,
-        tt_to_tbldf,
-        fontspec = fontspec,
-        string_map = string_map,
-        markup_df = markup_df,
-        round_type = round_type
-      )
-    } else {
-      df <- tt_to_tbldf(
-        pags,
-        fontspec = fontspec,
-        string_map = string_map,
-        markup_df = markup_df,
-        round_type = round_type
-      )
-    }
-    for (i in seq_along(df)) {
-      if (!is.null(tblid) && length(df) > 1) {
-        fmti <- paste0("%0", ceiling(log(length(df), base = 10)), "d")
-        fname <- paste0(tblid, "part", sprintf(fmti, i), "of", length(df))
-      } else {
-        fname <- tblid
-      }
-      output_csv_filename <- get_output_csv_filename(output_csv_directory,
-                                                     output_dir,
-                                                     tolower(fname))
-      utils::write.csv(
-        df[[i]],
-        file = output_csv_filename,
-        row.names = FALSE,
-      )
-    }
+  if (tlgtype != "Table" || isFALSE(export_csv)) {
+    return(invisible(NULL))
   }
+
+  # 'pags' should be a list of "MatrixPrintForm"
+  # even if there is no horizontal pagination, it should be a list of 1 element
+  checkmate::assert_true(is.list(pags) && methods::is(pags[[1]], "MatrixPrintForm"))
+
+  df <- lapply(
+    pags,
+    tt_to_tbldf,
+    fontspec = fontspec,
+    string_map = string_map,
+    markup_df = markup_df,
+    round_type = round_type
+  )
+
+  # 'one_table' is TRUE if there is vertical pagination
+  # when TRUE, it merges all pages in the same "part" into 1 csv
+  one_table <- length(pags) > 1
+  if (one_table) {
+    df <- do.call(
+      rbind,
+      lapply(
+        seq_along(df),
+        function(ii) {
+          dfii <- df[[ii]]
+          dfii$newpage <- 0
+          if (ii > 1) {
+            dfii$newpage[1] <- 1
+          }
+          dfii$indentme <- ifelse(dfii$indentme <= 1, 0, dfii$indentme - 1)
+          dfii
+        }
+      )
+    )
+  } else {
+    df <- df[[1]]
+  }
+
+  output_csv_filename <- get_output_csv_filename(output_csv_directory,
+                                                 output_dir,
+                                                 tolower(fname))
+
+  utils::write.csv(
+    df,
+    file = output_csv_filename,
+    row.names = FALSE
+  )
 }
 
 remove_table_shading <- function(doc) {
@@ -709,8 +697,6 @@ theme_docx_default_j <- function(
 #' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #' for what the matrix should contain. Users should only specify this when the
 #' default behavior does not meet their needs.
-#'
-#'
 #' @note
 #' This function has been tested for common use cases but may not work or have
 #' unexpected or undesired behavior in corner cases. As such it is not considered
@@ -731,7 +717,7 @@ tt_to_flextable_j <- function(
   bold_titles = TRUE,
   integrate_footers = TRUE,
   counts_in_newline = FALSE,
-  paginate = FALSE,
+  paginate = tlg_type(tt) == "Table",
   fontspec = formatters::font_spec("Times", 9L, 1.2),
   lpp = NULL,
   cpp = NULL,
@@ -904,6 +890,27 @@ tt_to_flextable_j <- function(
           drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE,
           reindex_refs = FALSE
         ]
+
+        # export csv
+        args <- list(...)
+        export_csv <- args$export_csv
+        output_csv_directory <- args$output_csv_directory
+        markup_df <- args$markup_df
+        output_dir <- args$output_dir
+        if (is.null(export_csv)) {
+          export_csv <- FALSE
+        }
+        export_as_csv(tlgtype = tlgtype,
+                      export_csv = export_csv,
+                      pags = full_pag_i,
+                      fontspec = fontspec,
+                      string_map = string_map,
+                      markup_df = markup_df,
+                      round_type = round_type,
+                      output_csv_directory = output_csv_directory,
+                      output_dir = output_dir,
+                      fname = fname)
+
         sub_ft <- tt_to_flextable_j(
           tt = subt,
           theme = theme,
@@ -936,6 +943,7 @@ tt_to_flextable_j <- function(
           round_type = round_type,
           alignments = alignments,
           border_mat = pag_bord_mats[[i]],
+          export_csv = FALSE # this is because we already exported the csv a few lines above
         )
 
         return(sub_ft)
@@ -945,6 +953,11 @@ tt_to_flextable_j <- function(
     if (is.null(file) && length(pags) > 1) {
       ret <- unlist(ret, recursive = FALSE)
     }
+
+    if (length(ret) == 1) {
+      ret <- ret[[1]]
+    }
+
     return(ret)
   }
 
@@ -1459,7 +1472,7 @@ export_as_docx_j <- function(
   doc_metadata = NULL,
   template_file = system.file("template_file.docx", package = "junco"),
   orientation = "portrait",
-  paginate = FALSE,
+  paginate = tlg_type(tt) == "Table",
   nosplitin = character(),
   string_map = junco::default_str_map,
   markup_df_docx = dps_markup_df_docx,
@@ -1493,7 +1506,6 @@ export_as_docx_j <- function(
     pagenum <- FALSE
   }
 
-  tt2 <- tt
   if (inherits(tt, "VTableTree") || inherits(tt, "listing_df")) {
     tt <- tt_to_flextable_j(tt,
       titles_as_header = titles_as_header,
@@ -1512,6 +1524,10 @@ export_as_docx_j <- function(
       alignments = alignments,
       border = border,
       border_mat = border_mat,
+      export_csv = export_csv,
+      output_csv_directory = output_csv_directory,
+      markup_df = markup_df,
+      output_dir = output_dir, # this argument is needed to guess where to save the csv
       ...
     )
   }
@@ -1542,6 +1558,10 @@ export_as_docx_j <- function(
             alignments = alignments,
             border = border,
             border_mat = border_mat,
+            export_csv = export_csv,
+            output_csv_directory = output_csv_directory,
+            markup_df = markup_df,
+            output_dir = output_dir, # this argument is needed to guess where to save the csv
             ...
           ),
         SIMPLIFY = FALSE
@@ -1595,7 +1615,7 @@ export_as_docx_j <- function(
         border = border,
         border_mat = border_mat,
         watermark = watermark,
-        export_csv = FALSE,
+        export_csv = export_csv,
         output_csv_directory = output_csv_directory,
         markup_df = markup_df,
         ...
@@ -1638,11 +1658,9 @@ export_as_docx_j <- function(
         border = border,
         border_mat = border_mat,
         watermark = watermark,
-        export_csv = export_csv && i == 1,
+        export_csv = export_csv,
         output_csv_directory = output_csv_directory,
         markup_df = markup_df,
-        tt_to_export_as_csv = tt2,
-        tblid_original = tolower(tblid),
         ...
       )
     }
@@ -1766,21 +1784,6 @@ export_as_docx_j <- function(
 
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
-
-    if (export_csv) {
-      args <- list(...)
-      tt_to_export_as_csv <- args$tt_to_export_as_csv
-      tblid_original <- args$tblid_original
-      if (is.null(tt_to_export_as_csv) || is.null(tblid_original)) {
-        tt_to_export_as_csv <- tt2
-        tblid_original <- tblid
-      }
-      export_as_csv(tlgtype = tlgtype, export_csv = export_csv, tt2 = tt_to_export_as_csv,
-                    col_gap = col_gap, orientation = orientation, nosplitin = nosplitin,
-                    round_type = round_type, string_map = string_map, markup_df = markup_df,
-                    output_csv_directory = output_csv_directory, output_dir = output_dir,
-                    tblid = tblid_original)
-    }
   }
 }
 

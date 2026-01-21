@@ -18,7 +18,7 @@ export_as_docx_j(
   doc_metadata = NULL,
   template_file = system.file("template_file.docx", package = "junco"),
   orientation = "portrait",
-  paginate = FALSE,
+  paginate = tlg_type(tt) == "Table",
   nosplitin = character(),
   string_map = junco::default_str_map,
   markup_df_docx = dps_markup_df_docx,
