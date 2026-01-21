@@ -1,4 +1,5 @@
-# junco 0.1.2
+# junco 0.1.3
+
 
 ### New Major features
 - Add docx exporter for Tables, Listings and Figures.
@@ -7,6 +8,9 @@
 - Add `a_maxlev()` to be able to calculate count and percentage of the maximum level of an ordered factor per subject
 - Added `cmh_sato` and `cmh_mn` (Cochran-Mantel-Haenszel stratified proportion difference estimation with Sato variance and Miettinen Nurminen method, respectively) `method` options to the `s_proportion_diff_j()` function.
 - Added formatting function round type (#76)
+
+### Changed
+- Vignettes: switch to rmarkdown::html_vignette and fix internal link to package index to address CRAN NOTES.
 
 ### Minor changes
 - Add `a_two_tier()` analysis function
@@ -31,5 +35,4 @@
 
 
 ## Other changes
-
 * Moved 'rbmi' from 'Imports' to 'Suggests' and made package fully functional without it
