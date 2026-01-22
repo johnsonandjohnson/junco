@@ -897,7 +897,7 @@ tt_to_flextable_j <- function(
         output_csv_directory <- args$output_csv_directory
         markup_df <- args$markup_df
         output_dir <- args$output_dir
-        if (is.null(export_csv)) {
+        if (!isTRUE(export_csv)) {
           export_csv <- FALSE
         }
         export_as_csv(tlgtype = tlgtype,
@@ -1439,7 +1439,7 @@ tt_to_flextable_j <- function(
 #' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
 #' Default = NULL. Only used if export_csv = TRUE.
 #' If NULL or attempting to export in a non-existent directory, the csv will be exported
-#' in the same directory as the .rtf file.
+#' in the same directory as the .docx file.
 #' @param markup_df (`data.frame`)\cr Data frame containing markup information.
 #' Only used if export_csv = TRUE.
 #' @param ... other parameters.

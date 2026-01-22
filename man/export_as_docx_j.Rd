@@ -110,7 +110,7 @@ Default = TRUE.}
 \item{output_csv_directory}{(\code{character(1)})\cr the directory to export the csv.
 Default = NULL. Only used if export_csv = TRUE.
 If NULL or attempting to export in a non-existent directory, the csv will be exported
-in the same directory as the .rtf file.}
+in the same directory as the .docx file.}
 
 \item{markup_df}{(\code{data.frame})\cr Data frame containing markup information.
 Only used if export_csv = TRUE.}
