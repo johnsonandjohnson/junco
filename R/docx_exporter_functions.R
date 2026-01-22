@@ -597,8 +597,8 @@ theme_docx_default_j <- function(
 #' @param tt (`TableTree` or `listing_df`)\cr The object to convert to flextable.
 #' @param tblid (`character`)\cr Output ID to be displayed in the title and last line of footer.
 #' @param theme (function factory)\cr The theme to apply to the flextable
-#' (default = [junco::theme_docx_default_j()]).\cr
-#' See [junco::theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
+#' (default = [theme_docx_default_j()]).\cr
+#' See [theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
 #' for more details.
 #' @param border (`fp_border`)\cr Border to use (default =
 #' \code{flextable::fp_border_default(width = 0.75, color = "black")}).
@@ -1272,8 +1272,8 @@ tt_to_flextable_j <- function(
 #' @param tblid (`character`)\cr Output ID to be displayed in the title and last line of footer.
 #' @param output_dir (`character`)\cr a directory path to save the docx.
 #' @param theme (function factory)\cr The theme to apply to the flextable
-#' (default = [junco::theme_docx_default_j()]).\cr
-#' See [junco::theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
+#' (default = [theme_docx_default_j()]).\cr
+#' See [theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
 #' for more details.
 #' @param add_page_break (`logical`)\cr (optional) Default = FALSE.
 #' @param titles_as_header (`logical`)\cr (optional) Default = TRUE.
@@ -1352,7 +1352,7 @@ export_as_docx_j <- function(
   orientation = "portrait",
   paginate = tlg_type(tt) == "Table",
   nosplitin = character(),
-  string_map = junco::default_str_map,
+  string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   combined_docx = FALSE,
   tlgtype = tlg_type(tt),

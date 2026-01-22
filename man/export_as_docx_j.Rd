@@ -20,7 +20,7 @@ export_as_docx_j(
   orientation = "portrait",
   paginate = tlg_type(tt) == "Table",
   nosplitin = character(),
-  string_map = junco::default_str_map,
+  string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   combined_docx = FALSE,
   tlgtype = tlg_type(tt),
