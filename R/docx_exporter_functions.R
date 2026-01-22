@@ -3,6 +3,61 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
+export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
+                          string_map, markup_df, round_type,
+                          output_csv_directory, output_dir, fname) {
+
+  if (tlgtype != "Table" || isFALSE(export_csv)) {
+    return(invisible(NULL))
+  }
+
+  # 'pags' should be a list of "MatrixPrintForm"
+  # even if there is no horizontal pagination, it should be a list of 1 element
+  checkmate::assert_true(is.list(pags) && methods::is(pags[[1]], "MatrixPrintForm"))
+
+  df <- lapply(
+    pags,
+    tt_to_tbldf,
+    fontspec = fontspec,
+    string_map = string_map,
+    markup_df = markup_df,
+    round_type = round_type
+  )
+
+  # 'one_table' is TRUE if there is vertical pagination
+  # when TRUE, it merges all pages in the same "part" into 1 csv
+  one_table <- length(pags) > 1
+  if (one_table) {
+    df <- do.call(
+      rbind,
+      lapply(
+        seq_along(df),
+        function(ii) {
+          dfii <- df[[ii]]
+          dfii$newpage <- 0
+          if (ii > 1) {
+            dfii$newpage[1] <- 1
+          }
+          dfii$indentme <- ifelse(dfii$indentme <= 1, 0, dfii$indentme - 1)
+          dfii
+        }
+      )
+    )
+  } else {
+    df <- df[[1]]
+  }
+
+  output_csv_filename <- get_output_csv_filename(output_csv_directory,
+                                                 output_dir,
+                                                 tolower(fname))
+
+  utils::write.csv(
+    df,
+    file = output_csv_filename,
+    row.names = FALSE
+  )
+}
+
 remove_table_shading <- function(doc) {
   # by default, Word adds a table shading white, which covers the watermark
   # the XML nodes responsible for this are:
@@ -642,8 +697,6 @@ theme_docx_default_j <- function(
 #' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #' for what the matrix should contain. Users should only specify this when the
 #' default behavior does not meet their needs.
-#'
-#'
 #' @note
 #' This function has been tested for common use cases but may not work or have
 #' unexpected or undesired behavior in corner cases. As such it is not considered
@@ -664,7 +717,7 @@ tt_to_flextable_j <- function(
   bold_titles = TRUE,
   integrate_footers = TRUE,
   counts_in_newline = FALSE,
-  paginate = FALSE,
+  paginate = tlg_type(tt) == "Table",
   fontspec = formatters::font_spec("Times", 9L, 1.2),
   lpp = NULL,
   cpp = NULL,
@@ -837,6 +890,27 @@ tt_to_flextable_j <- function(
           drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE,
           reindex_refs = FALSE
         ]
+
+        # export csv
+        args <- list(...)
+        export_csv <- args$export_csv
+        output_csv_directory <- args$output_csv_directory
+        markup_df <- args$markup_df
+        output_dir <- args$output_dir
+        if (!isTRUE(export_csv)) {
+          export_csv <- FALSE
+        }
+        export_as_csv(tlgtype = tlgtype,
+                      export_csv = export_csv,
+                      pags = full_pag_i,
+                      fontspec = fontspec,
+                      string_map = string_map,
+                      markup_df = markup_df,
+                      round_type = round_type,
+                      output_csv_directory = output_csv_directory,
+                      output_dir = output_dir,
+                      fname = fname)
+
         sub_ft <- tt_to_flextable_j(
           tt = subt,
           theme = theme,
@@ -869,6 +943,7 @@ tt_to_flextable_j <- function(
           round_type = round_type,
           alignments = alignments,
           border_mat = pag_bord_mats[[i]],
+          export_csv = FALSE # this is because we already exported the csv a few lines above
         )
 
         return(sub_ft)
@@ -878,6 +953,11 @@ tt_to_flextable_j <- function(
     if (is.null(file) && length(pags) > 1) {
       ret <- unlist(ret, recursive = FALSE)
     }
+
+    if (length(ret) == 1) {
+      ret <- ret[[1]]
+    }
+
     return(ret)
   }
 
@@ -1354,6 +1434,14 @@ tt_to_flextable_j <- function(
 #' @param watermark (`logical`)\cr whether to display the watermark "Confidential".
 #' By default, this is set to FALSE. In the future, this argument will be the
 #' actual watermark (i.e. a string) to display.
+#' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
+#' Default = TRUE.
+#' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
+#' Default = NULL. Only used if export_csv = TRUE.
+#' If NULL or attempting to export in a non-existent directory, the csv will be exported
+#' in the same directory as the .docx file.
+#' @param markup_df (`data.frame`)\cr Data frame containing markup information.
+#' Only used if export_csv = TRUE.
 #' @param ... other parameters.
 #'
 #' @note
@@ -1384,7 +1472,7 @@ export_as_docx_j <- function(
   doc_metadata = NULL,
   template_file = system.file("template_file.docx", package = "junco"),
   orientation = "portrait",
-  paginate = FALSE,
+  paginate = tlg_type(tt) == "Table",
   nosplitin = character(),
   string_map = junco::default_str_map,
   markup_df_docx = dps_markup_df_docx,
@@ -1397,6 +1485,9 @@ export_as_docx_j <- function(
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
   watermark = FALSE,
+  export_csv = TRUE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
   ...
 ) {
   # Validate `alignments` here because of its complicated data structure
@@ -1407,12 +1498,13 @@ export_as_docx_j <- function(
 
   checkmate::assert_flag(add_page_break)
   checkmate::assert_flag(watermark)
+  checkmate::assert_flag(export_csv)
+  checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
 
   do_tt_error <- FALSE
   if (tlgtype != "Listing") {
     pagenum <- FALSE
   }
-
 
   if (inherits(tt, "VTableTree") || inherits(tt, "listing_df")) {
     tt <- tt_to_flextable_j(tt,
@@ -1432,6 +1524,10 @@ export_as_docx_j <- function(
       alignments = alignments,
       border = border,
       border_mat = border_mat,
+      export_csv = export_csv,
+      output_csv_directory = output_csv_directory,
+      markup_df = markup_df,
+      output_dir = output_dir, # this argument is needed to guess where to save the csv
       ...
     )
   }
@@ -1462,6 +1558,10 @@ export_as_docx_j <- function(
             alignments = alignments,
             border = border,
             border_mat = border_mat,
+            export_csv = export_csv,
+            output_csv_directory = output_csv_directory,
+            markup_df = markup_df,
+            output_dir = output_dir, # this argument is needed to guess where to save the csv
             ...
           ),
         SIMPLIFY = FALSE
@@ -1515,7 +1615,10 @@ export_as_docx_j <- function(
         border = border,
         border_mat = border_mat,
         watermark = watermark,
-        ... = ...
+        export_csv = export_csv,
+        output_csv_directory = output_csv_directory,
+        markup_df = markup_df,
+        ...
       )
     } else {
       message(
@@ -1555,7 +1658,10 @@ export_as_docx_j <- function(
         border = border,
         border_mat = border_mat,
         watermark = watermark,
-        ... = ...
+        export_csv = export_csv,
+        output_csv_directory = output_csv_directory,
+        markup_df = markup_df,
+        ...
       )
     }
   } else {

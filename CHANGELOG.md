@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed `s_kaplan_meier()` range censoring indicator handling to no longer produce `NA` values in the output when either all subjects are censored or none are censored.
 
+### Added
+- Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
+- Added option to specify the output folder for the csv
+
 ## [0.1.3] - 2026-01-12
 
 ### Changed
