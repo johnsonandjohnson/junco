@@ -1,11 +1,11 @@
 ## Tests for tt_to_tlgrtf() export behavior
 
 mk_tbl <- function() {
-    lyt <- rtables::basic_table() |>
-      rtables::split_rows_by("Species") |>
-      rtables::analyze("Sepal.Length", mean)
-    rtables::build_table(lyt, iris)
-  }
+  lyt <- rtables::basic_table() |>
+    rtables::split_rows_by("Species") |>
+    rtables::analyze("Sepal.Length", mean)
+  rtables::build_table(lyt, iris)
+}
 
 testthat::test_that("tt_to_tlgrtf .csv export behaviors", {
 
