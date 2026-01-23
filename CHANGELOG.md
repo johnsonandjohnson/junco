@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed `s_kaplan_meier()` range censoring indicator handling to no longer produce `NA` values in the output when either all subjects are censored or none are censored.
+- Aligned `a_freq_resp_var_j()` with `a_freq_j()` by adding `.formats` and `na_str` parameters to allow user customization of output formatting and NA string representation (#67).
 - Export `leftside()`, `postfun_eq5d` and `ac_blank_line` for efficacy templates
 
 ### Changed
