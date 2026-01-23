@@ -514,6 +514,7 @@ tt_to_tlgrtf <- function(
           border_mat = pag_bord_mats[[i]],
           round_type = round_type,
           alignments = alignments,
+          label_width_ins = label_width_ins,
           ...
         )
       }
@@ -538,6 +539,7 @@ tt_to_tlgrtf <- function(
           border_mat = pag_bord_mats,
           round_type = round_type,
           alignments = alignments,
+          label_width_ins = label_width_ins,
           ...
         )
       } else if (!is.null(file)) { # only one page after pagination
