@@ -5,11 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.x] - Unreleased
+## [0.1.4] - Unreleased
 
 ### Fixed
 - Fixed `s_kaplan_meier()` range censoring indicator handling to no longer produce `NA` values in the output when either all subjects are censored or none are censored.
 - Aligned `a_freq_resp_var_j()` with `a_freq_j()` by adding `.formats` and `na_str` parameters to allow user customization of output formatting and NA string representation (#67).
+- Export `leftside()`, `postfun_eq5d` and `ac_blank_line` for efficacy templates
+
+### Changed
+- refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
+
+## [0.1.3] - 2026-01-12
+
+### Changed
+- Address CRAN NOTES.
+
 
 ## [0.1.2] - 2025-12-10
 
@@ -22,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `a_cmhrms_j()` to support p-value from CMH row mean score test, as well as the modified version `a_cmhrms_j_with_exclude()` that allows to exclude the analysis from specified row splits. #97
 - Added standard error (SE) column for each treatment arm's least square (LS) means estimate to the `summarize_lsmeans_wide()` layout.
 - Added the internal function `do_exclude_split()` to facilitate the exclusion of specified row splits from analysis functions.
-- Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify
+- Remove some unused functions (jj_uc_map, postfun_cog, column_N, non_blank_sentinel, null_fn, unicodify
 - Add extra check for existence of `.alt_df_full` when layout has risk difference column and a row-split (h_create_alt_df) #120.
 - Add docx exporter for Tables, Listings and Figures.
 - Add `alignments` argument in `tt_to_tlgrtf()`
@@ -54,5 +64,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Initial CRAN release
 
+[0.1.3]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.3
 [0.1.2]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.2
 [0.1.1]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.1

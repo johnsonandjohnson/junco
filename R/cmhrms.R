@@ -17,6 +17,7 @@ NULL
 #' based upon the row mean scores test.
 #'
 #' @export
+#' @importFrom tern get_covariates
 #' @order 3
 #' @inheritParams proposal_argument_convention
 #' @param variables (`list`)\cr list with arm and strata variable names.
@@ -46,7 +47,6 @@ s_cmhrms_j <- function(df, .var, .ref_group, .in_ref_col, ..., .df_row, variable
   strata <- variables$strata
 
   if (!is.null(strata) && length(strata) > 0) {
-    get_covariates <- utils::getFromNamespace("get_covariates", "tern")
     var_list <- get_covariates(strata)
     assert_df_with_variables(.df_row, var_list)
   }
