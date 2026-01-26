@@ -49981,770 +49981,752 @@
       31         29   table cell         1                 1
       32         30   table cell         1                 1
       33         31   table cell         1                 1
-      34         31   table cell         2                 1
-      35         31   table cell         3                 1
-      36         31   table cell         4                 1
-      37         32   table cell         1                 1
-      38         33   table cell         1                 1
-      39         34   table cell         1                 1
-      40         35   table cell         1                 1
-      41         36   table cell         1                 1
-      42         37   table cell         1                 1
-      43         38   table cell         1                 1
-      44         39   table cell         1                 1
-      45         40   table cell         1                 1
-      46         41   table cell         1                 1
-      47         42   table cell         1                 1
-      48         43   table cell         1                 1
-      49         44   table cell         1                 1
-      50         45   table cell         1                 1
-      51         46   table cell         1                 1
-      52         47   table cell         1                 1
-      53         48   table cell         1                 1
-      54         49   table cell         1                 1
-      55         50   table cell         1                 1
-      56         51   table cell         1                 1
-      57         52   table cell         1                 1
-      58         53   table cell         1                 1
-      59         54   table cell         1                 1
-      60         55   table cell         1                 1
-      61         56   table cell         1                 1
-      62         57   table cell         1                 1
-      63         58   table cell         1                 1
-      64         59   table cell         1                 1
-      65         60   table cell         1                 1
-      66         61   table cell         1                 1
-      67         62   table cell         1                 1
-      68         63   table cell         1                 1
-      69         64   table cell         1                 1
-      70         65   table cell         1                 1
-      71         66   table cell         1                 1
-      72         67   table cell         1                 1
-      73         68   table cell         1                 1
-      74         69   table cell         1                 1
-      75         70   table cell         1                 1
-      76         71   table cell         1                 1
-      77         72   table cell         1                 1
-      78         73   table cell         1                 1
-      79         74   table cell         1                 1
-      80         75   table cell         1                 1
-      81         76   table cell         1                 1
-      82         77   table cell         1                 1
-      83         78   table cell         1                 1
-      84         79   table cell         1                 1
-      85         80   table cell         1                 1
-      86         81   table cell         1                 1
-      87         82   table cell         1                 1
-      88         83   table cell         1                 1
-      89         84   table cell         1                 1
-      90         85   table cell         1                 1
-      91         86   table cell         1                 1
-      92         87   table cell         1                 1
-      93         88   table cell         1                 1
-      94         89   table cell         1                 1
-      95         90   table cell         1                 1
-      96         91   table cell         1                 1
-      97         92   table cell         1                 1
-      98         93   table cell         1                 1
-      99         94   table cell         1                 1
-      100        95   table cell         1                 1
-      101        96   table cell         1                 1
-      102        97   table cell         1                 1
-      103        98   table cell         1                 1
-      104        99   table cell         1                 1
-      105       100   table cell         1                 1
-      106       101   table cell         1                 1
-      107       102   table cell         1                 1
-      108       103   table cell         1                 1
-      109       104   table cell         1                 1
-      110       105   table cell         1                 1
-      111       106   table cell         1                 1
-      112       107   table cell         1                 1
-      113       108   table cell         1                 1
-      114       109   table cell         1                 1
-      115       110   table cell         1                 1
-      116       111   table cell         1                 1
-      117       112   table cell         1                 1
-      118       113   table cell         1                 1
-      119       114   table cell         1                 1
-      120       115   table cell         1                 1
-      121       116   table cell         1                 1
-      122       117   table cell         1                 1
-      123       118   table cell         1                 1
-      124       119   table cell         1                 1
-      125       120   table cell         1                 1
-      126       121   table cell         1                 1
-      127       122   table cell         1                 1
-      128       123   table cell         1                 1
-      129       124   table cell         1                 1
-      130       125   table cell         1                 1
-      131       126   table cell         1                 1
-      132       127   table cell         1                 1
-      133       128   table cell         1                 1
-      134       129   table cell         1                 1
-      135       130   table cell         1                 1
-      136       131   table cell         1                 1
-      137       132   table cell         1                 1
-      138       133   table cell         1                 1
-      139       134   table cell         1                 1
-      140       135   table cell         1                 1
-      141       136   table cell         1                 1
-      142       137   table cell         1                 1
-      143       138   table cell         1                 1
-      144       139   table cell         1                 1
-      145       140   table cell         1                 1
-      146       141   table cell         1                 1
-      147       142   table cell         1                 1
-      148       143   table cell         1                 1
-      149       144   table cell         1                 1
-      150       145   table cell         1                 1
-      151       146   table cell         1                 1
-      152       147   table cell         1                 1
-      153       148   table cell         1                 1
-      154       149   table cell         1                 1
-      155       150   table cell         1                 1
-      156       150   table cell         2                 1
-      157       150   table cell         3                 1
-      158       150   table cell         4                 1
-      159       151   table cell         1                 1
-      160       152   table cell         1                 1
-      161       153   table cell         1                 1
-      162       154   table cell         1                 1
-      163       155   table cell         1                 1
-      164       156   table cell         1                 1
-      165       157   table cell         1                 1
-      166       158   table cell         1                 1
-      167       159   table cell         1                 1
-      168       160   table cell         1                 1
-      169       161   table cell         1                 1
-      170       162   table cell         1                 1
-      171       163   table cell         1                 1
-      172       164   table cell         1                 1
-      173       165   table cell         1                 1
-      174       166   table cell         1                 1
-      175       167   table cell         1                 1
-      176       168   table cell         1                 1
-      177       169   table cell         1                 1
-      178       170   table cell         1                 1
-      179       171   table cell         1                 1
-      180       172   table cell         1                 1
-      181       173   table cell         1                 1
-      182       174   table cell         1                 1
-      183       175   table cell         1                 1
-      184       176   table cell         1                 1
-      185       177   table cell         1                 1
-      186       178   table cell         1                 1
-      187       179   table cell         1                 1
-      188       180   table cell         1                 1
-      189       181   table cell         1                 1
-      190       182   table cell         1                 1
-      191       183   table cell         1                 1
-      192       184   table cell         1                 1
-      193       185   table cell         1                 1
-      194       186   table cell         1                 1
-      195       187   table cell         1                 1
-      196       188   table cell         1                 1
-      197       189   table cell         1                 1
-      198       190   table cell         1                 1
-      199       191   table cell         1                 1
-      200       192   table cell         1                 1
-      201       193   table cell         1                 1
-      202       194   table cell         1                 1
-      203       195   table cell         1                 1
-      204       196   table cell         1                 1
-      205       197   table cell         1                 1
-      206       198   table cell         1                 1
-      207       199   table cell         1                 1
-      208       200   table cell         1                 1
-      209       201   table cell         1                 1
-      210       202   table cell         1                 1
-      211       203   table cell         1                 1
-      212       204   table cell         1                 1
-      213       205   table cell         1                 1
-      214       206   table cell         1                 1
-      215       207   table cell         1                 1
-      216       208   table cell         1                 1
-      217       209   table cell         1                 1
-      218       210   table cell         1                 1
-      219       211   table cell         1                 1
-      220       212   table cell         1                 1
-      221       213   table cell         1                 1
-      222       214   table cell         1                 1
-      223       215   table cell         1                 1
-      224       216   table cell         1                 1
-      225       217   table cell         1                 1
-      226       218   table cell         1                 1
-      227       219   table cell         1                 1
-      228       220   table cell         1                 1
-      229       221   table cell         1                 1
-      230       222   table cell         1                 1
-      231       223   table cell         1                 1
-      232       224   table cell         1                 1
-      233       225   table cell         1                 1
-      234       226   table cell         1                 1
-      235       227   table cell         1                 1
-      236       228   table cell         1                 1
-      237       229   table cell         1                 1
-      238       230   table cell         1                 1
-      239       231   table cell         1                 1
-      240       232   table cell         1                 1
-      241       233   table cell         1                 1
-      242       234   table cell         1                 1
-      243       235   table cell         1                 1
-      244       236   table cell         1                 1
-      245       237   table cell         1                 1
-      246       238   table cell         1                 1
-      247       239   table cell         1                 1
-      248       240   table cell         1                 1
-      249       241   table cell         1                 1
-      250       242   table cell         1                 1
-      251       243   table cell         1                 1
-      252       244   table cell         1                 1
-      253       245   table cell         1                 1
-      254       246   table cell         1                 1
-      255       247   table cell         1                 1
-      256       248   table cell         1                 1
-      257       249   table cell         1                 1
-      258       250   table cell         1                 1
-      259       251   table cell         1                 1
-      260       252   table cell         1                 1
-      261       253   table cell         1                 1
-      262       254   table cell         1                 1
-      263       255   table cell         1                 1
-      264       256   table cell         1                 1
-      265       257   table cell         1                 1
-                            run_content_text image_path field_code footnote_text link
-      1                    test1234part1of2:       <NA>       <NA>               <NA>
-      2                                   \t       <NA>       <NA>               <NA>
-      3               This is the main Title       <NA>       <NA>               <NA>
-      4                                            <NA>       <NA>               <NA>
-      5                   Active Study Agent       <NA>       <NA>               <NA>
-      6                                            <NA>       <NA>               <NA>
-      7                            A: Drug X       <NA>       <NA>               <NA>
-      8                       C: Combination       <NA>       <NA>               <NA>
-      9                      Laboratory Test       <NA>       <NA>               <NA>
-      10                               N=134       <NA>       <NA>               <NA>
-      11                               N=132       <NA>       <NA>               <NA>
-      12                         Study Visit       <NA>       <NA>               <NA>
-      13                             n/N (%)       <NA>       <NA>               <NA>
-      14                       Mean (95% CI)       <NA>       <NA>               <NA>
-      15  Mean Change From Baseline (95% CI)       <NA>       <NA>               <NA>
-      16                             n/N (%)       <NA>       <NA>               <NA>
-      17                       Mean (95% CI)       <NA>       <NA>               <NA>
-      18  Mean Change From Baseline (95% CI)       <NA>       <NA>               <NA>
-      19                     Age: < 35 years       <NA>       <NA>               <NA>
-      20                                 134       <NA>       <NA>               <NA>
-      21                                           <NA>       <NA>               <NA>
-      22                                           <NA>       <NA>               <NA>
-      23                                 132       <NA>       <NA>               <NA>
-      24                                           <NA>       <NA>               <NA>
-      25                                           <NA>       <NA>               <NA>
-      26                                           <NA>       <NA>               <NA>
-      27                                           <NA>       <NA>               <NA>
-      28                                           <NA>       <NA>               <NA>
-      29                                           <NA>       <NA>               <NA>
-      30                                           <NA>       <NA>               <NA>
-      31                                           <NA>       <NA>               <NA>
-      32                                           <NA>       <NA>               <NA>
-      33            Alanine Aminotransferase       <NA>       <NA>               <NA>
-      34                                  \n       <NA>       <NA>               <NA>
-      35                                  \t       <NA>       <NA>               <NA>
-      36                         Measurement       <NA>       <NA>               <NA>
-      37                                           <NA>       <NA>               <NA>
-      38                                           <NA>       <NA>               <NA>
-      39                                           <NA>       <NA>               <NA>
-      40                                           <NA>       <NA>               <NA>
-      41                                           <NA>       <NA>               <NA>
-      42                                           <NA>       <NA>               <NA>
-      43                            BASELINE       <NA>       <NA>               <NA>
-      44                      77/77 (100.0%)       <NA>       <NA>               <NA>
-      45                   50.1 (48.2, 52.0)       <NA>       <NA>               <NA>
-      46                      0.0 (0.0, 0.0)       <NA>       <NA>               <NA>
-      47                      63/63 (100.0%)       <NA>       <NA>               <NA>
-      48                   51.1 (49.2, 53.0)       <NA>       <NA>               <NA>
-      49                      0.0 (0.0, 0.0)       <NA>       <NA>               <NA>
-      50                        WEEK 1 DAY 8       <NA>       <NA>               <NA>
-      51                      77/77 (100.0%)       <NA>       <NA>               <NA>
-      52                   49.2 (47.3, 51.0)       <NA>       <NA>               <NA>
-      53                    -0.9 (-3.8, 1.9)       <NA>       <NA>               <NA>
-      54                      63/63 (100.0%)       <NA>       <NA>               <NA>
-      55                   50.4 (48.5, 52.4)       <NA>       <NA>               <NA>
-      56                    -0.7 (-3.2, 1.9)       <NA>       <NA>               <NA>
-      57                       WEEK 2 DAY 15       <NA>       <NA>               <NA>
-      58                      77/77 (100.0%)       <NA>       <NA>               <NA>
-      59                   50.5 (48.6, 52.3)       <NA>       <NA>               <NA>
-      60                     0.4 (-2.3, 3.1)       <NA>       <NA>               <NA>
-      61                      63/63 (100.0%)       <NA>       <NA>               <NA>
-      62                   48.3 (46.5, 50.2)       <NA>       <NA>               <NA>
-      63                   -2.8 (-5.4, -0.2)       <NA>       <NA>               <NA>
-      64                       WEEK 3 DAY 22       <NA>       <NA>               <NA>
-      65                      77/77 (100.0%)       <NA>       <NA>               <NA>
-      66                   50.1 (48.3, 51.9)       <NA>       <NA>               <NA>
-      67                     0.0 (-2.6, 2.6)       <NA>       <NA>               <NA>
-      68                      63/63 (100.0%)       <NA>       <NA>               <NA>
-      69                   49.5 (47.5, 51.5)       <NA>       <NA>               <NA>
-      70                    -1.6 (-4.3, 1.2)       <NA>       <NA>               <NA>
-      71                       WEEK 4 DAY 29       <NA>       <NA>               <NA>
-      72                      77/77 (100.0%)       <NA>       <NA>               <NA>
-      73                   50.8 (49.0, 52.6)       <NA>       <NA>               <NA>
-      74                     0.7 (-2.1, 3.5)       <NA>       <NA>               <NA>
-      75                      63/63 (100.0%)       <NA>       <NA>               <NA>
-      76                   49.6 (47.6, 51.6)       <NA>       <NA>               <NA>
-      77                    -1.5 (-4.2, 1.1)       <NA>       <NA>               <NA>
-      78                       WEEK 5 DAY 36       <NA>       <NA>               <NA>
-      79                      77/77 (100.0%)       <NA>       <NA>               <NA>
-      80                   50.8 (49.1, 52.5)       <NA>       <NA>               <NA>
-      81                     0.7 (-2.1, 3.6)       <NA>       <NA>               <NA>
-      82                      63/63 (100.0%)       <NA>       <NA>               <NA>
-      83                   49.9 (47.9, 51.9)       <NA>       <NA>               <NA>
-      84                    -1.2 (-4.0, 1.7)       <NA>       <NA>               <NA>
-      85                                           <NA>       <NA>               <NA>
-      86                                           <NA>       <NA>               <NA>
-      87                                           <NA>       <NA>               <NA>
-      88                                           <NA>       <NA>               <NA>
-      89                                           <NA>       <NA>               <NA>
-      90                                           <NA>       <NA>               <NA>
-      91                                           <NA>       <NA>               <NA>
-      92      C-Reactive Protein Measurement       <NA>       <NA>               <NA>
-      93                                           <NA>       <NA>               <NA>
-      94                                           <NA>       <NA>               <NA>
-      95                                           <NA>       <NA>               <NA>
-      96                                           <NA>       <NA>               <NA>
-      97                                           <NA>       <NA>               <NA>
-      98                                           <NA>       <NA>               <NA>
-      99                            BASELINE       <NA>       <NA>               <NA>
-      100                     77/77 (100.0%)       <NA>       <NA>               <NA>
-      101                  49.3 (46.9, 51.6)       <NA>       <NA>               <NA>
-      102                     0.0 (0.0, 0.0)       <NA>       <NA>               <NA>
-      103                     63/63 (100.0%)       <NA>       <NA>               <NA>
-      104                  50.8 (48.6, 53.0)       <NA>       <NA>               <NA>
-      105                     0.0 (0.0, 0.0)       <NA>       <NA>               <NA>
-      106                       WEEK 1 DAY 8       <NA>       <NA>               <NA>
-      107                     77/77 (100.0%)       <NA>       <NA>               <NA>
-      108                  51.2 (49.2, 53.2)       <NA>       <NA>               <NA>
-      109                    2.0 (-1.2, 5.2)       <NA>       <NA>               <NA>
-      110                     63/63 (100.0%)       <NA>       <NA>               <NA>
-      111                  51.0 (48.8, 53.1)       <NA>       <NA>               <NA>
-      112                    0.2 (-2.9, 3.3)       <NA>       <NA>               <NA>
-      113                      WEEK 2 DAY 15       <NA>       <NA>               <NA>
-      114                     77/77 (100.0%)       <NA>       <NA>               <NA>
-      115                  49.3 (47.5, 51.2)       <NA>       <NA>               <NA>
-      116                    0.1 (-2.9, 3.0)       <NA>       <NA>               <NA>
-      117                     63/63 (100.0%)       <NA>       <NA>               <NA>
-      118                  50.1 (48.3, 52.0)       <NA>       <NA>               <NA>
-      119                   -0.6 (-3.3, 2.1)       <NA>       <NA>               <NA>
-      120                      WEEK 3 DAY 22       <NA>       <NA>               <NA>
-      121                     77/77 (100.0%)       <NA>       <NA>               <NA>
-      122                  49.3 (47.2, 51.3)       <NA>       <NA>               <NA>
-      123                    0.0 (-3.1, 3.2)       <NA>       <NA>               <NA>
-      124                     63/63 (100.0%)       <NA>       <NA>               <NA>
-      125                  49.6 (47.7, 51.4)       <NA>       <NA>               <NA>
-      126                   -1.2 (-4.1, 1.8)       <NA>       <NA>               <NA>
-      127                      WEEK 4 DAY 29       <NA>       <NA>               <NA>
-      128                     77/77 (100.0%)       <NA>       <NA>               <NA>
-      129                  51.1 (49.1, 53.2)       <NA>       <NA>               <NA>
-      130                    1.9 (-1.2, 5.0)       <NA>       <NA>               <NA>
-      131                     63/63 (100.0%)       <NA>       <NA>               <NA>
-      132                  50.0 (48.0, 52.0)       <NA>       <NA>               <NA>
-      133                   -0.7 (-3.9, 2.4)       <NA>       <NA>               <NA>
-      134                      WEEK 5 DAY 36       <NA>       <NA>               <NA>
-      135                     77/77 (100.0%)       <NA>       <NA>               <NA>
-      136                  50.3 (48.2, 52.3)       <NA>       <NA>               <NA>
-      137                    1.0 (-2.3, 4.3)       <NA>       <NA>               <NA>
-      138                     63/63 (100.0%)       <NA>       <NA>               <NA>
-      139                  49.1 (47.2, 51.0)       <NA>       <NA>               <NA>
-      140                   -1.6 (-4.5, 1.2)       <NA>       <NA>               <NA>
-      141                    Age: ≥ 35 years       <NA>       <NA>               <NA>
-      142                                134       <NA>       <NA>               <NA>
-      143                                          <NA>       <NA>               <NA>
-      144                                          <NA>       <NA>               <NA>
-      145                                132       <NA>       <NA>               <NA>
-      146                                          <NA>       <NA>               <NA>
-      147                                          <NA>       <NA>               <NA>
-      148                                          <NA>       <NA>               <NA>
-      149                                          <NA>       <NA>               <NA>
-      150                                          <NA>       <NA>               <NA>
-      151                                          <NA>       <NA>               <NA>
-      152                                          <NA>       <NA>               <NA>
-      153                                          <NA>       <NA>               <NA>
-      154                                          <NA>       <NA>               <NA>
-      155           Alanine Aminotransferase       <NA>       <NA>               <NA>
-      156                                 \n       <NA>       <NA>               <NA>
-      157                                 \t       <NA>       <NA>               <NA>
-      158                        Measurement       <NA>       <NA>               <NA>
-      159                                          <NA>       <NA>               <NA>
-      160                                          <NA>       <NA>               <NA>
-      161                                          <NA>       <NA>               <NA>
-      162                                          <NA>       <NA>               <NA>
-      163                                          <NA>       <NA>               <NA>
-      164                                          <NA>       <NA>               <NA>
-      165                           BASELINE       <NA>       <NA>               <NA>
-      166                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      167                  48.9 (46.6, 51.1)       <NA>       <NA>               <NA>
-      168                     0.0 (0.0, 0.0)       <NA>       <NA>               <NA>
-      169                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      170                  50.7 (48.8, 52.7)       <NA>       <NA>               <NA>
-      171                     0.0 (0.0, 0.0)       <NA>       <NA>               <NA>
-      172                       WEEK 1 DAY 8       <NA>       <NA>               <NA>
-      173                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      174                  47.8 (45.8, 49.9)       <NA>       <NA>               <NA>
-      175                   -1.0 (-3.8, 1.8)       <NA>       <NA>               <NA>
-      176                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      177                  51.7 (49.8, 53.6)       <NA>       <NA>               <NA>
-      178                    1.0 (-1.8, 3.8)       <NA>       <NA>               <NA>
-      179                      WEEK 2 DAY 15       <NA>       <NA>               <NA>
-      180                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      181                  48.0 (45.7, 50.3)       <NA>       <NA>               <NA>
-      182                   -0.9 (-4.1, 2.3)       <NA>       <NA>               <NA>
-      183                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      184                  48.7 (47.0, 50.4)       <NA>       <NA>               <NA>
-      185                   -2.1 (-4.8, 0.7)       <NA>       <NA>               <NA>
-      186                      WEEK 3 DAY 22       <NA>       <NA>               <NA>
-      187                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      188                  50.5 (48.6, 52.4)       <NA>       <NA>               <NA>
-      189                    1.6 (-1.5, 4.7)       <NA>       <NA>               <NA>
-      190                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      191                  48.2 (46.3, 50.1)       <NA>       <NA>               <NA>
-      192                   -2.5 (-5.2, 0.2)       <NA>       <NA>               <NA>
-      193                      WEEK 4 DAY 29       <NA>       <NA>               <NA>
-      194                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      195                  50.6 (47.8, 53.4)       <NA>       <NA>               <NA>
-      196                    1.7 (-2.1, 5.4)       <NA>       <NA>               <NA>
-      197                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      198                  49.7 (47.8, 51.6)       <NA>       <NA>               <NA>
-      199                   -1.0 (-3.6, 1.6)       <NA>       <NA>               <NA>
-      200                      WEEK 5 DAY 36       <NA>       <NA>               <NA>
-      201                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      202                  50.9 (48.6, 53.1)       <NA>       <NA>               <NA>
-      203                    2.0 (-1.0, 5.0)       <NA>       <NA>               <NA>
-      204                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      205                  50.0 (47.9, 52.1)       <NA>       <NA>               <NA>
-      206                   -0.7 (-3.4, 2.0)       <NA>       <NA>               <NA>
-      207                                          <NA>       <NA>               <NA>
-      208                                          <NA>       <NA>               <NA>
-      209                                          <NA>       <NA>               <NA>
-      210                                          <NA>       <NA>               <NA>
-      211                                          <NA>       <NA>               <NA>
-      212                                          <NA>       <NA>               <NA>
-      213                                          <NA>       <NA>               <NA>
-      214     C-Reactive Protein Measurement       <NA>       <NA>               <NA>
-      215                                          <NA>       <NA>               <NA>
-      216                                          <NA>       <NA>               <NA>
-      217                                          <NA>       <NA>               <NA>
-      218                                          <NA>       <NA>               <NA>
-      219                                          <NA>       <NA>               <NA>
-      220                                          <NA>       <NA>               <NA>
-      221                           BASELINE       <NA>       <NA>               <NA>
-      222                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      223                  48.5 (46.3, 50.7)       <NA>       <NA>               <NA>
-      224                     0.0 (0.0, 0.0)       <NA>       <NA>               <NA>
-      225                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      226                  49.7 (47.8, 51.7)       <NA>       <NA>               <NA>
-      227                     0.0 (0.0, 0.0)       <NA>       <NA>               <NA>
-      228                       WEEK 1 DAY 8       <NA>       <NA>               <NA>
-      229                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      230                  52.7 (50.9, 54.6)       <NA>       <NA>               <NA>
-      231                     4.2 (1.6, 6.8)       <NA>       <NA>               <NA>
-      232                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      233                  49.6 (47.2, 52.0)       <NA>       <NA>               <NA>
-      234                   -0.1 (-3.4, 3.2)       <NA>       <NA>               <NA>
-      235                      WEEK 2 DAY 15       <NA>       <NA>               <NA>
-      236                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      237                  50.3 (48.1, 52.6)       <NA>       <NA>               <NA>
-      238                    1.8 (-1.3, 4.9)       <NA>       <NA>               <NA>
-      239                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      240                  48.2 (46.0, 50.3)       <NA>       <NA>               <NA>
-      241                   -1.5 (-4.3, 1.3)       <NA>       <NA>               <NA>
-      242                      WEEK 3 DAY 22       <NA>       <NA>               <NA>
-      243                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      244                  51.1 (49.2, 53.0)       <NA>       <NA>               <NA>
-      245                    2.6 (-0.1, 5.3)       <NA>       <NA>               <NA>
-      246                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      247                  50.0 (48.1, 51.9)       <NA>       <NA>               <NA>
-      248                    0.3 (-2.7, 3.3)       <NA>       <NA>               <NA>
-      249                      WEEK 4 DAY 29       <NA>       <NA>               <NA>
-      250                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      251                  52.2 (50.4, 54.1)       <NA>       <NA>               <NA>
-      252                     3.7 (1.1, 6.3)       <NA>       <NA>               <NA>
-      253                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      254                  49.5 (47.8, 51.3)       <NA>       <NA>               <NA>
-      255                   -0.2 (-2.8, 2.4)       <NA>       <NA>               <NA>
-      256                      WEEK 5 DAY 36       <NA>       <NA>               <NA>
-      257                     57/57 (100.0%)       <NA>       <NA>               <NA>
-      258                  49.0 (46.7, 51.3)       <NA>       <NA>               <NA>
-      259                    0.5 (-2.6, 3.6)       <NA>       <NA>               <NA>
-      260                     69/69 (100.0%)       <NA>       <NA>               <NA>
-      261                  49.0 (47.1, 50.9)       <NA>       <NA>               <NA>
-      262                   -0.7 (-3.6, 2.2)       <NA>       <NA>               <NA>
-      263                                          <NA>       <NA>               <NA>
-      264                           footer 1       <NA>       <NA>               <NA>
-      265                           footer 2       <NA>       <NA>               <NA>
-          link_to_bookmark bookmark_start character_stylename sz sz_cs
-      1               <NA>           <NA>                <NA> 20    20
-      2               <NA>           <NA>                <NA> 20    20
-      3               <NA>           <NA>                <NA> 20    20
-      4               <NA>           <NA>                <NA> 18    18
-      5               <NA>           <NA>                <NA> 18    18
-      6               <NA>           <NA>                <NA> 18    18
-      7               <NA>           <NA>                <NA> 18    18
-      8               <NA>           <NA>                <NA> 18    18
-      9               <NA>           <NA>                <NA> 18    18
-      10              <NA>           <NA>                <NA> 18    18
-      11              <NA>           <NA>                <NA> 18    18
-      12              <NA>           <NA>                <NA> 18    18
-      13              <NA>           <NA>                <NA> 18    18
-      14              <NA>           <NA>                <NA> 18    18
-      15              <NA>           <NA>                <NA> 18    18
-      16              <NA>           <NA>                <NA> 18    18
-      17              <NA>           <NA>                <NA> 18    18
-      18              <NA>           <NA>                <NA> 18    18
-      19              <NA>           <NA>                <NA> 18    18
-      20              <NA>           <NA>                <NA> 18    18
-      21              <NA>           <NA>                <NA> 18    18
-      22              <NA>           <NA>                <NA> 18    18
-      23              <NA>           <NA>                <NA> 18    18
-      24              <NA>           <NA>                <NA> 18    18
-      25              <NA>           <NA>                <NA> 18    18
-      26              <NA>           <NA>                <NA> 18    18
-      27              <NA>           <NA>                <NA> 18    18
-      28              <NA>           <NA>                <NA> 18    18
-      29              <NA>           <NA>                <NA> 18    18
-      30              <NA>           <NA>                <NA> 18    18
-      31              <NA>           <NA>                <NA> 18    18
-      32              <NA>           <NA>                <NA> 18    18
-      33              <NA>           <NA>                <NA> 18    18
-      34              <NA>           <NA>                <NA> 18    18
-      35              <NA>           <NA>                <NA> 18    18
-      36              <NA>           <NA>                <NA> 18    18
-      37              <NA>           <NA>                <NA> 18    18
-      38              <NA>           <NA>                <NA> 18    18
-      39              <NA>           <NA>                <NA> 18    18
-      40              <NA>           <NA>                <NA> 18    18
-      41              <NA>           <NA>                <NA> 18    18
-      42              <NA>           <NA>                <NA> 18    18
-      43              <NA>           <NA>                <NA> 18    18
-      44              <NA>           <NA>                <NA> 18    18
-      45              <NA>           <NA>                <NA> 18    18
-      46              <NA>           <NA>                <NA> 18    18
-      47              <NA>           <NA>                <NA> 18    18
-      48              <NA>           <NA>                <NA> 18    18
-      49              <NA>           <NA>                <NA> 18    18
-      50              <NA>           <NA>                <NA> 18    18
-      51              <NA>           <NA>                <NA> 18    18
-      52              <NA>           <NA>                <NA> 18    18
-      53              <NA>           <NA>                <NA> 18    18
-      54              <NA>           <NA>                <NA> 18    18
-      55              <NA>           <NA>                <NA> 18    18
-      56              <NA>           <NA>                <NA> 18    18
-      57              <NA>           <NA>                <NA> 18    18
-      58              <NA>           <NA>                <NA> 18    18
-      59              <NA>           <NA>                <NA> 18    18
-      60              <NA>           <NA>                <NA> 18    18
-      61              <NA>           <NA>                <NA> 18    18
-      62              <NA>           <NA>                <NA> 18    18
-      63              <NA>           <NA>                <NA> 18    18
-      64              <NA>           <NA>                <NA> 18    18
-      65              <NA>           <NA>                <NA> 18    18
-      66              <NA>           <NA>                <NA> 18    18
-      67              <NA>           <NA>                <NA> 18    18
-      68              <NA>           <NA>                <NA> 18    18
-      69              <NA>           <NA>                <NA> 18    18
-      70              <NA>           <NA>                <NA> 18    18
-      71              <NA>           <NA>                <NA> 18    18
-      72              <NA>           <NA>                <NA> 18    18
-      73              <NA>           <NA>                <NA> 18    18
-      74              <NA>           <NA>                <NA> 18    18
-      75              <NA>           <NA>                <NA> 18    18
-      76              <NA>           <NA>                <NA> 18    18
-      77              <NA>           <NA>                <NA> 18    18
-      78              <NA>           <NA>                <NA> 18    18
-      79              <NA>           <NA>                <NA> 18    18
-      80              <NA>           <NA>                <NA> 18    18
-      81              <NA>           <NA>                <NA> 18    18
-      82              <NA>           <NA>                <NA> 18    18
-      83              <NA>           <NA>                <NA> 18    18
-      84              <NA>           <NA>                <NA> 18    18
-      85              <NA>           <NA>                <NA> 18    18
-      86              <NA>           <NA>                <NA> 18    18
-      87              <NA>           <NA>                <NA> 18    18
-      88              <NA>           <NA>                <NA> 18    18
-      89              <NA>           <NA>                <NA> 18    18
-      90              <NA>           <NA>                <NA> 18    18
-      91              <NA>           <NA>                <NA> 18    18
-      92              <NA>           <NA>                <NA> 18    18
-      93              <NA>           <NA>                <NA> 18    18
-      94              <NA>           <NA>                <NA> 18    18
-      95              <NA>           <NA>                <NA> 18    18
-      96              <NA>           <NA>                <NA> 18    18
-      97              <NA>           <NA>                <NA> 18    18
-      98              <NA>           <NA>                <NA> 18    18
-      99              <NA>           <NA>                <NA> 18    18
-      100             <NA>           <NA>                <NA> 18    18
-      101             <NA>           <NA>                <NA> 18    18
-      102             <NA>           <NA>                <NA> 18    18
-      103             <NA>           <NA>                <NA> 18    18
-      104             <NA>           <NA>                <NA> 18    18
-      105             <NA>           <NA>                <NA> 18    18
-      106             <NA>           <NA>                <NA> 18    18
-      107             <NA>           <NA>                <NA> 18    18
-      108             <NA>           <NA>                <NA> 18    18
-      109             <NA>           <NA>                <NA> 18    18
-      110             <NA>           <NA>                <NA> 18    18
-      111             <NA>           <NA>                <NA> 18    18
-      112             <NA>           <NA>                <NA> 18    18
-      113             <NA>           <NA>                <NA> 18    18
-      114             <NA>           <NA>                <NA> 18    18
-      115             <NA>           <NA>                <NA> 18    18
-      116             <NA>           <NA>                <NA> 18    18
-      117             <NA>           <NA>                <NA> 18    18
-      118             <NA>           <NA>                <NA> 18    18
-      119             <NA>           <NA>                <NA> 18    18
-      120             <NA>           <NA>                <NA> 18    18
-      121             <NA>           <NA>                <NA> 18    18
-      122             <NA>           <NA>                <NA> 18    18
-      123             <NA>           <NA>                <NA> 18    18
-      124             <NA>           <NA>                <NA> 18    18
-      125             <NA>           <NA>                <NA> 18    18
-      126             <NA>           <NA>                <NA> 18    18
-      127             <NA>           <NA>                <NA> 18    18
-      128             <NA>           <NA>                <NA> 18    18
-      129             <NA>           <NA>                <NA> 18    18
-      130             <NA>           <NA>                <NA> 18    18
-      131             <NA>           <NA>                <NA> 18    18
-      132             <NA>           <NA>                <NA> 18    18
-      133             <NA>           <NA>                <NA> 18    18
-      134             <NA>           <NA>                <NA> 18    18
-      135             <NA>           <NA>                <NA> 18    18
-      136             <NA>           <NA>                <NA> 18    18
-      137             <NA>           <NA>                <NA> 18    18
-      138             <NA>           <NA>                <NA> 18    18
-      139             <NA>           <NA>                <NA> 18    18
-      140             <NA>           <NA>                <NA> 18    18
-      141             <NA>           <NA>                <NA> 18    18
-      142             <NA>           <NA>                <NA> 18    18
-      143             <NA>           <NA>                <NA> 18    18
-      144             <NA>           <NA>                <NA> 18    18
-      145             <NA>           <NA>                <NA> 18    18
-      146             <NA>           <NA>                <NA> 18    18
-      147             <NA>           <NA>                <NA> 18    18
-      148             <NA>           <NA>                <NA> 18    18
-      149             <NA>           <NA>                <NA> 18    18
-      150             <NA>           <NA>                <NA> 18    18
-      151             <NA>           <NA>                <NA> 18    18
-      152             <NA>           <NA>                <NA> 18    18
-      153             <NA>           <NA>                <NA> 18    18
-      154             <NA>           <NA>                <NA> 18    18
-      155             <NA>           <NA>                <NA> 18    18
-      156             <NA>           <NA>                <NA> 18    18
-      157             <NA>           <NA>                <NA> 18    18
-      158             <NA>           <NA>                <NA> 18    18
-      159             <NA>           <NA>                <NA> 18    18
-      160             <NA>           <NA>                <NA> 18    18
-      161             <NA>           <NA>                <NA> 18    18
-      162             <NA>           <NA>                <NA> 18    18
-      163             <NA>           <NA>                <NA> 18    18
-      164             <NA>           <NA>                <NA> 18    18
-      165             <NA>           <NA>                <NA> 18    18
-      166             <NA>           <NA>                <NA> 18    18
-      167             <NA>           <NA>                <NA> 18    18
-      168             <NA>           <NA>                <NA> 18    18
-      169             <NA>           <NA>                <NA> 18    18
-      170             <NA>           <NA>                <NA> 18    18
-      171             <NA>           <NA>                <NA> 18    18
-      172             <NA>           <NA>                <NA> 18    18
-      173             <NA>           <NA>                <NA> 18    18
-      174             <NA>           <NA>                <NA> 18    18
-      175             <NA>           <NA>                <NA> 18    18
-      176             <NA>           <NA>                <NA> 18    18
-      177             <NA>           <NA>                <NA> 18    18
-      178             <NA>           <NA>                <NA> 18    18
-      179             <NA>           <NA>                <NA> 18    18
-      180             <NA>           <NA>                <NA> 18    18
-      181             <NA>           <NA>                <NA> 18    18
-      182             <NA>           <NA>                <NA> 18    18
-      183             <NA>           <NA>                <NA> 18    18
-      184             <NA>           <NA>                <NA> 18    18
-      185             <NA>           <NA>                <NA> 18    18
-      186             <NA>           <NA>                <NA> 18    18
-      187             <NA>           <NA>                <NA> 18    18
-      188             <NA>           <NA>                <NA> 18    18
-      189             <NA>           <NA>                <NA> 18    18
-      190             <NA>           <NA>                <NA> 18    18
-      191             <NA>           <NA>                <NA> 18    18
-      192             <NA>           <NA>                <NA> 18    18
-      193             <NA>           <NA>                <NA> 18    18
-      194             <NA>           <NA>                <NA> 18    18
-      195             <NA>           <NA>                <NA> 18    18
-      196             <NA>           <NA>                <NA> 18    18
-      197             <NA>           <NA>                <NA> 18    18
-      198             <NA>           <NA>                <NA> 18    18
-      199             <NA>           <NA>                <NA> 18    18
-      200             <NA>           <NA>                <NA> 18    18
-      201             <NA>           <NA>                <NA> 18    18
-      202             <NA>           <NA>                <NA> 18    18
-      203             <NA>           <NA>                <NA> 18    18
-      204             <NA>           <NA>                <NA> 18    18
-      205             <NA>           <NA>                <NA> 18    18
-      206             <NA>           <NA>                <NA> 18    18
-      207             <NA>           <NA>                <NA> 18    18
-      208             <NA>           <NA>                <NA> 18    18
-      209             <NA>           <NA>                <NA> 18    18
-      210             <NA>           <NA>                <NA> 18    18
-      211             <NA>           <NA>                <NA> 18    18
-      212             <NA>           <NA>                <NA> 18    18
-      213             <NA>           <NA>                <NA> 18    18
-      214             <NA>           <NA>                <NA> 18    18
-      215             <NA>           <NA>                <NA> 18    18
-      216             <NA>           <NA>                <NA> 18    18
-      217             <NA>           <NA>                <NA> 18    18
-      218             <NA>           <NA>                <NA> 18    18
-      219             <NA>           <NA>                <NA> 18    18
-      220             <NA>           <NA>                <NA> 18    18
-      221             <NA>           <NA>                <NA> 18    18
-      222             <NA>           <NA>                <NA> 18    18
-      223             <NA>           <NA>                <NA> 18    18
-      224             <NA>           <NA>                <NA> 18    18
-      225             <NA>           <NA>                <NA> 18    18
-      226             <NA>           <NA>                <NA> 18    18
-      227             <NA>           <NA>                <NA> 18    18
-      228             <NA>           <NA>                <NA> 18    18
-      229             <NA>           <NA>                <NA> 18    18
-      230             <NA>           <NA>                <NA> 18    18
-      231             <NA>           <NA>                <NA> 18    18
-      232             <NA>           <NA>                <NA> 18    18
-      233             <NA>           <NA>                <NA> 18    18
-      234             <NA>           <NA>                <NA> 18    18
-      235             <NA>           <NA>                <NA> 18    18
-      236             <NA>           <NA>                <NA> 18    18
-      237             <NA>           <NA>                <NA> 18    18
-      238             <NA>           <NA>                <NA> 18    18
-      239             <NA>           <NA>                <NA> 18    18
-      240             <NA>           <NA>                <NA> 18    18
-      241             <NA>           <NA>                <NA> 18    18
-      242             <NA>           <NA>                <NA> 18    18
-      243             <NA>           <NA>                <NA> 18    18
-      244             <NA>           <NA>                <NA> 18    18
-      245             <NA>           <NA>                <NA> 18    18
-      246             <NA>           <NA>                <NA> 18    18
-      247             <NA>           <NA>                <NA> 18    18
-      248             <NA>           <NA>                <NA> 18    18
-      249             <NA>           <NA>                <NA> 18    18
-      250             <NA>           <NA>                <NA> 18    18
-      251             <NA>           <NA>                <NA> 18    18
-      252             <NA>           <NA>                <NA> 18    18
-      253             <NA>           <NA>                <NA> 18    18
-      254             <NA>           <NA>                <NA> 18    18
-      255             <NA>           <NA>                <NA> 18    18
-      256             <NA>           <NA>                <NA> 18    18
-      257             <NA>           <NA>                <NA> 18    18
-      258             <NA>           <NA>                <NA> 18    18
-      259             <NA>           <NA>                <NA> 18    18
-      260             <NA>           <NA>                <NA> 18    18
-      261             <NA>           <NA>                <NA> 18    18
-      262             <NA>           <NA>                <NA> 18    18
-      263             <NA>           <NA>                <NA> 18    18
-      264             <NA>           <NA>                <NA> 18    18
-      265             <NA>           <NA>                <NA> 18    18
+      34         32   table cell         1                 1
+      35         33   table cell         1                 1
+      36         34   table cell         1                 1
+      37         35   table cell         1                 1
+      38         36   table cell         1                 1
+      39         37   table cell         1                 1
+      40         38   table cell         1                 1
+      41         39   table cell         1                 1
+      42         40   table cell         1                 1
+      43         41   table cell         1                 1
+      44         42   table cell         1                 1
+      45         43   table cell         1                 1
+      46         44   table cell         1                 1
+      47         45   table cell         1                 1
+      48         46   table cell         1                 1
+      49         47   table cell         1                 1
+      50         48   table cell         1                 1
+      51         49   table cell         1                 1
+      52         50   table cell         1                 1
+      53         51   table cell         1                 1
+      54         52   table cell         1                 1
+      55         53   table cell         1                 1
+      56         54   table cell         1                 1
+      57         55   table cell         1                 1
+      58         56   table cell         1                 1
+      59         57   table cell         1                 1
+      60         58   table cell         1                 1
+      61         59   table cell         1                 1
+      62         60   table cell         1                 1
+      63         61   table cell         1                 1
+      64         62   table cell         1                 1
+      65         63   table cell         1                 1
+      66         64   table cell         1                 1
+      67         65   table cell         1                 1
+      68         66   table cell         1                 1
+      69         67   table cell         1                 1
+      70         68   table cell         1                 1
+      71         69   table cell         1                 1
+      72         70   table cell         1                 1
+      73         71   table cell         1                 1
+      74         72   table cell         1                 1
+      75         73   table cell         1                 1
+      76         74   table cell         1                 1
+      77         75   table cell         1                 1
+      78         76   table cell         1                 1
+      79         77   table cell         1                 1
+      80         78   table cell         1                 1
+      81         79   table cell         1                 1
+      82         80   table cell         1                 1
+      83         81   table cell         1                 1
+      84         82   table cell         1                 1
+      85         83   table cell         1                 1
+      86         84   table cell         1                 1
+      87         85   table cell         1                 1
+      88         86   table cell         1                 1
+      89         87   table cell         1                 1
+      90         88   table cell         1                 1
+      91         89   table cell         1                 1
+      92         90   table cell         1                 1
+      93         91   table cell         1                 1
+      94         92   table cell         1                 1
+      95         93   table cell         1                 1
+      96         94   table cell         1                 1
+      97         95   table cell         1                 1
+      98         96   table cell         1                 1
+      99         97   table cell         1                 1
+      100        98   table cell         1                 1
+      101        99   table cell         1                 1
+      102       100   table cell         1                 1
+      103       101   table cell         1                 1
+      104       102   table cell         1                 1
+      105       103   table cell         1                 1
+      106       104   table cell         1                 1
+      107       105   table cell         1                 1
+      108       106   table cell         1                 1
+      109       107   table cell         1                 1
+      110       108   table cell         1                 1
+      111       109   table cell         1                 1
+      112       110   table cell         1                 1
+      113       111   table cell         1                 1
+      114       112   table cell         1                 1
+      115       113   table cell         1                 1
+      116       114   table cell         1                 1
+      117       115   table cell         1                 1
+      118       116   table cell         1                 1
+      119       117   table cell         1                 1
+      120       118   table cell         1                 1
+      121       119   table cell         1                 1
+      122       120   table cell         1                 1
+      123       121   table cell         1                 1
+      124       122   table cell         1                 1
+      125       123   table cell         1                 1
+      126       124   table cell         1                 1
+      127       125   table cell         1                 1
+      128       126   table cell         1                 1
+      129       127   table cell         1                 1
+      130       128   table cell         1                 1
+      131       129   table cell         1                 1
+      132       130   table cell         1                 1
+      133       131   table cell         1                 1
+      134       132   table cell         1                 1
+      135       133   table cell         1                 1
+      136       134   table cell         1                 1
+      137       135   table cell         1                 1
+      138       136   table cell         1                 1
+      139       137   table cell         1                 1
+      140       138   table cell         1                 1
+      141       139   table cell         1                 1
+      142       140   table cell         1                 1
+      143       141   table cell         1                 1
+      144       142   table cell         1                 1
+      145       143   table cell         1                 1
+      146       144   table cell         1                 1
+      147       145   table cell         1                 1
+      148       146   table cell         1                 1
+      149       147   table cell         1                 1
+      150       148   table cell         1                 1
+      151       149   table cell         1                 1
+      152       150   table cell         1                 1
+      153       151   table cell         1                 1
+      154       152   table cell         1                 1
+      155       153   table cell         1                 1
+      156       154   table cell         1                 1
+      157       155   table cell         1                 1
+      158       156   table cell         1                 1
+      159       157   table cell         1                 1
+      160       158   table cell         1                 1
+      161       159   table cell         1                 1
+      162       160   table cell         1                 1
+      163       161   table cell         1                 1
+      164       162   table cell         1                 1
+      165       163   table cell         1                 1
+      166       164   table cell         1                 1
+      167       165   table cell         1                 1
+      168       166   table cell         1                 1
+      169       167   table cell         1                 1
+      170       168   table cell         1                 1
+      171       169   table cell         1                 1
+      172       170   table cell         1                 1
+      173       171   table cell         1                 1
+      174       172   table cell         1                 1
+      175       173   table cell         1                 1
+      176       174   table cell         1                 1
+      177       175   table cell         1                 1
+      178       176   table cell         1                 1
+      179       177   table cell         1                 1
+      180       178   table cell         1                 1
+      181       179   table cell         1                 1
+      182       180   table cell         1                 1
+      183       181   table cell         1                 1
+      184       182   table cell         1                 1
+      185       183   table cell         1                 1
+      186       184   table cell         1                 1
+      187       185   table cell         1                 1
+      188       186   table cell         1                 1
+      189       187   table cell         1                 1
+      190       188   table cell         1                 1
+      191       189   table cell         1                 1
+      192       190   table cell         1                 1
+      193       191   table cell         1                 1
+      194       192   table cell         1                 1
+      195       193   table cell         1                 1
+      196       194   table cell         1                 1
+      197       195   table cell         1                 1
+      198       196   table cell         1                 1
+      199       197   table cell         1                 1
+      200       198   table cell         1                 1
+      201       199   table cell         1                 1
+      202       200   table cell         1                 1
+      203       201   table cell         1                 1
+      204       202   table cell         1                 1
+      205       203   table cell         1                 1
+      206       204   table cell         1                 1
+      207       205   table cell         1                 1
+      208       206   table cell         1                 1
+      209       207   table cell         1                 1
+      210       208   table cell         1                 1
+      211       209   table cell         1                 1
+      212       210   table cell         1                 1
+      213       211   table cell         1                 1
+      214       212   table cell         1                 1
+      215       213   table cell         1                 1
+      216       214   table cell         1                 1
+      217       215   table cell         1                 1
+      218       216   table cell         1                 1
+      219       217   table cell         1                 1
+      220       218   table cell         1                 1
+      221       219   table cell         1                 1
+      222       220   table cell         1                 1
+      223       221   table cell         1                 1
+      224       222   table cell         1                 1
+      225       223   table cell         1                 1
+      226       224   table cell         1                 1
+      227       225   table cell         1                 1
+      228       226   table cell         1                 1
+      229       227   table cell         1                 1
+      230       228   table cell         1                 1
+      231       229   table cell         1                 1
+      232       230   table cell         1                 1
+      233       231   table cell         1                 1
+      234       232   table cell         1                 1
+      235       233   table cell         1                 1
+      236       234   table cell         1                 1
+      237       235   table cell         1                 1
+      238       236   table cell         1                 1
+      239       237   table cell         1                 1
+      240       238   table cell         1                 1
+      241       239   table cell         1                 1
+      242       240   table cell         1                 1
+      243       241   table cell         1                 1
+      244       242   table cell         1                 1
+      245       243   table cell         1                 1
+      246       244   table cell         1                 1
+      247       245   table cell         1                 1
+      248       246   table cell         1                 1
+      249       247   table cell         1                 1
+      250       248   table cell         1                 1
+      251       249   table cell         1                 1
+      252       250   table cell         1                 1
+      253       251   table cell         1                 1
+      254       252   table cell         1                 1
+      255       253   table cell         1                 1
+      256       254   table cell         1                 1
+      257       255   table cell         1                 1
+      258       256   table cell         1                 1
+      259       257   table cell         1                 1
+                              run_content_text image_path field_code footnote_text
+      1                      test1234part1of2:       <NA>       <NA>              
+      2                                     \t       <NA>       <NA>              
+      3                 This is the main Title       <NA>       <NA>              
+      4                                              <NA>       <NA>              
+      5                     Active Study Agent       <NA>       <NA>              
+      6                                              <NA>       <NA>              
+      7                              A: Drug X       <NA>       <NA>              
+      8                         C: Combination       <NA>       <NA>              
+      9                        Laboratory Test       <NA>       <NA>              
+      10                                 N=134       <NA>       <NA>              
+      11                                 N=132       <NA>       <NA>              
+      12                           Study Visit       <NA>       <NA>              
+      13                               n/N (%)       <NA>       <NA>              
+      14                         Mean (95% CI)       <NA>       <NA>              
+      15    Mean Change From Baseline (95% CI)       <NA>       <NA>              
+      16                               n/N (%)       <NA>       <NA>              
+      17                         Mean (95% CI)       <NA>       <NA>              
+      18    Mean Change From Baseline (95% CI)       <NA>       <NA>              
+      19                       Age: < 35 years       <NA>       <NA>              
+      20                                   134       <NA>       <NA>              
+      21                                             <NA>       <NA>              
+      22                                             <NA>       <NA>              
+      23                                   132       <NA>       <NA>              
+      24                                             <NA>       <NA>              
+      25                                             <NA>       <NA>              
+      26                                             <NA>       <NA>              
+      27                                             <NA>       <NA>              
+      28                                             <NA>       <NA>              
+      29                                             <NA>       <NA>              
+      30                                             <NA>       <NA>              
+      31                                             <NA>       <NA>              
+      32                                             <NA>       <NA>              
+      33  Alanine Aminotransferase Measurement       <NA>       <NA>              
+      34                                             <NA>       <NA>              
+      35                                             <NA>       <NA>              
+      36                                             <NA>       <NA>              
+      37                                             <NA>       <NA>              
+      38                                             <NA>       <NA>              
+      39                                             <NA>       <NA>              
+      40                              BASELINE       <NA>       <NA>              
+      41                        77/77 (100.0%)       <NA>       <NA>              
+      42                     50.1 (48.2, 52.0)       <NA>       <NA>              
+      43                        0.0 (0.0, 0.0)       <NA>       <NA>              
+      44                        63/63 (100.0%)       <NA>       <NA>              
+      45                     51.1 (49.2, 53.0)       <NA>       <NA>              
+      46                        0.0 (0.0, 0.0)       <NA>       <NA>              
+      47                          WEEK 1 DAY 8       <NA>       <NA>              
+      48                        77/77 (100.0%)       <NA>       <NA>              
+      49                     49.2 (47.3, 51.0)       <NA>       <NA>              
+      50                      -0.9 (-3.8, 1.9)       <NA>       <NA>              
+      51                        63/63 (100.0%)       <NA>       <NA>              
+      52                     50.4 (48.5, 52.4)       <NA>       <NA>              
+      53                      -0.7 (-3.2, 1.9)       <NA>       <NA>              
+      54                         WEEK 2 DAY 15       <NA>       <NA>              
+      55                        77/77 (100.0%)       <NA>       <NA>              
+      56                     50.5 (48.6, 52.3)       <NA>       <NA>              
+      57                       0.4 (-2.3, 3.1)       <NA>       <NA>              
+      58                        63/63 (100.0%)       <NA>       <NA>              
+      59                     48.3 (46.5, 50.2)       <NA>       <NA>              
+      60                     -2.8 (-5.4, -0.2)       <NA>       <NA>              
+      61                         WEEK 3 DAY 22       <NA>       <NA>              
+      62                        77/77 (100.0%)       <NA>       <NA>              
+      63                     50.1 (48.3, 51.9)       <NA>       <NA>              
+      64                       0.0 (-2.6, 2.6)       <NA>       <NA>              
+      65                        63/63 (100.0%)       <NA>       <NA>              
+      66                     49.5 (47.5, 51.5)       <NA>       <NA>              
+      67                      -1.6 (-4.3, 1.2)       <NA>       <NA>              
+      68                         WEEK 4 DAY 29       <NA>       <NA>              
+      69                        77/77 (100.0%)       <NA>       <NA>              
+      70                     50.8 (49.0, 52.6)       <NA>       <NA>              
+      71                       0.7 (-2.1, 3.5)       <NA>       <NA>              
+      72                        63/63 (100.0%)       <NA>       <NA>              
+      73                     49.6 (47.6, 51.6)       <NA>       <NA>              
+      74                      -1.5 (-4.2, 1.1)       <NA>       <NA>              
+      75                         WEEK 5 DAY 36       <NA>       <NA>              
+      76                        77/77 (100.0%)       <NA>       <NA>              
+      77                     50.8 (49.1, 52.5)       <NA>       <NA>              
+      78                       0.7 (-2.1, 3.6)       <NA>       <NA>              
+      79                        63/63 (100.0%)       <NA>       <NA>              
+      80                     49.9 (47.9, 51.9)       <NA>       <NA>              
+      81                      -1.2 (-4.0, 1.7)       <NA>       <NA>              
+      82                                             <NA>       <NA>              
+      83                                             <NA>       <NA>              
+      84                                             <NA>       <NA>              
+      85                                             <NA>       <NA>              
+      86                                             <NA>       <NA>              
+      87                                             <NA>       <NA>              
+      88                                             <NA>       <NA>              
+      89        C-Reactive Protein Measurement       <NA>       <NA>              
+      90                                             <NA>       <NA>              
+      91                                             <NA>       <NA>              
+      92                                             <NA>       <NA>              
+      93                                             <NA>       <NA>              
+      94                                             <NA>       <NA>              
+      95                                             <NA>       <NA>              
+      96                              BASELINE       <NA>       <NA>              
+      97                        77/77 (100.0%)       <NA>       <NA>              
+      98                     49.3 (46.9, 51.6)       <NA>       <NA>              
+      99                        0.0 (0.0, 0.0)       <NA>       <NA>              
+      100                       63/63 (100.0%)       <NA>       <NA>              
+      101                    50.8 (48.6, 53.0)       <NA>       <NA>              
+      102                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      103                         WEEK 1 DAY 8       <NA>       <NA>              
+      104                       77/77 (100.0%)       <NA>       <NA>              
+      105                    51.2 (49.2, 53.2)       <NA>       <NA>              
+      106                      2.0 (-1.2, 5.2)       <NA>       <NA>              
+      107                       63/63 (100.0%)       <NA>       <NA>              
+      108                    51.0 (48.8, 53.1)       <NA>       <NA>              
+      109                      0.2 (-2.9, 3.3)       <NA>       <NA>              
+      110                        WEEK 2 DAY 15       <NA>       <NA>              
+      111                       77/77 (100.0%)       <NA>       <NA>              
+      112                    49.3 (47.5, 51.2)       <NA>       <NA>              
+      113                      0.1 (-2.9, 3.0)       <NA>       <NA>              
+      114                       63/63 (100.0%)       <NA>       <NA>              
+      115                    50.1 (48.3, 52.0)       <NA>       <NA>              
+      116                     -0.6 (-3.3, 2.1)       <NA>       <NA>              
+      117                        WEEK 3 DAY 22       <NA>       <NA>              
+      118                       77/77 (100.0%)       <NA>       <NA>              
+      119                    49.3 (47.2, 51.3)       <NA>       <NA>              
+      120                      0.0 (-3.1, 3.2)       <NA>       <NA>              
+      121                       63/63 (100.0%)       <NA>       <NA>              
+      122                    49.6 (47.7, 51.4)       <NA>       <NA>              
+      123                     -1.2 (-4.1, 1.8)       <NA>       <NA>              
+      124                        WEEK 4 DAY 29       <NA>       <NA>              
+      125                       77/77 (100.0%)       <NA>       <NA>              
+      126                    51.1 (49.1, 53.2)       <NA>       <NA>              
+      127                      1.9 (-1.2, 5.0)       <NA>       <NA>              
+      128                       63/63 (100.0%)       <NA>       <NA>              
+      129                    50.0 (48.0, 52.0)       <NA>       <NA>              
+      130                     -0.7 (-3.9, 2.4)       <NA>       <NA>              
+      131                        WEEK 5 DAY 36       <NA>       <NA>              
+      132                       77/77 (100.0%)       <NA>       <NA>              
+      133                    50.3 (48.2, 52.3)       <NA>       <NA>              
+      134                      1.0 (-2.3, 4.3)       <NA>       <NA>              
+      135                       63/63 (100.0%)       <NA>       <NA>              
+      136                    49.1 (47.2, 51.0)       <NA>       <NA>              
+      137                     -1.6 (-4.5, 1.2)       <NA>       <NA>              
+      138                      Age: ≥ 35 years       <NA>       <NA>              
+      139                                  134       <NA>       <NA>              
+      140                                            <NA>       <NA>              
+      141                                            <NA>       <NA>              
+      142                                  132       <NA>       <NA>              
+      143                                            <NA>       <NA>              
+      144                                            <NA>       <NA>              
+      145                                            <NA>       <NA>              
+      146                                            <NA>       <NA>              
+      147                                            <NA>       <NA>              
+      148                                            <NA>       <NA>              
+      149                                            <NA>       <NA>              
+      150                                            <NA>       <NA>              
+      151                                            <NA>       <NA>              
+      152 Alanine Aminotransferase Measurement       <NA>       <NA>              
+      153                                            <NA>       <NA>              
+      154                                            <NA>       <NA>              
+      155                                            <NA>       <NA>              
+      156                                            <NA>       <NA>              
+      157                                            <NA>       <NA>              
+      158                                            <NA>       <NA>              
+      159                             BASELINE       <NA>       <NA>              
+      160                       57/57 (100.0%)       <NA>       <NA>              
+      161                    48.9 (46.6, 51.1)       <NA>       <NA>              
+      162                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      163                       69/69 (100.0%)       <NA>       <NA>              
+      164                    50.7 (48.8, 52.7)       <NA>       <NA>              
+      165                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      166                         WEEK 1 DAY 8       <NA>       <NA>              
+      167                       57/57 (100.0%)       <NA>       <NA>              
+      168                    47.8 (45.8, 49.9)       <NA>       <NA>              
+      169                     -1.0 (-3.8, 1.8)       <NA>       <NA>              
+      170                       69/69 (100.0%)       <NA>       <NA>              
+      171                    51.7 (49.8, 53.6)       <NA>       <NA>              
+      172                      1.0 (-1.8, 3.8)       <NA>       <NA>              
+      173                        WEEK 2 DAY 15       <NA>       <NA>              
+      174                       57/57 (100.0%)       <NA>       <NA>              
+      175                    48.0 (45.7, 50.3)       <NA>       <NA>              
+      176                     -0.9 (-4.1, 2.3)       <NA>       <NA>              
+      177                       69/69 (100.0%)       <NA>       <NA>              
+      178                    48.7 (47.0, 50.4)       <NA>       <NA>              
+      179                     -2.1 (-4.8, 0.7)       <NA>       <NA>              
+      180                        WEEK 3 DAY 22       <NA>       <NA>              
+      181                       57/57 (100.0%)       <NA>       <NA>              
+      182                    50.5 (48.6, 52.4)       <NA>       <NA>              
+      183                      1.6 (-1.5, 4.7)       <NA>       <NA>              
+      184                       69/69 (100.0%)       <NA>       <NA>              
+      185                    48.2 (46.3, 50.1)       <NA>       <NA>              
+      186                     -2.5 (-5.2, 0.2)       <NA>       <NA>              
+      187                        WEEK 4 DAY 29       <NA>       <NA>              
+      188                       57/57 (100.0%)       <NA>       <NA>              
+      189                    50.6 (47.8, 53.4)       <NA>       <NA>              
+      190                      1.7 (-2.1, 5.4)       <NA>       <NA>              
+      191                       69/69 (100.0%)       <NA>       <NA>              
+      192                    49.7 (47.8, 51.6)       <NA>       <NA>              
+      193                     -1.0 (-3.6, 1.6)       <NA>       <NA>              
+      194                        WEEK 5 DAY 36       <NA>       <NA>              
+      195                       57/57 (100.0%)       <NA>       <NA>              
+      196                    50.9 (48.6, 53.1)       <NA>       <NA>              
+      197                      2.0 (-1.0, 5.0)       <NA>       <NA>              
+      198                       69/69 (100.0%)       <NA>       <NA>              
+      199                    50.0 (47.9, 52.1)       <NA>       <NA>              
+      200                     -0.7 (-3.4, 2.0)       <NA>       <NA>              
+      201                                            <NA>       <NA>              
+      202                                            <NA>       <NA>              
+      203                                            <NA>       <NA>              
+      204                                            <NA>       <NA>              
+      205                                            <NA>       <NA>              
+      206                                            <NA>       <NA>              
+      207                                            <NA>       <NA>              
+      208       C-Reactive Protein Measurement       <NA>       <NA>              
+      209                                            <NA>       <NA>              
+      210                                            <NA>       <NA>              
+      211                                            <NA>       <NA>              
+      212                                            <NA>       <NA>              
+      213                                            <NA>       <NA>              
+      214                                            <NA>       <NA>              
+      215                             BASELINE       <NA>       <NA>              
+      216                       57/57 (100.0%)       <NA>       <NA>              
+      217                    48.5 (46.3, 50.7)       <NA>       <NA>              
+      218                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      219                       69/69 (100.0%)       <NA>       <NA>              
+      220                    49.7 (47.8, 51.7)       <NA>       <NA>              
+      221                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      222                         WEEK 1 DAY 8       <NA>       <NA>              
+      223                       57/57 (100.0%)       <NA>       <NA>              
+      224                    52.7 (50.9, 54.6)       <NA>       <NA>              
+      225                       4.2 (1.6, 6.8)       <NA>       <NA>              
+      226                       69/69 (100.0%)       <NA>       <NA>              
+      227                    49.6 (47.2, 52.0)       <NA>       <NA>              
+      228                     -0.1 (-3.4, 3.2)       <NA>       <NA>              
+      229                        WEEK 2 DAY 15       <NA>       <NA>              
+      230                       57/57 (100.0%)       <NA>       <NA>              
+      231                    50.3 (48.1, 52.6)       <NA>       <NA>              
+      232                      1.8 (-1.3, 4.9)       <NA>       <NA>              
+      233                       69/69 (100.0%)       <NA>       <NA>              
+      234                    48.2 (46.0, 50.3)       <NA>       <NA>              
+      235                     -1.5 (-4.3, 1.3)       <NA>       <NA>              
+      236                        WEEK 3 DAY 22       <NA>       <NA>              
+      237                       57/57 (100.0%)       <NA>       <NA>              
+      238                    51.1 (49.2, 53.0)       <NA>       <NA>              
+      239                      2.6 (-0.1, 5.3)       <NA>       <NA>              
+      240                       69/69 (100.0%)       <NA>       <NA>              
+      241                    50.0 (48.1, 51.9)       <NA>       <NA>              
+      242                      0.3 (-2.7, 3.3)       <NA>       <NA>              
+      243                        WEEK 4 DAY 29       <NA>       <NA>              
+      244                       57/57 (100.0%)       <NA>       <NA>              
+      245                    52.2 (50.4, 54.1)       <NA>       <NA>              
+      246                       3.7 (1.1, 6.3)       <NA>       <NA>              
+      247                       69/69 (100.0%)       <NA>       <NA>              
+      248                    49.5 (47.8, 51.3)       <NA>       <NA>              
+      249                     -0.2 (-2.8, 2.4)       <NA>       <NA>              
+      250                        WEEK 5 DAY 36       <NA>       <NA>              
+      251                       57/57 (100.0%)       <NA>       <NA>              
+      252                    49.0 (46.7, 51.3)       <NA>       <NA>              
+      253                      0.5 (-2.6, 3.6)       <NA>       <NA>              
+      254                       69/69 (100.0%)       <NA>       <NA>              
+      255                    49.0 (47.1, 50.9)       <NA>       <NA>              
+      256                     -0.7 (-3.6, 2.2)       <NA>       <NA>              
+      257                                            <NA>       <NA>              
+      258                             footer 1       <NA>       <NA>              
+      259                             footer 2       <NA>       <NA>              
+          link link_to_bookmark bookmark_start character_stylename sz sz_cs
+      1   <NA>             <NA>           <NA>                <NA> 20    20
+      2   <NA>             <NA>           <NA>                <NA> 20    20
+      3   <NA>             <NA>           <NA>                <NA> 20    20
+      4   <NA>             <NA>           <NA>                <NA> 18    18
+      5   <NA>             <NA>           <NA>                <NA> 18    18
+      6   <NA>             <NA>           <NA>                <NA> 18    18
+      7   <NA>             <NA>           <NA>                <NA> 18    18
+      8   <NA>             <NA>           <NA>                <NA> 18    18
+      9   <NA>             <NA>           <NA>                <NA> 18    18
+      10  <NA>             <NA>           <NA>                <NA> 18    18
+      11  <NA>             <NA>           <NA>                <NA> 18    18
+      12  <NA>             <NA>           <NA>                <NA> 18    18
+      13  <NA>             <NA>           <NA>                <NA> 18    18
+      14  <NA>             <NA>           <NA>                <NA> 18    18
+      15  <NA>             <NA>           <NA>                <NA> 18    18
+      16  <NA>             <NA>           <NA>                <NA> 18    18
+      17  <NA>             <NA>           <NA>                <NA> 18    18
+      18  <NA>             <NA>           <NA>                <NA> 18    18
+      19  <NA>             <NA>           <NA>                <NA> 18    18
+      20  <NA>             <NA>           <NA>                <NA> 18    18
+      21  <NA>             <NA>           <NA>                <NA> 18    18
+      22  <NA>             <NA>           <NA>                <NA> 18    18
+      23  <NA>             <NA>           <NA>                <NA> 18    18
+      24  <NA>             <NA>           <NA>                <NA> 18    18
+      25  <NA>             <NA>           <NA>                <NA> 18    18
+      26  <NA>             <NA>           <NA>                <NA> 18    18
+      27  <NA>             <NA>           <NA>                <NA> 18    18
+      28  <NA>             <NA>           <NA>                <NA> 18    18
+      29  <NA>             <NA>           <NA>                <NA> 18    18
+      30  <NA>             <NA>           <NA>                <NA> 18    18
+      31  <NA>             <NA>           <NA>                <NA> 18    18
+      32  <NA>             <NA>           <NA>                <NA> 18    18
+      33  <NA>             <NA>           <NA>                <NA> 18    18
+      34  <NA>             <NA>           <NA>                <NA> 18    18
+      35  <NA>             <NA>           <NA>                <NA> 18    18
+      36  <NA>             <NA>           <NA>                <NA> 18    18
+      37  <NA>             <NA>           <NA>                <NA> 18    18
+      38  <NA>             <NA>           <NA>                <NA> 18    18
+      39  <NA>             <NA>           <NA>                <NA> 18    18
+      40  <NA>             <NA>           <NA>                <NA> 18    18
+      41  <NA>             <NA>           <NA>                <NA> 18    18
+      42  <NA>             <NA>           <NA>                <NA> 18    18
+      43  <NA>             <NA>           <NA>                <NA> 18    18
+      44  <NA>             <NA>           <NA>                <NA> 18    18
+      45  <NA>             <NA>           <NA>                <NA> 18    18
+      46  <NA>             <NA>           <NA>                <NA> 18    18
+      47  <NA>             <NA>           <NA>                <NA> 18    18
+      48  <NA>             <NA>           <NA>                <NA> 18    18
+      49  <NA>             <NA>           <NA>                <NA> 18    18
+      50  <NA>             <NA>           <NA>                <NA> 18    18
+      51  <NA>             <NA>           <NA>                <NA> 18    18
+      52  <NA>             <NA>           <NA>                <NA> 18    18
+      53  <NA>             <NA>           <NA>                <NA> 18    18
+      54  <NA>             <NA>           <NA>                <NA> 18    18
+      55  <NA>             <NA>           <NA>                <NA> 18    18
+      56  <NA>             <NA>           <NA>                <NA> 18    18
+      57  <NA>             <NA>           <NA>                <NA> 18    18
+      58  <NA>             <NA>           <NA>                <NA> 18    18
+      59  <NA>             <NA>           <NA>                <NA> 18    18
+      60  <NA>             <NA>           <NA>                <NA> 18    18
+      61  <NA>             <NA>           <NA>                <NA> 18    18
+      62  <NA>             <NA>           <NA>                <NA> 18    18
+      63  <NA>             <NA>           <NA>                <NA> 18    18
+      64  <NA>             <NA>           <NA>                <NA> 18    18
+      65  <NA>             <NA>           <NA>                <NA> 18    18
+      66  <NA>             <NA>           <NA>                <NA> 18    18
+      67  <NA>             <NA>           <NA>                <NA> 18    18
+      68  <NA>             <NA>           <NA>                <NA> 18    18
+      69  <NA>             <NA>           <NA>                <NA> 18    18
+      70  <NA>             <NA>           <NA>                <NA> 18    18
+      71  <NA>             <NA>           <NA>                <NA> 18    18
+      72  <NA>             <NA>           <NA>                <NA> 18    18
+      73  <NA>             <NA>           <NA>                <NA> 18    18
+      74  <NA>             <NA>           <NA>                <NA> 18    18
+      75  <NA>             <NA>           <NA>                <NA> 18    18
+      76  <NA>             <NA>           <NA>                <NA> 18    18
+      77  <NA>             <NA>           <NA>                <NA> 18    18
+      78  <NA>             <NA>           <NA>                <NA> 18    18
+      79  <NA>             <NA>           <NA>                <NA> 18    18
+      80  <NA>             <NA>           <NA>                <NA> 18    18
+      81  <NA>             <NA>           <NA>                <NA> 18    18
+      82  <NA>             <NA>           <NA>                <NA> 18    18
+      83  <NA>             <NA>           <NA>                <NA> 18    18
+      84  <NA>             <NA>           <NA>                <NA> 18    18
+      85  <NA>             <NA>           <NA>                <NA> 18    18
+      86  <NA>             <NA>           <NA>                <NA> 18    18
+      87  <NA>             <NA>           <NA>                <NA> 18    18
+      88  <NA>             <NA>           <NA>                <NA> 18    18
+      89  <NA>             <NA>           <NA>                <NA> 18    18
+      90  <NA>             <NA>           <NA>                <NA> 18    18
+      91  <NA>             <NA>           <NA>                <NA> 18    18
+      92  <NA>             <NA>           <NA>                <NA> 18    18
+      93  <NA>             <NA>           <NA>                <NA> 18    18
+      94  <NA>             <NA>           <NA>                <NA> 18    18
+      95  <NA>             <NA>           <NA>                <NA> 18    18
+      96  <NA>             <NA>           <NA>                <NA> 18    18
+      97  <NA>             <NA>           <NA>                <NA> 18    18
+      98  <NA>             <NA>           <NA>                <NA> 18    18
+      99  <NA>             <NA>           <NA>                <NA> 18    18
+      100 <NA>             <NA>           <NA>                <NA> 18    18
+      101 <NA>             <NA>           <NA>                <NA> 18    18
+      102 <NA>             <NA>           <NA>                <NA> 18    18
+      103 <NA>             <NA>           <NA>                <NA> 18    18
+      104 <NA>             <NA>           <NA>                <NA> 18    18
+      105 <NA>             <NA>           <NA>                <NA> 18    18
+      106 <NA>             <NA>           <NA>                <NA> 18    18
+      107 <NA>             <NA>           <NA>                <NA> 18    18
+      108 <NA>             <NA>           <NA>                <NA> 18    18
+      109 <NA>             <NA>           <NA>                <NA> 18    18
+      110 <NA>             <NA>           <NA>                <NA> 18    18
+      111 <NA>             <NA>           <NA>                <NA> 18    18
+      112 <NA>             <NA>           <NA>                <NA> 18    18
+      113 <NA>             <NA>           <NA>                <NA> 18    18
+      114 <NA>             <NA>           <NA>                <NA> 18    18
+      115 <NA>             <NA>           <NA>                <NA> 18    18
+      116 <NA>             <NA>           <NA>                <NA> 18    18
+      117 <NA>             <NA>           <NA>                <NA> 18    18
+      118 <NA>             <NA>           <NA>                <NA> 18    18
+      119 <NA>             <NA>           <NA>                <NA> 18    18
+      120 <NA>             <NA>           <NA>                <NA> 18    18
+      121 <NA>             <NA>           <NA>                <NA> 18    18
+      122 <NA>             <NA>           <NA>                <NA> 18    18
+      123 <NA>             <NA>           <NA>                <NA> 18    18
+      124 <NA>             <NA>           <NA>                <NA> 18    18
+      125 <NA>             <NA>           <NA>                <NA> 18    18
+      126 <NA>             <NA>           <NA>                <NA> 18    18
+      127 <NA>             <NA>           <NA>                <NA> 18    18
+      128 <NA>             <NA>           <NA>                <NA> 18    18
+      129 <NA>             <NA>           <NA>                <NA> 18    18
+      130 <NA>             <NA>           <NA>                <NA> 18    18
+      131 <NA>             <NA>           <NA>                <NA> 18    18
+      132 <NA>             <NA>           <NA>                <NA> 18    18
+      133 <NA>             <NA>           <NA>                <NA> 18    18
+      134 <NA>             <NA>           <NA>                <NA> 18    18
+      135 <NA>             <NA>           <NA>                <NA> 18    18
+      136 <NA>             <NA>           <NA>                <NA> 18    18
+      137 <NA>             <NA>           <NA>                <NA> 18    18
+      138 <NA>             <NA>           <NA>                <NA> 18    18
+      139 <NA>             <NA>           <NA>                <NA> 18    18
+      140 <NA>             <NA>           <NA>                <NA> 18    18
+      141 <NA>             <NA>           <NA>                <NA> 18    18
+      142 <NA>             <NA>           <NA>                <NA> 18    18
+      143 <NA>             <NA>           <NA>                <NA> 18    18
+      144 <NA>             <NA>           <NA>                <NA> 18    18
+      145 <NA>             <NA>           <NA>                <NA> 18    18
+      146 <NA>             <NA>           <NA>                <NA> 18    18
+      147 <NA>             <NA>           <NA>                <NA> 18    18
+      148 <NA>             <NA>           <NA>                <NA> 18    18
+      149 <NA>             <NA>           <NA>                <NA> 18    18
+      150 <NA>             <NA>           <NA>                <NA> 18    18
+      151 <NA>             <NA>           <NA>                <NA> 18    18
+      152 <NA>             <NA>           <NA>                <NA> 18    18
+      153 <NA>             <NA>           <NA>                <NA> 18    18
+      154 <NA>             <NA>           <NA>                <NA> 18    18
+      155 <NA>             <NA>           <NA>                <NA> 18    18
+      156 <NA>             <NA>           <NA>                <NA> 18    18
+      157 <NA>             <NA>           <NA>                <NA> 18    18
+      158 <NA>             <NA>           <NA>                <NA> 18    18
+      159 <NA>             <NA>           <NA>                <NA> 18    18
+      160 <NA>             <NA>           <NA>                <NA> 18    18
+      161 <NA>             <NA>           <NA>                <NA> 18    18
+      162 <NA>             <NA>           <NA>                <NA> 18    18
+      163 <NA>             <NA>           <NA>                <NA> 18    18
+      164 <NA>             <NA>           <NA>                <NA> 18    18
+      165 <NA>             <NA>           <NA>                <NA> 18    18
+      166 <NA>             <NA>           <NA>                <NA> 18    18
+      167 <NA>             <NA>           <NA>                <NA> 18    18
+      168 <NA>             <NA>           <NA>                <NA> 18    18
+      169 <NA>             <NA>           <NA>                <NA> 18    18
+      170 <NA>             <NA>           <NA>                <NA> 18    18
+      171 <NA>             <NA>           <NA>                <NA> 18    18
+      172 <NA>             <NA>           <NA>                <NA> 18    18
+      173 <NA>             <NA>           <NA>                <NA> 18    18
+      174 <NA>             <NA>           <NA>                <NA> 18    18
+      175 <NA>             <NA>           <NA>                <NA> 18    18
+      176 <NA>             <NA>           <NA>                <NA> 18    18
+      177 <NA>             <NA>           <NA>                <NA> 18    18
+      178 <NA>             <NA>           <NA>                <NA> 18    18
+      179 <NA>             <NA>           <NA>                <NA> 18    18
+      180 <NA>             <NA>           <NA>                <NA> 18    18
+      181 <NA>             <NA>           <NA>                <NA> 18    18
+      182 <NA>             <NA>           <NA>                <NA> 18    18
+      183 <NA>             <NA>           <NA>                <NA> 18    18
+      184 <NA>             <NA>           <NA>                <NA> 18    18
+      185 <NA>             <NA>           <NA>                <NA> 18    18
+      186 <NA>             <NA>           <NA>                <NA> 18    18
+      187 <NA>             <NA>           <NA>                <NA> 18    18
+      188 <NA>             <NA>           <NA>                <NA> 18    18
+      189 <NA>             <NA>           <NA>                <NA> 18    18
+      190 <NA>             <NA>           <NA>                <NA> 18    18
+      191 <NA>             <NA>           <NA>                <NA> 18    18
+      192 <NA>             <NA>           <NA>                <NA> 18    18
+      193 <NA>             <NA>           <NA>                <NA> 18    18
+      194 <NA>             <NA>           <NA>                <NA> 18    18
+      195 <NA>             <NA>           <NA>                <NA> 18    18
+      196 <NA>             <NA>           <NA>                <NA> 18    18
+      197 <NA>             <NA>           <NA>                <NA> 18    18
+      198 <NA>             <NA>           <NA>                <NA> 18    18
+      199 <NA>             <NA>           <NA>                <NA> 18    18
+      200 <NA>             <NA>           <NA>                <NA> 18    18
+      201 <NA>             <NA>           <NA>                <NA> 18    18
+      202 <NA>             <NA>           <NA>                <NA> 18    18
+      203 <NA>             <NA>           <NA>                <NA> 18    18
+      204 <NA>             <NA>           <NA>                <NA> 18    18
+      205 <NA>             <NA>           <NA>                <NA> 18    18
+      206 <NA>             <NA>           <NA>                <NA> 18    18
+      207 <NA>             <NA>           <NA>                <NA> 18    18
+      208 <NA>             <NA>           <NA>                <NA> 18    18
+      209 <NA>             <NA>           <NA>                <NA> 18    18
+      210 <NA>             <NA>           <NA>                <NA> 18    18
+      211 <NA>             <NA>           <NA>                <NA> 18    18
+      212 <NA>             <NA>           <NA>                <NA> 18    18
+      213 <NA>             <NA>           <NA>                <NA> 18    18
+      214 <NA>             <NA>           <NA>                <NA> 18    18
+      215 <NA>             <NA>           <NA>                <NA> 18    18
+      216 <NA>             <NA>           <NA>                <NA> 18    18
+      217 <NA>             <NA>           <NA>                <NA> 18    18
+      218 <NA>             <NA>           <NA>                <NA> 18    18
+      219 <NA>             <NA>           <NA>                <NA> 18    18
+      220 <NA>             <NA>           <NA>                <NA> 18    18
+      221 <NA>             <NA>           <NA>                <NA> 18    18
+      222 <NA>             <NA>           <NA>                <NA> 18    18
+      223 <NA>             <NA>           <NA>                <NA> 18    18
+      224 <NA>             <NA>           <NA>                <NA> 18    18
+      225 <NA>             <NA>           <NA>                <NA> 18    18
+      226 <NA>             <NA>           <NA>                <NA> 18    18
+      227 <NA>             <NA>           <NA>                <NA> 18    18
+      228 <NA>             <NA>           <NA>                <NA> 18    18
+      229 <NA>             <NA>           <NA>                <NA> 18    18
+      230 <NA>             <NA>           <NA>                <NA> 18    18
+      231 <NA>             <NA>           <NA>                <NA> 18    18
+      232 <NA>             <NA>           <NA>                <NA> 18    18
+      233 <NA>             <NA>           <NA>                <NA> 18    18
+      234 <NA>             <NA>           <NA>                <NA> 18    18
+      235 <NA>             <NA>           <NA>                <NA> 18    18
+      236 <NA>             <NA>           <NA>                <NA> 18    18
+      237 <NA>             <NA>           <NA>                <NA> 18    18
+      238 <NA>             <NA>           <NA>                <NA> 18    18
+      239 <NA>             <NA>           <NA>                <NA> 18    18
+      240 <NA>             <NA>           <NA>                <NA> 18    18
+      241 <NA>             <NA>           <NA>                <NA> 18    18
+      242 <NA>             <NA>           <NA>                <NA> 18    18
+      243 <NA>             <NA>           <NA>                <NA> 18    18
+      244 <NA>             <NA>           <NA>                <NA> 18    18
+      245 <NA>             <NA>           <NA>                <NA> 18    18
+      246 <NA>             <NA>           <NA>                <NA> 18    18
+      247 <NA>             <NA>           <NA>                <NA> 18    18
+      248 <NA>             <NA>           <NA>                <NA> 18    18
+      249 <NA>             <NA>           <NA>                <NA> 18    18
+      250 <NA>             <NA>           <NA>                <NA> 18    18
+      251 <NA>             <NA>           <NA>                <NA> 18    18
+      252 <NA>             <NA>           <NA>                <NA> 18    18
+      253 <NA>             <NA>           <NA>                <NA> 18    18
+      254 <NA>             <NA>           <NA>                <NA> 18    18
+      255 <NA>             <NA>           <NA>                <NA> 18    18
+      256 <NA>             <NA>           <NA>                <NA> 18    18
+      257 <NA>             <NA>           <NA>                <NA> 18    18
+      258 <NA>             <NA>           <NA>                <NA> 18    18
+      259 <NA>             <NA>           <NA>                <NA> 18    18
           font_family_ascii font_family_eastasia font_family_hansi  font_family_cs
       1     Times New Roman      Times New Roman   Times New Roman Times New Roman
       2     Times New Roman      Times New Roman   Times New Roman Times New Roman
@@ -51005,12 +50987,6 @@
       257   Times New Roman      Times New Roman   Times New Roman Times New Roman
       258   Times New Roman      Times New Roman   Times New Roman Times New Roman
       259   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      260   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      261   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      262   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      263   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      264   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      265   Times New Roman      Times New Roman   Times New Roman Times New Roman
            bold italic underline   color shading shading_color shading_fill
       1    TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       2    TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
@@ -51271,12 +51247,6 @@
       257 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       258 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       259 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      260 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      261 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      262 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      263 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      264 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      265 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
           paragraph_stylename keep_with_next  align level num_id table_index row_id
       1               caption          FALSE   left    NA     NA           1      1
       2               caption          FALSE   left    NA     NA           1      1
@@ -51311,238 +51281,232 @@
       31                 <NA>          FALSE center    NA     NA           1      7
       32                 <NA>          FALSE center    NA     NA           1      7
       33                 <NA>          FALSE   left    NA     NA           1      8
-      34                 <NA>          FALSE   left    NA     NA           1      8
-      35                 <NA>          FALSE   left    NA     NA           1      8
-      36                 <NA>          FALSE   left    NA     NA           1      8
+      34                 <NA>          FALSE center    NA     NA           1      8
+      35                 <NA>          FALSE center    NA     NA           1      8
+      36                 <NA>          FALSE center    NA     NA           1      8
       37                 <NA>          FALSE center    NA     NA           1      8
       38                 <NA>          FALSE center    NA     NA           1      8
       39                 <NA>          FALSE center    NA     NA           1      8
-      40                 <NA>          FALSE center    NA     NA           1      8
-      41                 <NA>          FALSE center    NA     NA           1      8
-      42                 <NA>          FALSE center    NA     NA           1      8
-      43                 <NA>          FALSE   left    NA     NA           1      9
+      40                 <NA>          FALSE   left    NA     NA           1      9
+      41                 <NA>          FALSE center    NA     NA           1      9
+      42                 <NA>          FALSE center    NA     NA           1      9
+      43                 <NA>          FALSE center    NA     NA           1      9
       44                 <NA>          FALSE center    NA     NA           1      9
       45                 <NA>          FALSE center    NA     NA           1      9
       46                 <NA>          FALSE center    NA     NA           1      9
-      47                 <NA>          FALSE center    NA     NA           1      9
-      48                 <NA>          FALSE center    NA     NA           1      9
-      49                 <NA>          FALSE center    NA     NA           1      9
-      50                 <NA>          FALSE   left    NA     NA           1     10
+      47                 <NA>          FALSE   left    NA     NA           1     10
+      48                 <NA>          FALSE center    NA     NA           1     10
+      49                 <NA>          FALSE center    NA     NA           1     10
+      50                 <NA>          FALSE center    NA     NA           1     10
       51                 <NA>          FALSE center    NA     NA           1     10
       52                 <NA>          FALSE center    NA     NA           1     10
       53                 <NA>          FALSE center    NA     NA           1     10
-      54                 <NA>          FALSE center    NA     NA           1     10
-      55                 <NA>          FALSE center    NA     NA           1     10
-      56                 <NA>          FALSE center    NA     NA           1     10
-      57                 <NA>          FALSE   left    NA     NA           1     11
+      54                 <NA>          FALSE   left    NA     NA           1     11
+      55                 <NA>          FALSE center    NA     NA           1     11
+      56                 <NA>          FALSE center    NA     NA           1     11
+      57                 <NA>          FALSE center    NA     NA           1     11
       58                 <NA>          FALSE center    NA     NA           1     11
       59                 <NA>          FALSE center    NA     NA           1     11
       60                 <NA>          FALSE center    NA     NA           1     11
-      61                 <NA>          FALSE center    NA     NA           1     11
-      62                 <NA>          FALSE center    NA     NA           1     11
-      63                 <NA>          FALSE center    NA     NA           1     11
-      64                 <NA>          FALSE   left    NA     NA           1     12
+      61                 <NA>          FALSE   left    NA     NA           1     12
+      62                 <NA>          FALSE center    NA     NA           1     12
+      63                 <NA>          FALSE center    NA     NA           1     12
+      64                 <NA>          FALSE center    NA     NA           1     12
       65                 <NA>          FALSE center    NA     NA           1     12
       66                 <NA>          FALSE center    NA     NA           1     12
       67                 <NA>          FALSE center    NA     NA           1     12
-      68                 <NA>          FALSE center    NA     NA           1     12
-      69                 <NA>          FALSE center    NA     NA           1     12
-      70                 <NA>          FALSE center    NA     NA           1     12
-      71                 <NA>          FALSE   left    NA     NA           1     13
+      68                 <NA>          FALSE   left    NA     NA           1     13
+      69                 <NA>          FALSE center    NA     NA           1     13
+      70                 <NA>          FALSE center    NA     NA           1     13
+      71                 <NA>          FALSE center    NA     NA           1     13
       72                 <NA>          FALSE center    NA     NA           1     13
       73                 <NA>          FALSE center    NA     NA           1     13
       74                 <NA>          FALSE center    NA     NA           1     13
-      75                 <NA>          FALSE center    NA     NA           1     13
-      76                 <NA>          FALSE center    NA     NA           1     13
-      77                 <NA>          FALSE center    NA     NA           1     13
-      78                 <NA>          FALSE   left    NA     NA           1     14
+      75                 <NA>          FALSE   left    NA     NA           1     14
+      76                 <NA>          FALSE center    NA     NA           1     14
+      77                 <NA>          FALSE center    NA     NA           1     14
+      78                 <NA>          FALSE center    NA     NA           1     14
       79                 <NA>          FALSE center    NA     NA           1     14
       80                 <NA>          FALSE center    NA     NA           1     14
       81                 <NA>          FALSE center    NA     NA           1     14
-      82                 <NA>          FALSE center    NA     NA           1     14
-      83                 <NA>          FALSE center    NA     NA           1     14
-      84                 <NA>          FALSE center    NA     NA           1     14
-      85                 <NA>          FALSE   left    NA     NA           1     15
+      82                 <NA>          FALSE   left    NA     NA           1     15
+      83                 <NA>          FALSE center    NA     NA           1     15
+      84                 <NA>          FALSE center    NA     NA           1     15
+      85                 <NA>          FALSE center    NA     NA           1     15
       86                 <NA>          FALSE center    NA     NA           1     15
       87                 <NA>          FALSE center    NA     NA           1     15
       88                 <NA>          FALSE center    NA     NA           1     15
-      89                 <NA>          FALSE center    NA     NA           1     15
-      90                 <NA>          FALSE center    NA     NA           1     15
-      91                 <NA>          FALSE center    NA     NA           1     15
-      92                 <NA>          FALSE   left    NA     NA           1     16
+      89                 <NA>          FALSE   left    NA     NA           1     16
+      90                 <NA>          FALSE center    NA     NA           1     16
+      91                 <NA>          FALSE center    NA     NA           1     16
+      92                 <NA>          FALSE center    NA     NA           1     16
       93                 <NA>          FALSE center    NA     NA           1     16
       94                 <NA>          FALSE center    NA     NA           1     16
       95                 <NA>          FALSE center    NA     NA           1     16
-      96                 <NA>          FALSE center    NA     NA           1     16
-      97                 <NA>          FALSE center    NA     NA           1     16
-      98                 <NA>          FALSE center    NA     NA           1     16
-      99                 <NA>          FALSE   left    NA     NA           1     17
+      96                 <NA>          FALSE   left    NA     NA           1     17
+      97                 <NA>          FALSE center    NA     NA           1     17
+      98                 <NA>          FALSE center    NA     NA           1     17
+      99                 <NA>          FALSE center    NA     NA           1     17
       100                <NA>          FALSE center    NA     NA           1     17
       101                <NA>          FALSE center    NA     NA           1     17
       102                <NA>          FALSE center    NA     NA           1     17
-      103                <NA>          FALSE center    NA     NA           1     17
-      104                <NA>          FALSE center    NA     NA           1     17
-      105                <NA>          FALSE center    NA     NA           1     17
-      106                <NA>          FALSE   left    NA     NA           1     18
+      103                <NA>          FALSE   left    NA     NA           1     18
+      104                <NA>          FALSE center    NA     NA           1     18
+      105                <NA>          FALSE center    NA     NA           1     18
+      106                <NA>          FALSE center    NA     NA           1     18
       107                <NA>          FALSE center    NA     NA           1     18
       108                <NA>          FALSE center    NA     NA           1     18
       109                <NA>          FALSE center    NA     NA           1     18
-      110                <NA>          FALSE center    NA     NA           1     18
-      111                <NA>          FALSE center    NA     NA           1     18
-      112                <NA>          FALSE center    NA     NA           1     18
-      113                <NA>          FALSE   left    NA     NA           1     19
+      110                <NA>          FALSE   left    NA     NA           1     19
+      111                <NA>          FALSE center    NA     NA           1     19
+      112                <NA>          FALSE center    NA     NA           1     19
+      113                <NA>          FALSE center    NA     NA           1     19
       114                <NA>          FALSE center    NA     NA           1     19
       115                <NA>          FALSE center    NA     NA           1     19
       116                <NA>          FALSE center    NA     NA           1     19
-      117                <NA>          FALSE center    NA     NA           1     19
-      118                <NA>          FALSE center    NA     NA           1     19
-      119                <NA>          FALSE center    NA     NA           1     19
-      120                <NA>          FALSE   left    NA     NA           1     20
+      117                <NA>          FALSE   left    NA     NA           1     20
+      118                <NA>          FALSE center    NA     NA           1     20
+      119                <NA>          FALSE center    NA     NA           1     20
+      120                <NA>          FALSE center    NA     NA           1     20
       121                <NA>          FALSE center    NA     NA           1     20
       122                <NA>          FALSE center    NA     NA           1     20
       123                <NA>          FALSE center    NA     NA           1     20
-      124                <NA>          FALSE center    NA     NA           1     20
-      125                <NA>          FALSE center    NA     NA           1     20
-      126                <NA>          FALSE center    NA     NA           1     20
-      127                <NA>          FALSE   left    NA     NA           1     21
+      124                <NA>          FALSE   left    NA     NA           1     21
+      125                <NA>          FALSE center    NA     NA           1     21
+      126                <NA>          FALSE center    NA     NA           1     21
+      127                <NA>          FALSE center    NA     NA           1     21
       128                <NA>          FALSE center    NA     NA           1     21
       129                <NA>          FALSE center    NA     NA           1     21
       130                <NA>          FALSE center    NA     NA           1     21
-      131                <NA>          FALSE center    NA     NA           1     21
-      132                <NA>          FALSE center    NA     NA           1     21
-      133                <NA>          FALSE center    NA     NA           1     21
-      134                <NA>          FALSE   left    NA     NA           1     22
+      131                <NA>          FALSE   left    NA     NA           1     22
+      132                <NA>          FALSE center    NA     NA           1     22
+      133                <NA>          FALSE center    NA     NA           1     22
+      134                <NA>          FALSE center    NA     NA           1     22
       135                <NA>          FALSE center    NA     NA           1     22
       136                <NA>          FALSE center    NA     NA           1     22
       137                <NA>          FALSE center    NA     NA           1     22
-      138                <NA>          FALSE center    NA     NA           1     22
-      139                <NA>          FALSE center    NA     NA           1     22
-      140                <NA>          FALSE center    NA     NA           1     22
-      141                <NA>           TRUE   left    NA     NA           1     23
+      138                <NA>           TRUE   left    NA     NA           1     23
+      139                <NA>           TRUE center    NA     NA           1     23
+      140                <NA>           TRUE center    NA     NA           1     23
+      141                <NA>           TRUE center    NA     NA           1     23
       142                <NA>           TRUE center    NA     NA           1     23
       143                <NA>           TRUE center    NA     NA           1     23
       144                <NA>           TRUE center    NA     NA           1     23
-      145                <NA>           TRUE center    NA     NA           1     23
-      146                <NA>           TRUE center    NA     NA           1     23
-      147                <NA>           TRUE center    NA     NA           1     23
-      148                <NA>          FALSE   left    NA     NA           1     24
+      145                <NA>          FALSE   left    NA     NA           1     24
+      146                <NA>          FALSE center    NA     NA           1     24
+      147                <NA>          FALSE center    NA     NA           1     24
+      148                <NA>          FALSE center    NA     NA           1     24
       149                <NA>          FALSE center    NA     NA           1     24
       150                <NA>          FALSE center    NA     NA           1     24
       151                <NA>          FALSE center    NA     NA           1     24
-      152                <NA>          FALSE center    NA     NA           1     24
-      153                <NA>          FALSE center    NA     NA           1     24
-      154                <NA>          FALSE center    NA     NA           1     24
-      155                <NA>          FALSE   left    NA     NA           1     25
-      156                <NA>          FALSE   left    NA     NA           1     25
-      157                <NA>          FALSE   left    NA     NA           1     25
-      158                <NA>          FALSE   left    NA     NA           1     25
-      159                <NA>          FALSE center    NA     NA           1     25
-      160                <NA>          FALSE center    NA     NA           1     25
-      161                <NA>          FALSE center    NA     NA           1     25
-      162                <NA>          FALSE center    NA     NA           1     25
-      163                <NA>          FALSE center    NA     NA           1     25
-      164                <NA>          FALSE center    NA     NA           1     25
-      165                <NA>          FALSE   left    NA     NA           1     26
-      166                <NA>          FALSE center    NA     NA           1     26
-      167                <NA>          FALSE center    NA     NA           1     26
-      168                <NA>          FALSE center    NA     NA           1     26
-      169                <NA>          FALSE center    NA     NA           1     26
-      170                <NA>          FALSE center    NA     NA           1     26
-      171                <NA>          FALSE center    NA     NA           1     26
-      172                <NA>          FALSE   left    NA     NA           1     27
-      173                <NA>          FALSE center    NA     NA           1     27
-      174                <NA>          FALSE center    NA     NA           1     27
-      175                <NA>          FALSE center    NA     NA           1     27
-      176                <NA>          FALSE center    NA     NA           1     27
-      177                <NA>          FALSE center    NA     NA           1     27
-      178                <NA>          FALSE center    NA     NA           1     27
-      179                <NA>          FALSE   left    NA     NA           1     28
-      180                <NA>          FALSE center    NA     NA           1     28
-      181                <NA>          FALSE center    NA     NA           1     28
-      182                <NA>          FALSE center    NA     NA           1     28
-      183                <NA>          FALSE center    NA     NA           1     28
-      184                <NA>          FALSE center    NA     NA           1     28
-      185                <NA>          FALSE center    NA     NA           1     28
-      186                <NA>          FALSE   left    NA     NA           1     29
-      187                <NA>          FALSE center    NA     NA           1     29
-      188                <NA>          FALSE center    NA     NA           1     29
-      189                <NA>          FALSE center    NA     NA           1     29
-      190                <NA>          FALSE center    NA     NA           1     29
-      191                <NA>          FALSE center    NA     NA           1     29
-      192                <NA>          FALSE center    NA     NA           1     29
-      193                <NA>          FALSE   left    NA     NA           1     30
-      194                <NA>          FALSE center    NA     NA           1     30
-      195                <NA>          FALSE center    NA     NA           1     30
-      196                <NA>          FALSE center    NA     NA           1     30
-      197                <NA>          FALSE center    NA     NA           1     30
-      198                <NA>          FALSE center    NA     NA           1     30
-      199                <NA>          FALSE center    NA     NA           1     30
-      200                <NA>          FALSE   left    NA     NA           1     31
-      201                <NA>          FALSE center    NA     NA           1     31
-      202                <NA>          FALSE center    NA     NA           1     31
-      203                <NA>          FALSE center    NA     NA           1     31
-      204                <NA>          FALSE center    NA     NA           1     31
-      205                <NA>          FALSE center    NA     NA           1     31
-      206                <NA>          FALSE center    NA     NA           1     31
-      207                <NA>          FALSE   left    NA     NA           1     32
-      208                <NA>          FALSE center    NA     NA           1     32
-      209                <NA>          FALSE center    NA     NA           1     32
-      210                <NA>          FALSE center    NA     NA           1     32
-      211                <NA>          FALSE center    NA     NA           1     32
-      212                <NA>          FALSE center    NA     NA           1     32
-      213                <NA>          FALSE center    NA     NA           1     32
-      214                <NA>          FALSE   left    NA     NA           1     33
-      215                <NA>          FALSE center    NA     NA           1     33
-      216                <NA>          FALSE center    NA     NA           1     33
-      217                <NA>          FALSE center    NA     NA           1     33
-      218                <NA>          FALSE center    NA     NA           1     33
-      219                <NA>          FALSE center    NA     NA           1     33
-      220                <NA>          FALSE center    NA     NA           1     33
-      221                <NA>          FALSE   left    NA     NA           1     34
-      222                <NA>          FALSE center    NA     NA           1     34
-      223                <NA>          FALSE center    NA     NA           1     34
-      224                <NA>          FALSE center    NA     NA           1     34
-      225                <NA>          FALSE center    NA     NA           1     34
-      226                <NA>          FALSE center    NA     NA           1     34
-      227                <NA>          FALSE center    NA     NA           1     34
-      228                <NA>          FALSE   left    NA     NA           1     35
-      229                <NA>          FALSE center    NA     NA           1     35
-      230                <NA>          FALSE center    NA     NA           1     35
-      231                <NA>          FALSE center    NA     NA           1     35
-      232                <NA>          FALSE center    NA     NA           1     35
-      233                <NA>          FALSE center    NA     NA           1     35
-      234                <NA>          FALSE center    NA     NA           1     35
-      235                <NA>          FALSE   left    NA     NA           1     36
-      236                <NA>          FALSE center    NA     NA           1     36
-      237                <NA>          FALSE center    NA     NA           1     36
-      238                <NA>          FALSE center    NA     NA           1     36
-      239                <NA>          FALSE center    NA     NA           1     36
-      240                <NA>          FALSE center    NA     NA           1     36
-      241                <NA>          FALSE center    NA     NA           1     36
-      242                <NA>          FALSE   left    NA     NA           1     37
-      243                <NA>          FALSE center    NA     NA           1     37
-      244                <NA>          FALSE center    NA     NA           1     37
-      245                <NA>          FALSE center    NA     NA           1     37
-      246                <NA>          FALSE center    NA     NA           1     37
-      247                <NA>          FALSE center    NA     NA           1     37
-      248                <NA>          FALSE center    NA     NA           1     37
-      249                <NA>          FALSE   left    NA     NA           1     38
-      250                <NA>          FALSE center    NA     NA           1     38
-      251                <NA>          FALSE center    NA     NA           1     38
-      252                <NA>          FALSE center    NA     NA           1     38
-      253                <NA>          FALSE center    NA     NA           1     38
-      254                <NA>          FALSE center    NA     NA           1     38
-      255                <NA>          FALSE center    NA     NA           1     38
-      256                <NA>          FALSE   left    NA     NA           1     39
-      257                <NA>          FALSE center    NA     NA           1     39
-      258                <NA>          FALSE center    NA     NA           1     39
-      259                <NA>          FALSE center    NA     NA           1     39
-      260                <NA>          FALSE center    NA     NA           1     39
-      261                <NA>          FALSE center    NA     NA           1     39
-      262                <NA>          FALSE center    NA     NA           1     39
-      263                <NA>          FALSE   left    NA     NA           1     40
-      264                <NA>          FALSE   left    NA     NA           1     41
-      265                <NA>          FALSE   left    NA     NA           1     42
+      152                <NA>          FALSE   left    NA     NA           1     25
+      153                <NA>          FALSE center    NA     NA           1     25
+      154                <NA>          FALSE center    NA     NA           1     25
+      155                <NA>          FALSE center    NA     NA           1     25
+      156                <NA>          FALSE center    NA     NA           1     25
+      157                <NA>          FALSE center    NA     NA           1     25
+      158                <NA>          FALSE center    NA     NA           1     25
+      159                <NA>          FALSE   left    NA     NA           1     26
+      160                <NA>          FALSE center    NA     NA           1     26
+      161                <NA>          FALSE center    NA     NA           1     26
+      162                <NA>          FALSE center    NA     NA           1     26
+      163                <NA>          FALSE center    NA     NA           1     26
+      164                <NA>          FALSE center    NA     NA           1     26
+      165                <NA>          FALSE center    NA     NA           1     26
+      166                <NA>          FALSE   left    NA     NA           1     27
+      167                <NA>          FALSE center    NA     NA           1     27
+      168                <NA>          FALSE center    NA     NA           1     27
+      169                <NA>          FALSE center    NA     NA           1     27
+      170                <NA>          FALSE center    NA     NA           1     27
+      171                <NA>          FALSE center    NA     NA           1     27
+      172                <NA>          FALSE center    NA     NA           1     27
+      173                <NA>          FALSE   left    NA     NA           1     28
+      174                <NA>          FALSE center    NA     NA           1     28
+      175                <NA>          FALSE center    NA     NA           1     28
+      176                <NA>          FALSE center    NA     NA           1     28
+      177                <NA>          FALSE center    NA     NA           1     28
+      178                <NA>          FALSE center    NA     NA           1     28
+      179                <NA>          FALSE center    NA     NA           1     28
+      180                <NA>          FALSE   left    NA     NA           1     29
+      181                <NA>          FALSE center    NA     NA           1     29
+      182                <NA>          FALSE center    NA     NA           1     29
+      183                <NA>          FALSE center    NA     NA           1     29
+      184                <NA>          FALSE center    NA     NA           1     29
+      185                <NA>          FALSE center    NA     NA           1     29
+      186                <NA>          FALSE center    NA     NA           1     29
+      187                <NA>          FALSE   left    NA     NA           1     30
+      188                <NA>          FALSE center    NA     NA           1     30
+      189                <NA>          FALSE center    NA     NA           1     30
+      190                <NA>          FALSE center    NA     NA           1     30
+      191                <NA>          FALSE center    NA     NA           1     30
+      192                <NA>          FALSE center    NA     NA           1     30
+      193                <NA>          FALSE center    NA     NA           1     30
+      194                <NA>          FALSE   left    NA     NA           1     31
+      195                <NA>          FALSE center    NA     NA           1     31
+      196                <NA>          FALSE center    NA     NA           1     31
+      197                <NA>          FALSE center    NA     NA           1     31
+      198                <NA>          FALSE center    NA     NA           1     31
+      199                <NA>          FALSE center    NA     NA           1     31
+      200                <NA>          FALSE center    NA     NA           1     31
+      201                <NA>          FALSE   left    NA     NA           1     32
+      202                <NA>          FALSE center    NA     NA           1     32
+      203                <NA>          FALSE center    NA     NA           1     32
+      204                <NA>          FALSE center    NA     NA           1     32
+      205                <NA>          FALSE center    NA     NA           1     32
+      206                <NA>          FALSE center    NA     NA           1     32
+      207                <NA>          FALSE center    NA     NA           1     32
+      208                <NA>          FALSE   left    NA     NA           1     33
+      209                <NA>          FALSE center    NA     NA           1     33
+      210                <NA>          FALSE center    NA     NA           1     33
+      211                <NA>          FALSE center    NA     NA           1     33
+      212                <NA>          FALSE center    NA     NA           1     33
+      213                <NA>          FALSE center    NA     NA           1     33
+      214                <NA>          FALSE center    NA     NA           1     33
+      215                <NA>          FALSE   left    NA     NA           1     34
+      216                <NA>          FALSE center    NA     NA           1     34
+      217                <NA>          FALSE center    NA     NA           1     34
+      218                <NA>          FALSE center    NA     NA           1     34
+      219                <NA>          FALSE center    NA     NA           1     34
+      220                <NA>          FALSE center    NA     NA           1     34
+      221                <NA>          FALSE center    NA     NA           1     34
+      222                <NA>          FALSE   left    NA     NA           1     35
+      223                <NA>          FALSE center    NA     NA           1     35
+      224                <NA>          FALSE center    NA     NA           1     35
+      225                <NA>          FALSE center    NA     NA           1     35
+      226                <NA>          FALSE center    NA     NA           1     35
+      227                <NA>          FALSE center    NA     NA           1     35
+      228                <NA>          FALSE center    NA     NA           1     35
+      229                <NA>          FALSE   left    NA     NA           1     36
+      230                <NA>          FALSE center    NA     NA           1     36
+      231                <NA>          FALSE center    NA     NA           1     36
+      232                <NA>          FALSE center    NA     NA           1     36
+      233                <NA>          FALSE center    NA     NA           1     36
+      234                <NA>          FALSE center    NA     NA           1     36
+      235                <NA>          FALSE center    NA     NA           1     36
+      236                <NA>          FALSE   left    NA     NA           1     37
+      237                <NA>          FALSE center    NA     NA           1     37
+      238                <NA>          FALSE center    NA     NA           1     37
+      239                <NA>          FALSE center    NA     NA           1     37
+      240                <NA>          FALSE center    NA     NA           1     37
+      241                <NA>          FALSE center    NA     NA           1     37
+      242                <NA>          FALSE center    NA     NA           1     37
+      243                <NA>          FALSE   left    NA     NA           1     38
+      244                <NA>          FALSE center    NA     NA           1     38
+      245                <NA>          FALSE center    NA     NA           1     38
+      246                <NA>          FALSE center    NA     NA           1     38
+      247                <NA>          FALSE center    NA     NA           1     38
+      248                <NA>          FALSE center    NA     NA           1     38
+      249                <NA>          FALSE center    NA     NA           1     38
+      250                <NA>          FALSE   left    NA     NA           1     39
+      251                <NA>          FALSE center    NA     NA           1     39
+      252                <NA>          FALSE center    NA     NA           1     39
+      253                <NA>          FALSE center    NA     NA           1     39
+      254                <NA>          FALSE center    NA     NA           1     39
+      255                <NA>          FALSE center    NA     NA           1     39
+      256                <NA>          FALSE center    NA     NA           1     39
+      257                <NA>          FALSE   left    NA     NA           1     40
+      258                <NA>          FALSE   left    NA     NA           1     41
+      259                <NA>          FALSE   left    NA     NA           1     42
           cell_id col_span row_span is_header table_stylename
       1         1        7        1      TRUE            <NA>
       2         1        7        1      TRUE            <NA>
@@ -51577,238 +51541,232 @@
       31        6        1        1     FALSE            <NA>
       32        7        1        1     FALSE            <NA>
       33        1        1        1     FALSE            <NA>
-      34        1        1        1     FALSE            <NA>
-      35        1        1        1     FALSE            <NA>
-      36        1        1        1     FALSE            <NA>
-      37        2        1        1     FALSE            <NA>
-      38        3        1        1     FALSE            <NA>
-      39        4        1        1     FALSE            <NA>
-      40        5        1        1     FALSE            <NA>
-      41        6        1        1     FALSE            <NA>
-      42        7        1        1     FALSE            <NA>
-      43        1        1        1     FALSE            <NA>
-      44        2        1        1     FALSE            <NA>
-      45        3        1        1     FALSE            <NA>
-      46        4        1        1     FALSE            <NA>
-      47        5        1        1     FALSE            <NA>
-      48        6        1        1     FALSE            <NA>
-      49        7        1        1     FALSE            <NA>
-      50        1        1        1     FALSE            <NA>
-      51        2        1        1     FALSE            <NA>
-      52        3        1        1     FALSE            <NA>
-      53        4        1        1     FALSE            <NA>
-      54        5        1        1     FALSE            <NA>
-      55        6        1        1     FALSE            <NA>
-      56        7        1        1     FALSE            <NA>
-      57        1        1        1     FALSE            <NA>
-      58        2        1        1     FALSE            <NA>
-      59        3        1        1     FALSE            <NA>
-      60        4        1        1     FALSE            <NA>
-      61        5        1        1     FALSE            <NA>
-      62        6        1        1     FALSE            <NA>
-      63        7        1        1     FALSE            <NA>
-      64        1        1        1     FALSE            <NA>
-      65        2        1        1     FALSE            <NA>
-      66        3        1        1     FALSE            <NA>
-      67        4        1        1     FALSE            <NA>
-      68        5        1        1     FALSE            <NA>
-      69        6        1        1     FALSE            <NA>
-      70        7        1        1     FALSE            <NA>
-      71        1        1        1     FALSE            <NA>
-      72        2        1        1     FALSE            <NA>
-      73        3        1        1     FALSE            <NA>
-      74        4        1        1     FALSE            <NA>
-      75        5        1        1     FALSE            <NA>
-      76        6        1        1     FALSE            <NA>
-      77        7        1        1     FALSE            <NA>
-      78        1        1        1     FALSE            <NA>
-      79        2        1        1     FALSE            <NA>
-      80        3        1        1     FALSE            <NA>
-      81        4        1        1     FALSE            <NA>
-      82        5        1        1     FALSE            <NA>
-      83        6        1        1     FALSE            <NA>
-      84        7        1        1     FALSE            <NA>
-      85        1        1        1     FALSE            <NA>
-      86        2        1        1     FALSE            <NA>
-      87        3        1        1     FALSE            <NA>
-      88        4        1        1     FALSE            <NA>
-      89        5        1        1     FALSE            <NA>
-      90        6        1        1     FALSE            <NA>
-      91        7        1        1     FALSE            <NA>
-      92        1        1        1     FALSE            <NA>
-      93        2        1        1     FALSE            <NA>
-      94        3        1        1     FALSE            <NA>
-      95        4        1        1     FALSE            <NA>
-      96        5        1        1     FALSE            <NA>
-      97        6        1        1     FALSE            <NA>
-      98        7        1        1     FALSE            <NA>
-      99        1        1        1     FALSE            <NA>
-      100       2        1        1     FALSE            <NA>
-      101       3        1        1     FALSE            <NA>
-      102       4        1        1     FALSE            <NA>
-      103       5        1        1     FALSE            <NA>
-      104       6        1        1     FALSE            <NA>
-      105       7        1        1     FALSE            <NA>
-      106       1        1        1     FALSE            <NA>
-      107       2        1        1     FALSE            <NA>
-      108       3        1        1     FALSE            <NA>
-      109       4        1        1     FALSE            <NA>
-      110       5        1        1     FALSE            <NA>
-      111       6        1        1     FALSE            <NA>
-      112       7        1        1     FALSE            <NA>
-      113       1        1        1     FALSE            <NA>
-      114       2        1        1     FALSE            <NA>
-      115       3        1        1     FALSE            <NA>
-      116       4        1        1     FALSE            <NA>
-      117       5        1        1     FALSE            <NA>
-      118       6        1        1     FALSE            <NA>
-      119       7        1        1     FALSE            <NA>
-      120       1        1        1     FALSE            <NA>
-      121       2        1        1     FALSE            <NA>
-      122       3        1        1     FALSE            <NA>
-      123       4        1        1     FALSE            <NA>
-      124       5        1        1     FALSE            <NA>
-      125       6        1        1     FALSE            <NA>
-      126       7        1        1     FALSE            <NA>
-      127       1        1        1     FALSE            <NA>
-      128       2        1        1     FALSE            <NA>
-      129       3        1        1     FALSE            <NA>
-      130       4        1        1     FALSE            <NA>
-      131       5        1        1     FALSE            <NA>
-      132       6        1        1     FALSE            <NA>
-      133       7        1        1     FALSE            <NA>
-      134       1        1        1     FALSE            <NA>
-      135       2        1        1     FALSE            <NA>
-      136       3        1        1     FALSE            <NA>
-      137       4        1        1     FALSE            <NA>
-      138       5        1        1     FALSE            <NA>
-      139       6        1        1     FALSE            <NA>
-      140       7        1        1     FALSE            <NA>
-      141       1        1        1     FALSE            <NA>
-      142       2        1        1     FALSE            <NA>
-      143       3        1        1     FALSE            <NA>
-      144       4        1        1     FALSE            <NA>
-      145       5        1        1     FALSE            <NA>
-      146       6        1        1     FALSE            <NA>
-      147       7        1        1     FALSE            <NA>
-      148       1        1        1     FALSE            <NA>
-      149       2        1        1     FALSE            <NA>
-      150       3        1        1     FALSE            <NA>
-      151       4        1        1     FALSE            <NA>
-      152       5        1        1     FALSE            <NA>
-      153       6        1        1     FALSE            <NA>
-      154       7        1        1     FALSE            <NA>
-      155       1        1        1     FALSE            <NA>
-      156       1        1        1     FALSE            <NA>
-      157       1        1        1     FALSE            <NA>
-      158       1        1        1     FALSE            <NA>
-      159       2        1        1     FALSE            <NA>
-      160       3        1        1     FALSE            <NA>
-      161       4        1        1     FALSE            <NA>
-      162       5        1        1     FALSE            <NA>
-      163       6        1        1     FALSE            <NA>
-      164       7        1        1     FALSE            <NA>
-      165       1        1        1     FALSE            <NA>
-      166       2        1        1     FALSE            <NA>
-      167       3        1        1     FALSE            <NA>
-      168       4        1        1     FALSE            <NA>
-      169       5        1        1     FALSE            <NA>
-      170       6        1        1     FALSE            <NA>
-      171       7        1        1     FALSE            <NA>
-      172       1        1        1     FALSE            <NA>
-      173       2        1        1     FALSE            <NA>
-      174       3        1        1     FALSE            <NA>
-      175       4        1        1     FALSE            <NA>
-      176       5        1        1     FALSE            <NA>
-      177       6        1        1     FALSE            <NA>
-      178       7        1        1     FALSE            <NA>
-      179       1        1        1     FALSE            <NA>
-      180       2        1        1     FALSE            <NA>
-      181       3        1        1     FALSE            <NA>
-      182       4        1        1     FALSE            <NA>
-      183       5        1        1     FALSE            <NA>
-      184       6        1        1     FALSE            <NA>
-      185       7        1        1     FALSE            <NA>
-      186       1        1        1     FALSE            <NA>
-      187       2        1        1     FALSE            <NA>
-      188       3        1        1     FALSE            <NA>
-      189       4        1        1     FALSE            <NA>
-      190       5        1        1     FALSE            <NA>
-      191       6        1        1     FALSE            <NA>
-      192       7        1        1     FALSE            <NA>
-      193       1        1        1     FALSE            <NA>
-      194       2        1        1     FALSE            <NA>
-      195       3        1        1     FALSE            <NA>
-      196       4        1        1     FALSE            <NA>
-      197       5        1        1     FALSE            <NA>
-      198       6        1        1     FALSE            <NA>
-      199       7        1        1     FALSE            <NA>
-      200       1        1        1     FALSE            <NA>
-      201       2        1        1     FALSE            <NA>
-      202       3        1        1     FALSE            <NA>
-      203       4        1        1     FALSE            <NA>
-      204       5        1        1     FALSE            <NA>
-      205       6        1        1     FALSE            <NA>
-      206       7        1        1     FALSE            <NA>
-      207       1        1        1     FALSE            <NA>
-      208       2        1        1     FALSE            <NA>
-      209       3        1        1     FALSE            <NA>
-      210       4        1        1     FALSE            <NA>
-      211       5        1        1     FALSE            <NA>
-      212       6        1        1     FALSE            <NA>
-      213       7        1        1     FALSE            <NA>
-      214       1        1        1     FALSE            <NA>
-      215       2        1        1     FALSE            <NA>
-      216       3        1        1     FALSE            <NA>
-      217       4        1        1     FALSE            <NA>
-      218       5        1        1     FALSE            <NA>
-      219       6        1        1     FALSE            <NA>
-      220       7        1        1     FALSE            <NA>
-      221       1        1        1     FALSE            <NA>
-      222       2        1        1     FALSE            <NA>
-      223       3        1        1     FALSE            <NA>
-      224       4        1        1     FALSE            <NA>
-      225       5        1        1     FALSE            <NA>
-      226       6        1        1     FALSE            <NA>
-      227       7        1        1     FALSE            <NA>
-      228       1        1        1     FALSE            <NA>
-      229       2        1        1     FALSE            <NA>
-      230       3        1        1     FALSE            <NA>
-      231       4        1        1     FALSE            <NA>
-      232       5        1        1     FALSE            <NA>
-      233       6        1        1     FALSE            <NA>
-      234       7        1        1     FALSE            <NA>
-      235       1        1        1     FALSE            <NA>
-      236       2        1        1     FALSE            <NA>
-      237       3        1        1     FALSE            <NA>
-      238       4        1        1     FALSE            <NA>
-      239       5        1        1     FALSE            <NA>
-      240       6        1        1     FALSE            <NA>
-      241       7        1        1     FALSE            <NA>
-      242       1        1        1     FALSE            <NA>
-      243       2        1        1     FALSE            <NA>
-      244       3        1        1     FALSE            <NA>
-      245       4        1        1     FALSE            <NA>
-      246       5        1        1     FALSE            <NA>
-      247       6        1        1     FALSE            <NA>
-      248       7        1        1     FALSE            <NA>
-      249       1        1        1     FALSE            <NA>
-      250       2        1        1     FALSE            <NA>
-      251       3        1        1     FALSE            <NA>
-      252       4        1        1     FALSE            <NA>
-      253       5        1        1     FALSE            <NA>
-      254       6        1        1     FALSE            <NA>
-      255       7        1        1     FALSE            <NA>
-      256       1        1        1     FALSE            <NA>
-      257       2        1        1     FALSE            <NA>
-      258       3        1        1     FALSE            <NA>
-      259       4        1        1     FALSE            <NA>
-      260       5        1        1     FALSE            <NA>
-      261       6        1        1     FALSE            <NA>
-      262       7        1        1     FALSE            <NA>
-      263       1        7        1     FALSE            <NA>
-      264       1        7        1     FALSE            <NA>
-      265       1        7        1     FALSE            <NA>
+      34        2        1        1     FALSE            <NA>
+      35        3        1        1     FALSE            <NA>
+      36        4        1        1     FALSE            <NA>
+      37        5        1        1     FALSE            <NA>
+      38        6        1        1     FALSE            <NA>
+      39        7        1        1     FALSE            <NA>
+      40        1        1        1     FALSE            <NA>
+      41        2        1        1     FALSE            <NA>
+      42        3        1        1     FALSE            <NA>
+      43        4        1        1     FALSE            <NA>
+      44        5        1        1     FALSE            <NA>
+      45        6        1        1     FALSE            <NA>
+      46        7        1        1     FALSE            <NA>
+      47        1        1        1     FALSE            <NA>
+      48        2        1        1     FALSE            <NA>
+      49        3        1        1     FALSE            <NA>
+      50        4        1        1     FALSE            <NA>
+      51        5        1        1     FALSE            <NA>
+      52        6        1        1     FALSE            <NA>
+      53        7        1        1     FALSE            <NA>
+      54        1        1        1     FALSE            <NA>
+      55        2        1        1     FALSE            <NA>
+      56        3        1        1     FALSE            <NA>
+      57        4        1        1     FALSE            <NA>
+      58        5        1        1     FALSE            <NA>
+      59        6        1        1     FALSE            <NA>
+      60        7        1        1     FALSE            <NA>
+      61        1        1        1     FALSE            <NA>
+      62        2        1        1     FALSE            <NA>
+      63        3        1        1     FALSE            <NA>
+      64        4        1        1     FALSE            <NA>
+      65        5        1        1     FALSE            <NA>
+      66        6        1        1     FALSE            <NA>
+      67        7        1        1     FALSE            <NA>
+      68        1        1        1     FALSE            <NA>
+      69        2        1        1     FALSE            <NA>
+      70        3        1        1     FALSE            <NA>
+      71        4        1        1     FALSE            <NA>
+      72        5        1        1     FALSE            <NA>
+      73        6        1        1     FALSE            <NA>
+      74        7        1        1     FALSE            <NA>
+      75        1        1        1     FALSE            <NA>
+      76        2        1        1     FALSE            <NA>
+      77        3        1        1     FALSE            <NA>
+      78        4        1        1     FALSE            <NA>
+      79        5        1        1     FALSE            <NA>
+      80        6        1        1     FALSE            <NA>
+      81        7        1        1     FALSE            <NA>
+      82        1        1        1     FALSE            <NA>
+      83        2        1        1     FALSE            <NA>
+      84        3        1        1     FALSE            <NA>
+      85        4        1        1     FALSE            <NA>
+      86        5        1        1     FALSE            <NA>
+      87        6        1        1     FALSE            <NA>
+      88        7        1        1     FALSE            <NA>
+      89        1        1        1     FALSE            <NA>
+      90        2        1        1     FALSE            <NA>
+      91        3        1        1     FALSE            <NA>
+      92        4        1        1     FALSE            <NA>
+      93        5        1        1     FALSE            <NA>
+      94        6        1        1     FALSE            <NA>
+      95        7        1        1     FALSE            <NA>
+      96        1        1        1     FALSE            <NA>
+      97        2        1        1     FALSE            <NA>
+      98        3        1        1     FALSE            <NA>
+      99        4        1        1     FALSE            <NA>
+      100       5        1        1     FALSE            <NA>
+      101       6        1        1     FALSE            <NA>
+      102       7        1        1     FALSE            <NA>
+      103       1        1        1     FALSE            <NA>
+      104       2        1        1     FALSE            <NA>
+      105       3        1        1     FALSE            <NA>
+      106       4        1        1     FALSE            <NA>
+      107       5        1        1     FALSE            <NA>
+      108       6        1        1     FALSE            <NA>
+      109       7        1        1     FALSE            <NA>
+      110       1        1        1     FALSE            <NA>
+      111       2        1        1     FALSE            <NA>
+      112       3        1        1     FALSE            <NA>
+      113       4        1        1     FALSE            <NA>
+      114       5        1        1     FALSE            <NA>
+      115       6        1        1     FALSE            <NA>
+      116       7        1        1     FALSE            <NA>
+      117       1        1        1     FALSE            <NA>
+      118       2        1        1     FALSE            <NA>
+      119       3        1        1     FALSE            <NA>
+      120       4        1        1     FALSE            <NA>
+      121       5        1        1     FALSE            <NA>
+      122       6        1        1     FALSE            <NA>
+      123       7        1        1     FALSE            <NA>
+      124       1        1        1     FALSE            <NA>
+      125       2        1        1     FALSE            <NA>
+      126       3        1        1     FALSE            <NA>
+      127       4        1        1     FALSE            <NA>
+      128       5        1        1     FALSE            <NA>
+      129       6        1        1     FALSE            <NA>
+      130       7        1        1     FALSE            <NA>
+      131       1        1        1     FALSE            <NA>
+      132       2        1        1     FALSE            <NA>
+      133       3        1        1     FALSE            <NA>
+      134       4        1        1     FALSE            <NA>
+      135       5        1        1     FALSE            <NA>
+      136       6        1        1     FALSE            <NA>
+      137       7        1        1     FALSE            <NA>
+      138       1        1        1     FALSE            <NA>
+      139       2        1        1     FALSE            <NA>
+      140       3        1        1     FALSE            <NA>
+      141       4        1        1     FALSE            <NA>
+      142       5        1        1     FALSE            <NA>
+      143       6        1        1     FALSE            <NA>
+      144       7        1        1     FALSE            <NA>
+      145       1        1        1     FALSE            <NA>
+      146       2        1        1     FALSE            <NA>
+      147       3        1        1     FALSE            <NA>
+      148       4        1        1     FALSE            <NA>
+      149       5        1        1     FALSE            <NA>
+      150       6        1        1     FALSE            <NA>
+      151       7        1        1     FALSE            <NA>
+      152       1        1        1     FALSE            <NA>
+      153       2        1        1     FALSE            <NA>
+      154       3        1        1     FALSE            <NA>
+      155       4        1        1     FALSE            <NA>
+      156       5        1        1     FALSE            <NA>
+      157       6        1        1     FALSE            <NA>
+      158       7        1        1     FALSE            <NA>
+      159       1        1        1     FALSE            <NA>
+      160       2        1        1     FALSE            <NA>
+      161       3        1        1     FALSE            <NA>
+      162       4        1        1     FALSE            <NA>
+      163       5        1        1     FALSE            <NA>
+      164       6        1        1     FALSE            <NA>
+      165       7        1        1     FALSE            <NA>
+      166       1        1        1     FALSE            <NA>
+      167       2        1        1     FALSE            <NA>
+      168       3        1        1     FALSE            <NA>
+      169       4        1        1     FALSE            <NA>
+      170       5        1        1     FALSE            <NA>
+      171       6        1        1     FALSE            <NA>
+      172       7        1        1     FALSE            <NA>
+      173       1        1        1     FALSE            <NA>
+      174       2        1        1     FALSE            <NA>
+      175       3        1        1     FALSE            <NA>
+      176       4        1        1     FALSE            <NA>
+      177       5        1        1     FALSE            <NA>
+      178       6        1        1     FALSE            <NA>
+      179       7        1        1     FALSE            <NA>
+      180       1        1        1     FALSE            <NA>
+      181       2        1        1     FALSE            <NA>
+      182       3        1        1     FALSE            <NA>
+      183       4        1        1     FALSE            <NA>
+      184       5        1        1     FALSE            <NA>
+      185       6        1        1     FALSE            <NA>
+      186       7        1        1     FALSE            <NA>
+      187       1        1        1     FALSE            <NA>
+      188       2        1        1     FALSE            <NA>
+      189       3        1        1     FALSE            <NA>
+      190       4        1        1     FALSE            <NA>
+      191       5        1        1     FALSE            <NA>
+      192       6        1        1     FALSE            <NA>
+      193       7        1        1     FALSE            <NA>
+      194       1        1        1     FALSE            <NA>
+      195       2        1        1     FALSE            <NA>
+      196       3        1        1     FALSE            <NA>
+      197       4        1        1     FALSE            <NA>
+      198       5        1        1     FALSE            <NA>
+      199       6        1        1     FALSE            <NA>
+      200       7        1        1     FALSE            <NA>
+      201       1        1        1     FALSE            <NA>
+      202       2        1        1     FALSE            <NA>
+      203       3        1        1     FALSE            <NA>
+      204       4        1        1     FALSE            <NA>
+      205       5        1        1     FALSE            <NA>
+      206       6        1        1     FALSE            <NA>
+      207       7        1        1     FALSE            <NA>
+      208       1        1        1     FALSE            <NA>
+      209       2        1        1     FALSE            <NA>
+      210       3        1        1     FALSE            <NA>
+      211       4        1        1     FALSE            <NA>
+      212       5        1        1     FALSE            <NA>
+      213       6        1        1     FALSE            <NA>
+      214       7        1        1     FALSE            <NA>
+      215       1        1        1     FALSE            <NA>
+      216       2        1        1     FALSE            <NA>
+      217       3        1        1     FALSE            <NA>
+      218       4        1        1     FALSE            <NA>
+      219       5        1        1     FALSE            <NA>
+      220       6        1        1     FALSE            <NA>
+      221       7        1        1     FALSE            <NA>
+      222       1        1        1     FALSE            <NA>
+      223       2        1        1     FALSE            <NA>
+      224       3        1        1     FALSE            <NA>
+      225       4        1        1     FALSE            <NA>
+      226       5        1        1     FALSE            <NA>
+      227       6        1        1     FALSE            <NA>
+      228       7        1        1     FALSE            <NA>
+      229       1        1        1     FALSE            <NA>
+      230       2        1        1     FALSE            <NA>
+      231       3        1        1     FALSE            <NA>
+      232       4        1        1     FALSE            <NA>
+      233       5        1        1     FALSE            <NA>
+      234       6        1        1     FALSE            <NA>
+      235       7        1        1     FALSE            <NA>
+      236       1        1        1     FALSE            <NA>
+      237       2        1        1     FALSE            <NA>
+      238       3        1        1     FALSE            <NA>
+      239       4        1        1     FALSE            <NA>
+      240       5        1        1     FALSE            <NA>
+      241       6        1        1     FALSE            <NA>
+      242       7        1        1     FALSE            <NA>
+      243       1        1        1     FALSE            <NA>
+      244       2        1        1     FALSE            <NA>
+      245       3        1        1     FALSE            <NA>
+      246       4        1        1     FALSE            <NA>
+      247       5        1        1     FALSE            <NA>
+      248       6        1        1     FALSE            <NA>
+      249       7        1        1     FALSE            <NA>
+      250       1        1        1     FALSE            <NA>
+      251       2        1        1     FALSE            <NA>
+      252       3        1        1     FALSE            <NA>
+      253       4        1        1     FALSE            <NA>
+      254       5        1        1     FALSE            <NA>
+      255       6        1        1     FALSE            <NA>
+      256       7        1        1     FALSE            <NA>
+      257       1        7        1     FALSE            <NA>
+      258       1        7        1     FALSE            <NA>
+      259       1        7        1     FALSE            <NA>
 
 ---
 
@@ -53451,466 +53409,460 @@
       31         29   table cell         1                 1
       32         30   table cell         1                 1
       33         31   table cell         1                 1
-      34         31   table cell         2                 1
-      35         31   table cell         3                 1
-      36         31   table cell         4                 1
-      37         32   table cell         1                 1
-      38         33   table cell         1                 1
-      39         34   table cell         1                 1
-      40         35   table cell         1                 1
-      41         36   table cell         1                 1
-      42         37   table cell         1                 1
-      43         38   table cell         1                 1
-      44         39   table cell         1                 1
-      45         40   table cell         1                 1
-      46         41   table cell         1                 1
-      47         42   table cell         1                 1
-      48         43   table cell         1                 1
-      49         44   table cell         1                 1
-      50         45   table cell         1                 1
-      51         46   table cell         1                 1
-      52         47   table cell         1                 1
-      53         48   table cell         1                 1
-      54         49   table cell         1                 1
-      55         50   table cell         1                 1
-      56         51   table cell         1                 1
-      57         52   table cell         1                 1
-      58         53   table cell         1                 1
-      59         54   table cell         1                 1
-      60         55   table cell         1                 1
-      61         56   table cell         1                 1
-      62         57   table cell         1                 1
-      63         58   table cell         1                 1
-      64         59   table cell         1                 1
-      65         60   table cell         1                 1
-      66         61   table cell         1                 1
-      67         62   table cell         1                 1
-      68         63   table cell         1                 1
-      69         64   table cell         1                 1
-      70         65   table cell         1                 1
-      71         66   table cell         1                 1
-      72         67   table cell         1                 1
-      73         68   table cell         1                 1
-      74         69   table cell         1                 1
-      75         70   table cell         1                 1
-      76         71   table cell         1                 1
-      77         72   table cell         1                 1
-      78         73   table cell         1                 1
-      79         74   table cell         1                 1
-      80         75   table cell         1                 1
-      81         76   table cell         1                 1
-      82         77   table cell         1                 1
-      83         78   table cell         1                 1
-      84         79   table cell         1                 1
-      85         80   table cell         1                 1
-      86         81   table cell         1                 1
-      87         82   table cell         1                 1
-      88         83   table cell         1                 1
-      89         84   table cell         1                 1
-      90         85   table cell         1                 1
-      91         86   table cell         1                 1
-      92         87   table cell         1                 1
-      93         88   table cell         1                 1
-      94         89   table cell         1                 1
-      95         90   table cell         1                 1
-      96         91   table cell         1                 1
-      97         92   table cell         1                 1
-      98         93   table cell         1                 1
-      99         94   table cell         1                 1
-      100        95   table cell         1                 1
-      101        96   table cell         1                 1
-      102        97   table cell         1                 1
-      103        98   table cell         1                 1
-      104        99   table cell         1                 1
-      105       100   table cell         1                 1
-      106       101   table cell         1                 1
-      107       102   table cell         1                 1
-      108       103   table cell         1                 1
-      109       104   table cell         1                 1
-      110       105   table cell         1                 1
-      111       106   table cell         1                 1
-      112       107   table cell         1                 1
-      113       108   table cell         1                 1
-      114       109   table cell         1                 1
-      115       110   table cell         1                 1
-      116       111   table cell         1                 1
-      117       112   table cell         1                 1
-      118       113   table cell         1                 1
-      119       114   table cell         1                 1
-      120       115   table cell         1                 1
-      121       116   table cell         1                 1
-      122       117   table cell         1                 1
-      123       118   table cell         1                 1
-      124       119   table cell         1                 1
-      125       120   table cell         1                 1
-      126       121   table cell         1                 1
-      127       122   table cell         1                 1
-      128       123   table cell         1                 1
-      129       124   table cell         1                 1
-      130       125   table cell         1                 1
-      131       126   table cell         1                 1
-      132       127   table cell         1                 1
-      133       128   table cell         1                 1
-      134       129   table cell         1                 1
-      135       130   table cell         1                 1
-      136       131   table cell         1                 1
-      137       132   table cell         1                 1
-      138       133   table cell         1                 1
-      139       134   table cell         1                 1
-      140       135   table cell         1                 1
-      141       136   table cell         1                 1
-      142       137   table cell         1                 1
-      143       138   table cell         1                 1
-      144       139   table cell         1                 1
-      145       140   table cell         1                 1
-      146       141   table cell         1                 1
-      147       142   table cell         1                 1
-      148       143   table cell         1                 1
-      149       144   table cell         1                 1
-      150       145   table cell         1                 1
-      151       146   table cell         1                 1
-      152       147   table cell         1                 1
-      153       148   table cell         1                 1
-      154       149   table cell         1                 1
-      155       150   table cell         1                 1
-      156       150   table cell         2                 1
-      157       150   table cell         3                 1
-      158       150   table cell         4                 1
-      159       151   table cell         1                 1
-      160       152   table cell         1                 1
-      161       153   table cell         1                 1
-      162       154   table cell         1                 1
-      163       155   table cell         1                 1
-      164       156   table cell         1                 1
-      165       157   table cell         1                 1
-      166       158   table cell         1                 1
-      167       159   table cell         1                 1
-      168       160   table cell         1                 1
-      169       161   table cell         1                 1
-      170       162   table cell         1                 1
-      171       163   table cell         1                 1
-      172       164   table cell         1                 1
-      173       165   table cell         1                 1
-      174       166   table cell         1                 1
-      175       167   table cell         1                 1
-      176       168   table cell         1                 1
-      177       169   table cell         1                 1
-      178       170   table cell         1                 1
-      179       171   table cell         1                 1
-      180       172   table cell         1                 1
-      181       173   table cell         1                 1
-      182       174   table cell         1                 1
-      183       175   table cell         1                 1
-      184       176   table cell         1                 1
-      185       177   table cell         1                 1
-      186       178   table cell         1                 1
-      187       179   table cell         1                 1
-      188       180   table cell         1                 1
-      189       181   table cell         1                 1
-      190       182   table cell         1                 1
-      191       183   table cell         1                 1
-      192       184   table cell         1                 1
-      193       185   table cell         1                 1
-      194       186   table cell         1                 1
-      195       187   table cell         1                 1
-      196       188   table cell         1                 1
-      197       189   table cell         1                 1
-      198       190   table cell         1                 1
-      199       191   table cell         1                 1
-      200       192   table cell         1                 1
-      201       193   table cell         1                 1
-      202       194   table cell         1                 1
-      203       195   table cell         1                 1
-      204       196   table cell         1                 1
-      205       197   table cell         1                 1
-      206       198   table cell         1                 1
-      207       199   table cell         1                 1
-      208       200   table cell         1                 1
-      209       201   table cell         1                 1
-      210       202   table cell         1                 1
-      211       203   table cell         1                 1
-      212       204   table cell         1                 1
-      213       205   table cell         1                 1
-      214       206   table cell         1                 1
-      215       207   table cell         1                 1
-      216       208   table cell         1                 1
-      217       209   table cell         1                 1
-      218       210   table cell         1                 1
-      219       211   table cell         1                 1
-      220       212   table cell         1                 1
-      221       213   table cell         1                 1
-      222       214   table cell         1                 1
-      223       215   table cell         1                 1
-      224       216   table cell         1                 1
-      225       217   table cell         1                 1
-      226       218   table cell         1                 1
-      227       219   table cell         1                 1
-      228       220   table cell         1                 1
-      229       221   table cell         1                 1
-      230       222   table cell         1                 1
-      231       223   table cell         1                 1
-      232       224   table cell         1                 1
-      233       225   table cell         1                 1
-      234       226   table cell         1                 1
-      235       227   table cell         1                 1
-      236       228   table cell         1                 1
-      237       229   table cell         1                 1
-      238       230   table cell         1                 1
-      239       231   table cell         1                 1
-      240       232   table cell         1                 1
-      241       233   table cell         1                 1
-      242       234   table cell         1                 1
-      243       235   table cell         1                 1
-      244       236   table cell         1                 1
-      245       237   table cell         1                 1
-      246       238   table cell         1                 1
-      247       239   table cell         1                 1
-      248       240   table cell         1                 1
-      249       241   table cell         1                 1
-      250       242   table cell         1                 1
-      251       243   table cell         1                 1
-      252       244   table cell         1                 1
-      253       245   table cell         1                 1
-      254       246   table cell         1                 1
-      255       247   table cell         1                 1
-      256       248   table cell         1                 1
-      257       249   table cell         1                 1
-      258       250   table cell         1                 1
-      259       251   table cell         1                 1
-      260       252   table cell         1                 1
-      261       253   table cell         1                 1
-      262       254   table cell         1                 1
-      263       255   table cell         1                 1
-      264       256   table cell         1                 1
-      265       257   table cell         1                 1
-      266       258    paragraph         1                 1
-      267       259   table cell         1                 1
-      268       259   table cell         2                 1
-      269       259   table cell         3                 1
-      270       260   table cell         1                 1
-      271       261   table cell         1                 1
-      272       262   table cell         1                 1
-      273       263   table cell         1                 1
-      274       264   table cell         1                 1
-      275       265   table cell         1                 1
-      276       266   table cell         1                 1
-      277       267   table cell         1                 1
-      278       268   table cell         1                 1
-      279       269   table cell         1                 1
-      280       270   table cell         1                 1
-      281       271   table cell         1                 1
-      282       272   table cell         1                 1
-      283       273   table cell         1                 1
-      284       274   table cell         1                 1
-      285       275   table cell         1                 1
-      286       276   table cell         1                 1
-      287       277   table cell         1                 1
-      288       278   table cell         1                 1
-      289       279   table cell         1                 1
-      290       280   table cell         1                 1
-      291       281   table cell         1                 1
-      292       282   table cell         1                 1
-      293       283   table cell         1                 1
-      294       284   table cell         1                 1
-      295       285   table cell         1                 1
-      296       286   table cell         1                 1
-      297       287   table cell         1                 1
-      298       288   table cell         1                 1
-      299       289   table cell         1                 1
-      300       290   table cell         1                 1
-      301       291   table cell         1                 1
-      302       292   table cell         1                 1
-      303       293   table cell         1                 1
-      304       294   table cell         1                 1
-      305       295   table cell         1                 1
-      306       296   table cell         1                 1
-      307       297   table cell         1                 1
-      308       298   table cell         1                 1
-      309       299   table cell         1                 1
-      310       300   table cell         1                 1
-      311       301   table cell         1                 1
-      312       302   table cell         1                 1
-      313       303   table cell         1                 1
-      314       304   table cell         1                 1
-      315       305   table cell         1                 1
-      316       306   table cell         1                 1
-      317       307   table cell         1                 1
-      318       308   table cell         1                 1
-      319       309   table cell         1                 1
-      320       310   table cell         1                 1
-      321       311   table cell         1                 1
-      322       312   table cell         1                 1
-      323       313   table cell         1                 1
-      324       314   table cell         1                 1
-      325       315   table cell         1                 1
-      326       316   table cell         1                 1
-      327       317   table cell         1                 1
-      328       318   table cell         1                 1
-      329       319   table cell         1                 1
-      330       320   table cell         1                 1
-      331       321   table cell         1                 1
-      332       322   table cell         1                 1
-      333       323   table cell         1                 1
-      334       324   table cell         1                 1
-      335       325   table cell         1                 1
-      336       326   table cell         1                 1
-      337       327   table cell         1                 1
-      338       328   table cell         1                 1
-      339       329   table cell         1                 1
-      340       330   table cell         1                 1
-      341       331   table cell         1                 1
-      342       332   table cell         1                 1
-      343       333   table cell         1                 1
-      344       334   table cell         1                 1
-      345       335   table cell         1                 1
-      346       336   table cell         1                 1
-      347       337   table cell         1                 1
-      348       338   table cell         1                 1
-      349       339   table cell         1                 1
-      350       340   table cell         1                 1
-      351       341   table cell         1                 1
-      352       342   table cell         1                 1
-      353       343   table cell         1                 1
-      354       344   table cell         1                 1
-      355       345   table cell         1                 1
-      356       346   table cell         1                 1
-      357       347   table cell         1                 1
-      358       348   table cell         1                 1
-      359       349   table cell         1                 1
-      360       350   table cell         1                 1
-      361       351   table cell         1                 1
-      362       352   table cell         1                 1
-      363       353   table cell         1                 1
-      364       354   table cell         1                 1
-      365       355   table cell         1                 1
-      366       356   table cell         1                 1
-      367       357   table cell         1                 1
-      368       358   table cell         1                 1
-      369       359   table cell         1                 1
-      370       360   table cell         1                 1
-      371       361   table cell         1                 1
-      372       362   table cell         1                 1
-      373       363   table cell         1                 1
-      374       364   table cell         1                 1
-      375       365   table cell         1                 1
-      376       366   table cell         1                 1
-      377       367   table cell         1                 1
-      378       368   table cell         1                 1
-      379       369   table cell         1                 1
-      380       370   table cell         1                 1
-      381       371   table cell         1                 1
-      382       372   table cell         1                 1
-      383       373   table cell         1                 1
-      384       374   table cell         1                 1
-      385       375   table cell         1                 1
-      386       376   table cell         1                 1
-      387       377   table cell         1                 1
-      388       378   table cell         1                 1
-      389       379   table cell         1                 1
-      390       380   table cell         1                 1
-      391       381   table cell         1                 1
-      392       382   table cell         1                 1
-      393       383   table cell         1                 1
-      394       384   table cell         1                 1
-      395       385   table cell         1                 1
-      396       386   table cell         1                 1
-      397       387   table cell         1                 1
-      398       388   table cell         1                 1
-      399       389   table cell         1                 1
-      400       390   table cell         1                 1
-      401       391   table cell         1                 1
-      402       392   table cell         1                 1
-      403       393   table cell         1                 1
-      404       394   table cell         1                 1
-      405       395   table cell         1                 1
-      406       396   table cell         1                 1
-      407       397   table cell         1                 1
-      408       398   table cell         1                 1
-      409       399   table cell         1                 1
-      410       400   table cell         1                 1
-      411       401   table cell         1                 1
-      412       402   table cell         1                 1
-      413       403   table cell         1                 1
-      414       404   table cell         1                 1
-      415       405   table cell         1                 1
-      416       406   table cell         1                 1
-      417       407   table cell         1                 1
-      418       408   table cell         1                 1
-      419       409   table cell         1                 1
-      420       410   table cell         1                 1
-      421       411   table cell         1                 1
-      422       412   table cell         1                 1
-      423       413   table cell         1                 1
-      424       414   table cell         1                 1
-      425       415   table cell         1                 1
-      426       416   table cell         1                 1
-      427       417   table cell         1                 1
-      428       418   table cell         1                 1
-      429       419   table cell         1                 1
-      430       420   table cell         1                 1
-      431       421   table cell         1                 1
-      432       422   table cell         1                 1
-      433       423   table cell         1                 1
-      434       424   table cell         1                 1
-      435       425   table cell         1                 1
-      436       426   table cell         1                 1
-      437       427   table cell         1                 1
-      438       428   table cell         1                 1
-      439       429   table cell         1                 1
-      440       430   table cell         1                 1
-      441       431   table cell         1                 1
-      442       432   table cell         1                 1
-      443       433   table cell         1                 1
-      444       434   table cell         1                 1
-      445       435   table cell         1                 1
-      446       436   table cell         1                 1
-      447       437   table cell         1                 1
-      448       438   table cell         1                 1
-      449       439   table cell         1                 1
-      450       440   table cell         1                 1
-      451       441   table cell         1                 1
-      452       442   table cell         1                 1
-      453       443   table cell         1                 1
-      454       444   table cell         1                 1
-      455       445   table cell         1                 1
-      456       446   table cell         1                 1
-      457       447   table cell         1                 1
-      458       448   table cell         1                 1
-      459       449   table cell         1                 1
-      460       450   table cell         1                 1
-      461       451   table cell         1                 1
-      462       452   table cell         1                 1
-      463       453   table cell         1                 1
-      464       454   table cell         1                 1
-      465       455   table cell         1                 1
-      466       456   table cell         1                 1
-      467       457   table cell         1                 1
-      468       458   table cell         1                 1
-      469       459   table cell         1                 1
-      470       460   table cell         1                 1
-      471       461   table cell         1                 1
-      472       462   table cell         1                 1
-      473       463   table cell         1                 1
-      474       464   table cell         1                 1
-      475       465   table cell         1                 1
-      476       466   table cell         1                 1
-      477       467   table cell         1                 1
-      478       468   table cell         1                 1
-      479       469   table cell         1                 1
-      480       470   table cell         1                 1
-      481       471   table cell         1                 1
-      482       472   table cell         1                 1
-      483       473   table cell         1                 1
-      484       474   table cell         1                 1
-      485       475   table cell         1                 1
-      486       476   table cell         1                 1
-      487       477   table cell         1                 1
-      488       478   table cell         1                 1
-      489       479   table cell         1                 1
-      490       480   table cell         1                 1
-      491       481   table cell         1                 1
-      492       482   table cell         1                 1
-      493       483   table cell         1                 1
+      34         32   table cell         1                 1
+      35         33   table cell         1                 1
+      36         34   table cell         1                 1
+      37         35   table cell         1                 1
+      38         36   table cell         1                 1
+      39         37   table cell         1                 1
+      40         38   table cell         1                 1
+      41         39   table cell         1                 1
+      42         40   table cell         1                 1
+      43         41   table cell         1                 1
+      44         42   table cell         1                 1
+      45         43   table cell         1                 1
+      46         44   table cell         1                 1
+      47         45   table cell         1                 1
+      48         46   table cell         1                 1
+      49         47   table cell         1                 1
+      50         48   table cell         1                 1
+      51         49   table cell         1                 1
+      52         50   table cell         1                 1
+      53         51   table cell         1                 1
+      54         52   table cell         1                 1
+      55         53   table cell         1                 1
+      56         54   table cell         1                 1
+      57         55   table cell         1                 1
+      58         56   table cell         1                 1
+      59         57   table cell         1                 1
+      60         58   table cell         1                 1
+      61         59   table cell         1                 1
+      62         60   table cell         1                 1
+      63         61   table cell         1                 1
+      64         62   table cell         1                 1
+      65         63   table cell         1                 1
+      66         64   table cell         1                 1
+      67         65   table cell         1                 1
+      68         66   table cell         1                 1
+      69         67   table cell         1                 1
+      70         68   table cell         1                 1
+      71         69   table cell         1                 1
+      72         70   table cell         1                 1
+      73         71   table cell         1                 1
+      74         72   table cell         1                 1
+      75         73   table cell         1                 1
+      76         74   table cell         1                 1
+      77         75   table cell         1                 1
+      78         76   table cell         1                 1
+      79         77   table cell         1                 1
+      80         78   table cell         1                 1
+      81         79   table cell         1                 1
+      82         80   table cell         1                 1
+      83         81   table cell         1                 1
+      84         82   table cell         1                 1
+      85         83   table cell         1                 1
+      86         84   table cell         1                 1
+      87         85   table cell         1                 1
+      88         86   table cell         1                 1
+      89         87   table cell         1                 1
+      90         88   table cell         1                 1
+      91         89   table cell         1                 1
+      92         90   table cell         1                 1
+      93         91   table cell         1                 1
+      94         92   table cell         1                 1
+      95         93   table cell         1                 1
+      96         94   table cell         1                 1
+      97         95   table cell         1                 1
+      98         96   table cell         1                 1
+      99         97   table cell         1                 1
+      100        98   table cell         1                 1
+      101        99   table cell         1                 1
+      102       100   table cell         1                 1
+      103       101   table cell         1                 1
+      104       102   table cell         1                 1
+      105       103   table cell         1                 1
+      106       104   table cell         1                 1
+      107       105   table cell         1                 1
+      108       106   table cell         1                 1
+      109       107   table cell         1                 1
+      110       108   table cell         1                 1
+      111       109   table cell         1                 1
+      112       110   table cell         1                 1
+      113       111   table cell         1                 1
+      114       112   table cell         1                 1
+      115       113   table cell         1                 1
+      116       114   table cell         1                 1
+      117       115   table cell         1                 1
+      118       116   table cell         1                 1
+      119       117   table cell         1                 1
+      120       118   table cell         1                 1
+      121       119   table cell         1                 1
+      122       120   table cell         1                 1
+      123       121   table cell         1                 1
+      124       122   table cell         1                 1
+      125       123   table cell         1                 1
+      126       124   table cell         1                 1
+      127       125   table cell         1                 1
+      128       126   table cell         1                 1
+      129       127   table cell         1                 1
+      130       128   table cell         1                 1
+      131       129   table cell         1                 1
+      132       130   table cell         1                 1
+      133       131   table cell         1                 1
+      134       132   table cell         1                 1
+      135       133   table cell         1                 1
+      136       134   table cell         1                 1
+      137       135   table cell         1                 1
+      138       136   table cell         1                 1
+      139       137   table cell         1                 1
+      140       138   table cell         1                 1
+      141       139   table cell         1                 1
+      142       140   table cell         1                 1
+      143       141   table cell         1                 1
+      144       142   table cell         1                 1
+      145       143   table cell         1                 1
+      146       144   table cell         1                 1
+      147       145   table cell         1                 1
+      148       146   table cell         1                 1
+      149       147   table cell         1                 1
+      150       148   table cell         1                 1
+      151       149   table cell         1                 1
+      152       150   table cell         1                 1
+      153       151   table cell         1                 1
+      154       152   table cell         1                 1
+      155       153   table cell         1                 1
+      156       154   table cell         1                 1
+      157       155   table cell         1                 1
+      158       156   table cell         1                 1
+      159       157   table cell         1                 1
+      160       158   table cell         1                 1
+      161       159   table cell         1                 1
+      162       160   table cell         1                 1
+      163       161   table cell         1                 1
+      164       162   table cell         1                 1
+      165       163   table cell         1                 1
+      166       164   table cell         1                 1
+      167       165   table cell         1                 1
+      168       166   table cell         1                 1
+      169       167   table cell         1                 1
+      170       168   table cell         1                 1
+      171       169   table cell         1                 1
+      172       170   table cell         1                 1
+      173       171   table cell         1                 1
+      174       172   table cell         1                 1
+      175       173   table cell         1                 1
+      176       174   table cell         1                 1
+      177       175   table cell         1                 1
+      178       176   table cell         1                 1
+      179       177   table cell         1                 1
+      180       178   table cell         1                 1
+      181       179   table cell         1                 1
+      182       180   table cell         1                 1
+      183       181   table cell         1                 1
+      184       182   table cell         1                 1
+      185       183   table cell         1                 1
+      186       184   table cell         1                 1
+      187       185   table cell         1                 1
+      188       186   table cell         1                 1
+      189       187   table cell         1                 1
+      190       188   table cell         1                 1
+      191       189   table cell         1                 1
+      192       190   table cell         1                 1
+      193       191   table cell         1                 1
+      194       192   table cell         1                 1
+      195       193   table cell         1                 1
+      196       194   table cell         1                 1
+      197       195   table cell         1                 1
+      198       196   table cell         1                 1
+      199       197   table cell         1                 1
+      200       198   table cell         1                 1
+      201       199   table cell         1                 1
+      202       200   table cell         1                 1
+      203       201   table cell         1                 1
+      204       202   table cell         1                 1
+      205       203   table cell         1                 1
+      206       204   table cell         1                 1
+      207       205   table cell         1                 1
+      208       206   table cell         1                 1
+      209       207   table cell         1                 1
+      210       208   table cell         1                 1
+      211       209   table cell         1                 1
+      212       210   table cell         1                 1
+      213       211   table cell         1                 1
+      214       212   table cell         1                 1
+      215       213   table cell         1                 1
+      216       214   table cell         1                 1
+      217       215   table cell         1                 1
+      218       216   table cell         1                 1
+      219       217   table cell         1                 1
+      220       218   table cell         1                 1
+      221       219   table cell         1                 1
+      222       220   table cell         1                 1
+      223       221   table cell         1                 1
+      224       222   table cell         1                 1
+      225       223   table cell         1                 1
+      226       224   table cell         1                 1
+      227       225   table cell         1                 1
+      228       226   table cell         1                 1
+      229       227   table cell         1                 1
+      230       228   table cell         1                 1
+      231       229   table cell         1                 1
+      232       230   table cell         1                 1
+      233       231   table cell         1                 1
+      234       232   table cell         1                 1
+      235       233   table cell         1                 1
+      236       234   table cell         1                 1
+      237       235   table cell         1                 1
+      238       236   table cell         1                 1
+      239       237   table cell         1                 1
+      240       238   table cell         1                 1
+      241       239   table cell         1                 1
+      242       240   table cell         1                 1
+      243       241   table cell         1                 1
+      244       242   table cell         1                 1
+      245       243   table cell         1                 1
+      246       244   table cell         1                 1
+      247       245   table cell         1                 1
+      248       246   table cell         1                 1
+      249       247   table cell         1                 1
+      250       248   table cell         1                 1
+      251       249   table cell         1                 1
+      252       250   table cell         1                 1
+      253       251   table cell         1                 1
+      254       252   table cell         1                 1
+      255       253   table cell         1                 1
+      256       254   table cell         1                 1
+      257       255   table cell         1                 1
+      258       256   table cell         1                 1
+      259       257   table cell         1                 1
+      260       258    paragraph         1                 1
+      261       259   table cell         1                 1
+      262       259   table cell         2                 1
+      263       259   table cell         3                 1
+      264       260   table cell         1                 1
+      265       261   table cell         1                 1
+      266       262   table cell         1                 1
+      267       263   table cell         1                 1
+      268       264   table cell         1                 1
+      269       265   table cell         1                 1
+      270       266   table cell         1                 1
+      271       267   table cell         1                 1
+      272       268   table cell         1                 1
+      273       269   table cell         1                 1
+      274       270   table cell         1                 1
+      275       271   table cell         1                 1
+      276       272   table cell         1                 1
+      277       273   table cell         1                 1
+      278       274   table cell         1                 1
+      279       275   table cell         1                 1
+      280       276   table cell         1                 1
+      281       277   table cell         1                 1
+      282       278   table cell         1                 1
+      283       279   table cell         1                 1
+      284       280   table cell         1                 1
+      285       281   table cell         1                 1
+      286       282   table cell         1                 1
+      287       283   table cell         1                 1
+      288       284   table cell         1                 1
+      289       285   table cell         1                 1
+      290       286   table cell         1                 1
+      291       287   table cell         1                 1
+      292       288   table cell         1                 1
+      293       289   table cell         1                 1
+      294       290   table cell         1                 1
+      295       291   table cell         1                 1
+      296       292   table cell         1                 1
+      297       293   table cell         1                 1
+      298       294   table cell         1                 1
+      299       295   table cell         1                 1
+      300       296   table cell         1                 1
+      301       297   table cell         1                 1
+      302       298   table cell         1                 1
+      303       299   table cell         1                 1
+      304       300   table cell         1                 1
+      305       301   table cell         1                 1
+      306       302   table cell         1                 1
+      307       303   table cell         1                 1
+      308       304   table cell         1                 1
+      309       305   table cell         1                 1
+      310       306   table cell         1                 1
+      311       307   table cell         1                 1
+      312       308   table cell         1                 1
+      313       309   table cell         1                 1
+      314       310   table cell         1                 1
+      315       311   table cell         1                 1
+      316       312   table cell         1                 1
+      317       313   table cell         1                 1
+      318       314   table cell         1                 1
+      319       315   table cell         1                 1
+      320       316   table cell         1                 1
+      321       317   table cell         1                 1
+      322       318   table cell         1                 1
+      323       319   table cell         1                 1
+      324       320   table cell         1                 1
+      325       321   table cell         1                 1
+      326       322   table cell         1                 1
+      327       323   table cell         1                 1
+      328       324   table cell         1                 1
+      329       325   table cell         1                 1
+      330       326   table cell         1                 1
+      331       327   table cell         1                 1
+      332       328   table cell         1                 1
+      333       329   table cell         1                 1
+      334       330   table cell         1                 1
+      335       331   table cell         1                 1
+      336       332   table cell         1                 1
+      337       333   table cell         1                 1
+      338       334   table cell         1                 1
+      339       335   table cell         1                 1
+      340       336   table cell         1                 1
+      341       337   table cell         1                 1
+      342       338   table cell         1                 1
+      343       339   table cell         1                 1
+      344       340   table cell         1                 1
+      345       341   table cell         1                 1
+      346       342   table cell         1                 1
+      347       343   table cell         1                 1
+      348       344   table cell         1                 1
+      349       345   table cell         1                 1
+      350       346   table cell         1                 1
+      351       347   table cell         1                 1
+      352       348   table cell         1                 1
+      353       349   table cell         1                 1
+      354       350   table cell         1                 1
+      355       351   table cell         1                 1
+      356       352   table cell         1                 1
+      357       353   table cell         1                 1
+      358       354   table cell         1                 1
+      359       355   table cell         1                 1
+      360       356   table cell         1                 1
+      361       357   table cell         1                 1
+      362       358   table cell         1                 1
+      363       359   table cell         1                 1
+      364       360   table cell         1                 1
+      365       361   table cell         1                 1
+      366       362   table cell         1                 1
+      367       363   table cell         1                 1
+      368       364   table cell         1                 1
+      369       365   table cell         1                 1
+      370       366   table cell         1                 1
+      371       367   table cell         1                 1
+      372       368   table cell         1                 1
+      373       369   table cell         1                 1
+      374       370   table cell         1                 1
+      375       371   table cell         1                 1
+      376       372   table cell         1                 1
+      377       373   table cell         1                 1
+      378       374   table cell         1                 1
+      379       375   table cell         1                 1
+      380       376   table cell         1                 1
+      381       377   table cell         1                 1
+      382       378   table cell         1                 1
+      383       379   table cell         1                 1
+      384       380   table cell         1                 1
+      385       381   table cell         1                 1
+      386       382   table cell         1                 1
+      387       383   table cell         1                 1
+      388       384   table cell         1                 1
+      389       385   table cell         1                 1
+      390       386   table cell         1                 1
+      391       387   table cell         1                 1
+      392       388   table cell         1                 1
+      393       389   table cell         1                 1
+      394       390   table cell         1                 1
+      395       391   table cell         1                 1
+      396       392   table cell         1                 1
+      397       393   table cell         1                 1
+      398       394   table cell         1                 1
+      399       395   table cell         1                 1
+      400       396   table cell         1                 1
+      401       397   table cell         1                 1
+      402       398   table cell         1                 1
+      403       399   table cell         1                 1
+      404       400   table cell         1                 1
+      405       401   table cell         1                 1
+      406       402   table cell         1                 1
+      407       403   table cell         1                 1
+      408       404   table cell         1                 1
+      409       405   table cell         1                 1
+      410       406   table cell         1                 1
+      411       407   table cell         1                 1
+      412       408   table cell         1                 1
+      413       409   table cell         1                 1
+      414       410   table cell         1                 1
+      415       411   table cell         1                 1
+      416       412   table cell         1                 1
+      417       413   table cell         1                 1
+      418       414   table cell         1                 1
+      419       415   table cell         1                 1
+      420       416   table cell         1                 1
+      421       417   table cell         1                 1
+      422       418   table cell         1                 1
+      423       419   table cell         1                 1
+      424       420   table cell         1                 1
+      425       421   table cell         1                 1
+      426       422   table cell         1                 1
+      427       423   table cell         1                 1
+      428       424   table cell         1                 1
+      429       425   table cell         1                 1
+      430       426   table cell         1                 1
+      431       427   table cell         1                 1
+      432       428   table cell         1                 1
+      433       429   table cell         1                 1
+      434       430   table cell         1                 1
+      435       431   table cell         1                 1
+      436       432   table cell         1                 1
+      437       433   table cell         1                 1
+      438       434   table cell         1                 1
+      439       435   table cell         1                 1
+      440       436   table cell         1                 1
+      441       437   table cell         1                 1
+      442       438   table cell         1                 1
+      443       439   table cell         1                 1
+      444       440   table cell         1                 1
+      445       441   table cell         1                 1
+      446       442   table cell         1                 1
+      447       443   table cell         1                 1
+      448       444   table cell         1                 1
+      449       445   table cell         1                 1
+      450       446   table cell         1                 1
+      451       447   table cell         1                 1
+      452       448   table cell         1                 1
+      453       449   table cell         1                 1
+      454       450   table cell         1                 1
+      455       451   table cell         1                 1
+      456       452   table cell         1                 1
+      457       453   table cell         1                 1
+      458       454   table cell         1                 1
+      459       455   table cell         1                 1
+      460       456   table cell         1                 1
+      461       457   table cell         1                 1
+      462       458   table cell         1                 1
+      463       459   table cell         1                 1
+      464       460   table cell         1                 1
+      465       461   table cell         1                 1
+      466       462   table cell         1                 1
+      467       463   table cell         1                 1
+      468       464   table cell         1                 1
+      469       465   table cell         1                 1
+      470       466   table cell         1                 1
+      471       467   table cell         1                 1
+      472       468   table cell         1                 1
+      473       469   table cell         1                 1
+      474       470   table cell         1                 1
+      475       471   table cell         1                 1
+      476       472   table cell         1                 1
+      477       473   table cell         1                 1
+      478       474   table cell         1                 1
+      479       475   table cell         1                 1
+      480       476   table cell         1                 1
+      481       477   table cell         1                 1
+      482       478   table cell         1                 1
+      483       479   table cell         1                 1
+      484       480   table cell         1                 1
+      485       481   table cell         1                 1
+      486       482   table cell         1                 1
+      487       483   table cell         1                 1
                               run_content_text image_path field_code footnote_text
       1                      test1234allparts:       <NA>       <NA>              
       2                                     \t       <NA>       <NA>              
@@ -53944,467 +53896,461 @@
       30                                             <NA>       <NA>              
       31                                             <NA>       <NA>              
       32                                             <NA>       <NA>              
-      33              Alanine Aminotransferase       <NA>       <NA>              
-      34                                    \n       <NA>       <NA>              
-      35                                    \t       <NA>       <NA>              
-      36                           Measurement       <NA>       <NA>              
+      33  Alanine Aminotransferase Measurement       <NA>       <NA>              
+      34                                             <NA>       <NA>              
+      35                                             <NA>       <NA>              
+      36                                             <NA>       <NA>              
       37                                             <NA>       <NA>              
       38                                             <NA>       <NA>              
       39                                             <NA>       <NA>              
-      40                                             <NA>       <NA>              
-      41                                             <NA>       <NA>              
-      42                                             <NA>       <NA>              
-      43                              BASELINE       <NA>       <NA>              
-      44                        77/77 (100.0%)       <NA>       <NA>              
-      45                     50.1 (48.2, 52.0)       <NA>       <NA>              
+      40                              BASELINE       <NA>       <NA>              
+      41                        77/77 (100.0%)       <NA>       <NA>              
+      42                     50.1 (48.2, 52.0)       <NA>       <NA>              
+      43                        0.0 (0.0, 0.0)       <NA>       <NA>              
+      44                        63/63 (100.0%)       <NA>       <NA>              
+      45                     51.1 (49.2, 53.0)       <NA>       <NA>              
       46                        0.0 (0.0, 0.0)       <NA>       <NA>              
-      47                        63/63 (100.0%)       <NA>       <NA>              
-      48                     51.1 (49.2, 53.0)       <NA>       <NA>              
-      49                        0.0 (0.0, 0.0)       <NA>       <NA>              
-      50                          WEEK 1 DAY 8       <NA>       <NA>              
-      51                        77/77 (100.0%)       <NA>       <NA>              
-      52                     49.2 (47.3, 51.0)       <NA>       <NA>              
-      53                      -0.9 (-3.8, 1.9)       <NA>       <NA>              
-      54                        63/63 (100.0%)       <NA>       <NA>              
-      55                     50.4 (48.5, 52.4)       <NA>       <NA>              
-      56                      -0.7 (-3.2, 1.9)       <NA>       <NA>              
-      57                         WEEK 2 DAY 15       <NA>       <NA>              
-      58                        77/77 (100.0%)       <NA>       <NA>              
-      59                     50.5 (48.6, 52.3)       <NA>       <NA>              
-      60                       0.4 (-2.3, 3.1)       <NA>       <NA>              
-      61                        63/63 (100.0%)       <NA>       <NA>              
-      62                     48.3 (46.5, 50.2)       <NA>       <NA>              
-      63                     -2.8 (-5.4, -0.2)       <NA>       <NA>              
-      64                         WEEK 3 DAY 22       <NA>       <NA>              
-      65                        77/77 (100.0%)       <NA>       <NA>              
-      66                     50.1 (48.3, 51.9)       <NA>       <NA>              
-      67                       0.0 (-2.6, 2.6)       <NA>       <NA>              
-      68                        63/63 (100.0%)       <NA>       <NA>              
-      69                     49.5 (47.5, 51.5)       <NA>       <NA>              
-      70                      -1.6 (-4.3, 1.2)       <NA>       <NA>              
-      71                         WEEK 4 DAY 29       <NA>       <NA>              
-      72                        77/77 (100.0%)       <NA>       <NA>              
-      73                     50.8 (49.0, 52.6)       <NA>       <NA>              
-      74                       0.7 (-2.1, 3.5)       <NA>       <NA>              
-      75                        63/63 (100.0%)       <NA>       <NA>              
-      76                     49.6 (47.6, 51.6)       <NA>       <NA>              
-      77                      -1.5 (-4.2, 1.1)       <NA>       <NA>              
-      78                         WEEK 5 DAY 36       <NA>       <NA>              
-      79                        77/77 (100.0%)       <NA>       <NA>              
-      80                     50.8 (49.1, 52.5)       <NA>       <NA>              
-      81                       0.7 (-2.1, 3.6)       <NA>       <NA>              
-      82                        63/63 (100.0%)       <NA>       <NA>              
-      83                     49.9 (47.9, 51.9)       <NA>       <NA>              
-      84                      -1.2 (-4.0, 1.7)       <NA>       <NA>              
+      47                          WEEK 1 DAY 8       <NA>       <NA>              
+      48                        77/77 (100.0%)       <NA>       <NA>              
+      49                     49.2 (47.3, 51.0)       <NA>       <NA>              
+      50                      -0.9 (-3.8, 1.9)       <NA>       <NA>              
+      51                        63/63 (100.0%)       <NA>       <NA>              
+      52                     50.4 (48.5, 52.4)       <NA>       <NA>              
+      53                      -0.7 (-3.2, 1.9)       <NA>       <NA>              
+      54                         WEEK 2 DAY 15       <NA>       <NA>              
+      55                        77/77 (100.0%)       <NA>       <NA>              
+      56                     50.5 (48.6, 52.3)       <NA>       <NA>              
+      57                       0.4 (-2.3, 3.1)       <NA>       <NA>              
+      58                        63/63 (100.0%)       <NA>       <NA>              
+      59                     48.3 (46.5, 50.2)       <NA>       <NA>              
+      60                     -2.8 (-5.4, -0.2)       <NA>       <NA>              
+      61                         WEEK 3 DAY 22       <NA>       <NA>              
+      62                        77/77 (100.0%)       <NA>       <NA>              
+      63                     50.1 (48.3, 51.9)       <NA>       <NA>              
+      64                       0.0 (-2.6, 2.6)       <NA>       <NA>              
+      65                        63/63 (100.0%)       <NA>       <NA>              
+      66                     49.5 (47.5, 51.5)       <NA>       <NA>              
+      67                      -1.6 (-4.3, 1.2)       <NA>       <NA>              
+      68                         WEEK 4 DAY 29       <NA>       <NA>              
+      69                        77/77 (100.0%)       <NA>       <NA>              
+      70                     50.8 (49.0, 52.6)       <NA>       <NA>              
+      71                       0.7 (-2.1, 3.5)       <NA>       <NA>              
+      72                        63/63 (100.0%)       <NA>       <NA>              
+      73                     49.6 (47.6, 51.6)       <NA>       <NA>              
+      74                      -1.5 (-4.2, 1.1)       <NA>       <NA>              
+      75                         WEEK 5 DAY 36       <NA>       <NA>              
+      76                        77/77 (100.0%)       <NA>       <NA>              
+      77                     50.8 (49.1, 52.5)       <NA>       <NA>              
+      78                       0.7 (-2.1, 3.6)       <NA>       <NA>              
+      79                        63/63 (100.0%)       <NA>       <NA>              
+      80                     49.9 (47.9, 51.9)       <NA>       <NA>              
+      81                      -1.2 (-4.0, 1.7)       <NA>       <NA>              
+      82                                             <NA>       <NA>              
+      83                                             <NA>       <NA>              
+      84                                             <NA>       <NA>              
       85                                             <NA>       <NA>              
       86                                             <NA>       <NA>              
       87                                             <NA>       <NA>              
       88                                             <NA>       <NA>              
-      89                                             <NA>       <NA>              
+      89        C-Reactive Protein Measurement       <NA>       <NA>              
       90                                             <NA>       <NA>              
       91                                             <NA>       <NA>              
-      92        C-Reactive Protein Measurement       <NA>       <NA>              
+      92                                             <NA>       <NA>              
       93                                             <NA>       <NA>              
       94                                             <NA>       <NA>              
       95                                             <NA>       <NA>              
-      96                                             <NA>       <NA>              
-      97                                             <NA>       <NA>              
-      98                                             <NA>       <NA>              
-      99                              BASELINE       <NA>       <NA>              
-      100                       77/77 (100.0%)       <NA>       <NA>              
-      101                    49.3 (46.9, 51.6)       <NA>       <NA>              
+      96                              BASELINE       <NA>       <NA>              
+      97                        77/77 (100.0%)       <NA>       <NA>              
+      98                     49.3 (46.9, 51.6)       <NA>       <NA>              
+      99                        0.0 (0.0, 0.0)       <NA>       <NA>              
+      100                       63/63 (100.0%)       <NA>       <NA>              
+      101                    50.8 (48.6, 53.0)       <NA>       <NA>              
       102                       0.0 (0.0, 0.0)       <NA>       <NA>              
-      103                       63/63 (100.0%)       <NA>       <NA>              
-      104                    50.8 (48.6, 53.0)       <NA>       <NA>              
-      105                       0.0 (0.0, 0.0)       <NA>       <NA>              
-      106                         WEEK 1 DAY 8       <NA>       <NA>              
-      107                       77/77 (100.0%)       <NA>       <NA>              
-      108                    51.2 (49.2, 53.2)       <NA>       <NA>              
-      109                      2.0 (-1.2, 5.2)       <NA>       <NA>              
-      110                       63/63 (100.0%)       <NA>       <NA>              
-      111                    51.0 (48.8, 53.1)       <NA>       <NA>              
-      112                      0.2 (-2.9, 3.3)       <NA>       <NA>              
-      113                        WEEK 2 DAY 15       <NA>       <NA>              
-      114                       77/77 (100.0%)       <NA>       <NA>              
-      115                    49.3 (47.5, 51.2)       <NA>       <NA>              
-      116                      0.1 (-2.9, 3.0)       <NA>       <NA>              
-      117                       63/63 (100.0%)       <NA>       <NA>              
-      118                    50.1 (48.3, 52.0)       <NA>       <NA>              
-      119                     -0.6 (-3.3, 2.1)       <NA>       <NA>              
-      120                        WEEK 3 DAY 22       <NA>       <NA>              
-      121                       77/77 (100.0%)       <NA>       <NA>              
-      122                    49.3 (47.2, 51.3)       <NA>       <NA>              
-      123                      0.0 (-3.1, 3.2)       <NA>       <NA>              
-      124                       63/63 (100.0%)       <NA>       <NA>              
-      125                    49.6 (47.7, 51.4)       <NA>       <NA>              
-      126                     -1.2 (-4.1, 1.8)       <NA>       <NA>              
-      127                        WEEK 4 DAY 29       <NA>       <NA>              
-      128                       77/77 (100.0%)       <NA>       <NA>              
-      129                    51.1 (49.1, 53.2)       <NA>       <NA>              
-      130                      1.9 (-1.2, 5.0)       <NA>       <NA>              
-      131                       63/63 (100.0%)       <NA>       <NA>              
-      132                    50.0 (48.0, 52.0)       <NA>       <NA>              
-      133                     -0.7 (-3.9, 2.4)       <NA>       <NA>              
-      134                        WEEK 5 DAY 36       <NA>       <NA>              
-      135                       77/77 (100.0%)       <NA>       <NA>              
-      136                    50.3 (48.2, 52.3)       <NA>       <NA>              
-      137                      1.0 (-2.3, 4.3)       <NA>       <NA>              
-      138                       63/63 (100.0%)       <NA>       <NA>              
-      139                    49.1 (47.2, 51.0)       <NA>       <NA>              
-      140                     -1.6 (-4.5, 1.2)       <NA>       <NA>              
-      141                      Age: ≥ 35 years       <NA>       <NA>              
-      142                                  134       <NA>       <NA>              
+      103                         WEEK 1 DAY 8       <NA>       <NA>              
+      104                       77/77 (100.0%)       <NA>       <NA>              
+      105                    51.2 (49.2, 53.2)       <NA>       <NA>              
+      106                      2.0 (-1.2, 5.2)       <NA>       <NA>              
+      107                       63/63 (100.0%)       <NA>       <NA>              
+      108                    51.0 (48.8, 53.1)       <NA>       <NA>              
+      109                      0.2 (-2.9, 3.3)       <NA>       <NA>              
+      110                        WEEK 2 DAY 15       <NA>       <NA>              
+      111                       77/77 (100.0%)       <NA>       <NA>              
+      112                    49.3 (47.5, 51.2)       <NA>       <NA>              
+      113                      0.1 (-2.9, 3.0)       <NA>       <NA>              
+      114                       63/63 (100.0%)       <NA>       <NA>              
+      115                    50.1 (48.3, 52.0)       <NA>       <NA>              
+      116                     -0.6 (-3.3, 2.1)       <NA>       <NA>              
+      117                        WEEK 3 DAY 22       <NA>       <NA>              
+      118                       77/77 (100.0%)       <NA>       <NA>              
+      119                    49.3 (47.2, 51.3)       <NA>       <NA>              
+      120                      0.0 (-3.1, 3.2)       <NA>       <NA>              
+      121                       63/63 (100.0%)       <NA>       <NA>              
+      122                    49.6 (47.7, 51.4)       <NA>       <NA>              
+      123                     -1.2 (-4.1, 1.8)       <NA>       <NA>              
+      124                        WEEK 4 DAY 29       <NA>       <NA>              
+      125                       77/77 (100.0%)       <NA>       <NA>              
+      126                    51.1 (49.1, 53.2)       <NA>       <NA>              
+      127                      1.9 (-1.2, 5.0)       <NA>       <NA>              
+      128                       63/63 (100.0%)       <NA>       <NA>              
+      129                    50.0 (48.0, 52.0)       <NA>       <NA>              
+      130                     -0.7 (-3.9, 2.4)       <NA>       <NA>              
+      131                        WEEK 5 DAY 36       <NA>       <NA>              
+      132                       77/77 (100.0%)       <NA>       <NA>              
+      133                    50.3 (48.2, 52.3)       <NA>       <NA>              
+      134                      1.0 (-2.3, 4.3)       <NA>       <NA>              
+      135                       63/63 (100.0%)       <NA>       <NA>              
+      136                    49.1 (47.2, 51.0)       <NA>       <NA>              
+      137                     -1.6 (-4.5, 1.2)       <NA>       <NA>              
+      138                      Age: ≥ 35 years       <NA>       <NA>              
+      139                                  134       <NA>       <NA>              
+      140                                            <NA>       <NA>              
+      141                                            <NA>       <NA>              
+      142                                  132       <NA>       <NA>              
       143                                            <NA>       <NA>              
       144                                            <NA>       <NA>              
-      145                                  132       <NA>       <NA>              
+      145                                            <NA>       <NA>              
       146                                            <NA>       <NA>              
       147                                            <NA>       <NA>              
       148                                            <NA>       <NA>              
       149                                            <NA>       <NA>              
       150                                            <NA>       <NA>              
       151                                            <NA>       <NA>              
-      152                                            <NA>       <NA>              
+      152 Alanine Aminotransferase Measurement       <NA>       <NA>              
       153                                            <NA>       <NA>              
       154                                            <NA>       <NA>              
-      155             Alanine Aminotransferase       <NA>       <NA>              
-      156                                   \n       <NA>       <NA>              
-      157                                   \t       <NA>       <NA>              
-      158                          Measurement       <NA>       <NA>              
-      159                                            <NA>       <NA>              
-      160                                            <NA>       <NA>              
-      161                                            <NA>       <NA>              
-      162                                            <NA>       <NA>              
-      163                                            <NA>       <NA>              
-      164                                            <NA>       <NA>              
-      165                             BASELINE       <NA>       <NA>              
-      166                       57/57 (100.0%)       <NA>       <NA>              
-      167                    48.9 (46.6, 51.1)       <NA>       <NA>              
-      168                       0.0 (0.0, 0.0)       <NA>       <NA>              
-      169                       69/69 (100.0%)       <NA>       <NA>              
-      170                    50.7 (48.8, 52.7)       <NA>       <NA>              
-      171                       0.0 (0.0, 0.0)       <NA>       <NA>              
-      172                         WEEK 1 DAY 8       <NA>       <NA>              
-      173                       57/57 (100.0%)       <NA>       <NA>              
-      174                    47.8 (45.8, 49.9)       <NA>       <NA>              
-      175                     -1.0 (-3.8, 1.8)       <NA>       <NA>              
-      176                       69/69 (100.0%)       <NA>       <NA>              
-      177                    51.7 (49.8, 53.6)       <NA>       <NA>              
-      178                      1.0 (-1.8, 3.8)       <NA>       <NA>              
-      179                        WEEK 2 DAY 15       <NA>       <NA>              
-      180                       57/57 (100.0%)       <NA>       <NA>              
-      181                    48.0 (45.7, 50.3)       <NA>       <NA>              
-      182                     -0.9 (-4.1, 2.3)       <NA>       <NA>              
-      183                       69/69 (100.0%)       <NA>       <NA>              
-      184                    48.7 (47.0, 50.4)       <NA>       <NA>              
-      185                     -2.1 (-4.8, 0.7)       <NA>       <NA>              
-      186                        WEEK 3 DAY 22       <NA>       <NA>              
-      187                       57/57 (100.0%)       <NA>       <NA>              
-      188                    50.5 (48.6, 52.4)       <NA>       <NA>              
-      189                      1.6 (-1.5, 4.7)       <NA>       <NA>              
-      190                       69/69 (100.0%)       <NA>       <NA>              
-      191                    48.2 (46.3, 50.1)       <NA>       <NA>              
-      192                     -2.5 (-5.2, 0.2)       <NA>       <NA>              
-      193                        WEEK 4 DAY 29       <NA>       <NA>              
-      194                       57/57 (100.0%)       <NA>       <NA>              
-      195                    50.6 (47.8, 53.4)       <NA>       <NA>              
-      196                      1.7 (-2.1, 5.4)       <NA>       <NA>              
-      197                       69/69 (100.0%)       <NA>       <NA>              
-      198                    49.7 (47.8, 51.6)       <NA>       <NA>              
-      199                     -1.0 (-3.6, 1.6)       <NA>       <NA>              
-      200                        WEEK 5 DAY 36       <NA>       <NA>              
-      201                       57/57 (100.0%)       <NA>       <NA>              
-      202                    50.9 (48.6, 53.1)       <NA>       <NA>              
-      203                      2.0 (-1.0, 5.0)       <NA>       <NA>              
-      204                       69/69 (100.0%)       <NA>       <NA>              
-      205                    50.0 (47.9, 52.1)       <NA>       <NA>              
-      206                     -0.7 (-3.4, 2.0)       <NA>       <NA>              
+      155                                            <NA>       <NA>              
+      156                                            <NA>       <NA>              
+      157                                            <NA>       <NA>              
+      158                                            <NA>       <NA>              
+      159                             BASELINE       <NA>       <NA>              
+      160                       57/57 (100.0%)       <NA>       <NA>              
+      161                    48.9 (46.6, 51.1)       <NA>       <NA>              
+      162                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      163                       69/69 (100.0%)       <NA>       <NA>              
+      164                    50.7 (48.8, 52.7)       <NA>       <NA>              
+      165                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      166                         WEEK 1 DAY 8       <NA>       <NA>              
+      167                       57/57 (100.0%)       <NA>       <NA>              
+      168                    47.8 (45.8, 49.9)       <NA>       <NA>              
+      169                     -1.0 (-3.8, 1.8)       <NA>       <NA>              
+      170                       69/69 (100.0%)       <NA>       <NA>              
+      171                    51.7 (49.8, 53.6)       <NA>       <NA>              
+      172                      1.0 (-1.8, 3.8)       <NA>       <NA>              
+      173                        WEEK 2 DAY 15       <NA>       <NA>              
+      174                       57/57 (100.0%)       <NA>       <NA>              
+      175                    48.0 (45.7, 50.3)       <NA>       <NA>              
+      176                     -0.9 (-4.1, 2.3)       <NA>       <NA>              
+      177                       69/69 (100.0%)       <NA>       <NA>              
+      178                    48.7 (47.0, 50.4)       <NA>       <NA>              
+      179                     -2.1 (-4.8, 0.7)       <NA>       <NA>              
+      180                        WEEK 3 DAY 22       <NA>       <NA>              
+      181                       57/57 (100.0%)       <NA>       <NA>              
+      182                    50.5 (48.6, 52.4)       <NA>       <NA>              
+      183                      1.6 (-1.5, 4.7)       <NA>       <NA>              
+      184                       69/69 (100.0%)       <NA>       <NA>              
+      185                    48.2 (46.3, 50.1)       <NA>       <NA>              
+      186                     -2.5 (-5.2, 0.2)       <NA>       <NA>              
+      187                        WEEK 4 DAY 29       <NA>       <NA>              
+      188                       57/57 (100.0%)       <NA>       <NA>              
+      189                    50.6 (47.8, 53.4)       <NA>       <NA>              
+      190                      1.7 (-2.1, 5.4)       <NA>       <NA>              
+      191                       69/69 (100.0%)       <NA>       <NA>              
+      192                    49.7 (47.8, 51.6)       <NA>       <NA>              
+      193                     -1.0 (-3.6, 1.6)       <NA>       <NA>              
+      194                        WEEK 5 DAY 36       <NA>       <NA>              
+      195                       57/57 (100.0%)       <NA>       <NA>              
+      196                    50.9 (48.6, 53.1)       <NA>       <NA>              
+      197                      2.0 (-1.0, 5.0)       <NA>       <NA>              
+      198                       69/69 (100.0%)       <NA>       <NA>              
+      199                    50.0 (47.9, 52.1)       <NA>       <NA>              
+      200                     -0.7 (-3.4, 2.0)       <NA>       <NA>              
+      201                                            <NA>       <NA>              
+      202                                            <NA>       <NA>              
+      203                                            <NA>       <NA>              
+      204                                            <NA>       <NA>              
+      205                                            <NA>       <NA>              
+      206                                            <NA>       <NA>              
       207                                            <NA>       <NA>              
-      208                                            <NA>       <NA>              
+      208       C-Reactive Protein Measurement       <NA>       <NA>              
       209                                            <NA>       <NA>              
       210                                            <NA>       <NA>              
       211                                            <NA>       <NA>              
       212                                            <NA>       <NA>              
       213                                            <NA>       <NA>              
-      214       C-Reactive Protein Measurement       <NA>       <NA>              
-      215                                            <NA>       <NA>              
-      216                                            <NA>       <NA>              
-      217                                            <NA>       <NA>              
-      218                                            <NA>       <NA>              
-      219                                            <NA>       <NA>              
-      220                                            <NA>       <NA>              
-      221                             BASELINE       <NA>       <NA>              
-      222                       57/57 (100.0%)       <NA>       <NA>              
-      223                    48.5 (46.3, 50.7)       <NA>       <NA>              
-      224                       0.0 (0.0, 0.0)       <NA>       <NA>              
-      225                       69/69 (100.0%)       <NA>       <NA>              
-      226                    49.7 (47.8, 51.7)       <NA>       <NA>              
-      227                       0.0 (0.0, 0.0)       <NA>       <NA>              
-      228                         WEEK 1 DAY 8       <NA>       <NA>              
-      229                       57/57 (100.0%)       <NA>       <NA>              
-      230                    52.7 (50.9, 54.6)       <NA>       <NA>              
-      231                       4.2 (1.6, 6.8)       <NA>       <NA>              
-      232                       69/69 (100.0%)       <NA>       <NA>              
-      233                    49.6 (47.2, 52.0)       <NA>       <NA>              
-      234                     -0.1 (-3.4, 3.2)       <NA>       <NA>              
-      235                        WEEK 2 DAY 15       <NA>       <NA>              
-      236                       57/57 (100.0%)       <NA>       <NA>              
-      237                    50.3 (48.1, 52.6)       <NA>       <NA>              
-      238                      1.8 (-1.3, 4.9)       <NA>       <NA>              
-      239                       69/69 (100.0%)       <NA>       <NA>              
-      240                    48.2 (46.0, 50.3)       <NA>       <NA>              
-      241                     -1.5 (-4.3, 1.3)       <NA>       <NA>              
-      242                        WEEK 3 DAY 22       <NA>       <NA>              
-      243                       57/57 (100.0%)       <NA>       <NA>              
-      244                    51.1 (49.2, 53.0)       <NA>       <NA>              
-      245                      2.6 (-0.1, 5.3)       <NA>       <NA>              
-      246                       69/69 (100.0%)       <NA>       <NA>              
-      247                    50.0 (48.1, 51.9)       <NA>       <NA>              
-      248                      0.3 (-2.7, 3.3)       <NA>       <NA>              
-      249                        WEEK 4 DAY 29       <NA>       <NA>              
-      250                       57/57 (100.0%)       <NA>       <NA>              
-      251                    52.2 (50.4, 54.1)       <NA>       <NA>              
-      252                       3.7 (1.1, 6.3)       <NA>       <NA>              
-      253                       69/69 (100.0%)       <NA>       <NA>              
-      254                    49.5 (47.8, 51.3)       <NA>       <NA>              
-      255                     -0.2 (-2.8, 2.4)       <NA>       <NA>              
-      256                        WEEK 5 DAY 36       <NA>       <NA>              
-      257                       57/57 (100.0%)       <NA>       <NA>              
-      258                    49.0 (46.7, 51.3)       <NA>       <NA>              
-      259                      0.5 (-2.6, 3.6)       <NA>       <NA>              
-      260                       69/69 (100.0%)       <NA>       <NA>              
-      261                    49.0 (47.1, 50.9)       <NA>       <NA>              
-      262                     -0.7 (-3.6, 2.2)       <NA>       <NA>              
-      263                                            <NA>       <NA>              
-      264                             footer 1       <NA>       <NA>              
-      265                             footer 2       <NA>       <NA>              
-      266                                   \n       <NA>       <NA>              
-      267                    test1234allparts:       <NA>       <NA>              
-      268                                   \t       <NA>       <NA>              
-      269               This is the main Title       <NA>       <NA>              
-      270                                            <NA>       <NA>              
-      271                                            <NA>       <NA>              
-      272   Difference in Mean Change (95% CI)       <NA>       <NA>              
-      273                                            <NA>       <NA>              
-      274                           B: Placebo       <NA>       <NA>              
-      275              A: Drug X vs B: Placebo       <NA>       <NA>              
-      276         C: Combination vs B: Placebo       <NA>       <NA>              
-      277                      Laboratory Test       <NA>       <NA>              
-      278                                N=134       <NA>       <NA>              
-      279                                N=134       <NA>       <NA>              
-      280                                N=132       <NA>       <NA>              
-      281                          Study Visit       <NA>       <NA>              
-      282                              n/N (%)       <NA>       <NA>              
-      283                        Mean (95% CI)       <NA>       <NA>              
-      284   Mean Change From Baseline (95% CI)       <NA>       <NA>              
+      214                                            <NA>       <NA>              
+      215                             BASELINE       <NA>       <NA>              
+      216                       57/57 (100.0%)       <NA>       <NA>              
+      217                    48.5 (46.3, 50.7)       <NA>       <NA>              
+      218                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      219                       69/69 (100.0%)       <NA>       <NA>              
+      220                    49.7 (47.8, 51.7)       <NA>       <NA>              
+      221                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      222                         WEEK 1 DAY 8       <NA>       <NA>              
+      223                       57/57 (100.0%)       <NA>       <NA>              
+      224                    52.7 (50.9, 54.6)       <NA>       <NA>              
+      225                       4.2 (1.6, 6.8)       <NA>       <NA>              
+      226                       69/69 (100.0%)       <NA>       <NA>              
+      227                    49.6 (47.2, 52.0)       <NA>       <NA>              
+      228                     -0.1 (-3.4, 3.2)       <NA>       <NA>              
+      229                        WEEK 2 DAY 15       <NA>       <NA>              
+      230                       57/57 (100.0%)       <NA>       <NA>              
+      231                    50.3 (48.1, 52.6)       <NA>       <NA>              
+      232                      1.8 (-1.3, 4.9)       <NA>       <NA>              
+      233                       69/69 (100.0%)       <NA>       <NA>              
+      234                    48.2 (46.0, 50.3)       <NA>       <NA>              
+      235                     -1.5 (-4.3, 1.3)       <NA>       <NA>              
+      236                        WEEK 3 DAY 22       <NA>       <NA>              
+      237                       57/57 (100.0%)       <NA>       <NA>              
+      238                    51.1 (49.2, 53.0)       <NA>       <NA>              
+      239                      2.6 (-0.1, 5.3)       <NA>       <NA>              
+      240                       69/69 (100.0%)       <NA>       <NA>              
+      241                    50.0 (48.1, 51.9)       <NA>       <NA>              
+      242                      0.3 (-2.7, 3.3)       <NA>       <NA>              
+      243                        WEEK 4 DAY 29       <NA>       <NA>              
+      244                       57/57 (100.0%)       <NA>       <NA>              
+      245                    52.2 (50.4, 54.1)       <NA>       <NA>              
+      246                       3.7 (1.1, 6.3)       <NA>       <NA>              
+      247                       69/69 (100.0%)       <NA>       <NA>              
+      248                    49.5 (47.8, 51.3)       <NA>       <NA>              
+      249                     -0.2 (-2.8, 2.4)       <NA>       <NA>              
+      250                        WEEK 5 DAY 36       <NA>       <NA>              
+      251                       57/57 (100.0%)       <NA>       <NA>              
+      252                    49.0 (46.7, 51.3)       <NA>       <NA>              
+      253                      0.5 (-2.6, 3.6)       <NA>       <NA>              
+      254                       69/69 (100.0%)       <NA>       <NA>              
+      255                    49.0 (47.1, 50.9)       <NA>       <NA>              
+      256                     -0.7 (-3.6, 2.2)       <NA>       <NA>              
+      257                                            <NA>       <NA>              
+      258                             footer 1       <NA>       <NA>              
+      259                             footer 2       <NA>       <NA>              
+      260                                   \n       <NA>       <NA>              
+      261                    test1234allparts:       <NA>       <NA>              
+      262                                   \t       <NA>       <NA>              
+      263               This is the main Title       <NA>       <NA>              
+      264                                            <NA>       <NA>              
+      265                                            <NA>       <NA>              
+      266   Difference in Mean Change (95% CI)       <NA>       <NA>              
+      267                                            <NA>       <NA>              
+      268                           B: Placebo       <NA>       <NA>              
+      269              A: Drug X vs B: Placebo       <NA>       <NA>              
+      270         C: Combination vs B: Placebo       <NA>       <NA>              
+      271                      Laboratory Test       <NA>       <NA>              
+      272                                N=134       <NA>       <NA>              
+      273                                N=134       <NA>       <NA>              
+      274                                N=132       <NA>       <NA>              
+      275                          Study Visit       <NA>       <NA>              
+      276                              n/N (%)       <NA>       <NA>              
+      277                        Mean (95% CI)       <NA>       <NA>              
+      278   Mean Change From Baseline (95% CI)       <NA>       <NA>              
+      279                                            <NA>       <NA>              
+      280                                            <NA>       <NA>              
+      281                      Age: < 35 years       <NA>       <NA>              
+      282                                  134       <NA>       <NA>              
+      283                                            <NA>       <NA>              
+      284                                            <NA>       <NA>              
       285                                            <NA>       <NA>              
       286                                            <NA>       <NA>              
-      287                      Age: < 35 years       <NA>       <NA>              
-      288                                  134       <NA>       <NA>              
+      287                                            <NA>       <NA>              
+      288                                            <NA>       <NA>              
       289                                            <NA>       <NA>              
       290                                            <NA>       <NA>              
       291                                            <NA>       <NA>              
       292                                            <NA>       <NA>              
-      293                                            <NA>       <NA>              
+      293 Alanine Aminotransferase Measurement       <NA>       <NA>              
       294                                            <NA>       <NA>              
       295                                            <NA>       <NA>              
       296                                            <NA>       <NA>              
       297                                            <NA>       <NA>              
       298                                            <NA>       <NA>              
-      299 Alanine Aminotransferase Measurement       <NA>       <NA>              
-      300                                            <NA>       <NA>              
-      301                                            <NA>       <NA>              
-      302                                            <NA>       <NA>              
-      303                                            <NA>       <NA>              
-      304                                            <NA>       <NA>              
-      305                             BASELINE       <NA>       <NA>              
+      299                             BASELINE       <NA>       <NA>              
+      300                       65/65 (100.0%)       <NA>       <NA>              
+      301                    49.7 (47.7, 51.7)       <NA>       <NA>              
+      302                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      303                         0.0 (NE, NE)       <NA>       <NA>              
+      304                         0.0 (NE, NE)       <NA>       <NA>              
+      305                         WEEK 1 DAY 8       <NA>       <NA>              
       306                       65/65 (100.0%)       <NA>       <NA>              
-      307                    49.7 (47.7, 51.7)       <NA>       <NA>              
-      308                       0.0 (0.0, 0.0)       <NA>       <NA>              
-      309                         0.0 (NE, NE)       <NA>       <NA>              
-      310                         0.0 (NE, NE)       <NA>       <NA>              
-      311                         WEEK 1 DAY 8       <NA>       <NA>              
+      307                    49.9 (48.3, 51.5)       <NA>       <NA>              
+      308                      0.2 (-2.6, 3.0)       <NA>       <NA>              
+      309                     -1.1 (-5.1, 2.8)       <NA>       <NA>              
+      310                     -0.9 (-4.6, 2.9)       <NA>       <NA>              
+      311                        WEEK 2 DAY 15       <NA>       <NA>              
       312                       65/65 (100.0%)       <NA>       <NA>              
-      313                    49.9 (48.3, 51.5)       <NA>       <NA>              
-      314                      0.2 (-2.6, 3.0)       <NA>       <NA>              
-      315                     -1.1 (-5.1, 2.8)       <NA>       <NA>              
-      316                     -0.9 (-4.6, 2.9)       <NA>       <NA>              
-      317                        WEEK 2 DAY 15       <NA>       <NA>              
+      313                    49.4 (47.1, 51.6)       <NA>       <NA>              
+      314                     -0.4 (-3.6, 2.9)       <NA>       <NA>              
+      315                      0.7 (-3.5, 5.0)       <NA>       <NA>              
+      316                     -2.4 (-6.6, 1.7)       <NA>       <NA>              
+      317                        WEEK 3 DAY 22       <NA>       <NA>              
       318                       65/65 (100.0%)       <NA>       <NA>              
-      319                    49.4 (47.1, 51.6)       <NA>       <NA>              
-      320                     -0.4 (-3.6, 2.9)       <NA>       <NA>              
-      321                      0.7 (-3.5, 5.0)       <NA>       <NA>              
-      322                     -2.4 (-6.6, 1.7)       <NA>       <NA>              
-      323                        WEEK 3 DAY 22       <NA>       <NA>              
+      319                    49.6 (47.7, 51.5)       <NA>       <NA>              
+      320                     -0.1 (-2.8, 2.5)       <NA>       <NA>              
+      321                      0.1 (-3.6, 3.8)       <NA>       <NA>              
+      322                     -1.4 (-5.2, 2.3)       <NA>       <NA>              
+      323                        WEEK 4 DAY 29       <NA>       <NA>              
       324                       65/65 (100.0%)       <NA>       <NA>              
-      325                    49.6 (47.7, 51.5)       <NA>       <NA>              
-      326                     -0.1 (-2.8, 2.5)       <NA>       <NA>              
-      327                      0.1 (-3.6, 3.8)       <NA>       <NA>              
-      328                     -1.4 (-5.2, 2.3)       <NA>       <NA>              
-      329                        WEEK 4 DAY 29       <NA>       <NA>              
+      325                    49.4 (47.3, 51.4)       <NA>       <NA>              
+      326                     -0.3 (-3.1, 2.5)       <NA>       <NA>              
+      327                      1.1 (-2.9, 5.0)       <NA>       <NA>              
+      328                     -1.2 (-5.0, 2.6)       <NA>       <NA>              
+      329                        WEEK 5 DAY 36       <NA>       <NA>              
       330                       65/65 (100.0%)       <NA>       <NA>              
-      331                    49.4 (47.3, 51.4)       <NA>       <NA>              
-      332                     -0.3 (-3.1, 2.5)       <NA>       <NA>              
-      333                      1.1 (-2.9, 5.0)       <NA>       <NA>              
-      334                     -1.2 (-5.0, 2.6)       <NA>       <NA>              
-      335                        WEEK 5 DAY 36       <NA>       <NA>              
-      336                       65/65 (100.0%)       <NA>       <NA>              
-      337                    49.1 (47.1, 51.1)       <NA>       <NA>              
-      338                     -0.6 (-3.7, 2.4)       <NA>       <NA>              
-      339                      1.4 (-2.8, 5.5)       <NA>       <NA>              
-      340                     -0.5 (-4.7, 3.6)       <NA>       <NA>              
-      341                                            <NA>       <NA>              
+      331                    49.1 (47.1, 51.1)       <NA>       <NA>              
+      332                     -0.6 (-3.7, 2.4)       <NA>       <NA>              
+      333                      1.4 (-2.8, 5.5)       <NA>       <NA>              
+      334                     -0.5 (-4.7, 3.6)       <NA>       <NA>              
+      335                                            <NA>       <NA>              
+      336                                            <NA>       <NA>              
+      337                                            <NA>       <NA>              
+      338                                            <NA>       <NA>              
+      339                                            <NA>       <NA>              
+      340                                            <NA>       <NA>              
+      341       C-Reactive Protein Measurement       <NA>       <NA>              
       342                                            <NA>       <NA>              
       343                                            <NA>       <NA>              
       344                                            <NA>       <NA>              
       345                                            <NA>       <NA>              
       346                                            <NA>       <NA>              
-      347       C-Reactive Protein Measurement       <NA>       <NA>              
-      348                                            <NA>       <NA>              
-      349                                            <NA>       <NA>              
-      350                                            <NA>       <NA>              
-      351                                            <NA>       <NA>              
-      352                                            <NA>       <NA>              
-      353                             BASELINE       <NA>       <NA>              
+      347                             BASELINE       <NA>       <NA>              
+      348                       65/65 (100.0%)       <NA>       <NA>              
+      349                    48.7 (46.7, 50.7)       <NA>       <NA>              
+      350                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      351                         0.0 (NE, NE)       <NA>       <NA>              
+      352                         0.0 (NE, NE)       <NA>       <NA>              
+      353                         WEEK 1 DAY 8       <NA>       <NA>              
       354                       65/65 (100.0%)       <NA>       <NA>              
-      355                    48.7 (46.7, 50.7)       <NA>       <NA>              
-      356                       0.0 (0.0, 0.0)       <NA>       <NA>              
-      357                         0.0 (NE, NE)       <NA>       <NA>              
-      358                         0.0 (NE, NE)       <NA>       <NA>              
-      359                         WEEK 1 DAY 8       <NA>       <NA>              
+      355                    50.3 (48.1, 52.6)       <NA>       <NA>              
+      356                      1.6 (-1.4, 4.7)       <NA>       <NA>              
+      357                      0.3 (-4.0, 4.7)       <NA>       <NA>              
+      358                     -1.4 (-5.7, 2.9)       <NA>       <NA>              
+      359                        WEEK 2 DAY 15       <NA>       <NA>              
       360                       65/65 (100.0%)       <NA>       <NA>              
-      361                    50.3 (48.1, 52.6)       <NA>       <NA>              
-      362                      1.6 (-1.4, 4.7)       <NA>       <NA>              
-      363                      0.3 (-4.0, 4.7)       <NA>       <NA>              
-      364                     -1.4 (-5.7, 2.9)       <NA>       <NA>              
-      365                        WEEK 2 DAY 15       <NA>       <NA>              
+      361                    50.9 (49.1, 52.8)       <NA>       <NA>              
+      362                      2.2 (-0.5, 4.9)       <NA>       <NA>              
+      363                     -2.2 (-6.2, 1.8)       <NA>       <NA>              
+      364                     -2.8 (-6.6, 1.0)       <NA>       <NA>              
+      365                        WEEK 3 DAY 22       <NA>       <NA>              
       366                       65/65 (100.0%)       <NA>       <NA>              
-      367                    50.9 (49.1, 52.8)       <NA>       <NA>              
-      368                      2.2 (-0.5, 4.9)       <NA>       <NA>              
-      369                     -2.2 (-6.2, 1.8)       <NA>       <NA>              
-      370                     -2.8 (-6.6, 1.0)       <NA>       <NA>              
-      371                        WEEK 3 DAY 22       <NA>       <NA>              
+      367                    49.1 (47.2, 51.1)       <NA>       <NA>              
+      368                      0.4 (-2.3, 3.2)       <NA>       <NA>              
+      369                     -0.4 (-4.5, 3.7)       <NA>       <NA>              
+      370                     -1.6 (-5.6, 2.4)       <NA>       <NA>              
+      371                        WEEK 4 DAY 29       <NA>       <NA>              
       372                       65/65 (100.0%)       <NA>       <NA>              
-      373                    49.1 (47.2, 51.1)       <NA>       <NA>              
-      374                      0.4 (-2.3, 3.2)       <NA>       <NA>              
-      375                     -0.4 (-4.5, 3.7)       <NA>       <NA>              
-      376                     -1.6 (-5.6, 2.4)       <NA>       <NA>              
-      377                        WEEK 4 DAY 29       <NA>       <NA>              
+      373                    49.0 (47.0, 51.0)       <NA>       <NA>              
+      374                      0.3 (-2.5, 3.1)       <NA>       <NA>              
+      375                      1.6 (-2.6, 5.8)       <NA>       <NA>              
+      376                     -1.0 (-5.2, 3.2)       <NA>       <NA>              
+      377                        WEEK 5 DAY 36       <NA>       <NA>              
       378                       65/65 (100.0%)       <NA>       <NA>              
-      379                    49.0 (47.0, 51.0)       <NA>       <NA>              
-      380                      0.3 (-2.5, 3.1)       <NA>       <NA>              
-      381                      1.6 (-2.6, 5.8)       <NA>       <NA>              
-      382                     -1.0 (-5.2, 3.2)       <NA>       <NA>              
-      383                        WEEK 5 DAY 36       <NA>       <NA>              
-      384                       65/65 (100.0%)       <NA>       <NA>              
-      385                    51.1 (49.3, 52.9)       <NA>       <NA>              
-      386                      2.4 (-0.4, 5.2)       <NA>       <NA>              
-      387                     -1.4 (-5.7, 2.9)       <NA>       <NA>              
-      388                    -4.0 (-8.0, -0.1)       <NA>       <NA>              
-      389                      Age: ≥ 35 years       <NA>       <NA>              
-      390                                  134       <NA>       <NA>              
+      379                    51.1 (49.3, 52.9)       <NA>       <NA>              
+      380                      2.4 (-0.4, 5.2)       <NA>       <NA>              
+      381                     -1.4 (-5.7, 2.9)       <NA>       <NA>              
+      382                    -4.0 (-8.0, -0.1)       <NA>       <NA>              
+      383                      Age: ≥ 35 years       <NA>       <NA>              
+      384                                  134       <NA>       <NA>              
+      385                                            <NA>       <NA>              
+      386                                            <NA>       <NA>              
+      387                                            <NA>       <NA>              
+      388                                            <NA>       <NA>              
+      389                                            <NA>       <NA>              
+      390                                            <NA>       <NA>              
       391                                            <NA>       <NA>              
       392                                            <NA>       <NA>              
       393                                            <NA>       <NA>              
       394                                            <NA>       <NA>              
-      395                                            <NA>       <NA>              
+      395 Alanine Aminotransferase Measurement       <NA>       <NA>              
       396                                            <NA>       <NA>              
       397                                            <NA>       <NA>              
       398                                            <NA>       <NA>              
       399                                            <NA>       <NA>              
       400                                            <NA>       <NA>              
-      401 Alanine Aminotransferase Measurement       <NA>       <NA>              
-      402                                            <NA>       <NA>              
-      403                                            <NA>       <NA>              
-      404                                            <NA>       <NA>              
-      405                                            <NA>       <NA>              
-      406                                            <NA>       <NA>              
-      407                             BASELINE       <NA>       <NA>              
+      401                             BASELINE       <NA>       <NA>              
+      402                       69/69 (100.0%)       <NA>       <NA>              
+      403                    50.9 (48.8, 52.9)       <NA>       <NA>              
+      404                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      405                         0.0 (NE, NE)       <NA>       <NA>              
+      406                         0.0 (NE, NE)       <NA>       <NA>              
+      407                         WEEK 1 DAY 8       <NA>       <NA>              
       408                       69/69 (100.0%)       <NA>       <NA>              
-      409                    50.9 (48.8, 52.9)       <NA>       <NA>              
-      410                       0.0 (0.0, 0.0)       <NA>       <NA>              
-      411                         0.0 (NE, NE)       <NA>       <NA>              
-      412                         0.0 (NE, NE)       <NA>       <NA>              
-      413                         WEEK 1 DAY 8       <NA>       <NA>              
+      409                    50.9 (48.8, 53.1)       <NA>       <NA>              
+      410                      0.1 (-3.0, 3.2)       <NA>       <NA>              
+      411                     -1.1 (-5.3, 3.1)       <NA>       <NA>              
+      412                      0.9 (-3.2, 5.0)       <NA>       <NA>              
+      413                        WEEK 2 DAY 15       <NA>       <NA>              
       414                       69/69 (100.0%)       <NA>       <NA>              
-      415                    50.9 (48.8, 53.1)       <NA>       <NA>              
-      416                      0.1 (-3.0, 3.2)       <NA>       <NA>              
-      417                     -1.1 (-5.3, 3.1)       <NA>       <NA>              
-      418                      0.9 (-3.2, 5.0)       <NA>       <NA>              
-      419                        WEEK 2 DAY 15       <NA>       <NA>              
+      415                    51.1 (49.2, 52.9)       <NA>       <NA>              
+      416                      0.2 (-2.6, 3.1)       <NA>       <NA>              
+      417                     -1.1 (-5.4, 3.1)       <NA>       <NA>              
+      418                     -2.3 (-6.2, 1.7)       <NA>       <NA>              
+      419                        WEEK 3 DAY 22       <NA>       <NA>              
       420                       69/69 (100.0%)       <NA>       <NA>              
-      421                    51.1 (49.2, 52.9)       <NA>       <NA>              
-      422                      0.2 (-2.6, 3.1)       <NA>       <NA>              
-      423                     -1.1 (-5.4, 3.1)       <NA>       <NA>              
-      424                     -2.3 (-6.2, 1.7)       <NA>       <NA>              
-      425                        WEEK 3 DAY 22       <NA>       <NA>              
+      421                    49.8 (47.9, 51.6)       <NA>       <NA>              
+      422                     -1.1 (-3.9, 1.7)       <NA>       <NA>              
+      423                      2.7 (-1.4, 6.9)       <NA>       <NA>              
+      424                     -1.4 (-5.3, 2.5)       <NA>       <NA>              
+      425                        WEEK 4 DAY 29       <NA>       <NA>              
       426                       69/69 (100.0%)       <NA>       <NA>              
-      427                    49.8 (47.9, 51.6)       <NA>       <NA>              
-      428                     -1.1 (-3.9, 1.7)       <NA>       <NA>              
-      429                      2.7 (-1.4, 6.9)       <NA>       <NA>              
-      430                     -1.4 (-5.3, 2.5)       <NA>       <NA>              
-      431                        WEEK 4 DAY 29       <NA>       <NA>              
+      427                    49.2 (47.0, 51.3)       <NA>       <NA>              
+      428                     -1.7 (-5.0, 1.6)       <NA>       <NA>              
+      429                      3.4 (-1.5, 8.3)       <NA>       <NA>              
+      430                      0.7 (-3.5, 4.9)       <NA>       <NA>              
+      431                        WEEK 5 DAY 36       <NA>       <NA>              
       432                       69/69 (100.0%)       <NA>       <NA>              
-      433                    49.2 (47.0, 51.3)       <NA>       <NA>              
-      434                     -1.7 (-5.0, 1.6)       <NA>       <NA>              
-      435                      3.4 (-1.5, 8.3)       <NA>       <NA>              
-      436                      0.7 (-3.5, 4.9)       <NA>       <NA>              
-      437                        WEEK 5 DAY 36       <NA>       <NA>              
-      438                       69/69 (100.0%)       <NA>       <NA>              
-      439                    50.3 (48.2, 52.4)       <NA>       <NA>              
-      440                     -0.6 (-3.7, 2.6)       <NA>       <NA>              
-      441                      2.5 (-1.8, 6.8)       <NA>       <NA>              
-      442                     -0.1 (-4.2, 3.9)       <NA>       <NA>              
-      443                                            <NA>       <NA>              
+      433                    50.3 (48.2, 52.4)       <NA>       <NA>              
+      434                     -0.6 (-3.7, 2.6)       <NA>       <NA>              
+      435                      2.5 (-1.8, 6.8)       <NA>       <NA>              
+      436                     -0.1 (-4.2, 3.9)       <NA>       <NA>              
+      437                                            <NA>       <NA>              
+      438                                            <NA>       <NA>              
+      439                                            <NA>       <NA>              
+      440                                            <NA>       <NA>              
+      441                                            <NA>       <NA>              
+      442                                            <NA>       <NA>              
+      443       C-Reactive Protein Measurement       <NA>       <NA>              
       444                                            <NA>       <NA>              
       445                                            <NA>       <NA>              
       446                                            <NA>       <NA>              
       447                                            <NA>       <NA>              
       448                                            <NA>       <NA>              
-      449       C-Reactive Protein Measurement       <NA>       <NA>              
-      450                                            <NA>       <NA>              
-      451                                            <NA>       <NA>              
-      452                                            <NA>       <NA>              
-      453                                            <NA>       <NA>              
-      454                                            <NA>       <NA>              
-      455                             BASELINE       <NA>       <NA>              
+      449                             BASELINE       <NA>       <NA>              
+      450                       69/69 (100.0%)       <NA>       <NA>              
+      451                    51.4 (49.5, 53.2)       <NA>       <NA>              
+      452                       0.0 (0.0, 0.0)       <NA>       <NA>              
+      453                         0.0 (NE, NE)       <NA>       <NA>              
+      454                         0.0 (NE, NE)       <NA>       <NA>              
+      455                         WEEK 1 DAY 8       <NA>       <NA>              
       456                       69/69 (100.0%)       <NA>       <NA>              
-      457                    51.4 (49.5, 53.2)       <NA>       <NA>              
-      458                       0.0 (0.0, 0.0)       <NA>       <NA>              
-      459                         0.0 (NE, NE)       <NA>       <NA>              
-      460                         0.0 (NE, NE)       <NA>       <NA>              
-      461                         WEEK 1 DAY 8       <NA>       <NA>              
+      457                    50.2 (48.2, 52.3)       <NA>       <NA>              
+      458                     -1.2 (-3.8, 1.4)       <NA>       <NA>              
+      459                       5.4 (1.7, 9.0)       <NA>       <NA>              
+      460                      1.1 (-3.1, 5.3)       <NA>       <NA>              
+      461                        WEEK 2 DAY 15       <NA>       <NA>              
       462                       69/69 (100.0%)       <NA>       <NA>              
-      463                    50.2 (48.2, 52.3)       <NA>       <NA>              
-      464                     -1.2 (-3.8, 1.4)       <NA>       <NA>              
-      465                       5.4 (1.7, 9.0)       <NA>       <NA>              
-      466                      1.1 (-3.1, 5.3)       <NA>       <NA>              
-      467                        WEEK 2 DAY 15       <NA>       <NA>              
+      463                    50.8 (49.1, 52.6)       <NA>       <NA>              
+      464                     -0.5 (-3.0, 1.9)       <NA>       <NA>              
+      465                      2.4 (-1.6, 6.3)       <NA>       <NA>              
+      466                     -1.0 (-4.7, 2.7)       <NA>       <NA>              
+      467                        WEEK 3 DAY 22       <NA>       <NA>              
       468                       69/69 (100.0%)       <NA>       <NA>              
-      469                    50.8 (49.1, 52.6)       <NA>       <NA>              
-      470                     -0.5 (-3.0, 1.9)       <NA>       <NA>              
-      471                      2.4 (-1.6, 6.3)       <NA>       <NA>              
-      472                     -1.0 (-4.7, 2.7)       <NA>       <NA>              
-      473                        WEEK 3 DAY 22       <NA>       <NA>              
+      469                    49.4 (47.7, 51.1)       <NA>       <NA>              
+      470                     -2.0 (-4.4, 0.4)       <NA>       <NA>              
+      471                       4.6 (1.0, 8.2)       <NA>       <NA>              
+      472                      2.3 (-1.5, 6.1)       <NA>       <NA>              
+      473                        WEEK 4 DAY 29       <NA>       <NA>              
       474                       69/69 (100.0%)       <NA>       <NA>              
-      475                    49.4 (47.7, 51.1)       <NA>       <NA>              
-      476                     -2.0 (-4.4, 0.4)       <NA>       <NA>              
-      477                       4.6 (1.0, 8.2)       <NA>       <NA>              
-      478                      2.3 (-1.5, 6.1)       <NA>       <NA>              
-      479                        WEEK 4 DAY 29       <NA>       <NA>              
+      475                    49.9 (47.9, 52.0)       <NA>       <NA>              
+      476                     -1.4 (-4.0, 1.2)       <NA>       <NA>              
+      477                       5.1 (1.5, 8.8)       <NA>       <NA>              
+      478                      1.2 (-2.4, 4.9)       <NA>       <NA>              
+      479                        WEEK 5 DAY 36       <NA>       <NA>              
       480                       69/69 (100.0%)       <NA>       <NA>              
-      481                    49.9 (47.9, 52.0)       <NA>       <NA>              
-      482                     -1.4 (-4.0, 1.2)       <NA>       <NA>              
-      483                       5.1 (1.5, 8.8)       <NA>       <NA>              
-      484                      1.2 (-2.4, 4.9)       <NA>       <NA>              
-      485                        WEEK 5 DAY 36       <NA>       <NA>              
-      486                       69/69 (100.0%)       <NA>       <NA>              
-      487                    50.6 (48.7, 52.5)       <NA>       <NA>              
-      488                     -0.8 (-3.5, 1.9)       <NA>       <NA>              
-      489                      1.2 (-2.8, 5.3)       <NA>       <NA>              
-      490                      0.1 (-3.8, 4.0)       <NA>       <NA>              
-      491                                            <NA>       <NA>              
-      492                             footer 1       <NA>       <NA>              
-      493                             footer 2       <NA>       <NA>              
+      481                    50.6 (48.7, 52.5)       <NA>       <NA>              
+      482                     -0.8 (-3.5, 1.9)       <NA>       <NA>              
+      483                      1.2 (-2.8, 5.3)       <NA>       <NA>              
+      484                      0.1 (-3.8, 4.0)       <NA>       <NA>              
+      485                                            <NA>       <NA>              
+      486                             footer 1       <NA>       <NA>              
+      487                             footer 2       <NA>       <NA>              
           link link_to_bookmark bookmark_start character_stylename sz sz_cs
       1   <NA>             <NA>           <NA>                <NA> 20    20
       2   <NA>             <NA>           <NA>                <NA> 20    20
@@ -54665,16 +54611,16 @@
       257 <NA>             <NA>           <NA>                <NA> 18    18
       258 <NA>             <NA>           <NA>                <NA> 18    18
       259 <NA>             <NA>           <NA>                <NA> 18    18
-      260 <NA>             <NA>           <NA>                <NA> 18    18
-      261 <NA>             <NA>           <NA>                <NA> 18    18
-      262 <NA>             <NA>           <NA>                <NA> 18    18
-      263 <NA>             <NA>           <NA>                <NA> 18    18
+      260 <NA>             <NA>           <NA>                <NA> NA    NA
+      261 <NA>             <NA>           <NA>                <NA> 20    20
+      262 <NA>             <NA>           <NA>                <NA> 20    20
+      263 <NA>             <NA>           <NA>                <NA> 20    20
       264 <NA>             <NA>           <NA>                <NA> 18    18
       265 <NA>             <NA>           <NA>                <NA> 18    18
-      266 <NA>             <NA>           <NA>                <NA> NA    NA
-      267 <NA>             <NA>           <NA>                <NA> 20    20
-      268 <NA>             <NA>           <NA>                <NA> 20    20
-      269 <NA>             <NA>           <NA>                <NA> 20    20
+      266 <NA>             <NA>           <NA>                <NA> 18    18
+      267 <NA>             <NA>           <NA>                <NA> 18    18
+      268 <NA>             <NA>           <NA>                <NA> 18    18
+      269 <NA>             <NA>           <NA>                <NA> 18    18
       270 <NA>             <NA>           <NA>                <NA> 18    18
       271 <NA>             <NA>           <NA>                <NA> 18    18
       272 <NA>             <NA>           <NA>                <NA> 18    18
@@ -54893,12 +54839,6 @@
       485 <NA>             <NA>           <NA>                <NA> 18    18
       486 <NA>             <NA>           <NA>                <NA> 18    18
       487 <NA>             <NA>           <NA>                <NA> 18    18
-      488 <NA>             <NA>           <NA>                <NA> 18    18
-      489 <NA>             <NA>           <NA>                <NA> 18    18
-      490 <NA>             <NA>           <NA>                <NA> 18    18
-      491 <NA>             <NA>           <NA>                <NA> 18    18
-      492 <NA>             <NA>           <NA>                <NA> 18    18
-      493 <NA>             <NA>           <NA>                <NA> 18    18
           font_family_ascii font_family_eastasia font_family_hansi  font_family_cs
       1     Times New Roman      Times New Roman   Times New Roman Times New Roman
       2     Times New Roman      Times New Roman   Times New Roman Times New Roman
@@ -55159,13 +55099,13 @@
       257   Times New Roman      Times New Roman   Times New Roman Times New Roman
       258   Times New Roman      Times New Roman   Times New Roman Times New Roman
       259   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      260   Times New Roman      Times New Roman   Times New Roman Times New Roman
+      260              <NA>                 <NA>              <NA>            <NA>
       261   Times New Roman      Times New Roman   Times New Roman Times New Roman
       262   Times New Roman      Times New Roman   Times New Roman Times New Roman
       263   Times New Roman      Times New Roman   Times New Roman Times New Roman
       264   Times New Roman      Times New Roman   Times New Roman Times New Roman
       265   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      266              <NA>                 <NA>              <NA>            <NA>
+      266   Times New Roman      Times New Roman   Times New Roman Times New Roman
       267   Times New Roman      Times New Roman   Times New Roman Times New Roman
       268   Times New Roman      Times New Roman   Times New Roman Times New Roman
       269   Times New Roman      Times New Roman   Times New Roman Times New Roman
@@ -55387,12 +55327,6 @@
       485   Times New Roman      Times New Roman   Times New Roman Times New Roman
       486   Times New Roman      Times New Roman   Times New Roman Times New Roman
       487   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      488   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      489   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      490   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      491   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      492   Times New Roman      Times New Roman   Times New Roman Times New Roman
-      493   Times New Roman      Times New Roman   Times New Roman Times New Roman
            bold italic underline   color shading shading_color shading_fill
       1    TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       2    TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
@@ -55653,16 +55587,16 @@
       257 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       258 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       259 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      260 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      261 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      262 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      263 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
+      260 FALSE  FALSE     FALSE    <NA>    <NA>          <NA>         <NA>
+      261  TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
+      262  TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
+      263  TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       264 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       265 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      266 FALSE  FALSE     FALSE    <NA>    <NA>          <NA>         <NA>
-      267  TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      268  TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      269  TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
+      266 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
+      267 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
+      268 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
+      269 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       270 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       271 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       272 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
@@ -55881,12 +55815,6 @@
       485 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       486 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       487 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      488 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      489 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      490 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      491 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      492 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
-      493 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
           paragraph_stylename keep_with_next  align level num_id table_index row_id
       1               caption          FALSE   left    NA     NA           1      1
       2               caption          FALSE   left    NA     NA           1      1
@@ -55921,466 +55849,460 @@
       31                 <NA>          FALSE center    NA     NA           1      7
       32                 <NA>          FALSE center    NA     NA           1      7
       33                 <NA>          FALSE   left    NA     NA           1      8
-      34                 <NA>          FALSE   left    NA     NA           1      8
-      35                 <NA>          FALSE   left    NA     NA           1      8
-      36                 <NA>          FALSE   left    NA     NA           1      8
+      34                 <NA>          FALSE center    NA     NA           1      8
+      35                 <NA>          FALSE center    NA     NA           1      8
+      36                 <NA>          FALSE center    NA     NA           1      8
       37                 <NA>          FALSE center    NA     NA           1      8
       38                 <NA>          FALSE center    NA     NA           1      8
       39                 <NA>          FALSE center    NA     NA           1      8
-      40                 <NA>          FALSE center    NA     NA           1      8
-      41                 <NA>          FALSE center    NA     NA           1      8
-      42                 <NA>          FALSE center    NA     NA           1      8
-      43                 <NA>          FALSE   left    NA     NA           1      9
+      40                 <NA>          FALSE   left    NA     NA           1      9
+      41                 <NA>          FALSE center    NA     NA           1      9
+      42                 <NA>          FALSE center    NA     NA           1      9
+      43                 <NA>          FALSE center    NA     NA           1      9
       44                 <NA>          FALSE center    NA     NA           1      9
       45                 <NA>          FALSE center    NA     NA           1      9
       46                 <NA>          FALSE center    NA     NA           1      9
-      47                 <NA>          FALSE center    NA     NA           1      9
-      48                 <NA>          FALSE center    NA     NA           1      9
-      49                 <NA>          FALSE center    NA     NA           1      9
-      50                 <NA>          FALSE   left    NA     NA           1     10
+      47                 <NA>          FALSE   left    NA     NA           1     10
+      48                 <NA>          FALSE center    NA     NA           1     10
+      49                 <NA>          FALSE center    NA     NA           1     10
+      50                 <NA>          FALSE center    NA     NA           1     10
       51                 <NA>          FALSE center    NA     NA           1     10
       52                 <NA>          FALSE center    NA     NA           1     10
       53                 <NA>          FALSE center    NA     NA           1     10
-      54                 <NA>          FALSE center    NA     NA           1     10
-      55                 <NA>          FALSE center    NA     NA           1     10
-      56                 <NA>          FALSE center    NA     NA           1     10
-      57                 <NA>          FALSE   left    NA     NA           1     11
+      54                 <NA>          FALSE   left    NA     NA           1     11
+      55                 <NA>          FALSE center    NA     NA           1     11
+      56                 <NA>          FALSE center    NA     NA           1     11
+      57                 <NA>          FALSE center    NA     NA           1     11
       58                 <NA>          FALSE center    NA     NA           1     11
       59                 <NA>          FALSE center    NA     NA           1     11
       60                 <NA>          FALSE center    NA     NA           1     11
-      61                 <NA>          FALSE center    NA     NA           1     11
-      62                 <NA>          FALSE center    NA     NA           1     11
-      63                 <NA>          FALSE center    NA     NA           1     11
-      64                 <NA>          FALSE   left    NA     NA           1     12
+      61                 <NA>          FALSE   left    NA     NA           1     12
+      62                 <NA>          FALSE center    NA     NA           1     12
+      63                 <NA>          FALSE center    NA     NA           1     12
+      64                 <NA>          FALSE center    NA     NA           1     12
       65                 <NA>          FALSE center    NA     NA           1     12
       66                 <NA>          FALSE center    NA     NA           1     12
       67                 <NA>          FALSE center    NA     NA           1     12
-      68                 <NA>          FALSE center    NA     NA           1     12
-      69                 <NA>          FALSE center    NA     NA           1     12
-      70                 <NA>          FALSE center    NA     NA           1     12
-      71                 <NA>          FALSE   left    NA     NA           1     13
+      68                 <NA>          FALSE   left    NA     NA           1     13
+      69                 <NA>          FALSE center    NA     NA           1     13
+      70                 <NA>          FALSE center    NA     NA           1     13
+      71                 <NA>          FALSE center    NA     NA           1     13
       72                 <NA>          FALSE center    NA     NA           1     13
       73                 <NA>          FALSE center    NA     NA           1     13
       74                 <NA>          FALSE center    NA     NA           1     13
-      75                 <NA>          FALSE center    NA     NA           1     13
-      76                 <NA>          FALSE center    NA     NA           1     13
-      77                 <NA>          FALSE center    NA     NA           1     13
-      78                 <NA>          FALSE   left    NA     NA           1     14
+      75                 <NA>          FALSE   left    NA     NA           1     14
+      76                 <NA>          FALSE center    NA     NA           1     14
+      77                 <NA>          FALSE center    NA     NA           1     14
+      78                 <NA>          FALSE center    NA     NA           1     14
       79                 <NA>          FALSE center    NA     NA           1     14
       80                 <NA>          FALSE center    NA     NA           1     14
       81                 <NA>          FALSE center    NA     NA           1     14
-      82                 <NA>          FALSE center    NA     NA           1     14
-      83                 <NA>          FALSE center    NA     NA           1     14
-      84                 <NA>          FALSE center    NA     NA           1     14
-      85                 <NA>          FALSE   left    NA     NA           1     15
+      82                 <NA>          FALSE   left    NA     NA           1     15
+      83                 <NA>          FALSE center    NA     NA           1     15
+      84                 <NA>          FALSE center    NA     NA           1     15
+      85                 <NA>          FALSE center    NA     NA           1     15
       86                 <NA>          FALSE center    NA     NA           1     15
       87                 <NA>          FALSE center    NA     NA           1     15
       88                 <NA>          FALSE center    NA     NA           1     15
-      89                 <NA>          FALSE center    NA     NA           1     15
-      90                 <NA>          FALSE center    NA     NA           1     15
-      91                 <NA>          FALSE center    NA     NA           1     15
-      92                 <NA>          FALSE   left    NA     NA           1     16
+      89                 <NA>          FALSE   left    NA     NA           1     16
+      90                 <NA>          FALSE center    NA     NA           1     16
+      91                 <NA>          FALSE center    NA     NA           1     16
+      92                 <NA>          FALSE center    NA     NA           1     16
       93                 <NA>          FALSE center    NA     NA           1     16
       94                 <NA>          FALSE center    NA     NA           1     16
       95                 <NA>          FALSE center    NA     NA           1     16
-      96                 <NA>          FALSE center    NA     NA           1     16
-      97                 <NA>          FALSE center    NA     NA           1     16
-      98                 <NA>          FALSE center    NA     NA           1     16
-      99                 <NA>          FALSE   left    NA     NA           1     17
+      96                 <NA>          FALSE   left    NA     NA           1     17
+      97                 <NA>          FALSE center    NA     NA           1     17
+      98                 <NA>          FALSE center    NA     NA           1     17
+      99                 <NA>          FALSE center    NA     NA           1     17
       100                <NA>          FALSE center    NA     NA           1     17
       101                <NA>          FALSE center    NA     NA           1     17
       102                <NA>          FALSE center    NA     NA           1     17
-      103                <NA>          FALSE center    NA     NA           1     17
-      104                <NA>          FALSE center    NA     NA           1     17
-      105                <NA>          FALSE center    NA     NA           1     17
-      106                <NA>          FALSE   left    NA     NA           1     18
+      103                <NA>          FALSE   left    NA     NA           1     18
+      104                <NA>          FALSE center    NA     NA           1     18
+      105                <NA>          FALSE center    NA     NA           1     18
+      106                <NA>          FALSE center    NA     NA           1     18
       107                <NA>          FALSE center    NA     NA           1     18
       108                <NA>          FALSE center    NA     NA           1     18
       109                <NA>          FALSE center    NA     NA           1     18
-      110                <NA>          FALSE center    NA     NA           1     18
-      111                <NA>          FALSE center    NA     NA           1     18
-      112                <NA>          FALSE center    NA     NA           1     18
-      113                <NA>          FALSE   left    NA     NA           1     19
+      110                <NA>          FALSE   left    NA     NA           1     19
+      111                <NA>          FALSE center    NA     NA           1     19
+      112                <NA>          FALSE center    NA     NA           1     19
+      113                <NA>          FALSE center    NA     NA           1     19
       114                <NA>          FALSE center    NA     NA           1     19
       115                <NA>          FALSE center    NA     NA           1     19
       116                <NA>          FALSE center    NA     NA           1     19
-      117                <NA>          FALSE center    NA     NA           1     19
-      118                <NA>          FALSE center    NA     NA           1     19
-      119                <NA>          FALSE center    NA     NA           1     19
-      120                <NA>          FALSE   left    NA     NA           1     20
+      117                <NA>          FALSE   left    NA     NA           1     20
+      118                <NA>          FALSE center    NA     NA           1     20
+      119                <NA>          FALSE center    NA     NA           1     20
+      120                <NA>          FALSE center    NA     NA           1     20
       121                <NA>          FALSE center    NA     NA           1     20
       122                <NA>          FALSE center    NA     NA           1     20
       123                <NA>          FALSE center    NA     NA           1     20
-      124                <NA>          FALSE center    NA     NA           1     20
-      125                <NA>          FALSE center    NA     NA           1     20
-      126                <NA>          FALSE center    NA     NA           1     20
-      127                <NA>          FALSE   left    NA     NA           1     21
+      124                <NA>          FALSE   left    NA     NA           1     21
+      125                <NA>          FALSE center    NA     NA           1     21
+      126                <NA>          FALSE center    NA     NA           1     21
+      127                <NA>          FALSE center    NA     NA           1     21
       128                <NA>          FALSE center    NA     NA           1     21
       129                <NA>          FALSE center    NA     NA           1     21
       130                <NA>          FALSE center    NA     NA           1     21
-      131                <NA>          FALSE center    NA     NA           1     21
-      132                <NA>          FALSE center    NA     NA           1     21
-      133                <NA>          FALSE center    NA     NA           1     21
-      134                <NA>          FALSE   left    NA     NA           1     22
+      131                <NA>          FALSE   left    NA     NA           1     22
+      132                <NA>          FALSE center    NA     NA           1     22
+      133                <NA>          FALSE center    NA     NA           1     22
+      134                <NA>          FALSE center    NA     NA           1     22
       135                <NA>          FALSE center    NA     NA           1     22
       136                <NA>          FALSE center    NA     NA           1     22
       137                <NA>          FALSE center    NA     NA           1     22
-      138                <NA>          FALSE center    NA     NA           1     22
-      139                <NA>          FALSE center    NA     NA           1     22
-      140                <NA>          FALSE center    NA     NA           1     22
-      141                <NA>           TRUE   left    NA     NA           1     23
+      138                <NA>           TRUE   left    NA     NA           1     23
+      139                <NA>           TRUE center    NA     NA           1     23
+      140                <NA>           TRUE center    NA     NA           1     23
+      141                <NA>           TRUE center    NA     NA           1     23
       142                <NA>           TRUE center    NA     NA           1     23
       143                <NA>           TRUE center    NA     NA           1     23
       144                <NA>           TRUE center    NA     NA           1     23
-      145                <NA>           TRUE center    NA     NA           1     23
-      146                <NA>           TRUE center    NA     NA           1     23
-      147                <NA>           TRUE center    NA     NA           1     23
-      148                <NA>          FALSE   left    NA     NA           1     24
+      145                <NA>          FALSE   left    NA     NA           1     24
+      146                <NA>          FALSE center    NA     NA           1     24
+      147                <NA>          FALSE center    NA     NA           1     24
+      148                <NA>          FALSE center    NA     NA           1     24
       149                <NA>          FALSE center    NA     NA           1     24
       150                <NA>          FALSE center    NA     NA           1     24
       151                <NA>          FALSE center    NA     NA           1     24
-      152                <NA>          FALSE center    NA     NA           1     24
-      153                <NA>          FALSE center    NA     NA           1     24
-      154                <NA>          FALSE center    NA     NA           1     24
-      155                <NA>          FALSE   left    NA     NA           1     25
-      156                <NA>          FALSE   left    NA     NA           1     25
-      157                <NA>          FALSE   left    NA     NA           1     25
-      158                <NA>          FALSE   left    NA     NA           1     25
-      159                <NA>          FALSE center    NA     NA           1     25
-      160                <NA>          FALSE center    NA     NA           1     25
-      161                <NA>          FALSE center    NA     NA           1     25
-      162                <NA>          FALSE center    NA     NA           1     25
-      163                <NA>          FALSE center    NA     NA           1     25
-      164                <NA>          FALSE center    NA     NA           1     25
-      165                <NA>          FALSE   left    NA     NA           1     26
-      166                <NA>          FALSE center    NA     NA           1     26
-      167                <NA>          FALSE center    NA     NA           1     26
-      168                <NA>          FALSE center    NA     NA           1     26
-      169                <NA>          FALSE center    NA     NA           1     26
-      170                <NA>          FALSE center    NA     NA           1     26
-      171                <NA>          FALSE center    NA     NA           1     26
-      172                <NA>          FALSE   left    NA     NA           1     27
-      173                <NA>          FALSE center    NA     NA           1     27
-      174                <NA>          FALSE center    NA     NA           1     27
-      175                <NA>          FALSE center    NA     NA           1     27
-      176                <NA>          FALSE center    NA     NA           1     27
-      177                <NA>          FALSE center    NA     NA           1     27
-      178                <NA>          FALSE center    NA     NA           1     27
-      179                <NA>          FALSE   left    NA     NA           1     28
-      180                <NA>          FALSE center    NA     NA           1     28
-      181                <NA>          FALSE center    NA     NA           1     28
-      182                <NA>          FALSE center    NA     NA           1     28
-      183                <NA>          FALSE center    NA     NA           1     28
-      184                <NA>          FALSE center    NA     NA           1     28
-      185                <NA>          FALSE center    NA     NA           1     28
-      186                <NA>          FALSE   left    NA     NA           1     29
-      187                <NA>          FALSE center    NA     NA           1     29
-      188                <NA>          FALSE center    NA     NA           1     29
-      189                <NA>          FALSE center    NA     NA           1     29
-      190                <NA>          FALSE center    NA     NA           1     29
-      191                <NA>          FALSE center    NA     NA           1     29
-      192                <NA>          FALSE center    NA     NA           1     29
-      193                <NA>          FALSE   left    NA     NA           1     30
-      194                <NA>          FALSE center    NA     NA           1     30
-      195                <NA>          FALSE center    NA     NA           1     30
-      196                <NA>          FALSE center    NA     NA           1     30
-      197                <NA>          FALSE center    NA     NA           1     30
-      198                <NA>          FALSE center    NA     NA           1     30
-      199                <NA>          FALSE center    NA     NA           1     30
-      200                <NA>          FALSE   left    NA     NA           1     31
-      201                <NA>          FALSE center    NA     NA           1     31
-      202                <NA>          FALSE center    NA     NA           1     31
-      203                <NA>          FALSE center    NA     NA           1     31
-      204                <NA>          FALSE center    NA     NA           1     31
-      205                <NA>          FALSE center    NA     NA           1     31
-      206                <NA>          FALSE center    NA     NA           1     31
-      207                <NA>          FALSE   left    NA     NA           1     32
-      208                <NA>          FALSE center    NA     NA           1     32
-      209                <NA>          FALSE center    NA     NA           1     32
-      210                <NA>          FALSE center    NA     NA           1     32
-      211                <NA>          FALSE center    NA     NA           1     32
-      212                <NA>          FALSE center    NA     NA           1     32
-      213                <NA>          FALSE center    NA     NA           1     32
-      214                <NA>          FALSE   left    NA     NA           1     33
-      215                <NA>          FALSE center    NA     NA           1     33
-      216                <NA>          FALSE center    NA     NA           1     33
-      217                <NA>          FALSE center    NA     NA           1     33
-      218                <NA>          FALSE center    NA     NA           1     33
-      219                <NA>          FALSE center    NA     NA           1     33
-      220                <NA>          FALSE center    NA     NA           1     33
-      221                <NA>          FALSE   left    NA     NA           1     34
-      222                <NA>          FALSE center    NA     NA           1     34
-      223                <NA>          FALSE center    NA     NA           1     34
-      224                <NA>          FALSE center    NA     NA           1     34
-      225                <NA>          FALSE center    NA     NA           1     34
-      226                <NA>          FALSE center    NA     NA           1     34
-      227                <NA>          FALSE center    NA     NA           1     34
-      228                <NA>          FALSE   left    NA     NA           1     35
-      229                <NA>          FALSE center    NA     NA           1     35
-      230                <NA>          FALSE center    NA     NA           1     35
-      231                <NA>          FALSE center    NA     NA           1     35
-      232                <NA>          FALSE center    NA     NA           1     35
-      233                <NA>          FALSE center    NA     NA           1     35
-      234                <NA>          FALSE center    NA     NA           1     35
-      235                <NA>          FALSE   left    NA     NA           1     36
-      236                <NA>          FALSE center    NA     NA           1     36
-      237                <NA>          FALSE center    NA     NA           1     36
-      238                <NA>          FALSE center    NA     NA           1     36
-      239                <NA>          FALSE center    NA     NA           1     36
-      240                <NA>          FALSE center    NA     NA           1     36
-      241                <NA>          FALSE center    NA     NA           1     36
-      242                <NA>          FALSE   left    NA     NA           1     37
-      243                <NA>          FALSE center    NA     NA           1     37
-      244                <NA>          FALSE center    NA     NA           1     37
-      245                <NA>          FALSE center    NA     NA           1     37
-      246                <NA>          FALSE center    NA     NA           1     37
-      247                <NA>          FALSE center    NA     NA           1     37
-      248                <NA>          FALSE center    NA     NA           1     37
-      249                <NA>          FALSE   left    NA     NA           1     38
-      250                <NA>          FALSE center    NA     NA           1     38
-      251                <NA>          FALSE center    NA     NA           1     38
-      252                <NA>          FALSE center    NA     NA           1     38
-      253                <NA>          FALSE center    NA     NA           1     38
-      254                <NA>          FALSE center    NA     NA           1     38
-      255                <NA>          FALSE center    NA     NA           1     38
-      256                <NA>          FALSE   left    NA     NA           1     39
-      257                <NA>          FALSE center    NA     NA           1     39
-      258                <NA>          FALSE center    NA     NA           1     39
-      259                <NA>          FALSE center    NA     NA           1     39
-      260                <NA>          FALSE center    NA     NA           1     39
-      261                <NA>          FALSE center    NA     NA           1     39
-      262                <NA>          FALSE center    NA     NA           1     39
-      263                <NA>          FALSE   left    NA     NA           1     40
-      264                <NA>          FALSE   left    NA     NA           1     41
-      265                <NA>          FALSE   left    NA     NA           1     42
-      266                <NA>          FALSE   <NA>    NA     NA          NA     NA
-      267             caption          FALSE   left    NA     NA           2     43
-      268             caption          FALSE   left    NA     NA           2     43
-      269             caption          FALSE   left    NA     NA           2     43
-      270                <NA>          FALSE   left    NA     NA           2     44
-      271                <NA>          FALSE center    NA     NA           2     44
-      272                <NA>          FALSE center    NA     NA           2     44
-      273                <NA>          FALSE   left    NA     NA           2     45
-      274                <NA>          FALSE center    NA     NA           2     45
-      275                <NA>          FALSE center    NA     NA           2     45
-      276                <NA>          FALSE center    NA     NA           2     45
-      277                <NA>          FALSE   left    NA     NA           2     46
-      278                <NA>          FALSE center    NA     NA           2     46
-      279                <NA>          FALSE center    NA     NA           2     46
-      280                <NA>          FALSE center    NA     NA           2     46
-      281                <NA>          FALSE   left    NA     NA           2     47
-      282                <NA>          FALSE center    NA     NA           2     47
-      283                <NA>          FALSE center    NA     NA           2     47
-      284                <NA>          FALSE center    NA     NA           2     47
-      285                <NA>          FALSE center    NA     NA           2     47
-      286                <NA>          FALSE center    NA     NA           2     47
-      287                <NA>          FALSE   left    NA     NA           2     48
-      288                <NA>          FALSE center    NA     NA           2     48
-      289                <NA>          FALSE center    NA     NA           2     48
-      290                <NA>          FALSE center    NA     NA           2     48
-      291                <NA>          FALSE center    NA     NA           2     48
-      292                <NA>          FALSE center    NA     NA           2     48
-      293                <NA>          FALSE   left    NA     NA           2     49
-      294                <NA>          FALSE center    NA     NA           2     49
-      295                <NA>          FALSE center    NA     NA           2     49
-      296                <NA>          FALSE center    NA     NA           2     49
-      297                <NA>          FALSE center    NA     NA           2     49
-      298                <NA>          FALSE center    NA     NA           2     49
-      299                <NA>          FALSE   left    NA     NA           2     50
-      300                <NA>          FALSE center    NA     NA           2     50
-      301                <NA>          FALSE center    NA     NA           2     50
-      302                <NA>          FALSE center    NA     NA           2     50
-      303                <NA>          FALSE center    NA     NA           2     50
-      304                <NA>          FALSE center    NA     NA           2     50
-      305                <NA>          FALSE   left    NA     NA           2     51
-      306                <NA>          FALSE center    NA     NA           2     51
-      307                <NA>          FALSE center    NA     NA           2     51
-      308                <NA>          FALSE center    NA     NA           2     51
-      309                <NA>          FALSE center    NA     NA           2     51
-      310                <NA>          FALSE center    NA     NA           2     51
-      311                <NA>          FALSE   left    NA     NA           2     52
-      312                <NA>          FALSE center    NA     NA           2     52
-      313                <NA>          FALSE center    NA     NA           2     52
-      314                <NA>          FALSE center    NA     NA           2     52
-      315                <NA>          FALSE center    NA     NA           2     52
-      316                <NA>          FALSE center    NA     NA           2     52
-      317                <NA>          FALSE   left    NA     NA           2     53
-      318                <NA>          FALSE center    NA     NA           2     53
-      319                <NA>          FALSE center    NA     NA           2     53
-      320                <NA>          FALSE center    NA     NA           2     53
-      321                <NA>          FALSE center    NA     NA           2     53
-      322                <NA>          FALSE center    NA     NA           2     53
-      323                <NA>          FALSE   left    NA     NA           2     54
-      324                <NA>          FALSE center    NA     NA           2     54
-      325                <NA>          FALSE center    NA     NA           2     54
-      326                <NA>          FALSE center    NA     NA           2     54
-      327                <NA>          FALSE center    NA     NA           2     54
-      328                <NA>          FALSE center    NA     NA           2     54
-      329                <NA>          FALSE   left    NA     NA           2     55
-      330                <NA>          FALSE center    NA     NA           2     55
-      331                <NA>          FALSE center    NA     NA           2     55
-      332                <NA>          FALSE center    NA     NA           2     55
-      333                <NA>          FALSE center    NA     NA           2     55
-      334                <NA>          FALSE center    NA     NA           2     55
-      335                <NA>          FALSE   left    NA     NA           2     56
-      336                <NA>          FALSE center    NA     NA           2     56
-      337                <NA>          FALSE center    NA     NA           2     56
-      338                <NA>          FALSE center    NA     NA           2     56
-      339                <NA>          FALSE center    NA     NA           2     56
-      340                <NA>          FALSE center    NA     NA           2     56
-      341                <NA>          FALSE   left    NA     NA           2     57
-      342                <NA>          FALSE center    NA     NA           2     57
-      343                <NA>          FALSE center    NA     NA           2     57
-      344                <NA>          FALSE center    NA     NA           2     57
-      345                <NA>          FALSE center    NA     NA           2     57
-      346                <NA>          FALSE center    NA     NA           2     57
-      347                <NA>          FALSE   left    NA     NA           2     58
-      348                <NA>          FALSE center    NA     NA           2     58
-      349                <NA>          FALSE center    NA     NA           2     58
-      350                <NA>          FALSE center    NA     NA           2     58
-      351                <NA>          FALSE center    NA     NA           2     58
-      352                <NA>          FALSE center    NA     NA           2     58
-      353                <NA>          FALSE   left    NA     NA           2     59
-      354                <NA>          FALSE center    NA     NA           2     59
-      355                <NA>          FALSE center    NA     NA           2     59
-      356                <NA>          FALSE center    NA     NA           2     59
-      357                <NA>          FALSE center    NA     NA           2     59
-      358                <NA>          FALSE center    NA     NA           2     59
-      359                <NA>          FALSE   left    NA     NA           2     60
-      360                <NA>          FALSE center    NA     NA           2     60
-      361                <NA>          FALSE center    NA     NA           2     60
-      362                <NA>          FALSE center    NA     NA           2     60
-      363                <NA>          FALSE center    NA     NA           2     60
-      364                <NA>          FALSE center    NA     NA           2     60
-      365                <NA>          FALSE   left    NA     NA           2     61
-      366                <NA>          FALSE center    NA     NA           2     61
-      367                <NA>          FALSE center    NA     NA           2     61
-      368                <NA>          FALSE center    NA     NA           2     61
-      369                <NA>          FALSE center    NA     NA           2     61
-      370                <NA>          FALSE center    NA     NA           2     61
-      371                <NA>          FALSE   left    NA     NA           2     62
-      372                <NA>          FALSE center    NA     NA           2     62
-      373                <NA>          FALSE center    NA     NA           2     62
-      374                <NA>          FALSE center    NA     NA           2     62
-      375                <NA>          FALSE center    NA     NA           2     62
-      376                <NA>          FALSE center    NA     NA           2     62
-      377                <NA>          FALSE   left    NA     NA           2     63
-      378                <NA>          FALSE center    NA     NA           2     63
-      379                <NA>          FALSE center    NA     NA           2     63
-      380                <NA>          FALSE center    NA     NA           2     63
-      381                <NA>          FALSE center    NA     NA           2     63
-      382                <NA>          FALSE center    NA     NA           2     63
-      383                <NA>          FALSE   left    NA     NA           2     64
-      384                <NA>          FALSE center    NA     NA           2     64
-      385                <NA>          FALSE center    NA     NA           2     64
-      386                <NA>          FALSE center    NA     NA           2     64
-      387                <NA>          FALSE center    NA     NA           2     64
-      388                <NA>          FALSE center    NA     NA           2     64
-      389                <NA>           TRUE   left    NA     NA           2     65
-      390                <NA>           TRUE center    NA     NA           2     65
-      391                <NA>           TRUE center    NA     NA           2     65
-      392                <NA>           TRUE center    NA     NA           2     65
-      393                <NA>           TRUE center    NA     NA           2     65
-      394                <NA>           TRUE center    NA     NA           2     65
-      395                <NA>          FALSE   left    NA     NA           2     66
-      396                <NA>          FALSE center    NA     NA           2     66
-      397                <NA>          FALSE center    NA     NA           2     66
-      398                <NA>          FALSE center    NA     NA           2     66
-      399                <NA>          FALSE center    NA     NA           2     66
-      400                <NA>          FALSE center    NA     NA           2     66
-      401                <NA>          FALSE   left    NA     NA           2     67
-      402                <NA>          FALSE center    NA     NA           2     67
-      403                <NA>          FALSE center    NA     NA           2     67
-      404                <NA>          FALSE center    NA     NA           2     67
-      405                <NA>          FALSE center    NA     NA           2     67
-      406                <NA>          FALSE center    NA     NA           2     67
-      407                <NA>          FALSE   left    NA     NA           2     68
-      408                <NA>          FALSE center    NA     NA           2     68
-      409                <NA>          FALSE center    NA     NA           2     68
-      410                <NA>          FALSE center    NA     NA           2     68
-      411                <NA>          FALSE center    NA     NA           2     68
-      412                <NA>          FALSE center    NA     NA           2     68
-      413                <NA>          FALSE   left    NA     NA           2     69
-      414                <NA>          FALSE center    NA     NA           2     69
-      415                <NA>          FALSE center    NA     NA           2     69
-      416                <NA>          FALSE center    NA     NA           2     69
-      417                <NA>          FALSE center    NA     NA           2     69
-      418                <NA>          FALSE center    NA     NA           2     69
-      419                <NA>          FALSE   left    NA     NA           2     70
-      420                <NA>          FALSE center    NA     NA           2     70
-      421                <NA>          FALSE center    NA     NA           2     70
-      422                <NA>          FALSE center    NA     NA           2     70
-      423                <NA>          FALSE center    NA     NA           2     70
-      424                <NA>          FALSE center    NA     NA           2     70
-      425                <NA>          FALSE   left    NA     NA           2     71
-      426                <NA>          FALSE center    NA     NA           2     71
-      427                <NA>          FALSE center    NA     NA           2     71
-      428                <NA>          FALSE center    NA     NA           2     71
-      429                <NA>          FALSE center    NA     NA           2     71
-      430                <NA>          FALSE center    NA     NA           2     71
-      431                <NA>          FALSE   left    NA     NA           2     72
-      432                <NA>          FALSE center    NA     NA           2     72
-      433                <NA>          FALSE center    NA     NA           2     72
-      434                <NA>          FALSE center    NA     NA           2     72
-      435                <NA>          FALSE center    NA     NA           2     72
-      436                <NA>          FALSE center    NA     NA           2     72
-      437                <NA>          FALSE   left    NA     NA           2     73
-      438                <NA>          FALSE center    NA     NA           2     73
-      439                <NA>          FALSE center    NA     NA           2     73
-      440                <NA>          FALSE center    NA     NA           2     73
-      441                <NA>          FALSE center    NA     NA           2     73
-      442                <NA>          FALSE center    NA     NA           2     73
-      443                <NA>          FALSE   left    NA     NA           2     74
-      444                <NA>          FALSE center    NA     NA           2     74
-      445                <NA>          FALSE center    NA     NA           2     74
-      446                <NA>          FALSE center    NA     NA           2     74
-      447                <NA>          FALSE center    NA     NA           2     74
-      448                <NA>          FALSE center    NA     NA           2     74
-      449                <NA>          FALSE   left    NA     NA           2     75
-      450                <NA>          FALSE center    NA     NA           2     75
-      451                <NA>          FALSE center    NA     NA           2     75
-      452                <NA>          FALSE center    NA     NA           2     75
-      453                <NA>          FALSE center    NA     NA           2     75
-      454                <NA>          FALSE center    NA     NA           2     75
-      455                <NA>          FALSE   left    NA     NA           2     76
-      456                <NA>          FALSE center    NA     NA           2     76
-      457                <NA>          FALSE center    NA     NA           2     76
-      458                <NA>          FALSE center    NA     NA           2     76
-      459                <NA>          FALSE center    NA     NA           2     76
-      460                <NA>          FALSE center    NA     NA           2     76
-      461                <NA>          FALSE   left    NA     NA           2     77
-      462                <NA>          FALSE center    NA     NA           2     77
-      463                <NA>          FALSE center    NA     NA           2     77
-      464                <NA>          FALSE center    NA     NA           2     77
-      465                <NA>          FALSE center    NA     NA           2     77
-      466                <NA>          FALSE center    NA     NA           2     77
-      467                <NA>          FALSE   left    NA     NA           2     78
-      468                <NA>          FALSE center    NA     NA           2     78
-      469                <NA>          FALSE center    NA     NA           2     78
-      470                <NA>          FALSE center    NA     NA           2     78
-      471                <NA>          FALSE center    NA     NA           2     78
-      472                <NA>          FALSE center    NA     NA           2     78
-      473                <NA>          FALSE   left    NA     NA           2     79
-      474                <NA>          FALSE center    NA     NA           2     79
-      475                <NA>          FALSE center    NA     NA           2     79
-      476                <NA>          FALSE center    NA     NA           2     79
-      477                <NA>          FALSE center    NA     NA           2     79
-      478                <NA>          FALSE center    NA     NA           2     79
-      479                <NA>          FALSE   left    NA     NA           2     80
-      480                <NA>          FALSE center    NA     NA           2     80
-      481                <NA>          FALSE center    NA     NA           2     80
-      482                <NA>          FALSE center    NA     NA           2     80
-      483                <NA>          FALSE center    NA     NA           2     80
-      484                <NA>          FALSE center    NA     NA           2     80
-      485                <NA>          FALSE   left    NA     NA           2     81
-      486                <NA>          FALSE center    NA     NA           2     81
-      487                <NA>          FALSE center    NA     NA           2     81
-      488                <NA>          FALSE center    NA     NA           2     81
-      489                <NA>          FALSE center    NA     NA           2     81
-      490                <NA>          FALSE center    NA     NA           2     81
-      491                <NA>          FALSE   left    NA     NA           2     82
-      492                <NA>          FALSE   left    NA     NA           2     83
-      493                <NA>          FALSE   left    NA     NA           2     84
+      152                <NA>          FALSE   left    NA     NA           1     25
+      153                <NA>          FALSE center    NA     NA           1     25
+      154                <NA>          FALSE center    NA     NA           1     25
+      155                <NA>          FALSE center    NA     NA           1     25
+      156                <NA>          FALSE center    NA     NA           1     25
+      157                <NA>          FALSE center    NA     NA           1     25
+      158                <NA>          FALSE center    NA     NA           1     25
+      159                <NA>          FALSE   left    NA     NA           1     26
+      160                <NA>          FALSE center    NA     NA           1     26
+      161                <NA>          FALSE center    NA     NA           1     26
+      162                <NA>          FALSE center    NA     NA           1     26
+      163                <NA>          FALSE center    NA     NA           1     26
+      164                <NA>          FALSE center    NA     NA           1     26
+      165                <NA>          FALSE center    NA     NA           1     26
+      166                <NA>          FALSE   left    NA     NA           1     27
+      167                <NA>          FALSE center    NA     NA           1     27
+      168                <NA>          FALSE center    NA     NA           1     27
+      169                <NA>          FALSE center    NA     NA           1     27
+      170                <NA>          FALSE center    NA     NA           1     27
+      171                <NA>          FALSE center    NA     NA           1     27
+      172                <NA>          FALSE center    NA     NA           1     27
+      173                <NA>          FALSE   left    NA     NA           1     28
+      174                <NA>          FALSE center    NA     NA           1     28
+      175                <NA>          FALSE center    NA     NA           1     28
+      176                <NA>          FALSE center    NA     NA           1     28
+      177                <NA>          FALSE center    NA     NA           1     28
+      178                <NA>          FALSE center    NA     NA           1     28
+      179                <NA>          FALSE center    NA     NA           1     28
+      180                <NA>          FALSE   left    NA     NA           1     29
+      181                <NA>          FALSE center    NA     NA           1     29
+      182                <NA>          FALSE center    NA     NA           1     29
+      183                <NA>          FALSE center    NA     NA           1     29
+      184                <NA>          FALSE center    NA     NA           1     29
+      185                <NA>          FALSE center    NA     NA           1     29
+      186                <NA>          FALSE center    NA     NA           1     29
+      187                <NA>          FALSE   left    NA     NA           1     30
+      188                <NA>          FALSE center    NA     NA           1     30
+      189                <NA>          FALSE center    NA     NA           1     30
+      190                <NA>          FALSE center    NA     NA           1     30
+      191                <NA>          FALSE center    NA     NA           1     30
+      192                <NA>          FALSE center    NA     NA           1     30
+      193                <NA>          FALSE center    NA     NA           1     30
+      194                <NA>          FALSE   left    NA     NA           1     31
+      195                <NA>          FALSE center    NA     NA           1     31
+      196                <NA>          FALSE center    NA     NA           1     31
+      197                <NA>          FALSE center    NA     NA           1     31
+      198                <NA>          FALSE center    NA     NA           1     31
+      199                <NA>          FALSE center    NA     NA           1     31
+      200                <NA>          FALSE center    NA     NA           1     31
+      201                <NA>          FALSE   left    NA     NA           1     32
+      202                <NA>          FALSE center    NA     NA           1     32
+      203                <NA>          FALSE center    NA     NA           1     32
+      204                <NA>          FALSE center    NA     NA           1     32
+      205                <NA>          FALSE center    NA     NA           1     32
+      206                <NA>          FALSE center    NA     NA           1     32
+      207                <NA>          FALSE center    NA     NA           1     32
+      208                <NA>          FALSE   left    NA     NA           1     33
+      209                <NA>          FALSE center    NA     NA           1     33
+      210                <NA>          FALSE center    NA     NA           1     33
+      211                <NA>          FALSE center    NA     NA           1     33
+      212                <NA>          FALSE center    NA     NA           1     33
+      213                <NA>          FALSE center    NA     NA           1     33
+      214                <NA>          FALSE center    NA     NA           1     33
+      215                <NA>          FALSE   left    NA     NA           1     34
+      216                <NA>          FALSE center    NA     NA           1     34
+      217                <NA>          FALSE center    NA     NA           1     34
+      218                <NA>          FALSE center    NA     NA           1     34
+      219                <NA>          FALSE center    NA     NA           1     34
+      220                <NA>          FALSE center    NA     NA           1     34
+      221                <NA>          FALSE center    NA     NA           1     34
+      222                <NA>          FALSE   left    NA     NA           1     35
+      223                <NA>          FALSE center    NA     NA           1     35
+      224                <NA>          FALSE center    NA     NA           1     35
+      225                <NA>          FALSE center    NA     NA           1     35
+      226                <NA>          FALSE center    NA     NA           1     35
+      227                <NA>          FALSE center    NA     NA           1     35
+      228                <NA>          FALSE center    NA     NA           1     35
+      229                <NA>          FALSE   left    NA     NA           1     36
+      230                <NA>          FALSE center    NA     NA           1     36
+      231                <NA>          FALSE center    NA     NA           1     36
+      232                <NA>          FALSE center    NA     NA           1     36
+      233                <NA>          FALSE center    NA     NA           1     36
+      234                <NA>          FALSE center    NA     NA           1     36
+      235                <NA>          FALSE center    NA     NA           1     36
+      236                <NA>          FALSE   left    NA     NA           1     37
+      237                <NA>          FALSE center    NA     NA           1     37
+      238                <NA>          FALSE center    NA     NA           1     37
+      239                <NA>          FALSE center    NA     NA           1     37
+      240                <NA>          FALSE center    NA     NA           1     37
+      241                <NA>          FALSE center    NA     NA           1     37
+      242                <NA>          FALSE center    NA     NA           1     37
+      243                <NA>          FALSE   left    NA     NA           1     38
+      244                <NA>          FALSE center    NA     NA           1     38
+      245                <NA>          FALSE center    NA     NA           1     38
+      246                <NA>          FALSE center    NA     NA           1     38
+      247                <NA>          FALSE center    NA     NA           1     38
+      248                <NA>          FALSE center    NA     NA           1     38
+      249                <NA>          FALSE center    NA     NA           1     38
+      250                <NA>          FALSE   left    NA     NA           1     39
+      251                <NA>          FALSE center    NA     NA           1     39
+      252                <NA>          FALSE center    NA     NA           1     39
+      253                <NA>          FALSE center    NA     NA           1     39
+      254                <NA>          FALSE center    NA     NA           1     39
+      255                <NA>          FALSE center    NA     NA           1     39
+      256                <NA>          FALSE center    NA     NA           1     39
+      257                <NA>          FALSE   left    NA     NA           1     40
+      258                <NA>          FALSE   left    NA     NA           1     41
+      259                <NA>          FALSE   left    NA     NA           1     42
+      260                <NA>          FALSE   <NA>    NA     NA          NA     NA
+      261             caption          FALSE   left    NA     NA           2     43
+      262             caption          FALSE   left    NA     NA           2     43
+      263             caption          FALSE   left    NA     NA           2     43
+      264                <NA>          FALSE   left    NA     NA           2     44
+      265                <NA>          FALSE center    NA     NA           2     44
+      266                <NA>          FALSE center    NA     NA           2     44
+      267                <NA>          FALSE   left    NA     NA           2     45
+      268                <NA>          FALSE center    NA     NA           2     45
+      269                <NA>          FALSE center    NA     NA           2     45
+      270                <NA>          FALSE center    NA     NA           2     45
+      271                <NA>          FALSE   left    NA     NA           2     46
+      272                <NA>          FALSE center    NA     NA           2     46
+      273                <NA>          FALSE center    NA     NA           2     46
+      274                <NA>          FALSE center    NA     NA           2     46
+      275                <NA>          FALSE   left    NA     NA           2     47
+      276                <NA>          FALSE center    NA     NA           2     47
+      277                <NA>          FALSE center    NA     NA           2     47
+      278                <NA>          FALSE center    NA     NA           2     47
+      279                <NA>          FALSE center    NA     NA           2     47
+      280                <NA>          FALSE center    NA     NA           2     47
+      281                <NA>          FALSE   left    NA     NA           2     48
+      282                <NA>          FALSE center    NA     NA           2     48
+      283                <NA>          FALSE center    NA     NA           2     48
+      284                <NA>          FALSE center    NA     NA           2     48
+      285                <NA>          FALSE center    NA     NA           2     48
+      286                <NA>          FALSE center    NA     NA           2     48
+      287                <NA>          FALSE   left    NA     NA           2     49
+      288                <NA>          FALSE center    NA     NA           2     49
+      289                <NA>          FALSE center    NA     NA           2     49
+      290                <NA>          FALSE center    NA     NA           2     49
+      291                <NA>          FALSE center    NA     NA           2     49
+      292                <NA>          FALSE center    NA     NA           2     49
+      293                <NA>          FALSE   left    NA     NA           2     50
+      294                <NA>          FALSE center    NA     NA           2     50
+      295                <NA>          FALSE center    NA     NA           2     50
+      296                <NA>          FALSE center    NA     NA           2     50
+      297                <NA>          FALSE center    NA     NA           2     50
+      298                <NA>          FALSE center    NA     NA           2     50
+      299                <NA>          FALSE   left    NA     NA           2     51
+      300                <NA>          FALSE center    NA     NA           2     51
+      301                <NA>          FALSE center    NA     NA           2     51
+      302                <NA>          FALSE center    NA     NA           2     51
+      303                <NA>          FALSE center    NA     NA           2     51
+      304                <NA>          FALSE center    NA     NA           2     51
+      305                <NA>          FALSE   left    NA     NA           2     52
+      306                <NA>          FALSE center    NA     NA           2     52
+      307                <NA>          FALSE center    NA     NA           2     52
+      308                <NA>          FALSE center    NA     NA           2     52
+      309                <NA>          FALSE center    NA     NA           2     52
+      310                <NA>          FALSE center    NA     NA           2     52
+      311                <NA>          FALSE   left    NA     NA           2     53
+      312                <NA>          FALSE center    NA     NA           2     53
+      313                <NA>          FALSE center    NA     NA           2     53
+      314                <NA>          FALSE center    NA     NA           2     53
+      315                <NA>          FALSE center    NA     NA           2     53
+      316                <NA>          FALSE center    NA     NA           2     53
+      317                <NA>          FALSE   left    NA     NA           2     54
+      318                <NA>          FALSE center    NA     NA           2     54
+      319                <NA>          FALSE center    NA     NA           2     54
+      320                <NA>          FALSE center    NA     NA           2     54
+      321                <NA>          FALSE center    NA     NA           2     54
+      322                <NA>          FALSE center    NA     NA           2     54
+      323                <NA>          FALSE   left    NA     NA           2     55
+      324                <NA>          FALSE center    NA     NA           2     55
+      325                <NA>          FALSE center    NA     NA           2     55
+      326                <NA>          FALSE center    NA     NA           2     55
+      327                <NA>          FALSE center    NA     NA           2     55
+      328                <NA>          FALSE center    NA     NA           2     55
+      329                <NA>          FALSE   left    NA     NA           2     56
+      330                <NA>          FALSE center    NA     NA           2     56
+      331                <NA>          FALSE center    NA     NA           2     56
+      332                <NA>          FALSE center    NA     NA           2     56
+      333                <NA>          FALSE center    NA     NA           2     56
+      334                <NA>          FALSE center    NA     NA           2     56
+      335                <NA>          FALSE   left    NA     NA           2     57
+      336                <NA>          FALSE center    NA     NA           2     57
+      337                <NA>          FALSE center    NA     NA           2     57
+      338                <NA>          FALSE center    NA     NA           2     57
+      339                <NA>          FALSE center    NA     NA           2     57
+      340                <NA>          FALSE center    NA     NA           2     57
+      341                <NA>          FALSE   left    NA     NA           2     58
+      342                <NA>          FALSE center    NA     NA           2     58
+      343                <NA>          FALSE center    NA     NA           2     58
+      344                <NA>          FALSE center    NA     NA           2     58
+      345                <NA>          FALSE center    NA     NA           2     58
+      346                <NA>          FALSE center    NA     NA           2     58
+      347                <NA>          FALSE   left    NA     NA           2     59
+      348                <NA>          FALSE center    NA     NA           2     59
+      349                <NA>          FALSE center    NA     NA           2     59
+      350                <NA>          FALSE center    NA     NA           2     59
+      351                <NA>          FALSE center    NA     NA           2     59
+      352                <NA>          FALSE center    NA     NA           2     59
+      353                <NA>          FALSE   left    NA     NA           2     60
+      354                <NA>          FALSE center    NA     NA           2     60
+      355                <NA>          FALSE center    NA     NA           2     60
+      356                <NA>          FALSE center    NA     NA           2     60
+      357                <NA>          FALSE center    NA     NA           2     60
+      358                <NA>          FALSE center    NA     NA           2     60
+      359                <NA>          FALSE   left    NA     NA           2     61
+      360                <NA>          FALSE center    NA     NA           2     61
+      361                <NA>          FALSE center    NA     NA           2     61
+      362                <NA>          FALSE center    NA     NA           2     61
+      363                <NA>          FALSE center    NA     NA           2     61
+      364                <NA>          FALSE center    NA     NA           2     61
+      365                <NA>          FALSE   left    NA     NA           2     62
+      366                <NA>          FALSE center    NA     NA           2     62
+      367                <NA>          FALSE center    NA     NA           2     62
+      368                <NA>          FALSE center    NA     NA           2     62
+      369                <NA>          FALSE center    NA     NA           2     62
+      370                <NA>          FALSE center    NA     NA           2     62
+      371                <NA>          FALSE   left    NA     NA           2     63
+      372                <NA>          FALSE center    NA     NA           2     63
+      373                <NA>          FALSE center    NA     NA           2     63
+      374                <NA>          FALSE center    NA     NA           2     63
+      375                <NA>          FALSE center    NA     NA           2     63
+      376                <NA>          FALSE center    NA     NA           2     63
+      377                <NA>          FALSE   left    NA     NA           2     64
+      378                <NA>          FALSE center    NA     NA           2     64
+      379                <NA>          FALSE center    NA     NA           2     64
+      380                <NA>          FALSE center    NA     NA           2     64
+      381                <NA>          FALSE center    NA     NA           2     64
+      382                <NA>          FALSE center    NA     NA           2     64
+      383                <NA>           TRUE   left    NA     NA           2     65
+      384                <NA>           TRUE center    NA     NA           2     65
+      385                <NA>           TRUE center    NA     NA           2     65
+      386                <NA>           TRUE center    NA     NA           2     65
+      387                <NA>           TRUE center    NA     NA           2     65
+      388                <NA>           TRUE center    NA     NA           2     65
+      389                <NA>          FALSE   left    NA     NA           2     66
+      390                <NA>          FALSE center    NA     NA           2     66
+      391                <NA>          FALSE center    NA     NA           2     66
+      392                <NA>          FALSE center    NA     NA           2     66
+      393                <NA>          FALSE center    NA     NA           2     66
+      394                <NA>          FALSE center    NA     NA           2     66
+      395                <NA>          FALSE   left    NA     NA           2     67
+      396                <NA>          FALSE center    NA     NA           2     67
+      397                <NA>          FALSE center    NA     NA           2     67
+      398                <NA>          FALSE center    NA     NA           2     67
+      399                <NA>          FALSE center    NA     NA           2     67
+      400                <NA>          FALSE center    NA     NA           2     67
+      401                <NA>          FALSE   left    NA     NA           2     68
+      402                <NA>          FALSE center    NA     NA           2     68
+      403                <NA>          FALSE center    NA     NA           2     68
+      404                <NA>          FALSE center    NA     NA           2     68
+      405                <NA>          FALSE center    NA     NA           2     68
+      406                <NA>          FALSE center    NA     NA           2     68
+      407                <NA>          FALSE   left    NA     NA           2     69
+      408                <NA>          FALSE center    NA     NA           2     69
+      409                <NA>          FALSE center    NA     NA           2     69
+      410                <NA>          FALSE center    NA     NA           2     69
+      411                <NA>          FALSE center    NA     NA           2     69
+      412                <NA>          FALSE center    NA     NA           2     69
+      413                <NA>          FALSE   left    NA     NA           2     70
+      414                <NA>          FALSE center    NA     NA           2     70
+      415                <NA>          FALSE center    NA     NA           2     70
+      416                <NA>          FALSE center    NA     NA           2     70
+      417                <NA>          FALSE center    NA     NA           2     70
+      418                <NA>          FALSE center    NA     NA           2     70
+      419                <NA>          FALSE   left    NA     NA           2     71
+      420                <NA>          FALSE center    NA     NA           2     71
+      421                <NA>          FALSE center    NA     NA           2     71
+      422                <NA>          FALSE center    NA     NA           2     71
+      423                <NA>          FALSE center    NA     NA           2     71
+      424                <NA>          FALSE center    NA     NA           2     71
+      425                <NA>          FALSE   left    NA     NA           2     72
+      426                <NA>          FALSE center    NA     NA           2     72
+      427                <NA>          FALSE center    NA     NA           2     72
+      428                <NA>          FALSE center    NA     NA           2     72
+      429                <NA>          FALSE center    NA     NA           2     72
+      430                <NA>          FALSE center    NA     NA           2     72
+      431                <NA>          FALSE   left    NA     NA           2     73
+      432                <NA>          FALSE center    NA     NA           2     73
+      433                <NA>          FALSE center    NA     NA           2     73
+      434                <NA>          FALSE center    NA     NA           2     73
+      435                <NA>          FALSE center    NA     NA           2     73
+      436                <NA>          FALSE center    NA     NA           2     73
+      437                <NA>          FALSE   left    NA     NA           2     74
+      438                <NA>          FALSE center    NA     NA           2     74
+      439                <NA>          FALSE center    NA     NA           2     74
+      440                <NA>          FALSE center    NA     NA           2     74
+      441                <NA>          FALSE center    NA     NA           2     74
+      442                <NA>          FALSE center    NA     NA           2     74
+      443                <NA>          FALSE   left    NA     NA           2     75
+      444                <NA>          FALSE center    NA     NA           2     75
+      445                <NA>          FALSE center    NA     NA           2     75
+      446                <NA>          FALSE center    NA     NA           2     75
+      447                <NA>          FALSE center    NA     NA           2     75
+      448                <NA>          FALSE center    NA     NA           2     75
+      449                <NA>          FALSE   left    NA     NA           2     76
+      450                <NA>          FALSE center    NA     NA           2     76
+      451                <NA>          FALSE center    NA     NA           2     76
+      452                <NA>          FALSE center    NA     NA           2     76
+      453                <NA>          FALSE center    NA     NA           2     76
+      454                <NA>          FALSE center    NA     NA           2     76
+      455                <NA>          FALSE   left    NA     NA           2     77
+      456                <NA>          FALSE center    NA     NA           2     77
+      457                <NA>          FALSE center    NA     NA           2     77
+      458                <NA>          FALSE center    NA     NA           2     77
+      459                <NA>          FALSE center    NA     NA           2     77
+      460                <NA>          FALSE center    NA     NA           2     77
+      461                <NA>          FALSE   left    NA     NA           2     78
+      462                <NA>          FALSE center    NA     NA           2     78
+      463                <NA>          FALSE center    NA     NA           2     78
+      464                <NA>          FALSE center    NA     NA           2     78
+      465                <NA>          FALSE center    NA     NA           2     78
+      466                <NA>          FALSE center    NA     NA           2     78
+      467                <NA>          FALSE   left    NA     NA           2     79
+      468                <NA>          FALSE center    NA     NA           2     79
+      469                <NA>          FALSE center    NA     NA           2     79
+      470                <NA>          FALSE center    NA     NA           2     79
+      471                <NA>          FALSE center    NA     NA           2     79
+      472                <NA>          FALSE center    NA     NA           2     79
+      473                <NA>          FALSE   left    NA     NA           2     80
+      474                <NA>          FALSE center    NA     NA           2     80
+      475                <NA>          FALSE center    NA     NA           2     80
+      476                <NA>          FALSE center    NA     NA           2     80
+      477                <NA>          FALSE center    NA     NA           2     80
+      478                <NA>          FALSE center    NA     NA           2     80
+      479                <NA>          FALSE   left    NA     NA           2     81
+      480                <NA>          FALSE center    NA     NA           2     81
+      481                <NA>          FALSE center    NA     NA           2     81
+      482                <NA>          FALSE center    NA     NA           2     81
+      483                <NA>          FALSE center    NA     NA           2     81
+      484                <NA>          FALSE center    NA     NA           2     81
+      485                <NA>          FALSE   left    NA     NA           2     82
+      486                <NA>          FALSE   left    NA     NA           2     83
+      487                <NA>          FALSE   left    NA     NA           2     84
           cell_id col_span row_span is_header table_stylename
       1         1        7        1      TRUE            <NA>
       2         1        7        1      TRUE            <NA>
@@ -56415,259 +56337,259 @@
       31        6        1        1     FALSE            <NA>
       32        7        1        1     FALSE            <NA>
       33        1        1        1     FALSE            <NA>
-      34        1        1        1     FALSE            <NA>
-      35        1        1        1     FALSE            <NA>
-      36        1        1        1     FALSE            <NA>
-      37        2        1        1     FALSE            <NA>
-      38        3        1        1     FALSE            <NA>
-      39        4        1        1     FALSE            <NA>
-      40        5        1        1     FALSE            <NA>
-      41        6        1        1     FALSE            <NA>
-      42        7        1        1     FALSE            <NA>
-      43        1        1        1     FALSE            <NA>
-      44        2        1        1     FALSE            <NA>
-      45        3        1        1     FALSE            <NA>
-      46        4        1        1     FALSE            <NA>
-      47        5        1        1     FALSE            <NA>
-      48        6        1        1     FALSE            <NA>
-      49        7        1        1     FALSE            <NA>
-      50        1        1        1     FALSE            <NA>
-      51        2        1        1     FALSE            <NA>
-      52        3        1        1     FALSE            <NA>
-      53        4        1        1     FALSE            <NA>
-      54        5        1        1     FALSE            <NA>
-      55        6        1        1     FALSE            <NA>
-      56        7        1        1     FALSE            <NA>
-      57        1        1        1     FALSE            <NA>
-      58        2        1        1     FALSE            <NA>
-      59        3        1        1     FALSE            <NA>
-      60        4        1        1     FALSE            <NA>
-      61        5        1        1     FALSE            <NA>
-      62        6        1        1     FALSE            <NA>
-      63        7        1        1     FALSE            <NA>
-      64        1        1        1     FALSE            <NA>
-      65        2        1        1     FALSE            <NA>
-      66        3        1        1     FALSE            <NA>
-      67        4        1        1     FALSE            <NA>
-      68        5        1        1     FALSE            <NA>
-      69        6        1        1     FALSE            <NA>
-      70        7        1        1     FALSE            <NA>
-      71        1        1        1     FALSE            <NA>
-      72        2        1        1     FALSE            <NA>
-      73        3        1        1     FALSE            <NA>
-      74        4        1        1     FALSE            <NA>
-      75        5        1        1     FALSE            <NA>
-      76        6        1        1     FALSE            <NA>
-      77        7        1        1     FALSE            <NA>
-      78        1        1        1     FALSE            <NA>
-      79        2        1        1     FALSE            <NA>
-      80        3        1        1     FALSE            <NA>
-      81        4        1        1     FALSE            <NA>
-      82        5        1        1     FALSE            <NA>
-      83        6        1        1     FALSE            <NA>
-      84        7        1        1     FALSE            <NA>
-      85        1        1        1     FALSE            <NA>
-      86        2        1        1     FALSE            <NA>
-      87        3        1        1     FALSE            <NA>
-      88        4        1        1     FALSE            <NA>
-      89        5        1        1     FALSE            <NA>
-      90        6        1        1     FALSE            <NA>
-      91        7        1        1     FALSE            <NA>
-      92        1        1        1     FALSE            <NA>
-      93        2        1        1     FALSE            <NA>
-      94        3        1        1     FALSE            <NA>
-      95        4        1        1     FALSE            <NA>
-      96        5        1        1     FALSE            <NA>
-      97        6        1        1     FALSE            <NA>
-      98        7        1        1     FALSE            <NA>
-      99        1        1        1     FALSE            <NA>
-      100       2        1        1     FALSE            <NA>
-      101       3        1        1     FALSE            <NA>
-      102       4        1        1     FALSE            <NA>
-      103       5        1        1     FALSE            <NA>
-      104       6        1        1     FALSE            <NA>
-      105       7        1        1     FALSE            <NA>
-      106       1        1        1     FALSE            <NA>
-      107       2        1        1     FALSE            <NA>
-      108       3        1        1     FALSE            <NA>
-      109       4        1        1     FALSE            <NA>
-      110       5        1        1     FALSE            <NA>
-      111       6        1        1     FALSE            <NA>
-      112       7        1        1     FALSE            <NA>
-      113       1        1        1     FALSE            <NA>
-      114       2        1        1     FALSE            <NA>
-      115       3        1        1     FALSE            <NA>
-      116       4        1        1     FALSE            <NA>
-      117       5        1        1     FALSE            <NA>
-      118       6        1        1     FALSE            <NA>
-      119       7        1        1     FALSE            <NA>
-      120       1        1        1     FALSE            <NA>
-      121       2        1        1     FALSE            <NA>
-      122       3        1        1     FALSE            <NA>
-      123       4        1        1     FALSE            <NA>
-      124       5        1        1     FALSE            <NA>
-      125       6        1        1     FALSE            <NA>
-      126       7        1        1     FALSE            <NA>
-      127       1        1        1     FALSE            <NA>
-      128       2        1        1     FALSE            <NA>
-      129       3        1        1     FALSE            <NA>
-      130       4        1        1     FALSE            <NA>
-      131       5        1        1     FALSE            <NA>
-      132       6        1        1     FALSE            <NA>
-      133       7        1        1     FALSE            <NA>
-      134       1        1        1     FALSE            <NA>
-      135       2        1        1     FALSE            <NA>
-      136       3        1        1     FALSE            <NA>
-      137       4        1        1     FALSE            <NA>
-      138       5        1        1     FALSE            <NA>
-      139       6        1        1     FALSE            <NA>
-      140       7        1        1     FALSE            <NA>
-      141       1        1        1     FALSE            <NA>
-      142       2        1        1     FALSE            <NA>
-      143       3        1        1     FALSE            <NA>
-      144       4        1        1     FALSE            <NA>
-      145       5        1        1     FALSE            <NA>
-      146       6        1        1     FALSE            <NA>
-      147       7        1        1     FALSE            <NA>
-      148       1        1        1     FALSE            <NA>
-      149       2        1        1     FALSE            <NA>
-      150       3        1        1     FALSE            <NA>
-      151       4        1        1     FALSE            <NA>
-      152       5        1        1     FALSE            <NA>
-      153       6        1        1     FALSE            <NA>
-      154       7        1        1     FALSE            <NA>
-      155       1        1        1     FALSE            <NA>
-      156       1        1        1     FALSE            <NA>
-      157       1        1        1     FALSE            <NA>
-      158       1        1        1     FALSE            <NA>
-      159       2        1        1     FALSE            <NA>
-      160       3        1        1     FALSE            <NA>
-      161       4        1        1     FALSE            <NA>
-      162       5        1        1     FALSE            <NA>
-      163       6        1        1     FALSE            <NA>
-      164       7        1        1     FALSE            <NA>
-      165       1        1        1     FALSE            <NA>
-      166       2        1        1     FALSE            <NA>
-      167       3        1        1     FALSE            <NA>
-      168       4        1        1     FALSE            <NA>
-      169       5        1        1     FALSE            <NA>
-      170       6        1        1     FALSE            <NA>
-      171       7        1        1     FALSE            <NA>
-      172       1        1        1     FALSE            <NA>
-      173       2        1        1     FALSE            <NA>
-      174       3        1        1     FALSE            <NA>
-      175       4        1        1     FALSE            <NA>
-      176       5        1        1     FALSE            <NA>
-      177       6        1        1     FALSE            <NA>
-      178       7        1        1     FALSE            <NA>
-      179       1        1        1     FALSE            <NA>
-      180       2        1        1     FALSE            <NA>
-      181       3        1        1     FALSE            <NA>
-      182       4        1        1     FALSE            <NA>
-      183       5        1        1     FALSE            <NA>
-      184       6        1        1     FALSE            <NA>
-      185       7        1        1     FALSE            <NA>
-      186       1        1        1     FALSE            <NA>
-      187       2        1        1     FALSE            <NA>
-      188       3        1        1     FALSE            <NA>
-      189       4        1        1     FALSE            <NA>
-      190       5        1        1     FALSE            <NA>
-      191       6        1        1     FALSE            <NA>
-      192       7        1        1     FALSE            <NA>
-      193       1        1        1     FALSE            <NA>
-      194       2        1        1     FALSE            <NA>
-      195       3        1        1     FALSE            <NA>
-      196       4        1        1     FALSE            <NA>
-      197       5        1        1     FALSE            <NA>
-      198       6        1        1     FALSE            <NA>
-      199       7        1        1     FALSE            <NA>
-      200       1        1        1     FALSE            <NA>
-      201       2        1        1     FALSE            <NA>
-      202       3        1        1     FALSE            <NA>
-      203       4        1        1     FALSE            <NA>
-      204       5        1        1     FALSE            <NA>
-      205       6        1        1     FALSE            <NA>
-      206       7        1        1     FALSE            <NA>
-      207       1        1        1     FALSE            <NA>
-      208       2        1        1     FALSE            <NA>
-      209       3        1        1     FALSE            <NA>
-      210       4        1        1     FALSE            <NA>
-      211       5        1        1     FALSE            <NA>
-      212       6        1        1     FALSE            <NA>
-      213       7        1        1     FALSE            <NA>
-      214       1        1        1     FALSE            <NA>
-      215       2        1        1     FALSE            <NA>
-      216       3        1        1     FALSE            <NA>
-      217       4        1        1     FALSE            <NA>
-      218       5        1        1     FALSE            <NA>
-      219       6        1        1     FALSE            <NA>
-      220       7        1        1     FALSE            <NA>
-      221       1        1        1     FALSE            <NA>
-      222       2        1        1     FALSE            <NA>
-      223       3        1        1     FALSE            <NA>
-      224       4        1        1     FALSE            <NA>
-      225       5        1        1     FALSE            <NA>
-      226       6        1        1     FALSE            <NA>
-      227       7        1        1     FALSE            <NA>
-      228       1        1        1     FALSE            <NA>
-      229       2        1        1     FALSE            <NA>
-      230       3        1        1     FALSE            <NA>
-      231       4        1        1     FALSE            <NA>
-      232       5        1        1     FALSE            <NA>
-      233       6        1        1     FALSE            <NA>
-      234       7        1        1     FALSE            <NA>
-      235       1        1        1     FALSE            <NA>
-      236       2        1        1     FALSE            <NA>
-      237       3        1        1     FALSE            <NA>
-      238       4        1        1     FALSE            <NA>
-      239       5        1        1     FALSE            <NA>
-      240       6        1        1     FALSE            <NA>
-      241       7        1        1     FALSE            <NA>
-      242       1        1        1     FALSE            <NA>
-      243       2        1        1     FALSE            <NA>
-      244       3        1        1     FALSE            <NA>
-      245       4        1        1     FALSE            <NA>
-      246       5        1        1     FALSE            <NA>
-      247       6        1        1     FALSE            <NA>
-      248       7        1        1     FALSE            <NA>
-      249       1        1        1     FALSE            <NA>
-      250       2        1        1     FALSE            <NA>
-      251       3        1        1     FALSE            <NA>
-      252       4        1        1     FALSE            <NA>
-      253       5        1        1     FALSE            <NA>
-      254       6        1        1     FALSE            <NA>
-      255       7        1        1     FALSE            <NA>
-      256       1        1        1     FALSE            <NA>
-      257       2        1        1     FALSE            <NA>
-      258       3        1        1     FALSE            <NA>
-      259       4        1        1     FALSE            <NA>
-      260       5        1        1     FALSE            <NA>
-      261       6        1        1     FALSE            <NA>
-      262       7        1        1     FALSE            <NA>
-      263       1        7        1     FALSE            <NA>
-      264       1        7        1     FALSE            <NA>
-      265       1        7        1     FALSE            <NA>
-      266      NA     <NA>       NA        NA            <NA>
-      267       1        6        1      TRUE            <NA>
-      268       1        6        1      TRUE            <NA>
-      269       1        6        1      TRUE            <NA>
-      270       1        1        1      TRUE            <NA>
-      271       2        3        1      TRUE            <NA>
-      272       5        2        1      TRUE            <NA>
-      273       1        1        1      TRUE            <NA>
-      274       2        3        1      TRUE            <NA>
-      275       5        1        1      TRUE            <NA>
-      276       6        1        1      TRUE            <NA>
-      277       1        1        1      TRUE            <NA>
-      278       2        3        1      TRUE            <NA>
+      34        2        1        1     FALSE            <NA>
+      35        3        1        1     FALSE            <NA>
+      36        4        1        1     FALSE            <NA>
+      37        5        1        1     FALSE            <NA>
+      38        6        1        1     FALSE            <NA>
+      39        7        1        1     FALSE            <NA>
+      40        1        1        1     FALSE            <NA>
+      41        2        1        1     FALSE            <NA>
+      42        3        1        1     FALSE            <NA>
+      43        4        1        1     FALSE            <NA>
+      44        5        1        1     FALSE            <NA>
+      45        6        1        1     FALSE            <NA>
+      46        7        1        1     FALSE            <NA>
+      47        1        1        1     FALSE            <NA>
+      48        2        1        1     FALSE            <NA>
+      49        3        1        1     FALSE            <NA>
+      50        4        1        1     FALSE            <NA>
+      51        5        1        1     FALSE            <NA>
+      52        6        1        1     FALSE            <NA>
+      53        7        1        1     FALSE            <NA>
+      54        1        1        1     FALSE            <NA>
+      55        2        1        1     FALSE            <NA>
+      56        3        1        1     FALSE            <NA>
+      57        4        1        1     FALSE            <NA>
+      58        5        1        1     FALSE            <NA>
+      59        6        1        1     FALSE            <NA>
+      60        7        1        1     FALSE            <NA>
+      61        1        1        1     FALSE            <NA>
+      62        2        1        1     FALSE            <NA>
+      63        3        1        1     FALSE            <NA>
+      64        4        1        1     FALSE            <NA>
+      65        5        1        1     FALSE            <NA>
+      66        6        1        1     FALSE            <NA>
+      67        7        1        1     FALSE            <NA>
+      68        1        1        1     FALSE            <NA>
+      69        2        1        1     FALSE            <NA>
+      70        3        1        1     FALSE            <NA>
+      71        4        1        1     FALSE            <NA>
+      72        5        1        1     FALSE            <NA>
+      73        6        1        1     FALSE            <NA>
+      74        7        1        1     FALSE            <NA>
+      75        1        1        1     FALSE            <NA>
+      76        2        1        1     FALSE            <NA>
+      77        3        1        1     FALSE            <NA>
+      78        4        1        1     FALSE            <NA>
+      79        5        1        1     FALSE            <NA>
+      80        6        1        1     FALSE            <NA>
+      81        7        1        1     FALSE            <NA>
+      82        1        1        1     FALSE            <NA>
+      83        2        1        1     FALSE            <NA>
+      84        3        1        1     FALSE            <NA>
+      85        4        1        1     FALSE            <NA>
+      86        5        1        1     FALSE            <NA>
+      87        6        1        1     FALSE            <NA>
+      88        7        1        1     FALSE            <NA>
+      89        1        1        1     FALSE            <NA>
+      90        2        1        1     FALSE            <NA>
+      91        3        1        1     FALSE            <NA>
+      92        4        1        1     FALSE            <NA>
+      93        5        1        1     FALSE            <NA>
+      94        6        1        1     FALSE            <NA>
+      95        7        1        1     FALSE            <NA>
+      96        1        1        1     FALSE            <NA>
+      97        2        1        1     FALSE            <NA>
+      98        3        1        1     FALSE            <NA>
+      99        4        1        1     FALSE            <NA>
+      100       5        1        1     FALSE            <NA>
+      101       6        1        1     FALSE            <NA>
+      102       7        1        1     FALSE            <NA>
+      103       1        1        1     FALSE            <NA>
+      104       2        1        1     FALSE            <NA>
+      105       3        1        1     FALSE            <NA>
+      106       4        1        1     FALSE            <NA>
+      107       5        1        1     FALSE            <NA>
+      108       6        1        1     FALSE            <NA>
+      109       7        1        1     FALSE            <NA>
+      110       1        1        1     FALSE            <NA>
+      111       2        1        1     FALSE            <NA>
+      112       3        1        1     FALSE            <NA>
+      113       4        1        1     FALSE            <NA>
+      114       5        1        1     FALSE            <NA>
+      115       6        1        1     FALSE            <NA>
+      116       7        1        1     FALSE            <NA>
+      117       1        1        1     FALSE            <NA>
+      118       2        1        1     FALSE            <NA>
+      119       3        1        1     FALSE            <NA>
+      120       4        1        1     FALSE            <NA>
+      121       5        1        1     FALSE            <NA>
+      122       6        1        1     FALSE            <NA>
+      123       7        1        1     FALSE            <NA>
+      124       1        1        1     FALSE            <NA>
+      125       2        1        1     FALSE            <NA>
+      126       3        1        1     FALSE            <NA>
+      127       4        1        1     FALSE            <NA>
+      128       5        1        1     FALSE            <NA>
+      129       6        1        1     FALSE            <NA>
+      130       7        1        1     FALSE            <NA>
+      131       1        1        1     FALSE            <NA>
+      132       2        1        1     FALSE            <NA>
+      133       3        1        1     FALSE            <NA>
+      134       4        1        1     FALSE            <NA>
+      135       5        1        1     FALSE            <NA>
+      136       6        1        1     FALSE            <NA>
+      137       7        1        1     FALSE            <NA>
+      138       1        1        1     FALSE            <NA>
+      139       2        1        1     FALSE            <NA>
+      140       3        1        1     FALSE            <NA>
+      141       4        1        1     FALSE            <NA>
+      142       5        1        1     FALSE            <NA>
+      143       6        1        1     FALSE            <NA>
+      144       7        1        1     FALSE            <NA>
+      145       1        1        1     FALSE            <NA>
+      146       2        1        1     FALSE            <NA>
+      147       3        1        1     FALSE            <NA>
+      148       4        1        1     FALSE            <NA>
+      149       5        1        1     FALSE            <NA>
+      150       6        1        1     FALSE            <NA>
+      151       7        1        1     FALSE            <NA>
+      152       1        1        1     FALSE            <NA>
+      153       2        1        1     FALSE            <NA>
+      154       3        1        1     FALSE            <NA>
+      155       4        1        1     FALSE            <NA>
+      156       5        1        1     FALSE            <NA>
+      157       6        1        1     FALSE            <NA>
+      158       7        1        1     FALSE            <NA>
+      159       1        1        1     FALSE            <NA>
+      160       2        1        1     FALSE            <NA>
+      161       3        1        1     FALSE            <NA>
+      162       4        1        1     FALSE            <NA>
+      163       5        1        1     FALSE            <NA>
+      164       6        1        1     FALSE            <NA>
+      165       7        1        1     FALSE            <NA>
+      166       1        1        1     FALSE            <NA>
+      167       2        1        1     FALSE            <NA>
+      168       3        1        1     FALSE            <NA>
+      169       4        1        1     FALSE            <NA>
+      170       5        1        1     FALSE            <NA>
+      171       6        1        1     FALSE            <NA>
+      172       7        1        1     FALSE            <NA>
+      173       1        1        1     FALSE            <NA>
+      174       2        1        1     FALSE            <NA>
+      175       3        1        1     FALSE            <NA>
+      176       4        1        1     FALSE            <NA>
+      177       5        1        1     FALSE            <NA>
+      178       6        1        1     FALSE            <NA>
+      179       7        1        1     FALSE            <NA>
+      180       1        1        1     FALSE            <NA>
+      181       2        1        1     FALSE            <NA>
+      182       3        1        1     FALSE            <NA>
+      183       4        1        1     FALSE            <NA>
+      184       5        1        1     FALSE            <NA>
+      185       6        1        1     FALSE            <NA>
+      186       7        1        1     FALSE            <NA>
+      187       1        1        1     FALSE            <NA>
+      188       2        1        1     FALSE            <NA>
+      189       3        1        1     FALSE            <NA>
+      190       4        1        1     FALSE            <NA>
+      191       5        1        1     FALSE            <NA>
+      192       6        1        1     FALSE            <NA>
+      193       7        1        1     FALSE            <NA>
+      194       1        1        1     FALSE            <NA>
+      195       2        1        1     FALSE            <NA>
+      196       3        1        1     FALSE            <NA>
+      197       4        1        1     FALSE            <NA>
+      198       5        1        1     FALSE            <NA>
+      199       6        1        1     FALSE            <NA>
+      200       7        1        1     FALSE            <NA>
+      201       1        1        1     FALSE            <NA>
+      202       2        1        1     FALSE            <NA>
+      203       3        1        1     FALSE            <NA>
+      204       4        1        1     FALSE            <NA>
+      205       5        1        1     FALSE            <NA>
+      206       6        1        1     FALSE            <NA>
+      207       7        1        1     FALSE            <NA>
+      208       1        1        1     FALSE            <NA>
+      209       2        1        1     FALSE            <NA>
+      210       3        1        1     FALSE            <NA>
+      211       4        1        1     FALSE            <NA>
+      212       5        1        1     FALSE            <NA>
+      213       6        1        1     FALSE            <NA>
+      214       7        1        1     FALSE            <NA>
+      215       1        1        1     FALSE            <NA>
+      216       2        1        1     FALSE            <NA>
+      217       3        1        1     FALSE            <NA>
+      218       4        1        1     FALSE            <NA>
+      219       5        1        1     FALSE            <NA>
+      220       6        1        1     FALSE            <NA>
+      221       7        1        1     FALSE            <NA>
+      222       1        1        1     FALSE            <NA>
+      223       2        1        1     FALSE            <NA>
+      224       3        1        1     FALSE            <NA>
+      225       4        1        1     FALSE            <NA>
+      226       5        1        1     FALSE            <NA>
+      227       6        1        1     FALSE            <NA>
+      228       7        1        1     FALSE            <NA>
+      229       1        1        1     FALSE            <NA>
+      230       2        1        1     FALSE            <NA>
+      231       3        1        1     FALSE            <NA>
+      232       4        1        1     FALSE            <NA>
+      233       5        1        1     FALSE            <NA>
+      234       6        1        1     FALSE            <NA>
+      235       7        1        1     FALSE            <NA>
+      236       1        1        1     FALSE            <NA>
+      237       2        1        1     FALSE            <NA>
+      238       3        1        1     FALSE            <NA>
+      239       4        1        1     FALSE            <NA>
+      240       5        1        1     FALSE            <NA>
+      241       6        1        1     FALSE            <NA>
+      242       7        1        1     FALSE            <NA>
+      243       1        1        1     FALSE            <NA>
+      244       2        1        1     FALSE            <NA>
+      245       3        1        1     FALSE            <NA>
+      246       4        1        1     FALSE            <NA>
+      247       5        1        1     FALSE            <NA>
+      248       6        1        1     FALSE            <NA>
+      249       7        1        1     FALSE            <NA>
+      250       1        1        1     FALSE            <NA>
+      251       2        1        1     FALSE            <NA>
+      252       3        1        1     FALSE            <NA>
+      253       4        1        1     FALSE            <NA>
+      254       5        1        1     FALSE            <NA>
+      255       6        1        1     FALSE            <NA>
+      256       7        1        1     FALSE            <NA>
+      257       1        7        1     FALSE            <NA>
+      258       1        7        1     FALSE            <NA>
+      259       1        7        1     FALSE            <NA>
+      260      NA     <NA>       NA        NA            <NA>
+      261       1        6        1      TRUE            <NA>
+      262       1        6        1      TRUE            <NA>
+      263       1        6        1      TRUE            <NA>
+      264       1        1        1      TRUE            <NA>
+      265       2        3        1      TRUE            <NA>
+      266       5        2        1      TRUE            <NA>
+      267       1        1        1      TRUE            <NA>
+      268       2        3        1      TRUE            <NA>
+      269       5        1        1      TRUE            <NA>
+      270       6        1        1      TRUE            <NA>
+      271       1        1        1      TRUE            <NA>
+      272       2        3        1      TRUE            <NA>
+      273       5        1        1      TRUE            <NA>
+      274       6        1        1      TRUE            <NA>
+      275       1        1        1      TRUE            <NA>
+      276       2        1        1      TRUE            <NA>
+      277       3        1        1      TRUE            <NA>
+      278       4        1        1      TRUE            <NA>
       279       5        1        1      TRUE            <NA>
       280       6        1        1      TRUE            <NA>
-      281       1        1        1      TRUE            <NA>
-      282       2        1        1      TRUE            <NA>
-      283       3        1        1      TRUE            <NA>
-      284       4        1        1      TRUE            <NA>
-      285       5        1        1      TRUE            <NA>
-      286       6        1        1      TRUE            <NA>
+      281       1        1        1     FALSE            <NA>
+      282       2        1        1     FALSE            <NA>
+      283       3        1        1     FALSE            <NA>
+      284       4        1        1     FALSE            <NA>
+      285       5        1        1     FALSE            <NA>
+      286       6        1        1     FALSE            <NA>
       287       1        1        1     FALSE            <NA>
       288       2        1        1     FALSE            <NA>
       289       3        1        1     FALSE            <NA>
@@ -56866,15 +56788,9 @@
       482       4        1        1     FALSE            <NA>
       483       5        1        1     FALSE            <NA>
       484       6        1        1     FALSE            <NA>
-      485       1        1        1     FALSE            <NA>
-      486       2        1        1     FALSE            <NA>
-      487       3        1        1     FALSE            <NA>
-      488       4        1        1     FALSE            <NA>
-      489       5        1        1     FALSE            <NA>
-      490       6        1        1     FALSE            <NA>
-      491       1        6        1     FALSE            <NA>
-      492       1        6        1     FALSE            <NA>
-      493       1        6        1     FALSE            <NA>
+      485       1        6        1     FALSE            <NA>
+      486       1        6        1     FALSE            <NA>
+      487       1        6        1     FALSE            <NA>
 
 # export_graph_as_docx() works with basic example
 

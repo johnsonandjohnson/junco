@@ -151,8 +151,13 @@ insert_hanging_indent_first_col_XML <- function(doc, n_rows_footer = 0, hanging_
       children <- pPr_node |> xml2::xml_children()
       child_i <- which(xml2::xml_name(children) == "ind") |> head(1)
       x <- pPr_node |> xml2::xml_child(child_i)
+      # it is possible that the current cell is already indented
+      # we don't want to lose that left-indentation value
+      # therefore extract it and add up 87 (0.06 inches)
+      left_indentation <- xml2::xml_attr(x, "left")
+      left_indentation <- ifelse(is.na(left_indentation), 0, as.integer(left_indentation))
       xml2::xml_set_attr(x, "w:hanging", hanging_indent)
-      xml2::xml_set_attr(x, "w:left", hanging_indent)
+      xml2::xml_set_attr(x, "w:left", hanging_indent + left_indentation)
     }
   }
 }
