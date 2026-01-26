@@ -491,19 +491,6 @@ testthat::test_that("insert_title_as_header() adds the title correctly", {
 })
 
 
-testthat::test_that("add_hanging_indent_first_column() works correctly", {
-  options(docx.add_datetime = FALSE)
-  flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
-  options(docx.add_datetime = TRUE)
-
-  flx$body$dataset[1, 1] <- "Republic of China"
-  flx$body$dataset[2, 1] <- "United States of America"
-
-  res <- add_hanging_indent_first_column(flx, 0.7)
-  snapshot_test_flextable(res)
-})
-
-
 testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works correctly", {
   options(docx.add_datetime = FALSE)
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")

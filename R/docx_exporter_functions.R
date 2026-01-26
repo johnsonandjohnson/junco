@@ -113,32 +113,32 @@ insert_hanging_indent_first_col_XML <- function(doc, n_rows_footer = 0, hanging_
   #       takes its paragraph 'w:p'
   #         takes its paragraph properties 'w:pPr'
   #           inserts a child <w:ind w:left="87" w:hanging="87"/>
-  
+
   # look for all table nodes
   tbl_nodes <- doc$doc_obj$get() |>
     xml2::xml_find_all(".//w:tbl")
-  
+
   for (tbl_node in tbl_nodes) {
     # look for all table rows
     tr_nodes <- tbl_node |> xml2::xml_find_all(".//w:tr")
-    
+
     # ignore the last 'n_rows_footer' nodes, as we don't want hanging indent in the footer
     tr_nodes <- head(tr_nodes, length(tr_nodes) - n_rows_footer)
-    
+
     for (tr_node in tr_nodes) {
       # if it contains a child
       # <w:trPr>
       #   <w:tblHeader/>
       # </w:trPr>
       # it means that the current row belongs to the table header, so skip it
-      is_row_header <- 
+      is_row_header <-
         tr_node |>
         xml2::xml_find_first(".//w:trPr") |>
         xml2::xml_find_first(".//w:tblHeader")
       if (length(is_row_header) > 0) {
         next()
       }
-      
+
       # otherwise, ...
       # look for first cell
       tc_node <- tr_node |> xml2::xml_find_first(".//w:tc")
@@ -146,7 +146,7 @@ insert_hanging_indent_first_col_XML <- function(doc, n_rows_footer = 0, hanging_
       p_node <- tc_node |> xml2::xml_find_first(".//w:p")
       # take its paragraph properties
       pPr_node <- p_node |> xml2::xml_find_first(".//w:pPr")
-      
+
       # set hanging indent of 0.06 inches
       children <- pPr_node |> xml2::xml_children()
       child_i <- which(xml2::xml_name(children) == "ind") |> head(1)
@@ -155,7 +155,6 @@ insert_hanging_indent_first_col_XML <- function(doc, n_rows_footer = 0, hanging_
       xml2::xml_set_attr(x, "w:left", hanging_indent)
     }
   }
-  
 }
 
 add_title_caption_hanging_indent_XML <- function(doc, string_to_look_for) {
