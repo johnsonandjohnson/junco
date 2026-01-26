@@ -373,7 +373,7 @@ testthat::test_that("remove_security_popup_page_numbers_XML() removes dirty='tru
   testthat::expect_equal(length(l_3), 0)
 })
 
-testthat::test_that("add_title_style_caption_XML() adds a new XML node w:pStyle w:val='Caption'", {
+testthat::test_that("add_title_caption_hanging_indent_XML() adds a new XML node w:pStyle w:val='Caption'", {
   options(docx.add_datetime = FALSE)
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   options(docx.add_datetime = TRUE)
@@ -388,7 +388,7 @@ testthat::test_that("add_title_style_caption_XML() adds a new XML node w:pStyle 
   l_x_before <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:pStyle[@w:val='Caption']")
 
   string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flx$header$dataset[1, 1])
-  add_title_style_caption_XML(doc, string_to_look_for)
+  add_title_caption_hanging_indent_XML(doc, string_to_look_for)
 
   # this print() is needed to update the XML and be able to retrieve the newly inserted node
   # with style Caption
@@ -501,24 +501,6 @@ testthat::test_that("add_hanging_indent_first_column() works correctly", {
 
   res <- add_hanging_indent_first_column(flx, 0.7)
   snapshot_test_flextable(res)
-})
-
-testthat::test_that("wrap_string_with_indent() works correctly", {
-  res <- wrap_string_with_indent("this is a veeeeeeeeeeeeeeery long string", max_width_inch = 1)
-  expected_res <- "this is a\n\tveeeeeeeeeeeeeeery\n\tlong string"
-  testthat::expect_equal(res, expected_res)
-
-  res <- wrap_string_with_indent("Study agent permanently discontinued",
-    max_width_inch = 1.99 - 0.375, dpi = 78
-  )
-  expected_res <- "Study agent permanently\n\tdiscontinued"
-  testthat::expect_equal(res, expected_res)
-
-  res <- wrap_string_with_indent("Resulting in persistent or significant disability/incapacity",
-    max_width_inch = 1.98 - 0.125, dpi = 78
-  )
-  expected_res <- "Resulting in persistent or significant\n\tdisability/incapacity"
-  testthat::expect_equal(res, expected_res)
 })
 
 
