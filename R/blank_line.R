@@ -2,7 +2,7 @@
 #'
 #' @inheritParams proposal_argument_convention
 #'
-#' @keywords internal
+#' @export
 ac_blank_line <- function(df, labelstr = "") {
   in_rows(.list = NA_real_, .labels = labelstr, .formats = "xx", .format_na_strs = "")
 }

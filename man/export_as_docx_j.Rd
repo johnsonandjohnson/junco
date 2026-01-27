@@ -20,10 +20,10 @@ export_as_docx_j(
   orientation = "portrait",
   paginate = tlg_type(tt) == "Table",
   nosplitin = character(),
-  string_map = junco::default_str_map,
+  string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   combined_docx = FALSE,
-  tlgtype = (utils::getFromNamespace("tlg_type", "junco"))(tt),
+  tlgtype = tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", 0.5, 3),
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
@@ -38,50 +38,59 @@ export_as_docx_j(
 )
 }
 \arguments{
-\item{tt}{a VTableTree or a listing_df object to export.}
+\item{tt}{(\code{TableTree} or \code{listing_df})\cr the object to export.}
 
-\item{tblid}{Character. Output ID to be displayed in the Title and last line of footer.}
+\item{tblid}{(\code{character})\cr Output ID to be displayed in the title and last line of footer.}
 
-\item{output_dir}{a directory path to save the docx.}
+\item{output_dir}{(\code{character})\cr a directory path to save the docx.}
 
-\item{theme}{(optional) a function factory. See theme_docx_default_j()
-or rtables.officer::theme_docx_default() for more details.}
+\item{theme}{(function factory)\cr The theme to apply to the flextable
+(default = \code{\link[=theme_docx_default_j]{theme_docx_default_j()}}).\cr
+See \code{\link[=theme_docx_default_j]{theme_docx_default_j()}} or \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::theme_docx_default()}}
+for more details.}
 
-\item{add_page_break}{(optional) Default = FALSE.}
+\item{add_page_break}{(\code{logical})\cr (optional) Default = FALSE.}
 
-\item{titles_as_header}{(optional) Default = TRUE.}
+\item{titles_as_header}{(\code{logical})\cr (optional) Default = TRUE.}
 
-\item{integrate_footers}{(optional) Default = TRUE.}
+\item{integrate_footers}{(\code{logical})\cr (optional) Default = TRUE.}
 
-\item{section_properties}{(optional). A "prop_section" object containing
-information about page size, orientation, margins, etc.
-See officer::prop_section() for more details.
+\item{section_properties}{(\code{prop_section})\cr (optional) A "prop_section" object
+containing information about page size, orientation, margins, etc.
+See \code{\link[officer:prop_section]{officer::prop_section()}} for more details.
 No need to be specified by end user.}
 
-\item{doc_metadata}{(optional). Default = NULL.}
+\item{doc_metadata}{(list of \code{string})\cr Any value that can be used as metadata
+by \code{\link[officer:set_doc_properties]{officer::set_doc_properties()}}. Important text values are title, subject,
+creator, and description, while created is a date object.\cr
+(optional) Default = NULL.}
 
-\item{template_file}{(optional). Default = "doc/template_file.docx".
-Paragraph styles are inherited from this file.}
+\item{template_file}{(\code{character})\cr Template file that \code{officer} will use as a starting
+point for the final document. Document attaches the table and uses the defaults
+defined in the template file. Paragraph styles are inherited from this file.\cr
+(optional) Default = "doc/template_file.docx".}
 
-\item{orientation}{(optional) Default = "portrait".
+\item{orientation}{(\code{character})\cr (optional) Default = "portrait".
 One of: "portrait", "landscape".}
 
-\item{paginate}{(optional) Default = FALSE.}
+\item{paginate}{(\code{logical})\cr (optional) Default = TRUE for TableTree and FALSE otherwise.}
 
-\item{nosplitin}{(optional) Default = character(). Named list.}
+\item{nosplitin}{(\code{list})\cr list(row=, col=). Path elements whose children should not be paginated within
+if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
+all the associated columns don't fit on a single page.}
 
-\item{string_map}{(optional) Default = default_str_map.}
+\item{string_map}{(\code{tibble})\cr (optional) Default = default_str_map.}
 
-\item{markup_df_docx}{(optional) Default = dps_markup_df_docx.}
+\item{markup_df_docx}{(\code{tibble})\cr (optional) Default = dps_markup_df_docx.}
 
-\item{combined_docx}{(optional). Default = FALSE. Whether to also export an "allparts"
-docx version.}
+\item{combined_docx}{(\code{logical})\cr Whether to also export an "allparts" docx version.\cr
+(optional) Default = FALSE.}
 
-\item{tlgtype}{(optional). No need to be specified by end user.}
+\item{tlgtype}{(\code{character})\cr (optional). No need to be specified by end user.}
 
-\item{col_gap}{(optional). Default = 3 (Tables) or 0.5 (Listings).}
+\item{col_gap}{(\code{numeric})\cr (optional). Default = 3 (Tables) or 0.5 (Listings).}
 
-\item{pagenum}{(optional). Whether to display page numbers. Only applicable
+\item{pagenum}{(\code{logical})\cr (optional). Whether to display page numbers. Only applicable
 to listings (i.e. for tables and figures this argument is ignored).}
 
 \item{round_type}{(\code{"iec"} or \code{"sas"})\cr the type of rounding to perform. iec,
@@ -89,11 +98,12 @@ the default, performs rounding compliant with IEC 60559, while
 sas performs nearest-value rounding consistent with rounding within SAS.
 See \verb{[formatters::format_value()]} for more details.}
 
-\item{alignments}{(\code{list})\cr List of named lists. Vectorized.
+\item{alignments}{(\code{list})\cr (optional) List of named lists. Vectorized.
 (Default = \code{list()}) Used to specify individual column or cell alignments.
 Each named list contains \code{row}, \code{col}, and \code{value}.}
 
-\item{border}{(optional) an \code{fp_border} object.}
+\item{border}{(\code{fp_border})\cr Border to use (default =
+\code{flextable::fp_border_default(width = 0.75, color = "black")}).}
 
 \item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of columns of \code{tt}
 and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}

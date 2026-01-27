@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed `s_kaplan_meier()` range censoring indicator handling to no longer produce `NA` values in the output when either all subjects are censored or none are censored.
+- Export `leftside()`, `postfun_eq5d` and `ac_blank_line` for efficacy templates
+
+### Changed
+- refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
 
 ### Added
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
@@ -31,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `a_cmhrms_j()` to support p-value from CMH row mean score test, as well as the modified version `a_cmhrms_j_with_exclude()` that allows to exclude the analysis from specified row splits. #97
 - Added standard error (SE) column for each treatment arm's least square (LS) means estimate to the `summarize_lsmeans_wide()` layout.
 - Added the internal function `do_exclude_split()` to facilitate the exclusion of specified row splits from analysis functions.
-- Remove some unused functions (jj_uc_map, postfun_cog, postfun_eq5d, column_N, non_blank_sentinel, null_fn, unicodify
+- Remove some unused functions (jj_uc_map, postfun_cog, column_N, non_blank_sentinel, null_fn, unicodify
 - Add extra check for existence of `.alt_df_full` when layout has risk difference column and a row-split (h_create_alt_df) #120.
 - Add docx exporter for Tables, Listings and Figures.
 - Add `alignments` argument in `tt_to_tlgrtf()`

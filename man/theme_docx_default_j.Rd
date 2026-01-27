@@ -14,28 +14,31 @@ theme_docx_default_j(
 )
 }
 \arguments{
-\item{font}{(\code{string})\cr font. Defaults to "Times New Roman".}
+\item{font}{(\code{string})\cr (optional) Default = "Times New Roman".}
 
-\item{font_size}{(\code{integer(1)})\cr font size. Defaults to 9.}
+\item{font_size}{(\code{integer(1)})\cr (optional) Default = 9.}
 
 \item{cell_margins}{(\verb{numeric(1) or numeric(4)})\cr
-a numeric or a vector of four numbers indicating
-c("left", "right", "top", "bottom"). It defaults to 0mm in Word pt to all 4 margins.}
+A numeric or a vector of four numbers indicating
+c("left", "right", "top", "bottom").\cr
+(optional) Default = c(0, 0, 0, 0).}
 
-\item{bold}{(\code{character})\cr parts of the table text that should be in bold.
+\item{bold}{(\code{character})\cr Parts of the table text that should be in bold.
 Can be any combination of c("header", "content_rows", "label_rows", "top_left").
 The first one renders all column names bold (not topleft content).
-The second and third option use formatters::make_row_df() to render
-content or/and label rows as bold.}
+The second and third option use \code{\link[formatters:make_row_df]{formatters::make_row_df()}} to render
+content or/and label rows as bold.\cr
+(optional) Default = \code{c("header", "content_rows", "label_rows", "top_left")}}
 
-\item{bold_manual}{(\verb{named list or NULL})\cr list of index lists.
-See example for needed structure. Accepted groupings/names are c("header", "body").}
+\item{bold_manual}{(\verb{named list})\cr List of index lists.
+See example for needed structure. Accepted groupings/names are c("header", "body").\cr
+(optional) Default = NULL.}
 
-\item{border}{(\code{fp_border})\cr border to use. Defaults to width = 0.75
-and color = "black"}
+\item{border}{(\code{fp_border})\cr Border to use (default =
+\code{flextable::fp_border_default(width = 0.75, color = "black")}).}
 }
 \value{
-a function that applies the given theme to a flextable.
+A function that applies the given theme to a flextable.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

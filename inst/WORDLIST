@@ -11,6 +11,7 @@ Colwidths
 Customizations
 DOCX
 DataFrame
+EQ
 Eg
 Haenszel
 IEC
@@ -133,6 +134,7 @@ spl
 sprintf
 str
 subcol
+subfacet
 summarizations
 tbldf
 tibble

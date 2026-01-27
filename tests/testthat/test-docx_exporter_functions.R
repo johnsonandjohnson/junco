@@ -50,9 +50,13 @@ rtables::label_at_path(tbl1c, c("COUNTRY", "count_unique_denom_fraction.CAN")) <
 rtables::label_at_path(tbl1c, c("COUNTRY", "count_unique_denom_fraction.JPN")) <-
   "JPN >="
 
-snapshot_test_docx <- function(doc) {
+snapshot_test_docx <- function(doc, check_XML = FALSE) {
   if (Sys.info()[["sysname"]] == "Windows") {
-    testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
+    if (check_XML) {
+      testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
+    } else {
+      testthat::expect_snapshot(officer::docx_summary(x = doc, detailed = TRUE))
+    }
   }
 }
 
@@ -156,10 +160,10 @@ testthat::test_that("tt_to_flextable_j() works fine with border_mat", {
   flx2 <- tt_to_flextable_j(tt = tbl2, tblid = "output ID", border_mat = border_mat)
   options(docx.add_datetime = TRUE)
 
-  testthat::expect_equal(flx1$header$styles$cells$border.width.bottom$data[2, 4], c(V4 = 0))
-  testthat::expect_equal(flx2$header$styles$cells$border.width.bottom$data[2, 4], c(V4 = 0.75))
+  expected_res <- flx1$header$styles$cells$border.width.bottom$data
+  expected_res[2, 4] <- 0.75
+  testthat::expect_equal(flx2$header$styles$cells$border.width.bottom$data, expected_res)
 
-  snapshot_test_flextable(flx2)
 })
 
 testthat::test_that("tt_to_flextable_j() works fine with round_type", {
@@ -332,7 +336,7 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
 # - open the docx in R and get the XML
 # - treat the XML content as string
 # - use snapshot testing against the string
-testthat::test_that("remove_security_popup_page_numbers() removes dirty='true'", {
+testthat::test_that("remove_security_popup_page_numbers_XML() removes dirty='true'", {
   doc <- officer::read_docx()
   section_properties <- officer::prop_section(
     page_size = officer::page_size(width = 11, height = 8.5, orient = "landscape"),
@@ -358,10 +362,10 @@ testthat::test_that("remove_security_popup_page_numbers() removes dirty='true'",
 
   l_1 <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
 
-  junco:::remove_security_popup_page_numbers(doc = doc, tlgtype = "something different than Listing")
+  remove_security_popup_page_numbers_XML(doc = doc, tlgtype = "something different than Listing")
   l_2 <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
 
-  junco:::remove_security_popup_page_numbers(doc = doc, tlgtype = "Listing")
+  remove_security_popup_page_numbers_XML(doc = doc, tlgtype = "Listing")
   l_3 <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
 
   testthat::expect_equal(length(l_1), 6)
@@ -369,13 +373,13 @@ testthat::test_that("remove_security_popup_page_numbers() removes dirty='true'",
   testthat::expect_equal(length(l_3), 0)
 })
 
-testthat::test_that("add_title_style_caption() adds a new XML node w:pStyle w:val='Caption'", {
+testthat::test_that("add_title_style_caption_XML() adds a new XML node w:pStyle w:val='Caption'", {
   options(docx.add_datetime = FALSE)
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   options(docx.add_datetime = TRUE)
 
   # nolint start
-  flx <- junco:::insert_title_hanging_indent_v3(flx, "output id:this is a veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery long title")
+  flx <- insert_title_as_header(flx, "output id:this is a veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery long title")
   # nolint end
   flx <- flx |> flextable::set_table_properties(layout = "autofit")
   doc <- officer::read_docx(system.file("template_file.docx", package = "junco"))
@@ -384,7 +388,7 @@ testthat::test_that("add_title_style_caption() adds a new XML node w:pStyle w:va
   l_x_before <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:pStyle[@w:val='Caption']")
 
   string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flx$header$dataset[1, 1])
-  add_title_style_caption(doc, string_to_look_for)
+  add_title_style_caption_XML(doc, string_to_look_for)
 
   # this print() is needed to update the XML and be able to retrieve the newly inserted node
   # with style Caption
@@ -399,12 +403,6 @@ testthat::test_that("add_title_style_caption() adds a new XML node w:pStyle w:va
   testthat::expect_equal(length(l_x_after), 1)
 })
 
-testthat::test_that("my_pg_width_by_orient() returns what it should", {
-  res <- junco:::my_pg_width_by_orient(orientation = "portrait")
-  testthat::expect_equal(res, 6.38)
-  res <- junco:::my_pg_width_by_orient(orientation = "landscape")
-  testthat::expect_equal(res, 8.88)
-})
 
 testthat::test_that("insert_footer_text() adds a footer line to a flextable", {
   options(docx.add_datetime = FALSE)
@@ -431,25 +429,25 @@ testthat::test_that("insert_footer_text() adds a footer line to a flextable", {
 })
 
 testthat::test_that("interpret_cell_content() returns what it should", {
-  res <- junco:::interpret_cell_content("Any AE~[super a]~[sub bds]")
+  res <- interpret_cell_content("Any AE~[super a]~[sub bds]")
   expected_res <- "flextable::as_paragraph('Any AE', flextable::as_sup('a'), '', flextable::as_sub('bds'))"
   testthat::expect_equal(res, expected_res)
 
-  res <- junco:::interpret_cell_content("Any AE~{super a}~[sub bds]other ~{super b}b")
+  res <- interpret_cell_content("Any AE~{super a}~[sub bds]other ~{super b}b")
   # nolint start
   expected_res <- "flextable::as_paragraph('Any AE', flextable::as_sup('a'), '', flextable::as_sub('bds'), 'other ', flextable::as_sup('b'), 'b')"
   # nolint end
   testthat::expect_equal(res, expected_res)
 
   res <-
-    junco:::interpret_cell_content("~{super a} The event experienced by the subject with the worst severity is used.")
+    interpret_cell_content("~{super a} The event experienced by the subject with the worst severity is used.")
   # nolint start
   expected_res <- "flextable::as_paragraph('', flextable::as_sup('a'), ' The event experienced by the subject with the worst severity is used.')"
   # nolint end
   testthat::expect_equal(res, expected_res)
 
   # nolint start
-  res <- junco:::interpret_cell_content("Note: Adverse events are coded using MedDRA version 26.0.~{optional ; toxicity grade is evaluated according to NCI-CTCAE version &ctcae.}.")
+  res <- interpret_cell_content("Note: Adverse events are coded using MedDRA version 26.0.~{optional ; toxicity grade is evaluated according to NCI-CTCAE version &ctcae.}.")
   expected_res <- "flextable::as_paragraph('Note: Adverse events are coded using MedDRA version 26.0.', '; toxicity grade is evaluated according to NCI-CTCAE version &ctcae.', '.')"
   # nolint end
   testthat::expect_equal(res, expected_res)
@@ -460,7 +458,7 @@ testthat::test_that("interpret_all_cell_content() is interpreting markups correc
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   options(docx.add_datetime = TRUE)
 
-  flx <- insert_title_hanging_indent_v3(flx,
+  flx <- insert_title_as_header(flx,
     title = "This is the main Ttl~[super a]"
   )
 
@@ -483,12 +481,12 @@ testthat::test_that("interpret_all_cell_content() is interpreting markups correc
   snapshot_test_flextable(res)
 })
 
-testthat::test_that("insert_title_hanging_indent_v3() adds the title correctly", {
+testthat::test_that("insert_title_as_header() adds the title correctly", {
   options(docx.add_datetime = FALSE)
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   options(docx.add_datetime = TRUE)
 
-  res <- insert_title_hanging_indent_v3(flx, "output id:this is a test title")
+  res <- insert_title_as_header(flx, "output id:this is a test title")
   snapshot_test_flextable(res)
 })
 
@@ -506,17 +504,17 @@ testthat::test_that("add_hanging_indent_first_column() works correctly", {
 })
 
 testthat::test_that("wrap_string_with_indent() works correctly", {
-  res <- junco:::wrap_string_with_indent("this is a veeeeeeeeeeeeeeery long string", max_width_inch = 1)
+  res <- wrap_string_with_indent("this is a veeeeeeeeeeeeeeery long string", max_width_inch = 1)
   expected_res <- "this is a\n\tveeeeeeeeeeeeeeery\n\tlong string"
   testthat::expect_equal(res, expected_res)
 
-  res <- junco:::wrap_string_with_indent("Study agent permanently discontinued",
+  res <- wrap_string_with_indent("Study agent permanently discontinued",
     max_width_inch = 1.99 - 0.375, dpi = 78
   )
   expected_res <- "Study agent permanently\n\tdiscontinued"
   testthat::expect_equal(res, expected_res)
 
-  res <- junco:::wrap_string_with_indent("Resulting in persistent or significant disability/incapacity",
+  res <- wrap_string_with_indent("Resulting in persistent or significant disability/incapacity",
     max_width_inch = 1.98 - 0.125, dpi = 78
   )
   expected_res <- "Resulting in persistent or significant\n\tdisability/incapacity"
@@ -886,7 +884,7 @@ testthat::test_that("export_graph_as_docx() works with basic example", {
 
   # open the file and check the XML
   doc <- officer::read_docx(output_docx)
-  snapshot_test_docx(doc)
+  snapshot_test_docx(doc, check_XML = TRUE)
 
   file.remove(c(pn1, pn2, output_docx))
 })

@@ -58,7 +58,8 @@ export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
   )
 }
 
-remove_table_shading <- function(doc) {
+
+remove_table_shading_XML <- function(doc) {
   # by default, Word adds a table shading white, which covers the watermark
   # the XML nodes responsible for this are:
   # <w:shd w:val="clear" w:color="auto" w:fill="FF00FF"/>
@@ -67,8 +68,8 @@ remove_table_shading <- function(doc) {
   xml2::xml_remove(xml2::xml_find_all(doc$doc_obj$get(), ".//w:shd"))
 }
 
-remove_security_popup_page_numbers <- function(doc, tlgtype = "Table",
-                                               pagenum = tlgtype == "Listing") {
+remove_security_popup_page_numbers_XML <- function(doc, tlgtype = "Table",
+                                                   pagenum = tlgtype == "Listing") {
   # if we are working with listings, we previously had added
   # the page numbers using officer::run_word_field()
   # the problem with this function is that it inserts in the XML
@@ -108,7 +109,7 @@ insert_keepNext_vertical_pagination <- function(tt, flx) {
   # this function updates flx by calling flextable::keep_with_next()
 
   # calculate where to add the page breaks
-  df <- utils::getFromNamespace("tt_to_tbldf", "junco")(tt = tt)
+  df <- tt_to_tbldf(tt = tt)
   newrows <- df$newrows
   idx_page_breaks <- as.integer(df$row_type == "VALUE" & df$newrows == 1)
   idx <- which(newrows == 1)
@@ -161,7 +162,7 @@ add_vertical_pagination_XML <- function(doc) {
 }
 
 
-add_title_style_caption <- function(doc, string_to_look_for) {
+add_title_style_caption_XML <- function(doc, string_to_look_for) {
   # this function modifies the XML of the docx to add the "Caption" style to the Title
 
   s_xpath <- paste0("//*[contains(text(),'", string_to_look_for, "')]")
@@ -325,11 +326,13 @@ add_hanging_indent_first_column <- function(flx, column_widths, hanging_indent =
   return(flx)
 }
 
+
 insert_footer_text <- function(flx, tblid) {
   if (is.null(getOption("docx.add_datetime")) || isTRUE(getOption("docx.add_datetime"))) {
+    get_file_name <- utils::getFromNamespace("get_file_name", "tidytlg")
     footer_text <- paste0(
       "[", tolower(tblid), ".docx]",
-      "[", utils::getFromNamespace("get_file_name", "tidytlg")(), "] ",
+      "[", get_file_name(), "] ",
       toupper(format(Sys.time(), format = "%d%b%Y, %H:%M"))
     )
     flx <- flextable::add_footer_lines(flx, values = footer_text)
@@ -337,31 +340,23 @@ insert_footer_text <- function(flx, tblid) {
   return(flx)
 }
 
-insert_title_hanging_indent_v3 <- function(flx,
-                                           title,
-                                           border = flextable::fp_border_default(width = 0.75, color = "black")) {
-  # this version of the function inserts the Title as a header but does not attempt
+insert_title_as_header <- function(flx,
+                                   title,
+                                   border = flextable::fp_border_default(width = 0.75, color = "black")) {
+  # this function inserts the Title as a header but does not attempt
   # to simulate the hanging indent. Instead, it adds the string as is, and the hanging indent
   # will be handled further downstream when exporting to docx by manipulating the XML.
-  # see function "add_title_style_caption()"
-
-  if (flextable::nrow_part(flx, "header") == 0) {
-    title_font_size <- 10
-    title_font_family <- "Times New Roman"
-  } else {
-    flx_fpt <- utils::getFromNamespace(".extract_font_and_size_from_flx", "rtables.officer")(flx)
-    title_style <- flx_fpt$fpt
-    title_font_size <- title_style$font.size + 1 # 10
-    title_font_family <- title_style$font.family
-  }
-
+  # see function "add_title_style_caption_XML()"
 
   new_title <- sub(":", ":\t", title)
 
-  flx <-
-    utils::getFromNamespace(".add_titles_as_header", "rtables.officer")(flx, all_titles = new_title) |>
+  flx <- flx |>
+    flextable::add_header_lines(values = new_title, top = TRUE) |>
+    flextable::align(part = "header", i = 1, align = "left") |>
+    flextable::bg(part = "header", i = 1, bg = "white") |>
     flextable::padding(part = "header", i = 1, padding.left = 0) |>
-    flextable::fontsize(part = "header", i = 1, size = title_font_size) |>
+    flextable::fontsize(part = "header", i = 1, size = 10) |>
+    flextable::bold(part = "header", i = 1) |>
     flextable::border(part = "header", i = 1, border.top = border, border.bottom = border)
 
   # nolint start
@@ -499,12 +494,6 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
 }
 
 
-my_pg_width_by_orient <- function(orientation = "portrait") {
-  if (orientation == "landscape") {
-    return(8.88)
-  }
-  return(6.38)
-}
 
 #' Obtain the default theme for the docx
 #'
@@ -514,20 +503,23 @@ my_pg_width_by_orient <- function(orientation = "portrait") {
 #' See notes to understand why this is experimental.
 #'
 #'
-#' @param font (`string`)\cr font. Defaults to "Times New Roman".
-#' @param font_size (`integer(1)`)\cr font size. Defaults to 9.
+#' @param font (`string`)\cr (optional) Default = "Times New Roman".
+#' @param font_size (`integer(1)`)\cr (optional) Default = 9.
 #' @param cell_margins (`numeric(1) or numeric(4)`)\cr
-#' a numeric or a vector of four numbers indicating
-#' c("left", "right", "top", "bottom"). It defaults to 0mm in Word pt to all 4 margins.
-#' @param bold (`character`)\cr parts of the table text that should be in bold.
+#' A numeric or a vector of four numbers indicating
+#' c("left", "right", "top", "bottom").\cr
+#' (optional) Default = c(0, 0, 0, 0).
+#' @param bold (`character`)\cr Parts of the table text that should be in bold.
 #' Can be any combination of c("header", "content_rows", "label_rows", "top_left").
 #' The first one renders all column names bold (not topleft content).
-#' The second and third option use formatters::make_row_df() to render
-#' content or/and label rows as bold.
-#' @param bold_manual (`named list or NULL`)\cr list of index lists.
-#' See example for needed structure. Accepted groupings/names are c("header", "body").
-#' @param border (`fp_border`)\cr border to use. Defaults to width = 0.75
-#' and color = "black"
+#' The second and third option use [formatters::make_row_df()] to render
+#' content or/and label rows as bold.\cr
+#' (optional) Default = \code{c("header", "content_rows", "label_rows", "top_left")}
+#' @param bold_manual (`named list`)\cr List of index lists.
+#' See example for needed structure. Accepted groupings/names are c("header", "body").\cr
+#' (optional) Default = NULL.
+#' @param border (`fp_border`)\cr Border to use (default =
+#' \code{flextable::fp_border_default(width = 0.75, color = "black")}).
 #'
 #' @note
 #' This function has been tested for common use cases but may not work or have
@@ -537,7 +529,7 @@ my_pg_width_by_orient <- function(orientation = "portrait") {
 #' This function may be removed from junco in the future if the functionality
 #' is merged into `rtables.officer`.
 #'
-#' @returns a function that applies the given theme to a flextable.
+#' @returns A function that applies the given theme to a flextable.
 #' @export
 theme_docx_default_j <- function(
   font = "Times New Roman",
@@ -551,7 +543,7 @@ theme_docx_default_j <- function(
     if (!inherits(flx, "flextable")) {
       stop(sprintf(
         "Function `%s` supports only flextable objects.",
-        "theme_box()"
+        "theme_docx_default_j()"
       ))
     }
     checkmate::assert_int(font_size, lower = 6, upper = 12)
@@ -578,12 +570,15 @@ theme_docx_default_j <- function(
       flextable::valign(j = 1, valign = "bottom", part = "header") |>
       flextable::valign(j = seq(2, tbl_ncol_body), valign = "bottom", part = "header")
     flx <- flextable::padding(flx, part = "header", padding = 0, j = -1)
-    flx <-
-      utils::getFromNamespace(
-        ".apply_indentation_and_margin",
-        "rtables.officer"
-      )(flx, cell_margins = cell_margins,
-        tbl_row_class = tbl_row_class, tbl_ncol_body = tbl_ncol_body)
+    flx <- flx |> flextable::padding(padding.top = cell_margins[3],
+                                     padding.bottom = cell_margins[4], part = "body")
+    flx <- flextable::padding(flx, j = seq(2, tbl_ncol_body),
+                              padding.left = cell_margins[1], padding.right = cell_margins[2])
+    flx <- flx |> flextable::padding(j = seq(1, tbl_ncol_body),
+                                     padding.top = cell_margins[3],
+                                     padding.bottom = cell_margins[4],
+                                     part = "header")
+
     if (any(tbl_row_class == "LabelRow")) {
       flx <- flextable::padding(flx,
         j = 1, i = which(tbl_row_class == "LabelRow"),
@@ -623,7 +618,11 @@ theme_docx_default_j <- function(
     if (any(bold == "top_left")) {
       flx <- flextable::bold(flx, j = 1, part = "header")
     }
-    flx <- utils::getFromNamespace(".apply_bold_manual", "rtables.officer")(flx, bold_manual)
+    .apply_bold_manual <- utils::getFromNamespace(
+      ".apply_bold_manual",
+      "rtables.officer"
+    )
+    flx <- .apply_bold_manual(flx, bold_manual)
 
     # NOTE: the following block styles the footer and footnotes
     n_footnotes <- flextable::nrow_part(flx, "footer")
@@ -632,11 +631,7 @@ theme_docx_default_j <- function(
         flx <- flx |>
           flextable::fontsize(part = "footer", i = n_footnotes, size = 8) |>
           flextable::align(part = "footer", i = n_footnotes, align = "right") |>
-          utils::getFromNamespace(".remove_hborder", "rtables.officer")(part = "footer", w = "bottom") |>
-          utils::getFromNamespace(
-            ".add_hborder",
-            "rtables.officer"
-          )(part = "footer", ii = n_footnotes - 1, border = border)
+          flextable::border(part = "footer", i = n_footnotes, border.bottom = flextable::fp_border_default(width = 0))
       }
       flx <- flx |>
         flextable::padding(padding = 0, part = "footer")
@@ -648,55 +643,57 @@ theme_docx_default_j <- function(
 }
 
 
-#' Convert a VTableTree or a listing_df object to a flextable
+#' Convert a TableTree or a listing_df object to a flextable
 #'
 #' @description `r lifecycle::badge('experimental')`
 #'
 #' This function is based on [rtables.officer::tt_to_flextable()].
 #' See notes to understand why this is experimental.
 #'
-#' @param tt a VTableTree or a listing_df object
-#' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
-#' @param theme (optional) a function factory. See theme_docx_default_j()
-#' or rtables.officer::theme_docx_default() for more details.
-#' @param border (optional) an `fp_border` object.
-#' @param indent_size (optional) Numeric. Not used and set to 9 points internally.
-#' @param titles_as_header (optional) Default = TRUE.
-#' @param bold_titles (optional) Default = TRUE.
-#' @param integrate_footers (optional) Default = TRUE.
-#' @param counts_in_newline (optional) Default = FALSE.
-#' @param paginate (optional) Default = FALSE.
-#' @param fontspec (optional) a font_spec object.
-#' @param lpp (optional) Default = NULL. Not used.
-#' @param cpp (optional) Default = NULL. Not used.
-#' @param ... other arguments.
-#' @param colwidths (optional) Default = NULL.
-#' @param tf_wrap (optional) Default = FALSE. Not used.
-#' @param max_width (optional) Default = NULL. Not used.
-#' @param total_page_height (optional) Default = 10. Not used.
-#' @param total_page_width (optional). No need to be specified by end user.
+#' @param tt (`TableTree` or `listing_df`)\cr The object to convert to flextable.
+#' @param tblid (`character`)\cr Output ID to be displayed in the title and last line of footer.
+#' @param theme (function factory)\cr The theme to apply to the flextable
+#' (default = [theme_docx_default_j()]).\cr
+#' See [theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
+#' for more details.
+#' @param border (`fp_border`)\cr Border to use (default =
+#' \code{flextable::fp_border_default(width = 0.75, color = "black")}).
+#' @param titles_as_header (`logical`)\cr (optional) Default = TRUE.
+#' @param bold_titles (`logical`)\cr (optional) Default = TRUE.
+#' @param integrate_footers (`logical`)\cr (optional) Default = TRUE.
+#' @param counts_in_newline (`logical`)\cr (optional) Default = FALSE.
+#' @param paginate (`logical`)\cr (optional) Default = TRUE for TableTree and FALSE otherwise.
+#' @param fontspec (`font_spec`)\cr Font specification object.
+#' @param colwidths (`numeric`)\cr Column widths for the table.
+#' @param label_width_ins (`numeric`)\cr Label width in inches.
+#' @param total_page_width (`numeric`)\cr (optional). No need to be specified by end user.
 #' Set to 6.38 ("portrait") or 8.88 ("landscape").
-#' @param autofit_to_page (optional) Default = TRUE. Not used and set to FALSE internally.
-#' @param orientation (optional) Default = "portrait".
+#' @param orientation (`character`)\cr (optional) Default = "portrait".
 #' One of: "portrait", "landscape".
-#' @param nosplitin (optional) Default = character(). Named list.
-#' @param string_map (optional) Default = default_str_map.
-#' @param markup_df_docx (optional) Default = dps_markup_df_docx.
-#' @param reduce_first_col_indentation (optional) Default = FALSE.
-#' @param tlgtype (optional). No need to be specified by end user.
-#' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
-#' @param pagenum (optional). Default = FALSE (Tables) or TRUE (Listings).
+#' @param nosplitin (`list`)\cr list(row=, col=). Path elements whose children should not be paginated within
+#' if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
+#' all the associated columns don't fit on a single page.
+#' @param string_map (`tibble`)\cr (optional) Default = default_str_map.
+#' @param markup_df_docx (`tibble`)\cr (optional) Default = dps_markup_df_docx.
+#' @param reduce_first_col_indentation (`logical`)\cr (optional) Default = FALSE.
+#' Whether to reduce by 1 the indentation if we have vertical pagination.
+#' No need to be specified by the end user.
+#' @param tlgtype (`character`)\cr (optional). No need to be specified by end user.
+#' @param col_gap (`numeric`)\cr (optional). Default = 3 (Tables) or 0.5 (Listings).
 #' @param round_type (`"iec"` or `"sas"`)\cr the type of rounding to perform. iec,
 #' the default, performs rounding compliant with IEC 60559, while
 #' sas performs nearest-value rounding consistent with rounding within SAS.
 #' See `[formatters::format_value()]` for more details.
-#' @param alignments (`list`)\cr List of named lists. Vectorized.
+#' @param alignments (`list`)\cr (optional) List of named lists. Vectorized.
 #' (Default = `list()`) Used to specify individual column or cell alignments.
 #' Each named list contains `row`, `col`, and `value`.
-#' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of columns of `tt`
-#' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
-#' for what the matrix should contain. Users should only specify this when the
-#' default behavior does not meet their needs.
+#' @param border_mat (`matrix`)\cr (optional) A `m x k` matrix where m is the number of
+#' columns of `tt` and k is the number of lines the header takes up.
+#' See [tidytlg::add_bottom_borders] for what the matrix should contain.
+#' Users should only specify this when the default behavior does not meet their needs.
+#' @param ... other arguments.
+#'
+#'
 #' @note
 #' This function has been tested for common use cases but may not work or have
 #' unexpected or undesired behavior in corner cases. As such it is not considered
@@ -708,38 +705,30 @@ theme_docx_default_j <- function(
 #' @returns a flextable object.
 #' @export
 tt_to_flextable_j <- function(
-  tt,
-  tblid,
-  theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
-  indent_size = NULL,
-  titles_as_header = TRUE,
-  bold_titles = TRUE,
-  integrate_footers = TRUE,
-  counts_in_newline = FALSE,
-  paginate = tlg_type(tt) == "Table",
-  fontspec = formatters::font_spec("Times", 9L, 1.2),
-  lpp = NULL,
-  cpp = NULL,
-  ...,
-  colwidths = NULL,
-  tf_wrap = !is.null(cpp),
-  max_width = cpp,
-  total_page_height = 10,
-  total_page_width = my_pg_width_by_orient(orientation),
-  autofit_to_page = TRUE,
-  orientation = "portrait",
-  nosplitin = character(),
-  string_map = junco::default_str_map,
-  markup_df_docx = dps_markup_df_docx,
-  reduce_first_col_indentation = FALSE,
-  tlgtype = utils::getFromNamespace("tlg_type", "junco")(tt),
-  col_gap = ifelse(tlgtype == "Listing", .5, 3),
-  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-  round_type = formatters::obj_round_type(tt),
-  alignments = list(),
-  border_mat = make_header_bordmat(obj = tt)
-) {
+    tt,
+    tblid,
+    theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
+    border = flextable::fp_border_default(width = 0.75, color = "black"),
+    titles_as_header = TRUE,
+    bold_titles = TRUE,
+    integrate_footers = TRUE,
+    counts_in_newline = FALSE,
+    paginate = tlg_type(tt) == "Table",
+    fontspec = formatters::font_spec("Times", 9L, 1.2),
+    colwidths = NULL,
+    label_width_ins = 2,
+    total_page_width = pg_width_by_orient(orientation == "landscape"),
+    orientation = "portrait",
+    nosplitin = character(),
+    string_map = default_str_map,
+    markup_df_docx = dps_markup_df_docx,
+    reduce_first_col_indentation = FALSE,
+    tlgtype = tlg_type(tt),
+    col_gap = ifelse(tlgtype == "Listing", .5, 3),
+    round_type = formatters::obj_round_type(tt),
+    alignments = list(),
+    border_mat = make_header_bordmat(obj = tt),
+    ...) {
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
   }
@@ -749,9 +738,7 @@ tt_to_flextable_j <- function(
   checkmate::assert_flag(titles_as_header)
   checkmate::assert_flag(integrate_footers)
   checkmate::assert_flag(counts_in_newline)
-  checkmate::assert_flag(autofit_to_page)
   checkmate::assert_number(total_page_width, lower = 1)
-  checkmate::assert_number(total_page_height, lower = 1)
   checkmate::assert_numeric(colwidths, lower = 0, len = ncol(tt) + 1, null.ok = TRUE)
 
   # Validate `alignments` here because of its complicated data structure
@@ -781,10 +768,7 @@ tt_to_flextable_j <- function(
   }
 
   if (is.null(colwidths)) {
-    # NOTE: calculate page width and column widths
-
-    label_width_ins <- 2
-    colwidths <- junco::def_colwidths(
+    colwidths <- def_colwidths(
       tt,
       fontspec,
       col_gap = col_gap,
@@ -793,20 +777,15 @@ tt_to_flextable_j <- function(
     )
     colwidths_2 <- colwidths
     if (tlgtype == "Table") {
-      colwidths <- utils::getFromNamespace("cwidths_final_adj", "junco")(
+      colwidths <- cwidths_final_adj(
         labwidth_ins = label_width_ins,
         total_width = total_page_width,
         colwidths = colwidths[-1]
       )
     }
     colwidths <- (colwidths / sum(colwidths)) * total_page_width
-    # END
   }
 
-
-  autofit_to_page <- FALSE
-  # NOTE
-  left_right_fixed_margins <- rtables.officer::word_mm_to_pt(1.9)
 
   if (paginate) {
     ## implies type Table
@@ -829,10 +808,9 @@ tt_to_flextable_j <- function(
       landscape = orientation == "landscape",
       colwidths = colwidths_2,
       col_gap = col_gap,
-      pg_width = my_pg_width_by_orient(orientation),
+      pg_width = pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
       margins = rep(0, 4),
-      lpp = NULL,
       nosplitin = nosplitin,
       verbose = FALSE,
       round_type = round_type
@@ -915,22 +893,14 @@ tt_to_flextable_j <- function(
           tt = subt,
           theme = theme,
           border = border,
-          indent_size = indent_size,
           titles_as_header = titles_as_header,
           bold_titles = bold_titles,
           integrate_footers = integrate_footers,
           counts_in_newline = counts_in_newline,
           paginate = FALSE,
           fontspec = fontspec,
-          lpp = lpp,
-          cpp = cpp,
-          ... = ...,
           colwidths = NULL,
-          tf_wrap = tf_wrap,
-          max_width = max_width,
-          total_page_height = total_page_height,
           total_page_width = total_page_width,
-          autofit_to_page = autofit_to_page,
           orientation = orientation,
           tblid = fname,
           nosplitin = nosplitin,
@@ -939,11 +909,11 @@ tt_to_flextable_j <- function(
           reduce_first_col_indentation = (length(full_pag_i) > 1),
           tlgtype = tlgtype,
           col_gap = col_gap,
-          pagenum = pagenum,
           round_type = round_type,
           alignments = alignments,
           border_mat = pag_bord_mats[[i]],
-          export_csv = FALSE # this is because we already exported the csv a few lines above
+          export_csv = FALSE, # this is because we already exported the csv a few lines above,
+          ...
         )
 
         return(sub_ft)
@@ -957,14 +927,15 @@ tt_to_flextable_j <- function(
     if (length(ret) == 1) {
       ret <- ret[[1]]
     }
-
     return(ret)
   }
 
 
-  matform <- rtables::matrix_form(tt,
+  matform <- rtables::matrix_form(
+    tt,
     fontspec = fontspec,
-    indent_rownames = FALSE, round_type = round_type
+    indent_rownames = FALSE,
+    round_type = round_type
   )
   body <- formatters::mf_strings(matform)
   spans <- formatters::mf_spans(matform)
@@ -972,12 +943,6 @@ tt_to_flextable_j <- function(
   hnum <- formatters::mf_nlheader(matform)
   rdf <- rtables::make_row_df(tt)
 
-
-  # check if the user passed 'alignments'
-  # if so, overwrite the default ones
-  for (al in alignments) {
-    mpf_aligns[al$row, al$col] <- al$value
-  }
 
   # NOTE: convert the '>=', '<=', etc symbols
   body <- strmodify(body, string_map)
@@ -1023,7 +988,7 @@ tt_to_flextable_j <- function(
   # END
 
   flx <- flextable::qflextable(content) |>
-    utils::getFromNamespace(".remove_hborder", "rtables.officer")(part = "body", w = "bottom")
+    flextable::border_remove()
 
   hdr <- body[seq_len(hnum), , drop = FALSE]
   if (hnum > 1) {
@@ -1111,8 +1076,8 @@ tt_to_flextable_j <- function(
   nr_body <- flextable::nrow_part(flx, part = "body")
   nr_header <- flextable::nrow_part(flx, part = "header")
   flx <- flx |>
-    flextable::border(part = "header", border = flextable::fp_border_default(width = 0)) |>
-    flextable::border(part = "header", i = 1, border.top = border)
+    flextable::border(part = "header", i = 1, border.top = border) |>
+    flextable::border(part = "body", i = nr_body, border.bottom = border)
 
   for (ij in l_pos) {
     i <- ij[1]
@@ -1121,41 +1086,42 @@ tt_to_flextable_j <- function(
   }
   # END
 
+
+  # check if the user passed 'alignments'
+  # if so, overwrite the default ones
+  for (al in alignments) {
+    mpf_aligns[al$row, al$col] <- al$value
+  }
   if (length(alignments) == 0) {
+    .apply_alignments <- utils::getFromNamespace(
+      ".apply_alignments",
+      "rtables.officer"
+    )
     flx <- flx |>
-      utils::getFromNamespace(
-        ".apply_alignments",
-        "rtables.officer"
-      )(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") |>
-      utils::getFromNamespace(
-        ".apply_alignments",
-        "rtables.officer"
-      )(mpf_aligns[seq(hnum + 1, nrow(mpf_aligns)), , drop = FALSE], "body")
+      .apply_alignments(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") |>
+      .apply_alignments(mpf_aligns[-seq_len(hnum), , drop = FALSE], "body")
   } else {
-    flx <- flx |>
-      utils::getFromNamespace(
-        ".apply_alignments",
-        "rtables.officer"
-      )(mpf_aligns[seq_len(hnum), , drop = FALSE], "header")
-    for (i in seq(hnum + 1, nrow(mpf_aligns))) {
+    # iterate for each row in the header
+    for (i in seq_len(hnum)) {
       flx <- flx |>
         flextable::align(
-          part = "body", i = i - hnum,
+          part = "header", i = i,
           align = mpf_aligns[i, , drop = FALSE]
+        )
+    }
+    # iterate for each column in the body
+    for (j in seq_len(ncol(mpf_aligns))) {
+      flx <- flx |>
+        flextable::align(
+          part = "body", j = j,
+          align = mpf_aligns[-seq_len(hnum), j, drop = FALSE]
         )
     }
   }
 
-  checkmate::check_number(indent_size, null.ok = TRUE)
-  if (is.null(indent_size)) {
-    indent_size <- matform$indent_size * rtables.officer::word_mm_to_pt(1)
-  } else {
-    indent_size <- indent_size * rtables.officer::word_mm_to_pt(1)
-  }
-  # NOTE:
+  # NOTE: 3.175mm = 9 ms word points = 0.125 inches
   flx <- flextable::line_spacing(flx, space = 0, part = "body")
   indent_size <- rtables.officer::word_mm_to_pt(3.175)
-  left_right_fixed_margins <- 0
   updated_indents <- rdf$indent
   idx <- which(newrows == 1)
   # NOTE: here, it is important to traverse 'idx' in reverse order
@@ -1171,12 +1137,13 @@ tt_to_flextable_j <- function(
     updated_indents[which(updated_indents < 0)] <- 0
   }
   for (i in seq_len(nr_body)) {
-    # NOTE: this line adds the left padding to each row column 1 (Body only)
+    # NOTE: this line adds the left padding to each row in column 1 (Body only)
     flx <- flextable::padding(flx,
       i = i, j = 1,
-      padding.left = indent_size * updated_indents[[i]] + left_right_fixed_margins, # NOTE:
-      padding.right = left_right_fixed_margins,
-      padding.top = 0, padding.bottom = 0,
+      padding.left = indent_size * updated_indents[[i]],
+      padding.right = 0,
+      padding.top = 0,
+      padding.bottom = 0,
       part = "body"
     )
   }
@@ -1192,45 +1159,31 @@ tt_to_flextable_j <- function(
 
     flx <- flextable::compose(flx, i = i, j = 1, value = flextable::as_paragraph(hdr[i, 1]), part = "header")
 
-    # NOTE: this line adds the left padding to each row column 1 (Header only)
+    # NOTE: this line adds the left padding to each row in column 1 (Header only)
     flx <- flextable::padding(flx,
       i = i, j = 1,
-      padding.left = header_indent_size + left_right_fixed_margins,
-      padding.right = left_right_fixed_margins,
+      padding.left = header_indent_size,
+      padding.right = 0,
       part = "header"
     )
   }
 
   footers_with_blank_line <- c()
-  if (length(matform$ref_footnotes) > 0 && isTRUE(integrate_footers)) {
-    footers_with_blank_line <- c("", matform$ref_footnotes)
-    footers_with_blank_line <- strmodify(footers_with_blank_line, string_map)
-    flx <- flextable::add_footer_lines(flx, values = footers_with_blank_line) |>
-      utils::getFromNamespace(".add_hborder", "rtables.officer")(part = "body", ii = nrow(content), border = border) |>
-      utils::getFromNamespace(
-        ".add_hborder",
-        "rtables.officer"
-      )(part = "footer", ii = length(footers_with_blank_line), border = border)
-  }
   if (length(formatters::all_footers(tt)) > 0 && isTRUE(integrate_footers)) {
     footers_with_blank_line <- c("", formatters::all_footers(tt))
     footers_with_blank_line <- strmodify(footers_with_blank_line, string_map)
     flx <- flextable::add_footer_lines(flx, values = footers_with_blank_line) |>
-      utils::getFromNamespace(".add_hborder", "rtables.officer")(part = "body", ii = nrow(content), border = border) |>
-      utils::getFromNamespace(
-        ".add_hborder",
-        "rtables.officer"
-      )(part = "footer", ii = length(footers_with_blank_line), border = border)
+      flextable::border(part = "footer",
+                        i = length(footers_with_blank_line),
+                        border.bottom = border)
   }
 
   # NOTE: the following block adds the footer, this is, the last line below footnotes
   flx <- insert_footer_text(flx, tblid)
 
-  # here you can use ii = nrow(content), nr_body, ...
-  flx <- flx |>
-    utils::getFromNamespace(".add_hborder", "rtables.officer")(part = "body", ii = nr_body, border = border)
+  # apply theme
+  flx <- do.call(theme, list(flx, tbl_row_class = rdf$node_class))
 
-  flx <- utils::getFromNamespace(".apply_themes", "rtables.officer")(flx, theme = theme, tbl_row_class = rdf$node_class)
 
   # NOTE: for Listings, vertical alignment is "top" for the whole body
   if (tlgtype == "Listing") {
@@ -1241,7 +1194,7 @@ tt_to_flextable_j <- function(
   # END
 
   if (is.null(fontspec)) {
-    fontspec <- utils::getFromNamespace(".extract_fontspec", "rtables.officer")(flx)
+    fontspec <- formatters::font_spec("Times", 9L, 1.2)
   }
   if (is.null(colwidths)) {
     colwidths <- formatters::propose_column_widths(matform,
@@ -1258,7 +1211,7 @@ tt_to_flextable_j <- function(
     ts_tbl <- formatters::all_titles(tt)
     ts_tbl <- paste0(tblid, ":", ts_tbl)
 
-    flx <- insert_title_hanging_indent_v3(
+    flx <- insert_title_as_header(
       flx = flx,
       title = ts_tbl,
       border = border
@@ -1293,6 +1246,7 @@ tt_to_flextable_j <- function(
   if (tlgtype == "Table") {
     flx <- add_hanging_indent_first_column(flx = flx, column_widths = final_cwidths)
   }
+  autofit_to_page <- FALSE
   flx <- flextable::set_table_properties(flx,
     layout = ifelse(autofit_to_page, "autofit", "fixed"),
     align = "left", opts_word = list(split = FALSE, keep_with_next = TRUE)
@@ -1324,10 +1278,9 @@ tt_to_flextable_j <- function(
       landscape = orientation == "landscape",
       colwidths = colwidths_2,
       col_gap = col_gap,
-      pg_width = my_pg_width_by_orient(orientation),
+      pg_width = pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
       margins = rep(0, 4),
-      lpp = NULL,
       nosplitin = nosplitin,
       verbose = FALSE,
       round_type = round_type
@@ -1363,8 +1316,9 @@ tt_to_flextable_j <- function(
       border.top = border
     )
 
-    flx_fpt <- utils::getFromNamespace(".extract_font_and_size_from_flx", "rtables.officer")(flx)
-    title_style <- flx_fpt$fpt
+    font_sz_body <- flx$header$styles$text$font.size$data[1, 1]
+    font_fam <- flx$header$styles$text$font.family$data[1, 1]
+    title_style <- officer::fp_text(font.family = font_fam, font.size = font_sz_body)
     title_style$font.size <- title_style$font.size + 1 # 10
     title_style$bold <- bold_titles
     flx <- flx |> flextable::set_caption(
@@ -1392,41 +1346,51 @@ tt_to_flextable_j <- function(
 #' This function is based on [rtables.officer::export_as_docx()].
 #' See notes to understand why this is experimental.
 #'
-#' @param tt a VTableTree or a listing_df object to export.
-#' @param tblid Character. Output ID to be displayed in the Title and last line of footer.
-#' @param output_dir a directory path to save the docx.
-#' @param theme (optional) a function factory. See theme_docx_default_j()
-#' or rtables.officer::theme_docx_default() for more details.
-#' @param add_page_break (optional) Default = FALSE.
-#' @param titles_as_header (optional) Default = TRUE.
-#' @param integrate_footers (optional) Default = TRUE.
-#' @param section_properties (optional). A "prop_section" object containing
-#' information about page size, orientation, margins, etc.
-#' See officer::prop_section() for more details.
+#' @param tt (`TableTree` or `listing_df`)\cr the object to export.
+#' @param tblid (`character`)\cr Output ID to be displayed in the title and last line of footer.
+#' @param output_dir (`character`)\cr a directory path to save the docx.
+#' @param theme (function factory)\cr The theme to apply to the flextable
+#' (default = [theme_docx_default_j()]).\cr
+#' See [theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
+#' for more details.
+#' @param add_page_break (`logical`)\cr (optional) Default = FALSE.
+#' @param titles_as_header (`logical`)\cr (optional) Default = TRUE.
+#' @param integrate_footers (`logical`)\cr (optional) Default = TRUE.
+#' @param section_properties (`prop_section`)\cr (optional) A "prop_section" object
+#' containing information about page size, orientation, margins, etc.
+#' See [officer::prop_section()] for more details.
 #' No need to be specified by end user.
-#' @param doc_metadata (optional). Default = NULL.
-#' @param template_file (optional). Default = "doc/template_file.docx".
-#' Paragraph styles are inherited from this file.
-#' @param orientation (optional) Default = "portrait".
+#' @param doc_metadata (list of `string`)\cr Any value that can be used as metadata
+#' by [officer::set_doc_properties()]. Important text values are title, subject,
+#' creator, and description, while created is a date object.\cr
+#' (optional) Default = NULL.
+#' @param template_file (`character`)\cr Template file that `officer` will use as a starting
+#' point for the final document. Document attaches the table and uses the defaults
+#' defined in the template file. Paragraph styles are inherited from this file.\cr
+#' (optional) Default = "doc/template_file.docx".
+#' @param orientation (`character`)\cr (optional) Default = "portrait".
 #' One of: "portrait", "landscape".
-#' @param paginate (optional) Default = FALSE.
-#' @param nosplitin (optional) Default = character(). Named list.
-#' @param string_map (optional) Default = default_str_map.
-#' @param markup_df_docx (optional) Default = dps_markup_df_docx.
-#' @param combined_docx (optional). Default = FALSE. Whether to also export an "allparts"
-#' docx version.
-#' @param tlgtype (optional). No need to be specified by end user.
-#' @param col_gap (optional). Default = 3 (Tables) or 0.5 (Listings).
-#' @param pagenum (optional). Whether to display page numbers. Only applicable
+#' @param paginate (`logical`)\cr (optional) Default = TRUE for TableTree and FALSE otherwise.
+#' @param nosplitin (`list`)\cr list(row=, col=). Path elements whose children should not be paginated within
+#' if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
+#' all the associated columns don't fit on a single page.
+#' @param string_map (`tibble`)\cr (optional) Default = default_str_map.
+#' @param markup_df_docx (`tibble`)\cr (optional) Default = dps_markup_df_docx.
+#' @param combined_docx (`logical`)\cr Whether to also export an "allparts" docx version.\cr
+#' (optional) Default = FALSE.
+#' @param tlgtype (`character`)\cr (optional). No need to be specified by end user.
+#' @param col_gap (`numeric`)\cr (optional). Default = 3 (Tables) or 0.5 (Listings).
+#' @param pagenum (`logical`)\cr (optional). Whether to display page numbers. Only applicable
 #' to listings (i.e. for tables and figures this argument is ignored).
 #' @param round_type (`"iec"` or `"sas"`)\cr the type of rounding to perform. iec,
 #' the default, performs rounding compliant with IEC 60559, while
 #' sas performs nearest-value rounding consistent with rounding within SAS.
 #' See `[formatters::format_value()]` for more details.
-#' @param alignments (`list`)\cr List of named lists. Vectorized.
+#' @param alignments (`list`)\cr (optional) List of named lists. Vectorized.
 #' (Default = `list()`) Used to specify individual column or cell alignments.
 #' Each named list contains `row`, `col`, and `value`.
-#' @param border (optional) an `fp_border` object.
+#' @param border (`fp_border`)\cr Border to use (default =
+#' \code{flextable::fp_border_default(width = 0.75, color = "black")}).
 #' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of columns of `tt`
 #' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #' for what the matrix should contain. Users should only specify this when the
@@ -1474,10 +1438,10 @@ export_as_docx_j <- function(
   orientation = "portrait",
   paginate = tlg_type(tt) == "Table",
   nosplitin = character(),
-  string_map = junco::default_str_map,
+  string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   combined_docx = FALSE,
-  tlgtype = utils::getFromNamespace("tlg_type", "junco")(tt),
+  tlgtype = tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", .5, 3),
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
@@ -1518,7 +1482,6 @@ export_as_docx_j <- function(
       markup_df_docx = markup_df_docx,
       tlgtype = tlgtype,
       col_gap = col_gap,
-      pagenum = pagenum,
       theme = theme,
       round_type = round_type,
       alignments = alignments,
@@ -1552,7 +1515,6 @@ export_as_docx_j <- function(
             markup_df_docx = markup_df_docx,
             tlgtype = tlgtype,
             col_gap = col_gap,
-            pagenum = pagenum,
             theme = theme,
             round_type = round_type,
             alignments = alignments,
@@ -1579,10 +1541,14 @@ export_as_docx_j <- function(
     stop("tt must be a TableTree/listing_df, a flextable, or a list of TableTree/listing_df or flextable objects.")
   }
   if (isFALSE(titles_as_header) || isFALSE(integrate_footers)) {
+    .extract_font_and_size_from_flx <- utils::getFromNamespace(
+      ".extract_font_and_size_from_flx",
+      "rtables.officer"
+    )
     if (inherits(flex_tbl_list[[1]], "list")) {
-      flx_fpt <- utils::getFromNamespace(".extract_font_and_size_from_flx", "rtables.officer")(flex_tbl_list[[1]][[1]])
+      flx_fpt <- .extract_font_and_size_from_flx(flex_tbl_list[[1]][[1]])
     } else {
-      flx_fpt <- utils::getFromNamespace(".extract_font_and_size_from_flx", "rtables.officer")(flex_tbl_list[[1]])
+      flx_fpt <- .extract_font_and_size_from_flx(flex_tbl_list[[1]])
     }
   }
   if (!is.null(template_file) && !file.exists(template_file)) {
@@ -1704,7 +1670,7 @@ export_as_docx_j <- function(
 
     flex_tbl_list <- lapply(flex_tbl_list, function(flx) {
       if (flx$properties$layout != "autofit") {
-        page_width <- my_pg_width_by_orient(section_properties$page_size$orient)
+        page_width <- pg_width_by_orient(section_properties$page_size$orient == "landscape")
         # NOTE: here, even though page width is 8.88 inches, table width has
         # to be 8.82 inches, so leave a gap of 0.03 inches on both sides
         if (orientation == "landscape") {
@@ -1751,17 +1717,20 @@ export_as_docx_j <- function(
     if (isFALSE(integrate_footers) && inherits(tt, "VTableTree")) {
       matform <- rtables::matrix_form(tt, indent_rownames = TRUE, round_type = round_type)
       if (length(matform$ref_footnotes) > 0) {
-        doc <- utils::getFromNamespace(
-          "add_text_par",
-          "rtables.officer"
-        )(doc, matform$ref_footnotes, flx_fpt$fpt_footer)
+        char_v <- matform$ref_footnotes
+        text_format <- flx_fpt$fpt_footer
+        for (ii in seq_along(chr_v)) {
+          cur_fp <- officer::fpar(officer::ftext(chr_v[ii], prop = text_format))
+          doc <- officer::body_add_fpar(doc, cur_fp)
+        }
       }
       if (length(formatters::all_footers(tt)) > 0) {
-        doc <- utils::getFromNamespace(
-          "add_text_par",
-          "rtables.officer"
-        )(doc, formatters::all_footers(tt),
-          flx_fpt$fpt_footer)
+        char_v <- formatters::all_footers(tt)
+        text_format <- flx_fpt$fpt_footer
+        for (ii in seq_along(chr_v)) {
+          cur_fp <- officer::fpar(officer::ftext(chr_v[ii], prop = text_format))
+          doc <- officer::body_add_fpar(doc, cur_fp)
+        }
       }
     }
     if (!is.null(doc_metadata)) {
@@ -1775,11 +1744,11 @@ export_as_docx_j <- function(
     } else {
       string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
     }
-    add_title_style_caption(doc, string_to_look_for)
+    add_title_style_caption_XML(doc, string_to_look_for)
     add_vertical_pagination_XML(doc)
-    remove_security_popup_page_numbers(doc, tlgtype, pagenum)
+    remove_security_popup_page_numbers_XML(doc, tlgtype, pagenum)
     if (isTRUE(watermark)) {
-      remove_table_shading(doc)
+      remove_table_shading_XML(doc)
     }
 
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
@@ -1794,29 +1763,29 @@ export_as_docx_j <- function(
 #'
 #' Export graph in DOCX format. See notes to understand why this is experimental.
 #'
-#' @param g (optional) Default = NULL. A `ggplot2` object, or a list
+#' @param g (`ggplot2`)\cr (optional) Default = NULL. A `ggplot2` object, or a list
 #' of them, to export. At least one of `g` or `plotnames` must be provided.
 #' If both are provided, 'g' precedes and 'plotnames' will be ignored.
-#' @param plotnames (optional) Default = NULL. A file path, or a list of them,
+#' @param plotnames (`character`)\cr (optional) Default = NULL. A file path, or a list of them,
 #' to previously saved .png files. These will be opened and
 #' exported in the output file. At least one of `g` or `plotnames` must be provided.
 #' If both are provided, 'g' precedes and 'plotnames' will be ignored.
-#' @param tblid Character. Output ID that will appear in the Title and footer.
-#' @param output_dir Character. File path where to save the output.
-#' @param title (optional) Default = NULL. Character, or list of them,
+#' @param tblid (`character`)\cr Output ID to be displayed in the title and footer.
+#' @param output_dir (`character`)\cr a directory path to save the docx.
+#' @param title (`character`)\cr (optional) Default = NULL. Character, or list of them,
 #' with the titles to be displayed.
-#' @param footers (optional) Default = NULL. Character, or list of them,
-#' with the footers to be displayed.
-#' @param orientation (optional) Default = "portrait".
+#' @param footers (`character`)\cr (optional) Default = NULL. A list of footers
+#' to be displayed.
+#' @param orientation (`character`)\cr (optional) Default = "portrait".
 #' One of: "portrait", "landscape".
-#' @param plotwidth (optional) Default = 8. Plot size in units expressed by
+#' @param plotwidth (`numeric`)\cr (optional) Default = 8. Plot size in units expressed by
 #' the units argument. If not supplied, uses the size of the current graphics device.
-#' @param plotheight (optional) Default = 5.51. Plot size in units expressed by
+#' @param plotheight (`numeric`)\cr (optional) Default = 5.51. Plot size in units expressed by
 #' the units argument. If not supplied, uses the size of the current graphics device.
-#' @param units (optional) Default = "in". One of the following units in which the
-#' plotwidth and plotheight arguments are expressed: "in", "cm", "mm" or "px".
-#' @param border (optional). An `fp_border` object to use as borders for the Title
-#' and Footers.
+#' @param units (`character`)\cr (optional) Default = "in".
+#' One of the following units in which the plotwidth and plotheight arguments
+#' are expressed: "in", "cm", "mm" or "px".
+#' @param border (`fp_border`)\cr (optional). Border to use for the title and footers.
 #'
 #' @note
 #' This function has been tested for common use cases but may not work or have
@@ -1912,7 +1881,7 @@ export_graph_as_docx <- function(g = NULL,
 
   # set the Title
   ts_tbl <- paste0(tblid, ":", title)
-  flx <- insert_title_hanging_indent_v3(flx = flx, title = ts_tbl)
+  flx <- insert_title_as_header(flx = flx, title = ts_tbl)
 
   # set the Body (the plots)
   for (i in seq_along(plotnames)) {
@@ -1995,6 +1964,6 @@ export_graph_as_docx <- function(g = NULL,
   doc <- officer::body_set_default_section(doc, section_properties)
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
   string_to_look_for <- paste0(tblid, ":")
-  add_title_style_caption(doc, string_to_look_for)
+  add_title_style_caption_XML(doc, string_to_look_for)
   print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
 }
