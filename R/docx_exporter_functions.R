@@ -105,8 +105,64 @@ add_vertical_pagination_XML <- function(doc) {
   }
 }
 
+insert_hanging_indent_first_col_XML <- function(doc, n_rows_footer = 0, hanging_indent = 87) {
+  # 87 MS Word points = 0.06 inches
+  # this function looks for all table nodes 'w:tbl'
+  #   for each of them, looks for all table rows 'w:tr'
+  #     for each of them, takes the first cell 'w:tc'
+  #       takes its paragraph 'w:p'
+  #         takes its paragraph properties 'w:pPr'
+  #           inserts a child <w:ind w:left="87" w:hanging="87"/>
 
-add_title_style_caption_XML <- function(doc, string_to_look_for) {
+  # look for all table nodes
+  tbl_nodes <- doc$doc_obj$get() |>
+    xml2::xml_find_all(".//w:tbl")
+
+  for (tbl_node in tbl_nodes) {
+    # look for all table rows
+    tr_nodes <- tbl_node |> xml2::xml_find_all(".//w:tr")
+
+    # ignore the last 'n_rows_footer' nodes, as we don't want hanging indent in the footer
+    tr_nodes <- head(tr_nodes, length(tr_nodes) - n_rows_footer)
+
+    for (tr_node in tr_nodes) {
+      # if it contains a child
+      # <w:trPr>
+      #   <w:tblHeader/>
+      # </w:trPr>
+      # it means that the current row belongs to the table header, so skip it
+      is_row_header <-
+        tr_node |>
+        xml2::xml_find_first(".//w:trPr") |>
+        xml2::xml_find_first(".//w:tblHeader")
+      if (length(is_row_header) > 0) {
+        next()
+      }
+
+      # otherwise, ...
+      # look for first cell
+      tc_node <- tr_node |> xml2::xml_find_first(".//w:tc")
+      # take its paragraph node
+      p_node <- tc_node |> xml2::xml_find_first(".//w:p")
+      # take its paragraph properties
+      pPr_node <- p_node |> xml2::xml_find_first(".//w:pPr")
+
+      # set hanging indent of 0.06 inches
+      children <- pPr_node |> xml2::xml_children()
+      child_i <- which(xml2::xml_name(children) == "ind") |> head(1)
+      x <- pPr_node |> xml2::xml_child(child_i)
+      # it is possible that the current cell is already indented
+      # we don't want to lose that left-indentation value
+      # therefore extract it and add up 87 (0.06 inches)
+      left_indentation <- xml2::xml_attr(x, "left")
+      left_indentation <- ifelse(is.na(left_indentation), 0, as.integer(left_indentation))
+      xml2::xml_set_attr(x, "w:hanging", hanging_indent)
+      xml2::xml_set_attr(x, "w:left", hanging_indent + left_indentation)
+    }
+  }
+}
+
+add_title_caption_hanging_indent_XML <- function(doc, string_to_look_for) {
   # this function modifies the XML of the docx to add the "Caption" style to the Title
 
   s_xpath <- paste0("//*[contains(text(),'", string_to_look_for, "')]")
@@ -172,105 +228,6 @@ add_little_gap_bottom_borders_spanning_headers <- function(
 }
 
 
-wrap_string_with_indent <- function(text,
-                                    max_width_inch,
-                                    font_family = "Times New Roman",
-                                    font_size = 9,
-                                    hanging_indent = 0.06,
-                                    dpi = 96) {
-  # NOTE: this function converts 'text' into another string with '\n\t' inserted
-  # to simulate the hanging indent
-  # This function is applied to the first column of the body
-  # Steps: given 'max_width_inch' (available space in inches to show text
-  #        in a particular cell):
-  # - convert it to pixels
-  # - split 'text' into words
-  # - for each word, calculate the width in pixels with systemfonts::string_width(font)
-  #     - if it fits in available space, concatenate it with existing line
-  #     - if it doesn't fit, store the line in list and create a new line
-  #     - if we are now in second line, decrease available space by 0.06 inches
-  # 5. in the end, paste/merge all lines and return concatenated lines
-
-  # Convert inches to pixels
-  max_width_px <- max_width_inch * dpi
-
-  # Split text into words
-  words <- strsplit(text, " ")[[1]]
-
-  current_line <- ""
-  current_width <- 0
-  lines <- c()
-  we_are_in_second_line <- FALSE
-
-  for (word in words) {
-    test_line <- if (nchar(current_line) > 0) paste(current_line, word) else word
-    test_width <- systemfonts::string_width(test_line,
-      family = font_family,
-      size = font_size
-    )
-
-    if (test_width <= max_width_px) {
-      current_line <- test_line
-    } else {
-      lines <- c(lines, current_line)
-      current_line <- paste0("\t", word)
-      if (!we_are_in_second_line) {
-        we_are_in_second_line <- TRUE
-        # from the second line onwards, the available space is reduced
-        # by the hanging indent (only once)
-        max_width_inch <- max_width_inch - hanging_indent
-        max_width_px <- max_width_inch * dpi
-      }
-    }
-  }
-
-  if (nchar(current_line) > 0) {
-    lines <- c(lines, current_line)
-  }
-
-  return(paste(lines, collapse = "\n"))
-}
-
-add_hanging_indent_first_column <- function(flx, column_widths, hanging_indent = 0.06) {
-  # will need:
-  # - table of indentations -> flx$body$styles$pars$padding.left$data
-  # - list of column widths -> flx$body$colwidths
-
-  table_of_paddings <- flx$body$styles$pars$padding.left$data
-  cw_in_inches <- column_widths[1]
-
-  for (i in seq_len(nrow(table_of_paddings))) {
-    left_padding_in_inches <- (table_of_paddings[[i, 1]] / 9) * 0.125
-    # this is the available space for the string to be displayed at a particular level,
-    # which is equal to the width of the first column, minus the left padding at that level
-    available_space_in_inches <- cw_in_inches - left_padding_in_inches
-
-    s <- flx$body$dataset[[i, 1]]
-    new_s <- wrap_string_with_indent(s,
-      max_width_inch = available_space_in_inches,
-      dpi = 78
-    )
-
-    if (grepl("\n\t", new_s)) {
-      # insert new_s in row = i, j = 1
-      flx <- flextable::compose(flx,
-        part = "body", i = i, j = 1,
-        value = flextable::as_paragraph(new_s)
-      )
-      # insert a tab stop at current indentation level + hanging indent
-      # nolint start
-      flx <- flextable::tab_settings(flx,
-        part = "body", i = i, j = 1,
-        value = officer::fp_tabs(officer::fp_tab(pos = left_padding_in_inches + hanging_indent, style = "left"))
-      )
-      # nolint end
-    }
-  }
-
-  return(flx)
-}
-
-
 insert_footer_text <- function(flx, tblid) {
   if (is.null(getOption("docx.add_datetime")) || isTRUE(getOption("docx.add_datetime"))) {
     get_file_name <- utils::getFromNamespace("get_file_name", "tidytlg")
@@ -290,7 +247,7 @@ insert_title_as_header <- function(flx,
   # this function inserts the Title as a header but does not attempt
   # to simulate the hanging indent. Instead, it adds the string as is, and the hanging indent
   # will be handled further downstream when exporting to docx by manipulating the XML.
-  # see function "add_title_style_caption_XML()"
+  # see function "add_title_caption_hanging_indent_XML()"
 
   new_title <- sub(":", ":\t", title)
 
@@ -1165,9 +1122,6 @@ tt_to_flextable_j <- function(
     final_cwidths <- total_page_width * colwidths / sum(colwidths)
   }
   flx <- flextable::width(flx, width = final_cwidths)
-  if (tlgtype == "Table") {
-    flx <- add_hanging_indent_first_column(flx = flx, column_widths = final_cwidths)
-  }
   autofit_to_page <- FALSE
   flx <- flextable::set_table_properties(flx,
     layout = ifelse(autofit_to_page, "autofit", "fixed"),
@@ -1640,7 +1594,11 @@ export_as_docx_j <- function(
     } else {
       string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
     }
-    add_title_style_caption_XML(doc, string_to_look_for)
+    add_title_caption_hanging_indent_XML(doc, string_to_look_for)
+    if (tlgtype == "Table") {
+      n_rows_footer <- flextable::nrow_part(flex_tbl_list[[1]], part = "footer")
+      insert_hanging_indent_first_col_XML(doc, n_rows_footer = n_rows_footer)
+    }
     add_vertical_pagination_XML(doc)
     remove_security_popup_page_numbers_XML(doc, tlgtype, pagenum)
     if (isTRUE(watermark)) {
@@ -1860,6 +1818,6 @@ export_graph_as_docx <- function(g = NULL,
   doc <- officer::body_set_default_section(doc, section_properties)
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
   string_to_look_for <- paste0(tblid, ":")
-  add_title_style_caption_XML(doc, string_to_look_for)
+  add_title_caption_hanging_indent_XML(doc, string_to_look_for)
   print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
 }

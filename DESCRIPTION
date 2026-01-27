@@ -62,8 +62,7 @@ Imports:
     officer,
     xml2,
     ggplot2,
-    stringi,
-    systemfonts
+    stringi
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
