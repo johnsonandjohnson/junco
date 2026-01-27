@@ -7,7 +7,7 @@ export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
                           string_map, markup_df, round_type,
                           output_csv_directory, output_dir, fname) {
 
-  if (tlgtype != "Table" || isFALSE(export_csv)) {
+  if (tlgtype != "Table" || !isTRUE(export_csv)) {
     return(invisible(NULL))
   }
 
@@ -1435,7 +1435,7 @@ tt_to_flextable_j <- function(
 #' By default, this is set to FALSE. In the future, this argument will be the
 #' actual watermark (i.e. a string) to display.
 #' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
-#' Default = TRUE.
+#' Default = FALSE.
 #' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
 #' Default = NULL. Only used if export_csv = TRUE.
 #' If NULL or attempting to export in a non-existent directory, the csv will be exported
@@ -1485,7 +1485,7 @@ export_as_docx_j <- function(
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
   watermark = FALSE,
-  export_csv = TRUE,
+  export_csv = FALSE,
   output_csv_directory = NULL,
   markup_df = dps_markup_df,
   ...

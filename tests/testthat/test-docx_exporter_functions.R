@@ -655,7 +655,8 @@ testthat::test_that("export_as_docx_j() works with pagination", {
     nosplitin = list(cols = c(.trtvar, "rrisk_header")),
     paginate = TRUE,
     add_page_break = TRUE,
-    combined_docx = TRUE
+    combined_docx = TRUE,
+    export_csv = TRUE
   )
   options(docx.add_datetime = TRUE)
 
@@ -694,8 +695,7 @@ testthat::test_that("export_as_docx_j() works with pagination", {
     nosplitin = list(cols = c(.trtvar, "rrisk_header")),
     paginate = TRUE,
     add_page_break = TRUE,
-    combined_docx = TRUE,
-    export_csv = FALSE
+    combined_docx = TRUE
   )
   options(docx.add_datetime = TRUE)
 
@@ -724,6 +724,7 @@ testthat::test_that("export_as_docx_j() works with pagination", {
                      paginate = TRUE,
                      add_page_break = TRUE,
                      combined_docx = TRUE,
+                     export_csv = TRUE,
                      output_csv_directory = output_csv_directory)
   )
   options(docx.add_datetime = TRUE)
