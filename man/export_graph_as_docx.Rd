@@ -19,39 +19,47 @@ export_graph_as_docx(
 )
 }
 \arguments{
-\item{g}{(\code{ggplot2})\cr (optional) Default = NULL. A \code{ggplot2} object, or a list
+\item{g}{(\code{ggplot2})\cr a \code{ggplot2} object, or a list
 of them, to export. At least one of \code{g} or \code{plotnames} must be provided.
-If both are provided, 'g' precedes and 'plotnames' will be ignored.}
+If both are provided, \code{g} precedes and \code{plotnames} will be ignored.\cr
+(optional) Default = NULL.}
 
-\item{plotnames}{(\code{character})\cr (optional) Default = NULL. A file path, or a list of them,
+\item{plotnames}{(\code{character})\cr a file path, or a list of them,
 to previously saved .png files. These will be opened and
-exported in the output file. At least one of \code{g} or \code{plotnames} must be provided.
-If both are provided, 'g' precedes and 'plotnames' will be ignored.}
+exported in the output file. At least \code{g} (of class \code{ggplot2})
+or \code{plotnames} must be provided. If both are provided, \code{g} precedes and \code{plotnames}
+will be ignored.\cr
+(optional) Default = NULL.}
 
-\item{tblid}{(\code{character})\cr Output ID to be displayed in the title and footer.}
+\item{tblid}{(\code{character})\cr output ID to be displayed in the title and
+last line of footer.}
 
 \item{output_dir}{(\code{character})\cr a directory path to save the docx.}
 
-\item{title}{(\code{character})\cr (optional) Default = NULL. Character, or list of them,
-with the titles to be displayed.}
+\item{title}{(\code{character})\cr character, or list of them, with the titles
+to be displayed.\cr (optional) Default = NULL.}
 
-\item{footers}{(\code{character})\cr (optional) Default = NULL. A list of footers
-to be displayed.}
+\item{footers}{(\code{character})\cr a list of footers to be displayed.\cr
+(optional) Default = NULL.}
 
-\item{orientation}{(\code{character})\cr (optional) Default = "portrait".
-One of: "portrait", "landscape".}
+\item{orientation}{(\code{character})\cr one of: "portrait", "landscape".\cr
+(optional) Default = "portrait".}
 
-\item{plotwidth}{(\code{numeric})\cr (optional) Default = 8. Plot size in units expressed by
-the units argument. If not supplied, uses the size of the current graphics device.}
+\item{plotwidth}{(\code{numeric})\cr plot size in units expressed by the units argument.
+If not supplied, uses the size of the current graphics device.\cr
+(optional) Default = 8.}
 
-\item{plotheight}{(\code{numeric})\cr (optional) Default = 5.51. Plot size in units expressed by
-the units argument. If not supplied, uses the size of the current graphics device.}
+\item{plotheight}{(\code{numeric})\cr plot size in units expressed by the units argument.
+If not supplied, uses the size of the current graphics device.\cr
+(optional) Default = 5.51.}
 
-\item{units}{(\code{character})\cr (optional) Default = "in".
-One of the following units in which the plotwidth and plotheight arguments
-are expressed: "in", "cm", "mm" or "px".}
+\item{units}{(\code{character})\cr one of the following units
+in which the plotwidth and plotheight arguments are expressed:
+"in", "cm", "mm" or "px".\cr
+(optional) Default = "in".}
 
-\item{border}{(\code{fp_border})\cr (optional). Border to use for the title and footers.}
+\item{border}{(\code{fp_border})\cr border to use.\cr
+Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

@@ -19,23 +19,24 @@ theme_docx_default_j(
 \item{font_size}{(\code{integer(1)})\cr (optional) Default = 9.}
 
 \item{cell_margins}{(\verb{numeric(1) or numeric(4)})\cr
-A numeric or a vector of four numbers indicating
+a numeric or a vector of four numbers indicating
 c("left", "right", "top", "bottom").\cr
 (optional) Default = c(0, 0, 0, 0).}
 
-\item{bold}{(\code{character})\cr Parts of the table text that should be in bold.
+\item{bold}{(\code{character})\cr parts of the table text that should be in bold.
 Can be any combination of c("header", "content_rows", "label_rows", "top_left").
 The first one renders all column names bold (not topleft content).
 The second and third option use \code{\link[formatters:make_row_df]{formatters::make_row_df()}} to render
 content or/and label rows as bold.\cr
-(optional) Default = \code{c("header", "content_rows", "label_rows", "top_left")}}
+(optional) Default = \code{c("header", "content_rows", "label_rows", "top_left")}.}
 
-\item{bold_manual}{(\verb{named list})\cr List of index lists.
-See example for needed structure. Accepted groupings/names are c("header", "body").\cr
+\item{bold_manual}{(\verb{named list})\cr list of index lists.
+Accepted groupings/names are c("header", "body").\cr
+See examples in \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::theme_docx_default()}}.\cr
 (optional) Default = NULL.}
 
-\item{border}{(\code{fp_border})\cr Border to use (default =
-\code{flextable::fp_border_default(width = 0.75, color = "black")}).}
+\item{border}{(\code{fp_border})\cr border to use.\cr
+Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
 }
 \value{
 A function that applies the given theme to a flextable.
