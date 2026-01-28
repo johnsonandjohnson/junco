@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
 
+### Added
+- Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
+- Added option to specify the output folder for the csv
+
 ## [0.1.3] - 2026-01-12
 
 ### Changed

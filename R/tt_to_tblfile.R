@@ -112,6 +112,22 @@ pg_width_by_orient <- function(landscape = FALSE) {
   fullpg - mar_plus_gutters
 }
 
+get_output_csv_filename <- function(output_csv_directory, fpath, fname) {
+  if (is.null(output_csv_directory)) {
+    output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
+  } else if (!dir.exists(output_csv_directory)) {
+    output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
+    message("Output dir for csv ", output_csv_directory,
+            " does not exist; csv will be saved as ",
+            output_csv_filename)
+  } else {
+    output_csv_filename <- file.path(output_csv_directory,
+                                     paste0(tolower(fname), ".csv"))
+    message("Saving csv as ", output_csv_filename)
+  }
+  return(output_csv_filename)
+}
+
 tlg_type <- function(tt) {
   if (methods::is(tt, "list") && !methods::is(tt, "listing_df")) {
     tt <- tt[[1]]
@@ -309,9 +325,15 @@ listingdf_dataframe_formats <- function(df, round_type = obj_round_type(df)) {
 #' [huxtable::set_align()] to set the alignments.
 #' @param round_type (`character(1)`)\cr the type of rounding to perform.
 #' See [formatters::format_value()] for more details.
-#' @param validate logical(1). Whether to validate the table structure using
+#' @param validate (`logical(1)`)\cr Whether to validate the table structure using
 #'  `rtables::validate_table_struct()`. Defaults to `TRUE`. If `FALSE`, a message
 #'  will be displayed when validation fails.
+#' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
+#' Default = FALSE.
+#' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
+#' Default = NULL. Ignored if export_csv = FALSE.
+#' If NULL or attempting to export in a non-existent directory, the csv will be exported
+#' in the same directory as the .rtf file.
 #' @import rlistings
 #' @rdname tt_to_tlgrtf
 #' @export
@@ -359,8 +381,14 @@ tt_to_tlgrtf <- function(
   round_type = obj_round_type(tt),
   alignments = list(),
   validate = TRUE,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
   ...
 ) {
+
+  checkmate::assert_flag(export_csv)
+  checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
+
   if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
     if (!rtables::validate_table_struct(tt)) {
       message(
@@ -516,6 +544,8 @@ tt_to_tlgrtf <- function(
           border_mat = pag_bord_mats[[i]],
           round_type = round_type,
           alignments = alignments,
+          export_csv = export_csv,
+          output_csv_directory = output_csv_directory,
           ...
         )
       }
@@ -540,6 +570,8 @@ tt_to_tlgrtf <- function(
           border_mat = pag_bord_mats,
           round_type = round_type,
           alignments = alignments,
+          export_csv = export_csv,
+          output_csv_directory = output_csv_directory,
           ...
         )
       } else if (!is.null(file)) { # only one page after pagination
@@ -690,10 +722,13 @@ tt_to_tlgrtf <- function(
     footer_val <- NULL
   }
 
-  if (!is.null(fname) && tlgtype == "Table" && is.data.frame(df)) {
+  if (!is.null(fname) && tlgtype == "Table" && is.data.frame(df) && export_csv) {
+
+    output_csv_filename <- get_output_csv_filename(output_csv_directory, fpath, fname)
+
     utils::write.csv(
       df,
-      file = file.path(fpath, paste0(tolower(fname), ".csv")),
+      file = output_csv_filename,
       row.names = FALSE
     )
   }

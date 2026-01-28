@@ -622,7 +622,8 @@ testthat::test_that("export_as_docx_j() works with pagination", {
     nosplitin = list(cols = c(.trtvar, "rrisk_header")),
     paginate = TRUE,
     add_page_break = TRUE,
-    combined_docx = TRUE
+    combined_docx = TRUE,
+    export_csv = TRUE
   )
   options(docx.add_datetime = TRUE)
 
@@ -630,6 +631,8 @@ testthat::test_that("export_as_docx_j() works with pagination", {
   testthat::expect_true(file.exists(paste0(output_dir, "/test1234part1of2.docx")))
   testthat::expect_true(file.exists(paste0(output_dir, "/test1234part2of2.docx")))
   testthat::expect_true(file.exists(paste0(output_dir, "/test1234allparts.docx")))
+  testthat::expect_true(file.exists(paste0(output_dir, "/test1234part1of2.csv")))
+  testthat::expect_true(file.exists(paste0(output_dir, "/test1234part2of2.csv")))
 
   # open the files and check the XML
   doc <- officer::read_docx(paste0(output_dir, "/test1234part1of2.docx"))
@@ -644,8 +647,74 @@ testthat::test_that("export_as_docx_j() works with pagination", {
   file.remove(c(
     paste0(output_dir, "/test1234part1of2.docx"),
     paste0(output_dir, "/test1234part2of2.docx"),
+    paste0(output_dir, "/test1234allparts.docx"),
+    paste0(output_dir, "/test1234part1of2.csv"),
+    paste0(output_dir, "/test1234part2of2.csv")
+  ))
+
+  # do not save csv
+  options(docx.add_datetime = FALSE)
+  export_as_docx_j(
+    result,
+    output_dir = output_dir,
+    orientation = "landscape",
+    tblid = "test1234",
+    nosplitin = list(cols = c(.trtvar, "rrisk_header")),
+    paginate = TRUE,
+    add_page_break = TRUE,
+    combined_docx = TRUE
+  )
+  options(docx.add_datetime = TRUE)
+
+  # check that the files exist, including the allparts
+  testthat::expect_true(file.exists(paste0(output_dir, "/test1234part1of2.docx")))
+  testthat::expect_true(file.exists(paste0(output_dir, "/test1234part2of2.docx")))
+  testthat::expect_true(file.exists(paste0(output_dir, "/test1234allparts.docx")))
+  testthat::expect_false(file.exists(paste0(output_dir, "/test1234part1of2.csv")))
+  testthat::expect_false(file.exists(paste0(output_dir, "/test1234part2of2.csv")))
+  file.remove(c(
+    paste0(output_dir, "/test1234part1of2.docx"),
+    paste0(output_dir, "/test1234part2of2.docx"),
     paste0(output_dir, "/test1234allparts.docx")
   ))
+
+  # save csv in a different location
+  output_csv_directory <- tempfile()
+  dir.create(output_csv_directory, showWarnings = FALSE, recursive = TRUE)
+  options(docx.add_datetime = FALSE)
+  printed_messages <- testthat::capture_messages(
+    export_as_docx_j(result,
+                     output_dir = output_dir,
+                     orientation = "landscape",
+                     tblid = "test1234",
+                     nosplitin = list(cols = c(.trtvar, "rrisk_header")),
+                     paginate = TRUE,
+                     add_page_break = TRUE,
+                     combined_docx = TRUE,
+                     export_csv = TRUE,
+                     output_csv_directory = output_csv_directory)
+  )
+  options(docx.add_datetime = TRUE)
+
+  # check that the files exist, including the allparts
+  testthat::expect_true(file.exists(paste0(output_dir, "/test1234part1of2.docx")))
+  testthat::expect_true(file.exists(paste0(output_dir, "/test1234part2of2.docx")))
+  testthat::expect_true(file.exists(paste0(output_dir, "/test1234allparts.docx")))
+  testthat::expect_false(file.exists(paste0(output_dir, "/test1234part1of2.csv")))
+  testthat::expect_false(file.exists(paste0(output_dir, "/test1234part2of2.csv")))
+  testthat::expect_true(file.exists(paste0(output_csv_directory, "/test1234part1of2.csv")))
+  testthat::expect_true(file.exists(paste0(output_csv_directory, "/test1234part2of2.csv")))
+  testthat::expect_true(all.equal(printed_messages,
+    c(paste0("Saving csv as ", output_csv_directory, "/test1234part1of2.csv\n"),
+      paste0("Saving csv as ", output_csv_directory, "/test1234part2of2.csv\n"))
+  ))
+
+  file.remove(c(
+    paste0(output_dir, "/test1234part1of2.docx"),
+    paste0(output_dir, "/test1234part2of2.docx"),
+    paste0(output_dir, "/test1234allparts.docx")
+  ))
+  unlink(output_csv_directory, recursive = TRUE)
 })
 
 
