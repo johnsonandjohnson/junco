@@ -327,7 +327,7 @@ listingdf_dataframe_formats <- function(df, round_type = obj_round_type(df)) {
 #'  `rtables::validate_table_struct()`. Defaults to `TRUE`. If `FALSE`, a message
 #'  will be displayed when validation fails.
 #' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
-#' Default = TRUE.
+#' Default = FALSE.
 #' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
 #' Default = NULL. Ignored if export_csv = FALSE.
 #' If NULL or attempting to export in a non-existent directory, the csv will be exported
@@ -379,7 +379,7 @@ tt_to_tlgrtf <- function(
   round_type = obj_round_type(tt),
   alignments = list(),
   validate = TRUE,
-  export_csv = TRUE,
+  export_csv = FALSE,
   output_csv_directory = NULL,
   ...
 ) {

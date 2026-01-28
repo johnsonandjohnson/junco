@@ -29,7 +29,7 @@ tt_to_tlgrtf(
   round_type = obj_round_type(tt),
   alignments = list(),
   validate = TRUE,
-  export_csv = TRUE,
+  export_csv = FALSE,
   output_csv_directory = NULL,
   ...
 )
@@ -99,7 +99,7 @@ Each named list contains \code{row}, \code{col}, and \code{value}, which are pas
 will be displayed when validation fails.}
 
 \item{export_csv}{(\code{logical(1)})\cr Whether to export the object as a csv representation.
-Default = TRUE.}
+Default = FALSE.}
 
 \item{output_csv_directory}{(\code{character(1)})\cr the directory to export the csv.
 Default = NULL. Ignored if export_csv = FALSE.
