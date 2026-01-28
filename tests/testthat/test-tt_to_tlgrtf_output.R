@@ -13,7 +13,7 @@ testthat::test_that("tt_to_tlgrtf .csv export behaviors", {
 
   # 1) Default: csv next to rtf
   rtf_file <- file.path(tempdir(), "t01")
-  res <- tt_to_tlgrtf(tt, file = rtf_file)
+  res <- tt_to_tlgrtf(tt, file = rtf_file, export_csv = TRUE)
   testthat::expect_true(file.exists(paste0(rtf_file, ".rtf")))
   testthat::expect_true(file.exists(paste0(rtf_file, ".csv")))
 
