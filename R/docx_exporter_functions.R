@@ -420,7 +420,7 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
 #' Accepted groupings/names are c("header", "body").\cr
 #' See examples in [rtables.officer::theme_docx_default()].\cr
 #' (optional) Default = NULL.
-#' 
+#'
 #' @inheritParams export_as_docx_j
 #' @inherit export_TLG_as_docx note
 #'
@@ -561,7 +561,7 @@ theme_docx_default_j <- function(
 #'
 #' @inheritParams export_as_docx_j
 #' @inherit export_TLG_as_docx note
-#' 
+#'
 #' @note
 #' IMPORTANT NOTE: the following features are not implemented in `flextable`,
 #' and as a result they will only be visible when exporting to docx using
@@ -588,7 +588,10 @@ tt_to_flextable_j <- function(
     label_width_ins = 2,
     total_page_width = pg_width_by_orient(orientation == "landscape"),
     orientation = "portrait",
-    nosplitin = character(),
+    nosplitin = list(
+      row = character(),
+      col = character()
+    ),
     string_map = default_str_map,
     markup_df_docx = dps_markup_df_docx,
     reduce_first_col_indentation = FALSE,
@@ -604,9 +607,8 @@ tt_to_flextable_j <- function(
   if (!inherits(tt, "VTableTree") && !inherits(tt, "listing_df")) {
     stop("Input object is not an rtables' or rlistings' object.")
   }
-  
-  
-  checkmate::assert_multi_class(x = tt, classes = c("TableTree", "listing_df"))
+
+  checkmate::assert_true(inherits(tt, "VTableTree") || inherits(tt, "listing_df"))
   checkmate::assert_character(tblid)
   checkmate::assert_function(theme)
   checkmate::assert_class(border, "fp_border")
@@ -1235,8 +1237,11 @@ export_as_docx_j <- function(
   doc_metadata = NULL,
   template_file = system.file("template_file.docx", package = "junco"),
   orientation = "portrait",
-  paginate = tlg_type(tt) == "Table",
-  nosplitin = character(),
+  paginate = tlgtype == "Table",
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
   string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   combined_docx = FALSE,
@@ -1250,9 +1255,35 @@ export_as_docx_j <- function(
   watermark = FALSE,
   ...
 ) {
-  
-  browser()
-  
+
+  checkmate::assert_multi_class(x = tt, classes = c("TableTree", "listing_df", "list", "flextable"))
+  checkmate::assert_character(tblid)
+  checkmate::assert_character(output_dir, len = 1)
+  checkmate::assert_directory_exists(output_dir)
+  checkmate::assert_function(theme)
+  checkmate::assert_flag(add_page_break)
+  checkmate::assert_flag(titles_as_header)
+  checkmate::assert_flag(integrate_footers)
+  checkmate::assert_class(section_properties, "prop_section")
+  checkmate::assert_character(template_file, len = 1)
+  checkmate::assert_file_exists(template_file)
+  checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
+  checkmate::assert_flag(paginate)
+  checkmate::assert_list(nosplitin)
+  checkmate::assert_multi_class(x = string_map,
+                                classes = c("tbl_df", "data.frame"))
+  checkmate::assert_multi_class(x = markup_df_docx,
+                                classes = c("tbl_df", "data.frame"))
+  checkmate::assert_flag(combined_docx)
+  checkmate::assert_character(tlgtype)
+  checkmate::assert_numeric(col_gap)
+  checkmate::assert_flag(pagenum)
+  checkmate::assert_choice(round_type, choices = c("sas", "iec"))
+  checkmate::assert_list(alignments)
+  checkmate::assert_class(border, "fp_border")
+  checkmate::assert_matrix(border_mat)
+  checkmate::assert_flag(watermark)
+
   # Validate `alignments` here because of its complicated data structure
   stopifnot("`alignments` must be a list" = is.list(alignments))
   for (alignment in alignments) {
@@ -1551,13 +1582,13 @@ export_as_docx_j <- function(
 #' of them, to export. At least one of `g` or `plotnames` must be provided.
 #' If both are provided, `g` precedes and `plotnames` will be ignored.\cr
 #' (optional) Default = NULL.
-#' @param plotnames (`character`)\cr a file path, or a list of them,
+#' @param plotnames (`list`)\cr a file path, or a list of them,
 #' to previously saved .png files. These will be opened and
 #' exported in the output file. At least `g` (of class `ggplot2`)
 #' or `plotnames` must be provided. If both are provided, `g` precedes and `plotnames`
 #' will be ignored.\cr
 #' (optional) Default = NULL.
-#' 
+#'
 #' @inheritParams export_TLG_as_docx
 #' @inherit export_TLG_as_docx note
 export_graph_as_docx <- function(g = NULL,
@@ -1571,9 +1602,7 @@ export_graph_as_docx <- function(g = NULL,
                                  plotheight = 5.51,
                                  units = c("in", "cm", "mm", "px")[1],
                                  border = flextable::fp_border_default(width = 0.75, color = "black")) {
-  
-  browser()
-  
+
   # Check arguments ----
 
   if (is.null(g) && is.null(plotnames)) {
@@ -1625,6 +1654,17 @@ export_graph_as_docx <- function(g = NULL,
       plotnames <- append(plotnames, temp_file)
     }
   }
+
+  checkmate::assert_character(tblid)
+  checkmate::assert_character(output_dir, len = 1)
+  checkmate::assert_directory_exists(output_dir)
+  checkmate::assert_character(title, null.ok = TRUE)
+  checkmate::assert_character(footers, null.ok = TRUE)
+  checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
+  checkmate::assert_numeric(plotwidth)
+  checkmate::assert_numeric(plotheight)
+  checkmate::assert_choice(units, choices = c("in", "cm", "mm", "px"))
+  checkmate::assert_class(border, "fp_border")
 
 
   # Creation of flextable ----
@@ -1727,7 +1767,7 @@ export_graph_as_docx <- function(g = NULL,
 
 
 #' Export a TLG (Table, Listing, Graph) to .docx format
-#' 
+#'
 #' @description `r lifecycle::badge('experimental')`
 #'
 #' @param obj (`TableTree`, `listing_df` or `ggplot2`)\cr the object to export.
@@ -1754,15 +1794,16 @@ export_graph_as_docx <- function(g = NULL,
 #' defined in the template file. Paragraph styles are inherited from this file.\cr
 #' (optional) Default = "doc/template_file.docx".
 #' @param orientation (`character`)\cr one of: "portrait", "landscape".\cr
-#' (optional) Default = "portrait". 
+#' (optional) Default = "portrait".
 #' @param paginate (`logical`)\cr (optional) Default = TRUE for TableTree and FALSE otherwise.
 #' @param nosplitin (`list`)\cr path elements whose children should not be paginated
 #' within if it can be avoided. The list should have the format list(row=, col=).\cr
 #' E.g., list(col="TRT01A") means don't split within treatment arms unless
-#' all the associated columns don't fit on a single page.
+#' all the associated columns don't fit on a single page.\cr
+#' (optional) Default = list(row = character(), col = character()).
 #' @param string_map (`tibble`)\cr (optional) Default = default_str_map.
 #' @param markup_df_docx (`tibble`)\cr (optional) Default = dps_markup_df_docx.
-#' @param combined_docx (`logical`)\cr whether to also export an "allparts" docx 
+#' @param combined_docx (`logical`)\cr whether to also export an "allparts" docx
 #' version. Only applies when exporting a Table or Listing.\cr
 #' (optional) Default = FALSE.
 #' @param tlgtype (`character`)\cr (optional) No need to be specified by end user.
@@ -1780,10 +1821,10 @@ export_graph_as_docx <- function(g = NULL,
 #' (optional) Default = `list()`.
 #' @param border (`fp_border`)\cr border to use.\cr
 #' Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.
-#' @param border_mat (`matrix`)\cr a `m x k` matrix where m is the number of columns of `tt`
-#' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
-#' for what the matrix should contain. Users should only specify this when the
-#' default behavior does not meet their needs.
+#' @param border_mat (`matrix`)\cr a `m x k` matrix where m is the number of columns of
+#' the input Table/Listing and k is the number of lines the header takes up.\cr
+#' See [tidytlg::add_bottom_borders] for what the matrix should contain.
+#' Users should only specify this when the default behavior does not meet their needs.
 #' @param watermark (`logical`)\cr whether to display the watermark "Confidential".\cr
 #' In the future, this argument will be the actual watermark (i.e. a string)
 #' to display.\cr
@@ -1811,7 +1852,7 @@ export_graph_as_docx <- function(g = NULL,
 #' @param ... other parameters.
 #'
 #' @export
-#' 
+#'
 #' @note
 #' This function has been tested for common use cases but may not work or have
 #' unexpected or undesired behavior in corner cases. As such it is not considered
@@ -1821,46 +1862,57 @@ export_graph_as_docx <- function(g = NULL,
 #' is merged into `rtables.officer`.
 #'
 export_TLG_as_docx <- function(
-    obj = NULL,
-    tblid,
-    output_dir,
-    theme = theme_docx_default_j(
-      font = "Times New Roman",
-      font_size = 9L,
-      bold = NULL
-    ),
-    add_page_break = FALSE,
-    titles_as_header = TRUE,
-    integrate_footers = TRUE,
-    section_properties = officer::prop_section(
-      page_size = officer::page_size(width = 11, height = 8.5, orient = orientation),
-      page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
-    ),
-    doc_metadata = NULL,
-    template_file = system.file("template_file.docx", package = "junco"),
-    orientation = "portrait",
-    paginate = tlg_type(tt) == "Table",
-    nosplitin = character(),
-    string_map = default_str_map,
-    markup_df_docx = dps_markup_df_docx,
-    combined_docx = FALSE,
-    tlgtype = tlg_type(tt),
-    col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-    round_type = formatters::obj_round_type(tt),
-    alignments = list(),
-    border = flextable::fp_border_default(width = 0.75, color = "black"),
-    border_mat = make_header_bordmat(obj = tt),
-    watermark = FALSE,
-    plotnames = NULL,
-    title = NULL,
-    footers = NULL,
-    plotwidth = 8,
-    plotheight = 5.51,
-    units = c("in", "cm", "mm", "px")[1],
-    ...
+  obj = NULL,
+  tblid,
+  output_dir,
+  theme = theme_docx_default_j(
+    font = "Times New Roman",
+    font_size = 9L,
+    bold = NULL
+  ),
+  add_page_break = FALSE,
+  titles_as_header = TRUE,
+  integrate_footers = TRUE,
+  section_properties = officer::prop_section(
+    page_size = officer::page_size(width = 11, height = 8.5, orient = orientation),
+    page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
+  ),
+  doc_metadata = NULL,
+  template_file = system.file("template_file.docx", package = "junco"),
+  orientation = "portrait",
+  paginate = tlgtype == "Table",
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  string_map = default_str_map,
+  markup_df_docx = dps_markup_df_docx,
+  combined_docx = FALSE,
+  tlgtype = ifelse(is.null(obj), "Figure", tlg_type(obj)),
+  col_gap = ifelse(tlgtype == "Listing", .5, 3),
+  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+  round_type = ifelse(tlgtype %in% c("Table", "Listing"),
+                      formatters::obj_round_type(obj),
+                      "iec"),
+  alignments = list(),
+  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border_mat = NULL,
+  watermark = FALSE,
+  plotnames = NULL,
+  title = NULL,
+  footers = NULL,
+  plotwidth = 8,
+  plotheight = 5.51,
+  units = c("in", "cm", "mm", "px")[1],
+  ...
 ) {
-  
+
+  if (tlgtype %in% c("Table", "Listing") && is.null(border_mat)) {
+    border_mat <- make_header_bordmat(obj = obj)
+  } else {
+    border_mat <- matrix()
+  }
+
   # if 'obj' is provided, it must be of type "TableTree", "listing_df" or list of "ggplot"
   if (!is.null(obj)) {
     checkmate::assert_multi_class(x = obj,
@@ -1892,17 +1944,34 @@ export_TLG_as_docx <- function(
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_matrix(border_mat)
   checkmate::assert_flag(watermark)
-  checkmate::assert_character(plotnames, null.ok = TRUE)
+  checkmate::assert_list(plotnames, null.ok = TRUE)
   checkmate::assert_character(title, null.ok = TRUE)
   checkmate::assert_character(footers, null.ok = TRUE)
   checkmate::assert_numeric(plotwidth)
   checkmate::assert_numeric(plotheight)
   checkmate::assert_choice(units, choices = c("in", "cm", "mm", "px"))
-  
-  if (class(obj) %in% c("TableTree", "listing_df")) {
-    export_as_docx_j(tt = obj, ...)
+
+  if (inherits(obj, "VTableTree") || inherits(obj, "listing_df")) {
+    export_as_docx_j(
+      tt = obj, tblid = tblid, output_dir = output_dir,
+      theme = theme, add_page_break = add_page_break,
+      titles_as_header = titles_as_header,
+      integrate_footers = integrate_footers,
+      section_properties = section_properties, doc_metadata = doc_metadata,
+      template_file = template_file, orientation = orientation,
+      paginate = paginate, nosplitin = nosplitin,
+      string_map = string_map, markup_df_docx = markup_df_docx,
+      combined_docx = combined_docx, tlgtype = tlgtype,
+      col_gap = col_gap, pagenum = pagenum, round_type = round_type,
+      alignments = alignments, border = border,
+      border_mat = border_mat, watermark = watermark, ...
+    )
   } else {
-    export_graph_as_docx(g = obj, ...)
+    export_graph_as_docx(g = obj, plotnames = plotnames,
+                         tblid = tblid, output_dir = output_dir,
+                         title = title, footers = footers,
+                         orientation = orientation, plotwidth = plotwidth,
+                         plotheight = plotheight, units = units, border = border)
   }
-  
+
 }

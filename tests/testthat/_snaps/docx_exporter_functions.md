@@ -49942,7 +49942,7 @@
       45            <NA>
       46            <NA>
 
-# export_as_docx_j() works with pagination
+# export_TLG_as_docx() works with pagination
 
     Code
       officer::docx_summary(x = doc, detailed = TRUE)
@@ -56792,7 +56792,7 @@
       486       1        6        1     FALSE            <NA>
       487       1        6        1     FALSE            <NA>
 
-# export_graph_as_docx() works with basic example
+# export_TLG_as_docx() works with basic example
 
     Code
       as.character(xml2::xml_child(doc$doc_obj$get(), 1))

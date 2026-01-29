@@ -18,8 +18,8 @@ export_as_docx_j(
   doc_metadata = NULL,
   template_file = system.file("template_file.docx", package = "junco"),
   orientation = "portrait",
-  paginate = tlg_type(tt) == "Table",
-  nosplitin = character(),
+  paginate = tlgtype == "Table",
+  nosplitin = list(row = character(), col = character()),
   string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   combined_docx = FALSE,
@@ -76,7 +76,8 @@ defined in the template file. Paragraph styles are inherited from this file.\cr
 \item{nosplitin}{(\code{list})\cr path elements whose children should not be paginated
 within if it can be avoided. The list should have the format list(row=, col=).\cr
 E.g., list(col="TRT01A") means don't split within treatment arms unless
-all the associated columns don't fit on a single page.}
+all the associated columns don't fit on a single page.\cr
+(optional) Default = list(row = character(), col = character()).}
 
 \item{string_map}{(\code{tibble})\cr (optional) Default = default_str_map.}
 
@@ -107,10 +108,10 @@ Each named list contains \code{row}, \code{col}, and \code{value}.\cr
 \item{border}{(\code{fp_border})\cr border to use.\cr
 Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
 
-\item{border_mat}{(\code{matrix})\cr a \verb{m x k} matrix where m is the number of columns of \code{tt}
-and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}
-for what the matrix should contain. Users should only specify this when the
-default behavior does not meet their needs.}
+\item{border_mat}{(\code{matrix})\cr a \verb{m x k} matrix where m is the number of columns of
+the input Table/Listing and k is the number of lines the header takes up.\cr
+See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders} for what the matrix should contain.
+Users should only specify this when the default behavior does not meet their needs.}
 
 \item{watermark}{(\code{logical})\cr whether to display the watermark "Confidential".\cr
 In the future, this argument will be the actual watermark (i.e. a string)

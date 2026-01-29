@@ -19,7 +19,7 @@ tt_to_flextable_j(
   label_width_ins = 2,
   total_page_width = pg_width_by_orient(orientation == "landscape"),
   orientation = "portrait",
-  nosplitin = character(),
+  nosplitin = list(row = character(), col = character()),
   string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   reduce_first_col_indentation = FALSE,
@@ -72,7 +72,8 @@ Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
 \item{nosplitin}{(\code{list})\cr path elements whose children should not be paginated
 within if it can be avoided. The list should have the format list(row=, col=).\cr
 E.g., list(col="TRT01A") means don't split within treatment arms unless
-all the associated columns don't fit on a single page.}
+all the associated columns don't fit on a single page.\cr
+(optional) Default = list(row = character(), col = character()).}
 
 \item{string_map}{(\code{tibble})\cr (optional) Default = default_str_map.}
 
@@ -96,10 +97,10 @@ Used to specify individual column or cell alignments.
 Each named list contains \code{row}, \code{col}, and \code{value}.\cr
 (optional) Default = \code{list()}.}
 
-\item{border_mat}{(\code{matrix})\cr a \verb{m x k} matrix where m is the number of columns of \code{tt}
-and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}
-for what the matrix should contain. Users should only specify this when the
-default behavior does not meet their needs.}
+\item{border_mat}{(\code{matrix})\cr a \verb{m x k} matrix where m is the number of columns of
+the input Table/Listing and k is the number of lines the header takes up.\cr
+See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders} for what the matrix should contain.
+Users should only specify this when the default behavior does not meet their needs.}
 
 \item{...}{other parameters.}
 }
@@ -120,5 +121,6 @@ and as a result they will only be visible when exporting to docx using
 \item watermark
 \item hanging indents
 \item caption style
+\item page numbering
 }
 }
