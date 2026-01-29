@@ -394,7 +394,9 @@ tt_to_tlgrtf <- function(
     tt <- as_listing(
       df,
       key_cols = get_keycols(tt),
-      disp_cols = listing_dispcols(tt)
+      disp_cols = listing_dispcols(tt),
+      main_title = attr(tt, "main_title"),
+      main_footer = attr(tt, "main_footer")
     )
   }
 
