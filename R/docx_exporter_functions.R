@@ -1910,6 +1910,8 @@ export_TLG_as_docx <- function(
 
   if (tlgtype %in% c("Table", "Listing") && is.null(border_mat)) {
     border_mat <- make_header_bordmat(obj = obj)
+  } else if (tlgtype == "Figure") {
+    border_mat <- matrix()
   }
 
   # if 'obj' is provided, it must be of type "TableTree", "listing_df" or list of "ggplot"
