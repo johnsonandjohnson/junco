@@ -1256,7 +1256,8 @@ export_as_docx_j <- function(
   ...
 ) {
 
-  checkmate::assert_multi_class(x = tt, classes = c("TableTree", "listing_df", "list", "flextable"))
+  checkmate::assert_true(inherits(tt, "VTableTree") || inherits(tt, "listing_df") ||
+                           is.list(tt) || inherits(tt, "flextable"))
   checkmate::assert_character(tblid)
   checkmate::assert_character(output_dir, len = 1)
   checkmate::assert_directory_exists(output_dir)
@@ -1909,14 +1910,12 @@ export_TLG_as_docx <- function(
 
   if (tlgtype %in% c("Table", "Listing") && is.null(border_mat)) {
     border_mat <- make_header_bordmat(obj = obj)
-  } else {
-    border_mat <- matrix()
   }
 
   # if 'obj' is provided, it must be of type "TableTree", "listing_df" or list of "ggplot"
   if (!is.null(obj)) {
-    checkmate::assert_multi_class(x = obj,
-                                  classes = c("TableTree", "listing_df", "list", "ggplot"))
+    checkmate::assert_true(inherits(obj, "VTableTree") || inherits(obj, "listing_df") ||
+                             ggplot2::is.ggplot(obj) || is.list(obj))
   }
   checkmate::assert_character(tblid)
   checkmate::assert_character(output_dir, len = 1)
