@@ -1952,7 +1952,7 @@ export_TLG_as_docx <- function(
   checkmate::assert_numeric(plotheight)
   checkmate::assert_choice(units, choices = c("in", "cm", "mm", "px"))
 
-  if (inherits(obj, "VTableTree") || inherits(obj, "listing_df")) {
+  if (tlgtype %in% c("Table", "Listing")) {
     export_as_docx_j(
       tt = obj, tblid = tblid, output_dir = output_dir,
       theme = theme, add_page_break = add_page_break,
