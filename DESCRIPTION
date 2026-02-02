@@ -36,6 +36,8 @@ Description: Structure and formatting requirements for clinical trial table and 
 License: Apache License (>= 2)
 URL: https://github.com/johnsonandjohnson/junco, https://johnsonandjohnson.github.io/junco/
 BugReports: https://github.com/johnsonandjohnson/junco/issues
+Remotes:
+    davidgohel/flextable@master
 Depends:
     R (>= 4.4),
     formatters (>= 0.5.12),
@@ -58,7 +60,7 @@ Imports:
     assertthat,
     vcdExtra (>= 0.8.7),
     rtables.officer (>= 0.1.0),
-    flextable,
+    flextable (>= 0.9.11),
     officer,
     xml2,
     ggplot2,
