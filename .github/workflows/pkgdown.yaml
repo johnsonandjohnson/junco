@@ -13,16 +13,12 @@ on:
     types: [published]
   workflow_dispatch:
 
-name: Docs 📚
-
 permissions: read-all
 
 jobs:
-  build:
-    if: github.event.pull_request.draft == false
   pkgdown:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
-    # Only restrict concurrency for non-PR jobs
     concurrency:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
