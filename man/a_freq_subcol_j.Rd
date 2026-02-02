@@ -48,7 +48,7 @@ will be considered.\cr
 When multiple levels, only those levels/values of the incoming variable
 will be considered.\cr
 When no values are observed (eg zero row input df),
-a row with row-label \verb{No data reported} will be included in the table.}
+a row with row-label \verb{No data to report} will be included in the table.}
 
 \item{subcol_split}{(\code{string})\cr text to search colid to determine whether further subsetting
 should be performed.}

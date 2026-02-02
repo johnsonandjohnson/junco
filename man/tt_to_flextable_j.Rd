@@ -2,115 +2,101 @@
 % Please edit documentation in R/docx_exporter_functions.R
 \name{tt_to_flextable_j}
 \alias{tt_to_flextable_j}
-\title{Convert a VTableTree or a listing_df object to a flextable}
+\title{Convert a TableTree or a listing_df object to a flextable}
 \usage{
 tt_to_flextable_j(
   tt,
   tblid,
   theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
   border = flextable::fp_border_default(width = 0.75, color = "black"),
-  indent_size = NULL,
   titles_as_header = TRUE,
   bold_titles = TRUE,
   integrate_footers = TRUE,
   counts_in_newline = FALSE,
-  paginate = FALSE,
+  paginate = tlg_type(tt) == "Table",
   fontspec = formatters::font_spec("Times", 9L, 1.2),
-  lpp = NULL,
-  cpp = NULL,
-  ...,
   colwidths = NULL,
-  tf_wrap = !is.null(cpp),
-  max_width = cpp,
-  total_page_height = 10,
-  total_page_width = my_pg_width_by_orient(orientation),
-  autofit_to_page = TRUE,
+  label_width_ins = 2,
+  total_page_width = pg_width_by_orient(orientation == "landscape"),
   orientation = "portrait",
   nosplitin = character(),
-  string_map = junco::default_str_map,
+  string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   reduce_first_col_indentation = FALSE,
-  tlgtype = (utils::getFromNamespace("tlg_type", "junco"))(tt),
+  tlgtype = tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", 0.5, 3),
-  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
   alignments = list(),
-  border_mat = make_header_bordmat(obj = tt)
+  border_mat = make_header_bordmat(obj = tt),
+  ...
 )
 }
 \arguments{
-\item{tt}{a VTableTree or a listing_df object}
+\item{tt}{(\code{TableTree} or \code{listing_df})\cr The object to convert to flextable.}
 
-\item{tblid}{Character. Output ID to be displayed in the Title and last line of footer.}
+\item{tblid}{(\code{character})\cr Output ID to be displayed in the title and last line of footer.}
 
-\item{theme}{(optional) a function factory. See theme_docx_default_j()
-or rtables.officer::theme_docx_default() for more details.}
+\item{theme}{(function factory)\cr The theme to apply to the flextable
+(default = \code{\link[=theme_docx_default_j]{theme_docx_default_j()}}).\cr
+See \code{\link[=theme_docx_default_j]{theme_docx_default_j()}} or \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::theme_docx_default()}}
+for more details.}
 
-\item{border}{(optional) an \code{fp_border} object.}
+\item{border}{(\code{fp_border})\cr Border to use (default =
+\code{flextable::fp_border_default(width = 0.75, color = "black")}).}
 
-\item{indent_size}{(optional) Numeric. Not used and set to 9 points internally.}
+\item{titles_as_header}{(\code{logical})\cr (optional) Default = TRUE.}
 
-\item{titles_as_header}{(optional) Default = TRUE.}
+\item{bold_titles}{(\code{logical})\cr (optional) Default = TRUE.}
 
-\item{bold_titles}{(optional) Default = TRUE.}
+\item{integrate_footers}{(\code{logical})\cr (optional) Default = TRUE.}
 
-\item{integrate_footers}{(optional) Default = TRUE.}
+\item{counts_in_newline}{(\code{logical})\cr (optional) Default = FALSE.}
 
-\item{counts_in_newline}{(optional) Default = FALSE.}
+\item{paginate}{(\code{logical})\cr (optional) Default = TRUE for TableTree and FALSE otherwise.}
 
-\item{paginate}{(optional) Default = FALSE.}
+\item{fontspec}{(\code{font_spec})\cr Font specification object.}
 
-\item{fontspec}{(optional) a font_spec object.}
+\item{colwidths}{(\code{numeric})\cr Column widths for the table.}
 
-\item{lpp}{(optional) Default = NULL. Not used.}
+\item{label_width_ins}{(\code{numeric})\cr Label width in inches.}
 
-\item{cpp}{(optional) Default = NULL. Not used.}
-
-\item{...}{other arguments.}
-
-\item{colwidths}{(optional) Default = NULL.}
-
-\item{tf_wrap}{(optional) Default = FALSE. Not used.}
-
-\item{max_width}{(optional) Default = NULL. Not used.}
-
-\item{total_page_height}{(optional) Default = 10. Not used.}
-
-\item{total_page_width}{(optional). No need to be specified by end user.
+\item{total_page_width}{(\code{numeric})\cr (optional). No need to be specified by end user.
 Set to 6.38 ("portrait") or 8.88 ("landscape").}
 
-\item{autofit_to_page}{(optional) Default = TRUE. Not used and set to FALSE internally.}
-
-\item{orientation}{(optional) Default = "portrait".
+\item{orientation}{(\code{character})\cr (optional) Default = "portrait".
 One of: "portrait", "landscape".}
 
-\item{nosplitin}{(optional) Default = character(). Named list.}
+\item{nosplitin}{(\code{list})\cr list(row=, col=). Path elements whose children should not be paginated within
+if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
+all the associated columns don't fit on a single page.}
 
-\item{string_map}{(optional) Default = default_str_map.}
+\item{string_map}{(\code{tibble})\cr (optional) Default = default_str_map.}
 
-\item{markup_df_docx}{(optional) Default = dps_markup_df_docx.}
+\item{markup_df_docx}{(\code{tibble})\cr (optional) Default = dps_markup_df_docx.}
 
-\item{reduce_first_col_indentation}{(optional) Default = FALSE.}
+\item{reduce_first_col_indentation}{(\code{logical})\cr (optional) Default = FALSE.
+Whether to reduce by 1 the indentation if we have vertical pagination.
+No need to be specified by the end user.}
 
-\item{tlgtype}{(optional). No need to be specified by end user.}
+\item{tlgtype}{(\code{character})\cr (optional). No need to be specified by end user.}
 
-\item{col_gap}{(optional). Default = 3 (Tables) or 0.5 (Listings).}
-
-\item{pagenum}{(optional). Default = FALSE (Tables) or TRUE (Listings).}
+\item{col_gap}{(\code{numeric})\cr (optional). Default = 3 (Tables) or 0.5 (Listings).}
 
 \item{round_type}{(\code{"iec"} or \code{"sas"})\cr the type of rounding to perform. iec,
 the default, performs rounding compliant with IEC 60559, while
 sas performs nearest-value rounding consistent with rounding within SAS.
 See \verb{[formatters::format_value()]} for more details.}
 
-\item{alignments}{(\code{list})\cr List of named lists. Vectorized.
+\item{alignments}{(\code{list})\cr (optional) List of named lists. Vectorized.
 (Default = \code{list()}) Used to specify individual column or cell alignments.
 Each named list contains \code{row}, \code{col}, and \code{value}.}
 
-\item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of columns of \code{tt}
-and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}
-for what the matrix should contain. Users should only specify this when the
-default behavior does not meet their needs.}
+\item{border_mat}{(\code{matrix})\cr (optional) A \verb{m x k} matrix where m is the number of
+columns of \code{tt} and k is the number of lines the header takes up.
+See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders} for what the matrix should contain.
+Users should only specify this when the default behavior does not meet their needs.}
+
+\item{...}{other arguments.}
 }
 \value{
 a flextable object.

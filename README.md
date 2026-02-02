@@ -64,6 +64,17 @@ Key vignettes and what they cover:
 - Getting started with junco — overview and basic workflow
   - Article: https://johnsonandjohnson.github.io/junco/articles/junco.html
   - What you’ll learn: how to set up data, create common analyses, and produce TLG-ready outputs using core helpers.
+To understand how to use this package, please refer to the vignettes (also available on the pkgdown site). You can list them locally with:
+
+```r
+browseVignettes(package = "junco")
+```
+
+Key vignettes and what they cover:
+
+- Getting started with junco — overview and basic workflow
+  - Article: https://johnsonandjohnson.github.io/junco/articles/junco.html
+  - What you’ll learn: how to set up data, create common analyses, and produce TLG-ready outputs using core helpers.
 
 - Table and listing customizations — controlling layouts and styles
   - Article: https://johnsonandjohnson.github.io/junco/articles/table_and_listing_customizations.html

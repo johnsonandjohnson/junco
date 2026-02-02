@@ -92,6 +92,7 @@ reference:
     - jjcsformat_xx
     - jjcs_num_formats
     - jjcsformat_count_denom_fraction
+    - ac_blank_line
     - insert_blank_line
 
   - title: junco Sorting Functions and Pruning Functions
@@ -112,6 +113,7 @@ reference:
     - create_colspan_var
     - do_exclude_split
     - make_combo_splitfun
+    - postfun_eq5d
     - real_add_overall_facet
 
   - title: junco Functions For titles/footnotes
@@ -129,6 +131,7 @@ reference:
     - get_mmrm_lsmeans
     - get_ref_info
     - get_visit_levels
+    - leftside
 
   - title: internal
     desc: The following are additional junco functions.

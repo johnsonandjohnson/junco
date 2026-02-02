@@ -1,9 +1,17 @@
 #' Extract the left-hand side of a formula
 #'
-#' @keywords internal
+#' @param x (`formula`)\cr A two-sided formula, e.g., `y ~ x1 + x2`.
+#'
+#' @return (`character(1)`) The name of the left-hand side of the formula.
+#'
+#' @examples
+#' leftside(y ~ x)
+#'
+#' @export
 leftside <- function(x) {
   checkmate::assert_formula(x)
   res <- x[[2L]]
+  res <- as.character(res)
   checkmate::assert_string(res)
   res
 }

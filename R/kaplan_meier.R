@@ -67,12 +67,25 @@ s_kaplan_meier <- function(df, .var, is_event, control = control_surv_time()) {
   quantiles_lower <- vapply(srv_qt_tab, "[", 1, FUN.VALUE = numeric(1))
   median_ci <- vapply(srv_qt_tab, "[", 2, FUN.VALUE = numeric(1))
   quantiles_upper <- vapply(srv_qt_tab, "[", 3, FUN.VALUE = numeric(1))
-  range_censor <- range_noinf(df[[.var]][!df[[is_event]]], na.rm = TRUE)
-  range_event <- range_noinf(df[[.var]][df[[is_event]]], na.rm = TRUE)
-  range <- range_noinf(df[[.var]], na.rm = TRUE)
-  lower_censored <- as.numeric(range_censor[1] < range_event[1])
-  upper_censored <- as.numeric(range_censor[2] > range_event[2])
+
+  x <- df[[.var]]
+  has_event <- df[[is_event]]
+  x_censored <- x[!has_event]
+  x_event <- x[has_event]
+
+  any_censored <- !all(has_event)
+  no_event <- !any(has_event)
+
+  range_censor <- range_noinf(x_censored, na.rm = TRUE)
+  range_event <- range_noinf(x_event, na.rm = TRUE)
+  range <- range_noinf(x, na.rm = TRUE)
+
+  lower_censored <- any_censored &&
+    (no_event || as.numeric(range_censor[1] < range_event[1]))
+  upper_censored <- any_censored &&
+    (no_event || as.numeric(range_censor[2] > range_event[2]))
   range_with_cens_info <- c(range, lower_censored, upper_censored)
+
   list(
     quantiles_lower = with_label(
       unname(quantiles_lower),
