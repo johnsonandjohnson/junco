@@ -1,8 +1,6 @@
 # Changelog
 
-## junco 0.1.3
-
-CRAN release: 2026-01-15
+## junco 0.1.3.9
 
 #### New Major features
 
@@ -85,6 +83,10 @@ CRAN release: 2026-01-15
   [`tt_to_tbldf()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tbldf.md)
   function behavior with invalid structures
   [\#116](https://github.com/johnsonandjohnson/junco/issues/116)
+- Fixed
+  [`tt_to_tlgrtf()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md)
+  argument `label_width_ins`
+  [\#166](https://github.com/johnsonandjohnson/junco/issues/166)
 
 ### Other changes
 
