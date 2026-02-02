@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
 - created generic wrapper function `export_TLG_as_docx()`, which now calls `export_as_docx_j()` and `export_graph_as_docx()` (#173)
 - Functions `export_as_docx_j()` and `export_graph_as_docx()` still exist but are not internal, i.e. not exported
+- updated vignette to explain correctly how to insert newlines in the headers of Tables and Listings (#179)
+
+## [0.1.3.9] - Unreleased
+
+### Fixed
+- Fixed `tt_to_tlgrtf()` argument `label_width_ins` which was not applying the change in the row label column width (#166).
 
 ## [0.1.3] - 2026-01-12
 
@@ -42,17 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `cmh_sato` and `cmh_mn` (Cochran-Mantel-Haenszel stratified proportion difference estimation with Sato variance and Miettinen Nurminen method, respectively) `method` options to the `s_proportion_diff_j()` function.
 - Added formatting function round type (#76)
 
-### Changed
-- Replace {pharmaverseadam} with {pharmaverseadamjnj}
-- Update pruning_functions.R
-- Update `string_to_title()` to handle factors (#26)
-- Moved rbmi to suggest
-- Replaced `denom_df` with `.alt_df_full` in `a_maxlev()`.
-
-### Fixed
-- Fixes #102 bug inappropriate warnings from `cond_rm_facets` function
-- Fix bug for not selecting NA records in `h_subset_combo()`
-- Consistent `tt_to_tbldf()` function behavior with invalid structures #116
+* Fixed bug in s_summarize_desc_j function to handle sparse data (zero variance) cases (#78)
 
 
 ## [0.1.1] - 2025-07-28
