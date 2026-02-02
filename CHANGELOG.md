@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
 
+## [0.1.3.9] - Unreleased
+
+### Fixed
+- Fixed `tt_to_tlgrtf()` argument `label_width_ins` which was not applying the change in the row label column width (#166).
+
 ## [0.1.3] - 2026-01-12
 
 ### Changed
