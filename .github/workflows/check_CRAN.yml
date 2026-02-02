@@ -3,7 +3,6 @@
 on:
   pull_request:
     types:
-      - opened
       - synchronize
       - reopened
       - ready_for_review
@@ -16,7 +15,9 @@ name: check-CRAN
 permissions: read-all
 
 jobs:
-  R-CMD-check:
+  build:
+    if: github.event.pull_request.draft == false
+  R-CMD-check-CRAN:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (R ${{ matrix.config.r }})${{ matrix.config.clang && ' clang' || '' }}
 
@@ -24,7 +25,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          #- {os: macos-latest,   r: 'release'}
+#         - {os: macos-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
 #          - {os: windows-latest, r: 'devel'}

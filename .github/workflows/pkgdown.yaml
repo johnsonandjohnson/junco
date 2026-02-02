@@ -1,14 +1,14 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
-  push:
-    branches: [main]
   pull_request:
-      types:
-      - opened
+    types:
       - synchronize
       - reopened
       - ready_for_review
+  push:
+    branches:
+      - main
   release:
     types: [published]
   workflow_dispatch:
@@ -18,6 +18,8 @@ name: Docs 📚
 permissions: read-all
 
 jobs:
+  build:
+    if: github.event.pull_request.draft == false
   pkgdown:
     runs-on: ubuntu-latest
     # Only restrict concurrency for non-PR jobs

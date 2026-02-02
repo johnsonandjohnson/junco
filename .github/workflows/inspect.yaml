@@ -4,7 +4,6 @@ name: Inspection 🛠
 on:
   pull_request:
     types:
-      - opened
       - synchronize
       - reopened
       - ready_for_review
@@ -14,6 +13,8 @@ on:
   workflow_dispatch:
 
 jobs:
+  build:
+    if: github.event.pull_request.draft == false
   audit:
     name: Audit Dependencies 🕵️‍♂️
     uses: insightsengineering/r.pkg.template/.github/workflows/audit.yaml@main
