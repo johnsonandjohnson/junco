@@ -71,5 +71,3 @@ check_alt_df_full <- function(argument, values, .alt_df_full) {
     name, argument
   ))
 }
-
-
