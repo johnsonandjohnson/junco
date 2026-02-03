@@ -712,6 +712,7 @@ tt_to_flextable_j <- function(
       pg_width = pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
       margins = rep(0, 4),
+      lpp = NULL,
       nosplitin = nosplitin,
       verbose = FALSE,
       round_type = round_type
