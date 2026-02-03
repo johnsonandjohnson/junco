@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.4] - Unreleased
+## [0.1.5] - Unreleased
 
 ### Fixed
 - Fixed `s_kaplan_meier()` range censoring indicator handling to no longer produce `NA` values in the output when either all subjects are censored or none are censored.
@@ -16,7 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
 - updated vignette to explain correctly how to insert newlines in the headers of Tables and Listings (#179)
 
-## [0.1.3.9] - Unreleased
+## [0.1.4] - Unreleased
+
+## [0.1.3.9.1] - 2026-02-02
 
 ### Fixed
 - Fixed `tt_to_tlgrtf()` argument `label_width_ins` which was not applying the change in the row label column width (#166).
