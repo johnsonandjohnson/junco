@@ -70,7 +70,6 @@ rbmi_mmrm <- function(
   weights = c("counterfactual", "equal"),
   ...
 ) {
-  assert_rbmi()
   subjid <- vars[["subjid"]]
   outcome <- vars[["outcome"]]
   group <- vars[["group"]]

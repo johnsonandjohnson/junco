@@ -1,13 +1,9 @@
 suppressPackageStartupMessages({
   library(testthat)
   library(dplyr)
+  library(rbmi)
 })
 
-if (requireNamespace("rbmi", quietly = TRUE)) {
-  suppressPackageStartupMessages(library(rbmi))
-} else {
-  skip("rbmi package not available")
-}
 
 
 test_that("find_missing_chg_after_avisit works as expected", {
