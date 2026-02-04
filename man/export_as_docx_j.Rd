@@ -31,6 +31,9 @@ export_as_docx_j(
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
   watermark = FALSE,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
   ...
 )
 }
@@ -117,6 +120,17 @@ Users should only specify this when the default behavior does not meet their nee
 In the future, this argument will be the actual watermark (i.e. a string)
 to display.\cr
 (optional) Default = FALSE.}
+
+\item{export_csv}{(\code{logical(1)})\cr Whether to export the object as a csv representation.
+Default = FALSE.}
+
+\item{output_csv_directory}{(\code{character(1)})\cr the directory to export the csv.
+Default = NULL. Only used if export_csv = TRUE.
+If NULL or attempting to export in a non-existent directory, the csv will be exported
+in the same directory as the .docx file.}
+
+\item{markup_df}{(\code{data.frame})\cr Data frame containing markup information.
+Only used if export_csv = TRUE.}
 
 \item{...}{other parameters.}
 }

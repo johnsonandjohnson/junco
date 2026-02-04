@@ -3,6 +3,62 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
+export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
+                          string_map, markup_df, round_type,
+                          output_csv_directory, output_dir, fname) {
+
+  if (tlgtype != "Table" || !isTRUE(export_csv)) {
+    return(invisible(NULL))
+  }
+
+  # 'pags' should be a list of "MatrixPrintForm"
+  # even if there is no horizontal pagination, it should be a list of 1 element
+  checkmate::assert_true(is.list(pags) && methods::is(pags[[1]], "MatrixPrintForm"))
+
+  df <- lapply(
+    pags,
+    tt_to_tbldf,
+    fontspec = fontspec,
+    string_map = string_map,
+    markup_df = markup_df,
+    round_type = round_type
+  )
+
+  # 'one_table' is TRUE if there is vertical pagination
+  # when TRUE, it merges all pages in the same "part" into 1 csv
+  one_table <- length(pags) > 1
+  if (one_table) {
+    df <- do.call(
+      rbind,
+      lapply(
+        seq_along(df),
+        function(ii) {
+          dfii <- df[[ii]]
+          dfii$newpage <- 0
+          if (ii > 1) {
+            dfii$newpage[1] <- 1
+          }
+          dfii$indentme <- ifelse(dfii$indentme <= 1, 0, dfii$indentme - 1)
+          dfii
+        }
+      )
+    )
+  } else {
+    df <- df[[1]]
+  }
+
+  output_csv_filename <- get_output_csv_filename(output_csv_directory,
+                                                 output_dir,
+                                                 tolower(fname))
+
+  utils::write.csv(
+    df,
+    file = output_csv_filename,
+    row.names = FALSE
+  )
+}
+
+
 remove_table_shading_XML <- function(doc) {
   # by default, Word adds a table shading white, which covers the watermark
   # the XML nodes responsible for this are:
@@ -761,6 +817,27 @@ tt_to_flextable_j <- function(
           drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE,
           reindex_refs = FALSE
         ]
+
+        # export csv
+        args <- list(...)
+        export_csv <- args$export_csv
+        output_csv_directory <- args$output_csv_directory
+        markup_df <- args$markup_df
+        output_dir <- args$output_dir
+        if (!isTRUE(export_csv)) {
+          export_csv <- FALSE
+        }
+        export_as_csv(tlgtype = tlgtype,
+                      export_csv = export_csv,
+                      pags = full_pag_i,
+                      fontspec = fontspec,
+                      string_map = string_map,
+                      markup_df = markup_df,
+                      round_type = round_type,
+                      output_csv_directory = output_csv_directory,
+                      output_dir = output_dir,
+                      fname = fname)
+
         sub_ft <- tt_to_flextable_j(
           tt = subt,
           theme = theme,
@@ -784,7 +861,8 @@ tt_to_flextable_j <- function(
           round_type = round_type,
           alignments = alignments,
           border_mat = pag_bord_mats[[i]],
-          ... = ...
+          export_csv = FALSE, # this is because we already exported the csv a few lines above,
+          ...
         )
 
         return(sub_ft)
@@ -1223,6 +1301,66 @@ tt_to_flextable_j <- function(
 #' See notes to understand why this is experimental.
 #'
 #' @param tt (`TableTree` or `listing_df`)\cr the object to export.
+#' @param tblid (`character`)\cr Output ID to be displayed in the title and last line of footer.
+#' @param output_dir (`character`)\cr a directory path to save the docx.
+#' @param theme (function factory)\cr The theme to apply to the flextable
+#' (default = [theme_docx_default_j()]).\cr
+#' See [theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
+#' for more details.
+#' @param add_page_break (`logical`)\cr (optional) Default = FALSE.
+#' @param titles_as_header (`logical`)\cr (optional) Default = TRUE.
+#' @param integrate_footers (`logical`)\cr (optional) Default = TRUE.
+#' @param section_properties (`prop_section`)\cr (optional) A "prop_section" object
+#' containing information about page size, orientation, margins, etc.
+#' See [officer::prop_section()] for more details.
+#' No need to be specified by end user.
+#' @param doc_metadata (list of `string`)\cr Any value that can be used as metadata
+#' by [officer::set_doc_properties()]. Important text values are title, subject,
+#' creator, and description, while created is a date object.\cr
+#' (optional) Default = NULL.
+#' @param template_file (`character`)\cr Template file that `officer` will use as a starting
+#' point for the final document. Document attaches the table and uses the defaults
+#' defined in the template file. Paragraph styles are inherited from this file.\cr
+#' (optional) Default = "doc/template_file.docx".
+#' @param orientation (`character`)\cr (optional) Default = "portrait".
+#' One of: "portrait", "landscape".
+#' @param paginate (`logical`)\cr (optional) Default = TRUE for TableTree and FALSE otherwise.
+#' @param nosplitin (`list`)\cr list(row=, col=). Path elements whose children should not be paginated within
+#' if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
+#' all the associated columns don't fit on a single page.
+#' @param string_map (`tibble`)\cr (optional) Default = default_str_map.
+#' @param markup_df_docx (`tibble`)\cr (optional) Default = dps_markup_df_docx.
+#' @param combined_docx (`logical`)\cr Whether to also export an "allparts" docx version.\cr
+#' (optional) Default = FALSE.
+#' @param tlgtype (`character`)\cr (optional). No need to be specified by end user.
+#' @param col_gap (`numeric`)\cr (optional). Default = 3 (Tables) or 0.5 (Listings).
+#' @param pagenum (`logical`)\cr (optional). Whether to display page numbers. Only applicable
+#' to listings (i.e. for tables and figures this argument is ignored).
+#' @param round_type (`"iec"` or `"sas"`)\cr the type of rounding to perform. iec,
+#' the default, performs rounding compliant with IEC 60559, while
+#' sas performs nearest-value rounding consistent with rounding within SAS.
+#' See `[formatters::format_value()]` for more details.
+#' @param alignments (`list`)\cr (optional) List of named lists. Vectorized.
+#' (Default = `list()`) Used to specify individual column or cell alignments.
+#' Each named list contains `row`, `col`, and `value`.
+#' @param border (`fp_border`)\cr Border to use (default =
+#' \code{flextable::fp_border_default(width = 0.75, color = "black")}).
+#' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of columns of `tt`
+#' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
+#' for what the matrix should contain. Users should only specify this when the
+#' default behavior does not meet their needs.
+#' @param watermark (`logical`)\cr whether to display the watermark "Confidential".
+#' By default, this is set to FALSE. In the future, this argument will be the
+#' actual watermark (i.e. a string) to display.
+#' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
+#' Default = FALSE.
+#' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
+#' Default = NULL. Only used if export_csv = TRUE.
+#' If NULL or attempting to export in a non-existent directory, the csv will be exported
+#' in the same directory as the .docx file.
+#' @param markup_df (`data.frame`)\cr Data frame containing markup information.
+#' Only used if export_csv = TRUE.
+#' @param ... other parameters.
 #'
 #' @inheritParams export_TLG_as_docx
 #' @inherit export_TLG_as_docx note
@@ -1261,6 +1399,9 @@ export_as_docx_j <- function(
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
   watermark = FALSE,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
   ...
 ) {
 
@@ -1299,6 +1440,11 @@ export_as_docx_j <- function(
     stopifnot("Each item of `alignments` must be a list" = is.list(alignment))
   }
 
+  checkmate::assert_flag(add_page_break)
+  checkmate::assert_flag(watermark)
+  checkmate::assert_flag(export_csv)
+  checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
+
   do_tt_error <- FALSE
   if (tlgtype != "Listing") {
     pagenum <- FALSE
@@ -1321,6 +1467,10 @@ export_as_docx_j <- function(
       alignments = alignments,
       border = border,
       border_mat = border_mat,
+      export_csv = export_csv,
+      output_csv_directory = output_csv_directory,
+      markup_df = markup_df,
+      output_dir = output_dir, # this argument is needed to guess where to save the csv
       ...
     )
   }
@@ -1350,6 +1500,10 @@ export_as_docx_j <- function(
             alignments = alignments,
             border = border,
             border_mat = border_mat,
+            export_csv = export_csv,
+            output_csv_directory = output_csv_directory,
+            markup_df = markup_df,
+            output_dir = output_dir, # this argument is needed to guess where to save the csv
             ...
           ),
         SIMPLIFY = FALSE
@@ -1407,7 +1561,10 @@ export_as_docx_j <- function(
         border = border,
         border_mat = border_mat,
         watermark = watermark,
-        ... = ...
+        export_csv = export_csv,
+        output_csv_directory = output_csv_directory,
+        markup_df = markup_df,
+        ...
       )
     } else {
       message(
@@ -1447,7 +1604,10 @@ export_as_docx_j <- function(
         border = border,
         border_mat = border_mat,
         watermark = watermark,
-        ... = ...
+        export_csv = export_csv,
+        output_csv_directory = output_csv_directory,
+        markup_df = markup_df,
+        ...
       )
     }
   } else {
