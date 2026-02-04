@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.3.9.2] - Unreleased
 
+### Fixed
+
+### Changed
+- Reinstate rbmi as dependency
 
 
 ## [0.1.3.9.1] - 2026-02-02

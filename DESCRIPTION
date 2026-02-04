@@ -45,6 +45,7 @@ Imports:
     tern (>= 0.9.10),
     rlistings (>= 0.2.13),
     checkmate (>= 2.1.0),
+    rbmi (>= 1.6.0),
     broom,
     methods,
     dplyr,
@@ -78,9 +79,7 @@ Suggests:
     parallel,
     readxl,
     rlang,
-    rbmi (>= 1.3.0),
     tidyr,
     pharmaverseadamjnj (>= 0.0.2)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-Additional_repositories: https://insightsengineering.r-universe.dev/
