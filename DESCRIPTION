@@ -83,4 +83,4 @@ Suggests:
     pharmaverseadamjnj (>= 0.0.2)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-Additional_repositories: https://davidgohel.r-universe.dev/
+Additional_repositories: https://davidgohel.r-universe.dev

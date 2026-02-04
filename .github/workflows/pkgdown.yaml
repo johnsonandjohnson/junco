@@ -38,13 +38,13 @@ jobs:
           extra-repositories: |
             https://insightsengineering.r-universe.dev/
 
-      - name: Install rbmi
-        run: install.packages('rbmi', repos = c('https://insightsengineering.r-universe.dev'))
+      - name: Install flextable
+        run: install.packages('flextable', repos = c('https://davidgohel.r-universe.dev'))
         shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown@2.2.0, local::.,  rbmi=?ignore
+          extra-packages: any::pkgdown@2.2.0, local::.,  flextable=?ignore
           needs: website
 
       - name: Build site
