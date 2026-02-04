@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed `s_kaplan_meier()` range censoring indicator handling to no longer produce `NA` values in the output when either all subjects are censored or none are censored.
 - Fixed the hanging indent in the first column of the body of the table (#138)
 - Export `leftside()`, `postfun_eq5d` `ac_blank_line` and `tt_to_tblfile` 
+- Fixed `tt_to_flextable_j()` to have correct left-indentation in header col 1 (#171) and footer first line starting with newline (#171)
 
 ### Changed
 - refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`

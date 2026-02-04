@@ -998,9 +998,13 @@ tt_to_flextable_j <- function(
     }
   }
 
-  # NOTE: 3.175mm = 9 ms word points = 0.125 inches
   flx <- flextable::line_spacing(flx, space = 0, part = "body")
+
+
+  # The following block of code adds indentation in the first column
+  # NOTE: 3.175mm = 9 ms word points = 0.125 inches
   indent_size <- rtables.officer::word_mm_to_pt(3.175)
+  # add indentation in Body
   updated_indents <- rdf$indent
   idx <- which(newrows == 1)
   # NOTE: here, it is important to traverse 'idx' in reverse order
@@ -1026,30 +1030,34 @@ tt_to_flextable_j <- function(
       part = "body"
     )
   }
+  # add indentation in Header
   for (i in seq_len(nr_header)) {
-    # NOTE: conversion ratio
-    # 1 inches = 72 points = 25.4 mm
-    # I'd like 0.1 inches every 2 spaces
-    # 0.05 inches = 3.6 points = 1.27 mm
     leading_spaces_count <- nchar(hdr[i, 1]) -
       nchar(stringi::stri_replace(hdr[i, 1], regex = "^ +", ""))
-    header_indent_size <- leading_spaces_count * rtables.officer::word_mm_to_pt(1.27)
-    hdr[i, 1] <- stringi::stri_replace(hdr[i, 1], regex = "^ +", "")
-
-    flx <- flextable::compose(flx, i = i, j = 1, value = flextable::as_paragraph(hdr[i, 1]), part = "header")
+    # interpret every 2 leading whitespaces as 1 indentation level
+    header_indent_size <- (leading_spaces_count / 2) * indent_size
+    hdr[i, 1] <- trimws(x = hdr[i, 1], which = "left")
+    flx <- flextable::compose(flx,
+                              part = "header",
+                              i = i,
+                              j = 1,
+                              value = flextable::as_paragraph(hdr[i, 1]))
 
     # NOTE: this line adds the left padding to each row in column 1 (Header only)
     flx <- flextable::padding(flx,
-      i = i, j = 1,
+      part = "header",
+      i = i,
+      j = 1,
       padding.left = header_indent_size,
-      padding.right = 0,
-      part = "header"
+      padding.right = 0
     )
   }
 
+
   footers_with_blank_line <- c()
   if (length(formatters::all_footers(tt)) > 0 && isTRUE(integrate_footers)) {
-    footers_with_blank_line <- c("", formatters::all_footers(tt))
+    footers_with_blank_line <- formatters::all_footers(tt)
+    footers_with_blank_line[1] <- paste0("\n", footers_with_blank_line[1])
     footers_with_blank_line <- strmodify(footers_with_blank_line, string_map)
     flx <- flextable::add_footer_lines(flx, values = footers_with_blank_line) |>
       flextable::border(part = "footer",
