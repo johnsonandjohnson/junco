@@ -11,9 +11,11 @@
 #'   will be displayed instead of stopping with an error when validation fails.
 #' @return `tt` represented as a `tbl` data.frame suitable for passing
 #'   to [tidytlg::gentlg] via the `huxme` argument.
+#' @export
 tt_to_tbldf <- function(
   tt,
   fontspec = font_spec("Times", 9L, 1),
+
   string_map = default_str_map,
   markup_df = dps_markup_df,
   round_type = obj_round_type(tt),
@@ -542,8 +544,12 @@ tt_to_tlgrtf <- function(
           border_mat = pag_bord_mats[[i]],
           round_type = round_type,
           alignments = alignments,
+<<<<<<< 142_optional_csv
           export_csv = export_csv,
           output_csv_directory = output_csv_directory,
+=======
+          label_width_ins = label_width_ins,
+>>>>>>> dev
           ...
         )
       }
@@ -568,8 +574,12 @@ tt_to_tlgrtf <- function(
           border_mat = pag_bord_mats,
           round_type = round_type,
           alignments = alignments,
+<<<<<<< 142_optional_csv
           export_csv = export_csv,
           output_csv_directory = output_csv_directory,
+=======
+          label_width_ins = label_width_ins,
+>>>>>>> dev
           ...
         )
       } else if (!is.null(file)) { # only one page after pagination
