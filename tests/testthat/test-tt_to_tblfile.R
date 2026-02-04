@@ -152,6 +152,12 @@ test_that("tt_to_tlgrtf works with input Table and fontspec size 8", {
 
 test_that("tt_to_tlgrtf works with an empty listing", {
   empty_lsting <- as_listing(ex_adsl[numeric(), 1:10])
+  tab_titles <- list(
+    title = "This is a title",
+    main_footer = c("Footer 1", "Footer 2"),
+    prov_footer = "This is a footer"
+  )
+  empty_lsting <- set_titles(empty_lsting, tab_titles)
   expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(empty_lsting, "testemptylisting"), cran = TRUE)
   expect_error(
     tt_to_tlgrtf("hi"),
