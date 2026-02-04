@@ -511,7 +511,7 @@ testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works corr
 })
 
 
-testthat::test_that("export_as_docx_j() works with pagination", {
+testthat::test_that("export_TLG_as_docx() works with pagination", {
   # create a TableTree with a few pages
   colspan_trt_map <- data.frame(
     colspan_trt = c("Active Study Agent", "Active Study Agent", " "),
@@ -614,7 +614,7 @@ testthat::test_that("export_as_docx_j() works with pagination", {
   # export it as docx
   output_dir <- tempdir()
   options(docx.add_datetime = FALSE)
-  export_as_docx_j(
+  export_TLG_as_docx(
     result,
     output_dir = output_dir,
     orientation = "landscape",
@@ -649,7 +649,7 @@ testthat::test_that("export_as_docx_j() works with pagination", {
 })
 
 
-testthat::test_that("export_graph_as_docx() works with basic example", {
+testthat::test_that("export_TLG_as_docx() works with basic example", {
   # create a few ggplots
   cbbPalette <- c("#000000", "#E69F00", "#0072B2")
 
@@ -767,7 +767,7 @@ testthat::test_that("export_graph_as_docx() works with basic example", {
   # export them as docx
   options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
-    export_graph_as_docx(
+    export_TLG_as_docx(
       plotnames = list(pn1, pn2),
       tblid = "testgraph1234",
       output_dir = output_dir,
