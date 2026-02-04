@@ -58,7 +58,7 @@ Imports:
     assertthat,
     vcdExtra (>= 0.8.7),
     rtables.officer (>= 0.1.0),
-    flextable (>= 0.9.11),
+    flextable (>= 0.9.10),
     officer,
     xml2,
     ggplot2,
