@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.3.9.2] - Unreleased
 
 ### Fixed
+- "caption" paragraph style in the docx exporter is now handled by flextable (#182)
+- Fixed `tt_to_tlgrtf()`, when exporting an empty listing do not lose Title and Footers
 
 ### Changed
 - Reinstate rbmi as dependency
@@ -17,7 +19,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed `tt_to_tlgrtf()` argument `label_width_ins` which was not applying the change in the row label column width (#166).
-- Fixed `tt_to_tlgrtf()`, when exporting an empty listing do not lose Title and Footers
 
 
 ## [0.1.3] - 2026-01-12
