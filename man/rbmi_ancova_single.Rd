@@ -42,11 +42,10 @@ Performance analysis of covariance. See \code{\link[=rbmi_ancova]{rbmi_ancova()}
 }
 \examples{
 
-if (requireNamespace("rbmi", quietly = TRUE)) {
-  iris2 <- iris[iris$Species \%in\% c("versicolor", "virginica"), ]
-  iris2$Species <- factor(iris2$Species)
-  rbmi_ancova_single(iris2, "Sepal.Length", "Species", c("Petal.Length * Petal.Width"))
-}
+ iris2 <- iris[iris$Species \%in\% c("versicolor", "virginica"), ]
+ iris2$Species <- factor(iris2$Species)
+ rbmi_ancova_single(iris2, "Sepal.Length", "Species", c("Petal.Length * Petal.Width"))
+
 
 }
 \seealso{
