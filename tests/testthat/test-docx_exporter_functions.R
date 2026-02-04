@@ -5,7 +5,7 @@ library(ggplot2)
 
 
 
-skip_on_cran()
+skip_if_not_installed("flextable", "0.9.11")
 
 adsl <- ex_adsl
 adae <- ex_adae
@@ -371,7 +371,6 @@ testthat::test_that("remove_security_popup_page_numbers() removes dirty='true'",
 
 testthat::test_that("after being saved as docx, the XML contains a node w:pStyle w:val='Caption'", {
 
-  skip_on_cran() #TODO: remove after version bump
 
   options(docx.add_datetime = FALSE)
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
