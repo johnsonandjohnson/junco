@@ -544,12 +544,9 @@ tt_to_tlgrtf <- function(
           border_mat = pag_bord_mats[[i]],
           round_type = round_type,
           alignments = alignments,
-<<<<<<< 142_optional_csv
           export_csv = export_csv,
           output_csv_directory = output_csv_directory,
-=======
           label_width_ins = label_width_ins,
->>>>>>> dev
           ...
         )
       }
@@ -574,12 +571,9 @@ tt_to_tlgrtf <- function(
           border_mat = pag_bord_mats,
           round_type = round_type,
           alignments = alignments,
-<<<<<<< 142_optional_csv
           export_csv = export_csv,
           output_csv_directory = output_csv_directory,
-=======
           label_width_ins = label_width_ins,
->>>>>>> dev
           ...
         )
       } else if (!is.null(file)) { # only one page after pagination
