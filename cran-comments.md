@@ -1,24 +1,8 @@
 ## R CMD check results
 
-❯ checking CRAN incoming feasibility ... [35s] NOTE
-  Maintainer: 'Gabriel Becker <gabembecker@gmail.com>'
+0 errors ✖ | 0 warnings ✔ | 0 notes ✖
 
-  New submission
-
-  Package was archived on CRAN
-
-  CRAN repository db overrides:
-    X-CRAN-Comment: Archived on 2025-11-19 as requires archived package
-      'rbmi'.
-
-  Suggests or Enhances not in mainstream repositories:
-    rbmi
-  Availability using Additional_repositories specification:
-    rbmi   yes   https://insightsengineering.r-universe.dev/
-
-0 errors ✖ | 0 warnings ✔ | 1 note ✖
-
-* We've moved 'rbmi' from 'Imports' to 'Suggests' and made the package fully functional without it.
+* We've moved back 'rbmi' from 'Suggests' to 'Imports'
 
 ## Test environments
 
