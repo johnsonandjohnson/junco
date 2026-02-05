@@ -218,8 +218,9 @@ insert_hanging_indent_first_col_XML <- function(doc, n_rows_footer = 0, hanging_
   }
 }
 
-add_title_caption_hanging_indent_XML <- function(doc, string_to_look_for) {
-  # this function modifies the XML of the docx to add the "Caption" style to the Title
+add_hanging_indent_in_title_XML <- function(doc, string_to_look_for) {
+  # this function modifies the XML of the docx to add the
+  # hanging indent to the Title
 
   s_xpath <- paste0("//*[contains(text(),'", string_to_look_for, "')]")
   l_x <- doc$doc_obj$get() |>
@@ -227,7 +228,6 @@ add_title_caption_hanging_indent_XML <- function(doc, string_to_look_for) {
 
   for (x2 in l_x) {
     # look for a parent 'w:pPr'
-    # this parent should have a first child 'w:pStyle w:val="Caption"'
     x <- x2 |> xml2::xml_parent()
     children <- x |> xml2::xml_children()
     while (!any(xml2::xml_name(children) == "pPr")) {
@@ -235,10 +235,8 @@ add_title_caption_hanging_indent_XML <- function(doc, string_to_look_for) {
       children <- x |> xml2::xml_children()
     }
 
-    # set style "Caption"
     child_i <- which(xml2::xml_name(children) == "pPr") |> head(1)
     x <- x |> xml2::xml_child(child_i)
-    x |> xml2::xml_add_child(.value = 'w:pStyle w:val="Caption"', .where = 0)
 
     # set hanging indent of 0.8 inches
     children <- x |> xml2::xml_children()
@@ -303,7 +301,18 @@ insert_title_as_header <- function(flx,
   # this function inserts the Title as a header but does not attempt
   # to simulate the hanging indent. Instead, it adds the string as is, and the hanging indent
   # will be handled further downstream when exporting to docx by manipulating the XML.
-  # see function "add_title_caption_hanging_indent_XML()"
+  # see function "add_hanging_indent_in_title_XML()"
+
+  if (flextable::nrow_part(flx, "header") == 0) {
+    title_font_size <- 10
+    title_font_family <- "Times New Roman"
+  } else {
+    flx_fpt <- utils::getFromNamespace(".extract_font_and_size_from_flx", "rtables.officer")(flx)
+    title_style <- flx_fpt$fpt
+    title_font_size <- title_style$font.size + 1 # 10
+    title_font_family <- title_style$font.family
+  }
+
 
   new_title <- sub(":", ":\t", title)
 
@@ -323,7 +332,7 @@ insert_title_as_header <- function(flx,
   )
   # nolint end
 
-  flx <- flextable::style(x = flx, part = "header", i = 1, pr_p = officer::fp_par(word_style = "Caption"))
+  flx <- flextable::style(x = flx, part = "header", i = 1, pr_p = officer::fp_par(word_style = "caption"))
 
   return(flx)
 }
@@ -1279,7 +1288,7 @@ tt_to_flextable_j <- function(
     title_style$bold <- bold_titles
     flx <- flx |> flextable::set_caption(
       caption = flextable::as_paragraph(flextable::as_chunk(new_title, title_style)),
-      word_stylename = "Caption",
+      word_stylename = "caption",
       fp_p = fpp,
       align_with_table = FALSE
     )
@@ -1726,7 +1735,7 @@ export_as_docx_j <- function(
     } else {
       string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
     }
-    add_title_caption_hanging_indent_XML(doc, string_to_look_for)
+    add_hanging_indent_in_title_XML(doc, string_to_look_for)
     if (tlgtype == "Table") {
       n_rows_footer <- flextable::nrow_part(flex_tbl_list[[1]], part = "footer")
       insert_hanging_indent_first_col_XML(doc, n_rows_footer = n_rows_footer)
@@ -1932,7 +1941,7 @@ export_graph_as_docx <- function(g = NULL,
   doc <- officer::body_set_default_section(doc, section_properties)
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
   string_to_look_for <- paste0(tblid, ":")
-  add_title_caption_hanging_indent_XML(doc, string_to_look_for)
+  add_hanging_indent_in_title_XML(doc, string_to_look_for)
   print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
 }
 

@@ -20,18 +20,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Functions `export_as_docx_j()` and `export_graph_as_docx()` still exist but are not internal, i.e. not exported
 - updated vignette to explain correctly how to insert newlines in the headers of Tables and Listings (#179)
 
-## [0.1.4] - 2026-02-05
-
-- [0.1.3.9.1] and [0.1.3.9.2] merged together
-
-## [0.1.3.9.1] - 2026-02-02
-
-### Fixed
-- Fixed `tt_to_tlgrtf()` argument `label_width_ins` which was not applying the change in the row label column width (#166).
-
 ### Added
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
 - Added option to specify the output folder for the csv
+
+## [0.1.4] - 2026-02-05
+
+
+### Fixed
+- "caption" paragraph style in the docx exporter is now handled by flextable (#182)
+- Fixed `tt_to_tlgrtf()`, when exporting an empty listing do not lose Title and Footers
+- Fixed `tt_to_tlgrtf()` argument `label_width_ins` which was not applying the change in the row label column width (#166).
+
+### Changed
+- Reinstate rbmi as dependency
+
+
 
 ## [0.1.3] - 2026-01-12
 
