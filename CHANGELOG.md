@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed `s_kaplan_meier()` range censoring indicator handling to no longer produce `NA` values in the output when either all subjects are censored or none are censored.
 - Fixed the hanging indent in the first column of the body of the table (#138)
-- Export `leftside()`, `postfun_eq5d` `ac_blank_line` and `tt_to_tblfile` 
+- Export `leftside()`, `postfun_eq5d` `ac_blank_line` and `tt_to_tblfile`
+- Minor bugfix in DOCX exporter when calculating the number of pages (#188)
 - Fixed `tt_to_flextable_j()` to have correct left-indentation in header col 1 (#171) and footer first line starting with newline (#171)
 
 ### Changed
@@ -19,7 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Functions `export_as_docx_j()` and `export_graph_as_docx()` still exist but are not internal, i.e. not exported
 - updated vignette to explain correctly how to insert newlines in the headers of Tables and Listings (#179)
 
-## [0.1.4] - Unreleased
+## [0.1.4] - 2026-02-05
+
+- [0.1.3.9.1] and [0.1.3.9.2] merged together
 
 ## [0.1.3.9.1] - 2026-02-02
 
@@ -34,7 +37,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Address CRAN NOTES.
-
 
 ## [0.1.2] - 2025-12-10
 
