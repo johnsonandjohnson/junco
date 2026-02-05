@@ -487,7 +487,7 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
 #' (optional) Default = NULL.
 #'
 #' @inheritParams export_as_docx_j
-#' @inherit export_TLG_as_docx note
+#' @inheritSection export_TLG_as_docx Note
 #'
 #' @returns A function that applies the given theme to a flextable.
 #' @export
@@ -625,10 +625,10 @@ theme_docx_default_j <- function(
 #' (optional) Default = FALSE.
 #'
 #' @inheritParams export_as_docx_j
-#' @inherit export_TLG_as_docx note
+#' @inheritSection export_TLG_as_docx Note
 #'
 #' @note
-#' IMPORTANT NOTE: the following features are not implemented in `flextable`,
+#' The following features are not implemented in `flextable`,
 #' and as a result they will only be visible when exporting to docx using
 #' [junco::export_TLG_as_docx()]:
 #' - watermark
@@ -1312,69 +1312,9 @@ tt_to_flextable_j <- function(
 #' See notes to understand why this is experimental.
 #'
 #' @param tt (`TableTree` or `listing_df`)\cr the object to export.
-#' @param tblid (`character`)\cr Output ID to be displayed in the title and last line of footer.
-#' @param output_dir (`character`)\cr a directory path to save the docx.
-#' @param theme (function factory)\cr The theme to apply to the flextable
-#' (default = [theme_docx_default_j()]).\cr
-#' See [theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
-#' for more details.
-#' @param add_page_break (`logical`)\cr (optional) Default = FALSE.
-#' @param titles_as_header (`logical`)\cr (optional) Default = TRUE.
-#' @param integrate_footers (`logical`)\cr (optional) Default = TRUE.
-#' @param section_properties (`prop_section`)\cr (optional) A "prop_section" object
-#' containing information about page size, orientation, margins, etc.
-#' See [officer::prop_section()] for more details.
-#' No need to be specified by end user.
-#' @param doc_metadata (list of `string`)\cr Any value that can be used as metadata
-#' by [officer::set_doc_properties()]. Important text values are title, subject,
-#' creator, and description, while created is a date object.\cr
-#' (optional) Default = NULL.
-#' @param template_file (`character`)\cr Template file that `officer` will use as a starting
-#' point for the final document. Document attaches the table and uses the defaults
-#' defined in the template file. Paragraph styles are inherited from this file.\cr
-#' (optional) Default = "doc/template_file.docx".
-#' @param orientation (`character`)\cr (optional) Default = "portrait".
-#' One of: "portrait", "landscape".
-#' @param paginate (`logical`)\cr (optional) Default = TRUE for TableTree and FALSE otherwise.
-#' @param nosplitin (`list`)\cr list(row=, col=). Path elements whose children should not be paginated within
-#' if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
-#' all the associated columns don't fit on a single page.
-#' @param string_map (`tibble`)\cr (optional) Default = default_str_map.
-#' @param markup_df_docx (`tibble`)\cr (optional) Default = dps_markup_df_docx.
-#' @param combined_docx (`logical`)\cr Whether to also export an "allparts" docx version.\cr
-#' (optional) Default = FALSE.
-#' @param tlgtype (`character`)\cr (optional). No need to be specified by end user.
-#' @param col_gap (`numeric`)\cr (optional). Default = 3 (Tables) or 0.5 (Listings).
-#' @param pagenum (`logical`)\cr (optional). Whether to display page numbers. Only applicable
-#' to listings (i.e. for tables and figures this argument is ignored).
-#' @param round_type (`"iec"` or `"sas"`)\cr the type of rounding to perform. iec,
-#' the default, performs rounding compliant with IEC 60559, while
-#' sas performs nearest-value rounding consistent with rounding within SAS.
-#' See `[formatters::format_value()]` for more details.
-#' @param alignments (`list`)\cr (optional) List of named lists. Vectorized.
-#' (Default = `list()`) Used to specify individual column or cell alignments.
-#' Each named list contains `row`, `col`, and `value`.
-#' @param border (`fp_border`)\cr Border to use (default =
-#' \code{flextable::fp_border_default(width = 0.75, color = "black")}).
-#' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of columns of `tt`
-#' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
-#' for what the matrix should contain. Users should only specify this when the
-#' default behavior does not meet their needs.
-#' @param watermark (`logical`)\cr whether to display the watermark "Confidential".
-#' By default, this is set to FALSE. In the future, this argument will be the
-#' actual watermark (i.e. a string) to display.
-#' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
-#' Default = FALSE.
-#' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
-#' Default = NULL. Only used if export_csv = TRUE.
-#' If NULL or attempting to export in a non-existent directory, the csv will be exported
-#' in the same directory as the .docx file.
-#' @param markup_df (`data.frame`)\cr Data frame containing markup information.
-#' Only used if export_csv = TRUE.
-#' @param ... other parameters.
 #'
 #' @inheritParams export_TLG_as_docx
-#' @inherit export_TLG_as_docx note
+#' @inheritSection export_TLG_as_docx Note
 export_as_docx_j <- function(
   tt,
   tblid,
@@ -1431,10 +1371,10 @@ export_as_docx_j <- function(
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
   checkmate::assert_flag(paginate)
   checkmate::assert_list(nosplitin)
-  checkmate::assert_multi_class(x = string_map,
-                                classes = c("tbl_df", "data.frame"))
-  checkmate::assert_multi_class(x = markup_df_docx,
-                                classes = c("tbl_df", "data.frame"))
+  checkmate::assert_tibble(string_map)
+  checkmate::assert_true(all(colnames(string_map) == c("pattern", "value")))
+  checkmate::assert_tibble(markup_df_docx)
+  checkmate::assert_true(all(colnames(markup_df_docx) == c("keyword", "replace_by")))
   checkmate::assert_flag(combined_docx)
   checkmate::assert_character(tlgtype)
   checkmate::assert_numeric(col_gap)
@@ -1444,6 +1384,8 @@ export_as_docx_j <- function(
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_matrix(border_mat)
   checkmate::assert_flag(watermark)
+  checkmate::assert_tibble(markup_df)
+  checkmate::assert_true(all(colnames(markup_df) == c("keyword", "rtfstart", "rtfend")))
 
   # Validate `alignments` here because of its complicated data structure
   stopifnot("`alignments` must be a list" = is.list(alignments))
@@ -1770,7 +1712,7 @@ export_as_docx_j <- function(
 #' (optional) Default = NULL.
 #'
 #' @inheritParams export_TLG_as_docx
-#' @inherit export_TLG_as_docx note
+#' @inheritSection export_TLG_as_docx Note
 export_graph_as_docx <- function(g = NULL,
                                  plotnames = NULL,
                                  tblid,
@@ -1987,7 +1929,7 @@ export_graph_as_docx <- function(g = NULL,
 #' version. Only applies when exporting a Table or Listing.\cr
 #' (optional) Default = FALSE.
 #' @param tlgtype (`character`)\cr (optional) No need to be specified by end user.
-#' @param col_gap (`numeric`)\cr (optional) Default = 3 (Tables) or 0.5 (Listings).
+#' @param col_gap (`numeric`)\cr (optional) Default = 0.5 (Listings) or 3 otherwise.
 #' @param pagenum (`logical`)\cr whether to display page numbers. Only applicable
 #' to listings (i.e. for tables and figures this argument is ignored).\cr
 #' (optional) Default = TRUE for Listings and FALSE otherwise.
@@ -2009,6 +1951,14 @@ export_graph_as_docx <- function(g = NULL,
 #' In the future, this argument will be the actual watermark (i.e. a string)
 #' to display.\cr
 #' (optional) Default = FALSE.
+#' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
+#' Default = FALSE.
+#' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
+#' Default = NULL. Only used if export_csv = TRUE.
+#' If NULL or attempting to export in a non-existent directory, the csv will be exported
+#' in the same directory as the .docx file.
+#' @param markup_df (`data.frame`)\cr Data frame containing markup information.
+#' Only used if export_csv = TRUE.
 #' @param plotnames (`character`)\cr a file path, or a list of them,
 #' to previously saved .png files. These will be opened and
 #' exported in the output file. When exporting a Graph, at least `obj` (of class `ggplot2`)
@@ -2033,7 +1983,7 @@ export_graph_as_docx <- function(g = NULL,
 #'
 #' @export
 #'
-#' @note
+#' @section Note:
 #' This function has been tested for common use cases but may not work or have
 #' unexpected or undesired behavior in corner cases. As such it is not considered
 #' fully production ready and is being made available for further testing
@@ -2078,6 +2028,9 @@ export_TLG_as_docx <- function(
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = NULL,
   watermark = FALSE,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
   plotnames = NULL,
   title = NULL,
   footers = NULL,
@@ -2111,10 +2064,10 @@ export_TLG_as_docx <- function(
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
   checkmate::assert_flag(paginate)
   checkmate::assert_list(nosplitin)
-  checkmate::assert_multi_class(x = string_map,
-                                classes = c("tbl_df", "data.frame"))
-  checkmate::assert_multi_class(x = markup_df_docx,
-                                classes = c("tbl_df", "data.frame"))
+  checkmate::assert_tibble(string_map)
+  checkmate::assert_true(all(colnames(string_map) == c("pattern", "value")))
+  checkmate::assert_tibble(markup_df_docx)
+  checkmate::assert_true(all(colnames(markup_df_docx) == c("keyword", "replace_by")))
   checkmate::assert_flag(combined_docx)
   checkmate::assert_character(tlgtype)
   checkmate::assert_numeric(col_gap)
@@ -2124,6 +2077,10 @@ export_TLG_as_docx <- function(
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_matrix(border_mat)
   checkmate::assert_flag(watermark)
+  checkmate::assert_flag(export_csv)
+  checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
+  checkmate::assert_tibble(markup_df)
+  checkmate::assert_true(all(colnames(markup_df) == c("keyword", "rtfstart", "rtfend")))
   checkmate::assert_list(plotnames, null.ok = TRUE)
   checkmate::assert_character(title, null.ok = TRUE)
   checkmate::assert_character(footers, null.ok = TRUE)
@@ -2144,7 +2101,10 @@ export_TLG_as_docx <- function(
       combined_docx = combined_docx, tlgtype = tlgtype,
       col_gap = col_gap, pagenum = pagenum, round_type = round_type,
       alignments = alignments, border = border,
-      border_mat = border_mat, watermark = watermark, ...
+      border_mat = border_mat, watermark = watermark,
+      export_csv = export_csv, output_csv_directory = output_csv_directory,
+      markup_df = markup_df,
+      ...
     )
   } else {
     export_graph_as_docx(g = obj, plotnames = plotnames,

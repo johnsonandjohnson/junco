@@ -92,7 +92,7 @@ version. Only applies when exporting a Table or Listing.\cr
 
 \item{tlgtype}{(\code{character})\cr (optional) No need to be specified by end user.}
 
-\item{col_gap}{(\code{numeric})\cr (optional) Default = 3 (Tables) or 0.5 (Listings).}
+\item{col_gap}{(\code{numeric})\cr (optional) Default = 0.5 (Listings) or 3 otherwise.}
 
 \item{pagenum}{(\code{logical})\cr whether to display page numbers. Only applicable
 to listings (i.e. for tables and figures this argument is ignored).\cr
@@ -140,7 +140,8 @@ Only used if export_csv = TRUE.}
 This function is based on \code{\link[rtables.officer:export_as_docx]{rtables.officer::export_as_docx()}}.
 See notes to understand why this is experimental.
 }
-\note{
+\section{Note}{
+
 This function has been tested for common use cases but may not work or have
 unexpected or undesired behavior in corner cases. As such it is not considered
 fully production ready and is being made available for further testing
@@ -148,3 +149,4 @@ and early adoption. Please report any issues you encounter to the developers.
 This function may be removed from junco in the future if the functionality
 is merged into \code{rtables.officer}.
 }
+

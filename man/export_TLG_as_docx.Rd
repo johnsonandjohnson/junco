@@ -32,6 +32,9 @@ export_TLG_as_docx(
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = NULL,
   watermark = FALSE,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
   plotnames = NULL,
   title = NULL,
   footers = NULL,
@@ -96,7 +99,7 @@ version. Only applies when exporting a Table or Listing.\cr
 
 \item{tlgtype}{(\code{character})\cr (optional) No need to be specified by end user.}
 
-\item{col_gap}{(\code{numeric})\cr (optional) Default = 3 (Tables) or 0.5 (Listings).}
+\item{col_gap}{(\code{numeric})\cr (optional) Default = 0.5 (Listings) or 3 otherwise.}
 
 \item{pagenum}{(\code{logical})\cr whether to display page numbers. Only applicable
 to listings (i.e. for tables and figures this argument is ignored).\cr
@@ -124,6 +127,17 @@ Users should only specify this when the default behavior does not meet their nee
 In the future, this argument will be the actual watermark (i.e. a string)
 to display.\cr
 (optional) Default = FALSE.}
+
+\item{export_csv}{(\code{logical(1)})\cr Whether to export the object as a csv representation.
+Default = FALSE.}
+
+\item{output_csv_directory}{(\code{character(1)})\cr the directory to export the csv.
+Default = NULL. Only used if export_csv = TRUE.
+If NULL or attempting to export in a non-existent directory, the csv will be exported
+in the same directory as the .docx file.}
+
+\item{markup_df}{(\code{data.frame})\cr Data frame containing markup information.
+Only used if export_csv = TRUE.}
 
 \item{plotnames}{(\code{character})\cr a file path, or a list of them,
 to previously saved .png files. These will be opened and
@@ -156,7 +170,8 @@ in which the plotwidth and plotheight arguments are expressed:
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
-\note{
+\section{Note}{
+
 This function has been tested for common use cases but may not work or have
 unexpected or undesired behavior in corner cases. As such it is not considered
 fully production ready and is being made available for further testing
@@ -164,3 +179,4 @@ and early adoption. Please report any issues you encounter to the developers.
 This function may be removed from junco in the future if the functionality
 is merged into \code{rtables.officer}.
 }
+

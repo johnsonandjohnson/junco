@@ -24,7 +24,7 @@ of them, to export. At least one of \code{g} or \code{plotnames} must be provide
 If both are provided, \code{g} precedes and \code{plotnames} will be ignored.\cr
 (optional) Default = NULL.}
 
-\item{plotnames}{(\code{character})\cr a file path, or a list of them,
+\item{plotnames}{(\code{list})\cr a file path, or a list of them,
 to previously saved .png files. These will be opened and
 exported in the output file. At least \code{g} (of class \code{ggplot2})
 or \code{plotnames} must be provided. If both are provided, \code{g} precedes and \code{plotnames}
@@ -66,7 +66,8 @@ Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
 
 Export graph in DOCX format. See notes to understand why this is experimental.
 }
-\note{
+\section{Note}{
+
 This function has been tested for common use cases but may not work or have
 unexpected or undesired behavior in corner cases. As such it is not considered
 fully production ready and is being made available for further testing
@@ -74,3 +75,4 @@ and early adoption. Please report any issues you encounter to the developers.
 This function may be removed from junco in the future if the functionality
 is merged into \code{rtables.officer}.
 }
+

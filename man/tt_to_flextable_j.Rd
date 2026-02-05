@@ -85,7 +85,7 @@ the indentation if we have vertical pagination. No need to be specified by the e
 
 \item{tlgtype}{(\code{character})\cr (optional) No need to be specified by end user.}
 
-\item{col_gap}{(\code{numeric})\cr (optional) Default = 3 (Tables) or 0.5 (Listings).}
+\item{col_gap}{(\code{numeric})\cr (optional) Default = 0.5 (Listings) or 3 otherwise.}
 
 \item{round_type}{(\code{"iec"} or \code{"sas"})\cr the type of rounding to perform. iec,
 the default, performs rounding compliant with IEC 60559, while
@@ -114,7 +114,7 @@ This function is based on \code{\link[rtables.officer:tt_to_flextable]{rtables.o
 See notes to understand why this is experimental.
 }
 \note{
-IMPORTANT NOTE: the following features are not implemented in \code{flextable},
+The following features are not implemented in \code{flextable},
 and as a result they will only be visible when exporting to docx using
 \code{\link[=export_TLG_as_docx]{export_TLG_as_docx()}}:
 \itemize{
@@ -124,3 +124,13 @@ and as a result they will only be visible when exporting to docx using
 \item page numbering
 }
 }
+\section{Note}{
+
+This function has been tested for common use cases but may not work or have
+unexpected or undesired behavior in corner cases. As such it is not considered
+fully production ready and is being made available for further testing
+and early adoption. Please report any issues you encounter to the developers.
+This function may be removed from junco in the future if the functionality
+is merged into \code{rtables.officer}.
+}
+
