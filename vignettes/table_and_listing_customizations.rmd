@@ -167,10 +167,10 @@ tt_to_tlgrtf(result,
 
 ###  Table .docx File
 
-To create a .docx file with landscape orientation, the `junco::export_as_docx_j` function can be called with the `orientation` argument set to "landscape".
+To create a .docx file with landscape orientation, the `junco::export_TLG_as_docx` function can be called with the `orientation` argument set to "landscape".
 
 ```{r orientation_docx}
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "exampleorientation",
                 output_dir = out_dir,
                 orientation = "landscape")
@@ -287,10 +287,10 @@ tt_to_tlgrtf(result,
 
 ### Table .docx File
 
-To display the body of tables in Times New Roman 8-pt for .docx files, the junco::export_as_docx_j function can be called with the theme argument included. The theme argument will specify a junco::theme_docx_default_j function call.
+To display the body of tables in Times New Roman 8-pt for .docx files, the junco::export_TLG_as_docx function can be called with the theme argument included. The theme argument will specify a junco::theme_docx_default_j function call.
 
 ```{r fontsize_docx}
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "examplefontsize",
                 output_dir = out_dir,
                 theme = theme_docx_default_j(font = "Times New Roman", font_size = 8L))
@@ -920,7 +920,7 @@ lyt <- basic_table(
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
 
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "examplenewline",
                 output_dir = out_dir,
                 orientation = "landscape",
@@ -1014,7 +1014,7 @@ result <- rlistings::as_listing(
 result <- set_titles(result, titles)
 
 
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "examplelistingnewline2",
                 output_dir = out_dir,
                 orientation = "landscape",
@@ -1118,10 +1118,10 @@ tt_to_tlgrtf(result,
 
 
 ### Table .docx File
-To export a table with a custom border matrix to a .docx file, the `junco::export_as_docx_j` function can be called with the `border_mat` argument:
+To export a table with a custom border matrix to a .docx file, the `junco::export_TLG_as_docx` function can be called with the `border_mat` argument:
 
 ```{r custom_border_matrix_docx}
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "custombordertable",
                 output_dir = out_dir,
                 orientation = "landscape",
@@ -1236,7 +1236,7 @@ tt_to_tlgrtf(result,
 
 ### Table .docx File
 
-The default markup file for `junco::export_as_docx_j` to produce a .docx file is as follows.
+The default markup file for `junco::export_TLG_as_docx` to produce a .docx file is as follows.
 
 ```{r default_markup_docx2}
 library(tibble)
@@ -1255,7 +1255,7 @@ docx_markup_df <- tibble::tribble(
 docx_markup_df
 ```
 
-If a .docx file is to be created for the table, the `junco::export_as_docx_j` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_as_docx_j`, the "markup_df" argument has the default "docx_markup_df" object specified.
+If a .docx file is to be created for the table, the `junco::export_TLG_as_docx` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_TLG_as_docx`, the "markup_df" argument has the default "docx_markup_df" object specified.
 
 
 ```{r superscript_table_docx}
@@ -1290,7 +1290,7 @@ lyt <- basic_table(
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
 
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "superscripttable",
                 output_dir = out_dir,
                 orientation = "landscape",
@@ -1351,7 +1351,7 @@ tt_to_tlgrtf(result,
 
 ### Listing .docx File
 
-The default markup file for `junco::export_as_docx_j` to produce a .docx file is as follows.
+The default markup file for `junco::export_TLG_as_docx` to produce a .docx file is as follows.
 
 ```{r default_markup_docx}
 library(tibble)
@@ -1370,7 +1370,7 @@ docx_markup_df <- tibble::tribble(
 docx_markup_df
 ```
 
-If a .docx file is to be created for the table, the `junco::export_as_docx_j` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_as_docx_j`, the "markup_df" argument has the default "docx_markup_df" object specified.
+If a .docx file is to be created for the table, the `junco::export_TLG_as_docx` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_TLG_as_docx`, the "markup_df" argument has the default "docx_markup_df" object specified.
 
 ```{r superscript_listing_docx}
 
@@ -1402,7 +1402,7 @@ result <- rlistings::as_listing(
 )
 result <- set_titles(result, titles)
 
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "examplelistingsuperscript2",
                 output_dir = out_dir,
                 orientation = "landscape",
@@ -1818,11 +1818,11 @@ tt_to_tlgrtf(result1,
 
 
 ### Listing .docx File
-The `junco::export_as_docx_j` function can be called multiple times to produce multiple .docx files, similar to the approach used for .rtf files:
+The `junco::export_TLG_as_docx` function can be called multiple times to produce multiple .docx files, similar to the approach used for .rtf files:
 
 ```{r split_listing_docx_part1}
 
-export_as_docx_j(result1,
+export_TLG_as_docx(result1,
   tblid = "examplelistingmultiplefilesPART1OF2",
   output_dir = out_dir,
   orientation = "landscape"
@@ -1854,7 +1854,7 @@ tt_to_tlgrtf(result2,
 ### Listing .docx File 2
 ```{r split_listing_docx_part2}
 
-export_as_docx_j(result2,
+export_TLG_as_docx(result2,
   tblid = "examplelistingmultiplefilesPART2OF2",
   output_dir = out_dir,
   orientation = "landscape"
