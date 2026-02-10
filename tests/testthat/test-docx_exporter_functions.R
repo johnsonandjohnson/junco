@@ -4,8 +4,8 @@ library(rtables)
 library(ggplot2)
 
 
-skip_on_cran()
 skip_if_not_installed("flextable", "0.9.11") #TODO: To remove after release of flextable
+skip_on_cran()
 
 adsl <- ex_adsl
 adae <- ex_adae
