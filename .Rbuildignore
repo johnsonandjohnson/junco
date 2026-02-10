@@ -51,5 +51,3 @@ pkgdown
 ^[.]?air[.]toml$
 ^CHANGELOG\.md$
 ^air\.toml$
-
-^vignettes/table_and_listing_customizations.rmd$
