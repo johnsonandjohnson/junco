@@ -3,6 +3,26 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
+get_template_file <- function(watermark = NULL,
+                              orientation = "portrait",
+                              pagenum = FALSE) {
+  checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
+  checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
+  checkmate::assert_flag(pagenum)
+  if (is.null(watermark)) {
+    template_file <- "template_file.docx"
+  } else {
+    template_file <- "template_file_watermark"
+    template_file <- paste0(template_file, "_", orientation)
+    if (isTRUE(pagenum)) {
+      template_file <- paste0(template_file, "_pagenum")
+    }
+    template_file <- paste0(template_file, ".docx")
+  }
+  template_file <- system.file(template_file, package = "junco")
+  return(template_file)
+}
+
 export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
                           string_map, markup_df, round_type,
                           output_csv_directory, output_dir, fname) {
@@ -58,6 +78,44 @@ export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
   )
 }
 
+insert_watermark_XML <- function(doc, watermark) {
+  browser()
+  checkmate::assert_character(watermark, len = 1)
+  nodes <- xml2::xml_find_all(doc$headers$header2.xml$get(), ".//*[@string='Confidential']")
+  xml2::xml_set_attr(nodes, "string", watermark)
+  
+  # the following code makes adjusts the size of the watermark
+  # depending on its length (nchar)
+  # Rules:
+  # - we define that at max in one line of the watermark it fits 12 chars (arbitrary)
+  # - min height will be the default 119.95pt
+  #   - it can to larger if the watermark is longer than 12 chars
+  # - max width will be the default 575.1pt
+  #   - it can go smaller if the watermark is shorter than 12 chars
+  num_chars_per_line <- 12
+  nodes <- xml2::xml_find_all(doc$headers$header2.xml$get(), ".//*[contains(@id, 'PowerPlusWaterMarkObject')]")
+  # get field 'style' of such node
+  cur_style <- xml2::xml_attr(nodes[1], "style")
+  # get the watermark width and height
+  cur_style_v <- strsplit(cur_style, ";") |> unlist()
+  cur_width <- cur_style_v[grepl("width", cur_style_v)] |>
+    gsub(pattern = ".*width\\:", replacement = "") |>
+    gsub(pattern = "pt.*", replacement = "") |> as.numeric()
+  cur_height <- cur_style_v[grepl("height", cur_style_v)] |>
+    gsub(pattern = ".*height\\:", replacement = "") |>
+    gsub(pattern = "pt.*", replacement = "") |> as.numeric()
+  final_width <- min(cur_width, cur_width* (nchar(watermark)/num_chars_per_line))
+  # count the number of occurrences of "\n" in watermark
+  num_lines <- length(gregexpr("\n", watermark, fixed = TRUE)[[1]])
+  final_height <- num_lines * cur_height
+  
+  
+  cur_style <- gsub(paste0("width:", cur_width, "pt"), paste0("width:", final_width, "pt"), cur_style)
+  cur_style <- gsub(paste0("height:", cur_height, "pt"), paste0("height:", final_height, "pt"), cur_style)
+  xml2::xml_set_attr(x = nodes[1], attr = "style", value = cur_style)
+  
+}
+
 
 remove_table_shading_XML <- function(doc) {
   # by default, Word adds a table shading white, which covers the watermark
@@ -103,38 +161,6 @@ remove_security_popup_page_numbers_XML <- function(doc, tlgtype = "Table",
   for (x in l_x) {
     xml2::xml_set_attr(x = x, attr = "w:dirty", value = "NULL")
   }
-}
-
-insert_keepNext_vertical_pagination <- function(tt, flx) {
-  # this function updates flx by calling flextable::keep_with_next()
-
-  # calculate where to add the page breaks
-  df <- tt_to_tbldf(tt = tt)
-  newrows <- df$newrows
-  idx_page_breaks <- as.integer(df$row_type == "VALUE" & df$newrows == 1)
-  idx <- which(newrows == 1)
-  new_idx_page_breaks <- idx_page_breaks
-  for (i in rev(idx)) {
-    new_idx_page_breaks <- append(new_idx_page_breaks, 0, after = i - 2)
-  }
-  new_idx_page_breaks <- which(new_idx_page_breaks == 1)
-
-  # update the flextable
-  flx <- flx |>
-    flextable::keep_with_next(i = new_idx_page_breaks, value = TRUE, part = "body")
-
-  # remove the lines just above the beginning of the chunk
-  # these lines are expected to be all blank
-  # they are not needed because there will be a page break in their place
-  # i.e. flx$body$dataset[new_idx_page_breaks - 1, ] should be all blank
-
-  mask <- flx$body$dataset[new_idx_page_breaks - 1, ] |> apply(1, function(x) {
-    all(x == "")
-  })
-  lines_to_remove <- new_idx_page_breaks[mask] - 1
-  flx <- flx |> flextable::delete_rows(part = "body", i = lines_to_remove)
-
-  return(flx)
 }
 
 add_vertical_pagination_XML <- function(doc) {
@@ -246,6 +272,39 @@ add_hanging_indent_in_title_XML <- function(doc, string_to_look_for) {
     xml2::xml_set_attr(x, "w:left", 1152)
   }
 }
+
+insert_keepNext_vertical_pagination <- function(tt, flx) {
+  # this function updates flx by calling flextable::keep_with_next()
+  
+  # calculate where to add the page breaks
+  df <- tt_to_tbldf(tt = tt)
+  newrows <- df$newrows
+  idx_page_breaks <- as.integer(df$row_type == "VALUE" & df$newrows == 1)
+  idx <- which(newrows == 1)
+  new_idx_page_breaks <- idx_page_breaks
+  for (i in rev(idx)) {
+    new_idx_page_breaks <- append(new_idx_page_breaks, 0, after = i - 2)
+  }
+  new_idx_page_breaks <- which(new_idx_page_breaks == 1)
+  
+  # update the flextable
+  flx <- flx |>
+    flextable::keep_with_next(i = new_idx_page_breaks, value = TRUE, part = "body")
+  
+  # remove the lines just above the beginning of the chunk
+  # these lines are expected to be all blank
+  # they are not needed because there will be a page break in their place
+  # i.e. flx$body$dataset[new_idx_page_breaks - 1, ] should be all blank
+  
+  mask <- flx$body$dataset[new_idx_page_breaks - 1, ] |> apply(1, function(x) {
+    all(x == "")
+  })
+  lines_to_remove <- new_idx_page_breaks[mask] - 1
+  flx <- flx |> flextable::delete_rows(part = "body", i = lines_to_remove)
+  
+  return(flx)
+}
+
 
 add_little_gap_bottom_borders_spanning_headers <- function(
   flx,
@@ -1329,10 +1388,6 @@ tt_to_flextable_j <- function(
 #' by [officer::set_doc_properties()]. Important text values are title, subject,
 #' creator, and description, while created is a date object.\cr
 #' (optional) Default = NULL.
-#' @param template_file (`character`)\cr Template file that `officer` will use as a starting
-#' point for the final document. Document attaches the table and uses the defaults
-#' defined in the template file. Paragraph styles are inherited from this file.\cr
-#' (optional) Default = "doc/template_file.docx".
 #' @param orientation (`character`)\cr (optional) Default = "portrait".
 #' One of: "portrait", "landscape".
 #' @param paginate (`logical`)\cr (optional) Default = TRUE for TableTree and FALSE otherwise.
@@ -1360,9 +1415,6 @@ tt_to_flextable_j <- function(
 #' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
 #' for what the matrix should contain. Users should only specify this when the
 #' default behavior does not meet their needs.
-#' @param watermark (`logical`)\cr whether to display the watermark "Confidential".
-#' By default, this is set to FALSE. In the future, this argument will be the
-#' actual watermark (i.e. a string) to display.
 #' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
 #' Default = FALSE.
 #' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
@@ -1392,7 +1444,7 @@ export_as_docx_j <- function(
     page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
   ),
   doc_metadata = NULL,
-  template_file = system.file("template_file.docx", package = "junco"),
+  template_file = NULL,
   orientation = "portrait",
   paginate = tlgtype == "Table",
   nosplitin = list(
@@ -1409,7 +1461,7 @@ export_as_docx_j <- function(
   alignments = list(),
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
-  watermark = FALSE,
+  watermark = NULL,
   export_csv = FALSE,
   output_csv_directory = NULL,
   markup_df = dps_markup_df,
@@ -1426,7 +1478,7 @@ export_as_docx_j <- function(
   checkmate::assert_flag(titles_as_header)
   checkmate::assert_flag(integrate_footers)
   checkmate::assert_class(section_properties, "prop_section")
-  checkmate::assert_character(template_file, len = 1)
+  checkmate::assert_character(template_file, len = 1, null.ok = TRUE)
   checkmate::assert_file_exists(template_file)
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
   checkmate::assert_flag(paginate)
@@ -1443,7 +1495,6 @@ export_as_docx_j <- function(
   checkmate::assert_list(alignments)
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_matrix(border_mat)
-  checkmate::assert_flag(watermark)
 
   # Validate `alignments` here because of its complicated data structure
   stopifnot("`alignments` must be a list" = is.list(alignments))
@@ -1452,7 +1503,7 @@ export_as_docx_j <- function(
   }
 
   checkmate::assert_flag(add_page_break)
-  checkmate::assert_flag(watermark)
+  checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
   checkmate::assert_flag(export_csv)
   checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
 
@@ -1542,9 +1593,6 @@ export_as_docx_j <- function(
       flx_fpt <- .extract_font_and_size_from_flx(flex_tbl_list[[1]])
     }
   }
-  if (!is.null(template_file) && !file.exists(template_file)) {
-    template_file <- NULL
-  }
 
   if (combined_docx) {
     if (length(flex_tbl_list) > 1) {
@@ -1622,22 +1670,16 @@ export_as_docx_j <- function(
       )
     }
   } else {
-    if (isTRUE(watermark)) {
-      template_file <- "template_file_watermark"
-      template_file <- paste0(template_file, "_", orientation)
-      if (pagenum) {
-        template_file <- paste0(template_file, "_pagenum")
-      }
-      template_file <- paste0(template_file, ".docx")
-      template_file <- system.file(template_file, package = "junco")
+
+    browser()
+    if (is.null(template_file)) {
+      template_file <- get_template_file(watermark = watermark,
+                                         orientation = orientation,
+                                         pagenum = pagenum)
     }
 
-    if (!is.null(template_file)) {
-      doc <- officer::read_docx(template_file)
-      doc <- officer::body_remove(doc)
-    } else {
-      doc <- officer::read_docx()
-    }
+    doc <- officer::read_docx(template_file)
+    doc <- officer::body_remove(doc)
 
     # NOTE: the following block adds the page numbering
     if (tlgtype == "Listing" && pagenum) {
@@ -1655,7 +1697,7 @@ export_as_docx_j <- function(
       section_properties$footer_default <- footer_default
     }
     # END
-    if (isFALSE(watermark)) {
+    if (is.null(watermark)) {
       doc <- officer::body_set_default_section(doc, section_properties)
     }
 
@@ -1742,8 +1784,9 @@ export_as_docx_j <- function(
     }
     add_vertical_pagination_XML(doc)
     remove_security_popup_page_numbers_XML(doc, tlgtype, pagenum)
-    if (isTRUE(watermark)) {
+    if (!is.null(watermark)) {
       remove_table_shading_XML(doc)
+      insert_watermark_XML(doc, watermark)
     }
 
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
@@ -1781,7 +1824,8 @@ export_graph_as_docx <- function(g = NULL,
                                  plotwidth = 8,
                                  plotheight = 5.51,
                                  units = c("in", "cm", "mm", "px")[1],
-                                 border = flextable::fp_border_default(width = 0.75, color = "black")) {
+                                 border = flextable::fp_border_default(width = 0.75, color = "black"),
+                                 watermark = NULL) {
 
   # Check arguments ----
 
@@ -1845,6 +1889,7 @@ export_graph_as_docx <- function(g = NULL,
   checkmate::assert_numeric(plotheight)
   checkmate::assert_choice(units, choices = c("in", "cm", "mm", "px"))
   checkmate::assert_class(border, "fp_border")
+  checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
 
 
   # Creation of flextable ----
@@ -1942,6 +1987,7 @@ export_graph_as_docx <- function(g = NULL,
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
   string_to_look_for <- paste0(tblid, ":")
   add_hanging_indent_in_title_XML(doc, string_to_look_for)
+  insert_watermark_XML(doc, watermark)
   print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
 }
 
@@ -1969,10 +2015,11 @@ export_graph_as_docx <- function(g = NULL,
 #' by [officer::set_doc_properties()]. Important text values are title, subject,
 #' creator, and description, while created is a date object.\cr
 #' (optional) Default = NULL.
-#' @param template_file (`character`)\cr template file that `officer` will use as a starting
+#' @param template_file (`character`)\cr Template file that `officer` will use as a starting
 #' point for the final document. Document attaches the table and uses the defaults
 #' defined in the template file. Paragraph styles are inherited from this file.\cr
-#' (optional) Default = "doc/template_file.docx".
+#' If NULL, this function will use an internal template.
+#' (optional) Default = NULL.
 #' @param orientation (`character`)\cr one of: "portrait", "landscape".\cr
 #' (optional) Default = "portrait".
 #' @param paginate (`logical`)\cr (optional) Default = TRUE for TableTree and FALSE otherwise.
@@ -2005,10 +2052,10 @@ export_graph_as_docx <- function(g = NULL,
 #' the input Table/Listing and k is the number of lines the header takes up.\cr
 #' See [tidytlg::add_bottom_borders] for what the matrix should contain.
 #' Users should only specify this when the default behavior does not meet their needs.
-#' @param watermark (`logical`)\cr whether to display the watermark "Confidential".\cr
-#' In the future, this argument will be the actual watermark (i.e. a string)
-#' to display.\cr
-#' (optional) Default = FALSE.
+#' @param watermark (`character`)\cr the watermark (text) to display in the
+#' output docx file.\cr
+#' If NULL, no watermark will be displayed.
+#' (optional) Default = NULL.
 #' @param plotnames (`character`)\cr a file path, or a list of them,
 #' to previously saved .png files. These will be opened and
 #' exported in the output file. When exporting a Graph, at least `obj` (of class `ggplot2`)
@@ -2058,7 +2105,7 @@ export_TLG_as_docx <- function(
     page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
   ),
   doc_metadata = NULL,
-  template_file = system.file("template_file.docx", package = "junco"),
+  template_file = NULL,
   orientation = "portrait",
   paginate = tlgtype == "Table",
   nosplitin = list(
@@ -2077,7 +2124,7 @@ export_TLG_as_docx <- function(
   alignments = list(),
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = NULL,
-  watermark = FALSE,
+  watermark = NULL,
   plotnames = NULL,
   title = NULL,
   footers = NULL,
@@ -2106,7 +2153,7 @@ export_TLG_as_docx <- function(
   checkmate::assert_flag(titles_as_header)
   checkmate::assert_flag(integrate_footers)
   checkmate::assert_class(section_properties, "prop_section")
-  checkmate::assert_character(template_file, len = 1)
+  checkmate::assert_character(template_file, len = 1, null.ok = TRUE)
   checkmate::assert_file_exists(template_file)
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
   checkmate::assert_flag(paginate)
@@ -2123,7 +2170,7 @@ export_TLG_as_docx <- function(
   checkmate::assert_list(alignments)
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_matrix(border_mat)
-  checkmate::assert_flag(watermark)
+  checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
   checkmate::assert_list(plotnames, null.ok = TRUE)
   checkmate::assert_character(title, null.ok = TRUE)
   checkmate::assert_character(footers, null.ok = TRUE)
@@ -2151,7 +2198,8 @@ export_TLG_as_docx <- function(
                          tblid = tblid, output_dir = output_dir,
                          title = title, footers = footers,
                          orientation = orientation, plotwidth = plotwidth,
-                         plotheight = plotheight, units = units, border = border)
+                         plotheight = plotheight, units = units, border = border,
+                         watermark = watermark)
   }
 
 }
