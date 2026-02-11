@@ -165,3 +165,65 @@ and early adoption. Please report any issues you encounter to the developers.
 This function may be removed from junco in the future if the functionality
 is merged into \code{rtables.officer}.
 }
+\examples{
+adsl <- ex_adsl
+adae <- ex_adae
+extra_args_1 <- list(
+  .stats = c("count_unique_denom_fraction")
+)
+lyt1 <- basic_table(show_colcounts = TRUE) |>
+split_cols_by("ARM") |>
+analyze(
+  vars = "COUNTRY",
+  afun = a_freq_j,
+  extra_args = extra_args_1
+)
+tbl1 <- build_table(lyt1, adsl)
+tab_titles <- list(
+  "title" = "This is the main Title",
+  "subtitles" = NULL,
+  "main_footer" = c(
+  "footer 1",
+  "footer 2"
+  ),
+  "prov_footer" = NULL)
+tbl1b <- set_titles(tbl1, tab_titles)
+
+export_TLG_as_docx(
+  obj = tbl1b,
+  tblid = "test",
+  output_dir = tempdir(),
+  theme = theme_docx_default_j(), add_page_break = FALSE, 
+  titles_as_header = TRUE, integrate_footers = TRUE,
+  section_properties = officer::prop_section(
+    page_size = officer::page_size(width = 11, height = 8.5, orient = "portrait"),
+    page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
+  ),
+  doc_metadata = NULL,
+  template_file = NULL,
+  orientation = "portrait",
+  paginate = FALSE,
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  string_map = default_str_map,
+  markup_df_docx = dps_markup_df_docx,
+  combined_docx = FALSE,
+  tlgtype = "Table",
+  col_gap = 3,
+  pagenum = FALSE,
+  round_type = "iec",
+  alignments = list(),
+  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border_mat = NULL,
+  watermark = NULL,
+  plotnames = NULL,
+  title = NULL,
+  footers = NULL,
+  plotwidth = 8,
+  plotheight = 5.51,
+  units = "in"
+) 
+
+}

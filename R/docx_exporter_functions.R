@@ -79,7 +79,6 @@ export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
 }
 
 insert_watermark_XML <- function(doc, watermark) {
-  browser()
   checkmate::assert_character(watermark, len = 1)
   nodes <- xml2::xml_find_all(doc$headers$header2.xml$get(), ".//*[@string='Confidential']")
   xml2::xml_set_attr(nodes, "string", watermark)
@@ -1479,7 +1478,9 @@ export_as_docx_j <- function(
   checkmate::assert_flag(integrate_footers)
   checkmate::assert_class(section_properties, "prop_section")
   checkmate::assert_character(template_file, len = 1, null.ok = TRUE)
-  checkmate::assert_file_exists(template_file)
+  if (!is.null(template_file)) {
+    checkmate::assert_file_exists(template_file)
+  }
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
   checkmate::assert_flag(paginate)
   checkmate::assert_list(nosplitin)
@@ -1671,7 +1672,6 @@ export_as_docx_j <- function(
     }
   } else {
 
-    browser()
     if (is.null(template_file)) {
       template_file <- get_template_file(watermark = watermark,
                                          orientation = orientation,
@@ -1976,7 +1976,9 @@ export_graph_as_docx <- function(g = NULL,
 
 
   # Export as docx ----
-  template_file <- system.file("template_file.docx", package = "junco")
+  template_file <- get_template_file(watermark = watermark,
+                                     orientation = orientation,
+                                     pagenum = FALSE)
   section_properties <- officer::prop_section(
     page_size = officer::page_size(width = 11, height = 8.5, orient = orientation),
     page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
@@ -1987,7 +1989,9 @@ export_graph_as_docx <- function(g = NULL,
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
   string_to_look_for <- paste0(tblid, ":")
   add_hanging_indent_in_title_XML(doc, string_to_look_for)
-  insert_watermark_XML(doc, watermark)
+  if (!is.null(watermark)) {
+    insert_watermark_XML(doc, watermark)
+  }
   print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
 }
 
@@ -2077,6 +2081,67 @@ export_graph_as_docx <- function(g = NULL,
 #' "in", "cm", "mm" or "px".\cr
 #' (optional) Default = "in".
 #' @param ... other parameters.
+#' 
+#' @examples
+#' adsl <- ex_adsl
+#' adae <- ex_adae
+#' extra_args_1 <- list(
+#'   .stats = c("count_unique_denom_fraction")
+#' )
+#' lyt1 <- basic_table(show_colcounts = TRUE) |>
+#' split_cols_by("ARM") |>
+#' analyze(
+#'   vars = "COUNTRY",
+#'   afun = a_freq_j,
+#'   extra_args = extra_args_1
+#' )
+#' tbl1 <- build_table(lyt1, adsl)
+#' tab_titles <- list(
+#'   "title" = "This is the main Title",
+#'   "subtitles" = NULL,
+#'   "main_footer" = c(
+#'   "footer 1",
+#'   "footer 2"
+#'   ),
+#'   "prov_footer" = NULL)
+#' tbl1b <- set_titles(tbl1, tab_titles)
+#' 
+#' export_TLG_as_docx(
+#'   obj = tbl1b,
+#'   tblid = "test",
+#'   output_dir = tempdir(),
+#'   theme = theme_docx_default_j(), add_page_break = FALSE, 
+#'   titles_as_header = TRUE, integrate_footers = TRUE,
+#'   section_properties = officer::prop_section(
+#'     page_size = officer::page_size(width = 11, height = 8.5, orient = "portrait"),
+#'     page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
+#'   ),
+#'   doc_metadata = NULL,
+#'   template_file = NULL,
+#'   orientation = "portrait",
+#'   paginate = FALSE,
+#'   nosplitin = list(
+#'     row = character(),
+#'     col = character()
+#'   ),
+#'   string_map = default_str_map,
+#'   markup_df_docx = dps_markup_df_docx,
+#'   combined_docx = FALSE,
+#'   tlgtype = "Table",
+#'   col_gap = 3,
+#'   pagenum = FALSE,
+#'   round_type = "iec",
+#'   alignments = list(),
+#'   border = flextable::fp_border_default(width = 0.75, color = "black"),
+#'   border_mat = NULL,
+#'   watermark = NULL,
+#'   plotnames = NULL,
+#'   title = NULL,
+#'   footers = NULL,
+#'   plotwidth = 8,
+#'   plotheight = 5.51,
+#'   units = "in"
+#' ) 
 #'
 #' @export
 #'
@@ -2154,7 +2219,9 @@ export_TLG_as_docx <- function(
   checkmate::assert_flag(integrate_footers)
   checkmate::assert_class(section_properties, "prop_section")
   checkmate::assert_character(template_file, len = 1, null.ok = TRUE)
-  checkmate::assert_file_exists(template_file)
+  if (!is.null(template_file)) {
+    checkmate::assert_file_exists(template_file)
+  }
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
   checkmate::assert_flag(paginate)
   checkmate::assert_list(nosplitin)
