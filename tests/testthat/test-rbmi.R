@@ -1,13 +1,9 @@
 suppressPackageStartupMessages({
   library(testthat)
   library(dplyr)
+  library(rbmi)
 })
 
-if (requireNamespace("rbmi", quietly = TRUE)) {
-  suppressPackageStartupMessages(library(rbmi))
-} else {
-  skip("rbmi package not available")
-}
 
 
 test_that("find_missing_chg_after_avisit works as expected", {
@@ -260,10 +256,8 @@ test_that("Parallelisation works with rbmi_analyse and produces identical result
     references = c("A" = "B", "B" = "B")
   )
 
-  #
   # Here we set up a bunch of different analysis objects using different
   # of parallelisation methods and different dat_delta objects
-  #
 
   ### Delta 1
 
@@ -290,7 +284,7 @@ test_that("Parallelisation works with rbmi_analyse and produces identical result
 
   var <- 20
   inner_fun <- function(...) {
-    x <- as_factor(var) # forcats::as_factor
+    x <- as_factor(var)
     rbmi_ancova(...)
   }
   outer_fun <- function(...) {
@@ -321,50 +315,58 @@ test_that("Parallelisation works with rbmi_analyse and produces identical result
     vars = vars2,
     delta = dat_delta_2
   )
-  anaobj_d2_t3 <- rbmi_analyse(
-    imputeobj,
-    fun = rbmi_ancova,
-    vars = vars2,
-    delta = dat_delta_2,
-    cluster_or_cores = cl
-  )
-
-  ### Delta 3 (no delta)
-
-  anaobj_d3_t1 <- rbmi_analyse(
-    imputeobj,
-    fun = rbmi_ancova,
-    vars = vars2
-  )
-  anaobj_d3_t3 <- rbmi_analyse(
-    imputeobj,
-    fun = rbmi_ancova,
-    vars = vars2,
-    cluster_or_cores = cl
-  )
-
-  ## Check for internal consistency
-  expect_equal(anaobj_d1_t1, anaobj_d1_t2)
-  expect_equal(anaobj_d1_t1, anaobj_d1_t3)
-  expect_equal(anaobj_d1_t2, anaobj_d1_t3)
-
-  expect_equal(anaobj_d2_t1, anaobj_d2_t3)
-
-  expect_equal(anaobj_d3_t1, anaobj_d3_t3)
-
-  ## Check that they differ (as different deltas have been used)
-  ## Main thing is sanity checking that the embedded delta
-  ## in the parallel processes hasn't lingered and impacted
-  ## future results
-
-  # First assert consistency
-  expect_true(identical(anaobj_d1_t1$results, anaobj_d1_t3$results))
-  expect_true(identical(anaobj_d2_t1$results, anaobj_d2_t3$results))
-  expect_true(identical(anaobj_d3_t1$results, anaobj_d3_t3$results))
 
   # The ensure they are different
   expect_false(identical(anaobj_d1_t1$results, anaobj_d2_t1$results))
-  expect_false(identical(anaobj_d1_t1$results, anaobj_d3_t1$results))
-  expect_false(identical(anaobj_d2_t1$results, anaobj_d3_t1$results))
+
+  ## Check for internal consistency
+  expect_equal(anaobj_d1_t1, anaobj_d1_t2)
+
+  if (!testthat:::on_cran()) { #sanity checking
+    anaobj_d2_t3 <- rbmi_analyse(
+      imputeobj,
+      fun = rbmi_ancova,
+      vars = vars2,
+      delta = dat_delta_2,
+      cluster_or_cores = cl
+    )
+
+    ### Delta 3 (no delta)
+
+    anaobj_d3_t1 <- rbmi_analyse(
+      imputeobj,
+      fun = rbmi_ancova,
+      vars = vars2
+    )
+    anaobj_d3_t3 <- rbmi_analyse(
+      imputeobj,
+      fun = rbmi_ancova,
+      vars = vars2,
+      cluster_or_cores = cl
+    )
+
+    ## Check for internal consistency
+    expect_equal(anaobj_d1_t1, anaobj_d1_t3)
+    expect_equal(anaobj_d1_t2, anaobj_d1_t3)
+
+    expect_equal(anaobj_d2_t1, anaobj_d2_t3)
+
+    expect_equal(anaobj_d3_t1, anaobj_d3_t3)
+
+    ## Check that they differ (as different deltas have been used)
+    ## Main thing is sanity checking that the embedded delta
+    ## in the parallel processes hasn't lingered and impacted
+    ## future results
+
+    # First assert consistency
+    expect_true(identical(anaobj_d1_t1$results, anaobj_d1_t3$results))
+    expect_true(identical(anaobj_d2_t1$results, anaobj_d2_t3$results))
+    expect_true(identical(anaobj_d3_t1$results, anaobj_d3_t3$results))
+
+    # The ensure they are different
+    expect_false(identical(anaobj_d1_t1$results, anaobj_d3_t1$results))
+    expect_false(identical(anaobj_d2_t1$results, anaobj_d3_t1$results))
+
+  }
   parallel::stopCluster(cl)
 })

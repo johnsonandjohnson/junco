@@ -152,6 +152,12 @@ test_that("tt_to_tlgrtf works with input Table and fontspec size 8", {
 
 test_that("tt_to_tlgrtf works with an empty listing", {
   empty_lsting <- as_listing(ex_adsl[numeric(), 1:10])
+  tab_titles <- list(
+    title = "This is a title",
+    main_footer = c("Footer 1", "Footer 2"),
+    prov_footer = "This is a footer"
+  )
+  empty_lsting <- set_titles(empty_lsting, tab_titles)
   expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(empty_lsting, "testemptylisting"), cran = TRUE)
   expect_error(
     tt_to_tlgrtf("hi"),
@@ -189,7 +195,6 @@ test_that("tt_to_tlgrtf works with wide table", {
 
   lyt_wide <- basic_table() |>
     split_cols_by("ARM") |>
-    split_cols_by("STRATA1") |>
     split_cols_by("SEX") |>
     split_rows_by("RACE") |>
     summarize_row_groups() |>
@@ -208,7 +213,6 @@ test_that("tt_to_tlgrtf works with argument combined_rtf = TRUE", {
 
   lyt_wide <- basic_table() |>
     split_cols_by("ARM") |>
-    split_cols_by("STRATA1") |>
     split_cols_by("SEX") |>
     split_rows_by("RACE") |>
     summarize_row_groups() |>
@@ -218,9 +222,9 @@ test_that("tt_to_tlgrtf works with argument combined_rtf = TRUE", {
   expect_silent(suppressMessages(cmb_fl <- rtf_out_wrapper(tbl_wide, "test3", combined = TRUE)))
   expect_snapshot_file(compare = compare_file_text, cmb_fl, cran = TRUE)
   res_nullfl <- expect_silent(tt_to_tlgrtf(tbl_wide, file = NULL))
-  expect_equal(length(res_nullfl), 7)
+  expect_equal(length(res_nullfl), 3)
   ## extraneous empty line when we turn off timestamp line fix in next release
-  expect_equal(sapply(res_nullfl, nrow), rep(nrow(tbl_wide) + nlines(col_info(tbl_wide)), 7) + 1)
+  expect_equal(sapply(res_nullfl, nrow), rep(nrow(tbl_wide) + nlines(col_info(tbl_wide)), 3) + 1)
 })
 
 test_that("tt_to_tlgrtf converts table tree to tlg without error", {

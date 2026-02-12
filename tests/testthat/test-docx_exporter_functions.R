@@ -4,7 +4,7 @@ library(rtables)
 library(ggplot2)
 
 
-
+skip_if_not_installed("flextable", "0.9.11") #TODO: To remove after release of flextable
 skip_on_cran()
 
 adsl <- ex_adsl
@@ -369,22 +369,21 @@ testthat::test_that("remove_security_popup_page_numbers() removes dirty='true'",
   testthat::expect_equal(length(l_3), 0)
 })
 
-testthat::test_that("add_title_style_caption() adds a new XML node w:pStyle w:val='Caption'", {
+testthat::test_that("after being saved as docx, the XML contains a node w:pStyle w:val='Caption'", {
+
+
   options(docx.add_datetime = FALSE)
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   options(docx.add_datetime = TRUE)
 
   # nolint start
-  flx <- junco:::insert_title_hanging_indent_v3(flx, "output id:this is a veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery long title")
+  flx <- insert_title_hanging_indent_v3(flx, "output id:this is a veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery long title")
   # nolint end
   flx <- flx |> flextable::set_table_properties(layout = "autofit")
   doc <- officer::read_docx(system.file("template_file.docx", package = "junco"))
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
 
   l_x_before <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:pStyle[@w:val='Caption']")
-
-  string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flx$header$dataset[1, 1])
-  add_title_style_caption(doc, string_to_look_for)
 
   # this print() is needed to update the XML and be able to retrieve the newly inserted node
   # with style Caption

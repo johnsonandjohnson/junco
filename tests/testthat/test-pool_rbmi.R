@@ -1,11 +1,7 @@
-if (requireNamespace("rbmi", quietly = TRUE)) {
-  suppressPackageStartupMessages(library(rbmi))
-} else {
-  skip("rbmi package not available")
-}
-
-library(rbmi)
-suppressMessages(require(mockery))
+suppressPackageStartupMessages({
+  library(rbmi)
+  library(mockery)
+})
 
 as_analysis <- getFromNamespace("as_analysis", "rbmi")
 
