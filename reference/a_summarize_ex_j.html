@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -198,7 +198,7 @@ This is designed to be used as an analysis (afun in <code>analyze</code>) functi
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    diff_header <span class="op">=</span> <span class="st">"Difference in Means (95% CI)"</span>,</span></span>
 <span class="r-in"><span>    diff_label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/sym.html" class="external-link">sym</a></span><span class="op">(</span><span class="va">trtvar</span><span class="op">)</span>, <span class="st">"vs"</span>, <span class="va">ctrl_grp</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    TRTDURY <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    TRTDURY <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html" class="external-link">case_when</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">EOSDY</span><span class="op">)</span> <span class="op">~</span> <span class="va">EOSDY</span>,</span></span>
 <span class="r-in"><span>      <span class="cn">TRUE</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">cutoffd</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">TRTSDTM</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>

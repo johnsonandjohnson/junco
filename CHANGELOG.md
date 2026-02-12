@@ -6,7 +6,21 @@ The format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## \[0.1.3.9\] - Unreleased
+## \[0.1.4\] - Unreleased
+
+### Fixed
+
+- “caption” paragraph style in the docx exporter is now handled by
+  flextable (#182)
+- Fixed
+  [`tt_to_tlgrtf()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md),
+  when exporting an empty listing do not lose Title and Footers
+
+### Changed
+
+- Reinstate rbmi as dependency
+
+## \[0.1.3.9.1\] - 2026-02-02
 
 ### Fixed
 

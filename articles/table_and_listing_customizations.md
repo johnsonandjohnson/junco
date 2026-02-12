@@ -131,6 +131,9 @@ lyt <- basic_table(
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
+```
+
+``` r
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/exampleorientation"),
              orientation = "landscape")
@@ -278,6 +281,9 @@ lyt <- basic_table(
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
+```
+
+``` r
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplefontsize"),
              fontspec = formatters::font_spec("Times", 8, 1.2))
@@ -544,6 +550,9 @@ lyt <- basic_table(
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
+```
+
+``` r
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplespanningheader1"),
              orientation = "landscape")
@@ -724,6 +733,9 @@ lyt <- basic_table(
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
+```
+
+``` r
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplecombinedcolumn1"),
              orientation = "landscape")
@@ -914,6 +926,9 @@ lyt <- basic_table(
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
+```
+
+``` r
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplecombinedcolumn2"),
              orientation = "landscape")
@@ -1014,6 +1029,9 @@ lyt <- basic_table(
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
+```
+
+``` r
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/newlinetable"),
              orientation = "landscape")
@@ -1059,7 +1077,9 @@ lyt <- basic_table(
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
+```
 
+``` r
 export_as_docx_j(result,
                 tblid = "examplenewline",
                 output_dir = out_dir,
@@ -1118,6 +1138,9 @@ result <- rlistings::as_listing(
   disp_cols = "HEIGHT"
 )
 result <- set_titles(result, titles)
+```
+
+``` r
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplelistingnewline2"),
              orientation = "landscape")
@@ -1160,8 +1183,9 @@ result <- rlistings::as_listing(
   disp_cols = "HEIGHT"
 )
 result <- set_titles(result, titles)
+```
 
-
+``` r
 export_as_docx_j(result,
                 tblid = "examplelistingnewline2",
                 output_dir = out_dir,
@@ -1234,6 +1258,9 @@ lyt <- basic_table(
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
+```
+
+``` r
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/bordertable"),
              orientation = "landscape")
@@ -1455,6 +1482,9 @@ lyt <- basic_table(
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
+```
+
+``` r
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/superscripttable"),
              orientation = "landscape",
@@ -1531,7 +1561,9 @@ lyt <- basic_table(
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
+```
 
+``` r
 export_as_docx_j(result,
                 tblid = "superscripttable",
                 output_dir = out_dir,
@@ -1590,6 +1622,9 @@ result <- rlistings::as_listing(
   disp_cols = "HEIGHT"
 )
 result <- set_titles(result, titles)
+```
+
+``` r
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplelistingsuperscript2"),
              orientation = "landscape")
@@ -1661,7 +1696,9 @@ result <- rlistings::as_listing(
   disp_cols = "HEIGHT"
 )
 result <- set_titles(result, titles)
+```
 
+``` r
 export_as_docx_j(result,
                 tblid = "examplelistingsuperscript2",
                 output_dir = out_dir,
@@ -1877,7 +1914,9 @@ files.
 ################################################################################
 # Convert to tbl file and output table
 ################################################################################
+```
 
+``` r
 tt_to_tlgrtf(string_map = string_map, tt = result,
              file = paste0(out_dir, "/aetablemultipledocs1"), orientation = "landscape"
 )
@@ -1968,7 +2007,9 @@ within the same file.
 ################################################################################
 # Convert to tbl file and output table
 ################################################################################
+```
 
+``` r
 tt_to_tlgrtf(string_map = string_map, tt = result,
              file = paste0(out_dir, "/aetablemultipledocs2"), orientation = "landscape",
              nosplitin = list(cols = c(trtvar))
@@ -2036,10 +2077,6 @@ value of “TRUE”. In this case, both the multiple “part” .rtf files and
 the single .rtf file with all “parts” appended will be created.
 
 ``` r
-################################################################################
-# Convert to tbl file and output table
-################################################################################
-
 tt_to_tlgrtf(string_map = string_map, tt = result,
              file = paste0(out_dir, "/aetablemultipledocs3"), orientation = "landscape",
              nosplitin = list(cols = c(trtvar)),
@@ -2201,6 +2238,9 @@ lyt <- basic_table(
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
+```
+
+``` r
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplepagebreak"))
 #> [[1]]
@@ -2284,7 +2324,9 @@ result <- set_titles(result, titles)
 keep <- result$TRT01A %in% c("Example Drug 5 mg", "Example Drug 10 mg")
 
 result1 <- result[keep, ]
+```
 
+``` r
 tt_to_tlgrtf(result1,
   file = paste0(out_dir, "/examplelistingmultiplefilesPART1OF2"),
   orientation = "landscape"
@@ -2324,7 +2366,9 @@ export_as_docx_j(result1,
 keep <- result$TRT01A %in% c("Example Drug 20 mg", "Placebo")
 
 result2 <- result[keep, ]
+```
 
+``` r
 tt_to_tlgrtf(result2,
   file = paste0(out_dir, "/examplelistingmultiplefilesPART2OF2"),
   orientation = "landscape"

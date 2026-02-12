@@ -62,11 +62,9 @@ for full details.
 ## Examples
 
 ``` r
-if (requireNamespace("rbmi", quietly = TRUE)) {
-  iris2 <- iris[iris$Species %in% c("versicolor", "virginica"), ]
-  iris2$Species <- factor(iris2$Species)
-  rbmi_ancova_single(iris2, "Sepal.Length", "Species", c("Petal.Length * Petal.Width"))
-}
+ iris2 <- iris[iris$Species %in% c("versicolor", "virginica"), ]
+ iris2$Species <- factor(iris2$Species)
+ rbmi_ancova_single(iris2, "Sepal.Length", "Species", c("Petal.Length * Petal.Width"))
 #> $var
 #> $var$est
 #> [1] 0.1128236
@@ -112,4 +110,5 @@ if (requireNamespace("rbmi", quietly = TRUE)) {
 #> [1] 95
 #> 
 #> 
+
 ```
