@@ -193,7 +193,7 @@ export_TLG_as_docx(
   obj = tbl1b,
   tblid = "test",
   output_dir = tempdir(),
-  theme = theme_docx_default_j(), add_page_break = FALSE, 
+  theme = theme_docx_default_j(), add_page_break = FALSE,
   titles_as_header = TRUE, integrate_footers = TRUE,
   section_properties = officer::prop_section(
     page_size = officer::page_size(width = 11, height = 8.5, orient = "portrait"),
@@ -224,6 +224,6 @@ export_TLG_as_docx(
   plotwidth = 8,
   plotheight = 5.51,
   units = "in"
-) 
+)
 
 }

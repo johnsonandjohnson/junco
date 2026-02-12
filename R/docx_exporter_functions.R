@@ -6,9 +6,11 @@ dps_markup_df_docx <- tibble::tibble(
 get_template_file <- function(watermark = NULL,
                               orientation = "portrait",
                               pagenum = FALSE) {
+
   checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
   checkmate::assert_flag(pagenum)
+
   if (is.null(watermark)) {
     template_file <- "template_file.docx"
   } else {
@@ -78,11 +80,236 @@ export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
   )
 }
 
+
+insert_fake_watermark_XML <- function(doc, watermark, orientation) {
+  # This function inserts a fake watermark WordArt in the Title of 
+  # the flextable (that is, in the document body) by inserting an XML node.
+  # This function should only be called when exporting Figures.
+  # This ensures the watermark is duplicated on every page.
+  # Argument 'orientation' is needed to calculate the location of the watermark.
+
+  checkmate::assert_character(watermark, len = 1)
+  checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
+
+  # find out where to insert the node
+  node <- xml2::xml_find_first(doc$doc_obj$get(), ".//w:tbl")
+  node <- xml2::xml_find_first(node, ".//w:tr")
+  node <- xml2::xml_find_first(node, ".//w:tc")
+  node <- xml2::xml_find_first(node, ".//w:p")
+  node <- xml2::xml_find_first(node, ".//w:r")
+
+  if (orientation == "landscape") {
+    v1 <- -464704
+    v2 <- 1947315
+    v3 <- -36.6
+    v4 <- 153.35
+  } else {
+    v1 <- -1414153
+    v2 <- 3758927
+    v3 <- -111.35
+    v4 <- 296
+  }
+
+  # insert the node
+  # nolint start
+  node_to_insert <- paste0('
+    						<w:r>
+							<w:rPr>
+								<w:noProof/>
+								<w:color w:val="000000"/>
+							</w:rPr>
+							<mc:AlternateContent>
+								<mc:Choice Requires="wps">
+									<w:drawing>
+										<wp:anchor distT="0" distB="0" distL="114300" distR="114300" simplePos="0" relativeHeight="251658240" behindDoc="0" locked="0" layoutInCell="0" allowOverlap="1" wp14:anchorId="3648ABBD" wp14:editId="01A78D1A">
+											<wp:simplePos x="0" y="0"/>
+											<wp:positionH relativeFrom="margin">
+												<wp:posOffset>', v1, '</wp:posOffset>
+											</wp:positionH>
+											<wp:positionV relativeFrom="margin">
+												<wp:posOffset>', v2, '</wp:posOffset>
+											</wp:positionV>
+											<wp:extent cx="8541581" cy="1278249"/>
+											<wp:effectExtent l="0" t="0" r="0" b="0"/>
+											<wp:wrapNone/>
+											<wp:docPr id="1019605232" name="Text Box 2"/>
+											<wp:cNvGraphicFramePr>
+												<a:graphicFrameLocks
+													xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"/>
+												</wp:cNvGraphicFramePr>
+												<a:graphic
+													xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+													<a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape">
+														<wps:wsp>
+															<wps:cNvSpPr txBox="1">
+																<a:spLocks noChangeArrowheads="1" noChangeShapeType="1" noTextEdit="1"/>
+															</wps:cNvSpPr>
+															<wps:spPr bwMode="auto">
+																<a:xfrm rot="19347021">
+																	<a:off x="0" y="0"/>
+																	<a:ext cx="8541581" cy="1278249"/>
+																</a:xfrm>
+																<a:prstGeom prst="rect">
+																	<a:avLst/>
+																</a:prstGeom>
+																<a:extLst>
+																	<a:ext uri="{91240B29-F687-4F45-9708-019B960494DF}">
+																		<a14:hiddenLine
+																			xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main" w="9525">
+																			<a:solidFill>
+																				<a:srgbClr val="000000"/>
+																			</a:solidFill>
+																			<a:round/>
+																			<a:headEnd/>
+																			<a:tailEnd/>
+																		</a14:hiddenLine>
+																	</a:ext>
+																</a:extLst>
+															</wps:spPr>
+															<wps:txbx>
+																<w:txbxContent>
+																	<w:p w14:paraId="72CD1A34" w14:textId="77777777" w:rsidR="00000000" w:rsidRDefault="00000000" w:rsidP="00C86F87">
+																		<w:pPr>
+																			<w:jc w:val="center"/>
+																			<w:rPr>
+																				<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+																				<w:color w:val="000000"/>
+																				<w:sz w:val="72"/>
+																				<w:szCs w:val="72"/>
+																				<w14:textFill>
+																					<w14:solidFill>
+																						<w14:srgbClr w14:val="000000">
+																							<w14:alpha w14:val="77000"/>
+																						</w14:srgbClr>
+																					</w14:solidFill>
+																				</w14:textFill>
+																				<w14:ligatures w14:val="none"/>
+																			</w:rPr>
+																		</w:pPr>
+																		<w:r>
+																			<w:rPr>
+																				<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+																				<w:color w:val="000000"/>
+																				<w:sz w:val="72"/>
+																				<w:szCs w:val="72"/>
+																				<w14:textFill>
+																					<w14:solidFill>
+																						<w14:srgbClr w14:val="000000">
+																							<w14:alpha w14:val="77000"/>
+																						</w14:srgbClr>
+																					</w14:solidFill>
+																				</w14:textFill>
+																			</w:rPr>
+																			<w:t xml:space="preserve">   ', watermark, '</w:t>
+																		</w:r>
+																	</w:p>
+																</w:txbxContent>
+															</wps:txbx>
+															<wps:bodyPr wrap="square" numCol="1" fromWordArt="1">
+																<a:prstTxWarp prst="textPlain">
+																	<a:avLst>
+																		<a:gd name="adj" fmla="val 50000"/>
+																	</a:avLst>
+																</a:prstTxWarp>
+																<a:noAutofit/>
+															</wps:bodyPr>
+														</wps:wsp>
+													</a:graphicData>
+												</a:graphic>
+												<wp14:sizeRelH relativeFrom="page">
+													<wp14:pctWidth>0</wp14:pctWidth>
+												</wp14:sizeRelH>
+												<wp14:sizeRelV relativeFrom="page">
+													<wp14:pctHeight>0</wp14:pctHeight>
+												</wp14:sizeRelV>
+											</wp:anchor>
+										</w:drawing>
+									</mc:Choice>
+									<mc:Fallback>
+										<w:pict>
+											<v:shapetype w14:anchorId="3648ABBD" id="_x0000_t202" coordsize="21600,21600" o:spt="202" path="m,l,21600r21600,l21600,xe">
+												<v:stroke joinstyle="miter"/>
+												<v:path gradientshapeok="t" o:connecttype="rect"/>
+											</v:shapetype>
+											<v:shape id="Text Box 2" o:spid="_x0000_s1026" type="#_x0000_t202" style="position:absolute;left:0;text-align:left;margin-left:', v3, 'pt;margin-top:', v4, 'pt;width:672.55pt;height:100.65pt;rotation:-2460854fd;z-index:251658240;visibility:visible;mso-wrap-style:square;mso-width-percent:0;mso-height-percent:0;mso-wrap-distance-left:9pt;mso-wrap-distance-top:0;mso-wrap-distance-right:9pt;mso-wrap-distance-bottom:0;mso-position-horizontal:absolute;mso-position-horizontal-relative:margin;mso-position-vertical:absolute;mso-position-vertical-relative:margin;mso-width-percent:0;mso-height-percent:0;mso-width-relative:page;mso-height-relative:page;v-text-anchor:top" o:gfxdata="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&#xA;" o:allowincell="f" filled="f" stroked="f">
+												<v:stroke joinstyle="round"/>
+												<o:lock v:ext="edit" shapetype="t"/>
+												<v:textbox>
+													<w:txbxContent>
+														<w:p w14:paraId="72CD1A34" w14:textId="77777777" w:rsidR="00000000" w:rsidRDefault="00000000" w:rsidP="00C86F87">
+															<w:pPr>
+																<w:jc w:val="center"/>
+																<w:rPr>
+																	<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+																	<w:color w:val="000000"/>
+																	<w:sz w:val="72"/>
+																	<w:szCs w:val="72"/>
+																	<w14:textFill>
+																		<w14:solidFill>
+																			<w14:srgbClr w14:val="000000">
+																				<w14:alpha w14:val="77000"/>
+																			</w14:srgbClr>
+																		</w14:solidFill>
+																	</w14:textFill>
+																	<w14:ligatures w14:val="none"/>
+																</w:rPr>
+															</w:pPr>
+															<w:r>
+																<w:rPr>
+																	<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+																	<w:color w:val="000000"/>
+																	<w:sz w:val="72"/>
+																	<w:szCs w:val="72"/>
+																	<w14:textFill>
+																		<w14:solidFill>
+																			<w14:srgbClr w14:val="000000">
+																				<w14:alpha w14:val="77000"/>
+																			</w14:srgbClr>
+																		</w14:solidFill>
+																	</w14:textFill>
+																</w:rPr>
+																<w:t xml:space="preserve">   ', watermark, '</w:t>
+															</w:r>
+														</w:p>
+													</w:txbxContent>
+												</v:textbox>
+												<w10:wrap anchorx="margin" anchory="margin"/>
+											</v:shape>
+										</w:pict>
+									</mc:Fallback>
+								</mc:AlternateContent>
+							</w:r>
+  ')
+  node_to_insert <- paste0(
+    '<w:tmp ',
+    '  xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"',
+    '  xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"',
+    '  xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml"',
+    '  xmlns:o="urn:schemas-microsoft-com:office:office"',
+    '  xmlns:v="urn:schemas-microsoft-com:vml"',
+    '  xmlns:w10="urn:schemas-microsoft-com:office:word"',
+    '  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"',
+    '  xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing"',
+    '  xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14">',
+    '  xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"',
+    '  xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"',
+    '>',
+    node_to_insert,
+    '</w:tmp>'
+  )
+  # nolint end
+  node_to_insert <- xml2::read_xml(node_to_insert)
+  node_to_insert <- xml2::xml_root(node_to_insert)
+  xml2::xml_add_sibling(node, node_to_insert, .where = "before")
+
+}
+
 insert_watermark_XML <- function(doc, watermark) {
+
   checkmate::assert_character(watermark, len = 1)
   nodes <- xml2::xml_find_all(doc$headers$header2.xml$get(), ".//*[@string='Confidential']")
   xml2::xml_set_attr(nodes, "string", watermark)
-  
+
   # the following code makes adjusts the size of the watermark
   # depending on its length (nchar)
   # Rules:
@@ -99,20 +326,22 @@ insert_watermark_XML <- function(doc, watermark) {
   cur_style_v <- strsplit(cur_style, ";") |> unlist()
   cur_width <- cur_style_v[grepl("width", cur_style_v)] |>
     gsub(pattern = ".*width\\:", replacement = "") |>
-    gsub(pattern = "pt.*", replacement = "") |> as.numeric()
+    gsub(pattern = "pt.*", replacement = "") |>
+    as.numeric()
   cur_height <- cur_style_v[grepl("height", cur_style_v)] |>
     gsub(pattern = ".*height\\:", replacement = "") |>
-    gsub(pattern = "pt.*", replacement = "") |> as.numeric()
-  final_width <- min(cur_width, cur_width* (nchar(watermark)/num_chars_per_line))
+    gsub(pattern = "pt.*", replacement = "") |>
+    as.numeric()
+  final_width <- min(cur_width, cur_width * (nchar(watermark) / num_chars_per_line))
   # count the number of occurrences of "\n" in watermark
   num_lines <- length(gregexpr("\n", watermark, fixed = TRUE)[[1]])
   final_height <- num_lines * cur_height
-  
-  
+
+
   cur_style <- gsub(paste0("width:", cur_width, "pt"), paste0("width:", final_width, "pt"), cur_style)
   cur_style <- gsub(paste0("height:", cur_height, "pt"), paste0("height:", final_height, "pt"), cur_style)
   xml2::xml_set_attr(x = nodes[1], attr = "style", value = cur_style)
-  
+
 }
 
 
@@ -274,7 +503,7 @@ add_hanging_indent_in_title_XML <- function(doc, string_to_look_for) {
 
 insert_keepNext_vertical_pagination <- function(tt, flx) {
   # this function updates flx by calling flextable::keep_with_next()
-  
+
   # calculate where to add the page breaks
   df <- tt_to_tbldf(tt = tt)
   newrows <- df$newrows
@@ -285,22 +514,22 @@ insert_keepNext_vertical_pagination <- function(tt, flx) {
     new_idx_page_breaks <- append(new_idx_page_breaks, 0, after = i - 2)
   }
   new_idx_page_breaks <- which(new_idx_page_breaks == 1)
-  
+
   # update the flextable
   flx <- flx |>
     flextable::keep_with_next(i = new_idx_page_breaks, value = TRUE, part = "body")
-  
+
   # remove the lines just above the beginning of the chunk
   # these lines are expected to be all blank
   # they are not needed because there will be a page break in their place
   # i.e. flx$body$dataset[new_idx_page_breaks - 1, ] should be all blank
-  
+
   mask <- flx$body$dataset[new_idx_page_breaks - 1, ] |> apply(1, function(x) {
     all(x == "")
   })
   lines_to_remove <- new_idx_page_breaks[mask] - 1
   flx <- flx |> flextable::delete_rows(part = "body", i = lines_to_remove)
-  
+
   return(flx)
 }
 
@@ -1923,7 +2152,7 @@ export_graph_as_docx <- function(g = NULL,
 
   # set the Footers
   if (!is.null(footers)) {
-    footers <- c("", footers)
+    footers[1] <- paste0("\n", footers[1])
   }
   for (line in footers) {
     flx <- flextable::add_footer_lines(flx, values = line)
@@ -1976,7 +2205,7 @@ export_graph_as_docx <- function(g = NULL,
 
 
   # Export as docx ----
-  template_file <- get_template_file(watermark = watermark,
+  template_file <- get_template_file(watermark = NULL,
                                      orientation = orientation,
                                      pagenum = FALSE)
   section_properties <- officer::prop_section(
@@ -1990,7 +2219,7 @@ export_graph_as_docx <- function(g = NULL,
   string_to_look_for <- paste0(tblid, ":")
   add_hanging_indent_in_title_XML(doc, string_to_look_for)
   if (!is.null(watermark)) {
-    insert_watermark_XML(doc, watermark)
+    insert_fake_watermark_XML(doc, watermark, orientation)
   }
   print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
 }
@@ -2081,7 +2310,7 @@ export_graph_as_docx <- function(g = NULL,
 #' "in", "cm", "mm" or "px".\cr
 #' (optional) Default = "in".
 #' @param ... other parameters.
-#' 
+#'
 #' @examples
 #' adsl <- ex_adsl
 #' adae <- ex_adae
@@ -2105,12 +2334,12 @@ export_graph_as_docx <- function(g = NULL,
 #'   ),
 #'   "prov_footer" = NULL)
 #' tbl1b <- set_titles(tbl1, tab_titles)
-#' 
+#'
 #' export_TLG_as_docx(
 #'   obj = tbl1b,
 #'   tblid = "test",
 #'   output_dir = tempdir(),
-#'   theme = theme_docx_default_j(), add_page_break = FALSE, 
+#'   theme = theme_docx_default_j(), add_page_break = FALSE,
 #'   titles_as_header = TRUE, integrate_footers = TRUE,
 #'   section_properties = officer::prop_section(
 #'     page_size = officer::page_size(width = 11, height = 8.5, orient = "portrait"),
@@ -2141,7 +2370,7 @@ export_graph_as_docx <- function(g = NULL,
 #'   plotwidth = 8,
 #'   plotheight = 5.51,
 #'   units = "in"
-#' ) 
+#' )
 #'
 #' @export
 #'
