@@ -1,17 +1,6 @@
 ## R CMD check results
 
-0 errors ✖ | 0 warnings ✔ | 0 notes ✖
+0 errors | 0 warnings | 0 note
 
-* We've moved back 'rbmi' from 'Suggests' to 'Imports'
-
-## Test environments
-
-* local Windows install, R 4.5.0
-* ubuntu 22.04 (on GitHub Actions), R 4.5.0
-* windows-latest (on GitHub Actions), R 4.5.0
-* win-builder (devel)
-
-## Downstream dependencies
-
-There are currently no downstream dependencies for this package.
-
+* Fixed invalid relative URL in vignette to comply with new CRAN checks.
+Package checked on GitHub Actions with R CMD check --as-cran on macOS, Windows, and Linux (R release, devel incl. clang, and oldrel-1).
