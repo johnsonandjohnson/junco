@@ -82,7 +82,7 @@ export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
 
 
 insert_fake_watermark_XML <- function(doc, watermark, orientation) {
-  # This function inserts a fake watermark WordArt in the Title of 
+  # This function inserts a fake watermark WordArt in the Title of
   # the flextable (that is, in the document body) by inserting an XML node.
   # This function should only be called when exporting Figures.
   # This ensures the watermark is duplicated on every page.
@@ -1020,14 +1020,14 @@ tt_to_flextable_j <- function(
       label_width_ins = label_width_ins,
       type = tlgtype
     )
-    colwidths_2 <- colwidths
-    if (tlgtype == "Table") {
-      colwidths <- cwidths_final_adj(
-        labwidth_ins = label_width_ins,
-        total_width = total_page_width,
-        colwidths = colwidths[-1]
-      )
-    }
+  }
+  colwidths_2 <- colwidths
+  if (tlgtype == "Table") {
+    colwidths <- cwidths_final_adj(
+      labwidth_ins = label_width_ins,
+      total_width = total_page_width,
+      colwidths = colwidths[-1]
+    )
     colwidths <- (colwidths / sum(colwidths)) * total_page_width
   }
 
@@ -1135,6 +1135,7 @@ tt_to_flextable_j <- function(
                       output_dir = output_dir,
                       fname = fname)
 
+
         sub_ft <- tt_to_flextable_j(
           tt = subt,
           theme = theme,
@@ -1145,7 +1146,7 @@ tt_to_flextable_j <- function(
           counts_in_newline = counts_in_newline,
           paginate = FALSE,
           fontspec = fontspec,
-          colwidths = NULL,
+          colwidths = colwidths_2[c(1, jj + 1)],
           total_page_width = total_page_width,
           orientation = orientation,
           tblid = fname,
@@ -1527,7 +1528,7 @@ tt_to_flextable_j <- function(
       tt,
       fontspec = fontspec,
       landscape = orientation == "landscape",
-      colwidths = colwidths_2,
+      colwidths = NULL,
       col_gap = col_gap,
       pg_width = pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
