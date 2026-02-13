@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
 - Added option to specify the output folder for the csv
+- Export helpers for LS means tabulation: `lsmeans_wide_cfun`, `lsmeans_wide_first_split_fun_fct`, `lsmeans_wide_second_split_fun_fct`
 
 ## [0.1.4] - 2026-02-05
 
