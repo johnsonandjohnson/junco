@@ -24,7 +24,7 @@ of them, to export. At least one of \code{g} or \code{plotnames} must be provide
 If both are provided, \code{g} precedes and \code{plotnames} will be ignored.\cr
 (optional) Default = NULL.}
 
-\item{plotnames}{(\code{character})\cr a file path, or a list of them,
+\item{plotnames}{(\code{list})\cr a file path, or a list of them,
 to previously saved .png files. These will be opened and
 exported in the output file. At least \code{g} (of class \code{ggplot2})
 or \code{plotnames} must be provided. If both are provided, \code{g} precedes and \code{plotnames}
