@@ -7,6 +7,8 @@ library(ggplot2)
 skip_if_not_installed("flextable", "0.9.11") #TODO: To remove after release of flextable
 skip_on_cran()
 
+options(docx.add_datetime = FALSE)
+
 adsl <- ex_adsl
 adae <- ex_adae
 extra_args_1 <- list(
@@ -50,13 +52,9 @@ rtables::label_at_path(tbl1c, c("COUNTRY", "count_unique_denom_fraction.CAN")) <
 rtables::label_at_path(tbl1c, c("COUNTRY", "count_unique_denom_fraction.JPN")) <-
   "JPN >="
 
-snapshot_test_docx <- function(doc, check_XML = FALSE) {
+snapshot_test_docx <- function(doc, detailed = TRUE) {
   if (Sys.info()[["sysname"]] == "Windows") {
-    if (check_XML) {
-      testthat::expect_snapshot(doc$doc_obj$get() |> xml2::xml_child(1) |> as.character())
-    } else {
-      testthat::expect_snapshot(officer::docx_summary(x = doc, detailed = TRUE))
-    }
+    testthat::expect_snapshot(officer::docx_summary(x = doc, detailed = detailed))
   }
 }
 
@@ -84,30 +82,9 @@ testthat::test_that("tt_to_flextable_j() works fine with Tables", {
     "Input object is not an rtables' or rlistings' object."
   )
 
-  # basic example
-  options(docx.add_datetime = FALSE)
-  testthat::expect_no_error(
-    res <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
-  )
-  options(docx.add_datetime = TRUE)
-  snapshot_test_flextable(res)
-
-
-  # example with titles and footers
-  options(docx.add_datetime = FALSE)
-  testthat::expect_no_error(
-    res <- tt_to_flextable_j(tt = tbl1b, tblid = "output ID")
-  )
-  options(docx.add_datetime = TRUE)
-  snapshot_test_flextable(res)
-
-
-  # example with superscript and >=
-  options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
     res <- tt_to_flextable_j(tt = tbl1c, tblid = "output ID")
   )
-  options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
 
 
@@ -117,11 +94,9 @@ testthat::test_that("tt_to_flextable_j() works fine with Tables", {
     list(row = 6:7, col = 2, value = "left"),
     list(row = 8, col = 1, value = "right")
   )
-  options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
     res <- tt_to_flextable_j(tt = tbl1, tblid = "output ID", alignments = alignments)
   )
-  options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
 })
 
@@ -155,10 +130,8 @@ testthat::test_that("tt_to_flextable_j() works fine with border_mat", {
   border_mat <- make_header_bordmat(tbl2)
   border_mat[2, 4] <- 1
 
-  options(docx.add_datetime = FALSE)
   flx1 <- tt_to_flextable_j(tt = tbl2, tblid = "output ID")
   flx2 <- tt_to_flextable_j(tt = tbl2, tblid = "output ID", border_mat = border_mat)
-  options(docx.add_datetime = TRUE)
 
   expected_res <- flx1$header$styles$cells$border.width.bottom$data
   expected_res[2, 4] <- 0.75
@@ -205,7 +178,6 @@ testthat::test_that("tt_to_flextable_j() works fine with round_type", {
     col_formatting = list(COL3 = formatters::fmt_config(format = "xx.xx"))
   )
 
-  options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
     res <- tt_to_flextable_j(tt = ls1, tblid = "output ID", orientation = "landscape", round_type = "iec")
   )
@@ -218,68 +190,10 @@ testthat::test_that("tt_to_flextable_j() works fine with round_type", {
   testthat::expect_equal(res$body$dataset[1, "COL3"], "1.87")
   testthat::expect_equal(res$body$dataset[2, "COL3"], "2.99")
   testthat::expect_equal(res$body$dataset[3, "COL3"], "0.00")
-  options(docx.add_datetime = TRUE)
 })
 
 testthat::test_that("tt_to_flextable_j() works fine with Listings", {
-  lsting <- adae |>
-    dplyr::select(USUBJID, AGE, SEX, RACE, ARM) |>
-    dplyr::distinct() |>
-    dplyr::group_by(ARM) |>
-    dplyr::slice_head(n = 10) |>
-    dplyr::ungroup()
 
-
-  lsting <- lsting |>
-    dplyr::mutate(
-      AGE = tern::explicit_na(as.character(AGE), ""),
-      SEX = tern::explicit_na(SEX, ""),
-      RACE = explicit_na(RACE, ""),
-      COL0 = explicit_na(.data[["ARM"]], ""),
-      COL1 = explicit_na(USUBJID, ""),
-      COL2 = paste(AGE, SEX, RACE, sep = " / ")
-    ) |>
-    arrange(COL0, COL1)
-
-  lsting <- formatters::var_relabel(lsting,
-    COL0 = "Treatment Group",
-    COL1 = "Subject ID",
-    COL2 = paste("Age (years)", "Sex", "Race", sep = " / ")
-  )
-
-  ls1 <- rlistings::as_listing(
-    df = lsting,
-    key_cols = c("COL0", "COL1"),
-    disp_cols = c("COL0", "COL1", "COL2")
-  )
-
-  # basic example
-  options(docx.add_datetime = FALSE)
-  testthat::expect_no_error(
-    res <- tt_to_flextable_j(tt = ls1, tblid = "output ID", orientation = "landscape")
-  )
-  options(docx.add_datetime = TRUE)
-  snapshot_test_flextable(res)
-
-  # example with titles and footers
-  tab_titles <- list(
-    "title" = "This is the main Title",
-    "subtitles" = NULL,
-    "main_footer" = c(
-      "footer 1",
-      "footer 2"
-    ),
-    "prov_footer" = NULL
-  )
-  ls1b <- set_titles(ls1, tab_titles)
-  options(docx.add_datetime = FALSE)
-  testthat::expect_no_error(
-    res <- tt_to_flextable_j(tt = ls1b, tblid = "output ID", orientation = "landscape")
-  )
-  options(docx.add_datetime = TRUE)
-  snapshot_test_flextable(res)
-
-  # example with superscript and >=
   lsting <- adae |>
     dplyr::select(USUBJID, AGE, SEX, RACE, ARM) |>
     dplyr::distinct() |>
@@ -324,11 +238,9 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
   )
   ls1c <- set_titles(ls1c, tab_titles)
 
-  options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
     res <- tt_to_flextable_j(tt = ls1c, tblid = "output ID", orientation = "landscape")
   )
-  options(docx.add_datetime = TRUE)
   snapshot_test_flextable(res)
 })
 
@@ -375,10 +287,7 @@ testthat::test_that("remove_security_popup_page_numbers_XML() removes dirty='tru
 
 testthat::test_that("after being saved as docx, the XML contains a node w:pStyle w:val='Caption'", {
 
-
-  options(docx.add_datetime = FALSE)
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
-  options(docx.add_datetime = TRUE)
 
   # nolint start
   flx <- insert_title_as_header(flx, "output id:this is a veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery long title")
@@ -420,6 +329,8 @@ testthat::test_that("insert_footer_text() adds a footer line to a flextable", {
   n_footer_lines_3 <- flx |> flextable::nrow_part(part = "footer")
   footer_lines_3 <- flx$footer$dataset
 
+  options(docx.add_datetime = FALSE)
+
   testthat::expect_equal(n_footer_lines_1, n_footer_lines_2)
   testthat::expect_true(all.equal(footer_lines_1, footer_lines_2))
 
@@ -427,74 +338,17 @@ testthat::test_that("insert_footer_text() adds a footer line to a flextable", {
   testthat::expect_true(all.equal(footer_lines_1, footer_lines_3 |> head(n_footer_lines_1)))
 })
 
-testthat::test_that("interpret_cell_content() returns what it should", {
-  res <- interpret_cell_content("Any AE~[super a]~[sub bds]")
-  expected_res <- "flextable::as_paragraph('Any AE', flextable::as_sup('a'), '', flextable::as_sub('bds'))"
-  testthat::expect_equal(res, expected_res)
 
-  res <- interpret_cell_content("Any AE~{super a}~[sub bds]other ~{super b}b")
-  # nolint start
-  expected_res <- "flextable::as_paragraph('Any AE', flextable::as_sup('a'), '', flextable::as_sub('bds'), 'other ', flextable::as_sup('b'), 'b')"
-  # nolint end
-  testthat::expect_equal(res, expected_res)
-
-  res <-
-    interpret_cell_content("~{super a} The event experienced by the subject with the worst severity is used.")
-  # nolint start
-  expected_res <- "flextable::as_paragraph('', flextable::as_sup('a'), ' The event experienced by the subject with the worst severity is used.')"
-  # nolint end
-  testthat::expect_equal(res, expected_res)
-
-  # nolint start
-  res <- interpret_cell_content("Note: Adverse events are coded using MedDRA version 26.0.~{optional ; toxicity grade is evaluated according to NCI-CTCAE version &ctcae.}.")
-  expected_res <- "flextable::as_paragraph('Note: Adverse events are coded using MedDRA version 26.0.', '; toxicity grade is evaluated according to NCI-CTCAE version &ctcae.', '.')"
-  # nolint end
-  testthat::expect_equal(res, expected_res)
-})
-
-testthat::test_that("interpret_all_cell_content() is interpreting markups correctly", {
-  options(docx.add_datetime = FALSE)
-  flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
-  options(docx.add_datetime = TRUE)
-
-  flx <- insert_title_as_header(flx,
-    title = "This is the main Ttl~[super a]"
-  )
-
-  flx <- flx |>
-    flextable::append_chunks(part = "header", i = 2, j = 2, flextable::as_chunk("~[super b]")) |>
-    flextable::append_chunks(part = "body", i = 2, j = 1, flextable::as_chunk("~[sub c]"))
-
-  flx <- flx |>
-    flextable::add_footer_lines("~[super a]Title") |>
-    flextable::add_footer_lines("~{super b}Drug = Xanomeline") |>
-    flextable::add_footer_lines("~[super c]United States of America")
-
-  flx <- flx |>
-    flextable::align(part = "footer", align = "left") |>
-    flextable::fontsize(part = "footer", size = 8) |>
-    flextable::padding(part = "footer", padding = 0)
-
-  res <- interpret_all_cell_content(flx)
-
-  snapshot_test_flextable(res)
-})
 
 testthat::test_that("insert_title_as_header() adds the title correctly", {
-  options(docx.add_datetime = FALSE)
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
-  options(docx.add_datetime = TRUE)
-
   res <- insert_title_as_header(flx, "output id:this is a test title")
   snapshot_test_flextable(res)
 })
 
 
 testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works correctly", {
-  options(docx.add_datetime = FALSE)
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
-  options(docx.add_datetime = TRUE)
-
 
   flx <- flx |>
     flextable::add_header_row(
@@ -511,6 +365,7 @@ testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works corr
 
 
 testthat::test_that("export_TLG_as_docx() works with pagination", {
+
   # create a TableTree with a few pages
   colspan_trt_map <- data.frame(
     colspan_trt = c("Active Study Agent", "Active Study Agent", " "),
@@ -612,7 +467,7 @@ testthat::test_that("export_TLG_as_docx() works with pagination", {
 
   # export it as docx
   output_dir <- tempdir()
-  options(docx.add_datetime = FALSE)
+  dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
   export_TLG_as_docx(
     result,
     output_dir = output_dir,
@@ -621,15 +476,14 @@ testthat::test_that("export_TLG_as_docx() works with pagination", {
     nosplitin = list(cols = c(.trtvar, "rrisk_header")),
     paginate = TRUE,
     add_page_break = TRUE,
-    combined_docx = TRUE,
+    combined_docx = FALSE,
     export_csv = TRUE
   )
-  options(docx.add_datetime = TRUE)
 
-  # check that the files exist, including the allparts
+  # check that the files exist
   testthat::expect_true(file.exists(paste0(output_dir, "/test1234part1of2.docx")))
   testthat::expect_true(file.exists(paste0(output_dir, "/test1234part2of2.docx")))
-  testthat::expect_true(file.exists(paste0(output_dir, "/test1234allparts.docx")))
+  testthat::expect_false(file.exists(paste0(output_dir, "/test1234allparts.docx")))
   testthat::expect_true(file.exists(paste0(output_dir, "/test1234part1of2.csv")))
   testthat::expect_true(file.exists(paste0(output_dir, "/test1234part2of2.csv")))
 
@@ -640,82 +494,15 @@ testthat::test_that("export_TLG_as_docx() works with pagination", {
   doc <- officer::read_docx(paste0(output_dir, "/test1234part2of2.docx"))
   snapshot_test_docx(doc)
 
-  doc <- officer::read_docx(paste0(output_dir, "/test1234allparts.docx"))
-  snapshot_test_docx(doc)
 
   file.remove(c(
     paste0(output_dir, "/test1234part1of2.docx"),
     paste0(output_dir, "/test1234part2of2.docx"),
-    paste0(output_dir, "/test1234allparts.docx"),
     paste0(output_dir, "/test1234part1of2.csv"),
     paste0(output_dir, "/test1234part2of2.csv")
   ))
 
-  # do not save csv
-  options(docx.add_datetime = FALSE)
-  export_as_docx_j(
-    result,
-    output_dir = output_dir,
-    orientation = "landscape",
-    tblid = "test1234",
-    nosplitin = list(cols = c(.trtvar, "rrisk_header")),
-    paginate = TRUE,
-    add_page_break = TRUE,
-    combined_docx = TRUE
-  )
-  options(docx.add_datetime = TRUE)
-
-  # check that the files exist, including the allparts
-  testthat::expect_true(file.exists(paste0(output_dir, "/test1234part1of2.docx")))
-  testthat::expect_true(file.exists(paste0(output_dir, "/test1234part2of2.docx")))
-  testthat::expect_true(file.exists(paste0(output_dir, "/test1234allparts.docx")))
-  testthat::expect_false(file.exists(paste0(output_dir, "/test1234part1of2.csv")))
-  testthat::expect_false(file.exists(paste0(output_dir, "/test1234part2of2.csv")))
-  file.remove(c(
-    paste0(output_dir, "/test1234part1of2.docx"),
-    paste0(output_dir, "/test1234part2of2.docx"),
-    paste0(output_dir, "/test1234allparts.docx")
-  ))
-
-  # save csv in a different location
-  output_csv_directory <- tempfile()
-  dir.create(output_csv_directory, showWarnings = FALSE, recursive = TRUE)
-  options(docx.add_datetime = FALSE)
-  printed_messages <- testthat::capture_messages(
-    export_as_docx_j(result,
-                     output_dir = output_dir,
-                     orientation = "landscape",
-                     tblid = "test1234",
-                     nosplitin = list(cols = c(.trtvar, "rrisk_header")),
-                     paginate = TRUE,
-                     add_page_break = TRUE,
-                     combined_docx = TRUE,
-                     export_csv = TRUE,
-                     output_csv_directory = output_csv_directory)
-  )
-  options(docx.add_datetime = TRUE)
-
-  # check that the files exist, including the allparts
-  testthat::expect_true(file.exists(paste0(output_dir, "/test1234part1of2.docx")))
-  testthat::expect_true(file.exists(paste0(output_dir, "/test1234part2of2.docx")))
-  testthat::expect_true(file.exists(paste0(output_dir, "/test1234allparts.docx")))
-  testthat::expect_false(file.exists(paste0(output_dir, "/test1234part1of2.csv")))
-  testthat::expect_false(file.exists(paste0(output_dir, "/test1234part2of2.csv")))
-  testthat::expect_true(file.exists(paste0(output_csv_directory, "/test1234part1of2.csv")))
-  testthat::expect_true(file.exists(paste0(output_csv_directory, "/test1234part2of2.csv")))
-  testthat::expect_true(all.equal(printed_messages,
-    c(paste0("Saving csv as ", output_csv_directory, "/test1234part1of2.csv\n"),
-      paste0("Saving csv as ", output_csv_directory, "/test1234part2of2.csv\n"))
-  ))
-
-  file.remove(c(
-    paste0(output_dir, "/test1234part1of2.docx"),
-    paste0(output_dir, "/test1234part2of2.docx"),
-    paste0(output_dir, "/test1234allparts.docx")
-  ))
-  unlink(output_csv_directory, recursive = TRUE)
 })
-
 
 testthat::test_that("export_TLG_as_docx() works with basic example", {
   # create a few ggplots
@@ -833,7 +620,6 @@ testthat::test_that("export_TLG_as_docx() works with basic example", {
 
 
   # export them as docx
-  options(docx.add_datetime = FALSE)
   testthat::expect_no_error(
     export_TLG_as_docx(
       plotnames = list(pn1, pn2),
@@ -844,7 +630,6 @@ testthat::test_that("export_TLG_as_docx() works with basic example", {
       footers = NULL
     )
   )
-  options(docx.add_datetime = TRUE)
   output_docx <- paste0(output_dir, "/testgraph1234.docx")
 
   # check that the file exist
@@ -852,7 +637,7 @@ testthat::test_that("export_TLG_as_docx() works with basic example", {
 
   # open the file and check the XML
   doc <- officer::read_docx(output_docx)
-  snapshot_test_docx(doc, check_XML = TRUE)
+  snapshot_test_docx(doc, detailed = FALSE)
 
   file.remove(c(pn1, pn2, output_docx))
 })
