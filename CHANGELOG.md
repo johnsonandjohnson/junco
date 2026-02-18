@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Functions `export_as_docx_j()` and `export_graph_as_docx()` still exist but are not internal, i.e. not exported
 - updated vignette to explain correctly how to insert newlines in the headers of Tables and Listings (#179)
 - faster docx unit tests (#197)
+- Bump fletable and remove the skip() units tests (#193)
 
 ### Added
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
