@@ -2,6 +2,8 @@
 
 ## junco 0.1.4
 
+CRAN release: 2026-02-11
+
 #### Fixed
 
 - “caption” paragraph style in the docx exporter is now handled by
