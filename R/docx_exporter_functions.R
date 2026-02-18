@@ -90,7 +90,6 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation) {
 
   checkmate::assert_character(watermark, len = 1)
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
-  
 
   # find out where to insert the node
   nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:tbl")
@@ -99,22 +98,24 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation) {
     node <- xml2::xml_find_first(node, ".//w:tc")
     node <- xml2::xml_find_first(node, ".//w:p")
     node <- xml2::xml_find_first(node, ".//w:r")
-    
+
     if (orientation == "landscape") {
-      v1 <- -464704 # positionH
-      v2 <- 1947315 # positionV
-      v3 <- -36.6 # margin-left
-      v4 <- 153.35 # margin-top
+      v1 <- -164704
+      v2 <- 2447315
     } else {
-      v1 <- -1414153
-      v2 <- 3758927
-      v3 <- -111.35
-      v4 <- 296
+      # location:
+      # - to move it to the right, increase the value of v1
+      # - to move it upwards, decrease the value of v2
+      v1 <- -548153 # positionH
+      v2 <- 2998927 # positionV
     }
-    rot_angle <- (360-45)*60000
+    rot_angle <- (360 - 45) * 60000 # 315 degrees
+    w_color <- "C0C0C0"
     w_alpha <- 77000
-    
-    
+    w_font <- "Arial"
+    w_width <- 6621581
+    w_height <- 1178249
+
     # insert the node
     # nolint start
     node_to_insert <- paste0('
@@ -134,7 +135,7 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation) {
 											<wp:positionV relativeFrom="margin">
 												<wp:posOffset>', v2, '</wp:posOffset>
 											</wp:positionV>
-											<wp:extent cx="8541581" cy="1278249"/>
+											<wp:extent cx="', w_width, '" cy="', w_height, '"/>
 											<wp:effectExtent l="0" t="0" r="0" b="0"/>
 											<wp:wrapNone/>
 											<wp:docPr id="1019605232" name="Text Box 2"/>
@@ -150,9 +151,9 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation) {
 																<a:spLocks noChangeArrowheads="1" noChangeShapeType="1" noTextEdit="1"/>
 															</wps:cNvSpPr>
 															<wps:spPr bwMode="auto">
-																<a:xfrm rot="19347021">
+																<a:xfrm rot="', rot_angle, '">
 																	<a:off x="0" y="0"/>
-																	<a:ext cx="8541581" cy="1278249"/>
+																	<a:ext cx="', w_width, '" cy="', w_height, '"/>
 																</a:xfrm>
 																<a:prstGeom prst="rect">
 																	<a:avLst/>
@@ -174,32 +175,15 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation) {
 															<wps:txbx>
 																<w:txbxContent>
 																	<w:p w14:paraId="72CD1A34" w14:textId="77777777" w:rsidR="00000000" w:rsidRDefault="00000000" w:rsidP="00C86F87">
-																		<w:pPr>
-																			<w:jc w:val="center"/>
-																			<w:rPr>
-																				<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
-																				<w:color w:val="000000"/>
-																				<w:sz w:val="72"/>
-																				<w:szCs w:val="72"/>
-																				<w14:textFill>
-																					<w14:solidFill>
-																						<w14:srgbClr w14:val="000000">
-																							<w14:alpha w14:val="', w_alpha, '"/>
-																						</w14:srgbClr>
-																					</w14:solidFill>
-																				</w14:textFill>
-																				<w14:ligatures w14:val="none"/>
-																			</w:rPr>
-																		</w:pPr>
 																		<w:r>
 																			<w:rPr>
-																				<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>
+																				<w:rFonts w:ascii="', w_font, '" w:hAnsi="', w_font, '" w:cs="', w_font, '"/>
 																				<w:color w:val="000000"/>
 																				<w:sz w:val="72"/>
 																				<w:szCs w:val="72"/>
 																				<w14:textFill>
 																					<w14:solidFill>
-																						<w14:srgbClr w14:val="000000">
+																						<w14:srgbClr w14:val="', w_color, '">
 																							<w14:alpha w14:val="', w_alpha, '"/>
 																						</w14:srgbClr>
 																					</w14:solidFill>
@@ -1880,9 +1864,6 @@ export_as_docx_j <- function(
       section_properties$footer_default <- footer_default
     }
     # END
-    # if (is.null(watermark)) {
-    #   doc <- officer::body_set_default_section(doc, section_properties)
-    # }
     doc <- officer::body_set_default_section(doc, section_properties)
 
     flex_tbl_list <- lapply(flex_tbl_list, function(flx) {
@@ -1969,8 +1950,6 @@ export_as_docx_j <- function(
     add_vertical_pagination_XML(doc)
     remove_security_popup_page_numbers_XML(doc, tlgtype, pagenum)
     if (!is.null(watermark)) {
-      # remove_table_shading_XML(doc)
-      # insert_watermark_XML(doc, watermark)
       insert_fake_watermark_XML(doc, watermark, orientation)
     }
 
