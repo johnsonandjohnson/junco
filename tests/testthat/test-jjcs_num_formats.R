@@ -9,7 +9,7 @@ NA_str_jjcs <- "NE"
 
 test_that("jjcs_num_formats works", {
   # jjcs_num_formats spec tests
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     jjcs_num_formats(d = 0)$spec
     jjcs_num_formats(d = 1)$spec
     jjcs_num_formats(d = 8, cap = 2)$spec
@@ -28,7 +28,7 @@ test_that("jjcs_num_formats works", {
   )
 
   # jjcsformat_xx_SAS/R format tests
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(values, format = jjcsformat_xx("xx.x (xx.xx)"), round_type = "sas")
     format_value(values, format = jjcsformat_xx("xx.x (xx.xx)"), round_type = "iec")
     format_value(c(5.05, values[2]), format = jjcsformat_xx("xx.x (xx.xx)"), round_type = "sas")
@@ -45,7 +45,7 @@ test_that("jjcs_num_formats works", {
   })
 
   # jjcsformat_xx_SAS format tests
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(values, format = jjcsformat_xx("xx / xx"), round_type = "sas")
     format_value(values, format = jjcsformat_xx("xx. / xx."), round_type = "sas")
     format_value(values, format = jjcsformat_xx("xx.x / xx.x"), round_type = "sas")
@@ -111,7 +111,7 @@ test_that("jjcs_num_formats works", {
   )
 
   ## trailing 0s are correct
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(0, jjcsformat_xx("xx."), round_type = "sas")
     format_value(0, jjcsformat_xx("xx.x"), round_type = "sas")
     format_value(0, jjcsformat_xx("xx.xx"), round_type = "sas")
@@ -124,7 +124,7 @@ test_that("jjcs_num_formats works", {
 test_that("jjcsformats NA works", {
   ## handling NAs
 
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(NA, jjcsformat_xx("xx."), round_type = "sas", na_str = "-")
     format_value(NA, jjcsformat_xx("xx"), round_type = "sas", na_str = "-")
   })
@@ -134,7 +134,7 @@ test_that("jjcsformats NA works", {
     "jjcsformat_xx must contain same number of xx as the number of stats"
   )
 
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(
       c(1.2, NA, NA),
       jjcsformat_xx("xx.x (xx.x - xx.x)"),
@@ -155,7 +155,7 @@ test_that("jjcsformats NA works", {
     )
   })
 
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(
       c(NA, NA),
       format = jjcsformat_xx("xx.x - xx.x"),
@@ -182,13 +182,13 @@ test_that("jjcsformats NA works", {
     )
   })
 
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(NA, format = jjcsformat_xx("xx.x"), round_type = "sas", na_str = character())
     format_value(NA, format = jjcsformat_xx("xx.x"), round_type = "sas", na_str = NA_character_)
   })
 
   # 3 d formats
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(
       c(6.23, NA, NA),
       format = jjcsformat_xx("xx.x (xx.xx, xx.xx)"),
@@ -217,7 +217,7 @@ test_that("jjcsformats NA works", {
 })
 
 test_that("jjcsformats count_fraction works", {
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(cdf, format = jjcsformat_count_denom_fraction, round_type = "sas")
     format_value(cf, format = jjcsformat_count_fraction, round_type = "sas")
     format_value(cf, format = "xx (xx.x%)", round_type = "iec")

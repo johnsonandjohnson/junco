@@ -20,7 +20,7 @@ test_that("a_freq_j with label_map works in a table layout as expected", {
       )
     )
   result <- build_table(lyt, dta)
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("a_freq_j with label_map restricts the values according to row split and label_map", {
@@ -48,7 +48,7 @@ test_that("a_freq_j with label_map restricts the values according to row split a
       )
     )
   result <- build_table(lyt, dta)
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("a_freq_j_with_exclude allows to exclude row split levels from the analysis", {
@@ -78,7 +78,7 @@ test_that("a_freq_j_with_exclude allows to exclude row split levels from the ana
     )
   result <- build_table(lyt, dta) |>
     safe_prune_table(prune_func = tern::keep_rows(keep_non_null_rows))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("a_freq_j in specific situation error for not passing alt_counts_df", {
@@ -122,7 +122,7 @@ test_that("a_freq_j in specific situation error for not passing alt_counts_df", 
   )
 
   result <- build_table(lyt, adsl, alt_counts_df = adsl)
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("a_freq_j in layout with relative risk column for combined facet", {

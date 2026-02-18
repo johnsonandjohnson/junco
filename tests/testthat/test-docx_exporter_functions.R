@@ -52,20 +52,20 @@ rtables::label_at_path(tbl1c, c("COUNTRY", "count_unique_denom_fraction.JPN")) <
 
 snapshot_test_docx <- function(doc, detailed = TRUE) {
   if (Sys.info()[["sysname"]] == "Windows") {
-    testthat::expect_snapshot(officer::docx_summary(x = doc, detailed = detailed))
+    testthat::expect_snapshot(cran = TRUE, officer::docx_summary(x = doc, detailed = detailed))
   }
 }
 
 snapshot_test_flextable <- function(res) {
   testthat::expect_true(inherits(res, "flextable"))
   if (Sys.info()[["sysname"]] == "Windows") {
-    testthat::expect_snapshot(res$header)
-    testthat::expect_snapshot(res$body)
-    testthat::expect_snapshot(res$footer)
-    testthat::expect_snapshot(res$col_keys)
-    testthat::expect_snapshot(res$caption)
-    testthat::expect_snapshot(res$blanks)
-    testthat::expect_snapshot(res$properties)
+    testthat::expect_snapshot(cran = TRUE, res$header)
+    testthat::expect_snapshot(cran = TRUE, res$body)
+    testthat::expect_snapshot(cran = TRUE, res$footer)
+    testthat::expect_snapshot(cran = TRUE, res$col_keys)
+    testthat::expect_snapshot(cran = TRUE, res$caption)
+    testthat::expect_snapshot(cran = TRUE, res$blanks)
+    testthat::expect_snapshot(cran = TRUE, res$properties)
 
     doc <- officer::read_docx()
     doc <- flextable::body_add_flextable(doc, res, align = "center")
