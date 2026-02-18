@@ -4,8 +4,6 @@ library(rtables)
 library(ggplot2)
 
 
-skip_if_not_installed("flextable", "0.9.11") #TODO: To remove after release of flextable
-skip_on_cran()
 
 options(docx.add_datetime = FALSE)
 
