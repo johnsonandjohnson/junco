@@ -19,10 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - created generic wrapper function `export_TLG_as_docx()`, which now calls `export_as_docx_j()` and `export_graph_as_docx()` (#173)
 - Functions `export_as_docx_j()` and `export_graph_as_docx()` still exist but are not internal, i.e. not exported
 - updated vignette to explain correctly how to insert newlines in the headers of Tables and Listings (#179)
+- "watermark" argument in the docx exporter is now a String instead of a Boolean
 
 ### Added
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
 - Added option to specify the output folder for the csv
+- added "watermark" argument in the docx exporter for Figures
 
 ## [0.1.4] - 2026-02-05
 
