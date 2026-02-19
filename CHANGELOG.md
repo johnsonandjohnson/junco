@@ -20,14 +20,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - created generic wrapper function `export_TLG_as_docx()`, which now calls `export_as_docx_j()` and `export_graph_as_docx()` (#173)
 - Functions `export_as_docx_j()` and `export_graph_as_docx()` still exist but are not internal, i.e. not exported
 - updated vignette to explain correctly how to insert newlines in the headers of Tables and Listings (#179)
-- "watermark" argument in the docx exporter is now a String instead of a Boolean
+- "watermark" argument in the docx exporter is now a String instead of a Boolean (#181)
 - faster docx unit tests (#197)
-- Bump fletable and remove the skip() units tests (#193)
+- Bump flextable and remove the skip() units tests (#193)
 
 ### Added
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
 - Added option to specify the output folder for the csv
-- added "watermark" argument in the docx exporter for Figures
+- added "watermark" argument in the docx exporter for Figures (#181)
 - Export helpers for LS means tabulation: `lsmeans_wide_cfun`, `lsmeans_wide_first_split_fun_fct`, `lsmeans_wide_second_split_fun_fct`
 
 ## [0.1.4] - 2026-02-05

@@ -90,7 +90,7 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation) {
 
   checkmate::assert_character(watermark, len = 1)
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
-  
+
   if (orientation == "portrait") {
     margin_left <- -118.05
     margin_top <- 265.35
