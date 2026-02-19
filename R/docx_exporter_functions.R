@@ -90,6 +90,17 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation) {
 
   checkmate::assert_character(watermark, len = 1)
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
+  
+  if (orientation == "portrait") {
+    margin_left <- -118.05
+    margin_top <- 265.35
+  } else {
+    # to shift to the right, increase margin_left
+    # to shift upwards, decrease margin_top
+    margin_left <- -30.05
+    margin_top <- 175.35
+  }
+
 
   # find out where to insert the node
   nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:tbl")
@@ -99,124 +110,47 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation) {
     node <- xml2::xml_find_first(node, ".//w:p")
     node <- xml2::xml_find_first(node, ".//w:r")
 
-    if (orientation == "landscape") {
-      v1 <- -164704
-      v2 <- 2447315
-    } else {
-      # location:
-      # - to move it to the right, increase the value of v1
-      # - to move it upwards, decrease the value of v2
-      v1 <- -548153 # positionH
-      v2 <- 2998927 # positionV
-    }
-    rot_angle <- (360 - 45) * 60000 # 315 degrees
-    w_color <- "C0C0C0"
-    w_alpha <- 77000
-    w_font <- "Arial"
-    w_width <- 6621581
-    w_height <- 1178249
-
-    # insert the node
     # nolint start
     node_to_insert <- paste0('
-            <w:r>
-							<w:rPr>
-								<w:noProof/>
-								<w:color w:val="000000"/>
-							</w:rPr>
-							<mc:AlternateContent>
-								<mc:Choice Requires="wps">
-									<w:drawing>
-										<wp:anchor distT="0" distB="0" distL="114300" distR="114300" simplePos="0" relativeHeight="251658240" behindDoc="0" locked="0" layoutInCell="0" allowOverlap="1" wp14:anchorId="3648ABBD" wp14:editId="01A78D1A">
-											<wp:simplePos x="0" y="0"/>
-											<wp:positionH relativeFrom="margin">
-												<wp:posOffset>', v1, '</wp:posOffset>
-											</wp:positionH>
-											<wp:positionV relativeFrom="margin">
-												<wp:posOffset>', v2, '</wp:posOffset>
-											</wp:positionV>
-											<wp:extent cx="', w_width, '" cy="', w_height, '"/>
-											<wp:effectExtent l="0" t="0" r="0" b="0"/>
-											<wp:wrapNone/>
-											<wp:docPr id="1019605232" name="Text Box 2"/>
-											<wp:cNvGraphicFramePr>
-												<a:graphicFrameLocks
-													xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"/>
-												</wp:cNvGraphicFramePr>
-												<a:graphic
-													xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
-													<a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape">
-														<wps:wsp>
-															<wps:cNvSpPr txBox="1">
-																<a:spLocks noChangeArrowheads="1" noChangeShapeType="1" noTextEdit="1"/>
-															</wps:cNvSpPr>
-															<wps:spPr bwMode="auto">
-																<a:xfrm rot="', rot_angle, '">
-																	<a:off x="0" y="0"/>
-																	<a:ext cx="', w_width, '" cy="', w_height, '"/>
-																</a:xfrm>
-																<a:prstGeom prst="rect">
-																	<a:avLst/>
-																</a:prstGeom>
-																<a:extLst>
-																	<a:ext uri="{91240B29-F687-4F45-9708-019B960494DF}">
-																		<a14:hiddenLine
-																			xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main" w="9525">
-																			<a:solidFill>
-																				<a:srgbClr val="000000"/>
-																			</a:solidFill>
-																			<a:round/>
-																			<a:headEnd/>
-																			<a:tailEnd/>
-																		</a14:hiddenLine>
-																	</a:ext>
-																</a:extLst>
-															</wps:spPr>
-															<wps:txbx>
-																<w:txbxContent>
-																	<w:p w14:paraId="72CD1A34" w14:textId="77777777" w:rsidR="00000000" w:rsidRDefault="00000000" w:rsidP="00C86F87">
-																		<w:r>
-																			<w:rPr>
-																				<w:rFonts w:ascii="', w_font, '" w:hAnsi="', w_font, '" w:cs="', w_font, '"/>
-																				<w:color w:val="000000"/>
-																				<w:sz w:val="72"/>
-																				<w:szCs w:val="72"/>
-																				<w14:textFill>
-																					<w14:solidFill>
-																						<w14:srgbClr w14:val="', w_color, '">
-																							<w14:alpha w14:val="', w_alpha, '"/>
-																						</w14:srgbClr>
-																					</w14:solidFill>
-																				</w14:textFill>
-																			</w:rPr>
-																			<w:t xml:space="preserve">', watermark, '</w:t>
-																		</w:r>
-																	</w:p>
-																</w:txbxContent>
-															</wps:txbx>
-															<wps:bodyPr wrap="square" numCol="1" fromWordArt="1">
-																<a:prstTxWarp prst="textPlain">
-																	<a:avLst>
-																		<a:gd name="adj" fmla="val 50000"/>
-																	</a:avLst>
-																</a:prstTxWarp>
-																<a:noAutofit/>
-															</wps:bodyPr>
-														</wps:wsp>
-													</a:graphicData>
-												</a:graphic>
-												<wp14:sizeRelH relativeFrom="page">
-													<wp14:pctWidth>0</wp14:pctWidth>
-												</wp14:sizeRelH>
-												<wp14:sizeRelV relativeFrom="page">
-													<wp14:pctHeight>0</wp14:pctHeight>
-												</wp14:sizeRelV>
-											</wp:anchor>
-										</w:drawing>
-									</mc:Choice>
-								</mc:AlternateContent>
-							</w:r>
-  ')
+      <w:r>
+				<w:rPr>
+					<w:noProof/>
+					<w:szCs w:val="24"/>
+					<w:lang w:val="en-GB" w:eastAsia="en-GB"/>
+				</w:rPr>
+				<w:pict w14:anchorId="7C7FF34C">
+					<v:shapetype id="_x0000_t136" coordsize="21600,21600" o:spt="136" adj="10800" path="m@7,l@8,m@5,21600l@6,21600e">
+						<v:formulas>
+							<v:f eqn="sum #0 0 10800"/>
+							<v:f eqn="prod #0 2 1"/>
+							<v:f eqn="sum 21600 0 @1"/>
+							<v:f eqn="sum 0 0 @2"/>
+							<v:f eqn="sum 21600 0 @3"/>
+							<v:f eqn="if @0 @3 0"/>
+							<v:f eqn="if @0 21600 @1"/>
+							<v:f eqn="if @0 0 @2"/>
+							<v:f eqn="if @0 @4 21600"/>
+							<v:f eqn="mid @5 @6"/>
+							<v:f eqn="mid @8 @5"/>
+							<v:f eqn="mid @7 @8"/>
+							<v:f eqn="mid @6 @7"/>
+							<v:f eqn="sum @6 0 @5"/>
+						</v:formulas>
+						<v:path textpathok="t" o:connecttype="custom" o:connectlocs="@9,0;@10,10800;@11,21600;@12,10800" o:connectangles="270,180,90,0"/>
+						<v:textpath on="t" fitshape="t"/>
+						<v:handles>
+							<v:h position="#0,bottomRight" xrange="6629,14971"/>
+						</v:handles>
+						<o:lock v:ext="edit" text="t" shapetype="t"/>
+					</v:shapetype>
+					<v:shape id="         PowerPlusWaterMarkObject357476642" o:spid="_x0000_s1026" type="#_x0000_t136" style="position:absolute;margin-left:', margin_left, 'pt;margin-top:', margin_top, 'pt;width:696.05pt;height:116pt;rotation:315;z-index:251657728;mso-position-horizontal-relative:margin;mso-position-vertical-relative:margin" o:allowincell="f" fillcolor="silver" stroked="f">
+						<v:fill opacity="15000f"/>
+						<v:textpath style="font-family:&quot;      Calibri&quot;;font-size:1pt" string="   ', watermark, '"/>
+					</v:shape>
+				</w:pict>
+			</w:r>
+    ')
+
     node_to_insert <- paste0(
       '<w:tmp ',
       '  xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"',
