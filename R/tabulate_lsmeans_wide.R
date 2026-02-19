@@ -35,11 +35,8 @@ pad_in_rows_fct <- function(length_out = NULL, label = "") {
   }
 }
 
-#' First Level Column Split for LS Means Wide Table Layouts
-#'
-#' @inheritParams proposal_argument_convention
-#'
-#' @keywords internal
+#' @rdname summarize_lsmeans_wide
+#' @export
 lsmeans_wide_first_split_fun_fct <- function(include_variance) {
   checkmate::assert_flag(include_variance)
 
@@ -64,12 +61,8 @@ lsmeans_wide_first_split_fun_fct <- function(include_variance) {
   make_split_fun(post = list(post_fun))
 }
 
-#' Second Level Column Split for LS Means Wide Table Layouts
-#'
-#' @inheritParams proposal_argument_convention
-#' @param include_pval (`flag`)\cr whether to include the p-value column.
-#'
-#' @keywords internal
+#' @rdname summarize_lsmeans_wide
+#' @export
 lsmeans_wide_second_split_fun_fct <- function(pval_sided, conf_level, include_pval) {
   checkmate::assert_flag(include_pval)
 
@@ -107,23 +100,8 @@ lsmeans_wide_second_split_fun_fct <- function(pval_sided, conf_level, include_pv
   make_split_fun(post = list(post_fun))
 }
 
-#' Content Row Analysis Function for LS Means Wide Table Layouts
-#'
-#' @inheritParams proposal_argument_convention
-#' @param variables (`list`)\cr see [fit_ancova()] for required variable
-#'   specifications.
-#' @param ref_level (`string`)\cr the reference level of the treatment arm variable.
-#' @param treatment_levels (`character`)\cr the non-reference levels of the treatment arm
-#'   variable.
-#' @param pval_sided (`string`)\cr either '2' for two-sided or '1' for 1-sided with greater than
-#'   control or '-1' for 1-sided with smaller than control alternative hypothesis.
-#' @param formats (`list`)\cr including `lsmean`, `mse`, `df`, `lsmean_diff`, `se`,
-#'   `ci`, `pval` formats.
-#'
-#' @details This assumes a lot of structure of the layout, and is only intended to be used inside
-#'   [summarize_lsmeans_wide()], please see there for the layout structure that is needed.
-#'
-#' @keywords internal
+#' @rdname summarize_lsmeans_wide
+#' @export
 lsmeans_wide_cfun <- function(
   df,
   labelstr,
@@ -189,13 +167,25 @@ lsmeans_wide_cfun <- function(
 #' Layout Generating Function for LS Means Wide Table Layouts
 #'
 #' @inheritParams proposal_argument_convention
-#' @inheritParams lsmeans_wide_cfun
+#' @param variables (`list`)\cr see [fit_ancova()] for required variable
+#'   specifications.
+#' @param ref_level (`string`)\cr the reference level of the treatment arm variable.
+#' @param treatment_levels (`character`)\cr the non-reference levels of the treatment arm
+#'   variable.
+#' @param pval_sided (`string`)\cr either '2' for two-sided or '1' for 1-sided with greater than
+#'   control or '-1' for 1-sided with smaller than control alternative hypothesis.
+#' @param formats (`list`)\cr including `lsmean`, `mse`, `df`, `lsmean_diff`, `se`,
+#'   `ci`, `pval` formats.
 #' @param lyt (`layout`)\cr empty layout, i.e. result of [rtables::basic_table()]
 #' @param include_variance (`flag`)\cr whether to include the variance statistics
 #'   (M.S. error and d.f.).
 #' @param include_pval (`flag`)\cr whether to include the p-value column.
 #'
 #' @return Modified layout.
+#' @details The functions [lsmeans_wide_first_split_fun_fct()], [lsmeans_wide_second_split_fun_fct()] and
+#'   [lsmeans_wide_cfun()] are also exported and can be used directly when the layout is slightly different (e.g.
+#'   contains additional subgroup row split).
+#' 
 #' @export
 #' @examples
 #' variables <- list(
