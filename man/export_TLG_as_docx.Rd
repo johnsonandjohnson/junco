@@ -100,7 +100,7 @@ version. Only applies when exporting a Table or Listing.\cr
 
 \item{tlgtype}{(\code{character})\cr (optional) No need to be specified by end user.}
 
-\item{col_gap}{(\code{numeric})\cr (optional) Default = 0.5 (Listings) or 3 otherwise.}
+\item{col_gap}{(\code{numeric})\cr (optional) Default = 3 (Tables) or 0.5 (Listings).}
 
 \item{pagenum}{(\code{logical})\cr whether to display page numbers. Only applicable
 to listings (i.e. for tables and figures this argument is ignored).\cr

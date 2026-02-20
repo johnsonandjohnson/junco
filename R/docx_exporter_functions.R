@@ -1955,7 +1955,7 @@ export_graph_as_docx <- function(g = NULL,
 #' version. Only applies when exporting a Table or Listing.\cr
 #' (optional) Default = FALSE.
 #' @param tlgtype (`character`)\cr (optional) No need to be specified by end user.
-#' @param col_gap (`numeric`)\cr (optional) Default = 0.5 (Listings) or 3 otherwise.
+#' @param col_gap (`numeric`)\cr (optional) Default = 3 (Tables) or 0.5 (Listings).
 #' @param pagenum (`logical`)\cr whether to display page numbers. Only applicable
 #' to listings (i.e. for tables and figures this argument is ignored).\cr
 #' (optional) Default = TRUE for Listings and FALSE otherwise.

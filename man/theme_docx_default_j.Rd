@@ -35,8 +35,8 @@ Accepted groupings/names are c("header", "body").\cr
 See examples in \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::theme_docx_default()}}.\cr
 (optional) Default = NULL.}
 
-\item{border}{(\code{fp_border})\cr Border to use (default =
-\code{flextable::fp_border_default(width = 0.75, color = "black")}).}
+\item{border}{(\code{fp_border})\cr border to use.\cr
+Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
 }
 \value{
 A function that applies the given theme to a flextable.
