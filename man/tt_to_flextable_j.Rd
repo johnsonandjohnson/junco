@@ -35,16 +35,15 @@ tt_to_flextable_j(
 \arguments{
 \item{tt}{(\code{TableTree} or \code{listing_df})\cr the object to convert to flextable.}
 
-\item{tblid}{(\code{character})\cr output ID to be displayed in the title and
-last line of footer.}
+\item{tblid}{(\code{character})\cr Output ID to be displayed in the title and last line of footer.}
 
-\item{theme}{(function factory)\cr the theme to apply to the flextable.\cr
-(optional) Default = \code{\link[=theme_docx_default_j]{theme_docx_default_j()}}.\cr
+\item{theme}{(function factory)\cr The theme to apply to the flextable
+(default = \code{\link[=theme_docx_default_j]{theme_docx_default_j()}}).\cr
 See \code{\link[=theme_docx_default_j]{theme_docx_default_j()}} or \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::theme_docx_default()}}
 for more details.}
 
-\item{border}{(\code{fp_border})\cr border to use.\cr
-Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
+\item{border}{(\code{fp_border})\cr Border to use (default =
+\code{flextable::fp_border_default(width = 0.75, color = "black")}).}
 
 \item{titles_as_header}{(\code{logical})\cr (optional) Default = TRUE.}
 
@@ -67,14 +66,12 @@ Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
 \item{total_page_width}{(\code{numeric})\cr no need to be specified by end user.\cr
 (optional) Default = 6.38 ("portrait") or 8.88 ("landscape").}
 
-\item{orientation}{(\code{character})\cr one of: "portrait", "landscape".\cr
-(optional) Default = "portrait".}
+\item{orientation}{(\code{character})\cr (optional) Default = "portrait".
+One of: "portrait", "landscape".}
 
-\item{nosplitin}{(\code{list})\cr path elements whose children should not be paginated
-within if it can be avoided. The list should have the format list(row=, col=).\cr
-E.g., list(col="TRT01A") means don't split within treatment arms unless
-all the associated columns don't fit on a single page.\cr
-(optional) Default = list(row = character(), col = character()).}
+\item{nosplitin}{(\code{list})\cr list(row=, col=). Path elements whose children should not be paginated within
+if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
+all the associated columns don't fit on a single page.}
 
 \item{string_map}{(\code{tibble})\cr (optional) Default = default_str_map.}
 
@@ -84,24 +81,23 @@ all the associated columns don't fit on a single page.\cr
 the indentation if we have vertical pagination. No need to be specified by the end user.\cr
 (optional) Default = FALSE.}
 
-\item{tlgtype}{(\code{character})\cr (optional) No need to be specified by end user.}
+\item{tlgtype}{(\code{character})\cr (optional). No need to be specified by end user.}
 
-\item{col_gap}{(\code{numeric})\cr (optional) Default = 0.5 (Listings) or 3 otherwise.}
+\item{col_gap}{(\code{numeric})\cr (optional). Default = 3 (Tables) or 0.5 (Listings).}
 
 \item{round_type}{(\code{"iec"} or \code{"sas"})\cr the type of rounding to perform. iec,
 the default, performs rounding compliant with IEC 60559, while
 sas performs nearest-value rounding consistent with rounding within SAS.
 See \verb{[formatters::format_value()]} for more details.}
 
-\item{alignments}{(\code{list})\cr list of named lists. Vectorized.
-Used to specify individual column or cell alignments.
-Each named list contains \code{row}, \code{col}, and \code{value}.\cr
-(optional) Default = \code{list()}.}
+\item{alignments}{(\code{list})\cr (optional) List of named lists. Vectorized.
+(Default = \code{list()}) Used to specify individual column or cell alignments.
+Each named list contains \code{row}, \code{col}, and \code{value}.}
 
-\item{border_mat}{(\code{matrix})\cr a \verb{m x k} matrix where m is the number of columns of
-the input Table/Listing and k is the number of lines the header takes up.\cr
-See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders} for what the matrix should contain.
-Users should only specify this when the default behavior does not meet their needs.}
+\item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of columns of \code{tt}
+and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}
+for what the matrix should contain. Users should only specify this when the
+default behavior does not meet their needs.}
 
 \item{validate}{(\code{logical(1)})\cr Whether to validate the table structure using
 \code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message

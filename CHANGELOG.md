@@ -13,17 +13,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Export `leftside()`, `postfun_eq5d` `ac_blank_line` and `tt_to_tblfile`
 - Minor bugfix in DOCX exporter when calculating the number of pages (#188)
 - Fixed `tt_to_flextable_j()` to have correct left-indentation in header col 1 (#171) and footer first line starting with newline (#171)
+- Fixed relative risk difference derivations for combined column facets in `a_freq_j()`, `a_freq_resp_var_j()` and `a_eair100_j()` (#195)
 
 ### Changed
 - refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
 - created generic wrapper function `export_TLG_as_docx()`, which now calls `export_as_docx_j()` and `export_graph_as_docx()` (#173)
 - Functions `export_as_docx_j()` and `export_graph_as_docx()` still exist but are not internal, i.e. not exported
 - updated vignette to explain correctly how to insert newlines in the headers of Tables and Listings (#179)
+- faster docx unit tests (#197)
+- Bump fletable and remove the skip() units tests (#193)
 
 ### Added
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
 - Added option to specify the output folder for the csv
 - Added argument 'validate' to `export_TLG_as_docx()` and `tt_to_flextable_j()`
+- Export helpers for LS means tabulation: `lsmeans_wide_cfun`, `lsmeans_wide_first_split_fun_fct`, `lsmeans_wide_second_split_fun_fct`
 
 ## [0.1.4] - 2026-02-05
 

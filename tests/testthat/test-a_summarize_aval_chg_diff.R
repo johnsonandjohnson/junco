@@ -82,7 +82,7 @@ test_that("a_summarize_aval_chg_diff_j t-test sparse data works as expected", {
     )
 
   advs <- advs |>
-    inner_join(adsl)
+    inner_join(adsl, by = join_by(STUDYID, USUBJID, ARM))
 
   # introduce sparse data for DIABP at WEEK 1 DAY 8
   # keep 2 records in A: Drug X, and 2 records in B: Placebo with values c(50, 50) and c(45, 45)

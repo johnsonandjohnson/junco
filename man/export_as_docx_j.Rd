@@ -41,13 +41,12 @@ export_as_docx_j(
 \arguments{
 \item{tt}{(\code{TableTree} or \code{listing_df})\cr the object to export.}
 
-\item{tblid}{(\code{character})\cr output ID to be displayed in the title and
-last line of footer.}
+\item{tblid}{(\code{character})\cr Output ID to be displayed in the title and last line of footer.}
 
 \item{output_dir}{(\code{character})\cr a directory path to save the docx.}
 
-\item{theme}{(function factory)\cr the theme to apply to the flextable.\cr
-(optional) Default = \code{\link[=theme_docx_default_j]{theme_docx_default_j()}}.\cr
+\item{theme}{(function factory)\cr The theme to apply to the flextable
+(default = \code{\link[=theme_docx_default_j]{theme_docx_default_j()}}).\cr
 See \code{\link[=theme_docx_default_j]{theme_docx_default_j()}} or \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::theme_docx_default()}}
 for more details.}
 
@@ -62,65 +61,59 @@ containing information about page size, orientation, margins, etc.
 See \code{\link[officer:prop_section]{officer::prop_section()}} for more details.
 No need to be specified by end user.}
 
-\item{doc_metadata}{(list of \code{string})\cr any value that can be used as metadata
+\item{doc_metadata}{(list of \code{string})\cr Any value that can be used as metadata
 by \code{\link[officer:set_doc_properties]{officer::set_doc_properties()}}. Important text values are title, subject,
 creator, and description, while created is a date object.\cr
 (optional) Default = NULL.}
 
-\item{template_file}{(\code{character})\cr template file that \code{officer} will use as a starting
+\item{template_file}{(\code{character})\cr Template file that \code{officer} will use as a starting
 point for the final document. Document attaches the table and uses the defaults
 defined in the template file. Paragraph styles are inherited from this file.\cr
 (optional) Default = "doc/template_file.docx".}
 
-\item{orientation}{(\code{character})\cr one of: "portrait", "landscape".\cr
-(optional) Default = "portrait".}
+\item{orientation}{(\code{character})\cr (optional) Default = "portrait".
+One of: "portrait", "landscape".}
 
 \item{paginate}{(\code{logical})\cr (optional) Default = TRUE for TableTree and FALSE otherwise.}
 
-\item{nosplitin}{(\code{list})\cr path elements whose children should not be paginated
-within if it can be avoided. The list should have the format list(row=, col=).\cr
-E.g., list(col="TRT01A") means don't split within treatment arms unless
-all the associated columns don't fit on a single page.\cr
-(optional) Default = list(row = character(), col = character()).}
+\item{nosplitin}{(\code{list})\cr list(row=, col=). Path elements whose children should not be paginated within
+if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
+all the associated columns don't fit on a single page.}
 
 \item{string_map}{(\code{tibble})\cr (optional) Default = default_str_map.}
 
 \item{markup_df_docx}{(\code{tibble})\cr (optional) Default = dps_markup_df_docx.}
 
-\item{combined_docx}{(\code{logical})\cr whether to also export an "allparts" docx
-version. Only applies when exporting a Table or Listing.\cr
+\item{combined_docx}{(\code{logical})\cr Whether to also export an "allparts" docx version.\cr
 (optional) Default = FALSE.}
 
-\item{tlgtype}{(\code{character})\cr (optional) No need to be specified by end user.}
+\item{tlgtype}{(\code{character})\cr (optional). No need to be specified by end user.}
 
-\item{col_gap}{(\code{numeric})\cr (optional) Default = 0.5 (Listings) or 3 otherwise.}
+\item{col_gap}{(\code{numeric})\cr (optional). Default = 3 (Tables) or 0.5 (Listings).}
 
-\item{pagenum}{(\code{logical})\cr whether to display page numbers. Only applicable
-to listings (i.e. for tables and figures this argument is ignored).\cr
-(optional) Default = TRUE for Listings and FALSE otherwise.}
+\item{pagenum}{(\code{logical})\cr (optional). Whether to display page numbers. Only applicable
+to listings (i.e. for tables and figures this argument is ignored).}
 
 \item{round_type}{(\code{"iec"} or \code{"sas"})\cr the type of rounding to perform. iec,
 the default, performs rounding compliant with IEC 60559, while
 sas performs nearest-value rounding consistent with rounding within SAS.
 See \verb{[formatters::format_value()]} for more details.}
 
-\item{alignments}{(\code{list})\cr list of named lists. Vectorized.
-Used to specify individual column or cell alignments.
-Each named list contains \code{row}, \code{col}, and \code{value}.\cr
-(optional) Default = \code{list()}.}
+\item{alignments}{(\code{list})\cr (optional) List of named lists. Vectorized.
+(Default = \code{list()}) Used to specify individual column or cell alignments.
+Each named list contains \code{row}, \code{col}, and \code{value}.}
 
-\item{border}{(\code{fp_border})\cr border to use.\cr
-Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
+\item{border}{(\code{fp_border})\cr Border to use (default =
+\code{flextable::fp_border_default(width = 0.75, color = "black")}).}
 
-\item{border_mat}{(\code{matrix})\cr a \verb{m x k} matrix where m is the number of columns of
-the input Table/Listing and k is the number of lines the header takes up.\cr
-See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders} for what the matrix should contain.
-Users should only specify this when the default behavior does not meet their needs.}
+\item{border_mat}{(\code{matrix})\cr A \verb{m x k} matrix where m is the number of columns of \code{tt}
+and k is the number of lines the header takes up. See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders}
+for what the matrix should contain. Users should only specify this when the
+default behavior does not meet their needs.}
 
-\item{watermark}{(\code{logical})\cr whether to display the watermark "Confidential".\cr
-In the future, this argument will be the actual watermark (i.e. a string)
-to display.\cr
-(optional) Default = FALSE.}
+\item{watermark}{(\code{logical})\cr whether to display the watermark "Confidential".
+By default, this is set to FALSE. In the future, this argument will be the
+actual watermark (i.e. a string) to display.}
 
 \item{export_csv}{(\code{logical(1)})\cr Whether to export the object as a csv representation.
 Default = FALSE.}
