@@ -208,7 +208,7 @@ export_TLG_as_docx(
     col = character()
   ),
   string_map = default_str_map,
-  markup_df_docx = dps_markup_df_docx,
+  markup_df_docx = junco:::dps_markup_df_docx,
   combined_docx = FALSE,
   tlgtype = "Table",
   col_gap = 3,
