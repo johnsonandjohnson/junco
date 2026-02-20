@@ -3,24 +3,8 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
-get_template_file <- function(watermark = NULL,
-                              orientation = "portrait",
-                              pagenum = FALSE) {
-
-  checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
-  checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
-  checkmate::assert_flag(pagenum)
-
-  if (is.null(watermark)) {
-    template_file <- "template_file.docx"
-  } else {
-    template_file <- "template_file_watermark"
-    template_file <- paste0(template_file, "_", orientation)
-    if (isTRUE(pagenum)) {
-      template_file <- paste0(template_file, "_pagenum")
-    }
-    template_file <- paste0(template_file, ".docx")
-  }
+get_template_file <- function() {
+  template_file <- "template_file.docx"
   template_file <- system.file(template_file, package = "junco")
   return(template_file)
 }
@@ -175,56 +159,6 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation) {
   }
 }
 
-insert_watermark_XML <- function(doc, watermark) {
-
-  checkmate::assert_character(watermark, len = 1)
-  nodes <- xml2::xml_find_all(doc$headers$header2.xml$get(), ".//*[@string='Confidential']")
-  xml2::xml_set_attr(nodes, "string", watermark)
-
-  # the following code makes adjusts the size of the watermark
-  # depending on its length (nchar)
-  # Rules:
-  # - we define that at max in one line of the watermark it fits 12 chars (arbitrary)
-  # - min height will be the default 119.95pt
-  #   - it can to larger if the watermark is longer than 12 chars
-  # - max width will be the default 575.1pt
-  #   - it can go smaller if the watermark is shorter than 12 chars
-  num_chars_per_line <- 12
-  nodes <- xml2::xml_find_all(doc$headers$header2.xml$get(), ".//*[contains(@id, 'PowerPlusWaterMarkObject')]")
-  # get field 'style' of such node
-  cur_style <- xml2::xml_attr(nodes[1], "style")
-  # get the watermark width and height
-  cur_style_v <- strsplit(cur_style, ";") |> unlist()
-  cur_width <- cur_style_v[grepl("width", cur_style_v)] |>
-    gsub(pattern = ".*width\\:", replacement = "") |>
-    gsub(pattern = "pt.*", replacement = "") |>
-    as.numeric()
-  cur_height <- cur_style_v[grepl("height", cur_style_v)] |>
-    gsub(pattern = ".*height\\:", replacement = "") |>
-    gsub(pattern = "pt.*", replacement = "") |>
-    as.numeric()
-  final_width <- min(cur_width, cur_width * (nchar(watermark) / num_chars_per_line))
-  # count the number of occurrences of "\n" in watermark
-  num_lines <- length(gregexpr("\n", watermark, fixed = TRUE)[[1]])
-  final_height <- num_lines * cur_height
-
-
-  cur_style <- gsub(paste0("width:", cur_width, "pt"), paste0("width:", final_width, "pt"), cur_style)
-  cur_style <- gsub(paste0("height:", cur_height, "pt"), paste0("height:", final_height, "pt"), cur_style)
-  xml2::xml_set_attr(x = nodes[1], attr = "style", value = cur_style)
-
-}
-
-
-remove_table_shading_XML <- function(doc) {
-  # by default, Word adds a table shading white, which covers the watermark
-  # the XML nodes responsible for this are:
-  # <w:shd w:val="clear" w:color="auto" w:fill="FF00FF"/>
-  # if we delete all these nodes, then the table becomes transparent
-
-  xml2::xml_remove(xml2::xml_find_all(doc$doc_obj$get(), ".//w:shd"))
-}
-
 remove_security_popup_page_numbers_XML <- function(doc, tlgtype = "Table",
                                                    pagenum = tlgtype == "Listing") {
   # if we are working with listings, we previously had added
@@ -343,30 +277,22 @@ insert_hanging_indent_first_col_XML <- function(doc, n_rows_footer = 0, hanging_
   }
 }
 
-add_hanging_indent_in_title_XML <- function(doc, string_to_look_for) {
+add_hanging_indent_in_title_XML <- function(doc) {
   # this function modifies the XML of the docx to add the
   # hanging indent to the Title
 
-  s_xpath <- paste0("//*[contains(text(),'", string_to_look_for, "')]")
-  l_x <- doc$doc_obj$get() |>
-    xml2::xml_find_all(s_xpath)
-
-  for (x2 in l_x) {
-    # look for a parent 'w:pPr'
-    x <- x2 |> xml2::xml_parent()
-    children <- x |> xml2::xml_children()
-    while (!any(xml2::xml_name(children) == "pPr")) {
-      x <- x |> xml2::xml_parent()
-      children <- x |> xml2::xml_children()
-    }
-
-    child_i <- which(xml2::xml_name(children) == "pPr") |> head(1)
-    x <- x |> xml2::xml_child(child_i)
-
+  # obtain all table nodes
+  tbl_nodes <- doc$doc_obj$get() |>
+    xml2::xml_find_all(".//w:tbl")
+  # for each of them, obtain the first row in the header
+  for (tbl_node in tbl_nodes) {
+    first_header_row <- xml2::xml_find_first(tbl_node, ".//w:tblHeader")
+    x <- first_header_row |> xml2::xml_parent() |> xml2::xml_parent()
+    x <- xml2::xml_find_first(x, ".//w:tc")
+    x <- xml2::xml_find_first(x, ".//w:p")
+    x <- xml2::xml_find_first(x, ".//w:pPr")
+    x <- xml2::xml_find_first(x, ".//w:ind")
     # set hanging indent of 0.8 inches
-    children <- x |> xml2::xml_children()
-    child_i <- which(xml2::xml_name(children) == "ind") |> head(1)
-    x <- x |> xml2::xml_child(child_i)
     xml2::xml_set_attr(x, "w:hanging", 1152)
     xml2::xml_set_attr(x, "w:left", 1152)
   }
@@ -404,7 +330,6 @@ insert_keepNext_vertical_pagination <- function(tt, flx) {
   return(flx)
 }
 
-
 add_little_gap_bottom_borders_spanning_headers <- function(
   flx,
   border = flextable::fp_border_default(width = 0.75, color = "black")
@@ -438,7 +363,6 @@ add_little_gap_bottom_borders_spanning_headers <- function(
 
   return(flx)
 }
-
 
 insert_footer_text <- function(flx, tblid) {
   if (is.null(getOption("docx.add_datetime")) || isTRUE(getOption("docx.add_datetime"))) {
@@ -558,7 +482,6 @@ interpret_cell_content <- function(str_before, markup_df_docx = dps_markup_df_do
   res
 }
 
-
 interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx) {
   pattern <- "~\\[|~\\{"
 
@@ -616,7 +539,6 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
 
   flx
 }
-
 
 
 #' Obtain the default theme for the docx
@@ -1772,13 +1694,7 @@ export_as_docx_j <- function(
       )
     }
   } else {
-
-    if (is.null(template_file)) {
-      template_file <- get_template_file(watermark = NULL,
-                                         orientation = orientation,
-                                         pagenum = pagenum)
-    }
-
+    template_file <- get_template_file()
     doc <- officer::read_docx(template_file)
     doc <- officer::body_remove(doc)
 
@@ -1871,12 +1787,8 @@ export_as_docx_j <- function(
         doc_metadata
       ))
     }
-    if (endsWith(tblid, "allparts")) {
-      string_to_look_for <- paste0(tblid, ":")
-    } else {
-      string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flex_tbl_list[[1]]$header$dataset[1, 1])
-    }
-    add_hanging_indent_in_title_XML(doc, string_to_look_for)
+
+    add_hanging_indent_in_title_XML(doc)
     if (tlgtype == "Table") {
       n_rows_footer <- flextable::nrow_part(flex_tbl_list[[1]], part = "footer")
       insert_hanging_indent_first_col_XML(doc, n_rows_footer = n_rows_footer)
@@ -2074,9 +1986,7 @@ export_graph_as_docx <- function(g = NULL,
 
 
   # Export as docx ----
-  template_file <- get_template_file(watermark = NULL,
-                                     orientation = orientation,
-                                     pagenum = FALSE)
+  template_file <- get_template_file()
   section_properties <- officer::prop_section(
     page_size = officer::page_size(width = 11, height = 8.5, orient = orientation),
     page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
@@ -2085,8 +1995,7 @@ export_graph_as_docx <- function(g = NULL,
   doc <- officer::body_remove(doc)
   doc <- officer::body_set_default_section(doc, section_properties)
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
-  string_to_look_for <- paste0(tblid, ":")
-  add_hanging_indent_in_title_XML(doc, string_to_look_for)
+  add_hanging_indent_in_title_XML(doc)
   if (!is.null(watermark)) {
     insert_fake_watermark_XML(doc, watermark, orientation)
   }
@@ -2336,7 +2245,7 @@ export_TLG_as_docx <- function(
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_matrix(border_mat)
   checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
-  checkmate::assert_list(plotnames, null.ok = TRUE)
+  checkmate::assert_character(plotnames, null.ok = TRUE)
   checkmate::assert_character(title, null.ok = TRUE)
   checkmate::assert_character(footers, null.ok = TRUE)
   checkmate::assert_numeric(plotwidth)
