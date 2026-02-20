@@ -3,6 +3,23 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
+validate_tabletree <- function(tt, validate, tlgtype) {
+  if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
+    if (!rtables::validate_table_struct(tt)) {
+      message(
+        "Invalid table structure detected. This may cause issues in the output. ",
+        "The validation process failed, proceed with caution."
+      )
+    }
+  } else if (!validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
+    if (rtables::validate_table_struct(tt)) {
+      message(
+        "Table structure validation succeeded. You should not need to set validate=FALSE."
+      )
+    }
+  }
+}
+
 export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
                           string_map, markup_df, round_type,
                           output_csv_directory, output_dir, fname) {
@@ -665,6 +682,7 @@ tt_to_flextable_j <- function(
     round_type = formatters::obj_round_type(tt),
     alignments = list(),
     border_mat = make_header_bordmat(obj = tt),
+    validate = TRUE,
     ...) {
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
@@ -704,6 +722,8 @@ tt_to_flextable_j <- function(
   for (alignment in alignments) {
     stopifnot("Each item of `alignments` must be a list" = is.list(alignment))
   }
+
+  validate_tabletree(tt, validate, tlgtype)
 
   if (tlgtype == "Listing" && nrow(tt) == 0) {
     dat <- as.list(c("No data to report", rep("", ncol(tt) - 1)))
@@ -872,6 +892,7 @@ tt_to_flextable_j <- function(
           alignments = alignments,
           border_mat = pag_bord_mats[[i]],
           export_csv = FALSE, # this is because we already exported the csv a few lines above,
+          validate = validate,
           ...
         )
 
@@ -1353,6 +1374,7 @@ export_as_docx_j <- function(
   export_csv = FALSE,
   output_csv_directory = NULL,
   markup_df = dps_markup_df,
+  validate = TRUE,
   ...
 ) {
 
@@ -1424,6 +1446,7 @@ export_as_docx_j <- function(
       output_csv_directory = output_csv_directory,
       markup_df = markup_df,
       output_dir = output_dir, # this argument is needed to guess where to save the csv
+      validate = validate,
       ...
     )
   }
@@ -1457,6 +1480,7 @@ export_as_docx_j <- function(
             output_csv_directory = output_csv_directory,
             markup_df = markup_df,
             output_dir = output_dir, # this argument is needed to guess where to save the csv
+            validate = validate,
             ...
           ),
         SIMPLIFY = FALSE
@@ -1517,6 +1541,7 @@ export_as_docx_j <- function(
         export_csv = export_csv,
         output_csv_directory = output_csv_directory,
         markup_df = markup_df,
+        validate = validate,
         ...
       )
     } else {
@@ -1560,6 +1585,7 @@ export_as_docx_j <- function(
         export_csv = export_csv,
         output_csv_directory = output_csv_directory,
         markup_df = markup_df,
+        validate = validate,
         ...
       )
     }
@@ -1959,6 +1985,9 @@ export_graph_as_docx <- function(g = NULL,
 #' in the same directory as the .docx file.
 #' @param markup_df (`data.frame`)\cr Data frame containing markup information.
 #' Only used if export_csv = TRUE.
+#' @param validate (`logical(1)`)\cr Whether to validate the table structure using
+#'  `rtables::validate_table_struct()`. Defaults to `TRUE`. If `FALSE`, a message
+#'  will be displayed when validation fails.
 #' @param plotnames (`character`)\cr a file path, or a list of them,
 #' to previously saved .png files. These will be opened and
 #' exported in the output file. When exporting a Graph, at least `obj` (of class `ggplot2`)
@@ -2031,6 +2060,7 @@ export_TLG_as_docx <- function(
   export_csv = FALSE,
   output_csv_directory = NULL,
   markup_df = dps_markup_df,
+  validate = TRUE,
   plotnames = NULL,
   title = NULL,
   footers = NULL,
@@ -2081,6 +2111,7 @@ export_TLG_as_docx <- function(
   checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
   checkmate::assert_tibble(markup_df)
   checkmate::assert_true(all(colnames(markup_df) == c("keyword", "rtfstart", "rtfend")))
+  checkmate::assert_flag(validate)
   checkmate::assert_list(plotnames, null.ok = TRUE)
   checkmate::assert_character(title, null.ok = TRUE)
   checkmate::assert_character(footers, null.ok = TRUE)
@@ -2104,6 +2135,7 @@ export_TLG_as_docx <- function(
       border_mat = border_mat, watermark = watermark,
       export_csv = export_csv, output_csv_directory = output_csv_directory,
       markup_df = markup_df,
+      validate = validate,
       ...
     )
   } else {

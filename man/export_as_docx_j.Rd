@@ -34,6 +34,7 @@ export_as_docx_j(
   export_csv = FALSE,
   output_csv_directory = NULL,
   markup_df = dps_markup_df,
+  validate = TRUE,
   ...
 )
 }
@@ -131,6 +132,10 @@ in the same directory as the .docx file.}
 
 \item{markup_df}{(\code{data.frame})\cr Data frame containing markup information.
 Only used if export_csv = TRUE.}
+
+\item{validate}{(\code{logical(1)})\cr Whether to validate the table structure using
+\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message
+will be displayed when validation fails.}
 
 \item{...}{other parameters.}
 }

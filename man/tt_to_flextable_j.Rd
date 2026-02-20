@@ -28,6 +28,7 @@ tt_to_flextable_j(
   round_type = formatters::obj_round_type(tt),
   alignments = list(),
   border_mat = make_header_bordmat(obj = tt),
+  validate = TRUE,
   ...
 )
 }
@@ -101,6 +102,10 @@ Each named list contains \code{row}, \code{col}, and \code{value}.\cr
 the input Table/Listing and k is the number of lines the header takes up.\cr
 See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders} for what the matrix should contain.
 Users should only specify this when the default behavior does not meet their needs.}
+
+\item{validate}{(\code{logical(1)})\cr Whether to validate the table structure using
+\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message
+will be displayed when validation fails.}
 
 \item{...}{other parameters.}
 }
