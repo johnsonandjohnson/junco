@@ -1213,7 +1213,7 @@ tt_to_flextable_j <- function(
   autofit_to_page <- FALSE
   flx <- flextable::set_table_properties(flx,
     layout = ifelse(autofit_to_page, "autofit", "fixed"),
-    align = "left", opts_word = list(split = FALSE, keep_with_next = TRUE)
+    align = "left", opts_word = list(split = TRUE, keep_with_next = TRUE)
   )
 
   if (!all(is.na(matform$row_info$trailing_sep))) {
