@@ -105,19 +105,12 @@ remove_security_popup_page_numbers_XML <- function(doc, tlgtype = "Table",
   }
 }
 
-insert_keepNext_vertical_pagination <- function(tt, flx) {
+insert_keepNext_vertical_pagination <- function(flx, page_names) {
   # this function updates flx by calling flextable::keep_with_next()
 
   # calculate where to add the page breaks
-  df <- tt_to_tbldf(tt = tt)
-  newrows <- df$newrows
-  idx_page_breaks <- as.integer(df$row_type == "VALUE" & df$newrows == 1)
-  idx <- which(newrows == 1)
-  new_idx_page_breaks <- idx_page_breaks
-  for (i in rev(idx)) {
-    new_idx_page_breaks <- append(new_idx_page_breaks, 0, after = i - 2)
-  }
-  new_idx_page_breaks <- which(new_idx_page_breaks == 1)
+  new_idx_page_breaks <- which(flx$body$dataset$V1 %in% page_names)
+  new_idx_page_breaks <- new_idx_page_breaks[-1]
 
   # update the flextable
   flx <- flx |>
@@ -848,6 +841,12 @@ tt_to_flextable_j <- function(
                       output_dir = output_dir,
                       fname = fname)
 
+        # we want to decrease the indentation of each vertical pagination
+        # only if for each vertical pagination only the first row has indentation == 0
+        only_first_row_indent_zero <-
+          all(lapply(full_pag_i, function(x) {
+            x$row_info |> dplyr::filter(label != " ", indent == 0) |> nrow()
+            }) == 1)
         sub_ft <- tt_to_flextable_j(
           tt = subt,
           theme = theme,
@@ -865,7 +864,7 @@ tt_to_flextable_j <- function(
           nosplitin = nosplitin,
           string_map = string_map,
           markup_df_docx = markup_df_docx,
-          reduce_first_col_indentation = (length(full_pag_i) > 1),
+          reduce_first_col_indentation = (length(full_pag_i) > 1 && only_first_row_indent_zero),
           tlgtype = tlgtype,
           col_gap = col_gap,
           round_type = round_type,
@@ -1251,7 +1250,8 @@ tt_to_flextable_j <- function(
       round_type = round_type
     )
     if (!is.null(names(pags))) {
-      flx <- insert_keepNext_vertical_pagination(tt = tt, flx = flx)
+      flx <- insert_keepNext_vertical_pagination(flx = flx,
+                                                 page_names = strmodify(names(pags), string_map))
     }
   }
   # END
