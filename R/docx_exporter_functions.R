@@ -105,12 +105,40 @@ remove_security_popup_page_numbers_XML <- function(doc, tlgtype = "Table",
   }
 }
 
-insert_keepNext_vertical_pagination <- function(flx, page_names) {
-  # this function updates flx by calling flextable::keep_with_next()
+insert_keepNext_vertical_pagination <- function(flx, pags, fontspec,
+                                                string_map, round_type) {
+  df <- lapply(
+    pags,
+    tt_to_tbldf,
+    fontspec = fontspec,
+    string_map = string_map,
+    round_type = round_type
+  )
+  df <- do.call(
+    rbind,
+    lapply(
+      seq_along(df),
+      function(ii) {
+        dfii <- df[[ii]]
+        dfii$newpage <- 0
+        if (ii > 1) {
+          dfii$newpage[1] <- 1
+        }
+        dfii$indentme <- ifelse(dfii$indentme <= 1, 0, dfii$indentme - 1)
+        dfii
+      }
+    )
+  )
 
   # calculate where to add the page breaks
-  new_idx_page_breaks <- which(flx$body$dataset$V1 %in% page_names)
-  new_idx_page_breaks <- new_idx_page_breaks[-1]
+  idx <- which(df$newpage == 1)
+  new_idx_page_breaks <- c()
+  accum <- 1
+  for (i in idx) {
+    count_ones <- sum(df$newrows[1:i] == 1)
+    new_idx_page_breaks <- c(new_idx_page_breaks, i + count_ones + accum)
+    accum <- accum + 1
+  }
 
   # update the flextable
   flx <- flx |>
@@ -846,7 +874,7 @@ tt_to_flextable_j <- function(
         only_first_row_indent_zero <-
           all(lapply(full_pag_i, function(x) {
             x$row_info |> dplyr::filter(label != " ", indent == 0) |> nrow()
-            }) == 1)
+          }) == 1)
         sub_ft <- tt_to_flextable_j(
           tt = subt,
           theme = theme,
@@ -1251,7 +1279,10 @@ tt_to_flextable_j <- function(
     )
     if (!is.null(names(pags))) {
       flx <- insert_keepNext_vertical_pagination(flx = flx,
-                                                 page_names = strmodify(names(pags), string_map))
+                                                 pags = pags,
+                                                 fontspec = fontspec,
+                                                 string_map = string_map,
+                                                 round_type = round_type)
     }
   }
   # END
