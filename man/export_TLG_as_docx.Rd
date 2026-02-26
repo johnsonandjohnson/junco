@@ -16,7 +16,7 @@ export_TLG_as_docx(
     height = 8.5, orient = orientation), page_margins = officer::page_mar(bottom = 1, top
     = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)),
   doc_metadata = NULL,
-  template_file = system.file("template_file.docx", package = "junco"),
+  template_file = NULL,
   orientation = "portrait",
   paginate = tlgtype == "Table",
   nosplitin = list(row = character(), col = character()),
@@ -31,7 +31,7 @@ export_TLG_as_docx(
   alignments = list(),
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = NULL,
-  watermark = FALSE,
+  watermark = NULL,
   plotnames = NULL,
   title = NULL,
   footers = NULL,
@@ -70,10 +70,11 @@ by \code{\link[officer:set_doc_properties]{officer::set_doc_properties()}}. Impo
 creator, and description, while created is a date object.\cr
 (optional) Default = NULL.}
 
-\item{template_file}{(\code{character})\cr template file that \code{officer} will use as a starting
+\item{template_file}{(\code{character})\cr Template file that \code{officer} will use as a starting
 point for the final document. Document attaches the table and uses the defaults
 defined in the template file. Paragraph styles are inherited from this file.\cr
-(optional) Default = "doc/template_file.docx".}
+If NULL, this function will use an internal template.
+(optional) Default = NULL.}
 
 \item{orientation}{(\code{character})\cr one of: "portrait", "landscape".\cr
 (optional) Default = "portrait".}
@@ -120,10 +121,10 @@ the input Table/Listing and k is the number of lines the header takes up.\cr
 See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders} for what the matrix should contain.
 Users should only specify this when the default behavior does not meet their needs.}
 
-\item{watermark}{(\code{logical})\cr whether to display the watermark "Confidential".\cr
-In the future, this argument will be the actual watermark (i.e. a string)
-to display.\cr
-(optional) Default = FALSE.}
+\item{watermark}{(\code{character})\cr the watermark (text) to display in the
+output docx file.\cr
+If NULL, no watermark will be displayed.
+(optional) Default = NULL.}
 
 \item{plotnames}{(\code{character})\cr a file path, or a list of them,
 to previously saved .png files. These will be opened and
@@ -163,4 +164,66 @@ fully production ready and is being made available for further testing
 and early adoption. Please report any issues you encounter to the developers.
 This function may be removed from junco in the future if the functionality
 is merged into \code{rtables.officer}.
+}
+\examples{
+adsl <- ex_adsl
+adae <- ex_adae
+extra_args_1 <- list(
+  .stats = c("count_unique_denom_fraction")
+)
+lyt1 <- basic_table(show_colcounts = TRUE) |>
+split_cols_by("ARM") |>
+analyze(
+  vars = "COUNTRY",
+  afun = a_freq_j,
+  extra_args = extra_args_1
+)
+tbl1 <- build_table(lyt1, adsl)
+tab_titles <- list(
+  "title" = "This is the main Title",
+  "subtitles" = NULL,
+  "main_footer" = c(
+  "footer 1",
+  "footer 2"
+  ),
+  "prov_footer" = NULL)
+tbl1b <- set_titles(tbl1, tab_titles)
+
+export_TLG_as_docx(
+  obj = tbl1b,
+  tblid = "test",
+  output_dir = tempdir(),
+  theme = theme_docx_default_j(), add_page_break = FALSE,
+  titles_as_header = TRUE, integrate_footers = TRUE,
+  section_properties = officer::prop_section(
+    page_size = officer::page_size(width = 11, height = 8.5, orient = "portrait"),
+    page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
+  ),
+  doc_metadata = NULL,
+  template_file = NULL,
+  orientation = "portrait",
+  paginate = FALSE,
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  string_map = default_str_map,
+  markup_df_docx = junco:::dps_markup_df_docx,
+  combined_docx = FALSE,
+  tlgtype = "Table",
+  col_gap = 3,
+  pagenum = FALSE,
+  round_type = "iec",
+  alignments = list(),
+  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border_mat = NULL,
+  watermark = NULL,
+  plotnames = NULL,
+  title = NULL,
+  footers = NULL,
+  plotwidth = 8,
+  plotheight = 5.51,
+  units = "in"
+)
+
 }
