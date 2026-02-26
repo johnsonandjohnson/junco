@@ -213,10 +213,10 @@ test_that("a_freq_j in layout with relative risk column for combined facet", {
 
   # default method for relative risk in a_freq_j is wald stat which is based upon tern function
   expected <- tern::stat_propdiff_ci(
-                                   x = list(countscomb),
-                                   y = list(countsctrl),
-                                   N_x = ncolcomb,
-                                   N_y = ncolctrl
+    x = list(countscomb),
+    y = list(countsctrl),
+    N_x = ncolcomb,
+    N_y = ncolctrl
   )
 
   testthat::expect_equal(actual, expected, ignore_attr = TRUE)
