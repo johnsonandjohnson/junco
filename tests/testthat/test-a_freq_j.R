@@ -210,12 +210,14 @@ test_that("a_freq_j in layout with relative risk column for combined facet", {
 
   countscomb <- sum(sapply(cell_values(actual_row[1, combcols]), function(v) v[["count_unique"]]), na.rm = TRUE)
   countsctrl <- cell_values(actual_row[1, ctrlcol])[[1]][["count_unique"]]
-  
+
   # default method for relative risk in a_freq_j is wald stat which is based upon tern function
-  expected <- tern::stat_propdiff_ci(x = list(countscomb),
-                   y = list(countsctrl),
-                   N_x = ncolcomb,
-                   N_y = ncolctrl)
+  expected <- tern::stat_propdiff_ci(
+                                   x = list(countscomb),
+                                   y = list(countsctrl),
+                                   N_x = ncolcomb,
+                                   N_y = ncolctrl
+  )
 
   testthat::expect_equal(actual, expected, ignore_attr = TRUE)
 })
