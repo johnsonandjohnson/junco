@@ -125,11 +125,6 @@ the input Table/Listing and k is the number of lines the header takes up.\cr
 See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders} for what the matrix should contain.
 Users should only specify this when the default behavior does not meet their needs.}
 
-\item{watermark}{(\code{character})\cr the watermark (text) to display in the
-output docx file.\cr
-If NULL, no watermark will be displayed.
-(optional) Default = NULL.}
-
 \item{export_csv}{(\code{logical(1)})\cr Whether to export the object as a csv representation.
 Default = FALSE.}
 
@@ -144,6 +139,11 @@ Only used if export_csv = TRUE.}
 \item{validate}{(\code{logical(1)})\cr Whether to validate the table structure using
 \code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message
 will be displayed when validation fails.}
+
+\item{watermark}{(\code{character})\cr the watermark (text) to display in the
+output docx file.\cr
+If NULL, no watermark will be displayed.
+(optional) Default = NULL.}
 
 \item{plotnames}{(\code{character})\cr a file path, or a list of them,
 to previously saved .png files. These will be opened and
@@ -185,6 +185,7 @@ and early adoption. Please report any issues you encounter to the developers.
 This function may be removed from junco in the future if the functionality
 is merged into \code{rtables.officer}.
 }
+
 \examples{
 adsl <- ex_adsl
 adae <- ex_adae

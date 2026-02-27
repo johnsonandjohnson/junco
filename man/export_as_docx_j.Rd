@@ -67,7 +67,7 @@ by \code{\link[officer:set_doc_properties]{officer::set_doc_properties()}}. Impo
 creator, and description, while created is a date object.\cr
 (optional) Default = NULL.}
 
-\item{template_file}{(\code{character})\cr template file that \code{officer} will use as a starting
+\item{template_file}{(\code{character})\cr Template file that \code{officer} will use as a starting
 point for the final document. Document attaches the table and uses the defaults
 defined in the template file. Paragraph styles are inherited from this file.\cr
 If NULL, this function will use an internal template.

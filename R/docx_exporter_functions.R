@@ -19,7 +19,7 @@ validate_tabletree <- function(tt, validate, tlgtype) {
     }
   }
 }
-  
+
 get_template_file <- function() {
   template_file <- "template_file.docx"
   template_file <- system.file(template_file, package = "junco")
@@ -721,7 +721,7 @@ theme_docx_default_j <- function(
 #' the indentation if we have vertical pagination. No need to be specified by the end user.\cr
 #' (optional) Default = FALSE.
 #'
-#' @inheritParams export_as_docx_j
+#' @inheritParams export_TLG_as_docx
 #' @inheritSection export_TLG_as_docx Note
 #'
 #' @note
@@ -1342,7 +1342,7 @@ tt_to_flextable_j <- function(
       tt,
       fontspec = fontspec,
       landscape = orientation == "landscape",
-      colwidths = NULL,
+      colwidths = colwidths_2,
       col_gap = col_gap,
       pg_width = pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
