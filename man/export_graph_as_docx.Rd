@@ -15,7 +15,8 @@ export_graph_as_docx(
   plotwidth = 8,
   plotheight = 5.51,
   units = c("in", "cm", "mm", "px")[1],
-  border = flextable::fp_border_default(width = 0.75, color = "black")
+  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  watermark = NULL
 )
 }
 \arguments{
@@ -60,6 +61,11 @@ in which the plotwidth and plotheight arguments are expressed:
 
 \item{border}{(\code{fp_border})\cr border to use.\cr
 Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
+
+\item{watermark}{(\code{character})\cr the watermark (text) to display in the
+output docx file.\cr
+If NULL, no watermark will be displayed.
+(optional) Default = NULL.}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

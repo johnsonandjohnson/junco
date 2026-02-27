@@ -16,7 +16,7 @@ export_as_docx_j(
     height = 8.5, orient = orientation), page_margins = officer::page_mar(bottom = 1, top
     = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)),
   doc_metadata = NULL,
-  template_file = system.file("template_file.docx", package = "junco"),
+  template_file = NULL,
   orientation = "portrait",
   paginate = tlgtype == "Table",
   nosplitin = list(row = character(), col = character()),
@@ -30,7 +30,7 @@ export_as_docx_j(
   alignments = list(),
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
-  watermark = FALSE,
+  watermark = NULL,
   export_csv = FALSE,
   output_csv_directory = NULL,
   markup_df = dps_markup_df,
@@ -70,7 +70,8 @@ creator, and description, while created is a date object.\cr
 \item{template_file}{(\code{character})\cr template file that \code{officer} will use as a starting
 point for the final document. Document attaches the table and uses the defaults
 defined in the template file. Paragraph styles are inherited from this file.\cr
-(optional) Default = "doc/template_file.docx".}
+If NULL, this function will use an internal template.
+(optional) Default = NULL.}
 
 \item{orientation}{(\code{character})\cr one of: "portrait", "landscape".\cr
 (optional) Default = "portrait".}
@@ -117,10 +118,10 @@ the input Table/Listing and k is the number of lines the header takes up.\cr
 See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders} for what the matrix should contain.
 Users should only specify this when the default behavior does not meet their needs.}
 
-\item{watermark}{(\code{logical})\cr whether to display the watermark "Confidential".\cr
-In the future, this argument will be the actual watermark (i.e. a string)
-to display.\cr
-(optional) Default = FALSE.}
+\item{watermark}{(\code{character})\cr the watermark (text) to display in the
+output docx file.\cr
+If NULL, no watermark will be displayed.
+(optional) Default = NULL.}
 
 \item{export_csv}{(\code{logical(1)})\cr Whether to export the object as a csv representation.
 Default = FALSE.}

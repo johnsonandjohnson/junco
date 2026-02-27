@@ -46,14 +46,14 @@ lsmeans_wide_first_split_fun_fct <- function(include_variance) {
         reference_group = "Reference Group",
         testing_group = "Testing Group",
         variance = "",
-        comparison = "Testing - Reference",
+        comparison = "Testing-Reference",
         fulldf = fulldf
       )
     } else {
       short_split_result(
         reference_group = "Reference Group",
         testing_group = "Testing Group",
-        comparison = "Testing - Reference",
+        comparison = "Testing-Reference",
         fulldf = fulldf
       )
     }
