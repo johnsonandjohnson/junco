@@ -1285,7 +1285,7 @@ docx_markup_df <- tibble::tribble(
 docx_markup_df
 ```
 
-If a .docx file is to be created for the table, the `junco::export_TLG_as_docx` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_TLG_as_docx`, the "markup_df" argument has the default "docx_markup_df" object specified.
+If a .docx file is to be created for the table, the `junco::export_TLG_as_docx` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_TLG_as_docx`, the "markup_df_docx" argument has the default "docx_markup_df" object specified.
 
 
 ```{r superscript_table_docx}
@@ -1327,7 +1327,7 @@ export_TLG_as_docx(result,
                 tblid = "superscripttable",
                 output_dir = out_dir,
                 orientation = "landscape",
-                markup_df = docx_markup_df)
+                markup_df_docx = docx_markup_df)
 ```
 
 
@@ -1335,7 +1335,7 @@ export_TLG_as_docx(result,
 
 ### Visual Output (HTML Representation)
 ```{r superscript_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "superscripttable", orientation = "landscape",  markup_df = docx_markup_df)
+tt_to_flextable_j(result, "superscripttable", orientation = "landscape",  markup_df_docx = docx_markup_df)
 ```
 
 ### Listing .rtf File
@@ -1406,7 +1406,7 @@ docx_markup_df <- tibble::tribble(
 docx_markup_df
 ```
 
-If a .docx file is to be created for the table, the `junco::export_TLG_as_docx` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_TLG_as_docx`, the "markup_df" argument has the default "docx_markup_df" object specified.
+If a .docx file is to be created for the table, the `junco::export_TLG_as_docx` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_TLG_as_docx`, the "markup_df_docx" argument has the default "docx_markup_df" object specified.
 
 ```{r superscript_listing_docx}
 
@@ -1445,11 +1445,11 @@ export_TLG_as_docx(result,
                 tblid = "examplelistingsuperscript2",
                 output_dir = out_dir,
                 orientation = "landscape",
-                markup_df = docx_markup_df)
+                markup_df_docx = docx_markup_df)
 ```
 ### Visual Output (HTML Representation)
 ```{r superscript_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "examplelistingsuperscript2", orientation = "landscape",  markup_df = docx_markup_df)
+tt_to_flextable_j(result, "examplelistingsuperscript2", orientation = "landscape",  markup_df_docx = docx_markup_df)
 ```
 
 

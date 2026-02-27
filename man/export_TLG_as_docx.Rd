@@ -31,6 +31,10 @@ export_TLG_as_docx(
   alignments = list(),
   border = flextable::fp_border_default(width = 0.75, color = "black"),
   border_mat = NULL,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
+  validate = TRUE,
   watermark = NULL,
   plotnames = NULL,
   title = NULL,
@@ -121,6 +125,21 @@ the input Table/Listing and k is the number of lines the header takes up.\cr
 See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders} for what the matrix should contain.
 Users should only specify this when the default behavior does not meet their needs.}
 
+\item{export_csv}{(\code{logical(1)})\cr Whether to export the object as a csv representation.
+Default = FALSE.}
+
+\item{output_csv_directory}{(\code{character(1)})\cr the directory to export the csv.
+Default = NULL. Only used if export_csv = TRUE.
+If NULL or attempting to export in a non-existent directory, the csv will be exported
+in the same directory as the .docx file.}
+
+\item{markup_df}{(\code{data.frame})\cr Data frame containing markup information.
+Only used if export_csv = TRUE.}
+
+\item{validate}{(\code{logical(1)})\cr Whether to validate the table structure using
+\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message
+will be displayed when validation fails.}
+
 \item{watermark}{(\code{character})\cr the watermark (text) to display in the
 output docx file.\cr
 If NULL, no watermark will be displayed.
@@ -157,7 +176,8 @@ in which the plotwidth and plotheight arguments are expressed:
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
-\note{
+\section{Note}{
+
 This function has been tested for common use cases but may not work or have
 unexpected or undesired behavior in corner cases. As such it is not considered
 fully production ready and is being made available for further testing
@@ -165,6 +185,7 @@ and early adoption. Please report any issues you encounter to the developers.
 This function may be removed from junco in the future if the functionality
 is merged into \code{rtables.officer}.
 }
+
 \examples{
 adsl <- ex_adsl
 adae <- ex_adae

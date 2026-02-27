@@ -72,7 +72,8 @@ If NULL, no watermark will be displayed.
 
 Export graph in DOCX format. See notes to understand why this is experimental.
 }
-\note{
+\section{Note}{
+
 This function has been tested for common use cases but may not work or have
 unexpected or undesired behavior in corner cases. As such it is not considered
 fully production ready and is being made available for further testing
@@ -80,3 +81,4 @@ and early adoption. Please report any issues you encounter to the developers.
 This function may be removed from junco in the future if the functionality
 is merged into \code{rtables.officer}.
 }
+
