@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed `s_kaplan_meier()` range censoring indicator handling to no longer produce `NA` values in the output when either all subjects are censored or none are censored.
+- Aligned `a_freq_resp_var_j()` with `a_freq_j()` by adding `.formats` and `na_str` parameters to allow user customization of output formatting and NA string representation (#67).
 - Fixed the hanging indent in the first column of the body of the table (#138)
 - Export `leftside()`, `postfun_eq5d` `ac_blank_line` and `tt_to_tblfile`
 - Minor bugfix in DOCX exporter when calculating the number of pages (#188)
