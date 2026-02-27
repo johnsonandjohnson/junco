@@ -351,33 +351,58 @@ add_little_gap_bottom_borders_spanning_headers <- function(
   flx,
   border = flextable::fp_border_default(width = 0.75, color = "black")
 ) {
-  n <- nrow(flx$header$styles$cells$border.width.bottom$data)
-  spanning_headers <- flx$header$spans$rows
-  for (i in seq_len(n - 1)) {
-    j <- which(flx$header$styles$cells$border.width.bottom$data[i, ] > 0)
-    if (length(which(spanning_headers[i, j] > 0)) > 1) {
-      # remove the border before inserting a paragraph border
-      flx <- flextable::border(
-        x = flx,
-        part = "header",
-        i = i,
-        j = j,
-        border.bottom = officer::fp_border(color = "white", width = 0.1)
-      )
-      flx <- flextable::style(
-        x = flx,
-        part = "header",
-        i = i,
-        j = j,
-        pr_c = officer::fp_cell(margin.right = 3, margin.left = 3, vertical.align = "bottom"),
-        pr_p = officer::fp_par(
-          border.bottom = border,
-          text.align = "center"
-        )
-      )
+  nrow_header <- flextable::nrow_part(x = flx, part = "header")
+  if (nrow_header > 1) {
+    bottom_borders <- flx$header$styles$cells$border.width.bottom$data
+    spanning_headers <- flx$header$spans$rows
+    rows_to_inspect <- seq(1, nrow_header - 1)
+
+    for (i in rows_to_inspect) {
+      # if there are at least 2 spanning headers in the current header row
+      pos_spanning_header <- which(spanning_headers[i, ] > 1)
+      num_spanning_header <- length(pos_spanning_header)
+      if (num_spanning_header >= 2) {
+        for (j in pos_spanning_header[seq(1, num_spanning_header - 1)]) {
+          width_spanning_header <- spanning_headers[i, j]
+          # if the spanning headers are consecutive and both have bottom borders,
+          # then replace the cell borders by paragraph borders
+          if (spanning_headers[i, j + width_spanning_header] > 1 &&
+                bottom_borders[i, j + width_spanning_header - 1] > 0 &&
+                bottom_borders[i, j + width_spanning_header] > 0) {
+            start_pos <- j
+            end_pos <- start_pos + width_spanning_header +
+              spanning_headers[i, j + width_spanning_header] - 1
+            # remove the border before inserting a paragraph border
+            flx <- flextable::hline(
+              x = flx,
+              part = "header",
+              i = i,
+              j = seq(start_pos, end_pos),
+              border = officer::fp_border(width = 0)
+            )
+            # add the paragraph border
+            top_cell_borders <- flx$header$styles$cells$border.width.top$data[i, seq(start_pos, end_pos)]
+            flx <- flextable::style(
+              x = flx,
+              part = "header",
+              i = i,
+              j = seq(start_pos, end_pos),
+              pr_p = officer::fp_par(
+                border.bottom = border,
+                text.align = "center"
+              )
+            )
+            flx$header$styles$cells$border.width.top$data[i, seq(start_pos, end_pos)] <- top_cell_borders
+
+            flx$header$styles$cells$margin.left$data[i, start_pos + width_spanning_header] <- 3
+            flx$header$styles$cells$margin.right$data[i, start_pos] <- 3
+            flx$header$styles$pars$border.width.bottom$data[i, c(start_pos, start_pos + width_spanning_header)] <-
+              border$width
+          }
+        }
+      }
     }
   }
-
   return(flx)
 }
 
