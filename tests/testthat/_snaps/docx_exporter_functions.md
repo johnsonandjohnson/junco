@@ -4317,7 +4317,7 @@
       
       $opts_word
       $split
-      [1] FALSE
+      [1] TRUE
       
       $keep_with_next
       [1] TRUE
@@ -8878,7 +8878,7 @@
       
       $opts_word
       $split
-      [1] FALSE
+      [1] TRUE
       
       $keep_with_next
       [1] TRUE
@@ -14856,7 +14856,7 @@
       
       $opts_word
       $split
-      [1] FALSE
+      [1] TRUE
       
       $keep_with_next
       [1] TRUE
@@ -19858,7 +19858,7 @@
       
       $opts_word
       $split
-      [1] FALSE
+      [1] TRUE
       
       $keep_with_next
       [1] TRUE
@@ -24430,7 +24430,7 @@
       
       $opts_word
       $split
-      [1] FALSE
+      [1] TRUE
       
       $keep_with_next
       [1] TRUE
