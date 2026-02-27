@@ -1,6 +1,6 @@
 Package: junco
 Title: Create Common Tables and Listings Used in Clinical Trials
-Version: 0.1.4
+Version: 0.1.5
 Date: 2026-01-12
 Authors@R: c(
     person("Gabriel", "Becker", , "gabembecker@gmail.com", role = c("cre", "aut"),
@@ -45,6 +45,7 @@ Imports:
     tern (>= 0.9.10),
     rlistings (>= 0.2.13),
     checkmate (>= 2.1.0),
+    rbmi (>= 1.6.0),
     broom,
     methods,
     dplyr,
@@ -58,12 +59,11 @@ Imports:
     assertthat,
     vcdExtra (>= 0.8.7),
     rtables.officer (>= 0.1.0),
-    flextable,
+    flextable (>= 0.9.11),
     officer,
     xml2,
     ggplot2,
-    stringi,
-    systemfonts
+    stringi
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
@@ -78,9 +78,8 @@ Suggests:
     parallel,
     readxl,
     rlang,
-    rbmi (>= 1.3.0),
     tidyr,
     pharmaverseadamjnj (>= 0.0.2)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-Additional_repositories: https://insightsengineering.r-universe.dev/
+Remotes: davidgohel/flextable

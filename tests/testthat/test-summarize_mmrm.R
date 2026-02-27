@@ -13,7 +13,7 @@ longdat <- data.frame(
   dplyr::inner_join(DM, by = "ID")
 
 testthat::test_that("h_summarize_mmrm works with healthy input", {
-  result <- h_summarize_mmrm(
+  suppressMessages(result <- h_summarize_mmrm(
     .var = "AVAL",
     df_parent = longdat,
     variables = list(
@@ -25,7 +25,7 @@ testthat::test_that("h_summarize_mmrm works with healthy input", {
     ref_arm_level = "B: Placebo",
     ref_visit_levels = "V0",
     weights_emmeans = "proportional"
-  )
+  ))
   checkmate::expect_data_frame(result)
   expect_snapshot_value(result, style = "deparse", tolerance = 1e-3)
 })
@@ -48,7 +48,7 @@ test_that("s_summarize_mmrm works with healthy input in non-ref cell", {
     full_parent_df = I(list(root_df, strata_df, visit_df))
   )
 
-  result <- s_summarize_mmrm(
+  suppressMessages(result <- s_summarize_mmrm(
     df = df,
     .var = "AVAL",
     variables = list(
@@ -61,7 +61,7 @@ test_that("s_summarize_mmrm works with healthy input in non-ref cell", {
     .spl_context = .spl_context,
     cor_struct = "toeplitz",
     weights_emmeans = "proportional"
-  )
+  ))
 
   checkmate::expect_list(result)
   expect_snapshot_value(result, style = "deparse", tolerance = 1e-3)
@@ -85,7 +85,7 @@ test_that("s_summarize_mmrm works with healthy input in ref col cell", {
     full_parent_df = I(list(root_df, strata_df, visit_df))
   )
 
-  result <- s_summarize_mmrm(
+  suppressMessages(result <- s_summarize_mmrm(
     df = df,
     .var = "AVAL",
     variables = list(
@@ -98,7 +98,7 @@ test_that("s_summarize_mmrm works with healthy input in ref col cell", {
     .spl_context = .spl_context,
     cor_struct = "toeplitz",
     weights_emmeans = "proportional"
-  )
+  ))
 
   checkmate::expect_list(result)
   expect_snapshot_value(result, style = "serialize", tolerance = 1e-3)
@@ -122,7 +122,7 @@ test_that("s_summarize_mmrm works with healthy input in ref row cell", {
     full_parent_df = I(list(root_df, strata_df, visit_df))
   )
 
-  result <- s_summarize_mmrm(
+  suppressMessages(result <- s_summarize_mmrm(
     df = df,
     .var = "AVAL",
     variables = list(
@@ -135,7 +135,7 @@ test_that("s_summarize_mmrm works with healthy input in ref row cell", {
     .spl_context = .spl_context,
     cor_struct = "toeplitz",
     weights_emmeans = "proportional"
-  )
+  ))
 
   checkmate::expect_list(result)
   expect_snapshot(result)
@@ -164,7 +164,7 @@ test_that("a_summarize_mmrm works as expected in table layout", {
         weights_emmeans = "proportional"
       )
     )
-  tbl <- build_table(lyt, longdat)
+  suppressMessages(tbl <- build_table(lyt, longdat))
 
   res <- expect_silent(tbl)
   expect_snapshot(res)
@@ -198,7 +198,7 @@ test_that("a_summarize_mmrm works as expected below row splits", {
         weights_emmeans = "proportional"
       )
     )
-  tbl <- build_table(lyt, longdat)
+  suppressMessages(tbl <- build_table(lyt, longdat))
 
   res <- expect_silent(tbl)
   expect_snapshot(res)

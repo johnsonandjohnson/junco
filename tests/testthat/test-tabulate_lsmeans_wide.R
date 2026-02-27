@@ -1,5 +1,51 @@
 library(dplyr)
 
+test_that("lsmeans_wide_first_split_fun_fct with variance works as expected", {
+  split_fun <- lsmeans_wide_first_split_fun_fct(include_variance = TRUE)
+  lyt <- basic_table() |>
+    split_cols_by("ID", split_fun = split_fun)
+  result <- expect_silent(build_table(lyt, DM))
+  expect_snapshot(col_info(result))
+  expect_snapshot(result)
+})
+
+test_that("lsmeans_wide_first_split_fun_fct without variance works as expected", {
+  split_fun <- lsmeans_wide_first_split_fun_fct(include_variance = FALSE)
+  lyt <- basic_table() |>
+    split_cols_by("ID", split_fun = split_fun)
+  result <- expect_silent(build_table(lyt, DM))
+  expect_snapshot(col_info(result))
+  expect_snapshot(result)
+})
+
+test_that("lsmeans_wide_second_split_fun_fct works as expected", {
+  split_fun <- lsmeans_wide_second_split_fun_fct(
+    include_pval = TRUE,
+    pval_sided = "2",
+    conf_level = 0.92
+  )
+  lyt <- basic_table() |>
+    split_cols_by("ID", split_fun = lsmeans_wide_first_split_fun_fct(FALSE)) |>
+    split_cols_by("ID", split_fun = split_fun)
+  result <- expect_silent(build_table(lyt, DM))
+  expect_snapshot(col_info(result))
+  expect_snapshot(result)
+})
+
+test_that("lsmeans_wide_second_split_fun_fct works with variance and without pval", {
+  split_fun <- lsmeans_wide_second_split_fun_fct(
+    include_pval = FALSE,
+    pval_sided = "1",
+    conf_level = 0.78
+  )
+  lyt <- basic_table() |>
+    split_cols_by("ID", split_fun = lsmeans_wide_first_split_fun_fct(TRUE)) |>
+    split_cols_by("ID", split_fun = split_fun)
+  result <- expect_silent(build_table(lyt, DM))
+  expect_snapshot(col_info(result))
+  expect_snapshot(result)
+})
+
 test_that("lsmeans_wide_cfun works as expected", {
   df <- data.frame(
     TRT01P = factor(

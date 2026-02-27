@@ -1,3 +1,105 @@
+# lsmeans_wide_first_split_fun_fct with variance works as expected
+
+    Code
+      col_info(result)
+    Output
+      An InstantiatedColumnInfo object
+      Columns:
+      reference_group (ID)
+      testing_group (ID)
+      variance (ID)
+      comparison (ID)
+      
+
+---
+
+    Code
+      result
+    Output
+         Reference Group   Testing Group      Testing-Reference
+      —————————————————————————————————————————————————————————
+
+# lsmeans_wide_first_split_fun_fct without variance works as expected
+
+    Code
+      col_info(result)
+    Output
+      An InstantiatedColumnInfo object
+      Columns:
+      reference_group (ID)
+      testing_group (ID)
+      comparison (ID)
+      
+
+---
+
+    Code
+      result
+    Output
+         Reference Group   Testing Group   Testing-Reference
+      ——————————————————————————————————————————————————————
+
+# lsmeans_wide_second_split_fun_fct works as expected
+
+    Code
+      col_info(result)
+    Output
+      An InstantiatedColumnInfo object
+      Columns:
+      reference_group (ID) -> treatment (ID)
+      reference_group (ID) -> n (ID)
+      reference_group (ID) -> lsmean (ID)
+      reference_group (ID) -> se (ID)
+      testing_group (ID) -> treatment (ID)
+      testing_group (ID) -> n (ID)
+      testing_group (ID) -> lsmean (ID)
+      testing_group (ID) -> se (ID)
+      comparison (ID) -> lsmean (ID)
+      comparison (ID) -> se (ID)
+      comparison (ID) -> ci (ID)
+      comparison (ID) -> pval (ID)
+      
+
+---
+
+    Code
+      result
+    Output
+               Reference Group                 Testing Group                           Testing-Reference                
+         Treatment   N   LS Mean   SE   Treatment   N   LS Mean   SE   LS Mean   SE   92% CI   2-sided p-value~[super a]
+      ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+# lsmeans_wide_second_split_fun_fct works with variance and without pval
+
+    Code
+      col_info(result)
+    Output
+      An InstantiatedColumnInfo object
+      Columns:
+      reference_group (ID) -> treatment (ID)
+      reference_group (ID) -> n (ID)
+      reference_group (ID) -> lsmean (ID)
+      reference_group (ID) -> se (ID)
+      testing_group (ID) -> treatment (ID)
+      testing_group (ID) -> n (ID)
+      testing_group (ID) -> lsmean (ID)
+      testing_group (ID) -> se (ID)
+      variance (ID) -> mse (ID)
+      variance (ID) -> df (ID)
+      comparison (ID) -> lsmean (ID)
+      comparison (ID) -> se (ID)
+      comparison (ID) -> ci (ID)
+      
+
+---
+
+    Code
+      result
+    Output
+               Reference Group                 Testing Group                                       Testing-Reference   
+         Treatment   N   LS Mean   SE   Treatment   N   LS Mean   SE   M. S. Error   Error DF   LS Mean    SE    78% CI
+      —————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
 # lsmeans_wide_cfun works as expected
 
     Code
@@ -140,7 +242,7 @@
     Code
       result
     Output
-                     Reference Group                    Testing Group                                                        Testing - Reference                   
+                     Reference Group                    Testing Group                                                         Testing-Reference                    
              Treatment   N    LS Mean    SE    Treatment   N    LS Mean    SE    M. S. Error   Error DF   LS Mean    SE       80% CI      2-sided p-value~[super a]
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       VIS1      PBO      68    33.2     0.82      TRT      66    36.8     0.79      41.2         129        3.7     1.13   (1.80, 5.56)             0.001          
@@ -156,7 +258,7 @@
     Code
       result
     Output
-                     Reference Group                    Testing Group                                                        Testing - Reference                   
+                     Reference Group                    Testing Group                                                         Testing-Reference                    
              Treatment   N    LS Mean    SE    Treatment   N    LS Mean    SE    M. S. Error   Error DF   LS Mean    SE       80% CI      2-sided p-value~[super a]
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       VIS1      PBO      68    33.0     1.06      TRT      66    36.5     1.06      74.3         194        3.5     1.51   (1.41, 5.53)             0.044          
@@ -176,7 +278,7 @@
     Code
       result
     Output
-                     Reference Group                    Testing Group                 Testing - Reference     
+                     Reference Group                    Testing Group                  Testing-Reference      
              Treatment   N    LS Mean    SE    Treatment   N    LS Mean    SE    LS Mean    SE       80% CI   
       ————————————————————————————————————————————————————————————————————————————————————————————————————————
       VIS1      PBO      68    33.2     0.82      TRT      66    36.8     0.79     3.7     1.13   (1.80, 5.56)

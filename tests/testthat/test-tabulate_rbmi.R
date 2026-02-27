@@ -1,10 +1,7 @@
-library(broom)
-
-if (requireNamespace("rbmi", quietly = TRUE)) {
-  suppressPackageStartupMessages(library(rbmi))
-} else {
-  skip("rbmi package not available")
-}
+suppressPackageStartupMessages({
+  library(broom)
+  library(rbmi)
+})
 
 # rbmi_test_data ----
 

@@ -72,7 +72,6 @@ rbmi_ancova <- function(
   visits = NULL,
   weights = c("counterfactual", "equal", "proportional_em", "proportional")
 ) {
-  assert_rbmi()
   outcome <- vars[["outcome"]]
   group <- vars[["group"]]
   covariates <- vars[["covariates"]]
@@ -122,11 +121,10 @@ rbmi_ancova <- function(
 #' `trt_*` and `lsm_*` entries. See [rbmi_ancova()] for full details.
 #' @examples
 #'
-#' if (requireNamespace("rbmi", quietly = TRUE)) {
-#'   iris2 <- iris[iris$Species %in% c("versicolor", "virginica"), ]
-#'   iris2$Species <- factor(iris2$Species)
-#'   rbmi_ancova_single(iris2, "Sepal.Length", "Species", c("Petal.Length * Petal.Width"))
-#' }
+#'  iris2 <- iris[iris$Species %in% c("versicolor", "virginica"), ]
+#'  iris2$Species <- factor(iris2$Species)
+#'  rbmi_ancova_single(iris2, "Sepal.Length", "Species", c("Petal.Length * Petal.Width"))
+#'
 #'
 #' @seealso [rbmi_ancova()]
 rbmi_ancova_single <- function(
@@ -136,7 +134,6 @@ rbmi_ancova_single <- function(
   covariates,
   weights = c("counterfactual", "equal", "proportional_em", "proportional")
 ) {
-  assert_rbmi()
   checkmate::assert_string(outcome)
   checkmate::assert_string(group)
   weights <- match.arg(weights)
