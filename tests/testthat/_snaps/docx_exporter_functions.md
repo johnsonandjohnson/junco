@@ -4317,7 +4317,7 @@
       
       $opts_word
       $split
-      [1] FALSE
+      [1] TRUE
       
       $keep_with_next
       [1] TRUE
@@ -8878,7 +8878,7 @@
       
       $opts_word
       $split
-      [1] FALSE
+      [1] TRUE
       
       $keep_with_next
       [1] TRUE
@@ -14856,7 +14856,7 @@
       
       $opts_word
       $split
-      [1] FALSE
+      [1] TRUE
       
       $keep_with_next
       [1] TRUE
@@ -19858,7 +19858,7 @@
       
       $opts_word
       $split
-      [1] FALSE
+      [1] TRUE
       
       $keep_with_next
       [1] TRUE
@@ -20418,7 +20418,7 @@
       $margin.left
       $data
            V1 V2 V3 V4
-      [1,]  3  3  3  3
+      [1,]  0  0  3  0
       [2,]  0  0  0  0
       
       $keys
@@ -20439,7 +20439,7 @@
       $margin.right
       $data
            V1 V2 V3 V4
-      [1,]  3  3  3  3
+      [1,]  3  0  0  0
       [2,]  0  0  0  0
       
       $keys
@@ -20481,8 +20481,8 @@
       $border.width.top
       $data
              V1   V2   V3   V4
-      [1,] 0.00 0.00 0.00 0.00
-      [2,] 0.75 0.75 0.75 0.75
+      [1,] 0.75 0.75 0.75 0.75
+      [2,] 0.00 0.00 0.00 0.00
       
       $keys
       [1] "V1" "V2" "V3" "V4"
@@ -20904,9 +20904,9 @@
       
       $border.width.bottom
       $data
-           V1 V2 V3 V4
-      [1,]  0  0  0  0
-      [2,]  0  0  0  0
+             V1 V2   V3 V4
+      [1,] 0.75  0 0.75  0
+      [2,] 0.00  0 0.00  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
@@ -24430,7 +24430,7 @@
       
       $opts_word
       $split
-      [1] FALSE
+      [1] TRUE
       
       $keep_with_next
       [1] TRUE

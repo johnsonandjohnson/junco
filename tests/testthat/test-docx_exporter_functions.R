@@ -620,7 +620,7 @@ testthat::test_that("export_TLG_as_docx() works with basic example", {
   # export them as docx
   testthat::expect_no_error(
     export_TLG_as_docx(
-      plotnames = list(pn1, pn2),
+      plotnames = c(pn1, pn2),
       tblid = "testgraph1234",
       output_dir = output_dir,
       orientation = "landscape",
@@ -639,3 +639,5 @@ testthat::test_that("export_TLG_as_docx() works with basic example", {
 
   file.remove(c(pn1, pn2, output_docx))
 })
+
+options(docx.add_datetime = TRUE)
