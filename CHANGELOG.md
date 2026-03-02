@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Minor bugfix in DOCX exporter when calculating the number of pages (#188)
 - Fixed `tt_to_flextable_j()` to have correct left-indentation in header col 1 (#171) and footer first line starting with newline (#171)
 - Fixed relative risk difference derivations for combined column facets in `a_freq_j()`, `a_freq_resp_var_j()` and `a_eair100_j()` (#195)
+- Fixed calculation of 'reduce_first_col_indentation' and section break positions in `insert_keepNext_vertical_pagination()` (#218)
 - Fixed the little gaps in neighboring spanning headers in the docx exporter (#216)
 - Fixed blank pages happening at the end of the docx (#177)
 
