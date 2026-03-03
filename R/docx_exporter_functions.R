@@ -82,7 +82,7 @@ export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
 }
 
 
-insert_fake_watermark_XML <- function(doc, watermark, orientation) {
+insert_fake_watermark_XML <- function(doc, watermark, orientation, tlgtype) {
   # This function inserts a fake watermark WordArt in the Title of
   # the flextable (that is, in the document body) by inserting an XML node.
   # This function should only be called when exporting Figures.
@@ -99,7 +99,7 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation) {
     # to shift to the right, increase margin_left
     # to shift upwards, decrease margin_top
     margin_left <- -30.05
-    margin_top <- 175.35
+    margin_top <- ifelse(tlgtype == "Listing", 165, 175.35)
   }
 
 
@@ -1829,7 +1829,7 @@ export_as_docx_j <- function(
     add_vertical_pagination_XML(doc)
     remove_security_popup_page_numbers_XML(doc, tlgtype, pagenum)
     if (!is.null(watermark)) {
-      insert_fake_watermark_XML(doc, watermark, orientation)
+      insert_fake_watermark_XML(doc, watermark, orientation, tlgtype)
     }
 
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
@@ -2030,7 +2030,7 @@ export_graph_as_docx <- function(g = NULL,
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
   add_hanging_indent_in_title_XML(doc)
   if (!is.null(watermark)) {
-    insert_fake_watermark_XML(doc, watermark, orientation)
+    insert_fake_watermark_XML(doc, watermark, orientation, "Figure")
   }
   print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
 }
