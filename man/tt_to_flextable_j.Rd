@@ -8,7 +8,7 @@ tt_to_flextable_j(
   tt,
   tblid,
   theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   titles_as_header = TRUE,
   bold_titles = TRUE,
   integrate_footers = TRUE,
@@ -44,7 +44,7 @@ See \code{\link[=theme_docx_default_j]{theme_docx_default_j()}} or \code{\link[r
 for more details.}
 
 \item{border}{(\code{fp_border})\cr border to use.\cr
-Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
+Default = \code{flextable::fp_border_default(width = 0.875, color = "black")}.}
 
 \item{titles_as_header}{(\code{logical})\cr (optional) Default = TRUE.}
 

@@ -372,7 +372,7 @@ add_hanging_indent_in_title_XML <- function(doc) {
 
 add_little_gap_bottom_borders_spanning_headers <- function(
   flx,
-  border = flextable::fp_border_default(width = 0.75, color = "black")
+  border = flextable::fp_border_default(width = 0.875, color = "black")
 ) {
   nrow_header <- flextable::nrow_part(x = flx, part = "header")
   if (nrow_header > 1) {
@@ -444,7 +444,7 @@ insert_footer_text <- function(flx, tblid) {
 
 insert_title_as_header <- function(flx,
                                    title,
-                                   border = flextable::fp_border_default(width = 0.75, color = "black")) {
+                                   border = flextable::fp_border_default(width = 0.875, color = "black")) {
   # this function inserts the Title as a header but does not attempt
   # to simulate the hanging indent. Instead, it adds the string as is, and the hanging indent
   # will be handled further downstream when exporting to docx by manipulating the XML.
@@ -642,7 +642,7 @@ theme_docx_default_j <- function(
   cell_margins = c(0, 0, 0, 0),
   bold = c("header", "content_rows", "label_rows", "top_left"),
   bold_manual = NULL,
-  border = flextable::fp_border_default(width = 0.75, color = "black")
+  border = flextable::fp_border_default(width = 0.875, color = "black")
 ) {
   function(flx, ...) {
     if (!inherits(flx, "flextable")) {
@@ -787,7 +787,7 @@ tt_to_flextable_j <- function(
     tt,
     tblid,
     theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
-    border = flextable::fp_border_default(width = 0.75, color = "black"),
+    border = flextable::fp_border_default(width = 0.875, color = "black"),
     titles_as_header = TRUE,
     bold_titles = TRUE,
     integrate_footers = TRUE,
@@ -1507,7 +1507,7 @@ export_as_docx_j <- function(
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
   alignments = list(),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
   watermark = NULL,
   export_csv = FALSE,
@@ -1867,7 +1867,7 @@ export_graph_as_docx <- function(g = NULL,
                                  plotwidth = 8,
                                  plotheight = 5.51,
                                  units = c("in", "cm", "mm", "px")[1],
-                                 border = flextable::fp_border_default(width = 0.75, color = "black"),
+                                 border = flextable::fp_border_default(width = 0.875, color = "black"),
                                  watermark = NULL) {
 
   # Check arguments ----
@@ -2091,7 +2091,7 @@ export_graph_as_docx <- function(g = NULL,
 #' Each named list contains `row`, `col`, and `value`.\cr
 #' (optional) Default = `list()`.
 #' @param border (`fp_border`)\cr border to use.\cr
-#' Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.
+#' Default = \code{flextable::fp_border_default(width = 0.875, color = "black")}.
 #' @param border_mat (`matrix`)\cr a `m x k` matrix where m is the number of columns of
 #' the input Table/Listing and k is the number of lines the header takes up.\cr
 #' See [tidytlg::add_bottom_borders] for what the matrix should contain.
@@ -2183,7 +2183,7 @@ export_graph_as_docx <- function(g = NULL,
 #'   pagenum = FALSE,
 #'   round_type = "iec",
 #'   alignments = list(),
-#'   border = flextable::fp_border_default(width = 0.75, color = "black"),
+#'   border = flextable::fp_border_default(width = 0.875, color = "black"),
 #'   border_mat = NULL,
 #'   watermark = NULL,
 #'   plotnames = NULL,
@@ -2238,7 +2238,7 @@ export_TLG_as_docx <- function(
                       formatters::obj_round_type(obj),
                       "iec"),
   alignments = list(),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   border_mat = NULL,
   export_csv = FALSE,
   output_csv_directory = NULL,

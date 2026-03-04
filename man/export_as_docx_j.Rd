@@ -28,7 +28,7 @@ export_as_docx_j(
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
   alignments = list(),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
   watermark = NULL,
   export_csv = FALSE,
@@ -111,7 +111,7 @@ Each named list contains \code{row}, \code{col}, and \code{value}.\cr
 (optional) Default = \code{list()}.}
 
 \item{border}{(\code{fp_border})\cr border to use.\cr
-Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
+Default = \code{flextable::fp_border_default(width = 0.875, color = "black")}.}
 
 \item{border_mat}{(\code{matrix})\cr a \verb{m x k} matrix where m is the number of columns of
 the input Table/Listing and k is the number of lines the header takes up.\cr
