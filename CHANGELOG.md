@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed blank pages happening at the end of the docx (#177)
 - DOCX exporter fixed watermark location in case of listings
 - DOCX exporter updated table border width from 0.75 to 0.875 inches
+- DOCX exporter when having vertical pagination in tables or listings, fixed the rows misalignment from page 2 and below compared to RTF
 
 ### Changed
 
