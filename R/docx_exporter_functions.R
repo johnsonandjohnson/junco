@@ -3,6 +3,23 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
+align_rows_with_rtf <- function(doc) {
+  # when we have vertical pagination in the case of tables and listings,
+  # from page 2 onwards, the rows visually look a little bit shifted downwards
+  # in RTF compared to DOCX.
+  # It's a tiny difference caused by a little horizontal spacing located
+  # between the repeated table header and the first body row in each page,
+  # starting from page 2.
+  # This visual difference has to do with file "settings.xml" in the docx,
+  # and more precisely with this node:
+  # <w:compat>
+  #   <w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/>
+  # </w:compat>
+  # we need to change the value from 15 to 11
+  doc$settings$compatibility_mode <- "11"
+  return(doc)
+}
+
 validate_tabletree <- function(tt, validate, tlgtype) {
   if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
     if (!rtables::validate_table_struct(tt)) {
@@ -93,13 +110,13 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation, tlgtype) {
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
 
   if (orientation == "portrait") {
-    margin_left <- -118.05
-    margin_top <- 265.35
+    margin_left <- -114
+    margin_top <- 266
   } else {
     # to shift to the right, increase margin_left
     # to shift upwards, decrease margin_top
-    margin_left <- -30.05
-    margin_top <- ifelse(tlgtype == "Listing", 165, 175.35)
+    margin_left <- -24
+    margin_top <- ifelse(tlgtype == "Listing", 165, 176)
   }
 
 
@@ -1831,6 +1848,8 @@ export_as_docx_j <- function(
     if (!is.null(watermark)) {
       insert_fake_watermark_XML(doc, watermark, orientation, tlgtype)
     }
+
+    doc <- align_rows_with_rtf(doc)
 
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
