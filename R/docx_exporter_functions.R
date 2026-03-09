@@ -785,7 +785,7 @@ theme_docx_default_j <- function(
 #' @export
 tt_to_flextable_j <- function(
     tt,
-    tblid,
+    tblid = NULL,
     theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
     border = flextable::fp_border_default(width = 0.75, color = "black"),
     titles_as_header = TRUE,
@@ -820,7 +820,7 @@ tt_to_flextable_j <- function(
   }
 
   checkmate::assert_true(inherits(tt, "VTableTree") || inherits(tt, "listing_df"))
-  checkmate::assert_character(tblid)
+  checkmate::assert_character(tblid, null.ok = TRUE)
   checkmate::assert_function(theme)
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_flag(titles_as_header)
@@ -849,6 +849,11 @@ tt_to_flextable_j <- function(
   stopifnot("`alignments` must be a list" = is.list(alignments))
   for (alignment in alignments) {
     stopifnot("Each item of `alignments` must be a list" = is.list(alignment))
+  }
+
+  if (is.null(tblid)) {
+    temp_file <- tempfile()
+    tblid <- basename(temp_file)
   }
 
   validate_tabletree(tt, validate, tlgtype)
@@ -1477,8 +1482,8 @@ tt_to_flextable_j <- function(
 #' @inheritSection export_TLG_as_docx Note
 export_as_docx_j <- function(
   tt,
-  tblid,
-  output_dir,
+  tblid = NULL,
+  output_dir = NULL,
   theme = theme_docx_default_j(
     font = "Times New Roman",
     font_size = 9L,
@@ -1519,9 +1524,11 @@ export_as_docx_j <- function(
 
   checkmate::assert_true(inherits(tt, "VTableTree") || inherits(tt, "listing_df") ||
                            is.list(tt) || inherits(tt, "flextable"))
-  checkmate::assert_character(tblid)
-  checkmate::assert_character(output_dir, len = 1)
-  checkmate::assert_directory_exists(output_dir)
+  checkmate::assert_character(tblid, null.ok = TRUE)
+  checkmate::assert_character(output_dir, len = 1, null.ok = TRUE)
+  if (!is.null(output_dir)) {
+    checkmate::assert_directory_exists(output_dir)
+  }
   checkmate::assert_function(theme)
   checkmate::assert_flag(add_page_break)
   checkmate::assert_flag(titles_as_header)
@@ -1559,6 +1566,12 @@ export_as_docx_j <- function(
   checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
   checkmate::assert_flag(export_csv)
   checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
+
+  if (is.null(tblid) || is.null(output_dir)) {
+    temp_file <- tempfile()
+    tblid <- basename(temp_file)
+    output_dir <- dirname(temp_file)
+  }
 
   do_tt_error <- FALSE
   if (tlgtype != "Listing") {
@@ -1859,8 +1872,8 @@ export_as_docx_j <- function(
 #' @inheritSection export_TLG_as_docx Note
 export_graph_as_docx <- function(g = NULL,
                                  plotnames = NULL,
-                                 tblid,
-                                 output_dir,
+                                 tblid = NULL,
+                                 output_dir = NULL,
                                  title = NULL,
                                  footers = NULL,
                                  orientation = "portrait",
@@ -1922,9 +1935,11 @@ export_graph_as_docx <- function(g = NULL,
     }
   }
 
-  checkmate::assert_character(tblid)
-  checkmate::assert_character(output_dir, len = 1)
-  checkmate::assert_directory_exists(output_dir)
+  checkmate::assert_character(tblid, null.ok = TRUE)
+  checkmate::assert_character(output_dir, len = 1, null.ok = TRUE)
+  if (!is.null(output_dir)) {
+    checkmate::assert_directory_exists(output_dir)
+  }
   checkmate::assert_character(title, null.ok = TRUE)
   checkmate::assert_character(footers, null.ok = TRUE)
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
@@ -1933,6 +1948,12 @@ export_graph_as_docx <- function(g = NULL,
   checkmate::assert_choice(units, choices = c("in", "cm", "mm", "px"))
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
+
+  if (is.null(tblid) || is.null(output_dir)) {
+    temp_file <- tempfile()
+    tblid <- basename(temp_file)
+    output_dir <- dirname(temp_file)
+  }
 
 
   # Creation of flextable ----
@@ -2042,8 +2063,14 @@ export_graph_as_docx <- function(g = NULL,
 #'
 #' @param obj (`TableTree`, `listing_df` or `ggplot2`)\cr the object to export.
 #' @param tblid (`character`)\cr output ID to be displayed in the title and
-#' last line of footer.
-#' @param output_dir (`character`)\cr a directory path to save the docx.
+#' last line of footer. When exporting, it will also be used as the output filename.\cr
+#' If NULL, a temp file will be created, its dirname will replace argument `output_dir`,
+#' and its basename will replace argument `tblid`.\cr
+#' (optional) Default = NULL.
+#' @param output_dir (`character`)\cr a directory path to save the docx.\cr
+#' If NULL, a temp file will be created, its dirname will replace argument `output_dir`,
+#' and its basename will replace argument `tblid`.\cr
+#' (optional) Default = NULL.
 #' @param theme (function factory)\cr the theme to apply to the flextable.\cr
 #' (optional) Default = [theme_docx_default_j()].\cr
 #' See [theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
@@ -2062,7 +2089,7 @@ export_graph_as_docx <- function(g = NULL,
 #' @param template_file (`character`)\cr Template file that `officer` will use as a starting
 #' point for the final document. Document attaches the table and uses the defaults
 #' defined in the template file. Paragraph styles are inherited from this file.\cr
-#' If NULL, this function will use an internal template.
+#' If NULL, this function will use an internal template.\cr
 #' (optional) Default = NULL.
 #' @param orientation (`character`)\cr one of: "portrait", "landscape".\cr
 #' (optional) Default = "portrait".
@@ -2206,8 +2233,8 @@ export_graph_as_docx <- function(g = NULL,
 #'
 export_TLG_as_docx <- function(
   obj = NULL,
-  tblid,
-  output_dir,
+  tblid = NULL,
+  output_dir = NULL,
   theme = theme_docx_default_j(
     font = "Times New Roman",
     font_size = 9L,
@@ -2265,9 +2292,11 @@ export_TLG_as_docx <- function(
     checkmate::assert_true(inherits(obj, "VTableTree") || inherits(obj, "listing_df") ||
                              ggplot2::is.ggplot(obj) || is.list(obj))
   }
-  checkmate::assert_character(tblid)
-  checkmate::assert_character(output_dir, len = 1)
-  checkmate::assert_directory_exists(output_dir)
+  checkmate::assert_character(tblid, null.ok = TRUE)
+  checkmate::assert_character(output_dir, len = 1, null.ok = TRUE)
+  if (!is.null(output_dir)) {
+    checkmate::assert_directory_exists(output_dir)
+  }
   checkmate::assert_function(theme)
   checkmate::assert_flag(add_page_break)
   checkmate::assert_flag(titles_as_header)

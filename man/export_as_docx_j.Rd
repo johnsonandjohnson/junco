@@ -6,8 +6,8 @@
 \usage{
 export_as_docx_j(
   tt,
-  tblid,
-  output_dir,
+  tblid = NULL,
+  output_dir = NULL,
   theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
   add_page_break = FALSE,
   titles_as_header = TRUE,
@@ -42,9 +42,15 @@ export_as_docx_j(
 \item{tt}{(\code{TableTree} or \code{listing_df})\cr the object to export.}
 
 \item{tblid}{(\code{character})\cr output ID to be displayed in the title and
-last line of footer.}
+last line of footer. When exporting, it will also be used as the output filename.\cr
+If NULL, a temp file will be created, its dirname will replace argument \code{output_dir},
+and its basename will replace argument \code{tblid}.\cr
+(optional) Default = NULL.}
 
-\item{output_dir}{(\code{character})\cr a directory path to save the docx.}
+\item{output_dir}{(\code{character})\cr a directory path to save the docx.\cr
+If NULL, a temp file will be created, its dirname will replace argument \code{output_dir},
+and its basename will replace argument \code{tblid}.\cr
+(optional) Default = NULL.}
 
 \item{theme}{(function factory)\cr the theme to apply to the flextable.\cr
 (optional) Default = \code{\link[=theme_docx_default_j]{theme_docx_default_j()}}.\cr
@@ -70,7 +76,7 @@ creator, and description, while created is a date object.\cr
 \item{template_file}{(\code{character})\cr Template file that \code{officer} will use as a starting
 point for the final document. Document attaches the table and uses the defaults
 defined in the template file. Paragraph styles are inherited from this file.\cr
-If NULL, this function will use an internal template.
+If NULL, this function will use an internal template.\cr
 (optional) Default = NULL.}
 
 \item{orientation}{(\code{character})\cr one of: "portrait", "landscape".\cr
