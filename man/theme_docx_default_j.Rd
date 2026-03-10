@@ -10,7 +10,7 @@ theme_docx_default_j(
   cell_margins = c(0, 0, 0, 0),
   bold = c("header", "content_rows", "label_rows", "top_left"),
   bold_manual = NULL,
-  border = flextable::fp_border_default(width = 0.75, color = "black")
+  border = flextable::fp_border_default(width = 0.875, color = "black")
 )
 }
 \arguments{
@@ -35,8 +35,8 @@ Accepted groupings/names are c("header", "body").\cr
 See examples in \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::theme_docx_default()}}.\cr
 (optional) Default = NULL.}
 
-\item{border}{(\code{fp_border})\cr Border to use (default =
-\code{flextable::fp_border_default(width = 0.75, color = "black")}).}
+\item{border}{(\code{fp_border})\cr border to use.\cr
+Default = \code{flextable::fp_border_default(width = 0.875, color = "black")}.}
 }
 \value{
 A function that applies the given theme to a flextable.
@@ -47,7 +47,8 @@ A function that applies the given theme to a flextable.
 This function is based on \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::theme_docx_default()}}.
 See notes to understand why this is experimental.
 }
-\note{
+\section{Note}{
+
 This function has been tested for common use cases but may not work or have
 unexpected or undesired behavior in corner cases. As such it is not considered
 fully production ready and is being made available for further testing
@@ -55,3 +56,4 @@ and early adoption. Please report any issues you encounter to the developers.
 This function may be removed from junco in the future if the functionality
 is merged into \code{rtables.officer}.
 }
+

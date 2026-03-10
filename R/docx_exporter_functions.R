@@ -3,6 +3,40 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
+align_rows_with_rtf <- function(doc) {
+  # when we have vertical pagination in the case of tables and listings,
+  # from page 2 onwards, the rows visually look a little bit shifted downwards
+  # in RTF compared to DOCX.
+  # It's a tiny difference caused by a little horizontal spacing located
+  # between the repeated table header and the first body row in each page,
+  # starting from page 2.
+  # This visual difference has to do with file "settings.xml" in the docx,
+  # and more precisely with this node:
+  # <w:compat>
+  #   <w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/>
+  # </w:compat>
+  # we need to change the value from 15 to 11
+  doc$settings$compatibility_mode <- "11"
+  return(doc)
+}
+
+validate_tabletree <- function(tt, validate, tlgtype) {
+  if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
+    if (!rtables::validate_table_struct(tt)) {
+      message(
+        "Invalid table structure detected. This may cause issues in the output. ",
+        "The validation process failed, proceed with caution."
+      )
+    }
+  } else if (!validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
+    if (rtables::validate_table_struct(tt)) {
+      message(
+        "Table structure validation succeeded. You should not need to set validate=FALSE."
+      )
+    }
+  }
+}
+
 get_template_file <- function() {
   template_file <- "template_file.docx"
   template_file <- system.file(template_file, package = "junco")
@@ -65,7 +99,7 @@ export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
 }
 
 
-insert_fake_watermark_XML <- function(doc, watermark, orientation) {
+insert_fake_watermark_XML <- function(doc, watermark, orientation, tlgtype) {
   # This function inserts a fake watermark WordArt in the Title of
   # the flextable (that is, in the document body) by inserting an XML node.
   # This function should only be called when exporting Figures.
@@ -76,13 +110,13 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation) {
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
 
   if (orientation == "portrait") {
-    margin_left <- -118.05
-    margin_top <- 265.35
+    margin_left <- -114
+    margin_top <- 266
   } else {
     # to shift to the right, increase margin_left
     # to shift upwards, decrease margin_top
-    margin_left <- -30.05
-    margin_top <- 175.35
+    margin_left <- -24
+    margin_top <- ifelse(tlgtype == "Listing", 165, 176)
   }
 
 
@@ -196,6 +230,59 @@ remove_security_popup_page_numbers_XML <- function(doc, tlgtype = "Table",
   }
 }
 
+insert_keepNext_vertical_pagination <- function(flx, pags, fontspec,
+                                                string_map, round_type) {
+  df <- lapply(
+    pags,
+    tt_to_tbldf,
+    fontspec = fontspec,
+    string_map = string_map,
+    round_type = round_type
+  )
+  df <- do.call(
+    rbind,
+    lapply(
+      seq_along(df),
+      function(ii) {
+        dfii <- df[[ii]]
+        dfii$newpage <- 0
+        if (ii > 1) {
+          dfii$newpage[1] <- 1
+        }
+        dfii$indentme <- ifelse(dfii$indentme <= 1, 0, dfii$indentme - 1)
+        dfii
+      }
+    )
+  )
+
+  # calculate where to add the page breaks
+  idx <- which(df$newpage == 1)
+  new_idx_page_breaks <- c()
+  accum <- 1
+  for (i in idx) {
+    count_ones <- sum(df$newrows[1:i] == 1)
+    new_idx_page_breaks <- c(new_idx_page_breaks, i + count_ones + accum)
+    accum <- accum + 1
+  }
+
+  # update the flextable
+  flx <- flx |>
+    flextable::keep_with_next(i = new_idx_page_breaks, value = TRUE, part = "body")
+
+  # remove the lines just above the beginning of the chunk
+  # these lines are expected to be all blank
+  # they are not needed because there will be a page break in their place
+  # i.e. flx$body$dataset[new_idx_page_breaks - 1, ] should be all blank
+
+  mask <- flx$body$dataset[new_idx_page_breaks - 1, ] |> apply(1, function(x) {
+    all(x == "")
+  })
+  lines_to_remove <- new_idx_page_breaks[mask] - 1
+  flx <- flx |> flextable::delete_rows(part = "body", i = lines_to_remove)
+
+  return(flx)
+}
+
 add_vertical_pagination_XML <- function(doc) {
   # look for all nodes '<w:keepNext/>'
   l_x <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:keepNext")
@@ -298,69 +385,64 @@ add_hanging_indent_in_title_XML <- function(doc) {
   }
 }
 
-insert_keepNext_vertical_pagination <- function(tt, flx) {
-  # this function updates flx by calling flextable::keep_with_next()
 
-  # calculate where to add the page breaks
-  df <- tt_to_tbldf(tt = tt)
-  newrows <- df$newrows
-  idx_page_breaks <- as.integer(df$row_type == "VALUE" & df$newrows == 1)
-  idx <- which(newrows == 1)
-  new_idx_page_breaks <- idx_page_breaks
-  for (i in rev(idx)) {
-    new_idx_page_breaks <- append(new_idx_page_breaks, 0, after = i - 2)
-  }
-  new_idx_page_breaks <- which(new_idx_page_breaks == 1)
-
-  # update the flextable
-  flx <- flx |>
-    flextable::keep_with_next(i = new_idx_page_breaks, value = TRUE, part = "body")
-
-  # remove the lines just above the beginning of the chunk
-  # these lines are expected to be all blank
-  # they are not needed because there will be a page break in their place
-  # i.e. flx$body$dataset[new_idx_page_breaks - 1, ] should be all blank
-
-  mask <- flx$body$dataset[new_idx_page_breaks - 1, ] |> apply(1, function(x) {
-    all(x == "")
-  })
-  lines_to_remove <- new_idx_page_breaks[mask] - 1
-  flx <- flx |> flextable::delete_rows(part = "body", i = lines_to_remove)
-
-  return(flx)
-}
 
 add_little_gap_bottom_borders_spanning_headers <- function(
   flx,
-  border = flextable::fp_border_default(width = 0.75, color = "black")
+  border = flextable::fp_border_default(width = 0.875, color = "black")
 ) {
-  n <- nrow(flx$header$styles$cells$border.width.bottom$data)
-  spanning_headers <- flx$header$spans$rows
-  for (i in seq_len(n - 1)) {
-    j <- which(flx$header$styles$cells$border.width.bottom$data[i, ] > 0)
-    if (length(which(spanning_headers[i, j] > 0)) > 1) {
-      # remove the border before inserting a paragraph border
-      flx <- flextable::border(
-        x = flx,
-        part = "header",
-        i = i,
-        j = j,
-        border.bottom = officer::fp_border(color = "white", width = 0.1)
-      )
-      flx <- flextable::style(
-        x = flx,
-        part = "header",
-        i = i,
-        j = j,
-        pr_c = officer::fp_cell(margin.right = 3, margin.left = 3, vertical.align = "bottom"),
-        pr_p = officer::fp_par(
-          border.bottom = border,
-          text.align = "center"
-        )
-      )
+  nrow_header <- flextable::nrow_part(x = flx, part = "header")
+  if (nrow_header > 1) {
+    bottom_borders <- flx$header$styles$cells$border.width.bottom$data
+    spanning_headers <- flx$header$spans$rows
+    rows_to_inspect <- seq(1, nrow_header - 1)
+
+    for (i in rows_to_inspect) {
+      # if there are at least 2 spanning headers in the current header row
+      pos_spanning_header <- which(spanning_headers[i, ] > 1)
+      num_spanning_header <- length(pos_spanning_header)
+      if (num_spanning_header >= 2) {
+        for (j in pos_spanning_header[seq(1, num_spanning_header - 1)]) {
+          width_spanning_header <- spanning_headers[i, j]
+          # if the spanning headers are consecutive and both have bottom borders,
+          # then replace the cell borders by paragraph borders
+          if (spanning_headers[i, j + width_spanning_header] > 1 &&
+                bottom_borders[i, j + width_spanning_header - 1] > 0 &&
+                bottom_borders[i, j + width_spanning_header] > 0) {
+            start_pos <- j
+            end_pos <- start_pos + width_spanning_header +
+              spanning_headers[i, j + width_spanning_header] - 1
+            # remove the border before inserting a paragraph border
+            flx <- flextable::hline(
+              x = flx,
+              part = "header",
+              i = i,
+              j = seq(start_pos, end_pos),
+              border = officer::fp_border(width = 0)
+            )
+            # add the paragraph border
+            top_cell_borders <- flx$header$styles$cells$border.width.top$data[i, seq(start_pos, end_pos)]
+            flx <- flextable::style(
+              x = flx,
+              part = "header",
+              i = i,
+              j = seq(start_pos, end_pos),
+              pr_p = officer::fp_par(
+                border.bottom = border,
+                text.align = "center"
+              )
+            )
+            flx$header$styles$cells$border.width.top$data[i, seq(start_pos, end_pos)] <- top_cell_borders
+
+            flx$header$styles$cells$margin.left$data[i, start_pos + width_spanning_header] <- 3
+            flx$header$styles$cells$margin.right$data[i, start_pos] <- 3
+            flx$header$styles$pars$border.width.bottom$data[i, c(start_pos, start_pos + width_spanning_header)] <-
+              border$width
+          }
+        }
+      }
     }
   }
-
   return(flx)
 }
 
@@ -379,7 +461,7 @@ insert_footer_text <- function(flx, tblid) {
 
 insert_title_as_header <- function(flx,
                                    title,
-                                   border = flextable::fp_border_default(width = 0.75, color = "black")) {
+                                   border = flextable::fp_border_default(width = 0.875, color = "black")) {
   # this function inserts the Title as a header but does not attempt
   # to simulate the hanging indent. Instead, it adds the string as is, and the hanging indent
   # will be handled further downstream when exporting to docx by manipulating the XML.
@@ -567,7 +649,7 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
 #' (optional) Default = NULL.
 #'
 #' @inheritParams export_as_docx_j
-#' @inherit export_TLG_as_docx note
+#' @inheritSection export_TLG_as_docx Note
 #'
 #' @returns A function that applies the given theme to a flextable.
 #' @export
@@ -577,7 +659,7 @@ theme_docx_default_j <- function(
   cell_margins = c(0, 0, 0, 0),
   bold = c("header", "content_rows", "label_rows", "top_left"),
   bold_manual = NULL,
-  border = flextable::fp_border_default(width = 0.75, color = "black")
+  border = flextable::fp_border_default(width = 0.875, color = "black")
 ) {
   function(flx, ...) {
     if (!inherits(flx, "flextable")) {
@@ -704,11 +786,11 @@ theme_docx_default_j <- function(
 #' the indentation if we have vertical pagination. No need to be specified by the end user.\cr
 #' (optional) Default = FALSE.
 #'
-#' @inheritParams export_as_docx_j
-#' @inherit export_TLG_as_docx note
+#' @inheritParams export_TLG_as_docx
+#' @inheritSection export_TLG_as_docx Note
 #'
 #' @note
-#' IMPORTANT NOTE: the following features are not implemented in `flextable`,
+#' The following features are not implemented in `flextable`,
 #' and as a result they will only be visible when exporting to docx using
 #' [junco::export_TLG_as_docx()]:
 #' - watermark
@@ -720,9 +802,9 @@ theme_docx_default_j <- function(
 #' @export
 tt_to_flextable_j <- function(
     tt,
-    tblid,
+    tblid = NULL,
     theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
-    border = flextable::fp_border_default(width = 0.75, color = "black"),
+    border = flextable::fp_border_default(width = 0.875, color = "black"),
     titles_as_header = TRUE,
     bold_titles = TRUE,
     integrate_footers = TRUE,
@@ -745,6 +827,7 @@ tt_to_flextable_j <- function(
     round_type = formatters::obj_round_type(tt),
     alignments = list(),
     border_mat = make_header_bordmat(obj = tt),
+    validate = TRUE,
     ...) {
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
@@ -754,7 +837,7 @@ tt_to_flextable_j <- function(
   }
 
   checkmate::assert_true(inherits(tt, "VTableTree") || inherits(tt, "listing_df"))
-  checkmate::assert_character(tblid)
+  checkmate::assert_character(tblid, null.ok = TRUE)
   checkmate::assert_function(theme)
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_flag(titles_as_header)
@@ -784,6 +867,13 @@ tt_to_flextable_j <- function(
   for (alignment in alignments) {
     stopifnot("Each item of `alignments` must be a list" = is.list(alignment))
   }
+
+  if (is.null(tblid)) {
+    temp_file <- tempfile()
+    tblid <- basename(temp_file)
+  }
+
+  validate_tabletree(tt, validate, tlgtype)
 
   if (tlgtype == "Listing" && nrow(tt) == 0) {
     dat <- as.list(c("No data to report", rep("", ncol(tt) - 1)))
@@ -928,6 +1018,12 @@ tt_to_flextable_j <- function(
                       output_dir = output_dir,
                       fname = fname)
 
+        # we want to decrease the indentation of each vertical pagination
+        # only if for each vertical pagination only the first row has indentation == 0
+        only_first_row_indent_zero <-
+          all(lapply(full_pag_i, function(x) {
+            x$row_info |> dplyr::filter(label != " ", indent == 0) |> nrow()
+          }) == 1)
 
         sub_ft <- tt_to_flextable_j(
           tt = subt,
@@ -946,13 +1042,14 @@ tt_to_flextable_j <- function(
           nosplitin = nosplitin,
           string_map = string_map,
           markup_df_docx = markup_df_docx,
-          reduce_first_col_indentation = (length(full_pag_i) > 1),
+          reduce_first_col_indentation = (length(full_pag_i) > 1 && only_first_row_indent_zero),
           tlgtype = tlgtype,
           col_gap = col_gap,
           round_type = round_type,
           alignments = alignments,
           border_mat = pag_bord_mats[[i]],
           export_csv = FALSE, # this is because we already exported the csv a few lines above,
+          validate = validate,
           ...
         )
 
@@ -1294,7 +1391,7 @@ tt_to_flextable_j <- function(
   autofit_to_page <- FALSE
   flx <- flextable::set_table_properties(flx,
     layout = ifelse(autofit_to_page, "autofit", "fixed"),
-    align = "left", opts_word = list(split = FALSE, keep_with_next = TRUE)
+    align = "left", opts_word = list(split = TRUE, keep_with_next = TRUE)
   )
 
   if (!all(is.na(matform$row_info$trailing_sep))) {
@@ -1321,7 +1418,7 @@ tt_to_flextable_j <- function(
       tt,
       fontspec = fontspec,
       landscape = orientation == "landscape",
-      colwidths = NULL,
+      colwidths = colwidths_2,
       col_gap = col_gap,
       pg_width = pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
@@ -1332,7 +1429,11 @@ tt_to_flextable_j <- function(
       round_type = round_type
     )
     if (!is.null(names(pags))) {
-      flx <- insert_keepNext_vertical_pagination(tt = tt, flx = flx)
+      flx <- insert_keepNext_vertical_pagination(flx = flx,
+                                                 pags = pags,
+                                                 fontspec = fontspec,
+                                                 string_map = string_map,
+                                                 round_type = round_type)
     }
   }
   # END
@@ -1393,66 +1494,13 @@ tt_to_flextable_j <- function(
 #' See notes to understand why this is experimental.
 #'
 #' @param tt (`TableTree` or `listing_df`)\cr the object to export.
-#' @param tblid (`character`)\cr Output ID to be displayed in the title and last line of footer.
-#' @param output_dir (`character`)\cr a directory path to save the docx.
-#' @param theme (function factory)\cr The theme to apply to the flextable
-#' (default = [theme_docx_default_j()]).\cr
-#' See [theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
-#' for more details.
-#' @param add_page_break (`logical`)\cr (optional) Default = FALSE.
-#' @param titles_as_header (`logical`)\cr (optional) Default = TRUE.
-#' @param integrate_footers (`logical`)\cr (optional) Default = TRUE.
-#' @param section_properties (`prop_section`)\cr (optional) A "prop_section" object
-#' containing information about page size, orientation, margins, etc.
-#' See [officer::prop_section()] for more details.
-#' No need to be specified by end user.
-#' @param doc_metadata (list of `string`)\cr Any value that can be used as metadata
-#' by [officer::set_doc_properties()]. Important text values are title, subject,
-#' creator, and description, while created is a date object.\cr
-#' (optional) Default = NULL.
-#' @param orientation (`character`)\cr (optional) Default = "portrait".
-#' One of: "portrait", "landscape".
-#' @param paginate (`logical`)\cr (optional) Default = TRUE for TableTree and FALSE otherwise.
-#' @param nosplitin (`list`)\cr list(row=, col=). Path elements whose children should not be paginated within
-#' if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
-#' all the associated columns don't fit on a single page.
-#' @param string_map (`tibble`)\cr (optional) Default = default_str_map.
-#' @param markup_df_docx (`tibble`)\cr (optional) Default = dps_markup_df_docx.
-#' @param combined_docx (`logical`)\cr Whether to also export an "allparts" docx version.\cr
-#' (optional) Default = FALSE.
-#' @param tlgtype (`character`)\cr (optional). No need to be specified by end user.
-#' @param col_gap (`numeric`)\cr (optional). Default = 3 (Tables) or 0.5 (Listings).
-#' @param pagenum (`logical`)\cr (optional). Whether to display page numbers. Only applicable
-#' to listings (i.e. for tables and figures this argument is ignored).
-#' @param round_type (`"iec"` or `"sas"`)\cr the type of rounding to perform. iec,
-#' the default, performs rounding compliant with IEC 60559, while
-#' sas performs nearest-value rounding consistent with rounding within SAS.
-#' See `[formatters::format_value()]` for more details.
-#' @param alignments (`list`)\cr (optional) List of named lists. Vectorized.
-#' (Default = `list()`) Used to specify individual column or cell alignments.
-#' Each named list contains `row`, `col`, and `value`.
-#' @param border (`fp_border`)\cr Border to use (default =
-#' \code{flextable::fp_border_default(width = 0.75, color = "black")}).
-#' @param border_mat (`matrix`)\cr A `m x k` matrix where m is the number of columns of `tt`
-#' and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
-#' for what the matrix should contain. Users should only specify this when the
-#' default behavior does not meet their needs.
-#' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
-#' Default = FALSE.
-#' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
-#' Default = NULL. Only used if export_csv = TRUE.
-#' If NULL or attempting to export in a non-existent directory, the csv will be exported
-#' in the same directory as the .docx file.
-#' @param markup_df (`data.frame`)\cr Data frame containing markup information.
-#' Only used if export_csv = TRUE.
-#' @param ... other parameters.
 #'
 #' @inheritParams export_TLG_as_docx
-#' @inherit export_TLG_as_docx note
+#' @inheritSection export_TLG_as_docx Note
 export_as_docx_j <- function(
   tt,
-  tblid,
-  output_dir,
+  tblid = NULL,
+  output_dir = NULL,
   theme = theme_docx_default_j(
     font = "Times New Roman",
     font_size = 9L,
@@ -1481,20 +1529,23 @@ export_as_docx_j <- function(
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
   alignments = list(),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   border_mat = make_header_bordmat(obj = tt),
   watermark = NULL,
   export_csv = FALSE,
   output_csv_directory = NULL,
   markup_df = dps_markup_df,
+  validate = TRUE,
   ...
 ) {
 
   checkmate::assert_true(inherits(tt, "VTableTree") || inherits(tt, "listing_df") ||
                            is.list(tt) || inherits(tt, "flextable"))
-  checkmate::assert_character(tblid)
-  checkmate::assert_character(output_dir, len = 1)
-  checkmate::assert_directory_exists(output_dir)
+  checkmate::assert_character(tblid, null.ok = TRUE)
+  checkmate::assert_character(output_dir, len = 1, null.ok = TRUE)
+  if (!is.null(output_dir)) {
+    checkmate::assert_directory_exists(output_dir)
+  }
   checkmate::assert_function(theme)
   checkmate::assert_flag(add_page_break)
   checkmate::assert_flag(titles_as_header)
@@ -1507,10 +1558,10 @@ export_as_docx_j <- function(
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
   checkmate::assert_flag(paginate)
   checkmate::assert_list(nosplitin)
-  checkmate::assert_multi_class(x = string_map,
-                                classes = c("tbl_df", "data.frame"))
-  checkmate::assert_multi_class(x = markup_df_docx,
-                                classes = c("tbl_df", "data.frame"))
+  checkmate::assert_tibble(string_map)
+  checkmate::assert_true(all(colnames(string_map) == c("pattern", "value")))
+  checkmate::assert_tibble(markup_df_docx)
+  checkmate::assert_true(all(colnames(markup_df_docx) == c("keyword", "replace_by")))
   checkmate::assert_flag(combined_docx)
   checkmate::assert_character(tlgtype)
   checkmate::assert_numeric(col_gap)
@@ -1519,6 +1570,8 @@ export_as_docx_j <- function(
   checkmate::assert_list(alignments)
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_matrix(border_mat)
+  checkmate::assert_tibble(markup_df)
+  checkmate::assert_true(all(colnames(markup_df) == c("keyword", "rtfstart", "rtfend")))
 
   # Validate `alignments` here because of its complicated data structure
   stopifnot("`alignments` must be a list" = is.list(alignments))
@@ -1530,6 +1583,12 @@ export_as_docx_j <- function(
   checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
   checkmate::assert_flag(export_csv)
   checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
+
+  if (is.null(tblid) || is.null(output_dir)) {
+    temp_file <- tempfile()
+    tblid <- basename(temp_file)
+    output_dir <- dirname(temp_file)
+  }
 
   do_tt_error <- FALSE
   if (tlgtype != "Listing") {
@@ -1557,6 +1616,7 @@ export_as_docx_j <- function(
       output_csv_directory = output_csv_directory,
       markup_df = markup_df,
       output_dir = output_dir, # this argument is needed to guess where to save the csv
+      validate = validate,
       ...
     )
   }
@@ -1590,6 +1650,7 @@ export_as_docx_j <- function(
             output_csv_directory = output_csv_directory,
             markup_df = markup_df,
             output_dir = output_dir, # this argument is needed to guess where to save the csv
+            validate = validate,
             ...
           ),
         SIMPLIFY = FALSE
@@ -1647,6 +1708,7 @@ export_as_docx_j <- function(
         export_csv = export_csv,
         output_csv_directory = output_csv_directory,
         markup_df = markup_df,
+        validate = validate,
         ...
       )
     } else {
@@ -1690,6 +1752,7 @@ export_as_docx_j <- function(
         export_csv = export_csv,
         output_csv_directory = output_csv_directory,
         markup_df = markup_df,
+        validate = validate,
         ...
       )
     }
@@ -1796,8 +1859,10 @@ export_as_docx_j <- function(
     add_vertical_pagination_XML(doc)
     remove_security_popup_page_numbers_XML(doc, tlgtype, pagenum)
     if (!is.null(watermark)) {
-      insert_fake_watermark_XML(doc, watermark, orientation)
+      insert_fake_watermark_XML(doc, watermark, orientation, tlgtype)
     }
+
+    doc <- align_rows_with_rtf(doc)
 
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
@@ -1823,18 +1888,18 @@ export_as_docx_j <- function(
 #' (optional) Default = NULL.
 #'
 #' @inheritParams export_TLG_as_docx
-#' @inherit export_TLG_as_docx note
+#' @inheritSection export_TLG_as_docx Note
 export_graph_as_docx <- function(g = NULL,
                                  plotnames = NULL,
-                                 tblid,
-                                 output_dir,
+                                 tblid = NULL,
+                                 output_dir = NULL,
                                  title = NULL,
                                  footers = NULL,
                                  orientation = "portrait",
                                  plotwidth = 8,
                                  plotheight = 5.51,
                                  units = c("in", "cm", "mm", "px")[1],
-                                 border = flextable::fp_border_default(width = 0.75, color = "black"),
+                                 border = flextable::fp_border_default(width = 0.875, color = "black"),
                                  watermark = NULL) {
 
   # Check arguments ----
@@ -1889,9 +1954,11 @@ export_graph_as_docx <- function(g = NULL,
     }
   }
 
-  checkmate::assert_character(tblid)
-  checkmate::assert_character(output_dir, len = 1)
-  checkmate::assert_directory_exists(output_dir)
+  checkmate::assert_character(tblid, null.ok = TRUE)
+  checkmate::assert_character(output_dir, len = 1, null.ok = TRUE)
+  if (!is.null(output_dir)) {
+    checkmate::assert_directory_exists(output_dir)
+  }
   checkmate::assert_character(title, null.ok = TRUE)
   checkmate::assert_character(footers, null.ok = TRUE)
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
@@ -1900,6 +1967,12 @@ export_graph_as_docx <- function(g = NULL,
   checkmate::assert_choice(units, choices = c("in", "cm", "mm", "px"))
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
+
+  if (is.null(tblid) || is.null(output_dir)) {
+    temp_file <- tempfile()
+    tblid <- basename(temp_file)
+    output_dir <- dirname(temp_file)
+  }
 
 
   # Creation of flextable ----
@@ -1997,7 +2070,7 @@ export_graph_as_docx <- function(g = NULL,
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
   add_hanging_indent_in_title_XML(doc)
   if (!is.null(watermark)) {
-    insert_fake_watermark_XML(doc, watermark, orientation)
+    insert_fake_watermark_XML(doc, watermark, orientation, "Figure")
   }
   print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
 }
@@ -2009,8 +2082,14 @@ export_graph_as_docx <- function(g = NULL,
 #'
 #' @param obj (`TableTree`, `listing_df` or `ggplot2`)\cr the object to export.
 #' @param tblid (`character`)\cr output ID to be displayed in the title and
-#' last line of footer.
-#' @param output_dir (`character`)\cr a directory path to save the docx.
+#' last line of footer. When exporting, it will also be used as the output filename.\cr
+#' If NULL, a temp file will be created, its dirname will replace argument `output_dir`,
+#' and its basename will replace argument `tblid`.\cr
+#' (optional) Default = NULL.
+#' @param output_dir (`character`)\cr a directory path to save the docx.\cr
+#' If NULL, a temp file will be created, its dirname will replace argument `output_dir`,
+#' and its basename will replace argument `tblid`.\cr
+#' (optional) Default = NULL.
 #' @param theme (function factory)\cr the theme to apply to the flextable.\cr
 #' (optional) Default = [theme_docx_default_j()].\cr
 #' See [theme_docx_default_j()] or [rtables.officer::theme_docx_default()]
@@ -2029,7 +2108,7 @@ export_graph_as_docx <- function(g = NULL,
 #' @param template_file (`character`)\cr Template file that `officer` will use as a starting
 #' point for the final document. Document attaches the table and uses the defaults
 #' defined in the template file. Paragraph styles are inherited from this file.\cr
-#' If NULL, this function will use an internal template.
+#' If NULL, this function will use an internal template.\cr
 #' (optional) Default = NULL.
 #' @param orientation (`character`)\cr one of: "portrait", "landscape".\cr
 #' (optional) Default = "portrait".
@@ -2058,11 +2137,22 @@ export_graph_as_docx <- function(g = NULL,
 #' Each named list contains `row`, `col`, and `value`.\cr
 #' (optional) Default = `list()`.
 #' @param border (`fp_border`)\cr border to use.\cr
-#' Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.
+#' Default = \code{flextable::fp_border_default(width = 0.875, color = "black")}.
 #' @param border_mat (`matrix`)\cr a `m x k` matrix where m is the number of columns of
 #' the input Table/Listing and k is the number of lines the header takes up.\cr
 #' See [tidytlg::add_bottom_borders] for what the matrix should contain.
 #' Users should only specify this when the default behavior does not meet their needs.
+#' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
+#' Default = FALSE.
+#' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
+#' Default = NULL. Only used if export_csv = TRUE.
+#' If NULL or attempting to export in a non-existent directory, the csv will be exported
+#' in the same directory as the .docx file.
+#' @param markup_df (`data.frame`)\cr Data frame containing markup information.
+#' Only used if export_csv = TRUE.
+#' @param validate (`logical(1)`)\cr Whether to validate the table structure using
+#'  `rtables::validate_table_struct()`. Defaults to `TRUE`. If `FALSE`, a message
+#'  will be displayed when validation fails.
 #' @param watermark (`character`)\cr the watermark (text) to display in the
 #' output docx file.\cr
 #' If NULL, no watermark will be displayed.
@@ -2139,7 +2229,7 @@ export_graph_as_docx <- function(g = NULL,
 #'   pagenum = FALSE,
 #'   round_type = "iec",
 #'   alignments = list(),
-#'   border = flextable::fp_border_default(width = 0.75, color = "black"),
+#'   border = flextable::fp_border_default(width = 0.875, color = "black"),
 #'   border_mat = NULL,
 #'   watermark = NULL,
 #'   plotnames = NULL,
@@ -2152,7 +2242,7 @@ export_graph_as_docx <- function(g = NULL,
 #'
 #' @export
 #'
-#' @note
+#' @section Note:
 #' This function has been tested for common use cases but may not work or have
 #' unexpected or undesired behavior in corner cases. As such it is not considered
 #' fully production ready and is being made available for further testing
@@ -2162,8 +2252,8 @@ export_graph_as_docx <- function(g = NULL,
 #'
 export_TLG_as_docx <- function(
   obj = NULL,
-  tblid,
-  output_dir,
+  tblid = NULL,
+  output_dir = NULL,
   theme = theme_docx_default_j(
     font = "Times New Roman",
     font_size = 9L,
@@ -2194,8 +2284,12 @@ export_TLG_as_docx <- function(
                       formatters::obj_round_type(obj),
                       "iec"),
   alignments = list(),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   border_mat = NULL,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
+  validate = TRUE,
   watermark = NULL,
   plotnames = NULL,
   title = NULL,
@@ -2217,9 +2311,11 @@ export_TLG_as_docx <- function(
     checkmate::assert_true(inherits(obj, "VTableTree") || inherits(obj, "listing_df") ||
                              ggplot2::is.ggplot(obj) || is.list(obj))
   }
-  checkmate::assert_character(tblid)
-  checkmate::assert_character(output_dir, len = 1)
-  checkmate::assert_directory_exists(output_dir)
+  checkmate::assert_character(tblid, null.ok = TRUE)
+  checkmate::assert_character(output_dir, len = 1, null.ok = TRUE)
+  if (!is.null(output_dir)) {
+    checkmate::assert_directory_exists(output_dir)
+  }
   checkmate::assert_function(theme)
   checkmate::assert_flag(add_page_break)
   checkmate::assert_flag(titles_as_header)
@@ -2232,10 +2328,10 @@ export_TLG_as_docx <- function(
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
   checkmate::assert_flag(paginate)
   checkmate::assert_list(nosplitin)
-  checkmate::assert_multi_class(x = string_map,
-                                classes = c("tbl_df", "data.frame"))
-  checkmate::assert_multi_class(x = markup_df_docx,
-                                classes = c("tbl_df", "data.frame"))
+  checkmate::assert_tibble(string_map)
+  checkmate::assert_true(all(colnames(string_map) == c("pattern", "value")))
+  checkmate::assert_tibble(markup_df_docx)
+  checkmate::assert_true(all(colnames(markup_df_docx) == c("keyword", "replace_by")))
   checkmate::assert_flag(combined_docx)
   checkmate::assert_character(tlgtype)
   checkmate::assert_numeric(col_gap)
@@ -2244,6 +2340,11 @@ export_TLG_as_docx <- function(
   checkmate::assert_list(alignments)
   checkmate::assert_class(border, "fp_border")
   checkmate::assert_matrix(border_mat)
+  checkmate::assert_flag(export_csv)
+  checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
+  checkmate::assert_tibble(markup_df)
+  checkmate::assert_true(all(colnames(markup_df) == c("keyword", "rtfstart", "rtfend")))
+  checkmate::assert_flag(validate)
   checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
   checkmate::assert_character(plotnames, null.ok = TRUE)
   checkmate::assert_character(title, null.ok = TRUE)
@@ -2265,7 +2366,11 @@ export_TLG_as_docx <- function(
       combined_docx = combined_docx, tlgtype = tlgtype,
       col_gap = col_gap, pagenum = pagenum, round_type = round_type,
       alignments = alignments, border = border,
-      border_mat = border_mat, watermark = watermark, ...
+      border_mat = border_mat, watermark = watermark,
+      export_csv = export_csv, output_csv_directory = output_csv_directory,
+      markup_df = markup_df,
+      validate = validate,
+      ...
     )
   } else {
     export_graph_as_docx(g = obj, plotnames = plotnames,

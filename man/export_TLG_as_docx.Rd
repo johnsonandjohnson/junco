@@ -6,8 +6,8 @@
 \usage{
 export_TLG_as_docx(
   obj = NULL,
-  tblid,
-  output_dir,
+  tblid = NULL,
+  output_dir = NULL,
   theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
   add_page_break = FALSE,
   titles_as_header = TRUE,
@@ -29,8 +29,12 @@ export_TLG_as_docx(
   round_type = ifelse(tlgtype \%in\% c("Table", "Listing"),
     formatters::obj_round_type(obj), "iec"),
   alignments = list(),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   border_mat = NULL,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
+  validate = TRUE,
   watermark = NULL,
   plotnames = NULL,
   title = NULL,
@@ -45,9 +49,15 @@ export_TLG_as_docx(
 \item{obj}{(\code{TableTree}, \code{listing_df} or \code{ggplot2})\cr the object to export.}
 
 \item{tblid}{(\code{character})\cr output ID to be displayed in the title and
-last line of footer.}
+last line of footer. When exporting, it will also be used as the output filename.\cr
+If NULL, a temp file will be created, its dirname will replace argument \code{output_dir},
+and its basename will replace argument \code{tblid}.\cr
+(optional) Default = NULL.}
 
-\item{output_dir}{(\code{character})\cr a directory path to save the docx.}
+\item{output_dir}{(\code{character})\cr a directory path to save the docx.\cr
+If NULL, a temp file will be created, its dirname will replace argument \code{output_dir},
+and its basename will replace argument \code{tblid}.\cr
+(optional) Default = NULL.}
 
 \item{theme}{(function factory)\cr the theme to apply to the flextable.\cr
 (optional) Default = \code{\link[=theme_docx_default_j]{theme_docx_default_j()}}.\cr
@@ -73,7 +83,7 @@ creator, and description, while created is a date object.\cr
 \item{template_file}{(\code{character})\cr Template file that \code{officer} will use as a starting
 point for the final document. Document attaches the table and uses the defaults
 defined in the template file. Paragraph styles are inherited from this file.\cr
-If NULL, this function will use an internal template.
+If NULL, this function will use an internal template.\cr
 (optional) Default = NULL.}
 
 \item{orientation}{(\code{character})\cr one of: "portrait", "landscape".\cr
@@ -114,12 +124,27 @@ Each named list contains \code{row}, \code{col}, and \code{value}.\cr
 (optional) Default = \code{list()}.}
 
 \item{border}{(\code{fp_border})\cr border to use.\cr
-Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
+Default = \code{flextable::fp_border_default(width = 0.875, color = "black")}.}
 
 \item{border_mat}{(\code{matrix})\cr a \verb{m x k} matrix where m is the number of columns of
 the input Table/Listing and k is the number of lines the header takes up.\cr
 See \link[tidytlg:add_bottom_borders]{tidytlg::add_bottom_borders} for what the matrix should contain.
 Users should only specify this when the default behavior does not meet their needs.}
+
+\item{export_csv}{(\code{logical(1)})\cr Whether to export the object as a csv representation.
+Default = FALSE.}
+
+\item{output_csv_directory}{(\code{character(1)})\cr the directory to export the csv.
+Default = NULL. Only used if export_csv = TRUE.
+If NULL or attempting to export in a non-existent directory, the csv will be exported
+in the same directory as the .docx file.}
+
+\item{markup_df}{(\code{data.frame})\cr Data frame containing markup information.
+Only used if export_csv = TRUE.}
+
+\item{validate}{(\code{logical(1)})\cr Whether to validate the table structure using
+\code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message
+will be displayed when validation fails.}
 
 \item{watermark}{(\code{character})\cr the watermark (text) to display in the
 output docx file.\cr
@@ -157,7 +182,8 @@ in which the plotwidth and plotheight arguments are expressed:
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
-\note{
+\section{Note}{
+
 This function has been tested for common use cases but may not work or have
 unexpected or undesired behavior in corner cases. As such it is not considered
 fully production ready and is being made available for further testing
@@ -165,6 +191,7 @@ and early adoption. Please report any issues you encounter to the developers.
 This function may be removed from junco in the future if the functionality
 is merged into \code{rtables.officer}.
 }
+
 \examples{
 adsl <- ex_adsl
 adae <- ex_adae
@@ -215,7 +242,7 @@ export_TLG_as_docx(
   pagenum = FALSE,
   round_type = "iec",
   alignments = list(),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   border_mat = NULL,
   watermark = NULL,
   plotnames = NULL,
