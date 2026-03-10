@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed calculation of 'reduce_first_col_indentation' and section break positions in `insert_keepNext_vertical_pagination()` (#218)
 - Fixed the little gaps in neighboring spanning headers in the docx exporter (#216)
 - Fixed blank pages happening at the end of the docx (#177)
+- DOCX exporter fixed watermark location in case of listings
+- DOCX exporter updated table border width from 0.75 to 0.875 inches
+- DOCX exporter when having vertical pagination in tables or listings, fixed the rows misalignment from page 2 and below compared to RTF
 
 ### Changed
 
@@ -32,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bump flextable and remove the skip() units tests (#193)
 - Update colwidths tests to derive values
 - Fix old TODOs in tests
+- docx exporter added missing defaults (#186)
 
 ### Added
 

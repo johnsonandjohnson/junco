@@ -6,9 +6,9 @@
 \usage{
 tt_to_flextable_j(
   tt,
-  tblid,
+  tblid = NULL,
   theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   titles_as_header = TRUE,
   bold_titles = TRUE,
   integrate_footers = TRUE,
@@ -36,7 +36,10 @@ tt_to_flextable_j(
 \item{tt}{(\code{TableTree} or \code{listing_df})\cr the object to convert to flextable.}
 
 \item{tblid}{(\code{character})\cr output ID to be displayed in the title and
-last line of footer.}
+last line of footer. When exporting, it will also be used as the output filename.\cr
+If NULL, a temp file will be created, its dirname will replace argument \code{output_dir},
+and its basename will replace argument \code{tblid}.\cr
+(optional) Default = NULL.}
 
 \item{theme}{(function factory)\cr the theme to apply to the flextable.\cr
 (optional) Default = \code{\link[=theme_docx_default_j]{theme_docx_default_j()}}.\cr
@@ -44,7 +47,7 @@ See \code{\link[=theme_docx_default_j]{theme_docx_default_j()}} or \code{\link[r
 for more details.}
 
 \item{border}{(\code{fp_border})\cr border to use.\cr
-Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
+Default = \code{flextable::fp_border_default(width = 0.875, color = "black")}.}
 
 \item{titles_as_header}{(\code{logical})\cr (optional) Default = TRUE.}
 
