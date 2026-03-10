@@ -101,7 +101,9 @@ test_that("def_colwidths works as expected", {
   # nolint end
 
   result <- def_colwidths(tt = tt2, fontspec = fontspec)
-  expected_result <- c(67, 72, 84) # fixed expected_result to back us up from the hardcoded colwidths changes in scda.test
+  expected_result <- c(67, 72, 84)
+  # fixed expected_result to back us up from
+  # the hardcoded colwidths changes in scda.test
   testthat::expect_equal(result, expected_result)
 })
 
@@ -118,7 +120,9 @@ test_that("listing_column_widths works as expected", {
 
   mpf <- rlistings::matrix_form(tt3)
   suppressMessages(testthat::expect_message(result <- listing_column_widths(mpf, verbose = TRUE)))
-  expected_result <- c(67, 72, 84) # fixed expected_result to back us up from the hardcoded colwidths changes in scda.test
+  expected_result <- c(67, 72, 84)
+  # fixed expected_result to back us up from
+  # the hardcoded colwidths changes in scda.test
   testthat::expect_equal(result, expected_result)
 })
 
