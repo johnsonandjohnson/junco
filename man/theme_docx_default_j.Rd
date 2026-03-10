@@ -10,7 +10,7 @@ theme_docx_default_j(
   cell_margins = c(0, 0, 0, 0),
   bold = c("header", "content_rows", "label_rows", "top_left"),
   bold_manual = NULL,
-  border = flextable::fp_border_default(width = 0.75, color = "black")
+  border = flextable::fp_border_default(width = 0.875, color = "black")
 )
 }
 \arguments{
@@ -36,7 +36,7 @@ See examples in \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::th
 (optional) Default = NULL.}
 
 \item{border}{(\code{fp_border})\cr border to use.\cr
-Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
+Default = \code{flextable::fp_border_default(width = 0.875, color = "black")}.}
 }
 \value{
 A function that applies the given theme to a flextable.
