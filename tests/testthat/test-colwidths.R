@@ -41,7 +41,6 @@ tt <- build_table(lyt, ADSL)
 
 test_that("ttype_wrap_vec works as expected", {
   result <- ttype_wrap_vec(vec = c(1, 2, 3, 4) |> as.character(), fontspec = fontspec, width = 2)
-  # TODO: how do I guess expected_result
   expected_result <- list(
     c("1"),
     c("2"),
