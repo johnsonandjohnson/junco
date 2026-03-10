@@ -610,3 +610,30 @@ test_that("s_ancova_j works as expected in combined column for model without int
 
   expect_equal(summary_numbers2[["tbl2_comb"]], summary_numbers2[["comb_model"]])
 })
+
+test_that("s_ancova_j with a combined column but no method for weights_combo stops", {
+  model_variables <- list(arm = "Species", covariates = c("Color"))
+
+
+  expect_error(
+    result <- tbl_ancova_j(
+      weights_emmeans = "equal",
+      weights_combo = NULL,
+      inputdf = iris_plus2,
+      interaction = FALSE
+    ),
+    "In a combined column specifications for weights_combo must be non-NULL."
+  )
+  
+  expect_error(
+    result <- tbl_ancova_j(
+      weights_emmeans = "equal",
+      weights_combo = "invalid",
+      inputdf = iris_plus2,
+      interaction = FALSE
+    ),
+    "'arg' should be one of \"equal\", \"proportional\", \"proportional_marginal\""
+  )  
+  
+  
+})
