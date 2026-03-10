@@ -6,8 +6,8 @@
 \usage{
 export_TLG_as_docx(
   obj = NULL,
-  tblid,
-  output_dir,
+  tblid = NULL,
+  output_dir = NULL,
   theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
   add_page_break = FALSE,
   titles_as_header = TRUE,
@@ -29,7 +29,7 @@ export_TLG_as_docx(
   round_type = ifelse(tlgtype \%in\% c("Table", "Listing"),
     formatters::obj_round_type(obj), "iec"),
   alignments = list(),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   border_mat = NULL,
   export_csv = FALSE,
   output_csv_directory = NULL,
@@ -49,9 +49,15 @@ export_TLG_as_docx(
 \item{obj}{(\code{TableTree}, \code{listing_df} or \code{ggplot2})\cr the object to export.}
 
 \item{tblid}{(\code{character})\cr output ID to be displayed in the title and
-last line of footer.}
+last line of footer. When exporting, it will also be used as the output filename.\cr
+If NULL, a temp file will be created, its dirname will replace argument \code{output_dir},
+and its basename will replace argument \code{tblid}.\cr
+(optional) Default = NULL.}
 
-\item{output_dir}{(\code{character})\cr a directory path to save the docx.}
+\item{output_dir}{(\code{character})\cr a directory path to save the docx.\cr
+If NULL, a temp file will be created, its dirname will replace argument \code{output_dir},
+and its basename will replace argument \code{tblid}.\cr
+(optional) Default = NULL.}
 
 \item{theme}{(function factory)\cr the theme to apply to the flextable.\cr
 (optional) Default = \code{\link[=theme_docx_default_j]{theme_docx_default_j()}}.\cr
@@ -77,7 +83,7 @@ creator, and description, while created is a date object.\cr
 \item{template_file}{(\code{character})\cr Template file that \code{officer} will use as a starting
 point for the final document. Document attaches the table and uses the defaults
 defined in the template file. Paragraph styles are inherited from this file.\cr
-If NULL, this function will use an internal template.
+If NULL, this function will use an internal template.\cr
 (optional) Default = NULL.}
 
 \item{orientation}{(\code{character})\cr one of: "portrait", "landscape".\cr
@@ -118,7 +124,7 @@ Each named list contains \code{row}, \code{col}, and \code{value}.\cr
 (optional) Default = \code{list()}.}
 
 \item{border}{(\code{fp_border})\cr border to use.\cr
-Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
+Default = \code{flextable::fp_border_default(width = 0.875, color = "black")}.}
 
 \item{border_mat}{(\code{matrix})\cr a \verb{m x k} matrix where m is the number of columns of
 the input Table/Listing and k is the number of lines the header takes up.\cr
@@ -236,7 +242,7 @@ export_TLG_as_docx(
   pagenum = FALSE,
   round_type = "iec",
   alignments = list(),
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   border_mat = NULL,
   watermark = NULL,
   plotnames = NULL,

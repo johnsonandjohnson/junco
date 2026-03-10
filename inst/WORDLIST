@@ -65,6 +65,7 @@ datasplit
 denom
 df
 dfs
+dirname
 docx
 dps
 eg
@@ -103,7 +104,6 @@ parallelising
 parentdf
 pkgdown
 plotheight
-plotnames
 plotwidth
 png
 pre
@@ -147,4 +147,3 @@ unrounded
 unstratified
 wordbreaking
 xlsx
-rmarkdown

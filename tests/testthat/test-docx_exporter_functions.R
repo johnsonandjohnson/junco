@@ -132,7 +132,7 @@ testthat::test_that("tt_to_flextable_j() works fine with border_mat", {
   flx2 <- tt_to_flextable_j(tt = tbl2, tblid = "output ID", border_mat = border_mat)
 
   expected_res <- flx1$header$styles$cells$border.width.bottom$data
-  expected_res[2, 4] <- 0.75
+  expected_res[2, 4] <- 0.875
   testthat::expect_equal(flx2$header$styles$cells$border.width.bottom$data, expected_res)
 
 })
