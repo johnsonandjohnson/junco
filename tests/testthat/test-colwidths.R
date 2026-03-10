@@ -51,12 +51,21 @@ test_that("ttype_wrap_vec works as expected", {
 })
 
 test_that("check_wrap_nobreak works as expected", {
-  # TODO: how do I guess argument colwidths = rep(20, 5)
-  result <- check_wrap_nobreak(tt = tt, colwidths = rep(20, 5), fontspec = fontspec)
+  # Derive a safe width programmatically (max word length per column + a margin)
+  largest_word <- function(x) {
+    wrds <- unlist(mpf$row_info$label)
+    max(nchar(wrds), na.rm = TRUE)
+  }
+  mpf <- matrix_form(tt, fontspec = fontspec)
+  strs <- mf_strings(mpf)
+  max_per_col <- apply(strs, 2, largest_word)
+  # add a small margin
+  safe_widths <- max_per_col + 1L
+
+  result <- check_wrap_nobreak(tt = tt, colwidths = safe_widths, fontspec = fontspec)
   testthat::expect_true(result)
 
-  # TODO: how do I guess argument colwidths = rep(1, 5)
-  result <- check_wrap_nobreak(tt = tt, colwidths = rep(1, 5), fontspec = fontspec)
+  result <- check_wrap_nobreak(tt = tt, colwidths = max_per_col, fontspec = fontspec)
   testthat::expect_false(result)
 })
 
