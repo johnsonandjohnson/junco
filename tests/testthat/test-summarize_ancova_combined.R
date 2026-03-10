@@ -18,6 +18,35 @@ iris_plus2 <- iris_plus |>
     Species == "virginica" & id < 50) |>
   ungroup()
 
+
+test_that("summarize_ancova cannot deal with a combined column", {
+  
+  combodf <- tribble(
+    ~valname, ~label, ~levelcombo, ~exargs,
+    "setosa_virg", "Combined: setosa + virginica", c("setosa", "virginica"), list()
+  )
+  
+  lyt_1 <- basic_table() %>%
+    split_cols_by("Species", ref_group = "versicolor",
+                  split_fun = add_combo_levels(combodf)) %>%
+    add_colcounts() %>%
+    summarize_ancova(
+      vars = "Sepal.Length",
+      variables = model_variables,
+      conf_level = 0.95,
+      interaction_item = NULL,
+      interaction_y = FALSE,
+      weights_emmeans = "proportional",
+      var_labels = "Adjusted comparison (covariates Color)",
+      table_names = "adjusted"
+    )
+  
+  expect_error(
+    result <- build_table(lyt_1, iris_plus2),
+    "Assertion on 'sum_level' failed: Must have length 1."
+  )
+})
+
 #' all of the functions included in this test file are very specific to usage with
 #' iris_plus2 dataset and investigated models with/without interaction
 #' any adjustments to dataset/models will require a thorough re-review of the functions
