@@ -15,17 +15,17 @@
 testthat::test_that("tern_get_stats works as expected for defaults", {
   # Defaults are not changing
   res <- testthat::expect_silent(tern_get_stats("count_occurrences"))
-  testthat::expect_snapshot(res)
+  testthat::expect_snapshot(cran = TRUE, res)
 
   res <- testthat::expect_silent(tern_get_stats("summarize_num_patients"))
-  testthat::expect_snapshot(res)
+  testthat::expect_snapshot(cran = TRUE, res)
 
   # Change depending on type
   res <- testthat::expect_silent(tern_get_stats("analyze_vars_counts"))
-  testthat::expect_snapshot(res)
+  testthat::expect_snapshot(cran = TRUE, res)
 
   res <- testthat::expect_silent(tern_get_stats("analyze_vars_numeric"))
-  testthat::expect_snapshot(res)
+  testthat::expect_snapshot(cran = TRUE, res)
 
   testthat::expect_error(
     tern_get_stats("dont_exist"),
@@ -142,7 +142,7 @@ testthat::test_that("tern_get_formats_from_stats works as expected", {
 testthat::test_that("tern_get_labels_from_stats works as expected", {
   sts <- tern_get_stats("count_occurrences")
   res <- testthat::expect_silent(tern_get_labels_from_stats(sts))
-  testthat::expect_snapshot(res)
+  testthat::expect_snapshot(cran = TRUE, res)
 
   testthat::expect_identical(
     tern_get_labels_from_stats(c("nothing", "n"))[["nothing"]],
@@ -253,7 +253,7 @@ testthat::test_that("tern_get_labels_from_stats works fine for cases with levels
 testthat::test_that("tern_get_indents_from_stats works as expected", {
   sts <- tern_get_stats("count_occurrences")
   res <- testthat::expect_silent(tern_get_indents_from_stats(sts))
-  testthat::expect_snapshot(res)
+  testthat::expect_snapshot(cran = TRUE, res)
 
   testthat::expect_identical(
     tern_get_indents_from_stats("count", NULL)[["count"]],
@@ -314,7 +314,7 @@ test_that(".split_std_from_custom_stats works as expected with a list", {
 
 test_that(".split_std_from_custom_stats works as expected with a single input", {
   result <- .split_std_from_custom_stats("default")
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that(".apply_stat_functions works as expected without custom stat functions", {

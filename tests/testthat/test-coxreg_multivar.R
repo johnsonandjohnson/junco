@@ -30,8 +30,8 @@ test_that("tefos03_first_split_fun works as expected", {
   lyt <- basic_table() |>
     split_cols_by("ID", split_fun = tefos03_first_split_fun)
   result <- expect_silent(build_table(lyt, DM))
-  expect_snapshot(col_info(result))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, col_info(result))
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("tefos03_second_split_fun_fct works as expected", {
@@ -40,8 +40,8 @@ test_that("tefos03_second_split_fun_fct works as expected", {
     split_cols_by("ID", split_fun = tefos03_first_split_fun) |>
     split_cols_by("ID", split_fun = split_fun)
   result <- expect_silent(build_table(lyt, DM))
-  expect_snapshot(col_info(result))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, col_info(result))
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("tefos03_afun works as expected", {
@@ -70,7 +70,7 @@ test_that("tefos03_afun works as expected", {
       pval = jjcsformat_pval_fct(0.1)
     )
   ))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("summarize_coxreg_multivar works as expected with defaults", {
@@ -88,7 +88,7 @@ test_that("summarize_coxreg_multivar works as expected with defaults", {
       variables = variables
     )
   result <- expect_silent(build_table(lyt, anl))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("summarize_coxreg_multivar works as expected with custom options", {
@@ -117,7 +117,7 @@ test_that("summarize_coxreg_multivar works as expected with custom options", {
       )
     )
   result <- expect_silent(build_table(lyt, anl))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("summarize_coxreg_multivar works with row splits", {
@@ -136,5 +136,5 @@ test_that("summarize_coxreg_multivar works with row splits", {
       variables = variables
     )
   result <- expect_silent(build_table(lyt, anl))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })

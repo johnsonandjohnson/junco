@@ -15,7 +15,7 @@ test_that("s_event_free works with default arguments", {
   )
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
 
 test_that("s_event_free works with percent format", {
@@ -36,7 +36,7 @@ test_that("s_event_free works with percent format", {
   )
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
 
 test_that("a_event_free works with default arguments in a table layout", {
@@ -68,7 +68,7 @@ test_that("a_event_free works with default arguments in a table layout", {
   result <- build_table(lyt, df = adtte_f)
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
 
 test_that("a_event_free works with customized arguments in a table layout", {
@@ -106,5 +106,5 @@ test_that("a_event_free works with customized arguments in a table layout", {
   result <- build_table(lyt, df = adtte_f)
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })

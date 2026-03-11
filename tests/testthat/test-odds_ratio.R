@@ -132,7 +132,7 @@ test_that("a_odds_ratio_j works in a table layout as expected for unstratified a
       )
     )
   res <- expect_silent(build_table(lyt, df = dta))
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 
   first_row <- as.list(res[c("rsp", "or_ci"), c("grp", "B")])
   second_row <- as.list(res[c("rsp", "pval"), c("grp", "B")])
@@ -173,7 +173,7 @@ test_that("a_odds_ratio_j works in a table layout as expected for CMH analysis",
       )
     )
   res <- expect_silent(build_table(lyt, df = dta))
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 
   first_row <- as.list(res[c("rsp", "or_ci"), c("grp", "B")])
   second_row <- as.list(res[c("rsp", "pval"), c("grp", "B")])
