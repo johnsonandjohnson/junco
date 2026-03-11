@@ -2211,7 +2211,14 @@ export_graph_as_docx <- function(g = NULL,
 #'   titles_as_header = TRUE, integrate_footers = TRUE,
 #'   section_properties = officer::prop_section(
 #'     page_size = officer::page_size(width = 11, height = 8.5, orient = "portrait"),
-#'     page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
+#'     page_margins = officer::page_mar(
+#'                              bottom = 1,
+#'                              top = 1,
+#'                              right = 1,
+#'                              left = 1,
+#'                              gutter = 0,
+#'                              footer = 1,
+#'                              header = 1)
 #'   ),
 #'   doc_metadata = NULL,
 #'   template_file = NULL,
