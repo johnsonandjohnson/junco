@@ -124,11 +124,16 @@ reference:
   - title: junco Miscellaneous Functions
     desc: The following functions are other miscellaneous junco functions used to create common table layouts.
     contents:
-    - remove_col_count
-    - rm_levels
-    - get_mmrm_lsmeans
-    - get_ref_info
-    - get_visit_levels
+      - remove_col_count
+      - rm_levels
+      - get_mmrm_lsmeans
+      - get_ref_info
+      - get_visit_levels
+
+  - title: junco Geoms
+    desc: ggplot2 geoms provided by junco.
+    contents:
+      - geom_boxplot_j
 
   - title: internal
     desc: The following are additional junco functions.
