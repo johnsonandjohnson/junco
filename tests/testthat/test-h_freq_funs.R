@@ -274,3 +274,44 @@ test_that("h_restrict_val works with row split", {
   expected2 <- c("D", "E", "F")
   expect_identical(result2, expected2)
 })
+
+
+test_that("a_freq_j with alt_counts_df retains nested row structure", {
+  adsl <- pharmaverseadamjnj::adsl
+
+  adsl_ie <- tibble::tribble(
+    ~USUBJID, ~IECAT2, ~IETEST, ~TRT01A, ~REGION1, ~SITEID,
+    "01-701-1097", "Subjects who did not meet inclusion criteria", "Medication criteria",
+    "Xanomeline Low Dose", "NA", "701",
+    "01-701-1203", "Subjects who did not meet inclusion criteria", "Laboratory criteria",
+    "Placebo", "NA", "701",
+    "01-703-1086", "Subjects who did not meet inclusion criteria", "Laboratory criteria",
+    "Xanomeline Low Dose", "NA", "703"
+  )
+
+  args <- list(.stats = "count_unique_denom_fraction")
+
+  countsource <- "altdf_subset"
+
+  lyt <- basic_table() |>
+    split_cols_by("TRT01A") |>
+    split_rows_by("REGION1", split_fun = drop_split_levels) |>
+    summarize_row_groups("REGION1", cfun = a_freq_j, extra_args = args) |>
+    split_rows_by("SITEID", section_div = " ", split_fun = drop_split_levels) |>
+    summarize_row_groups(
+      "SITEID",
+      cfun = a_freq_j,
+      extra_args = list(.stats = "count_unique_denom_fraction", drop_levels = TRUE, countsource = countsource)
+    ) |>
+    split_rows_by("IECAT2") |>
+    summarize_row_groups("IECAT2", cfun = a_freq_j, extra_args = args) |>
+    analyze("IETEST", afun = a_freq_j, extra_args = args)
+
+  result <- build_table(lyt, adsl_ie, alt_counts_df = adsl)
+
+  output <- capture.output({
+    rp <- row_paths_summary(result)$path
+  })
+
+  expect_equal(length(rp), 8) # is 40 for altdf
+})

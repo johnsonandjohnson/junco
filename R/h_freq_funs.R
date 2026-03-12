@@ -555,7 +555,8 @@ h_a_freq_dataprep <- function(
   label_map = NULL,
   .alt_df_full = NULL,
   denom_by = NULL,
-  .stats
+  .stats,
+  countsource = c("df", "altdf", "altdf_subset")
 ) {
   denom <- match.arg(denom)
 
@@ -605,6 +606,25 @@ h_a_freq_dataprep <- function(
     denom = denom
   )
 
+  if (identical(countsource, "altdf_subset")) {
+    # prefer explicit val, otherwise use the levels present in .df_row.
+    if (!is.null(alt_df) && !is.na(.var) && (.var %in% names(alt_df))) {
+      keep_vals <- NULL
+      if (!is.null(val)) {
+        keep_vals <- val
+      } else if (!is.null(.df_row) && !is.null(.df_row[[.var]])) {
+        keep_vals <- if (is.factor(.df_row[[.var]])) levels(.df_row[[.var]]) else unique(.df_row[[.var]])
+      }
+
+      if (!is.null(keep_vals)) {
+        keep_vals <- intersect(keep_vals, unique(alt_df[[.var]]))
+        if (length(keep_vals) > 0) {
+          alt_df <- alt_df[alt_df[[.var]] %in% keep_vals, , drop = FALSE]
+          alt_df <- h_update_factor(alt_df, .var, keep_vals)
+        }
+      }
+    }
+  }
   new_denomdf <- alt_df
 
   parentdf <- h_denom_parentdf(.spl_context, denom, denom_by)
