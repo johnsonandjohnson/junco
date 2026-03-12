@@ -691,28 +691,43 @@ tt_to_tlgrtf <- function(
     fpath <- dirname(file)
   }
 
-  if (tlgtype == "Table") {
-    colwidths <- cwidths_final_adj(
-      labwidth_ins = label_width_ins,
-      total_width = pg_width,
-      colwidths = colwidths[-1]
-    )
-  }
-  colwidths <- colwidths / sum(colwidths)
-  # finite precision arithmetic is a dreamscape of infinite wonder...
-  ## sum(rep(1/18, 18)) <= 1 is FALSE...
-  if (sum(colwidths) > 1) {
-    colwidths <- colwidths - 0.00000000001 ## much smaller than a twip = 1/20 printing point
-  }
-
   if (!one_table && # nolint start
     is.list(tt) && !is(tt, "MatrixPrintForm")) {
-    ### gentlg is not vectorized on wcol.  x.x x.x x.x
-    ### but it won't break if we only give it one number...
-    ### Calling this an ugly hack is an insult to all the hard working hacks
-    ### out there
-    colwidths <- colwidths[1]
-  } # nolint end
+    # this should be technically always 1 but just in case
+    num_repeated_cols <- ncol(tt[[1]]$strings) - ncol(tt[[1]])
+    l_colwidths <- list()
+    j <- num_repeated_cols + 1
+    for (i in seq_along(tt)) {
+      subt_col_idxs <- j - 1 + seq(ncol(tt[[i]]))
+      colwidths_subt <- colwidths[c(1:num_repeated_cols, subt_col_idxs)]
+      j <- tail(subt_col_idxs, 1) + 1
+      if (tlgtype == "Table") {
+        colwidths_subt <- cwidths_final_adj(
+          labwidth_ins = label_width_ins,
+          total_width = pg_width,
+          colwidths = colwidths_subt[-1]
+        )
+      }
+      colwidths_subt <- colwidths_subt / sum(colwidths_subt)
+      l_colwidths[[i]] <- colwidths_subt
+    }
+    colwidths <- l_colwidths
+  } else {  # nolint end
+    if (tlgtype == "Table") {
+      colwidths <- cwidths_final_adj(
+        labwidth_ins = label_width_ins,
+        total_width = pg_width,
+        colwidths = colwidths[-1]
+      )
+    }
+    colwidths <- colwidths / sum(colwidths)
+    # finite precision arithmetic is a dreamscape of infinite wonder...
+    ## sum(rep(1/18, 18)) <= 1 is FALSE...
+    if (sum(colwidths) > 1) {
+      colwidths <- colwidths - 0.00000000001 ## much smaller than a twip = 1/20 printing point
+    }
+  }
+
 
   footer_val <- prep_strs_for_rtf(
     c(
