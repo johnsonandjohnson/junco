@@ -12,7 +12,6 @@ Customizations
 DOCX
 DataFrame
 Eg
-GeomBoxplot
 Haenszel
 IEC
 JJCS
@@ -21,6 +20,7 @@ Lapply
 MMRM
 Optimality
 PARAMCD
+PCTLDEF
 Parallelisation
 Parallelise
 RBMI

@@ -25,11 +25,18 @@
 #' @keywords internal
 #' @importFrom ggplot2 ggproto Stat
 #' @importFrom stats quantile
-StatBoxplotQuantile <- ggproto("StatBoxplotQuantile", Stat,
-                               required_aes = c("x", "y"),
-                               dropped_aes = c("x", "y", "weight"),
-                               compute_group = function(data, scales, width = NULL, na.rm = FALSE, coef = 1.5,
-                           quantile_type = 2) {
+StatBoxplotQuantile <- ggproto(
+  "StatBoxplotQuantile", Stat,
+  required_aes = c("x", "y"),
+  dropped_aes = c("x", "y", "weight"),
+  compute_group = function(
+    data,
+    scales,
+    width = NULL,
+    na.rm = FALSE,
+    coef = 1.5,
+    quantile_type = 2
+  ) {
     vec <- data$y
     if (length(vec) == 0) {
       return(data.frame())
@@ -87,12 +94,30 @@ StatBoxplotQuantile <- ggproto("StatBoxplotQuantile", Stat,
 #'
 #' @export
 #' @importFrom ggplot2 layer GeomBoxplot
-geom_boxplot_j <- function(mapping = NULL, data = NULL, position = "dodge2",
-                             ..., coef = 1.5, quantile_type = 2, na.rm = FALSE,
-                             show.legend = NA, inherit.aes = TRUE) {
+geom_boxplot_j <- function(
+  mapping = NULL,
+  data = NULL,
+  position = "dodge2",
+  ...,
+  coef = 1.5,
+  quantile_type = 2,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+) {
   layer(
-    data = data, mapping = mapping, stat = StatBoxplotQuantile, geom = GeomBoxplot,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, coef = coef, quantile_type = quantile_type, ...)
+    data = data,
+    mapping = mapping,
+    stat = StatBoxplotQuantile,
+    geom = GeomBoxplot,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      na.rm = na.rm,
+      coef = coef,
+      quantile_type = quantile_type,
+      ...
+    )
   )
 }
