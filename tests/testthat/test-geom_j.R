@@ -2,12 +2,12 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 
-test_that("StatBoxplotSas computes type = 2 quantiles", {
+test_that("StatBoxplotQuantile computes type = 2 quantiles", {
 
   vec <- c(1, 2, 3, 4, 100) # force outlier
   df <- data.frame(x = 1, y = vec)
 
-  res <- junco:::StatBoxplotSas$compute_group(
+  res <- junco:::StatBoxplotQuantile$compute_group(
     data = df, scales = NULL, width = NULL, na.rm = FALSE, coef = 1.5
   )
 
@@ -42,8 +42,11 @@ test_that("geom_boxplot_j uses type = 2 quantiles", {
   d <- built$data[[1]]
 
   # quartiles per group using type = 2
-  split_quantile_2 <- lapply(split(df$y, df$g), stats::quantile,
-                     probs = c(0.25, 0.5, 0.75), type = 2)
+  split_quantile_2 <- lapply(
+    split(df$y, df$g),
+    stats::quantile,
+    probs = c(0.25, 0.5, 0.75), type = 2
+  )
 
   exp_lower <- vapply(split_quantile_2, function(q) q[[1]], numeric(1))
   exp_middle <- vapply(split_quantile_2, function(q) q[[2]], numeric(1))
@@ -54,10 +57,10 @@ test_that("geom_boxplot_j uses type = 2 quantiles", {
   expect_equal(d$upper, as.numeric(exp_upper))
 })
 
-test_that("StatBoxplotSas differs from default type = 7", {
+test_that("StatBoxplotQuantile differs from default type = 7", {
   df <- data.frame(x = 1, y = 1:8)
 
-  res <- junco:::StatBoxplotSas$compute_group(
+  res <- junco:::StatBoxplotQuantile$compute_group(
     data = df, scales = NULL, width = NULL, na.rm = FALSE, coef = 1.5
   )
 
@@ -87,4 +90,48 @@ test_that("geom_boxplot_j differs from default type = 7", {
 
   #doesn't match type=7
   expect_true(any(as.numeric(q2) != as.numeric(q7)))
+})
+
+test_that("StatBoxplotQuantile supports custom quantile_type (type = 7)", {
+  df <- data.frame(x = 1, y = 1:9)
+
+  res <- junco:::StatBoxplotQuantile$compute_group(
+    data = df, scales = NULL, width = NULL, na.rm = FALSE, coef = 1.5,
+    quantile_type = 7
+  )
+
+  q7_full <- stats::quantile(df$y, probs = c(0, 0.25, 0.5, 0.75, 1), type = 7)
+  iqr7 <- q7_full[4] - q7_full[2]
+  lf7 <- q7_full[2] - 1.5 * iqr7
+  uf7 <- q7_full[4] + 1.5 * iqr7
+  ymin_exp <- min(df$y[df$y >= lf7])
+  ymax_exp <- max(df$y[df$y <= uf7])
+
+  expect_equal(res$lower, q7_full[[2]])
+  expect_equal(res$middle, q7_full[[3]])
+  expect_equal(res$upper, q7_full[[4]])
+  expect_equal(res$ymin, ymin_exp)
+  expect_equal(res$ymax, ymax_exp)
+})
+
+test_that("geom_boxplot_j supports custom quantile_type (type = 7)", {
+  df <- data.frame(g = factor(rep(c("a", "b"), each = 8)),
+                   y = c(1:8, 11:18))
+
+  p <- ggplot2::ggplot(df, ggplot2::aes(g, y)) + geom_boxplot_j(quantile_type = 7)
+  built <- ggplot2::ggplot_build(p)
+  d <- built$data[[1]]
+
+  split_q7 <- lapply(
+    split(df$y, df$g),
+    stats::quantile,
+    probs = c(0.25, 0.5, 0.75), type = 7
+  )
+  exp_lower <- vapply(split_q7, function(q) q[[1]], numeric(1))
+  exp_middle <- vapply(split_q7, function(q) q[[2]], numeric(1))
+  exp_upper <- vapply(split_q7, function(q) q[[3]], numeric(1))
+
+  expect_equal(d$lower, as.numeric(exp_lower))
+  expect_equal(d$middle, as.numeric(exp_middle))
+  expect_equal(d$upper, as.numeric(exp_upper))
 })

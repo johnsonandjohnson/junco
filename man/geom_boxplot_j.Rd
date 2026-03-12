@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_j.R
 \name{geom_boxplot_j}
 \alias{geom_boxplot_j}
-\title{Draws boxplots whose statistics follow SAS percentile}
+\title{Draws boxplots with configurable quantile type}
 \usage{
 geom_boxplot_j(
   mapping = NULL,
@@ -10,6 +10,7 @@ geom_boxplot_j(
   position = "dodge2",
   ...,
   coef = 1.5,
+  quantile_type = 2,
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
@@ -22,17 +23,22 @@ geom_boxplot_j(
 \item{coef}{Numeric multiplier for the IQR to compute fences. Defaults to 1.5
 (Tukey).}
 
+\item{quantile_type}{Integer in 1:9 passed to \code{stats::quantile(type = ...)} to
+compute quartiles. Defaults to 2 (follows PCTLDEF = 5).}
+
 \item{na.rm}{Logical; if \code{TRUE}, silently removes \code{NA} values.}
 
 \item{show.legend, inherit.aes}{See \code{ggplot2::layer()}.}
 }
 \value{
-A ggplot2 layer that produces SAS-style boxplots.
+A ggplot2 layer that produces boxplots using the chosen quantile type.
 }
 \description{
-\code{geom_boxplot_j()} draws boxplots whose statistics follow SAS percentile
-definition (\code{PCTLDEF = 5}). It uses \code{StatBoxplotSas} then renders with
-GeomBoxplot`.
+\code{geom_boxplot_j()} draws boxplots whose statistics can follow different
+percentile definitions for quartiles. By default it uses
+\code{quantile(type = 2)} to follow \code{PCTLDEF = 5} (SAS default). You can override
+the quantile definition via \code{quantile_type}. It uses \code{StatBoxplotQuantile}
+then renders with \code{GeomBoxplot}.
 }
 \examples{
 library(ggplot2)

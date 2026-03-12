@@ -1,8 +1,8 @@
-#' SAS-style boxplot statistics
+#' Boxplot statistics with configurable quantile type
 #'
-#' `StatBoxplotSas` computes boxplot statistics using SAS percentile definition
-#' (`PCTLDEF = 5`, equivalent to type = 2 quantiles in R). It mirrors SAS boxplot
-#' logic for quartiles, whiskers, and outliers.
+#' `StatBoxplotQuantile` computes boxplot statistics using a configurable
+#' quantile definition. By default, quartiles use `quantile(type = 2)` to follow
+#' `PCTLDEF = 5` (SAS default). It computes quartiles, whiskers, and outliers.
 #'
 #' Required aesthetics: `x`, `y`.
 #'
@@ -16,25 +16,27 @@
 #' - `x`: x position (first value in group)
 #' - `width`: box width used by `GeomBoxplot`
 #'
-#' @section SAS details:
-#' Quartiles are computed with `quantile(type = 2)`. Fences are defined as
-#' `Q1 - coef * IQR` and `Q3 + coef * IQR` where `IQR = Q3 - Q1` and `coef`
+#' @section Quantile details:
+#' By default, quartiles are computed with `quantile(type = 2)` to follow
+#' `PCTLDEF = 5` (SAS default). You can change this via the `quantile_type` argument. Fences
+#' are defined as `Q1 - coef * IQR` and `Q3 + coef * IQR` where `IQR = Q3 - Q1` and `coef`
 #' defaults to `1.5`.
 #'
 #' @keywords internal
 #' @importFrom ggplot2 ggproto Stat
 #' @importFrom stats quantile
-StatBoxplotSas <- ggproto("StatBoxplotSas", Stat,
-  required_aes = c("x", "y"),
-  dropped_aes = c("x", "y", "weight"),
-  compute_group = function(data, scales, width = NULL, na.rm = FALSE, coef = 1.5) {
+StatBoxplotQuantile <- ggproto("StatBoxplotQuantile", Stat,
+                               required_aes = c("x", "y"),
+                               dropped_aes = c("x", "y", "weight"),
+                               compute_group = function(data, scales, width = NULL, na.rm = FALSE, coef = 1.5,
+                           quantile_type = 2) {
     vec <- data$y
     if (length(vec) == 0) {
       return(data.frame())
     }
 
-    # SAS PCTLDEF=5 (Type 2 Quantiles)
-    qs <- quantile(vec, probs = c(0, 0.25, 0.5, 0.75, 1), type = 2, na.rm = na.rm)
+    # Quantiles controlled by quantile_type (default 2 = PCTLDEF=5)
+    qs <- quantile(vec, probs = c(0, 0.25, 0.5, 0.75, 1), type = quantile_type, na.rm = na.rm)
     iqr <- qs[4] - qs[2]
 
     lower_fence <- qs[2] - (coef * iqr)
@@ -58,35 +60,39 @@ StatBoxplotSas <- ggproto("StatBoxplotSas", Stat,
   }
 )
 
-#'  Draws boxplots whose statistics follow SAS percentile
+#'  Draws boxplots with configurable quantile type
 #'
-#' `geom_boxplot_j()` draws boxplots whose statistics follow SAS percentile
-#'  definition (`PCTLDEF = 5`). It uses `StatBoxplotSas` then renders with
-#'  GeomBoxplot`.
+#' `geom_boxplot_j()` draws boxplots whose statistics can follow different
+#'  percentile definitions for quartiles. By default it uses
+#'  `quantile(type = 2)` to follow `PCTLDEF = 5` (SAS default). You can override
+#'  the quantile definition via `quantile_type`. It uses `StatBoxplotQuantile`
+#'  then renders with `GeomBoxplot`.
 #'
 #' @param mapping,data,position,... Standard ggplot2 layer arguments passed to
 #'   `layer()`/`GeomBoxplot`.
 #' @param coef Numeric multiplier for the IQR to compute fences. Defaults to 1.5
 #'   (Tukey).
+#' @param quantile_type Integer in 1:9 passed to `stats::quantile(type = ...)` to
+#'   compute quartiles. Defaults to 2 (follows PCTLDEF = 5).
 #' @param na.rm Logical; if `TRUE`, silently removes `NA` values.
 #' @param show.legend,inherit.aes See `ggplot2::layer()`.
 #'
-#' @return A ggplot2 layer that produces SAS-style boxplots.
+#' @return A ggplot2 layer that produces boxplots using the chosen quantile type.
 #'
 #' @examples
 #' library(ggplot2)
 #' library(pharmaverseadamjnj)
 #' ggplot(advs, aes(AVISIT, AVAL, fill = TRT01A)) +
-#'      geom_boxplot_j(position = position_dodge2(preserve = "single"))
+#'   geom_boxplot_j(position = position_dodge2(preserve = "single"))
 #'
 #' @export
 #' @importFrom ggplot2 layer GeomBoxplot
 geom_boxplot_j <- function(mapping = NULL, data = NULL, position = "dodge2",
-                             ..., coef = 1.5, na.rm = FALSE,
+                             ..., coef = 1.5, quantile_type = 2, na.rm = FALSE,
                              show.legend = NA, inherit.aes = TRUE) {
   layer(
-    data = data, mapping = mapping, stat = StatBoxplotSas, geom = GeomBoxplot,
+    data = data, mapping = mapping, stat = StatBoxplotQuantile, geom = GeomBoxplot,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, coef = coef, ...)
+    params = list(na.rm = na.rm, coef = coef, quantile_type = quantile_type, ...)
   )
 }
