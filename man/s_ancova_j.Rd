@@ -14,7 +14,9 @@ s_ancova_j(
   conf_level,
   interaction_y = FALSE,
   interaction_item = NULL,
-  weights_emmeans = "counterfactual"
+  weights_emmeans = "counterfactual",
+  method_combo = c("contrasts", "collapse"),
+  weights_combo = NULL
 )
 }
 \arguments{
@@ -46,6 +48,23 @@ used to select the specific ANCOVA results. if the interaction is not needed, th
 with arm. if the interaction is not needed, the default option is \code{NULL}.}
 
 \item{weights_emmeans}{(\code{string})\cr argument from \code{\link[emmeans:emmeans]{emmeans::emmeans()}}, \code{"counterfactual"} by default.}
+
+\item{method_combo}{(\code{string})\cr Method for derivations in combined column.
+\itemize{
+\item \code{contrast} Derivations for the combined level are done through contrasts from the original model
+(using weights per \code{weights_combo} specifications).
+\item \code{collapse} The ancova model for the combined group will be performed with group levels that contribute
+to the combination collapsed into a single combined level.
+}}
+
+\item{weights_combo}{(\code{string})\cr Weights for the contrasts of the combined levels.
+\itemize{
+\item \code{equal} 1/(number of levels from arm variable included in the combination)
+\item \code{proportional}, \code{proportional_marginal} weight for each level included in the combination is proportional to number of observations in that level
+\cr The difference between \code{proportional} and \code{proportional_marginal} is only relevant when the model includes an interaction between arm and other factor variable (\code{interaction_item}).
+\cr \code{proportional_marginal} interprets proportional over all levels of \code{interaction_item}, ie, the same weights will be used for all levels of \code{interaction_item}.
+\cr For \code{proportional} the weights will be derived within the requested level (\code{interaction_y}) for \code{interaction_item}.
+}}
 }
 \value{
 Returns a named list of 8 statistics (3 extra compared to \code{tern:::s_ancova()}).

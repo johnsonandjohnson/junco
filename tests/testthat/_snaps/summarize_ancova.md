@@ -25,7 +25,7 @@
         mean_ci_upr = 5.6815023912247), label = "Geometric Mean 95% CI"), 
         geom_cv = c(geom_cv = 9.80174252966596), geom_mean_ci_3d = structure(c(geom_mean = 5.52578887426088, 
         mean_ci_lwr = 5.37434301357803, mean_ci_upr = 5.6815023912247
-        ), label = "Geometric Mean (95% CI)"), n = structure(50L, label = "n"), 
+        ), label = "Geometric Mean (95% CI)"), n_fit = structure(50L, label = "n"), 
         lsmean = structure(5.07100244458199, label = "Adjusted Mean"), 
         lsmean_se = structure(c(5.07100244458199, 0.0604121292091169
         ), label = "Adjusted Mean (SE)"), lsmean_ci = structure(c(5.07100244458199, 

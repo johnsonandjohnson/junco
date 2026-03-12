@@ -272,6 +272,17 @@ h_ancova_est_combined <- function(emmeans_fit,
 #' @name s_ancova_j
 #' @inheritParams tern::s_ancova
 #' @param weights_emmeans (`string`)\cr argument from [emmeans::emmeans()], `"counterfactual"` by default.
+#' @param method_combo (`string`)\cr Method for derivations in combined column.
+#'   * `contrast` Derivations for the combined level are done through contrasts from the original model
+#' (using weights per `weights_combo` specifications). 
+#'   * `collapse` The ancova model for the combined group will be performed with group levels that contribute 
+#' to the combination collapsed into a single combined level.
+#' @param weights_combo (`string`)\cr Weights for the contrasts of the combined levels.
+#'   * `equal` 1/(number of levels from arm variable included in the combination)
+#'   * `proportional`, `proportional_marginal` weight for each level included in the combination is proportional to number of observations in that level
+#'\cr The difference between `proportional` and `proportional_marginal` is only relevant when the model includes an interaction between arm and other factor variable (`interaction_item`).
+#'\cr `proportional_marginal` interprets proportional over all levels of `interaction_item`, ie, the same weights will be used for all levels of `interaction_item`.
+#'\cr For `proportional` the weights will be derived within the requested level (`interaction_y`) for `interaction_item`.
 #' @description Extension to tern:::s_ancova, 3 extra statistics are returned:
 #'   * `lsmean_se`: Marginal mean and estimated SE in the group.
 #'   * `lsmean_ci`: Marginal mean and associated confidence interval in the group.
@@ -303,6 +314,7 @@ s_ancova_j <- function(
     interaction_y = FALSE,
     interaction_item = NULL,
     weights_emmeans = "counterfactual",
+    method_combo = c("contrasts", "collapse"),
     weights_combo = NULL) {
   if ((!is.null(interaction_item) & interaction_y == FALSE) ||
     (is.null(interaction_item) & interaction_y != FALSE)) {
@@ -313,12 +325,34 @@ s_ancova_j <- function(
     )
   }
   arm <- variables$arm
+  method_combo <- match.arg(method_combo)
 
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
   df <- subset(df, !is.na(df[[.var]]))
   .ref_group <- subset(.ref_group, !is.na(.ref_group[[.var]]))
 
   n_obs_trt_lvls <- length(unique(.df_row[[arm]]))
+  
+  arm <- variables$arm
+  sum_level_start <- as.character(unique(df[[arm]]))
+  
+  incombo <- length(sum_level_start) > 1
+  if (incombo && method_combo == "collapse"){
+    # proceed with model on updated levels for treatment group
+    orig_levels <- levels(.df_row[[arm]])
+    new_levels <- orig_levels
+    new_levels[orig_levels %in% sum_level_start] <- "Combined"
+
+    df[[arm]] <- factor(as.character(df[[arm]]), 
+                             levels = orig_levels,
+                             labels = new_levels)
+    .df_row[[arm]] <- factor(as.character(.df_row[[arm]]), 
+                             levels = orig_levels,
+                             labels = new_levels)
+    .ref_group[[arm]] <- factor(as.character(.ref_group[[arm]]), 
+                             levels = orig_levels,
+                             labels = new_levels)    
+  }
 
   ### sparse data problems with underlying ancova function
   if (NROW(.df_row) == 0) {
@@ -377,7 +411,6 @@ s_ancova_j <- function(
       emmeans_fit,
       level = conf_level
     )
-    arm <- variables$arm
     sum_level <- as.character(unique(df[[arm]]))
 
     if (length(sum_level) == 1) {

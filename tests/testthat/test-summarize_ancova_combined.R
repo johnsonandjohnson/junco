@@ -107,7 +107,8 @@ tbl_ancova_tern <- function(weights_emmeans = "proportional",
 tbl_ancova_j <- function(weights_emmeans = "proportional",
                          weights_combo = "equal",
                          inputdf = iris_plus2,
-                         interaction = TRUE) {
+                         interaction = TRUE,
+                         method_combo = "contrasts") {
   combodf <- tribble(
     ~valname, ~label, ~levelcombo, ~exargs,
     "setosa_virg", "Combined: setosa + virginica", c("setosa", "virginica"), list()
@@ -129,6 +130,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           interaction_y = FALSE,
           weights_emmeans = weights_emmeans,
           weights_combo = weights_combo,
+          method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
           .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
         ),
@@ -152,6 +154,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           interaction_y = "red",
           weights_emmeans = weights_emmeans,
           weights_combo = weights_combo,
+          method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
           .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
         ),
@@ -168,6 +171,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           interaction_y = "blue",
           weights_emmeans = weights_emmeans,
           weights_combo = weights_combo,
+          method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
           .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
         ),
@@ -318,7 +322,9 @@ get_weights <- function(bycolor = TRUE, color) {
   w_color <- w_color / sum(w_color)
 }
 
-
+get_numbers <- function(tbl, col, rows = c(3)) {
+  numbers <- unname(unlist(cell_values(tbl[rows, col])))
+}
 
 
 
@@ -364,9 +370,7 @@ compare_ancova_tbl <- function(tbl1,
   # comparison of column virginica from tbl1 against tbl2
   col <- 3
 
-  get_numbers <- function(tbl, col, rows = c(3)) {
-    numbers <- unname(unlist(cell_values(tbl[rows, col])))
-  }
+
 
   if (!interaction) {
     # tbl without interaction: rows 3/4-5 are of interest
@@ -428,6 +432,16 @@ compare_ancova_tbl <- function(tbl1,
   ret
 }
 
+
+expect_any_difference <- function(object, expected, ...) {
+  comp <- all.equal(object, expected, ...)
+  expect_false(
+    isTRUE(comp),
+    info = "Objects are identical; expected at least one difference"
+  )
+}
+
+
 #' actual tests starts here
 
 test_that("s_ancova_j works as expected in combined column for model with interaction 3 sets of weights_combo", {
@@ -482,6 +496,12 @@ test_that("s_ancova_j works as expected in combined column for model with intera
   ### weights_combo have impact on combined column
   ### weights_emmeans have no impact on combined column (as weights_combo has been decoupled from weights_emmeans)
   expect_equal(result, result_d)
+  
+  expect_equal(result[, c(1:3)], result_b[, c(1:3)])
+  expect_equal(result[, c(1:3)], result_c[, c(1:3)])
+  
+  expect_any_difference(result[, c(4)], result_b[, c(4)])
+  expect_any_difference(result[, c(4)], result_c[, c(4)])
 
   # confirm that non-combined columns match with results from tern::summarize_ancova
   # compare_ancova_tbl heavily depends on the used model, updates to model would require detailed review of coefficients
@@ -564,6 +584,7 @@ test_that("s_ancova_j works as expected in combined column for model without int
   # for this model weights_emmeans do play a role for the adjusted mean estimate, not for the difference
   result_1
   result_1b
+  expect_any_difference(result_1, result_1b)
 
   result <- tbl_ancova_j(
     weights_emmeans = "equal",
@@ -595,6 +616,14 @@ test_that("s_ancova_j works as expected in combined column for model without int
 
   # proportional and proportional_marginal is the same when no interaction
   expect_equal(result_b, result_c)
+  
+  expect_equal(result[, c(1:3)], result_b[, c(1:3)])
+  expect_equal(result[, c(1:3)], result_c[, c(1:3)])
+  expect_any_difference(result[, c(1:3)], result_d[, c(1:3)])
+  
+  expect_any_difference(result[, c(4)], result_b[, c(4)])
+  expect_any_difference(result[, c(4)], result_c[, c(4)])
+  expect_any_difference(result[, c(4)], result_d[, c(4)])
 
   ### weights_emmeans have also impact on combined column - for adj mean estimate (not for diff as these cancel out)
   # similar as for the non-combined columns
@@ -666,4 +695,55 @@ test_that("s_ancova_j with a combined column but no method for weights_combo sto
   )  
   
   
+})
+
+test_that("s_ancova_j with a combined column and method_combo = collapse", {
+  model_variables <- list(arm = "Species", covariates = c("Color"))
+  
+  
+    result <- tbl_ancova_j(
+      weights_emmeans = "equal",
+      inputdf = iris_plus2,
+      interaction = FALSE,
+      method_combo = "collapse"
+    )
+    resultx <- tbl_ancova_j(
+      weights_emmeans = "equal",
+      inputdf = iris_plus2,
+      interaction = FALSE,
+      method_combo = "contrasts",
+      weights_combo = "equal"
+    )    
+    # result and resultx are identical excluding combined column
+    expect_equal(result[, c(1, 2, 3)], resultx[, c(1, 2, 3)])
+    # the combined column we expect differences 
+    expect_any_difference(result[, c(4)], resultx[, c(4)])
+    
+    # use summarize_ancova on data where combined column is level of the input data
+    iris_plus2_fix <- iris_plus2 
+    iris_plus2_fix[["Species"]] <- factor(as.character(iris_plus2_fix[["Species"]]),
+                                          levels = c("setosa", "versicolor", "virginica"),
+                                          labels = c("Combined: setosa + virginica", "versicolor",
+                                                     "Combined: setosa + virginica"))
+    weights_emmeans <- "equal"
+    result2 <- basic_table() %>%
+      split_cols_by("Species", ref_group = "versicolor") %>%
+      add_colcounts() %>%
+      summarize_ancova(
+        vars = "Sepal.Length",
+        variables = model_variables,
+        conf_level = 0.95,
+        interaction_item = NULL,
+        interaction_y = FALSE,
+        weights_emmeans = weights_emmeans,
+        var_labels = "Adjusted comparison (covariates Color)",
+        table_names = "adjusted"
+      ) |> 
+      build_table(iris_plus2_fix)
+  
+  # combined column estimates from result and result2
+  numbers_1 <- get_numbers(result, col = 4, rows = c(3, 4))[c(1, 4, 5, 6)]
+  numbers_2 <- get_numbers(result2, col = 1, rows = c(3, 4, 5)) 
+  
+  expect_equal(numbers_1, numbers_2)
 })
