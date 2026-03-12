@@ -237,7 +237,7 @@ h_ancova_est_combined <- function(emmeans_fit,
     w_start[["weights2"]][w_start[[interaction_item]] == interaction_y] <- w2
   }
 
-  contr <- contrast(emmeans_fit, list(
+  contr <- emmeans::contrast(emmeans_fit, list(
     setNames(list(w_start[["weights1"]]), "Estimate contrast"),
     setNames(list(w_start[["weights2"]]), "Estimate contrast vs ref")
   ),

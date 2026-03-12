@@ -1,4 +1,5 @@
 set.seed(123)
+library(dplyr)
 
 iris_plus <- iris |>
   mutate(
@@ -20,7 +21,7 @@ iris_plus2 <- iris_plus |>
 
 
 test_that("summarize_ancova cannot deal with a combined column", {
-  
+  model_variables <- list(arm = "Species", covariates = c("Color"))
   combodf <- tribble(
     ~valname, ~label, ~levelcombo, ~exargs,
     "setosa_virg", "Combined: setosa + virginica", c("setosa", "virginica"), list()
