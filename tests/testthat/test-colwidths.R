@@ -72,8 +72,7 @@ test_that("ttype_wrap_vec works as expected", {
 test_that("check_wrap_nobreak works as expected", {
   # Derive a safe width programmatically (max word length per column + a margin)
   largest_word <- function(x) {
-    wrds <- unlist(mpf$row_info$label)
-    max(nchar(wrds), na.rm = TRUE)
+    max(nchar(x), na.rm = TRUE)
   }
   mpf <- matrix_form(tt, fontspec = fontspec)
   strs <- mf_strings(mpf)
