@@ -47,6 +47,8 @@ jobs:
         shell: Rscript {0}
         run: |
           # 1. Load local junco source
+          options(rgl.useNULL = TRUE)
+
           devtools::load_all(".")
           
           # 2. Inject Hotfix
@@ -58,6 +60,8 @@ jobs:
           }
           
           # 3. Run tests in the current environment
+          library(testthat)
+          options(rgl.useNULL = TRUE)
           options(testthat.progress.max_reports = 10)
           results <- testthat::test_local(reporter = "progress")
           
