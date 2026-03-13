@@ -724,7 +724,7 @@ tt_to_tlgrtf <- function(
     # finite precision arithmetic is a dreamscape of infinite wonder...
     ## sum(rep(1/18, 18)) <= 1 is FALSE...
     if (sum(colwidths) > 1) {
-      colwidths <- colwidths - 0.00000000001 ## much smaller than a twip = 1/20 printing point
+      colwidths <- colwidths - .Machine$double.eps ## much smaller than a twip = 1/20 printing point
     }
   }
 
