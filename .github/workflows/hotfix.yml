@@ -1,8 +1,11 @@
 name: Hotfix Tests
 
 on:
+  push:
+    branches:
+      - 'feature/hotfix-*'
   pull_request:
-    branches: [main]
+    branches: [main, CRAN]
   workflow_dispatch:
 
 jobs:
