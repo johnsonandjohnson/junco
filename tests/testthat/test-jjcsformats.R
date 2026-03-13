@@ -11,7 +11,7 @@ NA_str_jjcs <- "NE"
 
 test_that("jjjcs formats work", {
   ## core formatter tests for format strings
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(values[1], format = jjcsformat_xx("xx"))
     format_value(values[1], format = jjcsformat_xx("xx."))
     format_value(values[1], format = jjcsformat_xx("xx.x"))
@@ -52,14 +52,14 @@ test_that("jjjcs formats work", {
   })
 
   ## handling NAs
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(NA, "xx.", na_str = "-")
     format_value(NA, "xx", na_str = "-")
     format_value(c(1, NA), "xx")
   })
 
   ## trailing 0s are correct
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(0, "xx.")
     format_value(0, "xx.x")
     format_value(0, "xx.xx")
@@ -69,7 +69,7 @@ test_that("jjjcs formats work", {
 
   ### untill formatters::format_value isn't adjusted to pass na_str into a formatting function
   ### set the expectation to NA - NA
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     format_value(
       c(NA, NA),
       format = jjcsformat_xx("xx.x - xx.x"),
@@ -155,7 +155,7 @@ test_that("round_type support works", {
 test_that("jjcsformat_range_fct is formatting ranges as expected", {
   my_range_format <- jjcsformat_range_fct("xx.xx")
   my_range_format2 <- jjcsformat_range_fct("xx.xx", censor_char = "*")
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     my_range_format(c(0.35235, 99.2342, 1, 0))
     my_range_format(c(0.35235, 99.2342, 0, 1))
     my_range_format(c(0.35235, 99.2342, 0, 0))
@@ -165,7 +165,7 @@ test_that("jjcsformat_range_fct is formatting ranges as expected", {
 })
 
 test_that("jjcsformat_pval_fct works", {
-  expect_snapshot({
+  expect_snapshot(cran = TRUE, {
     jjcsformat_pval_fct(0.005)(0.0048)
     jjcsformat_pval_fct(0.005)(0.00499)
     jjcsformat_pval_fct(0.005)(0.000499)

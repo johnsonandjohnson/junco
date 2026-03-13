@@ -25,7 +25,7 @@ test_that("get_mmrm_lsmeans can calculate the LS mean results including one- and
     weights = weights
   )
 
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   # Additional p-value verification
   contrasts <- result$contrasts
@@ -56,5 +56,5 @@ test_that("fit_mmrm_j works as expected", {
     )
   )
 
-  expect_snapshot(fit)
+  expect_snapshot(cran = TRUE, fit)
 })

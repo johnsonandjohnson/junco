@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bump flextable and remove the skip() units tests (#193)
 - docx exporter added missing defaults (#186)
 
+
 ### Added
 
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`

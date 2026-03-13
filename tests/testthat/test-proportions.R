@@ -3,7 +3,7 @@ test_that("s_proportion_factor works as expected", {
     factor(c("a", "b", "a")),
     .alt_df = data.frame(a = 1:5)
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("s_proportion_factor shows optional total row on top", {
@@ -12,7 +12,7 @@ test_that("s_proportion_factor shows optional total row on top", {
     .alt_df = data.frame(a = 1:5),
     show_total = "top"
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("s_proportion_factor shows optional total row in bottom", {
@@ -22,7 +22,7 @@ test_that("s_proportion_factor shows optional total row in bottom", {
     show_total = "bottom",
     total_label = "bla"
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("s_proportion_factor optionally uses number of non-missing levels as total", {
@@ -33,7 +33,7 @@ test_that("s_proportion_factor optionally uses number of non-missing levels as t
     total_label = "foo",
     use_alt_counts = FALSE
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("s_proportion_logical works as expected", {
@@ -41,7 +41,7 @@ test_that("s_proportion_logical works as expected", {
     c(TRUE, FALSE, TRUE),
     .alt_df = data.frame(a = 1:5)
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("c_proportion_logical works as expected", {
@@ -52,7 +52,7 @@ test_that("c_proportion_logical works as expected", {
     format = jjcsformat_count_fraction,
     .N_col = 5
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("h_get_design_mat works as expected", {
@@ -86,7 +86,7 @@ test_that("a_proportion_ci_logical works as expected", {
     method = "wald"
   )
   expect_s3_class(result, "CellValue")
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("a_proportion_ci_factor works as expected", {
@@ -99,14 +99,14 @@ test_that("a_proportion_ci_factor works as expected", {
     method = "clopper-pearson"
   )
   expect_s3_class(result, "RowsVerticalSection")
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("prop_split_fun works as expected", {
   result <- basic_table(round_type = "sas") |>
     split_cols_by("ID", split_fun = prop_split_fun) |>
     build_table(formatters::DM)
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("prop_table_afun works as expected with total row", {
@@ -125,7 +125,7 @@ test_that("prop_table_afun works as expected with total row", {
     formats = formats,
     add_total_level = TRUE
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(n = "n")))
@@ -136,7 +136,7 @@ test_that("prop_table_afun works as expected with total row", {
     formats = formats,
     add_total_level = TRUE
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(
@@ -151,7 +151,7 @@ test_that("prop_table_afun works as expected with total row", {
     formats = formats,
     add_total_level = TRUE
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(x = "a", b = "c", bla = "foo")))
@@ -182,7 +182,7 @@ test_that("prop_table_afun works as expected, by default without total row", {
     .spl_context = fake_spl_context,
     formats = formats
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(n = "n")))
@@ -192,7 +192,7 @@ test_that("prop_table_afun works as expected, by default without total row", {
     .spl_context = fake_spl_context,
     formats = formats
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(
@@ -206,7 +206,7 @@ test_that("prop_table_afun works as expected, by default without total row", {
     .spl_context = fake_spl_context,
     formats = formats
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   fake_spl_context <- data.frame(
     cur_col_split_val = I(list(c(x = "a", b = "c", bla = "foo")))

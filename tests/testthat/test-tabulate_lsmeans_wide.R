@@ -5,8 +5,8 @@ test_that("lsmeans_wide_first_split_fun_fct with variance works as expected", {
   lyt <- basic_table() |>
     split_cols_by("ID", split_fun = split_fun)
   result <- expect_silent(build_table(lyt, DM))
-  expect_snapshot(col_info(result))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, col_info(result))
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("lsmeans_wide_first_split_fun_fct without variance works as expected", {
@@ -14,8 +14,8 @@ test_that("lsmeans_wide_first_split_fun_fct without variance works as expected",
   lyt <- basic_table() |>
     split_cols_by("ID", split_fun = split_fun)
   result <- expect_silent(build_table(lyt, DM))
-  expect_snapshot(col_info(result))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, col_info(result))
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("lsmeans_wide_second_split_fun_fct works as expected", {
@@ -28,8 +28,8 @@ test_that("lsmeans_wide_second_split_fun_fct works as expected", {
     split_cols_by("ID", split_fun = lsmeans_wide_first_split_fun_fct(FALSE)) |>
     split_cols_by("ID", split_fun = split_fun)
   result <- expect_silent(build_table(lyt, DM))
-  expect_snapshot(col_info(result))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, col_info(result))
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("lsmeans_wide_second_split_fun_fct works with variance and without pval", {
@@ -42,8 +42,8 @@ test_that("lsmeans_wide_second_split_fun_fct works with variance and without pva
     split_cols_by("ID", split_fun = lsmeans_wide_first_split_fun_fct(TRUE)) |>
     split_cols_by("ID", split_fun = split_fun)
   result <- expect_silent(build_table(lyt, DM))
-  expect_snapshot(col_info(result))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, col_info(result))
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("lsmeans_wide_cfun works as expected", {
@@ -88,7 +88,7 @@ test_that("lsmeans_wide_cfun works as expected", {
     treatment_levels = "Seltorexant 20 mg",
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   result <- lsmeans_wide_cfun(
     df,
@@ -102,7 +102,7 @@ test_that("lsmeans_wide_cfun works as expected", {
     treatment_levels = "Seltorexant 20 mg",
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   result <- lsmeans_wide_cfun(
     df,
@@ -117,7 +117,7 @@ test_that("lsmeans_wide_cfun works as expected", {
     pval_sided = "-1",
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   result <- lsmeans_wide_cfun(
     df,
@@ -132,7 +132,7 @@ test_that("lsmeans_wide_cfun works as expected", {
     pval_sided = "1",
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   result <- lsmeans_wide_cfun(
     df,
@@ -147,7 +147,7 @@ test_that("lsmeans_wide_cfun works as expected", {
     pval_sided = "1",
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   result <- lsmeans_wide_cfun(
     df,
@@ -161,7 +161,7 @@ test_that("lsmeans_wide_cfun works as expected", {
     treatment_levels = "Seltorexant 20 mg",
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("lsmeans_wide_cfun works as expected with more than one treatment group", {
@@ -206,7 +206,7 @@ test_that("lsmeans_wide_cfun works as expected with more than one treatment grou
     treatment_levels = c("Seltorexant 20 mg", "Seltorexant 40 mg"),
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   result <- lsmeans_wide_cfun(
     df,
@@ -220,7 +220,7 @@ test_that("lsmeans_wide_cfun works as expected with more than one treatment grou
     treatment_levels = c("Seltorexant 20 mg", "Seltorexant 40 mg"),
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   result <- lsmeans_wide_cfun(
     df,
@@ -234,7 +234,7 @@ test_that("lsmeans_wide_cfun works as expected with more than one treatment grou
     treatment_levels = c("Seltorexant 20 mg", "Seltorexant 40 mg"),
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("lsmeans_wide_cfun works as expected with more than one treatment group for MMRM case", {
@@ -279,7 +279,7 @@ test_that("lsmeans_wide_cfun works as expected with more than one treatment grou
     treatment_levels = c("Seltorexant 20 mg", "Seltorexant 40 mg"),
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   result <- lsmeans_wide_cfun(
     df,
@@ -293,7 +293,7 @@ test_that("lsmeans_wide_cfun works as expected with more than one treatment grou
     treatment_levels = c("Seltorexant 20 mg", "Seltorexant 40 mg"),
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   result <- lsmeans_wide_cfun(
     df,
@@ -307,7 +307,7 @@ test_that("lsmeans_wide_cfun works as expected with more than one treatment grou
     treatment_levels = c("Seltorexant 20 mg", "Seltorexant 40 mg"),
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   result <- lsmeans_wide_cfun(
     df,
@@ -321,7 +321,7 @@ test_that("lsmeans_wide_cfun works as expected with more than one treatment grou
     treatment_levels = c("Seltorexant 20 mg", "Seltorexant 40 mg"),
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("summarize_lsmeans_wide works as expected", {
@@ -350,7 +350,7 @@ test_that("summarize_lsmeans_wide works as expected", {
       conf_level = 0.8
     )
   result <- expect_silent(build_table(lyt, df = anl))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("summarize_lsmeans_wide works as expected with more than 1 treatment group", {
@@ -395,7 +395,7 @@ test_that("summarize_lsmeans_wide works as expected with more than 1 treatment g
       conf_level = 0.8
     )
   result <- expect_silent(build_table(lyt, df = anl))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("summarize_lsmeans_wide can omit variance and p-value columns", {
@@ -425,5 +425,5 @@ test_that("summarize_lsmeans_wide can omit variance and p-value columns", {
       conf_level = 0.8
     )
   result <- expect_silent(build_table(lyt, df = anl))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
