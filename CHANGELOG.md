@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - LS means tabulation uses very slightly updated column header (no blanks around the hyphen in "Testing-Reference")
 - Bump flextable and remove the skip() units tests (#193)
 - docx exporter added missing defaults (#186)
-
+- Changed all snapshot tests to `cran = TRUE`
 
 ### Added
 
