@@ -90,7 +90,7 @@ StatBoxplotQuantile <- ggproto(
 #' library(ggplot2)
 #' library(pharmaverseadamjnj)
 #' ggplot(advs, aes(AVISIT, AVAL, fill = TRT01A)) +
-#'   geom_boxplot_j(position = position_dodge2(preserve = "single")) +
+#'   geom_boxplot_j(position = position_dodge2(preserve = "single"), na.rm = TRUE) +
 #'   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 #'
 #' @export
