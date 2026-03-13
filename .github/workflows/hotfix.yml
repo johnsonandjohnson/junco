@@ -18,8 +18,6 @@ jobs:
       fail-fast: false
       matrix:
         config:
-#          - {os: macos-latest,   r: 'release'}
-          - {os: windows-latest, r: '4.5.0'}
           - {os: ubuntu-latest,   r: '4.5.0'}
 
     env:
@@ -46,6 +44,11 @@ jobs:
           extra-packages: |
             any::devtools
             any::testthat
+
+      - name: Install Local Junco
+        shell: Rscript {0}
+        run: |
+          devtools::install(".", upgrade = "never", quick = TRUE)
 
       - name: Execute tests with hotfixes
         shell: Rscript {0}
