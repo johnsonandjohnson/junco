@@ -1,0 +1,51 @@
+name: Hotfix Tests
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test-hotfix:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup R 4.5.0
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.5.0' # Explicitly pinning to R 4.5.0 for hotfix
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::devtools
+            any::testthat
+
+      - name: Execute tests with hotfixes
+        shell: Rscript {0}
+        run: |
+          # 1. Load local junco source
+          devtools::load_all(".")
+          
+          # 2. Inject Hotfix
+          if (file.exists("dev/hotfix.R")) {
+            message(">>> Injecting dev/hotfix.R")
+            source("dev/junco_hotfix.R")
+          } else {
+            stop("Required hotfix file 'dev/junco_hotfix.R' is missing.")
+          }
+          
+          # 3. Run tests in the current environment
+          options(testthat.progress.max_reports = 10)
+          results <- testthat::test_local(reporter = "progress")
+          
+          # 4. Exit with error code if any tests failed
+          if (!testthat:::all_passed(results)) {
+            stop("Tests failed with the current hotfix applied.")
+          }
