@@ -50,20 +50,21 @@ jobs:
       - name: Execute tests with hotfixes
         shell: Rscript {0}
         run: |
-          # 1. Load local junco source
-          options(rgl.useNULL = TRUE)
-
-          devtools::load_all(".")
+          project_root <- getwd()
+          hotfix_file <- file.path(project_root, "dev", "junco_hotfix.R")
           
-          # 2. Inject Hotfix
-          if (file.exists("dev/hotfix.R")) {
-            message(">>> Injecting dev/hotfix.R")
-            source("dev/junco_hotfix.R")
+          devtools::load_all(project_root)
+          
+          # Inject the Hotfix 
+          if (file.exists(hotfix_file)) {
+            message(">>> Injecting Hotfix: ", hotfix_file)
+            source(hotfix_file, local = FALSE)
           } else {
-            stop("Required hotfix file 'dev/junco_hotfix.R' is missing.")
+            stop("Hotfix file not found at ", hotfix_file)
           }
+
           
-          # 3. Run tests in the current environment
+          #  Run tests in the current environment
           library(testthat)
           options(rgl.useNULL = TRUE)
           options(testthat.progress.max_reports = 10)
