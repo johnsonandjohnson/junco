@@ -112,6 +112,21 @@ pg_width_by_orient <- function(landscape = FALSE) {
   fullpg - mar_plus_gutters
 }
 
+get_colwidths_as_proportions <- function(colwidths, tlgtype, label_width_ins, pg_width) {
+  if (tlgtype == "Table") {
+    colwidths <- cwidths_final_adj(
+      labwidth_ins = label_width_ins,
+      total_width = pg_width,
+      colwidths = colwidths[-1]
+    )
+  }
+  colwidths <- colwidths / sum(colwidths)
+  if (sum(colwidths) > 1) {
+    colwidths <- colwidths - .Machine$double.eps ## much smaller than a twip = 1/20 printing point
+  }
+  return(colwidths)
+}
+
 get_output_csv_filename <- function(output_csv_directory, fpath, fname) {
   if (is.null(output_csv_directory)) {
     output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
@@ -703,29 +718,17 @@ tt_to_tlgrtf <- function(
       subt_col_idxs <- j - 1 + seq(ncol(tt[[i]]))
       colwidths_subt <- colwidths[c(1:num_repeated_cols, subt_col_idxs)]
       j <- tail(subt_col_idxs, 1) + 1
-      if (tlgtype == "Table") {
-        colwidths_subt <- cwidths_final_adj(
-          labwidth_ins = label_width_ins,
-          total_width = pg_width,
-          colwidths = colwidths_subt[-1]
-        )
-      }
-      colwidths_subt <- colwidths_subt / sum(colwidths_subt)
-      l_colwidths[[i]] <- colwidths_subt
+      l_colwidths[[i]] <- get_colwidths_as_proportions(colwidths_subt,
+                                                       tlgtype,
+                                                       label_width_ins,
+                                                       pg_width)
     }
     colwidths <- l_colwidths
   } else {  # nolint end
-    if (tlgtype == "Table") {
-      colwidths <- cwidths_final_adj(
-        labwidth_ins = label_width_ins,
-        total_width = pg_width,
-        colwidths = colwidths[-1]
-      )
-    }
-    colwidths <- colwidths / sum(colwidths)
-    if (sum(colwidths) > 1) {
-      colwidths <- colwidths - .Machine$double.eps ## much smaller than a twip = 1/20 printing point
-    }
+    colwidths <- get_colwidths_as_proportions(colwidths,
+                                              tlgtype,
+                                              label_width_ins,
+                                              pg_width)
   }
 
 
