@@ -695,6 +695,8 @@ tt_to_tlgrtf <- function(
     is.list(tt) && !is(tt, "MatrixPrintForm")) {
     # this should be technically always 1 but just in case
     num_repeated_cols <- ncol(tt[[1]]$strings) - ncol(tt[[1]])
+    # the following lines will listify the vector colwidths, this is, convert it
+    # to a list of vectors for each page
     l_colwidths <- list()
     j <- num_repeated_cols + 1
     for (i in seq_along(tt)) {
@@ -721,8 +723,6 @@ tt_to_tlgrtf <- function(
       )
     }
     colwidths <- colwidths / sum(colwidths)
-    # finite precision arithmetic is a dreamscape of infinite wonder...
-    ## sum(rep(1/18, 18)) <= 1 is FALSE...
     if (sum(colwidths) > 1) {
       colwidths <- colwidths - .Machine$double.eps ## much smaller than a twip = 1/20 printing point
     }
