@@ -5,5 +5,5 @@ test_that("dps markup works with ~{ and ~[", {
     "~[super a] and some ~[optional {a,b}] more st~[super a,b]uff"
   )
   out <- prep_strs_for_rtf(strs)
-  expect_snapshot(out)
+  expect_snapshot(cran = TRUE, out)
 })

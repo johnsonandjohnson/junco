@@ -82,4 +82,3 @@ Suggests:
     pharmaverseadamjnj (>= 0.0.2)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-Remotes: davidgohel/flextable

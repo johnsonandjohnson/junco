@@ -123,7 +123,7 @@ test_that("find_free_colspc works as expected", {
 
   suppressWarnings(result <- find_free_colspc(curposs = curdf, fullposs = full_possdf))
 
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("smart_colwidths_1page works as expected", {

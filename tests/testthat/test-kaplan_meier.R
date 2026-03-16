@@ -14,7 +14,7 @@ test_that("s_kaplan_meier works with default arguments", {
     is_event = "is_event"
   ))
 
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("s_kaplan_meier works with customized arguments", {
@@ -38,7 +38,7 @@ test_that("s_kaplan_meier works with customized arguments", {
     )
   ))
 
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("s_kaplan_meier returns correct censoring indicators in edge cases", {
@@ -92,7 +92,7 @@ test_that("a_kaplan_meier works with default arguments", {
   ))
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
 
 test_that("a_kaplan_meier works with customized arguments", {
@@ -116,7 +116,7 @@ test_that("a_kaplan_meier works with customized arguments", {
   ))
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
 
 test_that("a_kaplan_meier works inside analyze in table", {
@@ -146,7 +146,7 @@ test_that("a_kaplan_meier works inside analyze in table", {
     build_table(df = adtte_f)
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
 
 test_that("a_kaplan_meier works inside analyze in table with custom arguments", {
@@ -183,5 +183,5 @@ test_that("a_kaplan_meier works inside analyze in table with custom arguments", 
     build_table(df = adtte_f)
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })

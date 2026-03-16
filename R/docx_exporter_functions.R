@@ -1022,7 +1022,9 @@ tt_to_flextable_j <- function(
         # only if for each vertical pagination only the first row has indentation == 0
         only_first_row_indent_zero <-
           all(lapply(full_pag_i, function(x) {
-            x$row_info |> dplyr::filter(label != " ", indent == 0) |> nrow()
+            tmp <- x$row_info
+            tmp <- tmp[tmp$label != " " & tmp$indent == 0]
+            return(nrow(tmp))
           }) == 1)
 
         sub_ft <- tt_to_flextable_j(
@@ -1828,7 +1830,7 @@ export_as_docx_j <- function(
     if (isFALSE(integrate_footers) && inherits(tt, "VTableTree")) {
       matform <- rtables::matrix_form(tt, indent_rownames = TRUE, round_type = round_type)
       if (length(matform$ref_footnotes) > 0) {
-        char_v <- matform$ref_footnotes
+        chr_v <- matform$ref_footnotes
         text_format <- flx_fpt$fpt_footer
         for (ii in seq_along(chr_v)) {
           cur_fp <- officer::fpar(officer::ftext(chr_v[ii], prop = text_format))
@@ -1836,7 +1838,7 @@ export_as_docx_j <- function(
         }
       }
       if (length(formatters::all_footers(tt)) > 0) {
-        char_v <- formatters::all_footers(tt)
+        chr_v <- formatters::all_footers(tt)
         text_format <- flx_fpt$fpt_footer
         for (ii in seq_along(chr_v)) {
           cur_fp <- officer::fpar(officer::ftext(chr_v[ii], prop = text_format))
@@ -2211,7 +2213,14 @@ export_graph_as_docx <- function(g = NULL,
 #'   titles_as_header = TRUE, integrate_footers = TRUE,
 #'   section_properties = officer::prop_section(
 #'     page_size = officer::page_size(width = 11, height = 8.5, orient = "portrait"),
-#'     page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
+#'     page_margins = officer::page_mar(
+#'                              bottom = 1,
+#'                              top = 1,
+#'                              right = 1,
+#'                              left = 1,
+#'                              gutter = 0,
+#'                              footer = 1,
+#'                              header = 1)
 #'   ),
 #'   doc_metadata = NULL,
 #'   template_file = NULL,
