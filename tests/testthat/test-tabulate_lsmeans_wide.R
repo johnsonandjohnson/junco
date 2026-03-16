@@ -382,7 +382,6 @@ test_that("summarize_lsmeans_wide works as expected with more than 1 treatment g
     data = fev_data2,
     conf_level = 0.7,
     weights_emmeans = "proportional"
-    # TODO: in future release, change to: weights_emmeans = "counterfactual"
   ))
 
   anl <- tidy.tern_model(fit)

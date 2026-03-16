@@ -1,13 +1,29 @@
 fontspec <- font_spec("Times", 9L, 1)
 ADSL <- data.frame(
   USUBJID = c(
-    "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-    "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
+    "XXXXX01",
+    "XXXXX02",
+    "XXXXX03",
+    "XXXXX04",
+    "XXXXX05",
+    "XXXXX06",
+    "XXXXX07",
+    "XXXXX08",
+    "XXXXX09",
+    "XXXXX10"
   ),
   TRT01P = factor(
     c(
-      "ARMA", "ARMB", "ARMA", "ARMB", "ARMB",
-      "Placebo", "Placebo", "Placebo", "ARMA", "ARMB"
+      "ARMA",
+      "ARMB",
+      "ARMA",
+      "ARMB",
+      "ARMB",
+      "Placebo",
+      "Placebo",
+      "Placebo",
+      "ARMA",
+      "ARMB"
     )
   ),
   FASFL = c("Y", "Y", "Y", "Y", "N", "Y", "Y", "Y", "Y", "Y"),
@@ -18,19 +34,22 @@ ADSL <- data.frame(
 lyt <- basic_table(round_type = "sas") |>
   split_cols_by("TRT01P") |>
   add_overall_col("Total") |>
-  analyze("FASFL",
+  analyze(
+    "FASFL",
     var_labels = "Analysis set:",
     afun = a_freq_j,
     extra_args = list(label = "Full", val = "Y"),
     show_labels = "visible"
   ) |>
-  analyze("SAFFL",
+  analyze(
+    "SAFFL",
     var_labels = "Analysis set:",
     afun = a_freq_j,
     extra_args = list(label = "Safety", val = "Y"),
     show_labels = "visible"
   ) |>
-  analyze("PKFL",
+  analyze(
+    "PKFL",
     var_labels = "Analysis set:",
     afun = a_freq_j,
     extra_args = list(label = "PK", val = "Y"),
@@ -41,7 +60,6 @@ tt <- build_table(lyt, ADSL)
 
 test_that("ttype_wrap_vec works as expected", {
   result <- ttype_wrap_vec(vec = c(1, 2, 3, 4) |> as.character(), fontspec = fontspec, width = 2)
-  # TODO: how do I guess expected_result
   expected_result <- list(
     c("1"),
     c("2"),
@@ -52,12 +70,20 @@ test_that("ttype_wrap_vec works as expected", {
 })
 
 test_that("check_wrap_nobreak works as expected", {
-  # TODO: how do I guess argument colwidths = rep(20, 5)
-  result <- check_wrap_nobreak(tt = tt, colwidths = rep(20, 5), fontspec = fontspec)
+  # Derive a safe width programmatically (max word length per column + a margin)
+  largest_word <- function(x) {
+    max(nchar(x), na.rm = TRUE)
+  }
+  mpf <- matrix_form(tt, fontspec = fontspec)
+  strs <- mf_strings(mpf)
+  max_per_col <- apply(strs, 2, largest_word)
+  # add a small margin
+  safe_widths <- max_per_col + 1L
+
+  result <- check_wrap_nobreak(tt = tt, colwidths = safe_widths, fontspec = fontspec)
   testthat::expect_true(result)
 
-  # TODO: how do I guess argument colwidths = rep(1, 5)
-  result <- check_wrap_nobreak(tt = tt, colwidths = rep(1, 5), fontspec = fontspec)
+  result <- check_wrap_nobreak(tt = tt, colwidths = max_per_col, fontspec = fontspec)
   testthat::expect_false(result)
 })
 
@@ -65,50 +91,45 @@ test_that("check_wrap_nobreak works as expected", {
 test_that("def_colwidths works as expected", {
   anl <- ex_adsl
   anl <- anl[1:10, c("USUBJID", "ARM", "BMRKR1")]
-  anl <- var_relabel(anl,
-    USUBJID = "Unique\nSubject\nIdentifier",
-    ARM = "Description\nOf\nPlanned Arm"
+  anl <- var_relabel(anl, USUBJID = "Unique\nSubject\nIdentifier", ARM = "Description\nOf\nPlanned Arm")
+
+  suppressMessages(
+    tt2 <- as_listing(anl, key_cols = c("USUBJID")) |>
+      add_listing_col("ARM")
   )
-  # nolint start
-  suppressMessages(tt2 <- as_listing(anl, key_cols = c("USUBJID")) |>
-    add_listing_col("ARM"))
-  # nolint end
 
   result <- def_colwidths(tt = tt2, fontspec = fontspec)
-  # TODO: how do I guess this expected result?
   expected_result <- c(67, 72, 84)
+  # fixed expected_result to back us up from
+  # the hardcoded colwidths changes in scda.test
   testthat::expect_equal(result, expected_result)
 })
 
 test_that("listing_column_widths works as expected", {
   anl <- ex_adsl
   anl <- anl[1:10, c("USUBJID", "ARM", "BMRKR1")]
-  anl <- var_relabel(anl,
-    USUBJID = "Unique\nSubject\nIdentifier",
-    ARM = "Description\nOf\nPlanned Arm"
+  anl <- var_relabel(anl, USUBJID = "Unique\nSubject\nIdentifier", ARM = "Description\nOf\nPlanned Arm")
+  suppressMessages(
+    tt3 <- as_listing(anl, key_cols = c("USUBJID")) |>
+      add_listing_col("ARM")
   )
-  # nolint start
-  suppressMessages(tt3 <- as_listing(anl, key_cols = c("USUBJID")) |>
-    add_listing_col("ARM"))
-  # nolint end
+
   mpf <- rlistings::matrix_form(tt3)
   suppressMessages(testthat::expect_message(result <- listing_column_widths(mpf, verbose = TRUE)))
-  # TODO: how do I guess this expected result?
   expected_result <- c(67, 72, 84)
+  # fixed expected_result to back us up from
+  # the hardcoded colwidths changes in scda.test
   testthat::expect_equal(result, expected_result)
 })
 
 test_that("find_free_colspc works as expected", {
   anl <- ex_adsl
   anl <- anl[1:10, c("USUBJID", "ARM", "BMRKR1")]
-  anl <- var_relabel(anl,
-    USUBJID = "Unique\nSubject\nIdentifier",
-    ARM = "Description\nOf\nPlanned Arm"
+  anl <- var_relabel(anl, USUBJID = "Unique\nSubject\nIdentifier", ARM = "Description\nOf\nPlanned Arm")
+  suppressMessages(
+    tt4 <- as_listing(anl, key_cols = c("USUBJID")) |>
+      add_listing_col("ARM")
   )
-  # nolint start
-  suppressMessages(tt4 <- as_listing(anl, key_cols = c("USUBJID")) |>
-    add_listing_col("ARM"))
-  # nolint end
   mpf <- rlistings::matrix_form(tt4)
 
   possdf <- make_poss_wdf(mpf)
@@ -127,15 +148,30 @@ test_that("find_free_colspc works as expected", {
 })
 
 test_that("smart_colwidths_1page works as expected", {
-  result <- smart_colwidths_1page(tt = tt, fontspec = fontspec)
-  # TODO: how do I guess this expected result?
-  expected_result <- c(58, 29, 29, 29, 29)
-  testthat::expect_equal(result, expected_result)
-  testthat::expect_equal(length(result), ncol(tt) + 1)
+  expected_smart <- (function(
+      tt,
+      fontspec,
+      col_gap = 6L,
+      rowlabel_width_ins = 2,
+      print_width_ins = 8.5 - 2.12,
+      landscape = FALSE,
+      lastcol_gap = TRUE) {
+    # Derive all intermediate values exactly
+    rowlabel_width <- inches_to_spaces(rowlabel_width_ins, fontspec)
+    total_cpp <- floor(inches_to_spaces(ifelse(landscape, 11, 8.5) - 2.12, fontspec = fontspec, raw = TRUE))
+    nc <- ncol(tt)
+    remain <- total_cpp - rowlabel_width - col_gap * (nc - !lastcol_gap)
+    c(rowlabel_width - col_gap, formatters:::spread_integer(remain, nc))
+  })(tt, fontspec)
 
+  result <- smart_colwidths_1page(tt = tt, fontspec = fontspec)
+  expect_equal(result, expected_smart)
+  expect_equal(length(result), ncol(tt) + 1)
+
+  # Gap sensitivity check
   result2 <- smart_colwidths_1page(tt = tt, fontspec = fontspec, col_gap = 0)
   result3 <- smart_colwidths_1page(tt = tt, fontspec = fontspec, col_gap = 2)
-  testthat::expect_equal(result2 - 2, result3)
+  expect_equal(result2 - 2, result3)
 })
 
 test_that("spaces_to_inches works as expected", {

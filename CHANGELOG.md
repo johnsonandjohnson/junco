@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - faster docx unit tests (#197)
 - LS means tabulation uses very slightly updated column header (no blanks around the hyphen in "Testing-Reference")
 - Bump flextable and remove the skip() units tests (#193)
+- Update colwidths tests to derive values
+- Fix old TODOs in tests
 - docx exporter added missing defaults (#186)
 - Changed all snapshot tests to `cran = TRUE`
 
