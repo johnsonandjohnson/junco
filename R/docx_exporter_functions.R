@@ -1023,7 +1023,7 @@ tt_to_flextable_j <- function(
         only_first_row_indent_zero <-
           all(lapply(full_pag_i, function(x) {
             tmp <- x$row_info
-            tmp <- tmp[tmp$label != " " & tmp$indent == 0]
+            tmp <- tmp[tmp$label != " " & tmp$indent == 0, ]
             return(nrow(tmp))
           }) == 1)
 
