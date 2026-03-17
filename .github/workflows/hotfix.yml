@@ -57,7 +57,7 @@ jobs:
           # Inject the Hotfix 
           if (file.exists(hotfix_file)) {
             message(">>> Injecting Hotfix: ", hotfix_file)
-            #source(hotfix_file, local = FALSE)
+            source(hotfix_file, local = FALSE)
           } else {
             stop("Hotfix file not found at ", hotfix_file)
           }
