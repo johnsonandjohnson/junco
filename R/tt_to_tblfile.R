@@ -711,12 +711,13 @@ tt_to_tlgrtf <- function(
     # this should be technically always 1 but just in case
     num_repeated_cols <- ncol(tt[[1]]$strings) - ncol(tt[[1]])
     # the following lines will listify the vector colwidths, this is, convert it
-    # to a list of vectors for each page
+    # to a list of vectors (one vector per page)
     l_colwidths <- list()
     j <- num_repeated_cols + 1
     for (i in seq_along(tt)) {
       subt_col_idxs <- j - 1 + seq(ncol(tt[[i]]))
       colwidths_subt <- colwidths[c(1:num_repeated_cols, subt_col_idxs)]
+      ## jump current col position to first column on next page
       j <- tail(subt_col_idxs, 1) + 1
       l_colwidths[[i]] <- get_colwidths_as_proportions(colwidths_subt,
                                                        tlgtype,
