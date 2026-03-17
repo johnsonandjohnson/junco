@@ -1,5 +1,5 @@
 /* Import CSV dataset */
-PROC IMPORT DATAFILE="/adr/PDEV/dbove/pharma/globalcode_development/jnj-61186372--nsc3002/dbr_csr/re_csr1/programs/jjcs_tlgs_r/tests/testthat/sas_comparison/example_data2.csv"
+PROC IMPORT DATAFILE="./dev/example_data2.csv"
             OUT=work.mydata
             DBMS=CSV 
             REPLACE;
