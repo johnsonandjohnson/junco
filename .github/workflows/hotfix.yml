@@ -44,7 +44,7 @@ jobs:
       - name: Install Local Junco
         shell: Rscript {0}
         run: |
-          devtools::install(".", upgrade = "never", quick = TRUE)
+          devtools::install(".", upgrade = FALSE, quick = TRUE)
 
       - name: Execute tests with hotfixes
         shell: Rscript {0}
