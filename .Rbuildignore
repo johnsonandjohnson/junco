@@ -42,7 +42,7 @@ pkgdown
 ^\.covrignore$
 ^\.idea$
 ^lint_results.txt$
-^dev
+^dev$
 
 # output
 ^output$
