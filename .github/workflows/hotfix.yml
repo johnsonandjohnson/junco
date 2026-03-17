@@ -62,14 +62,22 @@ jobs:
             stop("Hotfix file not found at ", hotfix_file)
           }
 
-          
           #  Run tests in the current environment
           library(testthat)
           options(rgl.useNULL = TRUE)
           options(testthat.progress.max_reports = 10)
-          results <- testthat::test_local(reporter = "progress")
+          testthat::set_max_fails(Inf)
           
-          # 4. Exit with error code if any tests failed
+          reporter <- testthat::ListReporter$new()
+          try({
+            testthat::test_dir("tests/testthat", reporter = reporter)
+          }, silent = FALSE)
+          results <- reporter$get_results()
+          
+          # Exit with error code if any tests failed
           if (!testthat:::all_passed(results)) {
             stop("Tests failed with the current hotfix applied.")
           }
+          
+
+
