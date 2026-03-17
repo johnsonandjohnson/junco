@@ -1,8 +1,8 @@
 rver <- getRversion()
 
-if(rver != "4.5.0"){
-  stop("This hotfix should only be run on the 2025q4_r450_1_0_0 container !")
-}
+# if(rver != "4.5.0"){
+#   stop("This hotfix should only be run on the 2025q4_r450_1_0_0 container !")
+# }
 
 library(junco)
 #' @name tt_to_tlgrtf
