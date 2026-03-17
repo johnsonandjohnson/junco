@@ -22,11 +22,11 @@ test_that("a_freq_j with val = NA and denom option", {
 
   # apply to adsl
   tbl1 <- build_table(lyt1, adsl)
-  expect_snapshot(tbl1)
+  expect_snapshot(cran = TRUE, tbl1)
 
   # apply to adae
   tbl1b <- build_table(lyt1, adae, adsl)
-  expect_snapshot(tbl1b)
+  expect_snapshot(cran = TRUE, tbl1b)
 
   # scenario 1c : denom = .N_col, all values
   extra_args_2 <- list(
@@ -42,7 +42,7 @@ test_that("a_freq_j with val = NA and denom option", {
     )
 
   tbl1c <- build_table(lyt1c, adae, adsl)
-  expect_snapshot(tbl1c)
+  expect_snapshot(cran = TRUE, tbl1c)
 })
 
 test_that("a_freq_j with specific val (CHN) and denom option", {
@@ -61,11 +61,11 @@ test_that("a_freq_j with specific val (CHN) and denom option", {
 
   # apply to adsl
   tbl1 <- build_table(lyt1, adsl)
-  expect_snapshot(tbl1)
+  expect_snapshot(cran = TRUE, tbl1)
 
   # apply to adae
   tbl1b <- build_table(lyt1, adae, adsl)
-  expect_snapshot(tbl1b)
+  expect_snapshot(cran = TRUE, tbl1b)
 
   # scenario 1c : denom = .N_col, all values
   extra_args_2 <- list(
@@ -82,7 +82,7 @@ test_that("a_freq_j with specific val (CHN) and denom option", {
     )
 
   tbl1c <- build_table(lyt1c, adae, adsl)
-  expect_snapshot(tbl1c)
+  expect_snapshot(cran = TRUE, tbl1c)
 })
 
 
@@ -101,11 +101,11 @@ test_that("a_freq_j with N_only", {
 
   # apply to adsl
   tbl1 <- build_table(lyt1, adsl)
-  expect_snapshot(tbl1)
+  expect_snapshot(cran = TRUE, tbl1)
 
   # apply to adae
   tbl1b <- build_table(lyt1, adae, adsl)
-  expect_snapshot(tbl1b)
+  expect_snapshot(cran = TRUE, tbl1b)
 })
 
 
@@ -122,11 +122,11 @@ test_that("a_freq_j with TotCol_only", {
 
   # apply to adsl
   tbl1 <- build_table(lyt1, adsl)
-  expect_snapshot(tbl1)
+  expect_snapshot(cran = TRUE, tbl1)
 
   # apply to adae
   tbl1b <- build_table(lyt1, adae, adsl)
-  expect_snapshot(tbl1b)
+  expect_snapshot(cran = TRUE, tbl1b)
 })
 
 
@@ -158,7 +158,7 @@ test_that("a_freq_j as cfun", {
 
   # apply to adae
   tbl1 <- build_table(lyt1, adae, adsl)
-  expect_snapshot(tbl1)
+  expect_snapshot(cran = TRUE, tbl1)
 
   # scenario 2 : label using label_fstr method works
   extra_args_2 <- append(extra_args_1, list(label_fstr = "Bodysystem %s"))
@@ -179,7 +179,7 @@ test_that("a_freq_j as cfun", {
 
   # apply to adae
   tbl2 <- build_table(lyt2, adae, adsl)
-  expect_snapshot(tbl2)
+  expect_snapshot(cran = TRUE, tbl2)
 })
 
 test_that("a_freq_j with label map", {
@@ -208,7 +208,7 @@ test_that("a_freq_j with label map", {
 
   # apply to adae
   tbl1 <- build_table(lyt1, adae, adsl)
-  expect_snapshot(tbl1)
+  expect_snapshot(cran = TRUE, tbl1)
 
   # scenario 2 : set row label using label parameter
   extra_args_2 <- list(label = "Subjects with >= 1 AE")
@@ -221,7 +221,7 @@ test_that("a_freq_j with label map", {
     )
 
   tbl2 <- build_table(lyt2, adae, adsl)
-  expect_snapshot(tbl2)
+  expect_snapshot(cran = TRUE, tbl2)
 })
 
 
@@ -240,11 +240,11 @@ test_that("a_freq_j (old count_pats case)", {
 
   # apply to adsl
   tbl1 <- build_table(lyt1, adsl)
-  expect_snapshot(tbl1)
+  expect_snapshot(cran = TRUE, tbl1)
 
   # apply to adae
   tbl1b <- build_table(lyt1, adae, adsl)
-  expect_snapshot(tbl1b)
+  expect_snapshot(cran = TRUE, tbl1b)
 
   # scenario 1c : denom = .N_col, all values
   extra_args_2 <- list(
@@ -260,7 +260,7 @@ test_that("a_freq_j (old count_pats case)", {
     )
 
   tbl1c <- build_table(lyt1c, adae, adsl)
-  expect_snapshot(tbl1c)
+  expect_snapshot(cran = TRUE, tbl1c)
 })
 
 
@@ -279,12 +279,12 @@ test_that("a_freq_j with N_subgroup as denom", {
 
   # applied to adsl
   tbl1 <- build_table(lyt1, adsl)
-  expect_snapshot(tbl1)
+  expect_snapshot(cran = TRUE, tbl1)
 
   # applied to adae: when denomdf is not specified in the layout,
   # it will take Nsubgroup from df, not from alt_counts_df
   tbl1b <- build_table(lyt1, adae, adsl)
-  expect_snapshot(tbl1b)
+  expect_snapshot(cran = TRUE, tbl1b)
 
   # applied to adae: with denomdf specified in layout
   # it will take Nsubgroup from this denomdf dataset
@@ -304,7 +304,7 @@ test_that("a_freq_j with N_subgroup as denom", {
     )
 
   tbl1c <- build_table(lyt1c, adae, adsl)
-  expect_snapshot(tbl1c)
+  expect_snapshot(cran = TRUE, tbl1c)
 })
 
 
@@ -436,7 +436,7 @@ test_that("a_freq_j with N_trt as denom - special situation", {
 
   ## main focus of this test is on the denominator
   tbl <- build_table(lyt, adaeall, alt_counts_df = adsl_)
-  expect_snapshot(tbl)
+  expect_snapshot(cran = TRUE, tbl)
 
   ## additionally check if the denominator values are as expected
   sub_tbl <- tbl[, "A: Drug X"]
@@ -462,7 +462,7 @@ test_that("a_freq_j with keep_levels (CHN, NGA) ", {
 
   # apply to adsl
   tbl1 <- build_table(lyt1, adsl)
-  expect_snapshot(tbl1)
+  expect_snapshot(cran = TRUE, tbl1)
 
   # Also keep the original test to verify the specific row names
   result <- row.names(tbl1)

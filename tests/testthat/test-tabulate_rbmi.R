@@ -308,5 +308,5 @@ test_that("a_rbmi_lsmeans works as expected in table layout", {
     )
   result <- expect_silent(build_table(lyt, df))
 
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })

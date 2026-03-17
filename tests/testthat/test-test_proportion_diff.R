@@ -20,5 +20,5 @@ test_that("a_test_proportion_diff works as expected in table layout", {
     )
 
   result <- expect_silent(build_table(l, df = dta))
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
