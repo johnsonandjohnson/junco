@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added and Removed
 - Added new behavior for nested `countsource` in h_a_freq_dataprep `altdf_subset` (#200)
+- Add `geom_boxplot_j()` to be able to draw boxplots whose statistics follow SAS quantile(type =2)
 
 
 ## [0.1.4] - 2026-02-02
