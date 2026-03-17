@@ -19,7 +19,7 @@ s_freq_j(
   id = "USUBJID",
   denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
   .N_col,
-  countsource = c("df", "altdf")
+  countsource = c("df", "altdf", "altdf_subset")
 )
 
 a_freq_j(
@@ -58,7 +58,7 @@ a_freq_j(
   extrablanklineafter = NULL,
   restr_columns = NULL,
   colgroup = NULL,
-  countsource = c("df", "altdf")
+  countsource = c("df", "altdf", "altdf_subset")
 )
 
 a_freq_j_with_exclude(
@@ -120,8 +120,10 @@ It is a data frame in the higher row-space than the current input df
 \item{.N_col}{(\code{integer})\cr column-wise N (column count) for the full column being analyzed that is typically
 passed by \code{rtables}.}
 
-\item{countsource}{Either \code{df} or \code{alt_df}.\cr
-When \code{alt_df} the counts will be based upon the alternative dataframe \code{alt_df}.\cr
+\item{countsource}{Either \code{df}, \code{altdf}, or \code{altdf_subset}.\cr
+When \code{altdf} the counts will be based upon the alternative dataframe \code{alt_df}.\cr
+When \code{altdf_subset} the counts will be based upon \code{alt_df} but first restricted\cr
+to the levels/values of the current row split for \code{.var} (or to \code{val} when provided).\cr
 This is useful for subgroup processing,
 to present counts of subjects in a subgroup from the alternative dataframe.}
 
