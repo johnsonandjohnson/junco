@@ -70,7 +70,7 @@ jobs:
           
           reporter <- testthat::ListReporter$new()
           try({
-            testthat::test_dir("tests2/testthat", reporter = reporter)
+            testthat::test_dir("tests/testthat", reporter = reporter)
           }, silent = FALSE)
           results <- reporter$get_results()
           
