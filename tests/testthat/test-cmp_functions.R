@@ -2,7 +2,7 @@ test_that("cmp_split_fun works as expected", {
   result <- basic_table(round_type = "sas") |>
     split_cols_by("ID", split_fun = cmp_split_fun) |>
     build_table(formatters::DM)
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("cmp_cfun works correctly for expected column", {
@@ -17,7 +17,7 @@ test_that("cmp_cfun works correctly for expected column", {
     variables = list(expected = "exp", received = "rec", missing = "mis"),
     formats = list()
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("cmp_cfun works correctly for received column", {
@@ -35,7 +35,7 @@ test_that("cmp_cfun works correctly for received column", {
     variables = list(expected = "exp", received = "rec", missing = "mis"),
     formats = list(count_percent = jjcsformat_count_fraction)
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("cmp_cfun works correctly for missing column", {
@@ -54,5 +54,5 @@ test_that("cmp_cfun works correctly for missing column", {
     variables = list(expected = "exp", received = "rec", missing = "mis"),
     formats = list(count_percent = jjcsformat_count_fraction)
   )
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })

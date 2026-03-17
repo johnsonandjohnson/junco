@@ -91,7 +91,7 @@ test_that("summarize_lsmeans can show two- and one-sided p-values correctly", {
     df = df,
     alt_counts_df = dat_adsl
   )
-  expect_snapshot(result_two_sided)
+  expect_snapshot(cran = TRUE, result_two_sided)
 
   lyt_one_sided_less <- start_lyt |>
     analyze(
@@ -109,7 +109,7 @@ test_that("summarize_lsmeans can show two- and one-sided p-values correctly", {
     df = df,
     alt_counts_df = dat_adsl
   )
-  expect_snapshot(result_one_sided_less)
+  expect_snapshot(cran = TRUE, result_one_sided_less)
 
   lyt_one_sided_greater <- start_lyt |>
     analyze(
@@ -127,7 +127,7 @@ test_that("summarize_lsmeans can show two- and one-sided p-values correctly", {
     df = df,
     alt_counts_df = dat_adsl
   )
-  expect_snapshot(result_one_sided_greater)
+  expect_snapshot(cran = TRUE, result_one_sided_greater)
 })
 
 test_that("s_lsmeans works as expected with ANCOVA fit when not in reference column", {

@@ -40,7 +40,7 @@ test_that("response_by_var various scenarios", {
   expect_identical(res1, expected1)
 
   ## Snapshot for the full table
-  expect_snapshot(tbl)
+  expect_snapshot(cran = TRUE, tbl)
 
   ## Scenario 2: TRTEMFL has missing values and Y only, but is factor with just this level
   adsl2 <- adsl
@@ -48,7 +48,7 @@ test_that("response_by_var various scenarios", {
   adsl2$TRTEMFL <- factor(adsl2$TRTEMFL, levels = "Y")
 
   tbl2 <- build_table(lyt, adsl2)
-  expect_snapshot(tbl2)
+  expect_snapshot(cran = TRUE, tbl2)
 
   ## Scenario 3: TRTEMFL has missing values and Y only, and analysis variable has missing values
   adsl3 <- adsl |> select(USUBJID, ARM, SEX, TRTEMFL)
@@ -68,7 +68,7 @@ test_that("response_by_var various scenarios", {
   expect_identical(res3, expected3)
 
   ## Snapshot for the full table
-  expect_snapshot(tbl3)
+  expect_snapshot(cran = TRUE, tbl3)
 
   ## Scenario 4: TRTEMFL has missing values and Y/N, and analysis variable has missing values
   adsl4 <- adsl |> select(USUBJID, ARM, SEX, TRTEMFL)
@@ -87,7 +87,7 @@ test_that("response_by_var various scenarios", {
   expect_identical(res4, expected4)
 
   ## Snapshot for the full table
-  expect_snapshot(tbl4)
+  expect_snapshot(cran = TRUE, tbl4)
 
   ## Scenario 5: Analysis variable has a level not observed in data
   adsl5 <- adsl |> select(USUBJID, ARM, SEX, TRTEMFL)
@@ -109,5 +109,5 @@ test_that("response_by_var various scenarios", {
   expect_identical(res5, expected5)
 
   ## Snapshot for the full table
-  expect_snapshot(tbl5)
+  expect_snapshot(cran = TRUE, tbl5)
 })

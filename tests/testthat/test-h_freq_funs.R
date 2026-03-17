@@ -35,7 +35,6 @@ test_that("h_update_factor works correctly", {
     .var = "Category",
     val = c("A", "B", "C")
   )
-  # TODO: fix this equal(levels(result3$Category), "No data to report")
 
   # Test with non-factor
   df_non_factor <- data.frame(
@@ -198,7 +197,6 @@ test_that("h_subset_combo works correctly", {
   expect_equal(nrow(result3), 2) # All rows with Flag="Y" and Treatment="Drug A"
 })
 
-# TODO: fix this test_that("h_create_altdf works correctly")
 
 test_that("h_restrict_val works if there are more values in df_row than in map", {
   df_row <- data.frame(
