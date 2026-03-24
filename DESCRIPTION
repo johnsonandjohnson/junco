@@ -58,7 +58,7 @@ Imports:
     mmrm,
     assertthat,
     vcdExtra (>= 0.8.7),
-    rtables.officer (>= 0.1.0),
+    rtables.officer (>= 0.1.2.9001),
     flextable (>= 0.9.11),
     officer,
     xml2,
@@ -82,3 +82,4 @@ Suggests:
     pharmaverseadamjnj (>= 0.0.2)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Remotes: insightsengineering/rtables.officer@main
