@@ -2,6 +2,15 @@
 name: release 🕰️
 
 on:
+  pull_request:
+    types:
+      - opened
+      - ready_for_review
+    branches:
+      - main
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       chosen-workflow:
