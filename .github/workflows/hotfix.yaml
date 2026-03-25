@@ -71,6 +71,7 @@ jobs:
           options(rgl.useNULL = TRUE)
           options(testthat.progress.max_reports = 10)
           testthat::set_max_fails(Inf)
+          Sys.setenv(NOT_CRAN = "false") # Ensure NOT_CRAN is false to mimic CRAN checks and use skip_on_cran() behavior
           
           # Run tests using the Global Environment
           message(">>> Running tests in GlobalEnv (Snapshots preserved)...")

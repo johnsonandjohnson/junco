@@ -29,7 +29,7 @@ on:
 
 jobs:
   revdepcheck:
-    name: revdepcheck ⏪
+    name: revdepcheck 
     runs-on: ubuntu-latest
     if: >
       !contains(github.event.commits[0].message, '[skip revdepcheck]')
