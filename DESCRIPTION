@@ -9,7 +9,7 @@ Authors@R: c(
     person("Paul", "Jenkins", , "pjenkin2@its.jnj.com", role = c("aut")),
     person("Daniel", "Hofstaedter", , "dhofstae@its.jnj.com", role = c("aut")),
     person("Joseph", "Kovach", , "jkovach2@its.jnj.com", role = c("aut")),
-    person("David", "Munoz Tord", , "david.munoztord@mailbox.com", role = c("aut")),
+    person("David", "Munoz Tord", , "david.munoztord@mailbox.org", role = c("aut")),
     person("Daniel", "Sabanes Bove", , "daniel@rconis.com", role = c("aut")),
     person("Ezequiel", "Anokian", , "eanokia1@its.jnj.com", role = c("ctb")),
     person("Renfei", "Mao", , "rmao6@its.jnj.com", role = c("ctb")),
