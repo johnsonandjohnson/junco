@@ -6,22 +6,55 @@
 #
 # It is unlikely that you need to modify this file manually.
 
-name: R-hub
-run-name: "${{ github.event.inputs.id }}: ${{ github.event.inputs.name || format('Manually run by {0}', github.triggering_actor) }}"
+name: R-hub 🌐
 
 on:
-  workflow_dispatch:
+  workflow_call:
+    secrets:
+      REPO_GITHUB_TOKEN:
+        description: |
+          Github token with read access to repositories
+        required: false
     inputs:
       config:
-        description: 'A comma separated list of R-hub platforms to use.'
+        description: "A comma separated list of R-hub platforms to use."
         type: string
-        default: 'ubuntu-clang,gcc13,ubuntu-next,ubuntu-release,windows,macos'
-      name:
-        description: 'Run name. You can leave this empty now.'
+        # These platforms correspond roughly to CRAN package checks.
+        # More information: https://github.com/insightsengineering/idr-tasks/issues/781
+        # All supported R-hub platforms can be viewed by running: rhub::rhub_platforms()
+        # Container-based platforms (as opposed to VM-based Windows and macOS platforms)
+        # can be also viewed here: https://r-hub.github.io/containers/containers.html
+        # gcc14 = r-devel-linux-x86_64-fedora-gcc
+        #
+        # "linux" check (linux (R-devel)) is temporarily disabled because of unexplained timeouts
+        # in setup-r-dependencies step "Modify DESCRIPTION file (development)"
+        default: >-
+          r-devel-linux-x86_64-debian-clang,
+          r-devel-linux-x86_64-debian-gcc,
+          gcc14,
+          r-devel-windows-x86_64,
+          r-patched-linux-x86_64,
+          r-release-linux-x86_64,
+          r-release-macos-arm64,
+          r-release-macos-x86_64,
+          r-release-windows-x86_64,
+          r-oldrel-macos-arm64,
+          r-oldrel-macos-x86_64,
+          r-oldrel-windows-x86_64,
+          gcc13,
+          noSuggests,
+          donttest
+      lookup-refs:
+        description: |
+          List of package references to be used for the feature branch.
+          Multiple entries in new lines or separated by commas.
+        required: false
+        default: ""
         type: string
-      id:
-        description: 'Unique ID. You can leave this empty now.'
-        type: string
+
+concurrency:
+  group: r-hub-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
 
