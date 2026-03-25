@@ -41,4 +41,4 @@ jobs:
         inputs.chosen-workflow == 'rhub'
       )
     name: R-hub 🌐
-    uses: johnsonandjohnson/junco/.github/workflows/rhub.yaml@main
+    uses: johnsonandjohnson/junco/.github/workflows/rhub.yaml@scda_test_reversedependency
