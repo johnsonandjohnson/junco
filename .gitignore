@@ -36,11 +36,3 @@ programs_external/*
 #Air
 air.toml
 .vscode/extensions.json
-
-# revdepcheck outputs
-revdep/checks/
-revdep/library/
-revdep/data/
-revdep/*.html
-revdep/*.pdf
-revdep/*.sqlite

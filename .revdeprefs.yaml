@@ -1,0 +1,4 @@
+revdeps:
+  packages:
+    - teal.modules.clinical
+    - insightsengineering/scda.test
