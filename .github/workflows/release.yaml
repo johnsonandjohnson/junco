@@ -24,6 +24,7 @@ on:
         options:
           - rhub
           - revdepcheck
+          - hotfix
 
 jobs:
   revdepcheck:
@@ -32,7 +33,7 @@ jobs:
         github.event_name == 'workflow_dispatch' &&
         inputs.chosen-workflow == 'revdepcheck'
       )
-    name: revdepcheck ↩️
+    name: revdepcheck 🧑‍🔬
     uses: johnsonandjohnson/junco/.github/workflows/revdepcheck.yaml@scda_test_reversedependency
   rhub:
     if: >
@@ -42,3 +43,11 @@ jobs:
       )
     name: R-hub 🌐
     uses: johnsonandjohnson/junco/.github/workflows/rhub.yaml@scda_test_reversedependency
+  hotfix:
+    if: >
+      github.event_name == 'release' || (
+        github.event_name == 'workflow_dispatch' &&
+        inputs.chosen-workflow == 'hotfix'
+      )
+    name: hotfix-hub 🔥
+    uses: johnsonandjohnson/junco/.github/workflows/hotfix.yaml@scda_test_reversedependency

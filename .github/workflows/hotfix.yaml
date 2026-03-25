@@ -72,14 +72,35 @@ jobs:
           options(testthat.progress.max_reports = 10)
           testthat::set_max_fails(Inf)
           
+          # Run tests using the Global Environment
+          message(">>> Running tests in GlobalEnv (Snapshots preserved)...")
           reporter <- testthat::ListReporter$new()
+
           try({
-            testthat::test_dir("tests/testthat", reporter = reporter)
+            testthat::test_dir(
+              path = "tests/testthat",
+              reporter = reporter,
+              env = globalenv(),    
+              load_helpers = FALSE, 
+              stop_on_failure = FALSE
+            )
           }, silent = FALSE)
-          results <- reporter$get_results()
-          
-          # Exit with error code if any tests failed
-          if (!testthat:::all_passed(results)) {
-            stop("Tests failed with the current hotfix applied.")
+          res_list <- reporter$get_results()
+          df_results <- as.data.frame(res_list)
+
+          if (testthat:::all_passed(res_list)) {
+            message("\n✅ SUCCESS: Hotfix passed all tests.")
+          } else {
+            message("\n❌ FAILURE: Hotfix validation failed.")
+            
+            # Filter for files that had issues
+            failed_files <- df_results[df_results$failed > 0 | df_results$error, ]
+            
+            cat("\nFailed Test Files:\n")
+            print(failed_files[, c("file", "test", "failed", "error")])
+            
+            # Final stop to kill the process (Local or CI)
+            stop(sprintf("Validation failed with %d errors/failures.", 
+                        sum(df_results$failed) + sum(df_results$error)), call. = FALSE)
           }
           

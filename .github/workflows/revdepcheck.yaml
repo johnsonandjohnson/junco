@@ -1,5 +1,5 @@
 ---
-name: revdepcheck ⏪
+name: revdepcheck 🧑‍🔬
 
 on:
   workflow_dispatch:
