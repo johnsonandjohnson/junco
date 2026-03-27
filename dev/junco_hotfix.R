@@ -1,9 +1,9 @@
 
 rver <- getRversion()
 
-if(rver != "4.5.0"){
-  stop("This hotfix should only be run on the 2025q4_r450_1_0_0 container !")
-}
+# if(rver != "4.5.0"){
+#   stop("This hotfix should only be run on the 2025q4_r450_1_0_0 container !")
+# }
 
 library(junco)
 #' @name tt_to_tlgrtf
@@ -1190,5 +1190,6 @@ a_summarize_ex_j <- function(
     .indent_mods = .indent_mods,
     .format_na_strs = .format_na_strs
   )
+  stop("I introduced an error")
   return(ret)
 }
