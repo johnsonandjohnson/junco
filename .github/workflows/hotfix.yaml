@@ -29,7 +29,16 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Hotfix Branch
+        uses: actions/checkout@v4
+        with:
+          path: hotfix_repo
+
+      - name: Checkout Junco v0.1.1
+        uses: actions/checkout@v4
+        with:
+          ref: v0.1.1
+          path: junco_source
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -41,24 +50,28 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          working-directory: junco_source
           extra-packages: |
             any::devtools
             any::testthat
 
-      - name: Install Local Junco
+      - name: Install Local Junco v0.1.1
         shell: Rscript {0}
         run: |
-          devtools::install(".", upgrade = FALSE, quick = TRUE)
+          devtools::install("junco_source", upgrade = FALSE, quick = TRUE)
 
       - name: Execute tests with hotfixes
         shell: Rscript {0}
         run: |
-          project_root <- getwd()
-          hotfix_file <- file.path(project_root, "dev", "junco_hotfix.R")
+          project_root <- file.path(getwd(), "junco_source")
+          hotfix_file <- file.path(getwd(), "hotfix_repo", "dev", "junco_hotfix.R")
           
-          devtools::load_all(project_root)
+          setwd(project_root)
           
-          # Inject the Hotfix 
+          devtools::install(project_root)
+          library(junco)
+          
+          #  Inject the Hotfix 
           if (file.exists(hotfix_file)) {
             message(">>> Injecting Hotfix: ", hotfix_file)
             source(hotfix_file, local = FALSE)
@@ -66,12 +79,12 @@ jobs:
             stop("Hotfix file not found at ", hotfix_file)
           }
 
-          #  Run tests in the current environment
+          # Run tests in the current environment
           library(testthat)
           options(rgl.useNULL = TRUE)
           options(testthat.progress.max_reports = 10)
           testthat::set_max_fails(Inf)
-          Sys.setenv(NOT_CRAN = "false") # Ensure NOT_CRAN is false to mimic CRAN checks and use skip_on_cran() behavior
+          Sys.setenv(NOT_CRAN = "false") # Ensure NOT_CRAN is false to mimic CRAN checks
           
           # Run tests using the Global Environment
           message(">>> Running tests in GlobalEnv (Snapshots preserved)...")
@@ -86,13 +99,14 @@ jobs:
               stop_on_failure = FALSE
             )
           }, silent = FALSE)
+          
           res_list <- reporter$get_results()
           df_results <- as.data.frame(res_list)
 
           if (testthat:::all_passed(res_list)) {
-            message("\n✅ SUCCESS: Hotfix passed all tests.")
+            message("\n✅ SUCCESS: Hotfix passed all tests on v0.1.1.")
           } else {
-            message("\n❌ FAILURE: Hotfix validation failed.")
+            message("\n❌ FAILURE: Hotfix validation failed on v0.1.1.")
             
             # Filter for files that had issues
             failed_files <- df_results[df_results$failed > 0 | df_results$error, ]
@@ -104,4 +118,3 @@ jobs:
             stop(sprintf("Validation failed with %d errors/failures.", 
                         sum(df_results$failed) + sum(df_results$error)), call. = FALSE)
           }
-          
