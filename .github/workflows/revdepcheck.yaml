@@ -87,6 +87,7 @@ jobs:
         with:
           github-token: ${{ steps.github-token.outputs.token }}
           additional-env-vars: ${{ inputs.additional-env-vars }}
+          timeout: 7200
 
       - name: Prepare revdep artifact 🎁
         run: |
