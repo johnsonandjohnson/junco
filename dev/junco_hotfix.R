@@ -1,5 +1,5 @@
 message("===========================================================")
-message("               THE HOTFIX FILE HAS BEEN SOURCED!           ")
+message("             THE HOTFIX FILE HAS BEEN SOURCED!             ")
 message("===========================================================")
 
 rver <- getRversion()
