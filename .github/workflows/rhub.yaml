@@ -31,7 +31,6 @@ on:
           r-oldrel-macos-arm64,
           r-oldrel-macos-x86_64,
           r-oldrel-windows-x86_64,
-          gcc13,
           donttest
       lookup-refs:
         description: |
