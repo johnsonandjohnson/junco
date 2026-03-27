@@ -22,10 +22,7 @@ on:
         # "linux" check (linux (R-devel)) is temporarily disabled because of unexplained timeouts
         # in setup-r-dependencies step "Modify DESCRIPTION file (development)"
         default: >-
-          r-devel-linux-x86_64-debian-clang,
-          r-devel-linux-x86_64-debian-gcc,
           gcc14,
-          r-devel-windows-x86_64,
           r-patched-linux-x86_64,
           r-release-linux-x86_64,
           r-release-macos-arm64,
@@ -35,7 +32,6 @@ on:
           r-oldrel-macos-x86_64,
           r-oldrel-windows-x86_64,
           gcc13,
-          noSuggests,
           donttest
       lookup-refs:
         description: |

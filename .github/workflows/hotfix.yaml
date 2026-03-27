@@ -68,8 +68,8 @@ jobs:
           
           setwd(project_root)
           
-          devtools::install(project_root)
-          library(junco)
+          message(">>> Loading package interactively via load_all()...")
+          devtools::load_all(project_root)
           
           #  Inject the Hotfix 
           if (file.exists(hotfix_file)) {
