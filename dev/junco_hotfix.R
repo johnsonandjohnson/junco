@@ -1,65 +1,4 @@
-message("===========================================================")
-message("             THE HOTFIX FILE HAS BEEN SOURCED!             ")
-message("===========================================================")
 
-rver <- getRversion()
-
-if(rver != "4.5.0"){
-  stop("This hotfix should only be run on the 2025q4_r450_1_0_0 container !")
-}
-
-library(junco)
-#' @name tt_to_tlgrtf
-#' @title TableTree to .rtf Conversion
-#' @description
-#' A function to convert TableTree to .rtf
-#' @details
-#' This function aids in converting the rtables TableTree into the desired .rtf file.
-#'
-#' @param tt TableTree object to convert to RTF
-#' @param file character(1). File to create, including path, but excluding
-#' .rtf extension.
-#' @param orientation Orientation of the output ("portrait" or "landscape")
-#' @param colwidths Column widths for the table
-#' @param label_width_ins Label width in inches
-#' @param fontspec Font specification object
-#' @param pg_width Page width in inches
-#' @param margins Margins in inches (top, right, bottom, left)
-#' @param paginate Whether to paginate the output
-#' @param col_gap Column gap in spaces
-#' @param verbose Whether to print verbose output
-#' @param tlgtype Type of the output (Table, Listing, or Figure)
-#' @param string_map Unicode mapping for special characters
-#' @param markup_df Data frame containing markup information
-#' @param ... Additional arguments passed to gentlg
-#' @inheritParams tidytlg::gentlg
-#' @param nosplitin list(row=, col=). Path elements whose children should not be paginated within
-#' if it can be avoided. e.g., list(col="TRT01A") means don't split within treatment arms unless
-#' all the associated columns don't fit on a single page.
-#' @param combined_rtf logical(1). In the case where the result is broken up into multiple
-#' parts due to width, should a combined rtf file also be created. Defaults to `FALSE`.
-#' @param one_table logical(1). If `tt` is a (non-`MatrixPrintForm`) list,
-#' should the parts be added to the rtf within a single table (`TRUE`, the
-#' default) or as separate tables. End users will not generally need to set this.
-#' @param border_mat matrix. A `m x k` matrix where m is the number of columns of `tt`
-#'  and k is the number of lines the header takes up. See [tidytlg::add_bottom_borders]
-#'  for what the matrix should contain. Users should only specify this when the
-#'  default behavior does not meet their needs.
-#' @import rlistings
-#' @rdname tt_to_tlgrtf
-#' @export
-#' @seealso Used in all table and listing scripts
-#' @note `file` should always include path. Path will be extracted
-#' and passed separately to `gentlg`.
-#' @note When `one_table` is `FALSE`, only the width of the row label
-#'   pseudocolumn can be directly controlled due to a limitation in
-#'   `tidytlg::gentlg`. The proportion of the full page that the first value
-#'   in colwidths would take up is preserved and all other columns equally
-#'   split the remaining available width. This will cause, e.g., the
-#'   elements within the allparts rtf generated when `combined_rtf` is `TRUE`
-#'   to differ visually from the content of the individual part rtfs.
-#' @return If `file` is non-NULL, this is called for the side-effect of writing
-#'   one or more RTF files. Otherwise, returns a list of `huxtable` objects.
 tt_to_tlgrtf <- function(
     tt,
     file = NULL,
@@ -537,18 +476,6 @@ setMethod(
 
 
 
-#' Subset Combination
-#'
-#' Subsets a data frame based on specified combination criteria.
-#'
-#' @param df Data frame to subset.
-#' @param combosdf Data frame containing combinations.
-#' @param do_not_filter Variables to not filter.
-#' @param filter_var Variable used for filtering.
-#' @param flag_var Flag variable for filtering.
-#' @param colid Column ID for identification.
-#' @return Subsetted data frame.
-#' @export
 h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, colid) {
   ### this is the core code for subsetting to appropriate combo level
   if (!is.null(flag_var)) {
@@ -568,43 +495,6 @@ h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, co
 
   return(df)
 }
-
-#' @name a_freq_combos_j
-#'
-#' @title Analysis function count and percentage in column design controlled by combosdf
-#'
-#' @inheritParams proposal_argument_convention
-#' @inheritParams a_freq_j
-#'
-#' @param combosdf The df which provides the mapping of facets to produce cumulative counts for .N_col.
-#' @note: These extra records must then be removed from the numerator via the filter_var parameter
-#' to avoid double counting of events.
-#' @param do_not_filter A vector of facets (i.e., column headers), identifying headers for which
-#' no filtering of records should occur.
-#' That is, the numerator should contain cumulative counts.  Generally, this will be used for a
-#' "Total" column, or something similar.
-#' @param filter_var The variable which identifies the records to count in the numerator for any given column.
-#' Generally, this will contain text matching the column header for the column associated with a given record.
-#' @param flag_var Variable which identifies the occurrence (or first occurrence) of an event.
-#' The flag variable is expected to have a value of "Y" identifying that the event should be counted, or NA otherwise.
-
-#' @param denom (`string`)\cr
-#' One of \cr
-#' \itemize{
-#' \item \strong{N_col} Column count, \cr
-#' \item \strong{n_df} Number of patients (based upon the main input dataframe `df`),\cr
-#' \item \strong{n_altdf} Number of patients from the secondary dataframe (`.alt_df_full`),\cr
-#' Note that argument `denom_by` will perform a row-split on the `.alt_df_full` dataframe.\cr
-#' It is a requirement that variables specified in `denom_by` are part of the row split specifications. \cr
-#' \item \strong{n_rowdf} Number of patients from the current row-level dataframe
-#' (`.row_df` from the rtables splitting machinery).\cr
-#' \item \strong{n_parentdf} Number of patients from a higher row-level split than the current split.\cr
-#' This higher row-level split is specified in the argument `denom_by`.\cr
-#' }
-#' @param .formats (named 'character' or 'list')\cr
-#' formats for the statistics.
-#' @return list of requested statistics with formatted `rtables::CellValue()`.\cr
-#' @export
 
 a_freq_combos_j <- function(
     df,
@@ -913,28 +803,6 @@ s_aval_chg_col23_diff <- function(
 }
 
 
-#' @inheritParams proposal_argument_convention
-#' @describeIn a_summarize_ex_j Statistics function needed for the exposure tables
-#'
-#' @param daysconv conversion required to get the values into days
-#' (i.e 1 if original PARAMCD unit is days, 30.4375 if original PARAMCD unit is in months)
-#' @param ancova (`logical`)\cr If FALSE, only descriptive methods will be used. \cr
-#' If TRUE Ancova methods will be used for each of the columns : AVAL, CHG, DIFF. \cr
-#' @param comp_btw_group (`logical`)\cr If TRUE,
-#' \cr When ancova = FALSE, the estimate of between group difference (on CHG) will be based upon two-sample t-test. \cr
-#' \cr When ancova = TRUE, the same ancova model will be used for the estimate of between group difference (on CHG).
-#'
-#' @param interaction_y (`character`)\cr Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.
-#' @param interaction_item (`character`)\cr Will be passed onto the `tern` function `s_ancova`, when ancova = TRUE.
-#' @param conf_level (`proportion`)\cr Confidence level of the interval
-#' @param variables (named list of strings)\cr
-#' list of additional analysis variables, with expected elements:
-#'    * arm (string)\cr
-#' group variable, for which the covariate adjusted means of multiple groups will be summarized.
-#' Specifically, the first level of arm variable is taken as the reference group.
-#'    * covariates (character)\cr
-#' a vector that can contain single variable names (such as 'X1'), and/or interaction terms indicated by 'X1 * X2'.
-#'
 s_summarize_ex_j <- function(
     df,
     .var,
@@ -1017,83 +885,6 @@ s_summarize_ex_j <- function(
   return(x_stats)
 }
 
-#' @title Analysis Function For Exposure Tables
-#' @description
-#' A function to create the appropriate statistics needed for exposure table
-#' @details
-#' Creates statistics needed for table. This includes differences and 95% CI and total treatment years.
-#' This is designed to be used as an analysis (afun in `analyze`) function.
-#' @inheritParams proposal_argument_convention
-#'
-#' @describeIn a_summarize_ex_j Formatted analysis function which is used as `afun`.
-#'
-#' @return
-#' * `a_summarize_ex_j()` returns the corresponding list with formatted [rtables::CellValue()].
-#'
-#' @aliases a_summarize_ex_j
-#' @examples
-#' library(dplyr)
-#'
-#' ADEX <- data.frame(
-#'   USUBJID = c(
-#'     "XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04", "XXXXX05",
-#'     "XXXXX06", "XXXXX07", "XXXXX08", "XXXXX09", "XXXXX10"
-#'   ),
-#'   TRT01A = c(
-#'     "ARMA", "ARMA", "ARMA", "ARMA", "ARMA",
-#'     "Placebo", "Placebo", "Placebo", "ARMA", "ARMA"
-#'   ),
-#'   AVAL = c(56, 78, 67, 87, 88, 93, 39, 87, 65, 55)
-#' )
-#'
-#' ADEX <- ADEX |>
-#'   mutate(TRT01A = as.factor(TRT01A))
-#'
-#' ADEX$colspan_trt <- factor(ifelse(ADEX$TRT01A == "Placebo", " ", "Active Study Agent"),
-#'   levels = c("Active Study Agent", " ")
-#' )
-#'
-#' ADEX$diff_header <- "Difference in Means (95% CI)"
-#' ADEX$diff_label <- paste(ADEX$TRT01A, paste("vs", "Placebo"))
-#'
-#' colspan_trt_map <- create_colspan_map(ADEX,
-#'   non_active_grp = "Placebo",
-#'   non_active_grp_span_lbl = " ",
-#'   active_grp_span_lbl = "Active Study Agent",
-#'   colspan_var = "colspan_trt",
-#'   trt_var = "TRT01A"
-#' )
-#' ref_path <- c("colspan_trt", "", "TRT01A", "Placebo")
-#'
-#' lyt <- basic_table() |>
-#'   split_cols_by(
-#'     "colspan_trt",
-#'     split_fun = trim_levels_to_map(map = colspan_trt_map)
-#'   ) |>
-#'   split_cols_by("TRT01A") |>
-#'   split_cols_by("diff_header", nested = FALSE) |>
-#'   split_cols_by(
-#'     "TRT01A",
-#'     split_fun = remove_split_levels("Placebo"),
-#'     labels_var = "diff_label"
-#'   ) |>
-#'   analyze("AVAL",
-#'     afun = a_summarize_ex_j, var_labels = "Duration of treatment (Days)",
-#'     show_labels = "visible",
-#'     indent_mod = 0L,
-#'     extra_args = list(
-#'       daysconv = 1,
-#'       ref_path = ref_path,
-#'       variables = list(arm = "TRT01A", covariates = NULL),
-#'       ancova = TRUE,
-#'       comp_btw_group = TRUE
-#'     )
-#'   )
-#'
-#' result <- build_table(lyt, ADEX)
-#'
-#' result
-#' @export
 a_summarize_ex_j <- function(
     df,
     .var,
@@ -1196,256 +987,467 @@ a_summarize_ex_j <- function(
   return(ret)
 }
 
-#' Boxplot statistics with configurable quantile type
-#'
-#' `StatBoxplotQuantile` computes boxplot statistics using a configurable
-#' quantile definition. By default, quartiles use `quantile(type = 2)` to follow
-#' `PCTLDEF = 5` (SAS default). It computes quartiles, whiskers, and outliers.
-#'
-#' Required aesthetics: `x`, `y`.
-#'
-#' Computed variables (per group):
-#' - `ymin`: lower whisker (min value within lower fence)
-#' - `lower`: first quartile (Q1)
-#' - `middle`: median (Q2)
-#' - `upper`: third quartile (Q3)
-#' - `ymax`: upper whisker (max value within upper fence)
-#' - `outliers`: list-column of values outside whiskers
-#' - `x`: x position (first value in group)
-#' - `width`: box width used by `GeomBoxplot`
-#'
-#' @section Quantile details:
-#' By default, quartiles are computed with `quantile(type = 2)` to follow
-#' `PCTLDEF = 5` (SAS default). You can change this via the `quantile_type` argument. Fences
-#' are defined as `Q1 - coef * IQR` and `Q3 + coef * IQR` where `IQR = Q3 - Q1` and `coef`
-#' defaults to `1.5`.
-#'
-#' @keywords internal
-#' @importFrom ggplot2 ggproto Stat
-#' @importFrom stats quantile
-StatBoxplotQuantile <- ggproto(
-  "StatBoxplotQuantile", Stat,
-  required_aes = c("x", "y"),
-  dropped_aes = c("x", "y", "weight"),
-  compute_group = function(
-    data,
-    scales,
-    width = NULL,
-    na.rm = FALSE,
-    coef = 1.5,
-    quantile_type = 2
-  ) {
-    vec <- data$y
-    if (length(vec) == 0) {
-      return(data.frame())
-    }
 
-    # Quantiles controlled by quantile_type (default 2 = PCTLDEF=5)
-    qs <- quantile(vec, probs = c(0, 0.25, 0.5, 0.75, 1), type = quantile_type, na.rm = na.rm)
-    iqr <- qs[4] - qs[2]
 
-    lower_fence <- qs[2] - (coef * iqr)
-    upper_fence <- qs[4] + (coef * iqr)
 
-    ymin <- min(vec[vec >= lower_fence], na.rm = na.rm)
-    ymax <- max(vec[vec <= upper_fence], na.rm = na.rm)
+# hotfix alt_df_subset
 
-    outliers <- vec[vec < ymin | vec > ymax]
 
-    data.frame(
-      ymin = ymin,
-      lower = qs[2],
-      middle = qs[3],
-      upper = qs[4],
-      ymax = ymax,
-      outliers = I(list(outliers)),
-      x = data$x[1],
-      width = if (is.null(width)) 0.75 else width
-    )
-  }
-)
-
-#'  Draws boxplots with configurable quantile type
-#'
-#' `geom_boxplot_j()` draws boxplots whose statistics can follow different
-#'  percentile definitions for quartiles. By default it uses
-#'  `quantile(type = 2)` to follow `PCTLDEF = 5` (SAS default). You can override
-#'  the quantile definition via `quantile_type`. It uses `StatBoxplotQuantile`
-#'  then renders with `GeomBoxplot`.
-#'
-#' @param mapping,data,position,... Standard ggplot2 layer arguments passed to
-#'   `layer()`/`GeomBoxplot`.
-#' @param coef Numeric multiplier for the IQR to compute fences. Defaults to 1.5
-#'   (Tukey).
-#' @param quantile_type Integer in 1:9 passed to `stats::quantile(type = ...)` to
-#'   compute quartiles. Defaults to 2 (follows PCTLDEF = 5).
-#' @param na.rm Logical; if `TRUE`, silently removes `NA` values.
-#' @param show.legend,inherit.aes See `ggplot2::layer()`.
-#'
-#' @return A ggplot2 layer that produces boxplots using the chosen quantile type.
-#'
-#' @examples
-#' library(ggplot2)
-#' library(pharmaverseadamjnj)
-#' ggplot(advs, aes(AVISIT, AVAL, fill = TRT01A)) +
-#'   geom_boxplot_j(position = position_dodge2(preserve = "single"), na.rm = TRUE) +
-#'   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#'
-#' @export
-#' @importFrom ggplot2 layer GeomBoxplot
-geom_boxplot_j <- function(
-  mapping = NULL,
-  data = NULL,
-  position = "dodge2",
-  ...,
-  coef = 1.5,
-  quantile_type = 2,
-  na.rm = FALSE,
-  show.legend = NA,
-  inherit.aes = TRUE
+h_a_freq_dataprep <- function(
+    df,
+    labelstr = NULL,
+    .var = NA,
+    val = NULL,
+    drop_levels = FALSE,
+    excl_levels = NULL,
+    new_levels = NULL,
+    new_levels_after = FALSE,
+    addstr2levs = NULL,
+    .df_row,
+    .spl_context,
+    .N_col,
+    id = "USUBJID",
+    denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
+    variables,
+    label = NULL,
+    label_fstr = NULL,
+    label_map = NULL,
+    .alt_df_full = NULL,
+    denom_by = NULL,
+    .stats,
+    countsource = c("df", "altdf", "altdf_subset")
 ) {
-  layer(
-    data = data,
-    mapping = mapping,
-    stat = StatBoxplotQuantile,
-    geom = GeomBoxplot,
-    position = position,
-    show.legend = show.legend,
-    inherit.aes = inherit.aes,
-    params = list(
-      na.rm = na.rm,
-      coef = coef,
-      quantile_type = quantile_type,
-      ...
-    )
+  denom <- match.arg(denom)
+
+  df <- df[!is.na(df[[.var]]), ]
+  .df_row <- .df_row[!is.na(.df_row[[.var]]), ]
+
+  # if no stats requested, get all stats
+  .stats <- junco_get_stats("a_freq_j", stats_in = .stats, custom_stats_in = NULL)
+
+  ### combine all preprocessing of incoming df/.df_row in one function do this outside stats derivation functions
+  ### (s_freq_j/) use all of val/excl_levels/drop_levels//new_levels/ label/label_map/labelstr/label_fstr
+  upd_dfrow <- h_upd_dfrow(
+    df_row = .df_row,
+    .var = .var,
+    val = val,
+    excl_levels = excl_levels,
+    drop_levels = drop_levels,
+    new_levels = new_levels,
+    new_levels_after = new_levels_after,
+    addstr2levs = addstr2levs,
+    label = label,
+    label_map = label_map,
+    labelstr = labelstr,
+    label_fstr = label_fstr,
+    .spl_context = .spl_context
   )
+
+  .df_row <- upd_dfrow$df_row
+  df <- upd_dfrow$df
+
+  val <- upd_dfrow$val
+
+  # from here onwards proceed with drop_levels = FALSE action has already been done in h_upd_dfrow, and proper
+  # observed values will be passed to val for s_freq_j
+  drop_levels <- FALSE
+  excl_levels <- NULL
+
+  ### derive appropriate alt_df based upon .spl_context and .alt_df_full note that only row-based splits are done for
+  ### now only for variables from the first split_rows_by
+  alt_df <- h_create_altdf(
+    .spl_context,
+    .df_row,
+    .alt_df_full,
+    denom_by = denom_by,
+    id = id,
+    variables = variables,
+    denom = denom
+  )
+
+  if (identical(countsource, "altdf_subset")) {
+    # prefer explicit val, otherwise use the levels present in .df_row.
+    if (!is.null(alt_df) && !is.na(.var) && (.var %in% names(alt_df))) {
+      keep_vals <- NULL
+      if (!is.null(val)) {
+        keep_vals <- val
+      } else if (!is.null(.df_row) && !is.null(.df_row[[.var]])) {
+        keep_vals <- if (is.factor(.df_row[[.var]])) levels(.df_row[[.var]]) else unique(.df_row[[.var]])
+      }
+
+      if (!is.null(keep_vals)) {
+        keep_vals <- intersect(keep_vals, unique(alt_df[[.var]]))
+        if (length(keep_vals) > 0) {
+          alt_df <- alt_df[alt_df[[.var]] %in% keep_vals, , drop = FALSE]
+          alt_df <- h_update_factor(alt_df, .var, keep_vals)
+        }
+      }
+    }
+  }
+
+  new_denomdf <- alt_df
+
+  parentdf <- h_denom_parentdf(.spl_context, denom, denom_by)
+  if (denom == "n_parentdf") {
+    new_denomdf <- parentdf
+  }
+
+  return(list(
+    df = df,
+    .df_row = .df_row,
+    val = val,
+    drop_levels = drop_levels,
+    excl_levels = excl_levels,
+    alt_df = alt_df,
+    parentdf = parentdf,
+    new_denomdf = new_denomdf,
+    .stats = .stats
+  ))
 }
 
-#' @name a_freq_j
-#'
-#'
-#' @inheritParams proposal_argument_convention
-#' @param .stats (`character`)\cr statistics to select for the table.
-#' See Value for list of available statistics.
-#' @param riskdiff (`logical`)\cr
-#' When `TRUE`, risk difference calculations will be performed and
-#' presented (if required risk difference column splits are included).\cr
-#' When `FALSE`, risk difference columns will remain blank
-#' (if required risk difference column splits are included).
-#' @param ref_path (`string`)\cr Column path specifications for
-#' the control group for the relative risk derivation.
-#' @param variables Will be passed onto the relative risk function
-#' (internal function s_rel_risk_val_j), which is based upon [tern::s_proportion_diff()].\cr
-#' See `?tern::s_proportion_diff` for details.
-#' @param method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
-#' @param weights_method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
-#' @param label (`string`)\cr
-#' When `val` has length 1,
-#' the row label to be shown on the output can be specified using this argument.\cr
-#' When `val` is a `character vector`, the `label_map` argument can be specified
-#' to control the row-labels.
-#' @param labelstr An argument to ensure this function can be used
-#' as a `cfun` in a `summarize_row_groups` call.\cr
-#' It is recommended not to utilize this argument for other purposes.\cr
-#' The label argument could be used instead (if `val` is a single string)\cr
-#' An another approach could be to utilize the `label_map` argument
-#' to control the row labels of the incoming analysis variable.
-#' @param label_fstr (`string`)\cr
-#' a sprintf style format string.
-#' It can contain up to one `"%s"`, which takes the current split value and
-#' generates the row/column label.\cr
-#' It will be combined with the `labelstr` argument,
-#' when utilizing this function as
-#' a `cfun` in a `summarize_row_groups` call.\cr
-#' It is recommended not to utilize this argument for other purposes.
-#' The label argument could be used instead (if `val` is a single string)\cr
-#' @param label_map (`tibble`)\cr
-#' A mapping tibble to translate levels from the incoming variable into
-#' a different row label to be presented on the table.\cr
-#' @param .alt_df_full (`dataframe`)\cr Denominator dataset
-#' for fraction and relative risk calculations.\cr
-#' this argument gets populated by the rtables
-#' split machinery (see [rtables::additional_fun_params]).
-#' @param denom_by (`character`)\cr Variables from row-split
-#' to be used in the denominator derivation.\cr
-#' This controls both `denom = "n_parentdf"` and `denom = "n_altdf"`.\cr
-#' When `denom = "n_altdf"`, the denominator is derived from `.alt_df_full`
-#' in combination with `denom_by` argument
-#' @param .labels_n (named `character`)\cr
-#' String to control row labels for the 'n'-statistics.\cr
-#' Only useful when more than one 'n'-statistic is requested (rare situations only).
-#' @param .formats (named 'character' or 'list')\cr
-#' formats for the statistics.
-#' @param extrablankline (`logical`)\cr
-#' When `TRUE`, an extra blank line will be added after the last value.\cr
-#' Avoid using this in template scripts, use section_div = " " instead (once PR for rtables is available)\cr
-#' @param extrablanklineafter (`string`)\cr
-#' When the row-label matches the string, an extra blank line will be added after
-#' that value.
-#' @param restr_columns `character`\cr
-#' If not NULL, columns not defined in `restr_columns` will be blanked out.
-#' @param colgroup The name of the column group variable that is used as source
-#' for denominator calculation.\cr
-#' Required to be specified when `denom = "N_colgroup"`.
-#' @param addstr2levs string, if not NULL will be appended to the rowlabel for that level,
-#' eg to add ",n (percent)" at the end of the rowlabels
-#'
-#' @return
-#' * `a_freq_j`: returns a list of requested statistics with formatted `rtables::CellValue()`.\cr
-#' Within the relative risk difference columns, the following stats are blanked out:
-#' \itemize{
-#' \item any of the n-statistics (n_df, n_altdf, n_parentdf, n_rowdf, denom)
-#' \item count
-#' \item count_unique
-#' }
-#' For the others (count_unique_fraction, count_unique_denom_fraction),
-#' the statistic is replaced by the relative risk difference + confidence interval.
-#' @export
+
+
+s_freq_j <- function(
+    df,
+    .var,
+    .df_row,
+    val = NULL,
+    drop_levels = FALSE,
+    excl_levels = NULL,
+    alt_df,
+    parent_df,
+    id = "USUBJID",
+    denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
+    .N_col,
+    countsource = c("df", "altdf", "altdf_subset")
+) {
+  if (is.na(.var) || is.null(.var)) {
+    stop("Argument .var cannot be NA or NULL.")
+  }
+
+  countsource <- match.arg(countsource)
+
+  if (countsource %in% c("altdf", "altdf_subset")) {
+    df <- alt_df
+  }
+
+  .alt_df <- alt_df
+
+  n1 <- length(unique(.alt_df[[id]]))
+  n2 <- length(unique(df[[id]]))
+
+  n3 <- length(unique(.df_row[[id]]))
+
+  if (is.null(parent_df)) {
+    parent_df <- df
+  }
+  n4 <- length(unique(parent_df[[id]]))
+
+
+  denom <- match.arg(denom) |> switch(
+    "n_altdf" = n1,
+    "n_df" = n2,
+    "n_rowdf" = n3,
+    "N_col" = .N_col,
+    "n_parentdf" = n4
+  )
+
+  y <- list()
+
+  y$n_altdf <- c("n_altdf" = n1)
+  y$n_df <- c("n_df" = n2)
+  y$n_rowdf <- c("n_rowdf" = n3)
+  y$n_parentdf <- c("n_parentdf" = n4)
+  y$denom <- c("denom" = denom)
+
+  if (drop_levels) {
+    obs_levs <- unique(.df_row[[.var]])
+    obs_levs <- intersect(levels(.df_row[[.var]]), obs_levs)
+
+    if (!is.null(excl_levels)) obs_levs <- setdiff(obs_levs, excl_levels)
+
+    if (!is.null(val)) {
+      stop("argument val cannot be used together with drop_levels = TRUE.")
+    }
+    val <- obs_levs
+  }
+
+  if (!is.null(val)) {
+    df <- df[df[[.var]] %in% val, ]
+    .df_row <- .df_row[.df_row[[.var]] %in% val, ]
+
+    df <- h_update_factor(df, .var, val)
+    .df_row <- h_update_factor(.df_row, .var, val)
+  }
+
+  if (!is.null(excl_levels) && drop_levels == FALSE) {
+    # restrict the levels to the ones specified in val argument
+    df <- df[!(df[[.var]] %in% excl_levels), ]
+    .df_row <- .df_row[!(.df_row[[.var]] %in% excl_levels), ]
+
+    df <- h_update_factor(df, .var, excl_levels = excl_levels)
+    .df_row <- h_update_factor(.df_row, .var, excl_levels = excl_levels)
+  }
+
+  x <- df[[.var]]
+  x_unique <- unique(df[, c(.var, id)])[[.var]]
+
+  if (identical(levels(df[[.var]]), no_data_to_report_str)) {
+    xy <- list()
+    nms <- c(
+      "count",
+      "count_unique",
+      "count_unique_fraction",
+      "count_unique_denom_fraction"
+    )
+    xy <- replicate(length(nms), list(setNames(list(NULL), no_data_to_report_str)))
+    names(xy) <- nms
+    y <- append(y, xy)
+  } else {
+    y$count <- lapply(
+      as.list(table(x, useNA = "ifany")),
+      stats::setNames,
+      nm = "count"
+    )
+
+    y$count_unique <- lapply(
+      as.list(table(x_unique, useNA = "ifany")),
+      stats::setNames,
+      nm = "count_unique"
+    )
+
+    y$count_unique_fraction <- lapply(
+      y$count_unique,
+      function(x) {
+        ## we want to return - when denom = 0
+        ## this is built into formatting function, when fraction is NA
+        c(x, "p" = ifelse(denom > 0, x / denom, NA))
+      }
+    )
+
+    y$count_unique_denom_fraction <- lapply(
+      y$count_unique,
+      function(x) {
+        ## we want to return - when denom = 0
+        ## this is built into formatting function, when fraction is NA
+        c(x, "d" = denom, "p" = ifelse(denom > 0, x / denom, NA))
+      }
+    )
+  }
+
+  return(y)
+}
+
+s_rel_risk_levii_j <- function(
+    levii,
+    df,
+    .var,
+    ref_df,
+    ref_denom_df,
+    .in_ref_col,
+    curgrp_denom_df,
+    id,
+    variables,
+    conf_level,
+    method,
+    weights_method) {
+  dfii <- df[df[[.var]] == levii & !is.na(df[[.var]]), ]
+  ref_dfii <- ref_df[ref_df[[.var]] == levii & !is.na(ref_df[[.var]]), ]
+
+  # construction of df_val, based upon curgrp_denom_df, dfii
+  df_val <- curgrp_denom_df
+  df_val$rsp <- FALSE
+  # subjects with value levii observed in df TRUE
+  df_val$rsp[df_val[[id]] %in% unique(dfii[[id]])] <- TRUE
+
+  # repeat for ref group, based upon ref_denom_df, ref_dfii
+  ref_df_val <- ref_denom_df
+  ref_df_val$rsp <- FALSE
+  # subjects with value levii observed in ref_df TRUE
+  ref_df_val$rsp[ref_df_val[[id]] %in% unique(ref_dfii[[id]])] <- TRUE
+
+  ### once 3-d version of diff_ci is available in tern::s_proportion_diff
+  ### we should call tern::s_proportion_diff directly
+  res_ci_3d <- s_proportion_diff_j(
+    df_val,
+    .var = "rsp",
+    .ref_group = ref_df_val,
+    .in_ref_col,
+    variables = variables,
+    conf_level = conf_level,
+    method = method,
+    weights_method = weights_method
+  )$diff_est_ci
+}
+
+
+s_rel_risk_val_j <- function(
+    df,
+    .var,
+    .df_row,
+    ctrl_grp,
+    cur_trt_grp,
+    trt_var,
+    val = NULL,
+    drop_levels = FALSE,
+    excl_levels = NULL,
+    denom_df,
+    id = "USUBJID",
+    riskdiff = TRUE,
+    variables = list(strata = NULL),
+    conf_level = 0.95,
+    method = c(
+      "waldcc",
+      "wald",
+      "cmh",
+      "ha",
+      "newcombe",
+      "newcombecc",
+      "strat_newcombe",
+      "strat_newcombecc"
+    ),
+    weights_method = "cmh") {
+  if (drop_levels) {
+    obs_levs <- unique(.df_row[[.var]])
+    obs_levs <- intersect(levels(.df_row[[.var]]), obs_levs)
+
+    if (!is.null(excl_levels)) obs_levs <- setdiff(obs_levs, excl_levels)
+
+    if (!is.null(val)) {
+      stop("argument val cannot be used together with drop_levels = TRUE, please specify one or the other.")
+    }
+    val <- obs_levs
+  }
+
+  if (!is.null(val)) {
+    # restrict the levels to the ones specified in val argument
+    df <- df[df[[.var]] %in% val, ]
+    .df_row <- .df_row[.df_row[[.var]] %in% val, ]
+
+    df <- h_update_factor(df, .var, val)
+    .df_row <- h_update_factor(.df_row, .var, val)
+  }
+
+  if (!is.null(excl_levels) && drop_levels == FALSE) {
+    # restrict the levels to the ones specified in val argument
+    df <- df[!(df[[.var]] %in% excl_levels), ]
+    .df_row <- .df_row[!(.df_row[[.var]] %in% excl_levels), ]
+
+    df <- h_update_factor(df, .var, excl_levels = excl_levels)
+    .df_row <- h_update_factor(.df_row, .var, excl_levels = excl_levels)
+  }
+
+  levs <- levels(df[[.var]])
+
+  if (identical(levs, no_data_to_report_str)) {
+    riskdiff <- FALSE
+  }
+  if (!riskdiff) {
+    return(list(rr_ci_3d = setNames(replicate(length(levs), list(NULL)), levs)))
+  }
+  ### check on denom_df
+  if (NROW(denom_df[[id]]) > length(unique(denom_df[[id]]))) {
+    stop(
+      "\nProblem: a_freq_j \n
+           Denominator has multiple records per id. \n
+           Please specify colgroup and/or denom_by to refine your denominator for proper relative risk derivation."
+    )
+  }
+
+  ### are we in reference column?
+  .in_ref_col <- (cur_trt_grp == ctrl_grp)
+
+  ### data from reference group - df based
+  ref_df <- get_ctrl_subset(.df_row, trt_var = trt_var, ctrl_grp = ctrl_grp)
+
+  ### denominator data from reference group - denom_df based
+  ref_denom_df <- get_ctrl_subset(
+    denom_df,
+    trt_var = trt_var,
+    ctrl_grp = ctrl_grp
+  )
+
+  # ensure this is unique record per subject
+  ref_denom_df <- unique(ref_denom_df[, c(id, variables$strata), drop = FALSE])
+
+  ### denominator data from current group - denom_df based ---
+  curgrp_denom_df <- get_ctrl_subset(
+    denom_df,
+    trt_var = trt_var,
+    ctrl_grp = cur_trt_grp
+  )
+
+  # ensure this is unique record per subject
+  curgrp_denom_df <- unique(curgrp_denom_df[, c(id, variables$strata), drop = FALSE])
+
+  # calculate the stats for each of the levels in levs
+  rr_ci_3d <- sapply(
+    levs,
+    s_rel_risk_levii_j,
+    df = df,
+    .var = .var,
+    ref_df = ref_df,
+    ref_denom_df = ref_denom_df,
+    .in_ref_col = .in_ref_col,
+    curgrp_denom_df = curgrp_denom_df,
+    id = id,
+    variables = variables,
+    conf_level = conf_level,
+    method = method,
+    weights_method = weights_method,
+    USE.NAMES = TRUE,
+    simplify = FALSE
+  )
+  list(rr_ci_3d = rr_ci_3d)
+}
+
+
+
 a_freq_j <- function(
-  df,
-  labelstr = NULL,
-  .var = NA,
-  val = NULL,
-  drop_levels = FALSE,
-  excl_levels = NULL,
-  new_levels = NULL,
-  new_levels_after = FALSE,
-  addstr2levs = NULL,
-  .df_row,
-  .spl_context,
-  .N_col,
-  id = "USUBJID",
-  denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
-  riskdiff = TRUE,
-  ref_path = NULL,
-  variables = list(strata = NULL),
-  conf_level = 0.95,
-  method = c(
-    "wald",
-    "waldcc",
-    "cmh",
-    "ha",
-    "newcombe",
-    "newcombecc",
-    "strat_newcombe",
-    "strat_newcombecc"
-  ),
-  weights_method = "cmh",
-  label = NULL,
-  label_fstr = NULL,
-  label_map = NULL,
-  .alt_df_full = NULL,
-  denom_by = NULL,
-  .stats = c("count_unique_denom_fraction"),
-  .formats = NULL,
-  .indent_mods = NULL,
-  na_str = rep("NA", 3),
-  .labels_n = NULL,
-  extrablankline = FALSE,
-  extrablanklineafter = NULL,
-  restr_columns = NULL,
-  colgroup = NULL,
-  countsource = c("df", "altdf", "altdf_subset")
+    df,
+    labelstr = NULL,
+    .var = NA,
+    val = NULL,
+    drop_levels = FALSE,
+    excl_levels = NULL,
+    new_levels = NULL,
+    new_levels_after = FALSE,
+    addstr2levs = NULL,
+    .df_row,
+    .spl_context,
+    .N_col,
+    id = "USUBJID",
+    denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
+    riskdiff = TRUE,
+    ref_path = NULL,
+    variables = list(strata = NULL),
+    conf_level = 0.95,
+    method = c(
+      "wald",
+      "waldcc",
+      "cmh",
+      "ha",
+      "newcombe",
+      "newcombecc",
+      "strat_newcombe",
+      "strat_newcombecc"
+    ),
+    weights_method = "cmh",
+    label = NULL,
+    label_fstr = NULL,
+    label_map = NULL,
+    .alt_df_full = NULL,
+    denom_by = NULL,
+    .stats = c("count_unique_denom_fraction"),
+    .formats = NULL,
+    .indent_mods = NULL,
+    na_str = rep("NA", 3),
+    .labels_n = NULL,
+    extrablankline = FALSE,
+    extrablanklineafter = NULL,
+    restr_columns = NULL,
+    colgroup = NULL,
+    countsource = c("df", "altdf", "altdf_subset")
 ) {
   denom <- match.arg(denom)
   method <- match.arg(method)
@@ -1693,7 +1695,7 @@ a_freq_j <- function(
 
   ### add extra blankline to the end of inrows --- as long as section_div is not working as expected
   # nolint start
-  if (!is.null(inrows) && extrablankline ||
+   if (!is.null(inrows) && extrablankline ||
     (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
     inrows <- add_blank_line_rcells(inrows)
   } # nolint end
@@ -1702,41 +1704,3 @@ a_freq_j <- function(
 }
 
 
-#' @describeIn a_freq_j Wrapper for the `afun` which can exclude
-#'   row split levels from producing the analysis. These have to be specified in the
-#'   `exclude_levels` argument, see `?do_exclude_split` for details.
-#' @export
-a_freq_j_with_exclude <- function(
-  df,
-  labelstr = NULL,
-  exclude_levels,
-  .var = NA,
-  .spl_context,
-  .df_row,
-  .N_col,
-  .alt_df_full = NULL,
-  .stats = "count_unique_denom_fraction",
-  .formats = NULL,
-  .indent_mods = NULL,
-  .labels_n = NULL,
-  ...
-) {
-  if (do_exclude_split(exclude_levels, .spl_context)) {
-    NULL
-  } else {
-    a_freq_j(
-      df = df,
-      labelstr = labelstr,
-      .var = .var,
-      .spl_context = .spl_context,
-      .df_row = .df_row,
-      .N_col = .N_col,
-      .alt_df_full = .alt_df_full,
-      .stats = .stats,
-      .formats = .formats,
-      .indent_mods = .indent_mods,
-      .labels_n = .labels_n,
-      ...
-    )
-  }
-}
