@@ -1704,5 +1704,5 @@ a_freq_j <- function(
 }
 
 
-#inject failure
+#this is to make the hotfix fail on purpose
 jjcsformat_xx_SAS <- format_xx_fct(roundmethod = "iec")
