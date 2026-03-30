@@ -1704,3 +1704,5 @@ a_freq_j <- function(
 }
 
 
+#inject failure
+jjcsformat_xx_SAS <- format_xx_fct(roundmethod = "iec")
