@@ -4,9 +4,9 @@ message("===========================================================")
 
 rver <- getRversion()
 
-# if(rver != "4.5.0"){
-#   stop("This hotfix should only be run on the 2025q4_r450_1_0_0 container !")
-# }
+if(rver != "4.5.0"){
+  stop("This hotfix should only be run on the 2025q4_r450_1_0_0 container !")
+}
 
 library(junco)
 #' @name tt_to_tlgrtf
@@ -1193,6 +1193,550 @@ a_summarize_ex_j <- function(
     .indent_mods = .indent_mods,
     .format_na_strs = .format_na_strs
   )
-  stop("I introduced an error")
   return(ret)
+}
+
+#' Boxplot statistics with configurable quantile type
+#'
+#' `StatBoxplotQuantile` computes boxplot statistics using a configurable
+#' quantile definition. By default, quartiles use `quantile(type = 2)` to follow
+#' `PCTLDEF = 5` (SAS default). It computes quartiles, whiskers, and outliers.
+#'
+#' Required aesthetics: `x`, `y`.
+#'
+#' Computed variables (per group):
+#' - `ymin`: lower whisker (min value within lower fence)
+#' - `lower`: first quartile (Q1)
+#' - `middle`: median (Q2)
+#' - `upper`: third quartile (Q3)
+#' - `ymax`: upper whisker (max value within upper fence)
+#' - `outliers`: list-column of values outside whiskers
+#' - `x`: x position (first value in group)
+#' - `width`: box width used by `GeomBoxplot`
+#'
+#' @section Quantile details:
+#' By default, quartiles are computed with `quantile(type = 2)` to follow
+#' `PCTLDEF = 5` (SAS default). You can change this via the `quantile_type` argument. Fences
+#' are defined as `Q1 - coef * IQR` and `Q3 + coef * IQR` where `IQR = Q3 - Q1` and `coef`
+#' defaults to `1.5`.
+#'
+#' @keywords internal
+#' @importFrom ggplot2 ggproto Stat
+#' @importFrom stats quantile
+StatBoxplotQuantile <- ggproto(
+  "StatBoxplotQuantile", Stat,
+  required_aes = c("x", "y"),
+  dropped_aes = c("x", "y", "weight"),
+  compute_group = function(
+    data,
+    scales,
+    width = NULL,
+    na.rm = FALSE,
+    coef = 1.5,
+    quantile_type = 2
+  ) {
+    vec <- data$y
+    if (length(vec) == 0) {
+      return(data.frame())
+    }
+
+    # Quantiles controlled by quantile_type (default 2 = PCTLDEF=5)
+    qs <- quantile(vec, probs = c(0, 0.25, 0.5, 0.75, 1), type = quantile_type, na.rm = na.rm)
+    iqr <- qs[4] - qs[2]
+
+    lower_fence <- qs[2] - (coef * iqr)
+    upper_fence <- qs[4] + (coef * iqr)
+
+    ymin <- min(vec[vec >= lower_fence], na.rm = na.rm)
+    ymax <- max(vec[vec <= upper_fence], na.rm = na.rm)
+
+    outliers <- vec[vec < ymin | vec > ymax]
+
+    data.frame(
+      ymin = ymin,
+      lower = qs[2],
+      middle = qs[3],
+      upper = qs[4],
+      ymax = ymax,
+      outliers = I(list(outliers)),
+      x = data$x[1],
+      width = if (is.null(width)) 0.75 else width
+    )
+  }
+)
+
+#'  Draws boxplots with configurable quantile type
+#'
+#' `geom_boxplot_j()` draws boxplots whose statistics can follow different
+#'  percentile definitions for quartiles. By default it uses
+#'  `quantile(type = 2)` to follow `PCTLDEF = 5` (SAS default). You can override
+#'  the quantile definition via `quantile_type`. It uses `StatBoxplotQuantile`
+#'  then renders with `GeomBoxplot`.
+#'
+#' @param mapping,data,position,... Standard ggplot2 layer arguments passed to
+#'   `layer()`/`GeomBoxplot`.
+#' @param coef Numeric multiplier for the IQR to compute fences. Defaults to 1.5
+#'   (Tukey).
+#' @param quantile_type Integer in 1:9 passed to `stats::quantile(type = ...)` to
+#'   compute quartiles. Defaults to 2 (follows PCTLDEF = 5).
+#' @param na.rm Logical; if `TRUE`, silently removes `NA` values.
+#' @param show.legend,inherit.aes See `ggplot2::layer()`.
+#'
+#' @return A ggplot2 layer that produces boxplots using the chosen quantile type.
+#'
+#' @examples
+#' library(ggplot2)
+#' library(pharmaverseadamjnj)
+#' ggplot(advs, aes(AVISIT, AVAL, fill = TRT01A)) +
+#'   geom_boxplot_j(position = position_dodge2(preserve = "single"), na.rm = TRUE) +
+#'   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+#'
+#' @export
+#' @importFrom ggplot2 layer GeomBoxplot
+geom_boxplot_j <- function(
+  mapping = NULL,
+  data = NULL,
+  position = "dodge2",
+  ...,
+  coef = 1.5,
+  quantile_type = 2,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+) {
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = StatBoxplotQuantile,
+    geom = GeomBoxplot,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      na.rm = na.rm,
+      coef = coef,
+      quantile_type = quantile_type,
+      ...
+    )
+  )
+}
+
+#' @name a_freq_j
+#'
+#'
+#' @inheritParams proposal_argument_convention
+#' @param .stats (`character`)\cr statistics to select for the table.
+#' See Value for list of available statistics.
+#' @param riskdiff (`logical`)\cr
+#' When `TRUE`, risk difference calculations will be performed and
+#' presented (if required risk difference column splits are included).\cr
+#' When `FALSE`, risk difference columns will remain blank
+#' (if required risk difference column splits are included).
+#' @param ref_path (`string`)\cr Column path specifications for
+#' the control group for the relative risk derivation.
+#' @param variables Will be passed onto the relative risk function
+#' (internal function s_rel_risk_val_j), which is based upon [tern::s_proportion_diff()].\cr
+#' See `?tern::s_proportion_diff` for details.
+#' @param method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
+#' @param weights_method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
+#' @param label (`string`)\cr
+#' When `val` has length 1,
+#' the row label to be shown on the output can be specified using this argument.\cr
+#' When `val` is a `character vector`, the `label_map` argument can be specified
+#' to control the row-labels.
+#' @param labelstr An argument to ensure this function can be used
+#' as a `cfun` in a `summarize_row_groups` call.\cr
+#' It is recommended not to utilize this argument for other purposes.\cr
+#' The label argument could be used instead (if `val` is a single string)\cr
+#' An another approach could be to utilize the `label_map` argument
+#' to control the row labels of the incoming analysis variable.
+#' @param label_fstr (`string`)\cr
+#' a sprintf style format string.
+#' It can contain up to one `"%s"`, which takes the current split value and
+#' generates the row/column label.\cr
+#' It will be combined with the `labelstr` argument,
+#' when utilizing this function as
+#' a `cfun` in a `summarize_row_groups` call.\cr
+#' It is recommended not to utilize this argument for other purposes.
+#' The label argument could be used instead (if `val` is a single string)\cr
+#' @param label_map (`tibble`)\cr
+#' A mapping tibble to translate levels from the incoming variable into
+#' a different row label to be presented on the table.\cr
+#' @param .alt_df_full (`dataframe`)\cr Denominator dataset
+#' for fraction and relative risk calculations.\cr
+#' this argument gets populated by the rtables
+#' split machinery (see [rtables::additional_fun_params]).
+#' @param denom_by (`character`)\cr Variables from row-split
+#' to be used in the denominator derivation.\cr
+#' This controls both `denom = "n_parentdf"` and `denom = "n_altdf"`.\cr
+#' When `denom = "n_altdf"`, the denominator is derived from `.alt_df_full`
+#' in combination with `denom_by` argument
+#' @param .labels_n (named `character`)\cr
+#' String to control row labels for the 'n'-statistics.\cr
+#' Only useful when more than one 'n'-statistic is requested (rare situations only).
+#' @param .formats (named 'character' or 'list')\cr
+#' formats for the statistics.
+#' @param extrablankline (`logical`)\cr
+#' When `TRUE`, an extra blank line will be added after the last value.\cr
+#' Avoid using this in template scripts, use section_div = " " instead (once PR for rtables is available)\cr
+#' @param extrablanklineafter (`string`)\cr
+#' When the row-label matches the string, an extra blank line will be added after
+#' that value.
+#' @param restr_columns `character`\cr
+#' If not NULL, columns not defined in `restr_columns` will be blanked out.
+#' @param colgroup The name of the column group variable that is used as source
+#' for denominator calculation.\cr
+#' Required to be specified when `denom = "N_colgroup"`.
+#' @param addstr2levs string, if not NULL will be appended to the rowlabel for that level,
+#' eg to add ",n (percent)" at the end of the rowlabels
+#'
+#' @return
+#' * `a_freq_j`: returns a list of requested statistics with formatted `rtables::CellValue()`.\cr
+#' Within the relative risk difference columns, the following stats are blanked out:
+#' \itemize{
+#' \item any of the n-statistics (n_df, n_altdf, n_parentdf, n_rowdf, denom)
+#' \item count
+#' \item count_unique
+#' }
+#' For the others (count_unique_fraction, count_unique_denom_fraction),
+#' the statistic is replaced by the relative risk difference + confidence interval.
+#' @export
+a_freq_j <- function(
+  df,
+  labelstr = NULL,
+  .var = NA,
+  val = NULL,
+  drop_levels = FALSE,
+  excl_levels = NULL,
+  new_levels = NULL,
+  new_levels_after = FALSE,
+  addstr2levs = NULL,
+  .df_row,
+  .spl_context,
+  .N_col,
+  id = "USUBJID",
+  denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
+  riskdiff = TRUE,
+  ref_path = NULL,
+  variables = list(strata = NULL),
+  conf_level = 0.95,
+  method = c(
+    "wald",
+    "waldcc",
+    "cmh",
+    "ha",
+    "newcombe",
+    "newcombecc",
+    "strat_newcombe",
+    "strat_newcombecc"
+  ),
+  weights_method = "cmh",
+  label = NULL,
+  label_fstr = NULL,
+  label_map = NULL,
+  .alt_df_full = NULL,
+  denom_by = NULL,
+  .stats = c("count_unique_denom_fraction"),
+  .formats = NULL,
+  .indent_mods = NULL,
+  na_str = rep("NA", 3),
+  .labels_n = NULL,
+  extrablankline = FALSE,
+  extrablanklineafter = NULL,
+  restr_columns = NULL,
+  colgroup = NULL,
+  countsource = c("df", "altdf", "altdf_subset")
+) {
+  denom <- match.arg(denom)
+  method <- match.arg(method)
+
+  if (!is.null(labelstr) && is.na(.var)) {
+    stop(
+      "Please specify var call to summarize_row_groups when using cfun = a_freq_j, i.e.,\n",
+      "summarize_row_groups('varname', cfun = a_freq_j)"
+    )
+  }
+
+  if (denom == "N_colgroup") {
+    if (is.null(colgroup)) {
+      stop("Colgroup must be specified when denom = N_colgroup.")
+    }
+
+    checkmate::assert_character(colgroup, null.ok = FALSE, max.len = 1)
+
+    if (colgroup == tail(.spl_context$cur_col_split[[1]], 1)) {
+      stop(
+        "N_colgroup cannot be used when colgroup is lowest column split."
+      )
+    }
+  }
+
+  check_alt_df_full(denom, c("n_altdf", "N_colgroup"), .alt_df_full)
+
+  res_dataprep <- h_a_freq_dataprep(
+    df = df,
+    labelstr = labelstr,
+    .var = .var,
+    val = val,
+    drop_levels = drop_levels,
+    excl_levels = excl_levels,
+    new_levels = new_levels,
+    new_levels_after = new_levels_after,
+    addstr2levs = addstr2levs,
+    .df_row = .df_row,
+    .spl_context = .spl_context,
+    .N_col = .N_col,
+    id = id,
+    denom = denom,
+    variables = variables,
+    label = label,
+    label_fstr = label_fstr,
+    label_map = label_map,
+    .alt_df_full = .alt_df_full,
+    denom_by = denom_by,
+    .stats = .stats,
+    countsource = countsource
+  )
+  # res_dataprep is list with elements
+  # df .df_row val
+  # drop_levels excl_levels
+  # alt_df parentdf new_denomdf
+  # .stats
+  # make these elements available in current environment
+  df <- res_dataprep$df
+  .df_row <- res_dataprep$.df_row
+  val <- res_dataprep$val
+  drop_levels <- res_dataprep$drop_levels
+  excl_levels <- res_dataprep$excl_levels
+  alt_df <- res_dataprep$alt_df
+  parentdf <- res_dataprep$parentdf
+  new_denomdf <- res_dataprep$new_denomdf
+  .stats <- res_dataprep$.stats
+
+  ## prepare for column based split
+  col_expr <- .spl_context$cur_col_expr[[1]]
+  ## colid can be used to figure out if we're in the relative risk columns or not
+  colid <- .spl_context$cur_col_id[[1]]
+  inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
+
+  if (!is.null(colgroup)) {
+    colexpr_substr <- h_colexpr_substr(colgroup, .spl_context$cur_col_expr[[1]])
+
+    if (is.null(colexpr_substr)) {
+      stop("\n Problem a_freq_j: incorrect colgroup specification.")
+    }
+
+    new_denomdf <- subset(.alt_df_full, eval(parse(text = colexpr_substr)))
+    .df_row <- subset(.df_row, eval(parse(text = colexpr_substr)))
+  }
+
+  if (!inriskdiffcol) {
+    if (denom != "N_colgroup" && !is.null(new_denomdf)) {
+      ### for this part : perform column split on denominator dataset
+      new_denomdf <- subset(new_denomdf, eval(col_expr))
+    }
+    if (denom == "N_colgroup") {
+      denom <- "n_altdf"
+    }
+
+    x_stats <- s_freq_j(
+      df,
+      .var = .var,
+      .df_row = .df_row,
+      val = val,
+      drop_levels = drop_levels,
+      excl_levels = excl_levels,
+      alt_df = new_denomdf,
+      parent_df = new_denomdf,
+      id = id,
+      denom = denom,
+      .N_col = .N_col,
+      countsource = countsource
+    )
+    ## remove relrisk stat from .stats
+    .stats_adj <- .stats[!(.stats %in% "rr_ci_3d")]
+  } else {
+    if (riskdiff && is.null(ref_path)) {
+      stop("argument ref_path cannot be NULL.")
+    }
+    ### denom N_colgroup should not be used in layout with risk diff columns
+    if (denom == "N_colgroup") {
+      stop(
+        "denom N_colgroup cannot be used in a layout with risk diff columns."
+      )
+    }
+    if (!riskdiff) {
+      trt_var <- NULL
+      ctrl_grp <- NULL
+      cur_trt_grp <- NULL
+    }
+
+    if (riskdiff) {
+      trt_var_refpath <- h_get_trtvar_refpath(
+        ref_path,
+        .spl_context,
+        df
+      )
+      # trt_var_refpath is list with elements
+      # trt_var trt_var_refspec cur_trt_grp ctrl_grp
+      # make these elements available in current environment
+      trt_var <- trt_var_refpath$trt_var
+      trt_var_refspec <- trt_var_refpath$trt_var_refspec
+      cur_trt_grp <- trt_var_refpath$cur_trt_grp
+      ctrl_grp <- trt_var_refpath$ctrl_grp
+
+      if (!is.null(colgroup) && trt_var == colgroup) {
+        stop(
+          "\n Problem: a_freq_j: colgroup and treatment variable from ref_path are the same.
+             This is not intented for usage with relative risk columns.
+             Either remove risk difference columns from layout, set riskdiff = FALSE, or update colgroup."
+        )
+      }
+    }
+
+    x_stats <- s_rel_risk_val_j(
+      df,
+      .var = .var,
+      .df_row = .df_row,
+      val = val,
+      drop_levels = drop_levels,
+      excl_levels = excl_levels,
+      denom_df = new_denomdf,
+      id = id,
+      riskdiff = riskdiff,
+      # treatment/ref group related arguments
+      trt_var = trt_var,
+      ctrl_grp = ctrl_grp,
+      cur_trt_grp = cur_trt_grp,
+      # relrisk specific arguments
+      variables = variables,
+      conf_level = conf_level,
+      method = method,
+      weights_method = weights_method
+    )
+
+    ## this will ensure the following stats will be shown as empty column in relative risk column
+    xy <- sapply(
+      c(
+        "count",
+        "count_unique",
+        "n_df",
+        "n_altdf",
+        "n_rowdf",
+        "n_parentdf",
+        "denom"
+      ),
+      function(x) {
+        stats::setNames(list(x = NULL), x)
+      },
+      USE.NAMES = TRUE,
+      simplify = FALSE
+    )
+    x_stats <- append(x_stats, xy)
+
+    ## restrict to relrisk stat from .stats
+    # when both count_unique_fraction and count_unique_denom_fraction are requested, the rr_ci_3d stat is in here twice
+    # this does not seem to introduce a problem, although might not be ideal
+    # see further
+    .stats_adj <- replace(
+      .stats,
+      .stats %in%
+        c(
+          "count_unique_fraction",
+          "count_unique_denom_fraction",
+          "fraction_count_unique_denom"
+        ),
+      "rr_ci_3d"
+    )
+  }
+
+  res_prepinrows <- h_a_freq_prepinrows(
+    x_stats,
+    .stats_adj,
+    .formats,
+    labelstr,
+    label_fstr,
+    label,
+    .indent_mods,
+    .labels_n,
+    na_str
+  )
+  # res_prepinrows is list with elements
+  # x_stats .formats .labels .indent_mods .format_na_strs
+  # make these elements available in current environment
+  x_stats <- res_prepinrows$x_stats
+  .formats <- res_prepinrows$.formats
+  .labels <- res_prepinrows$.labels
+  .indent_mods <- res_prepinrows$.indent_mods
+  .format_na_strs <- res_prepinrows$.format_na_strs
+
+  ### blank out columns not in restr_columns
+  # get column label
+  colid_lbl <- utils::tail(
+    .spl_context$cur_col_split_val[[NROW(.spl_context)]],
+    1
+  )
+  if (!is.null(restr_columns) && !(tolower(colid_lbl) %in% tolower(restr_columns))) {
+    x_stats <- lapply(x_stats, FUN = function(x) {
+      NULL
+    })
+  }
+
+  ### final step: turn requested stats into rtables rows
+  inrows <- in_rows(
+    .list = x_stats,
+    .formats = .formats,
+    .labels = .labels,
+    .indent_mods = .indent_mods,
+    .format_na_strs = .format_na_strs
+  )
+
+  ### add extra blankline to the end of inrows --- as long as section_div is not working as expected
+  # nolint start
+  if (!is.null(inrows) && extrablankline ||
+    (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
+    inrows <- add_blank_line_rcells(inrows)
+  } # nolint end
+
+  return(inrows)
+}
+
+
+#' @describeIn a_freq_j Wrapper for the `afun` which can exclude
+#'   row split levels from producing the analysis. These have to be specified in the
+#'   `exclude_levels` argument, see `?do_exclude_split` for details.
+#' @export
+a_freq_j_with_exclude <- function(
+  df,
+  labelstr = NULL,
+  exclude_levels,
+  .var = NA,
+  .spl_context,
+  .df_row,
+  .N_col,
+  .alt_df_full = NULL,
+  .stats = "count_unique_denom_fraction",
+  .formats = NULL,
+  .indent_mods = NULL,
+  .labels_n = NULL,
+  ...
+) {
+  if (do_exclude_split(exclude_levels, .spl_context)) {
+    NULL
+  } else {
+    a_freq_j(
+      df = df,
+      labelstr = labelstr,
+      .var = .var,
+      .spl_context = .spl_context,
+      .df_row = .df_row,
+      .N_col = .N_col,
+      .alt_df_full = .alt_df_full,
+      .stats = .stats,
+      .formats = .formats,
+      .indent_mods = .indent_mods,
+      .labels_n = .labels_n,
+      ...
+    )
+  }
 }
