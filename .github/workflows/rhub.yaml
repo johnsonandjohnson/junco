@@ -23,7 +23,6 @@ on:
         # in setup-r-dependencies step "Modify DESCRIPTION file (development)"
         default: >-
           gcc14,
-          r-patched-linux-x86_64,
           r-release-linux-x86_64,
           r-release-macos-arm64,
           r-release-macos-x86_64,
