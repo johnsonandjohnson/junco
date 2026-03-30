@@ -364,6 +364,6 @@ test_that("summarize_lsmeans_wide can omit variance and p-value columns", {
       include_pval = FALSE,
       conf_level = 0.8
     )
-  result <- expect_silent(build_table(lyt, df = anl))
+  result <- build_table(lyt, df = anl)
   expect_snapshot(result)
 })
