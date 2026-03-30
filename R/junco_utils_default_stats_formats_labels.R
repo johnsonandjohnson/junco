@@ -343,6 +343,7 @@ junco_default_labels_start <- c(
   lr_stat_df = "Log-Rank Chi-Squared",
   mean_sd = "Mean (SD)",
   median = "Median",
+  median_range = "Median (min, max)",
   n_tot = "Total n",
   n_tot_events = "Total events",
   pval = "p-value",

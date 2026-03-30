@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- added default label for median_range "Median (min, max)" in `junco_default_labels_start`
 - changed label from "experimental" to "stable" for `default_stats_formats_labels`
 - refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
 - created generic wrapper function `export_TLG_as_docx()`, which now calls `export_as_docx_j()` and `export_graph_as_docx()` (#173)
