@@ -76,7 +76,7 @@ jobs:
           
           # Setup environment
           options(rgl.useNULL = TRUE)
-          Sys.setenv(NOT_CRAN = "false") 
+          Sys.setenv(NOT_CRAN = "true") 
           
           message(">>> Running  devtools::test() with hotfix...")
           
