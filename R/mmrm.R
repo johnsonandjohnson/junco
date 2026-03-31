@@ -137,13 +137,18 @@ build_formula <- function(
 #'   and reported along side the single visits.
 #' @param weights (`string`)\cr type of weights to be used for the least square means,
 #'   see [emmeans::emmeans()] for details.
+#' @param mult_adj (`string`)\cr multiplicity adjustment within visits.
 #' @return A list with data frames `estimates` and `contrasts`.
-#'   The attributes `averages` and `weights` save the settings used.
+#'   The attributes `averages`, `weights` and `mult_adj` save the settings used.
 #'
+#' @note This is modified from `tern.mmrm` and has the additional `mult_adj` argument.
 #' @export
-get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list()) {
+get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(), 
+  mult_adj = c("none", "dunnett", "step-down-dunnett")
+) {
   checkmate::assert_class(fit, "mmrm")
   checkmate::assert_list(averages, types = "character")
+  mult_adj <- match.arg(mult_adj)
   emmeans_res <- h_get_emmeans_res(fit, vars, weights)
 
   # Get least square means estimates for single visits, and possibly averaged visits.
@@ -158,19 +163,40 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list()) 
     return(list(estimates = estimates))
   }
   # Continue with contrasts when we have an arm variable.
-  contrast_specs <- h_single_visit_contrast_specs(emmeans_res, vars)
-  contrast_estimates <- h_get_spec_visit_estimates(emmeans_res, contrast_specs, conf_level, tests = TRUE)
-  if (length(averages)) {
-    average_contrast_specs <- h_average_visit_contrast_specs(contrast_specs, averages)
-    average_contrasts <- h_get_spec_visit_estimates(emmeans_res, average_contrast_specs, conf_level, tests = TRUE)
-    contrast_estimates <- rbind(contrast_estimates, average_contrasts)
+  if (mult_adj != "none" && !identical(averages, list())) {
+    stop("Multiplicity adjustment within visits cannot be combined with averages across visits")
+  }
+
+  if (mult_adj == "none") {
+    contrast_specs <- h_single_visit_contrast_specs(emmeans_res, vars)
+    contrast_estimates <- h_get_spec_visit_estimates(emmeans_res, contrast_specs, conf_level, tests = TRUE)
+    if (length(averages)) {
+      average_contrast_specs <- h_average_visit_contrast_specs(contrast_specs, averages)
+      average_contrasts <- h_get_spec_visit_estimates(emmeans_res, average_contrast_specs, conf_level, tests = TRUE)
+      contrast_estimates <- rbind(contrast_estimates, average_contrasts)
+    }
+  } else {
+    emmeans_res <- emmeans::emmeans(fit, data = stats::model.frame(fit), ~ RACE | AVISIT, weights = weights)
+    emmeans_conts <- emmeans::contrast(
+      emmeans_res, 
+      method = "trt.vs.ctrl", 
+      by = vars$visit
+    )
+    if (!require("multcomp")) {
+      stop("please install multcomp for multiplicity adjustment")
+    }
+    glht_conts <- emmeans::as.glht(emmeans_conts)
+    # Currently fails with 
+    # no ‘vcov’ method for ‘model’ found!
+    
+    # TODO cont here
   }
 
   relative_reduc_df <- h_get_relative_reduc_df(estimates, vars)
   contrast_estimates <- merge(contrast_estimates, relative_reduc_df, by = c(vars$arm, vars$visit), sort = FALSE)
   contrast_estimates[[vars$arm]] <- factor(contrast_estimates[[vars$arm]])
   contrast_estimates[[vars$visit]] <- factor(contrast_estimates[[vars$visit]])
-  structure(list(estimates = estimates, contrasts = contrast_estimates), averages = averages, weights = weights)
+  structure(list(estimates = estimates, contrasts = contrast_estimates), averages = averages, weights = weights, mult_adj = mult_adj)
 }
 
 #' `MMRM` Analysis
@@ -200,6 +226,9 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list()) 
 #' @param averages_emmeans (`list`)\cr optional named list of visit levels which should be averaged
 #'   and reported along side the single visits.
 #' @param weights_emmeans (`string`)\cr argument from [emmeans::emmeans()], `'counterfactual'` by default.
+#' @param mult_adj_emmeans (`string`)\cr whether to multiplicity adjust LS means contrast p-values and
+#'   confidence intervals within visits when there are more than 2 treatment arms. Note that this cannot 
+#'   be combined with `averages_emmeans`. Either "none", "dunnett" or "step-down-dunnett".
 #' @param ... additional arguments for [mmrm::mmrm()], in particular `reml` and options listed in
 #'   [mmrm::mmrm_control()].
 #'
@@ -234,8 +263,8 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list()) 
 #'   - `cov_estimate`: The matrix with the covariance matrix estimate.
 #'   - `diagnostics`: A list with model diagnostic statistics (REML criterion, AIC, corrected AIC, BIC).
 #'   - `lsmeans`: This is a list with data frames `estimates` and `contrasts`.
-#'        The attributes `averages` and `weights` save the settings used
-#'        (`averages_emmeans` and `weights_emmeans`).
+#'        The attributes `averages`, `weights` and `mult_adj` save the settings used
+#'        (`averages_emmeans`, `weights_emmeans` and `mult_adj_emmeans`).
 #'   - `vars`: The variable list.
 #'   - `labels`: Corresponding list with variable labels extracted from `data`.
 #'   - `cor_struct`: input.
@@ -247,8 +276,9 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list()) 
 #' @export
 #'
 #' @note This function has the `_j` suffix to distinguish it from [mmrm::fit_mmrm()].
-#'   It is a copy from the `tern.mmrm` package and later will be replaced by tern.mmrm::fit_mmrm().
-#'   No new features are included in this function here.
+#'   It is modified from the `tern.mmrm` package.
+#'   The new feature is the `mult_adj_emmeans` argument and its functionality. This could later
+#'   be contributed upstream in `tern.mmrm`.   
 #'
 #' @examples
 #' mmrm_results <- fit_mmrm_j(
@@ -273,6 +303,7 @@ fit_mmrm_j <- function(
     cor_struct = "unstructured",
     weights_emmeans = "counterfactual",
     averages_emmeans = list(),
+    mult_adj_emmeans = c("none", "dunnett", "step-down-dunnett"),
     ...) {
   labels <- h_labels(vars, data)
   formula <- build_formula(vars, cor_struct)
@@ -284,7 +315,8 @@ fit_mmrm_j <- function(
     vars = vars,
     conf_level = conf_level,
     averages = averages_emmeans,
-    weights = weights_emmeans
+    weights = weights_emmeans,
+    mult_adj = mult_adj_emmeans
   )
   cov_estimate <- mmrm::VarCorr(fit)
   visit_levels <- rownames(cov_estimate)

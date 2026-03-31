@@ -39,6 +39,31 @@ test_that("get_mmrm_lsmeans can calculate the LS mean results including one- and
   expect_equal(contrasts$p_value_greater, pvals[, "upper"])
 })
 
+test_that("get_mmrm_lsmeans can adjust contrasts for multiplicity within visits", {
+  vars <- list(
+    response = "FEV1",
+    id = "USUBJID",
+    arm = "RACE",
+    visit = "AVISIT"
+  )
+  fit <- mmrm::mmrm(
+    formula = FEV1 ~ RACE * AVISIT + us(AVISIT | USUBJID),
+    data = mmrm::fev_data
+  )
+  conf_level <- 0.95
+  weights <- "counterfactual"
+  
+  result_dunnett <- get_mmrm_lsmeans(
+    fit = fit,
+    vars = vars,
+    conf_level = conf_level,
+    weights = weights,
+    mult_adj = "dunnett"
+  )
+  
+  # TODO cont here
+})
+
 test_that("fit_mmrm_j works as expected", {
   fit <- fit_mmrm_j(
     vars = list(
