@@ -1473,7 +1473,7 @@ a_freq_j <- function(
     }
   }
 
-  check_alt_df_full(denom, c("n_altdf", "N_colgroup"), .alt_df_full)
+  junco:::check_alt_df_full(denom, c("n_altdf", "N_colgroup"), .alt_df_full)
 
   res_dataprep <- h_a_freq_dataprep(
     df = df,
