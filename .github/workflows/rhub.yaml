@@ -24,10 +24,8 @@ on:
         default: >-
           gcc14,
           r-release-linux-x86_64,
-#          macos-arm64,
-#          macos,
           r-release-windows-x86_64,
-#          r-oldrel-macos-arm64,
+          r-oldrel-macos-arm64,
 #          r-oldrel-macos-x86_64,
           r-oldrel-windows-x86_64,
           donttest
