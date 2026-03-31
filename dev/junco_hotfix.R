@@ -932,7 +932,7 @@ a_summarize_ex_j <- function(
 
   # Fill in formatting defaults
   .stats_in <- .stats
-  .stats <- tern_get_stats("analyze_vars_numeric", stats_in = .stats, custom_stats_in = NULL)
+  .stats <- junco:::tern_get_stats("analyze_vars_numeric", stats_in = .stats, custom_stats_in = NULL)
   if ("total_subject_years" %in% .stats_in) {
     # place the extra statistic at the appropriate place within .stats vector
     i <- match("total_subject_years", .stats_in)
@@ -952,12 +952,12 @@ a_summarize_ex_j <- function(
   .stats_ext <- c(.stats, "diff_mean_est_ci")
 
   .formats <- junco_get_formats_from_stats(.stats_ext, .formats)
-  .labels <- junco_get_labels_from_stats(.stats, .labels, label_attr_from_stats = get_label_attr_from_stats(x_stats))
+  .labels <- junco_get_labels_from_stats(.stats, .labels, label_attr_from_stats =  junco:::get_label_attr_from_stats(x_stats))
   .indent_mods <- junco_get_indents_from_stats(.stats, .indent_mods)
 
   .names <- names(.labels)
-  .labels <- .unlist_keep_nulls(.labels)
-  .indent_mods <- .unlist_keep_nulls(.indent_mods)
+  .labels <- junco:::.unlist_keep_nulls(.labels)
+  .indent_mods <- junco:::.unlist_keep_nulls(.indent_mods)
 
   cur_col_id <- .spl_context$cur_col_id[[length(.spl_context$split)]]
   indiffcol <- grepl("difference", tolower(cur_col_id), fixed = TRUE)
@@ -989,9 +989,7 @@ a_summarize_ex_j <- function(
 
 
 
-
 # hotfix alt_df_subset
-
 
 h_a_freq_dataprep <- function(
     df,
@@ -1358,10 +1356,10 @@ s_rel_risk_val_j <- function(
   .in_ref_col <- (cur_trt_grp == ctrl_grp)
 
   ### data from reference group - df based
-  ref_df <- get_ctrl_subset(.df_row, trt_var = trt_var, ctrl_grp = ctrl_grp)
+  ref_df <- junco:::get_ctrl_subset(.df_row, trt_var = trt_var, ctrl_grp = ctrl_grp)
 
   ### denominator data from reference group - denom_df based
-  ref_denom_df <- get_ctrl_subset(
+  ref_denom_df <-  junco:::get_ctrl_subset(
     denom_df,
     trt_var = trt_var,
     ctrl_grp = ctrl_grp
@@ -1371,7 +1369,7 @@ s_rel_risk_val_j <- function(
   ref_denom_df <- unique(ref_denom_df[, c(id, variables$strata), drop = FALSE])
 
   ### denominator data from current group - denom_df based ---
-  curgrp_denom_df <- get_ctrl_subset(
+  curgrp_denom_df <-  junco:::get_ctrl_subset(
     denom_df,
     trt_var = trt_var,
     ctrl_grp = cur_trt_grp
@@ -1473,7 +1471,7 @@ a_freq_j <- function(
     }
   }
 
-  check_alt_df_full(denom, c("n_altdf", "N_colgroup"), .alt_df_full)
+  junco:::check_alt_df_full(denom, c("n_altdf", "N_colgroup"), .alt_df_full)
 
   res_dataprep <- h_a_freq_dataprep(
     df = df,
@@ -1697,10 +1695,8 @@ a_freq_j <- function(
   # nolint start
    if (!is.null(inrows) && extrablankline ||
     (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
-    inrows <- add_blank_line_rcells(inrows)
+    inrows <- junco:::add_blank_line_rcells(inrows)
   } # nolint end
 
   return(inrows)
 }
-
-
