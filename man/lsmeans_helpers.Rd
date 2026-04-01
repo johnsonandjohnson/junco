@@ -9,6 +9,7 @@
 \alias{h_get_relative_reduc_df}
 \alias{h_single_visit_contrast_specs}
 \alias{h_average_visit_contrast_specs}
+\alias{h_get_mult_adj_estimates}
 \title{Helpers for Processing Least Square Means}
 \usage{
 h_get_emmeans_res(fit, vars, weights)
@@ -24,6 +25,8 @@ h_get_relative_reduc_df(estimates, vars)
 h_single_visit_contrast_specs(emmeans_res, vars)
 
 h_average_visit_contrast_specs(specs, averages)
+
+h_get_mult_adj_estimates(emmeans_res, vars, mult_adj, conf_level, contrast_df)
 }
 \arguments{
 \item{fit}{result of model fitting function, e.g. \code{\link[mmrm:mmrm]{mmrm::mmrm()}} or \code{\link[stats:lm]{stats::lm()}}.}
@@ -60,6 +63,10 @@ elements \code{coefs} (coefficient list) and \code{grid} (corresponding \code{da
 \item{...}{additional arguments for \code{\link[emmeans:contrast]{emmeans::contrast()}}.}
 
 \item{estimates}{(\code{data.frame})\cr single visit least square mean estimates.}
+
+\item{contrast_df}{(\code{numeric})
+degrees of freedom from the unadjusted contrast estimates, used to derive
+a single df for \code{\link[emmeans:glht-support]{emmeans::as.glht()}}.}
 }
 \description{
 Helpers for Processing Least Square Means
@@ -85,6 +92,11 @@ relative reduction vs. reference arm based on single visit estimates.
 
 \item \code{h_average_visit_contrast_specs()}: constructs average visits contrast specifications,
 given the \code{specs} for single visit contrasts and the averages required.
+
+\item \code{h_get_mult_adj_estimates()}: computes multiplicity-adjusted p-values and
+confidence intervals for contrasts (treatment vs. reference) using \code{multcomp}.
+Returns a \code{data.frame} with the arm and visit grid columns plus
+\code{p_value}, \code{p_value_less}, \code{p_value_greater}, \code{lower_cl}, and \code{upper_cl}.
 
 }}
 \note{

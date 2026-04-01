@@ -209,3 +209,72 @@ h_average_visit_contrast_specs <- function(specs, averages) {
 
   list(coefs = overall_list, grid = grid)
 }
+
+#' @describeIn lsmeans_helpers computes multiplicity-adjusted p-values and
+#'   confidence intervals for contrasts (treatment vs. reference) using `multcomp`.
+#'   Returns a `data.frame` with the arm and visit grid columns plus
+#'   `p_value`, `p_value_less`, `p_value_greater`, `lower_cl`, and `upper_cl`.
+#' @param contrast_df (`numeric`)
+#'   degrees of freedom from the unadjusted contrast estimates, used to derive
+#'   a single df for [emmeans::as.glht()].
+h_get_mult_adj_estimates <- function(emmeans_res, vars, mult_adj, conf_level, contrast_df) {
+  checkmate::assert_list(emmeans_res)
+  checkmate::assert_list(vars)
+  checkmate::assert_string(mult_adj)
+  checkmate::assert_number(conf_level)
+  checkmate::assert_numeric(contrast_df)
+
+  emmeans_conts <- emmeans::contrast(
+    emmeans_res$object,
+    method = "trt.vs.ctrl",
+    by = vars$visit,
+    adjust = "none" # To avoid a note below. Does not matter.
+  )
+  if (!requireNamespace("multcomp", quietly = TRUE)) {
+    stop("please install multcomp for multiplicity adjustment")
+  }
+  glht_type <- switch(mult_adj,
+    dunnett = "single-step",
+    `step-down-dunnett` = "free"
+  )
+  glht_test <- multcomp::adjusted(type = glht_type)
+  # We need a single df for the as.glht below. We give it explicitly to avoid a message.
+  glht_df <- floor(mean(contrast_df, na.rm = TRUE))
+
+  glht_conts_greater <- emmeans::as.glht(emmeans_conts, df = glht_df, alternative = "greater")
+  glht_summary_greater <- summary(glht_conts_greater, test = glht_test)
+  pvals_greater <- do.call(c, lapply(glht_summary_greater, function(x) x$test$pvalues))
+
+  glht_conts_lower <- emmeans::as.glht(emmeans_conts, df = glht_df, alternative = "less")
+  glht_summary_lower <- summary(glht_conts_lower, test = glht_test)
+  pvals_lower <- do.call(c, lapply(glht_summary_lower, function(x) x$test$pvalues))
+
+  glht_conts <- emmeans::as.glht(emmeans_conts, df = glht_df, alternative = "two.sided")
+  glht_summary <- summary(glht_conts, test = glht_test)
+  pvals <- do.call(c, lapply(glht_summary, function(x) x$test$pvalues))
+
+  glht_ci <- stats::confint(glht_conts, level = conf_level)
+  glht_ci_matrix <- do.call(rbind, lapply(glht_ci, function(x) x$confint[, c("lwr", "upr")]))
+
+  arm_levels <- emmeans_res$object@levels[[vars$arm]]
+  non_ref_arms <- arm_levels[-1L]
+  visit_levels <- emmeans_res$object@levels[[vars$visit]]
+  grid <- data.frame(
+    arm = rep(non_ref_arms, times = length(visit_levels)),
+    visit = rep(visit_levels, each = length(non_ref_arms)),
+    stringsAsFactors = FALSE
+  )
+  names(grid) <- c(vars$arm, vars$visit)
+
+  data.frame(
+    grid,
+    p_value = pvals,
+    p_value_less = pvals_lower,
+    p_value_greater = pvals_greater,
+    lower_cl = glht_ci_matrix[, "lwr"],
+    upper_cl = glht_ci_matrix[, "upr"],
+    row.names = NULL
+  )
+}
+
+
