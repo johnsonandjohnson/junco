@@ -60,8 +60,16 @@ test_that("get_mmrm_lsmeans can adjust contrasts for multiplicity within visits"
     weights = weights,
     mult_adj = "dunnett"
   )
-  
-  # TODO cont here
+  expect_snapshot_value(result_dunnett, style = "deparse")
+
+  result_step_down_dunnett <- get_mmrm_lsmeans(
+    fit = fit,
+    vars = vars,
+    conf_level = conf_level,
+    weights = weights,
+    mult_adj = "step-down-dunnett"
+  )
+  expect_snapshot_value(result_step_down_dunnett, style = "deparse")
 })
 
 test_that("fit_mmrm_j works as expected", {

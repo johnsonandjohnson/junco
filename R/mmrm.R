@@ -137,7 +137,7 @@ build_formula <- function(
 #'   and reported along side the single visits.
 #' @param weights (`string`)\cr type of weights to be used for the least square means,
 #'   see [emmeans::emmeans()] for details.
-#' @param mult_adj (`string`)\cr multiplicity adjustment within visits.
+#' @param mult_adj (`string`)\cr multiplicity adjustment within visits for the contrasts.
 #' @return A list with data frames `estimates` and `contrasts`.
 #'   The attributes `averages`, `weights` and `mult_adj` save the settings used.
 #'
