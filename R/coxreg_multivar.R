@@ -150,16 +150,17 @@ tefos03_afun <- function(df, .var, .spl_context, variables, control, formats) {
 #'   ) |>
 #'   build_table(df = anl)
 summarize_coxreg_multivar <- function(
-    lyt,
-    var,
-    variables,
-    control = control_coxreg(),
-    formats = list(
-      coef_se = jjcsformat_xx("xx.xx (xx.xx)"),
-      hr_est = jjcsformat_xx("xx.xx"),
-      hr_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
-      pval = jjcsformat_pval_fct(0)
-    )) {
+  lyt,
+  var,
+  variables,
+  control = control_coxreg(),
+  formats = list(
+    coef_se = jjcsformat_xx("xx.xx (xx.xx)"),
+    hr_est = jjcsformat_xx("xx.xx"),
+    hr_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+    pval = jjcsformat_pval_fct(0)
+  )
+) {
   second_split_fun <- tefos03_second_split_fun_fct(conf_level = control$conf_level)
   lyt |>
     split_cols_by(var = var, split_fun = tefos03_first_split_fun) |>

@@ -829,21 +829,22 @@ h_restrict_val <- function(df_row, .var, label_map, split_info) {
 #' coming from a combined facet
 #'
 upd_denom_df_combo <- function(
-    denom_df, 
-    trt_var, 
-    cur_trt_grp, 
-    .spl_context){
+  denom_df,
+  trt_var,
+  cur_trt_grp,
+  .spl_context
+) {
   # check if we are in a combo facet, trt_var in that facet is not the same as in denom_df
   in_combo <- !(cur_trt_grp %in% unique(denom_df[[trt_var]]))
-  
+
   if (in_combo) {
     colexpr_substr_combo <- h_colexpr_substr(trt_var, .spl_context$cur_col_expr[[1]])
-    
+
     # adjust denom_df to update values of trt_var to reflect the combo value as in df
     y1 <- subset(denom_df, eval(parse(text = colexpr_substr_combo)))
     y1[[trt_var]] <- cur_trt_grp
-    y2 <- subset(denom_df, eval(parse(text = paste0("!",colexpr_substr_combo))))
+    y2 <- subset(denom_df, eval(parse(text = paste0("!", colexpr_substr_combo))))
     denom_df <- rbind(y1, y2)
-  } 
+  }
   denom_df
 }

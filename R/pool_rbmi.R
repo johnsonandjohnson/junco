@@ -26,7 +26,6 @@ rbmi_pool <- function(
   alternative = c("two.sided", "less", "greater"),
   type = c("percentile", "normal")
 ) {
-
   rbmi::validate(results)
 
   alternative <- match.arg(alternative)

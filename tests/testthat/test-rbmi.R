@@ -5,7 +5,6 @@ suppressPackageStartupMessages({
 })
 
 
-
 test_that("find_missing_chg_after_avisit works as expected", {
   df <- data.frame(
     AVISIT = factor(c(1, 2, 3, 4, 5)),
@@ -322,7 +321,7 @@ test_that("Parallelisation works with rbmi_analyse and produces identical result
   ## Check for internal consistency
   expect_equal(anaobj_d1_t1, anaobj_d1_t2)
 
-  if (!testthat:::on_cran()) { #sanity checking
+  if (!testthat:::on_cran()) { # sanity checking
     anaobj_d2_t3 <- rbmi_analyse(
       imputeobj,
       fun = rbmi_ancova,
@@ -366,7 +365,6 @@ test_that("Parallelisation works with rbmi_analyse and produces identical result
     # The ensure they are different
     expect_false(identical(anaobj_d1_t1$results, anaobj_d3_t1$results))
     expect_false(identical(anaobj_d2_t1$results, anaobj_d3_t1$results))
-
   }
   parallel::stopCluster(cl)
 })

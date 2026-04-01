@@ -1,11 +1,12 @@
 #' @note This has been forked from [tern::h_ancova()], because the new
 #'   `weights_emmeans` option was added here.
 h_ancova <- function(
-    .var,
-    .df_row,
-    variables,
-    weights_emmeans,
-    interaction_item = NULL) {
+  .var,
+  .df_row,
+  variables,
+  weights_emmeans,
+  interaction_item = NULL
+) {
   checkmate::assert_string(.var)
   checkmate::assert_list(variables)
   checkmate::assert_subset(names(variables), c("arm", "covariates"))
@@ -67,16 +68,17 @@ h_ancova <- function(
 #' conf_level <- 0.95
 #' s_ancova_j(df, .var, .df_row, variables, .ref_group, .in_ref_col = FALSE, conf_level)
 s_ancova_j <- function(
-    df,
-    .var,
-    .df_row,
-    variables,
-    .ref_group,
-    .in_ref_col,
-    conf_level,
-    interaction_y = FALSE,
-    interaction_item = NULL,
-    weights_emmeans = "counterfactual") {
+  df,
+  .var,
+  .df_row,
+  variables,
+  .ref_group,
+  .in_ref_col,
+  conf_level,
+  interaction_y = FALSE,
+  interaction_item = NULL,
+  weights_emmeans = "counterfactual"
+) {
   arm <- variables$arm
 
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
@@ -321,12 +323,13 @@ s_ancova_j <- function(
 #'   conf_level = conf_level
 #' )
 s_summarize_ancova_j <- function(
-    df,
-    .var,
-    .df_row,
-    .ref_group,
-    .in_ref_col,
-    ...) {
+  df,
+  .var,
+  .df_row,
+  .ref_group,
+  .in_ref_col,
+  ...
+) {
   x <- df[[.var]]
   y1 <- s_summary(x)
   y2 <- s_ancova_j(
@@ -394,16 +397,17 @@ s_summarize_ancova_j <- function(
 #' @export
 #' @order 2
 a_summarize_ancova_j <- function(
-    df,
-    .var,
-    .df_row,
-    ref_path,
-    .spl_context,
-    ...,
-    .stats = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  .var,
+  .df_row,
+  ref_path,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

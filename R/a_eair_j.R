@@ -20,12 +20,13 @@ NULL
 #'
 #' @keywords internal
 s_patyrs_j <- function(
-    df,
-    .var,
-    id = "USUBJID",
-    .alt_df_full,
-    source = c("alt_df", "df"),
-    inriskdiffcol = FALSE) {
+  df,
+  .var,
+  id = "USUBJID",
+  .alt_df_full,
+  source = c("alt_df", "df"),
+  inriskdiffcol = FALSE
+) {
   source <- match.arg(source)
 
   if (source == "alt_df") {
@@ -136,16 +137,17 @@ s_patyrs_j <- function(
 #' result
 #'
 a_patyrs_j <- function(
-    df,
-    .var,
-    .df_row,
-    id = "USUBJID",
-    .alt_df_full = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    source = c("alt_df", "df"),
-    .spl_context,
-    .stats = "patyrs") {
+  df,
+  .var,
+  .df_row,
+  id = "USUBJID",
+  .alt_df_full = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  source = c("alt_df", "df"),
+  .spl_context,
+  .stats = "patyrs"
+) {
   source <- match.arg(source)
 
   if (length(.stats) > 1 || (length(.stats) == 1 && .stats != "patyrs")) {
@@ -253,22 +255,23 @@ NULL
 #'
 #' @keywords internal
 s_eair100_levii_j <- function(
-    levii,
-    df,
-    .df_row,
-    .var,
-    .alt_df_full = NULL,
-    id = "USUBJID",
-    diff = FALSE,
-    # treatment/ref group related arguments
-    conf_level = 0.95,
-    trt_var = NULL,
-    ctrl_grp = NULL,
-    cur_trt_grp = NULL,
-    inriskdiffcol = FALSE,
-    fup_var,
-    occ_var,
-    occ_dy) {
+  levii,
+  df,
+  .df_row,
+  .var,
+  .alt_df_full = NULL,
+  id = "USUBJID",
+  diff = FALSE,
+  # treatment/ref group related arguments
+  conf_level = 0.95,
+  trt_var = NULL,
+  ctrl_grp = NULL,
+  cur_trt_grp = NULL,
+  inriskdiffcol = FALSE,
+  fup_var,
+  occ_var,
+  occ_dy
+) {
   if (diff && inriskdiffcol) {
     .alt_df_full_cur_group <- get_ctrl_subset(
       .alt_df_full,
@@ -470,26 +473,27 @@ s_eair100_levii_j <- function(
 #' head(result, 5)
 #'
 a_eair100_j <- function(
-    df,
-    labelstr = NULL,
-    .var,
-    .df_row,
-    .spl_context,
-    .alt_df_full = NULL,
-    id = "USUBJID",
-    drop_levels = FALSE,
-    riskdiff = TRUE,
-    ref_path = NULL,
-    .stats = c("eair"),
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL,
-    na_str = rep("NA", 3),
-    # treatment/ref group related arguments
-    conf_level = 0.95,
-    fup_var,
-    occ_var,
-    occ_dy) {
+  df,
+  labelstr = NULL,
+  .var,
+  .df_row,
+  .spl_context,
+  .alt_df_full = NULL,
+  id = "USUBJID",
+  drop_levels = FALSE,
+  riskdiff = TRUE,
+  ref_path = NULL,
+  .stats = c("eair"),
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL,
+  na_str = rep("NA", 3),
+  # treatment/ref group related arguments
+  conf_level = 0.95,
+  fup_var,
+  occ_var,
+  occ_dy
+) {
   ## prepare for column based split
   col_expr <- .spl_context$cur_col_expr[[1]]
   ## colid can be used to figure out if we're in the relative risk columns or not
@@ -573,8 +577,9 @@ a_eair100_j <- function(
       .alt_df_full,
       trt_var,
       cur_trt_grp,
-      .spl_context)
-    
+      .spl_context
+    )
+
     fn_args_x <- list(
       .alt_df_full = .alt_df_full,
       # treatment/ref group related arguments

@@ -76,16 +76,17 @@ NULL
 #' )
 #' @export
 s_odds_ratio_j <- function(
-    df,
-    .var,
-    .ref_group,
-    .in_ref_col,
-    .df_row,
-    variables = list(arm = NULL, strata = NULL),
-    conf_level = 0.95,
-    groups_list = NULL,
-    na_if_no_events = TRUE,
-    method = c("exact", "approximate", "efron", "breslow", "cmh")) {
+  df,
+  .var,
+  .ref_group,
+  .in_ref_col,
+  .df_row,
+  variables = list(arm = NULL, strata = NULL),
+  conf_level = 0.95,
+  groups_list = NULL,
+  na_if_no_events = TRUE,
+  method = c("exact", "approximate", "efron", "breslow", "cmh")
+) {
   checkmate::assert_flag(na_if_no_events)
   # New: pval here
   y <- list(or_ci = list(), n_tot = list(), pval = list())
@@ -234,16 +235,17 @@ s_odds_ratio_j <- function(
 #' @export
 #' @order 2
 a_odds_ratio_j <- function(
-    df,
-    .var,
-    .df_row,
-    ref_path,
-    .spl_context,
-    ...,
-    .stats = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  .var,
+  .df_row,
+  ref_path,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

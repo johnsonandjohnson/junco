@@ -276,5 +276,3 @@ h_get_mult_adj_estimates <- function(emmeans_res, vars, mult_adj, conf_level, co
     row.names = NULL
   )
 }
-
-

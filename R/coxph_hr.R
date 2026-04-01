@@ -38,14 +38,15 @@ NULL
 #'   strata = NULL
 #' )
 s_coxph_hr <- function(
-    df,
-    .ref_group,
-    .in_ref_col,
-    .var,
-    is_event,
-    strata = NULL,
-    control = control_coxph(),
-    alternative = c("two.sided", "less", "greater")) {
+  df,
+  .ref_group,
+  .in_ref_col,
+  .var,
+  is_event,
+  strata = NULL,
+  control = control_coxph(),
+  alternative = c("two.sided", "less", "greater")
+) {
   checkmate::assert_string(.var)
   checkmate::assert_numeric(df[[.var]])
   checkmate::assert_logical(df[[is_event]])
@@ -170,15 +171,16 @@ s_coxph_hr <- function(
 #' @export
 #' @order 2
 a_coxph_hr <- function(
-    df,
-    .var,
-    ref_path,
-    .spl_context,
-    ...,
-    .stats = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  .var,
+  ref_path,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

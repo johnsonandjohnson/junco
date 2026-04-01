@@ -88,18 +88,19 @@ h_labels <- function(vars, data) {
 #' build_formula(vars, "auto-regressive")
 #' build_formula(vars)
 build_formula <- function(
-    vars,
-    cor_struct = c(
-      "unstructured",
-      "toeplitz",
-      "heterogeneous toeplitz",
-      "ante-dependence",
-      "heterogeneous ante-dependence",
-      "auto-regressive",
-      "heterogeneous auto-regressive",
-      "compound symmetry",
-      "heterogeneous compound symmetry"
-    )) {
+  vars,
+  cor_struct = c(
+    "unstructured",
+    "toeplitz",
+    "heterogeneous toeplitz",
+    "ante-dependence",
+    "heterogeneous ante-dependence",
+    "auto-regressive",
+    "heterogeneous auto-regressive",
+    "compound symmetry",
+    "heterogeneous compound symmetry"
+  )
+) {
   checkmate::assert_list(vars)
   cor_struct <- match.arg(cor_struct)
   covariates_part <- paste(vars$covariates, collapse = " + ")
@@ -143,7 +144,8 @@ build_formula <- function(
 #'
 #' @note This is modified from `tern.mmrm` and has the additional `mult_adj` argument.
 #' @export
-get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(), 
+get_mmrm_lsmeans <- function(
+  fit, vars, conf_level, weights, averages = list(),
   mult_adj = c("none", "dunnett", "step-down-dunnett")
 ) {
   checkmate::assert_class(fit, "mmrm")
@@ -175,7 +177,7 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
     average_contrasts <- h_get_spec_visit_estimates(emmeans_res, average_contrast_specs, conf_level, tests = TRUE)
     contrast_estimates <- rbind(contrast_estimates, average_contrasts)
   }
-  
+
   if (mult_adj != "none") {
     # We just calculate the adjusted p-values and confidence intervals here and replace them
     # in the contrast_estimates data frame. The estimates and t-stats remain unchanged.
@@ -228,7 +230,7 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
 #'   and reported along side the single visits.
 #' @param weights_emmeans (`string`)\cr argument from [emmeans::emmeans()], `'counterfactual'` by default.
 #' @param mult_adj_emmeans (`string`)\cr whether to multiplicity adjust LS means contrast p-values and
-#'   confidence intervals within visits when there are more than 2 treatment arms. Note that this cannot 
+#'   confidence intervals within visits when there are more than 2 treatment arms. Note that this cannot
 #'   be combined with `averages_emmeans`. Either "none", "dunnett" or "step-down-dunnett".
 #' @param ... additional arguments for [mmrm::mmrm()], in particular `reml` and options listed in
 #'   [mmrm::mmrm_control()].
@@ -279,7 +281,7 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
 #' @note This function has the `_j` suffix to distinguish it from [mmrm::fit_mmrm()].
 #'   It is modified from the `tern.mmrm` package.
 #'   The new feature is the `mult_adj_emmeans` argument and its functionality. This could later
-#'   be contributed upstream in `tern.mmrm`.   
+#'   be contributed upstream in `tern.mmrm`.
 #'
 #' @examples
 #' mmrm_results <- fit_mmrm_j(
@@ -298,14 +300,15 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
 #'   )
 #' )
 fit_mmrm_j <- function(
-    vars = list(response = "AVAL", covariates = c(), id = "USUBJID", arm = "ARM", visit = "AVISIT"),
-    data,
-    conf_level = 0.95,
-    cor_struct = "unstructured",
-    weights_emmeans = "counterfactual",
-    averages_emmeans = list(),
-    mult_adj_emmeans = c("none", "dunnett", "step-down-dunnett"),
-    ...) {
+  vars = list(response = "AVAL", covariates = c(), id = "USUBJID", arm = "ARM", visit = "AVISIT"),
+  data,
+  conf_level = 0.95,
+  cor_struct = "unstructured",
+  weights_emmeans = "counterfactual",
+  averages_emmeans = list(),
+  mult_adj_emmeans = c("none", "dunnett", "step-down-dunnett"),
+  ...
+) {
   labels <- h_labels(vars, data)
   formula <- build_formula(vars, cor_struct)
   weights <- if (!is.null(vars$weights)) data[[vars$weights]] else NULL

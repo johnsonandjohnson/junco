@@ -148,14 +148,13 @@ test_that("find_free_colspc works as expected", {
 })
 
 test_that("smart_colwidths_1page works as expected", {
-  expected_smart <- (function(
-      tt,
-      fontspec,
-      col_gap = 6L,
-      rowlabel_width_ins = 2,
-      print_width_ins = 8.5 - 2.12,
-      landscape = FALSE,
-      lastcol_gap = TRUE) {
+  expected_smart <- (function(tt,
+                              fontspec,
+                              col_gap = 6L,
+                              rowlabel_width_ins = 2,
+                              print_width_ins = 8.5 - 2.12,
+                              landscape = FALSE,
+                              lastcol_gap = TRUE) {
     # Derive all intermediate values exactly
     rowlabel_width <- inches_to_spaces(rowlabel_width_ins, fontspec)
     total_cpp <- floor(inches_to_spaces(ifelse(landscape, 11, 8.5) - 2.12, fontspec = fontspec, raw = TRUE))

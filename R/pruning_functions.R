@@ -30,11 +30,12 @@
 #'
 #' safe_prune_table(tbl, prfun)
 safe_prune_table <- function(
-    tt,
-    prune_func = prune_empty_level,
-    stop_depth = NA,
-    empty_msg = " - No Data To Display - ",
-    spancols = FALSE) {
+  tt,
+  prune_func = prune_empty_level,
+  stop_depth = NA,
+  empty_msg = " - No Data To Display - ",
+  spancols = FALSE
+) {
   ret <- prune_table(tt = tt, prune_func = prune_func, stop_depth = stop_depth, depth = 0)
   if (is.null(ret)) {
     ret <- tt[integer(), , keep_titles = TRUE, keep_topleft = TRUE, keep_footers = TRUE]
@@ -294,13 +295,14 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #' @returns  Function that can be utilized as pruning function in prune_table.
 #'
 bspt_pruner <- function(
-    fraction = 0.05,
-    keeprowtext = "Analysis set: Safety",
-    reg_expr = FALSE,
-    control = NULL,
-    diff_from_control = NULL,
-    only_more_often = TRUE,
-    cols = c("TRT01A")) {
+  fraction = 0.05,
+  keeprowtext = "Analysis set: Safety",
+  reg_expr = FALSE,
+  control = NULL,
+  diff_from_control = NULL,
+  only_more_often = TRUE,
+  cols = c("TRT01A")
+) {
   if (is.null(fraction) && is.null(diff_from_control)) {
     stop("At least one of fraction or diff_from_control must be non-NULL.")
   }

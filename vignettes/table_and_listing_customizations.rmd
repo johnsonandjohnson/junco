@@ -23,23 +23,24 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 
-options(docx.add_datetime=FALSE)
+options(docx.add_datetime = FALSE)
 
 library(junco)
 library(rlistings)
 library(tibble)
-
 ```
 
 
 ```{r setup-title, include=FALSE}
-#Need to set up a dummy tittle and main footer
-titles <- list(title = " ",
-                     subtitles = NULL,
-                     main_footer = "Dummy Note: On-treatment is defined as ~{optional treatment-emergent}")
-#Need tempdir
+# Need to set up a dummy tittle and main footer
+titles <- list(
+  title = " ",
+  subtitles = NULL,
+  main_footer = "Dummy Note: On-treatment is defined as ~{optional treatment-emergent}"
+)
+# Need tempdir
 out_dir <- file.path("..", "output")
-if(!dir.exists(out_dir)) {
+if (!dir.exists(out_dir)) {
   dir.create(out_dir)
 }
 
@@ -76,50 +77,67 @@ In the .rtf exporter function, `junco::tt_to_tlgrtf`, by default, the page orien
 ```{r orientation_rtf}
 library(junco)
 
-adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo",
-                                     "Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo"),
-                                   levels = c("Example Drug 5 mg",
-                                              "Example Drug 10 mg",
-                                              "Example Drug 20 mg",
-                                              "Placebo"
-                                              )
-                              ),
-                   USUBJID = c("1",
-                               "2",
-                               "3",
-                               "4",
-                               "5",
-                               "6",
-                               "7",
-                               "8"),
-                   RESPONSE = factor(c("Yes",
-                                       "No",
-                                       "Yes",
-                                       "Yes",
-                                       "Yes",
-                                       "No",
-                                       "Yes",
-                                       "No"),
-                                     levels = c("Yes",
-                                                "No")
-                              ),
-                   SEX = factor(c("Male",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Male"),
-                                levels = c("Male",
-                                           "Female")
-                           )
+adsl <- data.frame(
+  TRT01A = factor(
+    c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo",
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    ),
+    levels = c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    )
+  ),
+  USUBJID = c(
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ),
+  RESPONSE = factor(
+    c(
+      "Yes",
+      "No",
+      "Yes",
+      "Yes",
+      "Yes",
+      "No",
+      "Yes",
+      "No"
+    ),
+    levels = c(
+      "Yes",
+      "No"
+    )
+  ),
+  SEX = factor(
+    c(
+      "Male",
+      "Female",
+      "Male",
+      "Female",
+      "Female",
+      "Male",
+      "Female",
+      "Male"
+    ),
+    levels = c(
+      "Male",
+      "Female"
+    )
+  )
 ) |>
   var_relabel(RESPONSE = "Response")
 
@@ -129,34 +147,36 @@ lyt <- basic_table(
 ) |>
   ### first columns
   split_cols_by("TRT01A",
-                show_colcounts = FALSE
+    show_colcounts = FALSE
   ) |>
   ### create table body row sections based on SEX
   split_rows_by("SEX",
-                section_div = c(" "),
-                page_by = TRUE,
-                split_fun = drop_split_levels
-                ) |>
+    section_div = c(" "),
+    page_by = TRUE,
+    split_fun = drop_split_levels
+  ) |>
   summarize_row_groups("SEX",
-                       cfun =a_freq_j,
-                       extra_args = list(denom = "n_df",
-                                         denom_by = "SEX",
-                                         riskdiff = FALSE,
-                                         extrablankline = TRUE,
-                                         .stats = c("count_unique")
-                                         )
-                       ) |>
+    cfun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      extrablankline = TRUE,
+      .stats = c("count_unique")
+    )
+  ) |>
   ### analyze height
   analyze("RESPONSE",
-          var_labels = c("Response"),
-          show_labels = "visible",
-          afun = a_freq_j,
-          extra_args = list(denom = "n_df",
-                            denom_by = "SEX",
-                            riskdiff = FALSE,
-                            .stats = c("count_unique_fraction")
-                            )
-          )
+    var_labels = c("Response"),
+    show_labels = "visible",
+    afun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      .stats = c("count_unique_fraction")
+    )
+  )
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
@@ -164,8 +184,9 @@ result <- set_titles(result, titles)
 
 ```{r orientation_rtf_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/exampleorientation"),
-             orientation = "landscape")
+  file = paste0(out_dir, "/exampleorientation"),
+  orientation = "landscape"
+)
 ```
 
 
@@ -176,9 +197,10 @@ To create a .docx file with landscape orientation, the `junco::export_TLG_as_doc
 
 ```{r orientation_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 export_TLG_as_docx(result,
-                tblid = "exampleorientation",
-                output_dir = out_dir,
-                orientation = "landscape")
+  tblid = "exampleorientation",
+  output_dir = out_dir,
+  orientation = "landscape"
+)
 ```
 
 ### Visual Output (HTML Representation)
@@ -199,50 +221,67 @@ Example of Table with Font Size of 8-pt
 ```{r fontsize_rtf}
 library(junco)
 
-adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo",
-                                     "Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo"),
-                                   levels = c("Example Drug 5 mg",
-                                              "Example Drug 10 mg",
-                                              "Example Drug 20 mg",
-                                              "Placebo"
-                                              )
-                              ),
-                   USUBJID = c("1",
-                               "2",
-                               "3",
-                               "4",
-                               "5",
-                               "6",
-                               "7",
-                               "8"),
-                   RESPONSE = factor(c("Yes",
-                                       "No",
-                                       "Yes",
-                                       "Yes",
-                                       "Yes",
-                                       "No",
-                                       "Yes",
-                                       "No"),
-                                     levels = c("Yes",
-                                                "No")
-                              ),
-                   SEX = factor(c("Male",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Male"),
-                                levels = c("Male",
-                                           "Female")
-                           )
+adsl <- data.frame(
+  TRT01A = factor(
+    c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo",
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    ),
+    levels = c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    )
+  ),
+  USUBJID = c(
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ),
+  RESPONSE = factor(
+    c(
+      "Yes",
+      "No",
+      "Yes",
+      "Yes",
+      "Yes",
+      "No",
+      "Yes",
+      "No"
+    ),
+    levels = c(
+      "Yes",
+      "No"
+    )
+  ),
+  SEX = factor(
+    c(
+      "Male",
+      "Female",
+      "Male",
+      "Female",
+      "Female",
+      "Male",
+      "Female",
+      "Male"
+    ),
+    levels = c(
+      "Male",
+      "Female"
+    )
+  )
 ) |>
   var_relabel(RESPONSE = "Response")
 
@@ -252,34 +291,36 @@ lyt <- basic_table(
 ) |>
   ### first columns
   split_cols_by("TRT01A",
-                show_colcounts = FALSE
+    show_colcounts = FALSE
   ) |>
   ### create table body row sections based on SEX
   split_rows_by("SEX",
-                section_div = c(" "),
-                page_by = TRUE,
-                split_fun = drop_split_levels
-                ) |>
+    section_div = c(" "),
+    page_by = TRUE,
+    split_fun = drop_split_levels
+  ) |>
   summarize_row_groups("SEX",
-                       cfun =a_freq_j,
-                       extra_args = list(denom = "n_df",
-                                         denom_by = "SEX",
-                                         riskdiff = FALSE,
-                                         extrablankline = TRUE,
-                                         .stats = c("count_unique")
-                                         )
-                       ) |>
+    cfun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      extrablankline = TRUE,
+      .stats = c("count_unique")
+    )
+  ) |>
   ### analyze height
   analyze("RESPONSE",
-          var_labels = c("Response"),
-          show_labels = "visible",
-          afun = a_freq_j,
-          extra_args = list(denom = "n_df",
-                            denom_by = "SEX",
-                            riskdiff = FALSE,
-                            .stats = c("count_unique_fraction")
-                            )
-          )
+    var_labels = c("Response"),
+    show_labels = "visible",
+    afun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      .stats = c("count_unique_fraction")
+    )
+  )
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
@@ -287,9 +328,9 @@ result <- set_titles(result, titles)
 
 ```{r fontsize_rtf_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/examplefontsize"),
-             fontspec = formatters::font_spec("Times", 8, 1.2))
-
+  file = paste0(out_dir, "/examplefontsize"),
+  fontspec = formatters::font_spec("Times", 8, 1.2)
+)
 ```
 ### Table .docx File
 
@@ -297,9 +338,10 @@ To display the body of tables in Times New Roman 8-pt for .docx files, the junco
 
 ```{r fontsize_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 export_TLG_as_docx(result,
-                tblid = "examplefontsize",
-                output_dir = out_dir,
-                theme = theme_docx_default_j(font = "Times New Roman", font_size = 8L))
+  tblid = "examplefontsize",
+  output_dir = out_dir,
+  theme = theme_docx_default_j(font = "Times New Roman", font_size = 8L)
+)
 ```
 
 ### Visual Output (HTML Representation)
@@ -316,76 +358,97 @@ In the code below, the variable `colspan_trt` is being created to identify the s
 ```{r spanning_header_setup}
 library(junco)
 
-adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo",
-                                     "Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo"),
-                                   levels = c("Example Drug 5 mg",
-                                              "Example Drug 10 mg",
-                                              "Example Drug 20 mg",
-                                              "Placebo"
-                                              )
-                              ),
-                   colspan_trt = factor(c("Active Study Agent",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          " ",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          " "),
-                                        levels = c(
-                                          "Active Study Agent",
-                                          " "
-                                        )
-                                        ),
-                   USUBJID = c("1",
-                               "2",
-                               "3",
-                               "4",
-                               "5",
-                               "6",
-                               "7",
-                               "8"),
-                   RESPONSE = factor(c("Yes",
-                                       "No",
-                                       "Yes",
-                                       "Yes",
-                                       "Yes",
-                                       "No",
-                                       "Yes",
-                                       "No"),
-                                     levels = c("Yes",
-                                                "No")
-                              ),
-                   SEX = factor(c("Male",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Male"),
-                                levels = c("Male",
-                                           "Female")
-                           )
+adsl <- data.frame(
+  TRT01A = factor(
+    c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo",
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    ),
+    levels = c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    )
+  ),
+  colspan_trt = factor(
+    c(
+      "Active Study Agent",
+      "Active Study Agent",
+      "Active Study Agent",
+      " ",
+      "Active Study Agent",
+      "Active Study Agent",
+      "Active Study Agent",
+      " "
+    ),
+    levels = c(
+      "Active Study Agent",
+      " "
+    )
+  ),
+  USUBJID = c(
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ),
+  RESPONSE = factor(
+    c(
+      "Yes",
+      "No",
+      "Yes",
+      "Yes",
+      "Yes",
+      "No",
+      "Yes",
+      "No"
+    ),
+    levels = c(
+      "Yes",
+      "No"
+    )
+  ),
+  SEX = factor(
+    c(
+      "Male",
+      "Female",
+      "Male",
+      "Female",
+      "Female",
+      "Male",
+      "Female",
+      "Male"
+    ),
+    levels = c(
+      "Male",
+      "Female"
+    )
+  )
 ) |>
   var_relabel(RESPONSE = "Response")
 
 adsl
 
-  colspan_trt_map <- create_colspan_map(adsl,
-                                      non_active_grp = "Placebo",
-                                      non_active_grp_span_lbl = " ",
-                                      active_grp_span_lbl = "Active Study Agent",
-                                      colspan_var = "colspan_trt",
-                                      trt_var = "TRT01A")
+colspan_trt_map <- create_colspan_map(adsl,
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
 
-  colspan_trt_map
+colspan_trt_map
 ```
 
 
@@ -393,113 +456,136 @@ The full code to generate the output with the spanning column header is as follo
 ```{r spanning_header_full}
 library(junco)
 
-adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo",
-                                     "Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo"),
-                                   levels = c("Example Drug 5 mg",
-                                              "Example Drug 10 mg",
-                                              "Example Drug 20 mg",
-                                              "Placebo"
-                                              )
-                              ),
-                   colspan_trt = factor(c("Active Study Agent",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          " ",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          " "),
-                                        levels = c(
-                                          "Active Study Agent",
-                                          " "
-                                        )
-                                        ),
-                   USUBJID = c("1",
-                               "2",
-                               "3",
-                               "4",
-                               "5",
-                               "6",
-                               "7",
-                               "8"),
-                   RESPONSE = factor(c("Yes",
-                                       "No",
-                                       "Yes",
-                                       "Yes",
-                                       "Yes",
-                                       "No",
-                                       "Yes",
-                                       "No"),
-                                     levels = c("Yes",
-                                                "No")
-                              ),
-                   SEX = factor(c("Male",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Male"),
-                                levels = c("Male",
-                                           "Female")
-                           )
+adsl <- data.frame(
+  TRT01A = factor(
+    c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo",
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    ),
+    levels = c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    )
+  ),
+  colspan_trt = factor(
+    c(
+      "Active Study Agent",
+      "Active Study Agent",
+      "Active Study Agent",
+      " ",
+      "Active Study Agent",
+      "Active Study Agent",
+      "Active Study Agent",
+      " "
+    ),
+    levels = c(
+      "Active Study Agent",
+      " "
+    )
+  ),
+  USUBJID = c(
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ),
+  RESPONSE = factor(
+    c(
+      "Yes",
+      "No",
+      "Yes",
+      "Yes",
+      "Yes",
+      "No",
+      "Yes",
+      "No"
+    ),
+    levels = c(
+      "Yes",
+      "No"
+    )
+  ),
+  SEX = factor(
+    c(
+      "Male",
+      "Female",
+      "Male",
+      "Female",
+      "Female",
+      "Male",
+      "Female",
+      "Male"
+    ),
+    levels = c(
+      "Male",
+      "Female"
+    )
+  )
 ) |>
   var_relabel(RESPONSE = "Response")
 
-  # No combined column needed for spanning header example
-  mysplit <- make_split_fun()
+# No combined column needed for spanning header example
+mysplit <- make_split_fun()
 
-  colspan_trt_map <- create_colspan_map(adsl,
-                                      non_active_grp = "Placebo",
-                                      non_active_grp_span_lbl = " ",
-                                      active_grp_span_lbl = "Active Study Agent",
-                                      colspan_var = "colspan_trt",
-                                      trt_var = "TRT01A")
+colspan_trt_map <- create_colspan_map(adsl,
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
 
 lyt <- basic_table(
   show_colcounts = TRUE,
   colcount_format = "N=xx"
 ) |>
   split_cols_by("colspan_trt",
-                split_fun = trim_levels_to_map(map = colspan_trt_map)
+    split_fun = trim_levels_to_map(map = colspan_trt_map)
   ) |>
   split_cols_by("TRT01A",
-                show_colcounts = FALSE,
-                split_fun = mysplit
+    show_colcounts = FALSE,
+    split_fun = mysplit
   ) |>
   ### create table body row sections based on SEX
   split_rows_by("SEX",
-                section_div = c(" "),
-                page_by = TRUE,
-                split_fun = drop_split_levels
-                ) |>
+    section_div = c(" "),
+    page_by = TRUE,
+    split_fun = drop_split_levels
+  ) |>
   summarize_row_groups("SEX",
-                       cfun =a_freq_j,
-                       extra_args = list(denom = "n_df",
-                                         denom_by = "SEX",
-                                         riskdiff = FALSE,
-                                         extrablankline = TRUE,
-                                         .stats = c("count_unique")
-                                         )
-                       ) |>
+    cfun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      extrablankline = TRUE,
+      .stats = c("count_unique")
+    )
+  ) |>
   ### analyze height
   analyze("RESPONSE",
-          var_labels = c("Response"),
-          show_labels = "visible",
-          afun = a_freq_j,
-          extra_args = list(denom = "n_df",
-                            denom_by = "SEX",
-                            riskdiff = FALSE,
-                            .stats = c("count_unique_fraction")
-                            )
-          )
+    var_labels = c("Response"),
+    show_labels = "visible",
+    afun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      .stats = c("count_unique_fraction")
+    )
+  )
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
@@ -507,8 +593,9 @@ result <- set_titles(result, titles)
 
 ```{r spanning_header_rtf_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/examplespanningheader1"),
-             orientation = "landscape")
+  file = paste0(out_dir, "/examplespanningheader1"),
+  orientation = "landscape"
+)
 ```
 
 ### Visual Output (HTML Representation)
@@ -524,129 +611,152 @@ The creation of a combined column can be achieved by leveraging `rtables::add_co
 The snippet of code of interest is as follows.
 ```{r combined_column_setup}
 add_combo <- add_combo_facet("Combined",
-    label = "Combined",
-    levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
-  )
+  label = "Combined",
+  levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
+)
 
-  mysplit <- make_split_fun(post = list(add_combo))
+mysplit <- make_split_fun(post = list(add_combo))
 ```
 
 The full code to generate the output with the new "Combined" column is as follows.
 ```{r combined_column_full}
 library(junco)
 
-adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo",
-                                     "Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo"),
-                                   levels = c("Example Drug 5 mg",
-                                              "Example Drug 10 mg",
-                                              "Example Drug 20 mg",
-                                              "Placebo"
-                                              )
-                              ),
-                   colspan_trt = factor(c("Active Study Agent",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          " ",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          " "),
-                                        levels = c(
-                                          "Active Study Agent",
-                                          " "
-                                        )
-                                        ),
-                   USUBJID = c("1",
-                               "2",
-                               "3",
-                               "4",
-                               "5",
-                               "6",
-                               "7",
-                               "8"),
-                   RESPONSE = factor(c("Yes",
-                                       "No",
-                                       "Yes",
-                                       "Yes",
-                                       "Yes",
-                                       "No",
-                                       "Yes",
-                                       "No"),
-                                     levels = c("Yes",
-                                                "No")
-                              ),
-                   SEX = factor(c("Male",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Male"),
-                                levels = c("Male",
-                                           "Female")
-                           )
+adsl <- data.frame(
+  TRT01A = factor(
+    c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo",
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    ),
+    levels = c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    )
+  ),
+  colspan_trt = factor(
+    c(
+      "Active Study Agent",
+      "Active Study Agent",
+      "Active Study Agent",
+      " ",
+      "Active Study Agent",
+      "Active Study Agent",
+      "Active Study Agent",
+      " "
+    ),
+    levels = c(
+      "Active Study Agent",
+      " "
+    )
+  ),
+  USUBJID = c(
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ),
+  RESPONSE = factor(
+    c(
+      "Yes",
+      "No",
+      "Yes",
+      "Yes",
+      "Yes",
+      "No",
+      "Yes",
+      "No"
+    ),
+    levels = c(
+      "Yes",
+      "No"
+    )
+  ),
+  SEX = factor(
+    c(
+      "Male",
+      "Female",
+      "Male",
+      "Female",
+      "Female",
+      "Male",
+      "Female",
+      "Male"
+    ),
+    levels = c(
+      "Male",
+      "Female"
+    )
+  )
 ) |>
   var_relabel(RESPONSE = "Response")
 
-  # Set up levels and label for the required combined column
-  add_combo <- add_combo_facet("Combined",
-    label = "Combined",
-    levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
-  )
+# Set up levels and label for the required combined column
+add_combo <- add_combo_facet("Combined",
+  label = "Combined",
+  levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
+)
 
-  mysplit <- make_split_fun(post = list(add_combo))
+mysplit <- make_split_fun(post = list(add_combo))
 
-  colspan_trt_map <- create_colspan_map(adsl,
-                                      non_active_grp = "Placebo",
-                                      non_active_grp_span_lbl = " ",
-                                      active_grp_span_lbl = "Active Study Agent",
-                                      colspan_var = "colspan_trt",
-                                      trt_var = "TRT01A")
+colspan_trt_map <- create_colspan_map(adsl,
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
 
 lyt <- basic_table(
   show_colcounts = TRUE,
   colcount_format = "N=xx"
 ) |>
   split_cols_by("colspan_trt",
-                split_fun = trim_levels_to_map(map = colspan_trt_map)
+    split_fun = trim_levels_to_map(map = colspan_trt_map)
   ) |>
   split_cols_by("TRT01A",
-                show_colcounts = FALSE,
-                split_fun = mysplit
+    show_colcounts = FALSE,
+    split_fun = mysplit
   ) |>
   ### create table body row sections based on SEX
   split_rows_by("SEX",
-                section_div = c(" "),
-                page_by = TRUE,
-                split_fun = drop_split_levels
-                ) |>
+    section_div = c(" "),
+    page_by = TRUE,
+    split_fun = drop_split_levels
+  ) |>
   summarize_row_groups("SEX",
-                       cfun =a_freq_j,
-                       extra_args = list(denom = "n_df",
-                                         denom_by = "SEX",
-                                         riskdiff = FALSE,
-                                         extrablankline = TRUE,
-                                         .stats = c("count_unique")
-                                         )
-                       ) |>
+    cfun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      extrablankline = TRUE,
+      .stats = c("count_unique")
+    )
+  ) |>
   ### analyze height
   analyze("RESPONSE",
-          var_labels = c("Response"),
-          show_labels = "visible",
-          afun = a_freq_j,
-          extra_args = list(denom = "n_df",
-                            denom_by = "SEX",
-                            riskdiff = FALSE,
-                            .stats = c("count_unique_fraction")
-                            )
-          )
+    var_labels = c("Response"),
+    show_labels = "visible",
+    afun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      .stats = c("count_unique_fraction")
+    )
+  )
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
@@ -654,8 +764,9 @@ result <- set_titles(result, titles)
 
 ```{r combined_column1_rtf_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/examplecombinedcolumn1"),
-             orientation = "landscape")
+  file = paste0(out_dir, "/examplecombinedcolumn1"),
+  orientation = "landscape"
+)
 ```
 
 ### Visual Output (HTML Representation)
@@ -667,141 +778,164 @@ The code above creates the desired column, however, the issue is that the result
 
 The additional code required for to produce the desired result is as follows.
 ```{r improved_combined_column_setup, eval=FALSE}
-  # choose if any facets need to be removed - e.g remove the combined column for placebo
-  rm_combo_from_placebo <- cond_rm_facets(
-    facets = "Combined",
-    ancestor_pos = NA,
-    value = " ",
-    split = "colspan_trt"
-  )
+# choose if any facets need to be removed - e.g remove the combined column for placebo
+rm_combo_from_placebo <- cond_rm_facets(
+  facets = "Combined",
+  ancestor_pos = NA,
+  value = " ",
+  split = "colspan_trt"
+)
 
-  mysplit <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))
+mysplit <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))
 ```
 
 The full code to generate the output with the desired "Combined" column is as follows.
 ```{r improved_combined_column_full}
 library(junco)
 
-adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo",
-                                     "Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo"),
-                                   levels = c("Example Drug 5 mg",
-                                              "Example Drug 10 mg",
-                                              "Example Drug 20 mg",
-                                              "Placebo"
-                                              )
-                              ),
-                   colspan_trt = factor(c("Active Study Agent",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          " ",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          "Active Study Agent",
-                                          " "),
-                                        levels = c(
-                                          "Active Study Agent",
-                                          " "
-                                        )
-                                        ),
-                   USUBJID = c("1",
-                               "2",
-                               "3",
-                               "4",
-                               "5",
-                               "6",
-                               "7",
-                               "8"),
-                   RESPONSE = factor(c("Yes",
-                                       "No",
-                                       "Yes",
-                                       "Yes",
-                                       "Yes",
-                                       "No",
-                                       "Yes",
-                                       "No"),
-                                     levels = c("Yes",
-                                                "No")
-                              ),
-                   SEX = factor(c("Male",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Male"),
-                                levels = c("Male",
-                                           "Female")
-                           )
+adsl <- data.frame(
+  TRT01A = factor(
+    c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo",
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    ),
+    levels = c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    )
+  ),
+  colspan_trt = factor(
+    c(
+      "Active Study Agent",
+      "Active Study Agent",
+      "Active Study Agent",
+      " ",
+      "Active Study Agent",
+      "Active Study Agent",
+      "Active Study Agent",
+      " "
+    ),
+    levels = c(
+      "Active Study Agent",
+      " "
+    )
+  ),
+  USUBJID = c(
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ),
+  RESPONSE = factor(
+    c(
+      "Yes",
+      "No",
+      "Yes",
+      "Yes",
+      "Yes",
+      "No",
+      "Yes",
+      "No"
+    ),
+    levels = c(
+      "Yes",
+      "No"
+    )
+  ),
+  SEX = factor(
+    c(
+      "Male",
+      "Female",
+      "Male",
+      "Female",
+      "Female",
+      "Male",
+      "Female",
+      "Male"
+    ),
+    levels = c(
+      "Male",
+      "Female"
+    )
+  )
 ) |>
   var_relabel(RESPONSE = "Response")
 
-  # Set up levels and label for the required combined column
-  add_combo <- add_combo_facet("Combined",
-    label = "Combined",
-    levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
-  )
+# Set up levels and label for the required combined column
+add_combo <- add_combo_facet("Combined",
+  label = "Combined",
+  levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
+)
 
-  # choose if any facets need to be removed - e.g remove the combined column for placebo
-  rm_combo_from_placebo <- cond_rm_facets(
-    facets = "Combined",
-    ancestor_pos = NA,
-    value = " ",
-    split = "colspan_trt"
-  )
+# choose if any facets need to be removed - e.g remove the combined column for placebo
+rm_combo_from_placebo <- cond_rm_facets(
+  facets = "Combined",
+  ancestor_pos = NA,
+  value = " ",
+  split = "colspan_trt"
+)
 
-  mysplit <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))
+mysplit <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))
 
-  colspan_trt_map <- create_colspan_map(adsl,
-                                      non_active_grp = "Placebo",
-                                      non_active_grp_span_lbl = " ",
-                                      active_grp_span_lbl = "Active Study Agent",
-                                      colspan_var = "colspan_trt",
-                                      trt_var = "TRT01A")
+colspan_trt_map <- create_colspan_map(adsl,
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
 
 lyt <- basic_table(
   show_colcounts = TRUE,
   colcount_format = "N=xx"
 ) |>
   split_cols_by("colspan_trt",
-                split_fun = trim_levels_to_map(map = colspan_trt_map)
+    split_fun = trim_levels_to_map(map = colspan_trt_map)
   ) |>
   split_cols_by("TRT01A",
-                show_colcounts = FALSE,
-                split_fun = mysplit
+    show_colcounts = FALSE,
+    split_fun = mysplit
   ) |>
   ### create table body row sections based on SEX
   split_rows_by("SEX",
-                section_div = c(" "),
-                page_by = TRUE,
-                split_fun = drop_split_levels
-                ) |>
+    section_div = c(" "),
+    page_by = TRUE,
+    split_fun = drop_split_levels
+  ) |>
   summarize_row_groups("SEX",
-                       cfun =a_freq_j,
-                       extra_args = list(denom = "n_df",
-                                         denom_by = "SEX",
-                                         riskdiff = FALSE,
-                                         extrablankline = TRUE,
-                                         .stats = c("count_unique")
-                                         )
-                       ) |>
+    cfun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      extrablankline = TRUE,
+      .stats = c("count_unique")
+    )
+  ) |>
   ### analyze height
   analyze("RESPONSE",
-          var_labels = c("Response"),
-          show_labels = "visible",
-          afun = a_freq_j,
-          extra_args = list(denom = "n_df",
-                            denom_by = "SEX",
-                            riskdiff = FALSE,
-                            .stats = c("count_unique_fraction")
-                            )
-          )
+    var_labels = c("Response"),
+    show_labels = "visible",
+    afun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      .stats = c("count_unique_fraction")
+    )
+  )
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
@@ -809,8 +943,9 @@ result <- set_titles(result, titles)
 
 ```{r combined_column2_rtf_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/examplecombinedcolumn2"),
-             orientation = "landscape")
+  file = paste0(out_dir, "/examplecombinedcolumn2"),
+  orientation = "landscape"
+)
 ```
 
 ### Visual Output (HTML Representation)
@@ -828,19 +963,25 @@ this case, the text "Example Drug" is to appear on a different line than
 the dose levels (i.e. "5 mg", "10 mg", "20 mg").
 
 ```{r newline_data}
-adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
-                              "Example Drug 10 mg",
-                              "Example Drug 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  TRT01A = c(
+    "Example Drug 5 mg",
+    "Example Drug 10 mg",
+    "Example Drug 20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 )
 
 adsl
@@ -856,19 +997,25 @@ between the drug name and dose level.
 library(junco)
 library(rtables)
 
-adsl <- data.frame(TRT01A = c("Example Drug\\line 5 mg",
-                              "Example Drug\\line 10 mg",
-                              "Example Drug\\line 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  TRT01A = c(
+    "Example Drug\\line 5 mg",
+    "Example Drug\\line 10 mg",
+    "Example Drug\\line 20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 )
 
 lyt <- basic_table(
@@ -876,8 +1023,8 @@ lyt <- basic_table(
   colcount_format = "N=xx"
 ) |>
   ### first columns
-  split_cols_by("TRT01A",,
-                show_colcounts = FALSE
+  split_cols_by("TRT01A", ,
+    show_colcounts = FALSE
   ) |>
   ### analyze height
   analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
@@ -888,8 +1035,9 @@ result <- set_titles(result, titles)
 
 ```{r newline_table_rtf_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/newlinetable"),
-             orientation = "landscape")
+  file = paste0(out_dir, "/newlinetable"),
+  orientation = "landscape"
+)
 ```
 
 ### Table .docx File
@@ -909,19 +1057,25 @@ string_map_newline
 library(junco)
 library(rtables)
 
-adsl <- data.frame(TRT01A = c("Example Drug\\line5 mg",
-                              "Example Drug\\line10 mg",
-                              "Example Drug\\line20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  TRT01A = c(
+    "Example Drug\\line5 mg",
+    "Example Drug\\line10 mg",
+    "Example Drug\\line20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 )
 
 lyt <- basic_table(
@@ -929,28 +1083,30 @@ lyt <- basic_table(
   colcount_format = "N=xx"
 ) |>
   ### first columns
-  split_cols_by("TRT01A",,
-                show_colcounts = FALSE
+  split_cols_by("TRT01A", ,
+    show_colcounts = FALSE
   ) |>
   ### analyze height
   analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
-
 ```
 
 ```{r newline_table_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 export_TLG_as_docx(result,
-                tblid = "examplenewline",
-                output_dir = out_dir,
-                orientation = "landscape")
+  tblid = "examplenewline",
+  output_dir = out_dir,
+  orientation = "landscape"
+)
 ```
 
 ### Visual Output (HTML Representation)
 ```{r newline_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "newlinetable", orientation = "landscape",
-                  string_map = string_map_newline)
+tt_to_flextable_j(result, "newlinetable",
+  orientation = "landscape",
+  string_map = string_map_newline
+)
 ```
 
 ### Listing .rtf File
@@ -963,19 +1119,25 @@ By adding in "\\\\line" to the TRT01A variable label, a new line is inserted aft
 library(junco)
 library(rlistings)
 
-adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
-                              "Example Drug 10 mg",
-                              "Example Drug 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  TRT01A = c(
+    "Example Drug 5 mg",
+    "Example Drug 10 mg",
+    "Example Drug 20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 ) |>
   formatters::var_relabel(TRT01A = "Actual Treatment for\\line Period 01") |>
   formatters::var_relabel(SUBJECT = "Subject") |>
@@ -991,8 +1153,9 @@ result <- set_titles(result, titles)
 
 ```{r newline_listing_rtf_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/examplelistingnewline2"),
-             orientation = "landscape")
+  file = paste0(out_dir, "/examplelistingnewline2"),
+  orientation = "landscape"
+)
 ```
 
 
@@ -1010,19 +1173,25 @@ By adding in "\\\\line" to the TRT01A variable label, a new line is inserted aft
 library(junco)
 library(rlistings)
 
-adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
-                              "Example Drug 10 mg",
-                              "Example Drug 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  TRT01A = c(
+    "Example Drug 5 mg",
+    "Example Drug 10 mg",
+    "Example Drug 20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 ) |>
   formatters::var_relabel(TRT01A = "Actual Treatment for\\linePeriod 01") |>
   formatters::var_relabel(SUBJECT = "Subject") |>
@@ -1034,21 +1203,23 @@ result <- rlistings::as_listing(
   disp_cols = "HEIGHT"
 )
 result <- set_titles(result, titles)
-
 ```
 
 ```{r newline_listing_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 export_TLG_as_docx(result,
-                tblid = "examplelistingnewline2",
-                output_dir = out_dir,
-                orientation = "landscape",
-                string_map = string_map_newline)
+  tblid = "examplelistingnewline2",
+  output_dir = out_dir,
+  orientation = "landscape",
+  string_map = string_map_newline
+)
 ```
 
 ### Visual Output (HTML Representation)
 ```{r newline_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "examplelistingnewline2", orientation = "landscape",
-                  string_map = string_map_newline)
+tt_to_flextable_j(result, "examplelistingnewline2",
+  orientation = "landscape",
+  string_map = string_map_newline
+)
 ```
 
 
@@ -1063,23 +1234,31 @@ The following is an example of a table created from `junco::tt_to_tlgrtf`.
 ```{r border_matrix}
 library(junco)
 
-adsl <- data.frame(span = c("Example Drug Low Dose",
-                            "Example Drug Low Dose",
-                            "Example Drug High Dose",
-                            " "),
-                   TRT01A = c("Example Drug 5 mg",
-                              "Example Drug 10 mg",
-                              "Example Drug 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  span = c(
+    "Example Drug Low Dose",
+    "Example Drug Low Dose",
+    "Example Drug High Dose",
+    " "
+  ),
+  TRT01A = c(
+    "Example Drug 5 mg",
+    "Example Drug 10 mg",
+    "Example Drug 20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 )
 
 lyt <- basic_table(
@@ -1087,12 +1266,12 @@ lyt <- basic_table(
   colcount_format = "N=xx"
 ) |>
   ### first level in column header
-  split_cols_by("span",,
-                show_colcounts = FALSE
+  split_cols_by("span", ,
+    show_colcounts = FALSE
   ) |>
   ### second level in column header
-  split_cols_by("TRT01A",,
-                show_colcounts = FALSE
+  split_cols_by("TRT01A", ,
+    show_colcounts = FALSE
   ) |>
   ### analyze height
   analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
@@ -1103,8 +1282,9 @@ result <- set_titles(result, titles)
 
 ```{r border_matrix_rtf_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/bordertable"),
-             orientation = "landscape")
+  file = paste0(out_dir, "/bordertable"),
+  orientation = "landscape"
+)
 ```
 
 ### Visual Output (HTML Representation)
@@ -1138,9 +1318,10 @@ argument included, the new user-defined border matrix can be provided as the arg
 
 ```{r custom_border_matrix_rtf_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/custombordertable"),
-             orientation = "landscape",
-             border_mat = header_border)
+  file = paste0(out_dir, "/custombordertable"),
+  orientation = "landscape",
+  border_mat = header_border
+)
 ```
 
 
@@ -1149,10 +1330,11 @@ To export a table with a custom border matrix to a .docx file, the `junco::expor
 
 ```{r custom_border_matrix_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 export_TLG_as_docx(result,
-                tblid = "custombordertable",
-                output_dir = out_dir,
-                orientation = "landscape",
-                border_mat = header_border)
+  tblid = "custombordertable",
+  output_dir = out_dir,
+  orientation = "landscape",
+  border_mat = header_border
+)
 ```
 
 ### Visual Output (HTML Representation)
@@ -1196,19 +1378,25 @@ If additional markup is to be considered, then a custom markup data frame can be
 In the following example data, there is a desire to insert a superscript "a" at the end the drug name for the "Example Drug" drug in reference to a footnote present at the end of the table.
 
 ```{r superscript_example_data}
-adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
-                              "Example Drug 10 mg",
-                              "Example Drug 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  TRT01A = c(
+    "Example Drug 5 mg",
+    "Example Drug 10 mg",
+    "Example Drug 20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 )
 
 adsl
@@ -1226,19 +1414,25 @@ In order to get the superscript "a" to appear, the TRT01A variable values will n
 ```{r superscript_table_rtf}
 library(junco)
 
-adsl <- data.frame(TRT01A = c("Example Drug~[super a] 5 mg",
-                              "Example Drug~[super a] 10 mg",
-                              "Example Drug~[super a] 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  TRT01A = c(
+    "Example Drug~[super a] 5 mg",
+    "Example Drug~[super a] 10 mg",
+    "Example Drug~[super a] 20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 )
 
 lyt <- basic_table(
@@ -1246,8 +1440,8 @@ lyt <- basic_table(
   colcount_format = "N=xx"
 ) |>
   ### first columns
-  split_cols_by("TRT01A",,
-                show_colcounts = FALSE
+  split_cols_by("TRT01A", ,
+    show_colcounts = FALSE
   ) |>
   ### analyze height
   analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
@@ -1258,9 +1452,10 @@ result <- set_titles(result, titles)
 
 ```{r superscript_table_rtf_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/superscripttable"),
-             orientation = "landscape",
-             markup_df = dps_markup_df)
+  file = paste0(out_dir, "/superscripttable"),
+  orientation = "landscape",
+  markup_df = dps_markup_df
+)
 ```
 
 
@@ -1291,19 +1486,25 @@ If a .docx file is to be created for the table, the `junco::export_TLG_as_docx` 
 ```{r superscript_table_docx}
 library(junco)
 
-adsl <- data.frame(TRT01A = c("Example Drug~[super a] 5 mg",
-                              "Example Drug~[super a] 10 mg",
-                              "Example Drug~[super a] 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  TRT01A = c(
+    "Example Drug~[super a] 5 mg",
+    "Example Drug~[super a] 10 mg",
+    "Example Drug~[super a] 20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 )
 
 lyt <- basic_table(
@@ -1311,23 +1512,23 @@ lyt <- basic_table(
   colcount_format = "N=xx"
 ) |>
   ### first columns
-  split_cols_by("TRT01A",,
-                show_colcounts = FALSE
+  split_cols_by("TRT01A", ,
+    show_colcounts = FALSE
   ) |>
   ### analyze height
   analyze("HEIGHT", afun = list_wrap_x(summary), format = "xx.xx")
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
-
 ```
 
 ```{r superscript_table_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 export_TLG_as_docx(result,
-                tblid = "superscripttable",
-                output_dir = out_dir,
-                orientation = "landscape",
-                markup_df_docx = docx_markup_df)
+  tblid = "superscripttable",
+  output_dir = out_dir,
+  orientation = "landscape",
+  markup_df_docx = docx_markup_df
+)
 ```
 
 
@@ -1335,7 +1536,7 @@ export_TLG_as_docx(result,
 
 ### Visual Output (HTML Representation)
 ```{r superscript_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "superscripttable", orientation = "landscape",  markup_df_docx = docx_markup_df)
+tt_to_flextable_j(result, "superscripttable", orientation = "landscape", markup_df_docx = docx_markup_df)
 ```
 
 ### Listing .rtf File
@@ -1351,19 +1552,25 @@ added to the column label.
 library(junco)
 library(rlistings)
 
-adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
-                              "Example Drug 10 mg",
-                              "Example Drug 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  TRT01A = c(
+    "Example Drug 5 mg",
+    "Example Drug 10 mg",
+    "Example Drug 20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 ) |>
   formatters::var_relabel(TRT01A = "Actual Treatment for Period 01~[super a]") |>
   formatters::var_relabel(SUBJECT = "Subject") |>
@@ -1379,8 +1586,9 @@ result <- set_titles(result, titles)
 
 ```{r superscript_listing_rtf_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/examplelistingsuperscript2"),
-             orientation = "landscape")
+  file = paste0(out_dir, "/examplelistingsuperscript2"),
+  orientation = "landscape"
+)
 ```
 
 
@@ -1409,23 +1617,28 @@ docx_markup_df
 If a .docx file is to be created for the table, the `junco::export_TLG_as_docx` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_TLG_as_docx`, the "markup_df_docx" argument has the default "docx_markup_df" object specified.
 
 ```{r superscript_listing_docx}
-
 library(junco)
 library(rlistings)
 
-adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
-                              "Example Drug 10 mg",
-                              "Example Drug 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  TRT01A = c(
+    "Example Drug 5 mg",
+    "Example Drug 10 mg",
+    "Example Drug 20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 ) |>
   formatters::var_relabel(TRT01A = "Actual Treatment for Period 01~[super a]") |>
   formatters::var_relabel(SUBJECT = "Subject") |>
@@ -1437,19 +1650,19 @@ result <- rlistings::as_listing(
   disp_cols = "HEIGHT"
 )
 result <- set_titles(result, titles)
-
 ```
 
 ```{r superscript_listing_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 export_TLG_as_docx(result,
-                tblid = "examplelistingsuperscript2",
-                output_dir = out_dir,
-                orientation = "landscape",
-                markup_df_docx = docx_markup_df)
+  tblid = "examplelistingsuperscript2",
+  output_dir = out_dir,
+  orientation = "landscape",
+  markup_df_docx = docx_markup_df
+)
 ```
 ### Visual Output (HTML Representation)
 ```{r superscript_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "examplelistingsuperscript2", orientation = "landscape",  markup_df_docx = docx_markup_df)
+tt_to_flextable_j(result, "examplelistingsuperscript2", orientation = "landscape", markup_df_docx = docx_markup_df)
 ```
 
 
@@ -1486,15 +1699,15 @@ adae <- pharmaverseadamjnj::adae %>%
   select(USUBJID, TRTEMFL, AEBODSYS, AEDECOD, RACE)
 
 adsl$colspan_trt <- factor(ifelse(adsl[[trtvar]] == "Placebo", " ", "Active Study Agent"),
-                           levels = c("Active Study Agent", " ")
+  levels = c("Active Study Agent", " ")
 )
 
 colspan_trt_map <- create_colspan_map(adsl,
-                                      non_active_grp = "Placebo",
-                                      non_active_grp_span_lbl = " ",
-                                      active_grp_span_lbl = "Active Study Agent",
-                                      colspan_var = "colspan_trt",
-                                      trt_var = trtvar
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = trtvar
 )
 
 # Add total for Race - adsl
@@ -1516,7 +1729,7 @@ adsl <- adsl %>%
   select(-RACE)
 
 adsl$spanheader <- factor(ifelse(adsl$RACEcat == "Total", " ", "Race"),
-                          levels = c(" ", "Race")
+  levels = c(" ", "Race")
 )
 
 adsl$RACEcat <- factor(adsl$RACEcat, levels = c("Total", "White", "Black", "Asian", "Other"))
@@ -1548,15 +1761,16 @@ ae <- left_join(adsl, adae, by = c("USUBJID", "RACEcat"))
 # Define layout and build table:
 ################################################################################
 
-extra_args_1 <- list(denom = "n_altdf",
-                     .stats = c("count_unique_fraction")
+extra_args_1 <- list(
+  denom = "n_altdf",
+  .stats = c("count_unique_fraction")
 )
 
 
-extra_args_2 <- list(denom = "n_altdf",
-                     .stats = c("count_unique")
+extra_args_2 <- list(
+  denom = "n_altdf",
+  .stats = c("count_unique")
 )
-
 
 
 lyt <- basic_table(
@@ -1572,37 +1786,44 @@ lyt <- lyt %>%
   split_cols_by("spanheader", split_fun = trim_levels_in_group("RACEcat")) %>%
   split_cols_by("RACEcat") %>%
   analyze(popfl,
-          afun = a_freq_j,
-          show_labels = "hidden",
-          section_div = c(" "),
-          extra_args = append(extra_args_2,
-                              list(
-                                label = "Analysis set: Safety",
-                                val = "Y",
-                                section_div = c(" ")))
+    afun = a_freq_j,
+    show_labels = "hidden",
+    section_div = c(" "),
+    extra_args = append(
+      extra_args_2,
+      list(
+        label = "Analysis set: Safety",
+        val = "Y",
+        section_div = c(" ")
+      )
+    )
   ) %>%
   analyze("TRTEMFL",
-          afun = a_freq_j,
-          show_labels = "hidden",
-          extra_args = append(extra_args_1,
-                              list(label = "Subjects with >=1 AE",
-                                   val = "Y",
-                                   section_div = c(" ")))
+    afun = a_freq_j,
+    show_labels = "hidden",
+    extra_args = append(
+      extra_args_1,
+      list(
+        label = "Subjects with >=1 AE",
+        val = "Y",
+        section_div = c(" ")
+      )
+    )
   ) %>%
   split_rows_by("AEBODSYS",
-                split_label = "System Organ Class",
-                split_fun = trim_levels_in_group("AEDECOD"),
-                label_pos = "topleft",
-                section_div = c(" "),
-                nested = FALSE
+    split_label = "System Organ Class",
+    split_fun = trim_levels_in_group("AEDECOD"),
+    label_pos = "topleft",
+    section_div = c(" "),
+    nested = FALSE
   ) %>%
   summarize_row_groups("AEBODSYS",
-                       cfun = a_freq_j,
-                       extra_args = extra_args_1
+    cfun = a_freq_j,
+    extra_args = extra_args_1
   ) %>%
   analyze("AEDECOD",
-          afun = a_freq_j,
-          extra_args = extra_args_1
+    afun = a_freq_j,
+    extra_args = extra_args_1
   ) %>%
   append_topleft("  Preferred Term, n (%)")
 
@@ -1620,10 +1841,10 @@ result <- set_titles(result, titles)
 
 if (length(adae$TRTEMFL) != 0) {
   result <- sort_at_path(result, c("root", "AEBODSYS"),
-                         scorefun = jj_complex_scorefun(colpath = c("colspan_trt", "Active Study Agent", trtvar, "Xanomeline High Dose", "spanheader", " ", "RACEcat", "Total"))
+    scorefun = jj_complex_scorefun(colpath = c("colspan_trt", "Active Study Agent", trtvar, "Xanomeline High Dose", "spanheader", " ", "RACEcat", "Total"))
   )
   result <- sort_at_path(result, c("root", "AEBODSYS", "*", "AEDECOD"),
-                         scorefun = jj_complex_scorefun(colpath = c("colspan_trt", "Active Study Agent", trtvar, "Xanomeline High Dose", "spanheader", " ", "RACEcat", "Total"))
+    scorefun = jj_complex_scorefun(colpath = c("colspan_trt", "Active Study Agent", trtvar, "Xanomeline High Dose", "spanheader", " ", "RACEcat", "Total"))
   )
 }
 ```
@@ -1634,18 +1855,18 @@ By default, the `junco::tt_to_tlgrtf` function determines the appropriate place 
 ################################################################################
 # Convert to tbl file and output table
 ################################################################################
-
 ```
 
 ```{r multiple_docs_table1_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-tt_to_tlgrtf(string_map = string_map, tt = result,
-             file = paste0(out_dir, "/aetablemultipledocs1"), orientation = "landscape"
+tt_to_tlgrtf(
+  string_map = string_map, tt = result,
+  file = paste0(out_dir, "/aetablemultipledocs1"), orientation = "landscape"
 )
 ```
 
 ### Visual Output (HTML Representation)
 ```{r multiple_docs_table1_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs1", orientation = "landscape", paginate= TRUE)
+x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs1", orientation = "landscape", paginate = TRUE)
 x[[1]]
 knitr::asis_output("<br><br>")
 x[[2]]
@@ -1657,44 +1878,48 @@ When calling the `junco::tt_to_tlgrtf` function, the `nosplitin` argument can be
 ################################################################################
 # Convert to tbl file and output table
 ################################################################################
-
 ```
 
 ```{r multiple_docs_table2_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-tt_to_tlgrtf(string_map = string_map, tt = result,
-             file = paste0(out_dir, "/aetablemultipledocs2"), orientation = "landscape",
-             nosplitin = list(cols = c(trtvar))
+tt_to_tlgrtf(
+  string_map = string_map, tt = result,
+  file = paste0(out_dir, "/aetablemultipledocs2"), orientation = "landscape",
+  nosplitin = list(cols = c(trtvar))
 )
 ```
 
 ### Visual Output (HTML Representation)
 ```{r multiple_docs_table2_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs2", orientation = "landscape",
-                  nosplitin = list(cols = c(trtvar)), paginate= TRUE)
+x <- tt_to_flextable_j(
+  string_map = string_map, tt = result, "aetablemultipledocs2", orientation = "landscape",
+  nosplitin = list(cols = c(trtvar)), paginate = TRUE
+)
 x[[1]]
 knitr::asis_output("<br><br>")
 x[[2]]
 knitr::asis_output("<br><br>")
 x[[3]]
 knitr::asis_output("<br><br>")
-
 ```
 
 If there is a need to provide a single .rtf file that contains the multiple “part” .rtf files, then the `junco::tt_to_tlgrtf` function can be called with the "combined_rtf" argument included with a value of "TRUE". In this case, both the multiple "part" .rtf files and the single .rtf file with all "parts" appended will be created.
 
 
 ```{r multiple_docs_table3_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-tt_to_tlgrtf(string_map = string_map, tt = result,
-             file = paste0(out_dir, "/aetablemultipledocs3"), orientation = "landscape",
-             nosplitin = list(cols = c(trtvar)),
-             combined_rtf = TRUE
+tt_to_tlgrtf(
+  string_map = string_map, tt = result,
+  file = paste0(out_dir, "/aetablemultipledocs3"), orientation = "landscape",
+  nosplitin = list(cols = c(trtvar)),
+  combined_rtf = TRUE
 )
 ```
 
 ### Visual Output (HTML Representation)
 ```{r multiple_docs_table3_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs3", orientation = "landscape",
-                  nosplitin = list(cols = c(trtvar)), combined_rtf = TRUE, paginate = TRUE)
+x <- tt_to_flextable_j(
+  string_map = string_map, tt = result, "aetablemultipledocs3", orientation = "landscape",
+  nosplitin = list(cols = c(trtvar)), combined_rtf = TRUE, paginate = TRUE
+)
 x[[1]]
 knitr::asis_output("<br><br>")
 x[[2]]
@@ -1711,50 +1936,67 @@ It is sometimes necessary to insert page breaks into tables, to indicate that a 
 ```{r page_break_table}
 library(junco)
 
-adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo",
-                                     "Example Drug 5 mg",
-                                     "Example Drug 10 mg",
-                                     "Example Drug 20 mg",
-                                     "Placebo"),
-                                   levels = c("Example Drug 5 mg",
-                                              "Example Drug 10 mg",
-                                              "Example Drug 20 mg",
-                                              "Placebo"
-                                              )
-                              ),
-                   USUBJID = c("1",
-                               "2",
-                               "3",
-                               "4",
-                               "5",
-                               "6",
-                               "7",
-                               "8"),
-                   RESPONSE = factor(c("Yes",
-                                       "No",
-                                       "Yes",
-                                       "Yes",
-                                       "Yes",
-                                       "No",
-                                       "Yes",
-                                       "No"),
-                                     levels = c("Yes",
-                                                "No")
-                              ),
-                   SEX = factor(c("Male",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Female",
-                                  "Male",
-                                  "Female",
-                                  "Male"),
-                                levels = c("Male",
-                                           "Female")
-                           )
+adsl <- data.frame(
+  TRT01A = factor(
+    c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo",
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    ),
+    levels = c(
+      "Example Drug 5 mg",
+      "Example Drug 10 mg",
+      "Example Drug 20 mg",
+      "Placebo"
+    )
+  ),
+  USUBJID = c(
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ),
+  RESPONSE = factor(
+    c(
+      "Yes",
+      "No",
+      "Yes",
+      "Yes",
+      "Yes",
+      "No",
+      "Yes",
+      "No"
+    ),
+    levels = c(
+      "Yes",
+      "No"
+    )
+  ),
+  SEX = factor(
+    c(
+      "Male",
+      "Female",
+      "Male",
+      "Female",
+      "Female",
+      "Male",
+      "Female",
+      "Male"
+    ),
+    levels = c(
+      "Male",
+      "Female"
+    )
+  )
 ) |>
   var_relabel(RESPONSE = "Response")
 
@@ -1764,34 +2006,36 @@ lyt <- basic_table(
 ) |>
   ### first columns
   split_cols_by("TRT01A",
-                show_colcounts = FALSE
+    show_colcounts = FALSE
   ) |>
   ### create table body row sections based on SEX
   split_rows_by("SEX",
-                section_div = c(" "),
-                page_by = TRUE,
-                split_fun = drop_split_levels
-                ) |>
+    section_div = c(" "),
+    page_by = TRUE,
+    split_fun = drop_split_levels
+  ) |>
   summarize_row_groups("SEX",
-                       cfun =a_freq_j,
-                       extra_args = list(denom = "n_df",
-                                         denom_by = "SEX",
-                                         riskdiff = FALSE,
-                                         extrablankline = TRUE,
-                                         .stats = c("count_unique")
-                                         )
-                       ) |>
+    cfun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      extrablankline = TRUE,
+      .stats = c("count_unique")
+    )
+  ) |>
   ### analyze height
   analyze("RESPONSE",
-          var_labels = c("Response"),
-          show_labels = "visible",
-          afun = a_freq_j,
-          extra_args = list(denom = "n_df",
-                            denom_by = "SEX",
-                            riskdiff = FALSE,
-                            .stats = c("count_unique_fraction")
-                            )
-          )
+    var_labels = c("Response"),
+    show_labels = "visible",
+    afun = a_freq_j,
+    extra_args = list(
+      denom = "n_df",
+      denom_by = "SEX",
+      riskdiff = FALSE,
+      .stats = c("count_unique_fraction")
+    )
+  )
 
 result <- build_table(lyt, adsl)
 result <- set_titles(result, titles)
@@ -1799,7 +2043,8 @@ result <- set_titles(result, titles)
 
 ```{r page_break_table_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 tt_to_tlgrtf(result,
-             file = paste0(out_dir, "/examplepagebreak"))
+  file = paste0(out_dir, "/examplepagebreak")
+)
 ```
 
 ### Visual Output (HTML Representation)
@@ -1812,7 +2057,6 @@ knitr::asis_output("<br><br>")
 
 
 ```{r page_break_table_display_part2, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-
 female <- result[6:10, keep_titles = TRUE, keep_footers = TRUE]
 tt_to_flextable_j(female, "examplepagebreak")
 ```
@@ -1826,19 +2070,25 @@ The `junco::tt_to_tlgrtf` function can be called multiple times to produce multi
 library(junco)
 library(rlistings)
 
-adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
-                              "Example Drug 10 mg",
-                              "Example Drug 20 mg",
-                              "Placebo"),
-                   SUBJECT = c("1",
-                               "2",
-                               "3",
-                               "4"),
-                   HEIGHT = c(70,
-                              74,
-                              60,
-                              64
-                   )
+adsl <- data.frame(
+  TRT01A = c(
+    "Example Drug 5 mg",
+    "Example Drug 10 mg",
+    "Example Drug 20 mg",
+    "Placebo"
+  ),
+  SUBJECT = c(
+    "1",
+    "2",
+    "3",
+    "4"
+  ),
+  HEIGHT = c(
+    70,
+    74,
+    60,
+    64
+  )
 ) |>
   formatters::var_relabel(TRT01A = "Actual Treatment for Period 01~[super a]") |>
   formatters::var_relabel(SUBJECT = "Subject") |>
@@ -1867,7 +2117,6 @@ tt_to_tlgrtf(result1,
 The `junco::export_TLG_as_docx` function can be called multiple times to produce multiple .docx files, similar to the approach used for .rtf files:
 
 ```{r split_listing_docx_part1_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-
 export_TLG_as_docx(result1,
   tblid = "examplelistingmultiplefilesPART1OF2",
   output_dir = out_dir,
@@ -1878,13 +2127,13 @@ export_TLG_as_docx(result1,
 ### Visual Output (HTML Representation)
 ```{r split_listing_part1_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result1, "examplelistingmultiplefilesPART1OF2",
-  orientation = "landscape")
+  orientation = "landscape"
+)
 ```
 
 ### Listing .rtf File 2
 
 ```{r split_listing_part2}
-
 keep <- result$TRT01A %in% c("Example Drug 20 mg", "Placebo")
 
 result2 <- result[keep, ]
@@ -1900,7 +2149,6 @@ tt_to_tlgrtf(result2,
 
 ### Listing .docx File 2
 ```{r split_listing_docx_part2_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-
 export_TLG_as_docx(result2,
   tblid = "examplelistingmultiplefilesPART2OF2",
   output_dir = out_dir,
@@ -1911,5 +2159,6 @@ export_TLG_as_docx(result2,
 ### Visual Output (HTML Representation)
 ```{r split_listing_part2_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result2, "examplelistingmultiplefilesPART2OF2",
-  orientation = "landscape")
+  orientation = "landscape"
+)
 ```
