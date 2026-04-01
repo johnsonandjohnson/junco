@@ -1,10 +1,10 @@
 test_that("h_get_mult_adj_estimates works as expected", {
   vars <- list(
-      response = "FEV1",
-      id = "USUBJID",
-      arm = "RACE",
-      visit = "AVISIT"
-    )
+    response = "FEV1",
+    id = "USUBJID",
+    arm = "RACE",
+    visit = "AVISIT"
+  )
   conf_level <- 0.95
   weights <- "counterfactual"
   fit <- mmrm::mmrm(
@@ -21,6 +21,6 @@ test_that("h_get_mult_adj_estimates works as expected", {
     mult_adj = "dunnett",
     conf_level = conf_level,
     contrast_df = contrast_estimates$df
-  )  
+  )
   expect_snapshot_value(result, style = "deparse")
 })

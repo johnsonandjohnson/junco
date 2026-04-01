@@ -143,7 +143,7 @@ build_formula <- function(
 #'
 #' @note This is modified from `tern.mmrm` and has the additional `mult_adj` argument.
 #' @export
-get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(), 
+get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
   mult_adj = c("none", "dunnett", "step-down-dunnett")
 ) {
   checkmate::assert_class(fit, "mmrm")
@@ -175,7 +175,7 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
     average_contrasts <- h_get_spec_visit_estimates(emmeans_res, average_contrast_specs, conf_level, tests = TRUE)
     contrast_estimates <- rbind(contrast_estimates, average_contrasts)
   }
-  
+
   if (mult_adj != "none") {
     # We just calculate the adjusted p-values and confidence intervals here and replace them
     # in the contrast_estimates data frame. The estimates and t-stats remain unchanged.
@@ -197,7 +197,12 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
   contrast_estimates <- merge(contrast_estimates, relative_reduc_df, by = c(vars$arm, vars$visit), sort = FALSE)
   contrast_estimates[[vars$arm]] <- factor(contrast_estimates[[vars$arm]])
   contrast_estimates[[vars$visit]] <- factor(contrast_estimates[[vars$visit]])
-  structure(list(estimates = estimates, contrasts = contrast_estimates), averages = averages, weights = weights, mult_adj = mult_adj)
+  structure(
+    list(estimates = estimates, contrasts = contrast_estimates),
+    averages = averages,
+    weights = weights,
+    mult_adj = mult_adj
+  )
 }
 
 #' `MMRM` Analysis
@@ -228,7 +233,7 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
 #'   and reported along side the single visits.
 #' @param weights_emmeans (`string`)\cr argument from [emmeans::emmeans()], `'counterfactual'` by default.
 #' @param mult_adj_emmeans (`string`)\cr whether to multiplicity adjust LS means contrast p-values and
-#'   confidence intervals within visits when there are more than 2 treatment arms. Note that this cannot 
+#'   confidence intervals within visits when there are more than 2 treatment arms. Note that this cannot
 #'   be combined with `averages_emmeans`. Either "none", "dunnett" or "step-down-dunnett".
 #' @param ... additional arguments for [mmrm::mmrm()], in particular `reml` and options listed in
 #'   [mmrm::mmrm_control()].
@@ -279,7 +284,7 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
 #' @note This function has the `_j` suffix to distinguish it from [mmrm::fit_mmrm()].
 #'   It is modified from the `tern.mmrm` package.
 #'   The new feature is the `mult_adj_emmeans` argument and its functionality. This could later
-#'   be contributed upstream in `tern.mmrm`.   
+#'   be contributed upstream in `tern.mmrm`.
 #'
 #' @examples
 #' mmrm_results <- fit_mmrm_j(
