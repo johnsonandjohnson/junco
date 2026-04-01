@@ -65,7 +65,7 @@ elements \code{coefs} (coefficient list) and \code{grid} (corresponding \code{da
 \item{estimates}{(\code{data.frame})\cr single visit least square mean estimates.}
 
 \item{contrast_df}{(\code{numeric})
-degrees of freedom from the unadjusted contrast estimates, used to derive
+Degrees of freedom from the unadjusted contrast estimates, used to derive
 a single df for \code{\link[emmeans:glht-support]{emmeans::as.glht()}}.}
 }
 \description{
@@ -93,8 +93,8 @@ relative reduction vs. reference arm based on single visit estimates.
 \item \code{h_average_visit_contrast_specs()}: constructs average visits contrast specifications,
 given the \code{specs} for single visit contrasts and the averages required.
 
-\item \code{h_get_mult_adj_estimates()}: computes multiplicity-adjusted p-values and
-confidence intervals for contrasts (treatment vs. reference) using \code{multcomp}.
+\item \code{h_get_mult_adj_estimates()}: Computes multiplicity-adjusted p-values and
+confidence intervals for treatment-vs-reference contrasts using \code{multcomp}.
 Returns a \code{data.frame} with the arm and visit grid columns plus
 \code{p_value}, \code{p_value_less}, \code{p_value_greater}, \code{lower_cl}, and \code{upper_cl}.
 

@@ -210,13 +210,16 @@ h_average_visit_contrast_specs <- function(specs, averages) {
   list(coefs = overall_list, grid = grid)
 }
 
-#' @describeIn lsmeans_helpers computes multiplicity-adjusted p-values and
-#'   confidence intervals for contrasts (treatment vs. reference) using `multcomp`.
+#' @describeIn lsmeans_helpers Computes multiplicity-adjusted p-values and
+#'   confidence intervals for treatment-vs-reference contrasts using `multcomp`.
 #'   Returns a `data.frame` with the arm and visit grid columns plus
 #'   `p_value`, `p_value_less`, `p_value_greater`, `lower_cl`, and `upper_cl`.
+#'
 #' @param contrast_df (`numeric`)
-#'   degrees of freedom from the unadjusted contrast estimates, used to derive
+#'   Degrees of freedom from the unadjusted contrast estimates, used to derive
 #'   a single df for [emmeans::as.glht()].
+#'
+#' @export
 h_get_mult_adj_estimates <- function(emmeans_res, vars, mult_adj, conf_level, contrast_df) {
   checkmate::assert_list(emmeans_res)
   checkmate::assert_list(vars)
