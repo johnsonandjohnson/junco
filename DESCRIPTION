@@ -79,6 +79,7 @@ Suggests:
     readxl,
     rlang,
     tidyr,
-    pharmaverseadamjnj (>= 0.0.2)
+    pharmaverseadamjnj (>= 0.0.2),
+    multcomp
 VignetteBuilder: knitr
 Config/testthat/edition: 3
