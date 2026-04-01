@@ -167,29 +167,55 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
     stop("Multiplicity adjustment within visits cannot be combined with averages across visits")
   }
 
-  if (mult_adj == "none") {
-    contrast_specs <- h_single_visit_contrast_specs(emmeans_res, vars)
-    contrast_estimates <- h_get_spec_visit_estimates(emmeans_res, contrast_specs, conf_level, tests = TRUE)
-    if (length(averages)) {
-      average_contrast_specs <- h_average_visit_contrast_specs(contrast_specs, averages)
-      average_contrasts <- h_get_spec_visit_estimates(emmeans_res, average_contrast_specs, conf_level, tests = TRUE)
-      contrast_estimates <- rbind(contrast_estimates, average_contrasts)
-    }
-  } else {
-    emmeans_res <- emmeans::emmeans(fit, data = stats::model.frame(fit), ~ RACE | AVISIT, weights = weights)
+  contrast_specs <- h_single_visit_contrast_specs(emmeans_res, vars)
+  contrast_estimates <- h_get_spec_visit_estimates(emmeans_res, contrast_specs, conf_level, tests = TRUE)
+
+  if (length(averages)) {
+    average_contrast_specs <- h_average_visit_contrast_specs(contrast_specs, averages)
+    average_contrasts <- h_get_spec_visit_estimates(emmeans_res, average_contrast_specs, conf_level, tests = TRUE)
+    contrast_estimates <- rbind(contrast_estimates, average_contrasts)
+  }
+  
+  if (mult_adj != "none") {
+    # We just calculate the adjusted p-values and confidence intervals here and replace them
+    # in the contrast_estimates data frame. The estimates and t-stats remain unchanged.
     emmeans_conts <- emmeans::contrast(
-      emmeans_res, 
+      emmeans_res$object, 
       method = "trt.vs.ctrl", 
-      by = vars$visit
+      by = vars$visit,
+      adjust = "none" # To avoid a note below. Does not matter.
     )
     if (!require("multcomp")) {
       stop("please install multcomp for multiplicity adjustment")
     }
-    glht_conts <- emmeans::as.glht(emmeans_conts)
-    # Currently fails with 
-    # no ‘vcov’ method for ‘model’ found!
+    glht_type <- switch(mult_adj,
+      dunnett = "single-step",
+      `step-down-dunnett` = "free" 
+    )
+    glht_test <- multcomp::adjusted(type = glht_type)
+    # We need a single df for the as.glht below. We give it explicitly to avoid a message.
+    glht_df <- floor(mean(contrast_estimates$df, na.rm = TRUE))
     
-    # TODO cont here
+    glht_conts_greater <- emmeans::as.glht(emmeans_conts, df = glht_df, alternative = "greater")
+    glht_summary_greater <- summary(glht_conts_greater, test = glht_test)   
+    pvals_greater <- do.call(c, lapply(glht_summary_greater, function(x) x$test$pvalues))
+
+    glht_conts_lower <- emmeans::as.glht(emmeans_conts, df = glht_df, alternative = "less")
+    glht_summary_lower <- summary(glht_conts_lower, test = glht_test)   
+    pvals_lower <- do.call(c, lapply(glht_summary_lower, function(x) x$test$pvalues))
+
+    glht_conts <- emmeans::as.glht(emmeans_conts, df = glht_df, alternative = "two.sided")
+    glht_summary <- summary(glht_conts, test = glht_test)   
+    pvals <- do.call(c, lapply(glht_summary, function(x) x$test$pvalues))
+
+    glht_ci <- stats::confint(glht_conts, level = conf_level)
+    glht_ci_matrix <- do.call(rbind, lapply(glht_ci, function(x) x$confint[, c("lwr", "upr")]))
+
+    contrast_estimates$p_value <- pvals
+    contrast_estimates$p_value_less <- pvals_lower
+    contrast_estimates$p_value_greater <- pvals_greater
+    contrast_estimates$lower_cl <- glht_ci_matrix[, "lwr"]
+    contrast_estimates$upper_cl <- glht_ci_matrix[, "upr"]
   }
 
   relative_reduc_df <- h_get_relative_reduc_df(estimates, vars)
