@@ -83,14 +83,13 @@ check_wrap_nobreak <- function(tt, colwidths, fontspec) {
 #' @param lastcol_gap (`logical`)\cr Whether to include a gap after the last column
 #' @keywords internal
 smart_colwidths_1page <- function(
-  tt,
-  fontspec,
-  col_gap = 6L,
-  rowlabel_width = inches_to_spaces(2, fontspec),
-  print_width_ins = ifelse(landscape, 11, 8.5) - 2.12,
-  landscape = FALSE,
-  lastcol_gap = TRUE
-) {
+    tt,
+    fontspec,
+    col_gap = 6L,
+    rowlabel_width = inches_to_spaces(2, fontspec),
+    print_width_ins = ifelse(landscape, 11, 8.5) - 2.12,
+    landscape = FALSE,
+    lastcol_gap = TRUE) {
   total_cpp <- floor(inches_to_spaces(print_width_ins, fontspec = fontspec, raw = TRUE))
 
   nc <- ncol(tt)
@@ -157,14 +156,13 @@ pack_into_lines2 <- function(strs, wrdwidths = nchar_ttype(strs), colwidth, font
 }
 
 recursive_add_poss <- function(
-  wlst,
-  cur_lst,
-  ubnd_width,
-  lbnd_width,
-  ubnd_lines = calc_total_lns(wlst, fontspec = fontspec, colwidth = ubnd_width)$lines,
-  lbnd_lines = calc_total_lns(wlst, fontspec = fontspec, colwidth = lbnd_width)$lines,
-  fontspec
-) {
+    wlst,
+    cur_lst,
+    ubnd_width,
+    lbnd_width,
+    ubnd_lines = calc_total_lns(wlst, fontspec = fontspec, colwidth = ubnd_width)$lines,
+    lbnd_lines = calc_total_lns(wlst, fontspec = fontspec, colwidth = lbnd_width)$lines,
+    fontspec) {
   if (ubnd_width <= lbnd_width + 1 + sqrt(.Machine$double.eps)) {
     return(cur_lst)
   }
@@ -245,12 +243,11 @@ calc_poss_lines <- function(wlst, lbound, avail_spc, fontspec) {
 
 
 make_poss_wdf <- function(
-  mpf,
-  incl_header = FALSE,
-  col_gap = 3,
-  pg_width_ins = 8.88,
-  fontspec = font_spec("Times", 9, 1.2)
-) {
+    mpf,
+    incl_header = FALSE,
+    col_gap = 3,
+    pg_width_ins = 8.88,
+    fontspec = font_spec("Times", 9, 1.2)) {
   newdev <- open_font_dev(fontspec)
   if (newdev) {
     on.exit(close_font_dev())
@@ -299,13 +296,12 @@ make_poss_wdf <- function(
 #' @rdname def_colwidths
 #' @export
 listing_column_widths <- function(
-  mpf,
-  incl_header = TRUE,
-  col_gap = 0.5,
-  pg_width_ins = 8.88,
-  fontspec = font_spec("Times", 8, 1.2),
-  verbose = FALSE
-) {
+    mpf,
+    incl_header = TRUE,
+    col_gap = 0.5,
+    pg_width_ins = 8.88,
+    fontspec = font_spec("Times", 8, 1.2),
+    verbose = FALSE) {
   newdev <- open_font_dev(fontspec)
   if (newdev) {
     on.exit(close_font_dev())

@@ -261,12 +261,10 @@ cond_rm_facets <- function(
     torm_ind <- find_torm(ret, facets, facets_regex, keep_matches = keep_matches)
     fct_abbrev <- ifelse(is.null(facets_regex), paste(facets, collapse = ", "), facets_regex)
     split_match <- .check_rem_cond(
-      split, split_regex, .spl_context, ancestor_pos,
-      type = "split"
+      split, split_regex, .spl_context, ancestor_pos, type = "split"
     )
     value_match <- .check_rem_cond(
-      value, value_regex, .spl_context, ancestor_pos,
-      type = "value"
+      value, value_regex, .spl_context, ancestor_pos, type = "value"
     )
     if (split_match && value_match) {
       no_rm_msg <- paste0(

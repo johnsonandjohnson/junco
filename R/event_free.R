@@ -41,14 +41,13 @@ NULL
 #' )
 #' @order 3
 s_event_free <- function(
-  df,
-  .var,
-  time_point,
-  time_unit,
-  is_event,
-  percent = FALSE,
-  control = control_surv_timepoint()
-) {
+    df,
+    .var,
+    time_point,
+    time_unit,
+    is_event,
+    percent = FALSE,
+    control = control_surv_timepoint()) {
   checkmate::assert_string(time_unit, min.chars = 1L)
   start <- s_surv_timepoint(
     df = df,

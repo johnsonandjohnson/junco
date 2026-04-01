@@ -49,13 +49,12 @@
 #'
 #' colspan_var
 create_colspan_var <- function(
-  df,
-  non_active_grp = c("Placebo"),
-  non_active_grp_span_lbl = " ",
-  active_grp_span_lbl = "Active Study Agent",
-  colspan_var = "colspan_trt",
-  trt_var = "TRT01A"
-) {
+    df,
+    non_active_grp = c("Placebo"),
+    non_active_grp_span_lbl = " ",
+    active_grp_span_lbl = "Active Study Agent",
+    colspan_var = "colspan_trt",
+    trt_var = "TRT01A") {
   # Create a new column with the specified name using base R
   df[[colspan_var]] <- factor(
     ifelse(df[[trt_var]] %in% non_active_grp, non_active_grp_span_lbl, active_grp_span_lbl),
@@ -103,14 +102,13 @@ create_colspan_var <- function(
 #'
 #' colspan_map
 create_colspan_map <- function(
-  df,
-  non_active_grp = c("Placebo"),
-  non_active_grp_span_lbl = " ",
-  active_grp_span_lbl = "Active Study Agent",
-  colspan_var = "colspan_trt",
-  trt_var = "TRT01A",
-  active_first = TRUE
-) {
+    df,
+    non_active_grp = c("Placebo"),
+    non_active_grp_span_lbl = " ",
+    active_grp_span_lbl = "Active Study Agent",
+    colspan_var = "colspan_trt",
+    trt_var = "TRT01A",
+    active_first = TRUE) {
   act_trtlv <- setdiff(levels(df[[trt_var]]), non_active_grp)
   act_map_df <- data.frame(a = active_grp_span_lbl, b = act_trtlv)
   nact_map_df <- data.frame(a = non_active_grp_span_lbl, b = non_active_grp)

@@ -251,6 +251,7 @@ test_that("Check aeir100 numbers are giving expected result when occ_dy argument
 })
 
 test_that("Check aeir100 numbers are giving expected result relative risk in combined facet is available", {
+
   colspan_trt_map <- create_colspan_map(
     adsl,
     non_active_grp = ctrl_grp,
@@ -259,15 +260,16 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
     colspan_var = "colspan_trt",
     trt_var = trtvar
   )
-
-
+  
+  
+  
   # Set up levels and label for the required combined columns
   comb_group <- setdiff(unique(adsl[[trtvar]]), ctrl_grp)
   add_combo <- add_combo_facet("Combined",
-    label = "Combined",
-    levels = comb_group
+                               label = "Combined",
+                               levels = comb_group
   )
-
+  
   # choose if any facets need to be removed - e.g remove the combined column for placebo
   rm_combo_from_placebo <- cond_rm_facets(
     facets = "Combined",
@@ -275,8 +277,8 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
     value = " ",
     split = "colspan_trt"
   )
-
-  mysplit_comb <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))
+  
+  mysplit_comb <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))  
 
   # choose if any facets need to be removed - e.g remove the combined column for placebo
   rm_combo_from_placebo2 <- cond_rm_facets(
@@ -286,16 +288,16 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
     split = "rrisk_header"
   )
   add_combo2 <- add_combo_facet("Combined",
-    label = paste0("Combined vs ", ctrl_grp),
-    levels = comb_group
+                                label = paste0("Combined vs ", ctrl_grp),
+                                levels = comb_group
   )
-
+  
   mysplit_comb2 <- make_split_fun(post = list(add_combo2, rm_combo_from_placebo2))
-
+  
   ################################################################################
   # Define layout and build table:
   ################################################################################
-
+  
   lyt <- basic_table(
     show_colcounts = TRUE,
     colcount_format = "N=xx",
@@ -332,22 +334,22 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
       )
     ) %>%
     append_topleft("Preferred Term, EAIR Per 100 SY")
-
-
+  
+  
   result <- build_table(lyt, adae, alt_counts_df = adsl)
   result
 
   ################################################################################
   # actual comparison testthat code
   ################################################################################
-  # get numbers from single sel_AEDECOD, like dcd A.1.1.1.1, selected treatment group
-  eair_numbers <- function(adae, adsl, sel_AEDECOD, comb_group) {
+ # get numbers from single sel_AEDECOD, like dcd A.1.1.1.1, selected treatment group
+  eair_numbers <- function(adae, adsl, sel_AEDECOD, comb_group){
     adae_onecode <- adae |>
       filter(AEDECOD == sel_AEDECOD & !is.na(AOCCPFL)) |>
       select(USUBJID, AEDECOD, AOCCPFL, ASTDY)
-
+    
     adae_sub <- left_join(adsl, adae_onecode, by = "USUBJID")
-
+  
     adae_sub <- adae_sub |>
       filter(!!rlang::sym(trtvar) %in% comb_group) |>
       arrange(USUBJID, AEDECOD, ASTDY) |>
@@ -355,9 +357,9 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
       slice(1) |>
       ungroup() |>
       mutate(EXP_TIME = if_else(!is.na(ASTDY), (ASTDY / 365.25), TRTDURY))
-
+    
     total_exp_years <- sum(adae_sub$EXP_TIME)
-
+    
     adae_sub2 <- adae |>
       filter(
         AEDECOD == sel_AEDECOD & !!rlang::sym(trtvar) %in% comb_group & !is.na(AOCCPFL)
@@ -365,16 +367,15 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
       group_by(USUBJID) |>
       slice(1) |>
       ungroup()
-
+    
     number_with_event <- nrow(adae_sub2)
-
+    
     expected <- (100 * number_with_event) / total_exp_years
-
-    list(
-      count = number_with_event,
-      texpy = total_exp_years,
-      eair = (100 * number_with_event) / total_exp_years
-    )
+    
+    list(count = number_with_event,
+         texpy = total_exp_years,
+         eair =  (100 * number_with_event) / total_exp_years
+         )
   }
 
   # dcd A.1.1.1.1 is the second row in the result object
@@ -383,22 +384,22 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
 
   eair_numbers_comb <- eair_numbers(adae, adsl, "dcd A.1.1.1.1", comb_group)
   eair_numbers_ctrl <- eair_numbers(adae, adsl, "dcd A.1.1.1.1", ctrl_grp)
-
-  rdiff_eair <- function(eair_numbers_comb,
+  
+  rdiff_eair <- function(eair_numbers_comb, 
                          eair_numbers_ctrl, conf_level = 0.95) {
     rdiff <- eair_numbers_comb[["eair"]] - eair_numbers_ctrl[["eair"]]
-    sd <- sqrt(eair_numbers_comb[["count"]] / eair_numbers_comb[["texpy"]]^2 +
-      eair_numbers_ctrl[["count"]] / eair_numbers_ctrl[["texpy"]]^2) * 100
-
+    sd <- sqrt(eair_numbers_comb[["count"]]/ eair_numbers_comb[["texpy"]]^2 + 
+               eair_numbers_ctrl[["count"]]/ eair_numbers_ctrl[["texpy"]]^2) * 100
+    
     coeff <- stats::qnorm((1 + conf_level) / 2)
     lcl <- rdiff - (coeff * sd)
     ucl <- rdiff + (coeff * sd)
-
+    
     eair_diff <- c(rdiff, lcl, ucl)
   }
-
+  
   rdiff <- rdiff_eair(eair_numbers_comb, eair_numbers_ctrl)
-
+    
   # actual comparisons
   # eair for combined
   expect_equal(
@@ -406,14 +407,14 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
     eair_numbers_comb[["eair"]],
     ignore_attr = TRUE
   )
-
+    
   # eair for ctrl
   expect_equal(
     cell_values(actual_row[, 4])[[1]],
     eair_numbers_ctrl[["eair"]],
     ignore_attr = TRUE
   )
-
+    
   # diff in eair for combined vs ctrl
   expect_equal(
     cell_values(actual_row[, 7])[[1]],

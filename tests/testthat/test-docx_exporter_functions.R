@@ -4,6 +4,7 @@ library(rtables)
 library(ggplot2)
 
 
+
 options(docx.add_datetime = FALSE)
 
 adsl <- ex_adsl
@@ -133,6 +134,7 @@ testthat::test_that("tt_to_flextable_j() works fine with border_mat", {
   expected_res <- flx1$header$styles$cells$border.width.bottom$data
   expected_res[2, 4] <- 0.875
   testthat::expect_equal(flx2$header$styles$cells$border.width.bottom$data, expected_res)
+
 })
 
 testthat::test_that("tt_to_flextable_j() works fine with round_type", {
@@ -189,6 +191,7 @@ testthat::test_that("tt_to_flextable_j() works fine with round_type", {
 })
 
 testthat::test_that("tt_to_flextable_j() works fine with Listings", {
+
   lsting <- adae |>
     dplyr::select(USUBJID, AGE, SEX, RACE, ARM) |>
     dplyr::distinct() |>
@@ -281,6 +284,7 @@ testthat::test_that("remove_security_popup_page_numbers_XML() removes dirty='tru
 })
 
 testthat::test_that("after being saved as docx, the XML contains a node w:pStyle w:val='Caption'", {
+
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
 
   # nolint start
@@ -333,6 +337,7 @@ testthat::test_that("insert_footer_text() adds a footer line to a flextable", {
 })
 
 
+
 testthat::test_that("insert_title_as_header() adds the title correctly", {
   flx <- tt_to_flextable_j(tt = tbl1, tblid = "output ID")
   res <- insert_title_as_header(flx, "output id:this is a test title")
@@ -358,6 +363,7 @@ testthat::test_that("add_little_gap_bottom_borders_spanning_headers() works corr
 
 
 testthat::test_that("export_TLG_as_docx() works with pagination", {
+
   # create a TableTree with a few pages
   colspan_trt_map <- data.frame(
     colspan_trt = c("Active Study Agent", "Active Study Agent", " "),
@@ -493,6 +499,7 @@ testthat::test_that("export_TLG_as_docx() works with pagination", {
     paste0(output_dir, "/test1234part1of2.csv"),
     paste0(output_dir, "/test1234part2of2.csv")
   ))
+
 })
 
 testthat::test_that("export_TLG_as_docx() works with basic example", {

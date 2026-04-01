@@ -52,7 +52,7 @@ test_that("get_mmrm_lsmeans can adjust contrasts for multiplicity within visits"
   )
   conf_level <- 0.95
   weights <- "counterfactual"
-
+  
   result_dunnett <- get_mmrm_lsmeans(
     fit = fit,
     vars = vars,

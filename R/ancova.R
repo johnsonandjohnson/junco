@@ -50,11 +50,10 @@
 #' )
 #'
 fit_ancova <- function(
-  vars = list(response = "AVAL", covariates = c(), arm = "ARM", visit = "AVISIT", id = "USUBJID"),
-  data,
-  conf_level = 0.95,
-  weights_emmeans = "proportional"
-) {
+    vars = list(response = "AVAL", covariates = c(), arm = "ARM", visit = "AVISIT", id = "USUBJID"),
+    data,
+    conf_level = 0.95,
+    weights_emmeans = "proportional") {
   labels <- h_labels(vars, data)
 
   arm_levels <- levels(data[[vars$arm]])

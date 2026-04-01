@@ -1,3 +1,4 @@
+
 test_that("s_cmhrms_j works as expected with and without strata", {
   set.seed(12)
   nobs <- 100

@@ -15,6 +15,7 @@
 tt_to_tbldf <- function(
   tt,
   fontspec = font_spec("Times", 9L, 1),
+
   string_map = default_str_map,
   markup_df = dps_markup_df,
   round_type = obj_round_type(tt),
@@ -116,16 +117,12 @@ get_output_csv_filename <- function(output_csv_directory, fpath, fname) {
     output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
   } else if (!dir.exists(output_csv_directory)) {
     output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
-    message(
-      "Output dir for csv ", output_csv_directory,
-      " does not exist; csv will be saved as ",
-      output_csv_filename
-    )
+    message("Output dir for csv ", output_csv_directory,
+            " does not exist; csv will be saved as ",
+            output_csv_filename)
   } else {
-    output_csv_filename <- file.path(
-      output_csv_directory,
-      paste0(tolower(fname), ".csv")
-    )
+    output_csv_filename <- file.path(output_csv_directory,
+                                     paste0(tolower(fname), ".csv"))
     message("Saving csv as ", output_csv_filename)
   }
   return(output_csv_filename)
@@ -388,6 +385,7 @@ tt_to_tlgrtf <- function(
   output_csv_directory = NULL,
   ...
 ) {
+
   checkmate::assert_flag(export_csv)
   checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
 
@@ -729,6 +727,7 @@ tt_to_tlgrtf <- function(
   }
 
   if (!is.null(fname) && tlgtype == "Table" && is.data.frame(df) && export_csv) {
+
     output_csv_filename <- get_output_csv_filename(output_csv_directory, fpath, fname)
 
     utils::write.csv(

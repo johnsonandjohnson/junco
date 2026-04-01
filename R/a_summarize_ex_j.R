@@ -31,19 +31,18 @@ NULL
 #'    * covariates (character)\cr
 #' a vector that can contain single variable names (such as 'X1'), and/or interaction terms indicated by 'X1 * X2'.
 s_summarize_ex_j <- function(
-  df,
-  .var,
-  .df_row,
-  .spl_context,
-  comp_btw_group = TRUE,
-  ref_path = NULL,
-  ancova = FALSE,
-  interaction_y,
-  interaction_item,
-  conf_level,
-  daysconv,
-  variables
-) {
+    df,
+    .var,
+    .df_row,
+    .spl_context,
+    comp_btw_group = TRUE,
+    ref_path = NULL,
+    ancova = FALSE,
+    interaction_y,
+    interaction_item,
+    conf_level,
+    daysconv,
+    variables) {
   control <- control_analyze_vars()
   control$conf_level <- conf_level
   x_stats <- s_summary(df[[.var]], na.rm = TRUE, .var, control = control)
@@ -188,24 +187,23 @@ s_summarize_ex_j <- function(
 #' result
 #' @export
 a_summarize_ex_j <- function(
-  df,
-  .var,
-  .df_row,
-  .spl_context,
-  comp_btw_group = TRUE,
-  ref_path = NULL,
-  ancova = FALSE,
-  interaction_y = FALSE,
-  interaction_item = NULL,
-  conf_level = 0.95,
-  variables,
-  .stats = c("mean_sd", "median", "range", "quantiles", "total_subject_years"),
-  .formats = c(diff_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)")),
-  .labels = c(quantiles = "Interquartile range"),
-  .indent_mods = NULL,
-  na_str = rep("NA", 3),
-  daysconv = 1
-) {
+    df,
+    .var,
+    .df_row,
+    .spl_context,
+    comp_btw_group = TRUE,
+    ref_path = NULL,
+    ancova = FALSE,
+    interaction_y = FALSE,
+    interaction_item = NULL,
+    conf_level = 0.95,
+    variables,
+    .stats = c("mean_sd", "median", "range", "quantiles", "total_subject_years"),
+    .formats = c(diff_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)")),
+    .labels = c(quantiles = "Interquartile range"),
+    .indent_mods = NULL,
+    na_str = rep("NA", 3),
+    daysconv = 1) {
   if (!is.numeric(df[[.var]])) {
     stop("a_summarize_ex_j issue: input variable must be numeric.")
   }

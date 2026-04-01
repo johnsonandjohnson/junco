@@ -185,7 +185,7 @@ lsmeans_wide_cfun <- function(
 #' @details The functions [lsmeans_wide_first_split_fun_fct()], [lsmeans_wide_second_split_fun_fct()] and
 #'   [lsmeans_wide_cfun()] are also exported and can be used directly when the layout is slightly different (e.g.
 #'   contains additional subgroup row split).
-#'
+#' 
 #' @export
 #' @examples
 #' variables <- list(

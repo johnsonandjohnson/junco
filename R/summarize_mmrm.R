@@ -68,15 +68,14 @@ NULL
 #' @param ... eventually passed to [fit_mmrm_j()] via [h_summarize_mmrm()].
 #' @export
 s_summarize_mmrm <- function(
-  df,
-  .var,
-  variables,
-  ref_levels,
-  .spl_context,
-  alternative = c("two.sided", "less", "greater"),
-  show_relative = c("reduction", "increase"),
-  ...
-) {
+    df,
+    .var,
+    variables,
+    ref_levels,
+    .spl_context,
+    alternative = c("two.sided", "less", "greater"),
+    show_relative = c("reduction", "increase"),
+    ...) {
   alternative <- match.arg(alternative)
 
   checkmate::assert_list(variables, names = "unique")
@@ -173,15 +172,14 @@ s_summarize_mmrm <- function(
 #'   prune_table(all_zero)
 #' @export
 a_summarize_mmrm <- function(
-  df,
-  .var,
-  .spl_context,
-  ...,
-  .stats = NULL,
-  .formats = NULL,
-  .labels = NULL,
-  .indent_mods = NULL
-) {
+    df,
+    .var,
+    .spl_context,
+    ...,
+    .stats = NULL,
+    .formats = NULL,
+    .labels = NULL,
+    .indent_mods = NULL) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 
