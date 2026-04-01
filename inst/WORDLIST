@@ -19,7 +19,6 @@ JJCS
 Kaplan
 Lapply
 MMRM
-Optimality
 PARAMCD
 Parallelisation
 Parallelise
@@ -35,7 +34,6 @@ Toeplitz
 TrueType
 Unlist
 VTableTree
-Vectorized
 XLSX
 afun
 allparts
@@ -68,6 +66,7 @@ dfs
 dirname
 docx
 dps
+dunnett
 eg
 exprs
 firstcat
@@ -111,8 +110,6 @@ pseudocolumn
 px
 rbmi
 removerowtext
-repo
-reproducibility
 responder
 responders
 rlistings

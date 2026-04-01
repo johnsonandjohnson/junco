@@ -4,7 +4,14 @@
 \alias{get_mmrm_lsmeans}
 \title{Extract Least Square Means from \code{MMRM}}
 \usage{
-get_mmrm_lsmeans(fit, vars, conf_level, weights, averages = list())
+get_mmrm_lsmeans(
+  fit,
+  vars,
+  conf_level,
+  weights,
+  averages = list(),
+  mult_adj = c("none", "dunnett", "step-down-dunnett")
+)
 }
 \arguments{
 \item{fit}{(\code{mmrm})\cr result of \code{\link[mmrm:mmrm]{mmrm::mmrm()}}.}
@@ -31,11 +38,16 @@ see \code{\link[emmeans:emmeans]{emmeans::emmeans()}} for details.}
 
 \item{averages}{(\code{list})\cr named list of visit levels which should be averaged
 and reported along side the single visits.}
+
+\item{mult_adj}{(\code{string})\cr multiplicity adjustment within visits for the contrasts.}
 }
 \value{
 A list with data frames \code{estimates} and \code{contrasts}.
-The attributes \code{averages} and \code{weights} save the settings used.
+The attributes \code{averages}, \code{weights} and \code{mult_adj} save the settings used.
 }
 \description{
 Extracts the least square means from an \code{MMRM} fit.
+}
+\note{
+This is modified from \code{tern.mmrm} and has the additional \code{mult_adj} argument.
 }
