@@ -78,7 +78,6 @@ reference:
     - summarize_coxreg_multivar
     - summarize_lsmeans_wide
     - summarize_mmrm
-    - h_get_mult_adj_estimates
     - h_get_trtvar_refpath
     - rbmi_mmrm_single_info
     - rbmi_pool

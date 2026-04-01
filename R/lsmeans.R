@@ -218,8 +218,6 @@ h_average_visit_contrast_specs <- function(specs, averages) {
 #' @param contrast_df (`numeric`)
 #'   Degrees of freedom from the unadjusted contrast estimates, used to derive
 #'   a single df for [emmeans::as.glht()].
-#'
-#' @export
 h_get_mult_adj_estimates <- function(emmeans_res, vars, mult_adj, conf_level, contrast_df) {
   checkmate::assert_list(emmeans_res)
   checkmate::assert_list(vars)
