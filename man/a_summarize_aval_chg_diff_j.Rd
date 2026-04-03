@@ -27,7 +27,10 @@ a_summarize_aval_chg_diff_j(
     "xx.dx (xx.dx, xx.dx)"),
   .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx,
     coldiff = jjcsformat_xx),
-  multivars = c("AVAL", "AVAL", "CHG")
+  multivars = c("AVAL", "AVAL", "CHG"),
+  weights_emmeans = NULL,
+  method_combo = c("contrasts", "collapse"),
+  weights_combo = NULL
 )
 }
 \arguments{
@@ -107,6 +110,25 @@ statistics, to be applied after the conversion of \code{xx.d} style to the
 appropriate precision.}
 
 \item{multivars}{(\code{string(3)})\cr Variables names to use in 3-col layout.}
+
+\item{weights_emmeans}{(\code{string})\cr argument from \code{\link[emmeans:emmeans]{emmeans::emmeans()}}, \code{"counterfactual"} by default.}
+
+\item{method_combo}{(\code{string})\cr Method for derivations in combined column.
+\itemize{
+\item \code{contrast} Derivations for the combined level are done through contrasts from the original model
+(using weights per \code{weights_combo} specifications).
+\item \code{collapse} The ancova model for the combined group will be performed with group levels that contribute
+to the combination collapsed into a single combined level.
+}}
+
+\item{weights_combo}{(\code{string})\cr Weights for the contrasts of the combined levels.
+\itemize{
+\item \code{equal} 1/(number of levels from arm variable included in the combination)
+\item \code{proportional}, \code{proportional_marginal} weight for each level included in the combination is proportional to number of observations in that level
+\cr The difference between \code{proportional} and \code{proportional_marginal} is only relevant when the model includes an interaction between arm and other factor variable (\code{interaction_item}).
+\cr \code{proportional_marginal} interprets proportional over all levels of \code{interaction_item}, ie, the same weights will be used for all levels of \code{interaction_item}.
+\cr For \code{proportional} the weights will be derived within the requested level (\code{interaction_y}) for \code{interaction_item}.
+}}
 }
 \value{
 A function that can be used in an analyze function call
@@ -214,8 +236,6 @@ result <- build_table(lyt, ADEG)
 result
 }
 \seealso{
-s_summarize_ancova_j
-
 Other Inclusion of ANCOVA Functions: 
 \code{\link{a_summarize_ancova_j}()},
 \code{\link{s_ancova_j}()}
