@@ -25,7 +25,6 @@ tests/testthat/table.csv
 *.prof
 *.rprof
 *.diff
-./*.rtf
 programs_internal/*
 programs_external/*
 
