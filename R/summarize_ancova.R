@@ -42,6 +42,25 @@ h_ancova <- function(
   )
 }
 
+#' @noRd
+#' @title internal helpers for ancova
+#' @description Internal helper that derives adjusted means and contrasts for a single
+#' treatment level from an `emmeans` ANCOVA fit, optionally handling interaction
+#' terms and reference group contrasts.
+# 
+#' @param emmeans_fit (`emmGrid`)\cr
+#'   Object returned by [emmeans::emmeans()].
+#' @param sum_level (`character`)\cr
+#'   Single treatment level for which estimates are requested.
+#' @inheritParams tern::s_ancova
+#'
+#' @return A list with components:
+#' * `sum_fit_level`: summary statistics for the adjusted mean.
+#' * `sum_contrasts_level`: contrast estimates versus reference (if applicable).
+#' * `y`: observed response values used for `n`.
+#'
+#' @keywords internal
+
 h_ancova_est_single <- function(emmeans_fit,
                                 sum_level,
                                 interaction_y,
@@ -138,12 +157,35 @@ h_ancova_est_single <- function(emmeans_fit,
   ret
 }
 
-make_contrast_weights <- function(weight_mode = c("equal", "proportional"),
-                                  normalize = TRUE,
-                                  sum_fit,
+
+
+#' Internal utility to construct contrast weights across treatment levels,
+#' supporting equal or proportional weighting schemes.
+#' @noRd
+#' @param weight_mode (`character`)\cr
+#'   Weighting strategy: `"equal"` or `"proportional"`.
+#' @param normalize (`logical`)\cr
+#'   Whether to normalize weights to sum to 1.
+#' @param sum_fit (`data.frame`)\cr
+#'   Summary output from [emmeans::summary.emmGrid()].
+#' @param sum_levels (`character`)\cr
+#'   Treatment levels included in the combination.
+#' @param arm (`character`)\cr
+#'   Treatment arm variable name.
+#' @param data (`data.frame` | `NULL`)\cr
+#'   Dataset used to derive proportional weights.
+#'
+#' @return A named numeric vector of weights for all treatment levels.
+#'
+#' @keywords internal
+
+make_contrast_weights <- function(sum_fit,
                                   sum_levels,
                                   arm,
-                                  data) {
+                                  data,
+                                  weight_mode = c("equal", "proportional"),
+                                  normalize = TRUE
+                              ) {
   weight_mode <- match.arg(weight_mode)
   trt_levels <- levels(sum_fit[[arm]])
   # weights for contrast contains all trt_levels from sum_fit, not just the sum_levels
@@ -165,6 +207,22 @@ make_contrast_weights <- function(weight_mode = c("equal", "proportional"),
   w_all[names(w)] <- w[names(w)]
   w_all
 }
+
+
+
+#' Internal helper that derives adjusted means and contrasts for combined
+#' treatment levels using contrast-based weighting from an `emmeans` ANCOVA fit.
+#' @noRd
+#' @inheritParams tern::s_ancova
+#' @param weights_combo (`character`)\cr
+#'   Weighting method for combined contrasts.
+#'
+#' @return A list with components:
+#' * `sum_fit_level`: adjusted mean estimates for the combination.
+#' * `sum_contrasts_level`: contrast estimates versus reference.
+#' * `y`: observed response values used for `n`.
+#'
+#' @keywords internal
 
 h_ancova_est_combined <- function(emmeans_fit,
                                   sum_level,
@@ -237,15 +295,17 @@ h_ancova_est_combined <- function(emmeans_fit,
     w_start[["weights2"]][w_start[[interaction_item]] == interaction_y] <- w2
   }
 
-  contr <- emmeans::contrast(emmeans_fit, list(
-    setNames(list(w_start[["weights1"]]), "Estimate contrast"),
-    setNames(list(w_start[["weights2"]]), "Estimate contrast vs ref")
-  ),
-  # Derive confidence intervals, t-tests and p-values.
-  infer = TRUE,
-  # Do not adjust the p-values for multiplicity.
-  adjust = "none"
-  )
+  contr <- emmeans::contrast(
+    emmeans_fit,
+    list(
+      setNames(list(w_start[["weights1"]]), "Estimate contrast"),
+      setNames(list(w_start[["weights2"]]), "Estimate contrast vs ref")
+    ),
+    # Derive confidence intervals, t-tests and p-values.
+    infer = TRUE,
+    # Do not adjust the p-values for multiplicity.
+    adjust = "none")
+  
   contr_df <- as.data.frame(contr)
 
   contr_df[["emmeans"]] <- contr_df[["estimate"]]
@@ -360,7 +420,7 @@ s_ancova_j <- function(
   } else if (NROW(df) == 0 || n_obs_trt_lvls < 2) {
     ## all stats are NA
     ret <- list(
-      n = with_label(0, "n"),
+      n_fit = with_label(0, "n"),
       lsmean = with_label(NA, "Adjusted Mean"),
       lsmean_se = with_label(rep(NA, 2), "Adjusted Mean (SE)"),
       lsmean_ci = with_label(

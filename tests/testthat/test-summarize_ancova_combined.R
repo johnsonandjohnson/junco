@@ -20,7 +20,7 @@ iris_plus2 <- iris_plus |>
   ungroup()
 
 
-test_that("summarize_ancova cannot deal with a combined column", {
+test_that("tern function summarize_ancova cannot deal with a combined column", {
   model_variables <- list(arm = "Species", covariates = c("Color"))
   combodf <- tribble(
     ~valname, ~label, ~levelcombo, ~exargs,
@@ -56,6 +56,7 @@ test_that("summarize_ancova cannot deal with a combined column", {
 tbl_ancova_tern <- function(weights_emmeans = "proportional",
                             inputdf = iris_plus2,
                             interaction = TRUE) {
+# table does not include combined column as this is not possible for tern function summarize_ancova  
   if (!interaction) {
     model_variables <- list(arm = "Species", covariates = c("Color"))
 
@@ -433,147 +434,20 @@ compare_ancova_tbl <- function(tbl1,
 }
 
 
-expect_any_difference <- function(object, expected, ...) {
-  comp <- all.equal(object, expected, ...)
-  expect_false(
-    isTRUE(comp),
-    info = "Objects are identical; expected at least one difference"
-  )
-}
-
-
 #' actual tests starts here
 
-test_that("s_ancova_j works as expected in combined column for model with interaction 3 sets of weights_combo", {
-  model_variables <- list(arm = "Species", covariates = c("Color", "Species * Color"))
-  lm_fit <- stats::lm(formula = Sepal.Length ~ Species + Color + Species * Color, data = iris_plus2)
-
-  result_1 <- tbl_ancova_tern(
-    weights_emmeans = "equal",
-    inputdf = iris_plus2,
-    interaction = TRUE
-  )
-
-  result_1b <- tbl_ancova_tern(
-    weights_emmeans = "proportional",
-    inputdf = iris_plus2,
-    interaction = TRUE
-  )
-
-  # for this model, weights_emmeans has no effect for non-combo columns, as the model includes interaction between color and species
-  expect_equal(result_1, result_1b)
-  result_1
-
-  # results with combo column
-  result <- tbl_ancova_j(
-    weights_emmeans = "equal",
-    weights_combo = "equal",
-    inputdf = iris_plus2,
-    interaction = TRUE
-  )
-
-  result_b <- tbl_ancova_j(
-    weights_emmeans = "equal",
-    weights_combo = "proportional",
-    inputdf = iris_plus2,
-    interaction = TRUE
-  )
-
-  result_c <- tbl_ancova_j(
-    weights_emmeans = "equal",
-    weights_combo = "proportional_marginal",
-    inputdf = iris_plus2,
-    interaction = TRUE
-  )
-
-  result_d <- tbl_ancova_j(
-    weights_emmeans = "proportional",
-    weights_combo = "equal",
-    inputdf = iris_plus2,
-    interaction = TRUE
-  )
-
-  ### weights_combo have impact on combined column
-  ### weights_emmeans have no impact on combined column (as weights_combo has been decoupled from weights_emmeans)
-  expect_equal(result, result_d)
-  
-  expect_equal(result[, c(1:3)], result_b[, c(1:3)])
-  expect_equal(result[, c(1:3)], result_c[, c(1:3)])
-  
-  expect_any_difference(result[, c(4)], result_b[, c(4)])
-  expect_any_difference(result[, c(4)], result_c[, c(4)])
-
-  # confirm that non-combined columns match with results from tern::summarize_ancova
-  # compare_ancova_tbl heavily depends on the used model, updates to model would require detailed review of coefficients
-  summary_numbers <- compare_ancova_tbl(result_1,
-    result,
-    interaction = TRUE,
-    .lm_fit = lm_fit,
-    # equal weights for combo
-    weights_red = c(virginica = 0.5, setosa = 0.5),
-    weights_blue = c(virginica = 0.5, setosa = 0.5)
-  )
-
-
-  expect_equal(summary_numbers[["tbl1"]], summary_numbers[["tbl2"]])
-
-  # also match own derivations from model fit
-  limited <- list(
-    summary_numbers[["tbl1"]][[1]][1:2],
-    summary_numbers[["tbl1"]][[2]][1:2]
-  )
-  names(limited) <- names(summary_numbers[["tbl1"]])
-  expect_equal(limited, summary_numbers[["derived"]])
-
-  # confirm that combined column estimates match from model
-  expect_equal(summary_numbers[["tbl2_comb"]], summary_numbers[["comb_model"]])
-
-  ### repeat for weights_combo = "proportional" - focus on comb column only
-
-  w_red <- get_weights(bycolor = TRUE, "red")
-  w_blue <- get_weights(bycolor = TRUE, "blue")
-  print(w_red)
-  print(w_blue)
-
-  summary_numbers2 <- compare_ancova_tbl(result_1,
-    result_b,
-    interaction = TRUE,
-    .lm_fit = lm_fit,
-    weights_blue = w_blue,
-    weights_red = w_red
-  )
-
-  expect_equal(summary_numbers2[["tbl2_comb"]], summary_numbers2[["comb_model"]])
-
-  ### repeat for weights_combo = "proportional_marginal" - focus on comb column only
-  # bycolor FALSE is setting proportional_marginal, same weights for combo column derivation for both parts of the table
-
-  w_red <- get_weights(bycolor = FALSE, "red")
-  w_blue <- get_weights(bycolor = FALSE, "blue")
-  print(w_red)
-  print(w_blue)
-
-  summary_numbers3 <- compare_ancova_tbl(result_1,
-    result_c,
-    interaction = TRUE,
-    .lm_fit = lm_fit,
-    weights_blue = w_blue,
-    weights_red = w_red
-  )
-
-  expect_equal(summary_numbers3[["tbl2_comb"]], summary_numbers3[["comb_model"]])
-})
-
-test_that("s_ancova_j works as expected in combined column for model without interaction", {
+test_that("a_summarize_ancova_j (s_ancova_j) as expected in combined column for model without interaction", {
   model_variables <- list(arm = "Species", covariates = c("Color"))
   lm_fit <- stats::lm(formula = Sepal.Length ~ Species + Color, data = iris_plus2)
 
+  # core table from tern without combined column - equal weights when averaging over Color covariate
   result_1 <- tbl_ancova_tern(
     weights_emmeans = "equal",
     inputdf = iris_plus2,
     interaction = FALSE
   )
 
+  # core table from tern without combined column - proportional weights when averaging over Color covariate
   result_1b <- tbl_ancova_tern(
     weights_emmeans = "proportional",
     inputdf = iris_plus2,
@@ -586,6 +460,9 @@ test_that("s_ancova_j works as expected in combined column for model without int
   result_1b
   expect_any_difference(result_1, result_1b)
 
+  # table from junco afun a_summarize_ancova_j in layout with combined column
+  # - equal weights when averaging over Color covariate
+  # - equal weights when deriving estimates for Combined: setosa + virginica column 
   result <- tbl_ancova_j(
     weights_emmeans = "equal",
     weights_combo = "equal",
@@ -593,6 +470,9 @@ test_that("s_ancova_j works as expected in combined column for model without int
     interaction = FALSE
   )
 
+  # table from junco afun a_summarize_ancova_j in layout with combined column
+  # - equal weights when averaging over Color covariate
+  # - proportional weights when deriving estimates for Combined: setosa + virginica column 
   result_b <- tbl_ancova_j(
     weights_emmeans = "equal",
     weights_combo = "proportional",
@@ -600,6 +480,9 @@ test_that("s_ancova_j works as expected in combined column for model without int
     interaction = FALSE
   )
 
+  # - equal weights when averaging over Color covariate
+  # - proportional_marginal weights when deriving estimates for Combined: setosa + virginica column 
+  # proportional and proportional_marginal is the same when no interaction
   result_c <- tbl_ancova_j(
     weights_emmeans = "equal",
     weights_combo = "proportional_marginal",
@@ -607,6 +490,10 @@ test_that("s_ancova_j works as expected in combined column for model without int
     interaction = FALSE
   )
 
+  # - proportional weights when averaging over Color covariate
+  # - proportional_marginal weights when deriving estimates for Combined: setosa + virginica column 
+  # proportional and proportional_marginal is the same when no interaction
+  
   result_d <- tbl_ancova_j(
     weights_emmeans = "proportional",
     weights_combo = "equal",
@@ -614,13 +501,20 @@ test_that("s_ancova_j works as expected in combined column for model without int
     interaction = FALSE
   )
 
-  # proportional and proportional_marginal is the same when no interaction
+  # confirmation that proportional and proportional_marginal is the same when no interaction
   expect_equal(result_b, result_c)
   
+  # non combined columns are the same as original tern functions
   expect_equal(result[, c(1:3)], result_b[, c(1:3)])
   expect_equal(result[, c(1:3)], result_c[, c(1:3)])
+  # non combined column weight_emmeans not the same result in differences
   expect_any_difference(result[, c(1:3)], result_d[, c(1:3)])
   
+  # combined column : 4 weight methods yield different results
+  # result   : weights_emmeans = "equal" / weights_combo = "equal"
+  # result_b : weights_emmeans = "equal" / weights_combo = "proportional"
+  # result_c : weights_emmeans = "equal" / weights_combo = "proportional_marginal"
+  # result_d : weights_emmeans = "proportional" / weights_combo = "equal"
   expect_any_difference(result[, c(4)], result_b[, c(4)])
   expect_any_difference(result[, c(4)], result_c[, c(4)])
   expect_any_difference(result[, c(4)], result_d[, c(4)])
@@ -670,7 +564,7 @@ test_that("s_ancova_j works as expected in combined column for model without int
   expect_equal(summary_numbers2[["tbl2_comb"]], summary_numbers2[["comb_model"]])
 })
 
-test_that("s_ancova_j with a combined column but no method for weights_combo stops", {
+test_that("a_summarize_ancova_j (s_ancova_j) with a combined column but no method for weights_combo stops", {
   model_variables <- list(arm = "Species", covariates = c("Color"))
 
 
@@ -697,7 +591,7 @@ test_that("s_ancova_j with a combined column but no method for weights_combo sto
   
 })
 
-test_that("s_ancova_j with a combined column and method_combo = collapse", {
+test_that("a_summarize_ancova_j (s_ancova_j) with a combined column and method_combo = collapse", {
   model_variables <- list(arm = "Species", covariates = c("Color"))
   
   
@@ -747,3 +641,124 @@ test_that("s_ancova_j with a combined column and method_combo = collapse", {
   
   expect_equal(numbers_1, numbers_2)
 })
+
+test_that("a_summarize_ancova_j (s_ancova_j) works as expected in combined column for model with interaction 3 sets of weights_combo", {
+  model_variables <- list(arm = "Species", covariates = c("Color", "Species * Color"))
+  lm_fit <- stats::lm(formula = Sepal.Length ~ Species + Color + Species * Color, data = iris_plus2)
+  
+  result_1 <- tbl_ancova_tern(
+    weights_emmeans = "equal",
+    inputdf = iris_plus2,
+    interaction = TRUE
+  )
+  
+  result_1b <- tbl_ancova_tern(
+    weights_emmeans = "proportional",
+    inputdf = iris_plus2,
+    interaction = TRUE
+  )
+  
+  # for this model, weights_emmeans has no effect for non-combo columns, as the model includes interaction between color and species
+  expect_equal(result_1, result_1b)
+  result_1
+  
+  # results with combo column
+  result <- tbl_ancova_j(
+    weights_emmeans = "equal",
+    weights_combo = "equal",
+    inputdf = iris_plus2,
+    interaction = TRUE
+  )
+  
+  result_b <- tbl_ancova_j(
+    weights_emmeans = "equal",
+    weights_combo = "proportional",
+    inputdf = iris_plus2,
+    interaction = TRUE
+  )
+  
+  result_c <- tbl_ancova_j(
+    weights_emmeans = "equal",
+    weights_combo = "proportional_marginal",
+    inputdf = iris_plus2,
+    interaction = TRUE
+  )
+  
+  result_d <- tbl_ancova_j(
+    weights_emmeans = "proportional",
+    weights_combo = "equal",
+    inputdf = iris_plus2,
+    interaction = TRUE
+  )
+  
+  ### weights_combo have impact on combined column
+  ### weights_emmeans have no impact on combined column (as weights_combo has been decoupled from weights_emmeans)
+  expect_equal(result, result_d)
+  
+  expect_equal(result[, c(1:3)], result_b[, c(1:3)])
+  expect_equal(result[, c(1:3)], result_c[, c(1:3)])
+  
+  expect_any_difference(result[, c(4)], result_b[, c(4)])
+  expect_any_difference(result[, c(4)], result_c[, c(4)])
+  
+  # confirm that non-combined columns match with results from tern::summarize_ancova
+  # compare_ancova_tbl heavily depends on the used model, updates to model would require detailed review of coefficients
+  summary_numbers <- compare_ancova_tbl(result_1,
+                                        result,
+                                        interaction = TRUE,
+                                        .lm_fit = lm_fit,
+                                        # equal weights for combo
+                                        weights_red = c(virginica = 0.5, setosa = 0.5),
+                                        weights_blue = c(virginica = 0.5, setosa = 0.5)
+  )
+  
+  
+  expect_equal(summary_numbers[["tbl1"]], summary_numbers[["tbl2"]])
+  
+  # also match own derivations from model fit
+  limited <- list(
+    summary_numbers[["tbl1"]][[1]][1:2],
+    summary_numbers[["tbl1"]][[2]][1:2]
+  )
+  names(limited) <- names(summary_numbers[["tbl1"]])
+  expect_equal(limited, summary_numbers[["derived"]])
+  
+  # confirm that combined column estimates match from model
+  expect_equal(summary_numbers[["tbl2_comb"]], summary_numbers[["comb_model"]])
+  
+  ### repeat for weights_combo = "proportional" - focus on comb column only
+  
+  w_red <- get_weights(bycolor = TRUE, "red")
+  w_blue <- get_weights(bycolor = TRUE, "blue")
+  print(w_red)
+  print(w_blue)
+  
+  summary_numbers2 <- compare_ancova_tbl(result_1,
+                                         result_b,
+                                         interaction = TRUE,
+                                         .lm_fit = lm_fit,
+                                         weights_blue = w_blue,
+                                         weights_red = w_red
+  )
+  
+  expect_equal(summary_numbers2[["tbl2_comb"]], summary_numbers2[["comb_model"]])
+  
+  ### repeat for weights_combo = "proportional_marginal" - focus on comb column only
+  # bycolor FALSE is setting proportional_marginal, same weights for combo column derivation for both parts of the table
+  
+  w_red <- get_weights(bycolor = FALSE, "red")
+  w_blue <- get_weights(bycolor = FALSE, "blue")
+  print(w_red)
+  print(w_blue)
+  
+  summary_numbers3 <- compare_ancova_tbl(result_1,
+                                         result_c,
+                                         interaction = TRUE,
+                                         .lm_fit = lm_fit,
+                                         weights_blue = w_blue,
+                                         weights_red = w_red
+  )
+  
+  expect_equal(summary_numbers3[["tbl2_comb"]], summary_numbers3[["comb_model"]])
+})
+

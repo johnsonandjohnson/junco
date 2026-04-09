@@ -111,7 +111,7 @@ test_that("s_ancova_j works as expected", {
   checkmate::expect_names(
     names(result),
     identical.to = c(
-      "n",
+      "n_fit",
       "lsmean",
       "lsmean_se",
       "lsmean_ci",
