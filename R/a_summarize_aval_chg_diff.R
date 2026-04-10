@@ -1,3 +1,37 @@
+#' `tryCatch` around `stat::t.test`
+#'
+#' Captures errors when executing [stat::t.test].
+#'
+#' @inheritParams stat::t.test
+#'
+#' @return A list with core items as from `t.test.default` and `error_text` for the captured error.
+#'
+#' @keywords internal
+safe_t_test <- function(x, y = NULL, ...) {
+  tryCatch(
+    t.test(x, y, ...),
+    error = function(e) {
+      if (!is.null(y)) {
+        estimate <- c(mean_x = mean(x), mean_y = mean(y))
+        dname <- paste(deparse1(substitute(x)), "and", deparse1(substitute(y)))
+      } else {
+        estimate <- c(mean_x = mean(x))
+        dname <- deparse1(substitute(x))
+      }
+      list(
+        statistic = NA_real_,
+        parameter = NA_real_,
+        p.value   = NA_real_,
+        estimate  = estimate,
+        conf.int  = c(NA_real_, NA_real_),
+        method    = "t-test (failed)",
+        data.name = dname,
+        error_text = e$message
+      )
+    }
+  )
+}
+
 s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = control_analyze_vars()) {
   x <- df[[.var]]
   y1 <- s_summary(x)
@@ -12,27 +46,17 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = cont
     x1 <- x1[!is.na(x1)]
     x2 <- x2[!is.na(x2)]
 
-    if ((length(x1) > 1 && length(x2) > 1) && !(stats::var(x1) == 0 && stats::var(x2) == 0)) {
-      ttest_stat <- stats::t.test(x1, x2, conf.level = control$conf_level)
+    ttest_stat <- safe_t_test(x1, x2, conf.level = control$conf_level)
+    
+    stat <- ttest_stat[c("estimate", "conf.int")]
+    stat$diff <- stat$estimate[1] - stat$estimate[2]
+    stat <- c(stat$diff, stat$conf.int)
 
-      stat <- ttest_stat[c("estimate", "conf.int")]
-      stat$diff <- stat$estimate[1] - stat$estimate[2]
-      stat <- c(stat$diff, stat$conf.int)
+    y2$mean_diffci <- with_label(
+      c(mean_diffci = stat),
+      paste("Difference in Mean + ", f_conf_level(control$conf_level))
+    )
 
-      y2$mean_diffci <- with_label(
-        c(mean_diffci = stat),
-        paste("Difference in Mean + ", f_conf_level(control$conf_level))
-      )
-    } else {
-      y2b <- s_summary(.ref_group[[.var]])
-      diff <- y1[["mean"]] - y2b[["mean"]]
-      stat <- c(diff, NA, NA)
-
-      y2$mean_diffci <- with_label(
-        c(mean_diffci = stat),
-        paste("Difference in Mean + ", f_conf_level(control$conf_level))
-      )
-    }
   }
   y <- c(y1, y2)
 

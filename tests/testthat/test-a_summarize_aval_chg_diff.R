@@ -439,3 +439,21 @@ test_that("a_summarize_aval_chg_diff_j works with ancova = TRUE", {
   # Check that the table has the expected structure
   expect_equal(ncol(result), 7) # 3 columns for ARMA, 3 for Placebo, 1 for Blood Pressure
 })
+
+test_that("s_summarize_desc_j and safe_t_test does not fail for almost constant data", { 
+  df <- data.frame(
+    "AVAL" = c(1.709999999999999964473, 
+               1.710000000000000186517, 
+               1.710000000000000186517, 
+               1.710000000000000186517, 
+               1.710000000000000186517)
+  )
+  expect_error(t.test(df[["AVAL"]], df[["AVAL"]]))
+  
+  stats <- s_summarize_desc_j(df, "AVAL", .ref_group = df, .in_ref_col = FALSE)
+  expect_no_error(stats)
+  
+  stats <- safe_t_test(df[["AVAL"]], df[["AVAL"]])
+  expect_no_error(stats)
+
+  })
