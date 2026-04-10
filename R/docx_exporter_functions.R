@@ -17,6 +17,7 @@ remove_trHeight_nodes_XML <- function(doc) {
 }
 
 fix_namespaces_Graphs_XML <- function(doc) {
+  # nolint start
   # This function is only called when exporting a Graph, and
   # fixes the "parsing failed" error.
   # The root cause of this error is that namespace definitions are moved to the parent node:
@@ -33,7 +34,8 @@ fix_namespaces_Graphs_XML <- function(doc) {
   #
   # in order to prevent this moving, we just remove those 2 namespace definitions
   # from the parent node 'w:tbl'
-  
+  # nolint end
+
   # remove namespaces from parent node
   nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:tbl")
   for (node in nodes) {
@@ -156,6 +158,9 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation, tlgtype) {
     # to shift upwards, decrease margin_top
     margin_left <- -24
     margin_top <- ifelse(tlgtype == "Listing", 165, 176)
+    if (tlgtype == "Figure") {
+      margin_left <- -30
+    }
   }
 
 
