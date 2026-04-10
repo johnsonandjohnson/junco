@@ -18,6 +18,7 @@ safe_t_test <- function(x, y = NULL, ...) {
         estimate <- c(mean_x = mean(x))
         dname <- deparse1(substitute(x))
       }
+      estimate[is.nan(estimate)] <- NA_real_
       list(
         statistic = NA_real_,
         parameter = NA_real_,

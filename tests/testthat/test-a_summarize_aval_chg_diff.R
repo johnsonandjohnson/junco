@@ -457,3 +457,15 @@ test_that("s_summarize_desc_j and safe_t_test does not fail for almost constant 
   expect_no_error(stats)
 
   })
+
+test_that("s_summarize_desc_j with empty vectors", { 
+  df <- data.frame(
+    "AVAL" = rep(NA_real_, 3)
+  )
+  expect_error(t.test(df[["AVAL"]], df[["AVAL"]]))
+  
+  stats <- s_summarize_desc_j(df, "AVAL", .ref_group = df, .in_ref_col = FALSE)
+  expect_equal(stats[["mean_diffci"]], rep(NA_real_, 3), ignore_attr = TRUE)
+  
+})
+
