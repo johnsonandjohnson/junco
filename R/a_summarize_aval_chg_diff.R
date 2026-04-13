@@ -48,7 +48,7 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = cont
     x2 <- x2[!is.na(x2)]
 
     ttest_stat <- safe_t_test(x1, x2, conf.level = control$conf_level)
-    
+
     stat <- ttest_stat[c("estimate", "conf.int")]
     stat$diff <- stat$estimate[1] - stat$estimate[2]
     stat <- c(stat$diff, stat$conf.int)
