@@ -45,8 +45,8 @@ tt_to_tlgrtf(
 RTF outputs. Vectorized.}
 
 \item{pagenum}{(optional) Logical. When true page numbers are added on the
-right side of the footer section in the format page \code{x/y}.
-Vectorized. (Default = \code{FALSE}).}
+right side of the footer section in the format page x/y.
+Vectorized. (Default = FALSE)}
 
 \item{fontspec}{Font specification object}
 
