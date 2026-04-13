@@ -33,8 +33,8 @@ rtf_out_wrapper <- function(tt, filnm, ..., part = 1, combined = FALSE) {
 test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   # Create a simple table for testing
   data(ex_adsl)
-  lyt <- basic_table() |>
-    split_cols_by("ARM") |>
+  lyt <- basic_table() %>%
+    split_cols_by("ARM") %>%
     analyze("AGE")
 
   tbl <- build_table(lyt, ex_adsl)
@@ -64,7 +64,7 @@ test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   expect_snapshot_file(cmb_fl, cran = TRUE)
   res_nullfl <- expect_silent(tt_to_tlgrtf(tbl_wide, file = NULL))
   expect_equal(length(res_nullfl), 7)
-  expect_equal(sapply(res_nullfl, nrow), rep(nrow(tbl_wide) + nlines(col_info(tbl_wide)) + 1, 7))
+  expect_equal(sapply(res_nullfl, nrow), rep(nrow(tbl_wide) + nlines(col_info(tbl_wide))+1, 7))
 
   lsting <- as_listing(ex_adsl[1:30, 1:10])
   expect_snapshot_file(rtf_out_wrapper(lsting, "listing1"), cran = TRUE)
