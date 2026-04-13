@@ -33,8 +33,8 @@ rtf_out_wrapper <- function(tt, filnm, ..., part = 1, combined = FALSE) {
 test_that("tt_to_tlgrtf converts table tree to tlg without error", {
   # Create a simple table for testing
   data(ex_adsl)
-  lyt <- basic_table() %>%
-    split_cols_by("ARM") %>%
+  lyt <- basic_table() |>
+    split_cols_by("ARM") |>
     analyze("AGE")
 
   tbl <- build_table(lyt, ex_adsl)
