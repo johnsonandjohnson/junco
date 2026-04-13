@@ -3442,7 +3442,7 @@ a_freq_j <- function(
 
 
 #quantile type 2 hotfix
-
+library(ggplot2)
 
 StatBoxplotSas <- ggproto("StatBoxplotSas", Stat,
                           required_aes = c("x", "y"),
