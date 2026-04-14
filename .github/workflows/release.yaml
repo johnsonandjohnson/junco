@@ -23,15 +23,19 @@ on:
         options:
           - rhub
           - revdepcheck
-          - hotfix
+          - hotfix_v0-1-1
+          - hotfix_v0-1-2
 
 jobs:
   revdepcheck:
     name: revdepcheck 🧑‍🔬
-    uses: johnsonandjohnson/junco/.github/workflows/revdepcheck.yaml@scda_test_reversedependency
+    uses: johnsonandjohnson/actions/.github/workflows/revdepcheck.yaml@dev
   rhub:
     name: R-hub 🌐
-    uses: johnsonandjohnson/junco/.github/workflows/rhub.yaml@scda_test_reversedependency
+    uses: johnsonandjohnson/actions/.github/workflows/rhub.yaml@dev
   hotfix:
-    name: hotfix 🔥
-    uses: johnsonandjohnson/junco/.github/workflows/hotfix.yaml@scda_test_reversedependency
+    name: hotfix v0.1.1🔥
+    uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-1.yaml@dev
+  hotfix:
+    name: hotfix v0.1.2🔥
+    uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-2.yaml@dev
