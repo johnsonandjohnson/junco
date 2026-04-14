@@ -27,7 +27,7 @@ jobs:
   linter:
     if: github.event_name != 'push'
     name: Linter 🦸‍♀️
-    uses: johnsonandjohnson/actions/.github/workflows/lint.yaml@main
+    uses: johnsonandjohnson/actions/.github/workflows/lint.yaml@dev
 
   gitleaks:
     name: gitleaks 💧
