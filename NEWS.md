@@ -42,14 +42,15 @@
 - Added argument `mult_adj_emmeans` in `fit_mmrm_j()` to enable (single-step or step-down) Dunnett multiplicity adjustment for LS means contrasts (p-values and confidence intervals) for more than one experimental arm within visits.
 - Export helpers for LS means tabulation: `lsmeans_wide_cfun`, `lsmeans_wide_first_split_fun_fct`, `lsmeans_wide_second_split_fun_fct`
 
-## [0.1.5] - Unreleased
+
+## [0.1.5] - 2026-03-03 (minor hotfix release)
 
 ### Added and Removed
 - Added new behavior for nested `countsource` in h_a_freq_dataprep `altdf_subset` (#200)
 - Add `geom_boxplot_j()` to be able to draw boxplots whose statistics follow SAS quantile(type =2)
 
 
-## [0.1.4] - 2026-02-02
+## [0.1.4] - 2026-02-02 (minor hotfix release)
 
 ### Fixed
 
@@ -62,7 +63,7 @@
 - Reinstate rbmi as dependency
 
 
-## [0.1.3] - 2026-01-12
+## [0.1.3] - 2026-01-12 (minor hotfix release)
 
 ### Changed
 
@@ -104,9 +105,9 @@
 - Initial CRAN release
 
 [0.1.5]: https://github.com/johnsonandjohnson/junco/releases/tag/v-0.1.5
-[0.1.4]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.4
+[0.1.4]: https://github.com/johnsonandjohnson/junco/releases/tag/0.1.4
 [0.1.3]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.3
-[0.1.2]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.2
+[0.1.2]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.2-rc1
 [0.1.1]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.1
 
 All notable changes to this project will be documented in this file.
