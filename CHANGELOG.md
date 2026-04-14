@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.5] - Unreleased
+## [0.1.6] - Unreleased
 
 ### Fixed
 
@@ -39,7 +39,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added "watermark" argument in the docx exporter for Figures (#181)
 - Export helpers for LS means tabulation: `lsmeans_wide_cfun`, `lsmeans_wide_first_split_fun_fct`, `lsmeans_wide_second_split_fun_fct`
 
-## [0.1.4] - 2026-02-05
+## [0.1.5] - Unreleased
+
+### Added and Removed
+- Added new behavior for nested `countsource` in h_a_freq_dataprep `altdf_subset` (#200)
+- Add `geom_boxplot_j()` to be able to draw boxplots whose statistics follow SAS quantile(type =2)
+
+
+## [0.1.4] - 2026-02-02
 
 ### Fixed
 
@@ -51,13 +58,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reinstate rbmi as dependency
 
-## [0.1.3][0.1.3] - 2026-01-12
+
+## [0.1.3] - 2026-01-12
 
 ### Changed
 
 - Address CRAN NOTES.
 
-## [0.1.2][0.1.2] - 2025-12-10
+## [0.1.2] - 2025-12-10
 
 ### Added and Removed
 
@@ -79,7 +87,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Fixed bug in s_summarize_desc_j function to handle sparse data (zero variance) cases (#78)
 
-## [0.1.1][0.1.1] - 2025-07-28
+## [0.1.1] - 2025-07-28
 
 ### Added
 

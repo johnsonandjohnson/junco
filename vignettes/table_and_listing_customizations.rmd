@@ -175,7 +175,7 @@ tt_to_tlgrtf(result,
 To create a .docx file with landscape orientation, the `junco::export_TLG_as_docx` function can be called with the `orientation` argument set to "landscape".
 
 ```{r orientation_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_TLG_as_docx(result,
+export_as_docx_j(result,
                 tblid = "exampleorientation",
                 output_dir = out_dir,
                 orientation = "landscape")
@@ -296,7 +296,7 @@ tt_to_tlgrtf(result,
 To display the body of tables in Times New Roman 8-pt for .docx files, the junco::export_TLG_as_docx function can be called with the theme argument included. The theme argument will specify a junco::theme_docx_default_j function call.
 
 ```{r fontsize_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_TLG_as_docx(result,
+export_as_docx_j(result,
                 tblid = "examplefontsize",
                 output_dir = out_dir,
                 theme = theme_docx_default_j(font = "Times New Roman", font_size = 8L))
@@ -941,7 +941,7 @@ result <- set_titles(result, titles)
 ```
 
 ```{r newline_table_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_TLG_as_docx(result,
+export_as_docx_j(result,
                 tblid = "examplenewline",
                 output_dir = out_dir,
                 orientation = "landscape")
@@ -1038,7 +1038,7 @@ result <- set_titles(result, titles)
 ```
 
 ```{r newline_listing_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_TLG_as_docx(result,
+export_as_docx_j(result,
                 tblid = "examplelistingnewline2",
                 output_dir = out_dir,
                 orientation = "landscape",
@@ -1148,7 +1148,7 @@ tt_to_tlgrtf(result,
 To export a table with a custom border matrix to a .docx file, the `junco::export_TLG_as_docx` function can be called with the `border_mat` argument:
 
 ```{r custom_border_matrix_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_TLG_as_docx(result,
+export_as_docx_j(result,
                 tblid = "custombordertable",
                 output_dir = out_dir,
                 orientation = "landscape",
@@ -1323,7 +1323,7 @@ result <- set_titles(result, titles)
 ```
 
 ```{r superscript_table_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_TLG_as_docx(result,
+export_as_docx_j(result,
                 tblid = "superscripttable",
                 output_dir = out_dir,
                 orientation = "landscape",
@@ -1441,7 +1441,7 @@ result <- set_titles(result, titles)
 ```
 
 ```{r superscript_listing_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_TLG_as_docx(result,
+export_as_docx_j(result,
                 tblid = "examplelistingsuperscript2",
                 output_dir = out_dir,
                 orientation = "landscape",

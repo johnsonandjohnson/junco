@@ -21,6 +21,7 @@ Lapply
 MMRM
 Optimality
 PARAMCD
+PCTLDEF
 Parallelisation
 Parallelise
 RBMI
@@ -60,6 +61,7 @@ combosdf
 comparator
 csv
 customizations
+dataprep
 dataset's
 datasplit
 denom
@@ -74,6 +76,7 @@ flextable
 fmt
 formatters
 gentlg
+ggplot
 github
 goto
 grepl
@@ -147,4 +150,3 @@ unrounded
 unstratified
 wordbreaking
 xlsx
-rmarkdown
