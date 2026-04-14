@@ -33,9 +33,9 @@ jobs:
   rhub:
     name: R-hub 🌐
     uses: johnsonandjohnson/actions/.github/workflows/rhub.yaml@dev
-  hotfix:
+  hotfix_v0-1-1:
     name: hotfix v0.1.1🔥
     uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-1.yaml@dev
-  hotfix:
+  hotfix_v0-1-2:
     name: hotfix v0.1.2🔥
     uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-2.yaml@dev
