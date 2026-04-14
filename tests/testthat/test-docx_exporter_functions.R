@@ -488,9 +488,15 @@ testthat::test_that("export_TLG_as_docx() works with pagination", {
   # open the files and check the XML
   doc <- officer::read_docx(paste0(output_dir, "/test1234part1of2.docx"))
   snapshot_test_docx(doc)
+  # check that the XML does not contain "w:trHeight" nodes
+  nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:trHeight")
+  testthat::expect_length(nodes, 0)
 
   doc <- officer::read_docx(paste0(output_dir, "/test1234part2of2.docx"))
   snapshot_test_docx(doc)
+  # check that the XML does not contain "w:trHeight" nodes
+  nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:trHeight")
+  testthat::expect_length(nodes, 0)
 
 
   file.remove(c(
@@ -636,6 +642,12 @@ testthat::test_that("export_TLG_as_docx() works with basic example", {
   # open the file and check the XML
   doc <- officer::read_docx(output_docx)
   snapshot_test_docx(doc, detailed = FALSE)
+  # check that the XML "w:tbl" node does not contain namespace definitions
+  nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:tbl")
+  testthat::expect_length(nodes, 1)
+  node_str <- as.character(nodes[[1]])   # serializes the node (start tag + content + end tag)
+  node_str <- gsub("\n.*", "", node_str)
+  testthat::expect_equal(node_str, "<w:tbl w:table_index=\"1\">")
 
   file.remove(c(pn1, pn2, output_docx))
 })
