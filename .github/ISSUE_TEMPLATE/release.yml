@@ -74,14 +74,14 @@ body:
 
         **Note:** This section is applicable only for regulatory packages.
 
-        - [ ] Tag the update(s) as a release candidate vX.Y.Z-rc<iteration-number> (e.g. v0.5.3-rc1) on the release candidate branch (release-candidate-vX.Y.Z).
+        - [ ] Tag the update(s) as a release candidate v-X.Y.Z (e.g. v-0.5.3) on the release candidate branch (release-candidate-vX.Y.Z).
           ```r
           # Create rc tag for submission for internal validation
-          git tag vX.Y.Z-rc<iteration number>
-          git push origin vX.Y.Z-rc<iteration number>
+          git tag v-X.Y.Z
+          git push origin v-X.Y.Z
           ```
         - [ ] Submit the package for internal validation.
-        - [ ] Address any feedback (internal validation/user testing), retag the package as a release candidate vX.Y.Z-rc(n+1). Repeat the submission for internal validation if necessary.
+        - [ ] Address any feedback (internal validation/user testing), retag the package as a release candidate v-X.Y.Z(n+1). Repeat the submission for internal validation if necessary.
         - [ ] Get the package validated.
 
         #### Tag the release
