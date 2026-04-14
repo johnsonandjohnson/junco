@@ -18,7 +18,7 @@ s_freq_j(
   id = "USUBJID",
   denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
   .N_col,
-  countsource = c("df", "altdf")
+  countsource = c("df", "altdf", "altdf_subset")
 )
 
 a_freq_j(
@@ -57,7 +57,7 @@ a_freq_j(
   extrablanklineafter = NULL,
   restr_columns = NULL,
   colgroup = NULL,
-  countsource = c("df", "altdf")
+  countsource = c("df", "altdf", "altdf_subset")
 )
 
 a_freq_j_with_exclude(
@@ -154,9 +154,13 @@ a_freq_j_with_exclude(
 
 - countsource:
 
-  Either `df` or `alt_df`.  
-  When `alt_df` the counts will be based upon the alternative dataframe
+  Either `df`, `altdf`, or `altdf_subset`.  
+  When `altdf` the counts will be based upon the alternative dataframe
   `alt_df`.  
+  When `altdf_subset` the counts will be based upon `alt_df` but first
+  restricted  
+  to the levels/values of the current row split for `.var` (or to `val`
+  when provided).  
   This is useful for subgroup processing, to present counts of subjects
   in a subgroup from the alternative dataframe.
 

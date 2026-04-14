@@ -46,17 +46,17 @@ Page](https://johnsonandjohnson.github.io/junco/).
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/johnsonandjohnson/junco/blob/0.1.4/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/johnsonandjohnson/junco/blob/v-0.1.5/DESCRIPTION)
 
 Becker G, Augustyns I, Jenkins P, Hofstaedter D, Kovach J, Munoz Tord D,
 Sabanes Bove D (2026). *junco: Create Common Tables and Listings Used in
-Clinical Trials*. R package version 0.1.4,
+Clinical Trials*. R package version 0.1.5,
 <https://github.com/johnsonandjohnson/junco>.
 
     @Manual{,
       title = {junco: Create Common Tables and Listings Used in Clinical Trials},
       author = {Gabriel Becker and Ilse Augustyns and Paul Jenkins and Daniel Hofstaedter and Joseph Kovach and David {Munoz Tord} and Daniel {Sabanes Bove}},
       year = {2026},
-      note = {R package version 0.1.4},
+      note = {R package version 0.1.5},
       url = {https://github.com/johnsonandjohnson/junco},
     }

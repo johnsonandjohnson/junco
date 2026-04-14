@@ -9,7 +9,7 @@ and (optional) relative risk columns"><meta property="og:image" content="https:/
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@ and (optional) relative risk columns"><meta property="og:image" content="https:/
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Analysis/statistical function for count and percentage in core columns and (optional) relative risk columns</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/0.1.4/R/a_freq_j.R" class="external-link"><code>R/a_freq_j.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v-0.1.5/R/a_freq_j.R" class="external-link"><code>R/a_freq_j.R</code></a></small>
       <div class="d-none name"><code>a_freq_j.Rd</code></div>
     </div>
 
@@ -53,7 +53,7 @@ and (optional) relative risk columns</p>
 <span>  id <span class="op">=</span> <span class="st">"USUBJID"</span>,</span>
 <span>  denom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n_df"</span>, <span class="st">"n_altdf"</span>, <span class="st">"N_col"</span>, <span class="st">"n_rowdf"</span>, <span class="st">"n_parentdf"</span><span class="op">)</span>,</span>
 <span>  <span class="va">.N_col</span>,</span>
-<span>  countsource <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"df"</span>, <span class="st">"altdf"</span><span class="op">)</span></span>
+<span>  countsource <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"df"</span>, <span class="st">"altdf"</span>, <span class="st">"altdf_subset"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">a_freq_j</span><span class="op">(</span></span>
@@ -92,7 +92,7 @@ and (optional) relative risk columns</p>
 <span>  extrablanklineafter <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  restr_columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  colgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  countsource <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"df"</span>, <span class="st">"altdf"</span><span class="op">)</span></span>
+<span>  countsource <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"df"</span>, <span class="st">"altdf"</span>, <span class="st">"altdf_subset"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">a_freq_j_with_exclude</span><span class="op">(</span></span>
@@ -181,8 +181,10 @@ passed by <code>rtables</code>.</p></dd>
 
 
 <dt id="arg-countsource">countsource<a class="anchor" aria-label="anchor" href="#arg-countsource"></a></dt>
-<dd><p>Either <code>df</code> or <code>alt_df</code>.<br>
-When <code>alt_df</code> the counts will be based upon the alternative dataframe <code>alt_df</code>.<br>
+<dd><p>Either <code>df</code>, <code>altdf</code>, or <code>altdf_subset</code>.<br>
+When <code>altdf</code> the counts will be based upon the alternative dataframe <code>alt_df</code>.<br>
+When <code>altdf_subset</code> the counts will be based upon <code>alt_df</code> but first restricted<br>
+to the levels/values of the current row split for <code>.var</code> (or to <code>val</code> when provided).<br>
 This is useful for subgroup processing,
 to present counts of subjects in a subgroup from the alternative dataframe.</p></dd>
 

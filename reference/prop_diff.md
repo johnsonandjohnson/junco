@@ -226,25 +226,25 @@ s_proportion_diff_j(
 )
 #> $diff
 #> diff_cmh 
-#> 12.27932 
+#> 12.05847 
 #> attr(,"label")
 #> [1] "Difference in Response rate (%)"
 #> 
 #> $diff_ci
 #> diff_ci_cmh_l diff_ci_cmh_u 
-#>     -2.657093     27.215725 
+#>      -2.67057      26.78750 
 #> attr(,"label")
 #> [1] "90% CI (CMH, without correction)"
 #> 
 #> $diff_est_ci
 #>      diff_cmh diff_ci_cmh_l diff_ci_cmh_u 
-#>     12.279316     -2.657093     27.215725 
+#>      12.05847      -2.67057      26.78750 
 #> attr(,"label")
 #> [1] "% Difference (90% CI)"
 #> 
 #> $diff_ci_3d
 #>      diff_cmh diff_ci_cmh_l diff_ci_cmh_u 
-#>     12.279316     -2.657093     27.215725 
+#>      12.05847      -2.67057      26.78750 
 #> attr(,"label")
 #> [1] "Relative Risk (90% CI)"
 #> 

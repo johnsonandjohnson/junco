@@ -166,8 +166,8 @@ l <- basic_table() |>
 build_table(l, df = dta)
 #>                                    A            B
 #> —————————————————————————————————————————————————
-#>   Relative risk (90% CI)   1.14 (0.79 - 1.65)    
-#>   p-value                        0.548           
+#>   Relative risk (90% CI)   1.04 (0.73 - 1.50)    
+#>   p-value                        0.843           
 nex <- 100
 dta <- data.frame(
   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
@@ -187,11 +187,11 @@ s_relative_risk(
 )
 #> $rel_risk_ci
 #>       est       lcl       ucl 
-#> 1.0317456 0.7006869 1.5192220 
+#> 1.1968767 0.8206461 1.7455926 
 #> attr(,"label")
 #> [1] "Relative risk (90% CI)"
 #> 
 #> $pval
-#> [1] 0.8962701
+#> [1] 0.4443066
 #> 
 ```

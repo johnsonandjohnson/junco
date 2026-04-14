@@ -103,5 +103,5 @@ resp01_a_comp_stat_logical(
     pval = jjcsformat_pval_fct(0.05)
   )
 )
-#> rcell: 0.98 (0.69 - 1.38) 
+#> rcell: 0.79 (0.56 - 1.13) 
 ```

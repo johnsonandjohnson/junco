@@ -6,7 +6,18 @@ The format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## \[0.1.4\] - Unreleased
+## \[0.1.5\] - Unreleased
+
+### Added and Removed
+
+- Added new behavior for nested `countsource` in h_a_freq_dataprep
+  `altdf_subset` (#200)
+- Add
+  [`geom_boxplot_j()`](https://johnsonandjohnson.github.io/junco/reference/geom_boxplot_j.md)
+  to be able to draw boxplots whose statistics follow SAS quantile(type
+  =2)
+
+## \[0.1.4\] - 2026-02-02
 
 ### Fixed
 
@@ -15,19 +26,14 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Fixed
   [`tt_to_tlgrtf()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md),
   when exporting an empty listing do not lose Title and Footers
-
-### Changed
-
-- Reinstate rbmi as dependency
-
-## \[0.1.3.9.1\] - 2026-02-02
-
-### Fixed
-
 - Fixed
   [`tt_to_tlgrtf()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md)
   argument `label_width_ins` which was not applying the change in the
   row label column width (#166).
+
+### Changed
+
+- Reinstate rbmi as dependency
 
 ## [0.1.3](https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.3) - 2026-01-12
 

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/0.1.4/CHANGELOG.md" class="external-link"><code>CHANGELOG.md</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v-0.1.5/CHANGELOG.md" class="external-link"><code>CHANGELOG.md</code></a></small>
     </div>
 
 <div id="changelog" class="section level1">
@@ -36,22 +36,24 @@
 <p>All notable changes to this project will be documented in this file.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/" class="external-link">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html" class="external-link">Semantic Versioning</a>.</p>
 <div class="section level2">
-<h2 id="id_014---unreleased">[0.1.4] - Unreleased<a class="anchor" aria-label="anchor" href="#id_014---unreleased"></a></h2>
+<h2 id="id_015---unreleased">[0.1.5] - Unreleased<a class="anchor" aria-label="anchor" href="#id_015---unreleased"></a></h2>
+<div class="section level3">
+<h3 id="added-and-removed">Added and Removed<a class="anchor" aria-label="anchor" href="#added-and-removed"></a></h3>
+<ul><li>Added new behavior for nested <code>countsource</code> in h_a_freq_dataprep <code>altdf_subset</code> (#200)</li>
+<li>Add <code><a href="reference/geom_boxplot_j.html">geom_boxplot_j()</a></code> to be able to draw boxplots whose statistics follow SAS quantile(type =2)</li>
+</ul></div>
+</div>
+<div class="section level2">
+<h2 id="id_014---2026-02-02">[0.1.4] - 2026-02-02<a class="anchor" aria-label="anchor" href="#id_014---2026-02-02"></a></h2>
 <div class="section level3">
 <h3 id="fixed">Fixed<a class="anchor" aria-label="anchor" href="#fixed"></a></h3>
 <ul><li>“caption” paragraph style in the docx exporter is now handled by flextable (#182)</li>
 <li>Fixed <code><a href="reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code>, when exporting an empty listing do not lose Title and Footers</li>
+<li>Fixed <code><a href="reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> argument <code>label_width_ins</code> which was not applying the change in the row label column width (#166).</li>
 </ul></div>
 <div class="section level3">
 <h3 id="changed">Changed<a class="anchor" aria-label="anchor" href="#changed"></a></h3>
 <ul><li>Reinstate rbmi as dependency</li>
-</ul></div>
-</div>
-<div class="section level2">
-<h2 id="id_01391---2026-02-02">[0.1.3.9.1] - 2026-02-02<a class="anchor" aria-label="anchor" href="#id_01391---2026-02-02"></a></h2>
-<div class="section level3">
-<h3 id="fixed-1">Fixed<a class="anchor" aria-label="anchor" href="#fixed-1"></a></h3>
-<ul><li>Fixed <code><a href="reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> argument <code>label_width_ins</code> which was not applying the change in the row label column width (#166).</li>
 </ul></div>
 </div>
 <div class="section level2">
@@ -66,7 +68,7 @@
 <h2 id="id_012---2025-12-10">
 <a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.2" class="external-link">0.1.2</a> - 2025-12-10<a class="anchor" aria-label="anchor" href="#id_012---2025-12-10"></a></h2>
 <div class="section level3">
-<h3 id="added-and-removed">Added and Removed<a class="anchor" aria-label="anchor" href="#added-and-removed"></a></h3>
+<h3 id="added-and-removed-1">Added and Removed<a class="anchor" aria-label="anchor" href="#added-and-removed-1"></a></h3>
 <ul><li><p>Add <code><a href="reference/a_two_tier.html">a_two_tier()</a></code> analysis function</p></li>
 <li><p>Add <code><a href="reference/a_maxlev.html">a_maxlev()</a></code> to be able to calculate count and percentage of the maximum level of an ordered factor per subject</p></li>
 <li><p>Remove <code>brackets_to_rtf()</code></p></li>

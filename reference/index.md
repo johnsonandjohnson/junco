@@ -309,6 +309,13 @@ create common table layouts.
 - [`get_visit_levels()`](https://johnsonandjohnson.github.io/junco/reference/get_visit_levels.md)
   : Get Visit Levels in Order Defined by Numeric Version
 
+## junco Geoms
+
+ggplot2 geoms provided by junco.
+
+- [`geom_boxplot_j()`](https://johnsonandjohnson.github.io/junco/reference/geom_boxplot_j.md)
+  : Draws boxplots with configurable quantile type
+
 ## junco Functions For generating .rtfs, .docxs and HTMLs
 
 The following utility functions help to generate the .rtfs, .docxs and

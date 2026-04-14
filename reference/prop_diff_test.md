@@ -126,7 +126,7 @@ l <- basic_table() |>
   )
 
 build_table(l, df = dta)
-#>                                              A     B
-#> ————————————————————————————————————————————————————
-#>   p-value (Cochran-Mantel-Haenszel Test)   0.374    
+#>                                              A      B
+#> —————————————————————————————————————————————————————
+#>   p-value (Cochran-Mantel-Haenszel Test)   >0.999    
 ```
