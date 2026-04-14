@@ -29,13 +29,13 @@ on:
 jobs:
   revdepcheck:
     name: revdepcheck 🧑‍🔬
-    uses: johnsonandjohnson/actions/.github/workflows/revdepcheck.yaml@dev
+    uses: johnsonandjohnson/junco/.github/workflows/revdepcheck.yaml@CI_CD
   rhub:
     name: R-hub 🌐
-    uses: johnsonandjohnson/actions/.github/workflows/rhub.yaml@dev
+    uses: johnsonandjohnson/junco/.github/workflows/rhub.yaml@CI_CD
   hotfix_v0-1-1:
     name: hotfix v0.1.1🔥
-    uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-1.yaml@dev
+    uses: johnsonandjohnson/junco/.github/workflows/hotfix_v0-1-1.yaml@CI_CD
   hotfix_v0-1-2:
     name: hotfix v0.1.2🔥
-    uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-2.yaml@dev
+    uses: johnsonandjohnson/junco/.github/workflows/hotfix_v0-1-2.yaml@CI_CD
