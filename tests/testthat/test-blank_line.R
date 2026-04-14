@@ -28,7 +28,7 @@ test_that("insert_blank_line works as expected", {
 
   # We expect 6 blank lines: after mean and range, for each of the
   # 3 STRATA1 levels' row splits.
-  expect_snapshot(mf_strings(matrix_form(tbl)))
+  expect_snapshot(cran = TRUE, mf_strings(matrix_form(tbl)))
 })
 
 test_that("insert_blank_line optionally uses custom table names", {

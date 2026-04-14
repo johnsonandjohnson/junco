@@ -19,7 +19,6 @@ JJCS
 Kaplan
 Lapply
 MMRM
-Optimality
 PARAMCD
 PCTLDEF
 Parallelisation
@@ -36,7 +35,6 @@ Toeplitz
 TrueType
 Unlist
 VTableTree
-Vectorized
 XLSX
 afun
 allparts
@@ -67,8 +65,10 @@ datasplit
 denom
 df
 dfs
+dirname
 docx
 dps
+dunnett
 eg
 exprs
 firstcat
@@ -106,7 +106,6 @@ parallelising
 parentdf
 pkgdown
 plotheight
-plotnames
 plotwidth
 png
 pre
@@ -114,8 +113,6 @@ pseudocolumn
 px
 rbmi
 removerowtext
-repo
-reproducibility
 responder
 responders
 rlistings

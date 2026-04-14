@@ -189,5 +189,5 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
       )
     ) |>
     build_table(iris)
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })

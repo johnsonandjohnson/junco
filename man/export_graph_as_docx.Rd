@@ -7,15 +7,15 @@
 export_graph_as_docx(
   g = NULL,
   plotnames = NULL,
-  tblid,
-  output_dir,
+  tblid = NULL,
+  output_dir = NULL,
   title = NULL,
   footers = NULL,
   orientation = "portrait",
   plotwidth = 8,
   plotheight = 5.51,
   units = c("in", "cm", "mm", "px")[1],
-  border = flextable::fp_border_default(width = 0.75, color = "black"),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
   watermark = NULL
 )
 }
@@ -33,9 +33,15 @@ will be ignored.\cr
 (optional) Default = NULL.}
 
 \item{tblid}{(\code{character})\cr output ID to be displayed in the title and
-last line of footer.}
+last line of footer. When exporting, it will also be used as the output filename.\cr
+If NULL, a temp file will be created, its dirname will replace argument \code{output_dir},
+and its basename will replace argument \code{tblid}.\cr
+(optional) Default = NULL.}
 
-\item{output_dir}{(\code{character})\cr a directory path to save the docx.}
+\item{output_dir}{(\code{character})\cr a directory path to save the docx.\cr
+If NULL, a temp file will be created, its dirname will replace argument \code{output_dir},
+and its basename will replace argument \code{tblid}.\cr
+(optional) Default = NULL.}
 
 \item{title}{(\code{character})\cr character, or list of them, with the titles
 to be displayed.\cr (optional) Default = NULL.}
@@ -60,7 +66,7 @@ in which the plotwidth and plotheight arguments are expressed:
 (optional) Default = "in".}
 
 \item{border}{(\code{fp_border})\cr border to use.\cr
-Default = \code{flextable::fp_border_default(width = 0.75, color = "black")}.}
+Default = \code{flextable::fp_border_default(width = 0.875, color = "black")}.}
 
 \item{watermark}{(\code{character})\cr the watermark (text) to display in the
 output docx file.\cr

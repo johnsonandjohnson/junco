@@ -80,7 +80,7 @@ test_that("a_cmhrms_j works in a table layout as expected", {
       )
     )
   res <- expect_silent(build_table(lyt, df = dta))
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
 
 test_that("a_cmhrms_j_with_exclude works in a table layout as expected", {
@@ -107,5 +107,5 @@ test_that("a_cmhrms_j_with_exclude works in a table layout as expected", {
     )
   res <- expect_silent(build_table(lyt, df = dta)) |>
     safe_prune_table(prune_func = tern::keep_rows(keep_non_null_rows))
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })

@@ -34,7 +34,7 @@ test_that("a_summarize_aval_chg_diff_j comp_btw_group = FALSE works as expected"
 
   tbl <- expect_silent(build_table(lyt, advs, alt_counts_df = adsl))
   expect_s4_class(tbl, "TableTree")
-  expect_snapshot(tbl)
+  expect_snapshot(cran = TRUE, tbl)
 
   # this one also ran fine prior hotfix78
   extra_args_3col2 <- list(
@@ -56,7 +56,7 @@ test_that("a_summarize_aval_chg_diff_j comp_btw_group = FALSE works as expected"
 
   tbl2 <- build_table(lyt2, advs, alt_counts_df = adsl)
   expect_s4_class(tbl2, "TableTree")
-  expect_snapshot(tbl2)
+  expect_snapshot(cran = TRUE, tbl2)
 })
 
 test_that("a_summarize_aval_chg_diff_j t-test sparse data works as expected", {
@@ -144,11 +144,11 @@ test_that("a_summarize_aval_chg_diff_j t-test sparse data works as expected", {
 
   tbl <- build_table(lyt, advs, alt_counts_df = adsl)
   expect_s4_class(tbl, "TableTree")
-  expect_snapshot(tbl)
+  expect_snapshot(cran = TRUE, tbl)
 
   tbl2 <- build_table(lyt, advs_2, alt_counts_df = adsl)
   expect_s4_class(tbl2, "TableTree")
-  expect_snapshot(tbl2)
+  expect_snapshot(cran = TRUE, tbl2)
 })
 
 

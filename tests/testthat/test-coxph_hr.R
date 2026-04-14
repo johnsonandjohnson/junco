@@ -18,7 +18,7 @@ test_that("s_coxph_hr works with default arguments and no stratification factors
     strata = NULL
   )
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 
   # Try one-sided alternatives.
   result2 <- s_coxph_hr(
@@ -73,7 +73,7 @@ test_that("a_coxph_hr works with custom arguments and stratification factors", {
     build_table(df = adtte_f)
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
 
 test_that("a_coxph_hr works with stratification factors for Log-Rank test", {
@@ -104,5 +104,5 @@ test_that("a_coxph_hr works with stratification factors for Log-Rank test", {
     build_table(df = adtte_f)
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
