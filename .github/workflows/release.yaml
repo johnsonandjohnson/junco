@@ -9,9 +9,15 @@ on:
       - reopened
       - ready_for_review
     branches: [main, CRAN]
+  workflow_call:
+    secrets:
+      REPO_GITHUB_TOKEN:
+        description: |
+          Github token with read access to repositories
+        required: false
   push:
     branches:
-      - main
+      - 'feature/hotfix-*'
   workflow_dispatch:
     inputs:
       chosen-workflow:
