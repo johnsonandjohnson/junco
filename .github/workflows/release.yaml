@@ -28,10 +28,10 @@ on:
 jobs:
   revdepcheck:
     name: revdepcheck 🧑‍🔬
-    uses: johnsonandjohnson/junco/.github/workflows/revdepcheck.yaml@scda_test_reversedependency
+    uses: johnsonandjohnson/junco/.github/workflows/revdepcheck.yaml@dev
   rhub:
     name: R-hub 🌐
-    uses: johnsonandjohnson/junco/.github/workflows/rhub.yaml@scda_test_reversedependency
+    uses: johnsonandjohnson/junco/.github/workflows/rhub.yaml@dev
   hotfix:
     name: hotfix 🔥
-    uses: johnsonandjohnson/junco/.github/workflows/hotfix.yaml@scda_test_reversedependency
+    uses: johnsonandjohnson/junco/.github/workflows/hotfix.yaml@dev
