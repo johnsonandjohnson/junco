@@ -2,7 +2,6 @@
 
 ### Fixed
 
-- Added option to perform `a_summarize_ancova_j` in a layout with a combined column facet (#117) + slight change in return value for `s_ancova_j()`, now we have n_fit instead of n returned
 - Fixed `s_kaplan_meier()` range censoring indicator handling to no longer produce `NA` values in the output when either all subjects are censored or none are censored.
 - Aligned `a_freq_resp_var_j()` with `a_freq_j()` by adding `.formats` and `na_str` parameters to allow user customization of output formatting and NA string representation (#67).
 - Fixed the hanging indent in the first column of the body of the table (#138)
@@ -20,6 +19,7 @@
 
 ### Changed
 
+- changed return value `n` for `s_ancova_j` into `n_fit`, to differentiate between these two statistics for combined function `s_summarize_ancova_j()` (#117)
 - added default label for median_range "Median (min, max)" in `junco_default_labels_start`
 - changed label from "experimental" to "stable" for `default_stats_formats_labels`
 - refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
@@ -37,6 +37,7 @@
 
 ### Added
 
+- Added option to perform `a_summarize_ancova_j` in a layout with a combined column facet (#117) + slight change in return value for `s_ancova_j()`, now we have n_fit instead of n returned
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
 - Added option to specify the output folder for the csv
 - Added argument 'validate' to `export_TLG_as_docx()` and `tt_to_flextable_j()` (#213)
