@@ -41,12 +41,10 @@ pkgdown
 ^cran-comments\.md$
 ^\.covrignore$
 ^\.idea$
-^lint_results.txt$
 ^dev$
 
 # output
 ^output$
-^junco_tlg_template_scripts$
 ^[^/]*\.R$
 ^\.vscode$
 ^[.]?air[.]toml$

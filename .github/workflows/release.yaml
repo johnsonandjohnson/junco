@@ -1,0 +1,41 @@
+---
+name: release 🕰️
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+    branches: [main, CRAN]
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      chosen-workflow:
+        description: |
+          Select which workflow you'd like to run
+        required: true
+        type: choice
+        default: rhub
+        options:
+          - rhub
+          - revdepcheck
+          - hotfix_v0-1-1
+          - hotfix_v0-1-2
+
+jobs:
+  revdepcheck:
+    name: revdepcheck 🧑‍🔬
+    uses: johnsonandjohnson/actions/.github/workflows/revdepcheck.yaml@dev
+  rhub:
+    name: R-hub 🌐
+    uses: johnsonandjohnson/actions/.github/workflows/rhub.yaml@dev
+  hotfix_v0-1-1:
+    name: hotfix v0.1.1🔥
+    uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-1.yaml@dev
+  hotfix_v0-1-2:
+    name: hotfix v0.1.2🔥
+    uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-2.yaml@dev
