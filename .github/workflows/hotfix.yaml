@@ -43,7 +43,7 @@ jobs:
       - name: Inject Hotfix into Source Code
         shell: bash
         run: |
-          HOTFIX="hotfix_repo/dev/junco_hotfix.R"
+          HOTFIX="hotfix_repo/dev/junco_hotfix-v0-1-1.R"
           TARGET="junco_source/R/zzz_hotfix.R" 
           
           if [ -f "$HOTFIX" ]; then
