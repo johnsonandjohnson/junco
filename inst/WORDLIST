@@ -1,3 +1,7 @@
+2b
+3d
+5D
+A1
 ADSL
 AE
 AEBODSYS
@@ -23,12 +27,15 @@ Lapply
 MMRM
 Miettinen
 Nurminen
-Optimality
 PARAMCD
 PCTLDEF
 Parallelisation
 Parallelise
+Q1
+Q2
+Q3
 RBMI
+RESP01
 RTF
 Sato
 TEFOS
@@ -50,6 +57,7 @@ analyse
 analysing
 ancova
 approxbayes
+args
 bayes
 bugfix
 chisq
@@ -87,6 +95,7 @@ fn
 formatters
 gentlg
 ggplot
+ggplot2
 github
 goto
 grepl
@@ -98,6 +107,7 @@ iec
 insightsengineering
 jj
 jjcsformat
+johnsonandjohnson
 keeprowtext
 lastcat
 lsm
@@ -116,6 +126,7 @@ parallelisation
 parallelise
 parallelising
 parentdf
+pathin
 pkgdown
 plotheight
 plotwidth
@@ -166,3 +177,9 @@ unrounded
 unstratified
 wordbreaking
 xlsx
+riskdiff
+struct
+TEFOS03
+TRT01A
+X1
+X2

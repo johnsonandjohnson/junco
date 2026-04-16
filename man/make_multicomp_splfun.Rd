@@ -3,7 +3,7 @@
 \name{make_multicomp_splfun}
 \alias{make_multicomp_splfun}
 \alias{make_dflt_comp_map}
-\title{Make Multi-comparitor Split Function}
+\title{Make Multi-comparator Split Function}
 \usage{
 make_multicomp_splfun(
   comp_vars,
@@ -19,7 +19,7 @@ make_dflt_comp_map(df, spl_var, ref_lvls, combo_map, comp_vars)
 }
 \arguments{
 \item{comp_vars}{\code{(character)}\cr A vector of one or more different
-variables to provide the comparitors. The first value must be
+variables to provide the comparators. The first value must be
 the variable being split on.}
 
 \item{comp_level_paths}{\verb{(list of character vectors)}\cr A list of
@@ -38,7 +38,7 @@ to some or all blocks of comparisons. See Details.}
 functions to be provided to \code{make_split_fun}. Defaults to
 \code{list()}.}
 
-\item{.post}{\code{(list)}\cr A list of additional postprocessing
+\item{.post}{\code{(list)}\cr A list of additional post-processing
 functions to be provided to \code{make_split_fun} \emph{after} those
 which provide this function's primary multi-comparator
 functionality. Defaults to \code{list()}}
@@ -54,7 +54,7 @@ within \code{col_struct_w_risk_diffs}.
 }
 \details{
 This split function is intended to create a set of risk difference
-or similiar columns. As such it will automatically exclude the facet
+or similar columns. As such it will automatically exclude the facet
 for each comparator level (e.g., Placebo vs Placebo) as determined
 by the last element of each element of \code{comp_level_paths}.
 
@@ -100,8 +100,8 @@ one of \code{comp_level_paths} if so).
 }
 
 When specifying \code{combo_levels_map} if the \code{compare_against} column
-is ommitted, comparison against all reference levels will be
-performed for all combination levels. If \code{is_control} is ommitted,
+is omitted, comparison against all reference levels will be
+performed for all combination levels. If \code{is_control} is omitted,
 it will be assumed as \code{FALSE} for all combination levels.
 
 Order of combination levels when multiple are present for a single

@@ -35,6 +35,7 @@
 
 ### Added
 
+- Added multi-comparator functionality (#271)
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
 - Added option to specify the output folder for the csv
 - Added argument 'validate' to `export_TLG_as_docx()` and `tt_to_flextable_j()` (#213)

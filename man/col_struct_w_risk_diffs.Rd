@@ -20,7 +20,7 @@ col_struct_w_risk_diffs(
 }
 \arguments{
 \item{lyt}{(\code{PreDataTableLayouts}). The layout to modify. This
-should virually always be the object returned by \code{basic_table}.}
+should virtually always be the object returned by \code{basic_table}.}
 
 \item{colspan_trt_map}{(\code{data.frame}). The spanning label map for
 the main columns, as given by \code{create_colspan_map}.}
@@ -30,7 +30,7 @@ be used as comparator levels, or \emph{if only one reference path is
 given}, \code{NULL}.}
 
 \item{combo_map_df}{(\code{data.frame} or \code{NULL}). A combination data
-frame as defined by \code{\link[rtables:add_overall_level]{rtables::add_combo_levels()}} with an additional
+frame as defined by \code{\link[=add_combo_levels]{add_combo_levels()}} with an additional
 \code{is_control} column indicating whether the virtual level will
 act as a reference (\code{TRUE}) or active (\code{FALSE}) group.}
 
@@ -114,7 +114,7 @@ appear in \code{colspan_trt_map}, all combinations will be added to the
 appropriate group within the map based on \code{combo_map_df$is_control}
 (assumed to be \code{FALSE} if the column is missing), with a warning.
 
-If some combination levels \emph{do} apppear in \code{combo_map_df} but
+If some combination levels \emph{do} appear in \code{combo_map_df} but
 others do not, a warning will be thrown but the missing combination
 levels will \emph{not} be added to the treatment map.
 
