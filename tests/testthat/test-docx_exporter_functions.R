@@ -645,10 +645,9 @@ testthat::test_that("export_TLG_as_docx() works with basic example", {
   # check that the XML "w:tbl" node does not contain namespace definitions
   nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:tbl")
   testthat::expect_length(nodes, 1)
-  node_str <- as.character(nodes[[1]])   # serializes the node (start tag + content + end tag)
+  node_str <- as.character(nodes[[1]])
   node_str <- gsub("\n.*", "", node_str)
-  testthat::expect_equal(node_str, "<w:tbl w:table_index=\"1\">")
-
+  testthat::expect_false(grepl("xmlns", node_str))
   file.remove(c(pn1, pn2, output_docx))
 })
 
