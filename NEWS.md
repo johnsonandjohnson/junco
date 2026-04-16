@@ -2,6 +2,7 @@
 
 ### Fixed
 
+- Added option to perform `a_summarize_ancova_j` in a layout with a combined column facet (#117) + slight change in return value for `s_ancova_j()`, now we have n_fit instead of n returned
 - Fixed `s_kaplan_meier()` range censoring indicator handling to no longer produce `NA` values in the output when either all subjects are censored or none are censored.
 - Aligned `a_freq_resp_var_j()` with `a_freq_j()` by adding `.formats` and `na_str` parameters to allow user customization of output formatting and NA string representation (#67).
 - Fixed the hanging indent in the first column of the body of the table (#138)
