@@ -1,8 +1,10 @@
-#' `tryCatch` around `stat::t.test`
+#' @noRd
+#' 
+#' @description `tryCatch` around `stats::t.test`
 #'
-#' Captures errors when executing [stat::t.test].
+#' Captures errors when executing [stats::t.test].
 #'
-#' @inheritParams stat::t.test
+#' @inheritParams stats::t.test
 #'
 #' @return A list with core items as from `t.test.default` and `error_text` for the captured error.
 #'
@@ -194,7 +196,7 @@ s_aval_chg_col23_diff <- function(
         variables = variables,
         weights_emmeans = weights_emmeans,
         method_combo = method_combo,
-        weights_combo = weights_combo      
+        weights_combo = weights_combo
       )
     }
   }
@@ -434,7 +436,7 @@ a_summarize_aval_chg_diff_j <- function(
     weights_combo = NULL) {
   denom <- match.arg(denom)
   method_combo <- match.arg(method_combo)
-  
+
   if (comp_btw_group && is.null(ref_path)) {
     stop("ref_path cannot be NULL, please specify it. See ?get_ref_info for details.")
   }
@@ -565,7 +567,7 @@ a_summarize_aval_chg_diff_j <- function(
       cur_lvl = cur_lvl,
       weights_emmeans = weights_emmeans,
       method_combo = method_combo,
-      weights_combo = weights_combo     
+      weights_combo = weights_combo
     )
 
     if (comp_btw_group && indiffcol) {

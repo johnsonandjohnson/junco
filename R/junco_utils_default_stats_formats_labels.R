@@ -198,7 +198,7 @@ junco_default_stats <- list(
     "sd",
     "se",
     "mean_sd",
-    "mean_se",        
+    "mean_se",
     "mean_ci",
     "mean_sei",
     "mean_sdi",
@@ -212,7 +212,7 @@ junco_default_stats <- list(
     "iqr",
     "range",
     "min",
-    "max",            
+    "max",
     "median_range",
     "cv",
     "geom_mean",
@@ -228,9 +228,8 @@ junco_default_stats <- list(
     "lsmean_ci",
     "lsmean_diff",
     "lsmean_diff_ci",
-    
     "lsmean_diffci",
-    "pval"            
+    "pval"
   ),
   summarize_mmrm = c(
     "n",
