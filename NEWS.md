@@ -15,6 +15,7 @@
 - DOCX exporter fixed watermark location in case of listings
 - DOCX exporter updated table border width from 0.75 to 0.875 inches
 - DOCX exporter when having vertical pagination in tables or listings, fixed the rows misalignment from page 2 and below compared to RTF
+- Fixed bug in `s_summarize_desc_j()` when applied to almost constant data due to behavior from `t.test.default()` (#257)
 
 ### Changed
 
