@@ -124,10 +124,14 @@ to the combination collapsed into a single combined level.
 \item{weights_combo}{(\code{string})\cr Weights for the contrasts of the combined levels.
 \itemize{
 \item \code{equal} 1/(number of levels from arm variable included in the combination)
-\item \code{proportional}, \code{proportional_marginal} weight for each level included in the combination is proportional to number of observations in that level
-\cr The difference between \code{proportional} and \code{proportional_marginal} is only relevant when the model includes an interaction between arm and other factor variable (\code{interaction_item}).
-\cr \code{proportional_marginal} interprets proportional over all levels of \code{interaction_item}, ie, the same weights will be used for all levels of \code{interaction_item}.
-\cr For \code{proportional} the weights will be derived within the requested level (\code{interaction_y}) for \code{interaction_item}.
+\item \code{proportional}, \code{proportional_marginal} weight for each level included in
+the combination is proportional to number of observations in that level
+\cr The difference between \code{proportional} and \code{proportional_marginal} is only
+relevant when the model includes an interaction between arm and other factor variable (\code{interaction_item}).
+\cr \code{proportional_marginal} interprets proportional over all levels of
+\code{interaction_item}, ie, the same weights will be used for all levels of \code{interaction_item}.
+\cr For \code{proportional} the weights will be derived within
+the requested level (\code{interaction_y}) for \code{interaction_item}.
 }}
 }
 \value{
