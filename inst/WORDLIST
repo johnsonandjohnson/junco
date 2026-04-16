@@ -9,6 +9,7 @@ Analyse
 CMH
 Changelog
 Colwidths
+Cov
 Customizations
 DOCX
 DataFrame
@@ -79,6 +80,9 @@ docx
 dps
 dunnett
 eg
+emmeans
+estimand
+estimands
 exprs
 firstcat
 flextable
@@ -100,9 +104,12 @@ jj
 jjcsformat
 keeprowtext
 lastcat
+ldots
 lsm
 lsmean
 lsmeans
+mathbf
+mathrm
 mmrm
 mmy
 monospace
@@ -124,6 +131,7 @@ postfun
 pre
 pseudocolumn
 px
+qquad
 rbmi
 removerowtext
 repo
