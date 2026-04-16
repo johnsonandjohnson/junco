@@ -12,6 +12,7 @@ fit_mmrm_j(
   cor_struct = "unstructured",
   weights_emmeans = "counterfactual",
   averages_emmeans = list(),
+  mult_adj_emmeans = c("none", "dunnett", "step-down-dunnett"),
   ...
 )
 }
@@ -45,6 +46,10 @@ will be excluded.}
 \item{averages_emmeans}{(\code{list})\cr optional named list of visit levels which should be averaged
 and reported along side the single visits.}
 
+\item{mult_adj_emmeans}{(\code{string})\cr whether to multiplicity adjust LS means contrast p-values and
+confidence intervals within visits when there are more than 2 treatment arms. Note that this cannot
+be combined with \code{averages_emmeans}. Either "none", "dunnett" or "step-down-dunnett".}
+
 \item{...}{additional arguments for \code{\link[mmrm:mmrm]{mmrm::mmrm()}}, in particular \code{reml} and options listed in
 \code{\link[mmrm:mmrm_control]{mmrm::mmrm_control()}}.}
 }
@@ -57,8 +62,8 @@ later on.
 \item \code{cov_estimate}: The matrix with the covariance matrix estimate.
 \item \code{diagnostics}: A list with model diagnostic statistics (REML criterion, AIC, corrected AIC, BIC).
 \item \code{lsmeans}: This is a list with data frames \code{estimates} and \code{contrasts}.
-The attributes \code{averages} and \code{weights} save the settings used
-(\code{averages_emmeans} and \code{weights_emmeans}).
+The attributes \code{averages}, \code{weights} and \code{mult_adj} save the settings used
+(\code{averages_emmeans}, \code{weights_emmeans} and \code{mult_adj_emmeans}).
 \item \code{vars}: The variable list.
 \item \code{labels}: Corresponding list with variable labels extracted from \code{data}.
 \item \code{cor_struct}: input.
@@ -99,8 +104,9 @@ variance parameters.
 }
 \note{
 This function has the \verb{_j} suffix to distinguish it from \code{\link[mmrm:fit_mmrm]{mmrm::fit_mmrm()}}.
-It is a copy from the \code{tern.mmrm} package and later will be replaced by tern.mmrm::fit_mmrm().
-No new features are included in this function here.
+It is modified from the \code{tern.mmrm} package.
+The new feature is the \code{mult_adj_emmeans} argument and its functionality. This could later
+be contributed upstream in \code{tern.mmrm}.
 }
 \examples{
 mmrm_results <- fit_mmrm_j(

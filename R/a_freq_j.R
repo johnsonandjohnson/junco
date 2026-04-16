@@ -33,8 +33,10 @@
 #' It is a data frame in the higher row-space than the current input df
 #' (which underwent row-splitting by the rtables splitting machinery).
 #'
-#' @param countsource Either `df` or `alt_df`.\cr
-#' When `alt_df` the counts will be based upon the alternative dataframe `alt_df`.\cr
+#' @param countsource Either `df`, `altdf`, or `altdf_subset`.\cr
+#' When `altdf` the counts will be based upon the alternative dataframe `alt_df`.\cr
+#' When `altdf_subset` the counts will be based upon `alt_df` but first restricted\cr
+#' to the levels/values of the current row split for `.var` (or to `val` when provided).\cr
 #' This is useful for subgroup processing,
 #' to present counts of subjects in a subgroup from the alternative dataframe.
 #'
@@ -86,7 +88,7 @@ s_freq_j <- function(
   id = "USUBJID",
   denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
   .N_col,
-  countsource = c("df", "altdf")
+  countsource = c("df", "altdf", "altdf_subset")
 ) {
   if (is.na(.var) || is.null(.var)) {
     stop("Argument .var cannot be NA or NULL.")
@@ -94,7 +96,7 @@ s_freq_j <- function(
 
   countsource <- match.arg(countsource)
 
-  if (countsource == "altdf") {
+  if (countsource %in% c("altdf", "altdf_subset")) {
     df <- alt_df
   }
 
@@ -633,7 +635,7 @@ a_freq_j <- function(
   extrablanklineafter = NULL,
   restr_columns = NULL,
   colgroup = NULL,
-  countsource = c("df", "altdf")
+  countsource = c("df", "altdf", "altdf_subset")
 ) {
   denom <- match.arg(denom)
   method <- match.arg(method)
@@ -682,7 +684,8 @@ a_freq_j <- function(
     label_map = label_map,
     .alt_df_full = .alt_df_full,
     denom_by = denom_by,
-    .stats = .stats
+    .stats = .stats,
+    countsource = countsource
   )
   # res_dataprep is list with elements
   # df .df_row val

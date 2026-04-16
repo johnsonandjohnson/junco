@@ -1,7 +1,7 @@
 Package: junco
 Title: Create Common Tables and Listings Used in Clinical Trials
-Version: 0.1.5
-Date: 2026-01-12
+Version: 0.1.6
+Date: 2026-04-01
 Authors@R: c(
     person("Gabriel", "Becker", , "gabembecker@gmail.com", role = c("cre", "aut"),
            comment = "Original creator of the package, and author of included formatters functions"),
@@ -9,12 +9,12 @@ Authors@R: c(
     person("Paul", "Jenkins", , "pjenkin2@its.jnj.com", role = c("aut")),
     person("Daniel", "Hofstaedter", , "dhofstae@its.jnj.com", role = c("aut")),
     person("Joseph", "Kovach", , "jkovach2@its.jnj.com", role = c("aut")),
-    person("David", "Munoz Tord", , "david.munoztord@mailbox.com", role = c("aut")),
+    person("David", "Munoz Tord", , "david.munoztord@mailbox.org", role = c("aut")),
     person("Daniel", "Sabanes Bove", , "daniel@rconis.com", role = c("aut")),
     person("Ezequiel", "Anokian", , "eanokia1@its.jnj.com", role = c("ctb")),
     person("Renfei", "Mao", , "rmao6@its.jnj.com", role = c("ctb")),
     person("Mrinal", "Das", , "mdas35@its.jnj.com", role = c("ctb")),
-    person("Wojciech", "Wojciak", , "wwojciak@its.jnj.com", role = c("ctb")),
+    person("Wojciech", "Wójciak", , "wwojciak@its.jnj.com", role = c("ctb")),
     person("Isaac", "Gravestock", role = "cph",
            comment = "Author of included rbmi functions"),
     person("Joe", "Zhu", role = "cph",
@@ -79,6 +79,7 @@ Suggests:
     readxl,
     rlang,
     tidyr,
-    pharmaverseadamjnj (>= 0.0.2)
+    pharmaverseadamjnj (>= 0.0.2),
+    multcomp
 VignetteBuilder: knitr
 Config/testthat/edition: 3
