@@ -628,7 +628,7 @@ col_struct_w_risk_diffs <- function(lyt,
     comp_level_map = comp_map,
     combo_levels_map = combo_map_df,
     .pre = .rr_pre,
-    post = .rr_post
+    .post = .rr_post
   )
 
 
