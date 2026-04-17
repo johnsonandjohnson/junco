@@ -1,5 +1,5 @@
 #' @noRd
-#' 
+#'
 #' @description `tryCatch` around `stats::t.test`
 #'
 #' Captures errors when executing [stats::t.test].
