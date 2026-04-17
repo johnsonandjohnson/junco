@@ -296,16 +296,13 @@ h_ancova_est_combined <- function(
     w_start[["weights2"]][w_start[[interaction_item]] == interaction_y] <- w2
   }
 
-  contr <- emmeans::contrast(
-    emmeans_fit,
-    list(
-      setNames(list(w_start[["weights1"]]), "Estimate contrast"),
-      setNames(list(w_start[["weights2"]]), "Estimate contrast vs ref")
-    ),
-    # Derive confidence intervals, t-tests and p-values.
-    infer = TRUE,
-    # Do not adjust the p-values for multiplicity.
-    adjust = "none")
+  contr <- emmeans::contrast(emmeans_fit,
+                             list(setNames(list(w_start[["weights1"]]), "Estimate contrast"),
+                                  setNames(list(w_start[["weights2"]]), "Estimate contrast vs ref")),
+                             # Derive confidence intervals, t-tests and p-values.
+                             infer = TRUE,
+                             # Do not adjust the p-values for multiplicity.
+                             adjust = "none")
 
   contr_df <- as.data.frame(contr)
 
@@ -408,18 +405,15 @@ s_ancova_j <- function(
     new_levels <- orig_levels
     new_levels[orig_levels %in% sum_level_start] <- "Combined"
 
-    df[[arm]] <- factor(
-      as.character(df[[arm]]),
-      levels = orig_levels,
-      labels = new_levels)
-    .df_row[[arm]] <- factor(
-      as.character(.df_row[[arm]]),
-      levels = orig_levels,
-      labels = new_levels)
-    .ref_group[[arm]] <- factor(
-      as.character(.ref_group[[arm]]),
-      levels = orig_levels,
-      labels = new_levels)
+    df[[arm]] <- factor(as.character(df[[arm]]),
+                        levels = orig_levels,
+                        labels = new_levels)
+    .df_row[[arm]] <- factor(as.character(.df_row[[arm]]),
+                             levels = orig_levels,
+                             labels = new_levels)
+    .ref_group[[arm]] <- factor(as.character(.ref_group[[arm]]),
+                                levels = orig_levels,
+                                labels = new_levels)
   }
 
   ### sparse data problems with underlying ancova function
@@ -673,18 +667,15 @@ a_summarize_ancova_j <- function(
     ref_path,
     .spl_context,
     ...,
-    .stats =
-      c(
-        "n",
-        "mean_sd",
-        "median",
-        "range",
-        "quantiles",
-        "lsmean_se",
-        "lsmean_ci",
-        "lsmean_diffci",
-        "pval"
-      ),
+    .stats = c("n",
+               "mean_sd",
+               "median",
+               "range",
+               "quantiles",
+               "lsmean_se",
+               "lsmean_ci",
+               "lsmean_diffci",
+               "pval"),
     .formats = NULL,
     .labels = NULL,
     .indent_mods = NULL) {

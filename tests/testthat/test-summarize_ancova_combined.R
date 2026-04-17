@@ -14,10 +14,9 @@ iris_plus <- iris |>
 iris_plus2 <- iris_plus |>
   group_by(Species) |>
   mutate(id = row_number()) |>
-  filter(
-    Species == "setosa" & id < 45 |
-    Species == "versicolor" & id < 30 |
-    Species == "virginica" & id < 50) |>
+  filter(Species == "setosa" & id < 45 |
+           Species == "versicolor" & id < 30 |
+           Species == "virginica" & id < 50) |>
   ungroup()
 
 
@@ -278,28 +277,29 @@ derive_from_sumfit <- function(.lm_fit,
       adjust = "none"
     )
 
-    derived_virginica <- as.numeric(
-      as.data.frame(sum_fit) |>
-      filter(Species == "virginica") |>
-      select(c("emmean", "lower.CL", "upper.CL")))
+    derived_virginica <-
+      as.numeric(as.data.frame(sum_fit) |>
+                   filter(Species == "virginica") |>
+                   select(c("emmean", "lower.CL", "upper.CL")))
 
-    derived_virginica_against_ref <- as.numeric(as.data.frame(sum_contrasts) |>
-      filter(contrast == "virginica - versicolor") |>
-      select(c("estimate", "lower.CL", "upper.CL")))
+    derived_virginica_against_ref <-
+      as.numeric(as.data.frame(sum_contrasts) |>
+                   filter(contrast == "virginica - versicolor") |>
+                   select(c("estimate", "lower.CL", "upper.CL")))
     derived_start <- c(derived_virginica, derived_virginica_against_ref)
 
     # derivations for combined
     derived_setosa <- as.numeric(as.data.frame(sum_fit) |>
-      filter(Species == "setosa") |>
-      select(c("emmean")))
+                                   filter(Species == "setosa") |>
+                                   select(c("emmean")))
 
     derived_comb <- weights_contrast["virginica"] * derived_virginica[1] +
       weights_contrast["setosa"] * derived_setosa[1]
     names(derived_comb) <- NULL
 
     derived_ref <- as.numeric(as.data.frame(sum_fit) |>
-      filter(Species == "versicolor") |>
-      pull(c("emmean")))
+                                filter(Species == "versicolor") |>
+                                pull(c("emmean")))
 
     # add estimate for diff
     derived_comb <- c(derived_comb, derived_comb - derived_ref)
@@ -617,11 +617,10 @@ test_that("a_summarize_ancova_j (s_ancova_j) with a combined column and method_c
 
   # use summarize_ancova on data where combined column is level of the input data
   iris_plus2_fix <- iris_plus2
-  iris_plus2_fix[["Species"]] <- factor(
-    as.character(iris_plus2_fix[["Species"]]),
-    levels = c("setosa", "versicolor", "virginica"),
-    labels = c("Combined: setosa + virginica", "versicolor",
-               "Combined: setosa + virginica"))
+  iris_plus2_fix[["Species"]] <- factor(as.character(iris_plus2_fix[["Species"]]),
+                                        levels = c("setosa", "versicolor", "virginica"),
+                                        labels = c("Combined: setosa + virginica", "versicolor",
+                                                   "Combined: setosa + virginica"))
 
   weights_emmeans <- "equal"
   result2 <- basic_table() |>
@@ -646,8 +645,11 @@ test_that("a_summarize_ancova_j (s_ancova_j) with a combined column and method_c
   expect_equal(numbers_1, numbers_2)
 })
 
-test_that("a_summarize_ancova_j (s_ancova_j) works as expected in
-          combined column for model with interaction 3 sets of weights_combo", {
+test_that("a_summarize_ancova_j combined column and interaction, diff versions for weights_combo", {
+  # nolint start
+  # longer description lintr
+  # a_summarize_ancova_j (s_ancova_j) works as expected in combined column for model with interaction 3 sets of weights_combo"
+  # nolint end
   model_variables <- list(arm = "Species", covariates = c("Color", "Species * Color"))
   lm_fit <- stats::lm(formula = Sepal.Length ~ Species + Color + Species * Color, data = iris_plus2)
 
@@ -709,14 +711,14 @@ test_that("a_summarize_ancova_j (s_ancova_j) works as expected in
 
   # confirm that non-combined columns match with results from tern::summarize_ancova
   # compare_ancova_tbl heavily depends on the used model, updates to model would require detailed review of coefficients
-  summary_numbers <- compare_ancova_tbl(result_1,
-                                        result,
-                                        interaction = TRUE,
-                                        .lm_fit = lm_fit,
-                                        # equal weights for combo
-                                        weights_red = c(virginica = 0.5, setosa = 0.5),
-                                        weights_blue = c(virginica = 0.5, setosa = 0.5)
-  )
+  summary_numbers <-
+    compare_ancova_tbl(result_1,
+                       result,
+                       interaction = TRUE,
+                       .lm_fit = lm_fit,
+                       # equal weights for combo
+                       weights_red = c(virginica = 0.5, setosa = 0.5),
+                       weights_blue = c(virginica = 0.5, setosa = 0.5))
 
   expect_equal(summary_numbers[["tbl1"]], summary_numbers[["tbl2"]])
 
@@ -738,13 +740,13 @@ test_that("a_summarize_ancova_j (s_ancova_j) works as expected in
   print(w_red)
   print(w_blue)
 
-  summary_numbers2 <- compare_ancova_tbl(result_1,
-                                         result_b,
-                                         interaction = TRUE,
-                                         .lm_fit = lm_fit,
-                                         weights_blue = w_blue,
-                                         weights_red = w_red
-  )
+  summary_numbers2 <-
+    compare_ancova_tbl(result_1,
+                       result_b,
+                       interaction = TRUE,
+                       .lm_fit = lm_fit,
+                       weights_blue = w_blue,
+                       weights_red = w_red)
 
   expect_equal(summary_numbers2[["tbl2_comb"]], summary_numbers2[["comb_model"]])
 
@@ -756,13 +758,13 @@ test_that("a_summarize_ancova_j (s_ancova_j) works as expected in
   print(w_red)
   print(w_blue)
 
-  summary_numbers3 <- compare_ancova_tbl(result_1,
-                                         result_c,
-                                         interaction = TRUE,
-                                         .lm_fit = lm_fit,
-                                         weights_blue = w_blue,
-                                         weights_red = w_red
-  )
+  summary_numbers3 <-
+    compare_ancova_tbl(result_1,
+                       result_c,
+                       interaction = TRUE,
+                       .lm_fit = lm_fit,
+                       weights_blue = w_blue,
+                       weights_red = w_red)
 
   expect_equal(summary_numbers3[["tbl2_comb"]], summary_numbers3[["comb_model"]])
 })
