@@ -30,7 +30,7 @@ on:
           - rhub
           - revdepcheck
           - hotfix_v0-1-1
-          - hotfix_v0-1-2
+          - hotfix_v0-1-3
 
 jobs:
   revdepcheck:
@@ -42,6 +42,6 @@ jobs:
   hotfix_v0-1-1:
     name: hotfix v0.1.1🔥
     uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-1.yaml@dev
-  hotfix_v0-1-2:
+  hotfix_v0-1-3:
     name: hotfix v0.1.3🔥
-    uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-2.yaml@dev
+    uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-3.yaml@dev
