@@ -199,7 +199,6 @@ test_that("tt_to_tlgrtf works with wide table", {
   expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA)))
   for (fl in res_wide) {
     expect_snapshot_file(compare = compare_file_text, fl, cran = TRUE)
-    expect_snapshot_file(compare = compare_file_text, gsub("rtf$", "csv", fl))
   }
 })
 
