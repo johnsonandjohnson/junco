@@ -1357,14 +1357,14 @@ tt_to_flextable_j <- function(
     )
   }
 
-  footers_with_blank_line <- c()
   if (length(formatters::all_footers(tt)) > 0 && isTRUE(integrate_footers)) {
-    footers_with_blank_line <- formatters::all_footers(tt)
-    footers_with_blank_line[1] <- paste0("\n", footers_with_blank_line[1])
-    footers_with_blank_line <- strmodify(footers_with_blank_line, string_map)
-    flx <- flextable::add_footer_lines(flx, values = footers_with_blank_line) |>
+    footers <- formatters::all_footers(tt)
+    footers <- strmodify(footers, string_map)
+    footers_1row <- paste(footers, collapse = "\n")
+    footers_1row <- paste0("\n", footers_1row)
+    flx <- flextable::add_footer_lines(flx, values = footers_1row) |>
       flextable::border(part = "footer",
-                        i = length(footers_with_blank_line),
+                        i = length(footers_1row),
                         border.bottom = border)
   }
 
@@ -2052,10 +2052,9 @@ export_graph_as_docx <- function(g = NULL,
 
   # set the Footers
   if (!is.null(footers)) {
-    footers[1] <- paste0("\n", footers[1])
-  }
-  for (line in footers) {
-    flx <- flextable::add_footer_lines(flx, values = line)
+    footers_1row <- paste(footers, collapse = "\n")
+    footers_1row <- paste0("\n", footers_1row)
+    flx <- flextable::add_footer_lines(flx, values = footers_1row)
   }
 
   flx <- insert_footer_text(flx, tblid)
