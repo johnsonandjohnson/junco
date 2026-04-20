@@ -48,9 +48,26 @@ tt_to_tlgrtf <- function(
     one_table = TRUE,
     border_mat = make_header_bordmat(obj = tt),
     round_type = obj_round_type(tt),
+    alignments = list(),
+    validate = TRUE,
     export_csv = FALSE,
     output_csv_directory = NULL,
     ...) {
+  
+  if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
+    if (!rtables::validate_table_struct(tt)) {
+      message(
+        "Invalid table structure detected. This may cause issues in the output. ",
+        "The validation process failed, proceed with caution."
+      )
+    }
+  } else if (!validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
+    if (rtables::validate_table_struct(tt)) {
+      message(
+        "Table structure validation succeeded. You should not need to set validate=FALSE."
+      )
+    }
+  }
   
   if (tlgtype != "Listing") {
     pagenum <- FALSE
@@ -196,6 +213,7 @@ tt_to_tlgrtf <- function(
           markup_df = markup_df,
           border_mat = pag_bord_mats[[i]],
           round_type = round_type,
+          alignments = alignments,
           export_csv = export_csv,
           output_csv_directory = output_csv_directory,
           label_width_ins = label_width_ins,
@@ -222,6 +240,7 @@ tt_to_tlgrtf <- function(
           # colwidths are already on the pags since they are mpfs
           border_mat = pag_bord_mats,
           round_type = round_type,
+          alignments = alignments,
           export_csv = export_csv,
           output_csv_directory = output_csv_directory,
           label_width_ins = label_width_ins,
@@ -405,6 +424,7 @@ tt_to_tlgrtf <- function(
     pagenum = pagenum,
     bottom_borders = border_mat,
     print.hux = !is.null(fname),
+    alignments = alignments,
     ...
   )
 }
