@@ -15,6 +15,7 @@
 - DOCX exporter fixed watermark location in case of listings
 - DOCX exporter updated table border width from 0.75 to 0.875 inches
 - DOCX exporter when having vertical pagination in tables or listings, fixed the rows misalignment from page 2 and below compared to RTF
+- Fixed bug in `s_summarize_desc_j()` when applied to almost constant data due to behavior from `t.test.default()` (#257)
 
 ### Changed
 
@@ -22,7 +23,7 @@
 - changed label from "experimental" to "stable" for `default_stats_formats_labels`
 - refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
 - created generic wrapper function `export_TLG_as_docx()`, which now calls `export_as_docx_j()` and `export_graph_as_docx()` (#173)
-- Functions `export_as_docx_j()` and `export_graph_as_docx()` still exist but are not internal, i.e. not exported
+- Functions `export_as_docx_j()` and `export_graph_as_docx()` still exist but are now internal, i.e. not exported
 - updated vignette to explain correctly how to insert newlines in the headers of Tables and Listings (#179)
 - "watermark" argument in the docx exporter is now a String instead of a Boolean (#181)
 - faster docx unit tests (#197)
@@ -32,6 +33,7 @@
 - Fix old TODOs in tests
 - docx exporter added missing defaults (#186)
 - Changed all snapshot tests to `cran = TRUE`
+- Footnotes in docx outputs are now 1 table row/cell
 
 ### Added
 

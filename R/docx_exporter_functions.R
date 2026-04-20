@@ -3,6 +3,47 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
+remove_trHeight_nodes_XML <- function(doc) {
+  # this function is only called when exporting a table or listing.
+  # in the parsing process, there is a large spacing separating the rows.
+  # in 'trHeight' nodes, we should not have both 'w:val' and 'w:hRule'
+  # attributes together:
+  # <w:trHeight w:val="617" w:hRule="auto"/>
+  # Ideally, we'd like to remove only "w:hRule" attribute, but a simpler
+  # solution is to completely remove all 'trHeight' nodes
+  nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:trHeight")
+  # remove all row height nodes entirely
+  xml2::xml_remove(nodes)
+}
+
+fix_namespaces_Graphs_XML <- function(doc) {
+  # nolint start
+  # This function is only called when exporting a Graph, and
+  # fixes the "parsing failed" error.
+  # The root cause of this error is that namespace definitions are moved to the parent node:
+  #   <w:tbl
+  #     xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+  #     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+  # but they should appear at the children level:
+  #   <a:graphicFrameLocks
+  #     xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" noChangeAspect="1"/>
+  #   <a:graphic
+  #     xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+  #   <pic:pic
+  #     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+  #
+  # in order to prevent this moving, we just remove those 2 namespace definitions
+  # from the parent node 'w:tbl'
+  # nolint end
+
+  # remove namespaces from parent node
+  nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:tbl")
+  for (node in nodes) {
+    xml2::xml_attr(node, "xmlns:a") <- NULL
+    xml2::xml_attr(node, "xmlns:pic") <- NULL
+  }
+}
+
 align_rows_with_rtf <- function(doc) {
   # when we have vertical pagination in the case of tables and listings,
   # from page 2 onwards, the rows visually look a little bit shifted downwards
@@ -117,6 +158,9 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation, tlgtype) {
     # to shift upwards, decrease margin_top
     margin_left <- -24
     margin_top <- ifelse(tlgtype == "Listing", 165, 176)
+    if (tlgtype == "Figure") {
+      margin_left <- -30
+    }
   }
 
 
@@ -179,7 +223,7 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation, tlgtype) {
       '  xmlns:w10="urn:schemas-microsoft-com:office:word"',
       '  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"',
       '  xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing"',
-      '  xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14">',
+      '  xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14"',
       '  xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"',
       '  xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"',
       '>',
@@ -1313,15 +1357,14 @@ tt_to_flextable_j <- function(
     )
   }
 
-
-  footers_with_blank_line <- c()
   if (length(formatters::all_footers(tt)) > 0 && isTRUE(integrate_footers)) {
-    footers_with_blank_line <- formatters::all_footers(tt)
-    footers_with_blank_line[1] <- paste0("\n", footers_with_blank_line[1])
-    footers_with_blank_line <- strmodify(footers_with_blank_line, string_map)
-    flx <- flextable::add_footer_lines(flx, values = footers_with_blank_line) |>
+    footers <- formatters::all_footers(tt)
+    footers <- strmodify(footers, string_map)
+    footers_1row <- paste(footers, collapse = "\n")
+    footers_1row <- paste0("\n", footers_1row)
+    flx <- flextable::add_footer_lines(flx, values = footers_1row) |>
       flextable::border(part = "footer",
-                        i = length(footers_with_blank_line),
+                        i = length(footers_1row),
                         border.bottom = border)
   }
 
@@ -1860,6 +1903,7 @@ export_as_docx_j <- function(
     }
     add_vertical_pagination_XML(doc)
     remove_security_popup_page_numbers_XML(doc, tlgtype, pagenum)
+    remove_trHeight_nodes_XML(doc)
     if (!is.null(watermark)) {
       insert_fake_watermark_XML(doc, watermark, orientation, tlgtype)
     }
@@ -2008,10 +2052,9 @@ export_graph_as_docx <- function(g = NULL,
 
   # set the Footers
   if (!is.null(footers)) {
-    footers[1] <- paste0("\n", footers[1])
-  }
-  for (line in footers) {
-    flx <- flextable::add_footer_lines(flx, values = line)
+    footers_1row <- paste(footers, collapse = "\n")
+    footers_1row <- paste0("\n", footers_1row)
+    flx <- flextable::add_footer_lines(flx, values = footers_1row)
   }
 
   flx <- insert_footer_text(flx, tblid)
@@ -2071,6 +2114,7 @@ export_graph_as_docx <- function(g = NULL,
   doc <- officer::body_set_default_section(doc, section_properties)
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
   add_hanging_indent_in_title_XML(doc)
+  fix_namespaces_Graphs_XML(doc)
   if (!is.null(watermark)) {
     insert_fake_watermark_XML(doc, watermark, orientation, "Figure")
   }
