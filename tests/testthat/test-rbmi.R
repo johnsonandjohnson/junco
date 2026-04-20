@@ -128,6 +128,12 @@ test_that("make_rbmi_cluster handles existing cluster", {
     }
   )
   
+  # Load junco on each worker
+  parallel::clusterEvalQ(cl, {
+    library(junco)
+    NULL
+  })
+  
   if (!is.null(cl)) {
     result <- make_rbmi_cluster(cl)
     expect_identical(result, cl)
