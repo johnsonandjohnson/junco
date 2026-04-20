@@ -47,6 +47,7 @@ tt_to_tlgrtf <- function(
     combined_rtf = FALSE,
     one_table = TRUE,
     border_mat = make_header_bordmat(obj = tt),
+    round_type = obj_round_type(tt),
     export_csv = FALSE,
     output_csv_directory = NULL,
     ...) {
@@ -119,7 +120,7 @@ tt_to_tlgrtf <- function(
       )
     }
     if (methods::is(tt, "VTableTree")) {
-      hdrmpf <- matrix_form(tt[1, , keep_topleft = TRUE])
+      hdrmpf <- matrix_form(tt[1, , keep_topleft = TRUE], round_type = round_type)
     } else if (methods::is(tt, "list") && methods::is(tt[[1]], "MatrixPrintForm")) {
       hdrmpf <- tt[[1]]
     } else {
@@ -136,7 +137,8 @@ tt_to_tlgrtf <- function(
       margins = margins,
       lpp = NULL,
       nosplitin = nosplitin,
-      verbose = verbose
+      verbose = verbose,
+      round_type = round_type
     ) ##
     if (has_force_pag(tt)) {
       nslices <- which(
@@ -193,9 +195,10 @@ tt_to_tlgrtf <- function(
           string_map = string_map,
           markup_df = markup_df,
           border_mat = pag_bord_mats[[i]],
-          label_width_ins = label_width_ins,
+          round_type = round_type,
           export_csv = export_csv,
           output_csv_directory = output_csv_directory,
+          label_width_ins = label_width_ins,
           ...
         )
       }
@@ -218,9 +221,10 @@ tt_to_tlgrtf <- function(
           colwidths = colwidths, ## this is largely ignored see note in docs
           # colwidths are already on the pags since they are mpfs
           border_mat = pag_bord_mats,
-          label_width_ins = label_width_ins,
+          round_type = round_type,
           export_csv = export_csv,
           output_csv_directory = output_csv_directory,
+          label_width_ins = label_width_ins,
           ...
         )
       } else if (!is.null(file)) { # only one page after pagination
@@ -244,7 +248,8 @@ tt_to_tlgrtf <- function(
         junco:::tt_to_tbldf,
         fontspec = fontspec,
         string_map = string_map,
-        markup_df = markup_df
+        markup_df = markup_df,
+        round_type = round_type
       )
       if (one_table) {
         df <- do.call(
@@ -268,11 +273,14 @@ tt_to_tlgrtf <- function(
         tt,
         fontspec = fontspec,
         string_map = string_map,
-        markup_df = markup_df
+        markup_df = markup_df,
+        round_type = round_type
       )
     }
   } else {
     df <- tt[, listing_dispcols(tt)]
+    # apply formats and round_type and return df as a dataframe to input in gentlg
+    df <- listingdf_dataframe_formats(df, round_type = round_type)
   }
   
   ## we only care about the col labels here...
@@ -310,7 +318,8 @@ tt_to_tlgrtf <- function(
       utils::head(tt, 1),
       indent_rownames = FALSE,
       expand_newlines = FALSE,
-      fontspec = fontspec
+      fontspec = fontspec,
+      round_type = round_type
     )
     colinfo <- junco:::mpf_to_colspan(
       mpf,
