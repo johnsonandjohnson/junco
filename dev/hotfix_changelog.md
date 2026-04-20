@@ -42,7 +42,6 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
         * Added `export_csv` and `output_csv_directory` arguments.
         * Added internal helper `get_output_csv_filename()`.
         * Added `label_width_ins = label_width_ins` to all recursive pagination calls so formatting isn't lost on multi-page outputs.
-        * Ensured `validate` and `round_type` arguments are present and passed.
         * Fixed logic to retain `main_title` and `main_footer` when exporting an empty listing.
     * `a_freq_j()`, `s_freq_j()`, `h_a_freq_dataprep()`: 
         * Plumbed the `countsource` argument through the call stack to prevent failures when `countsource = "altdf"` in nested splits.
