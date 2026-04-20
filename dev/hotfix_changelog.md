@@ -13,20 +13,18 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
 **Target Legacy Version(s):** [e.g., v0.1.1, v0.1.2]  
 **Mainline PR:** [Link to the original fix merged into `main`]  
 
-### 🐛 The Bug
+### The Bug
 * **Impact:** [Briefly describe what broke in production and why PM approved the hotfix]
 * **Root Cause:** [1-2 sentences on the technical reason it failed]
 
-### 🔪 Surgical Changes
+### Surgical Changes
 * **Primary Function(s) Fixed:**
     * `[e.g., a_freq_j()]`
-* **Injected Dependencies:** *(Child functions included in the hotfix file to ensure the package uses the updated code, bypassing the locked namespace)*
-    * `[e.g., child_function_a()]`
-    * `[e.g., child_function_b()]`
 
-### 🧪 Testing & CI Notes
+
+### Testing & CI Notes
 * **Snapshot Changes:** [None / Expected due to math correction / Link to legacy PR updating expected snapshots]
-* **Runner Quirks:** [None / e.g., "Skipped `test-rbmi.R` due to GitHub Actions core limits"]
+* **Runner Quirks:** [None / e.g., "Skipped `test-rbmi.R` due to GitHub Actions"]
 
 
 **INSERT BELOW**
