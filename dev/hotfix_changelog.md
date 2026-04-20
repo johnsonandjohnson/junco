@@ -26,6 +26,7 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
 * **Runner Quirks:** [None / e.g., "Skipped `test-rbmi.R` due to GitHub Actions"]
 
 **INSERT BELOW**
+
 ---
 
 ## Hotfixes #165, #178, and #221 - 2026-04-20
