@@ -80,7 +80,7 @@ h_ancova_est_single <- function(emmeans_fit,
     level = conf_level
   )
 
-  sum_fit_level <- sum_fit[sum_fit[[arm]] == sum_level, ]
+  sum_fit_level <- sum_fit[sum_fit[[arm]] == sum_level, , drop = FALSE]
 
   # Get the index of the ref arm
   if (interaction_y != FALSE) {
