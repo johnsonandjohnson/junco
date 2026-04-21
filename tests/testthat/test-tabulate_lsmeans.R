@@ -203,3 +203,43 @@ test_that("a_lsmeans can show two- and one-sided p-values correctly", {
   )
   expect_snapshot(cran = TRUE, result_one_sided_greater)
 })
+
+test_that("a_lsmeans works well together with subgroup variable", {
+  mmrm_results <- fit_mmrm_j(
+    vars = list(
+      response = "FEV1",
+      covariates = "RACE",
+      id = "USUBJID",
+      arm = "ARMCD",
+      visit = "AVISIT",
+      subgroup = "SEX"
+    ),
+    data = mmrm::fev_data,
+    cor_struct = "unstructured",
+    weights_emmeans = "equal"
+  )
+  df <- broom::tidy(mmrm_results)
+  dat_adsl <- mmrm::fev_data |>
+    dplyr::select(USUBJID, ARMCD, SEX) |>
+    unique()
+  lyt <- basic_table() |>
+    split_cols_by("ARMCD") |>
+    add_colcounts() |>
+    split_rows_by("SEX") |> 
+    split_rows_by("AVISIT") |>
+    analyze(
+      "ARMCD",
+      afun = a_lsmeans,
+      show_labels = "hidden",
+      na_str = default_na_str(),
+      extra_args = list(
+        ref_path = c("ARMCD", mmrm_results$ref_level)
+      )
+    )
+  result <- build_table(
+    lyt,
+    df = df,
+    alt_counts_df = dat_adsl
+  )
+  expect_snapshot(cran = TRUE, result)
+})

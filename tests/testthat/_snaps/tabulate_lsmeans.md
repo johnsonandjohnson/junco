@@ -301,3 +301,94 @@
           Relative Reduction (%)                                                    -10.5%         
           p-value                                                                   <0.001         
 
+# a_lsmeans works well together with subgroup variable
+
+    Code
+      result
+    Output
+                                                              PBO                       TRT          
+                                                            (N=105)                   (N=95)         
+      ———————————————————————————————————————————————————————————————————————————————————————————————
+      Male                                                                                           
+        VIS1                                                                                         
+          n                                                   30                        32           
+          Adjusted Mean (SE)                            31.245 (1.116)            37.258 (1.089)     
+            Adjusted Mean 95% CI                       (29.039, 33.450)          (35.104, 39.412)    
+            Adjusted Mean (95% CI)                  31.245 (29.039, 33.450)   37.258 (35.104, 39.412)
+          Difference in Adjusted Means (SE)                                        6.014 (1.561)     
+            Difference in Adjusted Means 95% CI                                   (2.929, 9.098)     
+            Difference in Adjusted Means (95% CI)                              6.014 (2.929, 9.098)  
+            Relative Reduction (%)                                                    -19.2%         
+            p-value                                                                   <0.001         
+        VIS2                                                                                         
+          n                                                   35                        30           
+          Adjusted Mean (SE)                            38.209 (0.841)            43.467 (0.898)     
+            Adjusted Mean 95% CI                       (36.548, 39.871)          (41.691, 45.242)    
+            Adjusted Mean (95% CI)                  38.209 (36.548, 39.871)   43.467 (41.691, 45.242)
+          Difference in Adjusted Means (SE)                                        5.258 (1.232)     
+            Difference in Adjusted Means 95% CI                                   (2.822, 7.693)     
+            Difference in Adjusted Means (95% CI)                              5.258 (2.822, 7.693)  
+            Relative Reduction (%)                                                    -13.8%         
+            p-value                                                                   <0.001         
+        VIS3                                                                                         
+          n                                                   35                        23           
+          Adjusted Mean (SE)                            42.884 (0.652)            46.861 (0.799)     
+            Adjusted Mean 95% CI                       (41.593, 44.175)          (45.279, 48.443)    
+            Adjusted Mean (95% CI)                  42.884 (41.593, 44.175)   46.861 (45.279, 48.443)
+          Difference in Adjusted Means (SE)                                        3.977 (1.036)     
+            Difference in Adjusted Means 95% CI                                   (1.926, 6.027)     
+            Difference in Adjusted Means (95% CI)                              3.977 (1.926, 6.027)  
+            Relative Reduction (%)                                                     -9.3%         
+            p-value                                                                   <0.001         
+        VIS4                                                                                         
+          n                                                   33                        31           
+          Adjusted Mean (SE)                            47.511 (1.707)            52.571 (1.759)     
+            Adjusted Mean 95% CI                       (44.134, 50.888)          (49.091, 56.050)    
+            Adjusted Mean (95% CI)                  47.511 (44.134, 50.888)   52.571 (49.091, 56.050)
+          Difference in Adjusted Means (SE)                                        5.059 (2.451)     
+            Difference in Adjusted Means 95% CI                                   (0.211, 9.908)     
+            Difference in Adjusted Means (95% CI)                              5.059 (0.211, 9.908)  
+            Relative Reduction (%)                                                    -10.6%         
+            p-value                                                                    0.041         
+      Female                                                                                         
+        VIS1                                                                                         
+          n                                                   38                        34           
+          Adjusted Mean (SE)                            35.046 (1.004)            37.103 (1.047)     
+            Adjusted Mean 95% CI                       (33.062, 37.030)          (35.035, 39.172)    
+            Adjusted Mean (95% CI)                  35.046 (33.062, 37.030)   37.103 (35.035, 39.172)
+          Difference in Adjusted Means (SE)                                        2.058 (1.451)     
+            Difference in Adjusted Means 95% CI                                   (-0.810, 4.926)    
+            Difference in Adjusted Means (95% CI)                              2.058 (-0.810, 4.926) 
+            Relative Reduction (%)                                                     -5.9%         
+            p-value                                                                    0.158         
+        VIS2                                                                                         
+          n                                                   34                        41           
+          Adjusted Mean (SE)                            38.044 (0.847)            40.788 (0.777)     
+            Adjusted Mean 95% CI                       (36.371, 39.717)          (39.252, 42.325)    
+            Adjusted Mean (95% CI)                  38.044 (36.371, 39.717)   40.788 (39.252, 42.325)
+          Difference in Adjusted Means (SE)                                        2.744 (1.149)     
+            Difference in Adjusted Means 95% CI                                   (0.473, 5.015)     
+            Difference in Adjusted Means (95% CI)                              2.744 (0.473, 5.015)  
+            Relative Reduction (%)                                                     -7.2%         
+            p-value                                                                    0.018         
+        VIS3                                                                                         
+          n                                                   36                        35           
+          Adjusted Mean (SE)                            44.499 (0.647)            46.792 (0.649)     
+            Adjusted Mean 95% CI                       (43.219, 45.778)          (45.507, 48.076)    
+            Adjusted Mean (95% CI)                  44.499 (43.219, 45.778)   46.792 (45.507, 48.076)
+          Difference in Adjusted Means (SE)                                        2.293 (0.918)     
+            Difference in Adjusted Means 95% CI                                   (0.476, 4.109)     
+            Difference in Adjusted Means (95% CI)                              2.293 (0.476, 4.109)  
+            Relative Reduction (%)                                                     -5.2%         
+            p-value                                                                    0.014         
+        VIS4                                                                                         
+          n                                                   34                        36           
+          Adjusted Mean (SE)                            49.177 (1.680)            52.965 (1.632)     
+            Adjusted Mean 95% CI                       (45.854, 52.499)          (49.737, 56.193)    
+            Adjusted Mean (95% CI)                  49.177 (45.854, 52.499)   52.965 (49.737, 56.193)
+          Difference in Adjusted Means (SE)                                        3.788 (2.342)     
+            Difference in Adjusted Means 95% CI                                   (-0.845, 8.421)    
+            Difference in Adjusted Means (95% CI)                              3.788 (-0.845, 8.421) 
+            Relative Reduction (%)                                                     -7.7%         
+            p-value                                                                    0.108         
+
