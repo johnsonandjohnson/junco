@@ -163,6 +163,68 @@ test_that("h_get_average_visit_specs uses number of patients with any of the ave
   expect_identical(result, expected)
 })
 
+test_that("h_get_average_visit_specs works with subgroup", {
+  example <- get_lsmeans_example_subgroup()
+  averages <- list(
+    "VIS1+3" = c("VIS1", "VIS3"),
+    "VIS2+4" = c("VIS2", "VIS4")
+  )
+  result <- expect_silent(h_get_average_visit_specs(
+    emmeans_res = example$emmeans_res,
+    vars = example$vars,
+    averages = averages,
+    fit = example$fit
+  ))
+  expected <- list(
+    coefs = list(
+      `Male.PBO.VIS1+3` = c(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), 
+      `Female.PBO.VIS1+3` = c(0, 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), 
+      `Male.TRT.VIS1+3` = c(0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0), 
+      `Female.TRT.VIS1+3` = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0), 
+      `Male.PBO.VIS2+4` = c(0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0), 
+      `Female.PBO.VIS2+4` = c(0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0), 
+      `Male.TRT.VIS2+4` = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0), 
+      `Female.TRT.VIS2+4` = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5)
+    ),
+    grid = data.frame(
+      SEX = c("Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female"),
+      ARMCD = c("PBO", "PBO", "TRT", "TRT", "PBO", "PBO", "TRT", "TRT"), 
+      AVISIT = c("VIS1+3", "VIS1+3", "VIS1+3", "VIS1+3", "VIS2+4", "VIS2+4", "VIS2+4", "VIS2+4"
+    ), 
+      n = c(47L, 47L, 40L, 45L, 44L, 47L, 39L, 49L)
+    )
+  )
+  expect_identical(result, expected)
+})
+
+test_that("h_get_average_visit_specs works with subgroup and no arm", {
+  example <- get_lsmeans_example_no_arm_subgroup()
+  averages <- list(
+    "VIS1+3" = c("VIS1", "VIS3"),
+    "VIS2+4" = c("VIS2", "VIS4")
+  )
+  result <- expect_silent(h_get_average_visit_specs(
+    emmeans_res = example$emmeans_res,
+    vars = example$vars,
+    averages = averages,
+    fit = example$fit
+  ))
+  expected <- list(
+    coefs = list(
+      `Male.VIS1+3` = c(0.5, 0, 0, 0, 0.5, 0, 0, 0), 
+      `Female.VIS1+3` = c(0, 0.5, 0, 0, 0, 0.5, 0, 0), 
+      `Male.VIS2+4` = c(0, 0, 0.5, 0, 0, 0, 0.5, 0), 
+      `Female.VIS2+4` = c(0, 0, 0, 0.5, 0, 0, 0, 0.5)
+    ),
+    grid = data.frame(
+      SEX = c("Male", "Female", "Male", "Female"),
+      AVISIT = c("VIS1+3", "VIS1+3", "VIS2+4", "VIS2+4"),
+      n = c(87L, 92L, 83L, 96L)
+    )
+  )
+  expect_identical(result, expected)
+})
+
 # h_get_spec_visit_estimates ----
 
 test_that("h_get_spec_visit_estimates works as expected", {
@@ -510,6 +572,22 @@ test_that("h_average_visit_contrast_specs works also for 3 arms and many visits"
   expect_identical(result, expected)
 })
 
+test_that("h_average_visit_contrast_specs also works with subgroup", {
+  example <- get_lsmeans_example_subgroup()
+  single_specs <- h_single_visit_contrast_specs(
+    emmeans_res = example$emmeans_res,
+    vars = example$vars
+  )
+  averages <- list(
+    "VIS1+3" = c("VIS1", "VIS3"),
+    "VIS2+4" = c("VIS2", "VIS4")
+  )
+  result <- expect_silent(h_average_visit_contrast_specs(
+    specs = single_specs,
+    averages = averages
+  ))
+})
+
 # get_mmrm_lsmeans ----
 
 test_that("get_mmrm_lsmeans can calculate the LS mean results", {
@@ -697,34 +775,34 @@ test_that("get_mmrm_lsmeans works as expected with subgroup variable", {
   expect_snapshot_value(result, style = "deparse", cran = TRUE)
 })
 
-# test_that("get_mmrm_lsmeans also works with subgroup and averages of visits", {
-#   vars <- list(
-#     response = "FEV1",
-#     id = "USUBJID",
-#     arm = "ARMCD",
-#     visit = "AVISIT",
-#     subgroup = "SEX"
-#   )
-#   fit <- mmrm::mmrm(
-#     formula = FEV1 ~ ARMCD * AVISIT * SEX + us(AVISIT | USUBJID),
-#     data = mmrm::fev_data
-#   )
-#   conf_level <- 0.95
-#   weights <- "counterfactual"
-#   averages <- list(
-#     "VIS1+3" = c("VIS1", "VIS3"),
-#     "VIS2+4" = c("VIS2", "VIS4")
-#   )
-#   result <- get_mmrm_lsmeans(
-#     fit = fit,
-#     vars = vars,
-#     conf_level = conf_level,
-#     weights = weights,
-#     averages = averages
-#   )
+test_that("get_mmrm_lsmeans also works with subgroup and averages of visits", {
+  vars <- list(
+    response = "FEV1",
+    id = "USUBJID",
+    arm = "ARMCD",
+    visit = "AVISIT",
+    subgroup = "SEX"
+  )
+  fit <- mmrm::mmrm(
+    formula = FEV1 ~ ARMCD * AVISIT * SEX + us(AVISIT | USUBJID),
+    data = mmrm::fev_data
+  )
+  conf_level <- 0.95
+  weights <- "counterfactual"
+  averages <- list(
+    "VIS1+3" = c("VIS1", "VIS3"),
+    "VIS2+4" = c("VIS2", "VIS4")
+  )
+  result <- get_mmrm_lsmeans(
+    fit = fit,
+    vars = vars,
+    conf_level = conf_level,
+    weights = weights,
+    averages = averages
+  )
 
-#   expect_snapshot_value(result, style = "deparse", cran = TRUE)
-# })
+  expect_snapshot_value(result, style = "deparse", cran = TRUE)
+})
 
 # h_get_mult_adj_estimates ----
 

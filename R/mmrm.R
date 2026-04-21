@@ -66,6 +66,9 @@ h_labels <- function(vars, data) {
   if (h_is_specified("weights", vars)) {
     labels$weights <- h_check_and_get_label("weights", vars, data)
   }
+  if (h_is_specified("subgroup", vars)) {
+    labels$subgroup <- h_check_and_get_label("subgroup", vars, data)
+  }
   return(labels)
 }
 
@@ -73,7 +76,9 @@ h_labels <- function(vars, data) {
 #'
 #' This builds the model formula which is used inside [fit_mmrm_j()] and provided
 #' to [mmrm::mmrm()] internally. It can be instructive to look at the resulting
-#' formula directly sometimes.
+#' formula directly sometimes. In particular, if a `subgroup` variable is included
+#' in `vars`, then the formula will include the interaction of `subgroup` with 
+#' `arm` and `visit`.
 #'
 #' @param vars (`list`)\cr variables to use in the model.
 #' @param cor_struct (`string`)\cr specify the covariance structure to use.
@@ -82,8 +87,12 @@ h_labels <- function(vars, data) {
 #'
 #' @examples
 #' vars <- list(
-#'   response = "AVAL", covariates = c("RACE", "SEX"),
-#'   id = "USUBJID", arm = "ARMCD", visit = "AVISIT"
+#'   response = "AVAL", 
+#'   covariates = c("RACE", "SEX"),
+#'   id = "USUBJID", 
+#'   arm = "ARMCD", 
+#'   visit = "AVISIT",
+#'   subgroup = "REGION"
 #' )
 #' build_formula(vars, "auto-regressive")
 #' build_formula(vars)
@@ -107,6 +116,9 @@ build_formula <- function(
     vars$visit
   } else {
     paste0(vars$arm, "*", vars$visit)
+  }
+  if (!is.null(vars$subgroup)) {
+    arm_visit_part <- paste0(arm_visit_part, "*", vars$subgroup)
   }
   random_effects_fun <- switch(cor_struct,
     unstructured = "us",
@@ -194,7 +206,10 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
   }
 
   relative_reduc_df <- h_get_relative_reduc_df(estimates, vars)
-  contrast_estimates <- merge(contrast_estimates, relative_reduc_df, by = c(vars$arm, vars$visit), sort = FALSE)
+  contrast_estimates <- merge(contrast_estimates, relative_reduc_df, by = c(vars$subgroup, vars$arm, vars$visit), sort = FALSE)
+  if (!is.null(vars$subgroup)) {
+    contrast_estimates[[vars$subgroup]] <- factor(contrast_estimates[[vars$subgroup]])
+  }
   contrast_estimates[[vars$arm]] <- factor(contrast_estimates[[vars$arm]])
   contrast_estimates[[vars$visit]] <- factor(contrast_estimates[[vars$visit]])
   structure(
@@ -283,8 +298,12 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
 #'
 #' @note This function has the `_j` suffix to distinguish it from [mmrm::fit_mmrm()].
 #'   It is modified from the `tern.mmrm` package.
-#'   The new feature is the `mult_adj_emmeans` argument and its functionality. This could later
-#'   be contributed upstream in `tern.mmrm`.
+#'   The new features are:
+#' 
+#'   - the `mult_adj_emmeans` argument and its functionality
+#'   - the `subgroup` variable in `vars` and its functionality
+#' 
+#'   These could later be contributed upstream in `tern.mmrm`.
 #'
 #' @examples
 #' mmrm_results <- fit_mmrm_j(
@@ -303,7 +322,14 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
 #'   )
 #' )
 fit_mmrm_j <- function(
-    vars = list(response = "AVAL", covariates = c(), id = "USUBJID", arm = "ARM", visit = "AVISIT"),
+    vars = list(
+      response = "AVAL", 
+      covariates = c(), 
+      id = "USUBJID", 
+      arm = "ARM", 
+      visit = "AVISIT",
+      subgroup = NULL
+    ),
     data,
     conf_level = 0.95,
     cor_struct = "unstructured",
