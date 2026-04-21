@@ -1,3 +1,13 @@
+# h_partial_match ----
+
+test_that("h_partial_match works as expected", {
+  choices <- c("VIS1", "VIS2", "VIS3", "VIS4")
+  x <- c("VIS1 + VIS5", "VIS2 / bla", "foo + VIS3")
+  result <- expect_silent(h_partial_match(options = choices, x = x))
+  expected <- c("VIS1", "VIS2", "VIS3")
+  expect_identical(result, expected)
+})
+
 # h_get_emmeans_res ----
 
 test_that("h_get_emmeans_res works as expected", {
@@ -587,7 +597,7 @@ test_that("h_average_visit_contrast_specs also works with subgroup", {
   result <- expect_silent(h_average_visit_contrast_specs(
     specs = single_specs,
     averages = averages,
-    vars = vars
+    vars = example$vars
   ))
   expected <- list(
     coefs = list(
@@ -631,5 +641,17 @@ test_that("h_get_mult_adj_estimates works as expected", {
     conf_level = conf_level,
     contrast_df = contrast_estimates$df
   )
+  expect_snapshot_value(result, style = "deparse")
+})
+
+test_that("h_get_mult_adj_estimates works with subgroup", {
+  example <- get_lsmeans_example_subgroup()
+  result <- expect_silent(h_get_mult_adj_estimates(
+    emmeans_res = example$emmeans_res,
+    vars = example$vars,
+    mult_adj = "dunnett",
+    conf_level = 0.95,
+    contrast_df = 171
+  ))
   expect_snapshot_value(result, style = "deparse")
 })

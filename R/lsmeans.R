@@ -13,6 +13,26 @@
 #' @keywords internal
 NULL
 
+#' @describeIn lsmeans_helpers partial matching of a set of `options` to a character vector `x`. Here partial matching means that for each element of `x` we look for the
+#' (first) element of `options` which is contained in the element of `x`. Then we return
+#' the matched `options` in the same order as `x`.
+#' @param options (`character`)\cr vector of options to match against `x`.
+#' @param x (`character`)\cr vector of strings to be partially matched with `options`
+h_partial_match <- function(options, x) {
+  checkmate::assert_character(options)
+  checkmate::assert_character(x)
+
+  result <- sapply(x, function(xi) {
+    matches <- vapply(
+      options,
+      function(opt) grepl(opt, xi, fixed = TRUE),
+      logical(1)
+    )
+    options[which(matches)[1L]]
+  }, USE.NAMES = FALSE)
+  result
+}
+
 #' @describeIn lsmeans_helpers returns a list with
 #'   `object` (`emmGrid` object containing `emmeans` results) and `grid`
 #'   (`data.frame` containing the (optional) subgroup, arm and the visit variables
@@ -214,17 +234,9 @@ h_single_visit_contrast_specs <- function(emmeans_res, vars) {
     this_grid <- grid_by_subgroup_visit[[j]]
     ref_index <- which(this_grid[[vars$arm]] == ref_arm_level)
     this_name <- names(grid_by_subgroup_visit)[j]
-    this_visit <- visit_levels[vapply(
-      visit_levels,
-      function(v) grepl(v, this_name, fixed = TRUE),
-      logical(1)
-    )]
+    this_visit <- h_partial_match(options = visit_levels, x = this_name)
     if (!is.null(vars$subgroup)) {
-      this_subgroup <- subgroup_levels[vapply(
-        subgroup_levels,
-        function(s) grepl(s, this_name, fixed = TRUE),
-        logical(1)
-      )]
+      this_subgroup <- h_partial_match(options = subgroup_levels, x = this_name)
     }
     this_ref_coefs <- zeros_coefs
     this_ref_coefs[this_grid$index[ref_index]] <- -1
@@ -269,17 +281,9 @@ h_average_visit_contrast_specs <- function(specs, averages, vars) {
   subgroup_vec <- arm_vec <- visit_vec <- c()
   for (j in seq_along(grid_by_arm_subgroup)) {
     this_name <- names(grid_by_arm_subgroup)[j]
-    this_arm <- arm_levels[vapply(
-      arm_levels,
-      function(a) grepl(a, this_name, fixed = TRUE),
-      logical(1)
-    )]
+    this_arm <- h_partial_match(options = arm_levels, x = this_name)
     if (!is.null(vars$subgroup)) {
-      this_subgroup <- subgroup_levels[vapply(
-        subgroup_levels,
-        function(s) grepl(s, this_name, fixed = TRUE),
-        logical(1)
-      )]
+      this_subgroup <- h_partial_match(options = subgroup_levels, x = this_name)
     }
     this_grid <- grid_by_arm_subgroup[[j]]
     for (i in seq_along(averages)) {
@@ -328,7 +332,7 @@ h_get_mult_adj_estimates <- function(emmeans_res, vars, mult_adj, conf_level, co
   emmeans_conts <- emmeans::contrast(
     emmeans_res$object,
     method = "trt.vs.ctrl",
-    by = vars$visit,
+    by = c(vars$subgroup, vars$visit),
     adjust = "none" # To avoid a note below. Does not matter.
   )
   if (!requireNamespace("multcomp", quietly = TRUE)) {
@@ -359,13 +363,14 @@ h_get_mult_adj_estimates <- function(emmeans_res, vars, mult_adj, conf_level, co
 
   arm_levels <- emmeans_res$object@levels[[vars$arm]]
   non_ref_arms <- arm_levels[-1L]
-  visit_levels <- emmeans_res$object@levels[[vars$visit]]
-  grid <- data.frame(
-    arm = rep(non_ref_arms, times = length(visit_levels)),
-    visit = rep(visit_levels, each = length(non_ref_arms)),
-    stringsAsFactors = FALSE
+  
+  grid <- emmeans_conts@grid
+  arm_vec <- h_partial_match(options = non_ref_arms, x = as.character(grid$contrast))
+  grid <- cbind(
+    arm = arm_vec,
+    grid[c(vars$subgroup, vars$visit)]
   )
-  names(grid) <- c(vars$arm, vars$visit)
+  names(grid) <- c(vars$arm, vars$subgroup, vars$visit)
 
   data.frame(
     grid,

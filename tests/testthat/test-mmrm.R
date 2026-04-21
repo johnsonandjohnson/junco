@@ -234,6 +234,30 @@ test_that("get_mmrm_lsmeans also works with subgroup and averages of visits", {
   expect_snapshot_value(result, style = "deparse", cran = TRUE)
 })
 
+test_that("get_mmrm_lsmeans works with subgroup and multiplicity adjustment", {
+  vars <- list(
+    response = "FEV1",
+    id = "USUBJID",
+    arm = "RACE",
+    visit = "AVISIT",
+    subgroup = "SEX"
+  )
+  fit <- mmrm::mmrm(
+    formula = FEV1 ~ RACE * AVISIT * SEX + us(AVISIT | USUBJID),
+    data = mmrm::fev_data
+  )
+  conf_level <- 0.95
+  weights <- "counterfactual"
+  result_dunnett <- get_mmrm_lsmeans(
+    fit = fit,
+    vars = vars,
+    conf_level = conf_level,
+    weights = weights,
+    mult_adj = "dunnett"
+  )
+  expect_snapshot_value(result_dunnett, style = "deparse", cran = TRUE)
+})
+
 # fit_mmrm_j ----
 
 test_that("fit_mmrm_j works as expected", {
