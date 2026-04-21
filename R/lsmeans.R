@@ -259,28 +259,53 @@ h_single_visit_contrast_specs <- function(emmeans_res, vars) {
 #'   given the `specs` for single visit contrasts and the averages required.
 h_average_visit_contrast_specs <- function(specs, averages, vars) {
   subgroup_arm_visit_grid <- specs$grid
+  arm_levels <- unique(subgroup_arm_visit_grid[[vars$arm]])
+  if (!is.null(vars$subgroup)) {
+    subgroup_levels <- unique(subgroup_arm_visit_grid[[vars$subgroup]])
+  }
   subgroup_arm_visit_grid$index <- seq_len(nrow(subgroup_arm_visit_grid))
   grid_by_arm_subgroup <- split(subgroup_arm_visit_grid, subgroup_arm_visit_grid[c(vars$arm, vars$subgroup)])
   overall_list <- list()
   subgroup_vec <- arm_vec <- visit_vec <- c()
-  for (j in seq_along(grid_by_arm)) {
-    this_arm <- names(grid_by_arm)[j]
-    this_grid <- grid_by_arm[[j]]
+  for (j in seq_along(grid_by_arm_subgroup)) {
+    this_name <- names(grid_by_arm_subgroup)[j]
+    this_arm <- arm_levels[vapply(
+      arm_levels,
+      function(a) grepl(a, this_name, fixed = TRUE),
+      logical(1)
+    )]
+    if (!is.null(vars$subgroup)) {
+      this_subgroup <- subgroup_levels[vapply(
+        subgroup_levels,
+        function(s) grepl(s, this_name, fixed = TRUE),
+        logical(1)
+      )]
+    }
+    this_grid <- grid_by_arm_subgroup[[j]]
     for (i in seq_along(averages)) {
       average_label <- names(averages)[i]
       visits_average <- averages[[i]]
-      which_visits_in_average <- this_grid[, 2L] %in% visits_average
+      which_visits_in_average <- this_grid[, vars$visit] %in% visits_average
       averaged_indices <- this_grid$index[which_visits_in_average]
       this_comb <- paste(this_arm, average_label, sep = ".")
+      if (!is.null(vars$subgroup)) {
+        this_comb <- paste(this_subgroup, this_comb, sep = ".")
+      }
       averaged_coefs <- colMeans(do.call(rbind, specs$coefs[averaged_indices]))
       overall_list[[this_comb]] <- averaged_coefs
       arm_vec <- c(arm_vec, this_arm)
+      if (!is.null(vars$subgroup)) {
+        subgroup_vec <- c(subgroup_vec, this_subgroup)
+      }
       visit_vec <- c(visit_vec, average_label)
     }
   }
 
   grid <- data.frame(arm = arm_vec, visit = visit_vec)
-  names(grid) <- names(arm_visit_grid[, c(1, 2)])
+  if (!is.null(vars$subgroup)) {
+    grid[[vars$subgroup]] <- subgroup_vec
+  }
+  names(grid) <- c(vars$arm, vars$visit, vars$subgroup)
 
   list(coefs = overall_list, grid = grid)
 }

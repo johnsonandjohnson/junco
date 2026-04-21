@@ -34,3 +34,20 @@ test_that("fit_mmrm_j works as expected", {
 
   expect_snapshot(cran = TRUE, fit)
 })
+
+test_that("fit_mmrm_j works as expected with subgroup variable", {
+  fit <- fit_mmrm_j(
+    vars = list(
+      response = "FEV1",
+      covariates = "RACE",
+      id = "USUBJID",
+      arm = "ARMCD",
+      visit = "AVISIT",
+      subgroup = "SEX"
+    ),
+    data = mmrm::fev_data,
+    cor_struct = "unstructured",
+    weights_emmeans = "equal"
+  )
+  expect_snapshot(cran = TRUE, fit)
+})

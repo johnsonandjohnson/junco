@@ -183,7 +183,7 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
   contrast_estimates <- h_get_spec_visit_estimates(emmeans_res, contrast_specs, conf_level, tests = TRUE)
 
   if (length(averages)) {
-    average_contrast_specs <- h_average_visit_contrast_specs(contrast_specs, averages)
+    average_contrast_specs <- h_average_visit_contrast_specs(contrast_specs, averages, vars)
     average_contrasts <- h_get_spec_visit_estimates(emmeans_res, average_contrast_specs, conf_level, tests = TRUE)
     contrast_estimates <- rbind(contrast_estimates, average_contrasts)
   }

@@ -385,7 +385,8 @@ test_that("h_average_visit_contrast_specs works as expected", {
   )
   result <- expect_silent(h_average_visit_contrast_specs(
     specs = single_specs,
-    averages = averages
+    averages = averages,
+    vars = example$vars
   ))
   expected <- list(
     coefs = list(
@@ -548,7 +549,8 @@ test_that("h_average_visit_contrast_specs works also for 3 arms and many visits"
   averages <- list("average of Week 40 & 44" = c("Week 40", "Week 44"))
   result <- expect_silent(h_average_visit_contrast_specs(
     specs = single_specs,
-    averages = averages
+    averages = averages,
+    vars = list(arm = "TRT01P", visit = "AVISIT")
   ))
   expected <- list(
     coefs = list(
@@ -587,6 +589,20 @@ test_that("h_average_visit_contrast_specs also works with subgroup", {
     averages = averages,
     vars = vars
   ))
+  expected <- list(
+    coefs = list(
+      `Female.TRT.VIS1+3` = c(0, -0.5, 0, 0, 0, -0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0), 
+      `Female.TRT.VIS2+4` = c(0, 0, 0, -0.5, 0, 0, 0, -0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5),
+      `Male.TRT.VIS1+3` = c(-0.5, 0, 0, 0, -0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0), 
+      `Male.TRT.VIS2+4` = c(0, 0, -0.5, 0, 0, 0, -0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0)
+    ),
+    grid = data.frame(
+      ARMCD = c("TRT", "TRT", "TRT", "TRT"), 
+      AVISIT = c("VIS1+3", "VIS2+4", "VIS1+3", "VIS2+4"), 
+      SEX = c("Female", "Female", "Male", "Male")
+    )
+  )
+  expect_identical(result, expected)
 })
 
 # get_mmrm_lsmeans ----
