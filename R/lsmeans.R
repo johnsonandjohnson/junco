@@ -13,7 +13,7 @@
 #' @keywords internal
 NULL
 
-#' @describeIn lsmeans_helpers partial matching of a set of `options` to a 
+#' @describeIn lsmeans_helpers partial matching of a set of `options` to a
 #' character vector `x`. Here partial matching means that for each element of `x` we look for the
 #' (first) element of `options` which is contained in the element of `x`. Then we return
 #' the matched `options` in the same order as `x`.
@@ -106,7 +106,7 @@ h_get_average_visit_specs <- function(emmeans_res, vars, averages, fit) {
         averages_list[[subgroup_average_label]] <- this_coefs
         subgroup_vec <- c(subgroup_vec, this_subgroup)
         visit_vec <- c(visit_vec, average_label)
-        is_in_subset <- (model_frame[[vars$subgroup]] == this_subgroup) & 
+        is_in_subset <- (model_frame[[vars$subgroup]] == this_subgroup) &
           (model_frame[[vars$visit]] %in% visits_average)
         this_n <- length(unique(model_frame[is_in_subset, vars$id]))
         n_vec <- c(n_vec, this_n)
@@ -137,8 +137,8 @@ h_get_average_visit_specs <- function(emmeans_res, vars, averages, fit) {
           arm_vec <- c(arm_vec, this_arm)
           subgroup_vec <- c(subgroup_vec, this_subgroup)
           visit_vec <- c(visit_vec, average_label)
-          is_in_subset <- (model_frame[[vars$arm]] == this_arm) & 
-            (model_frame[[vars$subgroup]] == this_subgroup) & 
+          is_in_subset <- (model_frame[[vars$arm]] == this_arm) &
+            (model_frame[[vars$subgroup]] == this_subgroup) &
             (model_frame[[vars$visit]] %in% visits_average)
           this_n <- length(unique(model_frame[is_in_subset, vars$id]))
           n_vec <- c(n_vec, this_n)
@@ -218,11 +218,11 @@ h_get_relative_reduc_df <- function(estimates, vars) {
   ref_estimates <- estimates[estimates[[vars$arm]] == ref_arm_level, c(vars$subgroup, vars$visit, "estimate")]
   names(ref_estimates)[names(ref_estimates) == "estimate"] <- "ref"
   result <- merge(
-    estimates[estimates[[vars$arm]] != ref_arm_level, ], 
-    ref_estimates, 
-    by = c(vars$subgroup, vars$visit), 
+    estimates[estimates[[vars$arm]] != ref_arm_level, ],
+    ref_estimates,
+    by = c(vars$subgroup, vars$visit),
     sort = FALSE
- )
+  )
   result$relative_reduc <- (result$ref - result$estimate) / result$ref
   result[, c(vars$subgroup, vars$visit, vars$arm, "relative_reduc")]
 }

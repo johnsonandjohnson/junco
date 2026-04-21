@@ -92,12 +92,12 @@ tidy.tern_model <- function(x, ...) {
   } else {
     contrasts <- x$lsmeans$contrasts
     merge(
-      x = estimates, 
-      y = contrasts, 
-      by = c(vars$subgroup, vars$visit, vars$arm), 
-      suffixes = c("_est", "_contr"), 
+      x = estimates,
+      y = contrasts,
+      by = c(vars$subgroup, vars$visit, vars$arm),
+      suffixes = c("_est", "_contr"),
       all = TRUE
-   )
+    )
   }
   if (!is.null(vars$arm)) {
     df[[vars$arm]] <- factor(df[[vars$arm]], levels = levels(estimates[[vars$arm]]))
