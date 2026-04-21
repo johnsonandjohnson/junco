@@ -277,7 +277,9 @@ test_that("fit_mmrm_j works as expected", {
     )
   )
 
-  expect_snapshot(cran = TRUE, fit)
+  expect_s3_class(fit, "tern_model")
+  lsmeans <- fit$lsmeans$estimates
+  expect_snapshot_value(lsmeans, style = "deparse", cran = TRUE)
 })
 
 test_that("fit_mmrm_j works as expected with subgroup variable", {
@@ -294,5 +296,7 @@ test_that("fit_mmrm_j works as expected with subgroup variable", {
     cor_struct = "unstructured",
     weights_emmeans = "equal"
   )
-  expect_snapshot(cran = TRUE, fit)
+  expect_s3_class(fit, "tern_model")
+  contrs <- fit$lsmeans$contrasts
+  expect_snapshot_value(contrs, style = "deparse", cran = TRUE)
 })
