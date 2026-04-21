@@ -8,6 +8,18 @@ test_that("h_partial_match works as expected", {
   expect_identical(result, expected)
 })
 
+test_that("h_partial_match warns if some elements of 'x' do not match any of the 'options'", {
+  choices <- c("VIS1", "VIS2", "VIS3", "VIS4")
+  x <- c("VIS1 + VIS5", "VIS2 / bla", "foo + VIS3", "no match")
+  expect_warning(
+    result <- h_partial_match(options = choices, x = x),
+    "Some elements of 'x' did not match any of the 'options': no match",
+    fixed = TRUE
+  )
+  expected <- c("VIS1", "VIS2", "VIS3", NA_character_)
+  expect_identical(result, expected)
+})
+
 # h_get_emmeans_res ----
 
 test_that("h_get_emmeans_res works as expected", {
@@ -35,10 +47,10 @@ test_that("h_get_emmeans_res works as expected", {
 
   datfull <- na.omit(fit$data)
   assert_true(identical(nrow(datfull), length(fit$tmb_data$y_vector)))
-  ns <- datfull %>%
-    dplyr::group_by(ARMCD, AVISIT) %>%
+  ns <- datfull |>
+    dplyr::group_by(ARMCD, AVISIT) |>
     dplyr::summarize(n_expected = dplyr::n())
-  compare_grid <- result$grid %>% dplyr::full_join(ns, by = dplyr::join_by(AVISIT, ARMCD))
+  compare_grid <- result$grid |> dplyr::full_join(ns, by = dplyr::join_by(AVISIT, ARMCD))
   expect_identical(compare_grid$n, compare_grid$n_expected)
 })
 

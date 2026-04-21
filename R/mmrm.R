@@ -208,10 +208,19 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
   relative_reduc_df <- h_get_relative_reduc_df(estimates, vars)
   contrast_estimates <- merge(contrast_estimates, relative_reduc_df, by = c(vars$subgroup, vars$arm, vars$visit), sort = FALSE)
   if (!is.null(vars$subgroup)) {
-    contrast_estimates[[vars$subgroup]] <- factor(contrast_estimates[[vars$subgroup]])
+    contrast_estimates[[vars$subgroup]] <- factor(
+      contrast_estimates[[vars$subgroup]],
+      levels = intersect(levels(estimates[[vars$subgroup]]), contrast_estimates[[vars$subgroup]])
+    )
   }
-  contrast_estimates[[vars$arm]] <- factor(contrast_estimates[[vars$arm]])
-  contrast_estimates[[vars$visit]] <- factor(contrast_estimates[[vars$visit]])
+  contrast_estimates[[vars$arm]] <- factor(
+    contrast_estimates[[vars$arm]],
+    levels = intersect(levels(estimates[[vars$arm]]), contrast_estimates[[vars$arm]])
+  )
+  contrast_estimates[[vars$visit]] <- factor(
+    contrast_estimates[[vars$visit]],
+    levels = intersect(levels(estimates[[vars$visit]]), contrast_estimates[[vars$visit]])
+  )
   structure(
     list(estimates = estimates, contrasts = contrast_estimates),
     averages = averages,

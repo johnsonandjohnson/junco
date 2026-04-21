@@ -30,6 +30,12 @@ h_partial_match <- function(options, x) {
     )
     options[which(matches)[1L]]
   }, USE.NAMES = FALSE)
+  if (anyNA(result)) {
+    warning(
+      "Some elements of 'x' did not match any of the 'options': ",
+      paste(x[is.na(result)], collapse = ", ")
+    )
+  }
   result
 }
 
@@ -233,11 +239,12 @@ h_single_visit_contrast_specs <- function(emmeans_res, vars) {
   for (j in seq_along(grid_by_subgroup_visit)) {
     this_grid <- grid_by_subgroup_visit[[j]]
     ref_index <- which(this_grid[[vars$arm]] == ref_arm_level)
-    this_name <- names(grid_by_subgroup_visit)[j]
-    this_visit <- h_partial_match(options = visit_levels, x = this_name)
-    if (!is.null(vars$subgroup)) {
-      this_subgroup <- h_partial_match(options = subgroup_levels, x = this_name)
-    }
+    this_visit <- as.character(unique(this_grid[[vars$visit]]))
+    checkmate::assert_true(length(this_visit) == 1L)  
+    if (!is.null(vars$subgroup)) {  
+      this_subgroup <- as.character(unique(this_grid[[vars$subgroup]]))
+      checkmate::assert_true(length(this_subgroup) == 1L)  
+    }    
     this_ref_coefs <- zeros_coefs
     this_ref_coefs[this_grid$index[ref_index]] <- -1
     this_list <- list()
@@ -280,12 +287,13 @@ h_average_visit_contrast_specs <- function(specs, averages, vars) {
   overall_list <- list()
   subgroup_vec <- arm_vec <- visit_vec <- c()
   for (j in seq_along(grid_by_arm_subgroup)) {
-    this_name <- names(grid_by_arm_subgroup)[j]
-    this_arm <- h_partial_match(options = arm_levels, x = this_name)
-    if (!is.null(vars$subgroup)) {
-      this_subgroup <- h_partial_match(options = subgroup_levels, x = this_name)
-    }
     this_grid <- grid_by_arm_subgroup[[j]]
+    this_arm <- as.character(unique(this_grid[[vars$arm]]))
+    checkmate::assert_true(length(this_arm) == 1L)
+    if (!is.null(vars$subgroup)) {
+      this_subgroup <- as.character(unique(this_grid[[vars$subgroup]]))
+      checkmate::assert_true(length(this_subgroup) == 1L)
+    }
     for (i in seq_along(averages)) {
       average_label <- names(averages)[i]
       visits_average <- averages[[i]]
