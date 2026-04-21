@@ -36,7 +36,6 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
 
 ### The Bug
 * **Impact:** Users were unable to export optional CSVs alongside RTFs, empty listings were losing their titles during export, nested row splits were failing when using `countsource = altdf`, and label widths were not being respected across paginated tables. 
-* **Root Cause:** Several isolated issues required patching: `tt_to_tlgrtf()` was missing recursive argument passing for `label_width_ins` and lacked CSV handlers; the `countsource` argument was not properly plumbed through the internal frequency data prep functions; and upstream updates to `flextable` (v0.9.11) broke older manual caption stylings in the docx exporter.
 
 ### Surgical Changes
 * **Primary Function(s) Fixed:**
