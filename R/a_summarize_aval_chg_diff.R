@@ -1,8 +1,8 @@
 #' `tryCatch` around `stat::t.test`
 #'
-#' Captures errors when executing [stat::t.test].
+#' Captures errors when executing [stats::t.test].
 #'
-#' @inheritParams stat::t.test
+#' @inheritParams stats::t.test
 #'
 #' @return A list with core items as from `t.test.default` and `error_text` for the captured error.
 #'
