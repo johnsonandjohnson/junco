@@ -1,5 +1,20 @@
 library(mmrm)
 
+test_that("build_formula works as expected with subgroup variable", {
+  vars <- list(
+    response = "AVAL",
+    covariates = c("RACE", "SEX"),
+    id = "USUBJID",
+    arm = "ARMCD",
+    visit = "AVISIT",
+    subgroup = "REGION"
+  )
+  result <- build_formula(vars, "auto-regressive")
+  expect_s3_class(result, "formula")
+  expected <- AVAL ~ RACE + SEX + ARMCD * AVISIT * REGION + ar1(AVISIT | USUBJID)
+  expect_equal(result, expected, ignore_attr = TRUE)
+})
+
 test_that("get_mmrm_lsmeans can calculate the LS mean results including one- and two-sided p-values", {
   vars <- list(
     response = "FEV1",
@@ -70,6 +85,59 @@ test_that("get_mmrm_lsmeans can adjust contrasts for multiplicity within visits"
     mult_adj = "step-down-dunnett"
   )
   expect_snapshot_value(result_step_down_dunnett, style = "deparse")
+})
+
+test_that("get_mmrm_lsmeans works as expected with subgroup variable", {
+  vars <- list(
+    response = "FEV1",
+    id = "USUBJID",
+    arm = "ARMCD",
+    visit = "AVISIT",
+    subgroup = "SEX"
+  )
+  fit <- mmrm::mmrm(
+    formula = FEV1 ~ ARMCD * AVISIT * SEX + us(AVISIT | USUBJID),
+    data = mmrm::fev_data
+  )
+  conf_level <- 0.95
+  weights <- "counterfactual"
+  result <- get_mmrm_lsmeans(
+    fit = fit,
+    vars = vars,
+    conf_level = conf_level,
+    weights = weights
+  )
+
+  expect_snapshot_value(result, style = "deparse", cran = TRUE)
+})
+
+test_that("get_mmrm_lsmeans also works with subgroup and averages of visits", {
+  vars <- list(
+    response = "FEV1",
+    id = "USUBJID",
+    arm = "ARMCD",
+    visit = "AVISIT",
+    subgroup = "SEX"
+  )
+  fit <- mmrm::mmrm(
+    formula = FEV1 ~ ARMCD * AVISIT * SEX + us(AVISIT | USUBJID),
+    data = mmrm::fev_data
+  )
+  conf_level <- 0.95
+  weights <- "counterfactual"
+  averages <- list(
+    "VIS1+3" = c("VIS1", "VIS3"),
+    "VIS2+4" = c("VIS2", "VIS4")
+  )
+  result <- get_mmrm_lsmeans(
+    fit = fit,
+    vars = vars,
+    conf_level = conf_level,
+    weights = weights,
+    averages = averages
+  )
+
+  expect_snapshot_value(result, style = "deparse", cran = TRUE)
 })
 
 test_that("fit_mmrm_j works as expected", {
