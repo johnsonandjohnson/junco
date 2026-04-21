@@ -584,7 +584,8 @@ test_that("h_average_visit_contrast_specs also works with subgroup", {
   )
   result <- expect_silent(h_average_visit_contrast_specs(
     specs = single_specs,
-    averages = averages
+    averages = averages,
+    vars = vars
   ))
 })
 

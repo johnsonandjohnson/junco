@@ -257,12 +257,12 @@ h_single_visit_contrast_specs <- function(emmeans_res, vars) {
 
 #' @describeIn lsmeans_helpers constructs average visits contrast specifications,
 #'   given the `specs` for single visit contrasts and the averages required.
-h_average_visit_contrast_specs <- function(specs, averages) {
-  arm_visit_grid <- specs$grid
-  arm_visit_grid$index <- seq_len(nrow(arm_visit_grid))
-  grid_by_arm <- split(arm_visit_grid, arm_visit_grid[, 1L])
+h_average_visit_contrast_specs <- function(specs, averages, vars) {
+  subgroup_arm_visit_grid <- specs$grid
+  subgroup_arm_visit_grid$index <- seq_len(nrow(subgroup_arm_visit_grid))
+  grid_by_arm_subgroup <- split(subgroup_arm_visit_grid, subgroup_arm_visit_grid[c(vars$arm, vars$subgroup)])
   overall_list <- list()
-  arm_vec <- visit_vec <- c()
+  subgroup_vec <- arm_vec <- visit_vec <- c()
   for (j in seq_along(grid_by_arm)) {
     this_arm <- names(grid_by_arm)[j]
     this_grid <- grid_by_arm[[j]]
