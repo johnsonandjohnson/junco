@@ -208,7 +208,12 @@ get_mmrm_lsmeans <- function(
   }
 
   relative_reduc_df <- h_get_relative_reduc_df(estimates, vars)
-  contrast_estimates <- merge(contrast_estimates, relative_reduc_df, by = c(vars$subgroup, vars$arm, vars$visit), sort = FALSE)
+  contrast_estimates <- merge(
+    contrast_estimates, 
+    relative_reduc_df, 
+    by = c(vars$subgroup, vars$arm, vars$visit), 
+    sort = FALSE
+ )
   if (!is.null(vars$subgroup)) {
     contrast_estimates[[vars$subgroup]] <- factor(
       contrast_estimates[[vars$subgroup]],
