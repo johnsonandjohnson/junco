@@ -52,9 +52,9 @@ h_get_emmeans_res <- function(fit, vars, weights) {
     checkmate::assert_factor(data_complete[[vars$subgroup]])
   }
   emmeans_object <- emmeans::emmeans(
-    fit, 
-    data = data_complete, 
-    specs = c(vars$subgroup, vars$visit, vars$arm), 
+    fit,
+    data = data_complete,
+    specs = c(vars$subgroup, vars$visit, vars$arm),
     weights = weights
   )
 
@@ -240,11 +240,11 @@ h_single_visit_contrast_specs <- function(emmeans_res, vars) {
     this_grid <- grid_by_subgroup_visit[[j]]
     ref_index <- which(this_grid[[vars$arm]] == ref_arm_level)
     this_visit <- as.character(unique(this_grid[[vars$visit]]))
-    checkmate::assert_true(length(this_visit) == 1L)  
-    if (!is.null(vars$subgroup)) {  
+    checkmate::assert_true(length(this_visit) == 1L)
+    if (!is.null(vars$subgroup)) {
       this_subgroup <- as.character(unique(this_grid[[vars$subgroup]]))
-      checkmate::assert_true(length(this_subgroup) == 1L)  
-    }    
+      checkmate::assert_true(length(this_subgroup) == 1L)
+    }
     this_ref_coefs <- zeros_coefs
     this_ref_coefs[this_grid$index[ref_index]] <- -1
     this_list <- list()
@@ -371,7 +371,7 @@ h_get_mult_adj_estimates <- function(emmeans_res, vars, mult_adj, conf_level, co
 
   arm_levels <- emmeans_res$object@levels[[vars$arm]]
   non_ref_arms <- arm_levels[-1L]
-  
+
   grid <- emmeans_conts@grid
   arm_vec <- h_partial_match(options = non_ref_arms, x = as.character(grid$contrast))
   grid <- cbind(

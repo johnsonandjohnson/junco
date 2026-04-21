@@ -77,7 +77,7 @@ h_labels <- function(vars, data) {
 #' This builds the model formula which is used inside [fit_mmrm_j()] and provided
 #' to [mmrm::mmrm()] internally. It can be instructive to look at the resulting
 #' formula directly sometimes. In particular, if a `subgroup` variable is included
-#' in `vars`, then the formula will include the interaction of `subgroup` with 
+#' in `vars`, then the formula will include the interaction of `subgroup` with
 #' `arm` and `visit`.
 #'
 #' @param vars (`list`)\cr variables to use in the model.
@@ -87,28 +87,29 @@ h_labels <- function(vars, data) {
 #'
 #' @examples
 #' vars <- list(
-#'   response = "AVAL", 
+#'   response = "AVAL",
 #'   covariates = c("RACE", "SEX"),
-#'   id = "USUBJID", 
-#'   arm = "ARMCD", 
+#'   id = "USUBJID",
+#'   arm = "ARMCD",
 #'   visit = "AVISIT",
 #'   subgroup = "REGION"
 #' )
 #' build_formula(vars, "auto-regressive")
 #' build_formula(vars)
 build_formula <- function(
-    vars,
-    cor_struct = c(
-      "unstructured",
-      "toeplitz",
-      "heterogeneous toeplitz",
-      "ante-dependence",
-      "heterogeneous ante-dependence",
-      "auto-regressive",
-      "heterogeneous auto-regressive",
-      "compound symmetry",
-      "heterogeneous compound symmetry"
-    )) {
+  vars,
+  cor_struct = c(
+    "unstructured",
+    "toeplitz",
+    "heterogeneous toeplitz",
+    "ante-dependence",
+    "heterogeneous ante-dependence",
+    "auto-regressive",
+    "heterogeneous auto-regressive",
+    "compound symmetry",
+    "heterogeneous compound symmetry"
+  )
+) {
   checkmate::assert_list(vars)
   cor_struct <- match.arg(cor_struct)
   covariates_part <- paste(vars$covariates, collapse = " + ")
@@ -155,7 +156,8 @@ build_formula <- function(
 #'
 #' @note This is modified from `tern.mmrm` and has the additional `mult_adj` argument.
 #' @export
-get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
+get_mmrm_lsmeans <- function(
+  fit, vars, conf_level, weights, averages = list(),
   mult_adj = c("none", "dunnett", "step-down-dunnett")
 ) {
   checkmate::assert_class(fit, "mmrm")
@@ -308,10 +310,10 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
 #' @note This function has the `_j` suffix to distinguish it from [mmrm::fit_mmrm()].
 #'   It is modified from the `tern.mmrm` package.
 #'   The new features are:
-#' 
+#'
 #'   - the `mult_adj_emmeans` argument and its functionality
 #'   - the `subgroup` variable in `vars` and its functionality
-#' 
+#'
 #'   These could later be contributed upstream in `tern.mmrm`.
 #'
 #' @examples
@@ -331,21 +333,22 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
 #'   )
 #' )
 fit_mmrm_j <- function(
-    vars = list(
-      response = "AVAL", 
-      covariates = c(), 
-      id = "USUBJID", 
-      arm = "ARM", 
-      visit = "AVISIT",
-      subgroup = NULL
-    ),
-    data,
-    conf_level = 0.95,
-    cor_struct = "unstructured",
-    weights_emmeans = "counterfactual",
-    averages_emmeans = list(),
-    mult_adj_emmeans = c("none", "dunnett", "step-down-dunnett"),
-    ...) {
+  vars = list(
+    response = "AVAL",
+    covariates = c(),
+    id = "USUBJID",
+    arm = "ARM",
+    visit = "AVISIT",
+    subgroup = NULL
+  ),
+  data,
+  conf_level = 0.95,
+  cor_struct = "unstructured",
+  weights_emmeans = "counterfactual",
+  averages_emmeans = list(),
+  mult_adj_emmeans = c("none", "dunnett", "step-down-dunnett"),
+  ...
+) {
   labels <- h_labels(vars, data)
   formula <- build_formula(vars, cor_struct)
   weights <- if (!is.null(vars$weights)) data[[vars$weights]] else NULL

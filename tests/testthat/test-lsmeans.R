@@ -199,20 +199,19 @@ test_that("h_get_average_visit_specs works with subgroup", {
   ))
   expected <- list(
     coefs = list(
-      `Male.PBO.VIS1+3` = c(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), 
-      `Female.PBO.VIS1+3` = c(0, 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), 
-      `Male.TRT.VIS1+3` = c(0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0), 
-      `Female.TRT.VIS1+3` = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0), 
-      `Male.PBO.VIS2+4` = c(0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0), 
-      `Female.PBO.VIS2+4` = c(0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0), 
-      `Male.TRT.VIS2+4` = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0), 
+      `Male.PBO.VIS1+3` = c(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      `Female.PBO.VIS1+3` = c(0, 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      `Male.TRT.VIS1+3` = c(0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0),
+      `Female.TRT.VIS1+3` = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0),
+      `Male.PBO.VIS2+4` = c(0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+      `Female.PBO.VIS2+4` = c(0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0),
+      `Male.TRT.VIS2+4` = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0),
       `Female.TRT.VIS2+4` = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0.5)
     ),
     grid = data.frame(
       SEX = c("Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female"),
-      ARMCD = c("PBO", "PBO", "TRT", "TRT", "PBO", "PBO", "TRT", "TRT"), 
-      AVISIT = c("VIS1+3", "VIS1+3", "VIS1+3", "VIS1+3", "VIS2+4", "VIS2+4", "VIS2+4", "VIS2+4"
-    ), 
+      ARMCD = c("PBO", "PBO", "TRT", "TRT", "PBO", "PBO", "TRT", "TRT"),
+      AVISIT = c("VIS1+3", "VIS1+3", "VIS1+3", "VIS1+3", "VIS2+4", "VIS2+4", "VIS2+4", "VIS2+4"),
       n = c(47L, 47L, 40L, 45L, 44L, 47L, 39L, 49L)
     )
   )
@@ -233,9 +232,9 @@ test_that("h_get_average_visit_specs works with subgroup and no arm", {
   ))
   expected <- list(
     coefs = list(
-      `Male.VIS1+3` = c(0.5, 0, 0, 0, 0.5, 0, 0, 0), 
-      `Female.VIS1+3` = c(0, 0.5, 0, 0, 0, 0.5, 0, 0), 
-      `Male.VIS2+4` = c(0, 0, 0.5, 0, 0, 0, 0.5, 0), 
+      `Male.VIS1+3` = c(0.5, 0, 0, 0, 0.5, 0, 0, 0),
+      `Female.VIS1+3` = c(0, 0.5, 0, 0, 0, 0.5, 0, 0),
+      `Male.VIS2+4` = c(0, 0, 0.5, 0, 0, 0, 0.5, 0),
       `Female.VIS2+4` = c(0, 0, 0, 0.5, 0, 0, 0, 0.5)
     ),
     grid = data.frame(
@@ -310,7 +309,7 @@ test_that("h_get_spec_visit_estimates produces test results optionally", {
     upper_cl = c(38.7, 42.8),
     t_stat = c(73.2, 77.4),
     p_value = c(4.5e-131, 1.5e-135),
-    p_value_less = c(1, 1), 
+    p_value_less = c(1, 1),
     p_value_greater = c(2.23276631408581e-131, 7.55499500365628e-136)
   )
   expect_equal(result, expected, tolerance = 1e-3)
@@ -613,14 +612,14 @@ test_that("h_average_visit_contrast_specs also works with subgroup", {
   ))
   expected <- list(
     coefs = list(
-      `Female.TRT.VIS1+3` = c(0, -0.5, 0, 0, 0, -0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0), 
+      `Female.TRT.VIS1+3` = c(0, -0.5, 0, 0, 0, -0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0),
       `Female.TRT.VIS2+4` = c(0, 0, 0, -0.5, 0, 0, 0, -0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5),
-      `Male.TRT.VIS1+3` = c(-0.5, 0, 0, 0, -0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0), 
+      `Male.TRT.VIS1+3` = c(-0.5, 0, 0, 0, -0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0),
       `Male.TRT.VIS2+4` = c(0, 0, -0.5, 0, 0, 0, -0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0)
     ),
     grid = data.frame(
-      ARMCD = c("TRT", "TRT", "TRT", "TRT"), 
-      AVISIT = c("VIS1+3", "VIS2+4", "VIS1+3", "VIS2+4"), 
+      ARMCD = c("TRT", "TRT", "TRT", "TRT"),
+      AVISIT = c("VIS1+3", "VIS2+4", "VIS1+3", "VIS2+4"),
       SEX = c("Female", "Female", "Male", "Male")
     )
   )

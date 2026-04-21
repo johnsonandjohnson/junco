@@ -225,7 +225,7 @@ test_that("a_lsmeans works well together with subgroup variable", {
   lyt <- basic_table() |>
     split_cols_by("ARMCD") |>
     add_colcounts() |>
-    split_rows_by("SEX") |> 
+    split_rows_by("SEX") |>
     split_rows_by("AVISIT") |>
     analyze(
       "ARMCD",
