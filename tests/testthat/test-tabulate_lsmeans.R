@@ -17,6 +17,24 @@ test_that("tidy.tern_model works as expected", {
   expect_snapshot_value(result, style = "deparse", cran = TRUE)
 })
 
+test_that("tidy.tern_model works as expected with subgroup variable", {
+  fit <- fit_mmrm_j(
+    vars = list(
+      response = "FEV1",
+      covariates = "RACE",
+      id = "USUBJID",
+      arm = "ARMCD",
+      visit = "AVISIT",
+      subgroup = "SEX"
+    ),
+    data = mmrm::fev_data,
+    cor_struct = "unstructured",
+    weights_emmeans = "equal"
+  )
+  result <- expect_silent(broom::tidy(fit))
+  expect_snapshot_value(result, style = "deparse", cran = TRUE)
+})
+
 # s_lsmeans ----
 
 test_that("s_lsmeans works as expected with MMRM fit when not in reference column", {
