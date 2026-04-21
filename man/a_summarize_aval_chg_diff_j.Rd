@@ -119,7 +119,9 @@ appropriate precision.}
 (using weights per \code{weights_combo} specifications).
 \item \code{collapse} The ancova model for the combined group will be performed with group levels that contribute
 to the combination collapsed into a single combined level.
-}}
+}
+
+For more information see the vignette \verb{ANCOVA with Combined Treatment Groups}.}
 
 \item{weights_combo}{(\code{string})\cr Weights for the contrasts of the combined levels.
 \itemize{

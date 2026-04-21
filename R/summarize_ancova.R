@@ -335,6 +335,8 @@ h_ancova_est_combined <- function(
 #' (using weights per `weights_combo` specifications).
 #'   * `collapse` The ancova model for the combined group will be performed with group levels that contribute
 #' to the combination collapsed into a single combined level.
+#'
+#' For more information see the vignette `ANCOVA with Combined Treatment Groups`.
 #' @param weights_combo (`string`)\cr Weights for the contrasts of the combined levels.
 #'   * `equal` 1/(number of levels from arm variable included in the combination)
 #'   * `proportional`, `proportional_marginal` weight for each level included in

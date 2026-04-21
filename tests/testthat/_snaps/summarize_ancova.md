@@ -56,3 +56,132 @@
         Difference in Adjusted Means (95% CI)                                         2.17 (1.96, 2.38)   3.05 (2.81, 3.29)
           p-value                                                                          <0.001              <0.001      
 
+# a_summarize_ancova_j (s_ancova_j) as expected in combined column for model without interaction
+
+    Code
+      result
+    Output
+                                                       setosa             versicolor           virginica       Combined: setosa + virginica
+                                                       (N=44)               (N=29)              (N=49)                    (N=93)           
+      —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      Adjusted comparison (covariates Color)                                                                                               
+        n                                                44                   29                  49                        93             
+        Adjusted Mean (95% CI)                   5.02 (4.85, 5.19)     6.10 (5.88, 6.31)   6.61 (6.45, 6.78)        5.82 (5.69, 5.95)      
+        Difference in Adjusted Means (95% CI)   -1.08 (-1.33, -0.82)                       0.52 (0.27, 0.76)       -0.28 (-0.51, -0.06)    
+
+---
+
+    Code
+      result_b
+    Output
+                                                       setosa             versicolor           virginica       Combined: setosa + virginica
+                                                       (N=44)               (N=29)              (N=49)                    (N=93)           
+      —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      Adjusted comparison (covariates Color)                                                                                               
+        n                                                44                   29                  49                        93             
+        Adjusted Mean (95% CI)                   5.02 (4.85, 5.19)     6.10 (5.88, 6.31)   6.61 (6.45, 6.78)        5.86 (5.73, 5.99)      
+        Difference in Adjusted Means (95% CI)   -1.08 (-1.33, -0.82)                       0.52 (0.27, 0.76)       -0.24 (-0.46, -0.01)    
+
+---
+
+    Code
+      result_d
+    Output
+                                                       setosa             versicolor           virginica       Combined: setosa + virginica
+                                                       (N=44)               (N=29)              (N=49)                    (N=93)           
+      —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      Adjusted comparison (covariates Color)                                                                                               
+        n                                                44                   29                  49                        93             
+        Adjusted Mean (95% CI)                   5.01 (4.85, 5.17)     6.09 (5.89, 6.28)   6.60 (6.45, 6.75)        5.80 (5.69, 5.91)      
+        Difference in Adjusted Means (95% CI)   -1.08 (-1.33, -0.82)                       0.52 (0.27, 0.76)       -0.28 (-0.51, -0.06)    
+
+# a_summarize_ancova_j combined column and interaction, diff versions for weights_combo
+
+    Code
+      result
+    Output
+                                                             setosa             versicolor           virginica       Combined: setosa + virginica
+                                                             (N=44)               (N=29)              (N=49)                    (N=93)           
+      ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      Adjusted comparison (covariates Color - red)                                                                                               
+        n                                                      34                   25                  38                        72             
+        Adjusted Mean (95% CI)                         4.97 (4.79, 5.15)     6.11 (5.90, 6.32)   6.60 (6.43, 6.77)        5.78 (5.66, 5.91)      
+        Difference in Adjusted Means (95% CI)         -1.14 (-1.42, -0.87)                       0.49 (0.21, 0.76)       -0.33 (-0.58, -0.08)    
+      Adjusted comparison (covariates Color - blue)                                                                                              
+        n                                                      10                    4                  11                        21             
+        Adjusted Mean (95% CI)                         5.15 (4.81, 5.49)     5.90 (5.37, 6.43)   6.62 (6.30, 6.94)        5.88 (5.65, 6.12)      
+        Difference in Adjusted Means (95% CI)         -0.75 (-1.38, -0.12)                       0.72 (0.10, 1.34)       -0.02 (-0.59, 0.56)     
+
+---
+
+    Code
+      result_b
+    Output
+                                                             setosa             versicolor           virginica       Combined: setosa + virginica
+                                                             (N=44)               (N=29)              (N=49)                    (N=93)           
+      ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      Adjusted comparison (covariates Color - red)                                                                                               
+        n                                                      34                   25                  38                        72             
+        Adjusted Mean (95% CI)                         4.97 (4.79, 5.15)     6.11 (5.90, 6.32)   6.60 (6.43, 6.77)        5.83 (5.70, 5.95)      
+        Difference in Adjusted Means (95% CI)         -1.14 (-1.42, -0.87)                       0.49 (0.21, 0.76)       -0.28 (-0.53, -0.04)    
+      Adjusted comparison (covariates Color - blue)                                                                                              
+        n                                                      10                    4                  11                        21             
+        Adjusted Mean (95% CI)                         5.15 (4.81, 5.49)     5.90 (5.37, 6.43)   6.62 (6.30, 6.94)        5.92 (5.69, 6.15)      
+        Difference in Adjusted Means (95% CI)         -0.75 (-1.38, -0.12)                       0.72 (0.10, 1.34)        0.02 (-0.56, 0.60)     
+
+---
+
+    Code
+      result_c
+    Output
+                                                             setosa             versicolor           virginica       Combined: setosa + virginica
+                                                             (N=44)               (N=29)              (N=49)                    (N=93)           
+      ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      Adjusted comparison (covariates Color - red)                                                                                               
+        n                                                      34                   25                  38                        72             
+        Adjusted Mean (95% CI)                         4.97 (4.79, 5.15)     6.11 (5.90, 6.32)   6.60 (6.43, 6.77)        5.83 (5.70, 5.95)      
+        Difference in Adjusted Means (95% CI)         -1.14 (-1.42, -0.87)                       0.49 (0.21, 0.76)       -0.29 (-0.53, -0.04)    
+      Adjusted comparison (covariates Color - blue)                                                                                              
+        n                                                      10                    4                  11                        21             
+        Adjusted Mean (95% CI)                         5.15 (4.81, 5.49)     5.90 (5.37, 6.43)   6.62 (6.30, 6.94)        5.92 (5.69, 6.15)      
+        Difference in Adjusted Means (95% CI)         -0.75 (-1.38, -0.12)                       0.72 (0.10, 1.34)        0.02 (-0.55, 0.60)     
+
+# a_summarize_ancova_j with sparse data
+
+    Code
+      result
+    Output
+                                                                            setosa         versicolor       virginica    
+                                                                            (N=44)           (N=0)           (N=49)      
+      ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      Adjusted comparison (covariates: Sepal.Length and Sepal.Width)                                                     
+        Adjusted Mean (95% CI)                                         2.08 (1.92, 2.23)       NA       5.00 (4.86, 5.14)
+        Difference in Adjusted Means (95% CI)                                                  NA       2.92 (2.65, 3.20)
+          p-value                                                                              NA            <0.001      
+
+# a_summarize_ancova_j with no data
+
+    Code
+      result
+    Output
+                                                                       setosa   versicolor   virginica
+                                                                       (N=0)      (N=0)        (N=0)  
+      ————————————————————————————————————————————————————————————————————————————————————————————————
+      Adjusted comparison (covariates: Sepal.Length and Sepal.Width)                                  
+        lsmean_ci                                                                                     
+        lsmean_diffci                                                                                 
+          p-value                                                                                     
+
+# a_summarize_ancova_j with no data in reference group
+
+    Code
+      result
+    Output
+                                                                       setosa      versicolor           virginica    
+                                                                       (N=0)         (N=29)              (N=49)      
+      ———————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      Adjusted comparison (covariates: Sepal.Length and Sepal.Width)                                                 
+        Adjusted Mean (95% CI)                                           NA     4.60 (4.49, 4.71)   5.42 (5.34, 5.51)
+        Difference in Adjusted Means (95% CI)                            NA            NA                  NA        
+          p-value                                                        NA            NA                  NA        
+

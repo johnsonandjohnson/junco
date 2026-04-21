@@ -1,9 +1,9 @@
 ---
-title: "ANCOVA with Combined Treatment Groups (Detailed)"
+title: "ANCOVA with Combined Treatment Groups"
 author: "junco"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ANCOVA with Combined Treatment Groups (Detailed)}
+  %\VignetteIndexEntry{ANCOVA with Combined Treatment Groups}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,21 +12,23 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-> **Short version available:**
-> See *ANCOVA with Combined Treatment Groups (Short)* for a minimal working example
-> with recommended defaults.
 
 # Overview
 
-This vignette provides a detailed explanation of **ANCOVA with combined treatment groups** in *junco*, including weighting strategies, interaction models, and alternative estimands.
+This vignette provides an high-level illustration of **ANCOVA with combined treatment groups** in `junco`.  
+The main purpose is to highlight the ability to construct tables with combined groups using `junco` function `a_summarize_ancova_j()`.  
+The various options such as weighting strategies, interaction models, and alternative estimands will be described.
 
 # Clinical Context
 
-ANCOVA is commonly used for covariate-adjusted analyses of change from baseline in clinical trials. Regulatory tables often require pooling of treatment arms while preserving the original estimand.
+ANCOVA is commonly used for covariate-adjusted analyses of change from baseline in clinical trials.
+Regulatory tables often require pooling of treatment arms while preserving the original estimand.
 
 # Example Dataset
 
-```{r}
+The dataset used as an example is a small dataset with simulated values for `BASE` and `CHG`.
+
+```{r data, message = FALSE}
 library(dplyr)
 library(rtables)
 library(junco)
@@ -44,9 +46,10 @@ adchg <- tibble(
 
 # Combined Column Strategy
 
-Combined treatment columns are defined using layout metadata and do not modify the underlying dataset.
+A combined treatment column can be added in an `rtables` layout, by utilizing a `combodf` dataframe.  
+As seen further in this document, adding `split_fun = add_combo_levels(combodf)` in `split_cols_by` call, will result in a combined treatment column in the final table.
 
-```{r}
+```{r combodf}
 combodf <- tibble::tribble(
   ~valname,   ~label,    ~levelcombo,                     ~exargs,
   "ACTIVE",   "Active", c("Low Dose", "High Dose"), list()
@@ -55,24 +58,28 @@ combodf <- tibble::tribble(
 
 # ANCOVA Model
 
-The ANCOVA model is fitted as:
+The ANCOVA model used here is:
 
 ```
 CHG ~ TRT01A + BASE + REGION
 ```
 
-The model is fitted once using the original randomized treatment variable.
+The model is fitted once using the original randomized treatment variable, for all columns, including the combined column.
 
-# Contrast-Based Combination (Default)
+# Least-squares means approach 
 
-```{r}
-lyt <- basic_table() %>%
+The recommended approach for dealing with a combined treatment group column in an ANCOVA table, is to derive the estimates for that column as contrasts (least-squares means) from the linear ANCOVA model.  
+This can be achieved by specifying the argument `method_combo = "contrasts"`.  
+
+
+```{r lyt_table}
+lyt <- basic_table() |>
   split_cols_by(
     "TRT01A",
     ref_group = "Placebo",
     split_fun = add_combo_levels(combodf)
   ) %>%
-  add_colcounts() %>%
+  add_colcounts() |>
   analyze(
     vars = "CHG",
     afun = a_summarize_ancova_j,
@@ -90,15 +97,31 @@ lyt <- basic_table() %>%
 build_table(lyt, adchg)
 ```
 
-# Weighting Strategies
+## Weighting Strategies
+Note the argument `weights_combo` in the above layout definition. When defining contrasts in a linear model, weights can specified to use in averaging predictions. See `?emmeans::emmeans()` for more details.
+
+The following 3 weight scenarios are available for `weights_combo`:   
 
 - `equal`: equal contribution of arms
 - `proportional`: weighted by observed sample size
 - `proportional_marginal`: marginal weights across interaction strata
 
-# Interaction Models
+If no interaction term is included in the model, the choices `proportional` and `proportional_marginal` lead to the same weights (by observed sample size), reducing to 2 options only.  
+While, if an interaction, for example a term like `TRT01A * REGION` is included, `proportional` and `proportional_marginal` are slightly different, with `proportional` according to the proportions observed in the interaction strata.  
 
-If an interaction such as `TRT01A * REGION` is included, combined estimates are derived within strata, and weighting determines how pooling is applied.
+# Collapsing Treatment Arms
+The option `method_combo = "collapse"` is available as alternative approach, mainly as a quick verification method, and for consistency reason with another internal system.  
+In this scenario, the ANCOVA model is re-fitted on pooled arms and as such changes the estimand.  
+While it is available as an option, our recommendation is to use the `contrasts` approach, and only utilize `method_combo = "collapse"` when explicitly specified in the SAP.  
+
+# Summary
+
+- The `method_combo = "contrasts"` approach is aligned with `emmeans` theory
+- Combined LS means and differences are implemented as linear contrasts
+- Full covariance propagation is preserved
+- Interaction models require explicit decisions on within- and across-stratum weighting
+
+See also [junco::a_summarize_ancova_j()].
 
 # Statistical Appendix: emmeans-based Estimation
 
@@ -217,20 +240,6 @@ reflect observed sample sizes within or across strata.
 This two-stage weighting clarifies how estimands change in the presence of
 interactions and avoids implicit, undocumented averaging.
 
----
 
-# Collapsing Treatment Arms
 
-```r
-method_combo = "collapse"
-```
 
-This refits ANCOVA on pooled arms and changes the estimand.
-Use only if explicitly specified in the SAP.
-
-# Summary
-
-- Combined LS means and differences are implemented as linear contrasts
-- Full covariance propagation is preserved
-- Interaction models require explicit decisions on within- and across-stratum weighting
-- The approach is fully aligned with `emmeans` theory
