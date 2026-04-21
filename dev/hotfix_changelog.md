@@ -12,7 +12,7 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
 ## [Hotfix Title or Ticket #] - YYYY-MM-DD
 **Author:** [Your Name/Handle]  
 **Target Legacy Version(s):** [e.g., v0.1.1, v0.1.2]  
-**Mainline PR:** [Link to the original fix merged into `main`]  
+**Mainline PR:** [Link to the original fix merged into `dev`]  
 
 ### The Bug
 * **Impact:** [Briefly describe what broke in production and why PM approved the hotfix]
