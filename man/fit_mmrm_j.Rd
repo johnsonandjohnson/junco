@@ -6,7 +6,7 @@
 \usage{
 fit_mmrm_j(
   vars = list(response = "AVAL", covariates = c(), id = "USUBJID", arm = "ARM", visit =
-    "AVISIT"),
+    "AVISIT", subgroup = NULL),
   data,
   conf_level = 0.95,
   cor_struct = "unstructured",
@@ -105,8 +105,13 @@ variance parameters.
 \note{
 This function has the \verb{_j} suffix to distinguish it from \code{\link[mmrm:fit_mmrm]{mmrm::fit_mmrm()}}.
 It is modified from the \code{tern.mmrm} package.
-The new feature is the \code{mult_adj_emmeans} argument and its functionality. This could later
-be contributed upstream in \code{tern.mmrm}.
+The new features are:
+\itemize{
+\item the \code{mult_adj_emmeans} argument and its functionality
+\item the \code{subgroup} variable in \code{vars} and its functionality
+}
+
+These could later be contributed upstream in \code{tern.mmrm}.
 }
 \examples{
 mmrm_results <- fit_mmrm_j(

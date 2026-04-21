@@ -66,6 +66,9 @@ h_labels <- function(vars, data) {
   if (h_is_specified("weights", vars)) {
     labels$weights <- h_check_and_get_label("weights", vars, data)
   }
+  if (h_is_specified("subgroup", vars)) {
+    labels$subgroup <- h_check_and_get_label("subgroup", vars, data)
+  }
   return(labels)
 }
 
@@ -73,7 +76,9 @@ h_labels <- function(vars, data) {
 #'
 #' This builds the model formula which is used inside [fit_mmrm_j()] and provided
 #' to [mmrm::mmrm()] internally. It can be instructive to look at the resulting
-#' formula directly sometimes.
+#' formula directly sometimes. In particular, if a `subgroup` variable is included
+#' in `vars`, then the formula will include the interaction of `subgroup` with
+#' `arm` and `visit`.
 #'
 #' @param vars (`list`)\cr variables to use in the model.
 #' @param cor_struct (`string`)\cr specify the covariance structure to use.
@@ -82,24 +87,29 @@ h_labels <- function(vars, data) {
 #'
 #' @examples
 #' vars <- list(
-#'   response = "AVAL", covariates = c("RACE", "SEX"),
-#'   id = "USUBJID", arm = "ARMCD", visit = "AVISIT"
+#'   response = "AVAL",
+#'   covariates = c("RACE", "SEX"),
+#'   id = "USUBJID",
+#'   arm = "ARMCD",
+#'   visit = "AVISIT",
+#'   subgroup = "REGION"
 #' )
 #' build_formula(vars, "auto-regressive")
 #' build_formula(vars)
 build_formula <- function(
-    vars,
-    cor_struct = c(
-      "unstructured",
-      "toeplitz",
-      "heterogeneous toeplitz",
-      "ante-dependence",
-      "heterogeneous ante-dependence",
-      "auto-regressive",
-      "heterogeneous auto-regressive",
-      "compound symmetry",
-      "heterogeneous compound symmetry"
-    )) {
+  vars,
+  cor_struct = c(
+    "unstructured",
+    "toeplitz",
+    "heterogeneous toeplitz",
+    "ante-dependence",
+    "heterogeneous ante-dependence",
+    "auto-regressive",
+    "heterogeneous auto-regressive",
+    "compound symmetry",
+    "heterogeneous compound symmetry"
+  )
+) {
   checkmate::assert_list(vars)
   cor_struct <- match.arg(cor_struct)
   covariates_part <- paste(vars$covariates, collapse = " + ")
@@ -107,6 +117,9 @@ build_formula <- function(
     vars$visit
   } else {
     paste0(vars$arm, "*", vars$visit)
+  }
+  if (!is.null(vars$subgroup)) {
+    arm_visit_part <- paste0(arm_visit_part, "*", vars$subgroup)
   }
   random_effects_fun <- switch(cor_struct,
     unstructured = "us",
@@ -143,7 +156,8 @@ build_formula <- function(
 #'
 #' @note This is modified from `tern.mmrm` and has the additional `mult_adj` argument.
 #' @export
-get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
+get_mmrm_lsmeans <- function(
+  fit, vars, conf_level, weights, averages = list(),
   mult_adj = c("none", "dunnett", "step-down-dunnett")
 ) {
   checkmate::assert_class(fit, "mmrm")
@@ -171,7 +185,7 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
   contrast_estimates <- h_get_spec_visit_estimates(emmeans_res, contrast_specs, conf_level, tests = TRUE)
 
   if (length(averages)) {
-    average_contrast_specs <- h_average_visit_contrast_specs(contrast_specs, averages)
+    average_contrast_specs <- h_average_visit_contrast_specs(contrast_specs, averages, vars)
     average_contrasts <- h_get_spec_visit_estimates(emmeans_res, average_contrast_specs, conf_level, tests = TRUE)
     contrast_estimates <- rbind(contrast_estimates, average_contrasts)
   }
@@ -194,9 +208,26 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
   }
 
   relative_reduc_df <- h_get_relative_reduc_df(estimates, vars)
-  contrast_estimates <- merge(contrast_estimates, relative_reduc_df, by = c(vars$arm, vars$visit), sort = FALSE)
-  contrast_estimates[[vars$arm]] <- factor(contrast_estimates[[vars$arm]])
-  contrast_estimates[[vars$visit]] <- factor(contrast_estimates[[vars$visit]])
+  contrast_estimates <- merge(
+    contrast_estimates,
+    relative_reduc_df,
+    by = c(vars$subgroup, vars$arm, vars$visit),
+    sort = FALSE
+  )
+  if (!is.null(vars$subgroup)) {
+    contrast_estimates[[vars$subgroup]] <- factor(
+      contrast_estimates[[vars$subgroup]],
+      levels = intersect(levels(estimates[[vars$subgroup]]), contrast_estimates[[vars$subgroup]])
+    )
+  }
+  contrast_estimates[[vars$arm]] <- factor(
+    contrast_estimates[[vars$arm]],
+    levels = intersect(levels(estimates[[vars$arm]]), contrast_estimates[[vars$arm]])
+  )
+  contrast_estimates[[vars$visit]] <- factor(
+    contrast_estimates[[vars$visit]],
+    levels = intersect(levels(estimates[[vars$visit]]), contrast_estimates[[vars$visit]])
+  )
   structure(
     list(estimates = estimates, contrasts = contrast_estimates),
     averages = averages,
@@ -283,8 +314,12 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
 #'
 #' @note This function has the `_j` suffix to distinguish it from [mmrm::fit_mmrm()].
 #'   It is modified from the `tern.mmrm` package.
-#'   The new feature is the `mult_adj_emmeans` argument and its functionality. This could later
-#'   be contributed upstream in `tern.mmrm`.
+#'   The new features are:
+#'
+#'   - the `mult_adj_emmeans` argument and its functionality
+#'   - the `subgroup` variable in `vars` and its functionality
+#'
+#'   These could later be contributed upstream in `tern.mmrm`.
 #'
 #' @examples
 #' mmrm_results <- fit_mmrm_j(
@@ -303,14 +338,22 @@ get_mmrm_lsmeans <- function(fit, vars, conf_level, weights, averages = list(),
 #'   )
 #' )
 fit_mmrm_j <- function(
-    vars = list(response = "AVAL", covariates = c(), id = "USUBJID", arm = "ARM", visit = "AVISIT"),
-    data,
-    conf_level = 0.95,
-    cor_struct = "unstructured",
-    weights_emmeans = "counterfactual",
-    averages_emmeans = list(),
-    mult_adj_emmeans = c("none", "dunnett", "step-down-dunnett"),
-    ...) {
+  vars = list(
+    response = "AVAL",
+    covariates = c(),
+    id = "USUBJID",
+    arm = "ARM",
+    visit = "AVISIT",
+    subgroup = NULL
+  ),
+  data,
+  conf_level = 0.95,
+  cor_struct = "unstructured",
+  weights_emmeans = "counterfactual",
+  averages_emmeans = list(),
+  mult_adj_emmeans = c("none", "dunnett", "step-down-dunnett"),
+  ...
+) {
   labels <- h_labels(vars, data)
   formula <- build_formula(vars, cor_struct)
   weights <- if (!is.null(vars$weights)) data[[vars$weights]] else NULL

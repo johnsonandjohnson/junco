@@ -1,15 +1,15 @@
 #' `tryCatch` around `stat::t.test`
 #'
-#' Captures errors when executing [stat::t.test].
+#' Captures errors when executing [stats::t.test].
 #'
-#' @inheritParams stat::t.test
+#' @inheritParams stats::t.test
 #'
 #' @return A list with core items as from `t.test.default` and `error_text` for the captured error.
 #'
 #' @keywords internal
 safe_t_test <- function(x, y = NULL, ...) {
   tryCatch(
-    t.test(x, y, ...),
+    stats::t.test(x, y, ...),
     error = function(e) {
       if (!is.null(y)) {
         estimate <- c(mean_x = mean(x), mean_y = mean(y))

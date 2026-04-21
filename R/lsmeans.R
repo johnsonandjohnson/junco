@@ -13,16 +13,51 @@
 #' @keywords internal
 NULL
 
+#' @describeIn lsmeans_helpers partial matching of a set of `options` to a
+#' character vector `x`. Here partial matching means that for each element of `x` we look for the
+#' (first) element of `options` which is contained in the element of `x`. Then we return
+#' the matched `options` in the same order as `x`.
+#' @param options (`character`)\cr vector of options to match against `x`.
+#' @param x (`character`)\cr vector of strings to be partially matched with `options`
+h_partial_match <- function(options, x) {
+  checkmate::assert_character(options)
+  checkmate::assert_character(x)
+
+  result <- sapply(x, function(xi) {
+    matches <- vapply(
+      options,
+      function(opt) grepl(opt, xi, fixed = TRUE),
+      logical(1)
+    )
+    options[which(matches)[1L]]
+  }, USE.NAMES = FALSE)
+  if (anyNA(result)) {
+    warning(
+      "Some elements of 'x' did not match any of the 'options': ",
+      paste(x[is.na(result)], collapse = ", ")
+    )
+  }
+  result
+}
+
 #' @describeIn lsmeans_helpers returns a list with
 #'   `object` (`emmGrid` object containing `emmeans` results) and `grid`
-#'   (`data.frame` containing the potential arm and the visit variables
+#'   (`data.frame` containing the (optional) subgroup, arm and the visit variables
 #'   together with the sample size `n` for each combination).
 h_get_emmeans_res <- function(fit, vars, weights) {
   data_complete <- stats::model.frame(fit)
   checkmate::assert_data_frame(data_complete)
   checkmate::assert_list(vars)
 
-  emmeans_object <- emmeans::emmeans(fit, data = data_complete, specs = c(vars$visit, vars$arm), weights = weights)
+  if (!is.null(vars$subgroup)) {
+    checkmate::assert_factor(data_complete[[vars$subgroup]])
+  }
+  emmeans_object <- emmeans::emmeans(
+    fit,
+    data = data_complete,
+    specs = c(vars$subgroup, vars$visit, vars$arm),
+    weights = weights
+  )
 
   # Save grid with renamed number of subjects column.
   visit_arm_grid <- emmeans_object@grid
@@ -39,6 +74,10 @@ h_get_average_visit_specs <- function(emmeans_res, vars, averages, fit) {
   model_frame <- stats::model.frame(fit)
   averages_list <- list()
   visit_vec <- n_vec <- c()
+  if (!is.null(vars$subgroup)) {
+    subgroup_grid <- emmeans_res$grid[[vars$subgroup]]
+    subgroup_vec <- c()
+  }
   if (!is.null(vars$arm)) {
     arm_grid <- emmeans_res$grid[[vars$arm]]
     arm_vec <- c()
@@ -51,13 +90,28 @@ h_get_average_visit_specs <- function(emmeans_res, vars, averages, fit) {
     average_coefs <- as.integer(which_visits_in_average) / length(visits_average)
     zero_coefs <- numeric(length = length(average_coefs))
 
-    if (is.null(vars$arm)) {
+    if (is.null(vars$arm) && is.null(vars$subgroup)) {
       averages_list[[average_label]] <- average_coefs
       visit_vec <- c(visit_vec, average_label)
       is_in_subset <- (model_frame[[vars$visit]] %in% visits_average)
       this_n <- length(unique(model_frame[is_in_subset, vars$id]))
       n_vec <- c(n_vec, this_n)
-    } else {
+    } else if (is.null(vars$arm) && !is.null(vars$subgroup)) {
+      for (this_subgroup in levels(subgroup_grid)) {
+        this_coefs <- zero_coefs
+        subgroup_average_label <- paste(this_subgroup, average_label, sep = ".")
+        which_subgroup <- subgroup_grid == this_subgroup
+        which_visits_and_subgroup <- which_visits_in_average & which_subgroup
+        this_coefs[which_visits_and_subgroup] <- 1 / sum(which_visits_and_subgroup)
+        averages_list[[subgroup_average_label]] <- this_coefs
+        subgroup_vec <- c(subgroup_vec, this_subgroup)
+        visit_vec <- c(visit_vec, average_label)
+        is_in_subset <- (model_frame[[vars$subgroup]] == this_subgroup) &
+          (model_frame[[vars$visit]] %in% visits_average)
+        this_n <- length(unique(model_frame[is_in_subset, vars$id]))
+        n_vec <- c(n_vec, this_n)
+      }
+    } else if (!is.null(vars$arm) && is.null(vars$subgroup)) {
       for (this_arm in levels(arm_grid)) {
         this_coefs <- zero_coefs
         arm_average_label <- paste(this_arm, average_label, sep = ".")
@@ -70,14 +124,40 @@ h_get_average_visit_specs <- function(emmeans_res, vars, averages, fit) {
         this_n <- length(unique(model_frame[is_in_subset, vars$id]))
         n_vec <- c(n_vec, this_n)
       }
+    } else {
+      for (this_arm in levels(arm_grid)) {
+        for (this_subgroup in levels(subgroup_grid)) {
+          this_coefs <- zero_coefs
+          arm_subgroup_average_label <- paste(this_subgroup, this_arm, average_label, sep = ".")
+          which_arm <- arm_grid == this_arm
+          which_subgroup <- subgroup_grid == this_subgroup
+          which_visits_and_arm_and_subgroup <- which_visits_in_average & which_arm & which_subgroup
+          this_coefs[which_visits_and_arm_and_subgroup] <- 1 / sum(which_visits_and_arm_and_subgroup)
+          averages_list[[arm_subgroup_average_label]] <- this_coefs
+          arm_vec <- c(arm_vec, this_arm)
+          subgroup_vec <- c(subgroup_vec, this_subgroup)
+          visit_vec <- c(visit_vec, average_label)
+          is_in_subset <- (model_frame[[vars$arm]] == this_arm) &
+            (model_frame[[vars$subgroup]] == this_subgroup) &
+            (model_frame[[vars$visit]] %in% visits_average)
+          this_n <- length(unique(model_frame[is_in_subset, vars$id]))
+          n_vec <- c(n_vec, this_n)
+        }
+      }
     }
   }
-  if (is.null(vars$arm)) {
+  if (is.null(vars$arm) && is.null(vars$subgroup)) {
     averages_grid <- data.frame(visit = visit_vec, n = n_vec)
     names(averages_grid) <- c(vars$visit, "n")
-  } else {
+  } else if (!is.null(vars$arm) && is.null(vars$subgroup)) {
     averages_grid <- data.frame(arm = arm_vec, visit = visit_vec, n = n_vec)
     names(averages_grid) <- c(vars$arm, vars$visit, "n")
+  } else if (is.null(vars$arm) && !is.null(vars$subgroup)) {
+    averages_grid <- data.frame(subgroup = subgroup_vec, visit = visit_vec, n = n_vec)
+    names(averages_grid) <- c(vars$subgroup, vars$visit, "n")
+  } else {
+    averages_grid <- data.frame(subgroup = subgroup_vec, arm = arm_vec, visit = visit_vec, n = n_vec)
+    names(averages_grid) <- c(vars$subgroup, vars$arm, vars$visit, "n")
   }
   list(coefs = averages_list, grid = averages_grid)
 }
@@ -135,11 +215,16 @@ h_get_relative_reduc_df <- function(estimates, vars) {
   checkmate::assert_list(vars)
 
   ref_arm_level <- estimates[[vars$arm]][1L]
-  ref_estimates <- estimates[estimates[[vars$arm]] == ref_arm_level, c(vars$visit, "estimate")]
-  names(ref_estimates)[2L] <- "ref"
-  result <- merge(estimates[estimates[[vars$arm]] != ref_arm_level, ], ref_estimates, by = vars$visit, sort = FALSE)
+  ref_estimates <- estimates[estimates[[vars$arm]] == ref_arm_level, c(vars$subgroup, vars$visit, "estimate")]
+  names(ref_estimates)[names(ref_estimates) == "estimate"] <- "ref"
+  result <- merge(
+    estimates[estimates[[vars$arm]] != ref_arm_level, ],
+    ref_estimates,
+    by = c(vars$subgroup, vars$visit),
+    sort = FALSE
+  )
   result$relative_reduc <- (result$ref - result$estimate) / result$ref
-  result[, c(vars$visit, vars$arm, "relative_reduc")]
+  result[, c(vars$subgroup, vars$visit, vars$arm, "relative_reduc")]
 }
 
 #' @describeIn lsmeans_helpers constructs single visit contrast specifications.
@@ -149,17 +234,26 @@ h_single_visit_contrast_specs <- function(emmeans_res, vars) {
 
   emmeans_res$grid$index <- seq_len(nrow(emmeans_res$grid))
 
-  grid_by_visit <- split(emmeans_res$grid, emmeans_res$grid[[vars$visit]])
+  grid_by_subgroup_visit <- split(emmeans_res$grid, emmeans_res$grid[c(vars$subgroup, vars$visit)])
 
   arm_levels <- emmeans_res$object@levels[[vars$arm]]
+  visit_levels <- emmeans_res$object@levels[[vars$visit]]
+  if (!is.null(vars$subgroup)) {
+    subgroup_levels <- emmeans_res$object@levels[[vars$subgroup]]
+  }
   ref_arm_level <- arm_levels[1L]
   zeros_coefs <- numeric(nrow(emmeans_res$grid))
   overall_list <- list()
-  arm_vec <- visit_vec <- c()
-  for (j in seq_along(grid_by_visit)) {
-    this_grid <- grid_by_visit[[j]]
+  arm_vec <- visit_vec <- subgroup_vec <- c()
+  for (j in seq_along(grid_by_subgroup_visit)) {
+    this_grid <- grid_by_subgroup_visit[[j]]
     ref_index <- which(this_grid[[vars$arm]] == ref_arm_level)
-    this_visit <- names(grid_by_visit)[j]
+    this_visit <- as.character(unique(this_grid[[vars$visit]]))
+    checkmate::assert_true(length(this_visit) == 1L)
+    if (!is.null(vars$subgroup)) {
+      this_subgroup <- as.character(unique(this_grid[[vars$subgroup]]))
+      checkmate::assert_true(length(this_subgroup) == 1L)
+    }
     this_ref_coefs <- zeros_coefs
     this_ref_coefs[this_grid$index[ref_index]] <- -1
     this_list <- list()
@@ -169,43 +263,70 @@ h_single_visit_contrast_specs <- function(emmeans_res, vars) {
       this_arm <- as.character(this_grid[[vars$arm]][i])
       arm_vec <- c(arm_vec, this_arm)
       visit_vec <- c(visit_vec, this_visit)
+      if (!is.null(vars$subgroup)) {
+        subgroup_vec <- c(subgroup_vec, this_subgroup)
+      }
       this_label <- paste(this_arm, this_visit, sep = ".")
+      if (!is.null(vars$subgroup)) {
+        this_label <- paste(this_subgroup, this_label, sep = ".")
+      }
       this_list[[this_label]] <- this_coefs
     }
     overall_list <- c(overall_list, this_list)
   }
 
   grid <- data.frame(arm = arm_vec, visit = visit_vec)
-  names(grid) <- c(vars$arm, vars$visit)
+  if (!is.null(vars$subgroup)) {
+    grid[[vars$subgroup]] <- subgroup_vec
+  }
+  names(grid) <- c(vars$arm, vars$visit, vars$subgroup)
   list(coefs = overall_list, grid = grid)
 }
 
 #' @describeIn lsmeans_helpers constructs average visits contrast specifications,
 #'   given the `specs` for single visit contrasts and the averages required.
-h_average_visit_contrast_specs <- function(specs, averages) {
-  arm_visit_grid <- specs$grid
-  arm_visit_grid$index <- seq_len(nrow(arm_visit_grid))
-  grid_by_arm <- split(arm_visit_grid, arm_visit_grid[, 1L])
+h_average_visit_contrast_specs <- function(specs, averages, vars) {
+  subgroup_arm_visit_grid <- specs$grid
+  arm_levels <- unique(subgroup_arm_visit_grid[[vars$arm]])
+  if (!is.null(vars$subgroup)) {
+    subgroup_levels <- unique(subgroup_arm_visit_grid[[vars$subgroup]])
+  }
+  subgroup_arm_visit_grid$index <- seq_len(nrow(subgroup_arm_visit_grid))
+  grid_by_arm_subgroup <- split(subgroup_arm_visit_grid, subgroup_arm_visit_grid[c(vars$arm, vars$subgroup)])
   overall_list <- list()
-  arm_vec <- visit_vec <- c()
-  for (j in seq_along(grid_by_arm)) {
-    this_arm <- names(grid_by_arm)[j]
-    this_grid <- grid_by_arm[[j]]
+  subgroup_vec <- arm_vec <- visit_vec <- c()
+  for (j in seq_along(grid_by_arm_subgroup)) {
+    this_grid <- grid_by_arm_subgroup[[j]]
+    this_arm <- as.character(unique(this_grid[[vars$arm]]))
+    checkmate::assert_true(length(this_arm) == 1L)
+    if (!is.null(vars$subgroup)) {
+      this_subgroup <- as.character(unique(this_grid[[vars$subgroup]]))
+      checkmate::assert_true(length(this_subgroup) == 1L)
+    }
     for (i in seq_along(averages)) {
       average_label <- names(averages)[i]
       visits_average <- averages[[i]]
-      which_visits_in_average <- this_grid[, 2L] %in% visits_average
+      which_visits_in_average <- this_grid[, vars$visit] %in% visits_average
       averaged_indices <- this_grid$index[which_visits_in_average]
       this_comb <- paste(this_arm, average_label, sep = ".")
+      if (!is.null(vars$subgroup)) {
+        this_comb <- paste(this_subgroup, this_comb, sep = ".")
+      }
       averaged_coefs <- colMeans(do.call(rbind, specs$coefs[averaged_indices]))
       overall_list[[this_comb]] <- averaged_coefs
       arm_vec <- c(arm_vec, this_arm)
+      if (!is.null(vars$subgroup)) {
+        subgroup_vec <- c(subgroup_vec, this_subgroup)
+      }
       visit_vec <- c(visit_vec, average_label)
     }
   }
 
   grid <- data.frame(arm = arm_vec, visit = visit_vec)
-  names(grid) <- names(arm_visit_grid[, c(1, 2)])
+  if (!is.null(vars$subgroup)) {
+    grid[[vars$subgroup]] <- subgroup_vec
+  }
+  names(grid) <- c(vars$arm, vars$visit, vars$subgroup)
 
   list(coefs = overall_list, grid = grid)
 }
@@ -228,7 +349,7 @@ h_get_mult_adj_estimates <- function(emmeans_res, vars, mult_adj, conf_level, co
   emmeans_conts <- emmeans::contrast(
     emmeans_res$object,
     method = "trt.vs.ctrl",
-    by = vars$visit,
+    by = c(vars$subgroup, vars$visit),
     adjust = "none" # To avoid a note below. Does not matter.
   )
   if (!requireNamespace("multcomp", quietly = TRUE)) {
@@ -259,13 +380,14 @@ h_get_mult_adj_estimates <- function(emmeans_res, vars, mult_adj, conf_level, co
 
   arm_levels <- emmeans_res$object@levels[[vars$arm]]
   non_ref_arms <- arm_levels[-1L]
-  visit_levels <- emmeans_res$object@levels[[vars$visit]]
-  grid <- data.frame(
-    arm = rep(non_ref_arms, times = length(visit_levels)),
-    visit = rep(visit_levels, each = length(non_ref_arms)),
-    stringsAsFactors = FALSE
+
+  grid <- emmeans_conts@grid
+  arm_vec <- h_partial_match(options = non_ref_arms, x = as.character(grid$contrast))
+  grid <- cbind(
+    arm = arm_vec,
+    grid[c(vars$subgroup, vars$visit)]
   )
-  names(grid) <- c(vars$arm, vars$visit)
+  names(grid) <- c(vars$arm, vars$subgroup, vars$visit)
 
   data.frame(
     grid,
