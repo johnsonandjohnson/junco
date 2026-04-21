@@ -30,7 +30,7 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
 
 ---
 
-## Hotfixes #165, #178, and #221 - 2026-04-20
+## Hotfixes #165, #178, #221 and #257 - 2026-04-20
 **Author:** Technology Solutions  
 **Target Legacy Version(s):** v0.1.3  
 
@@ -46,6 +46,8 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
         * Fixed logic to retain `main_title` and `main_footer` when exporting an empty listing.
     * `a_freq_j()`, `s_freq_j()`, `h_a_freq_dataprep()`: 
         * Plumbed the `countsource` argument through the call stack to prevent failures when `countsource = "altdf"` in nested splits.
+    * `s_summarize_desc_j()` fixed when applied to almost constant data due to behavior from `t.test.default()` (#257)
+
 
 ### Testing & CI Notes
 * **Snapshot Changes:** Expected test modifications required to pass CI with the new patches.
