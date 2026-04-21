@@ -193,12 +193,41 @@ junco_default_stats <- list(
   relative_risk = c("rel_risk_ci", "pval"),
   summarize_ancova_j = c(
     "n",
+    "sum",
+    "mean",
+    "sd",
+    "se",
     "mean_sd",
+    "mean_se",
+    "mean_ci",
+    "mean_sei",
+    "mean_sdi",
+    "mean_ci_3d",
+    "mean_pval",
     "median",
-    "range",
+    "mad",
+    "median_ci",
+    "median_ci_3d",
     "quantiles",
+    "iqr",
+    "range",
+    "min",
+    "max",
+    "median_range",
+    "cv",
+    "geom_mean",
+    "geom_sd",
+    "geom_mean_sd",
+    "geom_mean_ci",
+    "geom_cv",
+    "geom_mean_ci_3d",
+
+    "n_fit",
+    "lsmean",
     "lsmean_se",
     "lsmean_ci",
+    "lsmean_diff",
+    "lsmean_diff_ci",
     "lsmean_diffci",
     "pval"
   ),
@@ -318,7 +347,8 @@ junco_default_formats_start <- c(
   eair_diff = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   n_event = "xx",
   person_years = jjcsformat_xx("xx.xx"),
-  total_subject_years = jjcsformat_xx("xx.x (xx.x)")
+  total_subject_years = jjcsformat_xx("xx.x (xx.x)"),
+  n_fit = "xx"
 )
 
 tern_formats_only <- setdiff(names(tern_default_formats), names(junco_default_formats_start))
