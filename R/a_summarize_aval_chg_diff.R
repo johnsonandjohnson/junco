@@ -9,7 +9,7 @@
 #' @keywords internal
 safe_t_test <- function(x, y = NULL, ...) {
   tryCatch(
-    t.test(x, y, ...),
+    stats::t.test(x, y, ...),
     error = function(e) {
       if (!is.null(y)) {
         estimate <- c(mean_x = mean(x), mean_y = mean(y))
