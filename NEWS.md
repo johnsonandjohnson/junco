@@ -42,6 +42,7 @@
 - Added argument 'validate' to `export_TLG_as_docx()` and `tt_to_flextable_j()` (#213)
 - Added "watermark" argument in the docx exporter for Figures (#181)
 - Added argument `mult_adj_emmeans` in `fit_mmrm_j()` to enable (single-step or step-down) Dunnett multiplicity adjustment for LS means contrasts (p-values and confidence intervals) for more than one experimental arm within visits.
+- Added option for subgroup variable in the `vars` argument of `fit_mmrm_j()` to enable fitting an overall MMRM with subgroup interaction terms.
 - Export helpers for LS means tabulation: `lsmeans_wide_cfun`, `lsmeans_wide_first_split_fun_fct`, `lsmeans_wide_second_split_fun_fct`
 
 
