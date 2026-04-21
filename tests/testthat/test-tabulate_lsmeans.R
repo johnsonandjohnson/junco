@@ -1,3 +1,24 @@
+# tidy.tern_model ----
+
+test_that("tidy.tern_model works as expected", {
+  fit <- fit_mmrm_j(
+    vars = list(
+      response = "FEV1",
+      covariates = c("RACE", "SEX"),
+      id = "USUBJID",
+      arm = "ARMCD",
+      visit = "AVISIT"
+    ),
+    data = mmrm::fev_data,
+    cor_struct = "unstructured",
+    weights_emmeans = "equal"
+  )
+  result <- expect_silent(broom::tidy(fit))
+  expect_snapshot_value(result, style = "deparse", cran = TRUE)
+})
+
+# s_lsmeans ----
+
 test_that("s_lsmeans works as expected with MMRM fit when not in reference column", {
   mmrm_results <- fit_mmrm_j(
     vars = list(
@@ -46,7 +67,42 @@ test_that("s_lsmeans works as expected with MMRM fit when not in reference colum
   expect_snapshot_value(pval_greater, style = "deparse", tolerance = 1e-3)
 })
 
-test_that("summarize_lsmeans can show two- and one-sided p-values correctly", {
+test_that("s_lsmeans works as expected with ANCOVA fit when not in reference column", {
+  ancova_results <- fit_ancova(
+    vars = list(
+      response = "FEV1",
+      covariates = c("RACE", "SEX"),
+      arm = "ARMCD",
+      id = "USUBJID",
+      visit = "AVISIT"
+    ),
+    data = mmrm::fev_data,
+    weights_emmeans = "equal"
+  )
+  df <- broom::tidy(ancova_results)
+
+  # Two-sided p-value.
+  result <- s_lsmeans(df[2, ], FALSE)
+  checkmate::expect_list(result, names = "unique")
+  checkmate::expect_names(
+    names(result),
+    identical.to = c(
+      "n",
+      "adj_mean_se",
+      "adj_mean_ci",
+      "adj_mean_est_ci",
+      "diff_mean_se",
+      "diff_mean_ci",
+      "diff_mean_est_ci",
+      "change",
+      "p_value"
+    )
+  )
+})
+
+# a_lsmeans ----
+
+test_that("a_lsmeans can show two- and one-sided p-values correctly", {
   mmrm_results <- fit_mmrm_j(
     vars = list(
       response = "FEV1",
@@ -69,7 +125,7 @@ test_that("summarize_lsmeans can show two- and one-sided p-values correctly", {
   )
 
   dat_adsl <- mmrm::fev_data |>
-    select(USUBJID, ARMCD) |>
+    dplyr::select(USUBJID, ARMCD) |>
     unique()
   start_lyt <- basic_table() |>
     split_cols_by("ARMCD") |>
@@ -128,37 +184,4 @@ test_that("summarize_lsmeans can show two- and one-sided p-values correctly", {
     alt_counts_df = dat_adsl
   )
   expect_snapshot(cran = TRUE, result_one_sided_greater)
-})
-
-test_that("s_lsmeans works as expected with ANCOVA fit when not in reference column", {
-  ancova_results <- fit_ancova(
-    vars = list(
-      response = "FEV1",
-      covariates = c("RACE", "SEX"),
-      arm = "ARMCD",
-      id = "USUBJID",
-      visit = "AVISIT"
-    ),
-    data = mmrm::fev_data,
-    weights_emmeans = "equal"
-  )
-  df <- broom::tidy(ancova_results)
-
-  # Two-sided p-value.
-  result <- s_lsmeans(df[2, ], FALSE)
-  checkmate::expect_list(result, names = "unique")
-  checkmate::expect_names(
-    names(result),
-    identical.to = c(
-      "n",
-      "adj_mean_se",
-      "adj_mean_ci",
-      "adj_mean_est_ci",
-      "diff_mean_se",
-      "diff_mean_ci",
-      "diff_mean_est_ci",
-      "change",
-      "p_value"
-    )
-  )
 })
