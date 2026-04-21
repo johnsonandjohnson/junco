@@ -14,7 +14,7 @@ pkg <- "junco"
 # Surgical Patches
 # ==========================================
 
-tt_to_tlgrtf <- function(
+hotfix_tt_to_tlgrtf <- function(
   tt,
   file = NULL,
   orientation = c("portrait", "landscape"),
@@ -444,7 +444,7 @@ tt_to_tlgrtf <- function(
 }
 
 
-h_a_freq_dataprep <- function(
+hotfix_h_a_freq_dataprep <- function(
     df,
     labelstr = NULL,
     .var = NA,
@@ -559,7 +559,7 @@ h_a_freq_dataprep <- function(
 
 
 
-s_freq_j <- function(
+hotfix_s_freq_j <- function(
     df,
     .var,
     .df_row,
@@ -691,7 +691,7 @@ s_freq_j <- function(
 }
 
 
-a_freq_j <- function(
+hotfix_a_freq_j <- function(
     df,
     labelstr = NULL,
     .var = NA,
@@ -996,8 +996,8 @@ a_freq_j <- function(
 # ==========================================
 
 patch_list <- list(
-  tt_to_tlgrtf = tt_to_tlgrtf,
-  h_a_freq_dataprep = h_a_freq_dataprep,
-  s_freq_j = s_freq_j,
-  a_freq_j = a_freq_j
+  tt_to_tlgrtf = hotfix_tt_to_tlgrtf,
+  h_a_freq_dataprep = hotfix_h_a_freq_dataprep,
+  s_freq_j = hotfix_s_freq_j,
+  a_freq_j = hotfix_a_freq_j
 )
