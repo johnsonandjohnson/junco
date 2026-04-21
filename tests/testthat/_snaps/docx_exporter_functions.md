@@ -3004,30 +3004,25 @@
       res$footer
     Output
       $dataset
-                                                V1
-      1                         \n~{super a}Canada
-      2 This ~{optional text should} stay the same
-                                                V2
-      1                         \n~{super a}Canada
-      2 This ~{optional text should} stay the same
-                                                V3
-      1                         \n~{super a}Canada
-      2 This ~{optional text should} stay the same
-                                                V4
-      1                         \n~{super a}Canada
-      2 This ~{optional text should} stay the same
+                                                                    V1
+      1 \n~{super a}Canada\nThis ~{optional text should} stay the same
+                                                                    V2
+      1 \n~{super a}Canada\nThis ~{optional text should} stay the same
+                                                                    V3
+      1 \n~{super a}Canada\nThis ~{optional text should} stay the same
+                                                                    V4
+      1 \n~{super a}Canada\nThis ~{optional text should} stay the same
       
       $content
       $data
            V1            V2            V3            V4           
       [1,] data.frame,21 data.frame,21 data.frame,21 data.frame,21
-      [2,] data.frame,21 data.frame,21 data.frame,21 data.frame,21
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3055,21 +3050,19 @@
       1.974762 1.468413 1.468413 1.468413 
       
       $rowheights
-      [1] 0.25 0.25
+      [1] 0.25
       
       $hrule
-      [1] "auto" "auto"
+      [1] "auto"
       
       $spans
       $spans$rows
            [,1] [,2] [,3] [,4]
       [1,]    4    0    0    0
-      [2,]    4    0    0    0
       
       $spans$columns
            [,1] [,2] [,3] [,4]
       [1,]    1    1    1    1
-      [2,]    1    1    1    1
       
       
       $styles
@@ -3078,13 +3071,12 @@
       $data
            V1       V2       V3       V4      
       [1,] "bottom" "center" "center" "center"
-      [2,] "bottom" "center" "center" "center"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3099,13 +3091,12 @@
       $data
            V1 V2 V3 V4
       [1,] NA NA NA NA
-      [2,] NA NA NA NA
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3120,13 +3111,12 @@
       $data
            V1 V2 V3 V4
       [1,] NA NA NA NA
-      [2,] NA NA NA NA
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3141,13 +3131,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3162,13 +3151,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3183,13 +3171,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3204,13 +3191,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3224,14 +3210,13 @@
       $border.width.bottom
       $data
               V1    V2    V3    V4
-      [1,] 0.000 0.000 0.000 0.000
-      [2,] 0.875 0.875 0.875 0.875
+      [1,] 0.875 0.875 0.875 0.875
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3246,13 +3231,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3267,13 +3251,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3288,13 +3271,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3307,15 +3289,14 @@
       
       $border.color.bottom
       $data
-           V1            V2            V3            V4           
-      [1,] "transparent" "transparent" "transparent" "transparent"
-      [2,] "black"       "black"       "black"       "black"      
+           V1      V2      V3      V4     
+      [1,] "black" "black" "black" "black"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3330,13 +3311,12 @@
       $data
            V1            V2            V3            V4           
       [1,] "transparent" "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent" "transparent"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3351,13 +3331,12 @@
       $data
            V1            V2            V3            V4           
       [1,] "transparent" "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent" "transparent"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3372,13 +3351,12 @@
       $data
            V1            V2            V3            V4           
       [1,] "transparent" "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent" "transparent"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3393,13 +3371,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "solid" "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid" "solid"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3414,13 +3391,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "solid" "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid" "solid"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3435,13 +3411,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "solid" "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid" "solid"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3456,13 +3431,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "solid" "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid" "solid"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3477,13 +3451,12 @@
       $data
            V1     V2     V3     V4    
       [1,] "lrtb" "lrtb" "lrtb" "lrtb"
-      [2,] "lrtb" "lrtb" "lrtb" "lrtb"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3498,13 +3471,12 @@
       $data
            V1            V2            V3            V4           
       [1,] "transparent" "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent" "transparent"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3519,13 +3491,12 @@
       $data
            V1     V2     V3     V4    
       [1,] "auto" "auto" "auto" "auto"
-      [2,] "auto" "auto" "auto" "auto"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3544,13 +3515,12 @@
       $data
            V1     V2     V3     V4    
       [1,] "left" "left" "left" "left"
-      [2,] "left" "left" "left" "left"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3565,13 +3535,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3586,13 +3555,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3607,13 +3575,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3628,13 +3595,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3649,13 +3615,12 @@
       $data
            V1 V2 V3 V4
       [1,]  1  1  1  1
-      [2,]  1  1  1  1
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3670,13 +3635,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3691,13 +3655,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3712,13 +3675,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3733,13 +3695,12 @@
       $data
            V1 V2 V3 V4
       [1,]  0  0  0  0
-      [2,]  0  0  0  0
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3754,13 +3715,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "black" "black" "black" "black"
-      [2,] "black" "black" "black" "black"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3775,13 +3735,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "black" "black" "black" "black"
-      [2,] "black" "black" "black" "black"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3796,13 +3755,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "black" "black" "black" "black"
-      [2,] "black" "black" "black" "black"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3817,13 +3775,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "black" "black" "black" "black"
-      [2,] "black" "black" "black" "black"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3838,13 +3795,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "solid" "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid" "solid"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3859,13 +3815,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "solid" "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid" "solid"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3880,13 +3835,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "solid" "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid" "solid"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3901,13 +3855,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "solid" "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid" "solid"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3922,13 +3875,12 @@
       $data
            V1            V2            V3            V4           
       [1,] "transparent" "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent" "transparent"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3943,13 +3895,12 @@
       $data
               V1    V2    V3    V4
       [1,] FALSE FALSE FALSE FALSE
-      [2,] FALSE FALSE FALSE FALSE
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3964,13 +3915,12 @@
       $data
            V1       V2       V3       V4      
       [1,] "Normal" "Normal" "Normal" "Normal"
-      [2,] "Normal" "Normal" "Normal" "Normal"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -3985,13 +3935,12 @@
       $data
            V1 V2 V3 V4
       [1,] NA NA NA NA
-      [2,] NA NA NA NA
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4010,13 +3959,12 @@
       $data
            V1      V2      V3      V4     
       [1,] "black" "black" "black" "black"
-      [2,] "black" "black" "black" "black"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4031,13 +3979,12 @@
       $data
            V1 V2 V3 V4
       [1,]  9  9  9  9
-      [2,]  9  9  9  9
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4052,13 +3999,12 @@
       $data
               V1    V2    V3    V4
       [1,] FALSE FALSE FALSE FALSE
-      [2,] FALSE FALSE FALSE FALSE
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4073,13 +4019,12 @@
       $data
               V1    V2    V3    V4
       [1,] FALSE FALSE FALSE FALSE
-      [2,] FALSE FALSE FALSE FALSE
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4094,13 +4039,12 @@
       $data
               V1    V2    V3    V4
       [1,] FALSE FALSE FALSE FALSE
-      [2,] FALSE FALSE FALSE FALSE
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4115,13 +4059,12 @@
       $data
               V1    V2    V3    V4
       [1,] FALSE FALSE FALSE FALSE
-      [2,] FALSE FALSE FALSE FALSE
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4136,13 +4079,12 @@
       $data
            V1                V2                V3                V4               
       [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
-      [2,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4157,13 +4099,12 @@
       $data
            V1                V2                V3                V4               
       [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
-      [2,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4178,13 +4119,12 @@
       $data
            V1                V2                V3                V4               
       [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
-      [2,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4199,13 +4139,12 @@
       $data
            V1                V2                V3                V4               
       [1,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
-      [2,] "Times New Roman" "Times New Roman" "Times New Roman" "Times New Roman"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4220,13 +4159,12 @@
       $data
            V1         V2         V3         V4        
       [1,] "baseline" "baseline" "baseline" "baseline"
-      [2,] "baseline" "baseline" "baseline" "baseline"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4241,13 +4179,12 @@
       $data
            V1            V2            V3            V4           
       [1,] "transparent" "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent" "transparent"
       
       $keys
       [1] "V1" "V2" "V3" "V4"
       
       $nrow
-      [1] 2
+      [1] 1
       
       $ncol
       [1] 4
@@ -4417,9 +4354,10 @@
       49        46   table cell         1                 1                     \n
       50        46   table cell         2                 1                      a
       51        46   table cell         3                 1                 Canada
-      52        47   table cell         1                 1                  This 
-      53        47   table cell         2                 1            text should
-      54        47   table cell         3                 1          stay the same
+      52        46   table cell         4                 1                     \n
+      53        46   table cell         5                 1                  This 
+      54        46   table cell         6                 1            text should
+      55        46   table cell         7                 1          stay the same
          image_path field_code footnote_text link link_to_bookmark bookmark_start
       1        <NA>       <NA>               <NA>             <NA>           <NA>
       2        <NA>       <NA>               <NA>             <NA>           <NA>
@@ -4475,6 +4413,7 @@
       52       <NA>       <NA>               <NA>             <NA>           <NA>
       53       <NA>       <NA>               <NA>             <NA>           <NA>
       54       <NA>       <NA>               <NA>             <NA>           <NA>
+      55       <NA>       <NA>               <NA>             <NA>           <NA>
          character_stylename sz sz_cs font_family_ascii font_family_eastasia
       1                 <NA> 20    20   Times New Roman      Times New Roman
       2                 <NA> 20    20   Times New Roman      Times New Roman
@@ -4530,6 +4469,7 @@
       52                <NA> 18    18   Times New Roman      Times New Roman
       53                <NA> 18    18   Times New Roman      Times New Roman
       54                <NA> 18    18   Times New Roman      Times New Roman
+      55                <NA> 18    18   Times New Roman      Times New Roman
          font_family_hansi  font_family_cs  bold italic underline   color shading
       1    Times New Roman Times New Roman  TRUE  FALSE     FALSE #000000    <NA>
       2    Times New Roman Times New Roman  TRUE  FALSE     FALSE #000000    <NA>
@@ -4585,6 +4525,7 @@
       52   Times New Roman Times New Roman FALSE  FALSE     FALSE #000000    <NA>
       53   Times New Roman Times New Roman FALSE  FALSE     FALSE #000000    <NA>
       54   Times New Roman Times New Roman FALSE  FALSE     FALSE #000000    <NA>
+      55   Times New Roman Times New Roman FALSE  FALSE     FALSE #000000    <NA>
          shading_color shading_fill paragraph_stylename keep_with_next  align level
       1           <NA>         <NA>                <NA>          FALSE   left    NA
       2           <NA>         <NA>                <NA>          FALSE   left    NA
@@ -4640,6 +4581,7 @@
       52          <NA>         <NA>                <NA>          FALSE   left    NA
       53          <NA>         <NA>                <NA>          FALSE   left    NA
       54          <NA>         <NA>                <NA>          FALSE   left    NA
+      55          <NA>         <NA>                <NA>          FALSE   left    NA
          num_id table_index row_id cell_id col_span row_span is_header
       1      NA           1      1       1        4        1      TRUE
       2      NA           1      1       1        4        1      TRUE
@@ -4692,9 +4634,10 @@
       49     NA           1     13       1        4        1     FALSE
       50     NA           1     13       1        4        1     FALSE
       51     NA           1     13       1        4        1     FALSE
-      52     NA           1     14       1        4        1     FALSE
-      53     NA           1     14       1        4        1     FALSE
-      54     NA           1     14       1        4        1     FALSE
+      52     NA           1     13       1        4        1     FALSE
+      53     NA           1     13       1        4        1     FALSE
+      54     NA           1     13       1        4        1     FALSE
+      55     NA           1     13       1        4        1     FALSE
          table_stylename
       1             <NA>
       2             <NA>
@@ -4750,6 +4693,7 @@
       52            <NA>
       53            <NA>
       54            <NA>
+      55            <NA>
 
 ---
 
@@ -13484,31 +13428,23 @@
       res$footer
     Output
       $dataset
-                                              COL0
-      1                   \n~{super a}Age in years
-      2      ~{super b}Xanomeline with dose ≥ 20mg
-      3 This ~{optional text should} stay the same
-                                              COL1
-      1                   \n~{super a}Age in years
-      2      ~{super b}Xanomeline with dose ≥ 20mg
-      3 This ~{optional text should} stay the same
-                                              COL2
-      1                   \n~{super a}Age in years
-      2      ~{super b}Xanomeline with dose ≥ 20mg
-      3 This ~{optional text should} stay the same
+                                                                                                               COL0
+      1 \n~{super a}Age in years\n~{super b}Xanomeline with dose ≥ 20mg\nThis ~{optional text should} stay the same
+                                                                                                               COL1
+      1 \n~{super a}Age in years\n~{super b}Xanomeline with dose ≥ 20mg\nThis ~{optional text should} stay the same
+                                                                                                               COL2
+      1 \n~{super a}Age in years\n~{super b}Xanomeline with dose ≥ 20mg\nThis ~{optional text should} stay the same
       
       $content
       $data
            COL0          COL1          COL2         
       [1,] data.frame,21 data.frame,21 data.frame,21
-      [2,] data.frame,21 data.frame,21 data.frame,21
-      [3,] data.frame,21 data.frame,21 data.frame,21
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13536,23 +13472,19 @@
       1.197778 3.647778 3.974444 
       
       $rowheights
-      [1] 0.25 0.25 0.25
+      [1] 0.25
       
       $hrule
-      [1] "auto" "auto" "auto"
+      [1] "auto"
       
       $spans
       $spans$rows
            [,1] [,2] [,3]
       [1,]    3    0    0
-      [2,]    3    0    0
-      [3,]    3    0    0
       
       $spans$columns
            [,1] [,2] [,3]
       [1,]    1    1    1
-      [2,]    1    1    1
-      [3,]    1    1    1
       
       
       $styles
@@ -13561,14 +13493,12 @@
       $data
            COL0     COL1     COL2    
       [1,] "bottom" "center" "center"
-      [2,] "bottom" "center" "center"
-      [3,] "bottom" "center" "center"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13583,14 +13513,12 @@
       $data
            COL0 COL1 COL2
       [1,]   NA   NA   NA
-      [2,]   NA   NA   NA
-      [3,]   NA   NA   NA
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13605,14 +13533,12 @@
       $data
            COL0 COL1 COL2
       [1,]   NA   NA   NA
-      [2,]   NA   NA   NA
-      [3,]   NA   NA   NA
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13627,14 +13553,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13649,14 +13573,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13671,14 +13593,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13693,14 +13613,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13714,15 +13632,13 @@
       $border.width.bottom
       $data
             COL0  COL1  COL2
-      [1,] 0.000 0.000 0.000
-      [2,] 0.000 0.000 0.000
-      [3,] 0.875 0.875 0.875
+      [1,] 0.875 0.875 0.875
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13737,14 +13653,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13759,14 +13673,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13781,14 +13693,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13801,16 +13711,14 @@
       
       $border.color.bottom
       $data
-           COL0          COL1          COL2         
-      [1,] "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent"
-      [3,] "black"       "black"       "black"      
+           COL0    COL1    COL2   
+      [1,] "black" "black" "black"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13825,14 +13733,12 @@
       $data
            COL0          COL1          COL2         
       [1,] "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent"
-      [3,] "transparent" "transparent" "transparent"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13847,14 +13753,12 @@
       $data
            COL0          COL1          COL2         
       [1,] "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent"
-      [3,] "transparent" "transparent" "transparent"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13869,14 +13773,12 @@
       $data
            COL0          COL1          COL2         
       [1,] "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent"
-      [3,] "transparent" "transparent" "transparent"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13891,14 +13793,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid"
-      [3,] "solid" "solid" "solid"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13913,14 +13813,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid"
-      [3,] "solid" "solid" "solid"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13935,14 +13833,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid"
-      [3,] "solid" "solid" "solid"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13957,14 +13853,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid"
-      [3,] "solid" "solid" "solid"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -13979,14 +13873,12 @@
       $data
            COL0   COL1   COL2  
       [1,] "lrtb" "lrtb" "lrtb"
-      [2,] "lrtb" "lrtb" "lrtb"
-      [3,] "lrtb" "lrtb" "lrtb"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14001,14 +13893,12 @@
       $data
            COL0          COL1          COL2         
       [1,] "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent"
-      [3,] "transparent" "transparent" "transparent"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14023,14 +13913,12 @@
       $data
            COL0   COL1   COL2  
       [1,] "auto" "auto" "auto"
-      [2,] "auto" "auto" "auto"
-      [3,] "auto" "auto" "auto"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14049,14 +13937,12 @@
       $data
            COL0   COL1   COL2  
       [1,] "left" "left" "left"
-      [2,] "left" "left" "left"
-      [3,] "left" "left" "left"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14071,14 +13957,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14093,14 +13977,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14115,14 +13997,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14137,14 +14017,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14159,14 +14037,12 @@
       $data
            COL0 COL1 COL2
       [1,]    1    1    1
-      [2,]    1    1    1
-      [3,]    1    1    1
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14181,14 +14057,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14203,14 +14077,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14225,14 +14097,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14247,14 +14117,12 @@
       $data
            COL0 COL1 COL2
       [1,]    0    0    0
-      [2,]    0    0    0
-      [3,]    0    0    0
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14269,14 +14137,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "black" "black" "black"
-      [2,] "black" "black" "black"
-      [3,] "black" "black" "black"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14291,14 +14157,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "black" "black" "black"
-      [2,] "black" "black" "black"
-      [3,] "black" "black" "black"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14313,14 +14177,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "black" "black" "black"
-      [2,] "black" "black" "black"
-      [3,] "black" "black" "black"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14335,14 +14197,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "black" "black" "black"
-      [2,] "black" "black" "black"
-      [3,] "black" "black" "black"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14357,14 +14217,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid"
-      [3,] "solid" "solid" "solid"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14379,14 +14237,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid"
-      [3,] "solid" "solid" "solid"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14401,14 +14257,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid"
-      [3,] "solid" "solid" "solid"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14423,14 +14277,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "solid" "solid" "solid"
-      [2,] "solid" "solid" "solid"
-      [3,] "solid" "solid" "solid"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14445,14 +14297,12 @@
       $data
            COL0          COL1          COL2         
       [1,] "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent"
-      [3,] "transparent" "transparent" "transparent"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14467,14 +14317,12 @@
       $data
             COL0  COL1  COL2
       [1,] FALSE FALSE FALSE
-      [2,] FALSE FALSE FALSE
-      [3,] FALSE FALSE FALSE
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14489,14 +14337,12 @@
       $data
            COL0     COL1     COL2    
       [1,] "Normal" "Normal" "Normal"
-      [2,] "Normal" "Normal" "Normal"
-      [3,] "Normal" "Normal" "Normal"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14511,14 +14357,12 @@
       $data
            COL0 COL1 COL2
       [1,] NA   NA   NA  
-      [2,] NA   NA   NA  
-      [3,] NA   NA   NA  
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14537,14 +14381,12 @@
       $data
            COL0    COL1    COL2   
       [1,] "black" "black" "black"
-      [2,] "black" "black" "black"
-      [3,] "black" "black" "black"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14559,14 +14401,12 @@
       $data
            COL0 COL1 COL2
       [1,]    8    8    8
-      [2,]    8    8    8
-      [3,]    8    8    8
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14581,14 +14421,12 @@
       $data
             COL0  COL1  COL2
       [1,] FALSE FALSE FALSE
-      [2,] FALSE FALSE FALSE
-      [3,] FALSE FALSE FALSE
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14603,14 +14441,12 @@
       $data
             COL0  COL1  COL2
       [1,] FALSE FALSE FALSE
-      [2,] FALSE FALSE FALSE
-      [3,] FALSE FALSE FALSE
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14625,14 +14461,12 @@
       $data
             COL0  COL1  COL2
       [1,] FALSE FALSE FALSE
-      [2,] FALSE FALSE FALSE
-      [3,] FALSE FALSE FALSE
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14647,14 +14481,12 @@
       $data
             COL0  COL1  COL2
       [1,] FALSE FALSE FALSE
-      [2,] FALSE FALSE FALSE
-      [3,] FALSE FALSE FALSE
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14669,14 +14501,12 @@
       $data
            COL0              COL1              COL2             
       [1,] "Times New Roman" "Times New Roman" "Times New Roman"
-      [2,] "Times New Roman" "Times New Roman" "Times New Roman"
-      [3,] "Times New Roman" "Times New Roman" "Times New Roman"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14691,14 +14521,12 @@
       $data
            COL0              COL1              COL2             
       [1,] "Times New Roman" "Times New Roman" "Times New Roman"
-      [2,] "Times New Roman" "Times New Roman" "Times New Roman"
-      [3,] "Times New Roman" "Times New Roman" "Times New Roman"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14713,14 +14541,12 @@
       $data
            COL0              COL1              COL2             
       [1,] "Times New Roman" "Times New Roman" "Times New Roman"
-      [2,] "Times New Roman" "Times New Roman" "Times New Roman"
-      [3,] "Times New Roman" "Times New Roman" "Times New Roman"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14735,14 +14561,12 @@
       $data
            COL0              COL1              COL2             
       [1,] "Times New Roman" "Times New Roman" "Times New Roman"
-      [2,] "Times New Roman" "Times New Roman" "Times New Roman"
-      [3,] "Times New Roman" "Times New Roman" "Times New Roman"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14757,14 +14581,12 @@
       $data
            COL0       COL1       COL2      
       [1,] "baseline" "baseline" "baseline"
-      [2,] "baseline" "baseline" "baseline"
-      [3,] "baseline" "baseline" "baseline"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -14779,14 +14601,12 @@
       $data
            COL0          COL1          COL2         
       [1,] "transparent" "transparent" "transparent"
-      [2,] "transparent" "transparent" "transparent"
-      [3,] "transparent" "transparent" "transparent"
       
       $keys
       [1] "COL0" "COL1" "COL2"
       
       $nrow
-      [1] 3
+      [1] 1
       
       $ncol
       [1] 3
@@ -15007,12 +14827,13 @@
       100        95   table cell         1                 1
       101        95   table cell         2                 1
       102        95   table cell         3                 1
-      103        96   table cell         1                 1
-      104        96   table cell         2                 1
-      105        96   table cell         3                 1
-      106        97   table cell         1                 1
-      107        97   table cell         2                 1
-      108        97   table cell         3                 1
+      103        95   table cell         4                 1
+      104        95   table cell         5                 1
+      105        95   table cell         6                 1
+      106        95   table cell         7                 1
+      107        95   table cell         8                 1
+      108        95   table cell         9                 1
+      109        95   table cell        10                 1
                                    run_content_text image_path field_code
       1                                  output ID:       <NA>       <NA>
       2                                          \t       <NA>       <NA>
@@ -15116,12 +14937,13 @@
       100                                        \n       <NA>       <NA>
       101                                         a       <NA>       <NA>
       102                              Age in years       <NA>       <NA>
-      103                                                 <NA>       <NA>
+      103                                        \n       <NA>       <NA>
       104                                         b       <NA>       <NA>
       105               Xanomeline with dose ≥ 20mg       <NA>       <NA>
-      106                                     This        <NA>       <NA>
-      107                               text should       <NA>       <NA>
-      108                             stay the same       <NA>       <NA>
+      106                                        \n       <NA>       <NA>
+      107                                     This        <NA>       <NA>
+      108                               text should       <NA>       <NA>
+      109                             stay the same       <NA>       <NA>
           footnote_text link link_to_bookmark bookmark_start character_stylename sz
       1                 <NA>             <NA>           <NA>                <NA> 20
       2                 <NA>             <NA>           <NA>                <NA> 20
@@ -15231,6 +15053,7 @@
       106               <NA>             <NA>           <NA>                <NA> 16
       107               <NA>             <NA>           <NA>                <NA> 16
       108               <NA>             <NA>           <NA>                <NA> 16
+      109               <NA>             <NA>           <NA>                <NA> 16
           sz_cs font_family_ascii font_family_eastasia font_family_hansi
       1      20   Times New Roman      Times New Roman   Times New Roman
       2      20   Times New Roman      Times New Roman   Times New Roman
@@ -15340,6 +15163,7 @@
       106    16   Times New Roman      Times New Roman   Times New Roman
       107    16   Times New Roman      Times New Roman   Times New Roman
       108    16   Times New Roman      Times New Roman   Times New Roman
+      109    16   Times New Roman      Times New Roman   Times New Roman
            font_family_cs  bold italic underline   color shading shading_color
       1   Times New Roman  TRUE  FALSE     FALSE #000000    <NA>          <NA>
       2   Times New Roman  TRUE  FALSE     FALSE #000000    <NA>          <NA>
@@ -15449,6 +15273,7 @@
       106 Times New Roman FALSE  FALSE     FALSE #000000    <NA>          <NA>
       107 Times New Roman FALSE  FALSE     FALSE #000000    <NA>          <NA>
       108 Times New Roman FALSE  FALSE     FALSE #000000    <NA>          <NA>
+      109 Times New Roman FALSE  FALSE     FALSE #000000    <NA>          <NA>
           shading_fill paragraph_stylename keep_with_next  align level num_id
       1           <NA>                <NA>          FALSE   left    NA     NA
       2           <NA>                <NA>          FALSE   left    NA     NA
@@ -15558,6 +15383,7 @@
       106         <NA>                <NA>          FALSE   left    NA     NA
       107         <NA>                <NA>          FALSE   left    NA     NA
       108         <NA>                <NA>          FALSE   left    NA     NA
+      109         <NA>                <NA>          FALSE   left    NA     NA
           table_index row_id cell_id col_span row_span is_header table_stylename
       1             1      1       1        3        1      TRUE            <NA>
       2             1      1       1        3        1      TRUE            <NA>
@@ -15661,12 +15487,13 @@
       100           1     33       1        3        1     FALSE            <NA>
       101           1     33       1        3        1     FALSE            <NA>
       102           1     33       1        3        1     FALSE            <NA>
-      103           1     34       1        3        1     FALSE            <NA>
-      104           1     34       1        3        1     FALSE            <NA>
-      105           1     34       1        3        1     FALSE            <NA>
-      106           1     35       1        3        1     FALSE            <NA>
-      107           1     35       1        3        1     FALSE            <NA>
-      108           1     35       1        3        1     FALSE            <NA>
+      103           1     33       1        3        1     FALSE            <NA>
+      104           1     33       1        3        1     FALSE            <NA>
+      105           1     33       1        3        1     FALSE            <NA>
+      106           1     33       1        3        1     FALSE            <NA>
+      107           1     33       1        3        1     FALSE            <NA>
+      108           1     33       1        3        1     FALSE            <NA>
+      109           1     33       1        3        1     FALSE            <NA>
 
 # insert_title_as_header() adds the title correctly
 
@@ -25072,7 +24899,8 @@
       256       254   table cell         1                 1
       257       255   table cell         1                 1
       258       255   table cell         2                 1
-      259       256   table cell         1                 1
+      259       255   table cell         3                 1
+      260       255   table cell         4                 1
                               run_content_text image_path field_code footnote_text
       1                      test1234part1of2:       <NA>       <NA>              
       2                                     \t       <NA>       <NA>              
@@ -25332,7 +25160,8 @@
       256                     -0.7 (-3.6, 2.2)       <NA>       <NA>              
       257                                   \n       <NA>       <NA>              
       258                             footer 1       <NA>       <NA>              
-      259                             footer 2       <NA>       <NA>              
+      259                                   \n       <NA>       <NA>              
+      260                             footer 2       <NA>       <NA>              
           link link_to_bookmark bookmark_start character_stylename sz sz_cs
       1   <NA>             <NA>           <NA>                <NA> 20    20
       2   <NA>             <NA>           <NA>                <NA> 20    20
@@ -25593,6 +25422,7 @@
       257 <NA>             <NA>           <NA>                <NA> 18    18
       258 <NA>             <NA>           <NA>                <NA> 18    18
       259 <NA>             <NA>           <NA>                <NA> 18    18
+      260 <NA>             <NA>           <NA>                <NA> 18    18
           font_family_ascii font_family_eastasia font_family_hansi  font_family_cs
       1     Times New Roman      Times New Roman   Times New Roman Times New Roman
       2     Times New Roman      Times New Roman   Times New Roman Times New Roman
@@ -25853,6 +25683,7 @@
       257   Times New Roman      Times New Roman   Times New Roman Times New Roman
       258   Times New Roman      Times New Roman   Times New Roman Times New Roman
       259   Times New Roman      Times New Roman   Times New Roman Times New Roman
+      260   Times New Roman      Times New Roman   Times New Roman Times New Roman
            bold italic underline   color shading shading_color shading_fill
       1    TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       2    TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
@@ -26113,6 +25944,7 @@
       257 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       258 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       259 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
+      260 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
           paragraph_stylename keep_with_next  align level num_id table_index row_id
       1               caption          FALSE   left    NA     NA           1      1
       2               caption          FALSE   left    NA     NA           1      1
@@ -26372,7 +26204,8 @@
       256              Normal          FALSE center    NA     NA           1     39
       257              Normal          FALSE   left    NA     NA           1     40
       258              Normal          FALSE   left    NA     NA           1     40
-      259              Normal          FALSE   left    NA     NA           1     41
+      259              Normal          FALSE   left    NA     NA           1     40
+      260              Normal          FALSE   left    NA     NA           1     40
           cell_id col_span row_span is_header table_stylename
       1         1        7        1      TRUE            <NA>
       2         1        7        1      TRUE            <NA>
@@ -26633,6 +26466,7 @@
       257       1        7        1     FALSE            <NA>
       258       1        7        1     FALSE            <NA>
       259       1        7        1     FALSE            <NA>
+      260       1        7        1     FALSE            <NA>
 
 ---
 
@@ -26866,7 +26700,8 @@
       224       222   table cell         1                 1
       225       223   table cell         1                 1
       226       223   table cell         2                 1
-      227       224   table cell         1                 1
+      227       223   table cell         3                 1
+      228       223   table cell         4                 1
                               run_content_text image_path field_code footnote_text
       1                      test1234part2of2:       <NA>       <NA>              
       2                                     \t       <NA>       <NA>              
@@ -27094,7 +26929,8 @@
       224                      0.1 (-3.8, 4.0)       <NA>       <NA>              
       225                                   \n       <NA>       <NA>              
       226                             footer 1       <NA>       <NA>              
-      227                             footer 2       <NA>       <NA>              
+      227                                   \n       <NA>       <NA>              
+      228                             footer 2       <NA>       <NA>              
           link link_to_bookmark bookmark_start character_stylename sz sz_cs
       1   <NA>             <NA>           <NA>                <NA> 20    20
       2   <NA>             <NA>           <NA>                <NA> 20    20
@@ -27323,6 +27159,7 @@
       225 <NA>             <NA>           <NA>                <NA> 18    18
       226 <NA>             <NA>           <NA>                <NA> 18    18
       227 <NA>             <NA>           <NA>                <NA> 18    18
+      228 <NA>             <NA>           <NA>                <NA> 18    18
           font_family_ascii font_family_eastasia font_family_hansi  font_family_cs
       1     Times New Roman      Times New Roman   Times New Roman Times New Roman
       2     Times New Roman      Times New Roman   Times New Roman Times New Roman
@@ -27551,6 +27388,7 @@
       225   Times New Roman      Times New Roman   Times New Roman Times New Roman
       226   Times New Roman      Times New Roman   Times New Roman Times New Roman
       227   Times New Roman      Times New Roman   Times New Roman Times New Roman
+      228   Times New Roman      Times New Roman   Times New Roman Times New Roman
            bold italic underline   color shading shading_color shading_fill
       1    TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       2    TRUE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
@@ -27779,6 +27617,7 @@
       225 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       226 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
       227 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
+      228 FALSE  FALSE     FALSE #000000    <NA>          <NA>         <NA>
           paragraph_stylename keep_with_next  align level num_id table_index row_id
       1               caption          FALSE   left    NA     NA           1      1
       2               caption          FALSE   left    NA     NA           1      1
@@ -28006,7 +27845,8 @@
       224              Normal          FALSE center    NA     NA           1     39
       225              Normal          FALSE   left    NA     NA           1     40
       226              Normal          FALSE   left    NA     NA           1     40
-      227              Normal          FALSE   left    NA     NA           1     41
+      227              Normal          FALSE   left    NA     NA           1     40
+      228              Normal          FALSE   left    NA     NA           1     40
           cell_id col_span row_span is_header table_stylename
       1         1        6        1      TRUE            <NA>
       2         1        6        1      TRUE            <NA>
@@ -28235,6 +28075,7 @@
       225       1        6        1     FALSE            <NA>
       226       1        6        1     FALSE            <NA>
       227       1        6        1     FALSE            <NA>
+      228       1        6        1     FALSE            <NA>
 
 # export_TLG_as_docx() works with basic example
 

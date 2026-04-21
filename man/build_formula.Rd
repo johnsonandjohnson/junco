@@ -22,12 +22,18 @@ Formula to use in \code{\link[mmrm:mmrm]{mmrm::mmrm()}}.
 \description{
 This builds the model formula which is used inside \code{\link[=fit_mmrm_j]{fit_mmrm_j()}} and provided
 to \code{\link[mmrm:mmrm]{mmrm::mmrm()}} internally. It can be instructive to look at the resulting
-formula directly sometimes.
+formula directly sometimes. In particular, if a \code{subgroup} variable is included
+in \code{vars}, then the formula will include the interaction of \code{subgroup} with
+\code{arm} and \code{visit}.
 }
 \examples{
 vars <- list(
-  response = "AVAL", covariates = c("RACE", "SEX"),
-  id = "USUBJID", arm = "ARMCD", visit = "AVISIT"
+  response = "AVAL", 
+  covariates = c("RACE", "SEX"),
+  id = "USUBJID", 
+  arm = "ARMCD", 
+  visit = "AVISIT",
+  subgroup = "REGION"
 )
 build_formula(vars, "auto-regressive")
 build_formula(vars)
