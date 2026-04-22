@@ -1,65 +1,3 @@
-add_sib_facets <- function(add_spl_var, add_lbl_var = add_spl_var, comp_path = NULL, combo_map_all) {
-  function(ret, spl, .spl_context, fulldf) {
-    combo_map <- NULL
-    if (!is.null(combo_map_all)) {
-      combo_map <- combo_map_all[combo_map_all$comp_var == add_spl_var, ]
-    }
-    ret <- insert_subset_exprs(ret, spl, comp_path = comp_path)
-    if (identical(add_spl_var, spl_variable(spl)) && NROW(combo_map) == 0) {
-      out <- ret
-    } else {
-      exargs <- list()
-      if (!is.null(comp_path)) {
-        exargs$ref_path <- comp_path
-      }
-      spl2 <- VarLevelSplit(
-        var = add_spl_var,
-        split_label = "new thang",
-        labels_var = add_lbl_var,
-        extra_args = list(exargs)
-      )
-      ret2 <- do_base_split(spl2, fulldf)
-      if (NROW(combo_map) > 0) {
-        for (i in seq_len(NROW(combo_map))) {
-          ret2 <- add_combo_facet(
-            combo_map$valname[i],
-            combo_map$label[i],
-            combo_map$levelcombo[[i]],
-            combo_map$exargs[[i]]
-          )(
-            ret = ret2,
-            spl = spl2,
-            .spl_context = .spl_context,
-            fulldf = fulldf
-          )
-        }
-      }
-
-      ret2 <- insert_subset_exprs(ret2, spl2, comp_path = comp_path)
-      if (identical(add_spl_var, spl_variable(spl))) {
-        ## if we're in the split variable case only add the new combo facets
-        cmbo_inds <- match(combo_map$valname, names(ret2$values))
-        ret2 <- lapply(ret2, function(lsti) lsti[cmbo_inds])
-        names(ret2) <- names(ret)
-      }
-
-      if (any(names(ret2[[1]]) %in% names(ret[[1]]))) {
-        stop(
-          "add_spl_var variable cannot have levels matching any ",
-          "existing levels in the split. Try creating a new dummy ",
-          "variable that is a one to one mapping to the split ",
-          "variable if desired."
-        )
-      }
-
-      out <- lapply(names(ret), function(nm) c(ret[[nm]], ret2[[nm]]))
-      names(out) <- names(ret)
-    }
-    out
-  }
-}
-
-
 get_all_comp_lvls <- function(colspan_trt_map) {
     nonactlvl  <- unique(as.character(colspan_trt_map[[1]]))[2]
     unique(as.character(colspan_trt_map[colspan_trt_map[[1]] == nonactlvl, 2]))
@@ -76,6 +14,8 @@ get_comp_path <- function(map, lvl) {
 
 
 ## ugh. thisisfine.jpg XXX  :( :( :(
+##
+## this is where we munge treatment names/labels into comparison versions
 do_sib_val_surgery <- function(splval, comp_lvl, newexargs) {
     splval@value <- make_comp_name(splval@value, comp_lvl)
     splval@label <- make_comp_name(splval@label, comp_lvl)
@@ -105,7 +45,7 @@ surgical_suite <- function(orig_ret, comp_lvl, newexargs) {
 }
 
 
-add_sib_facets2 <- function(comp_level, colspan_trt_map, combo_map_all) {
+add_sib_facets <- function(comp_level, colspan_trt_map, combo_map_all) {
     function(ret, spl, .spl_context, fulldf) {
     combo_map <- NULL
     if (!is.null(combo_map_all)) {
@@ -113,43 +53,28 @@ add_sib_facets2 <- function(comp_level, colspan_trt_map, combo_map_all) {
     }
     comp_path <- get_comp_path(colspan_trt_map, comp_level)
     ret <- insert_subset_exprs(ret, spl, comp_path = comp_path)
-    first_comp <- get_first_comp_lvl(colspan_trt_map)
-#    if (identical(comp_level, first_comp) && NROW(combo_map) == 0) {
-      out <- ret
-#    } else {
+    out <- ret
     exargs <- list(ref_path = get_comp_path(colspan_trt_map, comp_level))
-      if (NROW(combo_map) > 0) {
-        for (i in seq_len(NROW(combo_map))) {
-          out <- add_combo_facet(
-            combo_map$valname[i],
-            combo_map$label[i],
-            combo_map$levelcombo[[i]],
-            combo_map$exargs[[i]]
-          )(
-            ret = out,
-            spl = spl,
-            .spl_context = .spl_context,
-            fulldf = fulldf
-          )
-        }
-                                        #     }
-      print(sapply(out[[1]],  function(x) x@label))
-      out <- surgical_suite(out, comp_level, exargs)
-      print(sapply(out[[1]],  function(x) x@label))
-      names(out) <- names(ret)
+    if (NROW(combo_map) > 0) {
+      for (i in seq_len(NROW(combo_map))) {
+        out <- add_combo_facet(
+          combo_map$valname[i],
+          combo_map$label[i],
+          combo_map$levelcombo[[i]],
+          combo_map$exargs[[i]]
+        )(
+          ret = out,
+          spl = spl,
+          .spl_context = .spl_context,
+          fulldf = fulldf
+        )
+      }                                        #     }
     }
+    out <- surgical_suite(out, comp_level, exargs)
+    names(out) <- names(ret)
     out
   }
 }
-
-
-
-
-
-
-
-
-
 
 #' Make Multi-comparator Split Function
 #'
@@ -157,21 +82,21 @@ add_sib_facets2 <- function(comp_level, colspan_trt_map, combo_map_all) {
 #' difference columns against one or more comparators. This is used
 #' within `col_struct_w_risk_diffs`.
 #'
-#' @param comp_vars `(character)`\cr A vector of one or more different
-#'     variables to provide the comparators. The first value must be
-#'     the variable being split on.
-#'
-#' @param comp_level_paths `(list of character vectors)`\cr A list of
-#'     comparator paths suitable for passing to e.g., `a_freq_j`'s
-#'     `ref_path` argument.
-#'
-#' @param lbl_vars `(character)`\cr A vector of label variables or
-#'     (`NA_character_` for no label variable) corresponding to each
-#'     of `comp_vars`.
-#'
-#' @param combo_levels_map `(data.frame or NULL)`\cr NULL (the
+#' @param colspan_trt_map (`data.frame`)\cr A data.frame defining the
+#'     active and non-active groups of treatment arms, including
+#'     combination arms defined in `combo_levels_map`, as returned by
+#'     [create_colspan_map()].
+#' 
+#' @param combo_levels_map (`data.frame` or `NULL`)\cr NULL (the
 #'     default) or a data.frame indicating combination levels to added
 #'     to some or all blocks of comparisons. See Details.
+#'
+#' @param comp_level_map (`data.frame` or `NULL`)\cr A data.frame with
+#'     columns `active` and `comparator` indivating which risk
+#'     difference comparisons to include in the column structure, or
+#'     `NULL` (the default), indicating all active vs non-active
+#'     pairwise comparisons as defined `colspan_trt_map` treatment
+#'     groupings.
 #'
 #' @param .pre `(list)`\cr A list of additional preprocessing
 #'     functions to be provided to `make_split_fun`. Defaults to
@@ -191,28 +116,28 @@ add_sib_facets2 <- function(comp_level, colspan_trt_map, combo_map_all) {
 #' for each comparator level (e.g., Placebo vs Placebo) as determined
 #' by the last element of each element of `comp_level_paths`.
 #'
-#' Each variable in `comp_vars` must be unique *and not have any
-#' levels in common with any other comparator variables*.
-#'
 #' Further control of facets is provided by `comp_level_map`. If
 #' `NULL` (the default), all non-control/reference groups will be
-#' compared pairwise with all control/reference groups.
+#' compared pairwise with all control/reference groups as defined by
+#' the grouping in `colspan_trt_map`.
 #'
 #'  If specified, `comp_level_map` must be a `data.frame` (including
 #'  `tbl_df`) with three columns:
 #'
 #' - `active` - (character) the value to be compared to a reference level,
 #' - `comparator` - (character) the level that should be compared against, and
-#' - `is_combo_active` - (logical) is the level specified in `active` a virtual combination level.
+#' - `active_is_combo` - (logical) is the level specified in `active` a virtual combination level.
+#' - `comparator_is_combo` - (logical) is the level specified in `comparator` a virtual combination level.
 #'
 #' If a `data.frame` with only the `active` and `comparator` columns
-#' is given for `comp_level_map`, `is_combo_active` is assumed as
-#' `FALSE` for all rows.
+#' is given for `comp_level_map`, `active_is_combo` and
+#' `comparator_is_combo` are inferred from `colspan_trt_map`.
 #'
-#' If any rows of `comp_level_map` have `is_combo_active == TRUE`, the
-#' values of `active` in those rows *must* also appear in
-#' `combo_levels_map` with the correct level for comp_level (or `NA`
-#' which indicates inclusion for all comparators).
+#' If any rows of `comp_level_map` have `active_is_combo == TRUE` or
+#' `comparator_is_combo`, the relevant values in those rows *must*
+#' also appear in `combo_levels_map` with the correct level for
+#' comp_level (or the `select_all_levels` sentinel value which
+#' indicates inclusion for all comparators).
 #'
 #' If specified, `combo_levels_map` must be a `data.frame` (including `tbl_df`)
 #' with the following columns:
@@ -239,17 +164,18 @@ add_sib_facets2 <- function(comp_level, colspan_trt_map, combo_map_all) {
 #' comparator, as well as their position relative to non-combination
 #' comparisons, is determined by row order in `combo_levels_map`.
 #'
-#' Labels (for the first reference level) and names (for the remaining
-#' reference levels) of comparison columns involving combination
-#' levels will be automatically computed in the form of
-#' `"<combo level label> vs <ref group label>"`
+#' Labels and names of comparison columns involving combination levels
+#' will be automatically computed in the form of
+#' `"<combo level name/label> vs <ref group name>"`. Note currently
+#' ref group *name* is always used as it needs to be inferable from
+#' `colspan_trt_map`.
 #'
 #'
-#' The comparator reference path (`comp_level_path` elements) are
-#' added as `ref_path` to the extra_args associated with generated
-#' facet. As such, analysis (or content) functions used underneath a
-#' split using the generated split function must accept either
-#' `ref_path` or `...`.
+#' The comparator reference path is calculated based on
+#' `colspan_trt_map` and then added as `ref_path` to the extra_args
+#' associated with generated facet. As such, analysis (or content)
+#' functions used underneath a split using the generated split
+#' function must accept either `ref_path` or `...`.
 #'
 #' @note It is not currently possible to use a virtual combination
 #'     level as a comparator/reference group. If you need this
@@ -259,68 +185,7 @@ add_sib_facets2 <- function(comp_level, colspan_trt_map, combo_map_all) {
 #' @family riskdiff_col_struct
 #'
 #' @export
-make_multicomp_splfun <- function(comp_vars,
-                                  comp_level_paths,
-                                  lbl_vars = rep(NA,
-                                    length.out = length(comp_vars)
-                                  ),
-                                  combo_levels_map = NULL,
-                                  comp_level_map = NULL,
-                                  .pre = list(),
-                                  .post = list()) {
-  nvars <- length(comp_vars)
-  if (length(comp_level_paths) != nvars ||
-        length(lbl_vars) != nvars ||
-        length(comp_level_paths) != nvars) {
-    stop(
-      "Lengths of arguments do not all match:\n[",
-      "comp_vars:", nvars,
-      ", comp_level_paths: ", length(comp_level_paths),
-      "lbl_vars:", length(lbl_vars),
-      "]."
-    )
-  }
-
-
-  post <- c(.post)
-  comp_levels <- vapply(comp_level_paths, function(pth) tail(pth, 1), "")
-  if (!is.null(combo_levels_map)) {
-    comp_level_map <- fix_combo_comp_levels(comp_level_map,
-      combo_levels_map,
-      ref_lvls = comp_levels
-    )
-    combo_levels_map <- expand_combo_map(combo_levels_map, comp_vars, ref_lvls = comp_levels)
-  }
-
-  lbl_vars[is.na(lbl_vars)] <- comp_vars[is.na(lbl_vars)]
-
-  funlst <- lapply(
-    seq_along(comp_vars),
-    function(i) {
-      function(ret, spl, .spl_context, fulldf) {
-        sib_fac_fun <- add_sib_facets(
-          comp_vars[i],
-          lbl_vars[i],
-          comp_path = comp_level_paths[[i]],
-          combo_map_all = combo_levels_map
-        )
-        sib_fac_fun(ret, spl, .spl_context, fulldf)
-      }
-    }
-  )
-
-  make_split_fun(
-    pre = .pre,
-    post = c(
-      funlst,
-      apply_comp_map(comp_vars, comp_levels, comp_map = comp_level_map, combo_map = combo_levels_map),
-      post
-    )
-  )
-}
-
-#' @export
-make_multicomp_splfun2 <- function(colspan_trt_map,
+make_multicomp_splfun <- function(colspan_trt_map,
                                    combo_levels_map = NULL,
                                    comp_level_map = NULL,
                                    .pre = list(),
@@ -337,7 +202,7 @@ make_multicomp_splfun2 <- function(colspan_trt_map,
     ##   combo_levels_map,
     ##   ref_lvls = comp_levels
     ## )
-    combo_levels_map <- expand_combo_map2(combo_levels_map, ref_lvls = comp_levels)
+    combo_levels_map <- expand_combo_map(combo_levels_map, ref_lvls = comp_levels)
   }
 
   funlst <- list(
@@ -346,7 +211,7 @@ make_multicomp_splfun2 <- function(colspan_trt_map,
           comp_levels,
           function(lvl) {
 
-          sib_fac_fun <- add_sib_facets2(
+          sib_fac_fun <- add_sib_facets(
               lvl,
               colspan_trt_map = colspan_trt_map,
               combo_map_all = combo_levels_map
@@ -366,7 +231,7 @@ make_multicomp_splfun2 <- function(colspan_trt_map,
     pre = .pre,
     post = c(
       funlst,
-      apply_comp_map2(splvar = names(colspan_trt_map)[2], comp_levels, comp_map = comp_level_map, combo_map = combo_levels_map),
+      apply_comp_map(splvar = names(colspan_trt_map)[2], comp_levels, comp_map = comp_level_map, combo_map = combo_levels_map),
       post
     )
   )
@@ -394,63 +259,9 @@ fix_combo_comp_levels <- function(comp_map, combo_map, ref_lvls, ref_labs = ref_
   comp_map
 }
 
-expand_combo_map <- function(combo_map, comp_vars, ref_lvls, ref_labs = ref_lvls) {
-  if (NROW(combo_map) == 0) {
-    return(combo_map)
-  }
-
-  if (!("compare_against" %in% names(combo_map))) {
-    combo_map$compare_against <- lapply(seq_len(NROW(combo_map)), function(i) select_all_levels)
-  }
-
-  rws <- lapply(
-    seq_len(NROW(combo_map)),
-    function(ii) {
-      first_ref <- ref_lvls[1]
-      remaining_refs <- ref_lvls[-1]
-      mp_rw <- combo_map[ii, ]
-      comp_against <- mp_rw$compare_against[[1]]
-      if (is.null(comp_against) || is(comp_against, "AllLevelsSentinel")) {
-        comp_against <- ref_lvls
-      }
-
-
-      rws_out <- lapply(
-        comp_against,
-        function(cur_ref_lvl) {
-          ref_lvl_ind <- match(cur_ref_lvl, ref_lvls)
-          cur_ref_lab <- ref_labs[ref_lvl_ind]
-          cur_rw <- combo_map[ii, ] ## AllLvlsSentinel class getting dropped from map_rw somehow...
-          new_nm <- make_comp_name(mp_rw$label, cur_ref_lab)
-          cur_rw$valname <- new_nm
-          if (!is(cur_rw$levelcombo[[1]], "AllLevelsSentinel")) {
-            cur_rw$levelcombo[[1]] <- vapply(
-              as.character(cur_rw$levelcombo[[1]]),
-              function(lvl) {
-                if (!is(lvl, "AllLevelsSentinel")) {
-                  lvl <- make_comp_name(lvl, cur_ref_lab)
-                }
-                lvl
-              }, ""
-            )
-          }
-          cur_rw$comp_var <- comp_vars[ref_lvl_ind]
-          cur_rw$label <- new_nm
-          cur_rw
-        }
-      )
-
-      do.call(rbind.data.frame, rws_out)
-    }
-  )
-  do.call(rbind.data.frame, rws)
-}
-
-
-
-
-
-expand_combo_map2 <- function(combo_map, ref_lvls) {
+## conversion of names/labels to comparison versions is now
+## handled (much) later, in surgical_suite and apply_comp_map
+expand_combo_map <- function(combo_map, ref_lvls) {
   if (NROW(combo_map) == 0) {
     return(combo_map)
   }
@@ -476,8 +287,6 @@ expand_combo_map2 <- function(combo_map, ref_lvls) {
         function(cur_ref_lvl) {
           ref_lvl_ind <- match(cur_ref_lvl, ref_lvls)
           cur_rw <- combo_map[ii, ] ## AllLvlsSentinel class getting dropped from map_rw somehow...
-          ## new_nm <- make_comp_name(mp_rw$label, cur_ref_lvl)
-          ## cur_rw$valname <- new_nm
           if (!is(cur_rw$levelcombo[[1]], "AllLevelsSentinel")) {
             cur_rw$levelcombo[[1]] <- vapply(
               as.character(cur_rw$levelcombo[[1]]),
@@ -489,7 +298,6 @@ expand_combo_map2 <- function(combo_map, ref_lvls) {
               }, ""
             )
           }
-          #cur_rw$label <- new_nm
           cur_rw$comparator_level <- cur_ref_lvl
           cur_rw
         }
@@ -502,112 +310,21 @@ expand_combo_map2 <- function(combo_map, ref_lvls) {
 }
 
 
-
-
-
-
-
-apply_comp_map <- function(comp_vars, ref_lvls, comp_map, combo_map) {
-  function(ret, spl, fulldf, ...) {
-    splvar <- comp_vars[1]
-    more_comp_vars <- comp_vars[-1]
-    all_lvls <- levels(fulldf[[splvar]])
-
-    if (is.null(comp_map)) {
-      comp_map <- make_dflt_comp_map(fulldf, splvar, ref_lvls, combo_map, comp_vars)
-    }
-
-    lvls_to_keep <- levels_from_comp_map(comp_map, fulldf, ref_lvls, comp_vars, combo_map)
-    restrict_facets(lvls_to_keep, op = "keep")(ret, spl, fulldf)
-  }
-}
-
-
-apply_comp_map2 <- function(splvar, ref_lvls, comp_map, combo_map) {
+apply_comp_map <- function(splvar, ref_lvls, comp_map, combo_map) {
     function(ret, spl, fulldf, ...) {
     all_lvls <- levels(fulldf[[splvar]])
 
     if (is.null(comp_map)) {
-      comp_map <- make_dflt_comp_map2(fulldf, splvar, ref_lvls, combo_map)
+      comp_map <- make_dflt_comp_map(fulldf, splvar, ref_lvls, combo_map)
     }
     lvls_to_keep <- make_comp_name(comp_map$active, comp_map$comparator) #levels_from_comp_map2(comp_map, combodf)
     restrict_facets(lvls_to_keep, op = "keep")(ret, spl, fulldf)
   }
 }
 
-
-levels_from_comp_map2 <- function(comps, combos) {
-    act_combo_inds <- which(comps$active_is_combo)
-    comp_combo_inds <- which(comps$comparator_is_combo)
-
-    if (length(act_combo_inds) > 0) {
-      comps$active[act_combo_inds] <- combos$label[match(comps$active[act_combo_inds], combos$valname)]
-    }
-
-    if (length(comp_combo_inds) > 0) {
-      comps$comparator[comp_combo_inds] <- combos$label[match(comps$comparator[comp_combo_inds], combos$valname)]
-    }
-
-    make_comp_name(comps$active, comps$comparator)
-}
-
-
-one_comp_level <- function(act_lvl, comp_lvl, df, ref_lvls, comp_vars, active_is_combo) {
-  if (active_is_combo) {
-    return(act_lvl)
-  }
-  spl_var <- comp_vars[1]
-  var_ind <- match(comp_lvl, ref_lvls)
-
-  if (is.na(var_ind)) {
-    stop(
-      "Invalid comparison map: comparator value [", comp_lvl,
-      "] not among reference levels."
-    )
-  }
-
-  row_ind <- which(df[[spl_var]] == act_lvl)[1]
-  as.character(df[row_ind, comp_vars[var_ind], drop = TRUE])
-}
-
-one_comp_level2 <- function(act_lvl, comp_lvl, df, ref_lvls, spl_var, active_is_combo) {
-  if (active_is_combo) {
-    return(act_lvl)
-  }
-  var_ind <- match(comp_lvl, ref_lvls)
-
-  if (is.na(var_ind)) {
-    stop(
-      "Invalid comparison map: comparator value [", comp_lvl,
-      "] not among reference levels."
-    )
-  }
-
-  row_ind <- which(df[[spl_var]] == act_lvl)[1]
-  as.character(df[row_ind, spl_var, drop = TRUE])
-}
-
-
-levels_from_comp_map <- function(map, df, ref_lvls, comp_vars, combo_map) {
-  # combo_map <- expand_combo_map(combo_map, comp_vars, ref_lvls)
-  if (is.null(map$active_is_combo)) {
-    map$active_is_combo <- FALSE
-  }
-
-  mapply(one_comp_level,
-    act_lvl = map[[1]], comp_lvl = map[[2]], active_is_combo = map$active_is_combo,
-    MoreArgs = list(
-      df = df,
-      ref_lvls = ref_lvls,
-      comp_vars = comp_vars
-    )
-  )
-}
-
-
 #' @export
 #' @rdname make_multicomp_splfun
-make_dflt_comp_map <- function(df, spl_var, ref_lvls, combo_map, comp_vars) {
+make_dflt_comp_map <- function(df, spl_var, ref_lvls, combo_map) {
   all_lvls <- as.character(levels(df[[spl_var]]))
 
   non_ref <- setdiff(all_lvls, ref_lvls)
@@ -618,30 +335,7 @@ make_dflt_comp_map <- function(df, spl_var, ref_lvls, combo_map, comp_vars) {
     }
   )
 
-  combo_rws <- combodf_to_comp_map(combo_map, comp_vars, ref_lvls, all_lvls)
-  ret <- do.call(rbind.data.frame, c(base_rws, list(combo_rws)))
-
-  ret$tmp_fact <- factor(ret$comparator, levels = ref_lvls)
-  o <- order(ret$tmp_fact)
-  ret <- ret[o, ]
-  ret$tmp_fact <- NULL
-  ret
-}
-
-#' @export
-#' @rdname make_multicomp_splfun
-make_dflt_comp_map2 <- function(df, spl_var, ref_lvls, combo_map) {
-  all_lvls <- as.character(levels(df[[spl_var]]))
-
-  non_ref <- setdiff(all_lvls, ref_lvls)
-  base_rws <- lapply(
-    ref_lvls,
-    function(ref_lvl_i) {
-      data.frame(active = non_ref, comparator = ref_lvl_i, active_is_combo = FALSE, comparator_is_combo = FALSE)
-    }
-  )
-
-  combo_rws <- combodf_to_comp_map(combodf = combo_map, comp_vars = NULL, ref_lvls = ref_lvls, all_base_lvls = all_lvls)
+  combo_rws <- combodf_to_comp_map(combodf = combo_map, ref_lvls = ref_lvls, all_base_lvls = all_lvls)
   ret <- do.call(rbind.data.frame, c(base_rws, list(combo_rws)))
 
   ret$tmp_fact <- factor(ret$comparator, levels = ref_lvls)
@@ -652,7 +346,7 @@ make_dflt_comp_map2 <- function(df, spl_var, ref_lvls, combo_map) {
 }
 
 
-combodf_to_comp_map <- function(combodf, comp_vars, ref_lvls, all_base_lvls) {
+combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
   nrcombo <- NROW(combodf)
   if (nrcombo == 0) {
     return(NULL)
@@ -737,19 +431,6 @@ combodf_to_comp_map <- function(combodf, comp_vars, ref_lvls, all_base_lvls) {
 #'     `"active"`, `"comparator"`, `"active_is_combo"` and
 #'     `"comparator_is_combo"`, or `NULL` indicating the default
 #'     comparison behavior (See Details).
-#' @param comp_vars (`character` or `NULL`). The names of columns to
-#'     be used as comparator levels, or *if only one reference path is
-#'     given*, `NULL`.
-#'
-#' @param comp_lbl_vars (`character` or `NULL`). Names of columns to
-#'     be used as labels for comparator levels. Defaults to
-#'     `comp_vars`.
-#'
-#' @param ref_paths (`list` of `character`, `character` or
-#'     `NULL`). The path(s) to reference column(s) in the main portion
-#'     of the column structure, to be passed to `junco` analysis
-#'     functions such as [a_freq_j()]. If `NULL` (the default),
-#'     inferred from `colspan_trt_map`
 #' @param rrisk_header (`character(1)`). The spanning label for the
 #'     risk difference section of columns
 #'
@@ -788,16 +469,9 @@ combodf_to_comp_map <- function(combodf, comp_vars, ref_lvls, all_base_lvls) {
 #'
 #' In addition, it supports:
 #'
-#'  - comparison against multiple control groups (via `comp_vars`, see [make_multicomp_splfun()]),
+#'  - comparison against multiple control groups (as specified by `colspan_trt_map` and/or `comp_map`), 
 #'  - virtual combination-levels as active an/or control "treatments" (via `combo_map_df`),
 #'  - full control of which comparisons are performed, and their order (via `comp_map`).
-#'
-#' If only one control group is specified by `colspan_trt_map`,
-#' `comp_vars` does not need to be set, as the treatment variable
-#' (defined as the second column in `colspan_trt_map`) will be used
-#' automatically. If more than one control group is specified,
-#' `comp_vars` must be specified explicitly as it can no longer be
-#' inferred from the map.
 #'
 #' If combination levels are declared via `combo_map_df` but none
 #' appear in `colspan_trt_map`, all combinations will be added to the
@@ -830,11 +504,9 @@ combodf_to_comp_map <- function(combodf, comp_vars, ref_lvls, all_base_lvls) {
 
 col_struct_w_risk_diffs <- function(lyt,
                                     colspan_trt_map,
-                                    comp_vars = NULL,
                                     combo_map_df = NULL,
                                     ## default behavior for comp_map is taken care of in make_multicomp_splfun
                                     comp_map = NULL,
-                                    comp_lbl_vars = comp_vars,
                                     rrisk_header = "Risk Differences",
                                     .main_pre = list(),
                                     .main_post = list(),
@@ -843,10 +515,6 @@ col_struct_w_risk_diffs <- function(lyt,
   trtvar <- names(colspan_trt_map)[2]
   spanvar <- names(colspan_trt_map)[1]
 
-  ## default behavior resolution and arg checking cascade:
-  ## 1. add combinations to colspan_trt_map if needed
-  ## 2. use colspan_trt_map to infer ref_paths
-  ## 3. use ref_paths to check for valid comp_vars
   if (!is.null(combo_map_df)) {
     if (!("is_control" %in% names(combo_map_df))) {
       combo_map_df$is_control <- FALSE
@@ -881,28 +549,12 @@ col_struct_w_risk_diffs <- function(lyt,
     main_post <- list()
   }
 
-  ctrl_span <- unique(colspan_trt_map[[spanvar]])[2] ## assume second is non-active
-  ctrl_vals <- colspan_trt_map[colspan_trt_map[[spanvar]] == ctrl_span, trtvar]
-  ref_paths <- lapply(
-    ctrl_vals,
-    function(vl) c(spanvar, ctrl_span, trtvar, vl)
-  )
-
-  if (is.null(comp_vars) &&
-        (length(ref_paths) == 1 || is.character(ref_paths))) {
-    comp_vars <- trtvar
-  } else if (is.null(comp_vars)) {
-    stop("comp_vars must be specified when more than one control group is specified in colspan_trt_map")
-  }
-
-
   main_post <- c(main_post, .trtmap_to_post_funs(colspan_trt_map), .main_post)
 
   main_splfun <- make_split_fun(pre = .main_pre, post = main_post)
 
   rr_splfun <- make_multicomp_splfun(
-    comp_vars,
-    ref_paths,
+    colspan_trt_map, 
     comp_level_map = comp_map,
     combo_levels_map = combo_map_df,
     .pre = .rr_pre,

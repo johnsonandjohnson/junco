@@ -7,10 +7,8 @@
 col_struct_w_risk_diffs(
   lyt,
   colspan_trt_map,
-  comp_vars = NULL,
   combo_map_df = NULL,
   comp_map = NULL,
-  comp_lbl_vars = comp_vars,
   rrisk_header = "Risk Differences",
   .main_pre = list(),
   .main_post = list(),
@@ -25,10 +23,6 @@ should virtually always be the object returned by \code{basic_table}.}
 \item{colspan_trt_map}{(\code{data.frame}). The spanning label map for
 the main columns, as given by \code{create_colspan_map}.}
 
-\item{comp_vars}{(\code{character} or \code{NULL}). The names of columns to
-be used as comparator levels, or \emph{if only one reference path is
-given}, \code{NULL}.}
-
 \item{combo_map_df}{(\code{data.frame} or \code{NULL}). A combination data
 frame as defined by \code{\link[rtables:add_overall_level]{rtables::add_combo_levels()}} with an additional
 \code{is_control} column indicating whether the virtual level will
@@ -38,10 +32,6 @@ act as a reference (\code{TRUE}) or active (\code{FALSE}) group.}
 \code{"active"}, \code{"comparator"}, \code{"active_is_combo"} and
 \code{"comparator_is_combo"}, or \code{NULL} indicating the default
 comparison behavior (See Details).}
-
-\item{comp_lbl_vars}{(\code{character} or \code{NULL}). Names of columns to
-be used as labels for comparator levels. Defaults to
-\code{comp_vars}.}
 
 \item{rrisk_header}{(\code{character(1)}). The spanning label for the
 risk difference section of columns}
@@ -61,12 +51,6 @@ faceting.}
 \item{.rr_post}{(\code{list} of \code{function}s). Passed to
 \code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}} as \code{.post} for risk difference
 faceting.}
-
-\item{ref_paths}{(\code{list} of \code{character}, \code{character} or
-\code{NULL}). The path(s) to reference column(s) in the main portion
-of the column structure, to be passed to \code{junco} analysis
-functions such as \code{\link[=a_freq_j]{a_freq_j()}}. If \code{NULL} (the default),
-inferred from \code{colspan_trt_map}}
 }
 \value{
 \code{lyt} updated with the specified main and risk difference
@@ -97,17 +81,10 @@ split function
 
 In addition, it supports:
 \itemize{
-\item comparison against multiple control groups (via \code{comp_vars}, see \code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}}),
+\item comparison against multiple control groups (as specified by \code{colspan_trt_map} and/or \code{comp_map}),
 \item virtual combination-levels as active an/or control "treatments" (via \code{combo_map_df}),
 \item full control of which comparisons are performed, and their order (via \code{comp_map}).
 }
-
-If only one control group is specified by \code{colspan_trt_map},
-\code{comp_vars} does not need to be set, as the treatment variable
-(defined as the second column in \code{colspan_trt_map}) will be used
-automatically. If more than one control group is specified,
-\code{comp_vars} must be specified explicitly as it can no longer be
-inferred from the map.
 
 If combination levels are declared via \code{combo_map_df} but none
 appear in \code{colspan_trt_map}, all combinations will be added to the

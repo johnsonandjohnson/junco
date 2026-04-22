@@ -3,39 +3,34 @@
 \name{make_multicomp_splfun}
 \alias{make_multicomp_splfun}
 \alias{make_dflt_comp_map}
-\alias{make_dflt_comp_map2}
 \title{Make Multi-comparator Split Function}
 \usage{
 make_multicomp_splfun(
-  comp_vars,
-  comp_level_paths,
-  lbl_vars = rep(NA, length.out = length(comp_vars)),
+  colspan_trt_map,
   combo_levels_map = NULL,
   comp_level_map = NULL,
   .pre = list(),
   .post = list()
 )
 
-make_dflt_comp_map(df, spl_var, ref_lvls, combo_map, comp_vars)
-
-make_dflt_comp_map2(df, spl_var, ref_lvls, combo_map)
+make_dflt_comp_map(df, spl_var, ref_lvls, combo_map)
 }
 \arguments{
-\item{comp_vars}{\code{(character)}\cr A vector of one or more different
-variables to provide the comparators. The first value must be
-the variable being split on.}
+\item{colspan_trt_map}{(\code{data.frame})\cr A data.frame defining the
+active and non-active groups of treatment arms, including
+combination arms defined in \code{combo_levels_map}, as returned by
+\code{\link[=create_colspan_map]{create_colspan_map()}}.}
 
-\item{comp_level_paths}{\verb{(list of character vectors)}\cr A list of
-comparator paths suitable for passing to e.g., \code{a_freq_j}'s
-\code{ref_path} argument.}
-
-\item{lbl_vars}{\code{(character)}\cr A vector of label variables or
-(\code{NA_character_} for no label variable) corresponding to each
-of \code{comp_vars}.}
-
-\item{combo_levels_map}{\verb{(data.frame or NULL)}\cr NULL (the
+\item{combo_levels_map}{(\code{data.frame} or \code{NULL})\cr NULL (the
 default) or a data.frame indicating combination levels to added
 to some or all blocks of comparisons. See Details.}
+
+\item{comp_level_map}{(\code{data.frame} or \code{NULL})\cr A data.frame with
+columns \code{active} and \code{comparator} indivating which risk
+difference comparisons to include in the column structure, or
+\code{NULL} (the default), indicating all active vs non-active
+pairwise comparisons as defined \code{colspan_trt_map} treatment
+groupings.}
 
 \item{.pre}{\code{(list)}\cr A list of additional preprocessing
 functions to be provided to \code{make_split_fun}. Defaults to
@@ -61,29 +56,29 @@ or similar columns. As such it will automatically exclude the facet
 for each comparator level (e.g., Placebo vs Placebo) as determined
 by the last element of each element of \code{comp_level_paths}.
 
-Each variable in \code{comp_vars} must be unique \emph{and not have any
-levels in common with any other comparator variables}.
-
 Further control of facets is provided by \code{comp_level_map}. If
 \code{NULL} (the default), all non-control/reference groups will be
-compared pairwise with all control/reference groups.
+compared pairwise with all control/reference groups as defined by
+the grouping in \code{colspan_trt_map}.
 
 If specified, \code{comp_level_map} must be a \code{data.frame} (including
 \code{tbl_df}) with three columns:
 \itemize{
 \item \code{active} - (character) the value to be compared to a reference level,
 \item \code{comparator} - (character) the level that should be compared against, and
-\item \code{is_combo_active} - (logical) is the level specified in \code{active} a virtual combination level.
+\item \code{active_is_combo} - (logical) is the level specified in \code{active} a virtual combination level.
+\item \code{comparator_is_combo} - (logical) is the level specified in \code{comparator} a virtual combination level.
 }
 
 If a \code{data.frame} with only the \code{active} and \code{comparator} columns
-is given for \code{comp_level_map}, \code{is_combo_active} is assumed as
-\code{FALSE} for all rows.
+is given for \code{comp_level_map}, \code{active_is_combo} and
+\code{comparator_is_combo} are inferred from \code{colspan_trt_map}.
 
-If any rows of \code{comp_level_map} have \code{is_combo_active == TRUE}, the
-values of \code{active} in those rows \emph{must} also appear in
-\code{combo_levels_map} with the correct level for comp_level (or \code{NA}
-which indicates inclusion for all comparators).
+If any rows of \code{comp_level_map} have \code{active_is_combo == TRUE} or
+\code{comparator_is_combo}, the relevant values in those rows \emph{must}
+also appear in \code{combo_levels_map} with the correct level for
+comp_level (or the \code{select_all_levels} sentinel value which
+indicates inclusion for all comparators).
 
 If specified, \code{combo_levels_map} must be a \code{data.frame} (including \code{tbl_df})
 with the following columns:
@@ -111,16 +106,17 @@ Order of combination levels when multiple are present for a single
 comparator, as well as their position relative to non-combination
 comparisons, is determined by row order in \code{combo_levels_map}.
 
-Labels (for the first reference level) and names (for the remaining
-reference levels) of comparison columns involving combination
-levels will be automatically computed in the form of
-\code{"<combo level label> vs <ref group label>"}
+Labels and names of comparison columns involving combination levels
+will be automatically computed in the form of
+\code{"<combo level name/label> vs <ref group name>"}. Note currently
+ref group \emph{name} is always used as it needs to be inferable from
+\code{colspan_trt_map}.
 
-The comparator reference path (\code{comp_level_path} elements) are
-added as \code{ref_path} to the extra_args associated with generated
-facet. As such, analysis (or content) functions used underneath a
-split using the generated split function must accept either
-\code{ref_path} or \code{...}.
+The comparator reference path is calculated based on
+\code{colspan_trt_map} and then added as \code{ref_path} to the extra_args
+associated with generated facet. As such, analysis (or content)
+functions used underneath a split using the generated split
+function must accept either \code{ref_path} or \code{...}.
 }
 \note{
 It is not currently possible to use a virtual combination
