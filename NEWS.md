@@ -1,3 +1,8 @@
+# junco 0.1.5
+
+### Changed
+- updated snapshots produced by RTF exporter due to new tidytlg CRAN release v0.12.0
+
 # junco 0.1.4
 
 
