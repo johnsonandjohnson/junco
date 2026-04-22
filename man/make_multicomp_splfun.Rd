@@ -3,6 +3,7 @@
 \name{make_multicomp_splfun}
 \alias{make_multicomp_splfun}
 \alias{make_dflt_comp_map}
+\alias{make_dflt_comp_map2}
 \title{Make Multi-comparator Split Function}
 \usage{
 make_multicomp_splfun(
@@ -16,6 +17,8 @@ make_multicomp_splfun(
 )
 
 make_dflt_comp_map(df, spl_var, ref_lvls, combo_map, comp_vars)
+
+make_dflt_comp_map2(df, spl_var, ref_lvls, combo_map)
 }
 \arguments{
 \item{comp_vars}{\code{(character)}\cr A vector of one or more different

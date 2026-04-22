@@ -30,7 +30,7 @@ be used as comparator levels, or \emph{if only one reference path is
 given}, \code{NULL}.}
 
 \item{combo_map_df}{(\code{data.frame} or \code{NULL}). A combination data
-frame as defined by \code{\link[=add_combo_levels]{add_combo_levels()}} with an additional
+frame as defined by \code{\link[rtables:add_overall_level]{rtables::add_combo_levels()}} with an additional
 \code{is_control} column indicating whether the virtual level will
 act as a reference (\code{TRUE}) or active (\code{FALSE}) group.}
 

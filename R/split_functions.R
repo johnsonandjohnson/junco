@@ -396,12 +396,11 @@ insert_subset_exprs <- function(partinfo, spl, comp_path = NULL) {
   exprs <- lapply(rvs, function(rvi) rtables:::make_subset_expr(spl, rvi))
   newvals <- mapply(function(val, expr) {
     exvals <- rtables:::splv_extra(val)
-    if (!is.null(rtables:::value_expr(val)) && "ref_path" %in% names(exvals)) {
+    if (!is.null(rtables:::value_expr(val))) {
       return(val)
     }
     ## XXX fix ASAP, export setter from rtables
     val@subset_expression <- expr
-    rtables:::splv_extra(val) <- c(exvals, list(ref_path = comp_path))
     val
   },
   val = partinfo$values,

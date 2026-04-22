@@ -60,6 +60,97 @@ add_sib_facets <- function(add_spl_var, add_lbl_var = add_spl_var, comp_path = N
 }
 
 
+get_all_comp_lvls <- function(colspan_trt_map) {
+    nonactlvl  <- unique(as.character(colspan_trt_map[[1]]))[2]
+    unique(as.character(colspan_trt_map[colspan_trt_map[[1]] == nonactlvl, 2]))
+}
+
+get_first_comp_lvl <- function(colspan_trt_map) {
+    get_all_comp_lvls(colspan_trt_map)[1]
+}
+
+get_comp_path <- function(map, lvl) {
+    rw <- map[map[[2]] == lvl,]
+    c(names(map)[1], rw[[1]], names(map)[2], rw[[2]])
+}
+
+
+## ugh. thisisfine.jpg XXX  :( :( :(
+do_sib_val_surgery <- function(splval, comp_lvl, newexargs) {
+    splval@value <- make_comp_name(splval@value, comp_lvl)
+    splval@label <- make_comp_name(splval@label, comp_lvl)
+    args <- c(newexargs, splval@extra)
+    splval@extra <- args
+    splval
+}
+
+
+## do "surgery" on all of the original values to enforce uniqueness and
+## correct comparison labels
+surgical_suite <- function(orig_ret, comp_lvl, newexargs) {
+    out <- orig_ret
+    out$values <- lapply(out$values,
+                         do_sib_val_surgery,
+                         comp_lvl = comp_lvl,
+                         newexargs = newexargs)
+    out$labels <- vapply(out$values, function(x) x@label, "")
+    newnms <- vapply(out$values, value_names, "")
+    out <- lapply(out,
+                  function(part) {
+          names(part) <- newnms
+          part
+      })
+    names(out) <- names(orig_ret)
+    out
+}
+
+
+add_sib_facets2 <- function(comp_level, colspan_trt_map, combo_map_all) {
+    function(ret, spl, .spl_context, fulldf) {
+    combo_map <- NULL
+    if (!is.null(combo_map_all)) {
+      combo_map <- combo_map_all[combo_map_all$comparator_level == comp_level, ]
+    }
+    comp_path <- get_comp_path(colspan_trt_map, comp_level)
+    ret <- insert_subset_exprs(ret, spl, comp_path = comp_path)
+    first_comp <- get_first_comp_lvl(colspan_trt_map)
+#    if (identical(comp_level, first_comp) && NROW(combo_map) == 0) {
+      out <- ret
+#    } else {
+    exargs <- list(ref_path = get_comp_path(colspan_trt_map, comp_level))
+      if (NROW(combo_map) > 0) {
+        for (i in seq_len(NROW(combo_map))) {
+          out <- add_combo_facet(
+            combo_map$valname[i],
+            combo_map$label[i],
+            combo_map$levelcombo[[i]],
+            combo_map$exargs[[i]]
+          )(
+            ret = out,
+            spl = spl,
+            .spl_context = .spl_context,
+            fulldf = fulldf
+          )
+        }
+                                        #     }
+      print(sapply(out[[1]],  function(x) x@label))
+      out <- surgical_suite(out, comp_level, exargs)
+      print(sapply(out[[1]],  function(x) x@label))
+      names(out) <- names(ret)
+    }
+    out
+  }
+}
+
+
+
+
+
+
+
+
+
+
 #' Make Multi-comparator Split Function
 #'
 #' Create a custom splitting function suitable for creating risk
@@ -207,14 +298,12 @@ make_multicomp_splfun <- function(comp_vars,
     seq_along(comp_vars),
     function(i) {
       function(ret, spl, .spl_context, fulldf) {
-        callstuff <<- list(ret = ret, spl = spl, spl_context = .spl_context, fulldf = fulldf)
         sib_fac_fun <- add_sib_facets(
           comp_vars[i],
           lbl_vars[i],
           comp_path = comp_level_paths[[i]],
           combo_map_all = combo_levels_map
         )
-        one_sib_fac_fun <<- sib_fac_fun
         sib_fac_fun(ret, spl, .spl_context, fulldf)
       }
     }
@@ -230,13 +319,70 @@ make_multicomp_splfun <- function(comp_vars,
   )
 }
 
+#' @export
+make_multicomp_splfun2 <- function(colspan_trt_map,
+                                   combo_levels_map = NULL,
+                                   comp_level_map = NULL,
+                                   .pre = list(),
+                                   .post = list()) {
+  post <- c(.post)
+  if (is.null(comp_level_map)) {
+    comp_levels <- get_all_comp_lvls(colspan_trt_map)
+
+  } else {
+    comp_levels <- unique(as.character(comp_level_map$comparator))
+  }
+  if (!is.null(combo_levels_map)) {
+    ## comp_level_map <- fix_combo_comp_levels(comp_level_map,
+    ##   combo_levels_map,
+    ##   ref_lvls = comp_levels
+    ## )
+    combo_levels_map <- expand_combo_map2(combo_levels_map, ref_lvls = comp_levels)
+  }
+
+  funlst <- list(
+      function(ret, spl, .spl_context, fulldf) {
+      sib_sets <- lapply(
+          comp_levels,
+          function(lvl) {
+
+          sib_fac_fun <- add_sib_facets2(
+              lvl,
+              colspan_trt_map = colspan_trt_map,
+              combo_map_all = combo_levels_map
+          )
+          sib_fac_fun(ret, spl, .spl_context, fulldf)
+      })
+      out <- lapply(names(ret),
+                    function(nm) {
+          unlist(lapply(seq_along(sib_sets), function(ii) sib_sets[[ii]][[nm]]),
+                 recursive = FALSE)
+      })
+      names(out) <- names(ret)
+      out
+  })
+
+  make_split_fun(
+    pre = .pre,
+    post = c(
+      funlst,
+      apply_comp_map2(splvar = names(colspan_trt_map)[2], comp_levels, comp_map = comp_level_map, combo_map = combo_levels_map),
+      post
+    )
+  )
+}
+
+
+
+
+
 
 make_comp_name <- function(act_nm, comp_nm) paste0(act_nm, " vs ", comp_nm)
 
 ## must be called ***before*** expand_combo_map so the old
 ## valnames are still there
 fix_combo_comp_levels <- function(comp_map, combo_map, ref_lvls, ref_labs = ref_lvls) {
-  if (NROW(combo_map) == 0) {
+  if (NROW(combo_map) == 0 || NROW(comp_map) == 0) {
     return(comp_map)
   }
   comp_inds <- which(comp_map$active_is_combo)
@@ -301,6 +447,66 @@ expand_combo_map <- function(combo_map, comp_vars, ref_lvls, ref_labs = ref_lvls
 }
 
 
+
+
+
+expand_combo_map2 <- function(combo_map, ref_lvls) {
+  if (NROW(combo_map) == 0) {
+    return(combo_map)
+  }
+
+  if (!("compare_against" %in% names(combo_map))) {
+    combo_map$compare_against <- lapply(seq_len(NROW(combo_map)), function(i) select_all_levels)
+  }
+
+  rws <- lapply(
+    seq_len(NROW(combo_map)),
+    function(ii) {
+      first_ref <- ref_lvls[1]
+      remaining_refs <- ref_lvls[-1]
+      mp_rw <- combo_map[ii, ]
+      comp_against <- mp_rw$compare_against[[1]]
+      if (is.null(comp_against) || is(comp_against, "AllLevelsSentinel")) {
+        comp_against <- ref_lvls
+      }
+
+
+      rws_out <- lapply(
+        comp_against,
+        function(cur_ref_lvl) {
+          ref_lvl_ind <- match(cur_ref_lvl, ref_lvls)
+          cur_rw <- combo_map[ii, ] ## AllLvlsSentinel class getting dropped from map_rw somehow...
+          ## new_nm <- make_comp_name(mp_rw$label, cur_ref_lvl)
+          ## cur_rw$valname <- new_nm
+          if (!is(cur_rw$levelcombo[[1]], "AllLevelsSentinel")) {
+            cur_rw$levelcombo[[1]] <- vapply(
+              as.character(cur_rw$levelcombo[[1]]),
+              function(lvl) {
+                if (!is(lvl, "AllLevelsSentinel")) {
+                  lvl <- make_comp_name(lvl, cur_ref_lvl)
+                }
+                lvl
+              }, ""
+            )
+          }
+          #cur_rw$label <- new_nm
+          cur_rw$comparator_level <- cur_ref_lvl
+          cur_rw
+        }
+      )
+
+      do.call(rbind.data.frame, rws_out)
+    }
+  )
+  do.call(rbind.data.frame, rws)
+}
+
+
+
+
+
+
+
 apply_comp_map <- function(comp_vars, ref_lvls, comp_map, combo_map) {
   function(ret, spl, fulldf, ...) {
     splvar <- comp_vars[1]
@@ -314,6 +520,35 @@ apply_comp_map <- function(comp_vars, ref_lvls, comp_map, combo_map) {
     lvls_to_keep <- levels_from_comp_map(comp_map, fulldf, ref_lvls, comp_vars, combo_map)
     restrict_facets(lvls_to_keep, op = "keep")(ret, spl, fulldf)
   }
+}
+
+
+apply_comp_map2 <- function(splvar, ref_lvls, comp_map, combo_map) {
+    function(ret, spl, fulldf, ...) {
+    all_lvls <- levels(fulldf[[splvar]])
+
+    if (is.null(comp_map)) {
+      comp_map <- make_dflt_comp_map2(fulldf, splvar, ref_lvls, combo_map)
+    }
+    lvls_to_keep <- make_comp_name(comp_map$active, comp_map$comparator) #levels_from_comp_map2(comp_map, combodf)
+    restrict_facets(lvls_to_keep, op = "keep")(ret, spl, fulldf)
+  }
+}
+
+
+levels_from_comp_map2 <- function(comps, combos) {
+    act_combo_inds <- which(comps$active_is_combo)
+    comp_combo_inds <- which(comps$comparator_is_combo)
+
+    if (length(act_combo_inds) > 0) {
+      comps$active[act_combo_inds] <- combos$label[match(comps$active[act_combo_inds], combos$valname)]
+    }
+
+    if (length(comp_combo_inds) > 0) {
+      comps$comparator[comp_combo_inds] <- combos$label[match(comps$comparator[comp_combo_inds], combos$valname)]
+    }
+
+    make_comp_name(comps$active, comps$comparator)
 }
 
 
@@ -335,6 +570,24 @@ one_comp_level <- function(act_lvl, comp_lvl, df, ref_lvls, comp_vars, active_is
   as.character(df[row_ind, comp_vars[var_ind], drop = TRUE])
 }
 
+one_comp_level2 <- function(act_lvl, comp_lvl, df, ref_lvls, spl_var, active_is_combo) {
+  if (active_is_combo) {
+    return(act_lvl)
+  }
+  var_ind <- match(comp_lvl, ref_lvls)
+
+  if (is.na(var_ind)) {
+    stop(
+      "Invalid comparison map: comparator value [", comp_lvl,
+      "] not among reference levels."
+    )
+  }
+
+  row_ind <- which(df[[spl_var]] == act_lvl)[1]
+  as.character(df[row_ind, spl_var, drop = TRUE])
+}
+
+
 levels_from_comp_map <- function(map, df, ref_lvls, comp_vars, combo_map) {
   # combo_map <- expand_combo_map(combo_map, comp_vars, ref_lvls)
   if (is.null(map$active_is_combo)) {
@@ -350,6 +603,7 @@ levels_from_comp_map <- function(map, df, ref_lvls, comp_vars, combo_map) {
     )
   )
 }
+
 
 #' @export
 #' @rdname make_multicomp_splfun
@@ -373,6 +627,30 @@ make_dflt_comp_map <- function(df, spl_var, ref_lvls, combo_map, comp_vars) {
   ret$tmp_fact <- NULL
   ret
 }
+
+#' @export
+#' @rdname make_multicomp_splfun
+make_dflt_comp_map2 <- function(df, spl_var, ref_lvls, combo_map) {
+  all_lvls <- as.character(levels(df[[spl_var]]))
+
+  non_ref <- setdiff(all_lvls, ref_lvls)
+  base_rws <- lapply(
+    ref_lvls,
+    function(ref_lvl_i) {
+      data.frame(active = non_ref, comparator = ref_lvl_i, active_is_combo = FALSE, comparator_is_combo = FALSE)
+    }
+  )
+
+  combo_rws <- combodf_to_comp_map(combodf = combo_map, comp_vars = NULL, ref_lvls = ref_lvls, all_base_lvls = all_lvls)
+  ret <- do.call(rbind.data.frame, c(base_rws, list(combo_rws)))
+
+  ret$tmp_fact <- factor(ret$comparator, levels = ref_lvls)
+  o <- order(ret$tmp_fact)
+  ret <- ret[o, ]
+  ret$tmp_fact <- NULL
+  ret
+}
+
 
 combodf_to_comp_map <- function(combodf, comp_vars, ref_lvls, all_base_lvls) {
   nrcombo <- NROW(combodf)
