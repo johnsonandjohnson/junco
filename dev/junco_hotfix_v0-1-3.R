@@ -993,7 +993,7 @@ hotfix_a_freq_j <- function(
 
 
 
-s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = control_analyze_vars()) {
+hotfix_s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = control_analyze_vars()) {
   #### TODO: hotfix : 257 `s_summarize_desc_j()` fixed when applied to almost constant data due to behavior from `t.test.default()`
   safe_t_test <- function(x, y = NULL, ...) {
     tryCatch(
