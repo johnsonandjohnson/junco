@@ -21,7 +21,7 @@ Because we cannot rebuild and redeploy new package versions onto old containers,
 ## Phase 2: The `hotpatchR` Injection File
 **3. Isolate Surgical Changes:** We no longer need to map or copy child dependencies. Because `hotpatchR` rewrites the package memory directly, **you only need to write the exact function that is broken.** Internal dependencies will automatically inherit the fix.
 
-**4. Create the Hotfix File:** In the `junco` GitHub repository, create a new branch strictly following this naming convention: `feature/hotfix-<your-hotfix-name>`
+**4. Create the Hotfix File:** In the `junco` GitHub repository, create a new from `dev` branch strictly following this naming convention: `feature/hotfix-<your-hotfix-name>`
 
 Save your hotfix file in the `dev/` folder. **File names must exactly match the target legacy version** (e.g., `dev/junco_hotfix_v0-1-1.R`).
 
