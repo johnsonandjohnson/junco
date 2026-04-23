@@ -52,4 +52,3 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
 ### Testing & CI Notes
 * **Snapshot Changes:** Expected test modifications required to pass CI with the new patches.
     * `test-tt_to_tlgrtf.R`: Removed the test asserting that the CSV exists (line 202) to accommodate the new optional CSV logic.
-    * `test-docx_exporter_functions.R`: Removed lines 386-387 (`string_to_look_for` and `add_title_style_caption(doc, string_to_look_for)`). **Reason:** Caption styling is handled natively by `flextable` as of v0.9.11, making explicit manual style insertion obsolete and error-prone.
