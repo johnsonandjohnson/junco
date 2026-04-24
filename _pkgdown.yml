@@ -6,10 +6,9 @@ template:
 
 navbar:
   structure:
-    left: [reference, articles]
+    left: [reference, articles, news]
     right: [search, github]
   components:
-
 authors:
   before: "We define *authors* as those who are actively maintaining the code base, and *contributors* as those who made a significant contribution in the past. For all acknowledgements, see the eponymous section in the [Home Page](https://johnsonandjohnson.github.io/junco/)."
   footer:
@@ -23,6 +22,7 @@ articles:
     - junco
     - auto_colwidths
     - table_and_listing_customizations
+    - ancova_combined
 reference:
   - title: junco Analysis Functions
     desc: The following functions are the Analysis functions used used to create common table layouts.
@@ -132,6 +132,11 @@ reference:
     - get_ref_info
     - get_visit_levels
     - leftside
+
+  - title: junco Geoms
+    desc: ggplot2 geoms provided by junco.
+    contents:
+      - geom_boxplot_j
 
   - title: internal
     desc: The following are additional junco functions.
