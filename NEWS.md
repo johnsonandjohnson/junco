@@ -34,7 +34,7 @@
 - Fix old TODOs in tests
 - docx exporter added missing defaults (#186)
 - Changed all snapshot tests to `cran = TRUE`
-- Footnotes in docx outputs are now 1 table row/cell
+- Footnotes in docx and RTF outputs are now 1 table row/cell (#285)
 
 ### Added
 

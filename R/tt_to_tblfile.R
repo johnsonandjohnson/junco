@@ -759,6 +759,7 @@ tt_to_tlgrtf <- function(
     bottom_borders = border_mat,
     print.hux = !is.null(fname),
     alignments = alignments,
+    footers_one_row = TRUE,
     ...
   )
 }
