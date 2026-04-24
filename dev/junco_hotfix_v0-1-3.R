@@ -460,7 +460,7 @@ tt_to_tlgrtf <- function(
   } else {
     df <- tt[, listing_dispcols(tt)]
     # apply formats and round_type and return df as a dataframe to input in gentlg
-    df <- listingdf_dataframe_formats(df, round_type = round_type)
+    df <- junco:::listingdf_dataframe_formats(df, round_type = round_type)
   }
 
   ## we only care about the col labels here...
@@ -1034,7 +1034,7 @@ a_freq_j <- function(
       }
     }
 
-    x_stats <- s_rel_risk_val_j(
+    x_stats <- junco:::s_rel_risk_val_j(
       df,
       .var = .var,
       .df_row = .df_row,
@@ -1343,7 +1343,7 @@ a_freq_subcol_j <- function(
     )
   }
 
-  check_alt_df_full(denom, "n_altdf", .alt_df_full)
+  junco:::check_alt_df_full(denom, "n_altdf", .alt_df_full)
 
   res_dataprep <- h_a_freq_dataprep(
     df = df,
@@ -1517,7 +1517,7 @@ a_freq_resp_var_j <- function(
     df <- df[df[[.var]] %in% val_var, ]
     .df_row <- .df_row[.df_row[[.var]] %in% val_var, ]
 
-    df <- h_update_factor(df, .var, val_var)
+    df <- junco:::h_update_factor(df, .var, val_var)
   }
 
   varvec <- df[[.var]]
@@ -1566,7 +1566,7 @@ a_freq_resp_var_j <- function(
       fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction else .formats
       rslt <- rcell(x_stat, format = fmt)
     } else {
-      # use the risk differenc function s_rel_risk_val_j on the current level of the incoming variable (.var)
+      # use the risk differenc function junco:::s_rel_risk_val_j on the current level of the incoming variable (.var)
       # note that the response variable will become .var in the below call
       # val is restricted to Y to show number of response on the current level of .var
       denom_df <- dfrowii
@@ -1578,7 +1578,7 @@ a_freq_resp_var_j <- function(
         cur_trt_grp,
         .spl_context)
 
-      rslt <- s_rel_risk_val_j(
+      rslt <- junco:::s_rel_risk_val_j(
         df = dfii,
         .var = resp_var,
         .df_row = dfrowii,
