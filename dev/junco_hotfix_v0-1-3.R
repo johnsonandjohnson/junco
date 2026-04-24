@@ -402,8 +402,8 @@ tt_to_tlgrtf <- function(
           # colwidths are already on the pags since they are mpfs
           border_mat = pag_bord_mats,
           round_type = round_type,
-          export_csv = export_csv,
-          output_csv_directory = output_csv_directory,
+          export_csv = export_csv, #### TODO: hotfix :142 optional csv #165
+          output_csv_directory = output_csv_directory, #### TODO: hotfix :142 optional csv #165
           label_width_ins = label_width_ins, ### TODO: hotfix:  label_width_ins was not being passed recursively #166
           ...
         )
@@ -729,7 +729,7 @@ s_freq_j <- function(
 
   countsource <- match.arg(countsource)
 
-  if (countsource %in% c("altdf", "altdf_subset")) {
+  if (countsource %in% c("altdf", "altdf_subset")) { #### TODO: hotfix: a freq j fails with countsource = altdf in nested row splits (#221)
     df <- alt_df
   }
 
@@ -935,7 +935,7 @@ a_freq_j <- function(
     .alt_df_full = .alt_df_full,
     denom_by = denom_by,
     .stats = .stats,
-    countsource = countsource
+    countsource = countsource #### TODO: hotfix: a freq j fails with countsource = altdf in nested row splits (#221)
   )
   # res_dataprep is list with elements
   # df .df_row val
