@@ -19,6 +19,7 @@
 
 ### Changed
 
+- changed return value `n` for `s_ancova_j` into `n_fit`, to differentiate between these two statistics for combined function `s_summarize_ancova_j()` (#117)
 - added default label for median_range "Median (min, max)" in `junco_default_labels_start`
 - changed label from "experimental" to "stable" for `default_stats_formats_labels`
 - refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
@@ -37,11 +38,13 @@
 
 ### Added
 
+- Added option to perform `a_summarize_ancova_j` in a layout with a combined column facet (#117) + slight change in return value for `s_ancova_j()`, now we have n_fit instead of n returned
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
 - Added option to specify the output folder for the csv
 - Added argument 'validate' to `export_TLG_as_docx()` and `tt_to_flextable_j()` (#213)
 - Added "watermark" argument in the docx exporter for Figures (#181)
 - Added argument `mult_adj_emmeans` in `fit_mmrm_j()` to enable (single-step or step-down) Dunnett multiplicity adjustment for LS means contrasts (p-values and confidence intervals) for more than one experimental arm within visits.
+- Added option for subgroup variable in the `vars` argument of `fit_mmrm_j()` to enable fitting an overall MMRM with subgroup interaction terms.
 - Export helpers for LS means tabulation: `lsmeans_wide_cfun`, `lsmeans_wide_first_split_fun_fct`, `lsmeans_wide_second_split_fun_fct`
 
 

@@ -1,15 +1,17 @@
-#' `tryCatch` around `stat::t.test`
+#' @noRd
 #'
-#' Captures errors when executing [stat::t.test].
+#' @description `tryCatch` around `stats::t.test`
 #'
-#' @inheritParams stat::t.test
+#' Captures errors when executing [stats::t.test].
+#'
+#' @inheritParams stats::t.test
 #'
 #' @return A list with core items as from `t.test.default` and `error_text` for the captured error.
 #'
 #' @keywords internal
 safe_t_test <- function(x, y = NULL, ...) {
   tryCatch(
-    t.test(x, y, ...),
+    stats::t.test(x, y, ...),
     error = function(e) {
       if (!is.null(y)) {
         estimate <- c(mean_x = mean(x), mean_y = mean(y))
@@ -114,7 +116,10 @@ s_aval_chg_col23_diff <- function(
     trt_var,
     ctrl_grp,
     cur_param,
-    cur_lvl) {
+    cur_lvl,
+    weights_emmeans,
+    method_combo,
+    weights_combo) {
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
   df <- subset(df, !is.na(df[[.var]]))
   .ref_group <- subset(.ref_group, !is.na(.ref_group[[.var]]))
@@ -188,7 +193,10 @@ s_aval_chg_col23_diff <- function(
         conf_level = conf_level,
         interaction_y = interaction_y,
         interaction_item = interaction_item,
-        variables = variables
+        variables = variables,
+        weights_emmeans = weights_emmeans,
+        method_combo = method_combo,
+        weights_combo = weights_combo
       )
     }
   }
@@ -256,6 +264,7 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #' @details See Description
 #'
 #' @inheritParams proposal_argument_convention
+#' @inheritParams s_ancova_j
 #' @param denom (`string`)\cr choice of denominator for proportions. Options are:
 #'   * `N`: number of records in this column/row split.
 #' \cr There is no check in place that the current split only has one record per subject.
@@ -400,7 +409,6 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #' result <- build_table(lyt, ADEG)
 #'
 #' result
-#' @seealso s_summarize_ancova_j
 #' @family Inclusion of ANCOVA Functions
 a_summarize_aval_chg_diff_j <- function(
     df,
@@ -422,8 +430,12 @@ a_summarize_aval_chg_diff_j <- function(
     .stats = list(col1 = "count_denom_frac", col23 = "mean_ci_3d", coldiff = "meandiff_ci_3d"),
     .formats = list(col1 = NULL, col23 = "xx.dx (xx.dx, xx.dx)", coldiff = "xx.dx (xx.dx, xx.dx)"),
     .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx, coldiff = jjcsformat_xx),
-    multivars = c("AVAL", "AVAL", "CHG")) {
+    multivars = c("AVAL", "AVAL", "CHG"),
+    weights_emmeans = NULL,
+    method_combo = c("contrasts", "collapse"),
+    weights_combo = NULL) {
   denom <- match.arg(denom)
+  method_combo <- match.arg(method_combo)
 
   if (comp_btw_group && is.null(ref_path)) {
     stop("ref_path cannot be NULL, please specify it. See ?get_ref_info for details.")
@@ -552,7 +564,10 @@ a_summarize_aval_chg_diff_j <- function(
       trt_var = trt_var,
       ctrl_grp = ctrl_grp,
       cur_param = cur_param,
-      cur_lvl = cur_lvl
+      cur_lvl = cur_lvl,
+      weights_emmeans = weights_emmeans,
+      method_combo = method_combo,
+      weights_combo = weights_combo
     )
 
     if (comp_btw_group && indiffcol) {
