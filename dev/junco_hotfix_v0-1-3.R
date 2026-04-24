@@ -521,7 +521,7 @@ tt_to_tlgrtf <- function(
   }
 
   if (tlgtype == "Table") {
-    colwidths <- cwidths_final_adj(
+    colwidths <- junco:::cwidths_final_adj(
       labwidth_ins = label_width_ins,
       total_width = pg_width,
       colwidths = colwidths[-1]
