@@ -492,7 +492,7 @@ add_little_gap_bottom_borders_spanning_headers <- function(
 
 insert_footer_text <- function(flx, tblid) {
   if (is.null(getOption("docx.add_datetime")) || isTRUE(getOption("docx.add_datetime"))) {
-    get_file_name <- utils::getFromNamespace("get_file_name", "tidytlg")
+    get_file_name <- tidytlg::get_file_name
     footer_text <- paste0(
       "[", tolower(tblid), ".docx]",
       "[", get_file_name(), "] ",
@@ -1156,7 +1156,7 @@ tt_to_flextable_j <- function(
   content[content == ""] <- " "
   # NOTE:
   # insert blank lines previously calculated
-  content <- utils::getFromNamespace("insert_empty_rows", "tidytlg")(content, newrows)
+  content <- tidytlg::insert_empty_rows(content, newrows)
   # update 'mpf_aligns'
   idx <- which(newrows == 1)
   # NOTE: here, it is important to traverse 'idx' in reverse order
