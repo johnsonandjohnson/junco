@@ -226,7 +226,7 @@ tt_to_tlgrtf <- function(
     markup_df = junco:::dps_markup_df,
     combined_rtf = FALSE,
     one_table = TRUE,
-    border_mat = make_header_bordmat(obj = tt),
+    border_mat = junco:::make_header_bordmat(obj = tt),
     round_type = obj_round_type(tt),
     export_csv = FALSE, #### TODO: hotfix :142 optional csv #165
     output_csv_directory = NULL, #### TODO: hotfix :142 optional csv #165
