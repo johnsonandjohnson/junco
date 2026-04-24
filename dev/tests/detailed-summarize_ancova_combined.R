@@ -510,3 +510,177 @@ test_that("a_summarize_ancova_j combined column and interaction, diff versions f
   expect_equal(summary_numbers_c[["derived_virginica"]], summary_numbers_c[["tbl_virginica"]])
   expect_equal(summary_numbers_c[["derived_comb"]], summary_numbers_c[["tbl_comb"]])
 })
+
+test_that("a_summarize_ancova_j with multiple combined columns", {
+  adsl_jnj <- pharmaverseadamjnj::adsl
+  advs_jnj <- pharmaverseadamjnj::advs
+
+  fix_usubjid <- function(adsl) {
+    rws <- which(adsl$TRT01A == "Xanomeline Medium Dose")
+
+    usubj_char <- as.character(adsl$USUBJID)
+    subjid <- as.integer(as.character(adsl$SUBJID))
+    subjid[rws] <- subjid[rws] + 1000
+    substr(usubj_char, 8, 11) <- as.character(subjid)
+    adsl$USUBJID <- factor(usubj_char)
+    adsl$SUBJID <- factor(as.character(subjid))
+    adsl
+  }
+
+  make_fake_adsl <- function(adsl) {
+    fakeyfake <- filter(adsl, TRT01A == "Placebo")
+    fakeyfake$TRT01A <- "Xanomeline Medium Dose"
+    fakeyfake$AGE <- floor(runif(NROW(fakeyfake), 30,  90))
+    adsl$TRT01A <- as.character(adsl$TRT01A)
+    adsl <- rbind(adsl, fakeyfake)
+    adsl$TRT01A <- factor(adsl$TRT01A,
+                          levels = c("Placebo",
+                                     "Xanomeline Low Dose",
+                                     "Xanomeline Medium Dose",
+                                     "Xanomeline High Dose"))
+
+    fix_usubjid(adsl)
+  }
+
+  borrow_records <- function(df, adsl, mult = 1) { #runif(1, .9, 1.1)) {
+    plac_count <- sum(df$TRT01A == "Placebo", na.rm = TRUE)
+    new_count <- floor(plac_count * mult)
+    soc_usubjids <- as.character(adsl$USUBJID)[!is.na(adsl$TRT01A) & adsl$TRT01A == "Xanomeline Medium Dose"]
+
+    duprows <- sample(seq_len(NROW(df)), new_count, replace = TRUE)
+
+    newrws <- df[duprows, ]
+    print(c(new_count, length(duprows), length(unique(duprows)), NROW(newrws)))
+    newrws$USUBJID <- sample(soc_usubjids, NROW(newrws), replace = TRUE)
+    rbind(df, newrws)
+  }
+
+  adsl <- adsl_jnj |>
+    make_fake_adsl() |>
+    select(USUBJID, TRT01A, SEX)
+
+  advs <- advs_jnj |>
+    filter(PARAMCD == "DIABP" & AVISIT == "Cycle 02") |>
+    borrow_records(adsl) |>
+    select(USUBJID, PARAMCD, AVISIT, AVAL, CHG, BASE) |>
+    inner_join(adsl, by = c("USUBJID"), multiple = "all")
+
+  # nolint start
+  combodf <- tribble(
+    ~valname, ~label, ~levelcombo, ~exargs,
+    "low_med", "Combined: Low + Medium", c("Xanomeline Low Dose", "Xanomeline Medium Dose"), list(),
+    "med_high", "Combined: Medium + High", c("Xanomeline Medium Dose", "Xanomeline High Dose"), list(),
+    "low_med_high", "Combined: Low + Medium + High", c("Xanomeline Low Dose", "Xanomeline Medium Dose", "Xanomeline High Dose"), list()
+  )
+  # nolint end
+
+  lyt <- basic_table() |>
+    split_cols_by("TRT01A", split_fun = add_combo_levels(combodf)) |>
+    add_colcounts() |>
+    analyze(
+      vars = "CHG",
+      afun = a_summarize_ancova_j,
+      extra_args = list(
+        variables = list(arm = "TRT01A", covariates = c("SEX")),
+        conf_level = 0.95,
+        interaction_item = NULL,
+        interaction_y = FALSE,
+        weights_emmeans = "proportional",
+        weights_combo = "proportional",
+        method_combo = "contrasts",
+        ref_path = c("TRT01A", "Placebo"),
+        .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+      ),
+      var_labels = "Adjusted comparison (covariates SEX)",
+      table_names = "adjusted",
+      show_labels = "visible"
+    )
+
+  result <- build_table(lyt, advs, adsl)
+
+  get_weights2 <- function(combo, wm = "equal") {
+    df <- advs[!is.na(advs$CHG), ]
+
+    w_start <- table(df[["TRT01A"]])
+    w_start_orig <- w_start
+
+    if (wm == "equal") {
+      w_start <- rep(1, length(w_start))
+    } else {
+      w_start <- as.numeric(w_start)
+    }
+    names(w_start) <- names(w_start_orig)
+    w_start[!names(w_start) %in% combo] <- 0
+
+    w_start <- w_start / sum(w_start)
+    w_start
+  }
+
+  # derivations of model from
+  .lm_fit <- stats::lm(formula = CHG ~ TRT01A + SEX, data = advs)
+  emmeans_fit <- emmeans::emmeans(
+    .lm_fit,
+    specs = "TRT01A",
+    data = .lm_fit$model,
+    weights = "proportional"
+  )
+
+  emmeans_contrasts <- emmeans::contrast(
+    emmeans_fit,
+    # Compare all arms versus the control arm.
+    method = "trt.vs.ctrl",
+    # Take the arm factor from .ref_group as the control arm.
+    ref = "Placebo",
+    level = 0.95
+  )
+
+  sum_contrasts <- summary(
+    emmeans_contrasts,
+    # Derive confidence intervals, t-tests and p-values.
+    infer = TRUE,
+    # Do not adjust the p-values for multiplicity.
+    adjust = "none"
+  )
+
+  xweights_contrast <- list()
+  xweights_contrast2 <- list()
+  for (i in seq_len(nrow(combodf))) {
+    curcombo <- combodf[i, ][["levelcombo"]][[1]]
+    # derivations for combined
+    xweights_contrast[[i]] <- get_weights2(combo = curcombo,
+                                           wm = "proportional")
+
+    xweights_contrast2[[i]] <- xweights_contrast[[i]]
+    xweights_contrast2[[i]]["Placebo"] <- -1
+
+    print(xweights_contrast[[i]])
+    print(xweights_contrast2[[i]])
+  }
+  names(xweights_contrast) <- combodf$label
+  names(xweights_contrast2) <- combodf$label
+
+  contr <-
+    emmeans::contrast(emmeans_fit,
+                      list(setNames(list(xweights_contrast), "Estimate contrast"),
+                           setNames(list(xweights_contrast2), "Estimate contrast - ref")),
+                      # Derive confidence intervals, t-tests and p-values.
+                      infer = TRUE,
+                      # Do not adjust the p-values for multiplicity.
+                      adjust = "none")
+
+  contr <- as.data.frame(contr)
+  contr <- contr[c(1, 4, 2, 5, 3, 6), ]
+
+  combo_numbers_from_tbl <- list()
+  combo_numbers_from_model <- list()
+  for (i in seq_len(nrow(combodf))) {
+    combo_numbers_from_tbl[[i]] <- get_numbers(result, 4 + i, rows = c(3, 4))
+    combo_numbers_from_model[[i]] <- contr[c(2 * (i - 1) + 1, 2 * (i - 1) + 2), c("estimate", "lower.CL", "upper.CL")]
+    combo_numbers_from_model[[i]] <- c(t(combo_numbers_from_model[[i]]))
+  }
+  names(combo_numbers_from_tbl) <- combodf$label
+  names(combo_numbers_from_model) <- combodf$label
+
+  combo_numbers_from_tbl
+  testthat::expect_equal(combo_numbers_from_tbl, combo_numbers_from_model)
+})
