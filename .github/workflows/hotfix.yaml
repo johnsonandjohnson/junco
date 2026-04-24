@@ -28,7 +28,7 @@ on:
         default: rhub
         options:
           # - hotfix_v0-1-1
-          - hotfix_v0-1-3_old.yaml
+          - hotfix_v0-1-3_old
 
 jobs:
   # hotfix_v0-1-1:
