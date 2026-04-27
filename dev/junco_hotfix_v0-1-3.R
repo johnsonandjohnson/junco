@@ -2,12 +2,12 @@
 # Junco Hotfix Patch File
 # ==========================================
 # Summary of injected hotfixes:
-# - Hotfix #178: Ensures tt_to_tlgrtf() does not lose the title when exporting an empty listing.
-# - Hotfix #165: Implements optional CSV export functionality within tt_to_tlgrtf() (#142).
-# - Hotfix #166: label_width_ins was not being passed recursively #166
-# - Hotfix #221: Fixes a bug where a_freq_j fails with countsource = altdf in nested row splits
+# - Hotfix #178: Ensures tt_to_tlgrtf() does not lose the title when exporting an empty listing (introduced in junco v0.1.4)
+# - Hotfix #165: Implements optional CSV export functionality within tt_to_tlgrtf() (#142) (introduced in junco v0.1.6)
+# - Hotfix #166: label_width_ins was not being passed recursively #166 (introduced in junco v0.1.4)
+# - Hotfix #221: Fixes a bug where a_freq_j fails with countsource = altdf in nested row splits (introduced in junco v0.1.5)
 #         (applies to h_a_freq_dataprep, s_freq_j, and a_freq_j).
-# - Hotfix #257 `s_summarize_desc_j()` fixed when applied to almost constant data due to behavior from `t.test.default()`
+# - Hotfix #257 `s_summarize_desc_j()` fixed when applied to almost constant data due to behavior from `t.test.default()` (introduced in junco v0.1.5)
 # ==========================================
 
 
