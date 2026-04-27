@@ -233,7 +233,6 @@ tt_to_tlgrtf <- function(
     export_csv = FALSE, #### TODO: hotfix :142 optional csv #165
     output_csv_directory = NULL, #### TODO: hotfix :142 optional csv #165
     ...) {
-  
   checkmate::assert_flag(export_csv) #### TODO: hotfix :142 optional csv #165
   checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1) #### TODO: hotfix :142 optional csv #165
   
