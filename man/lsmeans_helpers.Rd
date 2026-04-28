@@ -2,6 +2,7 @@
 % Please edit documentation in R/lsmeans.R
 \name{lsmeans_helpers}
 \alias{lsmeans_helpers}
+\alias{h_partial_match}
 \alias{h_get_emmeans_res}
 \alias{h_get_average_visit_specs}
 \alias{h_get_spec_visit_estimates}
@@ -12,6 +13,8 @@
 \alias{h_get_mult_adj_estimates}
 \title{Helpers for Processing Least Square Means}
 \usage{
+h_partial_match(options, x)
+
 h_get_emmeans_res(fit, vars, weights)
 
 h_get_average_visit_specs(emmeans_res, vars, averages, fit)
@@ -24,11 +27,15 @@ h_get_relative_reduc_df(estimates, vars)
 
 h_single_visit_contrast_specs(emmeans_res, vars)
 
-h_average_visit_contrast_specs(specs, averages)
+h_average_visit_contrast_specs(specs, averages, vars)
 
 h_get_mult_adj_estimates(emmeans_res, vars, mult_adj, conf_level, contrast_df)
 }
 \arguments{
+\item{options}{(\code{character})\cr vector of options to match against \code{x}.}
+
+\item{x}{(\code{character})\cr vector of strings to be partially matched with \code{options}}
+
 \item{fit}{result of model fitting function, e.g. \code{\link[mmrm:mmrm]{mmrm::mmrm()}} or \code{\link[stats:lm]{stats::lm()}}.}
 
 \item{vars}{(named \code{list} of \code{string} or \code{character})\cr specifying the variables in the \code{MMRM}.
@@ -73,9 +80,13 @@ Helpers for Processing Least Square Means
 }
 \section{Functions}{
 \itemize{
+\item \code{h_partial_match()}: partial matching of a set of \code{options} to a character vector \code{x}. Here partial matching means that for each element of \code{x} we look for the
+(first) element of \code{options} which is contained in the element of \code{x}. Then we return
+the matched \code{options} in the same order as \code{x}.
+
 \item \code{h_get_emmeans_res()}: returns a list with
 \code{object} (\code{emmGrid} object containing \code{emmeans} results) and \code{grid}
-(\code{data.frame} containing the potential arm and the visit variables
+(\code{data.frame} containing the (optional) subgroup, arm and the visit variables
 together with the sample size \code{n} for each combination).
 
 \item \code{h_get_average_visit_specs()}: constructs average of visits specifications.

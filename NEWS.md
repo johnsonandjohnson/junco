@@ -15,14 +15,16 @@
 - DOCX exporter fixed watermark location in case of listings
 - DOCX exporter updated table border width from 0.75 to 0.875 inches
 - DOCX exporter when having vertical pagination in tables or listings, fixed the rows misalignment from page 2 and below compared to RTF
+- Fixed bug in `s_summarize_desc_j()` when applied to almost constant data due to behavior from `t.test.default()` (#257)
 
 ### Changed
 
+- changed return value `n` for `s_ancova_j` into `n_fit`, to differentiate between these two statistics for combined function `s_summarize_ancova_j()` (#117)
 - added default label for median_range "Median (min, max)" in `junco_default_labels_start`
 - changed label from "experimental" to "stable" for `default_stats_formats_labels`
 - refactored functions `tt_to_flextable_j()` and `export_as_docx_j()`
 - created generic wrapper function `export_TLG_as_docx()`, which now calls `export_as_docx_j()` and `export_graph_as_docx()` (#173)
-- Functions `export_as_docx_j()` and `export_graph_as_docx()` still exist but are not internal, i.e. not exported
+- Functions `export_as_docx_j()` and `export_graph_as_docx()` still exist but are now internal, i.e. not exported
 - updated vignette to explain correctly how to insert newlines in the headers of Tables and Listings (#179)
 - "watermark" argument in the docx exporter is now a String instead of a Boolean (#181)
 - faster docx unit tests (#197)
@@ -32,15 +34,18 @@
 - Fix old TODOs in tests
 - docx exporter added missing defaults (#186)
 - Changed all snapshot tests to `cran = TRUE`
+- Footnotes in docx outputs are now 1 table row/cell
 
 ### Added
 
 - Added multi-comparator functionality (#271)
+- Added option to perform `a_summarize_ancova_j` in a layout with a combined column facet (#117) + slight change in return value for `s_ancova_j()`, now we have n_fit instead of n returned
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
 - Added option to specify the output folder for the csv
 - Added argument 'validate' to `export_TLG_as_docx()` and `tt_to_flextable_j()` (#213)
 - Added "watermark" argument in the docx exporter for Figures (#181)
 - Added argument `mult_adj_emmeans` in `fit_mmrm_j()` to enable (single-step or step-down) Dunnett multiplicity adjustment for LS means contrasts (p-values and confidence intervals) for more than one experimental arm within visits.
+- Added option for subgroup variable in the `vars` argument of `fit_mmrm_j()` to enable fitting an overall MMRM with subgroup interaction terms.
 - Export helpers for LS means tabulation: `lsmeans_wide_cfun`, `lsmeans_wide_first_split_fun_fct`, `lsmeans_wide_second_split_fun_fct`
 
 
