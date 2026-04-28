@@ -382,6 +382,9 @@ testthat::test_that("add_title_style_caption() adds a new XML node w:pStyle w:va
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
 
   l_x_before <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:pStyle[@w:val='Caption']")
+  
+  string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flx$header$dataset[1, 1])
+  add_title_style_caption(doc, string_to_look_for)
 
   # this print() is needed to update the XML and be able to retrieve the newly inserted node
   # with style Caption
