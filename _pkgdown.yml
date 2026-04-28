@@ -133,11 +133,6 @@ reference:
     - get_visit_levels
     - leftside
 
-  - title: junco Geoms
-    desc: ggplot2 geoms provided by junco.
-    contents:
-      - geom_boxplot_j
-
   - title: internal
     desc: The following are additional junco functions.
     contents:
