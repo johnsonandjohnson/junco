@@ -316,7 +316,7 @@ insert_title_hanging_indent_v3 <- function(flx,
   )
   # nolint end
 
-  flx <- flextable::style(x = flx, part = "header", i = 1, pr_p = officer::fp_par(word_style = "Caption"))
+  flx <- flextable::style(x = flx, part = "header", i = 1, pr_p = officer::fp_par(word_style = "caption"))
 
   return(flx)
 }
@@ -1289,7 +1289,7 @@ tt_to_flextable_j <- function(
     title_style$bold <- bold_titles
     flx <- flx |> flextable::set_caption(
       caption = flextable::as_paragraph(flextable::as_chunk(new_title, title_style)),
-      word_stylename = "Caption",
+      word_stylename = "caption",
       fp_p = fpp,
       align_with_table = FALSE
     )
