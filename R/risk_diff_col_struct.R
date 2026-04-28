@@ -16,7 +16,9 @@ get_comp_path <- function(map, lvl) {
 ## ugh. thisisfine.jpg XXX  :( :( :(
 ##
 ## this is where we munge treatment names/labels into comparison versions
-do_sib_val_surgery <- function(splval, comp_lvl, newexargs) {
+do_sib_val_surgery <- function(splval, comp_lvl, newexargs, spl) {
+    expr <- make_subset_expr(spl, splval)
+    splval@subset_expression <- expr
     splval@value <- make_comp_name(splval@value, comp_lvl)
     splval@label <- make_comp_name(splval@label, comp_lvl)
     args <- c(newexargs, splval@extra)
@@ -27,12 +29,13 @@ do_sib_val_surgery <- function(splval, comp_lvl, newexargs) {
 
 ## do "surgery" on all of the original values to enforce uniqueness and
 ## correct comparison labels
-surgical_suite <- function(orig_ret, comp_lvl, newexargs) {
+surgical_suite <- function(orig_ret, comp_lvl, newexargs, spl) {
     out <- orig_ret
     out$values <- lapply(out$values,
                          do_sib_val_surgery,
                          comp_lvl = comp_lvl,
-                         newexargs = newexargs)
+                         newexargs = newexargs,
+                         spl = spl)
     out$labels <- vapply(out$values, function(x) x@label, "")
     newnms <- vapply(out$values, value_names, "")
     out <- lapply(out,
@@ -70,7 +73,7 @@ add_sib_facets <- function(comp_level, colspan_trt_map, combo_map_all) {
         )
       }                                        #     }
     }
-    out <- surgical_suite(out, comp_level, exargs)
+    out <- surgical_suite(out, comp_level, exargs, spl = spl)
     names(out) <- names(ret)
     out
   }
@@ -282,22 +285,13 @@ expand_combo_map <- function(combo_map, ref_lvls) {
       }
 
 
+      ## TODO this seems overkill for what is left inside
+      ## the lapply, refactor into saner form
       rws_out <- lapply(
         comp_against,
         function(cur_ref_lvl) {
           ref_lvl_ind <- match(cur_ref_lvl, ref_lvls)
-          cur_rw <- combo_map[ii, ] ## AllLvlsSentinel class getting dropped from map_rw somehow...
-          if (!is(cur_rw$levelcombo[[1]], "AllLevelsSentinel")) {
-            cur_rw$levelcombo[[1]] <- vapply(
-              as.character(cur_rw$levelcombo[[1]]),
-              function(lvl) {
-                if (!is(lvl, "AllLevelsSentinel")) {
-                  lvl <- make_comp_name(lvl, cur_ref_lvl)
-                }
-                lvl
-              }, ""
-            )
-          }
+          cur_rw <- combo_map[ii, ]
           cur_rw$comparator_level <- cur_ref_lvl
           cur_rw
         }
@@ -420,7 +414,8 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
 #' Construct column structure with main and risk difference sections
 #'
 #' @param lyt (`PreDataTableLayouts`). The layout to modify. This
-#'     should virtually always be the object returned by `basic_table`.
+#'     should virtually always be the object returned by
+#'     `basic_table`.
 #' @param colspan_trt_map (`data.frame`). The spanning label map for
 #'     the main columns, as given by `create_colspan_map`.
 #' @param combo_map_df (`data.frame` or `NULL`). A combination data
@@ -431,6 +426,9 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
 #'     `"active"`, `"comparator"`, `"active_is_combo"` and
 #'     `"comparator_is_combo"`, or `NULL` indicating the default
 #'     comparison behavior (See Details).
+#' @param risk_diff_cols (`logical(1)`). Whether the risk difference
+#'     column structure should be included (`TRUE`, the default) or
+#'     not (`FALSE`).
 #' @param rrisk_header (`character(1)`). The spanning label for the
 #'     risk difference section of columns
 #'
@@ -507,6 +505,7 @@ col_struct_w_risk_diffs <- function(lyt,
                                     combo_map_df = NULL,
                                     ## default behavior for comp_map is taken care of in make_multicomp_splfun
                                     comp_map = NULL,
+                                    risk_diff_cols = TRUE,
                                     rrisk_header = "Risk Differences",
                                     .main_pre = list(),
                                     .main_post = list(),
@@ -553,20 +552,25 @@ col_struct_w_risk_diffs <- function(lyt,
 
   main_splfun <- make_split_fun(pre = .main_pre, post = main_post)
 
-  rr_splfun <- make_multicomp_splfun(
-    colspan_trt_map, 
-    comp_level_map = comp_map,
-    combo_levels_map = combo_map_df,
-    .pre = .rr_pre,
-    .post = .rr_post
-  )
 
 
   lyt <- lyt |>
     split_cols_by(names(colspan_trt_map)[1]) |>
-    split_cols_by(trtvar, split_fun = main_splfun) |>
-    add_overall_col(label = rrisk_header) |>
-    split_cols_by(trtvar, split_fun = rr_splfun)
+    split_cols_by(trtvar, split_fun = main_splfun)
+  if (risk_diff_cols) {
+    rr_splfun <- make_multicomp_splfun(
+      colspan_trt_map, 
+      comp_level_map = comp_map,
+      combo_levels_map = combo_map_df,
+      .pre = .rr_pre,
+      .post = .rr_post
+    )
+
+    lyt <- lyt |>
+      ## this is inherently non-nested  
+      add_overall_col(label = rrisk_header) |>
+      split_cols_by(trtvar, split_fun = rr_splfun)
+  }
   lyt
 }
 

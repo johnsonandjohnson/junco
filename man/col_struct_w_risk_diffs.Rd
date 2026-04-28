@@ -9,6 +9,7 @@ col_struct_w_risk_diffs(
   colspan_trt_map,
   combo_map_df = NULL,
   comp_map = NULL,
+  risk_diff_cols = TRUE,
   rrisk_header = "Risk Differences",
   .main_pre = list(),
   .main_post = list(),
@@ -18,7 +19,8 @@ col_struct_w_risk_diffs(
 }
 \arguments{
 \item{lyt}{(\code{PreDataTableLayouts}). The layout to modify. This
-should virtually always be the object returned by \code{basic_table}.}
+should virtually always be the object returned by
+\code{basic_table}.}
 
 \item{colspan_trt_map}{(\code{data.frame}). The spanning label map for
 the main columns, as given by \code{create_colspan_map}.}
@@ -32,6 +34,10 @@ act as a reference (\code{TRUE}) or active (\code{FALSE}) group.}
 \code{"active"}, \code{"comparator"}, \code{"active_is_combo"} and
 \code{"comparator_is_combo"}, or \code{NULL} indicating the default
 comparison behavior (See Details).}
+
+\item{risk_diff_cols}{(\code{logical(1)}). Whether the risk difference
+column structure should be included (\code{TRUE}, the default) or
+not (\code{FALSE}).}
 
 \item{rrisk_header}{(\code{character(1)}). The spanning label for the
 risk difference section of columns}
