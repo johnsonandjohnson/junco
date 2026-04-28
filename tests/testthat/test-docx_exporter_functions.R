@@ -383,8 +383,15 @@ testthat::test_that("add_title_style_caption() adds a new XML node w:pStyle w:va
 
   l_x_before <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:pStyle[@w:val='Caption']")
 
-  string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flx$header$dataset[1, 1])
-  add_title_style_caption(doc, string_to_look_for)
+  if (packageVersion("flextable") < "0.9.11") {
+    # since flextable v0.9.11, the 2 lines below are not needed because the caption style
+    # is inserted by flextable
+    # however, if we remove this whole "if" block, the hotfix pipeline
+    # will fail because it uses flextable v0.9.10, which will not insert the caption
+    # style unless we explicitly insert it using the 2 lines below
+    string_to_look_for <- sub(pattern = ":\t.*", replacement = ":", flx$header$dataset[1, 1])
+    add_title_style_caption(doc, string_to_look_for)
+  }
 
   # this print() is needed to update the XML and be able to retrieve the newly inserted node
   # with style Caption
