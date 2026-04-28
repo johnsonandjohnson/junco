@@ -624,3 +624,98 @@ test_that("a_summarize_ancova_j with no data in reference group", {
 
   expect_snapshot(cran = TRUE, result)
 })
+
+test_that("a_summarize_ancova_j with multiple combined columns", {
+  # NOTE : test in current snippet utilize snapshot approach
+  # a non snapshot approach to verify results from combined column can be found in
+  # file dev/tests/detailed-summarize_ancova_combined.R
+  # testthat::test_file("dev/tests/detailed-summarize_ancova_combined.R") #nolint
+
+  adsl_jnj <- pharmaverseadamjnj::adsl
+  advs_jnj <- pharmaverseadamjnj::advs
+
+  fix_usubjid <- function(adsl) {
+    rws <- which(adsl$TRT01A == "Xanomeline Medium Dose")
+
+    usubj_char <- as.character(adsl$USUBJID)
+    subjid <- as.integer(as.character(adsl$SUBJID))
+    subjid[rws] <- subjid[rws] + 1000
+    substr(usubj_char, 8, 11) <- as.character(subjid)
+    adsl$USUBJID <- factor(usubj_char)
+    adsl$SUBJID <- factor(as.character(subjid))
+    adsl
+  }
+
+  make_fake_adsl <- function(adsl) {
+    fakeyfake <- filter(adsl, TRT01A == "Placebo")
+    fakeyfake$TRT01A <- "Xanomeline Medium Dose"
+    fakeyfake$AGE <- floor(runif(NROW(fakeyfake), 30,  90))
+    adsl$TRT01A <- as.character(adsl$TRT01A)
+    adsl <- rbind(adsl, fakeyfake)
+    adsl$TRT01A <- factor(adsl$TRT01A,
+                          levels = c("Placebo",
+                                     "Xanomeline Low Dose",
+                                     "Xanomeline Medium Dose",
+                                     "Xanomeline High Dose"))
+
+    fix_usubjid(adsl)
+  }
+
+  borrow_records <- function(df, adsl, mult = 1) { #runif(1, .9, 1.1)) {
+    plac_count <- sum(df$TRT01A == "Placebo", na.rm = TRUE)
+    new_count <- floor(plac_count * mult)
+    soc_usubjids <- as.character(adsl$USUBJID)[!is.na(adsl$TRT01A) & adsl$TRT01A == "Xanomeline Medium Dose"]
+
+    duprows <- sample(seq_len(NROW(df)), new_count, replace = TRUE)
+
+    newrws <- df[duprows, ]
+    print(c(new_count, length(duprows), length(unique(duprows)), NROW(newrws)))
+    newrws$USUBJID <- sample(soc_usubjids, NROW(newrws), replace = TRUE)
+    rbind(df, newrws)
+  }
+
+  adsl <- adsl_jnj |>
+    make_fake_adsl() |>
+    select(USUBJID, TRT01A, SEX)
+
+  advs <- advs_jnj |>
+    filter(PARAMCD == "DIABP" & AVISIT == "Cycle 02") |>
+    borrow_records(adsl) |>
+    select(USUBJID, PARAMCD, AVISIT, AVAL, CHG, BASE) |>
+    inner_join(adsl, by = c("USUBJID"), multiple = "all")
+
+  # nolint start
+  combodf <- tribble(
+    ~valname, ~label, ~levelcombo, ~exargs,
+    "low_med", "Combined: Low + Medium", c("Xanomeline Low Dose", "Xanomeline Medium Dose"), list(),
+    "med_high", "Combined: Medium + High", c("Xanomeline Medium Dose", "Xanomeline High Dose"), list(),
+    "low_med_high", "Combined: Low + Medium + High", c("Xanomeline Low Dose", "Xanomeline Medium Dose", "Xanomeline High Dose"), list()
+  )
+  # nolint end
+
+  lyt <- basic_table() |>
+    split_cols_by("TRT01A", split_fun = add_combo_levels(combodf)) |>
+    add_colcounts() |>
+    analyze(
+      vars = "CHG",
+      afun = a_summarize_ancova_j,
+      extra_args = list(
+        variables = list(arm = "TRT01A", covariates = c("SEX")),
+        conf_level = 0.95,
+        interaction_item = NULL,
+        interaction_y = FALSE,
+        weights_emmeans = "proportional",
+        weights_combo = "proportional",
+        method_combo = "contrasts",
+        ref_path = c("TRT01A", "Placebo"),
+        .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+      ),
+      var_labels = "Adjusted comparison (covariates SEX)",
+      table_names = "adjusted",
+      show_labels = "visible"
+    )
+
+  result <- build_table(lyt, advs, adsl)
+  expect_snapshot(cran = TRUE, result)
+
+})
