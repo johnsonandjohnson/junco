@@ -944,7 +944,8 @@ result <- set_titles(result, titles)
 export_TLG_as_docx(result,
                 tblid = "examplenewline",
                 output_dir = out_dir,
-                orientation = "landscape")
+                orientation = "landscape",
+                string_map = string_map_newline)
 ```
 
 ### Visual Output (HTML Representation)
