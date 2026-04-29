@@ -64,7 +64,7 @@ Imports:
     xml2,
     ggplot2,
     stringi
-Remotes: insightsengineering/rtables@1080_restrict_facets
+Remotes: insightsengineering/rtables@main
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
