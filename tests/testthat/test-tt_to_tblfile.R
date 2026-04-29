@@ -18,13 +18,12 @@ mk_part_names <- function(nfiles, fname) {
 }
 
 rtf_out_wrapper <- function(
-  tt,
-  filnm,
-  ...,
-  part = 1,
-  combined = FALSE,
-  round_type = obj_round_type(tt)
-) {
+    tt,
+    filnm,
+    ...,
+    part = 1,
+    combined = FALSE,
+    round_type = obj_round_type(tt)) {
   fullfl <- file.path(tempdir(), filnm)
   res <- tt_to_tlgrtf(
     tt,
@@ -152,6 +151,12 @@ test_that("tt_to_tlgrtf works with input Table and fontspec size 8", {
 
 test_that("tt_to_tlgrtf works with an empty listing", {
   empty_lsting <- as_listing(ex_adsl[numeric(), 1:10])
+  tab_titles <- list(
+    title = "This is a title",
+    main_footer = c("Footer 1", "Footer 2"),
+    prov_footer = "This is a footer"
+  )
+  empty_lsting <- set_titles(empty_lsting, tab_titles)
   expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(empty_lsting, "testemptylisting"), cran = TRUE)
   expect_error(
     tt_to_tlgrtf("hi"),
@@ -466,4 +471,37 @@ test_that("round_type in tt_to_tlgrtf works as expected for listing object", {
   )
 
   expect_true(any(vals_from_res_nullfl_iec != vals_from_res_nullfl_sas))
+})
+
+test_that("label_width_ins in tt_to_tlgrtf adjusts the width of the first column", {
+  # Create a simple table for testing
+  data(ex_adsl)
+  lyt_wide <- basic_table() |>
+    split_cols_by("SEX") |>
+    split_rows_by("RACE") |>
+    summarize_row_groups() |>
+    analyze("AGE")
+
+  tbl_wide <- build_table(lyt_wide, ex_adsl)
+
+  expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA)))
+  suppressWarnings(rtf_raw <- readLines(res_wide))
+  # RTF units for column widths are in twips, not in inches
+  # 1 inches = 1440 twips
+  # 2 inches is approx 2863 twips
+  expect_true(grepl("cellx2863", rtf_raw[6]))
+
+  expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA, label_width_ins = 5)))
+  suppressWarnings(rtf_raw <- readLines(res_wide))
+  # RTF units for column widths are in twips, not in inches
+  # 1 inches = 1440 twips
+  # 5 inches = 7200 twips
+  expect_true(grepl("cellx7200", rtf_raw[6]))
+
+  expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA, label_width_ins = 0.5)))
+  suppressWarnings(rtf_raw <- readLines(res_wide))
+  # RTF units for column widths are in twips, not in inches
+  # 1 inches = 1440 twips
+  # 0.5 inches is approx 707 twips
+  expect_true(grepl("cellx707", rtf_raw[6]))
 })
