@@ -1,7 +1,7 @@
 ---
 title: "Table & Listing Customizations"
 date: "2025-12-04"
-author: "Joe Kovach and David Munoz Tord"
+author: "C&SP Methodology Team"
 output:
     rmarkdown::html_document:
         theme: "spacelab"

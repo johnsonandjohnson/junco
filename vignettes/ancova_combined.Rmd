@@ -1,6 +1,6 @@
 ---
 title: "ANCOVA with Combined Treatment Groups"
-author: "junco"
+author: "C&SP Methodology Team"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ANCOVA with Combined Treatment Groups}
