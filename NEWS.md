@@ -47,7 +47,7 @@
 - Added argument `mult_adj_emmeans` in `fit_mmrm_j()` to enable (single-step or step-down) Dunnett multiplicity adjustment for LS means contrasts (p-values and confidence intervals) for more than one experimental arm within visits.
 - Added option for subgroup variable in the `vars` argument of `fit_mmrm_j()` to enable fitting an overall MMRM with subgroup interaction terms.
 - Export helpers for LS means tabulation: `lsmeans_wide_cfun`, `lsmeans_wide_first_split_fun_fct`, `lsmeans_wide_second_split_fun_fct`
-
+- Added `lifecycle` to suggests
 
 ## [0.1.5] - 2026-03-03 (minor hotfix release)
 
