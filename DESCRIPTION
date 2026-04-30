@@ -80,6 +80,7 @@ Suggests:
     rlang,
     tidyr,
     pharmaverseadamjnj (>= 0.0.2),
-    multcomp
+    multcomp,
+    lifecycle
 VignetteBuilder: knitr
 Config/testthat/edition: 3
