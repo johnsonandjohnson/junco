@@ -1,15 +1,15 @@
 get_all_comp_lvls <- function(colspan_trt_map) {
-    nonactlvl  <- unique(as.character(colspan_trt_map[[1]]))[2]
-    unique(as.character(colspan_trt_map[colspan_trt_map[[1]] == nonactlvl, 2]))
+  nonactlvl  <- unique(as.character(colspan_trt_map[[1]]))[2]
+  unique(as.character(colspan_trt_map[colspan_trt_map[[1]] == nonactlvl, 2]))
 }
 
 get_first_comp_lvl <- function(colspan_trt_map) {
-    get_all_comp_lvls(colspan_trt_map)[1]
+  get_all_comp_lvls(colspan_trt_map)[1]
 }
 
 get_comp_path <- function(map, lvl) {
-    rw <- map[map[[2]] == lvl,]
-    c(names(map)[1], rw[[1]], names(map)[2], rw[[2]])
+  rw <- map[map[[2]] == lvl,]
+  c(names(map)[1], rw[[1]], names(map)[2], rw[[2]])
 }
 
 
@@ -189,11 +189,11 @@ add_sib_facets <- function(comp_level, colspan_trt_map, combo_map_all) {
 #'
 #' @export
 make_multicomp_splfun <- function(colspan_trt_map,
-                                   combo_levels_map = NULL,
-                                   comp_level_map = NULL,
-                                   .pre = list(),
-                                   .post = list()) {
-  post <- c(.post)
+                                  combo_levels_map = NULL,
+                                  comp_level_map = NULL,
+                                  .pre = list(),
+                                  .post = list()) {
+  colspan_trt_map <- enrich_colspan_map(colspan_trt_map, combo_levels_map)
   if (is.null(comp_level_map)) {
     comp_levels <- get_all_comp_lvls(colspan_trt_map)
 
@@ -235,13 +235,52 @@ make_multicomp_splfun <- function(colspan_trt_map,
     post = c(
       funlst,
       apply_comp_map(splvar = names(colspan_trt_map)[2], comp_levels, comp_map = comp_level_map, combo_map = combo_levels_map),
-      post
+      .post
     )
   )
 }
 
+## add combo levels to colspan map IFF *none*
+## are present
+enrich_colspan_map <- function(colspan_map, combodf) {
+  ## assume if any combo levels are present that the
+  ## missing ones are intentional
+  if (is.null(combodf) ||
+    any(combodf$valname %in% colspan_map[[2]])) {
+    return(colspan_map)
+  }
+  combo_levs <- combodf$valname
 
+  if (!("is_control" %in% names(combodf))) {
+    combodf$is_control <- FALSE
+  }
 
+  ## second one is control spanner
+  span_levs <- unique(colspan_map[[1]])
+
+  in_ctrl <- function(spn) spn == span_levs[2]
+  subset_combo_lvls <- function(spn) {
+    combo_levs[combodf$is_control == in_ctrl(spn)]
+  }
+  
+  mapspl <- split(colspan_map, colspan_map[[1]])
+  rws <- lapply(
+    span_levs,
+    function(nm) {
+      cur_levs <- subset_combo_lvls(nm)
+      rbind(
+        mapspl[[nm]],
+        if(length(cur_levs) > 0)
+            setNames(
+              data.frame(nm, subset_combo_lvls(nm)),
+              names(colspan_map)
+            )
+      )
+    }
+  )
+
+  do.call(rbind, rws)
+}
 
 
 
@@ -300,7 +339,11 @@ expand_combo_map <- function(combo_map, ref_lvls) {
       do.call(rbind.data.frame, rws_out)
     }
   )
-  do.call(rbind.data.frame, rws)
+  ret <- do.call(rbind.data.frame, rws)
+  ## never compare level against itself
+  ## needed to (easily) support combo control grps
+  ret <- ret[ret$valname != ret$comparator_level,]
+  ret
 }
 
 
@@ -329,7 +372,12 @@ make_dflt_comp_map <- function(df, spl_var, ref_lvls, combo_map) {
     }
   )
 
-  combo_rws <- combodf_to_comp_map(combodf = combo_map, ref_lvls = ref_lvls, all_base_lvls = all_lvls)
+  if ("is_control" %in% names(combo_map)) {
+    act_combo_map <- combo_map[!combo_map$is_control, ]
+  } else {
+    act_combo_map <- combo_map
+  }
+  combo_rws <- combodf_to_comp_map(combodf = act_combo_map, ref_lvls = ref_lvls, all_base_lvls = all_lvls)
   ret <- do.call(rbind.data.frame, c(base_rws, list(combo_rws)))
 
   ret$tmp_fact <- factor(ret$comparator, levels = ref_lvls)
@@ -500,17 +548,17 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
 #' @family riskdiff_col_struct
 #' @export
 
-col_struct_w_risk_diffs <- function(lyt,
-                                    colspan_trt_map,
-                                    combo_map_df = NULL,
-                                    ## default behavior for comp_map is taken care of in make_multicomp_splfun
-                                    comp_map = NULL,
-                                    risk_diff_cols = TRUE,
-                                    rrisk_header = "Risk Differences",
-                                    .main_pre = list(),
-                                    .main_post = list(),
-                                    .rr_pre = list(),
-                                    .rr_post = list()) {
+col_spans_plus_diffs <- function(lyt,
+                                 colspan_trt_map,
+                                 combo_map_df = NULL,
+                                 ## default behavior for comp_map is taken care of in make_multicomp_splfun
+                                 comp_map = NULL,
+                                 risk_diff_cols = TRUE,
+                                 rrisk_header = "Risk Differences",
+                                 .main_pre = list(),
+                                 .main_post = list(),
+                                 .rr_pre = list(),
+                                 .rr_post = list()) {
   trtvar <- names(colspan_trt_map)[2]
   spanvar <- names(colspan_trt_map)[1]
 

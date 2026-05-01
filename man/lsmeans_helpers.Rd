@@ -80,7 +80,8 @@ Helpers for Processing Least Square Means
 }
 \section{Functions}{
 \itemize{
-\item \code{h_partial_match()}: partial matching of a set of \code{options} to a character vector \code{x}. Here partial matching means that for each element of \code{x} we look for the
+\item \code{h_partial_match()}: partial matching of a set of \code{options} to a
+character vector \code{x}. Here partial matching means that for each element of \code{x} we look for the
 (first) element of \code{options} which is contained in the element of \code{x}. Then we return
 the matched \code{options} in the same order as \code{x}.
 

@@ -9,43 +9,40 @@ adae_jnj <- pharmaverseadamjnj::adae
 
         
 
-fix_usubjid <- function(adsl) {
-    rws <- which(adsl$TRT01P == "Std Of Care")
+fix_usubjid <- function(adsl, newlev = "Std Of Care") {
+  rws <- which(adsl$TRT01P == newlev)
 
-    usubj_char <- as.character(adsl$USUBJID)
-    subjid <- as.integer(as.character(adsl$SUBJID))
-    subjid[rws] <- subjid[rws] + 1000
-    substr(usubj_char, 8, 11) <- as.character(subjid)
-    adsl$USUBJID <- factor(usubj_char)
-    adsl$SUBJID <- factor(as.character(subjid))
-    adsl
-
+  usubj_char <- as.character(adsl$USUBJID)
+  subjid <- as.integer(as.character(adsl$SUBJID))
+  subjid[rws] <- subjid[rws] + 1000
+  substr(usubj_char, 8, 11) <- as.character(subjid)
+  adsl$USUBJID <- factor(usubj_char)
+  adsl$SUBJID <- factor(as.character(subjid))
+  adsl
 }
         
         
 
-make_fake_adsl <- function(adsl) {
-    fakeyfake <- filter(adsl, TRT01P == "Placebo")
-    fakeyfake$TRT01P <- "Std Of Care"
-    fakeyfake$AGE <- floor(runif(NROW(fakeyfake), 30,  90))
-    adsl$TRT01P <- as.character(adsl$TRT01P)
-     adsl <- rbind(adsl, fakeyfake)
-    adsl$TRT01P <- factor(adsl$TRT01P)
-
-    fix_usubjid(adsl)
+make_fake_adsl <- function(adsl, newlev = "Std Of Care", oldlev = "Placebo") {
+  fakeyfake <- filter(adsl, TRT01P == !!oldlev)
+  fakeyfake$TRT01P <- newlev
+  fakeyfake$AGE <- floor(runif(NROW(fakeyfake), 30,  90))
+  adsl$TRT01P <- as.character(adsl$TRT01P)
+  adsl <- rbind(adsl, fakeyfake)
+  adsl$TRT01P <- factor(adsl$TRT01P)
+  fix_usubjid(adsl, newlev = newlev)
  }
 
 
 
-borrow_aes <- function(adae, adsl, mult = 1) { #runif(1, .9, 1.1)) {
-    plac_count <- sum(adae$TRT01P == "Placebo", na.rm = TRUE)
+borrow_aes <- function(adae, adsl, mult = 1, newlev = "Std Of Care", oldlev = "Placebo") { #runif(1, .9, 1.1)) {
+    plac_count <- sum(adae$TRT01P == oldlev, na.rm = TRUE)
     new_count <- floor(plac_count * mult)
-    soc_usubjids <- as.character(adsl$USUBJID)[!is.na(adsl$TRT01P) & adsl$TRT01P == "Std Of Care"]
+    soc_usubjids <- as.character(adsl$USUBJID)[!is.na(adsl$TRT01P) & adsl$TRT01P == newlev]
 
     duprows <- sample(seq_len(NROW(adae)), new_count, replace = TRUE)
 
     newrws <- adae[duprows,]
-    print(c(new_count, length(duprows), length(unique(duprows)), NROW(newrws)))
     newrws$USUBJID <- sample(soc_usubjids, NROW(newrws), replace = TRUE)
     rbind(adae, newrws)
 }
@@ -133,7 +130,9 @@ combodf <- tribble(~valname, ~label, ~levelcombo, ~exargs,
 
 comp_map <- make_dflt_comp_map(adsl, trtvar, ctrl_grp, combodf)
 
-afun_refpath <- function(x, ref_path, ...) paste(ref_path, collapse = ".")
+afun_refpath <- function(x, ref_path = "none", ...) paste(ref_path, collapse = ".")
+
+
 test_that("basic direct make_multicomp_splfun usage works", {
 
   splfun <- make_multicomp_splfun(colspan_trt_map)
@@ -191,7 +190,7 @@ test_that("basic direct make_multicomp_splfun usage works", {
   expect_identical(col_paths(tbl), col_paths(tbl4))
 })
 
-test_that("make_multicomp_splfuon works with active combo levels", {
+test_that("make_multicomp_splfun works with active combo levels", {
 
   splfun <- make_multicomp_splfun(colspan_trt_map, combodf, comp_map)
   lyt <- basic_table(show_colcounts = TRUE) |>
@@ -208,14 +207,89 @@ test_that("make_multicomp_splfuon works with active combo levels", {
         c(
           base_counts[act_grp],
           sum(base_counts[act_grp]),
-          ## this includes NAs, thats probably wrong but I doubt I can change it now :(
+          ## this includes NAs, thats 'probably fine' but something to be aware of
+          ## I doubt it can be changed at this point though alternate approach is
+          ## possible if needed
           nrow(adsl)
         ),
         2
       )
     )
   )
+})
+
+test_that("make_multicomp_splfun works with combo comparator levels (default comps)", {
+  combodf2 <- combodf
+  combodf2$is_control <- c(FALSE, TRUE)
+  
+  splfun <- make_multicomp_splfun(colspan_trt_map, combodf2)
+  lyt <- basic_table(show_colcounts = TRUE) |>
+    split_cols_by(trtvar, split_fun = splfun) |>
+    analyze(trtvar, afun = afun_refpath)  
+    
+  tbl <- build_table(lyt, adae, adsl)
+  base_counts <- setNames(as.integer(table(adsl[[trtvar]])), levels(adsl[[trtvar]]))
+  expect_equal(col_counts(tbl),
+               unname(rep(c(base_counts[3:4], sum(base_counts[3:4])), 3)))
+})
 
 
+test_that("make_multicomp_splfun works with active comparators (non-default comps)", {
+  splfun <- make_multicomp_splfun(colspan_trt_map, comp_level_map = data.frame(active = "Xanomeline High Dose", comparator = "Xanomeline Low Dose"))
+  lyt <- basic_table(show_colcounts = TRUE) |>
+    split_cols_by(trtvar, split_fun = splfun) |>
+    analyze(trtvar, afun = afun_refpath)  
+    
+  tbl <- build_table(lyt, adae, adsl)
+  expect_equal(unlist(cell_values(tbl), use.names = FALSE),
+               "colspan_trt.Active Study Agent.TRT01P.Xanomeline Low Dose")
 
+  splfun2 <- make_multicomp_splfun(colspan_trt_map, comp_level_map = data.frame(active = c("Xanomeline High Dose", "Xanomeline Low Dose"), comparator = "all_patients"), combo_levels_map = combodf)
+
+  lyt2 <- basic_table(show_colcounts = TRUE) |>
+    split_cols_by(trtvar, split_fun = splfun2) |>
+    analyze(trtvar, afun = afun_refpath)  
+    
+  tbl2 <- build_table(lyt2, adae, adsl)
+
+  expect_identical(unique(unlist(cell_values(tbl2), use.names = FALSE)),
+                   "colspan_trt.Active Study Agent.TRT01P.all_patients")
+})
+
+test_that("col_spans_plus_diffs works", {
+
+  lyt1 <- basic_table() |>
+    col_spans_plus_diffs(colspan_trt_map) |>
+    analyze(trtvar, afun = afun_refpath)
+
+  tbl1 <- build_table(lyt1, adae, adsl)
+  spanvar <- names(colspan_trt_map)[1]
+  varvar <- names(colspan_trt_map)[2]  
+  expect_equal(
+    unclass(col_paths(tbl1)),
+    c(lapply(seq_along(colspan_trt_map[[1]]),
+                    function(i) {
+        rw <- colspan_trt_map[i, ]
+        c(spanvar, rw[[spanvar]], varvar, rw[[varvar]])
+    }),
+    unlist(lapply(ctrl_grp,
+                  function(z) {
+        lapply(act_grp, function(w) {
+            c(rep("Risk Differences", 2), trtvar, paste(w, z, sep = " vs "))
+        })
+    }),
+    recursive = FALSE)
+    )
+  )
+
+  lyt2 <- basic_table() |>
+    col_spans_plus_diffs(colspan_trt_map, risk_diff_cols = FALSE) |>
+    analyze(trtvar, afun = afun_refpath)
+  tbl2 <- build_table(lyt2, adae, adsl)
+    
+  expect_equal(col_paths(tbl2),
+               col_paths(tbl1)[1:4])
+
+  expect_identical(unique(unlist(cell_values(tbl2))),
+                   "none")
 })

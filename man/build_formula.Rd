@@ -28,10 +28,10 @@ in \code{vars}, then the formula will include the interaction of \code{subgroup}
 }
 \examples{
 vars <- list(
-  response = "AVAL", 
+  response = "AVAL",
   covariates = c("RACE", "SEX"),
-  id = "USUBJID", 
-  arm = "ARMCD", 
+  id = "USUBJID",
+  arm = "ARMCD",
   visit = "AVISIT",
   subgroup = "REGION"
 )

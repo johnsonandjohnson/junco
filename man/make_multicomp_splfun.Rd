@@ -126,6 +126,6 @@ at https://github.com/johnsonandjohnson/junco/issues
 }
 \seealso{
 Other riskdiff_col_struct: 
-\code{\link{col_struct_w_risk_diffs}()}
+\code{\link{col_spans_plus_diffs}()}
 }
 \concept{riskdiff_col_struct}
