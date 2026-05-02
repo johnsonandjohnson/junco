@@ -1,22 +1,53 @@
-#' @title Safe Wrapper of `stats::t.test()`
+#' @title Safe Wrapper for `stats::t.test()`
 #'
-#' @description `r lifecycle::badge("stable")`
+#' @description `r lifecycle::badge("experimental")`
 #'
-#' Handles errors when executing [stats::t.test()].
+#' This is a robust wrapper around [stats::t.test] that prevents errors from
+#' interrupting execution. Instead of failing, it returns a structured result
+#' containing `NA` values and an informative error message.
+#'
+#' This is particularly useful in pipelines, simulations, or batch analyses where
+#' occasional invalid inputs (e.g., constant vectors, insufficient observations)
+#' would otherwise stop execution.
+#'
+#' @details
+#' When [stats::t.test] succeeds, the result is returned unchanged.
+#' If an error occurs, a list is returned mimicking key components of a `htest`
+#' object.
+#' Any `NaN` estimates are converted to `NA_real_`.
 #'
 #' @inheritParams stats::t.test
 #'
-#' @return A `list` with core items as from [stats:::t.test.default()] and
-#'   `error_text` for the captured error.
+#' @return
+#' A `list`: either the standard `htest` object from [stats::t.test], or (on error)
+#' a list with `NA` statistics, sample mean(s) in `estimate`, and an `error_text`
+#' field containing the error message.
 #'
 #' @importFrom stats t.test
+#'
 #' @examples
+#' # Standard usage
+#' t.test(1:10, 11:20)
+#' safe_t_test(1:10, 11:20)
+#'
+#' # Example triggering failure (zero variance)
 #' t.test(rep(10, 5), rep(10, 5))
 #' safe_t_test(rep(10, 5), rep(10, 5))
-#'
 safe_t_test <- function(x, y = NULL, ...) {
+  x_expr <- substitute(x)
+  y_expr <- substitute(y)
   tryCatch(
-    stats::t.test(x, y, ...),
+    {
+      res <- stats::t.test(x, y, ...)
+
+      res$data.name <- if (!is.null(y)) {
+        paste(deparse1(x_expr), "and", deparse1(y_expr))
+      } else {
+        deparse1(x_expr)
+      }
+
+      res
+    },
     error = function(e) {
       if (!is.null(y)) {
         estimate <- c(mean_x = mean(x), mean_y = mean(y))

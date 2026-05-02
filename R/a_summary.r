@@ -3,31 +3,35 @@
 #' @description `r lifecycle::badge("experimental")`
 #'
 #' This function wraps [tern::a_summary()] and applies junco-specific defaults
-#' to selected formatting arguments: `.labels`, `.formats`, and `.indent_mods`.
+#' for formatting-related arguments when they are not explicitly provided by the user.
 #'
-#' @details
-#' If `.labels`, `.formats`, or `.indent_mods` are supplied with non-`NULL`
-#' values, they are passed through to [tern::a_summary()] unchanged. If they
-#' are `NULL` or not supplied, default values are generated using:
+#' In particular, default values are generated for:
 #' \itemize{
-#'   \item [junco_get_labels_from_stats()] for `.labels`
-#'   \item [junco_get_formats_from_stats()] for `.formats`
-#'   \item [junco_get_indents_from_stats()] for `.indent_mods`.
+#'   \item `.labels` via [junco_get_labels_from_stats()]
+#'   \item `.formats` via [junco_get_formats_from_stats()]
+#'   \item `.indent_mods` via [junco_get_indents_from_stats()]
 #' }
 #'
-#' If the `.stats` argument is not explicitly provided, or is provided as `NULL`,
-#' the default statistics from [tern::get_stats()] are used.
+#' If `.stats` is not provided or is `NULL`, the default statistics from
+#' [tern::get_stats()] are used.
 #'
-#' @param ... Arguments passed on to [tern::a_summary()], including `.labels`,
-#'   `.formats`, and `.indent_mods`.
+#' @details
+#' User-supplied values for `.labels`, `.formats`, and `.indent_mods` are used
+#' as-is and only completed where needed by the corresponding junco helper
+#' functions. No modification is performed if these arguments are fully specified.
+#'
+#' @inheritParams tern::a_summary
 #'
 #' @return
-#' Returns the same output as [tern::a_summary()].
+#' Returns the same type of output as [tern::a_summary()], with optional
+#' junco-based default formatting applied.
 #'
-#' @seealso [tern::a_summary()]
+#' @seealso [tern::a_summary()], [tern::get_stats()]
 #'
 #' @importFrom tern a_summary get_stats
+#'
 #' @export
+#'
 #' @examples
 #' .stats <- c("n", "mean_sd", "median_range")
 #' tern::a_summary(1:10, .stats = .stats)
@@ -35,41 +39,78 @@
 #' a_summary_j(1:10, .stats = .stats, .formats = c(mean_sd = "xx (xx.x)"))
 #' a_summary_j(1:10)
 #'
-a_summary_j <- function(...) {
+a_summary_j <- function(x,
+                        ...,
+                        .stats = NULL,
+                        .stat_names = NULL,
+                        .formats = NULL,
+                        .labels = NULL,
+                        .indent_mods = NULL) {
   # Arguments for a_summary.
   argsas <- list(...)
 
-  if (is.null(argsas$.stats)) {
-    argsas$.stats <- tern:::get_stats()
+  if (is.null(.stats)) {
+    .stats <- tern::get_stats()
   }
-  s <- argsas$.stats
-  argsas$.labels <- junco_get_labels_from_stats(s, labels_in = argsas$.labels)
-  argsas$.formats <- junco_get_formats_from_stats(s, formats_in = argsas$.formats)
-  argsas$.indent_mods <- junco_get_indents_from_stats(s, indents_in = argsas$.indent_mods)
+  .formats <- junco_get_formats_from_stats(.stats, formats_in = .formats)
+  .labels <- junco_get_labels_from_stats(.stats, labels_in = .labels)
+  .indent_mods <- junco_get_indents_from_stats(.stats, indents_in = .indent_mods)
 
-  do.call(tern::a_summary, argsas)
+  tern::a_summary(
+    x = x,
+    ...,
+    .stats = .stats,
+    .stat_names = .stat_names,
+    .formats = .formats,
+    .labels = .labels,
+    .indent_mods = .indent_mods
+  )
 }
 
-#' @title Summary Statistics for the Filtered Data with Label
+#' @title Summary Statistics for Filtered Data with Label
 #'
 #' @description `r lifecycle::badge("experimental")`
 #'
-#' A wrapper function of [a_summary_j()] function that filters the data prior
-#' to the function execution and prepends the a single label for the object with
-#' statistics values.
+#' A wrapper around [a_summary_j()] that filters the data prior to execution
+#' and prepends a label to the resulting summary statistics object.
 #'
-#' @inheritParams proposal_argument_convention df labelstr .var .spl_context
-#' @inheritParams filter_df_prior_afun subset_expr
-#' @param label (`string` or `function`)\cr A label to be appended or the function
-#'   the creates the label. If a `function`, then is must accept exactly one
-#'   argument which is a `.spl_context`.
-#' @inheritParams prepend_label_cell label_indent_mod
+#' @details
+#' The function first applies row filtering via [filter_df_prior_afun()],
+#' then computes summary statistics using [a_summary_j()], and finally
+#' attaches a label to the resulting object.
+#'
+#' @inheritParams proposal_argument_convention
+#' @inheritParams filter_df_prior_afun
+#' @param label (`string` or `function`)\cr A label to be added to the output.
+#'   If a function is provided, it must accept a single argument `.spl_context`
+#'   and return a character string.
+#' @inheritParams prepend_label_cell
+#'
 #' @param ... Additional arguments passed to [a_summary_j()].
 #'
-#' @returns an object created by [a_summary_j()] for a given input arguments.
+#' @returns
+#' An object returned by [a_summary_j()] with an additional label applied.
+#'
 #' @export
 #'
 #' @examples
+#' df <- data.frame(
+#'   USUBJID = rep(1:6, each = 2),
+#'   AVISIT = rep(c("Baseline", "Day 1"), 6),
+#'   AVAL = c(1, 3, 2, 9, 13, 19, 15, 23, 43, 56, 24, 32),
+#'   ABLFL = rep(c(TRUE, FALSE), 6),
+#'   BASE = rep(c(1, 2, 13, 15, 43, 24), each = 2),
+#'   CHG = c(0, 2, 0, 7, 0, 6, 0, 8, 0, 13, 0, 8)
+#' )
+#' df
+#'
+#' c_summary_subset_label(
+#'   df = df,
+#'   .var = "CHG",
+#'   subset_expr = expression(ABLFL),
+#'   label = "Change from Baseline",
+#'   .stats = c("n", "mean_sd")
+#' )
 c_summary_subset_label <- function(df,
                                    labelstr,
                                    .var,

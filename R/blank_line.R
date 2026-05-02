@@ -118,24 +118,36 @@ add_blank_line_rcells <- function(ret) {
   fret
 }
 
-#' @title Pre-pend Row with Label to the Results of the Analysis Function.
+#' @title Prepend Label Row to Analysis Output
 #'
 #' @description `r lifecycle::badge("experimental")`
 #'
-#' @note If `x` is of class `RowsVerticalSection`, attributes `row_formats`,
-#'   `row_na_strs`, `row_footnotes` are not preserved (if present).
+#' Adds a label row at the beginning of analysis output objects, such as
+#' `CellValue`, `list` of `CellValue`s, or `RowsVerticalSection` objects.
+#' These objects are returned by analysis functions used within the **rtables**
+#' framework and are typically created via [rtables::rcell()] or
+#' [rtables::in_rows()] functions.
+#'
+#' This is typically used to introduce section headers
+#' (e.g., "Descriptive Statistics") in tabular or reporting outputs.
+#'
+#' @note If `x` is of class `RowsVerticalSection`, the attributes
+#' `row_formats`, `row_na_strs`, and `row_footnotes` are not preserved.
 #'
 #' @param x (`list` or `CellValue` or `RowsVerticalSection`)\cr
-#'   Results of the Analysis Function.
-#' @param label (`string`)\cr A label to be appended.
-#' @param label_indent (`integer(1)`)\cr An indent for the row with the
-#'   prepended label.
+#'   Analysis result object.
+#' @param label (`character(1)`)\cr Label to be inserted as the first row.
+#' @param label_indent (`integer(1)`)\cr Indentation level applied to the
+#'   label row.
 #'
-#' @returns `RowsVerticalSection` class object.
+#' @returns A `RowsVerticalSection` object with the label row prepended.
+#'
+#' @importFrom rtables rcell in_rows
+#'
 #' @export
 #'
 #' @examples
-#' rvs <- in_rows(Mean = rcell(5), SD = rcell(1))
+#' rvs <- rtables::in_rows(Mean = rtables::rcell(5), Range = rtables::rcell(c(1, 8)))
 #' prepend_label_cell(rvs, "Descriptive Statistics", label_indent = 1L)
 #'
 prepend_label_cell <- function(x, label = "", label_indent = 0L) {
@@ -147,13 +159,13 @@ prepend_label_cell <- function(x, label = "", label_indent = 0L) {
   checkmate::assert_int(label_indent)
 
   if (class(x) == "CellValue") {
-    label_rcell <- rcell(NULL, label = label, indent_mod = label_indent)
+    label_rcell <- rtables::rcell(NULL, label = label, indent_mod = label_indent)
     list(label_rcell, x)
   } else if (class(x) == "list") {
-    label_rcell <- rcell(NULL, label = label, indent_mod = label_indent)
+    label_rcell <- rtables::rcell(NULL, label = label, indent_mod = label_indent)
     c(list(label_rcell), x)
   } else if (class(x) == "RowsVerticalSection") {
-    ret <- in_rows(.list = c(list(NULL), x))
+    ret <- rtables::in_rows(.list = c(list(NULL), x))
     if (is.null(attr(x, "indent_mods"))) {
       attr(ret[[1]], "indent_mod") <- label_indent
     } else {

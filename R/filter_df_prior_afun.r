@@ -1,44 +1,56 @@
-#' @title Summary Statistics for the Filtered Data.
+#' @title Filter Data Prior To Analysis Function
 #'
 #' @description `r lifecycle::badge("experimental")`
 #'
-#' Formatted analysis function for summary statistics for optionally
-#' row-filtered data.
-#' It uses [a_summary_j()] under the hood.
+#' Applies row filtering to a dataset before executing a user-supplied analysis
+#' function.
+#'
+#' @details
+#' This is a generic wrapper that:
+#' \enumerate{
+#'   \item Subsets `df` using `subset_expr`.
+#'   \item Passes data to `afun`, depending on its first argument. If it is named:
+#'     \itemize{
+#'       \item `x`, then `df[[.var]]` is passed.
+#'       \item `df`, then the `df` data frame is passed.
+#'     }
+#'   \item Forwards `.var` (if it is present in the formal arguments of `afun`)
+#'     and all additional arguments (`...`) to `afun`.
+#' }
 #'
 #' @inheritParams proposal_argument_convention
+#' @param `afun` (`function`)\cr Analysis function. Must accept `x` or `df` as
+#'   its first parameter. Can optionally take other parameters.
 #' @param subset_expr (`expression` or `NULL`)\cr
-#'   logical expression indicating rows in `df` to keep for the analysis.
-#'   Filtering is performed prior to analysis.
-#' @param ... Additional arguments passed to [a_summary_j()]
+#'   Logical expression used to subset rows of `df` before analysis.
+#'   Evaluated in the context of `df`.
+#'   Defaults to `expression(rep(TRUE, nrow(df)))`, meaning no filtering.
+#' @param ... Additional arguments passed to `afun`.
 #'
-#' @returns an object created by [a_summary_j()] for a given input arguments.
+#' @returns
+#' The object returned by `afun` applied to the filtered dataset.
+#'
 #' @export
 #'
 #' @examples
 #' df <- data.frame(
 #'   USUBJID = rep(1:6, each = 2),
 #'   AVISIT = rep(c("Baseline", "Day 1"), 6),
-#'   AVAL = c(1, 3, 2, 9, 13, 19, 15, 23, 43, 56, 24, 32)
-#' ) |>
-#'   mutate(ABLFL = AVISIT == "Baseline") |>
-#'   group_by(USUBJID) |>
-#'   mutate(
-#'     BASE = AVAL[ABLFL],
-#'     CHG = AVAL - BASE
-#'   ) |>
-#'   ungroup()
-#' df <- as.data.frame(df)
+#'   AVAL = c(1, 3, 2, 9, 13, 19, 15, 23, 43, 56, 24, 32),
+#'   ABLFL = rep(c(TRUE, FALSE), 6),
+#'   BASE = rep(c(1, 2, 13, 15, 43, 24), each = 2),
+#'   CHG = c(0, 2, 0, 7, 0, 6, 0, 8, 0, 13, 0, 8)
+#' )
 #' df
 #'
 #' afun <- tern::a_summary
 #' .stats <- c("n", "mean_sd")
 #'
-#' # No filter.
-#' filter_df_prior_afun(dta_test, "CHG", afun, .stats = .stats)
+#' # No filtering.
+#' filter_df_prior_afun(df, "CHG", afun, .stats = .stats)
 #'
 #' # Baseline records only.
-#' filter_df_prior_afun(dta_test, "CHG", afun, expression(ABLFL), .stats = .stats)
+#' filter_df_prior_afun(df, "CHG", afun, expression(ABLFL), .stats = .stats)
 filter_df_prior_afun <- function(df,
                                  .var,
                                  afun,
@@ -46,7 +58,7 @@ filter_df_prior_afun <- function(df,
                                  ...) {
   checkmate::assert_data_frame(df)
   checkmate::assert_string(.var)
-  checkmate::assert_choice(.var, colnames(df))
+  checkmate::assert_names(colnames(df), must.include = .var)
   checkmate::assert_function(afun)
   checkmate::assert_true(any(c("x", "df") %in% names(formals(afun))[1]))
   checkmate::assert_logical(with(df, eval(subset_expr)), len = nrow(df), any.missing = FALSE)
