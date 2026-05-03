@@ -669,10 +669,8 @@ interpret_all_cell_content <- function(flx, markup_df_docx = dps_markup_df_docx)
 
 #' Obtain the default theme for the docx
 #'
-#' @description `r lifecycle::badge('experimental')`
 #'
 #' This function is based on [rtables.officer::theme_docx_default()].
-#' See notes to understand why this is experimental.
 #'
 #'
 #' @param font (`string`)\cr (optional) Default = "Times New Roman".
@@ -811,10 +809,8 @@ theme_docx_default_j <- function(
 
 #' Convert a TableTree or a listing_df object to a flextable
 #'
-#' @description `r lifecycle::badge('experimental')`
 #'
 #' This function is based on [rtables.officer::tt_to_flextable()].
-#' See notes to understand why this is experimental.
 #'
 #' @param tt (`TableTree` or `listing_df`)\cr the object to convert to flextable.
 #' @param bold_titles (`logical`)\cr (optional) Default = TRUE.
@@ -1533,10 +1529,8 @@ tt_to_flextable_j <- function(
 
 #' Export a VTableTree or a listing_df object into docx
 #'
-#' @description `r lifecycle::badge('experimental')`
 #'
 #' This function is based on [rtables.officer::export_as_docx()].
-#' See notes to understand why this is experimental.
 #'
 #' @param tt (`TableTree` or `listing_df`)\cr the object to export.
 #'
@@ -1918,9 +1912,8 @@ export_as_docx_j <- function(
 
 #' export_graph_as_docx
 #'
-#' @description `r lifecycle::badge('experimental')`
 #'
-#' Export graph in DOCX format. See notes to understand why this is experimental.
+#' Export graph in DOCX format.
 #'
 #' @param g (`ggplot2`)\cr a `ggplot2` object, or a list
 #' of them, to export. At least one of `g` or `plotnames` must be provided.
@@ -2124,7 +2117,6 @@ export_graph_as_docx <- function(g = NULL,
 
 #' Export a TLG (Table, Listing, Graph) to .docx format
 #'
-#' @description `r lifecycle::badge('experimental')`
 #'
 #' @param obj (`TableTree`, `listing_df` or `ggplot2`)\cr the object to export.
 #' @param tblid (`character`)\cr output ID to be displayed in the title and
@@ -2296,12 +2288,11 @@ export_graph_as_docx <- function(g = NULL,
 #' @export
 #'
 #' @section Note:
-#' This function has been tested for common use cases but may not work or have
-#' unexpected or undesired behavior in corner cases. As such it is not considered
-#' fully production ready and is being made available for further testing
-#' and early adoption. Please report any issues you encounter to the developers.
 #' This function may be removed from junco in the future if the functionality
 #' is merged into `rtables.officer`.
+#' 
+#' For more information, refer to the vignette `table_and_listing_customizations`
+#' (`browseVignettes("junco")`)
 #'
 export_TLG_as_docx <- function(
   obj = NULL,

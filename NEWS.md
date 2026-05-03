@@ -36,6 +36,7 @@
 - docx exporter added missing defaults (#186)
 - Changed all snapshot tests to `cran = TRUE`
 - Footnotes in docx and RTF outputs are now 1 table row/cell (#285)
+- removed label "experimental" for `theme_docx_default_j`, `tt_to_flextable_j` and `export_TLG_as_docx`
 
 ### Added
 
