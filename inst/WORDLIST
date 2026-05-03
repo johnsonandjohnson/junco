@@ -26,7 +26,6 @@ Miettinen
 Nurminen
 Optimality
 PARAMCD
-PCTLDEF
 Parallelisation
 Parallelise
 RBMI
@@ -90,7 +89,6 @@ fmt
 fn
 formatters
 gentlg
-ggplot
 github
 goto
 grepl
@@ -172,5 +170,6 @@ unicodify
 unlist
 unrounded
 unstratified
+vectorized
 wordbreaking
 xlsx
