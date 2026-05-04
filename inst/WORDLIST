@@ -93,7 +93,6 @@ fmt
 fn
 formatters
 gentlg
-ggplot
 github
 goto
 grepl

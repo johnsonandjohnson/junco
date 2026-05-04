@@ -42,13 +42,10 @@
 
 ### Added
 
-<<<<<<< multicomp_lyt_fun
 - Added multi-comparator functionality (#271)
-=======
 - Hotfix: Added several new functions for creating the Vital Sign tables for core and clinpharm:
   `a_summary_diff_mvars()`, `a_summary_j()`, `c_summary_subset_label()`, `filter_df_prior_afun()`,
   `prepend_label_cell()`, `s_diff_mean_ci()`, `s_summary_diff()`, `safe_t_test()` (#304).
->>>>>>> dev
 - Added option to perform `a_summarize_ancova_j` in a layout with a combined column facet (#117) + slight change in return value for `s_ancova_j()`, now we have n_fit instead of n returned
 - Added option to switch on/off the export of the csv in both `tt_to_tlgrtf()` and `export_as_docx_j()`
 - Added option to specify the output folder for the csv
