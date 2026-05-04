@@ -172,12 +172,6 @@ prepend_label_cell <- function(x, label = "", label_indent = 0L) {
       attr(ret, "indent_mods") <- c(label_indent, attr(x, "indent_mods"))
     }
     attr(ret, "row_labels") <- c(label, attr(x, "row_labels"))
-    # rvs_attr <- c("row_formats", "row_na_strs", "row_footnotes")
-    # rvs_attr_gr1 <- sapply(attributes(x)[rvs_attr], length) > 1
-    # rvs_attr_gr1 <- names(rvs_attr_gr1)[rvs_attr_gr1]
-    # for (a in rvs_attr_gr1) {
-    #   attr(ret, a) <- c(NA, attr(x, a))
-    # }
     ret
   }
 }

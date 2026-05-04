@@ -72,14 +72,12 @@ s_diff_mean_ci <- function(df1,
   checkmate::assert_data_frame(df1, null.ok = FALSE)
   checkmate::assert_data_frame(df2, null.ok = FALSE)
   checkmate::assert_string(.var)
-  checkmate::assert_names(colnames(df1), must.include = .var)
-  checkmate::assert_names(colnames(df2), must.include = .var)
+  checkmate::assert_character(paired_by, null.ok = FALSE)
+  checkmate::assert_names(colnames(df1), must.include = c(.var, paired_by))
+  checkmate::assert_names(colnames(df2), must.include = c(.var, paired_by))
   checkmate::assert_flag(paired, null.ok = FALSE)
 
   if (paired) {
-    checkmate::assert_character(paired_by, null.ok = FALSE)
-    checkmate::assert_subset(paired_by, colnames(df1), empty.ok = FALSE)
-    checkmate::assert_subset(paired_by, colnames(df2), empty.ok = FALSE)
     if (any(duplicated(df1[, paired_by]))) {
       stop("df1: 'paired_by' must uniquely identify rows.")
     }
