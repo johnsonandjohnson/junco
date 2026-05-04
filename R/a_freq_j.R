@@ -774,13 +774,13 @@ a_freq_j <- function(
       trt_var_refspec <- trt_var_refpath$trt_var_refspec
       cur_trt_grp <- trt_var_refpath$cur_trt_grp
       ctrl_grp <- trt_var_refpath$ctrl_grp
-      
       # for combined facet, denom_df value for the treatment group needs update
       new_denomdf <- upd_denom_df_combo(
         new_denomdf,
         trt_var,
         cur_trt_grp,
-        .spl_context)
+        .spl_context
+      )
 
       if (!is.null(colgroup) && trt_var == colgroup) {
         stop(

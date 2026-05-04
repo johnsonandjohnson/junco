@@ -178,13 +178,13 @@ a_freq_resp_var_j <- function(
       # note that the response variable will become .var in the below call
       # val is restricted to Y to show number of response on the current level of .var
       denom_df <- dfrowii
-      
       # for combined facet, denom_df value for the treatment group needs update
       denom_df <- upd_denom_df_combo(
         denom_df,
         trt_var,
         cur_trt_grp,
-        .spl_context)
+        .spl_context
+      )
 
       rslt <- s_rel_risk_val_j(
         df = dfii,

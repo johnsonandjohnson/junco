@@ -265,9 +265,10 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
   
   # Set up levels and label for the required combined columns
   comb_group <- setdiff(unique(adsl[[trtvar]]), ctrl_grp)
-  add_combo <- add_combo_facet("Combined",
-                               label = "Combined",
-                               levels = comb_group
+  add_combo <- add_combo_facet(
+    "Combined",
+    label = "Combined",
+    levels = comb_group
   )
   
   # choose if any facets need to be removed - e.g remove the combined column for placebo
@@ -278,7 +279,7 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
     split = "colspan_trt"
   )
   
-  mysplit_comb <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))  
+  mysplit_comb <- make_split_fun(post = list(add_combo, rm_combo_from_placebo))
 
   # choose if any facets need to be removed - e.g remove the combined column for placebo
   rm_combo_from_placebo2 <- cond_rm_facets(
@@ -287,9 +288,10 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
     value = "Risk Difference (95% CI)",
     split = "rrisk_header"
   )
-  add_combo2 <- add_combo_facet("Combined",
-                                label = paste0("Combined vs ", ctrl_grp),
-                                levels = comb_group
+  add_combo2 <- add_combo_facet(
+    "Combined",
+    label = paste0("Combined vs ", ctrl_grp),
+    levels = comb_group
   )
   
   mysplit_comb2 <- make_split_fun(post = list(add_combo2, rm_combo_from_placebo2))
@@ -302,25 +304,25 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
     show_colcounts = TRUE,
     colcount_format = "N=xx",
     top_level_section_div = " "
-  ) %>%
+  ) |>
     split_cols_by(
       "colspan_trt",
       split_fun = trim_levels_to_map(map = colspan_trt_map)
-    ) %>%
-    split_cols_by(trtvar, split_fun = mysplit_comb) %>%
-    split_cols_by("rrisk_header", nested = FALSE) %>%
+    ) |>
+    split_cols_by(trtvar, split_fun = mysplit_comb) |>
+    split_cols_by("rrisk_header", nested = FALSE) |>
     split_cols_by(
       trtvar,
       labels_var = "rrisk_label",
       split_fun = mysplit_comb2
-    ) %>%
+    ) |>
     analyze(
       "TRTDURY",
       nested = FALSE,
       show_labels = "hidden",
       afun = a_patyrs_j,
       extra_args = list(.labels = c(patyrs = "Subject years\u1D43"))
-    ) %>%
+    ) |>
     analyze(
       vars = "AEDECOD",
       nested = FALSE,
@@ -332,7 +334,7 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
         ref_path = ref_path,
         drop_levels = TRUE
       )
-    ) %>%
+    ) |>
     append_topleft("Preferred Term, EAIR Per 100 SY")
   
   
@@ -343,7 +345,7 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
   # actual comparison testthat code
   ################################################################################
  # get numbers from single sel_AEDECOD, like dcd A.1.1.1.1, selected treatment group
-  eair_numbers <- function(adae, adsl, sel_AEDECOD, comb_group){
+  eair_numbers <- function(adae, adsl, sel_AEDECOD, comb_group) {
     adae_onecode <- adae |>
       filter(AEDECOD == sel_AEDECOD & !is.na(AOCCPFL)) |>
       select(USUBJID, AEDECOD, AOCCPFL, ASTDY)
@@ -372,10 +374,11 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
     
     expected <- (100 * number_with_event) / total_exp_years
     
-    list(count = number_with_event,
-         texpy = total_exp_years,
-         eair =  (100 * number_with_event) / total_exp_years
-         )
+    list(
+      count = number_with_event,
+      texpy = total_exp_years,
+      eair = (100 * number_with_event) / total_exp_years
+    )
   }
 
   # dcd A.1.1.1.1 is the second row in the result object
@@ -385,11 +388,13 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
   eair_numbers_comb <- eair_numbers(adae, adsl, "dcd A.1.1.1.1", comb_group)
   eair_numbers_ctrl <- eair_numbers(adae, adsl, "dcd A.1.1.1.1", ctrl_grp)
   
-  rdiff_eair <- function(eair_numbers_comb, 
+  rdiff_eair <- function(eair_numbers_comb,
                          eair_numbers_ctrl, conf_level = 0.95) {
     rdiff <- eair_numbers_comb[["eair"]] - eair_numbers_ctrl[["eair"]]
-    sd <- sqrt(eair_numbers_comb[["count"]]/ eair_numbers_comb[["texpy"]]^2 + 
-               eair_numbers_ctrl[["count"]]/ eair_numbers_ctrl[["texpy"]]^2) * 100
+    sd <- sqrt(
+      eair_numbers_comb[["count"]] / eair_numbers_comb[["texpy"]]^2 +
+        eair_numbers_ctrl[["count"]] / eair_numbers_ctrl[["texpy"]]^2
+    ) * 100
     
     coeff <- stats::qnorm((1 + conf_level) / 2)
     lcl <- rdiff - (coeff * sd)
