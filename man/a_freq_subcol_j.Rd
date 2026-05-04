@@ -161,7 +161,7 @@ combodf <- tribble(
 )
 
 lyt <- basic_table(show_colcounts = TRUE) |>
-  split_cols_by("COLSPAN_REL", split_fun = add_combo_levels(combodf, trim = TRUE)) |>
+  split_cols_by("COLSPAN_REL", split_fun = rtables::add_combo_levels(combodf, trim = TRUE)) |>
   split_cols_by("ARM") |>
   analyze("AEDECOD",
     afun = a_freq_subcol_j,
