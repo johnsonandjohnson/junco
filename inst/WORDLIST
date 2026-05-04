@@ -17,6 +17,7 @@ Dunnett
 EQ
 Eg
 Haenszel
+Hotfix
 IEC
 JJCS
 Kaplan
@@ -26,7 +27,6 @@ Miettinen
 Nurminen
 Optimality
 PARAMCD
-PCTLDEF
 Parallelisation
 Parallelise
 RBMI
@@ -55,6 +55,7 @@ bayes
 bugfix
 chisq
 ci
+clinpharm
 cmh
 coef
 colcounts
@@ -172,5 +173,6 @@ unicodify
 unlist
 unrounded
 unstratified
+vectorized
 wordbreaking
 xlsx
