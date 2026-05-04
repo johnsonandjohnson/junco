@@ -185,3 +185,16 @@
         Difference in Adjusted Means (95% CI)                            NA            NA                  NA        
           p-value                                                        NA            NA                  NA        
 
+# a_summarize_ancova_j with multiple combined columns
+
+    Code
+      result
+    Output
+                                                      Placebo          Xanomeline Low Dose   Xanomeline Medium Dose   Xanomeline High Dose   Combined: Low + Medium   Combined: Medium + High   Combined: Low + Medium + High
+                                                       (N=86)                (N=96)                  (N=86)                  (N=72)                 (N=182)                   (N=158)                      (N=254)           
+      ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      Adjusted comparison (covariates SEX)                                                                                                                                                                                   
+        n                                                83                    94                      83                      72                     177                       155                          249             
+        Adjusted Mean (95% CI)                  -2.62 (-4.43, -0.81)   -0.11 (-1.81, 1.59)    -0.75 (-2.56, 1.06)     -1.91 (-3.86, 0.04)     -0.41 (-1.65, 0.83)       -1.29 (-2.61, 0.04)          -0.84 (-1.89, 0.20)     
+        Difference in Adjusted Means (95% CI)                           2.52 (0.03, 5.00)      1.87 (-0.69, 4.43)      0.71 (-1.95, 3.37)      2.21 (0.02, 4.41)        1.33 (-0.91, 3.58)           1.78 (-0.31, 3.87)      
+

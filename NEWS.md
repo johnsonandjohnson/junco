@@ -16,6 +16,7 @@
 - DOCX exporter updated table border width from 0.75 to 0.875 inches
 - DOCX exporter when having vertical pagination in tables or listings, fixed the rows misalignment from page 2 and below compared to RTF
 - Fixed bug in `s_summarize_desc_j()` when applied to almost constant data due to behavior from `t.test.default()` (#257)
+- `tt_to_tlgrtf()` now is passing vectorized colwidths when exporting 'allparts' to match the colwidths of the individual parts (#225)
 
 ### Changed
 
@@ -34,7 +35,8 @@
 - Fix old TODOs in tests
 - docx exporter added missing defaults (#186)
 - Changed all snapshot tests to `cran = TRUE`
-- Footnotes in docx outputs are now 1 table row/cell
+- Footnotes in docx and RTF outputs are now 1 table row/cell (#285)
+- removed label "experimental" for `theme_docx_default_j`, `tt_to_flextable_j` and `export_TLG_as_docx`
 
 ### Added
 
@@ -47,13 +49,12 @@
 - Added argument `mult_adj_emmeans` in `fit_mmrm_j()` to enable (single-step or step-down) Dunnett multiplicity adjustment for LS means contrasts (p-values and confidence intervals) for more than one experimental arm within visits.
 - Added option for subgroup variable in the `vars` argument of `fit_mmrm_j()` to enable fitting an overall MMRM with subgroup interaction terms.
 - Export helpers for LS means tabulation: `lsmeans_wide_cfun`, `lsmeans_wide_first_split_fun_fct`, `lsmeans_wide_second_split_fun_fct`
-
+- Added `lifecycle` to suggests
 
 ## [0.1.5] - 2026-03-03 (minor hotfix release)
 
 ### Added and Removed
 - Added new behavior for nested `countsource` in h_a_freq_dataprep `altdf_subset` (#200)
-- Add `geom_boxplot_j()` to be able to draw boxplots whose statistics follow SAS quantile(type =2)
 
 
 ## [0.1.4] - 2026-02-02 (minor hotfix release)

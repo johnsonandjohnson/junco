@@ -26,7 +26,6 @@ Miettinen
 Nurminen
 Optimality
 PARAMCD
-PCTLDEF
 Parallelisation
 Parallelise
 RBMI
@@ -180,5 +179,6 @@ unicodify
 unlist
 unrounded
 unstratified
+vectorized
 wordbreaking
 xlsx
