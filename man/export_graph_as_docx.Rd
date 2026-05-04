@@ -74,17 +74,14 @@ If NULL, no watermark will be displayed.
 (optional) Default = NULL.}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
-Export graph in DOCX format. See notes to understand why this is experimental.
+Export graph in DOCX format.
 }
 \section{Note}{
 
-This function has been tested for common use cases but may not work or have
-unexpected or undesired behavior in corner cases. As such it is not considered
-fully production ready and is being made available for further testing
-and early adoption. Please report any issues you encounter to the developers.
 This function may be removed from junco in the future if the functionality
 is merged into \code{rtables.officer}.
+
+For more information, refer to the vignette \code{table_and_listing_customizations}
+(\code{browseVignettes("junco")})
 }
 

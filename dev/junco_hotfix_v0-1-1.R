@@ -1,4 +1,27 @@
 
+
+
+
+
+
+
+get_output_csv_filename <- function(output_csv_directory, fpath, fname) {
+  if (is.null(output_csv_directory)) {
+    output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
+  } else if (!dir.exists(output_csv_directory)) {
+    output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
+    message("Output dir for csv ", output_csv_directory,
+            " does not exist; csv will be saved as ",
+            output_csv_filename)
+  } else {
+    output_csv_filename <- file.path(output_csv_directory,
+                                     paste0(tolower(fname), ".csv"))
+    message("Saving csv as ", output_csv_filename)
+  }
+  return(output_csv_filename)
+}
+
+
 tt_to_tlgrtf <- function(
     tt,
     file = NULL,
@@ -29,19 +52,25 @@ tt_to_tlgrtf <- function(
     combined_rtf = FALSE,
     one_table = TRUE,
     border_mat = make_header_bordmat(obj = tt),
+    export_csv = FALSE,
+    output_csv_directory = NULL,
     ...) {
+  
   orientation <- match.arg(orientation)
   newdev <- open_font_dev(fontspec)
   if (newdev) {
     on.exit(close_font_dev())
   }
-
+  
+  checkmate::assert_flag(export_csv)
+  checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
+  
   if (tlgtype == "Listing" && nrow(tt) == 0) {
     dat <- as.list(c("No data to report", rep("", ncol(tt) - 1)))
     names(dat) <- names(tt)
     df <- as.data.frame(dat)
     var_labels(df) <- var_labels(tt)
-
+    
     tt <- as_listing(
       df,
       key_cols = get_keycols(tt),
@@ -50,7 +79,7 @@ tt_to_tlgrtf <- function(
       main_footer = attr(tt, "main_footer")
     )
   }
-
+  
   if (tlgtype == "Table" && fontspec$size == 8) {
     opts <- options(
       tidytlg.fontsize.table.footnote = 8,
@@ -58,7 +87,7 @@ tt_to_tlgrtf <- function(
     )
     on.exit(options(opts), add = TRUE)
   }
-
+  
   if (length(colwidths) == 1) {
     nc <- junco:::get_ncol(tt)
     tot_width <- page_lcpp(
@@ -73,16 +102,16 @@ tt_to_tlgrtf <- function(
     wdth_left <- tot_width - colwidths
     colwidths <- c(colwidths, rep(floor(wdth_left / nc), nc))
   }
-
+  
   max_lwidth <- inches_to_spaces(label_width_ins, fontspec)
   if (colwidths[1] > max_lwidth) {
     colwidths[1] <- max_lwidth
   }
-
+  
   if (!requireNamespace("tidytlg")) {
     stop("tidytlg not installed, cannot go out to rtf.")
   }
-
+  
   if (paginate) {
     ## implies type Table
     if (tlgtype != "Table") {
@@ -146,7 +175,7 @@ tt_to_tlgrtf <- function(
         full_pag_i <- pags[[i]]
         if (
           is.list(full_pag_i) &&
-            !methods::is(full_pag_i, "MatrixPrintForm")
+          !methods::is(full_pag_i, "MatrixPrintForm")
         ) {
           pgi_for_cw <- full_pag_i[[1]]
         } else {
@@ -166,6 +195,8 @@ tt_to_tlgrtf <- function(
           markup_df = markup_df,
           border_mat = pag_bord_mats[[i]],
           label_width_ins = label_width_ins,
+          export_csv = export_csv,
+          output_csv_directory = output_csv_directory,
           ...
         )
       }
@@ -189,6 +220,8 @@ tt_to_tlgrtf <- function(
           # colwidths are already on the pags since they are mpfs
           border_mat = pag_bord_mats,
           label_width_ins = label_width_ins,
+          export_csv = export_csv,
+          output_csv_directory = output_csv_directory,
           ...
         )
       } else if (!is.null(file)) { # only one page after pagination
@@ -204,7 +237,7 @@ tt_to_tlgrtf <- function(
     }
     return(ret)
   }
-
+  
   if (tlgtype == "Table") {
     if (is.list(tt) && !methods::is(tt, "MatrixPrintForm")) {
       df <- lapply(
@@ -242,7 +275,7 @@ tt_to_tlgrtf <- function(
   } else {
     df <- tt[, listing_dispcols(tt)]
   }
-
+  
   ## we only care about the col labels here...
   if (tlgtype == "Table" && is.list(tt) && !methods::is(tt, "MatrixPrintForm")) {
     mpf <- tt[[1]]
@@ -288,7 +321,7 @@ tt_to_tlgrtf <- function(
     csph <- colinfo$colspan
     colheader <- colinfo$colheader
   }
-
+  
   if (is.null(file)) {
     fname <- NULL
     fpath <- tempdir()
@@ -298,7 +331,7 @@ tt_to_tlgrtf <- function(
     ## this unconditionally as opath
     fpath <- dirname(file)
   }
-
+  
   if (tlgtype == "Table") {
     colwidths <- cwidths_final_adj(
       labwidth_ins = label_width_ins,
@@ -312,16 +345,16 @@ tt_to_tlgrtf <- function(
   if (sum(colwidths) > 1) {
     colwidths <- colwidths - 0.00000000001 ## much smaller than a twip = 1/20 printing point
   }
-
+  
   if (!one_table && # nolint start
-    is.list(tt) && !is(tt, "MatrixPrintForm")) {
+      is.list(tt) && !is(tt, "MatrixPrintForm")) {
     ### gentlg is not vectorized on wcol.  x.x x.x x.x
     ### but it won't break if we only give it one number...
     ### Calling this an ugly hack is an insult to all the hard working hacks
     ### out there
     colwidths <- colwidths[1]
   } # nolint end
-
+  
   footer_val <- junco:::prep_strs_for_rtf(
     c(
       main_footer(mpf),
@@ -333,15 +366,16 @@ tt_to_tlgrtf <- function(
   if (length(footer_val) == 0) {
     footer_val <- NULL
   }
-
-  if (!is.null(fname) && tlgtype == "Table" && is.data.frame(df)) {
+  
+  if (!is.null(fname) && tlgtype == "Table" && is.data.frame(df) && export_csv) {
+    output_csv_filename <- get_output_csv_filename(output_csv_directory, fpath, fname)
     utils::write.csv(
       df,
-      file = file.path(fpath, paste0(tolower(fname), ".csv")),
+      file = output_csv_filename,
       row.names = FALSE
     )
   }
-
+  
   tidytlg::gentlg(
     df,
     tlf = tlgtype,
@@ -379,7 +413,7 @@ make_bordmat_row <- function(rowspns) {
   if (!any(havespn)) {
     return(rep(0, times = length(rowspns)))
   }
-
+  
   pos <- 1
   ngrp <- 1
   ret <- numeric(length(rowspns))
@@ -406,12 +440,12 @@ fixup_bord_mat <- function(brdmat, hstrs) {
     nrow = nrow(hstrs),
     ncol = ncol(hstrs)
   )
-
+  
   countcoords <- which(countcells, arr.ind = TRUE)
   for (i in seq_len(nrow(countcoords))) {
     brdmat[countcoords[i, "row"] - 1, countcoords[i, "col"]] <- 0
   }
-
+  
   brdmat[!nzchar(hstrs) | hstrs == " "] <- 0
   brdmat[nrow(brdmat), ] <- 1
   brdmat[seq_len(nrow(brdmat) - 1), 1] <- 0
@@ -425,10 +459,10 @@ fixup_bord_mat <- function(brdmat, hstrs) {
   nlh <- mf_nlheader(mpf)
   nrh <- mf_nrheader(mpf)
   stopifnot(nlh == nrh)
-
+  
   hstrs <- mf_strings(mpf)[seq_len(nrh), , drop = FALSE]
   spns <- mf_spans(mpf)[seq_len(nrh), , drop = FALSE]
-
+  
   brdmat <- do.call(
     rbind,
     lapply(
@@ -436,7 +470,7 @@ fixup_bord_mat <- function(brdmat, hstrs) {
       function(i) make_bordmat_row(spns[i, ])
     )
   )
-
+  
   brdmat <- fixup_bord_mat(brdmat, hstrs)
   brdmat
 }
@@ -481,18 +515,18 @@ h_subset_combo <- function(df, combosdf, do_not_filter, filter_var, flag_var, co
   if (!is.null(flag_var)) {
     df <- df[df[[flag_var]] %in% "Y", ]
   }
-
+  
   # get the string related to combosdf text from colid it is the last part of the column id after the .  eg 'Active
   # Study Agent.Apalutamide.Thru 3 months' colid_str is 'Thru 3 months' colid_str <- stringr::str_split_i(colid,
   # '\\.', i = -1)
   colid_str <- tail(unlist(strsplit(colid, "\\.")), 1)
-
+  
   filter_val <- combosdf[combosdf$valname == colid_str, ]$label
-
+  
   if (!(colid_str %in% do_not_filter)) {
     df <- df[df[[filter_var]] %in% filter_val, ]
   }
-
+  
   return(df)
 }
 
@@ -523,13 +557,13 @@ a_freq_combos_j <- function(
     .indent_mods = NULL,
     na_str = rep("NA", 3)) {
   denom <- match.arg(denom)
-
+  
   junco:::check_alt_df_full(denom, "n_altdf", .alt_df_full)
-
+  
   if (!is.null(combosdf) && !all(c("valname", "label") %in% names(combosdf))) {
     stop("a_freq_combos_j: combosdf must have variables valname and label.")
   }
-
+  
   res_dataprep <- h_a_freq_dataprep(
     df = df,
     labelstr = labelstr,
@@ -567,12 +601,12 @@ a_freq_combos_j <- function(
   parentdf <- res_dataprep$parentdf
   new_denomdf <- res_dataprep$new_denomdf
   .stats <- .stats
-
+  
   ## colid can be used to figure out if we're in the combo column or not
   colid <- .spl_context$cur_col_id[[1]]
-
+  
   ### this is the core code for subsetting to appropriate combo level
-  df <- h_subset_combo(
+  df <- junco:::h_subset_combo(
     df = df,
     combosdf = combosdf,
     do_not_filter = do_not_filter,
@@ -580,7 +614,7 @@ a_freq_combos_j <- function(
     flag_var = flag_var,
     colid = colid
   )
-
+  
   ## the same s-function can be used as in a_freq_j
   x_stats <- s_freq_j(
     df,
@@ -594,10 +628,10 @@ a_freq_combos_j <- function(
     .N_col = .N_col,
     countsource = "df"
   )
-
+  
   .stats_adj <- .stats
-
-  res_prepinrows <- h_a_freq_prepinrows(
+  
+  res_prepinrows <- junco:::h_a_freq_prepinrows(
     x_stats,
     .stats_adj,
     .formats,
@@ -616,7 +650,7 @@ a_freq_combos_j <- function(
   .labels <- res_prepinrows$.labels
   .indent_mods <- res_prepinrows$.indent_mods
   .format_na_strs <- res_prepinrows$.format_na_strs
-
+  
   ### final step: turn requested stats into rtables rows
   in_rows(
     .list = x_stats,
@@ -637,17 +671,17 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = cont
   if (!is.null(.ref_group) && !.in_ref_col) {
     x1 <- df[[.var]]
     x2 <- .ref_group[[.var]]
-
+    
     x1 <- x1[!is.na(x1)]
     x2 <- x2[!is.na(x2)]
-
+    
     if ((length(x1) > 1 && length(x2) > 1) && !(stats::var(x1) == 0 && stats::var(x2) == 0)) {
       ttest_stat <- stats::t.test(x1, x2, conf.level = control$conf_level)
-
+      
       stat <- ttest_stat[c("estimate", "conf.int")]
       stat$diff <- stat$estimate[1] - stat$estimate[2]
       stat <- c(stat$diff, stat$conf.int)
-
+      
       y2$mean_diffci <- with_label(
         c(mean_diffci = stat),
         paste("Difference in Mean + ", f_conf_level(control$conf_level))
@@ -656,7 +690,7 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = cont
       y2b <- s_summary(.ref_group[[.var]])
       diff <- y1[["mean"]] - y2b[["mean"]]
       stat <- c(diff, NA, NA)
-
+      
       y2$mean_diffci <- with_label(
         c(mean_diffci = stat),
         paste("Difference in Mean + ", f_conf_level(control$conf_level))
@@ -664,7 +698,7 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = cont
     }
   }
   y <- c(y1, y2)
-
+  
   return(y)
 }
 
@@ -672,16 +706,16 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = cont
 s_aval_chg_col1 <- function(df, .var, denom, .N_col, id, indatavar) {
   ## First column AVAL - show n/N (%)
   mystat <- "n"
-
+  
   if (!is.null(indatavar)) {
     df <- subset(df, !is.na(df[[indatavar]]))
   }
-
+  
   x <- df[[.var]]
-
+  
   x_stats <- s_summary(x)
   x_stats <- x_stats[mystat]
-
+  
   ### Ndenom derivation in case denom = N
   Ndenom <- .N_col
   if (denom == "N") {
@@ -690,18 +724,18 @@ s_aval_chg_col1 <- function(df, .var, denom, .N_col, id, indatavar) {
     nsub <- length(unique(df[[id]]))
     Ndenom <- nsub
   }
-
+  
   count_denom_frac <- c(x_stats$n, Ndenom, x_stats$n / Ndenom)
   names(count_denom_frac) <- c("n", "N", "fraction")
-
+  
   count_frac <- count_denom_frac[c("n", "fraction")]
   count <- count_denom_frac[c("n")]
-
+  
   y <- list()
   y$count_denom_frac <- count_denom_frac
   y$count_frac <- count_frac
   y$count <- count
-
+  
   return(y)
 }
 
@@ -723,7 +757,7 @@ s_aval_chg_col23_diff <- function(
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
   df <- subset(df, !is.na(df[[.var]]))
   .ref_group <- subset(.ref_group, !is.na(.ref_group[[.var]]))
-
+  
   if (nrow(.df_row) == 0) {
     #### this is only when input row no non-missing records in any of the columns expected to occur for baseline
     #### timepoint for analysis variable change only here we want a blank cell, not a cell with all NA's NULL is
@@ -732,7 +766,7 @@ s_aval_chg_col23_diff <- function(
     mystat1 <- c("mean_ci_3d", "mean_diffci")
   } else if (!ancova) {
     mystat1 <- c("mean_ci_3d", "mean_diffci")
-
+    
     control <- control_analyze_vars()
     control$conf_level <- conf_level
     x_stats <- s_summarize_desc_j(
@@ -744,27 +778,27 @@ s_aval_chg_col23_diff <- function(
     )
   } else {
     mystat1 <- c("lsmean_ci", "lsmean_diffci")
-
+    
     ### sparse data problems with underlying ancova function 1/ if nrow(.df_row) = 0 NULL (blank columns)
-
+    
     ### 2/ if nrow(df) = 0 no ancova - lsmean and lsmean diff should be na
-
+    
     ### 3/ if nrow(df) > 0, & nrow(.ref_group) = 0 ancova for ls mean only, NULL .ref_group -- lsmean diff should
     ### be na
-
+    
     ### 4/ if nrow(df) > 0, & nrow(.ref_group) > 0 and at least one group with 0 data update levels in
     ### .df_row/df/.ref_group to avoid problems for contrast
-
+    
     #### by making updates to .df_row/df/.ref_group, situation 3 and 4 could be used together with general case
-
+    
     .df_row_trtlevels <- unique(.df_row[[trt_var]])
-
+    
     if (NROW(.df_row_trtlevels) == 0) {
       ### No data at all
       x_stats <- NULL
     } else if (NROW(df) == 0 || NROW(.df_row_trtlevels) == 1) {
       ### current column no data/less than 2 treatment levels
-
+      
       x_stats <- list()
       x_stats[[mystat1[1]]] <- rep(NA, 3)
       x_stats[[mystat1[2]]] <- rep(NA, 3)
@@ -783,7 +817,7 @@ s_aval_chg_col23_diff <- function(
         df[[trt_var]] <- factor(as.character(df[[trt_var]]), levels = levels(.df_row[[trt_var]]))
         .ref_group[[trt_var]] <- factor(as.character(.ref_group[[trt_var]]), levels = levels(.df_row[[trt_var]]))
       }
-
+      
       x_stats <- s_summarize_ancova_j(
         df = df,
         .var = .var,
@@ -797,7 +831,7 @@ s_aval_chg_col23_diff <- function(
       )
     }
   }
-
+  
   y <- list(mean_ci_3d = x_stats[[mystat1[1]]], meandiff_ci_3d = x_stats[[mystat1[2]]])
   return(y)
 }
@@ -823,10 +857,10 @@ s_summarize_ex_j <- function(
   subj_years <- x_stats[["sum"]] * daysconv / 365.25
   x_stats[["total_subject_years"]] <- c(x_stats[["sum"]], subj_years)
   names(x_stats[["total_subject_years"]]) <- c("total", "subject_years")
-
+  
   cur_col_id <- .spl_context$cur_col_id[[length(.spl_context$split)]]
   indiffcol <- grepl("difference", tolower(cur_col_id), fixed = TRUE)
-
+  
   if (indiffcol) {
     # blank out all stats
     x_stats <- sapply(
@@ -839,19 +873,19 @@ s_summarize_ex_j <- function(
     )
     # diff between group will be updated in mean_sd stat
     if (comp_btw_group) {
-      trt_var_refpath <- h_get_trtvar_refpath(ref_path, .spl_context, df)
+      trt_var_refpath <- junco:::h_get_trtvar_refpath(ref_path, .spl_context, df)
       # trt_var_refpath is list with elements trt_var trt_var_refspec cur_trt_grp ctrl_grp make these elements
       # available in current environment
       trt_var <- trt_var_refpath$trt_var
       trt_var_refspec <- trt_var_refpath$trt_var_refspec
       cur_trt_grp <- trt_var_refpath$cur_trt_grp
       ctrl_grp <- trt_var_refpath$ctrl_grp
-
+      
       .in_ref_col <- FALSE
       if (trt_var == ctrl_grp) .in_ref_col <- TRUE
-
+      
       .ref_group <- .df_row[.df_row[[trt_var]] == ctrl_grp, ]
-
+      
       if (ancova) {
         # ancova method for diff between group
         x_stats2 <- s_summarize_ancova_j(
@@ -881,7 +915,7 @@ s_summarize_ex_j <- function(
       x_stats[["mean_sd"]] <- diffstat
     }
   }
-
+  
   return(x_stats)
 }
 
@@ -906,15 +940,15 @@ a_summarize_ex_j <- function(
   if (!is.numeric(df[[.var]])) {
     stop("a_summarize_ex_j issue: input variable must be numeric.")
   }
-
+  
   if (comp_btw_group && is.null(ref_path)) {
     stop("a_summarize_ex_j issue: argument ref_path cannot be NULL.")
   }
-
+  
   if (comp_btw_group && ancova && is.null(variables)) {
     stop("a_summarize_ex_j issue: argument variables must be defined when ancova is requested.")
   }
-
+  
   x_stats <- s_summarize_ex_j(
     df = df,
     .var = .var,
@@ -929,7 +963,7 @@ a_summarize_ex_j <- function(
     daysconv = daysconv,
     variables = variables
   )
-
+  
   # Fill in formatting defaults
   .stats_in <- .stats
   .stats <- junco:::tern_get_stats("analyze_vars_numeric", stats_in = .stats, custom_stats_in = NULL)
@@ -948,25 +982,25 @@ a_summarize_ex_j <- function(
       }
     }
   }
-
+  
   .stats_ext <- c(.stats, "diff_mean_est_ci")
-
+  
   .formats <- junco_get_formats_from_stats(.stats_ext, .formats)
   .labels <- junco_get_labels_from_stats(.stats, .labels, label_attr_from_stats =  junco:::get_label_attr_from_stats(x_stats))
   .indent_mods <- junco_get_indents_from_stats(.stats, .indent_mods)
-
+  
   .names <- names(.labels)
   .labels <- junco:::.unlist_keep_nulls(.labels)
   .indent_mods <- junco:::.unlist_keep_nulls(.indent_mods)
-
+  
   cur_col_id <- .spl_context$cur_col_id[[length(.spl_context$split)]]
   indiffcol <- grepl("difference", tolower(cur_col_id), fixed = TRUE)
-
+  
   if (indiffcol && comp_btw_group) {
     .formats[["mean_sd"]] <- .formats[["diff_mean_est_ci"]]
   }
   .formats[["diff_mean_est_ci"]] <- NULL
-
+  
   if (!is.null(na_str)) {
     .format_na_strs <- lapply(names(.formats), FUN = function(x) {
       na_str
@@ -974,7 +1008,7 @@ a_summarize_ex_j <- function(
   } else {
     .format_na_strs <- NULL
   }
-
+  
   x_stats <- x_stats[.stats]
   ret <- in_rows(
     .list = x_stats,
@@ -1016,16 +1050,16 @@ h_a_freq_dataprep <- function(
     countsource = c("df", "altdf", "altdf_subset")
 ) {
   denom <- match.arg(denom)
-
+  
   df <- df[!is.na(df[[.var]]), ]
   .df_row <- .df_row[!is.na(.df_row[[.var]]), ]
-
+  
   # if no stats requested, get all stats
   .stats <- junco_get_stats("a_freq_j", stats_in = .stats, custom_stats_in = NULL)
-
+  
   ### combine all preprocessing of incoming df/.df_row in one function do this outside stats derivation functions
   ### (s_freq_j/) use all of val/excl_levels/drop_levels//new_levels/ label/label_map/labelstr/label_fstr
-  upd_dfrow <- h_upd_dfrow(
+  upd_dfrow <- junco:::h_upd_dfrow(
     df_row = .df_row,
     .var = .var,
     val = val,
@@ -1040,20 +1074,20 @@ h_a_freq_dataprep <- function(
     label_fstr = label_fstr,
     .spl_context = .spl_context
   )
-
+  
   .df_row <- upd_dfrow$df_row
   df <- upd_dfrow$df
-
+  
   val <- upd_dfrow$val
-
+  
   # from here onwards proceed with drop_levels = FALSE action has already been done in h_upd_dfrow, and proper
   # observed values will be passed to val for s_freq_j
   drop_levels <- FALSE
   excl_levels <- NULL
-
+  
   ### derive appropriate alt_df based upon .spl_context and .alt_df_full note that only row-based splits are done for
   ### now only for variables from the first split_rows_by
-  alt_df <- h_create_altdf(
+  alt_df <- junco:::h_create_altdf(
     .spl_context,
     .df_row,
     .alt_df_full,
@@ -1062,7 +1096,7 @@ h_a_freq_dataprep <- function(
     variables = variables,
     denom = denom
   )
-
+  
   if (identical(countsource, "altdf_subset")) {
     # prefer explicit val, otherwise use the levels present in .df_row.
     if (!is.null(alt_df) && !is.na(.var) && (.var %in% names(alt_df))) {
@@ -1072,24 +1106,24 @@ h_a_freq_dataprep <- function(
       } else if (!is.null(.df_row) && !is.null(.df_row[[.var]])) {
         keep_vals <- if (is.factor(.df_row[[.var]])) levels(.df_row[[.var]]) else unique(.df_row[[.var]])
       }
-
+      
       if (!is.null(keep_vals)) {
         keep_vals <- intersect(keep_vals, unique(alt_df[[.var]]))
         if (length(keep_vals) > 0) {
           alt_df <- alt_df[alt_df[[.var]] %in% keep_vals, , drop = FALSE]
-          alt_df <- h_update_factor(alt_df, .var, keep_vals)
+          alt_df <- junco:::h_update_factor(alt_df, .var, keep_vals)
         }
       }
     }
   }
-
+  
   new_denomdf <- alt_df
-
-  parentdf <- h_denom_parentdf(.spl_context, denom, denom_by)
+  
+  parentdf <- junco:::h_denom_parentdf(.spl_context, denom, denom_by)
   if (denom == "n_parentdf") {
     new_denomdf <- parentdf
   }
-
+  
   return(list(
     df = df,
     .df_row = .df_row,
@@ -1122,26 +1156,26 @@ s_freq_j <- function(
   if (is.na(.var) || is.null(.var)) {
     stop("Argument .var cannot be NA or NULL.")
   }
-
+  
   countsource <- match.arg(countsource)
-
+  
   if (countsource %in% c("altdf", "altdf_subset")) {
     df <- alt_df
   }
-
+  
   .alt_df <- alt_df
-
+  
   n1 <- length(unique(.alt_df[[id]]))
   n2 <- length(unique(df[[id]]))
-
+  
   n3 <- length(unique(.df_row[[id]]))
-
+  
   if (is.null(parent_df)) {
     parent_df <- df
   }
   n4 <- length(unique(parent_df[[id]]))
-
-
+  
+  
   denom <- match.arg(denom) |> switch(
     "n_altdf" = n1,
     "n_df" = n2,
@@ -1149,47 +1183,47 @@ s_freq_j <- function(
     "N_col" = .N_col,
     "n_parentdf" = n4
   )
-
+  
   y <- list()
-
+  
   y$n_altdf <- c("n_altdf" = n1)
   y$n_df <- c("n_df" = n2)
   y$n_rowdf <- c("n_rowdf" = n3)
   y$n_parentdf <- c("n_parentdf" = n4)
   y$denom <- c("denom" = denom)
-
+  
   if (drop_levels) {
     obs_levs <- unique(.df_row[[.var]])
     obs_levs <- intersect(levels(.df_row[[.var]]), obs_levs)
-
+    
     if (!is.null(excl_levels)) obs_levs <- setdiff(obs_levs, excl_levels)
-
+    
     if (!is.null(val)) {
       stop("argument val cannot be used together with drop_levels = TRUE.")
     }
     val <- obs_levs
   }
-
+  
   if (!is.null(val)) {
     df <- df[df[[.var]] %in% val, ]
     .df_row <- .df_row[.df_row[[.var]] %in% val, ]
-
-    df <- h_update_factor(df, .var, val)
-    .df_row <- h_update_factor(.df_row, .var, val)
+    
+    df <- junco:::h_update_factor(df, .var, val)
+    .df_row <- junco:::h_update_factor(.df_row, .var, val)
   }
-
+  
   if (!is.null(excl_levels) && drop_levels == FALSE) {
     # restrict the levels to the ones specified in val argument
     df <- df[!(df[[.var]] %in% excl_levels), ]
     .df_row <- .df_row[!(.df_row[[.var]] %in% excl_levels), ]
-
-    df <- h_update_factor(df, .var, excl_levels = excl_levels)
-    .df_row <- h_update_factor(.df_row, .var, excl_levels = excl_levels)
+    
+    df <- junco:::h_update_factor(df, .var, excl_levels = excl_levels)
+    .df_row <- junco:::h_update_factor(.df_row, .var, excl_levels = excl_levels)
   }
-
+  
   x <- df[[.var]]
   x_unique <- unique(df[, c(.var, id)])[[.var]]
-
+  
   if (identical(levels(df[[.var]]), no_data_to_report_str)) {
     xy <- list()
     nms <- c(
@@ -1207,13 +1241,13 @@ s_freq_j <- function(
       stats::setNames,
       nm = "count"
     )
-
+    
     y$count_unique <- lapply(
       as.list(table(x_unique, useNA = "ifany")),
       stats::setNames,
       nm = "count_unique"
     )
-
+    
     y$count_unique_fraction <- lapply(
       y$count_unique,
       function(x) {
@@ -1222,7 +1256,7 @@ s_freq_j <- function(
         c(x, "p" = ifelse(denom > 0, x / denom, NA))
       }
     )
-
+    
     y$count_unique_denom_fraction <- lapply(
       y$count_unique,
       function(x) {
@@ -1232,7 +1266,7 @@ s_freq_j <- function(
       }
     )
   }
-
+  
   return(y)
 }
 
@@ -1251,19 +1285,19 @@ s_rel_risk_levii_j <- function(
     weights_method) {
   dfii <- df[df[[.var]] == levii & !is.na(df[[.var]]), ]
   ref_dfii <- ref_df[ref_df[[.var]] == levii & !is.na(ref_df[[.var]]), ]
-
+  
   # construction of df_val, based upon curgrp_denom_df, dfii
   df_val <- curgrp_denom_df
   df_val$rsp <- FALSE
   # subjects with value levii observed in df TRUE
   df_val$rsp[df_val[[id]] %in% unique(dfii[[id]])] <- TRUE
-
+  
   # repeat for ref group, based upon ref_denom_df, ref_dfii
   ref_df_val <- ref_denom_df
   ref_df_val$rsp <- FALSE
   # subjects with value levii observed in ref_df TRUE
   ref_df_val$rsp[ref_df_val[[id]] %in% unique(ref_dfii[[id]])] <- TRUE
-
+  
   ### once 3-d version of diff_ci is available in tern::s_proportion_diff
   ### we should call tern::s_proportion_diff directly
   res_ci_3d <- s_proportion_diff_j(
@@ -1308,35 +1342,35 @@ s_rel_risk_val_j <- function(
   if (drop_levels) {
     obs_levs <- unique(.df_row[[.var]])
     obs_levs <- intersect(levels(.df_row[[.var]]), obs_levs)
-
+    
     if (!is.null(excl_levels)) obs_levs <- setdiff(obs_levs, excl_levels)
-
+    
     if (!is.null(val)) {
       stop("argument val cannot be used together with drop_levels = TRUE, please specify one or the other.")
     }
     val <- obs_levs
   }
-
+  
   if (!is.null(val)) {
     # restrict the levels to the ones specified in val argument
     df <- df[df[[.var]] %in% val, ]
     .df_row <- .df_row[.df_row[[.var]] %in% val, ]
-
-    df <- h_update_factor(df, .var, val)
-    .df_row <- h_update_factor(.df_row, .var, val)
+    
+    df <- junco:::h_update_factor(df, .var, val)
+    .df_row <- junco:::h_update_factor(.df_row, .var, val)
   }
-
+  
   if (!is.null(excl_levels) && drop_levels == FALSE) {
     # restrict the levels to the ones specified in val argument
     df <- df[!(df[[.var]] %in% excl_levels), ]
     .df_row <- .df_row[!(.df_row[[.var]] %in% excl_levels), ]
-
-    df <- h_update_factor(df, .var, excl_levels = excl_levels)
-    .df_row <- h_update_factor(.df_row, .var, excl_levels = excl_levels)
+    
+    df <- junco:::h_update_factor(df, .var, excl_levels = excl_levels)
+    .df_row <- junco:::h_update_factor(.df_row, .var, excl_levels = excl_levels)
   }
-
+  
   levs <- levels(df[[.var]])
-
+  
   if (identical(levs, no_data_to_report_str)) {
     riskdiff <- FALSE
   }
@@ -1351,33 +1385,33 @@ s_rel_risk_val_j <- function(
            Please specify colgroup and/or denom_by to refine your denominator for proper relative risk derivation."
     )
   }
-
+  
   ### are we in reference column?
   .in_ref_col <- (cur_trt_grp == ctrl_grp)
-
+  
   ### data from reference group - df based
   ref_df <- junco:::get_ctrl_subset(.df_row, trt_var = trt_var, ctrl_grp = ctrl_grp)
-
+  
   ### denominator data from reference group - denom_df based
   ref_denom_df <-  junco:::get_ctrl_subset(
     denom_df,
     trt_var = trt_var,
     ctrl_grp = ctrl_grp
   )
-
+  
   # ensure this is unique record per subject
   ref_denom_df <- unique(ref_denom_df[, c(id, variables$strata), drop = FALSE])
-
+  
   ### denominator data from current group - denom_df based ---
   curgrp_denom_df <-  junco:::get_ctrl_subset(
     denom_df,
     trt_var = trt_var,
     ctrl_grp = cur_trt_grp
   )
-
+  
   # ensure this is unique record per subject
   curgrp_denom_df <- unique(curgrp_denom_df[, c(id, variables$strata), drop = FALSE])
-
+  
   # calculate the stats for each of the levels in levs
   rr_ci_3d <- sapply(
     levs,
@@ -1449,30 +1483,30 @@ a_freq_j <- function(
 ) {
   denom <- match.arg(denom)
   method <- match.arg(method)
-
+  
   if (!is.null(labelstr) && is.na(.var)) {
     stop(
       "Please specify var call to summarize_row_groups when using cfun = a_freq_j, i.e.,\n",
       "summarize_row_groups('varname', cfun = a_freq_j)"
     )
   }
-
+  
   if (denom == "N_colgroup") {
     if (is.null(colgroup)) {
       stop("Colgroup must be specified when denom = N_colgroup.")
     }
-
+    
     checkmate::assert_character(colgroup, null.ok = FALSE, max.len = 1)
-
+    
     if (colgroup == tail(.spl_context$cur_col_split[[1]], 1)) {
       stop(
         "N_colgroup cannot be used when colgroup is lowest column split."
       )
     }
   }
-
+  
   junco:::check_alt_df_full(denom, c("n_altdf", "N_colgroup"), .alt_df_full)
-
+  
   res_dataprep <- h_a_freq_dataprep(
     df = df,
     labelstr = labelstr,
@@ -1512,24 +1546,24 @@ a_freq_j <- function(
   parentdf <- res_dataprep$parentdf
   new_denomdf <- res_dataprep$new_denomdf
   .stats <- res_dataprep$.stats
-
+  
   ## prepare for column based split
   col_expr <- .spl_context$cur_col_expr[[1]]
   ## colid can be used to figure out if we're in the relative risk columns or not
   colid <- .spl_context$cur_col_id[[1]]
   inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
-
+  
   if (!is.null(colgroup)) {
-    colexpr_substr <- h_colexpr_substr(colgroup, .spl_context$cur_col_expr[[1]])
-
+    colexpr_substr <- junco:::h_colexpr_substr(colgroup, .spl_context$cur_col_expr[[1]])
+    
     if (is.null(colexpr_substr)) {
       stop("\n Problem a_freq_j: incorrect colgroup specification.")
     }
-
+    
     new_denomdf <- subset(.alt_df_full, eval(parse(text = colexpr_substr)))
     .df_row <- subset(.df_row, eval(parse(text = colexpr_substr)))
   }
-
+  
   if (!inriskdiffcol) {
     if (denom != "N_colgroup" && !is.null(new_denomdf)) {
       ### for this part : perform column split on denominator dataset
@@ -1538,7 +1572,7 @@ a_freq_j <- function(
     if (denom == "N_colgroup") {
       denom <- "n_altdf"
     }
-
+    
     x_stats <- s_freq_j(
       df,
       .var = .var,
@@ -1570,9 +1604,9 @@ a_freq_j <- function(
       ctrl_grp <- NULL
       cur_trt_grp <- NULL
     }
-
+    
     if (riskdiff) {
-      trt_var_refpath <- h_get_trtvar_refpath(
+      trt_var_refpath <- junco:::h_get_trtvar_refpath(
         ref_path,
         .spl_context,
         df
@@ -1584,7 +1618,7 @@ a_freq_j <- function(
       trt_var_refspec <- trt_var_refpath$trt_var_refspec
       cur_trt_grp <- trt_var_refpath$cur_trt_grp
       ctrl_grp <- trt_var_refpath$ctrl_grp
-
+      
       if (!is.null(colgroup) && trt_var == colgroup) {
         stop(
           "\n Problem: a_freq_j: colgroup and treatment variable from ref_path are the same.
@@ -1593,7 +1627,7 @@ a_freq_j <- function(
         )
       }
     }
-
+    
     x_stats <- s_rel_risk_val_j(
       df,
       .var = .var,
@@ -1614,7 +1648,7 @@ a_freq_j <- function(
       method = method,
       weights_method = weights_method
     )
-
+    
     ## this will ensure the following stats will be shown as empty column in relative risk column
     xy <- sapply(
       c(
@@ -1633,7 +1667,7 @@ a_freq_j <- function(
       simplify = FALSE
     )
     x_stats <- append(x_stats, xy)
-
+    
     ## restrict to relrisk stat from .stats
     # when both count_unique_fraction and count_unique_denom_fraction are requested, the rr_ci_3d stat is in here twice
     # this does not seem to introduce a problem, although might not be ideal
@@ -1649,8 +1683,8 @@ a_freq_j <- function(
       "rr_ci_3d"
     )
   }
-
-  res_prepinrows <- h_a_freq_prepinrows(
+  
+  res_prepinrows <- junco:::h_a_freq_prepinrows(
     x_stats,
     .stats_adj,
     .formats,
@@ -1669,7 +1703,7 @@ a_freq_j <- function(
   .labels <- res_prepinrows$.labels
   .indent_mods <- res_prepinrows$.indent_mods
   .format_na_strs <- res_prepinrows$.format_na_strs
-
+  
   ### blank out columns not in restr_columns
   # get column label
   colid_lbl <- utils::tail(
@@ -1681,7 +1715,7 @@ a_freq_j <- function(
       NULL
     })
   }
-
+  
   ### final step: turn requested stats into rtables rows
   inrows <- in_rows(
     .list = x_stats,
@@ -1690,13 +1724,63 @@ a_freq_j <- function(
     .indent_mods = .indent_mods,
     .format_na_strs = .format_na_strs
   )
-
+  
   ### add extra blankline to the end of inrows --- as long as section_div is not working as expected
   # nolint start
-   if (!is.null(inrows) && extrablankline ||
-    (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
+  if (!is.null(inrows) && extrablankline ||
+      (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
     inrows <- junco:::add_blank_line_rcells(inrows)
   } # nolint end
-
+  
   return(inrows)
 }
+
+
+#quantile type 2 hotfix
+library(ggplot2)
+
+StatBoxplotSas <- ggproto("StatBoxplotSas", Stat,
+                          required_aes = c("x", "y"),
+                          dropped_aes = c("x", "y", "weight"),
+                          compute_group = function(data, scales, width = NULL, na.rm = FALSE, coef = 1.5) {
+                            vec <- data$y
+                            if (length(vec) == 0) {
+                              return(data.frame())
+                            }
+                            
+                            # SAS PCTLDEF=5 (Type 2 Quantiles)
+                            qs <- quantile(vec, probs = c(0, 0.25, 0.5, 0.75, 1), type = 2, na.rm = na.rm)
+                            iqr <- qs[4] - qs[2]
+                            
+                            lower_fence <- qs[2] - (coef * iqr)
+                            upper_fence <- qs[4] + (coef * iqr)
+                            
+                            ymin <- min(vec[vec >= lower_fence], na.rm = na.rm)
+                            ymax <- max(vec[vec <= upper_fence], na.rm = na.rm)
+                            
+                            outliers <- vec[vec < ymin | vec > ymax]
+                            
+                            data.frame(
+                              ymin = ymin,
+                              lower = qs[2],
+                              middle = qs[3],
+                              upper = qs[4],
+                              ymax = ymax,
+                              outliers = I(list(outliers)),
+                              x = data$x[1],
+                              width = if (is.null(width)) 0.75 else width
+                            )
+                          }
+)
+
+
+geom_boxplot_j <- function(mapping = NULL, data = NULL, position = "dodge2",
+                           ..., coef = 1.5, na.rm = FALSE,
+                           show.legend = NA, inherit.aes = TRUE) {
+  layer(
+    data = data, mapping = mapping, stat = StatBoxplotSas, geom = GeomBoxplot,
+    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    params = list(na.rm = na.rm, coef = coef, ...)
+  )
+}
+

@@ -1,7 +1,7 @@
 ---
 title: "TrueType-Aware Automatic Column Widths"
 date: "2025-06-23"
-author: "Gabriel Becker"
+author: "C&SP Methodology Team"
 output:
     rmarkdown::html_document:
         theme: "spacelab"

@@ -29,7 +29,6 @@ MMRM
 Miettinen
 Nurminen
 PARAMCD
-PCTLDEF
 Parallelisation
 Parallelise
 Q1
@@ -183,6 +182,7 @@ unicodify
 unlist
 unrounded
 unstratified
+vectorized
 wordbreaking
 xlsx
 riskdiff

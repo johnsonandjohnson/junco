@@ -112,6 +112,21 @@ pg_width_by_orient <- function(landscape = FALSE) {
   fullpg - mar_plus_gutters
 }
 
+get_colwidths_as_proportions <- function(colwidths, tlgtype, label_width_ins, pg_width) {
+  if (tlgtype == "Table") {
+    colwidths <- cwidths_final_adj(
+      labwidth_ins = label_width_ins,
+      total_width = pg_width,
+      colwidths = colwidths[-1]
+    )
+  }
+  colwidths <- colwidths / sum(colwidths)
+  if (sum(colwidths) > 1) {
+    colwidths <- colwidths - .Machine$double.eps ## much smaller than a twip = 1/20 printing point
+  }
+  return(colwidths)
+}
+
 get_output_csv_filename <- function(output_csv_directory, fpath, fname) {
   if (is.null(output_csv_directory)) {
     output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
@@ -691,28 +706,32 @@ tt_to_tlgrtf <- function(
     fpath <- dirname(file)
   }
 
-  if (tlgtype == "Table") {
-    colwidths <- cwidths_final_adj(
-      labwidth_ins = label_width_ins,
-      total_width = pg_width,
-      colwidths = colwidths[-1]
-    )
-  }
-  colwidths <- colwidths / sum(colwidths)
-  # finite precision arithmetic is a dreamscape of infinite wonder...
-  ## sum(rep(1/18, 18)) <= 1 is FALSE...
-  if (sum(colwidths) > 1) {
-    colwidths <- colwidths - 0.00000000001 ## much smaller than a twip = 1/20 printing point
-  }
-
   if (!one_table && # nolint start
     is.list(tt) && !is(tt, "MatrixPrintForm")) {
-    ### gentlg is not vectorized on wcol.  x.x x.x x.x
-    ### but it won't break if we only give it one number...
-    ### Calling this an ugly hack is an insult to all the hard working hacks
-    ### out there
-    colwidths <- colwidths[1]
-  } # nolint end
+    # this should be technically always 1 but just in case
+    num_repeated_cols <- ncol(tt[[1]]$strings) - ncol(tt[[1]])
+    # the following lines will listify the vector colwidths, this is, convert it
+    # to a list of vectors (one vector per page)
+    l_colwidths <- list()
+    j <- num_repeated_cols + 1
+    for (i in seq_along(tt)) {
+      subt_col_idxs <- j - 1 + seq(ncol(tt[[i]]))
+      colwidths_subt <- colwidths[c(1:num_repeated_cols, subt_col_idxs)]
+      ## jump current col position to first column on next page
+      j <- tail(subt_col_idxs, 1) + 1
+      l_colwidths[[i]] <- get_colwidths_as_proportions(colwidths_subt,
+                                                       tlgtype,
+                                                       label_width_ins,
+                                                       pg_width)
+    }
+    colwidths <- l_colwidths
+  } else {  # nolint end
+    colwidths <- get_colwidths_as_proportions(colwidths,
+                                              tlgtype,
+                                              label_width_ins,
+                                              pg_width)
+  }
+
 
   footer_val <- prep_strs_for_rtf(
     c(
@@ -759,6 +778,7 @@ tt_to_tlgrtf <- function(
     bottom_borders = border_mat,
     print.hux = !is.null(fname),
     alignments = alignments,
+    footers_one_row = TRUE,
     ...
   )
 }
