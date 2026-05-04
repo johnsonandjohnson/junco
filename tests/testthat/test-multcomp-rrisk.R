@@ -54,7 +54,6 @@ borrow_aes <- function(adae, adsl, mult = 1) { #runif(1, .9, 1.1)) {
 trtvar <- "TRT01P"
 
 adsl <- adsl_jnj |>
-  # filter(!!rlang::sym(popfl) == "Y") |>
   make_fake_adsl() |>
   create_colspan_var(
     non_active_grp = c("Placebo", "Std Of Care"),
@@ -70,7 +69,6 @@ adsl <- adsl_jnj |>
   ) |>
   select(
     USUBJID,
-    #   !!rlang::sym(popfl),
     !!rlang::sym(trtvar),
     colspan_trt,
     rrisk_header,
@@ -122,7 +120,6 @@ ref_paths <- lapply(ctrl_grp, function(ctrl) c("colspan_trt", " ", trtvar, ctrl)
 
 rr_splitfun <- make_multicomp_splfun(c(trtvar, "rrisk_label2"), ref_paths)
 
-#debugonce(rr_splitfun)
 
 lvls <- levels(adsl[[trtvar]])
 combodf <- tribble(~valname, ~label, ~levelcombo, ~exargs,
