@@ -287,5 +287,5 @@ a_summary_diff_mvars_label <- function(df,
     label
   }
 
-  prepend_label_cell(asummary_ret, label = section_label, label_indent = label_indent_mod)
+  prepend_label_cell(asummary_ret, label = section_label, label_indent_mod = label_indent_mod)
 }

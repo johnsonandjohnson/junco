@@ -37,6 +37,9 @@ Defaults to \code{expression(rep(TRUE, nrow(df)))}, meaning no filtering.}
 If a function is provided, it must accept a single argument \code{.spl_context}
 and return a character string.}
 
+\item{label_indent_mod}{(\code{integer(1)})\cr Indentation level applied to the
+label row.}
+
 \item{...}{Additional arguments passed to \code{\link[=a_summary_j]{a_summary_j()}}.}
 }
 \value{

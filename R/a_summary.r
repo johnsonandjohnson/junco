@@ -132,5 +132,5 @@ c_summary_subset_label <- function(df,
     label <- label(.spl_context)
   }
 
-  prepend_label_cell(y, label = label, label_indent = label_indent_mod)
+  prepend_label_cell(y, label = label, label_indent_mod = label_indent_mod)
 }

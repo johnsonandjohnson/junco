@@ -4,7 +4,7 @@
 \alias{prepend_label_cell}
 \title{Prepend Label Row to Analysis Output}
 \usage{
-prepend_label_cell(x, label = "", label_indent = 0L)
+prepend_label_cell(x, label = "", label_indent_mod = 0L)
 }
 \arguments{
 \item{x}{(\code{list} or \code{CellValue} or \code{RowsVerticalSection})\cr
@@ -12,7 +12,7 @@ Analysis result object.}
 
 \item{label}{(\code{character(1)})\cr Label to be inserted as the first row.}
 
-\item{label_indent}{(\code{integer(1)})\cr Indentation level applied to the
+\item{label_indent_mod}{(\code{integer(1)})\cr Indentation level applied to the
 label row.}
 }
 \value{
@@ -36,6 +36,6 @@ If \code{x} is of class \code{RowsVerticalSection}, the attributes
 }
 \examples{
 rvs <- rtables::in_rows(Mean = rtables::rcell(5), Range = rtables::rcell(c(1, 8)))
-prepend_label_cell(rvs, "Descriptive Statistics", label_indent = 1L)
+prepend_label_cell(rvs, "Descriptive Statistics", label_indent_mod = 1L)
 
 }

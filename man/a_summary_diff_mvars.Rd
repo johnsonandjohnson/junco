@@ -88,6 +88,9 @@ The format of each element is defined by the \code{indents_in} argument in
 \item{label}{(\code{character(1)} or \code{function})\cr
 Label to be displayed for the section. If a function, it must accept a
 single argument \code{.spl_context} and return a character string.}
+
+\item{label_indent_mod}{(\code{integer(1)})\cr Indentation level applied to the
+label row.}
 }
 \value{
 \code{RowsVerticalSection} with computed values of chosen statistics for the
