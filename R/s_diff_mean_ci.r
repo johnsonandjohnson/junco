@@ -87,8 +87,6 @@ s_diff_mean_ci <- function(df1,
       stop("df2: 'paired_by' must uniquely identify rows.")
     }
 
-    stopifnot(!anyDuplicated(df1[, paired_by]), !anyDuplicated(df2[, paired_by]))
-
     pvcols <- c(paired_by, .var)
     df <- merge(
       df1[, pvcols, drop = FALSE],
