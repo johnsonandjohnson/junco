@@ -367,6 +367,20 @@ apply_comp_map <- function(splvar, ref_lvls, comp_map, combo_map) {
 
 #' @export
 #' @rdname make_multicomp_splfun
+#' @param df (`data.frame`)\cr Data used to derive the available levels for
+#'   the splitting variable `spl_var` and to construct the default comparison
+#'   map when `comp_level_map` is not provided.
+#' @param spl_var (`character(1)`)\cr Name of the splitting variable (typically
+#'   the treatment variable) whose levels define active and comparator groups.
+#' @param ref_lvls (`character`)\cr The level names to be treated as reference
+#'   (control) groups. Comparisons will be formed against these levels.
+#' @param combo_map (`data.frame`)\cr A combination levels map (i.e., the value
+#'   passed to `combo_levels_map`) used to include virtual combination levels in
+#'   the default comparison map.
+#' @return For `make_dflt_comp_map()`, a `data.frame` with columns
+#'   `active`, `comparator`, `active_is_combo`, and `comparator_is_combo`,
+#'   listing the comparisons to keep and whether either side is a virtual
+#'   combination level.
 make_dflt_comp_map <- function(df, spl_var, ref_lvls, combo_map) {
   all_lvls <- as.character(levels(df[[spl_var]]))
 

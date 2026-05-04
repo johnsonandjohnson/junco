@@ -40,10 +40,29 @@ functions to be provided to \code{make_split_fun}. Defaults to
 functions to be provided to \code{make_split_fun} \emph{after} those
 which provide this function's primary multi-comparator
 functionality. Defaults to \code{list()}}
+
+\item{df}{(\code{data.frame})\cr Data used to derive the available levels for
+the splitting variable \code{spl_var} and to construct the default comparison
+map when \code{comp_level_map} is not provided.}
+
+\item{spl_var}{(\code{character(1)})\cr Name of the splitting variable (typically
+the treatment variable) whose levels define active and comparator groups.}
+
+\item{ref_lvls}{(\code{character})\cr The level names to be treated as reference
+(control) groups. Comparisons will be formed against these levels.}
+
+\item{combo_map}{(\code{data.frame})\cr A combination levels map (i.e., the value
+passed to \code{combo_levels_map}) used to include virtual combination levels in
+the default comparison map.}
 }
 \value{
 A split function suitable for use in both \code{split_rows_by}
 and \code{split_cols_by}.
+
+For \code{make_dflt_comp_map()}, a \code{data.frame} with columns
+\code{active}, \code{comparator}, \code{active_is_combo}, and \code{comparator_is_combo},
+listing the comparisons to keep and whether either side is a virtual
+combination level.
 }
 \description{
 Create a custom splitting function suitable for creating risk

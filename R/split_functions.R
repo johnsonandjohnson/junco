@@ -393,10 +393,10 @@ do_exclude_split <- function(exclude_levels, .spl_context) {
 insert_subset_exprs <- function(partinfo, spl, comp_path = NULL) {
   rvs <- rawvalues(partinfo$values)
   names(rvs) <- names(partinfo$values)
-  exprs <- lapply(rvs, function(rvi) rtables:::make_subset_expr(spl, rvi))
+  exprs <- lapply(rvs, function(rvi) make_subset_expr(spl, rvi))
   newvals <- mapply(function(val, expr) {
-    exvals <- rtables:::splv_extra(val)
-    if (!is.null(rtables:::value_expr(val))) {
+    exvals <- utils::getFromNamespace("splv_extra", "rtables")(val)
+    if (!is.null(utils::getFromNamespace("value_expr", "rtables")(val))) {
       return(val)
     }
     ## XXX fix ASAP, export setter from rtables
