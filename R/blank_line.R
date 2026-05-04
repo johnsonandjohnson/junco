@@ -158,13 +158,13 @@ prepend_label_cell <- function(x, label = "", label_indent_mod = 0L) {
   checkmate::assert_string(label, na.ok = TRUE)
   checkmate::assert_int(label_indent_mod)
 
-  if (class(x) == "CellValue") {
+  if (is(x, "CellValue")) {
     label_rcell <- rtables::rcell(NULL, label = label, indent_mod = label_indent_mod)
     list(label_rcell, x)
-  } else if (class(x) == "list") {
+  } else if (is(x, "list")) {
     label_rcell <- rtables::rcell(NULL, label = label, indent_mod = label_indent_mod)
     c(list(label_rcell), x)
-  } else if (class(x) == "RowsVerticalSection") {
+  } else if (is(x, "RowsVerticalSection")) {
     ret <- rtables::in_rows(.list = c(list(NULL), x))
     if (is.null(attr(x, "indent_mods"))) {
       attr(ret[[1]], "indent_mod") <- label_indent_mod
