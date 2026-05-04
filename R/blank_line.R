@@ -81,7 +81,7 @@ add_blank_line_rcells <- function(ret) {
   if (is.null(ret)) {
     stop("add_blank_line_rcells: ret cannot be NULL.")
   }
-  if (!(class(ret) %in% c("RowsVerticalSection", "CellValue"))) {
+  if (!(inherits(ret, "RowsVerticalSection") || inherits(ret, "CellValue"))) {
     stop("add_blank_line_rcells:  ret must be of class RowsVerticalSection or CellValue.")
   }
 
@@ -152,7 +152,7 @@ add_blank_line_rcells <- function(ret) {
 #'
 prepend_label_cell <- function(x, label = "", label_indent_mod = 0L) {
   checkmate::check_multi_class(x, c("list", "CellValue", "RowsVerticalSection"))
-  if (class(x) == "list") {
+  if (is.list(x)) {
     checkmate::assert_list(x, types = "CellValue", any.missing = FALSE)
   }
   checkmate::assert_string(label, na.ok = TRUE)
