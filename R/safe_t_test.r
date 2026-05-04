@@ -32,7 +32,7 @@
 #' safe_t_test(1:10, 11:20)
 #'
 #' # Example triggering failure (zero variance)
-#' dontrun{stats::t.test(rep(10, 5), rep(10, 5))}
+#' \dontrun{stats::t.test(rep(10, 5), rep(10, 5))}
 #' safe_t_test(rep(10, 5), rep(10, 5))
 safe_t_test <- function(x, y = NULL, ...) {
   x_expr <- substitute(x)
