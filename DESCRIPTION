@@ -24,7 +24,7 @@ Description: Structure and formatting requirements for clinical trial table and 
     table and listing shells, 'junco' provides functionality that is general and reusable.
     Major features include a) alternative and extended statistical analyses beyond what 'tern'
     supports for use in standard safety and efficacy tables, b) a robust production-grade
-    Rich Text Format (RTF) exporter for both tables and listings, c) structural support
+    Rich Text Format (RTF) and DOCX exporter for tables, listings and graphs, c) structural support
     for spanning column headers and risk difference columns in tables, and d) robust
     font-aware automatic column width algorithms for both listings and tables.
 License: Apache License (>= 2)
