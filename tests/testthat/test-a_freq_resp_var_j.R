@@ -255,14 +255,14 @@ test_that("a_freq_resp_var_j in layout with relative risk column for combined fa
     colspan_var = "colspan_trt",
     trt_var = trtvar
   )
-  
+
   a_freq_j_args <- list(
     resp_var = "TRTEMFL", drop_levels = TRUE,
     riskdiff = TRUE,
     ref_path = c("colspan_trt", " ", trtvar, ctrl_grp),
     method = "wald"
   )
-  
+
   # Set up levels and label for the required combined columns
   add_combo <- add_combo_facet(
     "Combined",
@@ -316,10 +316,10 @@ test_that("a_freq_resp_var_j in layout with relative risk column for combined fa
 
   countscomb <- sum(sapply(cell_values(actual_row[1, combcols]), function(v) v[["count_unique"]]), na.rm = TRUE)
   countsctrl <- cell_values(actual_row[1, ctrlcol])[[1]][["count_unique"]]
-  
+
   denomcomb <- sum(sapply(cell_values(actual_row[1, combcols]), function(v) v[["d"]]), na.rm = TRUE)
   denomctrl <- cell_values(actual_row[1, ctrlcol])[[1]][["d"]]
-  
+
   # default method for relative risk in a_freq_j is wald stat which is based upon tern function
   expected <- tern::stat_propdiff_ci(
     x = list(countscomb),
@@ -327,6 +327,6 @@ test_that("a_freq_resp_var_j in layout with relative risk column for combined fa
     N_x = denomcomb,
     N_y = denomctrl
   )
-  
+
   testthat::expect_equal(actual, expected, ignore_attr = TRUE)
 })
