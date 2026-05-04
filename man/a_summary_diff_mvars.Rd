@@ -79,11 +79,7 @@ of \code{stats_vars$var}.
 The format of each element is defined by the \code{indents_in} argument in
 \code{\link[=junco_get_indents_from_stats]{junco_get_indents_from_stats()}}.}
 
-\item{...}{
-  Arguments passed on to \code{\link[=a_summary_diff_mvars]{a_summary_diff_mvars}}
-  \describe{
-    \item{\code{}}{}
-  }}
+\item{...}{Additional arguments passed on to \code{\link[=a_summary_diff_mvars]{a_summary_diff_mvars()}}.}
 
 \item{label}{(\code{character(1)} or \code{function})\cr
 Label to be displayed for the section. If a function, it must accept a
