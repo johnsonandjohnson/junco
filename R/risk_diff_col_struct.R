@@ -1,5 +1,5 @@
 get_all_comp_lvls <- function(colspan_trt_map) {
-  nonactlvl  <- unique(as.character(colspan_trt_map[[1]]))[2]
+  nonactlvl <- unique(as.character(colspan_trt_map[[1]]))[2]
   unique(as.character(colspan_trt_map[colspan_trt_map[[1]] == nonactlvl, 2]))
 }
 
@@ -8,7 +8,7 @@ get_first_comp_lvl <- function(colspan_trt_map) {
 }
 
 get_comp_path <- function(map, lvl) {
-  rw <- map[map[[2]] == lvl,]
+  rw <- map[map[[2]] == lvl, ]
   c(names(map)[1], rw[[1]], names(map)[2], rw[[2]])
 }
 
@@ -17,39 +17,42 @@ get_comp_path <- function(map, lvl) {
 ##
 ## this is where we munge treatment names/labels into comparison versions
 do_sib_val_surgery <- function(splval, comp_lvl, newexargs, spl) {
-    expr <- make_subset_expr(spl, splval)
-    splval@subset_expression <- expr
-    splval@value <- make_comp_name(splval@value, comp_lvl)
-    splval@label <- make_comp_name(splval@label, comp_lvl)
-    args <- c(newexargs, splval@extra)
-    splval@extra <- args
-    splval
+  expr <- make_subset_expr(spl, splval)
+  splval@subset_expression <- expr
+  splval@value <- make_comp_name(splval@value, comp_lvl)
+  splval@label <- make_comp_name(splval@label, comp_lvl)
+  args <- c(newexargs, splval@extra)
+  splval@extra <- args
+  splval
 }
 
 
 ## do "surgery" on all of the original values to enforce uniqueness and
 ## correct comparison labels
 surgical_suite <- function(orig_ret, comp_lvl, newexargs, spl) {
-    out <- orig_ret
-    out$values <- lapply(out$values,
-                         do_sib_val_surgery,
-                         comp_lvl = comp_lvl,
-                         newexargs = newexargs,
-                         spl = spl)
-    out$labels <- vapply(out$values, function(x) x@label, "")
-    newnms <- vapply(out$values, value_names, "")
-    out <- lapply(out,
-                  function(part) {
-          names(part) <- newnms
-          part
-      })
-    names(out) <- names(orig_ret)
-    out
+  out <- orig_ret
+  out$values <- lapply(out$values,
+    do_sib_val_surgery,
+    comp_lvl = comp_lvl,
+    newexargs = newexargs,
+    spl = spl
+  )
+  out$labels <- vapply(out$values, function(x) x@label, "")
+  newnms <- vapply(out$values, value_names, "")
+  out <- lapply(
+    out,
+    function(part) {
+      names(part) <- newnms
+      part
+    }
+  )
+  names(out) <- names(orig_ret)
+  out
 }
 
 
 add_sib_facets <- function(comp_level, colspan_trt_map, combo_map_all) {
-    function(ret, spl, .spl_context, fulldf) {
+  function(ret, spl, .spl_context, fulldf) {
     combo_map <- NULL
     if (!is.null(combo_map_all)) {
       combo_map <- combo_map_all[combo_map_all$comparator_level == comp_level, ]
@@ -71,7 +74,7 @@ add_sib_facets <- function(comp_level, colspan_trt_map, combo_map_all) {
           .spl_context = .spl_context,
           fulldf = fulldf
         )
-      }                                        #     }
+      } #     }
     }
     out <- surgical_suite(out, comp_level, exargs, spl = spl)
     names(out) <- names(ret)
@@ -89,7 +92,7 @@ add_sib_facets <- function(comp_level, colspan_trt_map, combo_map_all) {
 #'     active and non-active groups of treatment arms, including
 #'     combination arms defined in `combo_levels_map`, as returned by
 #'     [create_colspan_map()].
-#' 
+#'
 #' @param combo_levels_map (`data.frame` or `NULL`)\cr NULL (the
 #'     default) or a data.frame indicating combination levels to added
 #'     to some or all blocks of comparisons. See Details.
@@ -196,45 +199,47 @@ make_multicomp_splfun <- function(colspan_trt_map,
   colspan_trt_map <- enrich_colspan_map(colspan_trt_map, combo_levels_map)
   if (is.null(comp_level_map)) {
     comp_levels <- get_all_comp_lvls(colspan_trt_map)
-
   } else {
     comp_levels <- unique(as.character(comp_level_map$comparator))
   }
   if (!is.null(combo_levels_map)) {
-    ## comp_level_map <- fix_combo_comp_levels(comp_level_map,
-    ##   combo_levels_map,
-    ##   ref_lvls = comp_levels
-    ## )
     combo_levels_map <- expand_combo_map(combo_levels_map, ref_lvls = comp_levels)
   }
 
   funlst <- list(
-      function(ret, spl, .spl_context, fulldf) {
+    function(ret, spl, .spl_context, fulldf) {
       sib_sets <- lapply(
-          comp_levels,
-          function(lvl) {
-
+        comp_levels,
+        function(lvl) {
           sib_fac_fun <- add_sib_facets(
-              lvl,
-              colspan_trt_map = colspan_trt_map,
-              combo_map_all = combo_levels_map
+            lvl,
+            colspan_trt_map = colspan_trt_map,
+            combo_map_all = combo_levels_map
           )
           sib_fac_fun(ret, spl, .spl_context, fulldf)
-      })
-      out <- lapply(names(ret),
-                    function(nm) {
+        }
+      )
+      out <- lapply(
+        names(ret),
+        function(nm) {
           unlist(lapply(seq_along(sib_sets), function(ii) sib_sets[[ii]][[nm]]),
-                 recursive = FALSE)
-      })
+            recursive = FALSE
+          )
+        }
+      )
       names(out) <- names(ret)
       out
-  })
+    }
+  )
 
   make_split_fun(
     pre = .pre,
     post = c(
       funlst,
-      apply_comp_map(splvar = names(colspan_trt_map)[2], comp_levels, comp_map = comp_level_map, combo_map = combo_levels_map),
+      apply_comp_map(splvar = names(colspan_trt_map)[2],
+                     comp_levels,
+                     comp_map = comp_level_map,
+                     combo_map = combo_levels_map),
       .post
     )
   )
@@ -246,7 +251,7 @@ enrich_colspan_map <- function(colspan_map, combodf) {
   ## assume if any combo levels are present that the
   ## missing ones are intentional
   if (is.null(combodf) ||
-    any(combodf$valname %in% colspan_map[[2]])) {
+        any(combodf$valname %in% colspan_map[[2]])) {
     return(colspan_map)
   }
   combo_levs <- combodf$valname
@@ -262,7 +267,7 @@ enrich_colspan_map <- function(colspan_map, combodf) {
   subset_combo_lvls <- function(spn) {
     combo_levs[combodf$is_control == in_ctrl(spn)]
   }
-  
+
   mapspl <- split(colspan_map, colspan_map[[1]])
   rws <- lapply(
     span_levs,
@@ -270,11 +275,12 @@ enrich_colspan_map <- function(colspan_map, combodf) {
       cur_levs <- subset_combo_lvls(nm)
       rbind(
         mapspl[[nm]],
-        if(length(cur_levs) > 0)
-            setNames(
-              data.frame(nm, subset_combo_lvls(nm)),
-              names(colspan_map)
-            )
+        if (length(cur_levs) > 0) {
+          setNames(
+            data.frame(nm, subset_combo_lvls(nm)),
+            names(colspan_map)
+          )
+        }
       )
     }
   )
@@ -342,19 +348,19 @@ expand_combo_map <- function(combo_map, ref_lvls) {
   ret <- do.call(rbind.data.frame, rws)
   ## never compare level against itself
   ## needed to (easily) support combo control grps
-  ret <- ret[ret$valname != ret$comparator_level,]
+  ret <- ret[ret$valname != ret$comparator_level, ]
   ret
 }
 
 
 apply_comp_map <- function(splvar, ref_lvls, comp_map, combo_map) {
-    function(ret, spl, fulldf, ...) {
+  function(ret, spl, fulldf, ...) {
     all_lvls <- levels(fulldf[[splvar]])
 
     if (is.null(comp_map)) {
       comp_map <- make_dflt_comp_map(fulldf, splvar, ref_lvls, combo_map)
     }
-    lvls_to_keep <- make_comp_name(comp_map$active, comp_map$comparator) #levels_from_comp_map2(comp_map, combodf)
+    lvls_to_keep <- make_comp_name(comp_map$active, comp_map$comparator)
     restrict_facets(lvls_to_keep, op = "keep")(ret, spl, fulldf)
   }
 }
@@ -515,7 +521,7 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
 #'
 #' In addition, it supports:
 #'
-#'  - comparison against multiple control groups (as specified by `colspan_trt_map` and/or `comp_map`), 
+#'  - comparison against multiple control groups (as specified by `colspan_trt_map` and/or `comp_map`),
 #'  - virtual combination-levels as active an/or control "treatments" (via `combo_map_df`),
 #'  - full control of which comparisons are performed, and their order (via `comp_map`).
 #'
@@ -607,7 +613,7 @@ col_spans_plus_diffs <- function(lyt,
     split_cols_by(trtvar, split_fun = main_splfun)
   if (risk_diff_cols) {
     rr_splfun <- make_multicomp_splfun(
-      colspan_trt_map, 
+      colspan_trt_map,
       comp_level_map = comp_map,
       combo_levels_map = combo_map_df,
       .pre = .rr_pre,
@@ -615,7 +621,7 @@ col_spans_plus_diffs <- function(lyt,
     )
 
     lyt <- lyt |>
-      ## this is inherently non-nested  
+      ## this is inherently non-nested
       add_overall_col(label = rrisk_header) |>
       split_cols_by(trtvar, split_fun = rr_splfun)
   }

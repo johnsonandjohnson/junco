@@ -1,7 +1,3 @@
-2b
-3d
-5D
-A1
 ADSL
 AE
 AEBODSYS
@@ -28,15 +24,12 @@ Lapply
 MMRM
 Miettinen
 Nurminen
+Optimality
 PARAMCD
 PCTLDEF
 Parallelisation
 Parallelise
-Q1
-Q2
-Q3
 RBMI
-RESP01
 RTF
 Sato
 TEFOS
@@ -74,6 +67,7 @@ colwidth
 colwidths
 combosdf
 comparator
+comparators
 csv
 customizations
 dataprep
@@ -99,7 +93,6 @@ fn
 formatters
 gentlg
 ggplot
-ggplot2
 github
 goto
 grepl
@@ -108,6 +101,8 @@ hotfix
 https
 ie
 iec
+indivating
+inferable
 insightsengineering
 jj
 jjcsformat
@@ -149,6 +144,7 @@ repo
 reproducibility
 responder
 responders
+riskdiff
 rlistings
 rowdf
 rowlabel
@@ -167,6 +163,7 @@ sidedness
 spl
 sprintf
 str
+struct
 subcol
 subfacet
 summarizations
@@ -185,9 +182,3 @@ unrounded
 unstratified
 wordbreaking
 xlsx
-riskdiff
-struct
-TEFOS03
-TRT01A
-X1
-X2

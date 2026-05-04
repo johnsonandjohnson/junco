@@ -414,9 +414,5 @@ insert_subset_exprs <- function(partinfo, spl, comp_path = NULL) {
     newvals,
     partinfo$datasplit,
     partinfo$labels
-    ## subset_exprs = exprs,
-    ## extras = replicate(length(rvs),
-    ##                  list(ref_path = comp_path),
-    ##                  simplify = FALSE)
   )
 }
