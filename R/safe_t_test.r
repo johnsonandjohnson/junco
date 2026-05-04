@@ -24,6 +24,7 @@
 #' field containing the error message.
 #'
 #' @importFrom stats t.test
+#' @export
 #'
 #' @examples
 #' # Standard usage
