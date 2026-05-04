@@ -19,7 +19,7 @@
 #' }
 #'
 #' @inheritParams proposal_argument_convention
-#' @param `afun` (`function`)\cr Analysis function. Must accept `x` or `df` as
+#' @param afun (`function`)\cr Analysis function. Must accept `x` or `df` as
 #'   its first parameter. Can optionally take other parameters.
 #' @param subset_expr (`expression` or `NULL`)\cr
 #'   Logical expression used to subset rows of `df` before analysis.
@@ -27,7 +27,7 @@
 #'   Defaults to `expression(rep(TRUE, nrow(df)))`, meaning no filtering.
 #' @param ... Additional arguments passed to `afun`.
 #'
-#' @returns
+#' @return
 #' The object returned by `afun` applied to the filtered dataset.
 #'
 #' @export

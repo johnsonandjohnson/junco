@@ -18,15 +18,15 @@ filter_df_prior_afun(
 \item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
 by a statistics function.}
 
+\item{afun}{(\code{function})\cr Analysis function. Must accept \code{x} or \code{df} as
+its first parameter. Can optionally take other parameters.}
+
 \item{subset_expr}{(\code{expression} or \code{NULL})\cr
 Logical expression used to subset rows of \code{df} before analysis.
 Evaluated in the context of \code{df}.
 Defaults to \code{expression(rep(TRUE, nrow(df)))}, meaning no filtering.}
 
 \item{...}{Additional arguments passed to \code{afun}.}
-
-\item{`afun`}{(\code{function})\cr Analysis function. Must accept \code{x} or \code{df} as
-its first parameter. Can optionally take other parameters.}
 }
 \value{
 The object returned by \code{afun} applied to the filtered dataset.
