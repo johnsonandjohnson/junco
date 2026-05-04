@@ -41,6 +41,7 @@
 #' For unpaired cases, missing values are removed separately from each sample
 #' before computation.
 #'
+#' @importFrom stats complete.cases
 #' @importFrom tern f_conf_level
 #' @importFrom formatters with_label
 #'
