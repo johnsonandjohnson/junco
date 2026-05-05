@@ -63,7 +63,7 @@ adsl <- adsl_jnj |>
     trt_var = trtvar
   ) |>
   mutate(
-    rrisk_header = "Risk Difference (%) (95% CI)",
+    diffs_label = "Risk Difference (%) (95% CI)",
     rrisk_label = paste(!!rlang::sym(trtvar), "vs Placebo"),
     rrisk_label2 = paste(!!rlang::sym(trtvar), "vs Std of Care")
   ) |>
@@ -71,7 +71,7 @@ adsl <- adsl_jnj |>
     USUBJID,
     !!rlang::sym(trtvar),
     colspan_trt,
-    rrisk_header,
+    diffs_label,
     rrisk_label,
     rrisk_label2
   )
@@ -125,6 +125,10 @@ combodf <- tribble(
   "all_active", "All Active", lvls[3:4], list(),
   "all_patients", "All Patients", select_all_levels, list()
 )
+
+## this one with is_control
+combodf2 <- combodf
+combodf2$is_control <- c(FALSE, TRUE)
 
 
 
@@ -231,8 +235,6 @@ test_that("make_multicomp_splfun works with active combo levels", {
 })
 
 test_that("make_multicomp_splfun works with combo comparator levels (default comps)", {
-  combodf2 <- combodf
-  combodf2$is_control <- c(FALSE, TRUE)
 
   splfun <- make_multicomp_splfun(colspan_trt_map, combodf2)
   lyt <- basic_table(show_colcounts = TRUE) |>
@@ -282,9 +284,9 @@ test_that("make_multicomp_splfun works with active comparators (non-default comp
   )
 })
 
-test_that("col_spans_plus_diffs works", {
+test_that("grouped_cols_w_diffs works", {
   lyt1 <- basic_table() |>
-    col_spans_plus_diffs(colspan_trt_map) |>
+    grouped_cols_w_diffs(colspan_trt_map) |>
     analyze(trtvar, afun = afun_refpath)
 
   tbl1 <- build_table(lyt1, adae, adsl)
@@ -315,7 +317,7 @@ test_that("col_spans_plus_diffs works", {
   )
 
   lyt2 <- basic_table() |>
-    col_spans_plus_diffs(colspan_trt_map, risk_diff_cols = FALSE) |>
+    grouped_cols_w_diffs(colspan_trt_map, diff_cols = FALSE) |>
     analyze(trtvar, afun = afun_refpath)
   tbl2 <- build_table(lyt2, adae, adsl)
 
