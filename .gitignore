@@ -35,3 +35,4 @@ programs_external/*
 #Air
 air.toml
 .vscode/extensions.json
+.positai
