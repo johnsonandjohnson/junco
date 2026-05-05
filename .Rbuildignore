@@ -50,3 +50,5 @@ pkgdown
 ^[.]?air[.]toml$
 ^CHANGELOG\.md$
 ^air\.toml$
+^\.positai$
+^\.claude$
