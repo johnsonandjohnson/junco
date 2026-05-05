@@ -25,7 +25,6 @@ Lapply
 MMRM
 Miettinen
 Nurminen
-Optimality
 PARAMCD
 Parallelisation
 Parallelise
@@ -42,7 +41,6 @@ Toeplitz
 TrueType
 Unlist
 VTableTree
-Vectorized
 XLSX
 afun
 allparts
@@ -54,6 +52,7 @@ approxbayes
 args
 bayes
 bugfix
+cfuns
 chisq
 ci
 clinpharm
@@ -82,6 +81,7 @@ dirname
 docx
 dps
 dunnett
+eair
 eg
 emmeans
 estimand
@@ -139,9 +139,8 @@ pseudocolumn
 px
 qquad
 rbmi
+referene
 removerowtext
-repo
-reproducibility
 responder
 responders
 riskdiff
@@ -175,11 +174,9 @@ trt
 trtvar
 tt
 uc
-unadjusted
 unicodify
 unlist
 unrounded
 unstratified
-vectorized
 wordbreaking
 xlsx

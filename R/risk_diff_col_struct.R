@@ -31,7 +31,7 @@ do_sib_val_surgery <- function(splval, comp_lvl, newexargs, spl, comp_label) {
 ## correct comparison labels
 surgical_suite <- function(orig_ret, comp_lvl, newexargs, spl, combo_map) {
   out <- orig_ret
-  comp_label <- get_comp_label(comp_lvl, orig_ret, combo_map)  
+  comp_label <- get_comp_label(comp_lvl, orig_ret, combo_map)
   out$values <- lapply(out$values,
     do_sib_val_surgery,
     comp_lvl = comp_lvl,
@@ -57,8 +57,8 @@ get_comp_label <- function(comp_level, orig_ret, combo_map) {
     ret <- unique(combo_map$label[combo_map$valname == comp_level])
   } else {
     ind <- which(comp_level == names(orig_ret$values))
-    if(length(ind) != 1) browser()
-    stopifnot(length(ind) == 1)  
+    if (length(ind) != 1) browser()
+    stopifnot(length(ind) == 1)
     ret <- obj_label(orig_ret$values[[ind]])
   }
   ret
@@ -328,21 +328,19 @@ expand_combo_map <- function(combo_map, ref_lvls) {
       }
 
       if (mp_rw$valname %in% ref_lvls) {
-          mp_rw$compare_against[[1]] <- character()
-          mp_rw$comparator_level <- ""
-          rws_out <- list(mp_rw)
+        mp_rw$compare_against[[1]] <- character()
+        mp_rw$comparator_level <- ""
+        rws_out <- list(mp_rw)
       } else {
-          ## TODO this seems overkill for what is left inside
-          ## the lapply, refactor into saner form
-          rws_out <- lapply(
-            comp_against,
-            function(cur_ref_lvl) {
-              ref_lvl_ind <- match(cur_ref_lvl, ref_lvls)
-              cur_rw <- combo_map[ii, ]
-              cur_rw$comparator_level <- cur_ref_lvl
-              cur_rw
-          }
-          )
+        ## TODO this seems overkill for what is left inside
+        ## the lapply, refactor into saner form
+        rws_out <- lapply(comp_against,
+                          function(cur_ref_lvl) {
+                            ref_lvl_ind <- match(cur_ref_lvl, ref_lvls)
+                            cur_rw <- combo_map[ii, ]
+                            cur_rw$comparator_level <- cur_ref_lvl
+                            cur_rw
+                          })
       }
 
       do.call(rbind.data.frame, rws_out)

@@ -41,7 +41,7 @@ scripts, as we will see below.
 At it's most basic, `grouped_cols_w_diffs` takes a column-span treatment map, as created by `create_colspan_map`. This creates a column structure with spanning labels over active and non-active treatment groups, as well as difference columns comparing each active treatments individually against each non-active treatment:
 
 ```{r}
-
+library(junco)
 adsl <- create_colspan_var(pharmaverseadamjnj::adsl)
 adae <- create_colspan_var(pharmaverseadamjnj::adae)
 trt_map <- create_colspan_map(adsl)
