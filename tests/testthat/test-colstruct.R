@@ -281,11 +281,10 @@ test_that("make_multicomp_splfun works with combo comparator levels (default com
 test_that("make_multicomp_splfun works with active comparators (non-default comps)", {
   splfun <-
     make_multicomp_splfun(colspan_trt_map,
-      comp_level_map =
-        data.frame(
-          active = "Xanomeline High Dose",
-          comparator = "Xanomeline Low Dose"
-        )
+      comp_level_map = data.frame(
+        active = "Xanomeline High Dose",
+        comparator = "Xanomeline Low Dose"
+      )
     )
   lyt <- basic_table(show_colcounts = TRUE) |>
     split_cols_by(trtvar, split_fun = splfun) |>
