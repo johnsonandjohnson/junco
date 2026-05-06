@@ -8,7 +8,6 @@ adsl_jnj <- pharmaverseadamjnj::adsl
 adae_jnj <- pharmaverseadamjnj::adae
 
 
-
 fix_usubjid <- function(adsl, newlev = "Std Of Care") {
   rws <- which(adsl$TRT01P == newlev)
 
@@ -22,7 +21,6 @@ fix_usubjid <- function(adsl, newlev = "Std Of Care") {
 }
 
 
-
 make_fake_adsl <- function(adsl, newlev = "Std Of Care", oldlev = "Placebo") {
   fakeyfake <- filter(adsl, TRT01P == !!oldlev)
   fakeyfake$TRT01P <- newlev
@@ -32,7 +30,6 @@ make_fake_adsl <- function(adsl, newlev = "Std Of Care", oldlev = "Placebo") {
   adsl$TRT01P <- factor(adsl$TRT01P)
   fix_usubjid(adsl, newlev = newlev)
 }
-
 
 
 borrow_aes <- function(adae, adsl, mult = 1, newlev = "Std Of Care", oldlev = "Placebo") { # runif(1, .9, 1.1)) {
@@ -46,9 +43,6 @@ borrow_aes <- function(adae, adsl, mult = 1, newlev = "Std Of Care", oldlev = "P
   newrws$USUBJID <- sample(soc_usubjids, NROW(newrws), replace = TRUE)
   rbind(adae, newrws)
 }
-
-
-
 
 
 trtvar <- "TRT01P"
@@ -75,8 +69,6 @@ adsl <- adsl_jnj |>
     rrisk_label,
     rrisk_label2
   )
-
-
 
 
 adae <- adae_jnj |>
@@ -118,7 +110,6 @@ colspan_trt_map <- create_colspan_map(
 )
 
 
-
 lvls <- levels(adsl[[trtvar]])
 combodf <- tribble(
   ~valname, ~label, ~levelcombo, ~exargs,
@@ -131,11 +122,49 @@ combodf2 <- combodf
 combodf2$is_control <- c(FALSE, TRUE)
 
 
-
 comp_map <- make_dflt_comp_map(adsl, trtvar, ctrl_grp, combodf)
 
 afun_refpath <- function(x, ref_path = "none", ...) paste(ref_path, collapse = ".")
 
+
+make_expected_paths <- function(trt_map, combo_df = NULL) {
+  trtvar <- names(trt_map)[2]
+  spanvar <- names(trt_map)[1]
+  act_span_lvl <- head(trt_map[[spanvar]], 1)
+  ctrl_span_lvl <- tail(trt_map[[spanvar]], 1)
+  act_grps <- trt_map[[trtvar]][trt_map[[spanvar]] == act_span_lvl]
+  ctrl_grps <- trt_map[[trtvar]][trt_map[[spanvar]] == ctrl_span_lvl]
+  if (!is.null(combo_df)) {
+    if (!("is_control" %in% names(combo_df))) {
+      combo_df$is_control <- FALSE
+    }
+    act_grps <- unique(c(act_grps, combodf$valname[!combo_df$is_control]))
+    ctrl_grps <- unique(c(ctrl_grps, combodf$valname[combo_df$is_control]))
+  }
+  exp_paths <- c(
+    lapply(
+      act_grps,
+      function(xi) c(spanvar, act_span_lvl, trtvar, xi)
+    ),
+    lapply(
+      ctrl_grps,
+      function(xj) c(spanvar, ctrl_span_lvl, trtvar, xj)
+    ),
+    unlist(
+      recursive = FALSE,
+      lapply(
+        ctrl_grps,
+        function(y) {
+          lapply(
+            act_grps,
+            function(w) c("Risk Differences", "Risk Differences", trtvar, paste(w, y, sep = " vs "))
+          )
+        }
+      )
+    )
+  )
+  exp_paths
+}
 
 test_that("basic direct make_multicomp_splfun usage works", {
   splfun <- make_multicomp_splfun(colspan_trt_map)
@@ -235,7 +264,6 @@ test_that("make_multicomp_splfun works with active combo levels", {
 })
 
 test_that("make_multicomp_splfun works with combo comparator levels (default comps)", {
-
   splfun <- make_multicomp_splfun(colspan_trt_map, combodf2)
   lyt <- basic_table(show_colcounts = TRUE) |>
     split_cols_by(trtvar, split_fun = splfun) |>
@@ -253,9 +281,12 @@ test_that("make_multicomp_splfun works with combo comparator levels (default com
 test_that("make_multicomp_splfun works with active comparators (non-default comps)", {
   splfun <-
     make_multicomp_splfun(colspan_trt_map,
-                          comp_level_map =
-                          data.frame(active = "Xanomeline High Dose",
-                                     comparator = "Xanomeline Low Dose"))
+      comp_level_map =
+        data.frame(
+          active = "Xanomeline High Dose",
+          comparator = "Xanomeline Low Dose"
+        )
+    )
   lyt <- basic_table(show_colcounts = TRUE) |>
     split_cols_by(trtvar, split_fun = splfun) |>
     analyze(trtvar, afun = afun_refpath)
@@ -268,9 +299,12 @@ test_that("make_multicomp_splfun works with active comparators (non-default comp
 
   splfun2 <-
     make_multicomp_splfun(colspan_trt_map,
-                          comp_level_map = data.frame(active = c("Xanomeline High Dose", "Xanomeline Low Dose"),
-                                                      comparator = "all_patients"),
-                          combo_levels_map = combodf)
+      comp_level_map = data.frame(
+        active = c("Xanomeline High Dose", "Xanomeline Low Dose"),
+        comparator = "all_patients"
+      ),
+      combo_levels_map = combodf
+    )
 
   lyt2 <- basic_table(show_colcounts = TRUE) |>
     split_cols_by(trtvar, split_fun = splfun2) |>
@@ -329,5 +363,51 @@ test_that("grouped_cols_w_diffs works", {
   expect_identical(
     unique(unlist(cell_values(tbl2))),
     "none"
+  )
+
+  lyt3 <- basic_table() |>
+    grouped_cols_w_diffs(colspan_trt_map, combo_map_df = combodf) |>
+    analyze(trtvar, afun = afun_refpath)
+
+  tbl3 <- build_table(lyt3, adae, adsl)
+  spanvar <- names(colspan_trt_map)[1]
+
+
+  expect_equal(
+    unclass(col_paths(tbl3)),
+    make_expected_paths(colspan_trt_map, combodf)
+  )
+
+  lyt4 <- basic_table() |>
+    grouped_cols_w_diffs(colspan_trt_map, combo_map_df = combodf2) |>
+    analyze(trtvar, afun = afun_refpath)
+  tbl4 <- build_table(lyt4, adae, adsl)
+
+  expect_equal(
+    unclass(col_paths(tbl4)),
+    make_expected_paths(colspan_trt_map, combodf2)
+  )
+
+
+  comp_map2 <- tribble(
+    ~active, ~comparator,
+    "Xanomeline High Dose", "Xanomeline Low Dose",
+    "Xanomeline High Dose", "Placebo",
+    "Xanomeline Low Dose", "all_patients"
+  )
+
+
+  lyt5 <- basic_table() |>
+    grouped_cols_w_diffs(colspan_trt_map, combo_map_df = combodf2, comp_map = comp_map2)
+
+  tbl5 <- build_table(lyt5, adsl)
+  expect_equal(
+    col_paths(tbl5)[-7], # high vs low isn't in tbl4
+    col_paths(tbl4)[c(1:6, 7, 14)]
+  )
+
+  expect_equal(
+    col_paths(tbl5)[[7]],
+    c("Risk Differences", "Risk Differences", "TRT01P", "Xanomeline High Dose vs Xanomeline Low Dose")
   )
 })

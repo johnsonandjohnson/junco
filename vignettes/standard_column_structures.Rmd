@@ -49,7 +49,6 @@ print(trt_map)
 ```
 
 ```{r}
-
 lyt <- basic_table() |>
   grouped_cols_w_diffs(trt_map)
 
@@ -61,7 +60,6 @@ build_table(lyt, adsl)
 `grouped_cols_w_diffs` creates only the *column* structure; the contents of the difference columns are calculated by the analysis function used in the layout. The *structure* for the various types of difference columns (risk, mean, eair, etc) differs only in the spanning label for the difference columns. `grouped_cols_w_diffs` accepts `diffs_label` for this purpose:
 
 ```{r}
-
 lyt2 <- basic_table() |>
   grouped_cols_w_diffs(trt_map, diffs_label = "Mean Differences")
 
@@ -82,7 +80,6 @@ they are optional.
 
 
 ```{r}
-
 lyt_nodiff <- basic_table() |>
   grouped_cols_w_diffs(trt_map, diff_cols = FALSE)
 
@@ -165,14 +162,13 @@ should be the *names* (as opposed to labels) of the respective arms:
 
 
 ```{r}
-
 comp_map1 <- tribble(
-    ~active, ~comparator,
-    "Xanomeline High Dose", "Placebo",
-    "Xanomeline Low Dose", "placebo_redux",
-    "all_active", "placebo_redux"
+  ~active, ~comparator,
+  "Xanomeline High Dose", "Placebo",
+  "Xanomeline Low Dose", "placebo_redux",
+  "all_active", "placebo_redux"
 )
-    
+
 
 lyt5 <- basic_table() |>
   grouped_cols_w_diffs(trt_map, combo_map_df = combodf2, comp_map = comp_map1)
@@ -185,10 +181,10 @@ We can also use `comp_map` to compare one active treatment to another:
 
 ```{r}
 comp_map2 <- tribble(
-    ~active, ~comparator,
-    "Xanomeline High Dose", "Xanomeline Low Dose",
-    "Xanomeline High Dose", "Placebo",
-    "Xanomeline Low Dose", "Placebo"
+  ~active, ~comparator,
+  "Xanomeline High Dose", "Xanomeline Low Dose",
+  "Xanomeline High Dose", "Placebo",
+  "Xanomeline Low Dose", "Placebo"
 )
 
 
@@ -196,6 +192,4 @@ lyt6 <- basic_table() |>
   grouped_cols_w_diffs(trt_map, comp_map = comp_map2)
 
 build_table(lyt6, adsl)
-
-
 ```
