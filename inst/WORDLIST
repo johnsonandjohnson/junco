@@ -25,7 +25,6 @@ Lapply
 MMRM
 Miettinen
 Nurminen
-Optimality
 PARAMCD
 Parallelisation
 Parallelise
@@ -42,7 +41,6 @@ Toeplitz
 TrueType
 Unlist
 VTableTree
-Vectorized
 XLSX
 afun
 allparts
@@ -51,8 +49,10 @@ analyse
 analysing
 ancova
 approxbayes
+args
 bayes
 bugfix
+cfuns
 chisq
 ci
 clinpharm
@@ -67,6 +67,7 @@ colwidth
 colwidths
 combosdf
 comparator
+comparators
 csv
 customizations
 dataprep
@@ -80,6 +81,7 @@ dirname
 docx
 dps
 dunnett
+eair
 eg
 emmeans
 estimand
@@ -99,9 +101,12 @@ hotfix
 https
 ie
 iec
+indivating
+inferable
 insightsengineering
 jj
 jjcsformat
+johnsonandjohnson
 keeprowtext
 lastcat
 ldots
@@ -123,6 +128,7 @@ parallelisation
 parallelise
 parallelising
 parentdf
+pathin
 pkgdown
 plotheight
 plotwidth
@@ -133,11 +139,11 @@ pseudocolumn
 px
 qquad
 rbmi
+referene
 removerowtext
-repo
-reproducibility
 responder
 responders
+riskdiff
 rlistings
 rowdf
 rowlabel
@@ -156,6 +162,7 @@ sidedness
 spl
 sprintf
 str
+struct
 subcol
 subfacet
 summarizations
@@ -167,11 +174,9 @@ trt
 trtvar
 tt
 uc
-unadjusted
 unicodify
 unlist
 unrounded
 unstratified
-vectorized
 wordbreaking
 xlsx

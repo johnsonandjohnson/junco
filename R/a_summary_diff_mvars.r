@@ -183,7 +183,7 @@ a_summary_diff_mvars <- function(df,
 #' @param label (`character(1)` or `function`)\cr
 #'   Label to be displayed for the section. If a function, it must accept a
 #'   single argument `.spl_context` and return a character string.
-#' @inheritDotParams a_summary_diff_mvars
+#' @param ... Additional arguments passed on to [a_summary_diff_mvars()].
 #'
 #' @returns
 #' A `RowsVerticalSection` object with a prepended section label.

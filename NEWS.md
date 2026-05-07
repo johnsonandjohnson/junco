@@ -42,6 +42,7 @@
 
 ### Added
 
+- Added multi-comparator functionality (#271)
 - Hotfix: Added several new functions for creating the Vital Sign tables for core and clinpharm:
   `a_summary_diff_mvars()`, `a_summary_j()`, `c_summary_subset_label()`, `filter_df_prior_afun()`,
   `prepend_label_cell()`, `s_diff_mean_ci()`, `s_summary_diff()`, `safe_t_test()` (#304).
