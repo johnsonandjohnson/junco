@@ -19,7 +19,8 @@
 #'   If difference-in-means statistics are requested, `df[[.var]]` must be numeric.
 #' @param .stats (`character` or `NULL`)\cr Names of statistics to be computed.
 #'   For numerical data, the names of supported statistics are listed via
-#'   `tern::get_stats(custom_stats_in = junco_default_stats$diff_mean)`.
+#'   `tern::get_stats()` for statistics for a single variable and
+#'   `junco_get_stats("diff_mean")` for difference-in-means statistics.
 #'   If `NULL`, all available statistics for numerical data are computed.
 #' @param control (`list`)\cr List of control options passed to [tern::s_summary()].
 #'   If difference-in-means statistics are requested, `control$conf_level`
@@ -77,9 +78,7 @@ s_summary_diff <- function(df,
   checkmate::assert_list(control, null.ok = FALSE)
 
   if (is.null(.stats)) {
-    .stats <- unique(
-      tern::get_stats(custom_stats_in = junco_default_stats$diff_mean)
-    )
+    .stats <- unique(c(tern::get_stats(), junco_get_stats("diff_mean")))
   }
 
   y <- tern::s_summary(df[[.var]], control = control)
