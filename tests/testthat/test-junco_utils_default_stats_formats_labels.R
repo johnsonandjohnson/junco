@@ -43,3 +43,18 @@ test_that("get_indents_from_stats works as expected", {
   res <- junco_get_indents_from_stats(sts)
   expect_snapshot(cran = TRUE, res)
 })
+
+test_that("junco_get_stats works as expected", {
+  defaults <- c(
+    "n", "sum", "mean", "sd", "se", "mean_sd",
+    "mean_se", "mean_ci", "mean_sei", "mean_sdi", "mean_pval",
+    "median", "mad", "median_ci", "quantiles", "iqr", "range",
+    "min", "max", "median_range", "cv", "geom_mean", "geom_sd",
+    "geom_mean_sd", "geom_mean_ci", "geom_cv", "median_ci_3d",
+    "mean_ci_3d", "geom_mean_ci_3d"
+  )
+
+  res <- junco_get_stats()
+
+  expect_equal(res, defaults)
+})
