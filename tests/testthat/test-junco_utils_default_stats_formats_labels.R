@@ -53,8 +53,6 @@ test_that("junco_get_stats works as expected", {
     "geom_mean_sd", "geom_mean_ci", "geom_cv", "median_ci_3d",
     "mean_ci_3d", "geom_mean_ci_3d"
   )
-
   res <- junco_get_stats()
-
   expect_equal(res, defaults)
 })
