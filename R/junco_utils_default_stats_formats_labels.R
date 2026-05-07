@@ -191,7 +191,7 @@ junco_default_stats <- list(
   odds_ratio = c("n_tot", "or_ci", "pval"),
   proportion_diff = c("diff", "diff_ci", "diff_est_ci"),
   relative_risk = c("rel_risk_ci", "pval"),
-  diff_mean <- c(
+  diff_mean = c(
     "diff_mean_n1",
     "diff_mean_n2",
     "diff_mean_est",
