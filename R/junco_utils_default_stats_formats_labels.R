@@ -279,8 +279,8 @@ junco_default_stats <- list(
   a_eair100_j = c("eair", "n_event", "person_years")
 )
 
-tern_missing_in_junco <- setdiff(names(tern_default_stats), names(junco_default_stats))
-junco_default_stats <- c(junco_default_stats, tern_default_stats[tern_missing_in_junco])
+tern_not_in_junco <- setdiff(names(tern_default_stats), names(junco_default_stats))
+junco_default_stats <- c(junco_default_stats, tern_default_stats[tern_not_in_junco])
 
 
 # junco_default_formats ---------------------------------------------------------
