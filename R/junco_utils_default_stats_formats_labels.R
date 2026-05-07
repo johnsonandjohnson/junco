@@ -174,6 +174,7 @@ format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in
 }
 
 
+
 # junco_default_stats -----------------------------------------------------------
 
 #' @describeIn default_stats_formats_labels Named list of available statistics by method group for `junco`.
@@ -277,6 +278,11 @@ junco_default_stats <- list(
   a_patyrs_j = c("patyrs"),
   a_eair100_j = c("eair", "n_event", "person_years")
 )
+
+tern_stats_only <- setdiff(names(tern_default_stats), names(junco_default_stats))
+if (length(tern_stats_only) > 0) {
+  junco_default_stats <- c(junco_default_stats, tern_default_stats[tern_stats_only])
+}
 
 # junco_default_formats ---------------------------------------------------------
 junco_default_formats_start <- c(

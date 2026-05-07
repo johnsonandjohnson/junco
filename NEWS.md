@@ -1,4 +1,10 @@
-# junco 0.1.6
+# junco 0.1.7
+
+- Fixed `junco_get_stats` so that any default stats defined in `tern` but not overridden here are included.
+
+
+## [0.1.6] - 2026-05-05 (CRAN release)
+
 
 ### Fixed
 
