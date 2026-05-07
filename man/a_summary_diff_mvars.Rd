@@ -3,7 +3,8 @@
 \name{a_summary_diff_mvars}
 \alias{a_summary_diff_mvars}
 \alias{a_summary_diff_mvars_label}
-\title{Descriptive Statistics for Multiple Univariate Variables with Optional Reference-Based Comparison}
+\title{Descriptive Statistics for Multiple Univariate Variables with Optional
+Reference-Based Comparison}
 \usage{
 a_summary_diff_mvars(
   df,
@@ -48,8 +49,8 @@ split states passed by \strong{rtables}. It is ignored if \code{ref_path} is \co
 \item{ref_path}{(\code{character} or \code{NULL})\cr Global reference group specification,
 see \code{\link[=get_ref_info]{get_ref_info()}}. It is used to construct \code{.ref_group} and
 \code{.in_ref_col}, which are passed to \code{\link[=s_summary_diff]{s_summary_diff()}} to compute the
-comparison statistics for variables in \code{df} and the reference \code{.ref_group}
-data set.}
+difference-in-means statistics for variables in \code{df} and the reference
+\code{.ref_group} data set.}
 
 \item{na_rm_var}{(\code{logical(1)})\cr If \code{TRUE}, rows with missing values in
 \code{.var} are removed from \code{df} before computing statistics defined in

@@ -24,7 +24,6 @@
 #' field containing the error message.
 #'
 #' @importFrom stats t.test
-#' @export
 #'
 #' @examples
 #' # Standard usage
@@ -32,7 +31,9 @@
 #' safe_t_test(1:10, 11:20)
 #'
 #' # Example triggering failure (zero variance)
-#' \dontrun{stats::t.test(rep(10, 5), rep(10, 5))}
+#' \dontrun{
+#' stats::t.test(rep(10, 5), rep(10, 5))
+#' }
 #' safe_t_test(rep(10, 5), rep(10, 5))
 safe_t_test <- function(x, y = NULL, ...) {
   x_expr <- substitute(x)
@@ -64,6 +65,7 @@ safe_t_test <- function(x, y = NULL, ...) {
         p.value = NA_real_,
         estimate = estimate,
         conf.int = c(NA_real_, NA_real_),
+        stderr = NA_real_,
         method = "t-test (failed)",
         data.name = dname,
         error_text = e$message

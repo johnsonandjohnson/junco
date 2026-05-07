@@ -191,6 +191,15 @@ junco_default_stats <- list(
   odds_ratio = c("n_tot", "or_ci", "pval"),
   proportion_diff = c("diff", "diff_ci", "diff_est_ci"),
   relative_risk = c("rel_risk_ci", "pval"),
+  diff_mean <- c(
+    "diff_mean_n1",
+    "diff_mean_n2",
+    "diff_mean_est",
+    "diff_mean_se",
+    "diff_mean_est_se",
+    "diff_mean_ci",
+    "diff_mean_est_ci"
+  ),
   summarize_ancova_j = c(
     "n",
     "sum",
@@ -221,7 +230,6 @@ junco_default_stats <- list(
     "geom_mean_ci",
     "geom_cv",
     "geom_mean_ci_3d",
-
     "n_fit",
     "lsmean",
     "lsmean_se",
@@ -291,6 +299,17 @@ junco_default_formats_start <- c(
   diff_mean_se = jjcsformat_xx("xx.xxx (xx.xxx)"),
   diff_mean_ci = jjcsformat_xx("(xx.xxx, xx.xxx)"),
   diff_mean_est_ci = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)"),
+  #
+  # s_diff_mean stats:
+  diff_mean_n1 = jjcsformat_xx("xx."),
+  diff_mean_n2 = jjcsformat_xx("xx."),
+  diff_mean_est = jjcsformat_xx("xx.xx"),
+  # diff_mean_se = jjcsformat_xx("xx.xxx"),
+  diff_mean_est_se = jjcsformat_xx("xx.xxx (xx.xxx)"),
+  # diff_mean_ci = jjcsformat_xx("(xx.xxx, xx.xxx)"),
+  # diff_mean_est_ci = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)"),
+  # end s_diff_mean stats.
+  #
   event_free_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   event_free_rate = jjcsformat_xx("xx.xx"),
   geom_sd = jjcsformat_xx("xx.xxx"),
@@ -369,6 +388,17 @@ junco_default_labels_start <- c(
   diff = "Difference in Response rate (%)",
   diff_mean_se = "Difference in Adjusted Means (SE)",
   diff_mean_est_ci = "Difference in Adjusted Means (CI)",
+  #
+  # s_diff_mean stats:
+  diff_mean_n1 = "Difference in Means Sample Size (Group 1)",
+  diff_mean_n2 = "Difference in Means Sample Size (Group 2)",
+  diff_mean_est = "Difference in Means Estimate",
+  # diff_mean_se = "Difference in Means SE",
+  diff_mean_est_se = "Difference in Means Estimate + SE",
+  diff_mean_ci = "Difference in Means CI",
+  # diff_mean_est_ci = "Difference in Means Estimate + CI",
+  # end s_diff_mean stats.
+  #
   hr = "Hazard Ratio",
   lr_stat_df = "Log-Rank Chi-Squared",
   mean_sd = "Mean (SD)",
@@ -418,6 +448,17 @@ junco_default_indents <- c(
   diff_ci = 1L,
   diff_mean_ci = 1L,
   diff_mean_est_ci = 1L,
+  #
+  # s_diff_mean stats:
+  diff_mean_n1 = 1L,
+  diff_mean_n2 = 1L,
+  diff_mean_est = 1L,
+  diff_mean_se = 1L,
+  diff_mean_est_se = 1L,
+  # diff_mean_ci = 1L,
+  # diff_mean_est_ci = 1L,
+  # end s_diff_mean stats.
+  #
   hr_ci = 1L,
   or_ci = 1L,
   pval = 1L,
