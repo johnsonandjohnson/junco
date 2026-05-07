@@ -57,7 +57,6 @@ get_comp_label <- function(comp_level, orig_ret, combo_map) {
     ret <- unique(combo_map$label[combo_map$valname == comp_level])
   } else {
     ind <- which(comp_level == names(orig_ret$values))
-    if (length(ind) != 1) browser()
     stopifnot(length(ind) == 1)
     ret <- obj_label(orig_ret$values[[ind]])
   }
