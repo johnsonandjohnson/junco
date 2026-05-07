@@ -24,7 +24,8 @@ If difference-in-means statistics are requested, \code{df[[.var]]} must be numer
 
 \item{.stats}{(\code{character} or \code{NULL})\cr Names of statistics to be computed.
 For numerical data, the names of supported statistics are listed via
-\code{tern::get_stats(custom_stats_in = junco_default_stats$diff_mean)}.
+\code{tern::get_stats()} for statistics for a single variable and
+\code{junco_get_stats("diff_mean")} for difference-in-means statistics.
 If \code{NULL}, all available statistics for numerical data are computed.}
 
 \item{.ref_group}{(\code{data.frame} or \code{vector})\cr the data corresponding to the reference group.}
