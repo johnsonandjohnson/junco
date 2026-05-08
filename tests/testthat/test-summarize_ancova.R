@@ -676,12 +676,12 @@ test_that("a_summarize_ancova_j with multiple combined columns", {
 
   adsl <- adsl_jnj |>
     make_fake_adsl() |>
-    select(USUBJID, TRT01A, SEX)
+    dplyr::select(USUBJID, TRT01A, SEX)
 
   advs <- advs_jnj |>
     filter(PARAMCD == "DIABP" & AVISIT == "Cycle 02") |>
     borrow_records(adsl) |>
-    select(USUBJID, PARAMCD, AVISIT, AVAL, CHG, BASE) |>
+    dplyr::select(USUBJID, PARAMCD, AVISIT, AVAL, CHG, BASE) |>
     inner_join(adsl, by = c("USUBJID"), multiple = "all")
 
   # nolint start
