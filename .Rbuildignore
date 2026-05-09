@@ -42,7 +42,6 @@ pkgdown
 ^\.covrignore$
 ^\.idea$
 ^dev$
-
 # output
 ^output$
 ^[^/]*\.R$
