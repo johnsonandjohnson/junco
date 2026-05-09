@@ -20,6 +20,7 @@ LICENSE
 # lintr
 ^\.lintr$
 
+
 # pkgdown
 ^_pkgdown\.yml$
 pkgdown
