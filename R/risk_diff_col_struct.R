@@ -305,7 +305,7 @@ enrich_colspan_map <- function(colspan_map, combodf) {
 make_comp_name <- function(act_nm, comp_nm) paste0(act_nm, " vs ", comp_nm)
 
 ## conversion of names/labels to comparison versions is now
-## handled (much) later, in surgical_suite and apply_comp_map
+## handled (much) later, in surgical_suite and apply_comp_map.
 expand_combo_map <- function(combo_map, ref_lvls) {
   if (NROW(combo_map) == 0) {
     return(combo_map)
