@@ -20,6 +20,8 @@
 
 ### Changed
 
+- Added new stats/lables/formats/indents to `junco_utils_default_stats_formats_labels.r` file.
+- Renamed `s_diff_mean_ci()` to `s_diff_means()`, and added new statistics to `s_diff_means()`.
 - Moved `safe_t_test()` from `a_summarize_aval_chg_diff.R` to a new file `safe_t_test.R`,
 - Moved `add_blank_line_rcells()` from `s_functions.R` to `blank_line.R`.
 - changed return value `n` for `s_ancova_j` into `n_fit`, to differentiate between these two statistics for combined function `s_summarize_ancova_j()` (#117)

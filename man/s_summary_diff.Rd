@@ -2,7 +2,8 @@
 % Please edit documentation in R/s_summary_diff.r
 \name{s_summary_diff}
 \alias{s_summary_diff}
-\title{Descriptive Statistics for Univariate Data with Optional Reference Comparison}
+\title{Descriptive Statistics for Univariate Data with Optional Reference
+Comparison}
 \usage{
 s_summary_diff(
   df,
@@ -20,24 +21,26 @@ s_summary_diff(
 \item{.var}{(\code{character(1)})\cr Name of the column in \code{df} containing the
 values for which statistics are computed. The variable type is handled by
 the corresponding methods of \code{\link[tern:analyze_variables]{tern::s_summary()}}.
-If difference-in-means statistics are requested, \code{df[[.var]]} must be numeric.}
+If difference-in-means statistics are requested, \code{df[[.var]]} must be
+numeric.}
 
 \item{.stats}{(\code{character} or \code{NULL})\cr Names of statistics to be computed.
 For numerical data, the names of supported statistics are listed via
 \code{tern::get_stats()} for statistics for a single variable and
-\code{junco_get_stats("diff_mean")} for difference-in-means statistics.
+\code{junco_get_stats("diff_means")} for difference-in-means statistics.
 If \code{NULL}, all available statistics for numerical data are computed.}
 
 \item{.ref_group}{(\code{data.frame} or \code{vector})\cr the data corresponding to the reference group.}
 
 \item{.in_ref_col}{(\code{logical})\cr \code{TRUE} when working with the reference level, \code{FALSE} otherwise.}
 
-\item{control}{(\code{list})\cr List of control options passed to \code{\link[tern:analyze_variables]{tern::s_summary()}}.
+\item{control}{(\code{list})\cr List of control options passed to
+\code{\link[tern:analyze_variables]{tern::s_summary()}}.
 If difference-in-means statistics are requested, \code{control$conf_level}
 specifies the confidence level of the interval.}
 
 \item{...}{Additional arguments passed to \code{\link[tern:analyze_variables]{tern::s_summary()}}, and to
-\code{\link[=s_diff_mean]{s_diff_mean()}} if difference-in-means statistics are computed.}
+\code{\link[=s_diff_means]{s_diff_means()}} if difference-in-means statistics are computed.}
 }
 \value{
 A named \code{list} with the requested statistics.
@@ -52,7 +55,7 @@ S3 class of the input (e.g., character, factor, logical, numeric).
 Optionally, it computes estimates and associated inferential statistics for
 the difference in population means between two underlying distributions,
 based on observed samples \code{df[[.var]]} and \code{.ref_group[[.var]]} using
-\code{\link[=s_diff_mean]{s_diff_mean()}}.
+\code{\link[=s_diff_means]{s_diff_means()}}.
 These statistics are applicable only to numeric data.
 }
 \examples{
@@ -74,7 +77,7 @@ rg <- data.frame(
 )
 rg
 
-.stats <- c("n", "mean_sd", "diff_mean_n1", "diff_mean_n2", "diff_mean_est_ci")
+.stats <- c("n", "mean_sd", "diff_means_n1", "diff_means_n2", "diff_means_est_ci")
 
 # With reference group.
 s_summary_diff(df, "CHG", .stats, rg)

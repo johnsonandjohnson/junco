@@ -74,7 +74,7 @@ reference:
     - resp01_split_fun_fct
     - response_by_var
     - s_ancova_j
-    - s_diff_mean
+    - s_diff_means
     - s_proportion_factor
     - s_proportion_logical
     - s_summarize_ancova_j

@@ -14,13 +14,13 @@
 #'
 #' The following quantities are computed:
 #' \describe{
-#'   \item{diff_mean_n1}{Sample size of Group 1.}
-#'   \item{diff_mean_n2}{Sample size of Group 2.}
-#'   \item{diff_mean_est}{Point estimate of the difference in population means.}
-#'   \item{diff_mean_se}{Standard error of the estimator of the difference in population means.}
-#'   \item{diff_mean_est_se}{The point estimate and the standard error.}
-#'   \item{diff_mean_ci}{Confidence interval for the difference in population means.}
-#'   \item{diff_mean_est_ci}{The point estimate and the confidence interval.}
+#'   \item{diff_means_n1}{Sample size of Group 1.}
+#'   \item{diff_means_n2}{Sample size of Group 2.}
+#'   \item{diff_means_est}{Point estimate of the difference in population means.}
+#'   \item{diff_means_se}{Standard error of the estimator of the difference in population means.}
+#'   \item{diff_means_est_se}{The point estimate and the standard error.}
+#'   \item{diff_means_ci}{Confidence interval for the difference in population means.}
+#'   \item{diff_means_est_ci}{The point estimate and the confidence interval.}
 #' }
 #'
 #' @details
@@ -34,8 +34,8 @@
 #' excluded from matching (see `merge(..., incomparables = c(NA, NaN))`).
 #'
 #' For paired samples, only complete pairs are passed to [safe_t_test()].
-#' For non-paired samples, missing values are removed separately from each sample
-#' prior to passing them to [safe_t_test()].
+#' For non-paired samples, missing values are removed separately from each
+#' sample prior to passing them to [safe_t_test()].
 #'
 #' @param df1 (`data.frame`)\cr Dataset for the first sample.
 #' @param df2 (`data.frame`)\cr Dataset for the second sample.
@@ -68,18 +68,18 @@
 #' )
 #'
 #' # Paired
-#' s_diff_mean(df1, df2, "CHG", paired = TRUE, paired_by = "USUBJID")
+#' s_diff_means(df1, df2, "CHG", paired = TRUE, paired_by = "USUBJID")
 #'
 #' # Unpaired
-#' s_diff_mean(df1, df2, "CHG")
+#' s_diff_means(df1, df2, "CHG")
 #'
-s_diff_mean <- function(df1,
-                        df2,
-                        .var,
-                        paired = FALSE,
-                        paired_by = NULL,
-                        conf.level = 0.95,
-                        ...) {
+s_diff_means <- function(df1,
+                         df2,
+                         .var,
+                         paired = FALSE,
+                         paired_by = NULL,
+                         conf.level = 0.95,
+                         ...) {
   checkmate::assert_data_frame(df1, null.ok = FALSE)
   checkmate::assert_data_frame(df2, null.ok = FALSE)
   checkmate::assert_string(.var)
@@ -107,11 +107,11 @@ s_diff_mean <- function(df1,
       incomparables = c(NA, NaN)
     )
 
-    cols_out <- c(paste0(.var, "_df1"), paste0(.var, "_df2"))
-    df <- df[complete.cases(df[, cols_out]), ]
+    cols_var <- c(paste0(.var, "_df1"), paste0(.var, "_df2"))
+    df <- df[complete.cases(df[, cols_var]), ]
 
-    x1 <- df[[cols_out[1]]]
-    x2 <- df[[cols_out[2]]]
+    x1 <- df[[cols_var[1]]]
+    x2 <- df[[cols_var[2]]]
   } else {
     x1 <- df1[[.var]]
     x2 <- df2[[.var]]
@@ -131,11 +131,11 @@ s_diff_mean <- function(df1,
   ci <- ttest_res$conf
   se <- ttest_res$stderr
 
-  names(n1) <- "diff_mean_n1"
-  names(n2) <- "diff_mean_n2"
-  names(est) <- "diff_mean_est"
-  names(ci) <- c("diff_mean_ci_lwr", "diff_mean_ci_upr")
-  names(se) <- "diff_mean_se"
+  names(n1) <- "diff_means_n1"
+  names(n2) <- "diff_means_n2"
+  names(est) <- "diff_means_est"
+  names(ci) <- c("diff_means_ci_lwr", "diff_means_ci_upr")
+  names(se) <- "diff_means_se"
   est_ci <- c(est, ci)
   attr(est_ci, "conf.level") <- attr(ci, "conf.level")
 
@@ -143,13 +143,13 @@ s_diff_mean <- function(df1,
   cl <- tern::f_conf_level(conf.level)
 
   y <- list()
-  y$diff_mean_n1 <- formatters::with_label(n1, paste(label, "Sample Size (Group 1)"))
-  y$diff_mean_n2 <- formatters::with_label(n2, paste(label, "Sample Size (Group 2)"))
-  y$diff_mean_est <- formatters::with_label(est, paste(label, "Estimate"))
-  y$diff_mean_se <- formatters::with_label(se, paste(label, "SE"))
-  y$diff_mean_est_se <- formatters::with_label(c(est, se), paste(label, "Estimate + SE"))
-  y$diff_mean_ci <- formatters::with_label(ci, paste(label, cl))
-  y$diff_mean_est_ci <- formatters::with_label(est_ci, paste(label, "Estimate +", cl))
+  y$diff_means_n1 <- formatters::with_label(n1, paste(label, "Sample Size (Group 1)"))
+  y$diff_means_n2 <- formatters::with_label(n2, paste(label, "Sample Size (Group 2)"))
+  y$diff_means_est <- formatters::with_label(est, paste(label, "Estimate"))
+  y$diff_means_se <- formatters::with_label(se, paste(label, "SE"))
+  y$diff_means_est_se <- formatters::with_label(c(est, se), paste(label, "Estimate + SE"))
+  y$diff_means_ci <- formatters::with_label(ci, paste(label, cl))
+  y$diff_means_est_ci <- formatters::with_label(est_ci, paste(label, "Estimate +", cl))
 
   y
 }
