@@ -77,11 +77,9 @@ s_diff_means <- function(df1,
                          paired = FALSE,
                          paired_by = NULL,
                          ...) {
-  checkmate::assert_data_frame(df1, null.ok = FALSE)
-  checkmate::assert_data_frame(df2, null.ok = FALSE)
+  checkmate::assert_data_frame(df1)
+  checkmate::assert_data_frame(df2)
   checkmate::assert_string(.var)
-  checkmate::assert_names(colnames(df1), must.include = .var)
-  checkmate::assert_names(colnames(df2), must.include = .var)
   checkmate::assert_flag(paired, null.ok = FALSE)
 
   vecs <- extract_vectors(df1, df2, .var, paired = paired, paired_by = paired_by)
