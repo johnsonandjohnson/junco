@@ -21,7 +21,7 @@ In the difference column, the 2-sample t-test will be used."><meta property="og:
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,6 +31,7 @@ In the difference column, the 2-sample t-test will be used."><meta property="og:
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/index.html">Articles</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/johnsonandjohnson/junco/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -42,7 +43,7 @@ In the difference column, the 2-sample t-test will be used."><meta property="og:
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Analysis function 3-column presentation</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v-0.1.5/R/a_summarize_aval_chg_diff.R" class="external-link"><code>R/a_summarize_aval_chg_diff.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/a_summarize_aval_chg_diff.R" class="external-link"><code>R/a_summarize_aval_chg_diff.R</code></a></small>
       <div class="d-none name"><code>a_summarize_aval_chg_diff_j.Rd</code></div>
     </div>
 
@@ -82,7 +83,10 @@ In the difference column, the 2-sample t-test will be used.</p>
 <span>    <span class="st">"xx.dx (xx.dx, xx.dx)"</span><span class="op">)</span>,</span>
 <span>  .formats_fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>col1 <span class="op">=</span> <span class="va">jjcsformat_count_denom_fraction</span>, col23 <span class="op">=</span> <span class="va">jjcsformat_xx</span>,</span>
 <span>    coldiff <span class="op">=</span> <span class="va">jjcsformat_xx</span><span class="op">)</span>,</span>
-<span>  multivars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AVAL"</span>, <span class="st">"AVAL"</span>, <span class="st">"CHG"</span><span class="op">)</span></span>
+<span>  multivars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AVAL"</span>, <span class="st">"AVAL"</span>, <span class="st">"CHG"</span><span class="op">)</span>,</span>
+<span>  weights_emmeans <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  method_combo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"contrasts"</span>, <span class="st">"collapse"</span><span class="op">)</span>,</span>
+<span>  weights_combo <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -200,6 +204,31 @@ appropriate precision.</p></dd>
 <dt id="arg-multivars">multivars<a class="anchor" aria-label="anchor" href="#arg-multivars"></a></dt>
 <dd><p>(<code>string(3)</code>)<br> Variables names to use in 3-col layout.</p></dd>
 
+
+<dt id="arg-weights-emmeans">weights_emmeans<a class="anchor" aria-label="anchor" href="#arg-weights-emmeans"></a></dt>
+<dd><p>(<code>string</code>)<br> argument from <code><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans::emmeans()</a></code>, <code>"counterfactual"</code> by default.</p></dd>
+
+
+<dt id="arg-method-combo">method_combo<a class="anchor" aria-label="anchor" href="#arg-method-combo"></a></dt>
+<dd><p>(<code>string</code>)<br> Method for derivations in combined column.</p><ul><li><p><code>contrast</code> Derivations for the combined level are done through contrasts from the original model
+(using weights per <code>weights_combo</code> specifications).</p></li>
+<li><p><code>collapse</code> The ancova model for the combined group will be performed with group levels that contribute
+to the combination collapsed into a single combined level.</p></li>
+</ul><p>For more information see the vignette <code>ANCOVA with Combined Treatment Groups</code>.</p></dd>
+
+
+<dt id="arg-weights-combo">weights_combo<a class="anchor" aria-label="anchor" href="#arg-weights-combo"></a></dt>
+<dd><p>(<code>string</code>)<br> Weights for the contrasts of the combined levels.</p><ul><li><p><code>equal</code> 1/(number of levels from arm variable included in the combination)</p></li>
+<li><p><code>proportional</code>, <code>proportional_marginal</code> weight for each level included in
+the combination is proportional to number of observations in that level
+<br> The difference between <code>proportional</code> and <code>proportional_marginal</code> is only
+relevant when the model includes an interaction between arm and other factor variable (<code>interaction_item</code>).
+<br><code>proportional_marginal</code> interprets proportional over all levels of
+<code>interaction_item</code>, ie, the same weights will be used for all levels of <code>interaction_item</code>.
+<br> For <code>proportional</code> the weights will be derived within
+the requested level (<code>interaction_y</code>) for <code>interaction_item</code>.</p></li>
+</ul></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -211,8 +240,7 @@ appropriate precision.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>s_summarize_ancova_j</p>
-<p>Other Inclusion of ANCOVA Functions:
+    <div class="dont-index"><p>Other Inclusion of ANCOVA Functions:
 <code><a href="s_summarize_ancova_j.html">a_summarize_ancova_j()</a></code>,
 <code><a href="s_ancova_j.html">s_ancova_j()</a></code></p></div>
     </div>
@@ -319,7 +347,7 @@ appropriate precision.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wójciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

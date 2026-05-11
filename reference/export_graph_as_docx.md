@@ -1,9 +1,6 @@
 # export_graph_as_docx
 
-**\[experimental\]**
-
-Export graph in DOCX format. See notes to understand why this is
-experimental.
+Export graph in DOCX format.
 
 ## Usage
 
@@ -11,15 +8,16 @@ experimental.
 export_graph_as_docx(
   g = NULL,
   plotnames = NULL,
-  tblid,
-  output_dir,
+  tblid = NULL,
+  output_dir = NULL,
   title = NULL,
   footers = NULL,
   orientation = "portrait",
   plotwidth = 8,
   plotheight = 5.51,
   units = c("in", "cm", "mm", "px")[1],
-  border = flextable::fp_border_default(width = 0.75, color = "black")
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
+  watermark = NULL
 )
 ```
 
@@ -27,67 +25,96 @@ export_graph_as_docx(
 
 - g:
 
-  (optional) Default = NULL. A `ggplot2` object, or a list of them, to
-  export. At least one of `g` or `plotnames` must be provided. If both
-  are provided, 'g' precedes and 'plotnames' will be ignored.
+  (`ggplot2`)  
+  a `ggplot2` object, or a list of them, to export. At least one of `g`
+  or `plotnames` must be provided. If both are provided, `g` precedes
+  and `plotnames` will be ignored.  
+  (optional) Default = NULL.
 
 - plotnames:
 
-  (optional) Default = NULL. A file path, or a list of them, to
-  previously saved .png files. These will be opened and exported in the
-  output file. At least one of `g` or `plotnames` must be provided. If
-  both are provided, 'g' precedes and 'plotnames' will be ignored.
+  (`list`)  
+  a file path, or a list of them, to previously saved .png files. These
+  will be opened and exported in the output file. At least `g` (of class
+  `ggplot2`) or `plotnames` must be provided. If both are provided, `g`
+  precedes and `plotnames` will be ignored.  
+  (optional) Default = NULL.
 
 - tblid:
 
-  Character. Output ID that will appear in the Title and footer.
+  (`character`)  
+  output ID to be displayed in the title and last line of footer. When
+  exporting, it will also be used as the output filename.  
+  If NULL, a temp file will be created, its dirname will replace
+  argument `output_dir`, and its basename will replace argument
+  `tblid`.  
+  (optional) Default = NULL.
 
 - output_dir:
 
-  Character. File path where to save the output.
+  (`character`)  
+  a directory path to save the docx.  
+  If NULL, a temp file will be created, its dirname will replace
+  argument `output_dir`, and its basename will replace argument
+  `tblid`.  
+  (optional) Default = NULL.
 
 - title:
 
-  (optional) Default = NULL. Character, or list of them, with the titles
-  to be displayed.
+  (`character`)  
+  character, or list of them, with the titles to be displayed.  
+  (optional) Default = NULL.
 
 - footers:
 
-  (optional) Default = NULL. Character, or list of them, with the
-  footers to be displayed.
+  (`character`)  
+  a list of footers to be displayed.  
+  (optional) Default = NULL.
 
 - orientation:
 
-  (optional) Default = "portrait". One of: "portrait", "landscape".
+  (`character`)  
+  one of: "portrait", "landscape".  
+  (optional) Default = "portrait".
 
 - plotwidth:
 
-  (optional) Default = 8. Plot size in units expressed by the units
-  argument. If not supplied, uses the size of the current graphics
-  device.
+  (`numeric`)  
+  plot size in units expressed by the units argument. If not supplied,
+  uses the size of the current graphics device.  
+  (optional) Default = 8.
 
 - plotheight:
 
-  (optional) Default = 5.51. Plot size in units expressed by the units
-  argument. If not supplied, uses the size of the current graphics
-  device.
+  (`numeric`)  
+  plot size in units expressed by the units argument. If not supplied,
+  uses the size of the current graphics device.  
+  (optional) Default = 5.51.
 
 - units:
 
-  (optional) Default = "in". One of the following units in which the
-  plotwidth and plotheight arguments are expressed: "in", "cm", "mm" or
-  "px".
+  (`character`)  
+  one of the following units in which the plotwidth and plotheight
+  arguments are expressed: "in", "cm", "mm" or "px".  
+  (optional) Default = "in".
 
 - border:
 
-  (optional). An `fp_border` object to use as borders for the Title and
-  Footers.
+  (`fp_border`)  
+  border to use.  
+  Default =
+  `flextable::fp_border_default(width = 0.875, color = "black")`.
+
+- watermark:
+
+  (`character`)  
+  the watermark (text) to display in the output docx file.  
+  If NULL, no watermark will be displayed. (optional) Default = NULL.
 
 ## Note
 
-This function has been tested for common use cases but may not work or
-have unexpected or undesired behavior in corner cases. As such it is not
-considered fully production ready and is being made available for
-further testing and early adoption. Please report any issues you
-encounter to the developers. This function may be removed from junco in
-the future if the functionality is merged into `rtables.officer`.
+This function may be removed from junco in the future if the
+functionality is merged into `rtables.officer`.
+
+For more information, refer to the vignette
+`table_and_listing_customizations` (`browseVignettes("junco")`)

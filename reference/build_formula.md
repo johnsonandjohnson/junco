@@ -5,7 +5,9 @@ This builds the model formula which is used inside
 and provided to
 [`mmrm::mmrm()`](https://openpharma.github.io/mmrm/latest-tag/reference/mmrm.html)
 internally. It can be instructive to look at the resulting formula
-directly sometimes.
+directly sometimes. In particular, if a `subgroup` variable is included
+in `vars`, then the formula will include the interaction of `subgroup`
+with `arm` and `visit`.
 
 ## Usage
 
@@ -39,13 +41,17 @@ Formula to use in
 
 ``` r
 vars <- list(
-  response = "AVAL", covariates = c("RACE", "SEX"),
-  id = "USUBJID", arm = "ARMCD", visit = "AVISIT"
+  response = "AVAL",
+  covariates = c("RACE", "SEX"),
+  id = "USUBJID",
+  arm = "ARMCD",
+  visit = "AVISIT",
+  subgroup = "REGION"
 )
 build_formula(vars, "auto-regressive")
-#> AVAL ~ RACE + SEX + ARMCD * AVISIT + ar1(AVISIT | USUBJID)
-#> <environment: 0x560365d46b40>
+#> AVAL ~ RACE + SEX + ARMCD * AVISIT * REGION + ar1(AVISIT | USUBJID)
+#> <environment: 0x5594418e6ca0>
 build_formula(vars)
-#> AVAL ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID)
-#> <environment: 0x560365cbee78>
+#> AVAL ~ RACE + SEX + ARMCD * AVISIT * REGION + us(AVISIT | USUBJID)
+#> <environment: 0x559441923688>
 ```

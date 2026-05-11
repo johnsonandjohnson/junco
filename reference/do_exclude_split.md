@@ -30,6 +30,7 @@ do_exclude_split(exclude_levels, .spl_context)
 ## Examples
 
 ``` r
+
 do_exclude_split(
   exclude_levels = list(AVISIT = "Baseline"),
   .spl_context = data.frame(

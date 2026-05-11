@@ -40,6 +40,7 @@ A list with elements `rel_risk_ci` and `pval`.
 ## Examples
 
 ``` r
+
 set.seed(2)
 rsp <- sample(c(TRUE, FALSE), 100, TRUE)
 grp <- sample(c("Placebo", "Treatment"), 100, TRUE)

@@ -98,6 +98,7 @@ A degenerate table is likely to be returned if all facets are removed.
 ## Examples
 
 ``` r
+
 rm_a_from_placebo <- cond_rm_facets(
   facets = "A",
   ancestor_pos = NA,

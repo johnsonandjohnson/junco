@@ -80,6 +80,7 @@ a list containing a single numeric element called `est` (or additionally
 `se` and `df` if you had originally specified the method_bayes() or
 method_approxbayes() functions from the rbmi package) i.e.:
 
+
     myfun <- function(dat, ...) {
         mod_1 <- lm(data = dat, outcome ~ group)
         mod_2 <- lm(data = dat, outcome ~ group + covar)
@@ -219,6 +220,7 @@ for the default analysis function.
 ## Examples
 
 ``` r
+
  library(rbmi)
 #> 
 #> Attaching package: ‘rbmi’

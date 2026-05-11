@@ -9,7 +9,7 @@ tables and graphs."><meta property="og:image" content="https://johnsonandjohnson
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,6 +19,7 @@ tables and graphs."><meta property="og:image" content="https://johnsonandjohnson
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/index.html">Articles</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/johnsonandjohnson/junco/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -30,7 +31,7 @@ tables and graphs."><meta property="og:image" content="https://johnsonandjohnson
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1><code>MMRM</code> Analysis</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v-0.1.5/R/mmrm.R" class="external-link"><code>R/mmrm.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/mmrm.R" class="external-link"><code>R/mmrm.R</code></a></small>
       <div class="d-none name"><code>fit_mmrm_j.Rd</code></div>
     </div>
 
@@ -43,12 +44,13 @@ tables and graphs.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_mmrm_j</span><span class="op">(</span></span>
 <span>  vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>response <span class="op">=</span> <span class="st">"AVAL"</span>, covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>, id <span class="op">=</span> <span class="st">"USUBJID"</span>, arm <span class="op">=</span> <span class="st">"ARM"</span>, visit <span class="op">=</span></span>
-<span>    <span class="st">"AVISIT"</span><span class="op">)</span>,</span>
+<span>    <span class="st">"AVISIT"</span>, subgroup <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
 <span>  <span class="va">data</span>,</span>
 <span>  conf_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  cor_struct <span class="op">=</span> <span class="st">"unstructured"</span>,</span>
 <span>  weights_emmeans <span class="op">=</span> <span class="st">"counterfactual"</span>,</span>
 <span>  averages_emmeans <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  mult_adj_emmeans <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"dunnett"</span>, <span class="st">"step-down-dunnett"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -94,6 +96,12 @@ will be excluded.</p></dd>
 and reported along side the single visits.</p></dd>
 
 
+<dt id="arg-mult-adj-emmeans">mult_adj_emmeans<a class="anchor" aria-label="anchor" href="#arg-mult-adj-emmeans"></a></dt>
+<dd><p>(<code>string</code>)<br> whether to multiplicity adjust LS means contrast p-values and
+confidence intervals within visits when there are more than 2 treatment arms. Note that this cannot
+be combined with <code>averages_emmeans</code>. Either "none", "dunnett" or "step-down-dunnett".</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>additional arguments for <code><a href="https://openpharma.github.io/mmrm/latest-tag/reference/mmrm.html" class="external-link">mmrm::mmrm()</a></code>, in particular <code>reml</code> and options listed in
 <code><a href="https://openpharma.github.io/mmrm/latest-tag/reference/mmrm_control.html" class="external-link">mmrm::mmrm_control()</a></code>.</p></dd>
@@ -107,8 +115,8 @@ later on.</p></li>
 <li><p><code>cov_estimate</code>: The matrix with the covariance matrix estimate.</p></li>
 <li><p><code>diagnostics</code>: A list with model diagnostic statistics (REML criterion, AIC, corrected AIC, BIC).</p></li>
 <li><p><code>lsmeans</code>: This is a list with data frames <code>estimates</code> and <code>contrasts</code>.
-The attributes <code>averages</code> and <code>weights</code> save the settings used
-(<code>averages_emmeans</code> and <code>weights_emmeans</code>).</p></li>
+The attributes <code>averages</code>, <code>weights</code> and <code>mult_adj</code> save the settings used
+(<code>averages_emmeans</code>, <code>weights_emmeans</code> and <code>mult_adj_emmeans</code>).</p></li>
 <li><p><code>vars</code>: The variable list.</p></li>
 <li><p><code>labels</code>: Corresponding list with variable labels extracted from <code>data</code>.</p></li>
 <li><p><code>cor_struct</code>: input.</p></li>
@@ -142,8 +150,10 @@ variance parameters.</p></li>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>This function has the <code>_j</code> suffix to distinguish it from <code><a href="https://openpharma.github.io/mmrm/latest-tag/reference/fit_mmrm.html" class="external-link">mmrm::fit_mmrm()</a></code>.
-It is a copy from the <code>tern.mmrm</code> package and later will be replaced by tern.mmrm::fit_mmrm().
-No new features are included in this function here.</p>
+It is modified from the <code>tern.mmrm</code> package.
+The new features are:</p><ul><li><p>the <code>mult_adj_emmeans</code> argument and its functionality</p></li>
+<li><p>the <code>subgroup</code> variable in <code>vars</code> and its functionality</p></li>
+</ul><p>These could later be contributed upstream in <code>tern.mmrm</code>.</p>
     </div>
 
     <div class="section level2">
@@ -170,7 +180,7 @@ No new features are included in this function here.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wójciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -45,6 +45,7 @@ including the `orientation` argument and specifying a value of
 “landscape”.
 
 ``` r
+
 library(junco)
 
 adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
@@ -134,6 +135,7 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/exampleorientation"),
              orientation = "landscape")
@@ -144,12 +146,13 @@ tt_to_tlgrtf(result,
 ### Table .docx File
 
 To create a .docx file with landscape orientation, the
-[`junco::export_as_docx_j`](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.md)
+[`junco::export_TLG_as_docx`](https://johnsonandjohnson.github.io/junco/reference/export_TLG_as_docx.md)
 function can be called with the `orientation` argument set to
 “landscape”.
 
 ``` r
-export_as_docx_j(result,
+
+export_TLG_as_docx(result,
                 tblid = "exampleorientation",
                 output_dir = out_dir,
                 orientation = "landscape")
@@ -157,22 +160,7 @@ export_as_docx_j(result,
 
 ### Visual Output (HTML Representation)
 
-| exampleorientation:                                       |                   |                    |                    |            |
-|-----------------------------------------------------------|-------------------|--------------------|--------------------|------------|
-|                                                           | Example Drug 5 mg | Example Drug 10 mg | Example Drug 20 mg | Placebo    |
-|                                                           | N=2               | N=2                | N=2                | N=2        |
-| Male                                                      | 1                 | 1                  | 1                  | 1          |
-|                                                           |                   |                    |                    |            |
-| Response                                                  |                   |                    |                    |            |
-| Yes                                                       | 1 (100.0%)        | 0                  | 1 (100.0%)         | 0          |
-| No                                                        | 0                 | 1 (100.0%)         | 0                  | 1 (100.0%) |
-| Female                                                    | 1                 | 1                  | 1                  | 1          |
-|                                                           |                   |                    |                    |            |
-| Response                                                  |                   |                    |                    |            |
-| Yes                                                       | 1 (100.0%)        | 0                  | 1 (100.0%)         | 1 (100.0%) |
-| No                                                        | 0                 | 1 (100.0%)         | 0                  | 0          |
-|                                                           |                   |                    |                    |            |
-| Dummy Note: On-treatment is defined as treatment-emergent |                   |                    |                    |            |
+[TABLE]
 
 ## Adjusting the Font Size of a Table or Listing
 
@@ -195,6 +183,7 @@ function call.
 Example of Table with Font Size of 8-pt
 
 ``` r
+
 library(junco)
 
 adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
@@ -284,6 +273,7 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplefontsize"),
              fontspec = formatters::font_spec("Times", 8, 1.2))
@@ -294,12 +284,13 @@ tt_to_tlgrtf(result,
 ### Table .docx File
 
 To display the body of tables in Times New Roman 8-pt for .docx files,
-the junco::export_as_docx_j function can be called with the theme
+the junco::export_TLG_as_docx function can be called with the theme
 argument included. The theme argument will specify a
 junco::theme_docx_default_j function call.
 
 ``` r
-export_as_docx_j(result,
+
+export_TLG_as_docx(result,
                 tblid = "examplefontsize",
                 output_dir = out_dir,
                 theme = theme_docx_default_j(font = "Times New Roman", font_size = 8L))
@@ -307,22 +298,7 @@ export_as_docx_j(result,
 
 ### Visual Output (HTML Representation)
 
-| examplefontsize:                                          |                   |                    |                    |            |
-|-----------------------------------------------------------|-------------------|--------------------|--------------------|------------|
-|                                                           | Example Drug 5 mg | Example Drug 10 mg | Example Drug 20 mg | Placebo    |
-|                                                           | N=2               | N=2                | N=2                | N=2        |
-| Male                                                      | 1                 | 1                  | 1                  | 1          |
-|                                                           |                   |                    |                    |            |
-| Response                                                  |                   |                    |                    |            |
-| Yes                                                       | 1 (100.0%)        | 0                  | 1 (100.0%)         | 0          |
-| No                                                        | 0                 | 1 (100.0%)         | 0                  | 1 (100.0%) |
-| Female                                                    | 1                 | 1                  | 1                  | 1          |
-|                                                           |                   |                    |                    |            |
-| Response                                                  |                   |                    |                    |            |
-| Yes                                                       | 1 (100.0%)        | 0                  | 1 (100.0%)         | 1 (100.0%) |
-| No                                                        | 0                 | 1 (100.0%)         | 0                  | 0          |
-|                                                           |                   |                    |                    |            |
-| Dummy Note: On-treatment is defined as treatment-emergent |                   |                    |                    |            |
+[TABLE]
 
 ## Adding a Spanning Column Header to a Table
 
@@ -346,6 +322,7 @@ treatment map is being created by calling
 [`junco::create_colspan_map`](https://johnsonandjohnson.github.io/junco/reference/colspan_map.md).
 
 ``` r
+
 library(junco)
 
 adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
@@ -438,6 +415,7 @@ The full code to generate the output with the spanning column header is
 as follows.
 
 ``` r
+
 library(junco)
 
 adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
@@ -553,6 +531,7 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplespanningheader1"),
              orientation = "landscape")
@@ -562,23 +541,7 @@ tt_to_tlgrtf(result,
 
 ### Visual Output (HTML Representation)
 
-| examplespanningheader1:                                   |                    |                    |                    |            |
-|-----------------------------------------------------------|--------------------|--------------------|--------------------|------------|
-|                                                           | Active Study Agent |                    |                    |            |
-|                                                           | Example Drug 5 mg  | Example Drug 10 mg | Example Drug 20 mg | Placebo    |
-|                                                           | N=2                | N=2                | N=2                | N=2        |
-| Male                                                      | 1                  | 1                  | 1                  | 1          |
-|                                                           |                    |                    |                    |            |
-| Response                                                  |                    |                    |                    |            |
-| Yes                                                       | 1 (100.0%)         | 0                  | 1 (100.0%)         | 0          |
-| No                                                        | 0                  | 1 (100.0%)         | 0                  | 1 (100.0%) |
-| Female                                                    | 1                  | 1                  | 1                  | 1          |
-|                                                           |                    |                    |                    |            |
-| Response                                                  |                    |                    |                    |            |
-| Yes                                                       | 1 (100.0%)         | 0                  | 1 (100.0%)         | 1 (100.0%) |
-| No                                                        | 0                  | 1 (100.0%)         | 0                  | 0          |
-|                                                           |                    |                    |                    |            |
-| Dummy Note: On-treatment is defined as treatment-emergent |                    |                    |                    |            |
+[TABLE]
 
 ## Adding a Combined Column to a Table
 
@@ -604,6 +567,7 @@ function call for the TRT01A variable.
 The snippet of code of interest is as follows.
 
 ``` r
+
 add_combo <- add_combo_facet("Combined",
     label = "Combined",
     levels = c("Example Drug 5 mg", "Example Drug 10 mg", "Example Drug 20 mg")
@@ -616,6 +580,7 @@ The full code to generate the output with the new “Combined” column is
 as follows.
 
 ``` r
+
 library(junco)
 
 adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
@@ -736,6 +701,7 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplecombinedcolumn1"),
              orientation = "landscape")
@@ -745,23 +711,7 @@ tt_to_tlgrtf(result,
 
 ### Visual Output (HTML Representation)
 
-| examplecombinedcolumn1:                                   |                    |                    |                    |           |            |          |
-|-----------------------------------------------------------|--------------------|--------------------|--------------------|-----------|------------|----------|
-|                                                           | Active Study Agent |                    |                    |           |            |          |
-|                                                           | Example Drug 5 mg  | Example Drug 10 mg | Example Drug 20 mg | Combined  | Placebo    | Combined |
-|                                                           | N=2                | N=2                | N=2                | N=6       | N=2        | N=0      |
-| Male                                                      | 1                  | 1                  | 1                  | 3         | 1          | 0        |
-|                                                           |                    |                    |                    |           |            |          |
-| Response                                                  |                    |                    |                    |           |            |          |
-| Yes                                                       | 1 (100.0%)         | 0                  | 1 (100.0%)         | 2 (66.7%) | 0          | -        |
-| No                                                        | 0                  | 1 (100.0%)         | 0                  | 1 (33.3%) | 1 (100.0%) | -        |
-| Female                                                    | 1                  | 1                  | 1                  | 3         | 1          | 0        |
-|                                                           |                    |                    |                    |           |            |          |
-| Response                                                  |                    |                    |                    |           |            |          |
-| Yes                                                       | 1 (100.0%)         | 0                  | 1 (100.0%)         | 2 (66.7%) | 1 (100.0%) | -        |
-| No                                                        | 0                  | 1 (100.0%)         | 0                  | 1 (33.3%) | 0          | -        |
-|                                                           |                    |                    |                    |           |            |          |
-| Dummy Note: On-treatment is defined as treatment-emergent |                    |                    |                    |           |            |          |
+[TABLE]
 
 The code above creates the desired column, however, the issue is that
 the resulting output produces a “Combined” column under each spanning
@@ -786,6 +736,7 @@ The additional code required for to produce the desired result is as
 follows.
 
 ``` r
+
   # choose if any facets need to be removed - e.g remove the combined column for placebo
   rm_combo_from_placebo <- cond_rm_facets(
     facets = "Combined",
@@ -801,6 +752,7 @@ The full code to generate the output with the desired “Combined” column
 is as follows.
 
 ``` r
+
 library(junco)
 
 adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
@@ -929,6 +881,7 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplecombinedcolumn2"),
              orientation = "landscape")
@@ -938,23 +891,7 @@ tt_to_tlgrtf(result,
 
 ### Visual Output (HTML Representation)
 
-| examplecombinedcolumn2:                                   |                    |                    |                    |           |            |
-|-----------------------------------------------------------|--------------------|--------------------|--------------------|-----------|------------|
-|                                                           | Active Study Agent |                    |                    |           |            |
-|                                                           | Example Drug 5 mg  | Example Drug 10 mg | Example Drug 20 mg | Combined  | Placebo    |
-|                                                           | N=2                | N=2                | N=2                | N=6       | N=2        |
-| Male                                                      | 1                  | 1                  | 1                  | 3         | 1          |
-|                                                           |                    |                    |                    |           |            |
-| Response                                                  |                    |                    |                    |           |            |
-| Yes                                                       | 1 (100.0%)         | 0                  | 1 (100.0%)         | 2 (66.7%) | 0          |
-| No                                                        | 0                  | 1 (100.0%)         | 0                  | 1 (33.3%) | 1 (100.0%) |
-| Female                                                    | 1                  | 1                  | 1                  | 3         | 1          |
-|                                                           |                    |                    |                    |           |            |
-| Response                                                  |                    |                    |                    |           |            |
-| Yes                                                       | 1 (100.0%)         | 0                  | 1 (100.0%)         | 2 (66.7%) | 1 (100.0%) |
-| No                                                        | 0                  | 1 (100.0%)         | 0                  | 1 (33.3%) | 0          |
-|                                                           |                    |                    |                    |           |            |
-| Dummy Note: On-treatment is defined as treatment-emergent |                    |                    |                    |           |            |
+[TABLE]
 
 ## Inserting a New Line within Table & Listing Text
 
@@ -968,6 +905,7 @@ this case, the text “Example Drug” is to appear on a different line than
 the dose levels (i.e. “5 mg”, “10 mg”, “20 mg”).
 
 ``` r
+
 adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
                               "Example Drug 10 mg",
                               "Example Drug 20 mg",
@@ -998,6 +936,7 @@ variable values will need to be updated to include the text “\\line”
 between the drug name and dose level.
 
 ``` r
+
 library(junco)
 library(rtables)
 
@@ -1032,6 +971,7 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/newlinetable"),
              orientation = "landscape")
@@ -1042,16 +982,30 @@ tt_to_tlgrtf(result,
 ### Table .docx File
 
 In order to get the dose level to appear on a new line, then the TRT01A
-variable values will need to be updated to include the text “\n” between
-the drug name and dose level.
+variable values will need to be updated to include a markup/keyword of
+your choice (e.g. “\\line”) between the drug name and dose level, and
+passed through argument “string_map”.
 
 ``` r
+
+string_map_newline <- rbind(default_str_map, c("\\line", "\n"))
+string_map_newline
+#> # A tibble: 3 × 2
+#>   pattern  value
+#>   <chr>    <chr>
+#> 1 ">="     "≥"  
+#> 2 "<="     "≤"  
+#> 3 "\\line" "\n"
+```
+
+``` r
+
 library(junco)
 library(rtables)
 
-adsl <- data.frame(TRT01A = c("Example Drug\n 5 mg",
-                              "Example Drug\n 10 mg",
-                              "Example Drug\n 20 mg",
+adsl <- data.frame(TRT01A = c("Example Drug\\line5 mg",
+                              "Example Drug\\line10 mg",
+                              "Example Drug\\line20 mg",
                               "Placebo"),
                    SUBJECT = c("1",
                                "2",
@@ -1080,26 +1034,17 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
-export_as_docx_j(result,
+
+export_TLG_as_docx(result,
                 tblid = "examplenewline",
                 output_dir = out_dir,
-                orientation = "landscape")
+                orientation = "landscape",
+                string_map = string_map_newline)
 ```
 
 ### Visual Output (HTML Representation)
 
-| newlinetable:                                             |              |              |              |         |
-|-----------------------------------------------------------|--------------|--------------|--------------|---------|
-|                                                           | Example Drug | Example Drug | Example Drug |         |
-|                                                           |  5 mg        |  10 mg       |  20 mg       | Placebo |
-| Min.                                                      | 70.00        | 74.00        | 60.00        | 64.00   |
-| 1st Qu.                                                   | 70.00        | 74.00        | 60.00        | 64.00   |
-| Median                                                    | 70.00        | 74.00        | 60.00        | 64.00   |
-| Mean                                                      | 70.00        | 74.00        | 60.00        | 64.00   |
-| 3rd Qu.                                                   | 70.00        | 74.00        | 60.00        | 64.00   |
-| Max.                                                      | 70.00        | 74.00        | 60.00        | 64.00   |
-|                                                           |              |              |              |         |
-| Dummy Note: On-treatment is defined as treatment-emergent |              |              |              |         |
+[TABLE]
 
 ### Listing .rtf File
 
@@ -1111,6 +1056,7 @@ By adding in “\\line” to the TRT01A variable label, a new line is
 inserted after “Actual Treatment”.
 
 ``` r
+
 library(junco)
 library(rlistings)
 
@@ -1141,6 +1087,7 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplelistingnewline2"),
              orientation = "landscape")
@@ -1152,10 +1099,11 @@ If a .docx file is to be created for the listing, new lines can be
 inserted into the column header by updating the variable label that
 corresponds with the column of interest.
 
-By adding in “\n” to the TRT01A variable label, a new line is inserted
-after “Actual Treatment”.
+By adding in “\\line” to the TRT01A variable label, a new line is
+inserted after “Actual Treatment”.
 
 ``` r
+
 library(junco)
 library(rlistings)
 
@@ -1173,7 +1121,7 @@ adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
                               64
                    )
 ) |>
-  formatters::var_relabel(TRT01A = "Actual Treatment for\n Period 01") |>
+  formatters::var_relabel(TRT01A = "Actual Treatment for\\linePeriod 01") |>
   formatters::var_relabel(SUBJECT = "Subject") |>
   formatters::var_relabel(HEIGHT = "Height (in)")
 
@@ -1186,24 +1134,17 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
-export_as_docx_j(result,
+
+export_TLG_as_docx(result,
                 tblid = "examplelistingnewline2",
                 output_dir = out_dir,
-                orientation = "landscape")
+                orientation = "landscape",
+                string_map = string_map_newline)
 ```
 
 ### Visual Output (HTML Representation)
 
-| examplelistingnewline2:                                   |         |             |
-|-----------------------------------------------------------|---------|-------------|
-| Actual Treatment for                                      |         |             |
-| Period 01                                                 | Subject | Height (in) |
-| Example Drug 10 mg                                        | 2       | 74          |
-| Example Drug 20 mg                                        | 3       | 60          |
-| Example Drug 5 mg                                         | 1       | 70          |
-| Placebo                                                   | 4       | 64          |
-|                                                           |         |             |
-| Dummy Note: On-treatment is defined as treatment-emergent |         |             |
+[TABLE]
 
 ## Custom Table Column Header Border Matrix
 
@@ -1220,6 +1161,7 @@ The following is an example of a table created from
 [`junco::tt_to_tlgrtf`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md).
 
 ``` r
+
 library(junco)
 
 adsl <- data.frame(span = c("Example Drug Low Dose",
@@ -1261,6 +1203,7 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/bordertable"),
              orientation = "landscape")
@@ -1270,18 +1213,7 @@ tt_to_tlgrtf(result,
 
 ### Visual Output (HTML Representation)
 
-| bordertable:                                              |                       |                    |                        |         |
-|-----------------------------------------------------------|-----------------------|--------------------|------------------------|---------|
-|                                                           | Example Drug Low Dose |                    | Example Drug High Dose |         |
-|                                                           | Example Drug 5 mg     | Example Drug 10 mg | Example Drug 20 mg     | Placebo |
-| Min.                                                      | 70.00                 | 74.00              | 60.00                  | 64.00   |
-| 1st Qu.                                                   | 70.00                 | 74.00              | 60.00                  | 64.00   |
-| Median                                                    | 70.00                 | 74.00              | 60.00                  | 64.00   |
-| Mean                                                      | 70.00                 | 74.00              | 60.00                  | 64.00   |
-| 3rd Qu.                                                   | 70.00                 | 74.00              | 60.00                  | 64.00   |
-| Max.                                                      | 70.00                 | 74.00              | 60.00                  | 64.00   |
-|                                                           |                       |                    |                        |         |
-| Dummy Note: On-treatment is defined as treatment-emergent |                       |                    |                        |         |
+[TABLE]
 
 In the resulting output, the “Example Drug High Dose” spanning header
 does not include an underline beneath the text at the bottom of the
@@ -1290,6 +1222,7 @@ looks like. This can be achieved by calling the
 `junco:::make_header_bordmat` function.
 
 ``` r
+
 header_border <- junco:::make_header_bordmat(obj = result)
 header_border
 #>      [,1] [,2] [,3] [,4] [,5]
@@ -1305,6 +1238,7 @@ it’s own spanning header, and the value specified in the border matrix
 must be unique to the cell. The border can be updated as follows.
 
 ``` r
+
 header_border[1, 4] <- 4
 header_border
 #>      [,1] [,2] [,3] [,4] [,5]
@@ -1319,6 +1253,7 @@ user-defined border matrix can be provided as the argument value to
 specify the desired column header borders.
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/custombordertable"),
              orientation = "landscape",
@@ -1330,11 +1265,12 @@ tt_to_tlgrtf(result,
 ### Table .docx File
 
 To export a table with a custom border matrix to a .docx file, the
-[`junco::export_as_docx_j`](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.md)
+[`junco::export_TLG_as_docx`](https://johnsonandjohnson.github.io/junco/reference/export_TLG_as_docx.md)
 function can be called with the `border_mat` argument:
 
 ``` r
-export_as_docx_j(result,
+
+export_TLG_as_docx(result,
                 tblid = "custombordertable",
                 output_dir = out_dir,
                 orientation = "landscape",
@@ -1347,18 +1283,7 @@ export_as_docx_j(result,
 > instead of 2 lines. However, if you output the .docx or .rtf file
 > using the same TableTree as input, it will be displayed correctly.
 
-| custombordertable:                                        |                       |                    |                        |         |
-|-----------------------------------------------------------|-----------------------|--------------------|------------------------|---------|
-|                                                           | Example Drug Low Dose |                    | Example Drug High Dose |         |
-|                                                           | Example Drug 5 mg     | Example Drug 10 mg | Example Drug 20 mg     | Placebo |
-| Min.                                                      | 70.00                 | 74.00              | 60.00                  | 64.00   |
-| 1st Qu.                                                   | 70.00                 | 74.00              | 60.00                  | 64.00   |
-| Median                                                    | 70.00                 | 74.00              | 60.00                  | 64.00   |
-| Mean                                                      | 70.00                 | 74.00              | 60.00                  | 64.00   |
-| 3rd Qu.                                                   | 70.00                 | 74.00              | 60.00                  | 64.00   |
-| Max.                                                      | 70.00                 | 74.00              | 60.00                  | 64.00   |
-|                                                           |                       |                    |                        |         |
-| Dummy Note: On-treatment is defined as treatment-emergent |                       |                    |                        |         |
+[TABLE]
 
 ## Addition of Superscript or Other Symbol
 
@@ -1378,6 +1303,7 @@ The default markup file for
 to produce an .rtf file is as follows.
 
 ``` r
+
 library(tibble)
 
 dps_markup_df <- tibble::tribble(
@@ -1412,6 +1338,7 @@ In the following example data, there is a desire to insert a superscript
 a footnote present at the end of the table.
 
 ``` r
+
 adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
                               "Example Drug 10 mg",
                               "Example Drug 20 mg",
@@ -1452,6 +1379,7 @@ values will need to be updated to include the text “~\[super a\]”
 between the drug name and dose level.
 
 ``` r
+
 library(junco)
 
 adsl <- data.frame(TRT01A = c("Example Drug~[super a] 5 mg",
@@ -1485,6 +1413,7 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/superscripttable"),
              orientation = "landscape",
@@ -1496,10 +1425,11 @@ tt_to_tlgrtf(result,
 ### Table .docx File
 
 The default markup file for
-[`junco::export_as_docx_j`](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.md)
+[`junco::export_TLG_as_docx`](https://johnsonandjohnson.github.io/junco/reference/export_TLG_as_docx.md)
 to produce a .docx file is as follows.
 
 ``` r
+
 library(tibble)
 
 docx_markup_df <- tibble::tribble(
@@ -1523,14 +1453,15 @@ docx_markup_df
 ```
 
 If a .docx file is to be created for the table, the
-[`junco::export_as_docx_j`](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.md)
+[`junco::export_TLG_as_docx`](https://johnsonandjohnson.github.io/junco/reference/export_TLG_as_docx.md)
 is to be called. For .docx files, the markup is different from .rtf
 files. In this example, when calling
-[`junco::export_as_docx_j`](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.md),
-the “markup_df” argument has the default “docx_markup_df” object
+[`junco::export_TLG_as_docx`](https://johnsonandjohnson.github.io/junco/reference/export_TLG_as_docx.md),
+the “markup_df_docx” argument has the default “docx_markup_df” object
 specified.
 
 ``` r
+
 library(junco)
 
 adsl <- data.frame(TRT01A = c("Example Drug~[super a] 5 mg",
@@ -1564,26 +1495,17 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
-export_as_docx_j(result,
+
+export_TLG_as_docx(result,
                 tblid = "superscripttable",
                 output_dir = out_dir,
                 orientation = "landscape",
-                markup_df = docx_markup_df)
+                markup_df_docx = docx_markup_df)
 ```
 
 ### Visual Output (HTML Representation)
 
-| superscripttable:                                         |                    |                     |                     |         |
-|-----------------------------------------------------------|--------------------|---------------------|---------------------|---------|
-|                                                           | Example Druga 5 mg | Example Druga 10 mg | Example Druga 20 mg | Placebo |
-| Min.                                                      | 70.00              | 74.00               | 60.00               | 64.00   |
-| 1st Qu.                                                   | 70.00              | 74.00               | 60.00               | 64.00   |
-| Median                                                    | 70.00              | 74.00               | 60.00               | 64.00   |
-| Mean                                                      | 70.00              | 74.00               | 60.00               | 64.00   |
-| 3rd Qu.                                                   | 70.00              | 74.00               | 60.00               | 64.00   |
-| Max.                                                      | 70.00              | 74.00               | 60.00               | 64.00   |
-|                                                           |                    |                     |                     |         |
-| Dummy Note: On-treatment is defined as treatment-emergent |                    |                     |                     |         |
+[TABLE]
 
 ### Listing .rtf File
 
@@ -1595,6 +1517,7 @@ By adding in “~\[super a\]” to the TRT01A variable label, a superscript
 “a” is added to the column label.
 
 ``` r
+
 library(junco)
 library(rlistings)
 
@@ -1625,6 +1548,7 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplelistingsuperscript2"),
              orientation = "landscape")
@@ -1633,10 +1557,11 @@ tt_to_tlgrtf(result,
 ### Listing .docx File
 
 The default markup file for
-[`junco::export_as_docx_j`](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.md)
+[`junco::export_TLG_as_docx`](https://johnsonandjohnson.github.io/junco/reference/export_TLG_as_docx.md)
 to produce a .docx file is as follows.
 
 ``` r
+
 library(tibble)
 
 docx_markup_df <- tibble::tribble(
@@ -1660,14 +1585,15 @@ docx_markup_df
 ```
 
 If a .docx file is to be created for the table, the
-[`junco::export_as_docx_j`](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.md)
+[`junco::export_TLG_as_docx`](https://johnsonandjohnson.github.io/junco/reference/export_TLG_as_docx.md)
 is to be called. For .docx files, the markup is different from .rtf
 files. In this example, when calling
-[`junco::export_as_docx_j`](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.md),
-the “markup_df” argument has the default “docx_markup_df” object
+[`junco::export_TLG_as_docx`](https://johnsonandjohnson.github.io/junco/reference/export_TLG_as_docx.md),
+the “markup_df_docx” argument has the default “docx_markup_df” object
 specified.
 
 ``` r
+
 
 library(junco)
 library(rlistings)
@@ -1699,24 +1625,17 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
-export_as_docx_j(result,
+
+export_TLG_as_docx(result,
                 tblid = "examplelistingsuperscript2",
                 output_dir = out_dir,
                 orientation = "landscape",
-                markup_df = docx_markup_df)
+                markup_df_docx = docx_markup_df)
 ```
 
 ### Visual Output (HTML Representation)
 
-| examplelistingsuperscript2:                               |         |             |
-|-----------------------------------------------------------|---------|-------------|
-| Actual Treatment for Period 01a                           | Subject | Height (in) |
-| Example Drug 10 mg                                        | 2       | 74          |
-| Example Drug 20 mg                                        | 3       | 60          |
-| Example Drug 5 mg                                         | 1       | 70          |
-| Placebo                                                   | 4       | 64          |
-|                                                           |         |             |
-| Dummy Note: On-treatment is defined as treatment-emergent |         |             |
+[TABLE]
 
 ## Grouping of Columns for Tables Containing Many Columns
 
@@ -1730,6 +1649,7 @@ scenario.
 Data Preparation for example
 
 ``` r
+
 library(tern)
 library(dplyr)
 library(rtables)
@@ -1911,12 +1831,14 @@ race information for the “Placebo” treatment group is split across
 files.
 
 ``` r
+
 ################################################################################
 # Convert to tbl file and output table
 ################################################################################
 ```
 
 ``` r
+
 tt_to_tlgrtf(string_map = string_map, tt = result,
              file = paste0(out_dir, "/aetablemultipledocs1"), orientation = "landscape"
 )
@@ -1929,68 +1851,12 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
 
 ### Visual Output (HTML Representation)
 
-| aetablemultipledocs1part1of2:                             |                      |           |           |           |            |                     |           |           |           |
-|-----------------------------------------------------------|----------------------|-----------|-----------|-----------|------------|---------------------|-----------|-----------|-----------|
-|                                                           | Active Study Agent   |           |           |           |            |                     |           |           |           |
-|                                                           | Xanomeline High Dose |           |           |           |            | Xanomeline Low Dose |           |           |           |
-| System Organ Class                                        |                      | Race      |           |           |            |                     | Race      |           |           |
-| Preferred Term, n (%)                                     | Total                | White     | Black     | Asian     | Other      | Total               | White     | Black     | Asian     |
-| Analysis set: Safety                                      | 47                   | 8         | 3         | 10        | 26         | 68                  | 8         | 11        | 9         |
-|                                                           |                      |           |           |           |            |                     |           |           |           |
-| Subjects with ≥1 AE                                       | 32 (68.1%)           | 7 (87.5%) | 1 (33.3%) | 8 (80.0%) | 16 (61.5%) | 26 (38.2%)          | 4 (50.0%) | 4 (36.4%) | 4 (44.4%) |
-|                                                           |                      |           |           |           |            |                     |           |           |           |
-| Skin and subcutaneous tissue disorders                    | 32 (68.1%)           | 7 (87.5%) | 1 (33.3%) | 8 (80.0%) | 16 (61.5%) | 26 (38.2%)          | 4 (50.0%) | 4 (36.4%) | 4 (44.4%) |
-| PRURITUS                                                  | 18 (38.3%)           | 3 (37.5%) | 1 (33.3%) | 4 (40.0%) | 10 (38.5%) | 14 (20.6%)          | 3 (37.5%) | 1 (9.1%)  | 2 (22.2%) |
-| ERYTHEMA                                                  | 10 (21.3%)           | 3 (37.5%) | 1 (33.3%) | 0         | 6 (23.1%)  | 8 (11.8%)           | 1 (12.5%) | 1 (9.1%)  | 0         |
-| HYPERHIDROSIS                                             | 7 (14.9%)            | 2 (25.0%) | 0         | 3 (30.0%) | 2 (7.7%)   | 3 (4.4%)            | 0         | 0         | 2 (22.2%) |
-| RASH                                                      | 5 (10.6%)            | 0         | 0         | 2 (20.0%) | 3 (11.5%)  | 8 (11.8%)           | 3 (37.5%) | 2 (18.2%) | 1 (11.1%) |
-| SKIN IRRITATION                                           | 4 (8.5%)             | 1 (12.5%) | 0         | 2 (20.0%) | 1 (3.8%)   | 4 (5.9%)            | 0         | 0         | 1 (11.1%) |
-| RASH PRURITIC                                             | 2 (4.3%)             | 1 (12.5%) | 0         | 0         | 1 (3.8%)   | 1 (1.5%)            | 0         | 1 (9.1%)  | 0         |
-| ACTINIC KERATOSIS                                         | 1 (2.1%)             | 0         | 0         | 0         | 1 (3.8%)   | 0                   | 0         | 0         | 0         |
-| BLISTER                                                   | 1 (2.1%)             | 0         | 0         | 0         | 1 (3.8%)   | 2 (2.9%)            | 0         | 0         | 0         |
-| PRURITUS GENERALISED                                      | 1 (2.1%)             | 0         | 0         | 1 (10.0%) | 0          | 0                   | 0         | 0         | 0         |
-| RASH MACULO-PAPULAR                                       | 1 (2.1%)             | 0         | 0         | 0         | 1 (3.8%)   | 0                   | 0         | 0         | 0         |
-| SKIN ODOUR ABNORMAL                                       | 1 (2.1%)             | 1 (12.5%) | 0         | 0         | 0          | 0                   | 0         | 0         | 0         |
-| URTICARIA                                                 | 1 (2.1%)             | 0         | 0         | 0         | 1 (3.8%)   | 1 (1.5%)            | 1 (12.5%) | 0         | 0         |
-| ALOPECIA                                                  | 0                    | 0         | 0         | 0         | 0          | 0                   | 0         | 0         | 0         |
-| DRUG ERUPTION                                             | 0                    | 0         | 0         | 0         | 0          | 0                   | 0         | 0         | 0         |
-| RASH ERYTHEMATOUS                                         | 0                    | 0         | 0         | 0         | 0          | 1 (1.5%)            | 0         | 0         | 0         |
-| SKIN ULCER                                                | 0                    | 0         | 0         | 0         | 0          | 0                   | 0         | 0         | 0         |
-|                                                           |                      |           |           |           |            |                     |           |           |           |
-| Dummy Note: On-treatment is defined as treatment-emergent |                      |           |           |           |            |                     |           |           |           |
+[TABLE]
 
   
   
 
-| aetablemultipledocs1part2of2:                             |                     |            |           |           |           |           |
-|-----------------------------------------------------------|---------------------|------------|-----------|-----------|-----------|-----------|
-|                                                           | Active Study Agent  |            |           |           |           |           |
-|                                                           | Xanomeline Low Dose | Placebo    |           |           |           |           |
-| System Organ Class                                        | Race                |            | Race      |           |           |           |
-| Preferred Term, n (%)                                     | Other               | Total      | White     | Black     | Asian     | Other     |
-| Analysis set: Safety                                      | 40                  | 51         | 7         | 7         | 5         | 32        |
-|                                                           |                     |            |           |           |           |           |
-| Subjects with ≥1 AE                                       | 14 (35.0%)          | 12 (23.5%) | 2 (28.6%) | 2 (28.6%) | 1 (20.0%) | 7 (21.9%) |
-|                                                           |                     |            |           |           |           |           |
-| Skin and subcutaneous tissue disorders                    | 14 (35.0%)          | 12 (23.5%) | 2 (28.6%) | 2 (28.6%) | 1 (20.0%) | 7 (21.9%) |
-| PRURITUS                                                  | 8 (20.0%)           | 4 (7.8%)   | 1 (14.3%) | 1 (14.3%) | 0         | 2 (6.2%)  |
-| ERYTHEMA                                                  | 6 (15.0%)           | 4 (7.8%)   | 0         | 2 (28.6%) | 0         | 2 (6.2%)  |
-| HYPERHIDROSIS                                             | 1 (2.5%)            | 0          | 0         | 0         | 0         | 0         |
-| RASH                                                      | 2 (5.0%)            | 3 (5.9%)   | 1 (14.3%) | 0         | 1 (20.0%) | 1 (3.1%)  |
-| SKIN IRRITATION                                           | 3 (7.5%)            | 3 (5.9%)   | 0         | 1 (14.3%) | 0         | 2 (6.2%)  |
-| RASH PRURITIC                                             | 0                   | 0          | 0         | 0         | 0         | 0         |
-| ACTINIC KERATOSIS                                         | 0                   | 0          | 0         | 0         | 0         | 0         |
-| BLISTER                                                   | 2 (5.0%)            | 0          | 0         | 0         | 0         | 0         |
-| PRURITUS GENERALISED                                      | 0                   | 0          | 0         | 0         | 0         | 0         |
-| RASH MACULO-PAPULAR                                       | 0                   | 0          | 0         | 0         | 0         | 0         |
-| SKIN ODOUR ABNORMAL                                       | 0                   | 0          | 0         | 0         | 0         | 0         |
-| URTICARIA                                                 | 0                   | 0          | 0         | 0         | 0         | 0         |
-| ALOPECIA                                                  | 0                   | 1 (2.0%)   | 0         | 0         | 0         | 1 (3.1%)  |
-| DRUG ERUPTION                                             | 0                   | 1 (2.0%)   | 0         | 0         | 1 (20.0%) | 0         |
-| RASH ERYTHEMATOUS                                         | 1 (2.5%)            | 0          | 0         | 0         | 0         | 0         |
-| SKIN ULCER                                                | 0                   | 1 (2.0%)   | 0         | 0         | 0         | 1 (3.1%)  |
-|                                                           |                     |            |           |           |           |           |
-| Dummy Note: On-treatment is defined as treatment-emergent |                     |            |           |           |           |           |
+[TABLE]
 
   
   
@@ -2004,12 +1870,14 @@ treatment group (e.g. each unique TRT01A value), are kept together
 within the same file.
 
 ``` r
+
 ################################################################################
 # Convert to tbl file and output table
 ################################################################################
 ```
 
 ``` r
+
 tt_to_tlgrtf(string_map = string_map, tt = result,
              file = paste0(out_dir, "/aetablemultipledocs2"), orientation = "landscape",
              nosplitin = list(cols = c(trtvar))
@@ -2036,35 +1904,7 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
   
   
 
-| aetablemultipledocs2part3of3:                             |            |           |           |           |           |
-|-----------------------------------------------------------|------------|-----------|-----------|-----------|-----------|
-|                                                           |            |           |           |           |           |
-|                                                           | Placebo    |           |           |           |           |
-| System Organ Class                                        |            | Race      |           |           |           |
-| Preferred Term, n (%)                                     | Total      | White     | Black     | Asian     | Other     |
-| Analysis set: Safety                                      | 51         | 7         | 7         | 5         | 32        |
-|                                                           |            |           |           |           |           |
-| Subjects with ≥1 AE                                       | 12 (23.5%) | 2 (28.6%) | 2 (28.6%) | 1 (20.0%) | 7 (21.9%) |
-|                                                           |            |           |           |           |           |
-| Skin and subcutaneous tissue disorders                    | 12 (23.5%) | 2 (28.6%) | 2 (28.6%) | 1 (20.0%) | 7 (21.9%) |
-| PRURITUS                                                  | 4 (7.8%)   | 1 (14.3%) | 1 (14.3%) | 0         | 2 (6.2%)  |
-| ERYTHEMA                                                  | 4 (7.8%)   | 0         | 2 (28.6%) | 0         | 2 (6.2%)  |
-| HYPERHIDROSIS                                             | 0          | 0         | 0         | 0         | 0         |
-| RASH                                                      | 3 (5.9%)   | 1 (14.3%) | 0         | 1 (20.0%) | 1 (3.1%)  |
-| SKIN IRRITATION                                           | 3 (5.9%)   | 0         | 1 (14.3%) | 0         | 2 (6.2%)  |
-| RASH PRURITIC                                             | 0          | 0         | 0         | 0         | 0         |
-| ACTINIC KERATOSIS                                         | 0          | 0         | 0         | 0         | 0         |
-| BLISTER                                                   | 0          | 0         | 0         | 0         | 0         |
-| PRURITUS GENERALISED                                      | 0          | 0         | 0         | 0         | 0         |
-| RASH MACULO-PAPULAR                                       | 0          | 0         | 0         | 0         | 0         |
-| SKIN ODOUR ABNORMAL                                       | 0          | 0         | 0         | 0         | 0         |
-| URTICARIA                                                 | 0          | 0         | 0         | 0         | 0         |
-| ALOPECIA                                                  | 1 (2.0%)   | 0         | 0         | 0         | 1 (3.1%)  |
-| DRUG ERUPTION                                             | 1 (2.0%)   | 0         | 0         | 1 (20.0%) | 0         |
-| RASH ERYTHEMATOUS                                         | 0          | 0         | 0         | 0         | 0         |
-| SKIN ULCER                                                | 1 (2.0%)   | 0         | 0         | 0         | 1 (3.1%)  |
-|                                                           |            |           |           |           |           |
-| Dummy Note: On-treatment is defined as treatment-emergent |            |           |           |           |           |
+[TABLE]
 
   
   
@@ -2077,6 +1917,7 @@ value of “TRUE”. In this case, both the multiple “part” .rtf files and
 the single .rtf file with all “parts” appended will be created.
 
 ``` r
+
 tt_to_tlgrtf(string_map = string_map, tt = result,
              file = paste0(out_dir, "/aetablemultipledocs3"), orientation = "landscape",
              nosplitin = list(cols = c(trtvar)),
@@ -2104,35 +1945,7 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
   
   
 
-| aetablemultipledocs3part3of3:                             |            |           |           |           |           |
-|-----------------------------------------------------------|------------|-----------|-----------|-----------|-----------|
-|                                                           |            |           |           |           |           |
-|                                                           | Placebo    |           |           |           |           |
-| System Organ Class                                        |            | Race      |           |           |           |
-| Preferred Term, n (%)                                     | Total      | White     | Black     | Asian     | Other     |
-| Analysis set: Safety                                      | 51         | 7         | 7         | 5         | 32        |
-|                                                           |            |           |           |           |           |
-| Subjects with ≥1 AE                                       | 12 (23.5%) | 2 (28.6%) | 2 (28.6%) | 1 (20.0%) | 7 (21.9%) |
-|                                                           |            |           |           |           |           |
-| Skin and subcutaneous tissue disorders                    | 12 (23.5%) | 2 (28.6%) | 2 (28.6%) | 1 (20.0%) | 7 (21.9%) |
-| PRURITUS                                                  | 4 (7.8%)   | 1 (14.3%) | 1 (14.3%) | 0         | 2 (6.2%)  |
-| ERYTHEMA                                                  | 4 (7.8%)   | 0         | 2 (28.6%) | 0         | 2 (6.2%)  |
-| HYPERHIDROSIS                                             | 0          | 0         | 0         | 0         | 0         |
-| RASH                                                      | 3 (5.9%)   | 1 (14.3%) | 0         | 1 (20.0%) | 1 (3.1%)  |
-| SKIN IRRITATION                                           | 3 (5.9%)   | 0         | 1 (14.3%) | 0         | 2 (6.2%)  |
-| RASH PRURITIC                                             | 0          | 0         | 0         | 0         | 0         |
-| ACTINIC KERATOSIS                                         | 0          | 0         | 0         | 0         | 0         |
-| BLISTER                                                   | 0          | 0         | 0         | 0         | 0         |
-| PRURITUS GENERALISED                                      | 0          | 0         | 0         | 0         | 0         |
-| RASH MACULO-PAPULAR                                       | 0          | 0         | 0         | 0         | 0         |
-| SKIN ODOUR ABNORMAL                                       | 0          | 0         | 0         | 0         | 0         |
-| URTICARIA                                                 | 0          | 0         | 0         | 0         | 0         |
-| ALOPECIA                                                  | 1 (2.0%)   | 0         | 0         | 0         | 1 (3.1%)  |
-| DRUG ERUPTION                                             | 1 (2.0%)   | 0         | 0         | 1 (20.0%) | 0         |
-| RASH ERYTHEMATOUS                                         | 0          | 0         | 0         | 0         | 0         |
-| SKIN ULCER                                                | 1 (2.0%)   | 0         | 0         | 0         | 1 (3.1%)  |
-|                                                           |            |           |           |           |           |
-| Dummy Note: On-treatment is defined as treatment-emergent |            |           |           |           |           |
+[TABLE]
 
   
   
@@ -2152,6 +1965,7 @@ subsequent rows generated form the
 function call) will be separated by a page break.
 
 ``` r
+
 library(junco)
 
 adsl <- data.frame(TRT01A = factor(c("Example Drug 5 mg",
@@ -2241,6 +2055,7 @@ result <- set_titles(result, titles)
 ```
 
 ``` r
+
 tt_to_tlgrtf(result,
              file = paste0(out_dir, "/examplepagebreak"))
 #> [[1]]
@@ -2252,30 +2067,20 @@ tt_to_tlgrtf(result,
 > **Note:** HTML output notoriously does not handle well page break, so
 > here it is represented in two parts to show the point.
 
-| examplepagebreak:   |                   |                    |                    |            |
-|---------------------|-------------------|--------------------|--------------------|------------|
-|                     | Example Drug 5 mg | Example Drug 10 mg | Example Drug 20 mg | Placebo    |
-|                     | N=2               | N=2                | N=2                | N=2        |
-| Male                | 1                 | 1                  | 1                  | 1          |
-|                     |                   |                    |                    |            |
-| Response            |                   |                    |                    |            |
-| Yes                 | 1 (100.0%)        | 0                  | 1 (100.0%)         | 0          |
-| No                  | 0                 | 1 (100.0%)         | 0                  | 1 (100.0%) |
+| examplepagebreak:  |  |  |  |  |
+|----|----|----|----|----|
+|  | Example Drug 5 mg | Example Drug 10 mg | Example Drug 20 mg | Placebo |
+|  | N=2 | N=2 | N=2 | N=2 |
+| Male | 1 | 1 | 1 | 1 |
+|  |  |  |  |  |
+| Response |  |  |  |  |
+| Yes | 1 (100.0%) | 0 | 1 (100.0%) | 0 |
+| No | 0 | 1 (100.0%) | 0 | 1 (100.0%) |
 
   
   
 
-| examplepagebreak:                                         |                   |                    |                    |            |
-|-----------------------------------------------------------|-------------------|--------------------|--------------------|------------|
-|                                                           | Example Drug 5 mg | Example Drug 10 mg | Example Drug 20 mg | Placebo    |
-|                                                           | N=2               | N=2                | N=2                | N=2        |
-| Female                                                    | 1                 | 1                  | 1                  | 1          |
-|                                                           |                   |                    |                    |            |
-| Response                                                  |                   |                    |                    |            |
-| Yes                                                       | 1 (100.0%)        | 0                  | 1 (100.0%)         | 1 (100.0%) |
-| No                                                        | 0                 | 1 (100.0%)         | 0                  | 0          |
-|                                                           |                   |                    |                    |            |
-| Dummy Note: On-treatment is defined as treatment-emergent |                   |                    |                    |            |
+[TABLE]
 
 ## Manually Splitting Large Listing Files into Multiple Smaller Files
 
@@ -2294,6 +2099,7 @@ The
 function can be called multiple times to produce multiple .rtf files.
 
 ``` r
+
 library(junco)
 library(rlistings)
 
@@ -2327,6 +2133,7 @@ result1 <- result[keep, ]
 ```
 
 ``` r
+
 tt_to_tlgrtf(result1,
   file = paste0(out_dir, "/examplelistingmultiplefilesPART1OF2"),
   orientation = "landscape"
@@ -2336,13 +2143,14 @@ tt_to_tlgrtf(result1,
 ### Listing .docx File
 
 The
-[`junco::export_as_docx_j`](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.md)
+[`junco::export_TLG_as_docx`](https://johnsonandjohnson.github.io/junco/reference/export_TLG_as_docx.md)
 function can be called multiple times to produce multiple .docx files,
 similar to the approach used for .rtf files:
 
 ``` r
 
-export_as_docx_j(result1,
+
+export_TLG_as_docx(result1,
   tblid = "examplelistingmultiplefilesPART1OF2",
   output_dir = out_dir,
   orientation = "landscape"
@@ -2351,17 +2159,12 @@ export_as_docx_j(result1,
 
 ### Visual Output (HTML Representation)
 
-| examplelistingmultiplefilesPART1OF2:                      |         |             |
-|-----------------------------------------------------------|---------|-------------|
-| Actual Treatment for Period 01a                           | Subject | Height (in) |
-| Example Drug 10 mg                                        | 2       | 74          |
-| Example Drug 5 mg                                         | 1       | 70          |
-|                                                           |         |             |
-| Dummy Note: On-treatment is defined as treatment-emergent |         |             |
+[TABLE]
 
 ### Listing .rtf File 2
 
 ``` r
+
 
 keep <- result$TRT01A %in% c("Example Drug 20 mg", "Placebo")
 
@@ -2369,6 +2172,7 @@ result2 <- result[keep, ]
 ```
 
 ``` r
+
 tt_to_tlgrtf(result2,
   file = paste0(out_dir, "/examplelistingmultiplefilesPART2OF2"),
   orientation = "landscape"
@@ -2379,7 +2183,8 @@ tt_to_tlgrtf(result2,
 
 ``` r
 
-export_as_docx_j(result2,
+
+export_TLG_as_docx(result2,
   tblid = "examplelistingmultiplefilesPART2OF2",
   output_dir = out_dir,
   orientation = "landscape"
@@ -2388,10 +2193,4 @@ export_as_docx_j(result2,
 
 ### Visual Output (HTML Representation)
 
-| examplelistingmultiplefilesPART2OF2:                      |         |             |
-|-----------------------------------------------------------|---------|-------------|
-| Actual Treatment for Period 01a                           | Subject | Height (in) |
-| Example Drug 20 mg                                        | 3       | 60          |
-| Placebo                                                   | 4       | 64          |
-|                                                           |         |             |
-| Dummy Note: On-treatment is defined as treatment-emergent |         |             |
+[TABLE]

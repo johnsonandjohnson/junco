@@ -30,6 +30,8 @@ tt_to_tlgrtf(
   round_type = obj_round_type(tt),
   alignments = list(),
   validate = TRUE,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
   ...
 )
 ```
@@ -167,10 +169,23 @@ tt_to_tlgrtf(
 
 - validate:
 
-  logical(1). Whether to validate the table structure using
+  (`logical(1)`)  
+  Whether to validate the table structure using
   [`rtables::validate_table_struct()`](https://insightsengineering.github.io/rtables/latest-tag/reference/validate_table_struct.html).
   Defaults to `TRUE`. If `FALSE`, a message will be displayed when
   validation fails.
+
+- export_csv:
+
+  (`logical(1)`)  
+  Whether to export the object as a csv representation. Default = FALSE.
+
+- output_csv_directory:
+
+  (`character(1)`)  
+  the directory to export the csv. Default = NULL. Ignored if export_csv
+  = FALSE. If NULL or attempting to export in a non-existent directory,
+  the csv will be exported in the same directory as the .rtf file.
 
 - ...:
 

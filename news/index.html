@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,6 +17,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/index.html">Articles</a></li>
+<li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/johnsonandjohnson/junco/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -28,23 +29,151 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v-0.1.5/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.5" id="junco-015">junco 0.1.5<a class="anchor" aria-label="anchor" href="#junco-015"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.1.6" id="junco-016">junco 0.1.6<a class="anchor" aria-label="anchor" href="#junco-016"></a></h2><p class="text-muted">CRAN release: 2026-05-10</p>
 <div class="section level4">
-<h4 id="added-0-1-5">Added<a class="anchor" aria-label="anchor" href="#added-0-1-5"></a></h4>
-<ul><li>Added new behavior for nested <code>countsource</code> in h_a_freq_dataprep <code>altdf_subset</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/200" class="external-link">#200</a>)</li>
-<li>Add <code><a href="../reference/geom_boxplot_j.html">geom_boxplot_j()</a></code> to be able to draw boxplots whose statistics follow SAS quantile(type =2)</li>
+<h4 id="fixed-0-1-6">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-6"></a></h4>
+<ul><li>Fixed <code><a href="../reference/kaplan_meier.html">s_kaplan_meier()</a></code> range censoring indicator handling to no longer produce <code>NA</code> values in the output when either all subjects are censored or none are censored.</li>
+<li>Aligned <code><a href="../reference/a_freq_resp_var_j.html">a_freq_resp_var_j()</a></code> with <code><a href="../reference/a_freq_j.html">a_freq_j()</a></code> by adding <code>.formats</code> and <code>na_str</code> parameters to allow user customization of output formatting and NA string representation (<a href="https://github.com/johnsonandjohnson/junco/issues/67" class="external-link">#67</a>).</li>
+<li>Fixed the hanging indent in the first column of the body of the table (<a href="https://github.com/johnsonandjohnson/junco/issues/138" class="external-link">#138</a>)</li>
+<li>Export <code><a href="../reference/leftside.html">leftside()</a></code>, <code>postfun_eq5d</code> <code>ac_blank_line</code> and <code>tt_to_tblfile</code>
+</li>
+<li>Minor bugfix in DOCX exporter when calculating the number of pages (<a href="https://github.com/johnsonandjohnson/junco/issues/188" class="external-link">#188</a>)</li>
+<li>Fixed <code><a href="../reference/tt_to_flextable_j.html">tt_to_flextable_j()</a></code> to have correct left-indentation in header col 1 (<a href="https://github.com/johnsonandjohnson/junco/issues/171" class="external-link">#171</a>) and footer first line starting with newline (<a href="https://github.com/johnsonandjohnson/junco/issues/171" class="external-link">#171</a>)</li>
+<li>Fixed relative risk difference derivations for combined column facets in <code><a href="../reference/a_freq_j.html">a_freq_j()</a></code>, <code><a href="../reference/a_freq_resp_var_j.html">a_freq_resp_var_j()</a></code> and <code><a href="../reference/a_eair100_j.html">a_eair100_j()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/195" class="external-link">#195</a>)</li>
+<li>Fixed calculation of ‘reduce_first_col_indentation’ and section break positions in <code>insert_keepNext_vertical_pagination()</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/218" class="external-link">#218</a>)</li>
+<li>Fixed the little gaps in neighboring spanning headers in the docx exporter (<a href="https://github.com/johnsonandjohnson/junco/issues/216" class="external-link">#216</a>)</li>
+<li>Fixed blank pages happening at the end of the docx (<a href="https://github.com/johnsonandjohnson/junco/issues/177" class="external-link">#177</a>)</li>
+<li>DOCX exporter fixed watermark location in case of listings</li>
+<li>DOCX exporter updated table border width from 0.75 to 0.875 inches</li>
+<li>DOCX exporter when having vertical pagination in tables or listings, fixed the rows misalignment from page 2 and below compared to RTF</li>
+<li>Fixed bug in <code>s_summarize_desc_j()</code> when applied to almost constant data due to behavior from <code>t.test.default()</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/257" class="external-link">#257</a>)</li>
+<li>
+<code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> now is passing vectorized colwidths when exporting ‘allparts’ to match the colwidths of the individual parts (<a href="https://github.com/johnsonandjohnson/junco/issues/225" class="external-link">#225</a>)</li>
 </ul></div>
+<div class="section level4">
+<h4 id="changed-0-1-6">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-6"></a></h4>
+<ul><li>Moved <code><a href="../reference/safe_t_test.html">safe_t_test()</a></code> from <code>a_summarize_aval_chg_diff.R</code> to a new file <code>safe_t_test.R</code>,</li>
+<li>Moved <code>add_blank_line_rcells()</code> from <code>s_functions.R</code> to <code>blank_line.R</code>.</li>
+<li>changed return value <code>n</code> for <code>s_ancova_j</code> into <code>n_fit</code>, to differentiate between these two statistics for combined function <code><a href="../reference/s_summarize_ancova_j.html">s_summarize_ancova_j()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/117" class="external-link">#117</a>)</li>
+<li>added default label for median_range “Median (min, max)” in <code>junco_default_labels_start</code>
+</li>
+<li>changed label from “experimental” to “stable” for <code>default_stats_formats_labels</code>
+</li>
+<li>refactored functions <code><a href="../reference/tt_to_flextable_j.html">tt_to_flextable_j()</a></code> and <code><a href="../reference/export_as_docx_j.html">export_as_docx_j()</a></code>
+</li>
+<li>created generic wrapper function <code><a href="../reference/export_TLG_as_docx.html">export_TLG_as_docx()</a></code>, which now calls <code><a href="../reference/export_as_docx_j.html">export_as_docx_j()</a></code> and <code><a href="../reference/export_graph_as_docx.html">export_graph_as_docx()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/173" class="external-link">#173</a>)</li>
+<li>Functions <code><a href="../reference/export_as_docx_j.html">export_as_docx_j()</a></code> and <code><a href="../reference/export_graph_as_docx.html">export_graph_as_docx()</a></code> still exist but are now internal, i.e. not exported</li>
+<li>updated vignette to explain correctly how to insert newlines in the headers of Tables and Listings (<a href="https://github.com/johnsonandjohnson/junco/issues/179" class="external-link">#179</a>)</li>
+<li>“watermark” argument in the docx exporter is now a String instead of a Boolean (<a href="https://github.com/johnsonandjohnson/junco/issues/181" class="external-link">#181</a>)</li>
+<li>faster docx unit tests (<a href="https://github.com/johnsonandjohnson/junco/issues/197" class="external-link">#197</a>)</li>
+<li>LS means tabulation uses very slightly updated column header (no blanks around the hyphen in “Testing-Reference”)</li>
+<li>Bump flextable and remove the skip() units tests (<a href="https://github.com/johnsonandjohnson/junco/issues/193" class="external-link">#193</a>)</li>
+<li>Update colwidths tests to derive values</li>
+<li>Fix old TODOs in tests</li>
+<li>docx exporter added missing defaults (<a href="https://github.com/johnsonandjohnson/junco/issues/186" class="external-link">#186</a>)</li>
+<li>Changed all snapshot tests to <code>cran = TRUE</code>
+</li>
+<li>Footnotes in docx and RTF outputs are now 1 table row/cell (<a href="https://github.com/johnsonandjohnson/junco/issues/285" class="external-link">#285</a>)</li>
+<li>removed label “experimental” for <code>theme_docx_default_j</code>, <code>tt_to_flextable_j</code> and <code>export_TLG_as_docx</code>
+</li>
+</ul></div>
+<div class="section level4">
+<h4 id="added-0-1-6">Added<a class="anchor" aria-label="anchor" href="#added-0-1-6"></a></h4>
+<ul><li>Added multi-comparator functionality (<a href="https://github.com/johnsonandjohnson/junco/issues/271" class="external-link">#271</a>)</li>
+<li>Hotfix: Added several new functions for creating the Vital Sign tables for core and clinpharm: <code><a href="../reference/a_summary_diff_mvars.html">a_summary_diff_mvars()</a></code>, <code><a href="../reference/a_summary_j.html">a_summary_j()</a></code>, <code><a href="../reference/c_summary_subset_label.html">c_summary_subset_label()</a></code>, <code><a href="../reference/filter_df_prior_afun.html">filter_df_prior_afun()</a></code>, <code><a href="../reference/prepend_label_cell.html">prepend_label_cell()</a></code>, <code><a href="../reference/s_diff_mean_ci.html">s_diff_mean_ci()</a></code>, <code><a href="../reference/s_summary_diff.html">s_summary_diff()</a></code>, <code><a href="../reference/safe_t_test.html">safe_t_test()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/304" class="external-link">#304</a>).</li>
+<li>Added option to perform <code>a_summarize_ancova_j</code> in a layout with a combined column facet (<a href="https://github.com/johnsonandjohnson/junco/issues/117" class="external-link">#117</a>) + slight change in return value for <code><a href="../reference/s_ancova_j.html">s_ancova_j()</a></code>, now we have n_fit instead of n returned</li>
+<li>Added option to switch on/off the export of the csv in both <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> and <code><a href="../reference/export_as_docx_j.html">export_as_docx_j()</a></code>
+</li>
+<li>Added option to specify the output folder for the csv</li>
+<li>Added argument ‘validate’ to <code><a href="../reference/export_TLG_as_docx.html">export_TLG_as_docx()</a></code> and <code><a href="../reference/tt_to_flextable_j.html">tt_to_flextable_j()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/213" class="external-link">#213</a>)</li>
+<li>Added “watermark” argument in the docx exporter for Figures (<a href="https://github.com/johnsonandjohnson/junco/issues/181" class="external-link">#181</a>)</li>
+<li>Added argument <code>mult_adj_emmeans</code> in <code><a href="../reference/fit_mmrm_j.html">fit_mmrm_j()</a></code> to enable (single-step or step-down) Dunnett multiplicity adjustment for LS means contrasts (p-values and confidence intervals) for more than one experimental arm within visits.</li>
+<li>Added option for subgroup variable in the <code>vars</code> argument of <code><a href="../reference/fit_mmrm_j.html">fit_mmrm_j()</a></code> to enable fitting an overall MMRM with subgroup interaction terms.</li>
+<li>Export helpers for LS means tabulation: <code>lsmeans_wide_cfun</code>, <code>lsmeans_wide_first_split_fun_fct</code>, <code>lsmeans_wide_second_split_fun_fct</code>
+</li>
+<li>Added <code>lifecycle</code> to suggests</li>
+</ul></div>
+<div class="section level3">
+<h3 id="id_015---minor-hotfix-release-0-1-6">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v-0.1.5" class="external-link">0.1.5</a> - 2026-03-03 (minor hotfix release)<a class="anchor" aria-label="anchor" href="#id_015---minor-hotfix-release-0-1-6"></a></h3>
+<div class="section level4">
+<h4 id="added-and-removed-0-1-6">Added and Removed<a class="anchor" aria-label="anchor" href="#added-and-removed-0-1-6"></a></h4>
+<ul><li>Added new behavior for nested <code>countsource</code> in h_a_freq_dataprep <code>altdf_subset</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/200" class="external-link">#200</a>)</li>
+</ul></div>
+</div>
+<div class="section level3">
+<h3 id="id_014---minor-hotfix-release-0-1-6">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/0.1.4" class="external-link">0.1.4</a> - 2026-02-02 (minor hotfix release)<a class="anchor" aria-label="anchor" href="#id_014---minor-hotfix-release-0-1-6"></a></h3>
+<div class="section level4">
+<h4 id="fixed-0-1-6-1">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-6-1"></a></h4>
+<ul><li>“caption” paragraph style in the docx exporter is now handled by flextable (<a href="https://github.com/johnsonandjohnson/junco/issues/182" class="external-link">#182</a>)</li>
+<li>Fixed <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code>, when exporting an empty listing do not lose Title and Footers</li>
+<li>Fixed <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> argument <code>label_width_ins</code> which was not applying the change in the row label column width (<a href="https://github.com/johnsonandjohnson/junco/issues/166" class="external-link">#166</a>).</li>
+</ul></div>
+<div class="section level4">
+<h4 id="changed-0-1-6-1">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-6-1"></a></h4>
+<ul><li>Reinstate rbmi as dependency</li>
+</ul></div>
+</div>
+<div class="section level3">
+<h3 id="id_013---minor-hotfix-release-0-1-6">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.3" class="external-link">0.1.3</a> - 2026-01-12 (minor hotfix release)<a class="anchor" aria-label="anchor" href="#id_013---minor-hotfix-release-0-1-6"></a></h3>
+<div class="section level4">
+<h4 id="changed-0-1-6-2">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-6-2"></a></h4>
+<ul><li>Address CRAN NOTES.</li>
+</ul></div>
+</div>
+<div class="section level3">
+<h3 id="id_012---0-1-6">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.2-rc1" class="external-link">0.1.2</a> - 2025-12-10<a class="anchor" aria-label="anchor" href="#id_012---0-1-6"></a></h3>
+<div class="section level4">
+<h4 id="added-and-removed-0-1-6-1">Added and Removed<a class="anchor" aria-label="anchor" href="#added-and-removed-0-1-6-1"></a></h4>
+<ul><li><p>Add <code><a href="../reference/a_two_tier.html">a_two_tier()</a></code> analysis function</p></li>
+<li><p>Add <code><a href="../reference/a_maxlev.html">a_maxlev()</a></code> to be able to calculate count and percentage of the maximum level of an ordered factor per subject</p></li>
+<li><p>Remove <code>brackets_to_rtf()</code></p></li>
+<li><p>Export <code><a href="../reference/rbmi_pool.html">rbmi_pool()</a></code> <a href="https://github.com/johnsonandjohnson/junco/issues/22" class="external-link">#22</a></p></li>
+<li><p>Add functionality to <code><a href="../reference/a_freq_j.html">a_freq_j()</a></code> to process <code>val = NULL</code> from levels specified in <code>label_map</code>, as well as the modified version <code><a href="../reference/a_freq_j.html">a_freq_j_with_exclude()</a></code> that allows to exclude the analysis from specified row splits. <a href="https://github.com/johnsonandjohnson/junco/issues/95" class="external-link">#95</a></p></li>
+<li><p>Add <code><a href="../reference/cmhrms.html">a_cmhrms_j()</a></code> to support p-value from CMH row mean score test, as well as the modified version <code><a href="../reference/cmhrms.html">a_cmhrms_j_with_exclude()</a></code> that allows to exclude the analysis from specified row splits. <a href="https://github.com/johnsonandjohnson/junco/issues/97" class="external-link">#97</a></p></li>
+<li><p>Added standard error (SE) column for each treatment arm’s least square (LS) means estimate to the <code><a href="../reference/summarize_lsmeans_wide.html">summarize_lsmeans_wide()</a></code> layout.</p></li>
+<li><p>Added the internal function <code><a href="../reference/do_exclude_split.html">do_exclude_split()</a></code> to facilitate the exclusion of specified row splits from analysis functions.</p></li>
+<li><p>Remove some unused functions (jj_uc_map, postfun_cog, column_N, non_blank_sentinel, null_fn, unicodify</p></li>
+<li><p>Add extra check for existence of <code>.alt_df_full</code> when layout has risk difference column and a row-split (h_create_alt_df) <a href="https://github.com/johnsonandjohnson/junco/issues/120" class="external-link">#120</a>.</p></li>
+<li><p>Add docx exporter for Tables, Listings and Figures.</p></li>
+<li><p>Add <code>alignments</code> argument in <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code></p></li>
+<li><p>Removed <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff_test.html" class="external-link">s_test_proportion_diff()</a></code> and corresponding helper functions, as they are now available as needed in the <code>tern</code> package.</p></li>
+<li><p>Added <code>cmh_sato</code> and <code>cmh_mn</code> (Cochran-Mantel-Haenszel stratified proportion difference estimation with Sato variance and Miettinen Nurminen method, respectively) <code>method</code> options to the <code><a href="../reference/prop_diff.html">s_proportion_diff_j()</a></code> function.</p></li>
+<li><p>Added formatting function round type (<a href="https://github.com/johnsonandjohnson/junco/issues/76" class="external-link">#76</a>)</p></li>
+<li><p>Fixed bug in s_summarize_desc_j function to handle sparse data (zero variance) cases (<a href="https://github.com/johnsonandjohnson/junco/issues/78" class="external-link">#78</a>)</p></li>
+</ul></div>
+</div>
+<div class="section level3">
+<h3 id="id_011---0-1-6">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.1" class="external-link">0.1.1</a> - 2025-07-28<a class="anchor" aria-label="anchor" href="#id_011---0-1-6"></a></h3>
+<div class="section level4">
+<h4 id="added-0-1-6-1">Added<a class="anchor" aria-label="anchor" href="#added-0-1-6-1"></a></h4>
+<ul><li>First release of the junco package for Table and Listing (TL) Reporting</li>
+<li>Functions to produce tables and listings in R</li>
+<li>Built on the rtables package framework</li>
+<li>Integration with formatters, rtables, tidytlg, and tern packages</li>
+</ul></div>
+<div class="section level4">
+<h4 id="changed-0-1-6-3">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-6-3"></a></h4>
+<ul><li>Initial CRAN release</li>
+</ul><p>All notable changes to this project will be documented in this file.</p>
+<p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/" class="external-link">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html" class="external-link">Semantic Versioning</a>.</p>
+</div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wójciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

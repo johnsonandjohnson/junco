@@ -5,7 +5,14 @@ Extracts the least square means from an `MMRM` fit.
 ## Usage
 
 ``` r
-get_mmrm_lsmeans(fit, vars, conf_level, weights, averages = list())
+get_mmrm_lsmeans(
+  fit,
+  vars,
+  conf_level,
+  weights,
+  averages = list(),
+  mult_adj = c("none", "dunnett", "step-down-dunnett")
+)
 ```
 
 ## Arguments
@@ -58,7 +65,17 @@ get_mmrm_lsmeans(fit, vars, conf_level, weights, averages = list())
   named list of visit levels which should be averaged and reported along
   side the single visits.
 
+- mult_adj:
+
+  (`string`)  
+  multiplicity adjustment within visits for the contrasts.
+
 ## Value
 
 A list with data frames `estimates` and `contrasts`. The attributes
-`averages` and `weights` save the settings used.
+`averages`, `weights` and `mult_adj` save the settings used.
+
+## Note
+
+This is modified from `tern.mmrm` and has the additional `mult_adj`
+argument.

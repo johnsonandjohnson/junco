@@ -15,7 +15,8 @@ a_summarize_ancova_j(
   ref_path,
   .spl_context,
   ...,
-  .stats = NULL,
+  .stats = c("n", "mean_sd", "median", "range", "quantiles", "lsmean_se", "lsmean_ci",
+    "lsmean_diffci", "pval"),
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL
@@ -117,6 +118,7 @@ Other Inclusion of ANCOVA Functions:
 ## Examples
 
 ``` r
+
 basic_table() |>
   split_cols_by("Species") |>
   add_colcounts() |>
@@ -331,7 +333,7 @@ s_summarize_ancova_j(
 #> attr(,"label")
 #> [1] "Geometric Mean (95% CI)"
 #> 
-#> $n
+#> $n_fit
 #> [1] 50
 #> attr(,"label")
 #> [1] "n"

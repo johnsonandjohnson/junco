@@ -64,7 +64,7 @@ a_freq_combos_j(
   When multiple levels, only those levels/values of the incoming
   variable will be considered.  
   When no values are observed (eg zero row input df), a row with
-  row-label `No data reported` will be included in the table.
+  row-label `No data to report` will be included in the table.
 
 - combosdf:
 
@@ -258,7 +258,8 @@ combodf <- tribble(
 lyt <- basic_table(show_colcounts = TRUE) |>
   split_cols_by("ARM") |>
   split_cols_by("ACAT1",
-    split_fun = add_combo_levels(combosdf = combodf, trim = FALSE, keep_levels = combodf$valname)
+    split_fun = rtables::add_combo_levels(combosdf = combodf,
+                 trim = FALSE, keep_levels = combodf$valname)
   ) |>
   analyze("TRTEMFL",
     show_labels = "hidden",

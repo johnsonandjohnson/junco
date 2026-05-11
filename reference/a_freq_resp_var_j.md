@@ -22,6 +22,8 @@ a_freq_resp_var_j(
   method = c("wald", "waldcc", "cmh", "ha", "newcombe", "newcombecc", "strat_newcombe",
     "strat_newcombecc"),
   weights_method = formals(s_proportion_diff)$weights_method,
+  .formats = NULL,
+  na_str = rep("NA", 3),
   ...
 )
 ```
@@ -97,6 +99,17 @@ a_freq_resp_var_j(
 
   (`character`)  
   method for calculating weights.
+
+- .formats:
+
+  (`character` or NULL)  
+  formats to apply to the statistics. If NULL, default formats will be
+  used.
+
+- na_str:
+
+  (`character`)  
+  string to use for NA values. Defaults to `rep("NA", 3)`.
 
 - ...:
 

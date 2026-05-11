@@ -40,7 +40,10 @@ a_summarize_aval_chg_diff_j(
     "xx.dx (xx.dx, xx.dx)"),
   .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx,
     coldiff = jjcsformat_xx),
-  multivars = c("AVAL", "AVAL", "CHG")
+  multivars = c("AVAL", "AVAL", "CHG"),
+  weights_emmeans = NULL,
+  method_combo = c("contrasts", "collapse"),
+  weights_combo = NULL
 )
 ```
 
@@ -191,6 +194,49 @@ a_summarize_aval_chg_diff_j(
   (`string(3)`)  
   Variables names to use in 3-col layout.
 
+- weights_emmeans:
+
+  (`string`)  
+  argument from
+  [`emmeans::emmeans()`](https://rvlenth.github.io/emmeans/reference/emmeans.html),
+  `"counterfactual"` by default.
+
+- method_combo:
+
+  (`string`)  
+  Method for derivations in combined column.
+
+  - `contrast` Derivations for the combined level are done through
+    contrasts from the original model (using weights per `weights_combo`
+    specifications).
+
+  - `collapse` The ancova model for the combined group will be performed
+    with group levels that contribute to the combination collapsed into
+    a single combined level.
+
+  For more information see the vignette
+  `ANCOVA with Combined Treatment Groups`.
+
+- weights_combo:
+
+  (`string`)  
+  Weights for the contrasts of the combined levels.
+
+  - `equal` 1/(number of levels from arm variable included in the
+    combination)
+
+  - `proportional`, `proportional_marginal` weight for each level
+    included in the combination is proportional to number of
+    observations in that level  
+    The difference between `proportional` and `proportional_marginal` is
+    only relevant when the model includes an interaction between arm and
+    other factor variable (`interaction_item`).  
+    `proportional_marginal` interprets proportional over all levels of
+    `interaction_item`, ie, the same weights will be used for all levels
+    of `interaction_item`.  
+    For `proportional` the weights will be derived within the requested
+    level (`interaction_y`) for `interaction_item`.
+
 ## Value
 
 A function that can be used in an analyze function call
@@ -200,8 +246,6 @@ A function that can be used in an analyze function call
 See Description
 
 ## See also
-
-s_summarize_ancova_j
 
 Other Inclusion of ANCOVA Functions:
 [`a_summarize_ancova_j()`](https://johnsonandjohnson.github.io/junco/reference/s_summarize_ancova_j.md),

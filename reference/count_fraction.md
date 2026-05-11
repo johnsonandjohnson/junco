@@ -78,6 +78,7 @@ Other JJCS formatting functions:
 ## Examples
 
 ``` r
+
 jjcsformat_count_fraction(c(7, 0.7))
 #> [1] "7 (70.0%)"
 jjcsformat_count_fraction(c(70000, 70000 / 70001))

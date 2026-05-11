@@ -63,7 +63,7 @@ a_freq_subcol_j(
   When multiple levels, only those levels/values of the incoming
   variable will be considered.  
   When no values are observed (eg zero row input df), a row with
-  row-label `No data reported` will be included in the table.
+  row-label `No data to report` will be included in the table.
 
 - subcol_split:
 
@@ -230,7 +230,7 @@ combodf <- tribble(
 )
 
 lyt <- basic_table(show_colcounts = TRUE) |>
-  split_cols_by("COLSPAN_REL", split_fun = add_combo_levels(combodf, trim = TRUE)) |>
+  split_cols_by("COLSPAN_REL", split_fun = rtables::add_combo_levels(combodf, trim = TRUE)) |>
   split_cols_by("ARM") |>
   analyze("AEDECOD",
     afun = a_freq_subcol_j,

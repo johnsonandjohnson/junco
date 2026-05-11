@@ -8,12 +8,13 @@ result to produce tables and graphs.
 ``` r
 fit_mmrm_j(
   vars = list(response = "AVAL", covariates = c(), id = "USUBJID", arm = "ARM", visit =
-    "AVISIT"),
+    "AVISIT", subgroup = NULL),
   data,
   conf_level = 0.95,
   cor_struct = "unstructured",
   weights_emmeans = "counterfactual",
   averages_emmeans = list(),
+  mult_adj_emmeans = c("none", "dunnett", "step-down-dunnett"),
   ...
 )
 ```
@@ -74,6 +75,14 @@ fit_mmrm_j(
   optional named list of visit levels which should be averaged and
   reported along side the single visits.
 
+- mult_adj_emmeans:
+
+  (`string`)  
+  whether to multiplicity adjust LS means contrast p-values and
+  confidence intervals within visits when there are more than 2
+  treatment arms. Note that this cannot be combined with
+  `averages_emmeans`. Either "none", "dunnett" or "step-down-dunnett".
+
 - ...:
 
   additional arguments for
@@ -96,8 +105,9 @@ A `tern_model` object which is a list with model results:
   criterion, AIC, corrected AIC, BIC).
 
 - `lsmeans`: This is a list with data frames `estimates` and
-  `contrasts`. The attributes `averages` and `weights` save the settings
-  used (`averages_emmeans` and `weights_emmeans`).
+  `contrasts`. The attributes `averages`, `weights` and `mult_adj` save
+  the settings used (`averages_emmeans`, `weights_emmeans` and
+  `mult_adj_emmeans`).
 
 - `vars`: The variable list.
 
@@ -161,9 +171,13 @@ the following options.
 
 This function has the `_j` suffix to distinguish it from
 [`mmrm::fit_mmrm()`](https://openpharma.github.io/mmrm/latest-tag/reference/fit_mmrm.html).
-It is a copy from the `tern.mmrm` package and later will be replaced by
-tern.mmrm::fit_mmrm(). No new features are included in this function
-here.
+It is modified from the `tern.mmrm` package. The new features are:
+
+- the `mult_adj_emmeans` argument and its functionality
+
+- the `subgroup` variable in `vars` and its functionality
+
+These could later be contributed upstream in `tern.mmrm`.
 
 ## Examples
 

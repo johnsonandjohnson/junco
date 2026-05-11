@@ -5,23 +5,15 @@
 The following functions are the Analysis functions used used to create
 common table layouts.
 
-- [`s_ancova_j()`](https://johnsonandjohnson.github.io/junco/reference/s_ancova_j.md)
-  : Junco Extended ANCOVA Function
-
-- [`a_summarize_ancova_j()`](https://johnsonandjohnson.github.io/junco/reference/s_summarize_ancova_j.md)
-  [`s_summarize_ancova_j()`](https://johnsonandjohnson.github.io/junco/reference/s_summarize_ancova_j.md)
-  : ANCOVA Summary Function
-
 - [`column_stats()`](https://johnsonandjohnson.github.io/junco/reference/column_stats.md)
   : Statistics within the column space
+
+- [`a_eair100_j()`](https://johnsonandjohnson.github.io/junco/reference/a_eair100_j.md)
+  : Exposure-Adjusted Incidence Rate
 
 - [`a_freq_combos_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_combos_j.md)
   : Analysis function count and percentage in column design controlled
   by combosdf
-
-- [`s_summarize_ex_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summarize_ex_j.md)
-  [`a_summarize_ex_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summarize_ex_j.md)
-  : Tabulation for Exposure Tables
 
 - [`s_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
   [`a_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
@@ -36,8 +28,9 @@ common table layouts.
 - [`a_freq_resp_var_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_resp_var_j.md)
   : Analysis Function for Response Variables
 
-- [`a_eair100_j()`](https://johnsonandjohnson.github.io/junco/reference/a_eair100_j.md)
-  : Exposure-Adjusted Incidence Rate
+- [`a_maxlev()`](https://johnsonandjohnson.github.io/junco/reference/a_maxlev.md)
+  : Calculate Count and Percentage of the Maximum Level of an Ordered
+  Factor per Subject.
 
 - [`a_proportion_ci_factor()`](https://johnsonandjohnson.github.io/junco/reference/a_proportion_ci_factor.md)
   : Formatted Analysis Function For Proportion Confidence Interval for
@@ -50,12 +43,27 @@ common table layouts.
 - [`a_summarize_aval_chg_diff_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summarize_aval_chg_diff_j.md)
   : Analysis function 3-column presentation
 
-- [`a_maxlev()`](https://johnsonandjohnson.github.io/junco/reference/a_maxlev.md)
-  : Calculate Count and Percentage of the Maximum Level of an Ordered
-  Factor per Subject.
+- [`s_summarize_ex_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summarize_ex_j.md)
+  [`a_summarize_ex_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summarize_ex_j.md)
+  : Tabulation for Exposure Tables
+
+- [`a_summary_diff_mvars()`](https://johnsonandjohnson.github.io/junco/reference/a_summary_diff_mvars.md)
+  [`a_summary_diff_mvars_label()`](https://johnsonandjohnson.github.io/junco/reference/a_summary_diff_mvars.md)
+  **\[experimental\]** : Descriptive Statistics for Multiple Univariate
+  Variables with Optional Reference-Based Comparison
+
+- [`a_summary_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summary_j.md)
+  **\[experimental\]** :
+
+  Wrapper around
+  [`tern::a_summary()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html)
+  with junco-specific defaults
 
 - [`a_two_tier()`](https://johnsonandjohnson.github.io/junco/reference/a_two_tier.md)
   : Two Tier Analysis Function
+
+- [`c_summary_subset_label()`](https://johnsonandjohnson.github.io/junco/reference/c_summary_subset_label.md)
+  **\[experimental\]** : Summary Statistics for Filtered Data with Label
 
 - [`rbmi_analyse()`](https://johnsonandjohnson.github.io/junco/reference/rbmi_analyse.md)
   : Analyse Multiple Imputed Datasets
@@ -176,27 +184,44 @@ common table layouts.
 - [`response_by_var()`](https://johnsonandjohnson.github.io/junco/reference/response_by_var.md)
   : Count denom fraction statistic
 
+- [`s_ancova_j()`](https://johnsonandjohnson.github.io/junco/reference/s_ancova_j.md)
+  : Junco Extended ANCOVA Function
+
+- [`s_diff_mean_ci()`](https://johnsonandjohnson.github.io/junco/reference/s_diff_mean_ci.md)
+  **\[experimental\]** : Difference in Means with Confidence Interval
+
 - [`s_proportion_factor()`](https://johnsonandjohnson.github.io/junco/reference/s_proportion_factor.md)
   : s_function for proportion of factor levels
-
-- [`summarize_row_counts()`](https://johnsonandjohnson.github.io/junco/reference/summarize_row_counts.md)
-  : Layout Creating Function Adding Row Counts
 
 - [`s_proportion_logical()`](https://johnsonandjohnson.github.io/junco/reference/s_proportion_logical.md)
   :
 
   s_function for proportion of `TRUE` in logical vector
 
+- [`a_summarize_ancova_j()`](https://johnsonandjohnson.github.io/junco/reference/s_summarize_ancova_j.md)
+  [`s_summarize_ancova_j()`](https://johnsonandjohnson.github.io/junco/reference/s_summarize_ancova_j.md)
+  : ANCOVA Summary Function
+
+- [`s_summary_diff()`](https://johnsonandjohnson.github.io/junco/reference/s_summary_diff.md)
+  **\[experimental\]** : Descriptive Statistics for Univariate Data with
+  Optional Reference Comparison
+
 - [`summarize_coxreg_multivar()`](https://johnsonandjohnson.github.io/junco/reference/summarize_coxreg_multivar.md)
   : Layout Generating Function for TEFOS03 and Related Cox Regression
   Layouts
 
-- [`summarize_lsmeans_wide()`](https://johnsonandjohnson.github.io/junco/reference/summarize_lsmeans_wide.md)
+- [`lsmeans_wide_first_split_fun_fct()`](https://johnsonandjohnson.github.io/junco/reference/summarize_lsmeans_wide.md)
+  [`lsmeans_wide_second_split_fun_fct()`](https://johnsonandjohnson.github.io/junco/reference/summarize_lsmeans_wide.md)
+  [`lsmeans_wide_cfun()`](https://johnsonandjohnson.github.io/junco/reference/summarize_lsmeans_wide.md)
+  [`summarize_lsmeans_wide()`](https://johnsonandjohnson.github.io/junco/reference/summarize_lsmeans_wide.md)
   : Layout Generating Function for LS Means Wide Table Layouts
 
 - [`s_summarize_mmrm()`](https://johnsonandjohnson.github.io/junco/reference/summarize_mmrm.md)
   [`a_summarize_mmrm()`](https://johnsonandjohnson.github.io/junco/reference/summarize_mmrm.md)
   **\[stable\]** : Dynamic tabulation of MMRM results with tables
+
+- [`summarize_row_counts()`](https://johnsonandjohnson.github.io/junco/reference/summarize_row_counts.md)
+  : Layout Creating Function Adding Row Counts
 
 - [`h_get_trtvar_refpath()`](https://johnsonandjohnson.github.io/junco/reference/h_get_trtvar_refpath.md)
   : Get Treatment Variable Reference Path
@@ -233,6 +258,8 @@ create common table layouts.
   [`jjcsformat_fraction_count_denom()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
   : Formatting functions for count and fraction, and for count
   denominator and fraction values
+- [`ac_blank_line()`](https://johnsonandjohnson.github.io/junco/reference/ac_blank_line.md)
+  : Analysis and Content Summary Function Producing Blank Line
 - [`insert_blank_line()`](https://johnsonandjohnson.github.io/junco/reference/insert_blank_line.md)
   : Insertion of Blank Lines in a Layout
 
@@ -268,10 +295,18 @@ create common table layouts.
   : Creation of Column Spanning Mapping Dataframe
 - [`create_colspan_var()`](https://johnsonandjohnson.github.io/junco/reference/colspan_var.md)
   : Creation of Column Spanning Variables
+- [`grouped_cols_w_diffs()`](https://johnsonandjohnson.github.io/junco/reference/grouped_cols_w_diffs.md)
+  : Standard Column Structure With Grouped Treatments and Difference
+  Columns
 - [`do_exclude_split()`](https://johnsonandjohnson.github.io/junco/reference/do_exclude_split.md)
   : Predicate to Check if Split Should be Excluded
 - [`make_combo_splitfun()`](https://johnsonandjohnson.github.io/junco/reference/make_combo_splitfun.md)
   : Split Function Helper
+- [`make_multicomp_splfun()`](https://johnsonandjohnson.github.io/junco/reference/make_multicomp_splfun.md)
+  [`make_dflt_comp_map()`](https://johnsonandjohnson.github.io/junco/reference/make_multicomp_splfun.md)
+  : Make Multi-comparator Split Function
+- [`postfun_eq5d()`](https://johnsonandjohnson.github.io/junco/reference/postfun_eq5d.md)
+  : Post-processing split function for EQ-5D style column statistics
 - [`real_add_overall_facet()`](https://johnsonandjohnson.github.io/junco/reference/real_add_overall_facet.md)
   : Add Overall Facet
 
@@ -292,11 +327,8 @@ The following utility functions help to add titles/footnotes.
 The following functions are other miscellaneous junco functions used to
 create common table layouts.
 
-- [`remove_col_count()`](https://johnsonandjohnson.github.io/junco/reference/remove_col_count.md)
-  : Removal of Unwanted Column Counts
-
-- [`rm_levels()`](https://johnsonandjohnson.github.io/junco/reference/rm_levels.md)
-  : Removal of Levels
+- [`filter_df_prior_afun()`](https://johnsonandjohnson.github.io/junco/reference/filter_df_prior_afun.md)
+  **\[experimental\]** : Filter Data Prior To Analysis Function
 
 - [`get_mmrm_lsmeans()`](https://johnsonandjohnson.github.io/junco/reference/get_mmrm_lsmeans.md)
   :
@@ -309,12 +341,20 @@ create common table layouts.
 - [`get_visit_levels()`](https://johnsonandjohnson.github.io/junco/reference/get_visit_levels.md)
   : Get Visit Levels in Order Defined by Numeric Version
 
-## junco Geoms
+- [`leftside()`](https://johnsonandjohnson.github.io/junco/reference/leftside.md)
+  : Extract the left-hand side of a formula
 
-ggplot2 geoms provided by junco.
+- [`remove_col_count()`](https://johnsonandjohnson.github.io/junco/reference/remove_col_count.md)
+  : Removal of Unwanted Column Counts
 
-- [`geom_boxplot_j()`](https://johnsonandjohnson.github.io/junco/reference/geom_boxplot_j.md)
-  : Draws boxplots with configurable quantile type
+- [`rm_levels()`](https://johnsonandjohnson.github.io/junco/reference/rm_levels.md)
+  : Removal of Levels
+
+- [`safe_t_test()`](https://johnsonandjohnson.github.io/junco/reference/safe_t_test.md)
+  **\[experimental\]** :
+
+  Safe Wrapper for
+  [`stats::t.test()`](https://rdrr.io/r/stats/t.test.html)
 
 ## junco Functions For generating .rtfs, .docxs and HTMLs
 
@@ -324,12 +364,12 @@ HTMLs.
 - [`tt_to_tlgrtf()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md)
   : TableTree to .rtf Conversion
 - [`tt_to_flextable_j()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_flextable_j.md)
-  **\[experimental\]** : Convert a VTableTree or a listing_df object to
-  a flextable
+  : Convert a TableTree or a listing_df object to a flextable
 - [`export_as_docx_j()`](https://johnsonandjohnson.github.io/junco/reference/export_as_docx_j.md)
-  **\[experimental\]** : Export a VTableTree or a listing_df object into
-  docx
+  : Export a VTableTree or a listing_df object into docx
 - [`export_graph_as_docx()`](https://johnsonandjohnson.github.io/junco/reference/export_graph_as_docx.md)
-  **\[experimental\]** : export_graph_as_docx
+  : export_graph_as_docx
+- [`export_TLG_as_docx()`](https://johnsonandjohnson.github.io/junco/reference/export_TLG_as_docx.md)
+  : Export a TLG (Table, Listing, Graph) to .docx format
 - [`theme_docx_default_j()`](https://johnsonandjohnson.github.io/junco/reference/theme_docx_default_j.md)
-  **\[experimental\]** : Obtain the default theme for the docx
+  : Obtain the default theme for the docx

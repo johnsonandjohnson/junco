@@ -56,12 +56,14 @@ The package provides a range of functionality, such as:
 Either you can install the stable CRAN version
 
 ``` r
+
 install.packages("junco") #CRAN Release
 ```
 
 Or you can install the development version from GitHub:
 
 ``` r
+
 require('remotes')
 remotes::install_github("johnsonandjohnson/junco", ref = "dev") #for the rolling dev release
 ```
@@ -72,6 +74,22 @@ To understand how to use this package, please refer to the vignettes
 (also available on the pkgdown site). You can list them locally with:
 
 ``` r
+
+browseVignettes(package = "junco")
+```
+
+Key vignettes and what they cover:
+
+- Getting started with junco — overview and basic workflow
+  - Article:
+    <https://johnsonandjohnson.github.io/junco/articles/junco.html>
+  - What you’ll learn: how to set up data, create common analyses, and
+    produce TLG-ready outputs using core helpers. To understand how to
+    use this package, please refer to the vignettes (also available on
+    the pkgdown site). You can list them locally with:
+
+``` r
+
 browseVignettes(package = "junco")
 ```
 

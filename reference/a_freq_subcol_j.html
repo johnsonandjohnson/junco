@@ -9,7 +9,7 @@ selected columns (controlled by subcol_* arguments)"><meta property="og:image" c
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,6 +19,7 @@ selected columns (controlled by subcol_* arguments)"><meta property="og:image" c
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/index.html">Articles</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/johnsonandjohnson/junco/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -30,7 +31,7 @@ selected columns (controlled by subcol_* arguments)"><meta property="og:image" c
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Analysis function count and percentage with extra column-subsetting in selected columns (controlled by subcol_* arguments)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/v-0.1.5/R/a_freq_subcol_j.R" class="external-link"><code>R/a_freq_subcol_j.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/a_freq_subcol_j.R" class="external-link"><code>R/a_freq_subcol_j.R</code></a></small>
       <div class="d-none name"><code>a_freq_subcol_j.Rd</code></div>
     </div>
 
@@ -95,7 +96,7 @@ will be considered.<br>
 When multiple levels, only those levels/values of the incoming variable
 will be considered.<br>
 When no values are observed (eg zero row input df),
-a row with row-label <code>No data reported</code> will be included in the table.</p></dd>
+a row with row-label <code>No data to report</code> will be included in the table.</p></dd>
 
 
 <dt id="arg-subcol-split">subcol_split<a class="anchor" aria-label="anchor" href="#arg-subcol-split"></a></dt>
@@ -242,7 +243,7 @@ unmodified default behavior. Can be negative.</p></dd>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span>show_colcounts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"COLSPAN_REL"</span>, split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html" class="external-link">add_combo_levels</a></span><span class="op">(</span><span class="va">combodf</span>, trim <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"COLSPAN_REL"</span>, split_fun <span class="op">=</span> <span class="fu">rtables</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html" class="external-link">add_combo_levels</a></span><span class="op">(</span><span class="va">combodf</span>, trim <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AEDECOD"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_freq_subcol_j</span>,</span></span>
@@ -277,7 +278,7 @@ unmodified default behavior. Can be negative.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wójciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

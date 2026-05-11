@@ -140,6 +140,7 @@ GB, WW.
 ## Examples
 
 ``` r
+
 # Example 1
 
 lyt_obs_levels <- basic_table() |>

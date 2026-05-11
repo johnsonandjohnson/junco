@@ -5,6 +5,8 @@ Helpers for Processing Least Square Means
 ## Usage
 
 ``` r
+h_partial_match(options, x)
+
 h_get_emmeans_res(fit, vars, weights)
 
 h_get_average_visit_specs(emmeans_res, vars, averages, fit)
@@ -17,10 +19,22 @@ h_get_relative_reduc_df(estimates, vars)
 
 h_single_visit_contrast_specs(emmeans_res, vars)
 
-h_average_visit_contrast_specs(specs, averages)
+h_average_visit_contrast_specs(specs, averages, vars)
+
+h_get_mult_adj_estimates(emmeans_res, vars, mult_adj, conf_level, contrast_df)
 ```
 
 ## Arguments
+
+- options:
+
+  (`character`)  
+  vector of options to match against `x`.
+
+- x:
+
+  (`character`)  
+  vector of strings to be partially matched with `options`
 
 - fit:
 
@@ -96,12 +110,24 @@ h_average_visit_contrast_specs(specs, averages)
   (`data.frame`)  
   single visit least square mean estimates.
 
+- contrast_df:
+
+  (`numeric`) Degrees of freedom from the unadjusted contrast estimates,
+  used to derive a single df for
+  [`emmeans::as.glht()`](https://rvlenth.github.io/emmeans/reference/glht-support.html).
+
 ## Functions
+
+- `h_partial_match()`: partial matching of a set of `options` to a
+  character vector `x`. Here partial matching means that for each
+  element of `x` we look for the (first) element of `options` which is
+  contained in the element of `x`. Then we return the matched `options`
+  in the same order as `x`.
 
 - `h_get_emmeans_res()`: returns a list with `object` (`emmGrid` object
   containing `emmeans` results) and `grid` (`data.frame` containing the
-  potential arm and the visit variables together with the sample size
-  `n` for each combination).
+  (optional) subgroup, arm and the visit variables together with the
+  sample size `n` for each combination).
 
 - `h_get_average_visit_specs()`: constructs average of visits
   specifications.
@@ -121,6 +147,12 @@ h_average_visit_contrast_specs(specs, averages)
 - `h_average_visit_contrast_specs()`: constructs average visits contrast
   specifications, given the `specs` for single visit contrasts and the
   averages required.
+
+- `h_get_mult_adj_estimates()`: Computes multiplicity-adjusted p-values
+  and confidence intervals for treatment-vs-reference contrasts using
+  `multcomp`. Returns a `data.frame` with the arm and visit grid columns
+  plus `p_value`, `p_value_less`, `p_value_greater`, `lower_cl`, and
+  `upper_cl`.
 
 ## Note
 

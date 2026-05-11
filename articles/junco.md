@@ -17,6 +17,7 @@ vignettes.
 The packages used in this vignette are:
 
 ``` r
+
 library(rtables)
 library(junco)
 library(tern)
@@ -26,6 +27,7 @@ library(dplyr)
 The datasets used in this vignette are:
 
 ``` r
+
 adsl <- ex_adsl
 adae <- ex_adae
 advs <- ex_advs
@@ -36,6 +38,7 @@ extra variables and defining some tabulation settings, like treatment
 variable, control group for the table.
 
 ``` r
+
 trtvar <- "ARM"
 ctrl_grp <- "B: Placebo"
 
@@ -124,6 +127,7 @@ package, for similar AE table. Differences in how to define the layout
 as well as differences in the resulting table.
 
 ``` r
+
 ## extra args for a_freq_j controlling specification of
 ## reference group, denominator used to calculate percentages,
 ## and other details
@@ -149,6 +153,7 @@ For the overall summary, we add as extra specification to restrict to
 TRTEMFL = “Y” values and the label to show in the row.
 
 ``` r
+
 lyt <- basic_table(
   top_level_section_div = " ",
   colcount_format = "N=xx"
@@ -186,6 +191,7 @@ lyt <- basic_table(
 Now we just build and view the resulting table.
 
 ``` r
+
 tbl <- build_table(lyt, adae, alt_counts_df = adsl)
 head(tbl, 10)
 #>                                   Active Study Agent                                                                            
@@ -215,6 +221,7 @@ Here is a similar table generated with the tern functions
 to our target AE table we produced before in `tbl`.
 
 ``` r
+
 lyt_tern <- basic_table(
   top_level_section_div = " ",
   colcount_format = "N=xx"
@@ -292,6 +299,7 @@ difference columns. All methods available in
 using tern `count_occurrences` layouts, only `wald` method is available.
 
 ``` r
+
 extra_args_rr[["method"]] <- "waldcc"
 
 tbl2 <- basic_table(
@@ -350,6 +358,7 @@ The junco function `a_freq_j` also supports the creation of subgroup
 tables, which is demonstrated in below table.
 
 ``` r
+
 extra_args_rr_common <- list(
   denom = "n_altdf",
   denom_by = "SEX"
@@ -471,6 +480,7 @@ methods.
 ## Other junco features : Extra Statistics have been added to some tern statistical functions
 
 ``` r
+
 tern::get_stats("summarize_ancova")
 #> [1] "n"              "lsmean"         "lsmean_diff"    "lsmean_diff_ci"
 #> [5] "pval"
@@ -496,6 +506,7 @@ In junco, we have added extra stats for
 ## Tabulation Examples using `a_summarize_aval_chg_diff_j`
 
 ``` r
+
 multivars <- c("AVAL", "AVAL", "CHG")
 
 extra_args_3col <- list(
@@ -566,6 +577,7 @@ result_vs <- build_table(lyt_vs, advs, alt_counts_df = adsl)
 This is the resulting table.
 
 ``` r
+
 head(result_vs, 15)
 #>                                                                                             Active Study Agent                                                                                                                                                           Difference in Mean Change (95% CI)          
 #>                                                            A: Drug X                                                                C: Combination                                                                B: Placebo                                   A: Drug X vs B: Placebo   C: Combination vs B: Placebo
@@ -600,6 +612,7 @@ argument `comp_btw_group` = `FALSE` and leaving out the 3
 - split_cols_by_multivar(multivars\[3\])
 
 ``` r
+
 multivars <- c("AVAL", "AVAL", "CHG")
 
 extra_args_3col <- list(
@@ -624,6 +637,7 @@ This is the resulting table without the difference between treatment
 group columns.
 
 ``` r
+
 head(result_vs2, 15)
 #>                                                                                             Active Study Agent                                                                                                                                              
 #>                                                            A: Drug X                                                                C: Combination                                                                B: Placebo                                

@@ -105,7 +105,7 @@ a_freq_j_with_exclude(
   When multiple levels, only those levels/values of the incoming
   variable will be considered.  
   When no values are observed (eg zero row input df), a row with
-  row-label `No data reported` will be included in the table.
+  row-label `No data to report` will be included in the table.
 
 - drop_levels:
 
@@ -277,7 +277,10 @@ a_freq_j_with_exclude(
 - .stats:
 
   (`character`)  
-  statistics to select for the table. See Value for list of available
+  Statistics to include in the table. May contain one or more of:
+  `"count"`, `"count_unique"`, `"count_unique_fraction"`,
+  `"count_unique_denom_fraction"`, `"n_df"`, `"n_altdf"`, `"n_rowdf"`,
+  `"n_parentdf"`, `"denom"`. See Value for the full list of available
   statistics.
 
 - .formats:

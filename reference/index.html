@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,6 +17,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/index.html">Articles</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/johnsonandjohnson/junco/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -42,20 +43,6 @@
 
       <dl><dt>
 
-          <code><a href="s_ancova_j.html">s_ancova_j()</a></code>
-
-        </dt>
-        <dd>Junco Extended ANCOVA Function</dd>
-
-        <dt>
-
-          <code><a href="s_summarize_ancova_j.html">a_summarize_ancova_j()</a></code> <code><a href="s_summarize_ancova_j.html">s_summarize_ancova_j()</a></code>
-
-        </dt>
-        <dd>ANCOVA Summary Function</dd>
-
-        <dt>
-
           <code><a href="column_stats.html">column_stats()</a></code>
 
         </dt>
@@ -63,17 +50,17 @@
 
         <dt>
 
+          <code><a href="a_eair100_j.html">a_eair100_j()</a></code>
+
+        </dt>
+        <dd>Exposure-Adjusted Incidence Rate</dd>
+
+        <dt>
+
           <code><a href="a_freq_combos_j.html">a_freq_combos_j()</a></code>
 
         </dt>
         <dd>Analysis function count and percentage in column design controlled by combosdf</dd>
-
-        <dt>
-
-          <code><a href="a_summarize_ex_j.html">s_summarize_ex_j()</a></code> <code><a href="a_summarize_ex_j.html">a_summarize_ex_j()</a></code>
-
-        </dt>
-        <dd>Tabulation for Exposure Tables</dd>
 
         <dt>
 
@@ -98,10 +85,10 @@
 
         <dt>
 
-          <code><a href="a_eair100_j.html">a_eair100_j()</a></code>
+          <code><a href="a_maxlev.html">a_maxlev()</a></code>
 
         </dt>
-        <dd>Exposure-Adjusted Incidence Rate</dd>
+        <dd>Calculate Count and Percentage of the Maximum Level of an Ordered Factor per Subject.</dd>
 
         <dt>
 
@@ -126,10 +113,24 @@
 
         <dt>
 
-          <code><a href="a_maxlev.html">a_maxlev()</a></code>
+          <code><a href="a_summarize_ex_j.html">s_summarize_ex_j()</a></code> <code><a href="a_summarize_ex_j.html">a_summarize_ex_j()</a></code>
 
         </dt>
-        <dd>Calculate Count and Percentage of the Maximum Level of an Ordered Factor per Subject.</dd>
+        <dd>Tabulation for Exposure Tables</dd>
+
+        <dt>
+
+          <code><a href="a_summary_diff_mvars.html">a_summary_diff_mvars()</a></code> <code><a href="a_summary_diff_mvars.html">a_summary_diff_mvars_label()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Descriptive Statistics for Multiple Univariate Variables with Optional Reference-Based Comparison</dd>
+
+        <dt>
+
+          <code><a href="a_summary_j.html">a_summary_j()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Wrapper around <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::a_summary()</a></code> with junco-specific defaults</dd>
 
         <dt>
 
@@ -137,6 +138,13 @@
 
         </dt>
         <dd>Two Tier Analysis Function</dd>
+
+        <dt>
+
+          <code><a href="c_summary_subset_label.html">c_summary_subset_label()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Summary Statistics for Filtered Data with Label</dd>
 
         <dt>
 
@@ -357,17 +365,24 @@
 
         <dt>
 
+          <code><a href="s_ancova_j.html">s_ancova_j()</a></code>
+
+        </dt>
+        <dd>Junco Extended ANCOVA Function</dd>
+
+        <dt>
+
+          <code><a href="s_diff_mean_ci.html">s_diff_mean_ci()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Difference in Means with Confidence Interval</dd>
+
+        <dt>
+
           <code><a href="s_proportion_factor.html">s_proportion_factor()</a></code>
 
         </dt>
         <dd>s_function for proportion of factor levels</dd>
-
-        <dt>
-
-          <code><a href="summarize_row_counts.html">summarize_row_counts()</a></code>
-
-        </dt>
-        <dd>Layout Creating Function Adding Row Counts</dd>
 
         <dt>
 
@@ -378,6 +393,20 @@
 
         <dt>
 
+          <code><a href="s_summarize_ancova_j.html">a_summarize_ancova_j()</a></code> <code><a href="s_summarize_ancova_j.html">s_summarize_ancova_j()</a></code>
+
+        </dt>
+        <dd>ANCOVA Summary Function</dd>
+
+        <dt>
+
+          <code><a href="s_summary_diff.html">s_summary_diff()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Descriptive Statistics for Univariate Data with Optional Reference Comparison</dd>
+
+        <dt>
+
           <code><a href="summarize_coxreg_multivar.html">summarize_coxreg_multivar()</a></code>
 
         </dt>
@@ -385,7 +414,7 @@
 
         <dt>
 
-          <code><a href="summarize_lsmeans_wide.html">summarize_lsmeans_wide()</a></code>
+          <code><a href="summarize_lsmeans_wide.html">lsmeans_wide_first_split_fun_fct()</a></code> <code><a href="summarize_lsmeans_wide.html">lsmeans_wide_second_split_fun_fct()</a></code> <code><a href="summarize_lsmeans_wide.html">lsmeans_wide_cfun()</a></code> <code><a href="summarize_lsmeans_wide.html">summarize_lsmeans_wide()</a></code>
 
         </dt>
         <dd>Layout Generating Function for LS Means Wide Table Layouts</dd>
@@ -396,6 +425,13 @@
           <span class="badge lifecycle lifecycle-stable">stable</span>
         </dt>
         <dd>Dynamic tabulation of MMRM results with tables</dd>
+
+        <dt>
+
+          <code><a href="summarize_row_counts.html">summarize_row_counts()</a></code>
+
+        </dt>
+        <dd>Layout Creating Function Adding Row Counts</dd>
 
         <dt>
 
@@ -461,6 +497,13 @@
 
         </dt>
         <dd>Formatting functions for count and fraction, and for count denominator and fraction values</dd>
+
+        <dt>
+
+          <code><a href="ac_blank_line.html">ac_blank_line()</a></code>
+
+        </dt>
+        <dd>Analysis and Content Summary Function Producing Blank Line</dd>
 
         <dt>
 
@@ -552,6 +595,13 @@
 
         <dt>
 
+          <code><a href="grouped_cols_w_diffs.html">grouped_cols_w_diffs()</a></code>
+
+        </dt>
+        <dd>Standard Column Structure With Grouped Treatments and Difference Columns</dd>
+
+        <dt>
+
           <code><a href="do_exclude_split.html">do_exclude_split()</a></code>
 
         </dt>
@@ -563,6 +613,20 @@
 
         </dt>
         <dd>Split Function Helper</dd>
+
+        <dt>
+
+          <code><a href="make_multicomp_splfun.html">make_multicomp_splfun()</a></code> <code><a href="make_multicomp_splfun.html">make_dflt_comp_map()</a></code>
+
+        </dt>
+        <dd>Make Multi-comparator Split Function</dd>
+
+        <dt>
+
+          <code><a href="postfun_eq5d.html">postfun_eq5d()</a></code>
+
+        </dt>
+        <dd>Post-processing split function for EQ-5D style column statistics</dd>
 
         <dt>
 
@@ -612,17 +676,10 @@
 
       <dl><dt>
 
-          <code><a href="remove_col_count.html">remove_col_count()</a></code>
-
+          <code><a href="filter_df_prior_afun.html">filter_df_prior_afun()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
         </dt>
-        <dd>Removal of Unwanted Column Counts</dd>
-
-        <dt>
-
-          <code><a href="rm_levels.html">rm_levels()</a></code>
-
-        </dt>
-        <dd>Removal of Levels</dd>
+        <dd>Filter Data Prior To Analysis Function</dd>
 
         <dt>
 
@@ -644,22 +701,34 @@
 
         </dt>
         <dd>Get Visit Levels in Order Defined by Numeric Version</dd>
-      </dl></div><div class="section level2">
-      <h2 id="junco-geoms">junco Geoms<a class="anchor" aria-label="anchor" href="#junco-geoms"></a></h2>
 
-      <div class="section-desc"><p>ggplot2 geoms provided by junco.</p></div>
+        <dt>
 
-      <dl></dl></div><div class="section level2">
-
-
-
-
-      <dl><dt>
-
-          <code><a href="geom_boxplot_j.html">geom_boxplot_j()</a></code>
+          <code><a href="leftside.html">leftside()</a></code>
 
         </dt>
-        <dd>Draws boxplots with configurable quantile type</dd>
+        <dd>Extract the left-hand side of a formula</dd>
+
+        <dt>
+
+          <code><a href="remove_col_count.html">remove_col_count()</a></code>
+
+        </dt>
+        <dd>Removal of Unwanted Column Counts</dd>
+
+        <dt>
+
+          <code><a href="rm_levels.html">rm_levels()</a></code>
+
+        </dt>
+        <dd>Removal of Levels</dd>
+
+        <dt>
+
+          <code><a href="safe_t_test.html">safe_t_test()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Safe Wrapper for <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">stats::t.test()</a></code></dd>
       </dl></div><div class="section level2">
       <h2 id="junco-functions-for-generating-rtfs-docxs-and-htmls">junco Functions For generating .rtfs, .docxs and HTMLs<a class="anchor" aria-label="anchor" href="#junco-functions-for-generating-rtfs-docxs-and-htmls"></a></h2>
 
@@ -680,28 +749,35 @@
         <dt>
 
           <code><a href="tt_to_flextable_j.html">tt_to_flextable_j()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+
         </dt>
-        <dd>Convert a VTableTree or a listing_df object to a flextable</dd>
+        <dd>Convert a TableTree or a listing_df object to a flextable</dd>
 
         <dt>
 
           <code><a href="export_as_docx_j.html">export_as_docx_j()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+
         </dt>
         <dd>Export a VTableTree or a listing_df object into docx</dd>
 
         <dt>
 
           <code><a href="export_graph_as_docx.html">export_graph_as_docx()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+
         </dt>
         <dd>export_graph_as_docx</dd>
 
         <dt>
 
+          <code><a href="export_TLG_as_docx.html">export_TLG_as_docx()</a></code>
+
+        </dt>
+        <dd>Export a TLG (Table, Listing, Graph) to .docx format</dd>
+
+        <dt>
+
           <code><a href="theme_docx_default_j.html">theme_docx_default_j()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+
         </dt>
         <dd>Obtain the default theme for the docx</dd>
       </dl></div>
@@ -710,7 +786,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wojciak, Johnson &amp; Johnson Innovative Medicine.</p>
+  <p>Developed by Gabriel Becker, Ilse Augustyns, Paul Jenkins, Daniel Hofstaedter, Joseph Kovach, David Munoz Tord, Daniel Sabanes Bove, Ezequiel Anokian, Renfei Mao, Mrinal Das, Wojciech Wójciak, Johnson &amp; Johnson Innovative Medicine.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -47,6 +47,7 @@ We can see this by tables with the same structure and value contents but
 varying verbosity with column and row labels.
 
 ``` r
+
 library(junco)
 #> Loading required package: formatters
 #> 
@@ -134,6 +135,7 @@ takes the maximum width required for a *label or value* for each column
 (and the row-label pseudo column):
 
 ``` r
+
 propose_column_widths(tbl1)
 #> [1] 41 11 11 14
 ```
@@ -144,6 +146,7 @@ cell values. The first and second columns remain the same as the cell
 value widths were already slightly larger than the labels in `tbl1`.
 
 ``` r
+
 propose_column_widths(tbl2)
 #> [1] 41 11 11 11
 ```
@@ -153,6 +156,7 @@ wider column widths, as `propose_column_widths` enforces no wrapping
 **even within column labels**:
 
 ``` r
+
 propose_column_widths(tbl3)
 #> [1] 41 24 38 19
 ```
@@ -161,6 +165,7 @@ Meanwhile, `def_colwidths` gives the same widths for the 3 columns as
 with `tbl2` for all 3 tables:
 
 ``` r
+
 def_colwidths(tbl1, fontspec = font_spec(), label_width_ins = 2, col_gap = 0)
 #> [1] 30 11 11 11
 def_colwidths(tbl2, fontspec = font_spec(), label_width_ins = 2, col_gap = 0)
@@ -174,6 +179,7 @@ We see, however, that the label-row width has been reduced due to the
 the row labels need with no wrapping:
 
 ``` r
+
 ## bigger than 2, but not what we got from propose_column_labels
 def_colwidths(tbl1, fontspec = font_spec(), label_width_ins = 2.2, col_gap = 0)
 #> [1] 33 11 11 11
@@ -188,12 +194,14 @@ large when using a TrueType font with verbose labels, as many letters
 have larger print widths than punctuation and numeric digit characters:
 
 ``` r
+
 fspec_times <- font_spec("Times", 9)
 propose_column_widths(tbl3, fontspec = fspec_times)
 #> [1] 93 45 65 36
 ```
 
 ``` r
+
 def_colwidths(tbl3, fontspec = fspec_times, label_width_ins = 2, col_gap = 0)
 #> [1] 64 20 20 20
 ```
@@ -204,6 +212,7 @@ single page as even without padding between the columns, those widths
 take up
 
 ``` r
+
 sum(propose_column_widths(tbl3, fontspec = fspec_times))
 #> [1] 239
 ```
@@ -212,6 +221,7 @@ space-character widths (which is the unit `formatters` calculates widths
 in) while a standard page only has
 
 ``` r
+
 formatters::page_lcpp(fontspec = fspec_times)$cpp
 #> [1] 224
 ```
@@ -272,6 +282,7 @@ to less than the total available space.
 We will use the following data to illustrate:
 
 ``` r
+
 library(rlistings)
 #> Loading required package: tibble
 
@@ -296,6 +307,7 @@ lsting <- as_listing(lstdat,
 For example, the last cell in the demographics column contains the value
 
 ``` r
+
 demcell <- lstdat$demog[nrow(lstdat)]
 demcell
 #> [1] "BLACK OR AFRICAN AMERICAN / F / 74"
@@ -305,6 +317,7 @@ Broken up according to our definition, it contains the following “words”
 which must remain whole during column width selection.
 
 ``` r
+
 wrds <- strsplit(demcell, "[ -]")[[1]]
 wrds
 #> [1] "BLACK"    "OR"       "AFRICAN"  "AMERICAN" "/"        "F"        "/"       
@@ -315,6 +328,7 @@ Assuming a monospace font for simplicity, then, the smallest possible
 width of the column is
 
 ``` r
+
 max(nchar(wrds))
 #> [1] 8
 ```
@@ -325,6 +339,7 @@ into a final line, for a total of four lines. We call this *packing
 lines*
 
 ``` r
+
 packed_widths <- function(...) {
   lst <- list(...)
   nchar(vapply(lst, paste, collapse = " ", ""))
@@ -353,6 +368,7 @@ With that column width, we get three lines as we do not have enough room
 for the space required to consolidate the final two lines into one.
 
 ``` r
+
 packed_widths(wrds[1:3], wrds[4], wrds[5:8])
 #> [1] 16  8  8
 ```
@@ -361,6 +377,7 @@ Increasing the column width to 17, however, allows us to get down to two
 lines:
 
 ``` r
+
 packed_widths(
   wrds[1:3],
   wrds[4:8]
@@ -405,6 +422,7 @@ directly here for explicitness, and to make the column widths more
 directly comparable via `export_as_txt` output.
 
 ``` r
+
 fspec_times8 <- font_spec("Times", 8, 1)
 cw <- listing_column_widths(lsting, col_gap = 0, fontspec = fspec_times8, verbose = TRUE)
 #> Optimizng Column Widths
@@ -435,6 +453,7 @@ Versus giving each column an equal portion of the width (admittedly an
 ill-conceived strategy)
 
 ``` r
+
 txtbad <- export_as_txt(lsting,
   pg_width = inches_to_spaces(8.88, fontspec = fspec_times8),
   lpp = NULL, colwidths = rep(floor(320 / 11), 11),

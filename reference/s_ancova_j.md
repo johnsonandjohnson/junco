@@ -25,7 +25,9 @@ s_ancova_j(
   conf_level,
   interaction_y = FALSE,
   interaction_item = NULL,
-  weights_emmeans = "counterfactual"
+  weights_emmeans = "counterfactual",
+  method_combo = c("contrasts", "collapse"),
+  weights_combo = NULL
 )
 ```
 
@@ -97,6 +99,42 @@ s_ancova_j(
   [`emmeans::emmeans()`](https://rvlenth.github.io/emmeans/reference/emmeans.html),
   `"counterfactual"` by default.
 
+- method_combo:
+
+  (`string`)  
+  Method for derivations in combined column.
+
+  - `contrast` Derivations for the combined level are done through
+    contrasts from the original model (using weights per `weights_combo`
+    specifications).
+
+  - `collapse` The ancova model for the combined group will be performed
+    with group levels that contribute to the combination collapsed into
+    a single combined level.
+
+  For more information see the vignette
+  `ANCOVA with Combined Treatment Groups`.
+
+- weights_combo:
+
+  (`string`)  
+  Weights for the contrasts of the combined levels.
+
+  - `equal` 1/(number of levels from arm variable included in the
+    combination)
+
+  - `proportional`, `proportional_marginal` weight for each level
+    included in the combination is proportional to number of
+    observations in that level  
+    The difference between `proportional` and `proportional_marginal` is
+    only relevant when the model includes an interaction between arm and
+    other factor variable (`interaction_item`).  
+    `proportional_marginal` interprets proportional over all levels of
+    `interaction_item`, ie, the same weights will be used for all levels
+    of `interaction_item`.  
+    For `proportional` the weights will be derived within the requested
+    level (`interaction_y`) for `interaction_item`.
+
 ## Value
 
 Returns a named list of 8 statistics (3 extra compared to
@@ -121,7 +159,7 @@ variables <- list(arm = "Species", covariates = "Sepal.Length * Sepal.Width")
 .ref_group <- iris |> filter(Species == "setosa")
 conf_level <- 0.95
 s_ancova_j(df, .var, .df_row, variables, .ref_group, .in_ref_col = FALSE, conf_level)
-#> $n
+#> $n_fit
 #> [1] 50
 #> attr(,"label")
 #> [1] "n"

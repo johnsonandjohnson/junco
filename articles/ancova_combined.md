@@ -1,0 +1,271 @@
+# ANCOVA with Combined Treatment Groups
+
+## Overview
+
+This vignette provides an high-level illustration of **ANCOVA with
+combined treatment groups** in `junco`.  
+The main purpose is to highlight the ability to construct tables with
+combined groups using `junco` function
+[`a_summarize_ancova_j()`](https://johnsonandjohnson.github.io/junco/reference/s_summarize_ancova_j.md).  
+The various options such as weighting strategies, interaction models,
+and alternative estimands will be described.
+
+## Clinical Context
+
+ANCOVA is commonly used for covariate-adjusted analyses of change from
+baseline in clinical trials. Regulatory tables often require pooling of
+treatment arms while preserving the original estimand.
+
+## Example Dataset
+
+The dataset used as an example is a small dataset with simulated values
+for `BASE` and `CHG`.
+
+``` r
+
+library(dplyr)
+library(rtables)
+library(junco)
+
+set.seed(101)
+
+adchg <- tibble(
+  USUBJID = sprintf("SUBJ-%03d", 1:300),
+  TRT01A = factor(rep(c("Placebo", "Low Dose", "High Dose"), length.out = 300)),
+  REGION = factor(sample(c("EU", "US"), 300, replace = TRUE, prob = c(0.6, 0.4))),
+  BASE = rnorm(300, 50, 10),
+  CHG  = rnorm(300, 0, 8)
+)
+```
+
+## Combined Column Strategy
+
+A combined treatment column can be added in an `rtables` layout, by
+utilizing a `combodf` dataframe.  
+As seen further in this document, adding
+`split_fun = add_combo_levels(combodf)` in `split_cols_by` call, will
+result in a combined treatment column in the final table.
+
+``` r
+
+combodf <- tibble::tribble(
+  ~valname,   ~label,    ~levelcombo,                     ~exargs,
+  "ACTIVE",   "Active", c("Low Dose", "High Dose"), list()
+)
+```
+
+## ANCOVA Model
+
+The ANCOVA model used here is:
+
+    CHG ~ TRT01A + BASE + REGION
+
+The model is fitted once using the original randomized treatment
+variable, for all columns, including the combined column.
+
+## Least-squares means approach
+
+The recommended approach for dealing with a combined treatment group
+column in an ANCOVA table, is to derive the estimates for that column as
+contrasts (least-squares means) from the linear ANCOVA model.  
+This can be achieved by specifying the argument
+`method_combo = "contrasts"`.
+
+``` r
+
+lyt <- basic_table() |>
+  split_cols_by(
+    "TRT01A",
+    ref_group = "Placebo",
+    split_fun = add_combo_levels(combodf)
+  ) %>%
+  add_colcounts() |>
+  analyze(
+    vars = "CHG",
+    afun = a_summarize_ancova_j,
+    var_labels = "Change from Baseline",
+    extra_args = list(
+      variables = list(arm = "TRT01A", covariates = c("BASE", "REGION")),
+      ref_path = c("TRT01A", "Placebo"),
+      method_combo = "contrasts",
+      weights_combo = "equal",
+      weights_emmeans = "equal",
+      conf_level = 0.95      
+    )
+  )
+
+build_table(lyt, adchg)
+#>                                              High Dose             Low Dose               Placebo               Active       
+#>                                               (N=100)               (N=100)               (N=100)               (N=200)      
+#> —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+#> n                                               100                   100                   100                   200        
+#> Mean (SD)                                  -0.76 (7.541)         -0.12 (7.490)         -1.16 (6.510)         -0.44 (7.504)   
+#> Median                                         -0.27                 -0.13                 -1.60                 -0.18       
+#> Min, max                                    -22.1, 16.8           -15.2, 15.6           -16.2, 17.8           -22.1, 16.8    
+#> 25% and 75%-ile                             -6.51, 4.08           -5.82, 4.25           -5.68, 2.48           -6.44, 4.15    
+#> Adjusted Mean (SE)                         -0.73 (0.72)          -0.03 (0.72)          -0.97 (0.73)          -0.38 (0.51)    
+#> Adjusted Mean (95% CI)                  -0.73 (-2.15, 0.68)   -0.03 (-1.45, 1.40)   -0.97 (-2.41, 0.47)   -0.38 (-1.38, 0.63)
+#> Difference in Adjusted Means (95% CI)   0.24 (-1.78, 2.26)    0.95 (-1.06, 2.95)                          0.59 (-1.15, 2.34) 
+#>   p-value                                      0.815                 0.354                                       0.504
+```
+
+### Weighting Strategies
+
+Note the argument `weights_combo` in the above layout definition. When
+defining contrasts in a linear model, weights can specified to use in
+averaging predictions. See `?emmeans::emmeans()` for more details.
+
+The following 3 weight scenarios are available for `weights_combo`:
+
+- `equal`: equal contribution of arms
+- `proportional`: weighted by observed sample size
+- `proportional_marginal`: marginal weights across interaction strata
+
+If no interaction term is included in the model, the choices
+`proportional` and `proportional_marginal` lead to the same weights (by
+observed sample size), reducing to 2 options only.  
+While, if an interaction, for example a term like `TRT01A * REGION` is
+included, `proportional` and `proportional_marginal` are slightly
+different, with `proportional` according to the proportions observed in
+the interaction strata.
+
+## Collapsing Treatment Arms
+
+The option `method_combo = "collapse"` is available as alternative
+approach, mainly as a quick verification method, and for consistency
+reason with another internal system.  
+In this scenario, the ANCOVA model is re-fitted on pooled arms and as
+such changes the estimand.  
+While it is available as an option, our recommendation is to use the
+`contrasts` approach, and only utilize `method_combo = "collapse"` when
+explicitly specified in the SAP.
+
+## Summary
+
+- The `method_combo = "contrasts"` approach is aligned with `emmeans`
+  theory
+- Combined LS means and differences are implemented as linear contrasts
+- Full covariance propagation is preserved
+- Interaction models require explicit decisions on within- and
+  across-stratum weighting
+
+See also \[junco::a_summarize_ancova_j()\].
+
+## Statistical Appendix: emmeans-based Estimation
+
+### Notation
+
+Let:
+
+- $`\hat{\mu}_k`$ denote the LS mean for treatment arm $`k`$
+- $`\mathbf{\hat{\mu}} = (\hat{\mu}_1, \ldots, \hat{\mu}_K)^T`$
+- $`\mathbf{V} = \mathrm{Var}(\mathbf{\hat{\mu}})`$
+
+All quantities are obtained from the fitted ANCOVA model.
+
+------------------------------------------------------------------------
+
+### A. Combined LS Means
+
+A combined treatment LS mean for a set of arms $`C`$ is defined as:
+
+``` math
+\hat{\mu}_{C} = \sum_{k \in C} w_k \, \hat{\mu}_k ,
+\qquad \sum_{k \in C} w_k = 1
+```
+
+where $`w_k`$ are user-specified weights (e.g. equal or proportional).
+
+#### Variance
+
+The variance of the combined LS mean is:
+
+``` math
+\mathrm{Var}(\hat{\mu}_{C}) = \mathbf{w}^T \, \mathbf{V} \, \mathbf{w}
+```
+
+This corresponds exactly to a linear contrast implemented via
+[`emmeans::contrast()`](https://rvlenth.github.io/emmeans/reference/contrast.html).
+
+------------------------------------------------------------------------
+
+### B. Contrasts Between Treatment Groups
+
+#### Simple Treatment Differences
+
+The estimated difference between two individual treatment arms $`k`$ and
+$`r`$ (e.g. Active vs Placebo) is defined as the contrast:
+
+``` math
+\hat{\delta}_{k,r} = \hat{\mu}_k - \hat{\mu}_r
+```
+
+with variance:
+
+``` math
+\mathrm{Var}(\hat{\delta}_{k,r}) = \mathrm{Var}(\hat{\mu}_k)
++ \mathrm{Var}(\hat{\mu}_r)
+- 2 \, \mathrm{Cov}(\hat{\mu}_k, \hat{\mu}_r)
+```
+
+This covariance term is automatically accounted for when contrasts are
+derived from the joint covariance matrix $`\mathbf{V}`$.
+
+------------------------------------------------------------------------
+
+#### Differences Involving Combined Arms
+
+For a combined treatment $`C`$ compared to reference arm $`r`$:
+
+``` math
+\hat{\delta}_{C,r} = \hat{\mu}_{C} - \hat{\mu}_r
+```
+
+This can be written as a single linear contrast with weight vector:
+
+``` math
+\mathbf{w}_{C,r} = (w_1, \ldots, w_K, -1)
+```
+
+and variance:
+
+``` math
+\mathrm{Var}(\hat{\delta}_{C,r}) = \mathbf{w}_{C,r}^T \, \mathbf{V} \, \mathbf{w}_{C,r}
+```
+
+This ensures internally consistent standard errors, confidence
+intervals, and p-values for combined treatment comparisons.
+
+------------------------------------------------------------------------
+
+### C. Contrasts in Interaction Models
+
+When the ANCOVA model includes interaction terms
+(e.g. `TRT01A * REGION`), LS means are estimated **within each
+interaction stratum**.
+
+In this setting:
+
+- Treatment-specific LS means $`\hat{\mu}_{k,s}`$ are defined per
+  stratum $`s`$
+- Combined means are first formed *within stratum*
+- Pooling across strata is then applied via user-defined weights
+
+Formally, the combined LS mean marginal over strata is:
+
+``` math
+\hat{\mu}_{C} = \sum_{s} \pi_s \,
+\Big( \sum_{k \in C} w_{k|s} \, \hat{\mu}_{k,s} \Big)
+```
+
+where:
+
+- $`w_{k|s}`$ are within-stratum treatment weights
+- $`\pi_s`$ are stratum-level weights
+
+The distinction between `weights_combo = "proportional"` and
+`"proportional_marginal"` determines whether $`w_{k|s}`$ or $`\pi_s`$
+reflect observed sample sizes within or across strata.
+
+This two-stage weighting clarifies how estimands change in the presence
+of interactions and avoids implicit, undocumented averaging.

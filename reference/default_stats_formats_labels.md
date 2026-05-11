@@ -1,13 +1,12 @@
 # Get default statistical methods and their associated formats, labels, and indent modifiers
 
-**\[experimental\]**
+**\[stable\]**
 
 Utility functions to get valid statistic methods for different method
 groups (`.stats`) and their associated formats (`.formats`), labels
 (`.labels`), and indent modifiers (`.indent_mods`). This utility is used
 across `junco`, but some of its working principles can be seen in
 [`tern::analyze_vars()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html).
-See notes to understand why this is experimental.
 
 ## Usage
 

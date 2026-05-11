@@ -65,6 +65,7 @@ intended to be used within the column space.
 ## Examples
 
 ``` r
+
 library(tibble)
 
 df <- tribble(
