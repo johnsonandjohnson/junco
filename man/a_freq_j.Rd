@@ -19,7 +19,7 @@ s_freq_j(
   id = "USUBJID",
   denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
   .N_col,
-  countsource = c("df", "altdf")
+  countsource = c("df", "altdf", "altdf_subset")
 )
 
 a_freq_j(
@@ -58,7 +58,7 @@ a_freq_j(
   extrablanklineafter = NULL,
   restr_columns = NULL,
   colgroup = NULL,
-  countsource = c("df", "altdf")
+  countsource = c("df", "altdf", "altdf_subset")
 )
 
 a_freq_j_with_exclude(
@@ -93,7 +93,7 @@ will be considered.\cr
 When multiple levels, only those levels/values of the incoming variable
 will be considered.\cr
 When no values are observed (eg zero row input df),
-a row with row-label \verb{No data reported} will be included in the table.}
+a row with row-label \verb{No data to report} will be included in the table.}
 
 \item{drop_levels}{(\code{logical})\cr If \code{TRUE} non-observed levels
 (based upon .df_row) will not be included.\cr
@@ -120,8 +120,10 @@ It is a data frame in the higher row-space than the current input df
 \item{.N_col}{(\code{integer})\cr column-wise N (column count) for the full column being analyzed that is typically
 passed by \code{rtables}.}
 
-\item{countsource}{Either \code{df} or \code{alt_df}.\cr
-When \code{alt_df} the counts will be based upon the alternative dataframe \code{alt_df}.\cr
+\item{countsource}{Either \code{df}, \code{altdf}, or \code{altdf_subset}.\cr
+When \code{altdf} the counts will be based upon the alternative dataframe \code{alt_df}.\cr
+When \code{altdf_subset} the counts will be based upon \code{alt_df} but first restricted\cr
+to the levels/values of the current row split for \code{.var} (or to \code{val} when provided).\cr
 This is useful for subgroup processing,
 to present counts of subjects in a subgroup from the alternative dataframe.}
 
@@ -194,8 +196,11 @@ This controls both \code{denom = "n_parentdf"} and \code{denom = "n_altdf"}.\cr
 When \code{denom = "n_altdf"}, the denominator is derived from \code{.alt_df_full}
 in combination with \code{denom_by} argument}
 
-\item{.stats}{(\code{character})\cr statistics to select for the table.
-See Value for list of available statistics.}
+\item{.stats}{(\code{character})\cr Statistics to include in the table. May contain one or more of:
+\code{"count"}, \code{"count_unique"}, \code{"count_unique_fraction"},
+\code{"count_unique_denom_fraction"}, \code{"n_df"}, \code{"n_altdf"},
+\code{"n_rowdf"}, \code{"n_parentdf"}, \code{"denom"}.
+See Value for the full list of available statistics.}
 
 \item{.formats}{(named 'character' or 'list')\cr
 formats for the statistics.}

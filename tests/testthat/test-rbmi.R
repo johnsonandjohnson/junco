@@ -70,6 +70,7 @@ test_that("find_missing_chg_after_avisit validates input correctly", {
 })
 
 test_that("make_rbmi_cluster returns NULL when cluster_or_cores is 1", {
+  skip_on_cran()
   result <- make_rbmi_cluster(cluster_or_cores = 1)
   expect_null(result)
 })
@@ -135,6 +136,7 @@ test_that("make_rbmi_cluster handles existing cluster", {
 })
 
 test_that("make_rbmi_cluster rejects invalid cluster_or_cores parameter", {
+  skip_on_cran()
   expect_error(
     make_rbmi_cluster(cluster_or_cores = "not-a-number"),
     "`cluster_or_cores` has unsupported class of: character"

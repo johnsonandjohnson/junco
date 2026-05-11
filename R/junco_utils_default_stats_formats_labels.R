@@ -1,11 +1,11 @@
 #' Get default statistical methods and their associated formats, labels, and indent modifiers
 #'
-#' @description `r lifecycle::badge('experimental')`
+#' @description `r lifecycle::badge('stable')`
 #'
 #' Utility functions to get valid statistic methods for different method groups
 #' (`.stats`) and their associated formats (`.formats`), labels (`.labels`), and indent modifiers
 #' (`.indent_mods`). This utility is used across `junco`, but some of its working principles can be
-#' seen in [tern::analyze_vars()]. See notes to understand why this is experimental.
+#' seen in [tern::analyze_vars()].
 #'
 #' @param stats (`character`)\cr statistical methods to return defaults for.
 #' @param levels_per_stats (named `list` of `character` or `NULL`)\cr named list where the name of each element is a
@@ -46,11 +46,10 @@ NULL
 #'
 #' @export
 junco_get_stats <- function(
-  method_groups = "analyze_vars_numeric",
-  stats_in = NULL,
-  custom_stats_in = NULL,
-  add_pval = FALSE
-) {
+    method_groups = "analyze_vars_numeric",
+    stats_in = NULL,
+    custom_stats_in = NULL,
+    add_pval = FALSE) {
   tern_get_stats(
     method_groups = method_groups,
     stats_in = stats_in,
@@ -97,11 +96,10 @@ junco_get_formats_from_stats <- function(stats, formats_in = NULL, levels_per_st
 #'
 #' @export
 junco_get_labels_from_stats <- function(
-  stats,
-  labels_in = NULL,
-  levels_per_stats = NULL,
-  label_attr_from_stats = NULL
-) {
+    stats,
+    labels_in = NULL,
+    levels_per_stats = NULL,
+    label_attr_from_stats = NULL) {
   tern_get_labels_from_stats(
     stats = stats,
     labels_in = labels_in,
@@ -195,12 +193,41 @@ junco_default_stats <- list(
   relative_risk = c("rel_risk_ci", "pval"),
   summarize_ancova_j = c(
     "n",
+    "sum",
+    "mean",
+    "sd",
+    "se",
     "mean_sd",
+    "mean_se",
+    "mean_ci",
+    "mean_sei",
+    "mean_sdi",
+    "mean_ci_3d",
+    "mean_pval",
     "median",
-    "range",
+    "mad",
+    "median_ci",
+    "median_ci_3d",
     "quantiles",
+    "iqr",
+    "range",
+    "min",
+    "max",
+    "median_range",
+    "cv",
+    "geom_mean",
+    "geom_sd",
+    "geom_mean_sd",
+    "geom_mean_ci",
+    "geom_cv",
+    "geom_mean_ci_3d",
+
+    "n_fit",
+    "lsmean",
     "lsmean_se",
     "lsmean_ci",
+    "lsmean_diff",
+    "lsmean_diff_ci",
     "lsmean_diffci",
     "pval"
   ),
@@ -320,7 +347,8 @@ junco_default_formats_start <- c(
   eair_diff = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   n_event = "xx",
   person_years = jjcsformat_xx("xx.xx"),
-  total_subject_years = jjcsformat_xx("xx.x (xx.x)")
+  total_subject_years = jjcsformat_xx("xx.x (xx.x)"),
+  n_fit = "xx"
 )
 
 tern_formats_only <- setdiff(names(tern_default_formats), names(junco_default_formats_start))
@@ -345,6 +373,7 @@ junco_default_labels_start <- c(
   lr_stat_df = "Log-Rank Chi-Squared",
   mean_sd = "Mean (SD)",
   median = "Median",
+  median_range = "Median (min, max)",
   n_tot = "Total n",
   n_tot_events = "Total events",
   pval = "p-value",

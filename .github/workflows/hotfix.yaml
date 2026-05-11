@@ -1,0 +1,39 @@
+---
+name: hotfix 🔥
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+    branches: [main, CRAN]
+  workflow_call:
+    secrets:
+      REPO_GITHUB_TOKEN:
+        description: |
+          Github token with read access to repositories
+        required: false
+  push:
+    branches:
+      - 'feature/hotfix-*'
+  workflow_dispatch:
+    inputs:
+      chosen-workflow:
+        description: |
+          Select which workflow you'd like to run
+        required: true
+        type: choice
+        default: rhub
+        options:
+          # - hotfix_v0-1-1
+          - hotfix_v0-1-3_old
+
+jobs:
+  # hotfix_v0-1-1:
+  #   name: hotfix v0.1.1
+  #   uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-1.yaml@dev
+  hotfix_v0-1-3_old:
+    name: hotfix v0.1.3
+    uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-3_old.yaml@dev

@@ -48,7 +48,7 @@ will be considered.\cr
 When multiple levels, only those levels/values of the incoming variable
 will be considered.\cr
 When no values are observed (eg zero row input df),
-a row with row-label \verb{No data reported} will be included in the table.}
+a row with row-label \verb{No data to report} will be included in the table.}
 
 \item{combosdf}{The df which provides the mapping of column facets to produce cumulative counts for .N_col.\cr
 In the cell facet, these cumulative records must then be removed from the numerator,
@@ -185,7 +185,8 @@ combodf <- tribble(
 lyt <- basic_table(show_colcounts = TRUE) |>
   split_cols_by("ARM") |>
   split_cols_by("ACAT1",
-    split_fun = add_combo_levels(combosdf = combodf, trim = FALSE, keep_levels = combodf$valname)
+    split_fun = rtables::add_combo_levels(combosdf = combodf,
+                 trim = FALSE, keep_levels = combodf$valname)
   ) |>
   analyze("TRTEMFL",
     show_labels = "hidden",

@@ -6,7 +6,16 @@
 \usage{
 leftside(x)
 }
+\arguments{
+\item{x}{(\code{formula})\cr A two-sided formula, e.g., \code{y ~ x1 + x2}.}
+}
+\value{
+(\code{character(1)}) The name of the left-hand side of the formula.
+}
 \description{
 Extract the left-hand side of a formula
 }
-\keyword{internal}
+\examples{
+leftside(y ~ x)
+
+}

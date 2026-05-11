@@ -6,10 +6,9 @@ template:
 
 navbar:
   structure:
-    left: [reference, articles]
+    left: [reference, articles, news]
     right: [search, github]
   components:
-
 authors:
   before: "We define *authors* as those who are actively maintaining the code base, and *contributors* as those who made a significant contribution in the past. For all acknowledgements, see the eponymous section in the [Home Page](https://johnsonandjohnson.github.io/junco/)."
   footer:
@@ -23,24 +22,27 @@ articles:
     - junco
     - auto_colwidths
     - table_and_listing_customizations
+    - ancova_combined
+    - standard_column_structures
 reference:
   - title: junco Analysis Functions
     desc: The following functions are the Analysis functions used used to create common table layouts.
     contents:
-    - s_ancova_j
-    - s_summarize_ancova_j
     - column_stats
+    - a_eair100_j
     - a_freq_combos_j
-    - a_summarize_ex_j
     - a_freq_j
     - a_freq_subcol_j
     - a_freq_resp_var_j
-    - a_eair100_j
+    - a_maxlev
     - a_proportion_ci_factor
     - a_proportion_ci_logical
     - a_summarize_aval_chg_diff_j
-    - a_maxlev
+    - a_summarize_ex_j
+    - a_summary_diff_mvars
+    - a_summary_j
     - a_two_tier
+    - c_summary_subset_label
     - rbmi_analyse
     - analyze_values
     - rbmi_ancova
@@ -72,12 +74,16 @@ reference:
     - resp01_counts_cfun
     - resp01_split_fun_fct
     - response_by_var
+    - s_ancova_j
+    - s_diff_mean_ci
     - s_proportion_factor
-    - summarize_row_counts
     - s_proportion_logical
+    - s_summarize_ancova_j
+    - s_summary_diff
     - summarize_coxreg_multivar
     - summarize_lsmeans_wide
     - summarize_mmrm
+    - summarize_row_counts
     - h_get_trtvar_refpath
     - rbmi_mmrm_single_info
     - rbmi_pool
@@ -92,6 +98,7 @@ reference:
     - jjcsformat_xx
     - jjcs_num_formats
     - jjcsformat_count_denom_fraction
+    - ac_blank_line
     - insert_blank_line
 
   - title: junco Sorting Functions and Pruning Functions
@@ -110,8 +117,11 @@ reference:
     - cond_rm_facets
     - create_colspan_map
     - create_colspan_var
+    - grouped_cols_w_diffs
     - do_exclude_split
     - make_combo_splitfun
+    - make_multicomp_splfun
+    - postfun_eq5d
     - real_add_overall_facet
 
   - title: junco Functions For titles/footnotes
@@ -124,18 +134,24 @@ reference:
   - title: junco Miscellaneous Functions
     desc: The following functions are other miscellaneous junco functions used to create common table layouts.
     contents:
-    - remove_col_count
-    - rm_levels
+    - filter_df_prior_afun
     - get_mmrm_lsmeans
     - get_ref_info
     - get_visit_levels
+    - leftside
+    - remove_col_count
+    - rm_levels
+    - safe_t_test
 
+    
   - title: internal
     desc: The following are additional junco functions.
     contents:
     - check_wrap_nobreak
     - inches_to_spaces
+    - prepend_label_cell
     - rm_other_facets_fact
+    - safe_t_test
     - smart_colwidths_1page
     - tt_to_tbldf
 
@@ -146,4 +162,5 @@ reference:
     - tt_to_flextable_j
     - export_as_docx_j
     - export_graph_as_docx
+    - export_TLG_as_docx
     - theme_docx_default_j

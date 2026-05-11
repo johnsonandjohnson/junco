@@ -555,7 +555,8 @@ h_a_freq_dataprep <- function(
   label_map = NULL,
   .alt_df_full = NULL,
   denom_by = NULL,
-  .stats
+  .stats,
+  countsource = c("df", "altdf", "altdf_subset")
 ) {
   denom <- match.arg(denom)
 
@@ -605,6 +606,25 @@ h_a_freq_dataprep <- function(
     denom = denom
   )
 
+  if (identical(countsource, "altdf_subset")) {
+    # prefer explicit val, otherwise use the levels present in .df_row.
+    if (!is.null(alt_df) && !is.na(.var) && (.var %in% names(alt_df))) {
+      keep_vals <- NULL
+      if (!is.null(val)) {
+        keep_vals <- val
+      } else if (!is.null(.df_row) && !is.null(.df_row[[.var]])) {
+        keep_vals <- if (is.factor(.df_row[[.var]])) levels(.df_row[[.var]]) else unique(.df_row[[.var]])
+      }
+
+      if (!is.null(keep_vals)) {
+        keep_vals <- intersect(keep_vals, unique(alt_df[[.var]]))
+        if (length(keep_vals) > 0) {
+          alt_df <- alt_df[alt_df[[.var]] %in% keep_vals, , drop = FALSE]
+          alt_df <- h_update_factor(alt_df, .var, keep_vals)
+        }
+      }
+    }
+  }
   new_denomdf <- alt_df
 
   parentdf <- h_denom_parentdf(.spl_context, denom, denom_by)
@@ -817,4 +837,32 @@ h_restrict_val <- function(df_row, .var, label_map, split_info) {
     val <- label_map$value
   }
   val
+}
+
+#' @noRd
+#' @param denom_df denominator dataframe for relative risk calculation
+#' @param trt_var variable used as treatment variable
+#' @param cur_trt_grp current treatment group level
+#' @param .spl_context Current split context.
+#'
+#' @return Denominator dataframe with updated treatment variable to current treatment group level if this was
+#' coming from a combined facet
+#'
+upd_denom_df_combo <- function(
+  denom_df,
+  trt_var,
+  cur_trt_grp,
+  .spl_context
+) {
+  # check if we are in a combo facet, trt_var in that facet is not the same as in denom_df
+  in_combo <- !(cur_trt_grp %in% unique(denom_df[[trt_var]]))
+  if (in_combo) {
+    colexpr_substr_combo <- h_colexpr_substr(trt_var, .spl_context$cur_col_expr[[1]])
+    # adjust denom_df to update values of trt_var to reflect the combo value as in df
+    y1 <- subset(denom_df, eval(parse(text = colexpr_substr_combo)))
+    y1[[trt_var]] <- cur_trt_grp
+    y2 <- subset(denom_df, eval(parse(text = paste0("!", colexpr_substr_combo))))
+    denom_df <- rbind(y1, y2)
+  }
+  denom_df
 }

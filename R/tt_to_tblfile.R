@@ -11,9 +11,11 @@
 #'   will be displayed instead of stopping with an error when validation fails.
 #' @return `tt` represented as a `tbl` data.frame suitable for passing
 #'   to [tidytlg::gentlg] via the `huxme` argument.
+#' @export
 tt_to_tbldf <- function(
   tt,
   fontspec = font_spec("Times", 9L, 1),
+
   string_map = default_str_map,
   markup_df = dps_markup_df,
   round_type = obj_round_type(tt),
@@ -108,6 +110,37 @@ mar_plus_gutters <- 2 + gutter_width
 pg_width_by_orient <- function(landscape = FALSE) {
   fullpg <- ifelse(landscape, 11, 8.5)
   fullpg - mar_plus_gutters
+}
+
+get_colwidths_as_proportions <- function(colwidths, tlgtype, label_width_ins, pg_width) {
+  if (tlgtype == "Table") {
+    colwidths <- cwidths_final_adj(
+      labwidth_ins = label_width_ins,
+      total_width = pg_width,
+      colwidths = colwidths[-1]
+    )
+  }
+  colwidths <- colwidths / sum(colwidths)
+  if (sum(colwidths) > 1) {
+    colwidths <- colwidths - .Machine$double.eps ## much smaller than a twip = 1/20 printing point
+  }
+  return(colwidths)
+}
+
+get_output_csv_filename <- function(output_csv_directory, fpath, fname) {
+  if (is.null(output_csv_directory)) {
+    output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
+  } else if (!dir.exists(output_csv_directory)) {
+    output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
+    message("Output dir for csv ", output_csv_directory,
+            " does not exist; csv will be saved as ",
+            output_csv_filename)
+  } else {
+    output_csv_filename <- file.path(output_csv_directory,
+                                     paste0(tolower(fname), ".csv"))
+    message("Saving csv as ", output_csv_filename)
+  }
+  return(output_csv_filename)
 }
 
 tlg_type <- function(tt) {
@@ -307,9 +340,15 @@ listingdf_dataframe_formats <- function(df, round_type = obj_round_type(df)) {
 #' [huxtable::set_align()] to set the alignments.
 #' @param round_type (`character(1)`)\cr the type of rounding to perform.
 #' See [formatters::format_value()] for more details.
-#' @param validate logical(1). Whether to validate the table structure using
+#' @param validate (`logical(1)`)\cr Whether to validate the table structure using
 #'  `rtables::validate_table_struct()`. Defaults to `TRUE`. If `FALSE`, a message
 #'  will be displayed when validation fails.
+#' @param export_csv (`logical(1)`)\cr Whether to export the object as a csv representation.
+#' Default = FALSE.
+#' @param output_csv_directory (`character(1)`)\cr the directory to export the csv.
+#' Default = NULL. Ignored if export_csv = FALSE.
+#' If NULL or attempting to export in a non-existent directory, the csv will be exported
+#' in the same directory as the .rtf file.
 #' @import rlistings
 #' @rdname tt_to_tlgrtf
 #' @export
@@ -357,8 +396,14 @@ tt_to_tlgrtf <- function(
   round_type = obj_round_type(tt),
   alignments = list(),
   validate = TRUE,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
   ...
 ) {
+
+  checkmate::assert_flag(export_csv)
+  checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
+
   if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
     if (!rtables::validate_table_struct(tt)) {
       message(
@@ -516,6 +561,8 @@ tt_to_tlgrtf <- function(
           border_mat = pag_bord_mats[[i]],
           round_type = round_type,
           alignments = alignments,
+          export_csv = export_csv,
+          output_csv_directory = output_csv_directory,
           label_width_ins = label_width_ins,
           ...
         )
@@ -541,6 +588,8 @@ tt_to_tlgrtf <- function(
           border_mat = pag_bord_mats,
           round_type = round_type,
           alignments = alignments,
+          export_csv = export_csv,
+          output_csv_directory = output_csv_directory,
           label_width_ins = label_width_ins,
           ...
         )
@@ -657,28 +706,32 @@ tt_to_tlgrtf <- function(
     fpath <- dirname(file)
   }
 
-  if (tlgtype == "Table") {
-    colwidths <- cwidths_final_adj(
-      labwidth_ins = label_width_ins,
-      total_width = pg_width,
-      colwidths = colwidths[-1]
-    )
-  }
-  colwidths <- colwidths / sum(colwidths)
-  # finite precision arithmetic is a dreamscape of infinite wonder...
-  ## sum(rep(1/18, 18)) <= 1 is FALSE...
-  if (sum(colwidths) > 1) {
-    colwidths <- colwidths - 0.00000000001 ## much smaller than a twip = 1/20 printing point
-  }
-
   if (!one_table && # nolint start
     is.list(tt) && !is(tt, "MatrixPrintForm")) {
-    ### gentlg is not vectorized on wcol.  x.x x.x x.x
-    ### but it won't break if we only give it one number...
-    ### Calling this an ugly hack is an insult to all the hard working hacks
-    ### out there
-    colwidths <- colwidths[1]
-  } # nolint end
+    # this should be technically always 1 but just in case
+    num_repeated_cols <- ncol(tt[[1]]$strings) - ncol(tt[[1]])
+    # the following lines will listify the vector colwidths, this is, convert it
+    # to a list of vectors (one vector per page)
+    l_colwidths <- list()
+    j <- num_repeated_cols + 1
+    for (i in seq_along(tt)) {
+      subt_col_idxs <- j - 1 + seq(ncol(tt[[i]]))
+      colwidths_subt <- colwidths[c(1:num_repeated_cols, subt_col_idxs)]
+      ## jump current col position to first column on next page
+      j <- tail(subt_col_idxs, 1) + 1
+      l_colwidths[[i]] <- get_colwidths_as_proportions(colwidths_subt,
+                                                       tlgtype,
+                                                       label_width_ins,
+                                                       pg_width)
+    }
+    colwidths <- l_colwidths
+  } else {  # nolint end
+    colwidths <- get_colwidths_as_proportions(colwidths,
+                                              tlgtype,
+                                              label_width_ins,
+                                              pg_width)
+  }
+
 
   footer_val <- prep_strs_for_rtf(
     c(
@@ -692,10 +745,13 @@ tt_to_tlgrtf <- function(
     footer_val <- NULL
   }
 
-  if (!is.null(fname) && tlgtype == "Table" && is.data.frame(df)) {
+  if (!is.null(fname) && tlgtype == "Table" && is.data.frame(df) && export_csv) {
+
+    output_csv_filename <- get_output_csv_filename(output_csv_directory, fpath, fname)
+
     utils::write.csv(
       df,
-      file = file.path(fpath, paste0(tolower(fname), ".csv")),
+      file = output_csv_filename,
       row.names = FALSE
     )
   }
@@ -722,6 +778,7 @@ tt_to_tlgrtf <- function(
     bottom_borders = border_mat,
     print.hux = !is.null(fname),
     alignments = alignments,
+    footers_one_row = TRUE,
     ...
   )
 }

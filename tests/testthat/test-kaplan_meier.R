@@ -1,10 +1,10 @@
 library(tern)
 
 test_that("s_kaplan_meier works with default arguments", {
-  adtte_f <- tern::tern_ex_adtte |>
+  adtte_f <- tern_ex_adtte |>
     dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
-      AVAL = tern::day2month(AVAL),
+      AVAL = day2month(AVAL),
       is_event = CNSR == 0
     )
 
@@ -14,14 +14,14 @@ test_that("s_kaplan_meier works with default arguments", {
     is_event = "is_event"
   ))
 
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("s_kaplan_meier works with customized arguments", {
   adtte_f <- tern_ex_adtte |>
     dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
-      AVAL = tern::day2month(AVAL),
+      AVAL = day2month(AVAL),
       is_event = CNSR == 0
     )
   # Make sure the highest value is censored to check range censor information.
@@ -38,14 +38,49 @@ test_that("s_kaplan_meier works with customized arguments", {
     )
   ))
 
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
+})
+
+test_that("s_kaplan_meier returns correct censoring indicators in edge cases", {
+  adtte_f <- tern_ex_adtte |>
+    dplyr::filter(PARAMCD == "OS") |>
+    dplyr::mutate(
+      AVAL = day2month(AVAL),
+      is_event = CNSR == 0
+    )
+
+  # Case 1: All events
+  adtte_f_all_events <- adtte_f |>
+    dplyr::mutate(is_event = TRUE)
+  result_all_events <- expect_silent(s_kaplan_meier(
+    adtte_f_all_events,
+    .var = "AVAL",
+    is_event = "is_event"
+  ))
+  expect_identical(
+    result_all_events$range_with_cens_info[c(3, 4)],
+    c(0, 0) # No censored observations, so the range is also not censored.
+  )
+
+  # Case 2: All censored
+  adtte_f_all_censored <- adtte_f |>
+    dplyr::mutate(is_event = FALSE)
+  result_all_censored <- expect_silent(s_kaplan_meier(
+    adtte_f_all_censored,
+    .var = "AVAL",
+    is_event = "is_event"
+  ))
+  expect_identical(
+    result_all_censored$range_with_cens_info[c(3, 4)],
+    c(1, 1) # All observations are censored, so the range is also censored.
+  )
 })
 
 test_that("a_kaplan_meier works with default arguments", {
-  adtte_f <- tern::tern_ex_adtte |>
+  adtte_f <- tern_ex_adtte |>
     dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
-      AVAL = tern::day2month(AVAL),
+      AVAL = day2month(AVAL),
       is_event = CNSR == 0
     )
   adtte_f$is_event[adtte_f$AVAL == max(adtte_f$AVAL)] <- FALSE
@@ -57,14 +92,14 @@ test_that("a_kaplan_meier works with default arguments", {
   ))
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
 
 test_that("a_kaplan_meier works with customized arguments", {
-  adtte_f <- tern::tern_ex_adtte |>
+  adtte_f <- tern_ex_adtte |>
     dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
-      AVAL = tern::day2month(AVAL),
+      AVAL = day2month(AVAL),
       is_event = CNSR == 0
     )
   adtte_f$is_event[adtte_f$AVAL == max(adtte_f$AVAL)] <- FALSE
@@ -81,14 +116,14 @@ test_that("a_kaplan_meier works with customized arguments", {
   ))
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
 
 test_that("a_kaplan_meier works inside analyze in table", {
   adtte_f <- tern_ex_adtte |>
     dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
-      AVAL = tern::day2month(AVAL),
+      AVAL = day2month(AVAL),
       is_event = CNSR == 0
     )
   adtte_f$is_event[
@@ -111,14 +146,14 @@ test_that("a_kaplan_meier works inside analyze in table", {
     build_table(df = adtte_f)
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })
 
 test_that("a_kaplan_meier works inside analyze in table with custom arguments", {
   adtte_f <- tern_ex_adtte |>
     dplyr::filter(PARAMCD == "OS") |>
     dplyr::mutate(
-      AVAL = tern::day2month(AVAL),
+      AVAL = day2month(AVAL),
       is_event = CNSR == 0
     )
   adtte_f$is_event[
@@ -136,7 +171,7 @@ test_that("a_kaplan_meier works inside analyze in table with custom arguments", 
       show_labels = "visible",
       extra_args = list(
         is_event = "is_event",
-        control = tern::control_surv_time(conf_level = 0.9, conf_type = "log"),
+        control = control_surv_time(conf_level = 0.9, conf_type = "log"),
         .stats = c("median_ci_3d", "range_with_cens_info"),
         .formats = c(
           median_ci_3d = jjcsformat_xx("xx.xxxx (xx.xxxx, xx.xxxx)")
@@ -148,5 +183,5 @@ test_that("a_kaplan_meier works inside analyze in table with custom arguments", 
     build_table(df = adtte_f)
 
   res <- expect_silent(result)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 })

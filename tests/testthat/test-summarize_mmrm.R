@@ -138,7 +138,7 @@ test_that("s_summarize_mmrm works with healthy input in ref row cell", {
   ))
 
   checkmate::expect_list(result)
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 })
 
 test_that("a_summarize_mmrm works as expected in table layout", {
@@ -167,11 +167,11 @@ test_that("a_summarize_mmrm works as expected in table layout", {
   suppressMessages(tbl <- build_table(lyt, longdat))
 
   res <- expect_silent(tbl)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 
   # Check that we can prune this correctly.
   res2 <- prune_table(tbl, all_zero)
-  expect_snapshot(res2)
+  expect_snapshot(cran = TRUE, res2)
 })
 
 test_that("a_summarize_mmrm works as expected below row splits", {
@@ -201,9 +201,9 @@ test_that("a_summarize_mmrm works as expected below row splits", {
   suppressMessages(tbl <- build_table(lyt, longdat))
 
   res <- expect_silent(tbl)
-  expect_snapshot(res)
+  expect_snapshot(cran = TRUE, res)
 
   # Check that we can prune this correctly.
   res2 <- prune_table(tbl, all_zero)
-  expect_snapshot(res2)
+  expect_snapshot(cran = TRUE, res2)
 })

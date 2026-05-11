@@ -2,6 +2,7 @@
 % Please edit documentation in R/lsmeans.R
 \name{lsmeans_helpers}
 \alias{lsmeans_helpers}
+\alias{h_partial_match}
 \alias{h_get_emmeans_res}
 \alias{h_get_average_visit_specs}
 \alias{h_get_spec_visit_estimates}
@@ -9,8 +10,11 @@
 \alias{h_get_relative_reduc_df}
 \alias{h_single_visit_contrast_specs}
 \alias{h_average_visit_contrast_specs}
+\alias{h_get_mult_adj_estimates}
 \title{Helpers for Processing Least Square Means}
 \usage{
+h_partial_match(options, x)
+
 h_get_emmeans_res(fit, vars, weights)
 
 h_get_average_visit_specs(emmeans_res, vars, averages, fit)
@@ -23,9 +27,15 @@ h_get_relative_reduc_df(estimates, vars)
 
 h_single_visit_contrast_specs(emmeans_res, vars)
 
-h_average_visit_contrast_specs(specs, averages)
+h_average_visit_contrast_specs(specs, averages, vars)
+
+h_get_mult_adj_estimates(emmeans_res, vars, mult_adj, conf_level, contrast_df)
 }
 \arguments{
+\item{options}{(\code{character})\cr vector of options to match against \code{x}.}
+
+\item{x}{(\code{character})\cr vector of strings to be partially matched with \code{options}}
+
 \item{fit}{result of model fitting function, e.g. \code{\link[mmrm:mmrm]{mmrm::mmrm()}} or \code{\link[stats:lm]{stats::lm()}}.}
 
 \item{vars}{(named \code{list} of \code{string} or \code{character})\cr specifying the variables in the \code{MMRM}.
@@ -60,15 +70,24 @@ elements \code{coefs} (coefficient list) and \code{grid} (corresponding \code{da
 \item{...}{additional arguments for \code{\link[emmeans:contrast]{emmeans::contrast()}}.}
 
 \item{estimates}{(\code{data.frame})\cr single visit least square mean estimates.}
+
+\item{contrast_df}{(\code{numeric})
+Degrees of freedom from the unadjusted contrast estimates, used to derive
+a single df for \code{\link[emmeans:glht-support]{emmeans::as.glht()}}.}
 }
 \description{
 Helpers for Processing Least Square Means
 }
 \section{Functions}{
 \itemize{
+\item \code{h_partial_match()}: partial matching of a set of \code{options} to a
+character vector \code{x}. Here partial matching means that for each element of \code{x} we look for the
+(first) element of \code{options} which is contained in the element of \code{x}. Then we return
+the matched \code{options} in the same order as \code{x}.
+
 \item \code{h_get_emmeans_res()}: returns a list with
 \code{object} (\code{emmGrid} object containing \code{emmeans} results) and \code{grid}
-(\code{data.frame} containing the potential arm and the visit variables
+(\code{data.frame} containing the (optional) subgroup, arm and the visit variables
 together with the sample size \code{n} for each combination).
 
 \item \code{h_get_average_visit_specs()}: constructs average of visits specifications.
@@ -85,6 +104,11 @@ relative reduction vs. reference arm based on single visit estimates.
 
 \item \code{h_average_visit_contrast_specs()}: constructs average visits contrast specifications,
 given the \code{specs} for single visit contrasts and the averages required.
+
+\item \code{h_get_mult_adj_estimates()}: Computes multiplicity-adjusted p-values and
+confidence intervals for treatment-vs-reference contrasts using \code{multcomp}.
+Returns a \code{data.frame} with the arm and visit grid columns plus
+\code{p_value}, \code{p_value_less}, \code{p_value_greater}, \code{lower_cl}, and \code{upper_cl}.
 
 }}
 \note{

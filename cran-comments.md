@@ -1,17 +1,13 @@
 ## R CMD check results
 
-0 errors ✖ | 0 warnings ✔ | 0 notes ✖
+0 errors | 0 warnings | 0 note
 
-* We've moved back 'rbmi' from 'Suggests' to 'Imports'
+Test environments
+- Local: Windows 11 x64, R 4.5.2
+- R-hub: Windows, macOS, and Linux containers via GitHub Actions workflow `release` (job: rhub)
+- revdep: revdepcheck workflow run on GitHub Actions
 
-## Test environments
+Reverse dependencies
+- revdepcheck completed; no new problems were found in reverse dependencies.
 
-* local Windows install, R 4.5.0
-* ubuntu 22.04 (on GitHub Actions), R 4.5.0
-* windows-latest (on GitHub Actions), R 4.5.0
-* win-builder (devel)
-
-## Downstream dependencies
-
-There are currently no downstream dependencies for this package.
 

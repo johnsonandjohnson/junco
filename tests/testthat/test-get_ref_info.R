@@ -59,7 +59,7 @@ test_that("get_ref_info works with a df analysis function", {
       afun = result_afun
     )
   result <- build_table(lyt, dm)
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   # Compare with non-hierarchical layout.
   std_lyt <- basic_table(round_type = "sas") |>
@@ -70,7 +70,7 @@ test_that("get_ref_info works with a df analysis function", {
       afun = standard_afun
     )
   std_result <- build_table(std_lyt, dm)
-  expect_snapshot(std_result)
+  expect_snapshot(cran = TRUE, std_result)
 })
 
 
@@ -121,7 +121,7 @@ test_that("get_ref_info works with a vector analysis function", {
       afun = result_afun
     )
   result <- build_table(lyt, dm)
-  expect_snapshot(result)
+  expect_snapshot(cran = TRUE, result)
 
   # Compare with non-hierarchical layout.
   std_lyt <- basic_table(round_type = "sas") |>
@@ -132,7 +132,7 @@ test_that("get_ref_info works with a vector analysis function", {
       afun = standard_afun
     )
   std_result <- build_table(std_lyt, dm)
-  expect_snapshot(std_result)
+  expect_snapshot(cran = TRUE, std_result)
 
   # Keep one explicit check to verify the relationship between the two outputs
   result_matrix <- matrix_form(result)$strings

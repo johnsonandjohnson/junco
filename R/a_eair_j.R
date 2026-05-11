@@ -568,6 +568,14 @@ a_eair100_j <- function(
     cur_trt_grp <- trt_var_refpath$cur_trt_grp
     ctrl_grp <- trt_var_refpath$ctrl_grp
 
+    # for combined facet, .alt_df_full value for the treatment group needs update
+    .alt_df_full <- upd_denom_df_combo(
+      .alt_df_full,
+      trt_var,
+      cur_trt_grp,
+      .spl_context
+    )
+
     fn_args_x <- list(
       .alt_df_full = .alt_df_full,
       # treatment/ref group related arguments

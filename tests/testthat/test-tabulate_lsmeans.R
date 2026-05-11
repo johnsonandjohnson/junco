@@ -1,3 +1,42 @@
+# tidy.tern_model ----
+
+test_that("tidy.tern_model works as expected", {
+  fit <- fit_mmrm_j(
+    vars = list(
+      response = "FEV1",
+      covariates = c("RACE", "SEX"),
+      id = "USUBJID",
+      arm = "ARMCD",
+      visit = "AVISIT"
+    ),
+    data = mmrm::fev_data,
+    cor_struct = "unstructured",
+    weights_emmeans = "equal"
+  )
+  result <- expect_silent(broom::tidy(fit))
+  expect_snapshot_value(result, style = "deparse", cran = TRUE)
+})
+
+test_that("tidy.tern_model works as expected with subgroup variable", {
+  fit <- fit_mmrm_j(
+    vars = list(
+      response = "FEV1",
+      covariates = "RACE",
+      id = "USUBJID",
+      arm = "ARMCD",
+      visit = "AVISIT",
+      subgroup = "SEX"
+    ),
+    data = mmrm::fev_data,
+    cor_struct = "unstructured",
+    weights_emmeans = "equal"
+  )
+  result <- expect_silent(broom::tidy(fit))
+  expect_snapshot_value(result, style = "deparse", cran = TRUE)
+})
+
+# s_lsmeans ----
+
 test_that("s_lsmeans works as expected with MMRM fit when not in reference column", {
   mmrm_results <- fit_mmrm_j(
     vars = list(
@@ -46,90 +85,6 @@ test_that("s_lsmeans works as expected with MMRM fit when not in reference colum
   expect_snapshot_value(pval_greater, style = "deparse", tolerance = 1e-3)
 })
 
-test_that("summarize_lsmeans can show two- and one-sided p-values correctly", {
-  mmrm_results <- fit_mmrm_j(
-    vars = list(
-      response = "FEV1",
-      covariates = c("RACE", "SEX"),
-      id = "USUBJID",
-      arm = "ARMCD",
-      visit = "AVISIT"
-    ),
-    data = mmrm::fev_data,
-    cor_struct = "unstructured",
-    weights_emmeans = "equal",
-    averages_emmeans = list(
-      "VIS1+2" = c("VIS1", "VIS2")
-    )
-  )
-  df <- broom::tidy(mmrm_results)
-  checkmate::expect_subset(
-    c("p_value", "p_value_less", "p_value_greater"),
-    names(df)
-  )
-
-  dat_adsl <- mmrm::fev_data |>
-    select(USUBJID, ARMCD) |>
-    unique()
-  start_lyt <- basic_table() |>
-    split_cols_by("ARMCD") |>
-    add_colcounts() |>
-    split_rows_by("AVISIT")
-
-  lyt_two_sided <- start_lyt |>
-    analyze(
-      "ARMCD",
-      afun = a_lsmeans,
-      show_labels = "hidden",
-      na_str = default_na_str(),
-      extra_args = list(
-        ref_path = c("ARMCD", mmrm_results$ref_level)
-      )
-    )
-  result_two_sided <- build_table(
-    lyt_two_sided,
-    df = df,
-    alt_counts_df = dat_adsl
-  )
-  expect_snapshot(result_two_sided)
-
-  lyt_one_sided_less <- start_lyt |>
-    analyze(
-      "ARMCD",
-      afun = a_lsmeans,
-      show_labels = "hidden",
-      na_str = default_na_str(),
-      extra_args = list(
-        ref_path = c("ARMCD", mmrm_results$ref_level),
-        alternative = "less"
-      )
-    )
-  result_one_sided_less <- build_table(
-    lyt_one_sided_less,
-    df = df,
-    alt_counts_df = dat_adsl
-  )
-  expect_snapshot(result_one_sided_less)
-
-  lyt_one_sided_greater <- start_lyt |>
-    analyze(
-      "ARMCD",
-      afun = a_lsmeans,
-      show_labels = "hidden",
-      na_str = default_na_str(),
-      extra_args = list(
-        ref_path = c("ARMCD", mmrm_results$ref_level),
-        alternative = "greater"
-      )
-    )
-  result_one_sided_greater <- build_table(
-    lyt_one_sided_greater,
-    df = df,
-    alt_counts_df = dat_adsl
-  )
-  expect_snapshot(result_one_sided_greater)
-})
-
 test_that("s_lsmeans works as expected with ANCOVA fit when not in reference column", {
   ancova_results <- fit_ancova(
     vars = list(
@@ -161,4 +116,130 @@ test_that("s_lsmeans works as expected with ANCOVA fit when not in reference col
       "p_value"
     )
   )
+})
+
+# a_lsmeans ----
+
+test_that("a_lsmeans can show two- and one-sided p-values correctly", {
+  mmrm_results <- fit_mmrm_j(
+    vars = list(
+      response = "FEV1",
+      covariates = c("RACE", "SEX"),
+      id = "USUBJID",
+      arm = "ARMCD",
+      visit = "AVISIT"
+    ),
+    data = mmrm::fev_data,
+    cor_struct = "unstructured",
+    weights_emmeans = "equal",
+    averages_emmeans = list(
+      "VIS1+2" = c("VIS1", "VIS2")
+    )
+  )
+  df <- broom::tidy(mmrm_results)
+  checkmate::expect_subset(
+    c("p_value", "p_value_less", "p_value_greater"),
+    names(df)
+  )
+
+  dat_adsl <- mmrm::fev_data |>
+    dplyr::select(USUBJID, ARMCD) |>
+    unique()
+  start_lyt <- basic_table() |>
+    split_cols_by("ARMCD") |>
+    add_colcounts() |>
+    split_rows_by("AVISIT")
+
+  lyt_two_sided <- start_lyt |>
+    analyze(
+      "ARMCD",
+      afun = a_lsmeans,
+      show_labels = "hidden",
+      na_str = default_na_str(),
+      extra_args = list(
+        ref_path = c("ARMCD", mmrm_results$ref_level)
+      )
+    )
+  result_two_sided <- build_table(
+    lyt_two_sided,
+    df = df,
+    alt_counts_df = dat_adsl
+  )
+  expect_snapshot(cran = TRUE, result_two_sided)
+
+  lyt_one_sided_less <- start_lyt |>
+    analyze(
+      "ARMCD",
+      afun = a_lsmeans,
+      show_labels = "hidden",
+      na_str = default_na_str(),
+      extra_args = list(
+        ref_path = c("ARMCD", mmrm_results$ref_level),
+        alternative = "less"
+      )
+    )
+  result_one_sided_less <- build_table(
+    lyt_one_sided_less,
+    df = df,
+    alt_counts_df = dat_adsl
+  )
+  expect_snapshot(cran = TRUE, result_one_sided_less)
+
+  lyt_one_sided_greater <- start_lyt |>
+    analyze(
+      "ARMCD",
+      afun = a_lsmeans,
+      show_labels = "hidden",
+      na_str = default_na_str(),
+      extra_args = list(
+        ref_path = c("ARMCD", mmrm_results$ref_level),
+        alternative = "greater"
+      )
+    )
+  result_one_sided_greater <- build_table(
+    lyt_one_sided_greater,
+    df = df,
+    alt_counts_df = dat_adsl
+  )
+  expect_snapshot(cran = TRUE, result_one_sided_greater)
+})
+
+test_that("a_lsmeans works well together with subgroup variable", {
+  mmrm_results <- fit_mmrm_j(
+    vars = list(
+      response = "FEV1",
+      covariates = "RACE",
+      id = "USUBJID",
+      arm = "ARMCD",
+      visit = "AVISIT",
+      subgroup = "SEX"
+    ),
+    data = mmrm::fev_data,
+    cor_struct = "unstructured",
+    weights_emmeans = "equal"
+  )
+  df <- broom::tidy(mmrm_results)
+  dat_adsl <- mmrm::fev_data |>
+    dplyr::select(USUBJID, ARMCD, SEX) |>
+    unique()
+  lyt <- basic_table() |>
+    split_cols_by("ARMCD") |>
+    add_colcounts() |>
+    split_rows_by("SEX") |>
+    split_rows_by("AVISIT") |>
+    analyze(
+      "ARMCD",
+      afun = a_lsmeans,
+      show_labels = "hidden",
+      na_str = default_na_str(),
+      extra_args = list(
+        ref_path = c("ARMCD", mmrm_results$ref_level)
+      )
+    )
+  result <- build_table(
+    lyt,
+    df = df,
+    alt_counts_df = dat_adsl
+  )
+  expect_snapshot(cran = TRUE, result)
 })

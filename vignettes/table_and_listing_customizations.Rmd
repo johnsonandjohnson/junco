@@ -1,7 +1,7 @@
 ---
 title: "Table & Listing Customizations"
 date: "2025-12-04"
-author: "Joe Kovach and David Munoz Tord"
+author: "C&SP Methodology Team"
 output:
     rmarkdown::html_document:
         theme: "spacelab"
@@ -172,10 +172,10 @@ tt_to_tlgrtf(result,
 
 ###  Table .docx File
 
-To create a .docx file with landscape orientation, the `junco::export_as_docx_j` function can be called with the `orientation` argument set to "landscape".
+To create a .docx file with landscape orientation, the `junco::export_TLG_as_docx` function can be called with the `orientation` argument set to "landscape".
 
 ```{r orientation_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "exampleorientation",
                 output_dir = out_dir,
                 orientation = "landscape")
@@ -293,10 +293,10 @@ tt_to_tlgrtf(result,
 ```
 ### Table .docx File
 
-To display the body of tables in Times New Roman 8-pt for .docx files, the junco::export_as_docx_j function can be called with the theme argument included. The theme argument will specify a junco::theme_docx_default_j function call.
+To display the body of tables in Times New Roman 8-pt for .docx files, the junco::export_TLG_as_docx function can be called with the theme argument included. The theme argument will specify a junco::theme_docx_default_j function call.
 
 ```{r fontsize_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "examplefontsize",
                 output_dir = out_dir,
                 theme = theme_docx_default_j(font = "Times New Roman", font_size = 8L))
@@ -895,17 +895,23 @@ tt_to_tlgrtf(result,
 ### Table .docx File
 
 In order to get the dose level to appear on a new line, then the TRT01A
-variable values will need to be updated to include the text "\\n"
-between the drug name and dose level.
+variable values will need to be updated to include a markup/keyword of your
+choice (e.g. "\\\\line") between the drug name and dose level, and passed
+through argument "string_map".
+
+```{r string_map_newline}
+string_map_newline <- rbind(default_str_map, c("\\line", "\n"))
+string_map_newline
+```
 
 
 ```{r newline_table_docx}
 library(junco)
 library(rtables)
 
-adsl <- data.frame(TRT01A = c("Example Drug\n 5 mg",
-                              "Example Drug\n 10 mg",
-                              "Example Drug\n 20 mg",
+adsl <- data.frame(TRT01A = c("Example Drug\\line5 mg",
+                              "Example Drug\\line10 mg",
+                              "Example Drug\\line20 mg",
                               "Placebo"),
                    SUBJECT = c("1",
                                "2",
@@ -935,15 +941,17 @@ result <- set_titles(result, titles)
 ```
 
 ```{r newline_table_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "examplenewline",
                 output_dir = out_dir,
-                orientation = "landscape")
+                orientation = "landscape",
+                string_map = string_map_newline)
 ```
 
 ### Visual Output (HTML Representation)
 ```{r newline_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "newlinetable", orientation = "landscape")
+tt_to_flextable_j(result, "newlinetable", orientation = "landscape",
+                  string_map = string_map_newline)
 ```
 
 ### Listing .rtf File
@@ -997,7 +1005,7 @@ tt_to_tlgrtf(result,
 
 If a .docx file is to be created for the listing, new lines can be inserted into the column header by updating the variable label that corresponds with the column of interest.
 
-By adding in "\\n" to the TRT01A variable label, a new line is inserted after "Actual Treatment".
+By adding in "\\\\line" to the TRT01A variable label, a new line is inserted after "Actual Treatment".
 
 ```{r newline_listing_docx}
 library(junco)
@@ -1017,7 +1025,7 @@ adsl <- data.frame(TRT01A = c("Example Drug 5 mg",
                               64
                    )
 ) |>
-  formatters::var_relabel(TRT01A = "Actual Treatment for\n Period 01") |>
+  formatters::var_relabel(TRT01A = "Actual Treatment for\\linePeriod 01") |>
   formatters::var_relabel(SUBJECT = "Subject") |>
   formatters::var_relabel(HEIGHT = "Height (in)")
 
@@ -1031,15 +1039,17 @@ result <- set_titles(result, titles)
 ```
 
 ```{r newline_listing_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "examplelistingnewline2",
                 output_dir = out_dir,
-                orientation = "landscape")
+                orientation = "landscape",
+                string_map = string_map_newline)
 ```
 
 ### Visual Output (HTML Representation)
 ```{r newline_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "examplelistingnewline2", orientation = "landscape")
+tt_to_flextable_j(result, "examplelistingnewline2", orientation = "landscape",
+                  string_map = string_map_newline)
 ```
 
 
@@ -1136,10 +1146,10 @@ tt_to_tlgrtf(result,
 
 
 ### Table .docx File
-To export a table with a custom border matrix to a .docx file, the `junco::export_as_docx_j` function can be called with the `border_mat` argument:
+To export a table with a custom border matrix to a .docx file, the `junco::export_TLG_as_docx` function can be called with the `border_mat` argument:
 
 ```{r custom_border_matrix_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "custombordertable",
                 output_dir = out_dir,
                 orientation = "landscape",
@@ -1257,7 +1267,7 @@ tt_to_tlgrtf(result,
 
 ### Table .docx File
 
-The default markup file for `junco::export_as_docx_j` to produce a .docx file is as follows.
+The default markup file for `junco::export_TLG_as_docx` to produce a .docx file is as follows.
 
 ```{r default_markup_docx2}
 library(tibble)
@@ -1276,7 +1286,7 @@ docx_markup_df <- tibble::tribble(
 docx_markup_df
 ```
 
-If a .docx file is to be created for the table, the `junco::export_as_docx_j` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_as_docx_j`, the "markup_df" argument has the default "docx_markup_df" object specified.
+If a .docx file is to be created for the table, the `junco::export_TLG_as_docx` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_TLG_as_docx`, the "markup_df_docx" argument has the default "docx_markup_df" object specified.
 
 
 ```{r superscript_table_docx}
@@ -1314,11 +1324,11 @@ result <- set_titles(result, titles)
 ```
 
 ```{r superscript_table_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "superscripttable",
                 output_dir = out_dir,
                 orientation = "landscape",
-                markup_df = docx_markup_df)
+                markup_df_docx = docx_markup_df)
 ```
 
 
@@ -1326,7 +1336,7 @@ export_as_docx_j(result,
 
 ### Visual Output (HTML Representation)
 ```{r superscript_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "superscripttable", orientation = "landscape",  markup_df = dps_markup_df)
+tt_to_flextable_j(result, "superscripttable", orientation = "landscape",  markup_df_docx = docx_markup_df)
 ```
 
 ### Listing .rtf File
@@ -1378,7 +1388,7 @@ tt_to_tlgrtf(result,
 
 ### Listing .docx File
 
-The default markup file for `junco::export_as_docx_j` to produce a .docx file is as follows.
+The default markup file for `junco::export_TLG_as_docx` to produce a .docx file is as follows.
 
 ```{r default_markup_docx}
 library(tibble)
@@ -1397,7 +1407,7 @@ docx_markup_df <- tibble::tribble(
 docx_markup_df
 ```
 
-If a .docx file is to be created for the table, the `junco::export_as_docx_j` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_as_docx_j`, the "markup_df" argument has the default "docx_markup_df" object specified.
+If a .docx file is to be created for the table, the `junco::export_TLG_as_docx` is to be called. For .docx files, the markup is different from .rtf files. In this example, when calling `junco::export_TLG_as_docx`, the "markup_df_docx" argument has the default "docx_markup_df" object specified.
 
 ```{r superscript_listing_docx}
 
@@ -1432,15 +1442,15 @@ result <- set_titles(result, titles)
 ```
 
 ```{r superscript_listing_docx_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
-export_as_docx_j(result,
+export_TLG_as_docx(result,
                 tblid = "examplelistingsuperscript2",
                 output_dir = out_dir,
                 orientation = "landscape",
-                markup_df = docx_markup_df)
+                markup_df_docx = docx_markup_df)
 ```
 ### Visual Output (HTML Representation)
 ```{r superscript_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
-tt_to_flextable_j(result, "examplelistingsuperscript2", orientation = "landscape",  markup_df = dps_markup_df)
+tt_to_flextable_j(result, "examplelistingsuperscript2", orientation = "landscape",  markup_df_docx = docx_markup_df)
 ```
 
 
@@ -1855,11 +1865,11 @@ tt_to_tlgrtf(result1,
 
 
 ### Listing .docx File
-The `junco::export_as_docx_j` function can be called multiple times to produce multiple .docx files, similar to the approach used for .rtf files:
+The `junco::export_TLG_as_docx` function can be called multiple times to produce multiple .docx files, similar to the approach used for .rtf files:
 
 ```{r split_listing_docx_part1_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 
-export_as_docx_j(result1,
+export_TLG_as_docx(result1,
   tblid = "examplelistingmultiplefilesPART1OF2",
   output_dir = out_dir,
   orientation = "landscape"
@@ -1892,7 +1902,7 @@ tt_to_tlgrtf(result2,
 ### Listing .docx File 2
 ```{r split_listing_docx_part2_export, eval=NOT_CRAN, message=FALSE, warning=FALSE}
 
-export_as_docx_j(result2,
+export_TLG_as_docx(result2,
   tblid = "examplelistingmultiplefilesPART2OF2",
   output_dir = out_dir,
   orientation = "landscape"
