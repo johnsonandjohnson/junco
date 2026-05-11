@@ -26,16 +26,18 @@
 #' @details
 #' The first sample is taken from `df1[[.var]]` and the second from `df2[[.var]]`.
 #'
-#' If `paired = TRUE`, observations are matched using `paired_by`, and all
-#' statistics are computed on within-pair differences (i.e., differences between
-#' matched observations).
+#' If `paired = FALSE`, missing values are removed separately from each sample
+#' prior to statistical computations.
 #'
-#' Moreover, any `NA` or `NaN` values in columns specified by `paired_by` are
-#' excluded from matching (see `merge(..., incomparables = c(NA, NaN))`).
+#' If `paired = TRUE`, observations are matched using `paired_by` prior to
+#' statistical analysis, and only complete pairs are used.
 #'
-#' For paired samples, only complete pairs are passed to [safe_t_test()].
-#' For non-paired samples, missing values are removed separately from each
-#' sample prior to passing them to [safe_t_test()].
+#' Data extraction, alignment, and missing-value handling are delegated to
+#' [extract_vectors()], which prepares cleaned numeric vectors for both paired
+#' and unpaired settings.
+#'
+#' Inferential statistics are then computed using [safe_t_test()] applied to
+#' the processed vectors.
 #'
 #' @param df1 (`data.frame`)\cr Dataset for the first sample.
 #' @param df2 (`data.frame`)\cr Dataset for the second sample.
@@ -45,40 +47,35 @@
 #' @param paired_by (`character` or `NULL`)\cr Column name(s) in `df1` and `df2`
 #'   used to match observations between datasets. Required when `paired = TRUE`
 #'   and must uniquely identify each pair in both datasets.
-#' @param conf.level (`proportion`)\cr Confidence level for the interval.
-#' @param ... Additional arguments passed to [safe_t_test()].
+#' @param ... Additional named arguments passed to [safe_t_test()].
 #'
 #' @return
 #' A named `list` containing the quantities described in the Description section.
 #'
-#' @importFrom stats complete.cases
+#' @seealso [safe_t_test()], [extract_vectors()]
+#'
 #' @importFrom tern f_conf_level
 #' @importFrom formatters with_label
 #'
 #' @export
 #'
 #' @examples
-#' df1 <- data.frame(
-#'   USUBJID = c("X01", "X02", "X03", "X04", "X05"),
-#'   CHG = c(4, 1, -1, 9, -2)
-#' )
-#' df2 <- data.frame(
-#'   USUBJID = c("X01", "X02", "X03", "X04", "X05"),
-#'   CHG = c(-2, 4, NA, 5, 2)
-#' )
-#'
-#' # Paired
-#' s_diff_means(df1, df2, "CHG", paired = TRUE, paired_by = "USUBJID")
+#' df1 <- data.frame(id = c("A", "B", "C", "D"), value = 1:4)
+#' df2 <- data.frame(id = c("A", "C", "D", "E", "F"), value = c(3:1, NA, 16))
+#' df1
+#' df2
 #'
 #' # Unpaired
-#' s_diff_means(df1, df2, "CHG")
+#' s_diff_means(df1, df2, "value", conf.level = .8)
+#'
+#' # Paired
+#' s_diff_means(df1, df2, "value", paired = TRUE, paired_by = "id")
 #'
 s_diff_means <- function(df1,
                          df2,
                          .var,
                          paired = FALSE,
                          paired_by = NULL,
-                         conf.level = 0.95,
                          ...) {
   checkmate::assert_data_frame(df1, null.ok = FALSE)
   checkmate::assert_data_frame(df2, null.ok = FALSE)
@@ -87,49 +84,20 @@ s_diff_means <- function(df1,
   checkmate::assert_names(colnames(df2), must.include = .var)
   checkmate::assert_flag(paired, null.ok = FALSE)
 
-  if (paired) {
-    checkmate::assert_character(paired_by, null.ok = FALSE)
-    checkmate::assert_names(colnames(df1), must.include = paired_by)
-    checkmate::assert_names(colnames(df2), must.include = paired_by)
-    if (any(duplicated(df1[, paired_by]))) {
-      stop("df1: 'paired_by' must uniquely identify rows.")
-    }
-    if (any(duplicated(df2[, paired_by]))) {
-      stop("df2: 'paired_by' must uniquely identify rows.")
-    }
+  vecs <- extract_vectors(df1, df2, .var, paired = paired, paired_by = paired_by)
+  n1 <- length(vecs$x1)
+  n2 <- length(vecs$x2)
 
-    pvcols <- c(paired_by, .var)
-    df <- merge(
-      df1[, pvcols, drop = FALSE],
-      df2[, pvcols, drop = FALSE],
-      by = paired_by,
-      suffixes = c("_df1", "_df2"),
-      incomparables = c(NA, NaN)
-    )
-
-    cols_var <- c(paste0(.var, "_df1"), paste0(.var, "_df2"))
-    df <- df[complete.cases(df[, cols_var]), ]
-
-    x1 <- df[[cols_var[1]]]
-    x2 <- df[[cols_var[2]]]
-  } else {
-    x1 <- df1[[.var]]
-    x2 <- df2[[.var]]
-
-    x1 <- x1[!is.na(x1)]
-    x2 <- x2[!is.na(x2)]
-  }
-
-  n1 <- length(x1)
-  n2 <- length(x2)
-  ttest_res <- safe_t_test(x1, x2, paired = paired, conf.level = conf.level, ...)
+  # Get estimates.
+  ttest_res <- safe_t_test(vecs$x1, vecs$x2, paired = paired, ...)
   est <- if (paired) {
     ttest_res$estimate
   } else {
     ttest_res$estimate[1] - ttest_res$estimate[2]
   }
-  ci <- ttest_res$conf
+  ci <- ttest_res$conf.int
   se <- ttest_res$stderr
+  conf.level <- attr(ci, "conf.level")
 
   names(n1) <- "diff_means_n1"
   names(n2) <- "diff_means_n2"
@@ -137,10 +105,10 @@ s_diff_means <- function(df1,
   names(ci) <- c("diff_means_ci_lwr", "diff_means_ci_upr")
   names(se) <- "diff_means_se"
   est_ci <- c(est, ci)
-  attr(est_ci, "conf.level") <- attr(ci, "conf.level")
+  attr(est_ci, "conf.level") <- conf.level
 
   label <- "Difference in Means"
-  cl <- tern::f_conf_level(conf.level)
+  cl <- ifelse(!is.na(conf.level), tern::f_conf_level(conf.level), NA)
 
   y <- list()
   y$diff_means_n1 <- formatters::with_label(n1, paste(label, "Sample Size (Group 1)"))

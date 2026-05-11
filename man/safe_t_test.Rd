@@ -4,35 +4,36 @@
 \alias{safe_t_test}
 \title{Safe Wrapper for \code{stats::t.test()}}
 \usage{
-safe_t_test(x, y = NULL, ...)
+safe_t_test(x, y = NULL, paired = FALSE, ...)
 }
 \arguments{
 \item{x}{a (non-empty) numeric vector of data values.}
 
 \item{y}{an optional (non-empty) numeric vector of data values.}
 
-\item{...}{further arguments to be passed to or from methods.
-    For the \code{formula} method, this includes arguments of the
-    default method, but not \code{paired}.}
+\item{paired}{a logical indicating whether you want a paired
+    t-test.}
+
+\item{...}{Additional named arguments passed to \code{\link[stats:t.test]{stats::t.test.default()}}.}
 }
 \value{
-A \code{list}: either the standard \code{htest} object from \link[stats:t.test]{stats::t.test}, or (on error)
-a list with \code{NA} statistics, sample mean(s) in \code{estimate}, and an \code{error_text}
-field containing the error message.
+A \code{list}: either the standard \code{htest} object from \code{\link[stats:t.test]{stats::t.test.default()}},
+or (on error) a list with \code{NA} statistics, sample mean(s) in \code{estimate},
+and an \code{error_text} field containing the error message.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-This is a robust wrapper around \link[stats:t.test]{stats::t.test} that prevents errors from
-interrupting execution. Instead of failing, it returns a structured result
-containing \code{NA} values and an informative error message.
+This is a robust wrapper around \code{\link[stats:t.test]{stats::t.test.default()}} that prevents
+errors from interrupting execution. Instead of failing, it returns a
+structured result containing \code{NA} values and an informative error message.
 
 This is particularly useful in pipelines, simulations, or batch analyses where
 occasional invalid inputs (e.g., constant vectors, insufficient observations)
 would otherwise stop execution.
 }
 \details{
-When \link[stats:t.test]{stats::t.test} succeeds, the result is returned unchanged.
+When \code{\link[stats:t.test]{stats::t.test.default()}} succeeds, the result is returned unchanged.
 If an error occurs, a list is returned mimicking key components of a \code{htest}
 object.
 Any \code{NaN} estimates are converted to \code{NA_real_}.
@@ -40,11 +41,18 @@ Any \code{NaN} estimates are converted to \code{NA_real_}.
 \examples{
 # Standard usage
 t.test(1:10, 11:20)
-junco:::safe_t_test(1:10, 11:20)
+\dontrun{
+safe_t_test(1:10, 11:20)
+}
 
 # Example triggering failure (zero variance)
+x <- rep(10, 5)
 \dontrun{
-stats::t.test(rep(10, 5), rep(10, 5))
+stats::t.test(x, x)
+safe_t_test(x, x)
 }
-junco:::safe_t_test(rep(10, 5), rep(10, 5))
+
+\dontrun{
+safe_t_test(x, x, paired = TRUE)
+}
 }

@@ -28,8 +28,8 @@
 #'   [tern::s_summary()].
 #'   If difference-in-means statistics are requested, `control$conf_level`
 #'   specifies the confidence level of the interval.
-#' @param ... Additional arguments passed to [tern::s_summary()], and to
-#'   [s_diff_means()] if difference-in-means statistics are computed.
+#' @param ... Additional named arguments passed to [s_diff_means()], except
+#'   `conf.level = control$conf_level` which is already passed.
 #'
 #' @importFrom tern control_analyze_vars s_summary get_stats
 #'

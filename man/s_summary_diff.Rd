@@ -39,8 +39,8 @@ If \code{NULL}, all available statistics for numerical data are computed.}
 If difference-in-means statistics are requested, \code{control$conf_level}
 specifies the confidence level of the interval.}
 
-\item{...}{Additional arguments passed to \code{\link[tern:analyze_variables]{tern::s_summary()}}, and to
-\code{\link[=s_diff_means]{s_diff_means()}} if difference-in-means statistics are computed.}
+\item{...}{Additional named arguments passed to \code{\link[=s_diff_means]{s_diff_means()}}, except
+\code{conf.level = control$conf_level} which is already passed.}
 }
 \value{
 A named \code{list} with the requested statistics.

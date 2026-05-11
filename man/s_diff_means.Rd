@@ -4,15 +4,7 @@
 \alias{s_diff_means}
 \title{Difference in Means Statistics}
 \usage{
-s_diff_means(
-  df1,
-  df2,
-  .var,
-  paired = FALSE,
-  paired_by = NULL,
-  conf.level = 0.95,
-  ...
-)
+s_diff_means(df1, df2, .var, paired = FALSE, paired_by = NULL, ...)
 }
 \arguments{
 \item{df1}{(\code{data.frame})\cr Dataset for the first sample.}
@@ -28,9 +20,7 @@ numeric values.}
 used to match observations between datasets. Required when \code{paired = TRUE}
 and must uniquely identify each pair in both datasets.}
 
-\item{conf.level}{(\code{proportion})\cr Confidence level for the interval.}
-
-\item{...}{Additional arguments passed to \code{\link[=safe_t_test]{safe_t_test()}}.}
+\item{...}{Additional named arguments passed to \code{\link[=safe_t_test]{safe_t_test()}}.}
 }
 \value{
 A named \code{list} containing the quantities described in the Description section.
@@ -62,31 +52,32 @@ The following quantities are computed:
 \details{
 The first sample is taken from \code{df1[[.var]]} and the second from \code{df2[[.var]]}.
 
-If \code{paired = TRUE}, observations are matched using \code{paired_by}, and all
-statistics are computed on within-pair differences (i.e., differences between
-matched observations).
+If \code{paired = FALSE}, missing values are removed separately from each sample
+prior to statistical computations.
 
-Moreover, any \code{NA} or \code{NaN} values in columns specified by \code{paired_by} are
-excluded from matching (see \code{merge(..., incomparables = c(NA, NaN))}).
+If \code{paired = TRUE}, observations are matched using \code{paired_by} prior to
+statistical analysis, and only complete pairs are used.
 
-For paired samples, only complete pairs are passed to \code{\link[=safe_t_test]{safe_t_test()}}.
-For non-paired samples, missing values are removed separately from each
-sample prior to passing them to \code{\link[=safe_t_test]{safe_t_test()}}.
+Data extraction, alignment, and missing-value handling are delegated to
+\code{\link[=extract_vectors]{extract_vectors()}}, which prepares cleaned numeric vectors for both paired
+and unpaired settings.
+
+Inferential statistics are then computed using \code{\link[=safe_t_test]{safe_t_test()}} applied to
+the processed vectors.
 }
 \examples{
-df1 <- data.frame(
-  USUBJID = c("X01", "X02", "X03", "X04", "X05"),
-  CHG = c(4, 1, -1, 9, -2)
-)
-df2 <- data.frame(
-  USUBJID = c("X01", "X02", "X03", "X04", "X05"),
-  CHG = c(-2, 4, NA, 5, 2)
-)
-
-# Paired
-s_diff_means(df1, df2, "CHG", paired = TRUE, paired_by = "USUBJID")
+df1 <- data.frame(id = c("A", "B", "C", "D"), value = 1:4)
+df2 <- data.frame(id = c("A", "C", "D", "E", "F"), value = c(3:1, NA, 16))
+df1
+df2
 
 # Unpaired
-s_diff_means(df1, df2, "CHG")
+s_diff_means(df1, df2, "value", conf.level = .8)
 
+# Paired
+s_diff_means(df1, df2, "value", paired = TRUE, paired_by = "id")
+
+}
+\seealso{
+\code{\link[=safe_t_test]{safe_t_test()}}, \code{\link[=extract_vectors]{extract_vectors()}}
 }

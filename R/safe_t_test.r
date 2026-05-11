@@ -2,45 +2,53 @@
 #'
 #' @description `r lifecycle::badge("experimental")`
 #'
-#' This is a robust wrapper around [stats::t.test] that prevents errors from
-#' interrupting execution. Instead of failing, it returns a structured result
-#' containing `NA` values and an informative error message.
+#' This is a robust wrapper around [stats::t.test.default()] that prevents
+#' errors from interrupting execution. Instead of failing, it returns a
+#' structured result containing `NA` values and an informative error message.
 #'
 #' This is particularly useful in pipelines, simulations, or batch analyses where
 #' occasional invalid inputs (e.g., constant vectors, insufficient observations)
 #' would otherwise stop execution.
 #'
 #' @details
-#' When [stats::t.test] succeeds, the result is returned unchanged.
+#' When [stats::t.test.default()] succeeds, the result is returned unchanged.
 #' If an error occurs, a list is returned mimicking key components of a `htest`
 #' object.
 #' Any `NaN` estimates are converted to `NA_real_`.
 #'
 #' @inheritParams stats::t.test
+#' @param ... Additional named arguments passed to [stats::t.test.default()].
 #'
 #' @return
-#' A `list`: either the standard `htest` object from [stats::t.test], or (on error)
-#' a list with `NA` statistics, sample mean(s) in `estimate`, and an `error_text`
-#' field containing the error message.
+#' A `list`: either the standard `htest` object from [stats::t.test.default()],
+#' or (on error) a list with `NA` statistics, sample mean(s) in `estimate`,
+#' and an `error_text` field containing the error message.
 #'
 #' @importFrom stats t.test
 #'
 #' @examples
 #' # Standard usage
 #' t.test(1:10, 11:20)
-#' junco:::safe_t_test(1:10, 11:20)
+#' \dontrun{
+#' safe_t_test(1:10, 11:20)
+#' }
 #'
 #' # Example triggering failure (zero variance)
+#' x <- rep(10, 5)
 #' \dontrun{
-#' stats::t.test(rep(10, 5), rep(10, 5))
+#' stats::t.test(x, x)
+#' safe_t_test(x, x)
 #' }
-#' junco:::safe_t_test(rep(10, 5), rep(10, 5))
-safe_t_test <- function(x, y = NULL, ...) {
+#'
+#' \dontrun{
+#' safe_t_test(x, x, paired = TRUE)
+#' }
+safe_t_test <- function(x, y = NULL, paired = FALSE, ...) {
   x_expr <- substitute(x)
   y_expr <- substitute(y)
   tryCatch(
     {
-      res <- stats::t.test(x, y, ...)
+      res <- stats::t.test(x, y, paired = paired, ...)
 
       res$data.name <- if (!is.null(y)) {
         paste(deparse1(x_expr), "and", deparse1(y_expr))
@@ -51,20 +59,22 @@ safe_t_test <- function(x, y = NULL, ...) {
       res
     },
     error = function(e) {
-      if (!is.null(y)) {
-        estimate <- c(mean_x = mean(x), mean_y = mean(y))
-        dname <- paste(deparse1(substitute(x)), "and", deparse1(substitute(y)))
-      } else {
+      if (is.null(y) || paired) {
         estimate <- c(mean_x = mean(x))
         dname <- deparse1(substitute(x))
+      } else {
+        estimate <- c(mean_x = mean(x), mean_y = mean(y))
+        dname <- paste(deparse1(substitute(x)), "and", deparse1(substitute(y)))
       }
       estimate[is.nan(estimate)] <- NA_real_
+      conf.int <- c(NA_real_, NA_real_)
+      attr(conf.int, "conf.level") <- NA_real_
       list(
         statistic = NA_real_,
         parameter = NA_real_,
         p.value = NA_real_,
         estimate = estimate,
-        conf.int = c(NA_real_, NA_real_),
+        conf.int = conf.int,
         stderr = NA_real_,
         method = "t-test (failed)",
         data.name = dname,
