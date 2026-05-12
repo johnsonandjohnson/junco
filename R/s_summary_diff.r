@@ -21,7 +21,7 @@
 #'   numeric.
 #' @param .stats (`character` or `NULL`)\cr Names of statistics to be computed.
 #'   For numerical data, the names of supported statistics are listed via
-#'   `tern::get_stats()` for statistics for a single variable and
+#'   [tern::get_stats()] for statistics for a single variable and
 #'   `junco_get_stats("diff_means")` for difference-in-means statistics.
 #'   If `NULL`, all available statistics for numerical data are computed.
 #' @param control (`list`)\cr List of control options passed to
@@ -29,7 +29,7 @@
 #'   If difference-in-means statistics are requested, `control$conf_level`
 #'   specifies the confidence level of the interval.
 #' @param ... Additional named arguments passed to [s_diff_means()], except
-#'   `conf.level = control$conf_level` which is already passed.
+#'   `df1`, `df2`, `.var`, and `conf.level`, which are already passed.
 #'
 #' @importFrom tern control_analyze_vars s_summary get_stats
 #'

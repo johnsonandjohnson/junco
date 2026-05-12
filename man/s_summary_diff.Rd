@@ -26,7 +26,7 @@ numeric.}
 
 \item{.stats}{(\code{character} or \code{NULL})\cr Names of statistics to be computed.
 For numerical data, the names of supported statistics are listed via
-\code{tern::get_stats()} for statistics for a single variable and
+\code{\link[tern:default_stats_formats_labels]{tern::get_stats()}} for statistics for a single variable and
 \code{junco_get_stats("diff_means")} for difference-in-means statistics.
 If \code{NULL}, all available statistics for numerical data are computed.}
 
