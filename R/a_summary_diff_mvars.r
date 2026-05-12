@@ -1,6 +1,7 @@
 #' @name a_summary_diff_mvars
 #'
-#' @title Descriptive Statistics for Multiple Univariate Variables with Optional Reference-Based Comparison
+#' @title Descriptive Statistics for Multiple Univariate Variables with Optional
+#' Reference-Based Comparison
 #'
 #' @description `r lifecycle::badge("experimental")`
 #'
@@ -28,8 +29,8 @@
 #' @param ref_path (`character` or `NULL`)\cr Global reference group specification,
 #'   see [get_ref_info()]. It is used to construct `.ref_group` and
 #'   `.in_ref_col`, which are passed to [s_summary_diff()] to compute the
-#'   comparison statistics for variables in `df` and the reference `.ref_group`
-#'   data set.
+#'   difference-in-means statistics for variables in `df` and the reference
+#'   `.ref_group` data set.
 #'
 #' @param na_rm_var (`logical(1)`)\cr If `TRUE`, rows with missing values in
 #'   `.var` are removed from `df` before computing statistics defined in
