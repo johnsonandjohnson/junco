@@ -138,8 +138,6 @@ reference:
     - leftside
     - remove_col_count
     - rm_levels
-    - safe_t_test
-
     
   - title: internal
     desc: The following are additional junco functions.
