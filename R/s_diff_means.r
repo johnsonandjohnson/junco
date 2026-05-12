@@ -106,7 +106,7 @@ s_diff_means <- function(df1,
   attr(est_ci, "conf.level") <- conf.level
 
   label <- "Difference in Means"
-  cl <- ifelse(!is.na(conf.level), tern::f_conf_level(conf.level), NA)
+  cl <- tern::f_conf_level(conf.level)
 
   y <- list()
   y$diff_means_n1 <- formatters::with_label(n1, paste(label, "Sample Size (Group 1)"))

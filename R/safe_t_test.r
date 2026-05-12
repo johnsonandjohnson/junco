@@ -19,7 +19,6 @@
 #' Any `NaN` estimates are converted to `NA_real_`.
 #'
 #' @inheritParams stats::t.test
-#' @param ... Additional named arguments passed to [stats::t.test.default()].
 #'
 #' @return
 #' A `list`: either the standard `htest` object from [stats::t.test.default()],
@@ -42,16 +41,14 @@
 #' safe_t_test(x, x, paired = TRUE)
 #'
 safe_t_test <- function(
-  x,
-  y = NULL,
-  alternative = c("two.sided", "less", "greater"),
-  mu = 0,
-  paired = FALSE,
-  var.equal = FALSE,
-  conf.level = 0.95,
-  ...
-) {
-
+    x,
+    y = NULL,
+    alternative = c("two.sided", "less", "greater"),
+    mu = 0,
+    paired = FALSE,
+    var.equal = FALSE,
+    conf.level = 0.95,
+    ...) {
   x_expr <- substitute(x)
   y_expr <- substitute(y)
   tryCatch(
