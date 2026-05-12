@@ -1,5 +1,7 @@
 #' @title Safe Wrapper for `stats::t.test()`
 #'
+#' @noRd
+#'
 #' @description `r lifecycle::badge("experimental")`
 #'
 #' This is a robust wrapper around [stats::t.test.default()] that prevents
@@ -29,26 +31,27 @@
 #' @examples
 #' # Standard usage
 #' t.test(1:10, 11:20)
-#' \dontrun{
 #' safe_t_test(1:10, 11:20)
-#' }
 #'
 #' # Example triggering failure (zero variance)
 #' x <- rep(10, 5)
-#' \dontrun{
+#'
 #' stats::t.test(x, x)
 #' safe_t_test(x, x)
-#' }
 #'
-#' \dontrun{
 #' safe_t_test(x, x, paired = TRUE)
-#' }
-safe_t_test <- function(x, y = NULL, paired = FALSE, ...) {
+#'
+safe_t_test <- function(x, y = NULL, ...) {
   x_expr <- substitute(x)
   y_expr <- substitute(y)
+  paired <- FALSE
+  k <- match.arg(conf.level)
+
+  dotargs <- list(...)
+
   tryCatch(
     {
-      res <- stats::t.test(x, y, paired = paired, ...)
+      res <- stats::t.test(x, y, ...)
 
       res$data.name <- if (!is.null(y)) {
         paste(deparse1(x_expr), "and", deparse1(y_expr))

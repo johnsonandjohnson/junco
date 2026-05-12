@@ -82,6 +82,8 @@ check_alt_df_full <- function(argument, values, .alt_df_full) {
 
 #' @title Extract Vectors for Two-Sample Analysis
 #'
+#' @noRd
+#'
 #' @description `r lifecycle::badge("experimental")`
 #'
 #' Extracts numeric vectors from two data frames for two-sample statistical
@@ -143,14 +145,11 @@ check_alt_df_full <- function(argument, values, .alt_df_full) {
 #' df2
 #'
 #' # Unpaired
-#' \dontrun{
 #' extract_vectors(df1, df2, "value")
-#' }
 #'
 #' # Paired
-#' \dontrun{
 #' extract_vectors(df1, df2, "value", paired = TRUE, paired_by = "id")
-#' }
+#'
 extract_vectors <- function(df1, df2, .var, paired = FALSE, paired_by) {
   checkmate::assert_data_frame(df1)
   checkmate::assert_data_frame(df2)
