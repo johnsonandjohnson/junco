@@ -10,7 +10,7 @@
 #' samples, the estimator is defined as the mean of within-pair differences.
 #'
 #' Inferential statistics, including standard errors and confidence intervals,
-#' are obtained using a t-distribution framework via [safe_t_test()].
+#' are obtained using a t-distribution framework via `safe_t_test()`.
 #'
 #' The following quantities are computed:
 #' \describe{
@@ -33,10 +33,10 @@
 #' statistical analysis, and only complete pairs are used.
 #'
 #' Data extraction, alignment, and missing-value handling are delegated to
-#' [extract_vectors()], which prepares cleaned numeric vectors for both paired
+#' `extract_vectors()`, which prepares cleaned numeric vectors for both paired
 #' and unpaired settings.
 #'
-#' Inferential statistics are then computed using [safe_t_test()] applied to
+#' Inferential statistics are then computed using `safe_t_test()` applied to
 #' the processed vectors.
 #'
 #' @param df1 (`data.frame`)\cr Dataset for the first sample.
@@ -47,12 +47,12 @@
 #' @param paired_by (`character` or `NULL`)\cr Column name(s) in `df1` and `df2`
 #'   used to match observations between datasets. Required when `paired = TRUE`
 #'   and must uniquely identify each pair in both datasets.
-#' @param ... Additional named arguments passed to [safe_t_test()].
+#' @param ... Additional named arguments passed to `safe_t_test()`.
 #'
 #' @return
 #' A named `list` containing the quantities described in the Description section.
 #'
-#' @seealso [safe_t_test()], [extract_vectors()]
+#' @seealso `safe_t_test()`, `extract_vectors()`
 #'
 #' @importFrom tern f_conf_level
 #' @importFrom formatters with_label

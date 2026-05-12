@@ -20,7 +20,7 @@ numeric values.}
 used to match observations between datasets. Required when \code{paired = TRUE}
 and must uniquely identify each pair in both datasets.}
 
-\item{...}{Additional named arguments passed to \code{\link[=safe_t_test]{safe_t_test()}}.}
+\item{...}{Additional named arguments passed to \code{safe_t_test()}.}
 }
 \value{
 A named \code{list} containing the quantities described in the Description section.
@@ -36,7 +36,7 @@ estimator is defined as the difference between sample means. For paired
 samples, the estimator is defined as the mean of within-pair differences.
 
 Inferential statistics, including standard errors and confidence intervals,
-are obtained using a t-distribution framework via \code{\link[=safe_t_test]{safe_t_test()}}.
+are obtained using a t-distribution framework via \code{safe_t_test()}.
 
 The following quantities are computed:
 \describe{
@@ -59,10 +59,10 @@ If \code{paired = TRUE}, observations are matched using \code{paired_by} prior t
 statistical analysis, and only complete pairs are used.
 
 Data extraction, alignment, and missing-value handling are delegated to
-\code{\link[=extract_vectors]{extract_vectors()}}, which prepares cleaned numeric vectors for both paired
+\code{extract_vectors()}, which prepares cleaned numeric vectors for both paired
 and unpaired settings.
 
-Inferential statistics are then computed using \code{\link[=safe_t_test]{safe_t_test()}} applied to
+Inferential statistics are then computed using \code{safe_t_test()} applied to
 the processed vectors.
 }
 \examples{
@@ -79,5 +79,5 @@ s_diff_means(df1, df2, "value", paired = TRUE, paired_by = "id")
 
 }
 \seealso{
-\code{\link[=safe_t_test]{safe_t_test()}}, \code{\link[=extract_vectors]{extract_vectors()}}
+\code{safe_t_test()}, \code{extract_vectors()}
 }

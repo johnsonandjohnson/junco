@@ -41,17 +41,12 @@
 #'
 #' safe_t_test(x, x, paired = TRUE)
 #'
-safe_t_test <- function(x, y = NULL, ...) {
+safe_t_test <- function(x, y = NULL, paired = FALSE, ...) {
   x_expr <- substitute(x)
   y_expr <- substitute(y)
-  paired <- FALSE
-  k <- match.arg(conf.level)
-
-  dotargs <- list(...)
-
   tryCatch(
     {
-      res <- stats::t.test(x, y, ...)
+      res <- stats::t.test(x, y, paired = paired, ...)
 
       res$data.name <- if (!is.null(y)) {
         paste(deparse1(x_expr), "and", deparse1(y_expr))
