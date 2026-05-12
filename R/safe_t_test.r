@@ -41,12 +41,31 @@
 #'
 #' safe_t_test(x, x, paired = TRUE)
 #'
-safe_t_test <- function(x, y = NULL, paired = FALSE, ...) {
+safe_t_test <- function(
+  x,
+  y = NULL,
+  alternative = c("two.sided", "less", "greater"),
+  mu = 0,
+  paired = FALSE,
+  var.equal = FALSE,
+  conf.level = 0.95,
+  ...
+) {
+
   x_expr <- substitute(x)
   y_expr <- substitute(y)
   tryCatch(
     {
-      res <- stats::t.test(x, y, paired = paired, ...)
+      res <- stats::t.test(
+        x = x,
+        y = y,
+        alternative = alternative,
+        mu = mu,
+        paired = paired,
+        var.equal = var.equal,
+        conf.level = conf.level,
+        ...
+      )
 
       res$data.name <- if (!is.null(y)) {
         paste(deparse1(x_expr), "and", deparse1(y_expr))
@@ -58,16 +77,20 @@ safe_t_test <- function(x, y = NULL, paired = FALSE, ...) {
     },
     error = function(e) {
       if (is.null(y) || paired) {
-        estimate <- c(mean_x = mean(x))
-        dname <- deparse1(substitute(x))
+        estimate <- c(mean_x = mean(x, na.rm = TRUE))
+        dname <- deparse1(x_expr)
       } else {
-        estimate <- c(mean_x = mean(x), mean_y = mean(y))
-        dname <- paste(deparse1(substitute(x)), "and", deparse1(substitute(y)))
+        estimate <- c(
+          mean_x = mean(x, na.rm = TRUE),
+          mean_y = mean(y, na.rm = TRUE)
+        )
+        dname <- paste(deparse1(x_expr), "and", deparse1(y_expr))
       }
       estimate[is.nan(estimate)] <- NA_real_
       conf.int <- c(NA_real_, NA_real_)
-      attr(conf.int, "conf.level") <- NA_real_
-      list(
+      attr(conf.int, "conf.level") <- conf.level
+
+      out <- list(
         statistic = NA_real_,
         parameter = NA_real_,
         p.value = NA_real_,
@@ -78,6 +101,10 @@ safe_t_test <- function(x, y = NULL, paired = FALSE, ...) {
         data.name = dname,
         error_text = e$message
       )
+
+      class(out) <- "htest"
+
+      out
     }
   )
 }
