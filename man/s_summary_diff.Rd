@@ -40,7 +40,7 @@ If difference-in-means statistics are requested, \code{control$conf_level}
 specifies the confidence level of the interval.}
 
 \item{...}{Additional named arguments passed to \code{\link[=s_diff_means]{s_diff_means()}}, except
-\code{conf.level = control$conf_level} which is already passed.}
+\code{df1}, \code{df2}, \code{.var}, and \code{conf.level}, which are already passed.}
 }
 \value{
 A named \code{list} with the requested statistics.

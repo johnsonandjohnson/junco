@@ -149,7 +149,6 @@ reference:
     - inches_to_spaces
     - prepend_label_cell
     - rm_other_facets_fact
-    - safe_t_test
     - smart_colwidths_1page
     - tt_to_tbldf
 
