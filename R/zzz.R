@@ -1,7 +1,7 @@
 .onLoad <- function(libname, pkgname) {
   settings <- list(
-    # A named list for tracking table names and counts in `insert_blank_line()`
-    junco.insert_blank_line = list()
+    # A named list for tracking table names and counts in `insert_line()`
+    junco.insert_line = list()
   )
 
   to_set <- !names(settings) %in% names(options())
@@ -12,7 +12,7 @@
 
 .onUnload <- function(libpath) {
   settings <- list(
-    junco.insert_blank_line = NULL
+    junco.insert_line = NULL
   )
 
   options(settings)
