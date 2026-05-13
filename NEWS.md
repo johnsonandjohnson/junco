@@ -20,6 +20,8 @@
 
 ### Changed
 
+- Expanded and refactored `insert_line()` so that it can accept custom `afun` that creates the label.
+- Renamed `insert_blank_line()` to `insert_line()`.
 - Added new stats/labels/formats/indents to `junco_utils_default_stats_formats_labels.r` file.
 - Renamed `s_diff_mean_ci()` to `s_diff_means()`, and added new statistics to `s_diff_means()`.
 - Moved `safe_t_test()` from `a_summarize_aval_chg_diff.R` to a new file `safe_t_test.R`,

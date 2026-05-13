@@ -7,72 +7,95 @@ ac_blank_line <- function(df, labelstr = "") {
   in_rows(.list = NA_real_, .labels = labelstr, .formats = "xx", .format_na_strs = "")
 }
 
-#' Insertion of Blank Lines in a Layout
+#' @title Insert a Single Line into a Layout
+#'
+#' @description `r lifecycle::badge("experimental")`
+#'
+#' Inserts a single-row "gap" or labeled line into an `rtables` layout by
+#' appending an additional [rtables::analyze()] step for the most recently used
+#' row-analysis variable. This is useful for adding visual separators or
+#' headings between blocks of rows.
+#'
+#' @details
+#' This helper appends another [rtables::analyze()] call targeting the last
+#' variable present in the row layout (as returned by [rtables::vars_in_layout()]),
+#' so it should be called after at least one prior analysis step has introduced
+#' a row-analysis variable.
+#'
+#' If `table_names` is not provided, the function generates a unique internal
+#' table name for the injected line. To avoid duplicate table names across
+#' multiple invocations, it maintains a simple counter in the R option
+#' `"junco.insert_line"`. This stateful approach:
+#' - is not thread-safe and may not work with parallelization across multiple
+#'   threads/processes, and
+#' - can make the resulting `rtables` object non-reproducible unless the option
+#'   is controlled/reset between runs.
+#'
+#' For reproducible or parallel workflows, pass an explicit, globally unique
+#' `table_names` value.
 #'
 #' @inheritParams proposal_argument_convention
+#' @param afun (`function`) `rtables` analysis function that produces exactly one
+#'   row of output (for example, a single `CellValue`). Defaults to `ac_blank_line`
+#'   for inserting a blank or static labeled line.
+#' @param ... Additional arguments passed to `afun` via
+#'   `analyze(extra_args = list(...))`.
 #'
-#' @description This is a hack for `rtables` in order to be able to add row gaps,
-#' i.e. blank lines.
-#' In particular, by default this function needs to maintain a global state for avoiding
-#' duplicate table names. The global state variable is hidden by using
-#' a dot in front of its name. However, this likely won't work with parallelisation across
-#' multiple threads and also causes non-reproducibility of the resulting `rtables`
-#' object. Therefore also a custom table name can be used.
+#' @return A modified `PreDataTableLayouts` object containing the inserted line
+#'   after the current row content.
 #'
-#' @return The modified layout now including a blank line after the current
-#'   row content.
+#' @seealso [rtables::analyze()], [rtables::vars_in_layout()]
+#'
 #' @export
 #'
 #' @examples
-#' ADSL <- ex_adsl
+#' afun_N <- function(x) rcell(length(x), label = "N")
+#' afun_mean <- function(x) rcell(mean(x), label = "Mean")
 #'
+#' # Blank line example
 #' lyt <- basic_table() |>
-#'   split_cols_by("ARM") |>
 #'   split_rows_by("STRATA1") |>
-#'   analyze(vars = "AGE", afun = function(x) {
-#'     in_rows(
-#'       "Mean (sd)" = rcell(c(mean(x), sd(x)), format = "xx.xx (xx.xx)")
-#'     )
-#'   }) |>
-#'   insert_blank_line() |>
-#'   analyze(vars = "AGE", table_names = "AGE_Range", afun = function(x) {
-#'     in_rows(
-#'       "Range" = rcell(range(x), format = "xx.xx - xx.xx")
-#'     )
-#'   })
-#' build_table(lyt, ADSL)
-insert_blank_line <- function(lyt, table_names = NULL) {
-  varnames_rows <- vars_in_layout(lyt@row_layout)
-  checkmate::assert_character(varnames_rows, min.len = 1L)
-  last_varname_rows <- utils::tail(varnames_rows, 1L)
+#'   analyze(vars = "AGE", afun = afun_N) |>
+#'   insert_line() |>
+#'   analyze(vars = "AGE", afun = afun_mean, table_names = "AGE_mean")
+#'
+#' build_table(lyt, ex_adsl)
+#'
+#' # Labelled line example
+#' lyt2 <- basic_table() |>
+#'   split_rows_by("STRATA1") |>
+#'   analyze(vars = "AGE", afun = afun_N) |>
+#'   insert_line(labelstr = "Point Estimates:") |>
+#'   analyze(vars = "AGE", afun = afun_mean, table_names = "AGE_mean")
+#'
+#' build_table(lyt2, ex_adsl)
+#'
+insert_line <- function(lyt, afun = ac_blank_line, table_names = NULL, indent_mod = 0L, ...) {
+  checkmate::assert_class(lyt, "PreDataTableLayouts")
+  checkmate::assert_function(afun)
+  checkmate::assert_string(table_names, min.chars = 1L, null.ok = TRUE)
 
-  this_table_name <- if (is.null(table_names)) {
-    default_table_name <- paste0(".post_", last_varname_rows, "_blank")
+  last_varname_rows <- utils::tail(vars_in_layout(lyt@row_layout), 1L)
+  checkmate::assert_string(last_varname_rows, min.chars = 1L)
+
+  if (is.null(table_names)) {
+    tn <- paste0(".post_", last_varname_rows, "_line")
 
     # A named list for tracking table names and counts
-    table_count <- getOption("junco.insert_blank_line")
-
-    new_count <- if (default_table_name %in% names(table_count)) {
-      table_count[[default_table_name]] + 1
-    } else {
-      1
-    }
-
-    table_count[[default_table_name]] <- new_count
-    options(junco.insert_blank_line = table_count)
-
-    paste(default_table_name, new_count, sep = "_")
-  } else {
-    checkmate::assert_string(table_names, min.chars = 1L)
-    table_names
+    table_count <- getOption("junco.insert_line")
+    table_count[[tn]] <- ifelse(tn %in% names(table_count), table_count[[tn]] + 1, 1)
+    options(junco.insert_line = table_count)
+    table_names <- paste(tn, table_count[[tn]], sep = "_")
   }
 
   analyze(
     lyt,
     vars = last_varname_rows,
-    afun = ac_blank_line,
+    afun = afun,
+    extra_args = list(...),
     show_labels = "hidden",
-    table_names = this_table_name
+    table_names = table_names,
+    indent_mod = indent_mod
   )
 }
 

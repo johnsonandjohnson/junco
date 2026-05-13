@@ -1,4 +1,4 @@
-test_that("insert_blank_line works as expected", {
+test_that("insert_line works as expected", {
   ADSL <- ex_adsl
 
   lyt <- basic_table(round_type = "sas") |>
@@ -9,13 +9,13 @@ test_that("insert_blank_line works as expected", {
         "Mean (sd)" = rcell(c(mean(x), sd(x)), format = "xx.xx (xx.xx)")
       )
     }) |>
-    insert_blank_line() |>
+    insert_line() |>
     analyze(vars = "AGE", table_names = "AGE_Range", afun = function(x) {
       in_rows(
         "Range" = rcell(range(x), format = "xx.xx - xx.xx")
       )
     }) |>
-    insert_blank_line() |>
+    insert_line() |>
     analyze(vars = "AGE", table_names = "AGE_Median", afun = function(x) {
       in_rows(
         "Median" = rcell(median(x), format = "xx.xx")
@@ -31,7 +31,7 @@ test_that("insert_blank_line works as expected", {
   expect_snapshot(cran = TRUE, mf_strings(matrix_form(tbl)))
 })
 
-test_that("insert_blank_line optionally uses custom table names", {
+test_that("insert_line optionally uses custom table names", {
   ADSL <- ex_adsl
 
   lyt <- basic_table(round_type = "sas") |>
@@ -42,13 +42,13 @@ test_that("insert_blank_line optionally uses custom table names", {
         "Mean (sd)" = rcell(c(mean(x), sd(x)), format = "xx.xx (xx.xx)")
       )
     }) |>
-    insert_blank_line(table_names = "Gap1") |>
+    insert_line(table_names = "Gap1") |>
     analyze(vars = "AGE", table_names = "AGE_Range", afun = function(x) {
       in_rows(
         "Range" = rcell(range(x), format = "xx.xx - xx.xx")
       )
     }) |>
-    insert_blank_line(table_names = "Gap2") |>
+    insert_line(table_names = "Gap2") |>
     analyze(vars = "AGE", table_names = "AGE_Median", afun = function(x) {
       in_rows(
         "Median" = rcell(median(x), format = "xx.xx")
@@ -72,4 +72,26 @@ test_that("insert_blank_line optionally uses custom table names", {
   for (row in c(7, 16, 25)) {
     checkmate::expect_subset("Gap2", tbl_row_paths[[row]])
   }
+})
+
+test_that("insert_line works with custom afun and indent_mod", {
+  my_afun <- function(x, .spl_context) {
+    last_split <- length(.spl_context$split)
+    label <- paste("Under", .spl_context$value[last_split])
+    rcell(NULL, label = label)
+  }
+
+  lyt <- basic_table() |>
+    split_rows_by("STRATA1") |>
+    analyze(vars = "AGE", afun = function(x) rcell(length(x), label = "N")) |>
+    insert_line(afun = my_afun, indent_mod = 4L) |>
+    analyze(
+      vars = "AGE",
+      afun = function(x) rcell(mean(x), label = "Mean"),
+      table_names = "AGE_mean"
+    )
+
+  tbl <- expect_silent(build_table(lyt, ex_adsl))
+
+  expect_snapshot(cran = TRUE, mf_strings(matrix_form(tbl)))
 })
