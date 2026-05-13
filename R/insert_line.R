@@ -26,7 +26,7 @@ ac_blank_line <- function(df, labelstr = "") {
 #' table name for the injected line. To avoid duplicate table names across
 #' multiple invocations, it maintains a simple counter in the R option
 #' `"junco.insert_line"`. This stateful approach:
-#' - is not thread-safe and may not work with parallelization across multiple
+#' - is not thread-safe and may not work with parallelisation across multiple
 #'   threads/processes, and
 #' - can make the resulting `rtables` object non-reproducible unless the option
 #'   is controlled/reset between runs.

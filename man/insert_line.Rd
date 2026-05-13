@@ -50,7 +50,7 @@ table name for the injected line. To avoid duplicate table names across
 multiple invocations, it maintains a simple counter in the R option
 \code{"junco.insert_line"}. This stateful approach:
 \itemize{
-\item is not thread-safe and may not work with parallelization across multiple
+\item is not thread-safe and may not work with parallelisation across multiple
 threads/processes, and
 \item can make the resulting \code{rtables} object non-reproducible unless the option
 is controlled/reset between runs.
