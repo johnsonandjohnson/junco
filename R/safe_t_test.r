@@ -2,44 +2,63 @@
 #'
 #' @noRd
 #'
-#' @description `r lifecycle::badge("experimental")`
+#' @description `r lifecycle::badge("stable")`
 #'
-#' This is a robust wrapper around [stats::t.test.default()] that prevents
-#' errors from interrupting execution. Instead of failing, it returns a
-#' structured result containing `NA` values and an informative error message.
+#' A robust wrapper around [stats::t.test()] that prevents errors from
+#' interrupting execution.
 #'
-#' This is particularly useful in pipelines, simulations, or batch analyses where
-#' occasional invalid inputs (e.g., constant vectors, insufficient observations)
-#' would otherwise stop execution.
+#' Instead of failing, the function returns an object of class `"htest"`
+#' containing `NA` values for inferential statistics together with the computed
+#' sample mean(s) and an informative error message embedded in the `method`
+#' field.
+#'
+#' This is particularly useful in pipelines, simulations, or batch analyses
+#' where occasional invalid inputs (e.g., constant vectors or insufficient
+#' observations) would otherwise stop execution.
 #'
 #' @details
-#' When [stats::t.test.default()] succeeds, the result is returned unchanged.
-#' If an error occurs, a list is returned mimicking key components of a `htest`
-#' object.
-#' Any `NaN` estimates are converted to `NA_real_`.
+#' When [stats::t.test()] succeeds, the resulting `"htest"` object is returned
+#' unchanged except that `data.name` is reconstructed from the original
+#' expressions supplied to `x` and `y`.
+#'
+#' When an error occurs, the function returns an object of class `"htest"` with:
+#'
+#' \itemize{
+#'   \item `NA_real` values for `statistic`, `parameter`, `p.value`, `stderr`,
+#'   and `conf.int`
+#'   \item computed sample mean(s) stored in `estimate`
+#'   \item the original null hypothesis value stored in `null.value`
+#'   \item the original test type and error message appended to `method`.
+#' }
 #'
 #' @inheritParams stats::t.test
 #'
 #' @return
-#' A `list`: either the standard `htest` object from [stats::t.test.default()],
-#' or (on error) a list with `NA` statistics, sample mean(s) in `estimate`,
-#' and an `error_text` field containing the error message.
+#' An object of class `"htest"`.
+#'
+#' If [stats::t.test()] succeeds, the standard `"htest"` object is returned.
+#' If an error occurs, an `"htest"` object with `NA` inferential statistics and
+#' computed sample mean(s) in `estimate` is returned instead.
 #'
 #' @importFrom stats t.test
 #'
 #' @examples
 #' # Standard usage
-#' t.test(1:10, 11:20)
-#' safe_t_test(1:10, 11:20)
+#' x <- 1:10
+#' y <- 11:20
 #'
-#' # Example triggering failure (zero variance)
+#' t.test(x, y)
+#' safe_t_test(x, y)
+#'
+#' # Paired test with constant differences
 #' x <- rep(10, 5)
 #'
-#' stats::t.test(x, x)
-#' safe_t_test(x, x)
-#'
+#' t.test(x, x, paired = TRUE)
 #' safe_t_test(x, x, paired = TRUE)
 #'
+#' # Example triggering an error (constant data)
+#' t.test(x, x)
+#' safe_t_test(x, x)
 safe_t_test <- function(
     x,
     y = NULL,
@@ -51,6 +70,7 @@ safe_t_test <- function(
     ...) {
   x_expr <- substitute(x)
   y_expr <- substitute(y)
+  alternative <- match.arg(alternative)
   tryCatch(
     {
       res <- stats::t.test(
@@ -64,43 +84,56 @@ safe_t_test <- function(
         ...
       )
 
-      res$data.name <- if (!is.null(y)) {
-        paste(deparse1(x_expr), "and", deparse1(y_expr))
-      } else {
+      res$data.name <- if (is.null(y)) {
         deparse1(x_expr)
+      } else {
+        paste(deparse1(x_expr), "and", deparse1(y_expr))
       }
 
       res
     },
     error = function(e) {
-      if (is.null(y) || paired) {
-        estimate <- c(mean_x = mean(x, na.rm = TRUE))
+      if (paired) {
+        x <- x - y
+        y <- NULL
+      }
+
+      if (is.null(y)) {
+        estimate <- c(mean(x, na.rm = TRUE))
         dname <- deparse1(x_expr)
+        method <- ifelse(paired, "Paired t-test", "One Sample t-test")
+        names(estimate) <- ifelse(paired, "mean difference", "mean of x")
       } else {
-        estimate <- c(
-          mean_x = mean(x, na.rm = TRUE),
-          mean_y = mean(y, na.rm = TRUE)
-        )
+        estimate <- c(mean(x, na.rm = TRUE), mean(y, na.rm = TRUE))
         dname <- paste(deparse1(x_expr), "and", deparse1(y_expr))
+        method <- paste(if (!var.equal) "Welch", "Two Sample t-test")
+        names(estimate) <- c("mean of x", "mean of y")
       }
       estimate[is.nan(estimate)] <- NA_real_
-      conf.int <- c(NA_real_, NA_real_)
-      attr(conf.int, "conf.level") <- conf.level
+
+      names(mu) <- if (paired) {
+        "mean difference"
+      } else if (!is.null(y)) {
+        "difference in means"
+      } else {
+        "mean"
+      }
 
       out <- list(
-        statistic = NA_real_,
-        parameter = NA_real_,
+        statistic = setNames(NA_real_, "t"),
+        parameter = setNames(NA_real_, "df"),
         p.value = NA_real_,
+        conf.int = c(NA_real_, NA_real_),
         estimate = estimate,
-        conf.int = conf.int,
+        null.value = mu,
         stderr = NA_real_,
-        method = "t-test (failed)",
-        data.name = dname,
-        error_text = e$message
+        alternative = alternative,
+        method = paste0(method, " (failed: ", e$message, ")"),
+        data.name = dname
       )
+      attr(out$conf.int, "conf.level") <- conf.level
 
       class(out) <- "htest"
-
       out
     }
   )

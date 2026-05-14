@@ -140,7 +140,10 @@ check_alt_df_full <- function(argument, values, .alt_df_full) {
 #'
 #' @examples
 #' df1 <- data.frame(id = c("A", "B", "C", "D"), value = 1:4)
-#' df2 <- data.frame(id = c("A", "C", "D", "E", "F"), value = c(11, 13:14, NA, 16))
+#' df2 <- data.frame(
+#'   id = c("A", "C", "D", "E", "F"),
+#'   value = c(11, 13:14, NA, 16)
+#' )
 #' df1
 #' df2
 #'
