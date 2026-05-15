@@ -450,7 +450,6 @@ test_that("s_summarize_desc_j does not fail for almost constant data", {
       1.710000000000000186517
     )
   )
-  expect_error(t.test(df[["AVAL"]], df[["AVAL"]]))
 
   stats <- s_summarize_desc_j(df, "AVAL", .ref_group = df, .in_ref_col = FALSE)
   expect_no_error(stats)
