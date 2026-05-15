@@ -175,10 +175,11 @@ test_that("extract_vectors() errors when df1/df2 pairing keys are duplicated wit
   )
 })
 
-# Note that this tests is different than
-# "extract_vectors() errors when df1/df2 pairing keys are duplicated with NA",
-# because here we do not have duplicateds in keys on complete data.
 test_that("extract_vectors() errors when df1/df2 pairing keys are duplicated on NA", {
+  # Note that this tests is different than
+  # "extract_vectors() errors when df1/df2 pairing keys are duplicated with NA",
+  # because here we do not have duplicateds in keys on complete data.
+
   df1 <- data.frame(id = c("A", "A", NA, "B"), value = 1:4)
   df2 <- data.frame(id = c("A", NA, "C", "D"), value = 11:14)
 
