@@ -33,8 +33,8 @@
 #' statistical analysis, and only complete pairs are used.
 #'
 #' Data extraction, alignment, and missing-value handling are delegated to
-#' `extract_vectors()`, which prepares cleaned numeric vectors for both paired
-#' and unpaired settings.
+#' `extract_vectors()` internal function, which prepares cleaned numeric
+#' vectors for both paired and unpaired settings.
 #'
 #' Inferential statistics are then computed using `safe_t_test()` applied to
 #' the processed vectors.

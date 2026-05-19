@@ -59,8 +59,8 @@ If \code{paired = TRUE}, observations are matched using \code{paired_by} prior t
 statistical analysis, and only complete pairs are used.
 
 Data extraction, alignment, and missing-value handling are delegated to
-\code{extract_vectors()}, which prepares cleaned numeric vectors for both paired
-and unpaired settings.
+\code{extract_vectors()} internal function, which prepares cleaned numeric
+vectors for both paired and unpaired settings.
 
 Inferential statistics are then computed using \code{safe_t_test()} applied to
 the processed vectors.
