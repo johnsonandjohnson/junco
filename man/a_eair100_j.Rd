@@ -2,8 +2,28 @@
 % Please edit documentation in R/a_eair_j.R
 \name{a_eair100_j}
 \alias{a_eair100_j}
+\alias{s_eair100_levii_j}
 \title{Exposure-Adjusted Incidence Rate}
 \usage{
+s_eair100_levii_j(
+  levii,
+  df,
+  .df_row,
+  .var,
+  .alt_df_full = NULL,
+  id = "USUBJID",
+  diff = FALSE,
+  conf_level = 0.95,
+  trt_var = NULL,
+  ctrl_grp = NULL,
+  cur_trt_grp = NULL,
+  inriskdiffcol = FALSE,
+  fup_var,
+  occ_var,
+  occ_dy,
+  num_p_year = 100
+)
+
 a_eair100_j(
   df,
   labelstr = NULL,
@@ -23,23 +43,50 @@ a_eair100_j(
   conf_level = 0.95,
   fup_var,
   occ_var,
-  occ_dy
+  occ_dy,
+  num_p_year = 100
 )
 }
 \arguments{
+\item{levii}{(\code{string})\cr the specific level of the variable to calculate EAIR for.}
+
 \item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
-
-\item{labelstr}{(\code{string})\cr label string for the row.}
-
-\item{.var}{(\code{string})\cr variable name for analysis.}
 
 \item{.df_row}{(\code{data.frame})\cr data frame across all of the columns for the given row split.}
 
-\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states.}
+\item{.var}{(\code{string})\cr variable name that is passed by \code{rtables}.}
 
-\item{.alt_df_full}{(\code{dataframe})\cr denominator dataset for calculations.}
+\item{.alt_df_full}{(\code{dataframe})\cr alternative dataset for calculations.}
 
 \item{id}{(\code{string})\cr subject variable name.}
+
+\item{diff}{(\code{logical})\cr if TRUE, risk difference calculations will be performed.}
+
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
+
+\item{trt_var}{(\code{string})\cr treatment variable name.}
+
+\item{ctrl_grp}{(\code{string})\cr control group value.}
+
+\item{cur_trt_grp}{(\code{string})\cr current treatment group value.}
+
+\item{inriskdiffcol}{(\code{logical})\cr flag indicating if the function is called within a risk difference column.}
+
+\item{fup_var}{(\code{string})\cr follow-up variable name. Note that expected time unit interval is in \strong{years}.}
+
+\item{occ_var}{(\code{string})\cr occurrence variable name.
+\cr Note: expected to be encoded with values \code{Y}, to indicate the first occurrence within a subject & level.}
+
+\item{occ_dy}{(\code{string})\cr occurrence day variable name. Note that expected time unit interval is in \strong{days}.
+\cr Calculations for \code{person_years} will use this variable for subjects who have experienced the event (first occurrence).
+For subjects without an event, \code{fup_var} will be used in the \code{peron_years} calculation.
+\cr If \code{occ_var = NULL}, the entire follow-up interval (\code{fup_var}) will be used for all subjects.}
+
+\item{num_p_year}{(\code{numeric})\cr time unit for desired incidence rate (in person-years)}
+
+\item{labelstr}{(\code{string})\cr label string for the row.}
+
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states.}
 
 \item{drop_levels}{(\code{logical})\cr if TRUE, non-observed levels will not be included.}
 
@@ -56,16 +103,21 @@ a_eair100_j(
 \item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels.}
 
 \item{na_str}{(\code{string})\cr string used to replace all NA or empty values in the output.}
-
-\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
-
-\item{fup_var}{(\code{string})\cr variable name for follow-up time.}
-
-\item{occ_var}{(\code{string})\cr variable name for occurrence.}
-
-\item{occ_dy}{(\code{string})\cr variable name for occurrence day.}
 }
 \value{
+\itemize{
+\item \code{s_eair100_levii_j()} returns a list containing the following statistics:
+\itemize{
+\item n_event: Number of events
+\item person_years: Total person-years of follow-up
+\item eair: Exposure-adjusted incidence rate per \code{num_p_year} person-years
+\item n_eair: Combination of \code{n_event} and \code{eair} statistics.
+\item eair_diff: Difference in EAIR between current group and reference group
+(if diff=TRUE and inriskdiffcol=TRUE), together with it's Wald based confidence interval.
+}\cr
+The list of available statistics (core columns) can also be viewed by running \code{junco_get_stats("a_eair100_j")}
+}
+
 \itemize{
 \item \code{a_eair100_j} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
 }
@@ -73,8 +125,64 @@ a_eair100_j(
 \description{
 Statistical/Analysis Function for presenting Exposure-Adjusted Incidence Rate summary data
 }
+\details{
+The exposure-adjusted incidence rate (EAIR) is defined as the number of subjects
+with at least one occurrence of a specified adverse event divided by the total
+at-risk exposure time across all subjects.
+
+At-risk exposure time is calculated for each subject
+as:
+\itemize{
+\item for subjects with the event: relative day (from the start of exposure) of
+the onset date of the \strong{first} occurrence of the specified event (\code{occ_var} and \code{occ_dy}),
+transformed from days into years as \code{occ_dy/365.25}, or
+\item for subjects without the event: total duration of follow-up (expressed in years)
+(e.g., treatment discontinuation, completion, or censoring) (\code{fup_var}).
+}
+
+The EAIR is expressed as:
+
+\deqn{
+  \mathrm{EAIR} = \hat r = \frac{n}{T}
+}
+
+where:
+\itemize{
+\item \eqn{n} is the number of subjects with at least one occurrence of the event
+\item T = \eqn{ \sum_{i=1}^{N} t_i}, with
+\item \eqn{t_i} is the at-risk exposure time for subject \eqn{i},
+expressed in subject-years
+}
+
+The difference between two EAIRs is
+\eqn{\hat \theta = (\hat r_1 - \hat r_2)}.
+
+Wald's method for the confidence interval approximation is used, which uses the standard error
+\deqn{
+\mathrm{se}(\hat r_1 - \hat r_2) =
+\sqrt{\frac{n_1}{T_1^2} + \frac{n_2}{T_2^2}}
+}{
+se = sqrt(n1/T1^2 + n2/T2^2)
+}
+and the \eqn{100(1-\alpha)\%} confidence interval is
+\deqn{
+(\hat r_1 - \hat r_2) \pm z_{1-\alpha/2}\,\mathrm{se}(\hat r_1 - \hat r_2)
+}{
+(r1 - r2) +/- z_(1-a/2) * SE
+}
+where \eqn{z_{1-\alpha/2}} is the standard normal quantile. \href{https://metricgate.com/docs/poisson-rate-comparison/}{1}
+
+EAIR is commonly reported per 100 subject-years:
+
+\deqn{
+  \mathrm{EAIR}_{100} = 100 \times \hat r
+}
+}
 \section{Functions}{
 \itemize{
+\item \code{s_eair100_levii_j()}: calculates exposure-adjusted incidence rates (EAIR) per 100 person-years for a
+specific level of a variable.
+
 \item \code{a_eair100_j()}: Formatted analysis function for exposure adjusted incidence rate summary which is
 used as \code{afun} in \code{analyze} or \code{cfun} in \code{summarize_row_groups}.
 
@@ -160,3 +268,4 @@ result <- build_table(lyt, aefup, alt_counts_df = adexsum)
 head(result, 5)
 
 }
+\keyword{internal}
