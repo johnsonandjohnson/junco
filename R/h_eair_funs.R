@@ -1,18 +1,28 @@
 h_get_eair_df <- function(levii, df, denom_df, .var, id, occ_var, occ_dy, fup_var) {
   dfii <- df[df[[.var]] == levii & !is.na(df[[.var]]), ]
 
-  df_denom <- unique(denom_df[, c(id, fup_var)])
-  df_num <- subset(dfii, dfii[[occ_var]] == "Y")[, c(id, .var, occ_var, occ_dy)]
+  df_denom <- unique(denom_df[, c(id, fup_var), drop = FALSE])
+  if (!is.null(occ_var)) {
+    df_num <- unique(subset(dfii, dfii[[occ_var]] == "Y")[, c(id, .var, occ_var, occ_dy), drop = FALSE])
+  } else {
+    df_num <- unique(dfii[, c(id, .var), drop = FALSE])
+  }
+
+  if (any(duplicated(df_num[[id]]))) {
+    stop("Input dataset must uniquely identify one record per subject/.var/occ_var.")
+  }
 
   ### construct modified fup var subjects not in numerator - use fup_var from df_denom
   df_denom$mod_fup_var <- df_denom[[fup_var]]
 
-  ### add vars from df_num onto df_denom
-  df_denom <- dplyr::left_join(df_denom, df_num, by = id)
+  if (!is.null(occ_var)) {
+    ### add vars from df_num onto df_denom
+    df_denom <- dplyr::left_join(df_denom, df_num, by = id)
 
-  # subjects in numerator dataset, use occ_dy variable/365.25
-  id_to_update <- df_denom[[id]] %in% df_num[[id]]
-  df_denom[id_to_update, "mod_fup_var"] <- df_denom[id_to_update, occ_dy] / 365.25
+    # subjects in numerator dataset, use occ_dy variable/365.25
+    id_to_update <- df_denom[[id]] %in% df_num[[id]]
+    df_denom[id_to_update, "mod_fup_var"] <- df_denom[id_to_update, occ_dy] / 365.25
+  }
 
   return(list(df_denom = df_denom, df_num = df_num))
 }

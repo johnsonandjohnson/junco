@@ -57,6 +57,60 @@ core_lyt <- basic_table(show_colcounts = FALSE, round_type = "sas") |>
     split_fun = remove_split_levels(ctrl_grp)
   )
 
+# get numbers from single sel_AEDECOD, like dcd A.1.1.1.1, selected treatment group
+eair_numbers <- function(adae, adsl, sel_AEDECOD, comb_group) {
+  adae_onecode <- adae |>
+    filter(AEDECOD == sel_AEDECOD & !is.na(AOCCPFL)) |>
+    select(USUBJID, AEDECOD, AOCCPFL, ASTDY)
+
+  adae_sub <- left_join(adsl, adae_onecode, by = "USUBJID")
+
+  adae_sub <- adae_sub |>
+    filter(!!rlang::sym(trtvar) %in% comb_group) |>
+    arrange(USUBJID, AEDECOD, ASTDY) |>
+    group_by(USUBJID) |>
+    slice(1) |>
+    ungroup() |>
+    mutate(EXP_TIME = if_else(!is.na(ASTDY), (ASTDY / 365.25), TRTDURY))
+
+  total_exp_years <- sum(adae_sub$EXP_TIME)
+
+  adae_sub2 <- adae |>
+    filter(
+      AEDECOD == sel_AEDECOD & !!rlang::sym(trtvar) %in% comb_group & !is.na(AOCCPFL)
+    ) |>
+    group_by(USUBJID) |>
+    slice(1) |>
+    ungroup()
+
+  number_with_event <- nrow(adae_sub2)
+
+  expected <- (100 * number_with_event) / total_exp_years
+
+  list(
+    count = number_with_event,
+    texpy = total_exp_years,
+    eair = (100 * number_with_event) / total_exp_years
+  )
+}
+
+
+rdiff_eair <- function(
+  eair_numbers_comb,
+  eair_numbers_ctrl, conf_level = 0.95
+) {
+  rdiff <- eair_numbers_comb[["eair"]] - eair_numbers_ctrl[["eair"]]
+  se <- sqrt(
+    eair_numbers_comb[["count"]] / eair_numbers_comb[["texpy"]]^2 +
+      eair_numbers_ctrl[["count"]] / eair_numbers_ctrl[["texpy"]]^2
+  ) * 100
+
+  coeff <- stats::qnorm((1 + conf_level) / 2)
+  lcl <- rdiff - (coeff * se)
+  ucl <- rdiff + (coeff * se)
+
+  eair_diff <- c(rdiff, lcl, ucl)
+}
 
 #### Actual start of tests
 
@@ -251,7 +305,6 @@ test_that("Check aeir100 numbers are giving expected result when occ_dy argument
 })
 
 test_that("Check aeir100 numbers are giving expected result relative risk in combined facet is available", {
-
   colspan_trt_map <- create_colspan_map(
     adsl,
     non_active_grp = ctrl_grp,
@@ -260,7 +313,6 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
     colspan_var = "colspan_trt",
     trt_var = trtvar
   )
-
 
 
   # Set up levels and label for the required combined columns
@@ -343,42 +395,6 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
   ################################################################################
   # actual comparison testthat code
   ################################################################################
-  # get numbers from single sel_AEDECOD, like dcd A.1.1.1.1, selected treatment group
-  eair_numbers <- function(adae, adsl, sel_AEDECOD, comb_group) {
-    adae_onecode <- adae |>
-      filter(AEDECOD == sel_AEDECOD & !is.na(AOCCPFL)) |>
-      select(USUBJID, AEDECOD, AOCCPFL, ASTDY)
-
-    adae_sub <- left_join(adsl, adae_onecode, by = "USUBJID")
-
-    adae_sub <- adae_sub |>
-      filter(!!rlang::sym(trtvar) %in% comb_group) |>
-      arrange(USUBJID, AEDECOD, ASTDY) |>
-      group_by(USUBJID) |>
-      slice(1) |>
-      ungroup() |>
-      mutate(EXP_TIME = if_else(!is.na(ASTDY), (ASTDY / 365.25), TRTDURY))
-
-    total_exp_years <- sum(adae_sub$EXP_TIME)
-
-    adae_sub2 <- adae |>
-      filter(
-        AEDECOD == sel_AEDECOD & !!rlang::sym(trtvar) %in% comb_group & !is.na(AOCCPFL)
-      ) |>
-      group_by(USUBJID) |>
-      slice(1) |>
-      ungroup()
-
-    number_with_event <- nrow(adae_sub2)
-
-    expected <- (100 * number_with_event) / total_exp_years
-
-    list(
-      count = number_with_event,
-      texpy = total_exp_years,
-      eair = (100 * number_with_event) / total_exp_years
-    )
-  }
 
   # dcd A.1.1.1.1 is the second row in the result object
   actual_row <- result[2, ]
@@ -386,20 +402,7 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
 
   eair_numbers_comb <- eair_numbers(adae, adsl, "dcd A.1.1.1.1", comb_group)
   eair_numbers_ctrl <- eair_numbers(adae, adsl, "dcd A.1.1.1.1", ctrl_grp)
-  rdiff_eair <- function(eair_numbers_comb,
-                         eair_numbers_ctrl, conf_level = 0.95) {
-    rdiff <- eair_numbers_comb[["eair"]] - eair_numbers_ctrl[["eair"]]
-    sd <- sqrt(
-      eair_numbers_comb[["count"]] / eair_numbers_comb[["texpy"]]^2 +
-        eair_numbers_ctrl[["count"]] / eair_numbers_ctrl[["texpy"]]^2
-    ) * 100
 
-    coeff <- stats::qnorm((1 + conf_level) / 2)
-    lcl <- rdiff - (coeff * sd)
-    ucl <- rdiff + (coeff * sd)
-
-    eair_diff <- c(rdiff, lcl, ucl)
-  }
   rdiff <- rdiff_eair(eair_numbers_comb, eair_numbers_ctrl)
 
   # actual comparisons
@@ -422,5 +425,103 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
     cell_values(actual_row[, 7])[[1]],
     rdiff,
     ignore_attr = TRUE
+  )
+})
+
+test_that("Check aeir100 function stops with incorrect input", {
+  extra_record <- adae[which(adae[["AEDECOD"]] == "dcd A.1.1.1.1")[1], ]
+  extra_record$ASTDY <- extra_record$ASTDY + 1
+  adae_incorrect <- rbind(
+    adae,
+    extra_record
+  )
+  lyt1 <- core_lyt |>
+    analyze(
+      "AEDECOD",
+      nested = FALSE,
+      inclNAs = TRUE,
+      afun = a_eair100_j,
+      extra_args = list(
+        fup_var = "TRTDURY",
+        occ_var = "AOCCPFL",
+        occ_dy = "ASTDY",
+        ref_path = ref_path
+      )
+    )
+
+  expect_error(
+    tbl1 <- build_table(lyt1, adae_incorrect, adsl),
+    "Input dataset must uniquely identify one record per subject/.var/occ_var."
+  )
+})
+
+test_that("Check aeir100 function uses fup_var for eair/person_years when occ_var = NULL", {
+  lyt1 <- core_lyt |>
+    analyze(
+      "AEDECOD",
+      nested = FALSE,
+      inclNAs = TRUE,
+      afun = a_eair100_j,
+      extra_args = list(
+        fup_var = "TRTDURY",
+        occ_var = NULL,
+        occ_dy = "ASTDY",
+        ref_path = ref_path
+      )
+    )
+  tbl1 <- build_table(lyt1, adae, adsl)
+
+  lyt2 <- core_lyt |>
+    analyze(
+      "AEDECOD",
+      nested = FALSE,
+      inclNAs = TRUE,
+      afun = a_eair100_j,
+      extra_args = list(
+        fup_var = "TRTDURY",
+        occ_var = "AOCCPFL",
+        occ_dy = "ASTDY",
+        ref_path = ref_path
+      )
+    )
+  tbl2 <- build_table(lyt2, adae, adsl)
+  expect_any_difference(tbl1, tbl2)
+
+  # demonstrate that calculation for person_years is using TRTDURY throughout
+  res1 <- cell_values(tbl1["dcd A.1.1.1.1", "A: Drug X"])
+  result <- as.numeric(unlist(unname(res1))[[1]])
+
+  adae_onecode <- adae |>
+    filter(AEDECOD == "dcd A.1.1.1.1" & !is.na(AOCCPFL)) |>
+    select(USUBJID, AEDECOD, AEBODSYS, ASTDY, TRTEMFL, AOCCPFL)
+
+  adae_sub <- left_join(adsl, adae_onecode, by = "USUBJID")
+
+  adae_sub <- adae_sub |>
+    filter(ARM == "A: Drug X") |>
+    arrange(USUBJID, AEDECOD, ASTDY) |>
+    group_by(USUBJID) |>
+    slice(1) |>
+    ungroup() |>
+    # this piece is different vs using non-null occ_var
+    mutate(EXP_TIME = TRTDURY)
+
+  total_exp_years <- sum(adae_sub$EXP_TIME)
+
+  adae_sub2 <- adae |>
+    filter(
+      AEDECOD == "dcd A.1.1.1.1" & ARM == "A: Drug X"
+    ) |>
+    group_by(USUBJID) |>
+    slice(1) |>
+    ungroup()
+
+  number_with_event <- nrow(adae_sub2)
+
+  expected <- (100 * number_with_event) / total_exp_years
+
+  expect_equal(
+    result,
+    expected
   )
 })
