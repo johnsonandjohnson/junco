@@ -26,7 +26,7 @@ and must uniquely identify each pair in both datasets.}
 A named \code{list} containing the quantities described in the Description section.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
 Computes estimates and associated inferential statistics for the difference
 in population means between two underlying distributions.
@@ -36,7 +36,11 @@ estimator is defined as the difference between sample means. For paired
 samples, the estimator is defined as the mean of within-pair differences.
 
 Inferential statistics, including standard errors and confidence intervals,
-are obtained using a t-distribution framework via \code{safe_t_test()}.
+are obtained using a t-distribution framework via the internal
+\code{safe_t_test()} function.
+
+Only complete (non-missing) observations are used in statistical computations.
+Non-finite values (i.e., \code{Inf}, \code{-Inf}) are not allowed.
 
 The following quantities are computed:
 \describe{
@@ -58,8 +62,8 @@ prior to statistical computations.
 If \code{paired = TRUE}, observations are matched using \code{paired_by} prior to
 statistical analysis, and only complete pairs are used.
 
-Data extraction, alignment, and missing-value handling are delegated to
-\code{extract_vectors()} internal function, which prepares cleaned numeric
+Data extraction, alignment, and missing-value handling are delegated to the
+internal \code{extract_vectors()} function, which prepares cleaned numeric
 vectors for both paired and unpaired settings.
 
 Inferential statistics are then computed using \code{safe_t_test()} applied to

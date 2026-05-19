@@ -1,6 +1,6 @@
 #' @title Difference in Means Statistics
 #'
-#' @description `r lifecycle::badge("experimental")`
+#' @description `r lifecycle::badge("stable")`
 #'
 #' Computes estimates and associated inferential statistics for the difference
 #' in population means between two underlying distributions.
@@ -10,7 +10,11 @@
 #' samples, the estimator is defined as the mean of within-pair differences.
 #'
 #' Inferential statistics, including standard errors and confidence intervals,
-#' are obtained using a t-distribution framework via `safe_t_test()`.
+#' are obtained using a t-distribution framework via the internal
+#' `safe_t_test()` function.
+#'
+#' Only complete (non-missing) observations are used in statistical computations.
+#' Non-finite values (i.e., `Inf`, `-Inf`) are not allowed.
 #'
 #' The following quantities are computed:
 #' \describe{
@@ -32,8 +36,8 @@
 #' If `paired = TRUE`, observations are matched using `paired_by` prior to
 #' statistical analysis, and only complete pairs are used.
 #'
-#' Data extraction, alignment, and missing-value handling are delegated to
-#' `extract_vectors()` internal function, which prepares cleaned numeric
+#' Data extraction, alignment, and missing-value handling are delegated to the
+#' internal `extract_vectors()` function, which prepares cleaned numeric
 #' vectors for both paired and unpaired settings.
 #'
 #' Inferential statistics are then computed using `safe_t_test()` applied to
@@ -80,7 +84,16 @@ s_diff_means <- function(df1,
   checkmate::assert_data_frame(df1)
   checkmate::assert_data_frame(df2)
   checkmate::assert_string(.var)
+  checkmate::assert_names(colnames(df1), must.include = .var)
+  checkmate::assert_names(colnames(df2), must.include = .var)
+  checkmate::assert_numeric(df1[[.var]], finite = TRUE)
+  checkmate::assert_numeric(df2[[.var]], finite = TRUE)
   checkmate::assert_flag(paired, null.ok = FALSE)
+  if (paired) {
+    checkmate::assert_character(paired_by)
+    checkmate::assert_names(colnames(df1), must.include = paired_by)
+    checkmate::assert_names(colnames(df2), must.include = paired_by)
+  }
 
   vecs <- extract_vectors(df1, df2, .var, paired = paired, paired_by = paired_by)
   n1 <- length(vecs$x1)
