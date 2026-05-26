@@ -26,7 +26,7 @@ by a statistics function.}
 
 \item{filter_expr}{(\code{expression})
 A single logical expression wrapped in \code{expression(...)} used to subset
-rows of \code{df} before summarisation.
+rows of \code{df} before summarization.
 The expression is evaluated using \code{\link[=eval]{eval()}} in an environment constructed
 from \code{df}, meaning that all column names are available as variables.
 Exactly one expression is allowed.}

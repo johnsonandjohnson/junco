@@ -28,7 +28,7 @@
 #' @inheritParams proposal_argument_convention
 #' @param filter_expr (`expression`)
 #'   A single logical expression wrapped in `expression(...)` used to subset
-#'   rows of `df` before summarisation.
+#'   rows of `df` before summarization.
 #'   The expression is evaluated using [eval()] in an environment constructed
 #'   from `df`, meaning that all column names are available as variables.
 #'   Exactly one expression is allowed.
