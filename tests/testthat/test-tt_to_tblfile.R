@@ -149,17 +149,12 @@ listingdf_to_test_round_type <- function(vals = vals_round_type, round_type = "i
 }
 
 test_that("tt_to_tlgrtf works with input Table and fontspec size 8", {
-  lyt_wide <- basic_table() |>
-    split_cols_by("ARM") |>
-    split_cols_by("STRATA1") |>
-    split_cols_by("SEX") |>
-    split_rows_by("RACE") |>
-    summarize_row_groups() |>
-    analyze("AGE")
-
-  tbl_wide <- build_table(lyt_wide, ex_adsl)
+  tbl <- build_table(
+    basic_table() |> split_cols_by("ARM") |> analyze("AGE"),
+    ex_adsl
+  )
   fontspec <- font_spec("Times", 8L, 1.2)
-  expect_no_error(rtf_out_wrapper(tbl_wide, "testfontsize8", fontspec = fontspec))
+  expect_no_error(rtf_out_wrapper(tbl, "testfontsize8", fontspec = fontspec))
 })
 
 test_that("tt_to_tlgrtf works with an empty listing", {
@@ -181,15 +176,6 @@ test_that("get_ncol works as expected", {
   tt <- as_listing(ex_adsl[, 1:10])
   expect_equal(get_ncol(tt), ncol(tt))
 
-  lyt_wide <- basic_table() |>
-    split_cols_by("ARM") |>
-    split_cols_by("STRATA1") |>
-    split_cols_by("SEX") |>
-    split_rows_by("RACE") |>
-    summarize_row_groups() |>
-    analyze("AGE")
-
-  tbl_wide <- build_table(lyt_wide, ex_adsl)
   expect_equal(get_ncol(tbl_wide), ncol(tbl_wide))
 
   mpf <- rlistings::matrix_form(tbl_wide)
@@ -466,34 +452,13 @@ test_that("round_type in tt_to_tlgrtf works as expected for listing object", {
 })
 
 test_that("label_width_ins in tt_to_tlgrtf adjusts the width of the first column", {
-  # Create a simple table for testing
-  data(ex_adsl)
-  lyt_wide <- basic_table() |>
-    split_cols_by("SEX") |>
-    split_rows_by("RACE") |>
-    summarize_row_groups() |>
-    analyze("AGE")
+  # Uses shared tbl_wide
+  suppressMessages(res <- rtf_out_wrapper(tbl_wide, "labelwidth_default", part = 1))
+  expect_true(grepl("cellx2863", suppressWarnings(readLines(res))[6]))
 
-  tbl_wide <- build_table(lyt_wide, ex_adsl)
+  suppressMessages(res <- rtf_out_wrapper(tbl_wide, "labelwidth_5", part = 1, label_width_ins = 5))
+  expect_true(grepl("cellx7200", suppressWarnings(readLines(res))[6]))
 
-  expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA)))
-  suppressWarnings(rtf_raw <- readLines(res_wide))
-  # RTF units for column widths are in twips, not in inches
-  # 1 inches = 1440 twips
-  # 2 inches is approx 2863 twips
-  expect_true(grepl("cellx2863", rtf_raw[6]))
-
-  expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA, label_width_ins = 5)))
-  suppressWarnings(rtf_raw <- readLines(res_wide))
-  # RTF units for column widths are in twips, not in inches
-  # 1 inches = 1440 twips
-  # 5 inches = 7200 twips
-  expect_true(grepl("cellx7200", rtf_raw[6]))
-
-  expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA, label_width_ins = 0.5)))
-  suppressWarnings(rtf_raw <- readLines(res_wide))
-  # RTF units for column widths are in twips, not in inches
-  # 1 inches = 1440 twips
-  # 0.5 inches is approx 707 twips
-  expect_true(grepl("cellx707", rtf_raw[6]))
+  suppressMessages(res <- rtf_out_wrapper(tbl_wide, "labelwidth_05", part = 1, label_width_ins = 0.5))
+  expect_true(grepl("cellx707", suppressWarnings(readLines(res))[6]))
 })
