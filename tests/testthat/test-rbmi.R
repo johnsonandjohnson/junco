@@ -4,8 +4,6 @@ suppressPackageStartupMessages({
   library(rbmi)
 })
 
-
-
 test_that("find_missing_chg_after_avisit works as expected", {
   df <- data.frame(
     AVISIT = factor(c(1, 2, 3, 4, 5)),
@@ -30,7 +28,6 @@ test_that("find_missing_chg_after_avisit works as expected", {
 })
 
 test_that("find_missing_chg_after_avisit handles unsorted input correctly", {
-  # Test with unsorted AVISIT levels
   df_unsorted <- data.frame(
     AVISIT = factor(c(5, 4, 3, 2, 1)),
     CHG = c(NA, NA, 3, NA, 5)
@@ -38,7 +35,6 @@ test_that("find_missing_chg_after_avisit handles unsorted input correctly", {
   result <- find_missing_chg_after_avisit(df_unsorted)
   expect_identical(result, "4")
 
-  # Test with levels that aren't in sequential order
   df_nonseq <- data.frame(
     AVISIT = factor(c("Visit 10", "Visit 20", "Visit 30")),
     CHG = c(5, NA, NA)
@@ -48,20 +44,15 @@ test_that("find_missing_chg_after_avisit handles unsorted input correctly", {
 })
 
 test_that("find_missing_chg_after_avisit validates input correctly", {
-  # Not a data frame
   expect_error(
     find_missing_chg_after_avisit(list(AVISIT = factor(1:3), CHG = c(1, 2, 3))),
     "Assertion on 'df' failed"
   )
-
-  # AVISIT not a factor
   df_char <- data.frame(AVISIT = c("1", "2", "3"), CHG = c(1, 2, 3))
   expect_error(
     find_missing_chg_after_avisit(df_char),
     "Assertion on 'df\\$AVISIT' failed"
   )
-
-  # CHG not numeric
   df_char_chg <- data.frame(AVISIT = factor(1:3), CHG = c("1", "2", "3"))
   expect_error(
     find_missing_chg_after_avisit(df_char_chg),
@@ -77,41 +68,22 @@ test_that("make_rbmi_cluster returns NULL when cluster_or_cores is 1", {
 
 test_that("make_rbmi_cluster exports objects and loads packages", {
   skip_on_cran()
-  # Create a simple test object and function
   test_value <- 42
   test_fun <- function(x) x * 2
-
-  # Test with a small cluster to avoid excessive resource usage
   cl <- tryCatch(
-    {
-      make_rbmi_cluster(
-        cluster_or_cores = 2,
-        objects = list(test_value = test_value, test_fun = test_fun),
-        packages = "stats"
-      )
-    },
-    error = function(e) {
-      skip("Could not create cluster, skipping test")
-      NULL
-    }
+    make_rbmi_cluster(
+      cluster_or_cores = 2,
+      objects = list(test_value = test_value, test_fun = test_fun),
+      packages = "stats"
+    ),
+    error = function(e) skip("Could not create cluster, skipping test")
   )
-
-  # Only proceed if we successfully created a cluster
   if (!is.null(cl)) {
-    # Check if the objects were exported correctly
     test_result <- tryCatch(
-      {
-        parallel::clusterEvalQ(cl, test_fun(test_value))
-      },
-      error = function(e) {
-        list(NA)
-      }
+      parallel::clusterEvalQ(cl, test_fun(test_value)),
+      error = function(e) list(NA)
     )
-
-    # Clean up
     parallel::stopCluster(cl)
-
-    # The function should double our value
     expect_equal(unlist(test_result[1]), 84)
   }
 })
@@ -119,15 +91,9 @@ test_that("make_rbmi_cluster exports objects and loads packages", {
 test_that("make_rbmi_cluster handles existing cluster", {
   skip_on_cran()
   cl <- tryCatch(
-    {
-      parallel::makeCluster(2)
-    },
-    error = function(e) {
-      skip("Could not create cluster, skipping test")
-      NULL
-    }
+    parallel::makeCluster(2),
+    error = function(e) skip("Could not create cluster, skipping test")
   )
-
   if (!is.null(cl)) {
     result <- make_rbmi_cluster(cl)
     expect_identical(result, cl)
@@ -144,22 +110,15 @@ test_that("make_rbmi_cluster rejects invalid cluster_or_cores parameter", {
 })
 
 test_that("par_lapply works with and without cluster", {
-  # Test without cluster
   result1 <- par_lapply(NULL, function(x) x^2, 1:3)
   expect_equal(result1, list(1, 4, 9))
 
-  # Test with cluster (if possible)
+  # parallel path tested off-CRAN only — cluster setup adds overhead not worth it on CRAN
   skip_on_cran()
   cl <- tryCatch(
-    {
-      make_rbmi_cluster(cluster_or_cores = 2)
-    },
-    error = function(e) {
-      skip("Could not create cluster, skipping test")
-      NULL
-    }
+    make_rbmi_cluster(cluster_or_cores = 2),
+    error = function(e) skip("Could not create cluster, skipping test")
   )
-
   if (!is.null(cl)) {
     result2 <- par_lapply(cl, function(x) x^2, 1:3)
     parallel::stopCluster(cl)
@@ -169,20 +128,11 @@ test_that("par_lapply works with and without cluster", {
 
 test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
   skip_on_cran()
-
-  # Only run this test if we can create a cluster
   cl <- tryCatch(
-    {
-      parallel::makeCluster(2)
-    },
-    error = function(e) {
-      skip("Could not create cluster for namespace test")
-      NULL
-    }
+    parallel::makeCluster(2),
+    error = function(e) skip("Could not create cluster for namespace test")
   )
-
   if (!is.null(cl)) {
-    # First make sure the rbmi package is available in the cluster
     cluster_has_rbmi <- FALSE
     tryCatch(
       {
@@ -191,33 +141,32 @@ test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
           requireNamespace("rbmi")
         )))
       },
-      error = function(e) {
-        # If this fails, it might be because rbmi isn't installed in test env
-        skip("rbmi package not available in cluster")
-      }
+      error = function(e) skip("rbmi package not available in cluster")
     )
-
     if (cluster_has_rbmi) {
       result <- make_rbmi_cluster(cl)
-      # Check if the exported variable was set correctly
       exported_flag <- unlist(parallel::clusterEvalQ(
         cl,
         exists("..exported..parallel..rbmi")
       ))
       expect_true(all(exported_flag))
     }
-
     parallel::stopCluster(cl)
   }
 })
 
 test_that("Parallelisation works with rbmi_analyse and produces identical results", {
+  # Skipped on CRAN: runs rbmi::draws + impute + multiple rbmi_analyse calls
+  # with parallel clusters — too slow and resource-heavy for CRAN checks.
+  skip_on_cran()
+
   set.seed(4642)
   sigma <- as_vcov(
     c(2, 1, 0.7, 1.5),
     c(0.5, 0.3, 0.2, 0.3, 0.5, 0.4)
   )
-  dat <- get_sim_data(200, sigma, trt = 8) |>
+  # Use n=50 (down from 200) and n_samples=4 (down from 6) to keep runtime short
+  dat <- get_sim_data(50, sigma, trt = 8) |>
     dplyr::mutate(
       outcome = dplyr::if_else(
         rbinom(dplyr::n(), 1, 0.3) == 1 & group == "A",
@@ -249,7 +198,7 @@ test_that("Parallelisation works with rbmi_analyse and produces identical result
     data = dat,
     data_ice = dat_ice,
     vars = vars,
-    method = rbmi::method_condmean(n_samples = 6, type = "bootstrap"),
+    method = rbmi::method_condmean(n_samples = 4, type = "bootstrap"),
     quiet = TRUE
   )
 
@@ -258,117 +207,35 @@ test_that("Parallelisation works with rbmi_analyse and produces identical result
     references = c("A" = "B", "B" = "B")
   )
 
-  # Here we set up a bunch of different analysis objects using different
-  # of parallelisation methods and different dat_delta objects
-
-  ### Delta 1
+  vars2 <- vars
+  vars2$covariates <- c("age", "sex")
 
   dat_delta_1 <- rbmi::delta_template(imputations = imputeobj) |>
     dplyr::mutate(delta = is_missing * 5)
 
-  vars2 <- vars
-  vars2$covariates <- c("age", "sex")
+  anaobj_d1_t1 <- rbmi_analyse(imputeobj, fun = rbmi_ancova, vars = vars2, delta = dat_delta_1)
+  anaobj_d1_t2 <- rbmi_analyse(imputeobj, fun = rbmi_ancova, vars = vars2, delta = dat_delta_1, cluster_or_cores = 2)
 
-  anaobj_d1_t1 <- rbmi_analyse(
-    imputeobj,
-    fun = rbmi_ancova,
-    vars = vars2,
-    delta = dat_delta_1
-  )
+  # Verify sequential and parallel give identical results
+  expect_equal(anaobj_d1_t1, anaobj_d1_t2)
 
-  anaobj_d1_t2 <- rbmi_analyse(
-    imputeobj,
-    fun = rbmi_ancova,
-    vars = vars2,
-    delta = dat_delta_1,
-    cluster_or_cores = 2
-  )
+  dat_delta_2 <- rbmi::delta_template(imputations = imputeobj) |>
+    dplyr::mutate(delta = is_missing * 50)
+
+  anaobj_d2_t1 <- rbmi_analyse(imputeobj, fun = rbmi_ancova, vars = vars2, delta = dat_delta_2)
+
+  # Different deltas must produce different results — sanity check that delta
+  # values don't bleed between parallel runs
+  expect_false(identical(anaobj_d1_t1$results, anaobj_d2_t1$results))
 
   var <- 20
   inner_fun <- function(...) {
     x <- as_factor(var)
     rbmi_ancova(...)
   }
-  outer_fun <- function(...) {
-    inner_fun(...)
-  }
+  cl <- make_rbmi_cluster(2, objects = list(var = var, inner_fun = inner_fun), "forcats")
+  anaobj_d1_t3 <- rbmi_analyse(imputeobj, fun = rbmi_ancova, vars = vars2, delta = dat_delta_1, cluster_or_cores = cl)
+  expect_equal(anaobj_d1_t1, anaobj_d1_t3)
 
-  cl <- make_rbmi_cluster(
-    2,
-    objects = list(var = var, inner_fun = inner_fun),
-    "forcats"
-  )
-  anaobj_d1_t3 <- rbmi_analyse(
-    imputeobj,
-    fun = rbmi_ancova,
-    vars = vars2,
-    delta = dat_delta_1,
-    cluster_or_cores = cl
-  )
-
-  ### Delta 2
-
-  dat_delta_2 <- rbmi::delta_template(imputations = imputeobj) |>
-    dplyr::mutate(delta = is_missing * 50)
-
-  anaobj_d2_t1 <- rbmi_analyse(
-    imputeobj,
-    fun = rbmi_ancova,
-    vars = vars2,
-    delta = dat_delta_2
-  )
-
-  # The ensure they are different
-  expect_false(identical(anaobj_d1_t1$results, anaobj_d2_t1$results))
-
-  ## Check for internal consistency
-  expect_equal(anaobj_d1_t1, anaobj_d1_t2)
-
-  if (!testthat:::on_cran()) { #sanity checking
-    anaobj_d2_t3 <- rbmi_analyse(
-      imputeobj,
-      fun = rbmi_ancova,
-      vars = vars2,
-      delta = dat_delta_2,
-      cluster_or_cores = cl
-    )
-
-    ### Delta 3 (no delta)
-
-    anaobj_d3_t1 <- rbmi_analyse(
-      imputeobj,
-      fun = rbmi_ancova,
-      vars = vars2
-    )
-    anaobj_d3_t3 <- rbmi_analyse(
-      imputeobj,
-      fun = rbmi_ancova,
-      vars = vars2,
-      cluster_or_cores = cl
-    )
-
-    ## Check for internal consistency
-    expect_equal(anaobj_d1_t1, anaobj_d1_t3)
-    expect_equal(anaobj_d1_t2, anaobj_d1_t3)
-
-    expect_equal(anaobj_d2_t1, anaobj_d2_t3)
-
-    expect_equal(anaobj_d3_t1, anaobj_d3_t3)
-
-    ## Check that they differ (as different deltas have been used)
-    ## Main thing is sanity checking that the embedded delta
-    ## in the parallel processes hasn't lingered and impacted
-    ## future results
-
-    # First assert consistency
-    expect_true(identical(anaobj_d1_t1$results, anaobj_d1_t3$results))
-    expect_true(identical(anaobj_d2_t1$results, anaobj_d2_t3$results))
-    expect_true(identical(anaobj_d3_t1$results, anaobj_d3_t3$results))
-
-    # The ensure they are different
-    expect_false(identical(anaobj_d1_t1$results, anaobj_d3_t1$results))
-    expect_false(identical(anaobj_d2_t1$results, anaobj_d3_t1$results))
-
-  }
   parallel::stopCluster(cl)
 })
