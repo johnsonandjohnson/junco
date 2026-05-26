@@ -295,66 +295,42 @@ test_that("make_bordmat_row creates border matrix row correctly", {
   expect_equal(result2, c(1, 1, 2, 2, 2))
 })
 
+tbl_simple <- build_table(
+  basic_table() |> split_cols_by("ARM") |> analyze("AGE"),
+  ex_adsl
+)
+badtbl_simple <- build_table(
+  basic_table() |> split_rows_by("ARM") |> summarize_row_groups(),
+  ex_adsl
+)
+
 test_that("tt_to_tlgrtf validates table structure correctly", {
-  # Create an invalid table structure (similar to badtbl in previous test)
-  data(ex_adsl)
-  badlyt <- basic_table() |>
-    split_rows_by("ARM") |>
-    summarize_row_groups()
-
-  badtbl <- build_table(badlyt, ex_adsl)
-
-  # Test that a message is issued when validate=TRUE
   expect_message(
-    tt_to_tlgrtf(badtbl, file = NULL, validate = TRUE),
+    tt_to_tlgrtf(badtbl_simple, file = NULL, validate = TRUE),
     "Invalid table structure detected"
   )
-
-  # Test that no message is issued when validate=FALSE
   expect_no_message(
-    tt_to_tlgrtf(badtbl, file = NULL, validate = FALSE)
+    tt_to_tlgrtf(badtbl_simple, file = NULL, validate = FALSE)
   )
-
-  # Test that the default behavior (validate=TRUE) issues a message
   expect_message(
-    tt_to_tlgrtf(badtbl, file = NULL),
+    tt_to_tlgrtf(badtbl_simple, file = NULL),
     "Invalid table structure detected"
   )
 })
 
 test_that("tt_to_tlgrtf does not message for valid table structures with validate=TRUE", {
-  # Create a valid table structure
-  data(ex_adsl)
-  lyt <- basic_table() |>
-    split_cols_by("ARM") |>
-    analyze("AGE")
-
-  tbl <- build_table(lyt, ex_adsl)
-
-  # Test that no message is issued for a valid table with validate=TRUE
   expect_no_message(
-    tt_to_tlgrtf(tbl, file = NULL, validate = TRUE)
+    tt_to_tlgrtf(tbl_simple, file = NULL, validate = TRUE)
   )
 })
 
 test_that("tt_to_tlgrtf validates valid table structures correctly", {
-  # Create a valid table structure
-  data(ex_adsl)
-  lyt <- basic_table() |>
-    split_cols_by("ARM") |>
-    analyze("AGE")
-
-  tbl <- build_table(lyt, ex_adsl)
-
-  # Test that a message is issued for valid tables when validate=FALSE
   expect_message(
-    tt_to_tlgrtf(tbl, file = NULL, validate = FALSE),
+    tt_to_tlgrtf(tbl_simple, file = NULL, validate = FALSE),
     "Table structure validation succeeded"
   )
-
-  # Test that no message is issued for valid tables when validate=TRUE
   expect_no_message(
-    tt_to_tlgrtf(tbl, file = NULL, validate = TRUE)
+    tt_to_tlgrtf(tbl_simple, file = NULL, validate = TRUE)
   )
 })
 
