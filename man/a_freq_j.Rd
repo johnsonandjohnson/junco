@@ -182,8 +182,18 @@ It is recommended not to utilize this argument for other purposes.
 The label argument could be used instead (if \code{val} is a single string)\cr}
 
 \item{label_map}{(\code{tibble})\cr
-A mapping tibble to translate levels from the incoming variable into
-a different row label to be presented on the table.\cr}
+A mapping tibble to translate levels from the incoming variable(s) into
+a different row label to be presented on the table.\cr
+
+Four structural variants are supported:
+\enumerate{
+\item Simple mapping        -- columns: value, label
+\item Multi-variable mapping -- columns: var, value, label
+\item Row-split-aware mapping -- columns: <split_var>, value, label
+\item Row-split-aware + multi-variable mapping -- columns: <split_var>, var, value, label
+}
+
+See examples for more details.}
 
 \item{.alt_df_full}{(\code{dataframe})\cr Denominator dataset
 for fraction and relative risk calculations.\cr
@@ -426,5 +436,189 @@ lyt2 <- basic_table(
   )
 
 result2 <- build_table(lyt2, adae, alt_counts_df = adsl)
+
+# -------------------------------------------------------------------------
+# Examples focusing on label_map
+# -------------------------------------------------------------------------
+
+adsl <- ex_adsl |> select("USUBJID", "SEX", "ARM")
+adae <- ex_adae |> select("USUBJID", "AEBODSYS", "AEDECOD")
+adae[["TRTEMFL"]] <- "Y"
+
+trtvar <- "ARM"
+adae <- adae |> left_join(adsl)
+
+# -------------------------------------------------------------------------
+# 1. Simple mapping
+#    Tibble with columns `value` and `label`.
+#    Remaps a factor levels (`value`) from a single variable to a custom new label (`label`).
+# -------------------------------------------------------------------------
+
+label_map_simple <- tribble(
+  ~value, ~label,
+  "M", "Male",
+  "F", "Female",
+  "UNDIFFERENTIATED", "Undifferentiated",
+  "U", "Unknown"
+)
+
+lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by(trtvar) |>
+  analyze("SEX",
+    afun = a_freq_j,
+    extra_args = list(
+      .stats = "count_unique_fraction",
+      label_map = label_map_simple
+    )
+  )
+
+result_lmap1 <- build_table(lyt_lmap1, adsl, alt_counts_df = adsl)
+result_lmap1
+
+# -------------------------------------------------------------------------
+# 2. Multi-variable mapping (with `var` column)
+#    When the same label_map tibble is passed to multiple analyze calls,
+#    add a `var` column so each row is applied only to its matching variable.
+#    Useful in situations where multiple Y/N variables can be analyzed in one call.
+# -------------------------------------------------------------------------
+
+multi_vars <- c("DTH30FL", "DTHA30FL", "DTHB30FL")
+adslx <- pharmaverseadam::adsl
+# ensure the variables are factor with levels Y/N - and variable label is kept
+adslx <- adslx |>
+  mutate(across(multi_vars, ~ {
+    lbl <- attr(.x, "label")
+    out <- factor(.x, levels = c("Y", "N"))
+    attr(out, "label") <- lbl
+    out
+  }))
+
+map_multi <- as.data.frame(t(t(labelled::var_label(adslx[, multi_vars]))))
+map_multi[["var"]] <- rownames(map_multi)
+rownames(map_multi) <- NULL
+map_multi[["label"]] <- map_multi[["V1"]]
+map_multi[["value"]] <- "Y"
+map_multi <- map_multi[, c("var", "value", "label")]
+
+basic_table(show_colcounts = TRUE) |>
+  split_cols_by("ARM") |>
+  analyze(multi_vars,
+    afun = a_freq_j,
+    extra_args = list(
+      .stats = "count_unique_denom_fraction",
+      label_map = map_multi,
+      val = "Y"
+    ),
+    show_labels = "hidden"
+  ) |>
+  build_table(adslx)
+
+# other example
+
+advs_jnj <- pharmaverseadamjnj::advs |>
+  select("USUBJID", "TRT01A", "PARAMCD", "PARAM", "AVISIT", "AVAL", starts_with("CRIT"))
+adsl_jnj <- pharmaverseadamjnj::adsl |> select("USUBJID", "TRT01A")
+
+crits <- unique(advs_jnj |>
+  filter(PARAMCD \%in\% c("DIABP")) |>
+  select(CRIT1, CRIT2, CRIT3)) |>
+  tidyr::pivot_longer(cols = c("CRIT1", "CRIT2", "CRIT3")) |>
+  filter(!is.na(value)) |>
+  rename(
+    label = value,
+    var = name
+  ) |>
+  mutate(value = "Y") |>
+  mutate(across(where(is.factor), as.character))
+
+crits[["var"]] <- paste0(crits[["var"]], "FL")
+
+advs_jnj_bp <- advs_jnj |>
+  filter(PARAMCD == "DIABP")
+
+lyt_lmap2 <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("TRT01A") |>
+  analyze(c("CRIT1FL", "CRIT2FL", "CRIT3FL"),
+    afun = a_freq_j,
+    extra_args = list(
+      .stats = "count_unique_denom_fraction",
+      label_map = crits,
+      val = "Y"
+    ),
+    show_labels = "hidden"
+  )
+
+result_lmap2 <- build_table(lyt_lmap2, advs_jnj_bp, alt_counts_df = adsl_jnj)
+result_lmap2
+
+# -------------------------------------------------------------------------
+# 3. Row-split-aware mapping
+#    When the table is split by a row variable (e.g. SEX), add that
+#    variable as a column in label_map so that different labels are
+#    applied per split level.
+# -------------------------------------------------------------------------
+
+map3 <- tribble(
+  ~SEX, ~value, ~label,
+  "M", "Y", "Male subjects with at least one TE AE",
+  "F", "Y", "Female subjects with at least one TE AE"
+)
+
+adsl <- ex_adsl |> select("USUBJID", "ARM", "SEX")
+adae <- ex_adae |> select("USUBJID", "AEBODSYS", "AEDECOD")
+adae[["TRTEMFL"]] <- "Y"
+adae <- adae |> left_join(adsl)
+
+lyt_lmap3 <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("ARM") |>
+  split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M")), child_labels = "hidden") |>
+  analyze("TRTEMFL",
+    afun = a_freq_j,
+    extra_args = list(
+      .stats = "count_unique_denom_fraction",
+      label_map = map3,
+      val = "Y"
+    ),
+    show_labels = "hidden"
+  )
+
+result_lmap3 <- build_table(lyt_lmap3, adae, alt_counts_df = adsl)
+result_lmap3
+
+# -------------------------------------------------------------------------
+# 4. Row-split-aware mapping + Multi-variable mapping (with `var` column)
+#    When the table is split by a row variable (e.g. PARAMCD), add that
+#    variable as a column in label_map so that different labels are
+#    applied per split level for its matching variable.
+# -------------------------------------------------------------------------
+
+crits4 <- unique(advs_jnj |>
+  select(PARAMCD, CRIT1, CRIT2, CRIT3)) |>
+  tidyr::pivot_longer(cols = c("CRIT1", "CRIT2", "CRIT3")) |>
+  filter(!is.na(value)) |>
+  rename(
+    label = value,
+    var = name
+  ) |>
+  mutate(value = "Y") |>
+  mutate(across(where(is.factor), as.character))
+
+crits4[["var"]] <- paste0(crits4[["var"]], "FL")
+
+lyt_lmap4 <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("TRT01A") |>
+  split_rows_by("PARAMCD", split_fun = keep_split_levels(c("DIABP", "SYSBP"))) |>
+  analyze(c("CRIT1FL", "CRIT2FL", "CRIT3FL"),
+    afun = a_freq_j,
+    extra_args = list(
+      .stats = "count_unique_denom_fraction",
+      label_map = crits4,
+      val = "Y"
+    ),
+    show_labels = "hidden"
+  )
+
+result_lmap4 <- build_table(lyt_lmap4, advs_jnj, alt_counts_df = adsl_jnj)
+result_lmap4
 
 }

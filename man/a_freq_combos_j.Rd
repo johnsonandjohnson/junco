@@ -107,8 +107,18 @@ It is recommended not to utilize this argument for other purposes.
 The label argument could be used instead (if \code{val} is a single string)\cr}
 
 \item{label_map}{(\code{tibble})\cr
-A mapping tibble to translate levels from the incoming variable into
-a different row label to be presented on the table.\cr}
+A mapping tibble to translate levels from the incoming variable(s) into
+a different row label to be presented on the table.\cr
+
+Four structural variants are supported:
+\enumerate{
+\item Simple mapping        -- columns: value, label
+\item Multi-variable mapping -- columns: var, value, label
+\item Row-split-aware mapping -- columns: <split_var>, value, label
+\item Row-split-aware + multi-variable mapping -- columns: <split_var>, var, value, label
+}
+
+See examples for more details.}
 
 \item{.alt_df_full}{(\code{dataframe})\cr Denominator dataset
 for fraction and relative risk calculations.\cr
@@ -185,8 +195,10 @@ combodf <- tribble(
 lyt <- basic_table(show_colcounts = TRUE) |>
   split_cols_by("ARM") |>
   split_cols_by("ACAT1",
-    split_fun = rtables::add_combo_levels(combosdf = combodf,
-                 trim = FALSE, keep_levels = combodf$valname)
+    split_fun = rtables::add_combo_levels(
+      combosdf = combodf,
+      trim = FALSE, keep_levels = combodf$valname
+    )
   ) |>
   analyze("TRTEMFL",
     show_labels = "hidden",
@@ -204,4 +216,7 @@ lyt <- basic_table(show_colcounts = TRUE) |>
 result <- build_table(lyt, df = ADAE, alt_counts_df = ADSL)
 
 result
+}
+\seealso{
+\code{\link[=a_freq_j]{a_freq_j()}} for extensive \code{label_map} usage examples.
 }
