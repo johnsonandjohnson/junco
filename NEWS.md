@@ -1,11 +1,12 @@
 # junco 0.1.6.9000
 
 ### Fixed
+- Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
 
 ### Changed
 - Removed formatters exports #317
 - Reduce sampling of `rbmi` test to make tests shorter (#323)
-- Optimize shared tables in test-tt_to_tblfile (#323)
+- Optimize shared tables in `test-tt_to_tblfile` (#323)
 
 ### Added
 
