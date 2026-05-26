@@ -1,7 +1,15 @@
+# junco 0.1.6.9000
 
+### Fixed
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
 
-# junco 0.1.6
+### Changed
+- Removed formatters exports #317
+
+### Added
+
+## [0.1.6] - 2026-05-05 (CRAN release)
+
 
 ### Fixed
 
@@ -121,6 +129,10 @@
 
 - Initial CRAN release
 
+
+## Changelog
+
+[0.1.6]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.6-rc
 [0.1.5]: https://github.com/johnsonandjohnson/junco/releases/tag/v-0.1.5
 [0.1.4]: https://github.com/johnsonandjohnson/junco/releases/tag/0.1.4
 [0.1.3]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.3

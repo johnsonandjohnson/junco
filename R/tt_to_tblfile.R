@@ -550,7 +550,7 @@ tt_to_tlgrtf <- function(
           full_pag_i,
           file = fname,
           orientation = orientation,
-          colwidths = j_mf_col_widths(pgi_for_cw),
+          colwidths = formatters::mf_col_widths(pgi_for_cw),
           fontspec = fontspec,
           watermark = watermark,
           col_gap = col_gap,
