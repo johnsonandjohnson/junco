@@ -44,6 +44,7 @@
 
 ### Added
 
+- Added `a_diff_means()`, which is based on the existing `s_diff_means()`.
 - Added multi-comparator functionality (#271)
 - Hotfix: Added several new functions for creating the Vital Sign tables for core and clinpharm:
   `a_summary_diff_mvars()`, `a_summary_j()`, `c_summary_subset_label()`, `filter_df_prior_afun()`,
