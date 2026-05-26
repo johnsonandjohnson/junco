@@ -386,3 +386,33 @@ do_exclude_split <- function(exclude_levels, .spl_context) {
   }
   FALSE
 }
+
+
+
+
+insert_subset_exprs <- function(partinfo, spl, comp_path = NULL) {
+  rvs <- rawvalues(partinfo$values)
+  names(rvs) <- names(partinfo$values)
+  exprs <- lapply(rvs, function(rvi) make_subset_expr(spl, rvi))
+  newvals <- mapply(function(val, expr) {
+    exvals <- utils::getFromNamespace("splv_extra", "rtables")(val)
+    if (!is.null(utils::getFromNamespace("value_expr", "rtables")(val))) {
+      return(val)
+    }
+    ## XXX fix ASAP, export setter from rtables
+    val@subset_expression <- expr
+    val
+  },
+  val = partinfo$values,
+  expr = exprs,
+  SIMPLIFY = FALSE)
+  names(newvals) <- names(partinfo$values)
+
+  names(exprs) <- names(rvs)
+  make_split_result(
+    ## names(partinfo$values), ## AllLevelsSentinel is not playing nice here but should be handled by expr
+    newvals,
+    partinfo$datasplit,
+    partinfo$labels
+  )
+}

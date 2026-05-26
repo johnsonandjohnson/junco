@@ -470,9 +470,7 @@ one_col_strs <- function(strcol, col_gap = 2, fontspec) {
   ret
 }
 
-## we have permission from the formatters maintainer to use this
-## unexported function
-j_mf_col_widths <- utils::getFromNamespace("mf_col_widths", "formatters")
+
 
 #' @name def_colwidths
 #'
@@ -509,9 +507,9 @@ def_colwidths <- function(tt,
     if (
       is.list(tt) &&
         !methods::is(tt, "MatrixPrintForm") &&
-        !is.null(j_mf_col_widths(tt[[1]]))
+        !is.null(formatters::mf_col_widths(tt[[1]]))
     ) {
-      ret <- j_mf_col_widths(tt[[1]])
+      ret <- formatters::mf_col_widths(tt[[1]])
     } else {
       ret <- no_cellwrap_colwidths(tt, fontspec, col_gap = col_gap, label_width_ins = label_width_ins)
     }

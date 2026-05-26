@@ -23,6 +23,7 @@ articles:
     - auto_colwidths
     - table_and_listing_customizations
     - ancova_combined
+    - standard_column_structures
 reference:
   - title: junco Analysis Functions
     desc: The following functions are the Analysis functions used used to create common table layouts.
@@ -74,7 +75,7 @@ reference:
     - resp01_split_fun_fct
     - response_by_var
     - s_ancova_j
-    - s_diff_mean_ci
+    - s_diff_means
     - s_proportion_factor
     - s_proportion_logical
     - s_summarize_ancova_j
@@ -116,8 +117,10 @@ reference:
     - cond_rm_facets
     - create_colspan_map
     - create_colspan_var
+    - grouped_cols_w_diffs
     - do_exclude_split
     - make_combo_splitfun
+    - make_multicomp_splfun
     - postfun_eq5d
     - real_add_overall_facet
 
@@ -138,8 +141,6 @@ reference:
     - leftside
     - remove_col_count
     - rm_levels
-    - safe_t_test
-
     
   - title: internal
     desc: The following are additional junco functions.
@@ -148,7 +149,6 @@ reference:
     - inches_to_spaces
     - prepend_label_cell
     - rm_other_facets_fact
-    - safe_t_test
     - smart_colwidths_1page
     - tt_to_tbldf
 

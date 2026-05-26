@@ -79,3 +79,135 @@ check_alt_df_full <- function(argument, values, .alt_df_full) {
     name, argument
   ))
 }
+
+#' @title Extract Vectors for Two-Sample Analysis
+#'
+#' @noRd
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Extract (aligned) vectors from two data frames for two-sample statistical
+#' analysis using complete-case (non-missing) observations.
+#'
+#' For unpaired data, values are extracted directly from each dataset with
+#' missing values (`NA`) removed independently.
+#'
+#' For paired data, observations are first matched using the key variable(s)
+#' specified in `paired_by`, and only complete pairs are retained.
+#'
+#' The function validates that `paired_by` uniquely identifies rows in each
+#' dataset (after removing rows with incomplete values in `paired_by` columns)
+#' and raises an error if duplicates are detected.
+#'
+#' @details
+#' The function performs the following steps depending on the `paired` flag:
+#'
+#' \strong{Unpaired case (`paired = FALSE`):}
+#' \enumerate{
+#'   \item Extract `.var` from each dataset.
+#'   \item Remove `NA` values independently from each vector.
+#' }
+#'
+#' \strong{Paired case (`paired = TRUE`):}
+#' \enumerate{
+#'   \item Check that `paired_by` uniquely identifies rows in each dataset,
+#'     considering only rows that are complete cases for the `paired_by` columns.
+#'
+#'   \item Merge `df1` and `df2` by the columns specified in `paired_by`.
+#'   The merged data contains only the `paired_by` columns and the `.var` column
+#'   from each dataset.
+#'
+#'   \item Remove rows containing any missing values (`NA`) in the merged data.
+#'
+#'   \item Extract aligned vectors corresponding to `.var`.
+#' }
+#'
+#' This function is intended for internal use in two-sample statistical
+#' procedures such as paired and unpaired t-tests.
+#'
+#' @param df1 (`data.frame`)\cr First dataset.
+#' @param df2 (`data.frame`)\cr Second dataset.
+#' @param .var (`character(1)`)\cr Name of the variable to extract from both
+#'   datasets.
+#' @param paired (`logical(1)`)\cr Whether the values in `df1[[.var]]` and
+#'   `df2[[.var]]` should be treated as paired (matched) samples.
+#' @param paired_by (`character`)\cr Column name(s) used to match observations
+#'   between `df1` and `df2`. Required only if `paired = TRUE`.
+#'
+#' @return
+#' A named `list` with:
+#' \describe{
+#'   \item{x1}{Non-missing values from `df1[[.var]]` after optional pairing.}
+#'   \item{x2}{Non-missing values from `df2[[.var]]` after optional pairing.}
+#' }
+#'
+#' Returned vectors may be shorter than the original inputs due to removal of
+#' unmatched observations, missing values (`NA`).
+#'
+#' @keywords internal
+#'
+#' @importFrom stats complete.cases
+#'
+#' @examples
+#' df1 <- data.frame(id = c("A", "B", "C", "D"), value = 1:4)
+#' df2 <- data.frame(id = c("A", "C", "D", "E", "F"), value = c(11, 13:14, NA, 16))
+#' df1
+#' df2
+#'
+#' # Unpaired
+#' extract_vectors(df1, df2, "value")
+#'
+#' # Paired
+#' extract_vectors(df1, df2, "value", paired = TRUE, paired_by = "id")
+#'
+extract_vectors <- function(df1,
+                            df2,
+                            .var,
+                            paired = FALSE,
+                            paired_by) {
+  checkmate::assert_data_frame(df1)
+  checkmate::assert_data_frame(df2)
+  checkmate::assert_string(.var)
+  checkmate::assert_names(colnames(df1), must.include = .var)
+  checkmate::assert_names(colnames(df2), must.include = .var)
+  checkmate::assert_flag(paired)
+
+  if (paired) {
+    checkmate::assert_character(paired_by)
+    checkmate::assert_names(colnames(df1), must.include = paired_by)
+    checkmate::assert_names(colnames(df2), must.include = paired_by)
+
+    df1_keys <- df1[complete.cases(df1[, paired_by]), paired_by]
+    df2_keys <- df2[complete.cases(df2[, paired_by]), paired_by]
+
+    if (any(duplicated(df1_keys))) {
+      stop("Duplicate values in 'paired_by' columns in df1 (complete cases only).")
+    }
+
+    if (any(duplicated(df2_keys))) {
+      stop("Duplicate values in 'paired_by' columns in df2 (complete cases only).")
+    }
+
+    suffixes <- c("_df1", "_df2")
+
+    df <- merge(
+      df1[, c(paired_by, .var), drop = FALSE],
+      df2[, c(paired_by, .var), drop = FALSE],
+      by = paired_by,
+      suffixes = suffixes
+    )
+    df <- df[complete.cases(df), , drop = FALSE]
+
+    varsfx <- paste0(.var, suffixes)
+    x1 <- df[[varsfx[1]]]
+    x2 <- df[[varsfx[2]]]
+  } else {
+    x1 <- df1[[.var]]
+    x2 <- df2[[.var]]
+
+    x1 <- x1[!is.na(x1)]
+    x2 <- x2[!is.na(x2)]
+  }
+
+  list(x1 = x1, x2 = x2)
+}

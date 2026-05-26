@@ -2290,7 +2290,7 @@ export_graph_as_docx <- function(g = NULL,
 #' @section Note:
 #' This function may be removed from junco in the future if the functionality
 #' is merged into `rtables.officer`.
-#' 
+#'
 #' For more information, refer to the vignette `table_and_listing_customizations`
 #' (`browseVignettes("junco")`)
 #'

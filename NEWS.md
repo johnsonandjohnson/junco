@@ -1,7 +1,12 @@
-# junco 0.1.7
+# junco 0.1.6.9000
 
+### Fixed
 - Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
+- 
+### Changed
+- Removed formatters exports #317
 
+### Added
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 
@@ -26,6 +31,8 @@
 
 ### Changed
 
+- Added new stats/labels/formats/indents to `junco_utils_default_stats_formats_labels.r` file.
+- Renamed `s_diff_mean_ci()` to `s_diff_means()`, and added new statistics to `s_diff_means()`.
 - Moved `safe_t_test()` from `a_summarize_aval_chg_diff.R` to a new file `safe_t_test.R`,
 - Moved `add_blank_line_rcells()` from `s_functions.R` to `blank_line.R`.
 - changed return value `n` for `s_ancova_j` into `n_fit`, to differentiate between these two statistics for combined function `s_summarize_ancova_j()` (#117)
@@ -48,6 +55,7 @@
 
 ### Added
 
+- Added multi-comparator functionality (#271)
 - Hotfix: Added several new functions for creating the Vital Sign tables for core and clinpharm:
   `a_summary_diff_mvars()`, `a_summary_j()`, `c_summary_subset_label()`, `filter_df_prior_afun()`,
   `prepend_label_cell()`, `s_diff_mean_ci()`, `s_summary_diff()`, `safe_t_test()` (#304).
@@ -121,6 +129,10 @@
 
 - Initial CRAN release
 
+
+## Changelog
+
+[0.1.6]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.6-rc
 [0.1.5]: https://github.com/johnsonandjohnson/junco/releases/tag/v-0.1.5
 [0.1.4]: https://github.com/johnsonandjohnson/junco/releases/tag/0.1.4
 [0.1.3]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.3
