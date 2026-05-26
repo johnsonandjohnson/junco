@@ -41,7 +41,7 @@
 #'   colspan_var = "colspan_trt",
 #'   trt_var = "ARM"
 #' )
-#' 
+#'
 #' # A standard analysis function which uses a reference group.
 #' standard_afun <- function(x, .ref_group, .in_ref_col) {
 #'   diff_means <- if (isFALSE(.in_ref_col)) {
