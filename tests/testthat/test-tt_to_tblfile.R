@@ -46,6 +46,18 @@ rtf_out_wrapper <- function(
   }
 }
 
+# shared fixture: ARM x SEX x RACE: wide enough to trigger column pagination,
+# reused across the wide-table, combined_rtf, and file=NULL tests
+tbl_wide <- local({
+  lyt <- basic_table() |>
+    split_cols_by("ARM") |>
+    split_cols_by("SEX") |>
+    split_rows_by("RACE") |>
+    summarize_row_groups() |>
+    analyze("AGE")
+  build_table(lyt, ex_adsl)
+})
+
 # all elements result in different rounding sas vs iec with format xx.xx
 # third element only results in different rounding iec_mod vs iec with format xx.xx
 vals_round_type <- c(1.865, 2.985, -0.001)
@@ -191,16 +203,6 @@ test_that("get_ncol works as expected", {
 })
 
 test_that("tt_to_tlgrtf works with wide table", {
-  ## wide enough for pagination:
-
-  lyt_wide <- basic_table() |>
-    split_cols_by("ARM") |>
-    split_cols_by("SEX") |>
-    split_rows_by("RACE") |>
-    summarize_row_groups() |>
-    analyze("AGE")
-
-  tbl_wide <- build_table(lyt_wide, ex_adsl)
   expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA, export_csv = TRUE)))
   for (fl in res_wide) {
     expect_snapshot_file(compare = compare_file_text, fl, cran = TRUE)
@@ -209,16 +211,6 @@ test_that("tt_to_tlgrtf works with wide table", {
 })
 
 test_that("tt_to_tlgrtf works with argument combined_rtf = TRUE", {
-  ## wide enough for pagination:
-
-  lyt_wide <- basic_table() |>
-    split_cols_by("ARM") |>
-    split_cols_by("SEX") |>
-    split_rows_by("RACE") |>
-    summarize_row_groups() |>
-    analyze("AGE")
-
-  tbl_wide <- build_table(lyt_wide, ex_adsl)
   expect_silent(suppressMessages(cmb_fl <- rtf_out_wrapper(tbl_wide, "test3", combined = TRUE)))
   expect_snapshot_file(compare = compare_file_text, cmb_fl, cran = TRUE)
   res_nullfl <- expect_silent(tt_to_tlgrtf(tbl_wide, file = NULL))
