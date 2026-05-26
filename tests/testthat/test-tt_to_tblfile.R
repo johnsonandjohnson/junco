@@ -206,41 +206,22 @@ test_that("tt_to_tlgrtf works with argument combined_rtf = TRUE", {
 })
 
 test_that("tt_to_tlgrtf converts table tree to tlg without error", {
-  # Create a simple table for testing
-  lyt <- basic_table() |>
-    split_cols_by("ARM") |>
-    analyze("AGE")
-
-  tbl <- build_table(lyt, ex_adsl)
-
-  # test that it runs without error
-  expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(tbl, "test1"), cran = TRUE)
-  expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(tbl, "test1b", colwidths = 120), cran = TRUE)
-  expect_no_error(suppressMessages(result <- tt_to_tlgrtf(tbl, file = tempfile())))
+  expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(tbl_simple, "test1"), cran = TRUE)
+  expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(tbl_simple, "test1b", colwidths = 120), cran = TRUE)
+  expect_no_error(suppressMessages(result <- tt_to_tlgrtf(tbl_simple, file = tempfile())))
   expect_true(is.null(result[[1]]))
 
   lsting <- as_listing(ex_adsl[1:30, 1:10])
   expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(lsting, "listing1"), cran = TRUE)
 
-  badlyt <- basic_table() |>
-    split_rows_by("ARM") |>
-    summarize_row_groups()
-
-  badtbl <- build_table(badlyt, ex_adsl)
-
-  ## Test that an error is issued when validate=TRUE (default behavior)
-  expect_error(tt_to_tbldf(badtbl))
-  expect_error(tt_to_tbldf(badtbl, validate = TRUE))
-
-  ## Test that a message is issued when validate=FALSE
+  expect_error(tt_to_tbldf(badtbl_simple))
+  expect_error(tt_to_tbldf(badtbl_simple, validate = TRUE))
   expect_message(
-    tt_to_tbldf(badtbl, validate = FALSE),
+    tt_to_tbldf(badtbl_simple, validate = FALSE),
     "Invalid table structure detected"
   )
-
-  ## Test that a different message is issued for valid tables when validate=FALSE
   expect_message(
-    tt_to_tbldf(tbl, validate = FALSE),
+    tt_to_tbldf(tbl_simple, validate = FALSE),
     "Table structure validation succeeded"
   )
 
