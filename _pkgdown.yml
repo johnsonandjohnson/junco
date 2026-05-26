@@ -30,6 +30,7 @@ reference:
     contents:
     - column_stats
     - a_eair100_j
+    - a_diff_means
     - a_freq_combos_j
     - a_freq_j
     - a_freq_subcol_j
