@@ -46,7 +46,7 @@ rtf_out_wrapper <- function(
   }
 }
 
-# shared fixture: ARM x SEX x RACE: wide enough to trigger column pagination,
+# shared table: ARM x SEX x RACE: wide enough to trigger column pagination,
 # reused across the wide-table, combined_rtf, and file=NULL tests
 tbl_wide <- local({
   lyt <- basic_table() |>
@@ -57,6 +57,16 @@ tbl_wide <- local({
     analyze("AGE")
   build_table(lyt, ex_adsl)
 })
+
+# shared simple table reused across converts-without-error and validate tests
+tbl_simple <- build_table(
+  basic_table() |> split_cols_by("ARM") |> analyze("AGE"),
+  ex_adsl
+)
+badtbl_simple <- build_table(
+  basic_table() |> split_rows_by("ARM") |> summarize_row_groups(),
+  ex_adsl
+)
 
 # all elements result in different rounding sas vs iec with format xx.xx
 # third element only results in different rounding iec_mod vs iec with format xx.xx
@@ -149,12 +159,9 @@ listingdf_to_test_round_type <- function(vals = vals_round_type, round_type = "i
 }
 
 test_that("tt_to_tlgrtf works with input Table and fontspec size 8", {
-  tbl <- build_table(
-    basic_table() |> split_cols_by("ARM") |> analyze("AGE"),
-    ex_adsl
-  )
+  # tbl_simple reused — fontspec is a rendering option, not layout-dependent
   fontspec <- font_spec("Times", 8L, 1.2)
-  expect_no_error(rtf_out_wrapper(tbl, "testfontsize8", fontspec = fontspec))
+  expect_no_error(rtf_out_wrapper(tbl_simple, "testfontsize8", fontspec = fontspec))
 })
 
 test_that("tt_to_tlgrtf works with an empty listing", {
@@ -275,15 +282,6 @@ test_that("make_bordmat_row creates border matrix row correctly", {
   # Match the actual output pattern
   expect_equal(result2, c(1, 1, 2, 2, 2))
 })
-
-tbl_simple <- build_table(
-  basic_table() |> split_cols_by("ARM") |> analyze("AGE"),
-  ex_adsl
-)
-badtbl_simple <- build_table(
-  basic_table() |> split_rows_by("ARM") |> summarize_row_groups(),
-  ex_adsl
-)
 
 test_that("tt_to_tlgrtf validates table structure correctly", {
   expect_message(
