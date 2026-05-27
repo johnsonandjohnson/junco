@@ -634,22 +634,25 @@ s_rel_risk_val_j <- function(
 #' # -------------------------------------------------------------------------
 #'
 #' multi_vars <- c("DTH30FL", "DTHA30FL", "DTHB30FL")
-#' adslx <- pharmaverseadam::adsl
+#' adslx <- pharmaverseadamjnj::adsl
 #' # ensure the variables are factor with levels Y/N - and variable label is kept
 #' adslx <- adslx |>
-#'   mutate(across(multi_vars, ~ {
+#'   mutate(across(all_of(multi_vars), ~ {
 #'     lbl <- attr(.x, "label")
 #'     out <- factor(.x, levels = c("Y", "N"))
 #'     attr(out, "label") <- lbl
 #'     out
 #'   }))
 #'
-#' map_multi <- as.data.frame(t(t(labelled::var_label(adslx[, multi_vars]))))
-#' map_multi[["var"]] <- rownames(map_multi)
-#' rownames(map_multi) <- NULL
-#' map_multi[["label"]] <- map_multi[["V1"]]
-#' map_multi[["value"]] <- "Y"
-#' map_multi <- map_multi[, c("var", "value", "label")]
+#' map_multi <- data.frame(
+#'   var = multi_vars,
+#'   value = "Y",
+#'   label = vapply(multi_vars, function(v) {
+#'     lbl <- attr(adslx[[v]], "label")
+#'     if (is.null(lbl)) v else lbl
+#'   }, character(1)),
+#'   stringsAsFactors = FALSE
+#' )
 #'
 #' basic_table(show_colcounts = TRUE) |>
 #'   split_cols_by("ARM") |>
