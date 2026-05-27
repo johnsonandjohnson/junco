@@ -1,6 +1,7 @@
 # junco 0.1.6.9000
 
 ### Fixed
+- Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
 
 ### Changed
