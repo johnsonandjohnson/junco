@@ -348,6 +348,7 @@ or_glm_j <- function(data, conf_level) {
 #' or_clogit_j(data, conf_level = 0.95)
 #'
 #' @export
+#' @importFrom survival Surv
 or_clogit_j <- function(data, conf_level, method = "exact") {
   checkmate::assert_logical(data$rsp)
   (assert_proportion_value)(conf_level)
