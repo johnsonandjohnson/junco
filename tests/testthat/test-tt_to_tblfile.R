@@ -338,9 +338,29 @@ test_that("more top left than col headers works", {
   unlink(tmpfile)
 })
 
+# shared round_type fixture — built once, reused in both round_type tests.
+# tt_to_test_round_type contains expect_true so cannot be called at file scope;
+# we replicate only the build_table part here.
+tbl_iec <- local({
+  require(dplyr, quietly = TRUE)
+  adsl <- ex_adsl |>
+    mutate(new_var = case_when(
+      ARMCD == "ARM A" ~ vals_round_type[1],
+      ARMCD == "ARM B" ~ vals_round_type[2],
+      ARMCD == "ARM C" ~ vals_round_type[3]
+    ))
+  build_table(
+    basic_table(show_colcounts = FALSE, round_type = "iec") |>
+      split_cols_by("ARMCD") |>
+      analyze("new_var", function(x) in_rows(mean = mean(x), .formats = "xx.xx", .labels = "Mean")),
+    adsl
+  )
+})
+
 test_that("round_type in tt_to_tbldf works as expected for tabletree object", {
-  tbl_iec <- tt_to_test_round_type(round_type = "iec")
-  tbldf <- tt_to_tbldf(tbl_iec)
+  # confirm iec and sas produce different output for these values
+  expect_true(any(vals_round_type_fmt(round_type = "iec") != vals_round_type_fmt(round_type = "sas")))
+  tbldf     <- tt_to_tbldf(tbl_iec)
   tbldf_sas <- tt_to_tbldf(tbl_iec, round_type = "sas")
   expect_true(any(tbldf != tbldf_sas))
   expect_true(all(
@@ -360,7 +380,6 @@ test_that("round_type in tt_to_tbldf works as expected for tabletree object", {
 })
 
 test_that("round_type in tt_to_tlgrtf works as expected for tabletree object", {
-  tbl_iec <- tt_to_test_round_type(round_type = "iec")
   expect_silent(suppressMessages(rtf_sas <- rtf_out_wrapper(tbl_iec, "test4sas", round_type = "sas")))
   expect_snapshot_file(compare = compare_file_text, rtf_sas, cran = TRUE)
   expect_silent(suppressMessages(rtf_iec_mod <- rtf_out_wrapper(tbl_iec, "test4iecmod", round_type = "iec_mod")))
