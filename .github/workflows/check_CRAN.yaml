@@ -19,6 +19,7 @@ jobs:
     if: github.event.pull_request.draft == false
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (R ${{ matrix.config.r }})${{ matrix.config.clang && ' clang' || '' }}
+    timeout-minutes: 10
 
     strategy:
       fail-fast: false
@@ -52,6 +53,7 @@ jobs:
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
+        timeout-minutes: 10
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
