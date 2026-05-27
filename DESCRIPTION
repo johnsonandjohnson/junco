@@ -79,4 +79,5 @@ Suggests:
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
-    insightsengineering/formatters@main
+    insightsengineering/formatters@main,
+    insightsengineering/tern@main
