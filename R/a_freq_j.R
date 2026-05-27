@@ -433,7 +433,7 @@ s_rel_risk_val_j <- function(
 #' formats for the statistics.
 #' @param extrablankline (`logical`)\cr
 #' When `TRUE`, an extra blank line will be added after the last value.\cr
-#' Avoid using this in template scripts, use section_div = " " instead (once PR for rtables is available)\cr
+#' @deprecated Use `section_div = " "` instead.
 #' @param extrablanklineafter (`string`)\cr
 #' When the row-label matches the string, an extra blank line will be added after
 #' that value.
@@ -558,8 +558,7 @@ s_rel_risk_val_j <- function(
 #'   summarize_row_groups("TRTEMFL",
 #'     cfun = a_freq_j,
 #'     extra_args = append(extra_args_rr2, list(
-#'       label =
-#'         "Subjects with >=1 AE", extrablankline = TRUE
+#'       label = "Subjects with >=1 AE"
 #'     ))
 #'   ) |>
 #'   split_rows_by("AEBODSYS",
@@ -888,7 +887,10 @@ a_freq_j <- function(
     .format_na_strs = .format_na_strs
   )
 
-  ### add extra blankline to the end of inrows --- as long as section_div is not working as expected
+  if (extrablankline) {
+    lifecycle::deprecate_warn("0.1.0", "a_freq_j(extrablankline)", details = 'Use `section_div = " "` instead.')
+  }
+
   # nolint start
   if (!is.null(inrows) && extrablankline ||
     (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {

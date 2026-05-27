@@ -215,8 +215,7 @@ String to control row labels for the 'n'-statistics.\cr
 Only useful when more than one 'n'-statistic is requested (rare situations only).}
 
 \item{extrablankline}{(\code{logical})\cr
-When \code{TRUE}, an extra blank line will be added after the last value.\cr
-Avoid using this in template scripts, use section_div = " " instead (once PR for rtables is available)\cr}
+When \code{TRUE}, an extra blank line will be added after the last value.\cr}
 
 \item{extrablanklineafter}{(\code{string})\cr
 When the row-label matches the string, an extra blank line will be added after
@@ -405,8 +404,7 @@ lyt2 <- basic_table(
   summarize_row_groups("TRTEMFL",
     cfun = a_freq_j,
     extra_args = append(extra_args_rr2, list(
-      label =
-        "Subjects with >=1 AE", extrablankline = TRUE
+      label = "Subjects with >=1 AE"
     ))
   ) |>
   split_rows_by("AEBODSYS",
