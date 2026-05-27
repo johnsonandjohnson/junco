@@ -397,11 +397,11 @@ junco_default_labels_start <- c(
   # s_diff_means stats:
   diff_means_n1 = "Difference in Means Sample Size (Group 1)",
   diff_means_n2 = "Difference in Means Sample Size (Group 2)",
-  diff_means_est = "Difference in Means Estimate",
+  diff_means_est = "Difference in Means",
   diff_means_se = "Difference in Means SE",
-  diff_means_est_se = "Difference in Means Estimate (SE)",
+  diff_means_est_se = "Difference in Means (SE)",
   diff_means_ci = "Difference in Means CI",
-  diff_means_est_ci = "Difference in Means Estimate (CI)",
+  diff_means_est_ci = "Difference in Means (CI)",
   # end s_diff_means stats.
   #
   hr = "Hazard Ratio",
@@ -455,13 +455,13 @@ junco_default_indents <- c(
   diff_mean_est_ci = 1L,
   #
   # s_diff_means stats:
-  diff_means_n1 = 1L,
-  diff_means_n2 = 1L,
-  diff_means_est = 1L,
-  diff_means_se = 1L,
-  diff_means_est_se = 1L,
-  diff_means_ci = 1L,
-  diff_means_est_ci = 1L,
+  diff_means_n1 = 0L,
+  diff_means_n2 = 0L,
+  diff_means_est = 0L,
+  diff_means_se = 0L,
+  diff_means_est_se = 0L,
+  diff_means_ci = 0L,
+  diff_means_est_ci = 0L,
   # end s_diff_means stats.
   #
   hr_ci = 1L,
