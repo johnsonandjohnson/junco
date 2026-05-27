@@ -17,6 +17,10 @@
 #' observations) would otherwise stop execution.
 #'
 #' @details
+#' Inputs `x` and `y` must be numeric vectors containing only finite,
+#' non-missing values. In particular, `NA`, `NaN`, `Inf`, and `-Inf` values are
+#' not allowed and will trigger an error before [stats::t.test()] is evaluated.
+#'
 #' When [stats::t.test()] succeeds, the resulting `"htest"` object is returned
 #' unchanged except that `data.name` is reconstructed from the original
 #' expressions supplied to `x` and `y`.
@@ -32,6 +36,10 @@
 #' }
 #'
 #' @inheritParams stats::t.test
+#' @param x (`numeric`)\cr A numeric vector containing only finite, non-missing
+#'   values.
+#' @param y (`numeric`)\cr  An optional numeric vector containing only finite,
+#'   non-missing values.
 #'
 #' @return
 #' An object of class `"htest"`.
@@ -68,17 +76,22 @@ safe_t_test <- function(
     var.equal = FALSE,
     conf.level = 0.95,
     ...) {
+  x_expr <- substitute(x)
+  y_expr <- substitute(y)
+  alternative <- match.arg(alternative)
+
   checkmate::assert_numeric(x, any.missing = FALSE, finite = TRUE)
-  checkmate::assert_numeric(y, finite = TRUE, any.missing = FALSE, null.ok = TRUE)
+  if (paired) {
+    checkmate::assert_numeric(y, finite = TRUE, any.missing = FALSE, len = length(x))
+  } else {
+    checkmate::assert_numeric(y, finite = TRUE, any.missing = FALSE, null.ok = TRUE)
+  }
   checkmate::assert_choice(alternative, choices = c("two.sided", "less", "greater"))
   checkmate::assert_number(mu, finite = TRUE)
   checkmate::assert_flag(paired)
   checkmate::assert_flag(var.equal)
-  tern::assert_proportion_value(conf.level)
+  checkmate::assert_number(conf.level, lower = 0, upper = 1, finite = TRUE)
 
-  x_expr <- substitute(x)
-  y_expr <- substitute(y)
-  alternative <- match.arg(alternative)
   tryCatch(
     {
       res <- stats::t.test(
@@ -107,12 +120,12 @@ safe_t_test <- function(
       }
 
       if (is.null(y)) {
-        estimate <- c(mean(x, na.rm = TRUE))
+        estimate <- mean(x)
         dname <- deparse1(x_expr)
         method <- ifelse(paired, "Paired t-test", "One Sample t-test")
         names(estimate) <- ifelse(paired, "mean difference", "mean of x")
       } else {
-        estimate <- c(mean(x, na.rm = TRUE), mean(y, na.rm = TRUE))
+        estimate <- c(mean(x), mean(y))
         dname <- paste(deparse1(x_expr), "and", deparse1(y_expr))
         method <- paste(if (!var.equal) "Welch", "Two Sample t-test")
         names(estimate) <- c("mean of x", "mean of y")
