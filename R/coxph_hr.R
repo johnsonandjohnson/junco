@@ -3,6 +3,7 @@
 #' @description coxph_hr `r lifecycle::badge("deprecated")` Use
 #'   `tern:::a_coxph_pairwise()` instead, and use `tern::coxph_pairwise()` as
 #'   the layout-level wrapper.
+#' @inheritParams odds_ratio
 #' @export
 a_coxph_hr <- function(
     df,

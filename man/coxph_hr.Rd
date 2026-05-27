@@ -17,6 +17,25 @@ a_coxph_hr(
   .indent_mods = NULL
 )
 }
+\arguments{
+\item{df}{(\code{data.frame})\cr input data frame.}
+
+\item{.var}{(\code{string})\cr name of the response variable.}
+
+\item{ref_path}{(\code{character})\cr path to the reference group.}
+
+\item{.spl_context}{(\code{environment})\cr split context environment.}
+
+\item{...}{Additional arguments passed to the statistics function.}
+
+\item{.stats}{(\code{character})\cr statistics to calculate.}
+
+\item{.formats}{(\code{list})\cr formats for the statistics.}
+
+\item{.labels}{(\code{list})\cr labels for the statistics.}
+
+\item{.indent_mods}{(\code{list})\cr indentation modifications for the statistics.}
+}
 \description{
 coxph_hr \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use
 \code{tern:::a_coxph_pairwise()} instead, and use \code{tern::coxph_pairwise()} as
