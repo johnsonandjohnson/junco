@@ -168,7 +168,7 @@ lyt <- basic_table() |>
     "AVAL",
     cfun = c_summary_subset_label,
     extra_args = list(
-      subset_expr = expression(ABLFL == "Y"),
+      filter_expr = expression(ABLFL == "Y"),
       .stats = c("n", "mean_sd"),
       .indent_mods = c(n = 1L, mean_sd = 1L),
       label = "BASELINE"
