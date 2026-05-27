@@ -41,7 +41,7 @@ reference:
     - a_summarize_aval_chg_diff_j
     - a_summarize_ex_j
     - a_summary_diff_mvars
-    - a_summary_j
+    - a_summary_subset
     - a_two_tier
     - c_summary_subset_label
     - rbmi_analyse

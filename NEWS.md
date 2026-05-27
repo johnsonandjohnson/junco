@@ -33,6 +33,8 @@
 
 ### Changed
 
+- Updated `c_summary_subset_label()`: removed `.spl_context` argument and renamed `subset_expr` to `filter_expr`.
+- Renamed `a_summary_j()` to `a_summary_subset()` and updated its purpose, implementation, and arguments.
 - Added new stats/labels/formats/indents to `junco_utils_default_stats_formats_labels.r` file.
 - Renamed `s_diff_mean_ci()` to `s_diff_means()`, and added new statistics to `s_diff_means()`.
 - Moved `safe_t_test()` from `a_summarize_aval_chg_diff.R` to a new file `safe_t_test.R`,
