@@ -5,6 +5,7 @@
 
 ### Changed
 - Removed formatters exports #317
+- Depreciate `a_coxph_hr` for `tern:::a_coxph_pairwise()`
 
 ### Added
 
