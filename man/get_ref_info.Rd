@@ -74,7 +74,7 @@ result_afun <- function(x, ref_path, .spl_context, .var) {
 ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
 
 lyt <- basic_table() |>
-  split_cols_by("colspan_trt", split_fun = trim_levels_to_map(colspan_trt_map) |>
+  split_cols_by("colspan_trt", split_fun = trim_levels_to_map(colspan_trt_map)) |>
   split_cols_by("ARM") |>
   add_overall_col("Total") |>
   analyze("AGE", afun = result_afun, extra_args = list(ref_path = ref_path))
