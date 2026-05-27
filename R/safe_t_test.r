@@ -68,6 +68,14 @@ safe_t_test <- function(
     var.equal = FALSE,
     conf.level = 0.95,
     ...) {
+  checkmate::assert_numeric(x, any.missing = FALSE, finite = TRUE)
+  checkmate::assert_numeric(y, finite = TRUE, any.missing = FALSE, null.ok = TRUE)
+  checkmate::assert_choice(alternative, choices = c("two.sided", "less", "greater"))
+  checkmate::assert_number(mu, finite = TRUE)
+  checkmate::assert_flag(paired)
+  checkmate::assert_flag(var.equal)
+  tern::assert_proportion_value(conf.level)
+
   x_expr <- substitute(x)
   y_expr <- substitute(y)
   alternative <- match.arg(alternative)
