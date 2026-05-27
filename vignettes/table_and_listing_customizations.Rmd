@@ -29,21 +29,18 @@ library(junco)
 library(rlistings)
 library(tibble)
 
+NOT_CRAN <- identical(Sys.getenv("NOT_CRAN"), "true")
 ```
 
 
 ```{r setup-title, include=FALSE}
-#Need to set up a dummy tittle and main footer
 titles <- list(title = " ",
                      subtitles = NULL,
                      main_footer = "Dummy Note: On-treatment is defined as ~{optional treatment-emergent}")
-#Need tempdir
 out_dir <- file.path("..", "output")
 if(!dir.exists(out_dir)) {
   dir.create(out_dir)
 }
-
-NOT_CRAN <- !testthat:::on_cran()
 ```
 
 ## Introduction
@@ -182,7 +179,7 @@ export_TLG_as_docx(result,
 ```
 
 ### Visual Output (HTML Representation)
-```{r orientation_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r orientation_rtf_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "exampleorientation", orientation = "landscape")
 ```
 
@@ -303,7 +300,7 @@ export_TLG_as_docx(result,
 ```
 
 ### Visual Output (HTML Representation)
-```{r fontsize_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r fontsize_rtf_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplefontsize", fontspec = formatters::font_spec("Times", 8, 1.2))
 ```
 
@@ -512,7 +509,7 @@ tt_to_tlgrtf(result,
 ```
 
 ### Visual Output (HTML Representation)
-```{r spanning_header_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r spanning_header_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplespanningheader1", orientation = "landscape")
 ```
 
@@ -659,7 +656,7 @@ tt_to_tlgrtf(result,
 ```
 
 ### Visual Output (HTML Representation)
-```{r combined_column_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r combined_column_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplecombinedcolumn1", orientation = "landscape")
 ```
 
@@ -814,7 +811,7 @@ tt_to_tlgrtf(result,
 ```
 
 ### Visual Output (HTML Representation)
-```{r improved_combined_column_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r improved_combined_column_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplecombinedcolumn2", orientation = "landscape")
 ```
 
@@ -949,7 +946,7 @@ export_TLG_as_docx(result,
 ```
 
 ### Visual Output (HTML Representation)
-```{r newline_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r newline_table_rtf_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "newlinetable", orientation = "landscape",
                   string_map = string_map_newline)
 ```
@@ -1047,7 +1044,7 @@ export_TLG_as_docx(result,
 ```
 
 ### Visual Output (HTML Representation)
-```{r newline_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r newline_listing_rtf_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplelistingnewline2", orientation = "landscape",
                   string_map = string_map_newline)
 ```
@@ -1109,7 +1106,7 @@ tt_to_tlgrtf(result,
 ```
 
 ### Visual Output (HTML Representation)
-```{r border_matrix_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r border_matrix_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "bordertable", orientation = "landscape")
 ```
 
@@ -1160,7 +1157,7 @@ export_TLG_as_docx(result,
 > **Note:** In this HTML output the spanning line is a single line, instead of 2 lines. However, if you output the .docx or .rtf file using the same TableTree as input, it will be displayed correctly.
 
 
-```{r custom_border_matrix_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r custom_border_matrix_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "custombordertable", orientation = "landscape", border_mat = header_border)
 ```
 
@@ -1335,7 +1332,7 @@ export_TLG_as_docx(result,
 
 
 ### Visual Output (HTML Representation)
-```{r superscript_table_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r superscript_table_rtf_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "superscripttable", orientation = "landscape",  markup_df_docx = docx_markup_df)
 ```
 
@@ -1449,7 +1446,7 @@ export_TLG_as_docx(result,
                 markup_df_docx = docx_markup_df)
 ```
 ### Visual Output (HTML Representation)
-```{r superscript_listing_rtf_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r superscript_listing_rtf_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result, "examplelistingsuperscript2", orientation = "landscape",  markup_df_docx = docx_markup_df)
 ```
 
@@ -1460,7 +1457,7 @@ In some cases, there are tables that are required that contain many columns. As 
 
 Data Preparation for example
 
-```{r multiple_docs_data_prep}
+```{r multiple_docs_data_prep, eval=NOT_CRAN}
 library(tern)
 library(dplyr)
 library(rtables)
@@ -1631,7 +1628,7 @@ if (length(adae$TRTEMFL) != 0) {
 
 ### Table .rtf File
 By default, the `junco::tt_to_tlgrtf` function determines the appropriate place to break the columns so that the created files contain an appropriate number of columns that contain readable data. The default logic might not be ideal, as sometimes columns that make sense to be grouped together to appear within the same file, are not. This can be seen in the example call below, where the race information for the "Placebo" treatment group is split across files.
-```{r multiple_docs_table1}
+```{r multiple_docs_table1, eval=NOT_CRAN}
 ################################################################################
 # Convert to tbl file and output table
 ################################################################################
@@ -1645,7 +1642,7 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
 ```
 
 ### Visual Output (HTML Representation)
-```{r multiple_docs_table1_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r multiple_docs_table1_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs1", orientation = "landscape", paginate= TRUE)
 x[[1]]
 knitr::asis_output("<br><br>")
@@ -1654,7 +1651,7 @@ knitr::asis_output("<br><br>")
 ```
 
 When calling the `junco::tt_to_tlgrtf` function, the `nosplitin` argument can be included, and the user can specify a variable in which the associated columns should be grouped together in the same file. Now, all the sub columns for the "Placebo" treatment group (e.g. each unique TRT01A value), are kept together within the same file.
-```{r multiple_docs_table2}
+```{r multiple_docs_table2, eval=NOT_CRAN}
 ################################################################################
 # Convert to tbl file and output table
 ################################################################################
@@ -1669,7 +1666,7 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
 ```
 
 ### Visual Output (HTML Representation)
-```{r multiple_docs_table2_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r multiple_docs_table2_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs2", orientation = "landscape",
                   nosplitin = list(cols = c(trtvar)), paginate= TRUE)
 x[[1]]
@@ -1693,7 +1690,7 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
 ```
 
 ### Visual Output (HTML Representation)
-```{r multiple_docs_table3_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r multiple_docs_table3_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs3", orientation = "landscape",
                   nosplitin = list(cols = c(trtvar)), combined_rtf = TRUE, paginate = TRUE)
 x[[1]]
@@ -1805,14 +1802,14 @@ tt_to_tlgrtf(result,
 
 ### Visual Output (HTML Representation)
 > **Note:** HTML output notoriously does not handle well page break, so here it is represented in two parts to show the point.
-```{r page_break_table_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r page_break_table_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 male <- result[1:5, keep_titles = TRUE, keep_footers = FALSE]
 tt_to_flextable_j(male, "examplepagebreak")
 knitr::asis_output("<br><br>")
 ```
 
 
-```{r page_break_table_display_part2, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r page_break_table_display_part2, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 
 female <- result[6:10, keep_titles = TRUE, keep_footers = TRUE]
 tt_to_flextable_j(female, "examplepagebreak")
@@ -1877,7 +1874,7 @@ export_TLG_as_docx(result1,
 ```
 
 ### Visual Output (HTML Representation)
-```{r split_listing_part1_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r split_listing_part1_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result1, "examplelistingmultiplefilesPART1OF2",
   orientation = "landscape")
 ```
@@ -1910,7 +1907,7 @@ export_TLG_as_docx(result2,
 ```
 
 ### Visual Output (HTML Representation)
-```{r split_listing_part2_display, echo=FALSE, fig.align="center", out.width="100%", out.height="200px"}
+```{r split_listing_part2_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 tt_to_flextable_j(result2, "examplelistingmultiplefilesPART2OF2",
   orientation = "landscape")
 ```
