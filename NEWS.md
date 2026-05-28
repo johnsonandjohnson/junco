@@ -8,6 +8,7 @@
 - Removed formatters exports #317
 
 ### Added
+- Added more tests for coverage
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 
