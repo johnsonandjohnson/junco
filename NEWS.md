@@ -1,9 +1,11 @@
 # junco 0.1.6.9000
 
 ### Fixed
+- Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
 
 ### Changed
+- Removed `filter_df_prior_afun()`, `a_summary_diff_mvars()`, `a_summary_diff_mvars_label()`.
 - Removed formatters exports #317
 - Reduce sampling of `rbmi` test to make tests shorter (#323)
 - Optimize shared tables in `test-tt_to_tblfile` (#323)
@@ -33,6 +35,8 @@
 
 ### Changed
 
+- Updated `c_summary_subset_label()`: removed `.spl_context` argument and renamed `subset_expr` to `filter_expr`.
+- Renamed `a_summary_j()` to `a_summary_subset()` and updated its purpose, implementation, and arguments.
 - Added new stats/labels/formats/indents to `junco_utils_default_stats_formats_labels.r` file.
 - Renamed `s_diff_mean_ci()` to `s_diff_means()`, and added new statistics to `s_diff_means()`.
 - Moved `safe_t_test()` from `a_summarize_aval_chg_diff.R` to a new file `safe_t_test.R`,

@@ -165,6 +165,7 @@ str
 struct
 subcol
 subfacet
+summarization
 summarizations
 tbldf
 tibble
