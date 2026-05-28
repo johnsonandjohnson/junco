@@ -6,6 +6,7 @@
 
 ### Changed
 - Removed formatters exports #317
+- Changed forked `h_ancova` for the `tern` one
 
 ### Added
 
