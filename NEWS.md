@@ -9,6 +9,7 @@
 - Removed formatters exports #317
 - Reduce sampling of `rbmi` test to make tests shorter (#323)
 - Optimize shared tables in `test-tt_to_tblfile` (#323)
+- Changed forked `h_ancova` for the `tern` one
 
 ### Added
 
