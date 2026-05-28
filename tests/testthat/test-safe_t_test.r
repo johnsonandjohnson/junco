@@ -1,3 +1,14 @@
+test_that("safe_t_test() preserves the argument order of t.test()", {
+  x <- c(41, 40, 13, 71, 3, 96)
+  y <- c(1, 50, 43, 76, 94, 77)
+
+  result <- expect_silent(
+    safe_t_test(x, y, "greater", 4, TRUE, TRUE, 0.5)
+  )
+  expected <- t.test(x, y, "greater", 4, TRUE, TRUE, 0.5)
+  expect_identical(result, expected)
+})
+
 test_that("safe_t_test() is identical to t.test() for regular data (x only)", {
   # Intentionally named xx (not x) because we want to check whether
   # safe_t_test() preserves the variable name
@@ -54,15 +65,9 @@ test_that("safe_t_test() is identical to t.test() for regular data", {
   expect_identical(result_cl, expected_cl)
 })
 
-test_that("safe_t_test() preserves the argument order of t.test()", {
-  x <- c(41, 40, 13, 71, 3, 96)
-  y <- c(1, 50, 43, 76, 94, 77)
-
-  result <- expect_silent(
-    safe_t_test(x, y, "greater", 4, TRUE, TRUE, 0.5)
-  )
-  expected <- t.test(x, y, "greater", 4, TRUE, TRUE, 0.5)
-  expect_identical(result, expected)
+test_that("safe_t_test() does not fail for nearly constant data", {
+  x <- c(1.709999999999999964473, rep(1.710000000000000186517, 4))
+  expect_silent(safe_t_test(x, x))
 })
 
 test_that("safe_t_test() returns NaN for constant data (paired)", {
@@ -83,17 +88,13 @@ test_that("safe_t_test() returns NaN for constant data (paired, var.equal)", {
   expect_identical(result, expected)
 })
 
-test_that("safe_t_test() warns for constant paired samples of different lengths", {
-  x <- c(2, NA, NA, 2, 2, NA, 2)
-  y <- c(NA, 2, 2, 2, 2, NA)
-  expect_warning(
-    safe_t_test(x, y, paired = TRUE, conf.level = 0.5)
+test_that("safe_t_test() fails for constant paired samples of different lengths", {
+  x <- rep(2, 6)
+  y <- c(x, 2)
+  expect_error(
+    safe_t_test(x, y, paired = TRUE, conf.level = 0.5),
+    "length"
   )
-})
-
-test_that("safe_t_test() does not fail for nearly constant data", {
-  x <- c(1.709999999999999964473, rep(1.710000000000000186517, 4))
-  expect_silent(safe_t_test(x, x))
 })
 
 test_that("safe_t_test() returns NA for constant data (x only)", {
@@ -141,66 +142,6 @@ test_that("safe_t_test() returns NA for constant data", {
   attr(expected$conf.int, "conf.level") <- 0.5
   class(expected) <- "htest"
 
-  expect_identical(result, expected)
-})
-
-test_that("safe_t_test() returns NA for constant data (x only, many NAs)", {
-  x <- c(2, NA, NA, 2, 2, NA, 2)
-  result <- expect_silent(
-    safe_t_test(x, conf.level = 0.5)
-  )
-
-  expected <- list(
-    statistic = setNames(NA_real_, "t"),
-    parameter = setNames(NA_real_, "df"),
-    p.value = NA_real_,
-    conf.int = c(NA_real_, NA_real_),
-    estimate = setNames(2, "mean of x"),
-    null.value = setNames(0, "mean"),
-    stderr = NA_real_,
-    alternative = "two.sided",
-    method = "One Sample t-test (failed: data are essentially constant)",
-    data.name = "x"
-  )
-  attr(expected$conf.int, "conf.level") <- 0.5
-  class(expected) <- "htest"
-
-  expect_identical(result, expected)
-})
-
-test_that("safe_t_test() returns NA for constant data (many NAs)", {
-  x <- c(2, NA, NA, 2, 2, NA, 2)
-  y <- c(NA, 2, 2, 2, 2, NA)
-  result <- expect_silent(
-    safe_t_test(x, x, conf.level = 0.5)
-  )
-
-  expected <- list(
-    statistic = setNames(NA_real_, "t"),
-    parameter = setNames(NA_real_, "df"),
-    p.value = NA_real_,
-    conf.int = c(NA_real_, NA_real_),
-    estimate = setNames(c(2, 2), c("mean of x", "mean of y")),
-    null.value = setNames(0, "difference in means"),
-    stderr = NA_real_,
-    alternative = "two.sided",
-    method = "Welch Two Sample t-test (failed: data are essentially constant)",
-    data.name = "x and x"
-  )
-  attr(expected$conf.int, "conf.level") <- 0.5
-  class(expected) <- "htest"
-
-  expect_identical(result, expected)
-})
-
-test_that("safe_t_test() returns NaN for constant data (many NAs, paired)", {
-  x <- c(2, NA, NA, 2, 2, 2)
-  y <- c(NA, 2, 2, 2, 2, NA)
-  result <- expect_silent(
-    safe_t_test(x, y, paired = TRUE, conf.level = 0.5)
-  )
-
-  expected <- t.test(x, y, paired = TRUE, conf.level = 0.5)
   expect_identical(result, expected)
 })
 
@@ -303,27 +244,54 @@ test_that("safe_t_test() returns NA for not enough observations", {
   expect_identical(result, expected)
 })
 
-test_that("safe_t_test() returns NA for not enough observations (NA)", {
+test_that("safe_t_test() fails for NA", {
+  x <- c(1, 3, 5, 20, 31, NA, 23)
+  y <- c(11, 16, 19, 28, 7, 20, 21, 1)
+
+  expect_error(safe_t_test(x), "missing")
+  expect_error(safe_t_test(x, y), "missing")
+  expect_error(safe_t_test(x, y, paired = TRUE), "missing")
+})
+
+test_that("safe_t_test() fails for NA (1 non-NA obs.)", {
   x <- c(1, NA, NA)
   y <- c(2, NA, NA)
-  result <- expect_silent(
-    safe_t_test(x, y, var.equal = TRUE, conf.level = 0.5)
-  )
 
-  expected <- list(
-    statistic = setNames(NA_real_, "t"),
-    parameter = setNames(NA_real_, "df"),
-    p.value = NA_real_,
-    conf.int = c(NA_real_, NA_real_),
-    estimate = setNames(c(1, 2), c("mean of x", "mean of y")),
-    null.value = setNames(0, "difference in means"),
-    stderr = NA_real_,
-    alternative = "two.sided",
-    method = " Two Sample t-test (failed: not enough observations)",
-    data.name = "x and y"
-  )
-  attr(expected$conf.int, "conf.level") <- 0.5
-  class(expected) <- "htest"
+  expect_error(safe_t_test(x), "missing")
+  expect_error(safe_t_test(x, y), "missing")
+  expect_error(safe_t_test(x, y, paired = TRUE), "missing")
+})
 
-  expect_identical(result, expected)
+test_that("safe_t_test() fails for NA (constant data)", {
+  x <- c(2, NA, NA, 2, 2, NA, 2)
+  y <- c(NA, 2, 2, 2, 2, NA)
+
+  expect_error(safe_t_test(x), "missing")
+  expect_error(safe_t_test(x, y), "missing")
+  expect_error(safe_t_test(x, y, paired = TRUE), "missing")
+})
+
+test_that("safe_t_test() fails for NaN", {
+  x <- c(1, 3, 5, NaN, 31, 34, 23)
+  y <- c(11, 16, 32, 28, 7, 20, 21, 1)
+
+  expect_error(safe_t_test(x), "missing")
+  expect_error(safe_t_test(x, y), "missing")
+  expect_error(safe_t_test(x, y, paired = TRUE), "missing")
+})
+
+test_that("safe_t_test() fails for Inf", {
+  x <- c(1, 3, 5, 20, 31, Inf, 23)
+  y <- c(11, 16, 19, 28, 7, 20, 21, 1)
+
+  expect_error(safe_t_test(x), "finite")
+  expect_error(safe_t_test(x, y), "finite")
+  expect_error(safe_t_test(x, y, paired = TRUE), "finite")
+})
+
+test_that("safe_t_test() fails for paired data of different lengths", {
+  x <- c(1, 3, 5, 20, 31, 23)
+  y <- c(11, 16, 19, 28, 7, 20, 21, 1)
+
+  expect_error(safe_t_test(x, y, paired = TRUE), "length")
 })
