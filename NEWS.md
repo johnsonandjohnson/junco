@@ -7,6 +7,7 @@
 ### Changed
 - Removed `filter_df_prior_afun()`, `a_summary_diff_mvars()`, `a_summary_diff_mvars_label()`.
 - Removed formatters exports #317
+- Changed forked `h_ancova` for the `tern` one
 
 ### Added
 

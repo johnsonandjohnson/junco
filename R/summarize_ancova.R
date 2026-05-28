@@ -1,47 +1,3 @@
-#' @note This has been forked from [tern::h_ancova()], because the new
-#'   `weights_emmeans` option was added here.
-h_ancova <- function(
-    .var,
-    .df_row,
-    variables,
-    weights_emmeans,
-    interaction_item = NULL) {
-  checkmate::assert_string(.var)
-  checkmate::assert_list(variables)
-  checkmate::assert_subset(names(variables), c("arm", "covariates"))
-
-  assert_df_with_variables(
-    .df_row,
-    list(rsp = .var)
-  )
-  arm <- variables$arm
-  covariates <- variables$covariates
-  if (!is.null(covariates) && length(covariates) > 0) {
-    var_list <- get_covariates(covariates)
-    assert_df_with_variables(
-      .df_row,
-      var_list
-    )
-  }
-  covariates_part <- paste(covariates, collapse = " + ")
-  formula_str <- paste0(.var, " ~ ", arm)
-  if (covariates_part != "") {
-    formula_str <- paste0(formula_str, "+", covariates_part)
-  }
-  formula <- stats::as.formula(formula_str)
-  specs <- arm
-  if (!is.null(interaction_item)) {
-    specs <- c(specs, interaction_item)
-  }
-  lm_fit <- stats::lm(formula = formula, data = .df_row)
-  emmeans::emmeans(
-    lm_fit,
-    specs = specs,
-    data = .df_row,
-    weights = weights_emmeans
-  )
-}
-
 #' @noRd
 #' @title internal helpers for ancova
 #' @description Internal helper that derives adjusted means and contrasts for a single
@@ -464,7 +420,7 @@ s_ancova_j <- function(
       )
     }
 
-    emmeans_fit <- h_ancova(
+    emmeans_fit <- tern::h_ancova(
       .var = .var,
       variables = variables,
       .df_row = .df_row,

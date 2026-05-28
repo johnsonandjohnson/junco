@@ -24,35 +24,6 @@ get_numbers <- function(tbl, col, rows = c(3)) {
 }
 
 
-test_that("h_ancova works as expected", {
-  set.seed(123)
-  df_row <- iris |>
-    mutate(
-      Color = factor(sample(
-        c("red", "blue"),
-        size = nrow(iris),
-        prob = c(0.8, 0.2),
-        replace = TRUE
-      ))
-    )
-  df <- df_row |>
-    filter(Species == "virginica")
-  variables <- list(
-    arm = "Species",
-    covariates = c("Sepal.Length * Sepal.Width", "Color")
-  )
-  ref_group <- df_row |>
-    filter(Species == "setosa")
-
-  result <- expect_silent(h_ancova(
-    .var = "Petal.Length",
-    .df_row = df_row,
-    variables = variables,
-    weights_emmeans = "equal"
-  ))
-  checkmate::expect_class(result, "emmGrid")
-})
-
 test_that("s_ancova_j works as expected", {
   set.seed(123)
   df_row <- iris |>
