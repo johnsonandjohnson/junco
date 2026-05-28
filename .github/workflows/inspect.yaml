@@ -18,6 +18,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+  coverage:
+     name: Coverage 📔
+     uses: insightsengineering/r.pkg.template/.github/workflows/test-coverage.yaml@main
+     secrets:
+       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
+     with:
+       deps-installation-method: setup-r-dependencies
+       additional-env-vars: |
+         NOT_CRAN=true
+
   audit:
     name: Audit Dependencies 🕵️‍♂️
     needs: build
