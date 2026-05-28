@@ -306,3 +306,47 @@ test_that("calc_N returns NULL for non-AVAL variables", {
   result <- calc_N(datvec = c(1, 2, 3), statnm = "N", varnm = "CHG")
   expect_null(result)
 })
+
+# Helper to build a .spl_context with a "value" column (used by postfun_eq5d)
+mk_val_context <- function(val) {
+  data.frame(value = I(list(val)), stringsAsFactors = FALSE)
+}
+
+test_that("postfun_eq5d returns correct split result for AVAL", {
+  fulldf <- data.frame(x = 1:3)
+  ctx <- mk_val_context("AVAL")
+  res <- postfun_eq5d(NULL, NULL, fulldf, ctx)
+  expect_equal(vapply(res$values, methods::slot, character(1), "value"),
+               c(N = "N", Mean = "Mean", SD = "SD", Med = "Med", Min = "Min", Max = "Max"))
+  expect_equal(res$labels, c(N = "N", mean = "Mean", SD = "SD", Med = "Med", Min = "Min", Max = "Max"))
+  expect_length(res$datasplit, 6)
+  expect_true(all(vapply(res$datasplit, identical, logical(1), fulldf)))
+})
+
+test_that("postfun_eq5d returns correct split result for BASE", {
+  fulldf <- data.frame(x = 1:3)
+  ctx <- mk_val_context("BASE")
+  res <- postfun_eq5d(NULL, NULL, fulldf, ctx)
+  expect_equal(vapply(res$values, methods::slot, character(1), "value"), c(mean_sd = "mean_sd"))
+  expect_equal(res$labels, c(mean_sd = "Base Mean (SD)"))
+  expect_length(res$datasplit, 1)
+  expect_identical(res$datasplit$mean_sd, fulldf)
+})
+
+test_that("postfun_eq5d returns correct split result for CHG", {
+  fulldf <- data.frame(x = 1:3)
+  ctx <- mk_val_context("CHG")
+  res <- postfun_eq5d(NULL, NULL, fulldf, ctx)
+  expect_equal(
+    vapply(res$values, methods::slot, character(1), "value"),
+    c(N = "N", Mean = "Mean", SE = "SE", SD = "SD", Med = "Med", Min = "Min", Max = "Max")
+  )
+  expect_length(res$datasplit, 7)
+  expect_true(all(vapply(res$datasplit, identical, logical(1), fulldf)))
+})
+
+test_that("postfun_eq5d errors on unknown colset", {
+  fulldf <- data.frame(x = 1:3)
+  ctx <- mk_val_context("UNKNOWN")
+  expect_error(postfun_eq5d(NULL, NULL, fulldf, ctx), "something bad happened")
+})

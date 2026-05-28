@@ -73,3 +73,23 @@ test_that("insert_blank_line optionally uses custom table names", {
     checkmate::expect_subset("Gap2", tbl_row_paths[[row]])
   }
 })
+
+test_that("prepend_label_cell works with list of CellValues input", {
+  cv1 <- rtables::rcell(NULL, label = "a")
+  cv2 <- rtables::rcell(NULL, label = "b")
+  res <- prepend_label_cell(list(cv1, cv2), label = "Section")
+  expect_type(res, "list")
+  expect_length(res, 3)
+  expect_equal(attr(res[[1]], "label"), "Section")
+  expect_identical(res[[2]], cv1)
+  expect_identical(res[[3]], cv2)
+})
+
+test_that("prepend_label_cell works with RowsVerticalSection input", {
+  rvs <- rtables::in_rows(Mean = rtables::rcell(5), Range = rtables::rcell(c(1, 8)))
+  res <- prepend_label_cell(rvs, label = "Descriptive Statistics", label_indent_mod = 1L)
+  expect_s3_class(res, "RowsVerticalSection")
+  expect_equal(length(res), 3)
+  expect_equal(attr(res, "row_labels")[1], "Descriptive Statistics")
+  expect_equal(attr(res, "row_labels")[2:3], c("Mean", "Range"))
+})

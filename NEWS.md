@@ -9,7 +9,7 @@
 - Removed formatters exports #317
 
 ### Added
-- Added more tests for coverage
+- Added tests for coverage [#325](https://github.com/johnsonandjohnson/junco/issues/325)
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 
