@@ -21,8 +21,7 @@ a_freq_resp_var_j(
     "strat_newcombecc"),
   weights_method = formals(s_proportion_diff)$weights_method,
   .formats = NULL,
-  na_str = rep("NA", 3),
-  ...
+  na_str = rep("NA", 3)
 )
 }
 \arguments{
@@ -57,8 +56,6 @@ a_freq_resp_var_j(
 \item{.formats}{(\code{character} or NULL)\cr formats to apply to the statistics. If NULL, default formats will be used.}
 
 \item{na_str}{(\code{character})\cr string to use for NA values. Defaults to \code{rep("NA", 3)}.}
-
-\item{...}{Additional arguments passed to other functions.}
 }
 \value{
 Formatted analysis function which is used as \code{afun} in \code{analyze_vars()}
