@@ -46,6 +46,28 @@ rtf_out_wrapper <- function(
   }
 }
 
+# shared table: ARM x SEX x RACE: wide enough to trigger column pagination,
+# reused across the wide-table, combined_rtf, and file=NULL tests
+tbl_wide <- local({
+  lyt <- basic_table() |>
+    split_cols_by("ARM") |>
+    split_cols_by("SEX") |>
+    split_rows_by("RACE") |>
+    summarize_row_groups() |>
+    analyze("AGE")
+  build_table(lyt, ex_adsl)
+})
+
+# shared simple table reused across converts-without-error and validate tests
+tbl_simple <- build_table(
+  basic_table() |> split_cols_by("ARM") |> analyze("AGE"),
+  ex_adsl
+)
+badtbl_simple <- build_table(
+  basic_table() |> split_rows_by("ARM") |> summarize_row_groups(),
+  ex_adsl
+)
+
 # all elements result in different rounding sas vs iec with format xx.xx
 # third element only results in different rounding iec_mod vs iec with format xx.xx
 vals_round_type <- c(1.865, 2.985, -0.001)
@@ -137,17 +159,9 @@ listingdf_to_test_round_type <- function(vals = vals_round_type, round_type = "i
 }
 
 test_that("tt_to_tlgrtf works with input Table and fontspec size 8", {
-  lyt_wide <- basic_table() |>
-    split_cols_by("ARM") |>
-    split_cols_by("STRATA1") |>
-    split_cols_by("SEX") |>
-    split_rows_by("RACE") |>
-    summarize_row_groups() |>
-    analyze("AGE")
-
-  tbl_wide <- build_table(lyt_wide, ex_adsl)
+  # tbl_simple reused — fontspec is a rendering option, not layout-dependent
   fontspec <- font_spec("Times", 8L, 1.2)
-  expect_no_error(rtf_out_wrapper(tbl_wide, "testfontsize8", fontspec = fontspec))
+  expect_no_error(rtf_out_wrapper(tbl_simple, "testfontsize8", fontspec = fontspec))
 })
 
 test_that("tt_to_tlgrtf works with an empty listing", {
@@ -169,15 +183,6 @@ test_that("get_ncol works as expected", {
   tt <- as_listing(ex_adsl[, 1:10])
   expect_equal(get_ncol(tt), ncol(tt))
 
-  lyt_wide <- basic_table() |>
-    split_cols_by("ARM") |>
-    split_cols_by("STRATA1") |>
-    split_cols_by("SEX") |>
-    split_rows_by("RACE") |>
-    summarize_row_groups() |>
-    analyze("AGE")
-
-  tbl_wide <- build_table(lyt_wide, ex_adsl)
   expect_equal(get_ncol(tbl_wide), ncol(tbl_wide))
 
   mpf <- rlistings::matrix_form(tbl_wide)
@@ -191,16 +196,6 @@ test_that("get_ncol works as expected", {
 })
 
 test_that("tt_to_tlgrtf works with wide table", {
-  ## wide enough for pagination:
-
-  lyt_wide <- basic_table() |>
-    split_cols_by("ARM") |>
-    split_cols_by("SEX") |>
-    split_rows_by("RACE") |>
-    summarize_row_groups() |>
-    analyze("AGE")
-
-  tbl_wide <- build_table(lyt_wide, ex_adsl)
   expect_silent(suppressMessages(res_wide <- rtf_out_wrapper(tbl_wide, "test2", part = NA, export_csv = TRUE)))
   for (fl in res_wide) {
     expect_snapshot_file(compare = compare_file_text, fl, cran = TRUE)
@@ -209,16 +204,6 @@ test_that("tt_to_tlgrtf works with wide table", {
 })
 
 test_that("tt_to_tlgrtf works with argument combined_rtf = TRUE", {
-  ## wide enough for pagination:
-
-  lyt_wide <- basic_table() |>
-    split_cols_by("ARM") |>
-    split_cols_by("SEX") |>
-    split_rows_by("RACE") |>
-    summarize_row_groups() |>
-    analyze("AGE")
-
-  tbl_wide <- build_table(lyt_wide, ex_adsl)
   expect_silent(suppressMessages(cmb_fl <- rtf_out_wrapper(tbl_wide, "test3", combined = TRUE)))
   expect_snapshot_file(compare = compare_file_text, cmb_fl, cran = TRUE)
   res_nullfl <- expect_silent(tt_to_tlgrtf(tbl_wide, file = NULL))
@@ -228,41 +213,22 @@ test_that("tt_to_tlgrtf works with argument combined_rtf = TRUE", {
 })
 
 test_that("tt_to_tlgrtf converts table tree to tlg without error", {
-  # Create a simple table for testing
-  lyt <- basic_table() |>
-    split_cols_by("ARM") |>
-    analyze("AGE")
-
-  tbl <- build_table(lyt, ex_adsl)
-
-  # test that it runs without error
-  expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(tbl, "test1"), cran = TRUE)
-  expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(tbl, "test1b", colwidths = 120), cran = TRUE)
-  expect_no_error(suppressMessages(result <- tt_to_tlgrtf(tbl, file = tempfile())))
+  expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(tbl_simple, "test1"), cran = TRUE)
+  expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(tbl_simple, "test1b", colwidths = 120), cran = TRUE)
+  expect_no_error(suppressMessages(result <- tt_to_tlgrtf(tbl_simple, file = tempfile())))
   expect_true(is.null(result[[1]]))
 
   lsting <- as_listing(ex_adsl[1:30, 1:10])
   expect_snapshot_file(compare = compare_file_text, rtf_out_wrapper(lsting, "listing1"), cran = TRUE)
 
-  badlyt <- basic_table() |>
-    split_rows_by("ARM") |>
-    summarize_row_groups()
-
-  badtbl <- build_table(badlyt, ex_adsl)
-
-  ## Test that an error is issued when validate=TRUE (default behavior)
-  expect_error(tt_to_tbldf(badtbl))
-  expect_error(tt_to_tbldf(badtbl, validate = TRUE))
-
-  ## Test that a message is issued when validate=FALSE
+  expect_error(tt_to_tbldf(badtbl_simple))
+  expect_error(tt_to_tbldf(badtbl_simple, validate = TRUE))
   expect_message(
-    tt_to_tbldf(badtbl, validate = FALSE),
+    tt_to_tbldf(badtbl_simple, validate = FALSE),
     "Invalid table structure detected"
   )
-
-  ## Test that a different message is issued for valid tables when validate=FALSE
   expect_message(
-    tt_to_tbldf(tbl, validate = FALSE),
+    tt_to_tbldf(tbl_simple, validate = FALSE),
     "Table structure validation succeeded"
   )
 
@@ -318,65 +284,32 @@ test_that("make_bordmat_row creates border matrix row correctly", {
 })
 
 test_that("tt_to_tlgrtf validates table structure correctly", {
-  # Create an invalid table structure (similar to badtbl in previous test)
-  data(ex_adsl)
-  badlyt <- basic_table() |>
-    split_rows_by("ARM") |>
-    summarize_row_groups()
-
-  badtbl <- build_table(badlyt, ex_adsl)
-
-  # Test that a message is issued when validate=TRUE
   expect_message(
-    tt_to_tlgrtf(badtbl, file = NULL, validate = TRUE),
+    tt_to_tlgrtf(badtbl_simple, file = NULL, validate = TRUE),
     "Invalid table structure detected"
   )
-
-  # Test that no message is issued when validate=FALSE
   expect_no_message(
-    tt_to_tlgrtf(badtbl, file = NULL, validate = FALSE)
+    tt_to_tlgrtf(badtbl_simple, file = NULL, validate = FALSE)
   )
-
-  # Test that the default behavior (validate=TRUE) issues a message
   expect_message(
-    tt_to_tlgrtf(badtbl, file = NULL),
+    tt_to_tlgrtf(badtbl_simple, file = NULL),
     "Invalid table structure detected"
   )
 })
 
 test_that("tt_to_tlgrtf does not message for valid table structures with validate=TRUE", {
-  # Create a valid table structure
-  data(ex_adsl)
-  lyt <- basic_table() |>
-    split_cols_by("ARM") |>
-    analyze("AGE")
-
-  tbl <- build_table(lyt, ex_adsl)
-
-  # Test that no message is issued for a valid table with validate=TRUE
   expect_no_message(
-    tt_to_tlgrtf(tbl, file = NULL, validate = TRUE)
+    tt_to_tlgrtf(tbl_simple, file = NULL, validate = TRUE)
   )
 })
 
 test_that("tt_to_tlgrtf validates valid table structures correctly", {
-  # Create a valid table structure
-  data(ex_adsl)
-  lyt <- basic_table() |>
-    split_cols_by("ARM") |>
-    analyze("AGE")
-
-  tbl <- build_table(lyt, ex_adsl)
-
-  # Test that a message is issued for valid tables when validate=FALSE
   expect_message(
-    tt_to_tlgrtf(tbl, file = NULL, validate = FALSE),
+    tt_to_tlgrtf(tbl_simple, file = NULL, validate = FALSE),
     "Table structure validation succeeded"
   )
-
-  # Test that no message is issued for valid tables when validate=TRUE
   expect_no_message(
-    tt_to_tlgrtf(tbl, file = NULL, validate = TRUE)
+    tt_to_tlgrtf(tbl_simple, file = NULL, validate = TRUE)
   )
 })
 
@@ -405,9 +338,29 @@ test_that("more top left than col headers works", {
   unlink(tmpfile)
 })
 
+# shared round_type fixture — built once, reused in both round_type tests.
+# tt_to_test_round_type contains expect_true so cannot be called at file scope;
+# we replicate only the build_table part here.
+tbl_iec <- local({
+  require(dplyr, quietly = TRUE)
+  adsl <- ex_adsl |>
+    mutate(new_var = case_when(
+      ARMCD == "ARM A" ~ vals_round_type[1],
+      ARMCD == "ARM B" ~ vals_round_type[2],
+      ARMCD == "ARM C" ~ vals_round_type[3]
+    ))
+  build_table(
+    basic_table(show_colcounts = FALSE, round_type = "iec") |>
+      split_cols_by("ARMCD") |>
+      analyze("new_var", function(x) in_rows(mean = mean(x), .formats = "xx.xx", .labels = "Mean")),
+    adsl
+  )
+})
+
 test_that("round_type in tt_to_tbldf works as expected for tabletree object", {
-  tbl_iec <- tt_to_test_round_type(round_type = "iec")
-  tbldf <- tt_to_tbldf(tbl_iec)
+  # confirm iec and sas produce different output for these values
+  expect_true(any(vals_round_type_fmt(round_type = "iec") != vals_round_type_fmt(round_type = "sas")))
+  tbldf     <- tt_to_tbldf(tbl_iec)
   tbldf_sas <- tt_to_tbldf(tbl_iec, round_type = "sas")
   expect_true(any(tbldf != tbldf_sas))
   expect_true(all(
@@ -427,7 +380,6 @@ test_that("round_type in tt_to_tbldf works as expected for tabletree object", {
 })
 
 test_that("round_type in tt_to_tlgrtf works as expected for tabletree object", {
-  tbl_iec <- tt_to_test_round_type(round_type = "iec")
   expect_silent(suppressMessages(rtf_sas <- rtf_out_wrapper(tbl_iec, "test4sas", round_type = "sas")))
   expect_snapshot_file(compare = compare_file_text, rtf_sas, cran = TRUE)
   expect_silent(suppressMessages(rtf_iec_mod <- rtf_out_wrapper(tbl_iec, "test4iecmod", round_type = "iec_mod")))

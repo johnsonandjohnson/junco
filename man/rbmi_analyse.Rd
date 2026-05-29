@@ -176,7 +176,9 @@ parallel::clusterStop(cl)
 }
 
 \examples{
-
+\donttest{
+# Full rbmi workflow: draws + impute + analyse is slow by nature
+# (model fitting across many imputed datasets). Run interactively only.
  library(rbmi)
  library(dplyr)
 
@@ -223,6 +225,7 @@ parallel::clusterStop(cl)
  imputeObj <- impute(drawObj, references)
 
  rbmi_analyse(imputations = imputeObj, vars = vars)
+}
 
 }
 \seealso{

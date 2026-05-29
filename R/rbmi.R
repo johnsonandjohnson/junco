@@ -350,7 +350,9 @@ par_lapply <- function(cl, fun, x, ...) {
 #' @return An `analysis` object, as defined by `rbmi`, representing the desired
 #' analysis applied to each of the imputed datasets in `imputations`.
 #' @examples
-#'
+#' \donttest{
+#' # Full rbmi workflow: draws + impute + analyse is slow by nature
+#' # (model fitting across many imputed datasets). Run interactively only.
 #'  library(rbmi)
 #'  library(dplyr)
 #'
@@ -397,6 +399,7 @@ par_lapply <- function(cl, fun, x, ...) {
 #'  imputeObj <- impute(drawObj, references)
 #'
 #'  rbmi_analyse(imputations = imputeObj, vars = vars)
+#' }
 #'
 #' @export
 rbmi_analyse <- function(
