@@ -7,6 +7,8 @@
 ### Changed
 - Removed `filter_df_prior_afun()`, `a_summary_diff_mvars()`, `a_summary_diff_mvars_label()`.
 - Removed formatters exports #317
+- Reduce sampling of `rbmi` test to make tests shorter (#323)
+- Optimize shared tables in `test-tt_to_tblfile` (#323)
 - Changed forked `h_ancova` for the `tern` one
 
 ### Added
