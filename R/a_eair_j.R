@@ -222,7 +222,7 @@ a_patyrs_j <- function(
 NULL
 
 #' @describeIn a_eair100_j
-#' calculates exposure-adjusted incidence rates (EAIR) per 100 person-years for a
+#' calculates exposure-adjusted incidence rates (EAIR) per `num_p_year` person-years for a
 #' specific level of a variable.
 #'
 #'
@@ -238,15 +238,23 @@ NULL
 #' @param ctrl_grp (`string`)\cr control group value.
 #' @param cur_trt_grp (`string`)\cr current treatment group value.
 #' @param inriskdiffcol (`logical`)\cr flag indicating if the function is called within a risk difference column.
-#' @param fup_var (`string`)\cr follow-up variable name. Note that expected time unit interval is in **years**.
-#' @param occ_var (`string`)\cr occurrence variable name.
-#' \cr Note: expected to be encoded with values `Y`, to indicate the **first** occurrence within a subject & level.
-#' @param occ_dy (`string`)\cr occurrence day variable name. Note that expected time unit interval is in **days**.
-#' \cr Calculations for `person_years` will use this variable for subjects who have experienced the event
-#' (first occurrence).
-#' For subjects without an event, `fup_var` will be used in the `peron_years` calculation.
-#' \cr If `occ_var = NULL`, the entire follow-up interval (`fup_var`) will be used for all subjects.
-#' @param num_p_year (`numeric`)\cr time unit for desired incidence rate (in person-years)
+#' @param fup_var (`string`)\cr name of the variable containing the total follow-up duration
+#'   for each subject, expressed in **years**.
+#'   Used as the at-risk exposure time for subjects who did **not** experience the event.
+#' @param occ_var (`string`)\cr name of the flag variable identifying the
+#'   **first** occurrence of the event within each subject and level, encoded as `"Y"`.
+#'   Only records where `occ_var == "Y"` contribute to the event count (`n_event`).
+#' @param occ_dy (`string`)\cr name of the variable containing the relative day of the
+#'   first event occurrence, expressed in **days** (e.g., `ASTDY`).
+#'   For subjects with an event (`occ_var == "Y"`), this value is converted to years
+#'   as `occ_dy / 365.25` and used as the at-risk exposure time instead of `fup_var`.
+#'   Must be on the same time origin as `fup_var` (i.e., relative to start of exposure).
+#' @param num_p_year (`numeric`)\cr scaling factor for the incidence rate, representing
+#'   the number of person-years used as the denominator base.
+#'   The EAIR is calculated as `num_p_year * n_event / total_person_years`.
+#'   Defaults to `100`, yielding a rate per 100 person-years.
+#'   For example, use `1` for a rate per person-year or `1000` for a rate per
+#'   1000 person-years.
 #'
 #' @return
 #'  * `s_eair100_levii_j()` returns a list containing the following statistics:
@@ -258,7 +266,8 @@ NULL
 #'   \item eair_diff: Difference in EAIR between current group and reference group
 #'    (if diff=TRUE and inriskdiffcol=TRUE), together with it's Wald based confidence interval.
 #' }\cr
-#' The list of available statistics (core columns) can also be viewed by running `junco_get_stats("a_eair100_j")`
+#' The list of available statistics (core columns) can also be viewed by
+#' running `junco_get_stats("a_eair100_j")`.
 #' @details
 #' The exposure-adjusted incidence rate (EAIR) is defined as the number of subjects
 #' with at least one occurrence of a specified adverse event divided by the total
@@ -289,7 +298,7 @@ NULL
 #' The difference between two EAIRs is
 #' \eqn{\hat \theta = (\hat r_1 - \hat r_2)}.
 #'
-#' Wald's method for the confidence interval approximation is used, which uses the standard error
+#' Wald's method for the confidence interval approximation is used (Liu iet al., 2006), which uses the standard error
 #' \deqn{
 #' \mathrm{se}(\hat r_1 - \hat r_2) =
 #' \sqrt{\frac{n_1}{T_1^2} + \frac{n_2}{T_2^2}}
@@ -309,7 +318,12 @@ NULL
 #' \deqn{
 #'   \mathrm{EAIR}_{100} = 100 \times \hat r
 #' }
-#'
+#' @references
+#' Liu, G. F., Wang, J., Liu, K., and Snavely, D. B. (2006).
+#' Confidence intervals for an exposure adjusted incidence rate difference
+#' with applications to clinical trials.
+#' \emph{Statistics in Medicine}, \strong{25}(8), 1275--1286.
+#' \doi{10.1002/sim.2335}
 #' @keywords internal
 s_eair100_levii_j <- function(
   levii,
@@ -426,22 +440,24 @@ s_eair100_levii_j <- function(
 
 #' @describeIn a_eair100_j
 #' Formatted analysis function for exposure adjusted incidence rate summary which is
-#' used as `afun` in `analyze` or `cfun` in `summarize_row_groups`.
+#' used as `afun` in `analyze` or `cfun` in `summarize_row_groups`.\cr
 #'
 #' @param labelstr (`string`)\cr Not intended to be set by user, only present to be able to use function as a `cfun`.
 #' @param .spl_context (`data.frame`)\cr gives information about ancestor split states.
 #' @param drop_levels (`logical`)\cr if TRUE, non-observed levels will not be included.
 #' @param riskdiff (`logical`)\cr if TRUE, risk difference calculations will be performed.
 #' @param ref_path (`string`)\cr column path specifications for the control group.
-#' @param .stats (`character`)\cr statistics to select for the table.
+#' @param .stats (`character`)\cr statistics to select for the table.\cr
 #' @param .formats (named 'character' or 'list')\cr formats for the statistics.
 #' @param .labels (named 'character')\cr labels for the statistics.
 #' @param .indent_mods (named `integer`)\cr indent modifiers for the labels.
 #' @param na_str (`string`)\cr string used to replace all NA or empty values in the output.
 #'
 #' @return
-#'  * `a_eair100_j` returns the corresponding list with formatted [rtables::CellValue()].
-#'
+#'  * `a_eair100_j` returns the corresponding list with formatted [rtables::CellValue()].\cr
+#' Within a risk difference column, the statistics `eair` and `n_eair` are replaced by `eair_diff`
+#' (difference in EAIR between current group and reference group, together with it's confidence interval).
+
 #' @export
 #'
 #' @examples
@@ -558,6 +574,11 @@ a_eair100_j <- function(
     custom_stats_in = NULL
   )
 
+  checkmate::assert_string(fup_var, null.ok = FALSE)
+  checkmate::assert_string(occ_dy, null.ok = FALSE)
+  checkmate::assert_string(occ_var, null.ok = FALSE)
+  checkmate::assert_names(colnames(df), must.include = c(occ_var, fup_var, occ_dy))
+    
   ### combine all preprocessing of incoming df/.df_row in one function
   ### do this outside stats derivation functions (s_freq_j/)
   ### use all of val/excl_levels/drop_levels//new_levels/label/label_map/labelstr/label_fstr
@@ -580,7 +601,7 @@ a_eair100_j <- function(
   df <- upd_dfrow$df
 
   if (is.null(.alt_df_full)) {
-    stop(paste("a_eair100_j: .alt_df_full cannot be NULL."))
+    stop(paste("a_eair100_j: .alt_df_full cannot be NULL. Specify `alt_counts_df` to `build_table`"))
   }
 
   ### derive appropriate alt_df based upon .spl_context and .alt_df_full

@@ -145,7 +145,7 @@ test_that("Check patient years numbers are giving expected result", {
   )
 })
 
-test_that("Check aeir100 numbers are giving expected result", {
+test_that("Check a_eair100_j numbers are giving expected result", {
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
@@ -198,7 +198,7 @@ test_that("Check aeir100 numbers are giving expected result", {
   )
 })
 
-test_that("Check aeir100 numbers are giving expected result when fup_var argument is changed", {
+test_that("Check a_eair100_j numbers are giving expected result when fup_var argument is changed", {
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
@@ -251,7 +251,7 @@ test_that("Check aeir100 numbers are giving expected result when fup_var argumen
   )
 })
 
-test_that("Check aeir100 numbers are giving expected result when occ_dy argument is changed", {
+test_that("Check a_eair100_j numbers are giving expected result when occ_dy argument is changed", {
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
@@ -304,7 +304,7 @@ test_that("Check aeir100 numbers are giving expected result when occ_dy argument
   )
 })
 
-test_that("Check aeir100 numbers are giving expected result relative risk in combined facet is available", {
+test_that("Check a_eair100_j numbers are giving expected result relative risk in combined facet is available", {
   colspan_trt_map <- create_colspan_map(
     adsl,
     non_active_grp = ctrl_grp,
@@ -428,7 +428,7 @@ test_that("Check aeir100 numbers are giving expected result relative risk in com
   )
 })
 
-test_that("Check aeir100 function stops with incorrect input", {
+test_that("Check a_eair100_j function stops with incorrect input", {
   extra_record <- adae[which(adae[["AEDECOD"]] == "dcd A.1.1.1.1")[1], ]
   extra_record$ASTDY <- extra_record$ASTDY + 1
   adae_incorrect <- rbind(
@@ -455,7 +455,7 @@ test_that("Check aeir100 function stops with incorrect input", {
   )
 })
 
-test_that("Check aeir100 function uses fup_var for eair/person_years when occ_var = NULL", {
+test_that("Check a_eair100_j function does not allow occ_var = NULL", {
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
@@ -469,10 +469,13 @@ test_that("Check aeir100 function uses fup_var for eair/person_years when occ_va
         ref_path = ref_path
       )
     )
-  tbl1 <- build_table(lyt1, adae, adsl)
+  expect_error(tbl1 <- build_table(lyt1, adae, adsl),
+               "Assertion on 'occ_var' failed: Must be of type 'string', not 'NULL'")
+})
 
-  lyt2 <- core_lyt |>
-    analyze(
+test_that("Check a_eair100_j function request alt_counts_df", {
+  lyt1 <- core_lyt |>
+     analyze(
       "AEDECOD",
       nested = FALSE,
       inclNAs = TRUE,
@@ -484,44 +487,25 @@ test_that("Check aeir100 function uses fup_var for eair/person_years when occ_va
         ref_path = ref_path
       )
     )
-  tbl2 <- build_table(lyt2, adae, adsl)
-  expect_any_difference(tbl1, tbl2)
+  expect_error(tbl1 <- build_table(lyt1, adae),
+               ".alt_df_full cannot be NULL. Specify `alt_counts_df`")
+})
 
-  # demonstrate that calculation for person_years is using TRTDURY throughout
-  res1 <- cell_values(tbl1["dcd A.1.1.1.1", "A: Drug X"])
-  result <- as.numeric(unlist(unname(res1))[[1]])
-
-  adae_onecode <- adae |>
-    filter(AEDECOD == "dcd A.1.1.1.1" & !is.na(AOCCPFL)) |>
-    select(USUBJID, AEDECOD, AEBODSYS, ASTDY, TRTEMFL, AOCCPFL)
-
-  adae_sub <- left_join(adsl, adae_onecode, by = "USUBJID")
-
-  adae_sub <- adae_sub |>
-    filter(ARM == "A: Drug X") |>
-    arrange(USUBJID, AEDECOD, ASTDY) |>
-    group_by(USUBJID) |>
-    slice(1) |>
-    ungroup() |>
-    # this piece is different vs using non-null occ_var
-    mutate(EXP_TIME = TRTDURY)
-
-  total_exp_years <- sum(adae_sub$EXP_TIME)
-
-  adae_sub2 <- adae |>
-    filter(
-      AEDECOD == "dcd A.1.1.1.1" & ARM == "A: Drug X"
-    ) |>
-    group_by(USUBJID) |>
-    slice(1) |>
-    ungroup()
-
-  number_with_event <- nrow(adae_sub2)
-
-  expected <- (100 * number_with_event) / total_exp_years
-
-  expect_equal(
-    result,
-    expected
-  )
+test_that("Check a_eair100_j function does perform variable existence check", {
+  lyt1 <- core_lyt |>
+    analyze(
+      "AEDECOD",
+      nested = FALSE,
+      inclNAs = TRUE,
+      afun = a_eair100_j,
+      extra_args = list(
+        fup_var = "TRTDURY",
+        occ_var = "fake",
+        occ_dy = "ASTDY",
+        ref_path = ref_path
+      )
+    )
+  expect_error(tbl1 <- build_table(lyt1, adae, adsl),
+               "Assertion on 'colnames(df)' failed",
+               fixed = TRUE)
 })
