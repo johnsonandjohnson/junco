@@ -72,19 +72,28 @@ a_eair100_j(
 
 \item{inriskdiffcol}{(\code{logical})\cr flag indicating if the function is called within a risk difference column.}
 
-\item{fup_var}{(\code{string})\cr follow-up variable name. Note that expected time unit interval is in \strong{years}.}
+\item{fup_var}{(\code{string})\cr name of the variable containing the total follow-up duration
+for each subject, expressed in \strong{years}.
+Used as the at-risk exposure time for subjects who did \strong{not} experience the event.}
 
-\item{occ_var}{(\code{string})\cr occurrence variable name.
-\cr Note: expected to be encoded with values \code{Y}, to indicate the first occurrence within a subject & level.}
+\item{occ_var}{(\code{string})\cr name of the flag variable identifying the
+\strong{first} occurrence of the event within each subject and level, encoded as \code{"Y"}.
+Only records where \code{occ_var == "Y"} contribute to the event count (\code{n_event}).}
 
-\item{occ_dy}{(\code{string})\cr occurrence day variable name. Note that expected time unit interval is in \strong{days}.
-\cr Calculations for \code{person_years} will use this variable for subjects who have experienced the event (first occurrence).
-For subjects without an event, \code{fup_var} will be used in the \code{peron_years} calculation.
-\cr If \code{occ_var = NULL}, the entire follow-up interval (\code{fup_var}) will be used for all subjects.}
+\item{occ_dy}{(\code{string})\cr name of the variable containing the relative day of the
+first event occurrence, expressed in \strong{days} (e.g., \code{ASTDY}).
+For subjects with an event (\code{occ_var == "Y"}), this value is converted to years
+as \code{occ_dy / 365.25} and used as the at-risk exposure time instead of \code{fup_var}.
+Must be on the same time origin as \code{fup_var} (i.e., relative to start of exposure).}
 
-\item{num_p_year}{(\code{numeric})\cr time unit for desired incidence rate (in person-years)}
+\item{num_p_year}{(\code{numeric})\cr scaling factor for the incidence rate, representing
+the number of person-years used as the denominator base.
+The EAIR is calculated as \code{num_p_year * n_event / total_person_years}.
+Defaults to \code{100}, yielding a rate per 100 person-years.
+For example, use \code{1} for a rate per person-year or \code{1000} for a rate per
+1000 person-years.}
 
-\item{labelstr}{(\code{string})\cr label string for the row.}
+\item{labelstr}{(\code{string})\cr Not intended to be set by user, only present to be able to use function as a \code{cfun}.}
 
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states.}
 
@@ -94,7 +103,7 @@ For subjects without an event, \code{fup_var} will be used in the \code{peron_ye
 
 \item{ref_path}{(\code{string})\cr column path specifications for the control group.}
 
-\item{.stats}{(\code{character})\cr statistics to select for the table.}
+\item{.stats}{(\code{character})\cr statistics to select for the table.\cr}
 
 \item{.formats}{(named 'character' or 'list')\cr formats for the statistics.}
 
@@ -115,11 +124,14 @@ For subjects without an event, \code{fup_var} will be used in the \code{peron_ye
 \item eair_diff: Difference in EAIR between current group and reference group
 (if diff=TRUE and inriskdiffcol=TRUE), together with it's Wald based confidence interval.
 }\cr
-The list of available statistics (core columns) can also be viewed by running \code{junco_get_stats("a_eair100_j")}
+The list of available statistics (core columns) can also be viewed by
+running \code{junco_get_stats("a_eair100_j")}.
 }
 
 \itemize{
-\item \code{a_eair100_j} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
+\item \code{a_eair100_j} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.\cr
+Within a risk difference column, the statistics \code{eair} and \code{n_eair} are replaced by \code{eair_diff}
+(difference in EAIR between current group and reference group, together with it's confidence interval).
 }
 }
 \description{
@@ -157,7 +169,7 @@ expressed in subject-years
 The difference between two EAIRs is
 \eqn{\hat \theta = (\hat r_1 - \hat r_2)}.
 
-Wald's method for the confidence interval approximation is used, which uses the standard error
+Wald's method for the confidence interval approximation is used (Liu iet al., 2006), which uses the standard error
 \deqn{
 \mathrm{se}(\hat r_1 - \hat r_2) =
 \sqrt{\frac{n_1}{T_1^2} + \frac{n_2}{T_2^2}}
@@ -180,11 +192,11 @@ EAIR is commonly reported per 100 subject-years:
 }
 \section{Functions}{
 \itemize{
-\item \code{s_eair100_levii_j()}: calculates exposure-adjusted incidence rates (EAIR) per 100 person-years for a
+\item \code{s_eair100_levii_j()}: calculates exposure-adjusted incidence rates (EAIR) per \code{num_p_year} person-years for a
 specific level of a variable.
 
 \item \code{a_eair100_j()}: Formatted analysis function for exposure adjusted incidence rate summary which is
-used as \code{afun} in \code{analyze} or \code{cfun} in \code{summarize_row_groups}.
+used as \code{afun} in \code{analyze} or \code{cfun} in \code{summarize_row_groups}.\cr
 
 }}
 \examples{
@@ -247,13 +259,11 @@ lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_se
   split_cols_by("rrisk_header", nested = FALSE) |>
   split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = remove_split_levels(ctrl_grp)) |>
   analyze("TRTDURY",
-    nested = FALSE,
     show_labels = "hidden",
     afun = a_patyrs_j
   ) |>
   analyze(
     vars = "AEDECOD",
-    nested = FALSE,
     afun = a_eair100_j,
     extra_args = list(
       fup_var = "TRTDURY",
@@ -267,5 +277,12 @@ lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx", top_level_se
 result <- build_table(lyt, aefup, alt_counts_df = adexsum)
 head(result, 5)
 
+}
+\references{
+Liu, G. F., Wang, J., Liu, K., and Snavely, D. B. (2006).
+Confidence intervals for an exposure adjusted incidence rate difference
+with applications to clinical trials.
+\emph{Statistics in Medicine}, \strong{25}(8), 1275--1286.
+\doi{10.1002/sim.2335}
 }
 \keyword{internal}
