@@ -264,7 +264,7 @@ NULL
 #'   \item eair: Exposure-adjusted incidence rate per `num_p_year` person-years
 #'   \item n_eair: Combination of `n_event` and `eair` statistics.
 #'   \item eair_diff: Difference in EAIR between current group and reference group
-#'    (if diff=TRUE and inriskdiffcol=TRUE), together with it's Wald based confidence interval.
+#'    (if `diff`=TRUE and `inriskdiffcol`=TRUE), together with it's Wald based confidence interval.
 #' }\cr
 #' The list of available statistics (core columns) can also be viewed by
 #' running `junco_get_stats("a_eair100_j")`.
@@ -298,7 +298,7 @@ NULL
 #' The difference between two EAIRs is
 #' \eqn{\hat \theta = (\hat r_1 - \hat r_2)}.
 #'
-#' Wald's method for the confidence interval approximation is used (Liu iet al., 2006), which uses the standard error
+#' Wald's method for the confidence interval approximation is used (Liu et al., 2006), which uses the standard error
 #' \deqn{
 #' \mathrm{se}(\hat r_1 - \hat r_2) =
 #' \sqrt{\frac{n_1}{T_1^2} + \frac{n_2}{T_2^2}}
@@ -343,7 +343,7 @@ s_eair100_levii_j <- function(
   occ_var,
   occ_dy,
   num_p_year = 100
-){
+) {
   if (diff && inriskdiffcol) {
     .alt_df_full_cur_group <- get_ctrl_subset(
       .alt_df_full,
@@ -588,7 +588,7 @@ a_eair100_j <- function(
   checkmate::assert_string(occ_dy, null.ok = FALSE)
   checkmate::assert_string(occ_var, null.ok = FALSE)
   checkmate::assert_names(colnames(df), must.include = c(occ_var, fup_var, occ_dy))
-    
+
   ### combine all preprocessing of incoming df/.df_row in one function
   ### do this outside stats derivation functions (s_freq_j/)
   ### use all of val/excl_levels/drop_levels//new_levels/label/label_map/labelstr/label_fstr
