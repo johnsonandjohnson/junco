@@ -5,7 +5,7 @@
 [![Docs
 📚](https://github.com/johnsonandjohnson/junco/actions/workflows/pkgdown.yaml/badge.svg)](https://johnsonandjohnson.github.io/junco/)
 [![Code Coverage
-📔](https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/gh-pages/_xml_coverage_reports/badge.svg)](https://johnsonandjohnson.github.io/junco/_xml_coverage_reports/coverage.html)
+📔](https://github.com/johnsonandjohnson/junco/blob/_xml_coverage_reports/data/main/badge.svg)](https://johnsonandjohnson.github.io/junco/_xml_coverage_reports/coverage.html)
 
 ![GitHub
 forks](https://img.shields.io/github/forks/johnsonandjohnson/junco?style=social)![GitHub
