@@ -343,7 +343,7 @@ s_eair100_levii_j <- function(
   occ_var,
   occ_dy,
   num_p_year = 100
-) {
+){
   if (diff && inriskdiffcol) {
     .alt_df_full_cur_group <- get_ctrl_subset(
       .alt_df_full,
@@ -372,11 +372,16 @@ s_eair100_levii_j <- function(
   cur_YRSFUP <- sum(cur_df_denom[["mod_fup_var"]])
   cur_eair <- num_p_year * cur_AECOUNT / cur_YRSFUP
   cur_n_eair <- c(cur_AECOUNT, cur_eair)
+  cur_eair <- num_p_year * cur_AECOUNT / cur_YRSFUP
+  cur_n_eair <- c(cur_AECOUNT, cur_eair)
 
   x <- list()
   eair_lbl <- paste0("eair (per ", num_p_year, " person years)")
+  eair_lbl <- paste0("eair (per ", num_p_year, " person years)")
   x$n_event <- c("n_event" = cur_AECOUNT)
   x$person_years <- c("person_years" = cur_YRSFUP)
+  x$eair <- stats::setNames(c("eair" = cur_eair), eair_lbl)
+  x$n_eair <- stats::setNames(c("n_eair" = cur_n_eair), c("n_event", eair_lbl))
   x$eair <- stats::setNames(c("eair" = cur_eair), eair_lbl)
   x$n_eair <- stats::setNames(c("n_eair" = cur_n_eair), c("n_event", eair_lbl))
 
@@ -416,12 +421,17 @@ s_eair100_levii_j <- function(
     ref_YRSFUP <- sum(ref_df_denom[["mod_fup_var"]])
     ref_eair <- num_p_year * ref_AECOUNT / ref_YRSFUP
     ref_n_eair <- c(ref_AECOUNT, ref_eair)
+    ref_eair <- num_p_year * ref_AECOUNT / ref_YRSFUP
+    ref_n_eair <- c(ref_AECOUNT, ref_eair)
 
     rdiff <- cur_eair - ref_eair
 
     se <- sqrt(cur_AECOUNT / cur_YRSFUP^2 + ref_AECOUNT / ref_YRSFUP^2) * num_p_year
+    se <- sqrt(cur_AECOUNT / cur_YRSFUP^2 + ref_AECOUNT / ref_YRSFUP^2) * num_p_year
 
     coeff <- stats::qnorm((1 + conf_level) / 2)
+    lcl <- rdiff - (coeff * se)
+    ucl <- rdiff + (coeff * se)
     lcl <- rdiff - (coeff * se)
     ucl <- rdiff + (coeff * se)
 
@@ -679,11 +689,13 @@ a_eair100_j <- function(
   ### rearrange list y to  list to x_stats
   #### this is to ensure the remainder of the code can stay the same as in a_freq_j
   stnms <- c("eair", "eair_diff", "n_event", "person_years", "n_eair")
+  stnms <- c("eair", "eair_diff", "n_event", "person_years", "n_eair")
   x_stats <- extract_x_stats(y, stnms)
 
   if (!inriskdiffcol) {
     .stats_adj <- .stats
   } else {
+    .stats_adj <- replace(.stats, .stats %in% c("eair", "n_eair"), "eair_diff")
     .stats_adj <- replace(.stats, .stats %in% c("eair", "n_eair"), "eair_diff")
   }
 

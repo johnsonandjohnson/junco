@@ -111,6 +111,60 @@ rdiff_eair <- function(
 
   eair_diff <- c(rdiff, lcl, ucl)
 }
+# get numbers from single sel_AEDECOD, like dcd A.1.1.1.1, selected treatment group
+eair_numbers <- function(adae, adsl, sel_AEDECOD, comb_group) {
+  adae_onecode <- adae |>
+    filter(AEDECOD == sel_AEDECOD & !is.na(AOCCPFL)) |>
+    select(USUBJID, AEDECOD, AOCCPFL, ASTDY)
+
+  adae_sub <- left_join(adsl, adae_onecode, by = "USUBJID")
+
+  adae_sub <- adae_sub |>
+    filter(!!rlang::sym(trtvar) %in% comb_group) |>
+    arrange(USUBJID, AEDECOD, ASTDY) |>
+    group_by(USUBJID) |>
+    slice(1) |>
+    ungroup() |>
+    mutate(EXP_TIME = if_else(!is.na(ASTDY), (ASTDY / 365.25), TRTDURY))
+
+  total_exp_years <- sum(adae_sub$EXP_TIME)
+
+  adae_sub2 <- adae |>
+    filter(
+      AEDECOD == sel_AEDECOD & !!rlang::sym(trtvar) %in% comb_group & !is.na(AOCCPFL)
+    ) |>
+    group_by(USUBJID) |>
+    slice(1) |>
+    ungroup()
+
+  number_with_event <- nrow(adae_sub2)
+
+  expected <- (100 * number_with_event) / total_exp_years
+
+  list(
+    count = number_with_event,
+    texpy = total_exp_years,
+    eair = (100 * number_with_event) / total_exp_years
+  )
+}
+
+
+rdiff_eair <- function(
+  eair_numbers_comb,
+  eair_numbers_ctrl, conf_level = 0.95
+) {
+  rdiff <- eair_numbers_comb[["eair"]] - eair_numbers_ctrl[["eair"]]
+  se <- sqrt(
+    eair_numbers_comb[["count"]] / eair_numbers_comb[["texpy"]]^2 +
+      eair_numbers_ctrl[["count"]] / eair_numbers_ctrl[["texpy"]]^2
+  ) * 100
+
+  coeff <- stats::qnorm((1 + conf_level) / 2)
+  lcl <- rdiff - (coeff * se)
+  ucl <- rdiff + (coeff * se)
+
+  eair_diff <- c(rdiff, lcl, ucl)
+}
 
 #### Actual start of tests
 
@@ -402,6 +456,7 @@ test_that("Check a_eair100_j numbers are giving expected result relative risk in
 
   eair_numbers_comb <- eair_numbers(adae, adsl, "dcd A.1.1.1.1", comb_group)
   eair_numbers_ctrl <- eair_numbers(adae, adsl, "dcd A.1.1.1.1", ctrl_grp)
+
 
   rdiff <- rdiff_eair(eair_numbers_comb, eair_numbers_ctrl)
 
