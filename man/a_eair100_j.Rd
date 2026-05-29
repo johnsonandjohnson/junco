@@ -138,7 +138,7 @@ For subjects without an event, \code{fup_var} will be used in the \code{peron_ye
 \item eair: Exposure-adjusted incidence rate per \code{num_p_year} person-years
 \item n_eair: Combination of \code{n_event} and \code{eair} statistics.
 \item eair_diff: Difference in EAIR between current group and reference group
-(if diff=TRUE and inriskdiffcol=TRUE), together with it's Wald based confidence interval.
+(if \code{diff}=TRUE and \code{inriskdiffcol}=TRUE), together with it's Wald based confidence interval.
 }\cr
 <<<<<<< HEAD
 The list of available statistics (core columns) can also be viewed by
@@ -194,10 +194,14 @@ The difference between two EAIRs is
 \eqn{\hat \theta = (\hat r_1 - \hat r_2)}.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Wald's method for the confidence interval approximation is used (Liu iet al., 2006), which uses the standard error
 =======
 Wald's method for the confidence interval approximation is used, which uses the standard error
 >>>>>>> b102ea9 (temp commit, not yet finished)
+=======
+Wald's method for the confidence interval approximation is used (Liu et al., 2006), which uses the standard error
+>>>>>>> fc318b7 (lintr + spelling)
 \deqn{
 \mathrm{se}(\hat r_1 - \hat r_2) =
 \sqrt{\frac{n_1}{T_1^2} + \frac{n_2}{T_2^2}}
