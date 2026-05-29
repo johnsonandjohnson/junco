@@ -476,7 +476,7 @@ test_that("Check a_eair100_j function does not allow occ_var = NULL", {
 
 test_that("Check a_eair100_j function request alt_counts_df", {
   lyt1 <- core_lyt |>
-     analyze(
+    analyze(
       "AEDECOD",
       nested = FALSE,
       inclNAs = TRUE,
