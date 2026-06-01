@@ -43,7 +43,6 @@ reference:
     - a_summary_subset
     - a_two_tier
     - c_summary_subset_label
-    - rbmi_analyse
     - analyze_values
     - rbmi_ancova
     - rbmi_ancova_single
@@ -57,11 +56,9 @@ reference:
     - tabulate_rbmi
     - tabulate_lsmeans
     - h_odds_ratio
-    - make_rbmi_cluster
     - rbmi_mmrm
     - event_free
     - odds_ratio
-    - par_lapply
     - prop_diff
     - prop_post_fun
     - prop_ratio_cmh
@@ -165,3 +162,6 @@ reference:
     contents:
     - a_coxph_hr
     - s_coxph_hr
+    - rbmi_analyse
+    - make_rbmi_cluster
+    - par_lapply
