@@ -50,7 +50,6 @@ Imports:
     utils,
     emmeans,
     mmrm,
-    assertthat,
     vcdExtra (>= 0.8.7),
     rtables.officer (>= 0.1.0),
     flextable (>= 0.9.11),

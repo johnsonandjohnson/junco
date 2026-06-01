@@ -211,3 +211,65 @@ extract_vectors <- function(df1,
 
   list(x1 = x1, x2 = x2)
 }
+
+
+#' Helper for Finding AVISIT after which CHG are all Missing
+#'
+#' @description
+#' Helper for Finding AVISIT after which CHG are all Missing.
+#'
+#' @param df (`data.frame`)\cr with `CHG` and `AVISIT` variables.
+#'
+#' @return A string with either the factor level after which `AVISIT` is all missing,
+#'   or `NA`.
+#' @export
+#'
+#' @examples
+#' df <- data.frame(
+#'   AVISIT = factor(c(1, 2, 3, 4, 5)),
+#'   CHG = c(5, NA, NA, NA, 3)
+#' )
+#' find_missing_chg_after_avisit(df)
+#'
+#' df2 <- data.frame(
+#'   AVISIT = factor(c(1, 2, 3, 4, 5)),
+#'   CHG = c(5, NA, 3, NA, NA)
+#' )
+#' find_missing_chg_after_avisit(df2)
+#'
+#' df3 <- data.frame(
+#'   AVISIT = factor(c(1, 2, 3, 4, 5)),
+#'   CHG = c(NA, NA, NA, NA, NA)
+#' )
+#' find_missing_chg_after_avisit(df3)
+find_missing_chg_after_avisit <- function(df) {
+  checkmate::assert_data_frame(df)
+  checkmate::assert_factor(df$AVISIT, unique = TRUE, any.missing = FALSE)
+  checkmate::assert_numeric(df$CHG)
+
+  # Ensure the dataframe is sorted by AVISIT
+  df <- df[order(df$AVISIT), ]
+
+  # Last visit with available data.
+  visit_levels_available <- as.integer(df[!is.na(df$CHG), ]$AVISIT)
+
+  if (!length(visit_levels_available)) {
+    return(levels(df$AVISIT)[1])
+  }
+  visit_levels_max_available <- max(visit_levels_available)
+
+  # Visits with missing data.
+  visit_levels_missing <- as.integer(df[is.na(df$CHG), ]$AVISIT)
+
+  # Missing visits at the end.
+  visit_levels_missing_end <- visit_levels_missing[
+    visit_levels_missing > visit_levels_max_available
+  ]
+
+  # Return first one if there is any.
+  if (length(visit_levels_missing_end)) {
+    levels(df$AVISIT)[min(visit_levels_missing_end)]
+  } else {
+    NA_character_
+  }
+}

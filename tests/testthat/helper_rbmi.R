@@ -12,7 +12,7 @@ rbmi_as_analysis <- function(
     condmean = ifelse(method$type == "jackknife", "jackknife", "bootstrap"),
     bmlmi = "bmlmi"
   )
-  assert_that(
+  stopifnot(
     is.list(results),
     length(next_class) == 1,
     is.character(next_class),
