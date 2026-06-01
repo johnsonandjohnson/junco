@@ -7,7 +7,7 @@
 - Removed formatters exports #317
 
 ### Added
-- Updated documentation and examples for label_map in a_freq_j (#235)
+- Updated documentation and examples for `label_map` in `a_freq_j` (#235)
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 
