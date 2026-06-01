@@ -23,14 +23,14 @@ a_coxph_hr <- function(
   )
 }
 
-#' @name  coxph_hr
-#' @title coxph_hr
-#' @description coxph_hr `r lifecycle::badge("deprecated")` Use
+#' @name  s_coxph_hr
+#' @title s_coxph_hr
+#' @description s_coxph_hr `r lifecycle::badge("deprecated")` Use
 #'  `tern::s_coxph_pairwise`  instead, and use `tern::coxph_pairwise()` as
 #'   the layout-level wrapper.
 #' @inheritParams odds_ratio
 #' @export
-a_coxph_hr <- function(
+s_coxph_hr <- function(
     df,
     .var,
     ref_path,
@@ -47,4 +47,3 @@ a_coxph_hr <- function(
     details = "Use `tern:::coxph_pairwise()` as the layout-level wrapper."
   )
 }
-

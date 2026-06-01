@@ -54,7 +54,6 @@ reference:
     - find_missing_chg_after_avisit
     - fit_ancova
     - fit_mmrm_j
-    - coxph_hr
     - tabulate_rbmi
     - tabulate_lsmeans
     - h_odds_ratio
@@ -160,3 +159,9 @@ reference:
     - export_graph_as_docx
     - export_TLG_as_docx
     - theme_docx_default_j
+
+  - title: Deprecated Functions
+    desc: The following functions are deprecated and should not be used in new code.
+    contents:
+    - a_coxph_hr
+    - s_coxph_hr
