@@ -72,7 +72,8 @@ Suggests:
     tidyr,
     pharmaverseadamjnj (>= 0.0.2),
     multcomp,
-    lifecycle
+    lifecycle,
+    dplyr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
