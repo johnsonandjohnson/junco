@@ -7,7 +7,7 @@
 ### Changed
 - Removed `filter_df_prior_afun()`, `a_summary_diff_mvars()`, `a_summary_diff_mvars_label()`.
 - Removed formatters exports #317
-- Depreciate `a_coxph_hr` for `tern:::a_coxph_pairwise()` and `s_coxph_hr` for `tern:::s_coxph_pairwise()` #158
+- Deprecate `a_coxph_hr` for `tern:::a_coxph_pairwise()` and `s_coxph_hr` for `tern:::s_coxph_pairwise()` #158
 - Reduce sampling of `rbmi` test to make tests shorter (#323)
 - Optimize shared tables in `test-tt_to_tblfile` (#323)
 - Changed forked `h_ancova` for the `tern` one
@@ -15,6 +15,8 @@
 - Removed `dplyr` from `junco` and replaced by base R #201
 - Replaced `assertthat` by `checkmate` for consistency #201
 - Remove `stringi` from dependencies #201
+- Deprecate `rbmi_analyse()`, `make_rbmi_cluster()`, `par_lapply()` for `rbmi` equivalent functions #367
+
 
 ### Added
 
