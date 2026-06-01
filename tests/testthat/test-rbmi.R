@@ -83,5 +83,3 @@ test_that("rbmi_analyse is deprecated", {
     )
   )
 })
-
-

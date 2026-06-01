@@ -21,7 +21,7 @@ make_rbmi_cluster <- function(
     what = "make_rbmi_cluster()",
     with = "rbmi::make_rbmi_cluster()"
   )
-} 
+}
 
 #' Parallelise Lapply
 #'
