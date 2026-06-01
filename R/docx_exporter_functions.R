@@ -563,7 +563,7 @@ interpret_cell_content <- function(str_before, markup_df_docx = dps_markup_df_do
     }) |>
     unlist()
   pos <- data.frame(pos_start = pos_start, pos_end = pos_end)
-  pos <- pos |> dplyr::filter(!is.na(pos_end))
+  pos <- pos[!is.na(pos$pos_end), ]
   pos$replacement <- ""
 
   for (i in seq_len(nrow(pos))) {

@@ -42,7 +42,6 @@ Imports:
     rbmi (>= 1.6.0),
     broom,
     methods,
-    dplyr,
     generics,
     stats,
     survival,
