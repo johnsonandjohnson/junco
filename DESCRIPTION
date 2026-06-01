@@ -36,7 +36,7 @@ Depends:
     rtables (>= 0.6.16)
 Imports:
     tidytlg (>= 0.12.0),
-    tern (>= 0.9.10),
+    tern (>= 0.9.10.9007),
     rlistings (>= 0.2.13),
     checkmate (>= 2.1.0),
     rbmi (>= 1.6.0),
@@ -77,4 +77,5 @@ Suggests:
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
-    insightsengineering/formatters@main
+    insightsengineering/formatters@main,
+    insightsengineering/tern@main
