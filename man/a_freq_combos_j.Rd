@@ -107,16 +107,20 @@ It is recommended not to utilize this argument for other purposes.
 The label argument could be used instead (if \code{val} is a single string)\cr}
 
 \item{label_map}{(\code{tibble})\cr
-A mapping tibble to translate levels from the incoming variable(s) into
-a different row label to be presented on the table.\cr
+A mapping tibble used to translate levels of the input variable(s) into
+the row labels displayed in the table.\cr
 
 Four structural variants are supported:
 \enumerate{
-\item Simple mapping        -- columns: value, label
-\item Multi-variable mapping -- columns: var, value, label
-\item Row-split-aware mapping -- columns: <split_var>, value, label
-\item Row-split-aware + multi-variable mapping -- columns: <split_var>, var, value, label
+\item Simple mapping        -- columns: \code{value}, \code{label}
+\item Multi-variable mapping -- columns: \code{var}, \code{value}, \code{label}
+\item Row-split-aware mapping -- columns: <split_var>, \code{value}, \code{label}
+\item Row-split-aware + multi-variable mapping -- columns: <split_var>, \code{var}, \code{value}, \code{label}\cr\cr
+When the table is split by a row variable (e.g. SEX, PARAMCD), the map allows to apply custom labels
+for the levels of analyzed variable, conditionally on the value of the current row-split variable.
 }
+\strong{Recommendation}: ensure input variable(s) are of type factor, to avoid error of type
+"got a label map that doesn't provide labels for all values".\cr
 
 See examples for more details.}
 

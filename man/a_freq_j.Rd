@@ -182,16 +182,20 @@ It is recommended not to utilize this argument for other purposes.
 The label argument could be used instead (if \code{val} is a single string)\cr}
 
 \item{label_map}{(\code{tibble})\cr
-A mapping tibble to translate levels from the incoming variable(s) into
-a different row label to be presented on the table.\cr
+A mapping tibble used to translate levels of the input variable(s) into
+the row labels displayed in the table.\cr
 
 Four structural variants are supported:
 \enumerate{
-\item Simple mapping        -- columns: value, label
-\item Multi-variable mapping -- columns: var, value, label
-\item Row-split-aware mapping -- columns: <split_var>, value, label
-\item Row-split-aware + multi-variable mapping -- columns: <split_var>, var, value, label
+\item Simple mapping        -- columns: \code{value}, \code{label}
+\item Multi-variable mapping -- columns: \code{var}, \code{value}, \code{label}
+\item Row-split-aware mapping -- columns: <split_var>, \code{value}, \code{label}
+\item Row-split-aware + multi-variable mapping -- columns: <split_var>, \code{var}, \code{value}, \code{label}\cr\cr
+When the table is split by a row variable (e.g. SEX, PARAMCD), the map allows to apply custom labels
+for the levels of analyzed variable, conditionally on the value of the current row-split variable.
 }
+\strong{Recommendation}: ensure input variable(s) are of type factor, to avoid error of type
+"got a label map that doesn't provide labels for all values".\cr
 
 See examples for more details.}
 
@@ -438,7 +442,7 @@ lyt2 <- basic_table(
 result2 <- build_table(lyt2, adae, alt_counts_df = adsl)
 
 # -------------------------------------------------------------------------
-# Examples focusing on label_map
+# Examples using the label_map argument
 # -------------------------------------------------------------------------
 
 adsl <- ex_adsl |> select("USUBJID", "SEX", "ARM")
@@ -449,9 +453,8 @@ trtvar <- "ARM"
 adae <- adae |> left_join(adsl)
 
 # -------------------------------------------------------------------------
-# 1. Simple mapping
-#    Tibble with columns `value` and `label`.
-#    Remaps a factor levels (`value`) from a single variable to a custom new label (`label`).
+# 1. Simple mapping (dataframe with `value` and `label`)
+#    Remaps factor levels (`value`) to a custom new label (`label`).
 # -------------------------------------------------------------------------
 
 label_map_simple <- tribble(
@@ -476,9 +479,7 @@ result_lmap1 <- build_table(lyt_lmap1, adsl, alt_counts_df = adsl)
 result_lmap1
 
 # -------------------------------------------------------------------------
-# 2. Multi-variable mapping (with `var` column)
-#    When the same label_map tibble is passed to multiple analyze calls,
-#    add a `var` column so each row is applied only to its matching variable.
+# 2. Multi-variable mapping (extra `var` column)
 #    Useful in situations where multiple Y/N variables can be analyzed in one call.
 # -------------------------------------------------------------------------
 
@@ -486,21 +487,19 @@ multi_vars <- c("DTH30FL", "DTHA30FL", "DTHB30FL")
 adslx <- pharmaverseadamjnj::adsl
 # ensure the variables are factor with levels Y/N - and variable label is kept
 adslx <- adslx |>
-  mutate(across(all_of(multi_vars), ~ {
-    lbl <- attr(.x, "label")
-    out <- factor(.x, levels = c("Y", "N"))
-    attr(out, "label") <- lbl
-    out
-  }))
+  mutate(across(all_of(multi_vars), \(x) structure(
+    factor(x, levels = c("Y", "N")),
+    label = attr(x, "label")
+  )))
 
 map_multi <- data.frame(
   var = multi_vars,
   value = "Y",
-  label = vapply(multi_vars, function(v) {
-    lbl <- attr(adslx[[v]], "label")
-    if (is.null(lbl)) v else lbl
-  }, character(1)),
-  stringsAsFactors = FALSE
+  label = c(
+    "Death <=30D of Last Trt Flag",
+    "Death >30D from Last Trt Flag",
+    "Death <=30D of First Trt Flag"
+  )
 )
 
 basic_table(show_colcounts = TRUE) |>
@@ -516,52 +515,12 @@ basic_table(show_colcounts = TRUE) |>
   ) |>
   build_table(adslx)
 
-# other example
-
-advs_jnj <- pharmaverseadamjnj::advs |>
-  select("USUBJID", "TRT01A", "PARAMCD", "PARAM", "AVISIT", "AVAL", starts_with("CRIT"))
-adsl_jnj <- pharmaverseadamjnj::adsl |> select("USUBJID", "TRT01A")
-
-crits <- unique(advs_jnj |>
-  filter(PARAMCD \%in\% c("DIABP")) |>
-  select(CRIT1, CRIT2, CRIT3)) |>
-  tidyr::pivot_longer(cols = c("CRIT1", "CRIT2", "CRIT3")) |>
-  filter(!is.na(value)) |>
-  rename(
-    label = value,
-    var = name
-  ) |>
-  mutate(value = "Y") |>
-  mutate(across(where(is.factor), as.character))
-
-crits[["var"]] <- paste0(crits[["var"]], "FL")
-
-advs_jnj_bp <- advs_jnj |>
-  filter(PARAMCD == "DIABP")
-
-lyt_lmap2 <- basic_table(show_colcounts = TRUE) |>
-  split_cols_by("TRT01A") |>
-  analyze(c("CRIT1FL", "CRIT2FL", "CRIT3FL"),
-    afun = a_freq_j,
-    extra_args = list(
-      .stats = "count_unique_denom_fraction",
-      label_map = crits,
-      val = "Y"
-    ),
-    show_labels = "hidden"
-  )
-
-result_lmap2 <- build_table(lyt_lmap2, advs_jnj_bp, alt_counts_df = adsl_jnj)
-result_lmap2
 
 # -------------------------------------------------------------------------
-# 3. Row-split-aware mapping
-#    When the table is split by a row variable (e.g. SEX), add that
-#    variable as a column in label_map so that different labels are
-#    applied per split level.
+# 3. Row-split-aware mapping (column <split_var>)
 # -------------------------------------------------------------------------
 
-map3 <- tribble(
+map_rowsplit <- tribble(
   ~SEX, ~value, ~label,
   "M", "Y", "Male subjects with at least one TE AE",
   "F", "Y", "Female subjects with at least one TE AE"
@@ -579,7 +538,7 @@ lyt_lmap3 <- basic_table(show_colcounts = TRUE) |>
     afun = a_freq_j,
     extra_args = list(
       .stats = "count_unique_denom_fraction",
-      label_map = map3,
+      label_map = map_rowsplit,
       val = "Y"
     ),
     show_labels = "hidden"
@@ -588,25 +547,24 @@ lyt_lmap3 <- basic_table(show_colcounts = TRUE) |>
 result_lmap3 <- build_table(lyt_lmap3, adae, alt_counts_df = adsl)
 result_lmap3
 
-# -------------------------------------------------------------------------
-# 4. Row-split-aware mapping + Multi-variable mapping (with `var` column)
-#    When the table is split by a row variable (e.g. PARAMCD), add that
-#    variable as a column in label_map so that different labels are
-#    applied per split level for its matching variable.
-# -------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
+# 4. Row-split-aware mapping + Multi-variable mapping (<split_var> and `var` columns)
+# -----------------------------------------------------------------------------------
 
-crits4 <- unique(advs_jnj |>
-  select(PARAMCD, CRIT1, CRIT2, CRIT3)) |>
-  tidyr::pivot_longer(cols = c("CRIT1", "CRIT2", "CRIT3")) |>
-  filter(!is.na(value)) |>
-  rename(
-    label = value,
-    var = name
-  ) |>
-  mutate(value = "Y") |>
-  mutate(across(where(is.factor), as.character))
-
-crits4[["var"]] <- paste0(crits4[["var"]], "FL")
+map_multi_rowsplit <- data.frame(
+  PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
+  var = rep(c("CRIT1FL", "CRIT2FL", "CRIT3FL"), 2),
+  value = rep("Y", 6),
+  label =
+    c(
+      "<50 mmHg and with >20 mmHg decrease from baseline",
+      ">105 mmHg and with >30 mmHg increase from baseline",
+      "Diastolic blood pressure<60",
+      "<90 mmHg and with >30 mmHg decrease from baseline",
+      ">180 mmHg and with >40 mmHg increase from baseline",
+      "Systolic blood pressure<90"
+    )
+)
 
 lyt_lmap4 <- basic_table(show_colcounts = TRUE) |>
   split_cols_by("TRT01A") |>
@@ -615,7 +573,7 @@ lyt_lmap4 <- basic_table(show_colcounts = TRUE) |>
     afun = a_freq_j,
     extra_args = list(
       .stats = "count_unique_denom_fraction",
-      label_map = crits4,
+      label_map = map_multi_rowsplit,
       val = "Y"
     ),
     show_labels = "hidden"
