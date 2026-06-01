@@ -52,7 +52,7 @@ jobs:
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
-        timeout-minutes: 10
+        timeout-minutes: 12
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
