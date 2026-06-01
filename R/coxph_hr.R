@@ -1,7 +1,7 @@
 #' @name  coxph_hr
 #' @title coxph_hr
 #' @description coxph_hr `r lifecycle::badge("deprecated")` Use
-#'   `tern:::a_coxph_pairwise()` instead, and use `tern::coxph_pairwise()` as
+#'   `tern::s_coxph_pairwise` and `tern:::a_coxph_pairwise()` instead, and use `tern::coxph_pairwise()` as
 #'   the layout-level wrapper.
 #' @inheritParams odds_ratio
 #' @export
