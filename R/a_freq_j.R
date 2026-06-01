@@ -703,7 +703,9 @@ s_rel_risk_val_j <- function(
 #' # -----------------------------------------------------------------------------------
 #' # 4. Row-split-aware mapping + Multi-variable mapping (<split_var> and `var` columns)
 #' # -----------------------------------------------------------------------------------
-#'
+#' adsl_jnj <- pharmaverseadamjnj::adsl
+#' advs_jnj <- pharmaverseadamjnj::advs
+#' 
 #' map_multi_rowsplit <- data.frame(
 #'   PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
 #'   var = rep(c("CRIT1FL", "CRIT2FL", "CRIT3FL"), 2),
