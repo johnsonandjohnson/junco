@@ -1333,7 +1333,7 @@ tt_to_flextable_j <- function(
   # add indentation in Header
   for (i in seq_len(nr_header)) {
     leading_spaces_count <- nchar(hdr[i, 1]) -
-      nchar(stringi::stri_replace(hdr[i, 1], regex = "^ +", ""))
+      nchar(sub("^ +", "", hdr[i, 1]))
     # interpret every 2 leading whitespaces as 1 indentation level
     header_indent_size <- (leading_spaces_count / 2) * indent_size
     hdr[i, 1] <- trimws(x = hdr[i, 1], which = "left")

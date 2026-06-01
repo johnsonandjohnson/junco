@@ -56,8 +56,7 @@ Imports:
     flextable (>= 0.9.11),
     officer,
     xml2,
-    ggplot2,
-    stringi
+    ggplot2
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
