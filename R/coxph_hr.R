@@ -47,4 +47,3 @@ s_coxph_hr <- function(
     details = "Use `tern:::coxph_pairwise()` as the layout-level wrapper."
   )
 }
-
