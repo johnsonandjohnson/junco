@@ -126,7 +126,7 @@ make_rbmi_cluster <- function(
   }
 
   # Load user defined packages
-  packages <- c(packages, "assertthat", "junco")
+  packages <- c(packages, "junco")
   # Remove attempts to load `rbmi` as this will be covered later
   packages <- setdiff(packages, "rbmi")
   devnull <- parallel::clusterCall(
@@ -195,7 +195,6 @@ par_lapply <- function(cl, fun, x, ...) {
 #' the impute() function from the rbmi package) and runs an analysis function on
 #' each of them.
 #'
-#' @importFrom assertthat assert_that
 #'
 #' @details
 #' This function works by performing the following steps:
@@ -414,11 +413,8 @@ rbmi_analyse <- function(
   if (.validate) {
     rbmi::validate(imputations)
   }
-  assertthat::assert_that(is.function(fun), msg = "`fun` must be a function")
-  assertthat::assert_that(
-    is.null(delta) | is.data.frame(delta),
-    msg = "`delta` must be NULL or a data.frame"
-  )
+  checkmate::assert_function(fun)
+  checkmate::assert_data_frame(delta, null.ok = TRUE)
   vars <- imputations$data$vars
 
   if (.validate) {
@@ -427,12 +423,9 @@ rbmi_analyse <- function(
 
   if (!is.null(delta)) {
     expected_vars <- c(vars$subjid, vars$visit, "delta")
-    assertthat::assert_that(
-      all(expected_vars %in% names(delta)),
-      msg = sprintf(
-        "The following variables must exist witin `delta`: `%s`",
-        paste0(expected_vars, collapse = "`, `")
-      )
+    stopifnot(
+      "The following variables must exist within `delta`" =
+        all(expected_vars %in% names(delta))
     )
   }
 
