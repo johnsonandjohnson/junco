@@ -480,7 +480,7 @@ test_that("a_summarize_aval_chg_diff_j ancova in a combined column work as expec
       PARAMCD = droplevels(PARAMCD),
       AVISIT = droplevels(AVISIT)
     ) |>
-    left_join(adsl)
+    left_join(adsl, by = c("USUBJID", "ARM"))
 
   multivars <- c("AVAL", "AVAL", "CHG")
   extra_args_3col <- list(

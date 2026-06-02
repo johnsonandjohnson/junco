@@ -82,7 +82,7 @@ test_that("a_freq_j_with_exclude allows to exclude row split levels from the ana
 })
 
 test_that("a_freq_j in specific situation error for not passing alt_counts_df", {
-  library(dplyr)
+  suppressMessages(library(dplyr))
   trtvar <- "ARM"
   ctrl_grp <- "B: Placebo"
 
