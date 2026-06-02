@@ -12,6 +12,9 @@
 - Optimize shared tables in `test-tt_to_tblfile` (#323)
 - Changed forked `h_ancova` for the `tern` one
 - Removed ellipsis argument from `a_freq_resp_var_j` (#236) 
+- Removed `dplyr` from `junco` and replaced by base R #201
+- Replaced `assertthat` by `checkmate` for consistency #201
+- Remove `stringi` from dependencies #201
 - Deprecate `rbmi_analyse()`, `make_rbmi_cluster()`, `par_lapply()` for `rbmi` equivalent functions #367
 
 

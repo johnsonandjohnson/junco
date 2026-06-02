@@ -365,7 +365,7 @@ bspt_pruner <- function(
 
       checkmate::check_integerish(counts)
       # similarly check that pcts is indeed a percentage
-      if (!all(dplyr::between(pcts, 0, 1))) {
+      if (!all(pcts >= 0 & pcts <= 1)) {
         stop("second value column cell is not a percentage.")
       }
 
@@ -401,7 +401,7 @@ bspt_pruner <- function(
           # get percent from control group
           pct0 <- cell_values(tt_all_cols, colpath = c(control))[[1]][2]
 
-          if (!dplyr::between(pct0, 0, 1)) {
+          if (!(pct0 >= 0 && pct0 <= 1)) {
             stop("second value of control column cell is not a percentage.")
           }
         }

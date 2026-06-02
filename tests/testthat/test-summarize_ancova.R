@@ -649,11 +649,13 @@ test_that("a_summarize_ancova_j with multiple combined columns", {
     make_fake_adsl() |>
     select(USUBJID, TRT01A, SEX)
 
-  advs <- advs_jnj |>
-    filter(PARAMCD == "DIABP" & AVISIT == "Cycle 02") |>
-    borrow_records(adsl) |>
-    select(USUBJID, PARAMCD, AVISIT, AVAL, CHG, BASE) |>
-    inner_join(adsl, by = c("USUBJID"), multiple = "all")
+  invisible(capture.output(
+    advs <- advs_jnj |>
+      filter(PARAMCD == "DIABP" & AVISIT == "Cycle 02") |>
+      borrow_records(adsl) |>
+      select(USUBJID, PARAMCD, AVISIT, AVAL, CHG, BASE) |>
+      inner_join(adsl, by = c("USUBJID"), multiple = "all")
+  ))
 
   # nolint start
   combodf <- tribble(

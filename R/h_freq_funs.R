@@ -267,7 +267,7 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
       addi <- df[df[[.var]] %in% levii, ]
       addi[[.var]] <- new_levels[[1]][i]
 
-      df <- dplyr::bind_rows(df, addi)
+      df <- rbind(df, addi)
     }
   }
 

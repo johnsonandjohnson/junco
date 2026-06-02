@@ -244,7 +244,7 @@ test_that("a_freq_resp_var_j in layout with relative risk column for combined fa
     distinct(USUBJID, .keep_all = TRUE)
 
   adsl <- adsl |>
-    left_join(had_ae) |>
+    left_join(had_ae, by = "USUBJID") |>
     mutate(TRTEMFL = ifelse(is.na(TRTEMFL), "N", "Y"))
 
   colspan_trt_map <- create_colspan_map(
