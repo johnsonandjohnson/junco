@@ -1425,7 +1425,7 @@ a_freq_subcol_j <- function(
 
   .stats_adj <- .stats
 
-  res_prepinrows <- h_a_freq_prepinrows(
+  res_prepinrows <- junco:::h_a_freq_prepinrows(
     x_stats,
     .stats_adj,
     .formats,
