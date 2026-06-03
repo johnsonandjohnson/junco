@@ -51,7 +51,7 @@ names(deps[deps])
 ```
 
 ## Phase 3: Branching & Injection
-**5. Create the Branch & File:** In the `junco` GitHub repository, create a new branch strictly following this naming convention:
+**5. Create the Branch & File:** In the `junco` GitHub repository, create a new branch from `main` strictly following this naming convention:
 `feature/hotfix-<your-hotfix-name>`
 
 Save your hotfix files in the `dev/` folder. **File names must exactly match the target legacy version:**
