@@ -3,6 +3,7 @@
 ### Fixed
 - Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
+- CRITICAL: hotfixed `tt_to_tlgrtf()` lost titles in certain cases (#373)
 
 ### Changed
 - Removed `filter_df_prior_afun()`, `a_summary_diff_mvars()`, `a_summary_diff_mvars_label()`.
