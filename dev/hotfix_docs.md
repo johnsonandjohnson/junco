@@ -70,7 +70,7 @@ Save your hotfix files in the `dev/` folder. **File names must exactly match the
 **8. Update the Changelog:** Document the bug, the affected versions, and the functions modified inside `dev/hotfix_changelog.md`. 
 
 ## Phase 6: Update
-**9. Update the Template:** Go to the Bitbucket `jjcs_templates` repository, do a PR on the `main` branch, and paste in your new hotfix under the header fo the old version and uppate the date i.e. :
+**9. Update the Template:** Go to the Bitbucket `jjcs_templates` repository, do a PR on the `main` branch, and paste in your new hotfix under the header of the old version and update the date i.e.:
 
 
 ```
