@@ -6,12 +6,14 @@ Because we cannot rebuild and redeploy new package versions onto old containes, 
 
 ## Phase 1: The Mainline Fix
 **1. PM Approval:** A critical bug is identified in production. The Project Manager (PM) formally decides that a hotfix is necessary.
+
 **2. Mainline PR & Regression Testing:** The developer fixes the bug in the current `dev` branch via a standard Pull Request. 
 > **What is a Regression Test?** > When you fix a bug, you must add a specific unit test that proves the bug is fixed.
 > This is called a regression test because it ensures the codebase never "regresses" back to having this specific bug in the future.
 
 ## Phase 2: The Namespace Trap & Dependency Mapping
 **3. Percolate the Hotfix:** Once merged into the current working branch, the fix must be ported backwards to older legacy versions/containers.
+
 **4. Isolate Surgical Changes & Find Child Dependencies:** To hotfix an R package, we source a `.R` file into the Global Environment. However, R uses a **locked package namespace**. 
 
 If we fix function `a()`, and the package has an internal function `b()` that calls `a()`, the internal `b()` will ignore our hotfix and continue using the broken `a()` trapped inside the locked package. 
