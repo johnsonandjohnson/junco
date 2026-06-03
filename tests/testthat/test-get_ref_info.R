@@ -1,8 +1,3 @@
-library(testthat)
-library(rtables)
-library(dplyr)
-
-
 test_that("get_ref_info works with a df analysis function", {
   dm <- formatters::DM
   dm$colspan_trt <- factor(
@@ -205,4 +200,11 @@ test_that("get_ref_info works with a df in the presence of the overall column", 
     result_matrix[-1, c(1, 2, 4, 3, 5)],
     std_result_matrix
   )
+})
+
+test_that("get_ref_info returns NULL values when ref_path is NULL", {
+  res <- get_ref_info(NULL, .spl_context = data.frame())
+  exp <- list(ref_group = NULL, in_ref_col = NULL)
+
+  expect_identical(res, exp)
 })
