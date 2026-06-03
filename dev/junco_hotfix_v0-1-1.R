@@ -308,7 +308,7 @@ tt_to_tlgrtf <- function(
     colheader <- colinfo$colheader
   } else {
     mpf <- matrix_form(
-      utils::head(tt, 1),
+      rtables::head(tt, 1), #### TODO: hotfix #375 `tt_to_tlgrtf()` sometimes missed the titles (issue #373)
       indent_rownames = FALSE,
       expand_newlines = FALSE,
       fontspec = fontspec

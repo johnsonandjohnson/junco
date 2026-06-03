@@ -8,6 +8,7 @@
 # - Hotfix #221: Fixes a bug where a_freq_j fails with countsource = altdf in nested row splits #200 (introduced in junco v0.1.5)
 #         (applies to h_a_freq_dataprep, s_freq_j, and a_freq_j).
 # - Hotfix #257 `s_summarize_desc_j()` fixed when applied to almost constant data due to behavior from `t.test.default()` (introduced in junco v0.1.5)
+# - Hotfix #375 `tt_to_tlgrtf()` sometimes missed the titles (issue #373) (introduced in junco v0.1.6)
 # ==========================================
 
 
@@ -513,7 +514,7 @@ tt_to_tlgrtf <- function(
     colheader <- colinfo$colheader
   } else {
     mpf <- matrix_form(
-      utils::head(tt, 1),
+      rtables::head(tt, 1), #### TODO: hotfix #375 `tt_to_tlgrtf()` sometimes missed the titles (issue #373)
       indent_rownames = FALSE,
       expand_newlines = FALSE,
       fontspec = fontspec,
