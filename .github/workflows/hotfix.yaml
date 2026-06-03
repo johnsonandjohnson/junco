@@ -34,6 +34,6 @@ jobs:
   hotfix_v0-1-1:
      name: hotfix v0.1.1
      uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-1.yaml@dev
-  hotfix_v0-1-3_old:
+  hotfix_v0-1-3:
     name: hotfix v0.1.3
     uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-3.yaml@dev
