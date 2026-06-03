@@ -60,6 +60,7 @@ Save your hotfix files in the `dev/` folder. **File names must exactly match the
 
 ## Phase 4: CI Validation
 **6. Trigger the Pipeline:** Push your `feature/hotfix-*` branch to GitHub. This automatically triggers the Hotfix CI Pipeline, which will virtually inject your code into the legacy package and run the old test suite.
+
 **7. Handle Snapshot Failures:** If the pipeline fails, check the logs. It is usually caused by snapshot mismatches in the unit tests (since your hotfix changed the math, formatting, or output). 
 * Evaluate: Are these snapshot changes expected due to your fix? 
 * Discuss with the team. 
