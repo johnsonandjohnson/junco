@@ -1,7 +1,3 @@
-suppressPackageStartupMessages({
-  library(dplyr)
-})
-
 # s_diff_means ----
 
 ## data setup ----
@@ -330,15 +326,13 @@ test_that("s_diff_means errors for non-numeric input (factor)", {
 ## data setup ----
 
 advs_bp_blw12 <- local({
-  ex_advs |>
-    filter(
-      PARAMCD %in% c("DIABP", "SYSBP"),
-      AVISIT %in% c("BASELINE", "WEEK 1 DAY 8", "WEEK 2 DAY 15")
-    ) |>
-    mutate(
-      PARAMCD = droplevels(PARAMCD),
-      AVISIT = droplevels(AVISIT)
-    )
+  res <- subset(
+    ex_advs,
+    PARAMCD %in% c("DIABP", "SYSBP") & AVISIT %in% c("BASELINE", "WEEK 1 DAY 8", "WEEK 2 DAY 15")
+  )
+  res$PARAMCD <- droplevels(res$PARAMCD)
+  res$AVISIT <- droplevels(res$AVISIT)
+  res
 })
 
 advs2 <- local({
