@@ -212,6 +212,7 @@ test_that("make_rbmi_cluster loads rbmi namespaces correctly", {
 })
 
 test_that("Parallelisation works with rbmi_analyse and produces identical results", {
+  skip_on_cran()
   set.seed(4642)
   sigma <- as_vcov(
     c(2, 1, 0.7, 1.5),
