@@ -31,8 +31,9 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
 ---
 
 ## Hotfixes #165, #178, #221 and #257 - 2026-04-20
-**Author:** Technology Solutions  
-**Target Legacy Version(s):** v0.1.3  
+**Author:** Technology Solutions
+
+**Target Legacy Version(s):** v0.1.3
 
 ### The Bug
 * **Impact:** Users were unable to export optional CSVs alongside RTFs, empty listings were losing their titles during export, nested row splits were failing when using `countsource = altdf`, and label widths were not being respected across paginated tables. 
@@ -52,3 +53,28 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
 ### Testing & CI Notes
 * **Snapshot Changes:** Expected test modifications required to pass CI with the new patches.
     * `test-tt_to_tlgrtf.R`: Removed the test asserting that the CSV exists (line 202) to accommodate the new optional CSV logic.
+
+
+
+## Hotfix #375 - 2026-06-03
+**Author:** Technology Solutions
+
+**Target Legacy Version(s):** v0.1.6
+
+**Mainline PR:** [Link to the original fix merged into `dev`]  
+
+### The Bug
+* **Impact:** Users highlighted that in some situations, `tt_to_tlgrtf()` was not exporting the title.
+* **Root Cause:** internally, `tt_to_tlgrtf()` was calling `utils::head(tt, 1)`, which removes the title.
+
+### Surgical Changes
+* **Primary Function(s) Fixed:**
+    * `tt_to_tlgrtf()`:
+        * replaced `utils::head(tt, 1)` with `rtables::head(tt, 1)`
+
+### Testing & CI Notes
+* **Snapshot Changes:** None
+* **Runner Quirks:** None
+
+
+

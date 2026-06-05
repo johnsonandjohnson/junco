@@ -30,7 +30,9 @@ on:
 jobs:
   revdepcheck:
     name: revdepcheck 🧑‍🔬
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.chosen-workflow == 'revdepcheck' }}
     uses: johnsonandjohnson/actions/.github/workflows/revdepcheck.yaml@dev
   rhub:
     name: R-hub 🌐
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.chosen-workflow == 'rhub' }}
     uses: johnsonandjohnson/actions/.github/workflows/rhub.yaml@dev
