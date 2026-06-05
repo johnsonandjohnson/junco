@@ -14,6 +14,7 @@ s_eair100_levii_j(
   id = "USUBJID",
   diff = FALSE,
   conf_level = 0.95,
+  conf_type = c("wald", "waldcc", "mn", "scas"),
   trt_var = NULL,
   ctrl_grp = NULL,
   cur_trt_grp = NULL,
@@ -41,6 +42,7 @@ a_eair100_j(
   .indent_mods = NULL,
   na_str = rep("NA", 3),
   conf_level = 0.95,
+  conf_type = c("wald", "waldcc", "mn", "scas"),
   fup_var,
   occ_var,
   occ_dy,
@@ -63,6 +65,11 @@ a_eair100_j(
 \item{diff}{(\code{logical})\cr if TRUE, risk difference calculations will be performed.}
 
 \item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
+
+\item{conf_type}{(\code{string})\cr method used to compute the confidence interval for the EAIR difference.
+One of \code{"wald"} (Wald without continuity correction), \code{"waldcc"} (Wald with continuity correction),
+\code{"mn"} (Miettinen-Nurminen score), or \code{"scas"} (skewness-corrected asymptotic score).
+Defaults to \code{"wald"}.}
 
 \item{trt_var}{(\code{string})\cr treatment variable name.}
 
@@ -122,7 +129,8 @@ For example, use \code{1} for a rate per person-year or \code{1000} for a rate p
 \item eair: Exposure-adjusted incidence rate per \code{num_p_year} person-years
 \item n_eair: Combination of \code{n_event} and \code{eair} statistics.
 \item eair_diff: Difference in EAIR between current group and reference group
-(if \code{diff}=TRUE and \code{inriskdiffcol}=TRUE), together with it's Wald based confidence interval.
+(if \code{diff}=TRUE and \code{inriskdiffcol}=TRUE), together with its confidence interval
+computed using the method specified by \code{conf_type}.
 }\cr
 The list of available statistics (core columns) can also be viewed by
 running \code{junco_get_stats("a_eair100_j")}.

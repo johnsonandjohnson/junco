@@ -234,6 +234,10 @@ NULL
 #' @param id (`string`)\cr subject variable name.
 #' @param diff (`logical`)\cr if TRUE, risk difference calculations will be performed.
 #' @param conf_level (`proportion`)\cr confidence level of the interval.
+#' @param conf_type (`string`)\cr method used to compute the confidence interval for the EAIR difference.
+#'   One of `"wald"` (Wald without continuity correction), `"waldcc"` (Wald with continuity correction),
+#'   `"mn"` (Miettinen-Nurminen score), or `"scas"` (skewness-corrected asymptotic score).
+#'   Defaults to `"wald"`.
 #' @param trt_var (`string`)\cr treatment variable name.
 #' @param ctrl_grp (`string`)\cr control group value.
 #' @param cur_trt_grp (`string`)\cr current treatment group value.
@@ -264,7 +268,8 @@ NULL
 #'   \item eair: Exposure-adjusted incidence rate per `num_p_year` person-years
 #'   \item n_eair: Combination of `n_event` and `eair` statistics.
 #'   \item eair_diff: Difference in EAIR between current group and reference group
-#'    (if `diff`=TRUE and `inriskdiffcol`=TRUE), together with it's Wald based confidence interval.
+#'    (if `diff`=TRUE and `inriskdiffcol`=TRUE), together with its confidence interval
+#'    computed using the method specified by `conf_type`.
 #' }\cr
 #' The list of available statistics (core columns) can also be viewed by
 #' running `junco_get_stats("a_eair100_j")`.
@@ -335,6 +340,7 @@ s_eair100_levii_j <- function(
   diff = FALSE,
   # treatment/ref group related arguments
   conf_level = 0.95,
+  conf_type = c("wald", "waldcc", "mn", "scas"),
   trt_var = NULL,
   ctrl_grp = NULL,
   cur_trt_grp = NULL,
@@ -344,6 +350,7 @@ s_eair100_levii_j <- function(
   occ_dy,
   num_p_year = 100
 ) {
+  conf_type <- match.arg(conf_type)
   if (diff && inriskdiffcol) {
     .alt_df_full_cur_group <- get_ctrl_subset(
       .alt_df_full,
@@ -370,18 +377,15 @@ s_eair100_levii_j <- function(
   ### statistics derivation
   cur_AECOUNT <- length(unique(cur_df_num[[id]]))
   cur_YRSFUP <- sum(cur_df_denom[["mod_fup_var"]])
-  cur_eair <- num_p_year * cur_AECOUNT / cur_YRSFUP
-  cur_n_eair <- c(cur_AECOUNT, cur_eair)
-  cur_eair <- num_p_year * cur_AECOUNT / cur_YRSFUP
-  cur_n_eair <- c(cur_AECOUNT, cur_eair)
+  x1 <- cur_AECOUNT
+  n1 <- cur_YRSFUP
+  cur_eair <- num_p_year * x1 / n1
+  cur_n_eair <- c(x1, cur_eair)
 
   x <- list()
   eair_lbl <- paste0("eair (per ", num_p_year, " person years)")
-  eair_lbl <- paste0("eair (per ", num_p_year, " person years)")
-  x$n_event <- c("n_event" = cur_AECOUNT)
-  x$person_years <- c("person_years" = cur_YRSFUP)
-  x$eair <- stats::setNames(c("eair" = cur_eair), eair_lbl)
-  x$n_eair <- stats::setNames(c("n_eair" = cur_n_eair), c("n_event", eair_lbl))
+  x$n_event <- c("n_event" = x1)
+  x$person_years <- c("person_years" = n1)
   x$eair <- stats::setNames(c("eair" = cur_eair), eair_lbl)
   x$n_eair <- stats::setNames(c("n_eair" = cur_n_eair), c("n_event", eair_lbl))
 
@@ -419,23 +423,20 @@ s_eair100_levii_j <- function(
     ### statistics derivation
     ref_AECOUNT <- length(unique(ref_df_num[[id]]))
     ref_YRSFUP <- sum(ref_df_denom[["mod_fup_var"]])
-    ref_eair <- num_p_year * ref_AECOUNT / ref_YRSFUP
-    ref_n_eair <- c(ref_AECOUNT, ref_eair)
-    ref_eair <- num_p_year * ref_AECOUNT / ref_YRSFUP
-    ref_n_eair <- c(ref_AECOUNT, ref_eair)
+    x2 <- ref_AECOUNT
+    n2 <- ref_YRSFUP
+
+    ref_eair <- num_p_year * x2 / n2
+    ref_n_eair <- c(x2, ref_eair)
 
     rdiff <- cur_eair - ref_eair
-
-    se <- sqrt(cur_AECOUNT / cur_YRSFUP^2 + ref_AECOUNT / ref_YRSFUP^2) * num_p_year
-    se <- sqrt(cur_AECOUNT / cur_YRSFUP^2 + ref_AECOUNT / ref_YRSFUP^2) * num_p_year
-
-    coeff <- stats::qnorm((1 + conf_level) / 2)
-    lcl <- rdiff - (coeff * se)
-    ucl <- rdiff + (coeff * se)
-    lcl <- rdiff - (coeff * se)
-    ucl <- rdiff + (coeff * se)
-
-    eair_diff <- c(rdiff, lcl, ucl)
+    eair_diff_est <- h_s_eair_diff(x1, n1,
+      x2, n2,
+      conf_type = conf_type,
+      conf_level = conf_level
+    )
+    # combine est of difference with its ci
+    eair_diff <- num_p_year * c(eair_diff_est$diff_est, eair_diff_est$diff_lcl, eair_diff_est$diff_ucl)
 
     x$eair_diff <- stats::setNames(
       c("eair_diff" = eair_diff),
@@ -566,11 +567,13 @@ a_eair100_j <- function(
   na_str = rep("NA", 3),
   # treatment/ref group related arguments
   conf_level = 0.95,
+  conf_type = c("wald", "waldcc", "mn", "scas"),
   fup_var,
   occ_var,
   occ_dy,
   num_p_year = 100
 ) {
+  conf_type <- match.arg(conf_type)
   ## prepare for column based split
   col_expr <- .spl_context$cur_col_expr[[1]]
   ## colid can be used to figure out if we're in the relative risk columns or not
@@ -667,6 +670,7 @@ a_eair100_j <- function(
       .alt_df_full = .alt_df_full,
       # treatment/ref group related arguments
       conf_level = conf_level,
+      conf_type = conf_type,
       trt_var = trt_var,
       ctrl_grp = ctrl_grp,
       cur_trt_grp = cur_trt_grp
