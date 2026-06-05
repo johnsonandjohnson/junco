@@ -72,26 +72,31 @@
 #'
 #' build_table(lyt, dm)
 get_ref_info <- function(ref_path, .spl_context, .var = NULL) {
-  checkmate::check_character(ref_path, min.len = 2L, names = "unnamed")
-  checkmate::assert_true(length(ref_path) %% 2 == 0) # Even number of elements in ref_path.
+  if (is.null(ref_path)) {
+    return(list(ref_group = NULL, in_ref_col = NULL))
+  }
 
-  leaf_sp <- .spl_context[nrow(.spl_context), ]
+  checkmate::assert_character(ref_path, min.len = 2L, names = "unnamed")
+  checkmate::assert_true(length(ref_path) %% 2 == 0)
+  checkmate::assert_data_frame(.spl_context)
 
-  colvars_indices <- seq(from = 1L, to = length(ref_path) - 1L, by = 2L)
-  is_ref_in_colvars <- identical(leaf_sp$cur_col_split[[1]], ref_path[colvars_indices])
+  leaf_sc <- .spl_context[nrow(.spl_context), ]
+  vars_indices <- seq(from = 1L, to = length(ref_path) - 1L, by = 2L)
+  level_indices <- seq(from = 2L, to = length(ref_path), by = 2L)
+  ref_path_levels <- paste(ref_path[level_indices], collapse = ".")
+
+  # If ref_path variables are outside of the current column split variable.
+  is_ref_in_colvars <- identical(leaf_sc$cur_col_split[[1]], ref_path[vars_indices])
   if (!is_ref_in_colvars) {
     return(list(ref_group = NULL, in_ref_col = NULL))
   }
 
-  level_indices <- seq(from = 2L, to = length(ref_path), by = 2L)
-
   # Prepare in_ref_col.
-  in_ref_col <- identical(leaf_sp$cur_col_split_val[[1]], ref_path[level_indices])
+  in_ref_col <- identical(leaf_sc$cur_col_split_val[[1]], ref_path[level_indices])
 
   # Prepare ref_group.
-  full_df <- leaf_sp$full_parent_df[[1]]
-  ref_path_levels <- paste(ref_path[level_indices], collapse = ".")
-  row_in_ref_group <- leaf_sp[[ref_path_levels]][[1]]
+  full_df <- leaf_sc$full_parent_df[[1]]
+  row_in_ref_group <- leaf_sc[[ref_path_levels]][[1]]
   ref_group <- full_df[row_in_ref_group, ]
   if (!is.null(.var)) {
     ref_group <- ref_group[[.var]]

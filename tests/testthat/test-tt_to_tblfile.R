@@ -457,3 +457,91 @@ test_that("label_width_ins in tt_to_tlgrtf adjusts the width of the first column
   # 0.5 inches is approx 707 twips
   expect_true(grepl("cellx707", rtf_raw[6]))
 })
+
+test_that("tt_to_tlgrtf doesn't lose titles", {
+
+  tblid <- "test"
+  fileid <- file.path(tempdir(), tblid)
+
+  popfl <- "SAFFL"
+  trtvar <- "ARM"
+  adsl <- ex_adsl |>
+    mutate(
+      !!rlang::sym(trtvar) := factor(
+        .data[[trtvar]],
+        levels = c("Dummy A - Tec-DR", "Dummy B - Tal-DR", "Dummy C - DRd")
+      ),
+      SEX = factor(
+        case_when(SEX == "M" ~ "Male", SEX == "F" ~ "Female", TRUE ~ SEX),
+        levels = c("Male", "Female", "Untersex", "Unknown")
+      )
+    )
+  adae <- ex_adae |>
+    mutate(
+      !!rlang::sym(trtvar) := factor(
+        .data[[trtvar]],
+        levels = c("Dummy A - Tec-DR\t", "Dummy B - Tal-DR", "Dummy C - DRd")
+      ),
+      SEX = factor(
+        case_when(SEX == "M" ~ "Male", SEX == "F" ~ "Female", TRUE ~ SEX),
+        levels = c("Male", "Female", "Untersex", "Unknown")
+      )
+    )
+  adsl <- adsl |>
+    filter(!!rlang::sym(popfl) == "Y") |>
+    create_colspan_var(
+      non_active_grp          = NULL,
+      non_active_grp_span_lbl = NULL,
+      active_grp_span_lbl     = "Active Study Agent",
+      colspan_var             = "colspan_trt",
+      trt_var                 = trtvar
+    ) |>
+    select(
+      USUBJID,
+      !!rlang::sym(popfl),
+      !!rlang::sym(trtvar),
+      colspan_trt
+    )
+
+  adae <- adae |>
+    mutate(TRTEMFL = "Y") |>
+    filter(TRTEMFL == "Y") |>
+    mutate(TEAEFL = "Y", RELGR1 = "Y") |>
+    select(USUBJID, TEAEFL, RELGR1) |>
+    group_by(USUBJID)
+
+  adae <- inner_join(adae, adsl, by = c("USUBJID"))
+  colspan_trt_map <- create_colspan_map(
+    adsl,
+    non_active_grp          = NULL,
+    non_active_grp_span_lbl = NULL,
+    active_grp_span_lbl     = "Active Study Agent",
+    colspan_var             = "colspan_trt",
+    trt_var                 = trtvar
+  )
+  lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx") |>
+    append_topleft(c(" ", " ", "Event, n (%)")) |>
+    split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
+    split_cols_by(trtvar) |>
+    add_overall_col("Total")
+
+  lyt <- lyt |>
+    analyze("TEAEFL", afun = a_freq_j, nested = FALSE, show_labels = "hidden",
+            extra_args = list(label  = "Any TEAE", val = "Y",
+                              .stats = c("count_unique_fraction"))) |>
+    analyze("RELGR1", afun = a_freq_j, nested = FALSE, show_labels = "hidden",
+            extra_args = list(label  = "At least one related",
+                              val = "Y", .stats = c("count_unique_fraction")))
+
+  adae_combined <- bind_rows(adae |> ungroup() |> mutate(AETOXGR_MAX = NA_character_))
+  result <- build_table(lyt, round_type = "sas", adae_combined, alt_counts_df = adsl)
+  main_title(result) <- "Test title"
+  tt_to_tlgrtf(string_map = NULL, tt = result, file = fileid,
+               orientation = "landscape", paginate = FALSE,
+               combined_rtf = FALSE, one_table = FALSE)
+
+  # read the output and check that the title isn't missing
+  suppressWarnings(rtf_raw <- readLines(paste0(fileid, ".rtf")))
+  expect_true(grepl("test:\\\\tab Test title", rtf_raw[10]))
+
+})

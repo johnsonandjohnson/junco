@@ -6,12 +6,14 @@ Because we cannot rebuild and redeploy new package versions onto old containes, 
 
 ## Phase 1: The Mainline Fix
 **1. PM Approval:** A critical bug is identified in production. The Project Manager (PM) formally decides that a hotfix is necessary.
+
 **2. Mainline PR & Regression Testing:** The developer fixes the bug in the current `dev` branch via a standard Pull Request. 
 > **What is a Regression Test?** > When you fix a bug, you must add a specific unit test that proves the bug is fixed.
 > This is called a regression test because it ensures the codebase never "regresses" back to having this specific bug in the future.
 
 ## Phase 2: The Namespace Trap & Dependency Mapping
 **3. Percolate the Hotfix:** Once merged into the current working branch, the fix must be ported backwards to older legacy versions/containers.
+
 **4. Isolate Surgical Changes & Find Child Dependencies:** To hotfix an R package, we source a `.R` file into the Global Environment. However, R uses a **locked package namespace**. 
 
 If we fix function `a()`, and the package has an internal function `b()` that calls `a()`, the internal `b()` will ignore our hotfix and continue using the broken `a()` trapped inside the locked package. 
@@ -49,8 +51,8 @@ names(deps[deps])
 ```
 
 ## Phase 3: Branching & Injection
-**5. Create the Branch & File:** In the `junco` GitHub repository, create a new branch strictly following this naming convention:
-`feature/hotfix-<your-hotfix-name>`
+**5. Create the Branch & File:** In the `junco` GitHub repository, create a new branch from `main` strictly following this naming convention:
+`feature/hotfix-<your-hotfix-name>`. For example: `feature/hotfix-lost_titles_tt_to_tlgrtf`.
 
 Save your hotfix files in the `dev/` folder. **File names must exactly match the target legacy version:**
 * `dev/junco_hotfix_v0-1-1.R`
@@ -58,6 +60,7 @@ Save your hotfix files in the `dev/` folder. **File names must exactly match the
 
 ## Phase 4: CI Validation
 **6. Trigger the Pipeline:** Push your `feature/hotfix-*` branch to GitHub. This automatically triggers the Hotfix CI Pipeline, which will virtually inject your code into the legacy package and run the old test suite.
+
 **7. Handle Snapshot Failures:** If the pipeline fails, check the logs. It is usually caused by snapshot mismatches in the unit tests (since your hotfix changed the math, formatting, or output). 
 * Evaluate: Are these snapshot changes expected due to your fix? 
 * Discuss with the team. 
@@ -67,7 +70,7 @@ Save your hotfix files in the `dev/` folder. **File names must exactly match the
 **8. Update the Changelog:** Document the bug, the affected versions, and the functions modified inside `dev/hotfix_changelog.md`. 
 
 ## Phase 6: Update
-**9. Update the Template:** Go to the Bitbucket `jjcs_templates` repository, do a PR on the `main` branch, and paste in your new hotfix under the header fo the old version and uppate the date i.e. :
+**9. Update the Template:** Go to the Bitbucket `jjcs_templates` repository, do a PR on the `main` branch, and paste in your new hotfix under the header of the old version and update the date i.e.:
 
 
 ```

@@ -19,6 +19,6 @@ par_lapply(cl, fun, x, ...)
 \code{list} of results of calling \code{fun} on elements of \code{x}.
 }
 \description{
-Simple wrapper around \code{lapply} and \code{\link[parallel:clusterApply]{parallel::clusterApplyLB}} to abstract away
-the logic of deciding which one to use.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This internal helper is no longer exported.
+Use \code{rbmi::analyse()} directly.
 }

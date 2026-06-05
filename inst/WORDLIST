@@ -30,7 +30,6 @@ MMRM
 Miettinen
 Nurminen
 PARAMCD
-Parallelisation
 Parallelise
 RBMI
 RTF
@@ -53,9 +52,7 @@ altdf
 analyse
 analysing
 ancova
-approxbayes
 args
-bayes
 bugfix
 cfuns
 chisq
@@ -73,6 +70,7 @@ colwidths
 combosdf
 comparator
 comparators
+coxph
 csv
 customizations
 dataprep
@@ -81,7 +79,6 @@ datasplit
 denom
 desc
 df
-dfs
 dirname
 docx
 dps
@@ -103,6 +100,7 @@ goto
 grepl
 hardcoding
 hotfix
+hotfixed
 https
 ie
 iec
@@ -127,11 +125,7 @@ multivar
 multivars
 n's
 na
-optimisation
-optimised
 parallelisation
-parallelise
-parallelising
 parentdf
 pathin
 pkgdown
@@ -180,7 +174,6 @@ trt
 trtvar
 tt
 uc
-coxph
 unicodify
 unlist
 unrounded

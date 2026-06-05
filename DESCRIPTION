@@ -42,7 +42,6 @@ Imports:
     rbmi (>= 1.6.0),
     broom,
     methods,
-    dplyr,
     generics,
     stats,
     survival,
@@ -50,14 +49,12 @@ Imports:
     utils,
     emmeans,
     mmrm,
-    assertthat,
     vcdExtra (>= 0.8.7),
     rtables.officer (>= 0.1.0),
     flextable (>= 0.9.11),
     officer,
     xml2,
-    ggplot2,
-    stringi
+    ggplot2
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
@@ -75,7 +72,8 @@ Suggests:
     tidyr,
     pharmaverseadamjnj (>= 0.0.2),
     multcomp,
-    lifecycle
+    lifecycle,
+    dplyr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:

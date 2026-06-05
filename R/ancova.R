@@ -82,7 +82,8 @@ fit_ancova <- function(
       emmeans_res <- h_get_emmeans_res(fit, vars = vars["arm"], weights = weights_emmeans)
       estimates <- h_get_single_visit_estimates(emmeans_res, conf_level)
       estimates[[vars$visit]] <- grid[[vars$visit]]
-      estimates <- estimates |> dplyr::relocate(!!vars$arm, !!vars$visit)
+      estimates <- estimates[, c(vars$arm, vars$visit,
+                                 setdiff(names(estimates), c(vars$arm, vars$visit))), drop = FALSE]
       contrasts <- h_get_spec_visit_estimates(
         emmeans_res,
         specs = list(

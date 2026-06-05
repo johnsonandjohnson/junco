@@ -17,7 +17,7 @@ h_get_eair_df <- function(levii, df, denom_df, .var, id, occ_var, occ_dy, fup_va
 
   if (!is.null(occ_var)) {
     ### add vars from df_num onto df_denom
-    df_denom <- dplyr::left_join(df_denom, df_num, by = id)
+    df_denom <- merge(df_denom, df_num, by = id, all.x = TRUE)
 
     # subjects in numerator dataset, use occ_dy variable/365.25
     id_to_update <- df_denom[[id]] %in% df_num[[id]]

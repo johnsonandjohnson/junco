@@ -16,34 +16,8 @@ Number of parallel processes to use or an existing cluster to make use of}
 A character vector of libraries to load in the sub-processes}
 }
 \value{
-\itemize{
-\item If \code{cluster_or_cores} is \code{1}, this function will return \code{NULL}.
-\item If \code{cluster_or_cores} is a number greater than \code{1},
-a cluster with \code{cluster_or_cores} cores is returned.
-\item If \code{cluster_or_cores} is a cluster created via \code{parallel::makeCluster()},
-then this function returns it after inserting the relevant \code{rbmi} objects
-into the existing cluster.
-}
+See \code{rbmi::make_rbmi_cluster()}.
 }
 \description{
-This function is a wrapper around \code{parallel::makePSOCKcluster()} but takes
-care of configuring \code{rbmi} to be used in the sub-processes as well as loading
-user defined objects and libraries and setting the seed for reproducibility.
-}
-\examples{
-\dontrun{
-make_rbmi_cluster(5)
-closeAllConnections()
-
-VALUE <- 5
-myfun <- function(x) {
-  x + day(VALUE)
-}
-make_rbmi_cluster(5, list(VALUE = VALUE, myfun = myfun), c("lubridate"))
-closeAllConnections()
-
-cl <- parallel::makeCluster(5)
-make_rbmi_cluster(cl)
-closeAllConnections()
-}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{rbmi::make_rbmi_cluster()} instead.
 }
