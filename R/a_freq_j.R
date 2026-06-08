@@ -709,7 +709,7 @@ s_rel_risk_val_j <- function(
 #'
 #' map_multi_rowsplit <- data.frame(
 #'   PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
-#'   var = rep(cmulti__vars, 2),
+#'   var = rep(multi__vars, 2),
 #'   value = rep("Y", 6),
 #'   label = c(
 #'             "<50 mmHg and with >20 mmHg decrease from baseline",
