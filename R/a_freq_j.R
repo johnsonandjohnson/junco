@@ -663,8 +663,8 @@ s_rel_risk_val_j <- function(
 #'       val = "Y"
 #'     ),
 #'     show_labels = "hidden"
-#'   ) 
-#' 
+#'   )
+#'
 #'   result_lmap2 <- build_table(lyt_lmap1, adslx)
 #'   result_lmap2
 #'

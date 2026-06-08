@@ -510,7 +510,7 @@ lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
       val = "Y"
     ),
     show_labels = "hidden"
-  ) 
+  )
 
   result_lmap2 <- build_table(lyt_lmap1, adslx)
   result_lmap2
