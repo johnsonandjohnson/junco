@@ -118,60 +118,99 @@ add_blank_line_rcells <- function(ret) {
   fret
 }
 
-#' @title Prepend Label Row to Analysis Output
+#' @title Prepend a Label Row to a RowsVerticalSection Object
 #'
-#' @description `r lifecycle::badge("experimental")`
+#' @description `r lifecycle::badge("stable")`
 #'
-#' Adds a label row at the beginning of analysis output objects, such as
-#' `CellValue`, `list` of `CellValue`s, or `RowsVerticalSection` objects.
-#' These objects are returned by analysis functions used within the **rtables**
-#' framework and are typically created via [rtables::rcell()] or
-#' [rtables::in_rows()] functions.
+#' Prepends a label row to a `RowsVerticalSection` object.
 #'
-#' This is typically used to introduce section headers
-#' (e.g., "Descriptive Statistics") in tabular or reporting outputs.
+#' `RowsVerticalSection` objects are returned by analysis functions used within
+#' the **rtables** framework and are typically created with
+#' [rtables::in_rows()].
 #'
-#' @note If `x` is of class `RowsVerticalSection`, the attributes
-#' `row_formats`, `row_na_strs`, and `row_footnotes` are not preserved.
+#' This function is typically used to introduce section headers
+#' (e.g., "Descriptive Statistics") in tabular reports and other reporting
+#' outputs.
 #'
-#' @param x (`list` or `CellValue` or `RowsVerticalSection`)\cr
-#'   Analysis result object.
-#' @param label (`character(1)`)\cr Label to be inserted as the first row.
-#' @param label_indent_mod (`integer(1)`)\cr Indentation level applied to the
-#'   label row.
+#' @note The `row_na_strs` and `row_footnotes` attributes of the
+#'   `RowsVerticalSection` object are not preserved.
+#'   Since an additional row is added, be aware of recycling rules; that is,
+#'   the length of all attributes of `x` should be equal to `length(x)`.
 #'
-#' @returns A `RowsVerticalSection` object with the label row prepended.
+#' @param x (`RowsVerticalSection`)\cr Analysis result object.
+#' @param label (`character(1)`)\cr Label to insert as the first row.
+#' @param label_indent_mod (`integer(1)`)\cr Indentation modifier applied to
+#'   the label row.
+#'
+#' @returns A `RowsVerticalSection` object with a label row prepended.
 #'
 #' @importFrom rtables rcell in_rows
 #'
 #' @export
 #'
 #' @examples
-#' rvs <- rtables::in_rows(Mean = rtables::rcell(5), Range = rtables::rcell(c(1, 8)))
-#' prepend_label_cell(rvs, "Descriptive Statistics", label_indent_mod = 1L)
+#' rvs <- rtables::in_rows(
+#'   Mean = rtables::rcell(5),
+#'   Range = rtables::rcell(c(1, 8))
+#' )
+#'
+#' prepend_label_cell(
+#'   rvs,
+#'   "Descriptive Statistics",
+#'   label_indent_mod = 1L
+#' )
 #'
 prepend_label_cell <- function(x, label = "", label_indent_mod = 0L) {
-  checkmate::check_multi_class(x, c("list", "CellValue", "RowsVerticalSection"))
-  if (is.list(x)) {
-    checkmate::assert_list(x, types = "CellValue", any.missing = FALSE)
-  }
+  checkmate::assert_class(x, "RowsVerticalSection")
   checkmate::assert_string(label, na.ok = TRUE)
   checkmate::assert_int(label_indent_mod)
+  checkmate::assert_true(
+    !("__label" %in% c(names(x), attr(x, "row_names")))
+  )
 
-  if (is(x, "CellValue")) {
-    label_rcell <- rtables::rcell(NULL, label = label, indent_mod = label_indent_mod)
-    list(label_rcell, x)
-  } else if (is(x, "list")) {
-    label_rcell <- rtables::rcell(NULL, label = label, indent_mod = label_indent_mod)
-    c(list(label_rcell), x)
-  } else if (is(x, "RowsVerticalSection")) {
-    ret <- rtables::in_rows(.list = c(list(NULL), x))
-    if (is.null(attr(x, "indent_mods"))) {
-      attr(ret[[1]], "indent_mod") <- label_indent_mod
+  label_rcell <- rcell(NULL, label = label, indent_mod = label_indent_mod)
+  ret <- rtables::in_rows(
+    .list = c(list("__label" = label_rcell), x)
+  )
+
+  # row_names
+  x_rn <- attr(x, "row_names")
+  if (!is.null(x_rn)) {
+    label_rn <- if (!is.null(names(x_rn))) {
+      c("__label" = "__label")
     } else {
-      attr(ret, "indent_mods") <- c(label_indent_mod, attr(x, "indent_mods"))
+      "__label"
     }
-    attr(ret, "row_labels") <- c(label, attr(x, "row_labels"))
-    ret
+    attr(ret, "row_names") <- c(label_rn, x_rn)
   }
+
+  # row_labels
+  x_rl <- attr(x, "row_labels")
+  if (!is.null(x_rl)) {
+    label_rl <- if (!is.null(names(x_rl))) {
+      c("__label" = label)
+    } else {
+      label
+    }
+    attr(ret, "row_labels") <- c(label_rl, x_rl)
+  }
+
+  # row_formats
+  x_rf <- attr(x, "row_formats")
+  if (length(x_rf) >= 2 || !is.null(x_rf[[1]])) {
+    attr(ret, "row_formats") <- c("__label" = list(NULL), x_rf)
+  }
+
+  # indent_mods
+  x_im <- attr(x, "indent_mods")
+  if (!is.null(x_im)) {
+    label_im <- if (!is.null(names(x_im))) {
+      c("__label" = label_indent_mod)
+    } else {
+      label_indent_mod
+    }
+    attr(ret, "indent_mods") <- c(label_im, x_im)
+  }
+
+  ret
 }
