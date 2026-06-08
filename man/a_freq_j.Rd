@@ -181,20 +181,21 @@ a \code{cfun} in a \code{summarize_row_groups} call.\cr
 It is recommended not to utilize this argument for other purposes.
 The label argument could be used instead (if \code{val} is a single string)\cr}
 
-\item{label_map}{(\code{tibble})\cr
-A mapping tibble used to translate levels of the input variable(s) into
-the row labels displayed in the table.\cr
+\item{label_map}{(\code{data.frame})\cr
+A mapping data frame used to translate levels of the analysis variable(s) into
+the row labels displayed in the table, optionally conditioned on the nearest row-split.\cr
 
-Four structural variants are supported:
+Four types of mappings are supported:
 \enumerate{
-\item Simple mapping        -- columns: \code{value}, \code{label}
-\item Multi-variable mapping -- columns: \code{var}, \code{value}, \code{label}
-\item Row-split-aware mapping -- columns: <split_var>, \code{value}, \code{label}
-\item Row-split-aware + multi-variable mapping -- columns: <split_var>, \code{var}, \code{value}, \code{label}\cr\cr
-When the table is split by a row variable (e.g. SEX, PARAMCD), the map allows to apply custom labels
-for the levels of analyzed variable, conditionally on the value of the current row-split variable.
+\item Single-variable mapping. Column names: \code{level}, \code{label}.
+\item Multi-variable mapping. Column names: \code{var}, \code{level}, \code{label}.
+\item Conditional-on-row-split mapping. Column names: \verb{<split_var>}, \code{level}, \code{label}.
+\item Conditional-on-row-split multi-variable mapping. Column names: \verb{<split_var>}, \code{var}, \code{level}, \code{label}.
 }
-\strong{Recommendation}: ensure input variable(s) are of type factor, to avoid error of type
+Here, \verb{<split_var>} is a placeholder for the name of the variable used for the nearest row-split
+(e.g. \code{SEX}, \code{PARAMCD}).\cr
+
+\strong{Recommendation}: ensure input variable(s) are of type factor, to avoid the error
 "got a label map that doesn't provide labels for all values".\cr
 
 See examples for more details.}
@@ -457,12 +458,9 @@ adae <- adae |> left_join(adsl)
 #    Remaps factor levels (`value`) to a custom new label (`label`).
 # -------------------------------------------------------------------------
 
-label_map_simple <- tribble(
-  ~value, ~label,
-  "M", "Male",
-  "F", "Female",
-  "UNDIFFERENTIATED", "Undifferentiated",
-  "U", "Unknown"
+label_map_simple <- data.frame(
+ value = c("M", "F", "UNDIFFERENTIATED", "U"),
+ label = c("Male", "Female", "Undifferentiated", "Unknown")
 )
 
 lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
@@ -517,13 +515,13 @@ basic_table(show_colcounts = TRUE) |>
 
 
 # -------------------------------------------------------------------------
-# 3. Row-split-aware mapping (column <split_var>)
+# 3. Conditional-on-row-split mapping (column <split_var>)
 # -------------------------------------------------------------------------
 
-map_rowsplit <- tribble(
-  ~SEX, ~value, ~label,
-  "M", "Y", "Male subjects with at least one TE AE",
-  "F", "Y", "Female subjects with at least one TE AE"
+map_rowsplit <- data.frame(
+  SEX = c("M", "F"),
+  value = c("Y", "Y"),
+  label = c("Male subjects with at least one TE AE", "Female subjects with at least one TE AE")
 )
 
 adsl <- ex_adsl |> select("USUBJID", "ARM", "SEX")
@@ -548,24 +546,25 @@ result_lmap3 <- build_table(lyt_lmap3, adae, alt_counts_df = adsl)
 result_lmap3
 
 # -----------------------------------------------------------------------------------
-# 4. Row-split-aware mapping + Multi-variable mapping (<split_var> and `var` columns)
+# 4. Conditional-on-row-split multi-variable mapping (<split_var> and `var` columns)
 # -----------------------------------------------------------------------------------
 adsl_jnj <- pharmaverseadamjnj::adsl
 advs_jnj <- pharmaverseadamjnj::advs
 
+multi__vars <- c("CRIT1FL", "CRIT2FL", "CRIT3FL")
+
 map_multi_rowsplit <- data.frame(
   PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
-  var = rep(c("CRIT1FL", "CRIT2FL", "CRIT3FL"), 2),
+  var = rep(cmulti__vars, 2),
   value = rep("Y", 6),
-  label =
-    c(
-      "<50 mmHg and with >20 mmHg decrease from baseline",
-      ">105 mmHg and with >30 mmHg increase from baseline",
-      "Diastolic blood pressure<60",
-      "<90 mmHg and with >30 mmHg decrease from baseline",
-      ">180 mmHg and with >40 mmHg increase from baseline",
-      "Systolic blood pressure<90"
-    )
+  label = c(
+            "<50 mmHg and with >20 mmHg decrease from baseline",
+            ">105 mmHg and with >30 mmHg increase from baseline",
+            "Diastolic blood pressure<60",
+            "<90 mmHg and with >30 mmHg decrease from baseline",
+            ">180 mmHg and with >40 mmHg increase from baseline",
+            "Systolic blood pressure<90"
+           )
 )
 
 lyt_lmap4 <- basic_table(show_colcounts = TRUE) |>

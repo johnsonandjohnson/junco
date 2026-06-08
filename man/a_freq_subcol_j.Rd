@@ -98,20 +98,21 @@ a \code{cfun} in a \code{summarize_row_groups} call.\cr
 It is recommended not to utilize this argument for other purposes.
 The label argument could be used instead (if \code{val} is a single string)\cr}
 
-\item{label_map}{(\code{tibble})\cr
-A mapping tibble used to translate levels of the input variable(s) into
-the row labels displayed in the table.\cr
+\item{label_map}{(\code{data.frame})\cr
+A mapping data frame used to translate levels of the analysis variable(s) into
+the row labels displayed in the table, optionally conditioned on the nearest row-split.\cr
 
-Four structural variants are supported:
+Four types of mappings are supported:
 \enumerate{
-\item Simple mapping        -- columns: \code{value}, \code{label}
-\item Multi-variable mapping -- columns: \code{var}, \code{value}, \code{label}
-\item Row-split-aware mapping -- columns: <split_var>, \code{value}, \code{label}
-\item Row-split-aware + multi-variable mapping -- columns: <split_var>, \code{var}, \code{value}, \code{label}\cr\cr
-When the table is split by a row variable (e.g. SEX, PARAMCD), the map allows to apply custom labels
-for the levels of analyzed variable, conditionally on the value of the current row-split variable.
+\item Single-variable mapping. Column names: \code{level}, \code{label}.
+\item Multi-variable mapping. Column names: \code{var}, \code{level}, \code{label}.
+\item Conditional-on-row-split mapping. Column names: \verb{<split_var>}, \code{level}, \code{label}.
+\item Conditional-on-row-split multi-variable mapping. Column names: \verb{<split_var>}, \code{var}, \code{level}, \code{label}.
 }
-\strong{Recommendation}: ensure input variable(s) are of type factor, to avoid error of type
+Here, \verb{<split_var>} is a placeholder for the name of the variable used for the nearest row-split
+(e.g. \code{SEX}, \code{PARAMCD}).\cr
+
+\strong{Recommendation}: ensure input variable(s) are of type factor, to avoid the error
 "got a label map that doesn't provide labels for all values".\cr
 
 See examples for more details.}
