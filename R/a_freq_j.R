@@ -653,7 +653,7 @@ s_rel_risk_val_j <- function(
 #'   )
 #' )
 #'
-#' basic_table(show_colcounts = TRUE) |>
+#' lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
 #'   split_cols_by("ARM") |>
 #'   analyze(multi_vars,
 #'     afun = a_freq_j,
@@ -663,9 +663,10 @@ s_rel_risk_val_j <- function(
 #'       val = "Y"
 #'     ),
 #'     show_labels = "hidden"
-#'   ) |>
-#'   build_table(adslx)
-#'
+#'   ) 
+#' 
+#'   result_lmap2 <- build_table(lyt_lmap1, adslx)
+#'   result_lmap2
 #'
 #' # -------------------------------------------------------------------------
 #' # 3. Conditional-on-row-split mapping (column <split_var>)
@@ -703,9 +704,9 @@ s_rel_risk_val_j <- function(
 #' # -----------------------------------------------------------------------------------
 #' adsl_jnj <- pharmaverseadamjnj::adsl
 #' advs_jnj <- pharmaverseadamjnj::advs
-#' 
+#'
 #' multi__vars <- c("CRIT1FL", "CRIT2FL", "CRIT3FL")
-#' 
+#'
 #' map_multi_rowsplit <- data.frame(
 #'   PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
 #'   var = rep(cmulti__vars, 2),

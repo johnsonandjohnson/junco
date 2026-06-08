@@ -500,7 +500,7 @@ map_multi <- data.frame(
   )
 )
 
-basic_table(show_colcounts = TRUE) |>
+lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
   split_cols_by("ARM") |>
   analyze(multi_vars,
     afun = a_freq_j,
@@ -510,9 +510,10 @@ basic_table(show_colcounts = TRUE) |>
       val = "Y"
     ),
     show_labels = "hidden"
-  ) |>
-  build_table(adslx)
+  ) 
 
+  result_lmap2 <- build_table(lyt_lmap1, adslx)
+  result_lmap2
 
 # -------------------------------------------------------------------------
 # 3. Conditional-on-row-split mapping (column <split_var>)
