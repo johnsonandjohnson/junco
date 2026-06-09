@@ -22,7 +22,8 @@ s_eair100_levii_j(
   fup_var,
   occ_var,
   occ_dy,
-  num_p_year = 100
+  num_p_year = 100,
+  count_events = FALSE
 )
 
 a_eair100_j(
@@ -46,7 +47,8 @@ a_eair100_j(
   fup_var,
   occ_var,
   occ_dy,
-  num_p_year = 100
+  num_p_year = 100,
+  count_events = FALSE
 )
 }
 \arguments{
@@ -83,9 +85,11 @@ Defaults to \code{"wald"}.}
 for each subject, expressed in \strong{years}.
 Used as the at-risk exposure time for subjects who did \strong{not} experience the event.}
 
-\item{occ_var}{(\code{string})\cr name of the flag variable identifying the
+\item{occ_var}{(\code{string} or \code{NULL})\cr name of the flag variable identifying the
 \strong{first} occurrence of the event within each subject and level, encoded as \code{"Y"}.
-Only records where \code{occ_var == "Y"} contribute to the event count (\code{n_event}).}
+Only records where \code{occ_var == "Y"} contribute to the event count (\code{n_event}).
+If \code{NULL}, event occurrence filtering is skipped and time at risk is taken
+from \code{fup_var} in \code{alt_counts_df} for all subjects.}
 
 \item{occ_dy}{(\code{string})\cr name of the variable containing the relative day of the
 first event occurrence, expressed in \strong{days} (e.g., \code{ASTDY}).
@@ -99,6 +103,11 @@ The EAIR is calculated as \code{num_p_year * n_event / total_person_years}.
 Defaults to \code{100}, yielding a rate per 100 person-years.
 For example, use \code{1} for a rate per person-year or \code{1000} for a rate per
 1000 person-years.}
+
+\item{count_events}{(\code{logical})\cr if \code{TRUE}, counts the total number of events
+per subject rather than treating each subject as contributing 1 to \code{n_event}.
+Can only be used when \code{occ_var = NULL}.
+Defaults to \code{FALSE}.}
 
 \item{labelstr}{(\code{string})\cr Not intended to be set by user, only present to be able to use function as a \code{cfun}.}
 
@@ -124,7 +133,7 @@ For example, use \code{1} for a rate per person-year or \code{1000} for a rate p
 \itemize{
 \item \code{s_eair100_levii_j()} returns a list containing the following statistics:
 \itemize{
-\item n_event: Number of events
+\item n_event: Number of subjects with the event, or total event count if \code{count_events = TRUE}
 \item person_years: Total person-years of follow-up
 \item eair: Exposure-adjusted incidence rate per \code{num_p_year} person-years
 \item n_eair: Combination of \code{n_event} and \code{eair} statistics.

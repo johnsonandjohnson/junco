@@ -1,8 +1,8 @@
-.h_s_eair_diff_scalar <- function(x1, 
-                                  n1, 
-                                  x2, 
-                                  n2, 
-                                  conf_type = c("wald", "waldcc", "mn", "scas"), 
+.h_s_eair_diff_scalar <- function(x1,
+                                  n1,
+                                  x2,
+                                  n2,
+                                  conf_type = c("wald", "waldcc", "mn", "scas"),
                                   conf_level = 0.95) {
   conf_type <- match.arg(conf_type)
   diff_est <- switch(conf_type,
@@ -41,7 +41,7 @@ h_s_eair_diff_wald <- function(x1, n1, x2, n2, conf_level, cc = TRUE) {
   coeff <- stats::qnorm(1 - alpha / 2)
   term2 <- coeff * se
   if (cc) {
-    term2 <- term2 + 0.5 * (1/n1 + 1/n2)
+    term2 <- term2 + 0.5 * (1 / n1 + 1 / n2)
   }
   lcl <- est - term2
   ucl <- est + term2

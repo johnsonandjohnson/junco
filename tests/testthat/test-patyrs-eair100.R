@@ -470,8 +470,7 @@ test_that("Check a_eair100_j function does not allow occ_var = NULL", {
         ref_path = ref_path
       )
     )
-  expect_error(tbl1 <- build_table(lyt1, adae, adsl),
-               "Assertion on 'occ_var' failed: Must be of type 'string', not 'NULL'")
+  expect_no_error(tbl1 <- build_table(lyt1, adae, adsl))
 })
 
 test_that("Check a_eair100_j function request alt_counts_df", {
@@ -488,8 +487,10 @@ test_that("Check a_eair100_j function request alt_counts_df", {
         ref_path = ref_path
       )
     )
-  expect_error(tbl1 <- build_table(lyt1, adae),
-               ".alt_df_full cannot be NULL. Specify `alt_counts_df`")
+  expect_error(
+    tbl1 <- build_table(lyt1, adae),
+    ".alt_df_full cannot be NULL. Specify `alt_counts_df`"
+  )
 })
 
 test_that("Check a_eair100_j function does perform variable existence check", {
@@ -507,6 +508,120 @@ test_that("Check a_eair100_j function does perform variable existence check", {
       )
     )
   expect_error(tbl1 <- build_table(lyt1, adae, adsl),
-               "Assertion on 'colnames(df)' failed",
-               fixed = TRUE)
+    "Assertion on 'colnames(df)' failed",
+    fixed = TRUE
+  )
+})
+
+test_that("Check a_eair100_j with occ_var NULL and count_events", {
+  lyt1 <- core_lyt |>
+    analyze(
+      "AEDECOD",
+      nested = FALSE,
+      inclNAs = TRUE,
+      afun = a_eair100_j,
+      extra_args = list(
+        fup_var = "TRTDURY",
+        occ_var = NULL,
+        occ_dy = NULL,
+        ref_path = ref_path,
+        .stats = c("person_years", "n_eair"),
+        .formats = c("n_eair" = jjcsformat_xx("xx (xx.xxx)")),
+        .labels = c("n_eair" = "n (eair per 100 SY)"),
+        count_events = FALSE
+      )
+    )
+
+  lyt2 <- core_lyt |>
+    analyze(
+      "AEDECOD",
+      nested = FALSE,
+      inclNAs = TRUE,
+      afun = a_eair100_j,
+      extra_args = list(
+        fup_var = "TRTDURY",
+        occ_var = NULL,
+        occ_dy = NULL,
+        ref_path = ref_path,
+        .stats = c("person_years", "n_eair"),
+        .formats = c("n_eair" = jjcsformat_xx("xx (xx.xxx)")),
+        .labels = c("n_eair" = "n (eair per 100 SY)"),
+        count_events = TRUE
+      )
+    )
+
+  adae_sel <- adae |>
+    filter(AEDECOD %in% c("dcd A.1.1.1.1", "dcd A.1.1.1.2")) |>
+    mutate(AEDECOD = factor(as.character(AEDECOD)))
+
+  tbl1 <- build_table(lyt1, adae_sel, adsl)
+  tbl2 <- build_table(lyt2, adae_sel, adsl)
+
+  expect_snapshot(cran = TRUE, tbl1)
+  expect_snapshot(cran = TRUE, tbl2)
+
+  # manual confirmation of some numbers
+  expect_equal(
+    cell_values(tbl1["dcd A.1.1.1.1.person_years"]),
+    cell_values(tbl2["dcd A.1.1.1.1.person_years"])
+  )
+
+  cols <- which(grepl("Drug X", cps) & grepl("colspan_trt", cps))
+
+  c1_py <- cell_values(tbl1["dcd A.1.1.1.1.person_years", "A: Drug X"])[[1]]
+  man_py <- sum(adsl |> filter(.data[[trtvar]] == "A: Drug X") |> pull(TRTDURY))
+  expect_equal(c1_py, man_py, ignore_attr = TRUE)
+
+
+  c1_n_eair <- cell_values(tbl1["dcd A.1.1.1.1.n_eair", cols])[[1]]
+  c2_n_eair <- cell_values(tbl2["dcd A.1.1.1.1.n_eair", cols])[[1]]
+
+  # n part of events:
+  # tbl1 : total number of subjects with aedecod
+  # tbl2 : total number of events with aedecod
+
+  man_n_event <- length(
+    unique(
+      adae_sel |>
+        filter(.data[[trtvar]] == "A: Drug X") |>
+        filter(AEDECOD == "dcd A.1.1.1.1") |>
+        pull(USUBJID)
+    )
+  )
+
+  man2_n_event <- length(
+    adae_sel |>
+      filter(.data[[trtvar]] == "A: Drug X") |>
+      filter(AEDECOD == "dcd A.1.1.1.1") |>
+      pull(USUBJID)
+  )
+
+  expect_equal(c1_n_eair[1], man_n_event, ignore_attr = TRUE)
+  expect_equal(c2_n_eair[1], man2_n_event, ignore_attr = TRUE)
+
+  # check a single value of eair in column
+  expect_equal(c1_n_eair[2], 100 * c1_n_eair[1] / c1_py, ignore_attr = TRUE)
+  expect_equal(c2_n_eair[2], 100 * c2_n_eair[1] / c1_py, ignore_attr = TRUE)
+
+  # check a single value of eair difference in column
+  # pbo : 3rd column
+  pbo_vals <- cell_values(tbl1["dcd A.1.1.1.1", 3])
+  pbo_py <- pbo_vals[[1]][[1]]
+  pbo_n <- pbo_vals[[2]][[1]][1]
+
+  x_vals <- cell_values(tbl1["dcd A.1.1.1.1", 1])
+  x_py <- x_vals[[1]][[1]]
+  x_n <- x_vals[[2]][[1]][1]
+
+  target <- cell_values(tbl1["dcd A.1.1.1.1.n_eair", 4])[[1]]
+  diff <- h_s_eair_diff(
+    x1 = x_n,
+    n1 = x_py,
+    x2 = pbo_n,
+    n2 = pbo_py,
+    conf_type = "wald",
+    conf_level = 0.95
+  )
+
+  expect_equal(target, as.numeric(100 * diff), ignore_attr = TRUE)
 })

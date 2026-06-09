@@ -245,9 +245,11 @@ NULL
 #' @param fup_var (`string`)\cr name of the variable containing the total follow-up duration
 #'   for each subject, expressed in **years**.
 #'   Used as the at-risk exposure time for subjects who did **not** experience the event.
-#' @param occ_var (`string`)\cr name of the flag variable identifying the
+#' @param occ_var (`string` or `NULL`)\cr name of the flag variable identifying the
 #'   **first** occurrence of the event within each subject and level, encoded as `"Y"`.
 #'   Only records where `occ_var == "Y"` contribute to the event count (`n_event`).
+#'   If `NULL`, event occurrence filtering is skipped and time at risk is taken
+#'   from `fup_var` in `alt_counts_df` for all subjects.
 #' @param occ_dy (`string`)\cr name of the variable containing the relative day of the
 #'   first event occurrence, expressed in **days** (e.g., `ASTDY`).
 #'   For subjects with an event (`occ_var == "Y"`), this value is converted to years
@@ -259,11 +261,15 @@ NULL
 #'   Defaults to `100`, yielding a rate per 100 person-years.
 #'   For example, use `1` for a rate per person-year or `1000` for a rate per
 #'   1000 person-years.
+#' @param count_events (`logical`)\cr if `TRUE`, counts the total number of events
+#'   per subject rather than treating each subject as contributing 1 to `n_event`.
+#'   Can only be used when `occ_var = NULL`.
+#'   Defaults to `FALSE`.
 #'
 #' @return
 #'  * `s_eair100_levii_j()` returns a list containing the following statistics:
 #' \itemize{
-#'   \item n_event: Number of events
+#'   \item n_event: Number of subjects with the event, or total event count if `count_events = TRUE`
 #'   \item person_years: Total person-years of follow-up
 #'   \item eair: Exposure-adjusted incidence rate per `num_p_year` person-years
 #'   \item n_eair: Combination of `n_event` and `eair` statistics.
@@ -348,7 +354,8 @@ s_eair100_levii_j <- function(
   fup_var,
   occ_var,
   occ_dy,
-  num_p_year = 100
+  num_p_year = 100,
+  count_events = FALSE
 ) {
   conf_type <- match.arg(conf_type)
   if (diff && inriskdiffcol) {
@@ -369,16 +376,17 @@ s_eair100_levii_j <- function(
     id = id,
     fup_var = fup_var,
     occ_var = occ_var,
-    occ_dy = occ_dy
+    occ_dy = occ_dy,
+    count_events = count_events
   )
   cur_df_num <- cur_dfs$df_num
   cur_df_denom <- cur_dfs$df_denom
-
   ### statistics derivation
-  cur_AECOUNT <- length(unique(cur_df_num[[id]]))
-  cur_YRSFUP <- sum(cur_df_denom[["mod_fup_var"]])
-  x1 <- cur_AECOUNT
-  n1 <- cur_YRSFUP
+  # note: variables n_events and mod_fup_var are derived by h_get_eair_df
+  # when count_events == TRUE, n_events: number of events per subject
+  # when count_events == FALSE, n_events: 1 for subjects with event
+  x1 <- sum(cur_df_num[["n_events"]])
+  n1 <- sum(cur_df_denom[["mod_fup_var"]])
   cur_eair <- num_p_year * x1 / n1
   cur_n_eair <- c(x1, cur_eair)
 
@@ -414,17 +422,16 @@ s_eair100_levii_j <- function(
       id = id,
       fup_var = fup_var,
       occ_var = occ_var,
-      occ_dy = occ_dy
+      occ_dy = occ_dy,
+      count_events = count_events
     )
 
     ref_df_num <- ref_dfs$df_num
     ref_df_denom <- ref_dfs$df_denom
 
     ### statistics derivation
-    ref_AECOUNT <- length(unique(ref_df_num[[id]]))
-    ref_YRSFUP <- sum(ref_df_denom[["mod_fup_var"]])
-    x2 <- ref_AECOUNT
-    n2 <- ref_YRSFUP
+    x2 <- sum(ref_df_num[["n_events"]])
+    n2 <- sum(ref_df_denom[["mod_fup_var"]])
 
     ref_eair <- num_p_year * x2 / n2
     ref_n_eair <- c(x2, ref_eair)
@@ -571,7 +578,8 @@ a_eair100_j <- function(
   fup_var,
   occ_var,
   occ_dy,
-  num_p_year = 100
+  num_p_year = 100,
+  count_events = FALSE
 ) {
   conf_type <- match.arg(conf_type)
   ## prepare for column based split
@@ -588,9 +596,17 @@ a_eair100_j <- function(
   )
 
   checkmate::assert_string(fup_var, null.ok = FALSE)
-  checkmate::assert_string(occ_dy, null.ok = FALSE)
-  checkmate::assert_string(occ_var, null.ok = FALSE)
-  checkmate::assert_names(colnames(df), must.include = c(occ_var, fup_var, occ_dy))
+  checkmate::assert_string(occ_var, null.ok = TRUE)
+  if (!is.null(occ_var)) {
+    checkmate::assert_string(occ_dy, null.ok = FALSE)
+  }
+
+  checkmate::assert_names(colnames(df), must.include = c(occ_var, occ_dy))
+
+  if (is.null(.alt_df_full)) {
+    stop(paste("a_eair100_j: .alt_df_full cannot be NULL. Specify `alt_counts_df` to `build_table`"))
+  }
+  checkmate::assert_names(colnames(.alt_df_full), must.include = c(fup_var))
 
   ### combine all preprocessing of incoming df/.df_row in one function
   ### do this outside stats derivation functions (s_freq_j/)
@@ -612,10 +628,6 @@ a_eair100_j <- function(
 
   .df_row <- upd_dfrow$df_row
   df <- upd_dfrow$df
-
-  if (is.null(.alt_df_full)) {
-    stop(paste("a_eair100_j: .alt_df_full cannot be NULL. Specify `alt_counts_df` to `build_table`"))
-  }
 
   ### derive appropriate alt_df based upon .spl_context and .alt_df_full
   ### note that only row-based splits are done
@@ -641,7 +653,8 @@ a_eair100_j <- function(
     fup_var = fup_var,
     occ_var = occ_var,
     occ_dy = occ_dy,
-    num_p_year = num_p_year
+    num_p_year = num_p_year,
+    count_events = count_events
   )
 
   if (riskdiff && inriskdiffcol) {
@@ -707,20 +720,24 @@ a_eair100_j <- function(
 
   # Fill in formatting defaults
 
-  if (length(levs) > 1 && length(.stats) > 1) {
-    message(
-      "a_eair100_j : with multiple stats and multiple levels of analysis
-      variable it is recommended to apply an extra split_rows_by on the analysis variable"
-    )
-  }
 
   x_stats <- x_stats[.stats]
+  upd_labels <- FALSE
+  if (length(.stats) > 1) {
+    x_stats <- transpose_named_list(x_stats)
+    x_stats_orig <- x_stats
+    upd_labels <- TRUE
+  }
 
   levels_per_stats <- lapply(x_stats, names)
 
   .formats <- junco_get_formats_from_stats(.stats, .formats, levels_per_stats)
   .labels <- junco_get_labels_from_stats(.stats, .labels, levels_per_stats)
   .labels <- .unlist_keep_nulls(.labels)
+
+  if (upd_labels) {
+    .labels <- paste(rep(names(x_stats_orig), each = length(.stats)), .labels)
+  }
 
   .indent_mods <- junco_get_indents_from_stats(
     .stats,
