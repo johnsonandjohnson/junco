@@ -66,7 +66,8 @@ test_that("Check h_s_eair_diff for MN method ratesci", {
       res[, c("est", "lower", "upper")],
       res_ratesci,
       tolerance = 1e-4,
-      ignore_attr = FALSE)
+      ignore_attr = FALSE
+    )
   }
 })
 
@@ -104,7 +105,8 @@ test_that("Check h_s_eair_diff for Wald method without CC", {
       res[, c("est", "lower", "upper")],
       res_ratesci,
       tolerance = 1e-4,
-      ignore_attr = FALSE)
+      ignore_attr = FALSE
+    )
   }
 
   expect_snapshot(cran = TRUE, res)
@@ -145,7 +147,8 @@ test_that("Check h_s_eair_diff for Wald method with CC", {
       res[, c("est", "lower", "upper")],
       res_ratesci,
       tolerance = 1e-4,
-      ignore_attr = FALSE)
+      ignore_attr = FALSE
+    )
   }
 
   expect_snapshot(cran = TRUE, res)
@@ -187,7 +190,8 @@ test_that("Check h_s_eair_diff for SCAS method", {
       res[, c("est", "lower", "upper")],
       res_ratesci,
       tolerance = 1e-4,
-      ignore_attr = FALSE)
+      ignore_attr = FALSE
+    )
   }
 
   expect_snapshot(cran = TRUE, res)
@@ -234,7 +238,8 @@ test_that("Check diff in binomial for MN method ratesci", {
       res[, c("est", "lower", "upper")],
       res_ratesci,
       tolerance = 1e-3,
-      ignore_attr = FALSE)
+      ignore_attr = FALSE
+    )
   }
   expect_snapshot(cran = TRUE, res)
 })
