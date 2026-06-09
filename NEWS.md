@@ -7,6 +7,8 @@
 - CRITICAL: hotfixed `tt_to_tlgrtf()` lost titles in certain cases (#373)
 
 ### Changed
+- Added a default value for the `label` argument in `c_summary_subset_label()`.
+- Updated the documentation of `a_summary_subset()`.
 - Refactored `prepend_label_cell()`; Only `RowsVerticalSection` is now supported.
 - Removed `filter_df_prior_afun()`, `a_summary_diff_mvars()`, `a_summary_diff_mvars_label()`.
 - Removed formatters exports #317
