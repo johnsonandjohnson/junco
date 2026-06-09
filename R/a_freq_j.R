@@ -607,8 +607,8 @@ s_rel_risk_val_j <- function(
 #' adae <- adae |> left_join(adsl)
 #'
 #' # -------------------------------------------------------------------------
-#' # 1. Simple mapping (dataframe with `value` and `label`)
-#' #    Remaps factor levels (`value`) to a custom new label (`label`).
+#' # 1. Simple mapping.
+#' # Remaps factor levels (value) to custom new labels (label).
 #' # -------------------------------------------------------------------------
 #'
 #' label_map_simple <- data.frame(
@@ -630,8 +630,9 @@ s_rel_risk_val_j <- function(
 #' result_lmap1
 #'
 #' # -------------------------------------------------------------------------
-#' # 2. Multi-variable mapping (extra `var` column)
-#' #    Useful in situations where multiple Y/N variables can be analyzed in one call.
+#' # 2. Multi-variable mapping.
+#' # Useful in situations where multiple Y/N variables can be analyzed in one
+#' # [rtables::analyze()] call.
 #' # -------------------------------------------------------------------------
 #'
 #' multi_vars <- c("DTH30FL", "DTHA30FL", "DTHB30FL")
@@ -669,13 +670,13 @@ s_rel_risk_val_j <- function(
 #'   result_lmap2
 #'
 #' # -------------------------------------------------------------------------
-#' # 3. Conditional-on-row-split mapping (column <split_var>)
+#' # 3. Conditional-on-row-split mapping
 #' # -------------------------------------------------------------------------
 #'
 #' map_rowsplit <- data.frame(
 #'   SEX = c("M", "F"),
 #'   value = c("Y", "Y"),
-#'   label = c("Male subjects with at least one TE AE", "Female subjects with at least one TE AE")
+#'   label = c("Male subjects with >=1 TE AE", "Female subjects with >=1 TE AE")
 #' )
 #'
 #' adsl <- ex_adsl |> select("USUBJID", "ARM", "SEX")
@@ -700,31 +701,31 @@ s_rel_risk_val_j <- function(
 #' result_lmap3
 #'
 #' # -----------------------------------------------------------------------------------
-#' # 4. Conditional-on-row-split multi-variable mapping (<split_var> and `var` columns)
+#' # 4. Conditional-on-row-split multi-variable mapping
 #' # -----------------------------------------------------------------------------------
 #' adsl_jnj <- pharmaverseadamjnj::adsl
 #' advs_jnj <- pharmaverseadamjnj::advs
 #'
-#' multi__vars <- c("CRIT1FL", "CRIT2FL", "CRIT3FL")
+#' multi_vars <- c("CRIT1FL", "CRIT2FL", "CRIT3FL")
 #'
 #' map_multi_rowsplit <- data.frame(
-#'   PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
-#'   var = rep(multi__vars, 2),
-#'   value = rep("Y", 6),
-#'   label = c(
-#'             "<50 mmHg and with >20 mmHg decrease from baseline",
-#'             ">105 mmHg and with >30 mmHg increase from baseline",
-#'             "Diastolic blood pressure<60",
-#'             "<90 mmHg and with >30 mmHg decrease from baseline",
-#'             ">180 mmHg and with >40 mmHg increase from baseline",
-#'             "Systolic blood pressure<90"
-#'            )
+#' PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
+#' var = rep(multi_vars, 2),
+#' value = rep("Y", 6),
+#' label = c(
+#'     "<50 mmHg and with >20 mmHg decrease from baseline",
+#'     ">105 mmHg and with >30 mmHg increase from baseline",
+#'     "Diastolic blood pressure<60",
+#'     "<90 mmHg and with >30 mmHg decrease from baseline",
+#'     ">180 mmHg and with >40 mmHg increase from baseline",
+#'     "Systolic blood pressure<90"
+#'   )
 #' )
 #'
 #' lyt_lmap4 <- basic_table(show_colcounts = TRUE) |>
 #'   split_cols_by("TRT01A") |>
 #'   split_rows_by("PARAMCD", split_fun = keep_split_levels(c("DIABP", "SYSBP"))) |>
-#'   analyze(c("CRIT1FL", "CRIT2FL", "CRIT3FL"),
+#'   analyze(multi_vars),
 #'     afun = a_freq_j,
 #'     extra_args = list(
 #'       .stats = "count_unique_denom_fraction",
