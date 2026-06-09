@@ -670,7 +670,7 @@ s_rel_risk_val_j <- function(
 #'   result_lmap2
 #'
 #' # -------------------------------------------------------------------------
-#' # 3. Conditional-on-row-split mapping
+#' # 3. Conditional-on-row-split mapping.
 #' # -------------------------------------------------------------------------
 #'
 #' map_rowsplit <- data.frame(
@@ -701,7 +701,7 @@ s_rel_risk_val_j <- function(
 #' result_lmap3
 #'
 #' # -----------------------------------------------------------------------------------
-#' # 4. Conditional-on-row-split multi-variable mapping
+#' # 4. Conditional-on-row-split multi-variable mapping.
 #' # -----------------------------------------------------------------------------------
 #' adsl_jnj <- pharmaverseadamjnj::adsl
 #' advs_jnj <- pharmaverseadamjnj::advs
