@@ -7,6 +7,7 @@
 - CRITICAL: hotfixed `tt_to_tlgrtf()` lost titles in certain cases (#373)
 
 ### Changed
+- Refactored `prepend_label_cell()`; Only `RowsVerticalSection` is now supported.
 - Removed `filter_df_prior_afun()`, `a_summary_diff_mvars()`, `a_summary_diff_mvars_label()`.
 - Removed formatters exports #317
 - Deprecate `a_coxph_hr` for `tern:::a_coxph_pairwise()` and `s_coxph_hr` for `tern:::s_coxph_pairwise()` #158

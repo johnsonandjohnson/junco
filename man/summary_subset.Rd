@@ -39,10 +39,10 @@ after applying the filter.}
 (must be present as second argument in Content Row Functions). See \code{\link[rtables:summarize_row_groups]{rtables::summarize_row_groups()}}
 for more information.}
 
-\item{label}{(\code{character(1)})\cr Label to be inserted as the first row.}
+\item{label}{(\code{character(1)})\cr Label to insert as the first row.}
 
-\item{label_indent_mod}{(\code{integer(1)})\cr Indentation level applied to the
-label row.}
+\item{label_indent_mod}{(\code{integer(1)})\cr Indentation modifier applied to
+the label row.}
 }
 \value{
 Returns the same type of object as \code{\link[tern:analyze_variables]{tern::a_summary()}}.
