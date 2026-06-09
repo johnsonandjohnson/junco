@@ -43,7 +43,7 @@ test_that("Check h_s_eair_diff for MN method ratesci", {
         conf_type = "mn",
         conf_level = 0.95
       ),
-    digits = 2
+    digits = 4
   )
   names(res) <- c("est", "lower", "upper")
   res <- cbind(inputs, res)
@@ -59,10 +59,14 @@ test_that("Check h_s_eair_diff for MN method ratesci", {
         level = 0.95
       )$estimates
       x <- x["Miettinen-Nurminen", c("est", "lower", "upper"), ]
-      x <- round(100 * x, 2)
+      x <- round(100 * x, 4)
     }, simplify = TRUE))
     res_ratesci <- as.data.frame(res_ratesci)
-    expect_equal(res[, c("est", "lower", "upper")], res_ratesci, ignore_attr = FALSE)
+    expect_equal(
+      res[, c("est", "lower", "upper")],
+      res_ratesci,
+      tolerance = 1e-4,
+      ignore_attr = FALSE)
   }
 })
 
@@ -77,7 +81,7 @@ test_that("Check h_s_eair_diff for Wald method without CC", {
         conf_type = "wald",
         conf_level = 0.95
       ),
-    digits = 2
+    digits = 4
   )
   names(res) <- c("est", "lower", "upper")
   res <- cbind(inputs, res)
@@ -93,10 +97,14 @@ test_that("Check h_s_eair_diff for Wald method without CC", {
         level = 0.95
       )$estimates
       x <- x["Approximate Normal", c("est", "lower", "upper"), ]
-      x <- round(100 * x, 2)
+      x <- round(100 * x, 4)
     }, simplify = TRUE))
     res_ratesci <- as.data.frame(res_ratesci)
-    expect_equal(res[, c("est", "lower", "upper")], res_ratesci, ignore_attr = FALSE)
+    expect_equal(
+      res[, c("est", "lower", "upper")],
+      res_ratesci,
+      tolerance = 1e-4,
+      ignore_attr = FALSE)
   }
 
   expect_snapshot(cran = TRUE, res)
@@ -133,7 +141,11 @@ test_that("Check h_s_eair_diff for Wald method with CC", {
       x <- round(100 * x, 4)
     }, simplify = TRUE))
     res_ratesci <- as.data.frame(res_ratesci)
-    expect_equal(res[, c("est", "lower", "upper")], res_ratesci, ignore_attr = FALSE)
+    expect_equal(
+      res[, c("est", "lower", "upper")],
+      res_ratesci,
+      tolerance = 1e-4,
+      ignore_attr = FALSE)
   }
 
   expect_snapshot(cran = TRUE, res)
@@ -150,7 +162,7 @@ test_that("Check h_s_eair_diff for SCAS method", {
         conf_type = "scas",
         conf_level = 0.95
       ),
-    digits = 2
+    digits = 4
   )
 
   names(res) <- c("est", "lower", "upper")
@@ -168,10 +180,14 @@ test_that("Check h_s_eair_diff for SCAS method", {
         cc = FALSE
       )$estimates
       x <- x["SCAS", c("est", "lower", "upper"), ]
-      x <- round(100 * x, 2)
+      x <- round(100 * x, 4)
     }, simplify = TRUE))
     res_ratesci <- as.data.frame(res_ratesci)
-    expect_equal(res[, c("est", "lower", "upper")], res_ratesci, ignore_attr = FALSE)
+    expect_equal(
+      res[, c("est", "lower", "upper")],
+      res_ratesci,
+      tolerance = 1e-4,
+      ignore_attr = FALSE)
   }
 
   expect_snapshot(cran = TRUE, res)
@@ -193,7 +209,7 @@ test_that("Check diff in binomial for MN method ratesci", {
     conf.level = 0.95, # nolint
     sides = "two.sided",
     method = "mn"
-  ), 2)
+  ), 3)
   res <- as.data.frame(res)
   names(res) <- c("est", "lower", "upper")
   row.names(res) <- NULL
@@ -210,11 +226,15 @@ test_that("Check diff in binomial for MN method ratesci", {
         level = 0.95
       )$estimates
       x <- x["Miettinen-Nurminen", c("est", "lower", "upper"), ]
-      x <- round(100 * x, 2)
+      x <- round(100 * x, 3)
     }, simplify = TRUE))
     res_ratesci <- as.data.frame(res_ratesci)
     row.names(res_ratesci) <- NULL
-    expect_equal(res[, c("est", "lower", "upper")], res_ratesci, ignore_attr = FALSE)
+    expect_equal(
+      res[, c("est", "lower", "upper")],
+      res_ratesci,
+      tolerance = 1e-3,
+      ignore_attr = FALSE)
   }
   expect_snapshot(cran = TRUE, res)
 })
