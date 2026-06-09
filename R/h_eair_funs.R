@@ -1,3 +1,4 @@
+#' @importFrom stats ave
 h_get_eair_df <- function(levii, df, denom_df, .var, id, occ_var, occ_dy, fup_var, count_events = FALSE) {
   dfii <- df[df[[.var]] == levii & !is.na(df[[.var]]), ]
 
