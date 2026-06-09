@@ -725,7 +725,7 @@ s_rel_risk_val_j <- function(
 #' lyt_lmap4 <- basic_table(show_colcounts = TRUE) |>
 #'   split_cols_by("TRT01A") |>
 #'   split_rows_by("PARAMCD", split_fun = keep_split_levels(c("DIABP", "SYSBP"))) |>
-#'   analyze(multi_vars),
+#'   analyze(multi_vars,
 #'     afun = a_freq_j,
 #'     extra_args = list(
 #'       .stats = "count_unique_denom_fraction",
