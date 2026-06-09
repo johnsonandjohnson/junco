@@ -566,6 +566,7 @@ test_that("Check a_eair100_j with occ_var NULL and count_events", {
     cell_values(tbl2["dcd A.1.1.1.1.person_years"])
   )
 
+  cps <- col_paths(tbl1)
   cols <- which(grepl("Drug X", cps) & grepl("colspan_trt", cps))
 
   c1_py <- cell_values(tbl1["dcd A.1.1.1.1.person_years", "A: Drug X"])[[1]]
