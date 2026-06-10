@@ -6,13 +6,6 @@ inputs <- data.frame(
   n2 = c(295.3, 295.9, 295.6, 291.9, 292.7, 294.3, 293.5, 288.6, 294.1, 294.2, 295.3, 294.6, 292.8, 295, 294.6)
 )
 
-.ratesci_dev_available <- function() {
-  # tested using ratesci::rdci development version in interactive session
-  interactive() &&
-    requireNamespace("ratesci", quietly = TRUE) &&
-    isTRUE(packageDescription("ratesci")$GithubRepo == "ratesci")
-}
-
 test_that("Check h_s_eair_diff for MN method snapshot", {
   res <- round(
     100 *
@@ -33,6 +26,8 @@ test_that("Check h_s_eair_diff for MN method snapshot", {
 })
 
 test_that("Check h_s_eair_diff for MN method ratesci", {
+  skip_if_not_installed("ratesci")
+
   res <- round(
     100 *
       h_s_eair_diff(
@@ -48,27 +43,25 @@ test_that("Check h_s_eair_diff for MN method ratesci", {
   names(res) <- c("est", "lower", "upper")
   res <- cbind(inputs, res)
 
-  if (.ratesci_dev_available()) {
-    res_ratesci <- t(sapply(seq_len(nrow(inputs)), FUN = function(i) {
-      x <- ratesci::rdci(
-        x1 = inputs$x1[i],
-        n1 = inputs$n1[i],
-        x2 = inputs$x2[i],
-        n2 = inputs$n2[i],
-        distrib = "poi",
-        level = 0.95
-      )$estimates
-      x <- x["Miettinen-Nurminen", c("est", "lower", "upper"), ]
-      x <- round(100 * x, 4)
-    }, simplify = TRUE))
-    res_ratesci <- as.data.frame(res_ratesci)
-    expect_equal(
-      res[, c("est", "lower", "upper")],
-      res_ratesci,
-      tolerance = 1e-4,
-      ignore_attr = FALSE
-    )
-  }
+  res_ratesci <- t(sapply(seq_len(nrow(inputs)), FUN = function(i) {
+    x <- ratesci::rdci(
+      x1 = inputs$x1[i],
+      n1 = inputs$n1[i],
+      x2 = inputs$x2[i],
+      n2 = inputs$n2[i],
+      distrib = "poi",
+      level = 0.95
+    )$estimates
+    x <- x["Miettinen-Nurminen", c("est", "lower", "upper"), ]
+    x <- round(100 * x, 4)
+  }, simplify = TRUE))
+  res_ratesci <- as.data.frame(res_ratesci)
+  expect_equal(
+    res[, c("est", "lower", "upper")],
+    res_ratesci,
+    tolerance = 1e-4,
+    ignore_attr = FALSE
+  )
 })
 
 test_that("Check h_s_eair_diff for Wald method without CC", {
@@ -87,7 +80,7 @@ test_that("Check h_s_eair_diff for Wald method without CC", {
   names(res) <- c("est", "lower", "upper")
   res <- cbind(inputs, res)
 
-  if (.ratesci_dev_available()) {
+  if (requireNamespace("ratesci", quietly = TRUE)) {
     res_ratesci <- t(sapply(seq_len(nrow(inputs)), FUN = function(i) {
       x <- ratesci::rdci(
         x1 = inputs$x1[i],
@@ -128,7 +121,7 @@ test_that("Check h_s_eair_diff for Wald method with CC", {
   names(res) <- c("est", "lower", "upper")
   res <- cbind(inputs, res)
 
-  if (.ratesci_dev_available()) {
+  if (requireNamespace("ratesci", quietly = TRUE)) {
     res_ratesci <- t(sapply(seq_len(nrow(inputs)), FUN = function(i) {
       x <- ratesci::rdci(
         x1 = inputs$x1[i],
@@ -171,7 +164,7 @@ test_that("Check h_s_eair_diff for SCAS method", {
   names(res) <- c("est", "lower", "upper")
   res <- cbind(inputs, res)
 
-  if (.ratesci_dev_available()) {
+  if (requireNamespace("ratesci", quietly = TRUE)) {
     res_ratesci <- t(sapply(seq_len(nrow(inputs)), FUN = function(i) {
       x <- ratesci::rdci(
         x1 = inputs$x1[i],
@@ -219,7 +212,7 @@ test_that("Check diff in binomial for MN method ratesci", {
   row.names(res) <- NULL
   res <- cbind(inputs2, res)
 
-  if (.ratesci_dev_available()) {
+  if (requireNamespace("ratesci", quietly = TRUE)) {
     res_ratesci <- t(sapply(seq_len(nrow(inputs)), FUN = function(i) {
       x <- ratesci::rdci(
         x1 = inputs2$x1[i],
