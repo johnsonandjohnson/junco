@@ -306,7 +306,7 @@ h_ancova_est_combined <- function(
 #' @description Extension to tern:::s_ancova, 3 extra statistics are returned:
 #'   * `lsmean_se`: Marginal mean and estimated SE in the group.
 #'   * `lsmean_ci`: Marginal mean and associated confidence interval in the group.
-#'   * `lsmean_diffci`: Difference in mean and associated confidence level in one combined statistic.
+#'   * `lsmean_diff_with_ci`: Difference in mean and associated confidence level in one combined statistic.
 #'   In addition, the LS mean weights can be specified.
 #'   In addition, also a NULL .ref_group can be specified, the lsmean_diff related estimates will be returned as NA.
 #' @export
@@ -392,7 +392,7 @@ s_ancova_j <- function(
         rep(NA, 2),
         paste("Difference in Adjusted Means", f_conf_level(conf_level))
       ),
-      lsmean_diffci = with_label(
+      lsmean_diff_with_ci = with_label(
         rep(NA, 3),
         paste0(
           "Difference in Adjusted Means",
@@ -495,7 +495,7 @@ s_ancova_j <- function(
         c(sum_contrasts_level$lower.CL, sum_contrasts_level$upper.CL),
         paste("Difference in Adjusted Means", f_conf_level(conf_level))
       ),
-      lsmean_diffci = with_label(
+      lsmean_diff_with_ci = with_label(
         c(
           sum_contrasts_level$estimate,
           sum_contrasts_level$lower.CL,
@@ -632,7 +632,7 @@ a_summarize_ancova_j <- function(
                "quantiles",
                "lsmean_se",
                "lsmean_ci",
-               "lsmean_diffci",
+               "lsmean_diff_with_ci",
                "pval"),
     .formats = NULL,
     .labels = NULL,

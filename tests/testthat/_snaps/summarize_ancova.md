@@ -32,7 +32,7 @@
         4.95159333631352, 5.19041155285046), label = "Adjusted Mean (95% CI)"), 
         lsmean_diff = structure(3.06260323315316, label = "Difference in Adjusted Means"), 
         lsmean_diff_ci = structure(c(2.80852642307127, 3.31668004323504
-        ), label = "Difference in Adjusted Means 95% CI"), lsmean_diffci = structure(c(3.06260323315316, 
+        ), label = "Difference in Adjusted Means 95% CI"), lsmean_diff_with_ci = structure(c(3.06260323315316, 
         2.80852642307127, 3.31668004323504), label = "Difference in Adjusted Means (95% CI)"), 
         pval = structure(8.1172834382675e-52, label = "p-value"))
 
@@ -169,7 +169,7 @@
       ————————————————————————————————————————————————————————————————————————————————————————————————
       Adjusted comparison (covariates: Sepal.Length and Sepal.Width)                                  
         lsmean_ci                                                                                     
-        lsmean_diffci                                                                                 
+        lsmean_diff_with_ci                                                                                 
           p-value                                                                                     
 
 # a_summarize_ancova_j with no data in reference group
