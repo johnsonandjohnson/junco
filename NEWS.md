@@ -5,6 +5,7 @@
 - Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
 - CRITICAL: hotfixed `tt_to_tlgrtf()` lost titles in certain cases (#373)
+- Fixed bug in `def_colwidths()` when a column label is too long (#384)
 
 ### Changed
 - Refactored `prepend_label_cell()`; Only `RowsVerticalSection` is now supported.
