@@ -105,6 +105,111 @@ test_that("def_colwidths works as expected", {
   testthat::expect_equal(result, expected_result)
 })
 
+test_that("def_colwidths does not fail when a column label is too large", {
+  popfl <- "FASFL"
+  trtvar <- "TRT01P"
+  key_cols <- c("COL0", "COL1")
+  disp_cols <- paste0("COL", 0:8)
+  concat_sep <- " / "
+
+  adsl <- pharmaverseadamjnj::adsl |>
+    filter(!!rlang::sym(popfl) == "Y" & !(EOTSTT %in% c("COMPLETED", "ONGOING")))
+
+  ds <- pharmaversesdtmjnj::ds |>
+    filter(
+      (DSSCAT %in% c("TREATMENT")) &
+        DSCAT == "DISPOSITION EVENT" &
+        DSDECOD != "COMPLETED"
+    ) |>
+    select(STUDYID, USUBJID, DSSCAT)
+
+  adsl_ds <- adsl |>
+    left_join(ds, by = c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID"))
+
+  adexsum <- pharmaverseadamjnj::adexsum |>
+    filter(PARAMCD == "CUMDOSE") |>
+    select(STUDYID, USUBJID, PARAMCD, PARAM, AVAL)
+
+  adsl_ds_adexsum <- left_join(
+    adsl_ds,
+    adexsum,
+    by = c(
+      "STUDYID" = "STUDYID",
+      "USUBJID" = "USUBJID"
+    )
+  )
+
+  lsting <- adsl_ds_adexsum |>
+    mutate(
+      AGE = explicit_na(as.character(AGE), ""),
+      SEX = explicit_na(SEX, ""),
+      RACE = explicit_na(RACE, ""),
+      AVAL = explicit_na(as.character(AVAL), ""),
+      AVALU = case_when(
+        !is.na(AVAL) ~
+          stringr::str_extract(PARAM, "(?<=\\()([^()]*?)(?=\\)[^()]*$)"),
+        is.na(AVAL) ~ ""
+      ),
+      DCTREAS = explicit_na(DCTREAS, ""),
+      DCTREASP = explicit_na(DCTREASP, ""),
+      COL0 = explicit_na(.data[[trtvar]], ""),
+      COL1 = explicit_na(USUBJID, ""),
+      COL2 = paste(AGE, SEX, RACE, sep = concat_sep),
+      COL3 = explicit_na(stringr::str_to_sentence(DSSCAT), ""),
+      COL4 = explicit_na(LTVISIT, ""),
+      COL5 = explicit_na(as.character(TRTEDY), ""),
+      COL6 = paste0(AVAL, " ", AVALU),
+      COL7 = ifelse(
+        is.na(DCTDT),
+        "",
+        toupper(format(as.Date(DCTDT), format = "%d%b%Y"))
+      ),
+      COL8 = case_when(
+        DCTREAS == "OTHER" ~
+          paste0(DCTREAS, " (", stringr::str_to_sentence(DCTREASP), ")"),
+        DCTREAS != "OTHER" ~ DCTREAS
+      )
+    ) |>
+    arrange(COL0, COL1, COL2, COL3)
+
+  lsting <- lsting |>
+    mutate(COL7 = ifelse(is.na(DCTADY), COL7, sprintf("%s (%s)", COL7, DCTADY)))
+
+  lsting <- var_relabel(
+    lsting,
+    COL0 = "Treatment Group",
+    COL1 = "Subject ID",
+    COL2 = paste("Age (years)", "Sex", "Race", sep = concat_sep),
+    COL3 = "Study Agent Discontinued",
+    COL4 = "Last Visit~[super a]",
+    COL5 = "Date of Last Study Agent Administered (Study Day~[super a])",
+    COL6 = "Cumulative Dose (unit)",
+    COL7 = "Date of Discontinuation (Study Day~[super b])",
+    COL8 = "Primary Reason for Discontinuation"
+  )
+
+  result <- rlistings::as_listing(
+    df = lsting,
+    key_cols = key_cols,
+    disp_cols = disp_cols
+  )
+
+  fontspec <- font_spec("Times", 9L, 1.2)
+  col_gap <- 7L
+  label_width_ins <- 2
+
+  testthat::expect_no_error(
+    colwidths <- def_colwidths(
+      result,
+      fontspec,
+      col_gap = col_gap,
+      label_width_ins = label_width_ins
+    )
+  )
+  exp_res <- c(34, 26, 36, 36, 31, 36, 33, 40, 40)
+  testthat::expect_equal(colwidths, exp_res)
+})
+
 test_that("listing_column_widths works as expected", {
   anl <- ex_adsl
   anl <- anl[1:10, c("USUBJID", "ARM", "BMRKR1")]

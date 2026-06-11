@@ -313,6 +313,7 @@ listing_column_widths <- function(
     fontspec = fontspec,
     pg_width_ins = pg_width_ins
   )
+  # browser()
   optimal <- optimal_widths(
     possdf = possdf,
     tot_spaces = inches_to_spaces(pg_width_ins, fontspec = fontspec),
@@ -357,7 +358,16 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
       success <- FALSE
       break
     }
-    newrow <- possdfii[ii, ]
+    newrow <- possdfii[ii, ] # why??? ii = 6, and possdfii is a dataframe with
+    # possible colwidths for column 6.
+    # possdfii[ii, ] means nothing; shouldn't we look for tail(possdfii, 1),
+    # or the optimal colwidth (i.e. a possdfii$colwidth that is > cwidthii and 
+    # still fits in avail_spc)?
+    # browser()
+    if (ii > nrow(possdfii)) {
+      success <- FALSE
+      break
+    }
     if (newrow$colwidth - cwidthii > avail_spc) {
       success <- FALSE
       break
@@ -385,6 +395,7 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
 }
 
 optimal_widths <- function(possdf, tot_spaces = 320, max_lbl_lines = 3, verbose = FALSE) {
+  # browser()
   odf <- order(possdf$col_num, possdf$colwidth)
   possdf <- possdf[odf, ]
   badlbl <- which(possdf$lbl_lines > max_lbl_lines)
@@ -415,6 +426,7 @@ optimal_widths <- function(possdf, tot_spaces = 320, max_lbl_lines = 3, verbose 
   done <- FALSE
   while (!done) {
     oldwdths <- curdf$colwidth
+    # browser()
     curdf <- constrict_lbl_lns(curdf, possdf, verbose = verbose)
     if (all.equal(curdf$colwidth, oldwdths)) {
       done <- TRUE
