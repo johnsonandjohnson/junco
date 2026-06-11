@@ -608,6 +608,12 @@ a_eair100_j <- function(
   }
   checkmate::assert_names(colnames(.alt_df_full), must.include = c(fup_var))
 
+  inrowsplit <- FALSE
+  if (.var == tail(.spl_context$split, 1L)){
+    drop_levels <- TRUE
+    inrowsplit <- TRUE
+  }
+
   ### combine all preprocessing of incoming df/.df_row in one function
   ### do this outside stats derivation functions (s_freq_j/)
   ### use all of val/excl_levels/drop_levels//new_levels/label/label_map/labelstr/label_fstr
@@ -706,13 +712,11 @@ a_eair100_j <- function(
   ### rearrange list y to  list to x_stats
   #### this is to ensure the remainder of the code can stay the same as in a_freq_j
   stnms <- c("eair", "eair_diff", "n_event", "person_years", "n_eair")
-  stnms <- c("eair", "eair_diff", "n_event", "person_years", "n_eair")
   x_stats <- extract_x_stats(y, stnms)
 
   if (!inriskdiffcol) {
     .stats_adj <- .stats
   } else {
-    .stats_adj <- replace(.stats, .stats %in% c("eair", "n_eair"), "eair_diff")
     .stats_adj <- replace(.stats, .stats %in% c("eair", "n_eair"), "eair_diff")
   }
 
@@ -722,21 +726,23 @@ a_eair100_j <- function(
 
 
   x_stats <- x_stats[.stats]
-  upd_labels <- FALSE
-  if (length(.stats) > 1) {
-    x_stats <- transpose_named_list(x_stats)
-    x_stats_orig <- x_stats
-    upd_labels <- TRUE
-  }
+  x_stats <- transpose_named_list(x_stats)
 
   levels_per_stats <- lapply(x_stats, names)
 
   .formats <- junco_get_formats_from_stats(.stats, .formats, levels_per_stats)
   .labels <- junco_get_labels_from_stats(.stats, .labels, levels_per_stats)
   .labels <- .unlist_keep_nulls(.labels)
-
-  if (upd_labels) {
-    .labels <- paste(rep(names(x_stats_orig), each = length(.stats)), .labels)
+  
+  # make adjustments to rowlabels  when not inrowsplit
+  if (!inrowsplit && length(.stats) > 1) {
+    # if more than one stat requested and variable is not in a prior splitrowscall
+    # prepend the level of the incoming variable (which is now in names of x_stats) to the label
+    .labels <- paste(rep(names(x_stats), each = length(.stats)), .labels)
+  } else if (!inrowsplit && length(.stats) == 1){ 
+    # if one stat requested and variable is not in a prior splitrowscall
+    # show the levels of the incoming variable, rather than the statistic
+    .labels <- names(x_stats)
   }
 
   .indent_mods <- junco_get_indents_from_stats(
