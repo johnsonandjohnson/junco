@@ -361,7 +361,7 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
     newrow <- possdfii[ii, ] # why??? ii = 6, and possdfii is a dataframe with
     # possible colwidths for column 6.
     # possdfii[ii, ] means nothing; shouldn't we look for tail(possdfii, 1),
-    # or the optimal colwidth (i.e. a possdfii$colwidth that is > cwidthii and 
+    # or the optimal colwidth (i.e. a possdfii$colwidth that is > cwidthii and
     # still fits in avail_spc)?
     # browser()
     if (ii > nrow(possdfii)) {
