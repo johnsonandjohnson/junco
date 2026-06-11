@@ -14,6 +14,21 @@ a_kaplan_meier(
   .indent_mods = NULL
 )
 }
+\arguments{
+\item{df}{(\code{data.frame}) input data.}
+
+\item{.var}{(\code{string}) variable name.}
+
+\item{...}{additional arguments (ignored).}
+
+\item{.stats}{(\code{character}) statistics to compute (ignored).}
+
+\item{.formats}{(\code{list}) formats for statistics (ignored).}
+
+\item{.labels}{(\code{list}) labels for statistics (ignored).}
+
+\item{.indent_mods}{(\code{list}) indentation modifications (ignored).}
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{\link[tern:survival_time]{tern::a_surv_time()}} instead.
 }
