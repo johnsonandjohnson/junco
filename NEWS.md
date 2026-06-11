@@ -19,6 +19,7 @@
 - Replaced `assertthat` by `checkmate` for consistency #201
 - Remove `stringi` from dependencies #201
 - Deprecate `rbmi_analyse()`, `make_rbmi_cluster()`, `par_lapply()` for `rbmi` equivalent functions #367
+- Deprecate `a_kaplan_meier` for `tern::a_surv_time()`
 
 
 ### Added

@@ -169,7 +169,7 @@
       ————————————————————————————————————————————————————————————————————————————————————————————————
       Adjusted comparison (covariates: Sepal.Length and Sepal.Width)                                  
         lsmean_ci                                                                                     
-        lsmean_diff_with_ci                                                                                 
+        lsmean_diff_with_ci                                                                           
           p-value                                                                                     
 
 # a_summarize_ancova_j with no data in reference group

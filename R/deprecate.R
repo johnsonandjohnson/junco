@@ -65,6 +65,13 @@ s_kaplan_meier <- function(df, .var, is_event, control = control_surv_time()) {
 
 #' @title a_kaplan_meier
 #' @description `r lifecycle::badge("deprecated")` Use [tern::a_surv_time()] instead.
+#' @param df (`data.frame`) input data.
+#' @param .var (`string`) variable name.
+#' @param ... additional arguments (ignored).
+#' @param .stats (`character`) statistics to compute (ignored).
+#' @param .formats (`list`) formats for statistics (ignored).
+#' @param .labels (`list`) labels for statistics (ignored).
+#' @param .indent_mods (`list`) indentation modifications (ignored).
 #' @export
 a_kaplan_meier <- function(df, .var, ..., .stats = NULL, .formats = NULL, .labels = NULL, .indent_mods = NULL) {
   lifecycle::deprecate_stop(
@@ -77,4 +84,3 @@ a_kaplan_meier <- function(df, .var, ..., .stats = NULL, .formats = NULL, .label
     )
   )
 }
-
