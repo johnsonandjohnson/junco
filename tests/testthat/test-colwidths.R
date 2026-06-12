@@ -132,6 +132,13 @@ test_that("def_colwidths does not fail when a column label is too large", {
     )
   )
 
+  to_sentence <- function(x) {
+    x <- tolower(x)
+    paste0(
+      toupper(substr(x, 1, 1)),
+      substr(x, 2, nchar(x))
+    )
+  }
   lsting <- adsl_ds_adexsum |>
     mutate(
       AGE = explicit_na(as.character(AGE), ""),
@@ -139,8 +146,7 @@ test_that("def_colwidths does not fail when a column label is too large", {
       RACE = explicit_na(RACE, ""),
       AVAL = explicit_na(as.character(AVAL), ""),
       AVALU = case_when(
-        !is.na(AVAL) ~
-          stringr::str_extract(PARAM, "(?<=\\()([^()]*?)(?=\\)[^()]*$)"),
+        !is.na(AVAL) ~ "[unit]",
         is.na(AVAL) ~ ""
       ),
       DCSREAS = explicit_na(DCSREAS, ""),
@@ -148,7 +154,7 @@ test_that("def_colwidths does not fail when a column label is too large", {
       COL0 = explicit_na(.data[[trtvar]], ""),
       COL1 = explicit_na(USUBJID, ""),
       COL2 = paste(AGE, SEX, RACE, sep = concat_sep),
-      COL3 = explicit_na(stringr::str_to_sentence(DSSCAT), ""),
+      COL3 = explicit_na(to_sentence(DSSCAT), ""),
       COL4 = explicit_na(LTVISIT, ""),
       COL5 = explicit_na(as.character(TRTEDY), ""),
       COL6 = paste0(AVAL, " ", AVALU),
@@ -159,7 +165,7 @@ test_that("def_colwidths does not fail when a column label is too large", {
       ),
       COL8 = case_when(
         DCSREAS == "OTHER" ~
-          paste0(DCSREAS, " (", stringr::str_to_sentence(DCTREASP), ")"),
+          paste0(DCSREAS, " (", to_sentence(DCTREASP), ")"),
         DCSREAS != "OTHER" ~ DCSREAS
       )
     ) |>
