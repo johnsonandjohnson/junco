@@ -288,6 +288,8 @@ make_poss_wdf <- function(
 #'  which corresponds to landscape orientation on a standard page after margins.
 #' @param fontspec (`font_spec`)\cr Defaults to Times New Roman 8pt font with 1.2 line
 #' height.
+#' @param max_lbl_lines (`numeric(1)`)\cr Maximum number
+#' of lines allowed for column labels. Defaults to 3.
 #' @param verbose (`logical(1)`)\cr Should additional information messages be
 #' displayed during the calculation of the column widths? Defaults to `FALSE`.
 #' @return
@@ -301,6 +303,7 @@ listing_column_widths <- function(
     col_gap = 0.5,
     pg_width_ins = 8.88,
     fontspec = font_spec("Times", 8, 1.2),
+    max_lbl_lines = 3,
     verbose = FALSE) {
   newdev <- open_font_dev(fontspec)
   if (newdev) {
@@ -316,7 +319,8 @@ listing_column_widths <- function(
   optimal <- optimal_widths(
     possdf = possdf,
     tot_spaces = inches_to_spaces(pg_width_ins, fontspec = fontspec),
-    verbose = verbose
+    verbose = verbose,
+    max_lbl_lines = max_lbl_lines
   )
   optimal$colwidth
 }
@@ -357,7 +361,17 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
       success <- FALSE
       break
     }
-    newrow <- possdfii[ii, ]
+    newrow <- possdfii[ii, ] # TODO: this line seems odd,
+    # ii = 6, and possdfii is a dataframe with possible colwidths for column 6.
+    # possdfii[ii, ] means nothing.
+    # we need to find another index in possdfii (different from ii)
+    # examples could be tail(possdfii, 1),
+    # or the optimal colwidth (i.e. a possdfii$colwidth that is > cwidthii and
+    # still fits in avail_spc)
+    if (ii > nrow(possdfii)) {
+      success <- FALSE
+      break
+    }
     if (newrow$colwidth - cwidthii > avail_spc) {
       success <- FALSE
       break
@@ -375,7 +389,9 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
       )
     } else {
       msg <- paste("Unable to reduce label rows required.")
+      msg <- paste0(msg, " Please try with a smaller value of 'max_lbl_lines'.")
     }
+    message(msg)
   }
 
   if (!success) {
@@ -486,6 +502,8 @@ one_col_strs <- function(strcol, col_gap = 2, fontspec) {
 #' @param col_gap Column gap in spaces. Defaults to `.5` for listings and `3`
 #'   for tables.
 #' @param type Type of the TableTree, used to determine column width calculation method.
+#' @param max_lbl_lines (`numeric(1)`)\cr Maximum number
+#' of lines allowed for column labels. Defaults to 3.
 #'
 #' @details Listings are assumed to be rendered landscape on standard A1 paper,
 #'   such that all columns are rendered on one page. Tables are allowed to
@@ -500,7 +518,8 @@ def_colwidths <- function(tt,
                           fontspec,
                           label_width_ins = 2,
                           col_gap = ifelse(type == "Listing", .5, 3),
-                          type = tlg_type(tt)) {
+                          type = tlg_type(tt),
+                          max_lbl_lines = 3) {
   if (type == "Figure") {
     ret <- NULL
   } else if (type == "Table") {
@@ -514,7 +533,8 @@ def_colwidths <- function(tt,
       ret <- no_cellwrap_colwidths(tt, fontspec, col_gap = col_gap, label_width_ins = label_width_ins)
     }
   } else {
-    ret <- listing_column_widths(tt, fontspec = fontspec, col_gap = col_gap)
+    ret <- listing_column_widths(tt, fontspec = fontspec, col_gap = col_gap,
+                                 max_lbl_lines = max_lbl_lines)
   }
   ret
 }

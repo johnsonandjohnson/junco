@@ -11,6 +11,7 @@ listing_column_widths(
   col_gap = 0.5,
   pg_width_ins = 8.88,
   fontspec = font_spec("Times", 8, 1.2),
+  max_lbl_lines = 3,
   verbose = FALSE
 )
 
@@ -19,7 +20,8 @@ def_colwidths(
   fontspec,
   label_width_ins = 2,
   col_gap = ifelse(type == "Listing", 0.5, 3),
-  type = tlg_type(tt)
+  type = tlg_type(tt),
+  max_lbl_lines = 3
 )
 }
 \arguments{
@@ -37,6 +39,9 @@ for tables.}
 which corresponds to landscape orientation on a standard page after margins.}
 
 \item{fontspec}{Font specification}
+
+\item{max_lbl_lines}{(\code{numeric(1)})\cr Maximum number
+of lines allowed for column labels. Defaults to 3.}
 
 \item{verbose}{(\code{logical(1)})\cr Should additional information messages be
 displayed during the calculation of the column widths? Defaults to \code{FALSE}.}
