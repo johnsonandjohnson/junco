@@ -236,7 +236,7 @@ junco_default_stats <- list(
     "lsmean_ci",
     "lsmean_diff",
     "lsmean_diff_ci",
-    "lsmean_diffci",
+    "lsmean_diff_with_ci",
     "pval"
   ),
   summarize_mmrm = c(
@@ -327,7 +327,7 @@ junco_default_formats_start <- c(
   lsmean = jjcsformat_xx("xx.xx"),
   lsmean_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   lsmean_diff = jjcsformat_xx("xx.xx"),
-  lsmean_diffci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  lsmean_diff_with_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   lsmean_diff_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
   lsmean_se = jjcsformat_xx("xx.xx (xx.xx)"),
   mean = jjcsformat_xx("xx.xx"),

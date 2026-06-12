@@ -36,7 +36,7 @@ Depends:
     rtables (>= 0.6.16)
 Imports:
     tidytlg (>= 0.12.0),
-    tern (>= 0.9.10.9007),
+    tern (>= 0.9.10.9012),
     rlistings (>= 0.2.13),
     checkmate (>= 2.1.0),
     rbmi (>= 1.6.0),
