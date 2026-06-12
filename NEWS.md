@@ -20,14 +20,10 @@
 - Replaced `assertthat` by `checkmate` for consistency #201
 - Remove `stringi` from dependencies #201
 - Deprecate `rbmi_analyse()`, `make_rbmi_cluster()`, `par_lapply()` for `rbmi` equivalent functions #367
-<<<<<<< 281_error_def_colwidths
 - Added argument `max_lbl_lines` to functions `def_colwidths()` and `listing_column_widths()` #384
-=======
 - Deprecate `a_kaplan_meier()` for `tern::a_surv_time()`
 - Changed the label for `range_with_cens_info` from `"Min, max"` (junco) to `"Min - Max (with censoring)"` and the argument from `lsmean_diffci` to `lsmean_diff_with_ci`
 - Deprecate `s_coxph_hr()` for `tern:::a_coxph_pairwise()`
-
->>>>>>> dev
 
 
 ### Added
