@@ -206,8 +206,8 @@ test_that("def_colwidths does not fail when a column label is too large", {
       label_width_ins = label_width_ins
     )
   )
-  exp_res <- c(34, 26, 36, 36, 31, 36, 33, 40, 40)
-  testthat::expect_equal(colwidths, exp_res)
+  expected_result <- c(34, 26, 36, 36, 31, 36, 33, 40, 40)
+  testthat::expect_equal(colwidths, expected_result)
 })
 
 test_that("listing_column_widths works as expected", {
