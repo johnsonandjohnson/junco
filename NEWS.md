@@ -20,6 +20,7 @@
 - Replaced `assertthat` by `checkmate` for consistency #201
 - Remove `stringi` from dependencies #201
 - Deprecate `rbmi_analyse()`, `make_rbmi_cluster()`, `par_lapply()` for `rbmi` equivalent functions #367
+- Added argument `max_lbl_lines` to functions `def_colwidths()` and `listing_column_widths()` #384
 
 
 ### Added
