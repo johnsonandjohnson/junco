@@ -389,14 +389,12 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
       )
     } else {
       msg <- paste("Unable to reduce label rows required.")
+      msg <- paste0(msg, " Please try with a smaller value of 'max_lbl_lines'.")
     }
+    message(msg)
   }
 
   if (!success) {
-    if (verbose) {
-      message("Optimization of colwidths was not successfull.
-Please try with a smaller value of 'max_lbl_lines'")
-    }
     curdf <- olddf
   }
   curdf
