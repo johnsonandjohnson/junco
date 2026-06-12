@@ -106,6 +106,7 @@ test_that("def_colwidths works as expected", {
 })
 
 test_that("def_colwidths does not fail when a column label is too large", {
+  library(dplyr)
   popfl <- "FASFL"
   trtvar <- "TRT01P"
   key_cols <- c("COL0", "COL1")
@@ -115,16 +116,8 @@ test_that("def_colwidths does not fail when a column label is too large", {
   adsl <- pharmaverseadamjnj::adsl |>
     filter(!!rlang::sym(popfl) == "Y" & !(EOTSTT %in% c("COMPLETED", "ONGOING")))
 
-  ds <- pharmaversesdtmjnj::ds |>
-    filter(
-      (DSSCAT %in% c("TREATMENT")) &
-        DSCAT == "DISPOSITION EVENT" &
-        DSDECOD != "COMPLETED"
-    ) |>
-    select(STUDYID, USUBJID, DSSCAT)
-
-  adsl_ds <- adsl |>
-    left_join(ds, by = c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID"))
+  adsl_ds <- adsl
+  adsl_ds$DSSCAT <- "TREATMENT"
 
   adexsum <- pharmaverseadamjnj::adexsum |>
     filter(PARAMCD == "CUMDOSE") |>
@@ -150,7 +143,7 @@ test_that("def_colwidths does not fail when a column label is too large", {
           stringr::str_extract(PARAM, "(?<=\\()([^()]*?)(?=\\)[^()]*$)"),
         is.na(AVAL) ~ ""
       ),
-      DCTREAS = explicit_na(DCTREAS, ""),
+      DCSREAS = explicit_na(DCSREAS, ""),
       DCTREASP = explicit_na(DCTREASP, ""),
       COL0 = explicit_na(.data[[trtvar]], ""),
       COL1 = explicit_na(USUBJID, ""),
@@ -165,9 +158,9 @@ test_that("def_colwidths does not fail when a column label is too large", {
         toupper(format(as.Date(DCTDT), format = "%d%b%Y"))
       ),
       COL8 = case_when(
-        DCTREAS == "OTHER" ~
-          paste0(DCTREAS, " (", stringr::str_to_sentence(DCTREASP), ")"),
-        DCTREAS != "OTHER" ~ DCTREAS
+        DCSREAS == "OTHER" ~
+          paste0(DCSREAS, " (", stringr::str_to_sentence(DCTREASP), ")"),
+        DCSREAS != "OTHER" ~ DCSREAS
       )
     ) |>
     arrange(COL0, COL1, COL2, COL3)
