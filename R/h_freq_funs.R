@@ -477,7 +477,7 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
     if (!all(c("split", "value") %in% names(split_info))) {
       stop("split_info does not contain required elements.")
     }
-    
+
     nodata <- FALSE
     if (length(.labels) == 1 && .labels == no_data_to_report_str) {
       nodata <- TRUE
