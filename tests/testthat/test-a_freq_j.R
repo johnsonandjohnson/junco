@@ -221,3 +221,53 @@ test_that("a_freq_j in layout with relative risk column for combined facet", {
 
   testthat::expect_equal(actual, expected, ignore_attr = TRUE)
 })
+
+test_that("a_freq_j with label_map and no data in row error message", {
+  set.seed(12)
+  dta <- data.frame(
+    id = 1:100,
+    visit = factor(rep(c("Baseline", "Week 1"), length.out = 100)),
+    rsp = sample(c("Y", "N"), 100, TRUE),
+    grp = factor(rep(c("A", "B"), each = 50), levels = c("A", "B"))
+  )
+  label_map <- data.frame(
+    visit = rep(c("Baseline", "Week 1"), each = 2),
+    value = c("Y"),
+    label = c("Yes")
+  )
+  dta$rsp[dta$visit == "Baseline"] <- "N"
+
+  lyt1 <- basic_table() |>
+    split_cols_by("grp") |>
+    split_rows_by("visit") |>
+    analyze(
+      "rsp",
+      afun = a_freq_j,
+      extra_args = list(
+        val = "Y",
+        id = "id"
+      )
+    )
+  expect_no_error(result1 <- build_table(lyt1, dta))
+
+  lyt2 <- basic_table() |>
+    split_cols_by("grp") |>
+    split_rows_by("visit") |>
+    analyze(
+      "rsp",
+      afun = a_freq_j,
+      extra_args = list(
+        label_map = label_map,
+        val = "Y",
+        id = "id"
+      )
+    )
+  expect_error(result2 <- build_table(lyt2, dta),
+    regexp = "Perhaps convert analysis variable rsp to a factor"
+  )
+
+  # same layout works fine with analysis variable being factor
+  dta2 <- dta
+  dta2$rsp <- factor(dta2$rsp, levels = c("Y", "N"))
+  expect_no_error(result3 <- build_table(lyt2, dta2))
+})
