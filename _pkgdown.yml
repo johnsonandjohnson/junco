@@ -160,7 +160,6 @@ reference:
     contents:
     - a_coxph_hr
     - rbmi_analyse
-    - make_rbmi_cluster
     - par_lapply
     - a_kaplan_meier
     - rbmi_ancova
