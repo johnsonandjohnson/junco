@@ -22,14 +22,6 @@ test_that("a_kaplan_meier is deprecated", {
   )
 })
 
-test_that("make_rbmi_cluster is deprecated", {
-  expect_error(
-    lifecycle::expect_deprecated(
-      make_rbmi_cluster(cluster_or_cores = 1)
-    )
-  )
-})
-
 test_that("par_lapply is deprecated", {
   expect_error(
     lifecycle::expect_deprecated(
