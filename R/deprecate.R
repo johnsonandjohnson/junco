@@ -105,31 +105,6 @@ a_kaplan_meier <- function(df, .var, ..., .stats = NULL, .formats = NULL, .label
   )
 }
 
-#' Create a `rbmi` ready cluster
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")` Use `rbmi::make_rbmi_cluster()` instead.
-#'
-#' @param cluster_or_cores (`integer` or `cluster object`)\cr
-#' Number of parallel processes to use or an existing cluster to make use of
-#' @param objects (`list`)\cr A named list of objects to export into the sub-processes
-#' @param packages (`character vector`)\cr
-#' A character vector of libraries to load in the sub-processes
-#'
-#' @return See `rbmi::make_rbmi_cluster()`.
-#' @export
-make_rbmi_cluster <- function(
-  cluster_or_cores = 1,
-  objects = NULL,
-  packages = NULL
-) {
-  lifecycle::deprecate_stop(
-    when = "0.1.6",
-    what = "make_rbmi_cluster()",
-    with = "rbmi::make_rbmi_cluster()"
-  )
-}
-
 #' Parallelise Lapply
 #'
 #' @description
