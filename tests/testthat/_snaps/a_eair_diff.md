@@ -86,7 +86,7 @@
       14  1 309.4  4 295.0 -1.0327 -2.9956  0.5478
       15  1 309.9  4 294.6 -1.0351 -3.0002  0.5445
 
-# Check diff in binomial for MN method ratesci
+# Check diff in binomial for MN method
 
     Code
       res
