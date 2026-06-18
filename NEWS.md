@@ -24,6 +24,7 @@
 - Deprecate `a_kaplan_meier()` for `tern::a_surv_time()`
 - Changed the label for `range_with_cens_info` from `"Min, max"` (junco) to `"Min - Max (with censoring)"` and the argument from `lsmean_diffci` to `lsmean_diff_with_ci`
 - Deprecate `s_coxph_hr()` for `tern:::a_coxph_pairwise()`
+- Changed stop message in `a_freq_j()` when `label_map` option is used in a rowsplit with no data on a character analysis var #386
 
 
 
