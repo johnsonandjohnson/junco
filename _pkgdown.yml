@@ -44,8 +44,6 @@ reference:
     - a_two_tier
     - c_summary_subset_label
     - analyze_values
-    - rbmi_ancova
-    - rbmi_ancova_single
     - build_formula
     - c_proportion_logical
     - cmp_cfun
@@ -165,3 +163,4 @@ reference:
     - make_rbmi_cluster
     - par_lapply
     - a_kaplan_meier
+    - rbmi_ancova

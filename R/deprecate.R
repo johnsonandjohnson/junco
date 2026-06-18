@@ -63,6 +63,26 @@ s_kaplan_meier <- function(df, .var, is_event, control = control_surv_time()) {
   )
 }
 
+#' @title rbmi_ancova
+#' @description `r lifecycle::badge("deprecated")` Use [rbmi::ancova()] instead.
+#' @param data (`data.frame`) input data.
+#' @param vars (`list`) vars object from `rbmi::set_vars()`.
+#' @param visits (`character`) optional visit filter.
+#' @param weights (`character`) weighting strategy.
+#' @export
+rbmi_ancova <- function(
+  data,
+  vars,
+  visits = NULL,
+  weights = c("counterfactual", "equal", "proportional_em", "proportional")
+) {
+  lifecycle::deprecate_stop(
+    when = "0.1.7",
+    what = "rbmi_ancova()",
+    with = "rbmi::ancova()"
+  )
+}
+
 #' @title a_kaplan_meier
 #' @description `r lifecycle::badge("deprecated")` Use [tern::a_surv_time()] instead.
 #' @param df (`data.frame`) input data.

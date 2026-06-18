@@ -59,27 +59,3 @@ test_that("find_missing_chg_after_avisit validates input correctly", {
     "Assertion on 'df\\$CHG' failed"
   )
 })
-
-test_that("make_rbmi_cluster is deprecated", {
-  expect_error(
-    lifecycle::expect_deprecated(
-      make_rbmi_cluster(ncores = 1)
-    )
-  )
-})
-
-test_that("par_lapply is deprecated", {
-  expect_error(
-    lifecycle::expect_deprecated(
-      par_lapply(NULL, function(x) x^2, 1:3)
-    )
-  )
-})
-
-test_that("rbmi_analyse is deprecated", {
-  expect_error(
-    lifecycle::expect_deprecated(
-      rbmi_analyse(imputations = list())
-    )
-  )
-})

@@ -45,3 +45,30 @@ test_that("rbmi_analyse is deprecated", {
     )
   )
 })
+
+test_that("rbmi_ancova is deprecated", {
+  expect_error(
+    lifecycle::expect_deprecated(
+      rbmi_ancova(
+        data = data.frame(),
+        vars = list(outcome = "x", group = "g", covariates = NULL, visit = "v")
+      )
+    )
+  )
+})
+
+test_that("par_lapply is deprecated", {
+  expect_error(
+    lifecycle::expect_deprecated(
+      par_lapply(NULL, function(x) x^2, 1:3)
+    )
+  )
+})
+
+test_that("rbmi_analyse is deprecated", {
+  expect_error(
+    lifecycle::expect_deprecated(
+      rbmi_analyse(imputations = list())
+    )
+  )
+})
