@@ -261,9 +261,9 @@ NULL
 #'   Defaults to `100`, yielding a rate per 100 person-years.
 #'   For example, use `1` for a rate per person-year or `1000` for a rate per
 #'   1000 person-years.
-#' @param count_events (`logical`)\cr if `TRUE`, counts the total number of events
+#' @param count_multiple_events (`logical`)\cr if `TRUE`, counts the total number of events
 #'   per subject rather than treating each subject as contributing 1 to `n_event`.
-#'   Can only be used when `occ_var = NULL`.
+#'   Only considered when `occ_var = NULL`.
 #'   Defaults to `FALSE`.
 #'
 #' @return
@@ -280,16 +280,28 @@ NULL
 #' The list of available statistics (core columns) can also be viewed by
 #' running `junco_get_stats("a_eair100_j")`.
 #' @details
-#' The exposure-adjusted incidence rate (EAIR) is defined as the number of subjects
+#' The exposure-adjusted incidence rate (EAIR) is defined as:
+#' - When (`occvar` not `NULL`) or `count_multiple_events = FALSE`:
+#' \cr the **number of subjects**
 #' with at least one occurrence of a specified adverse event divided by the total
 #' at-risk exposure time across all subjects.
+#' 
+#' - When `occvar = NULL` and `count_multiple_events = TRUE`:
+#' \cr the total **number of events** across of a specified adverse event divided by the total
+#' at-risk exposure time across all subjects.
 #'
-#' At-risk exposure time is calculated for each subject
+#' Total at-risk exposure time is calculated for each subject
 #' as:
-#' - for subjects with the event: relative day (from the start of exposure) of
+#' - When `occvar` not `NULL`
+#' \itemize{
+#' \item for subjects with the event: relative day (from the start of exposure) of
 #' the onset date of the **first** occurrence of the specified event (`occ_var` and `occ_dy`),
 #' transformed from days into years as `occ_dy/365.25`, or
-#' - for subjects without the event: total duration of follow-up (expressed in years)
+#' \item for subjects without the event: total duration of follow-up (expressed in years)
+#' (e.g., treatment discontinuation, completion, or censoring) (`fup_var`).
+#' }
+#' - When `occvar = NULL`\cr
+#' for all subjects: total duration of follow-up (expressed in years)
 #' (e.g., treatment discontinuation, completion, or censoring) (`fup_var`).
 #'
 #' The EAIR is expressed as:
@@ -323,6 +335,8 @@ NULL
 #' (r1 - r2) +/- z_(1-a/2) * SE
 #' }
 #' where \eqn{z_{1-\alpha/2}} is the standard normal quantile. [1](https://metricgate.com/docs/poisson-rate-comparison/)
+#' \cr
+#' \cr Other methods for confidence interval for difference can be specified in `conf_type` argument.
 #'
 #' EAIR is commonly reported per 100 subject-years:
 #'
@@ -355,7 +369,7 @@ s_eair100_levii_j <- function(
   occ_var,
   occ_dy,
   num_p_year = 100,
-  count_events = FALSE
+  count_multiple_events = FALSE
 ) {
   conf_type <- match.arg(conf_type)
   if (diff && inriskdiffcol) {
@@ -377,14 +391,14 @@ s_eair100_levii_j <- function(
     fup_var = fup_var,
     occ_var = occ_var,
     occ_dy = occ_dy,
-    count_events = count_events
+    count_multiple_events = count_multiple_events
   )
   cur_df_num <- cur_dfs$df_num
   cur_df_denom <- cur_dfs$df_denom
   ### statistics derivation
   # note: variables n_events and mod_fup_var are derived by h_get_eair_df
-  # when count_events == TRUE, n_events: number of events per subject
-  # when count_events == FALSE, n_events: 1 for subjects with event
+  # when count_multiple_events == TRUE, n_events: number of events per subject
+  # when count_multiple_events == FALSE, n_events: 1 for subjects with event
   x1 <- sum(cur_df_num[["n_events"]])
   n1 <- sum(cur_df_denom[["mod_fup_var"]])
   cur_eair <- num_p_year * x1 / n1
@@ -392,10 +406,21 @@ s_eair100_levii_j <- function(
 
   x <- list()
   eair_lbl <- paste0("eair (per ", num_p_year, " person years)")
-  x$n_event <- c("n_event" = x1)
+  n_event_lbl <-
+    if (is.null(occ_var) && count_multiple_events) {
+      "Number of events"
+    } else {
+      "Number of subjects with event"
+    }
+
+  x$n_event <- stats::setNames(c("n_event" = x1), n_event_lbl)
   x$person_years <- c("person_years" = n1)
   x$eair <- stats::setNames(c("eair" = cur_eair), eair_lbl)
-  x$n_eair <- stats::setNames(c("n_eair" = cur_n_eair), c("n_event", eair_lbl))
+  x$n_eair <- stats::setNames(c("n_eair" = cur_n_eair), c(n_event_lbl, eair_lbl))
+
+  attr(x$n_event, "label") <- n_event_lbl
+  attr(x$eair, "label") <- eair_lbl
+  attr(x$n_eair, "label") <- paste0(n_event_lbl, " (", eair_lbl, ")")
 
   if (diff && inriskdiffcol) {
     x$n_event <- c("n_event" = NULL)
@@ -423,7 +448,7 @@ s_eair100_levii_j <- function(
       fup_var = fup_var,
       occ_var = occ_var,
       occ_dy = occ_dy,
-      count_events = count_events
+      count_multiple_events = count_multiple_events
     )
 
     ref_df_num <- ref_dfs$df_num
@@ -449,6 +474,7 @@ s_eair100_levii_j <- function(
       c("eair_diff" = eair_diff),
       nm = c("estimate", "lcl", "ucl")
     )
+    attr(x$eair_diff, "label") <- "Difference in eair"
   } else {
     x$eair_diff <- c("eair_diff" = NULL)
   }
@@ -579,7 +605,7 @@ a_eair100_j <- function(
   occ_var,
   occ_dy,
   num_p_year = 100,
-  count_events = FALSE
+  count_multiple_events = FALSE
 ) {
   conf_type <- match.arg(conf_type)
   ## prepare for column based split
@@ -609,7 +635,8 @@ a_eair100_j <- function(
   checkmate::assert_names(colnames(.alt_df_full), must.include = c(fup_var))
 
   inrowsplit <- FALSE
-  if (.var == tail(.spl_context$split, 1L)){
+  if (.var == tail(.spl_context$split, 1L)) {
+    # note: this will catch the rowsplit only if parent_name in split_rows_by call is .var (default)
     drop_levels <- TRUE
     inrowsplit <- TRUE
   }
@@ -660,7 +687,7 @@ a_eair100_j <- function(
     occ_var = occ_var,
     occ_dy = occ_dy,
     num_p_year = num_p_year,
-    count_events = count_events
+    count_multiple_events = count_multiple_events
   )
 
   if (riskdiff && inriskdiffcol) {
@@ -710,9 +737,21 @@ a_eair100_j <- function(
   )
 
   ### rearrange list y to  list to x_stats
+  # y is a nested list with
+  # outer elements levels of incoming variable
+  # inner elements stat elements statistics from
+
   #### this is to ensure the remainder of the code can stay the same as in a_freq_j
   stnms <- c("eair", "eair_diff", "n_event", "person_years", "n_eair")
   x_stats <- extract_x_stats(y, stnms)
+
+  # x_stats is a nested list with
+  # outer elements stat elements statistics (all 5 from stnms)
+  # inner elements levels of incoming variable
+  # this will ensure we can perform subsetting on .stats
+  # like x_stats[.stats]
+
+  # transpose_named_list cannot be used as this will not ensure all 5 poss stats are in
 
   if (!inriskdiffcol) {
     .stats_adj <- .stats
@@ -726,20 +765,28 @@ a_eair100_j <- function(
 
 
   x_stats <- x_stats[.stats]
+  x_stats_orig <- x_stats
+  # from now onwards, retransform x_stats back into structure
+  # list with outer elements stats levels from incoming variable
+  # inner elements statistics
   x_stats <- transpose_named_list(x_stats)
 
   levels_per_stats <- lapply(x_stats, names)
+  # in case no default label get the label from the x_stats directly
+  # this is to cover statistics with dynamic label, such as
+  # n_event Either Number of events or Number of subjects with events
+  .labels_pre <- junco_get_labels_from_attrib(.stats, .labels, x_stats)
 
   .formats <- junco_get_formats_from_stats(.stats, .formats, levels_per_stats)
-  .labels <- junco_get_labels_from_stats(.stats, .labels, levels_per_stats)
+  .labels <- junco_get_labels_from_stats(.stats, .labels_pre, levels_per_stats)
   .labels <- .unlist_keep_nulls(.labels)
-  
+
   # make adjustments to rowlabels  when not inrowsplit
   if (!inrowsplit && length(.stats) > 1) {
     # if more than one stat requested and variable is not in a prior splitrowscall
     # prepend the level of the incoming variable (which is now in names of x_stats) to the label
     .labels <- paste(rep(names(x_stats), each = length(.stats)), .labels)
-  } else if (!inrowsplit && length(.stats) == 1){ 
+  } else if (!inrowsplit && length(.stats) == 1) {
     # if one stat requested and variable is not in a prior splitrowscall
     # show the levels of the incoming variable, rather than the statistic
     .labels <- names(x_stats)
