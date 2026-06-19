@@ -80,4 +80,5 @@ Config/testthat/edition: 3
 Remotes:
     insightsengineering/formatters@main,
     insightsengineering/tern@main,
-    petelaud/ratesci
+    petelaud/ratesci,
+    johnsonandjohnson/pharmaverseadamjnj@dev
