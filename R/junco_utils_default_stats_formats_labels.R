@@ -421,7 +421,6 @@ junco_default_labels_start <- c(
   n_parentdf = "N",
   denom = "N",
   patyrs = "Patient years",
-  n_event = "Number of events",
   person_years = "Person years",
   total_subject_years = "Total treatment (subject years)"
 )

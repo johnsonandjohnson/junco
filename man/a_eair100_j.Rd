@@ -23,7 +23,7 @@ s_eair100_levii_j(
   occ_var,
   occ_dy,
   num_p_year = 100,
-  count_events = FALSE
+  count_multiple_events = FALSE
 )
 
 a_eair100_j(
@@ -48,7 +48,7 @@ a_eair100_j(
   occ_var,
   occ_dy,
   num_p_year = 100,
-  count_events = FALSE
+  count_multiple_events = FALSE
 )
 }
 \arguments{
@@ -104,9 +104,9 @@ Defaults to \code{100}, yielding a rate per 100 person-years.
 For example, use \code{1} for a rate per person-year or \code{1000} for a rate per
 1000 person-years.}
 
-\item{count_events}{(\code{logical})\cr if \code{TRUE}, counts the total number of events
+\item{count_multiple_events}{(\code{logical})\cr if \code{TRUE}, counts the total number of events
 per subject rather than treating each subject as contributing 1 to \code{n_event}.
-Can only be used when \code{occ_var = NULL}.
+Only considered when \code{occ_var = NULL}.
 Defaults to \code{FALSE}.}
 
 \item{labelstr}{(\code{string})\cr Not intended to be set by user, only present to be able to use function as a \code{cfun}.}
@@ -155,17 +155,30 @@ Within a risk difference column, the statistics \code{eair} and \code{n_eair} ar
 Statistical/Analysis Function for presenting Exposure-Adjusted Incidence Rate summary data
 }
 \details{
-The exposure-adjusted incidence rate (EAIR) is defined as the number of subjects
+The exposure-adjusted incidence rate (EAIR) is defined as:
+\itemize{
+\item When (\code{occvar} not \code{NULL}) or \code{count_multiple_events = FALSE}:
+\cr the \strong{number of subjects}
 with at least one occurrence of a specified adverse event divided by the total
 at-risk exposure time across all subjects.
+\item When \code{occvar = NULL} and \code{count_multiple_events = TRUE}:
+\cr the total \strong{number of events} across of a specified adverse event divided by the total
+at-risk exposure time across all subjects.
+}
 
-At-risk exposure time is calculated for each subject
+Total at-risk exposure time is calculated for each subject
 as:
+\itemize{
+\item When \code{occvar} not \code{NULL}
 \itemize{
 \item for subjects with the event: relative day (from the start of exposure) of
 the onset date of the \strong{first} occurrence of the specified event (\code{occ_var} and \code{occ_dy}),
 transformed from days into years as \code{occ_dy/365.25}, or
 \item for subjects without the event: total duration of follow-up (expressed in years)
+(e.g., treatment discontinuation, completion, or censoring) (\code{fup_var}).
+}
+\item When \code{occvar = NULL}\cr
+for all subjects: total duration of follow-up (expressed in years)
 (e.g., treatment discontinuation, completion, or censoring) (\code{fup_var}).
 }
 
@@ -200,6 +213,8 @@ and the \eqn{100(1-\alpha)\%} confidence interval is
 (r1 - r2) +/- z_(1-a/2) * SE
 }
 where \eqn{z_{1-\alpha/2}} is the standard normal quantile. \href{https://metricgate.com/docs/poisson-rate-comparison/}{1}
+\cr
+\cr Other methods for confidence interval for difference can be specified in \code{conf_type} argument.
 
 EAIR is commonly reported per 100 subject-years:
 

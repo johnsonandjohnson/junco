@@ -149,8 +149,6 @@ test_that("Check a_eair100_j numbers are giving expected result", {
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
-      nested = FALSE,
-      inclNAs = TRUE,
       afun = a_eair100_j,
       extra_args = list(
         fup_var = "TRTDURY",
@@ -202,8 +200,6 @@ test_that("Check a_eair100_j numbers are giving expected result when fup_var arg
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
-      nested = FALSE,
-      inclNAs = TRUE,
       afun = a_eair100_j,
       extra_args = list(
         fup_var = "TRTDURY2",
@@ -255,8 +251,6 @@ test_that("Check a_eair100_j numbers are giving expected result when occ_dy argu
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
-      nested = FALSE,
-      inclNAs = TRUE,
       afun = a_eair100_j,
       extra_args = list(
         fup_var = "TRTDURY2",
@@ -369,15 +363,14 @@ test_that("Check a_eair100_j numbers are giving expected result relative risk in
     ) |>
     analyze(
       "TRTDURY",
-      nested = FALSE,
       show_labels = "hidden",
       afun = a_patyrs_j,
       extra_args = list(.labels = c(patyrs = "Subject years\u1D43"))
     ) |>
     analyze(
       vars = "AEDECOD",
-      nested = FALSE,
       afun = a_eair100_j,
+      nested = FALSE,
       extra_args = list(
         fup_var = "TRTDURY",
         occ_var = "AOCCPFL",
@@ -439,8 +432,6 @@ test_that("Check a_eair100_j function stops with incorrect input", {
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
-      nested = FALSE,
-      inclNAs = TRUE,
       afun = a_eair100_j,
       extra_args = list(
         fup_var = "TRTDURY",
@@ -460,8 +451,6 @@ test_that("Check a_eair100_j function does not allow occ_var = NULL", {
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
-      nested = FALSE,
-      inclNAs = TRUE,
       afun = a_eair100_j,
       extra_args = list(
         fup_var = "TRTDURY",
@@ -477,8 +466,6 @@ test_that("Check a_eair100_j function request alt_counts_df", {
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
-      nested = FALSE,
-      inclNAs = TRUE,
       afun = a_eair100_j,
       extra_args = list(
         fup_var = "TRTDURY",
@@ -497,8 +484,6 @@ test_that("Check a_eair100_j function does perform variable existence check", {
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
-      nested = FALSE,
-      inclNAs = TRUE,
       afun = a_eair100_j,
       extra_args = list(
         fup_var = "TRTDURY",
@@ -513,12 +498,10 @@ test_that("Check a_eair100_j function does perform variable existence check", {
   )
 })
 
-test_that("Check a_eair100_j with occ_var NULL and count_events", {
+test_that("Check a_eair100_j with occ_var NULL and count_multiple_events", {
   lyt1 <- core_lyt |>
     analyze(
       "AEDECOD",
-      nested = FALSE,
-      inclNAs = TRUE,
       afun = a_eair100_j,
       extra_args = list(
         fup_var = "TRTDURY",
@@ -528,15 +511,13 @@ test_that("Check a_eair100_j with occ_var NULL and count_events", {
         .stats = c("person_years", "n_eair"),
         .formats = c("n_eair" = jjcsformat_xx("xx (xx.xxx)")),
         .labels = c("n_eair" = "n (eair per 100 SY)"),
-        count_events = FALSE
+        count_multiple_events = FALSE
       )
     )
 
   lyt2 <- core_lyt |>
     analyze(
       "AEDECOD",
-      nested = FALSE,
-      inclNAs = TRUE,
       afun = a_eair100_j,
       extra_args = list(
         fup_var = "TRTDURY",
@@ -546,7 +527,7 @@ test_that("Check a_eair100_j with occ_var NULL and count_events", {
         .stats = c("person_years", "n_eair"),
         .formats = c("n_eair" = jjcsformat_xx("xx (xx.xxx)")),
         .labels = c("n_eair" = "n (eair per 100 SY)"),
-        count_events = TRUE
+        count_multiple_events = TRUE
       )
     )
 
@@ -625,4 +606,81 @@ test_that("Check a_eair100_j with occ_var NULL and count_events", {
   )
 
   expect_equal(target, as.numeric(100 * diff), ignore_attr = TRUE)
+})
+
+test_that("dynamic labels for a_eair100_j", {
+  adaex <- adae |>
+    filter(AEDECOD %in% c("dcd A.1.1.1.1", "dcd A.1.1.1.2", "dcd B.1.1.1.1")) |>
+    mutate(AEDECOD = droplevels(AEDECOD))
+
+  # no user defined labels ----
+  # person_years comes from junco_default_labels
+  # "n_eair" "eair" comes from labels from x_stats statistics
+  lyt1 <- core_lyt |>
+    split_rows_by("AEDECOD", parent_name = "AEDECOD") |>
+    analyze(
+      "AEDECOD",
+      afun = a_eair100_j,
+      extra_args = list(
+        fup_var = "TRTDURY",
+        occ_var = "AOCCPFL",
+        occ_dy = "ASTDY",
+        ref_path = ref_path,
+        .stats = c("person_years", "n_eair", "eair"),
+        num_p_year = 1000
+      )
+    )
+  tbl1 <- build_table(lyt1, adaex, adsl)
+  tbl1
+
+  expect_snapshot(cran = TRUE, tbl1)
+
+  # user defined label ----
+  # person_years comes from user defined input
+  # "n_eair" "eair" comes from labels from x_stats statistics
+  lyt2 <- core_lyt |>
+    split_rows_by("AEDECOD", parent_name = "AEDECOD") |>
+    analyze(
+      "AEDECOD",
+      afun = a_eair100_j,
+      extra_args = list(
+        fup_var = "TRTDURY",
+        occ_var = "AOCCPFL",
+        occ_dy = "ASTDY",
+        ref_path = ref_path,
+        .stats = c("person_years", "n_eair", "eair"),
+        num_p_year = 100,
+        .labels = c("person_years" = "Subject years of exposure")
+      )
+    )
+  tbl2 <- build_table(lyt2, adaex, adsl)
+  tbl2
+
+  expect_snapshot(cran = TRUE, tbl2)
+
+  # user defined label ----
+  # person_years and n_eair comes from user defined input
+  # "eair" comes from labels from x_stats statistics
+  lyt3 <- core_lyt |>
+    split_rows_by("AEDECOD", parent_name = "AEDECOD") |>
+    analyze(
+      "AEDECOD",
+      afun = a_eair100_j,
+      extra_args = list(
+        fup_var = "TRTDURY",
+        occ_var = "AOCCPFL",
+        occ_dy = "ASTDY",
+        ref_path = ref_path,
+        .stats = c("person_years", "n_eair", "eair"),
+        num_p_year = 100,
+        .labels = c(
+          "person_years" = "Subject years of exposure",
+          "n_eair" = "Number of subjects with event (incidence rate (per 100 person years))"
+        )
+      )
+    )
+  tbl3 <- build_table(lyt3, adaex, adsl)
+  tbl3
+
+  expect_snapshot(cran = TRUE, tbl3)
 })
