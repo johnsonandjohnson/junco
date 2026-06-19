@@ -33,6 +33,7 @@ PARAMCD
 Parallelise
 RBMI
 RTF
+RowsVerticalSection
 Sato
 Snavely
 TEFOS
@@ -110,6 +111,7 @@ insightsengineering
 jj
 jjcsformat
 johnsonandjohnson
+kaplan
 keeprowtext
 lastcat
 ldots
@@ -118,6 +120,7 @@ lsmean
 lsmeans
 mathbf
 mathrm
+meier
 mmrm
 mmy
 monospace
@@ -147,6 +150,7 @@ rlistings
 rowdf
 rowlabel
 rowlabels
+rowsplit
 rr
 rrisk
 rtables

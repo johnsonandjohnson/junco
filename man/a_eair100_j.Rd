@@ -46,7 +46,7 @@ a_eair100_j(
   conf_type = c("wald", "waldcc", "mn", "scas"),
   fup_var,
   occ_var,
-  occ_dy,
+  occ_dy = NULL,
   num_p_year = 100,
   count_multiple_events = FALSE
 )
@@ -87,11 +87,11 @@ Used as the at-risk exposure time for subjects who did \strong{not} experience t
 
 \item{occ_var}{(\code{string} or \code{NULL})\cr name of the flag variable identifying the
 \strong{first} occurrence of the event within each subject and level, encoded as \code{"Y"}.
-Only records where \code{occ_var == "Y"} contribute to the event count (\code{n_event}).
-If \code{NULL}, event occurrence filtering is skipped and time at risk is taken
+Only records where \code{occ_var == "Y"} contribute to the event count (\code{n_event}), and only one event record per subject is allowed.
+\cr If \code{NULL}, event occurrence filtering is skipped and time at risk is taken
 from \code{fup_var} in \code{alt_counts_df} for all subjects.}
 
-\item{occ_dy}{(\code{string})\cr name of the variable containing the relative day of the
+\item{occ_dy}{(\code{string} or \code{NULL})\cr When \code{occ_var} not \code{NULL}: name of the variable containing the relative day of the
 first event occurrence, expressed in \strong{days} (e.g., \code{ASTDY}).
 For subjects with an event (\code{occ_var == "Y"}), this value is converted to years
 as \code{occ_dy / 365.25} and used as the at-risk exposure time instead of \code{fup_var}.
@@ -133,7 +133,7 @@ Defaults to \code{FALSE}.}
 \itemize{
 \item \code{s_eair100_levii_j()} returns a list containing the following statistics:
 \itemize{
-\item n_event: Number of subjects with the event, or total event count if \code{count_events = TRUE}
+\item n_event: Number of subjects with the event, or total event count if \code{count_multiple_events = TRUE}
 \item person_years: Total person-years of follow-up
 \item eair: Exposure-adjusted incidence rate per \code{num_p_year} person-years
 \item n_eair: Combination of \code{n_event} and \code{eair} statistics.
@@ -157,11 +157,11 @@ Statistical/Analysis Function for presenting Exposure-Adjusted Incidence Rate su
 \details{
 The exposure-adjusted incidence rate (EAIR) is defined as:
 \itemize{
-\item When (\code{occvar} not \code{NULL}) or \code{count_multiple_events = FALSE}:
+\item When (\code{occ_var} not \code{NULL}) or \code{count_multiple_events = FALSE}:
 \cr the \strong{number of subjects}
 with at least one occurrence of a specified adverse event divided by the total
 at-risk exposure time across all subjects.
-\item When \code{occvar = NULL} and \code{count_multiple_events = TRUE}:
+\item When \code{occ_var = NULL} and \code{count_multiple_events = TRUE}:
 \cr the total \strong{number of events} across of a specified adverse event divided by the total
 at-risk exposure time across all subjects.
 }
@@ -169,7 +169,7 @@ at-risk exposure time across all subjects.
 Total at-risk exposure time is calculated for each subject
 as:
 \itemize{
-\item When \code{occvar} not \code{NULL}
+\item When \code{occ_var} not \code{NULL}
 \itemize{
 \item for subjects with the event: relative day (from the start of exposure) of
 the onset date of the \strong{first} occurrence of the specified event (\code{occ_var} and \code{occ_dy}),
@@ -177,7 +177,7 @@ transformed from days into years as \code{occ_dy/365.25}, or
 \item for subjects without the event: total duration of follow-up (expressed in years)
 (e.g., treatment discontinuation, completion, or censoring) (\code{fup_var}).
 }
-\item When \code{occvar = NULL}\cr
+\item When \code{occ_var = NULL}\cr
 for all subjects: total duration of follow-up (expressed in years)
 (e.g., treatment discontinuation, completion, or censoring) (\code{fup_var}).
 }

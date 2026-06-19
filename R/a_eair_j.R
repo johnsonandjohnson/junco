@@ -247,10 +247,10 @@ NULL
 #'   Used as the at-risk exposure time for subjects who did **not** experience the event.
 #' @param occ_var (`string` or `NULL`)\cr name of the flag variable identifying the
 #'   **first** occurrence of the event within each subject and level, encoded as `"Y"`.
-#'   Only records where `occ_var == "Y"` contribute to the event count (`n_event`).
-#'   If `NULL`, event occurrence filtering is skipped and time at risk is taken
+#'   Only records where `occ_var == "Y"` contribute to the event count (`n_event`), and only one event record per subject is allowed.
+#'   \cr If `NULL`, event occurrence filtering is skipped and time at risk is taken
 #'   from `fup_var` in `alt_counts_df` for all subjects.
-#' @param occ_dy (`string`)\cr name of the variable containing the relative day of the
+#' @param occ_dy (`string` or `NULL`)\cr When `occ_var` not `NULL`: name of the variable containing the relative day of the
 #'   first event occurrence, expressed in **days** (e.g., `ASTDY`).
 #'   For subjects with an event (`occ_var == "Y"`), this value is converted to years
 #'   as `occ_dy / 365.25` and used as the at-risk exposure time instead of `fup_var`.
@@ -269,7 +269,7 @@ NULL
 #' @return
 #'  * `s_eair100_levii_j()` returns a list containing the following statistics:
 #' \itemize{
-#'   \item n_event: Number of subjects with the event, or total event count if `count_events = TRUE`
+#'   \item n_event: Number of subjects with the event, or total event count if `count_multiple_events = TRUE`
 #'   \item person_years: Total person-years of follow-up
 #'   \item eair: Exposure-adjusted incidence rate per `num_p_year` person-years
 #'   \item n_eair: Combination of `n_event` and `eair` statistics.
@@ -281,18 +281,18 @@ NULL
 #' running `junco_get_stats("a_eair100_j")`.
 #' @details
 #' The exposure-adjusted incidence rate (EAIR) is defined as:
-#' - When (`occvar` not `NULL`) or `count_multiple_events = FALSE`:
+#' - When (`occ_var` not `NULL`) or `count_multiple_events = FALSE`:
 #' \cr the **number of subjects**
 #' with at least one occurrence of a specified adverse event divided by the total
 #' at-risk exposure time across all subjects.
-#' 
-#' - When `occvar = NULL` and `count_multiple_events = TRUE`:
+#'
+#' - When `occ_var = NULL` and `count_multiple_events = TRUE`:
 #' \cr the total **number of events** across of a specified adverse event divided by the total
 #' at-risk exposure time across all subjects.
 #'
 #' Total at-risk exposure time is calculated for each subject
 #' as:
-#' - When `occvar` not `NULL`
+#' - When `occ_var` not `NULL`
 #' \itemize{
 #' \item for subjects with the event: relative day (from the start of exposure) of
 #' the onset date of the **first** occurrence of the specified event (`occ_var` and `occ_dy`),
@@ -300,7 +300,7 @@ NULL
 #' \item for subjects without the event: total duration of follow-up (expressed in years)
 #' (e.g., treatment discontinuation, completion, or censoring) (`fup_var`).
 #' }
-#' - When `occvar = NULL`\cr
+#' - When `occ_var = NULL`\cr
 #' for all subjects: total duration of follow-up (expressed in years)
 #' (e.g., treatment discontinuation, completion, or censoring) (`fup_var`).
 #'
@@ -603,7 +603,7 @@ a_eair100_j <- function(
   conf_type = c("wald", "waldcc", "mn", "scas"),
   fup_var,
   occ_var,
-  occ_dy,
+  occ_dy = NULL,
   num_p_year = 100,
   count_multiple_events = FALSE
 ) {

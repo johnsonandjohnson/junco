@@ -32,6 +32,7 @@
 #' }
 #' @param .formats (named 'character' or 'list')\cr
 #' formats for the statistics.
+#' @seealso [a_freq_j()] for extensive `label_map` usage examples.
 #' @return list of requested statistics with formatted `rtables::CellValue()`.\cr
 #'
 #' @examples
@@ -78,8 +79,10 @@
 #' lyt <- basic_table(show_colcounts = TRUE) |>
 #'   split_cols_by("ARM") |>
 #'   split_cols_by("ACAT1",
-#'     split_fun = rtables::add_combo_levels(combosdf = combodf,
-#'                  trim = FALSE, keep_levels = combodf$valname)
+#'     split_fun = rtables::add_combo_levels(
+#'       combosdf = combodf,
+#'       trim = FALSE, keep_levels = combodf$valname
+#'     )
 #'   ) |>
 #'   analyze("TRTEMFL",
 #'     show_labels = "hidden",
@@ -99,31 +102,32 @@
 #' result
 #' @export
 a_freq_combos_j <- function(
-    df,
-    labelstr = NULL,
-    .var = NA,
-    val = NULL,
-    # arguments specific to a_freq_combos_j
-    combosdf = NULL,
-    do_not_filter = NULL,
-    filter_var = NULL,
-    flag_var = NULL,
-    # arguments specific to a_freq_combos_j till here
-    .df_row,
-    .spl_context,
-    .N_col,
-    id = "USUBJID",
-    denom = c("N_col", "n_df", "n_altdf", "n_rowdf", "n_parentdf"),
-    label = NULL,
-    label_fstr = NULL,
-    label_map = NULL,
-    .alt_df_full = NULL,
-    denom_by = NULL,
-    .stats = "count_unique_denom_fraction",
-    .formats = NULL,
-    .labels_n = NULL,
-    .indent_mods = NULL,
-    na_str = rep("NA", 3)) {
+  df,
+  labelstr = NULL,
+  .var = NA,
+  val = NULL,
+  # arguments specific to a_freq_combos_j
+  combosdf = NULL,
+  do_not_filter = NULL,
+  filter_var = NULL,
+  flag_var = NULL,
+  # arguments specific to a_freq_combos_j till here
+  .df_row,
+  .spl_context,
+  .N_col,
+  id = "USUBJID",
+  denom = c("N_col", "n_df", "n_altdf", "n_rowdf", "n_parentdf"),
+  label = NULL,
+  label_fstr = NULL,
+  label_map = NULL,
+  .alt_df_full = NULL,
+  denom_by = NULL,
+  .stats = "count_unique_denom_fraction",
+  .formats = NULL,
+  .labels_n = NULL,
+  .indent_mods = NULL,
+  na_str = rep("NA", 3)
+) {
   denom <- match.arg(denom)
 
   check_alt_df_full(denom, "n_altdf", .alt_df_full)

@@ -64,7 +64,7 @@ test_that("s_ancova_j works as expected", {
       "lsmean_ci",
       "lsmean_diff",
       "lsmean_diff_ci",
-      "lsmean_diffci",
+      "lsmean_diff_with_ci",
       "pval"
     )
   )
@@ -114,7 +114,7 @@ test_that("s_ancova_j works as expected", {
       "lsmean_ci",
       "lsmean_diff",
       "lsmean_diff_ci",
-      "lsmean_diffci",
+      "lsmean_diff_with_ci",
       "pval"
     )
   )
@@ -160,7 +160,7 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
           "median",
           "range",
           "quantiles",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -180,7 +180,7 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
         conf_level = 0.95,
         ref_path = c("Species", "setosa"),
         .stats = c(
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -247,7 +247,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           weights_combo = weights_combo,
           method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
-          .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+          .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
         ),
         var_labels = "Adjusted comparison (covariates Color)",
         table_names = "adjusted",
@@ -271,7 +271,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           weights_combo = weights_combo,
           method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
-          .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+          .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
         ),
         var_labels = "Adjusted comparison (covariates Color - red)",
         table_names = "adjusted"
@@ -288,7 +288,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           weights_combo = weights_combo,
           method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
-          .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+          .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
         ),
         var_labels = "Adjusted comparison (covariates Color - blue)",
         table_names = "adjusted2"
@@ -518,7 +518,7 @@ test_that("a_summarize_ancova_j with sparse data", {
         ref_path = c("Species", "setosa"),
         .stats = c(
           "lsmean_ci",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -552,7 +552,7 @@ test_that("a_summarize_ancova_j with no data", {
         ref_path = c("Species", "setosa"),
         .stats = c(
           "lsmean_ci",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -586,7 +586,7 @@ test_that("a_summarize_ancova_j with no data in reference group", {
         ref_path = c("Species", "setosa"),
         .stats = c(
           "lsmean_ci",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -681,7 +681,7 @@ test_that("a_summarize_ancova_j with multiple combined columns", {
         weights_combo = "proportional",
         method_combo = "contrasts",
         ref_path = c("TRT01A", "Placebo"),
-        .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+        .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
       ),
       var_labels = "Adjusted comparison (covariates SEX)",
       table_names = "adjusted",

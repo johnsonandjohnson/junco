@@ -7,6 +7,9 @@
 - CRITICAL: hotfixed `tt_to_tlgrtf()` lost titles in certain cases (#373)
 
 ### Changed
+- Added a default value for the `label` argument in `c_summary_subset_label()`.
+- Updated the documentation of `a_summary_subset()`.
+- Refactored `prepend_label_cell()`; Only `RowsVerticalSection` is now supported.
 - Removed `filter_df_prior_afun()`, `a_summary_diff_mvars()`, `a_summary_diff_mvars_label()`.
 - Removed formatters exports #317
 - Deprecate `a_coxph_hr` for `tern:::a_coxph_pairwise()` and `s_coxph_hr` for `tern:::s_coxph_pairwise()` #158
@@ -19,9 +22,15 @@
 - Replaced `assertthat` by `checkmate` for consistency #201
 - Remove `stringi` from dependencies #201
 - Deprecate `rbmi_analyse()`, `make_rbmi_cluster()`, `par_lapply()` for `rbmi` equivalent functions #367
+- Deprecate `a_kaplan_meier()` for `tern::a_surv_time()`
+- Changed the label for `range_with_cens_info` from `"Min, max"` (junco) to `"Min - Max (with censoring)"` and the argument from `lsmean_diffci` to `lsmean_diff_with_ci`
+- Deprecate `s_coxph_hr()` for `tern:::a_coxph_pairwise()`
+- Changed stop message in `a_freq_j()` when `label_map` option is used in a rowsplit with no data on a character analysis var #386
+
 
 
 ### Added
+- Updated documentation and examples for `label_map` in `a_freq_j` (#235)
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 

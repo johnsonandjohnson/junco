@@ -13,7 +13,7 @@ c_summary_subset_label(
   labelstr,
   .var,
   filter_expr,
-  label,
+  label = "",
   label_indent_mod = 0L,
   ...
 )
@@ -26,10 +26,21 @@ by a statistics function.}
 
 \item{filter_expr}{(\code{expression})
 A single logical expression wrapped in \code{expression(...)} used to subset
-rows of \code{df} before summarization.
-The expression is evaluated using \code{\link[=eval]{eval()}} in an environment constructed
-from \code{df}, meaning that all column names are available as variables.
-Exactly one expression is allowed.}
+rows of \code{df} before summarization. Exactly one expression is allowed.
+The expression is evaluated using \code{\link[=eval]{eval()}} in an environment containing
+the columns of \code{df}, meaning that all column names are available as
+variables.
+
+In the current implementation, variables used in the expression can only
+be column names of \code{df}. That is, the following is not supported:
+\code{min_age <- 45;}
+\code{a_summary_subset(df, "AVAL", expression(AGE > min_age))},
+given that \code{AVAL} is a column in \code{df} and \code{min_age} is not a column in \code{df}.
+
+The expression must evaluate to a logical vector whose length is exactly
+equal to \code{nrow(df)}. No recycling is performed.
+In particular, scalar logical values such as \code{expression(TRUE)} or
+\code{expression(FALSE)} are not allowed when \code{nrow(df) > 1}.}
 
 \item{...}{Additional arguments passed to \code{\link[tern:analyze_variables]{tern::a_summary()}}, excluding
 the \code{x} argument, which is constructed internally from \code{df[[.var]]}
@@ -39,16 +50,16 @@ after applying the filter.}
 (must be present as second argument in Content Row Functions). See \code{\link[rtables:summarize_row_groups]{rtables::summarize_row_groups()}}
 for more information.}
 
-\item{label}{(\code{character(1)})\cr Label to be inserted as the first row.}
+\item{label}{(\code{character(1)})\cr Label to insert as the first row.}
 
-\item{label_indent_mod}{(\code{integer(1)})\cr Indentation level applied to the
-label row.}
+\item{label_indent_mod}{(\code{integer(1)})\cr Indentation modifier applied to
+the label row.}
 }
 \value{
 Returns the same type of object as \code{\link[tern:analyze_variables]{tern::a_summary()}}.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
 These wrappers around \code{\link[tern:analyze_variables]{tern::a_summary()}} allow optional row subsetting
 using a logical expression evaluated in the context of the input data frame.
@@ -98,8 +109,6 @@ stats <- c("n", "sum")
 tern::a_summary(df$AVAL, .stats = stats)
 
 a_summary_subset(df, "AVAL", expression(!is.na(AGE)), .stats = stats)
-min_age <- 45
-a_summary_subset(df, "AVAL", expression(AGE > min_age), .stats = stats)
 a_summary_subset(df, "AVAL", expression(AGE > 30 & AVAL > 0), .stats = stats)
 
 
