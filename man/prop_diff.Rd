@@ -26,7 +26,8 @@ s_proportion_diff_j(
   variables = list(strata = NULL),
   conf_level = 0.95,
   method = c("waldcc", "wald", "cmh", "cmh_sato", "cmh_mn", "ha", "newcombe",
-    "newcombecc", "strat_newcombe", "strat_newcombecc"),
+    "newcombecc", "strat_newcombe", "strat_newcombecc", "cmh_sato", "cmh_mn",
+    "uncond_exact_diff"),
   weights_method = "cmh"
 )
 }

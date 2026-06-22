@@ -63,3 +63,45 @@ test_that("a_proportion_diff_j works as expected in a table layout", {
   result <- expect_silent(build_table(l, df = dta))
   expect_snapshot(cran = TRUE, result)
 })
+
+test_that("a_proportion_diff_j works as expected in a table layout with uncond_exact_diff method", {
+  dta <- data.frame(
+    rsp = c(rep(TRUE, 5), rep(FALSE, 12), rep(TRUE, 40), rep(FALSE, 38)),
+    grp = c(rep("B", 17), rep("A", 78)),
+    stringsAsFactors = FALSE
+  )
+
+  result <- s_proportion_diff(
+    df = subset(dta, grp == "A"),
+    .var = "rsp",
+    .ref_group = subset(dta, grp == "B"),
+    .in_ref_col = FALSE,
+    conf_level = 0.95,
+    method = "uncond_exact_diff"
+  )
+
+  expect_equal(as.numeric(result$diff), 21.87, tolerance = 1e-2)
+  expect_equal(as.numeric(result$diff_ci), c(-4.66, 46.76), tolerance = 1e-2)
+  expect_identical(attr(result$diff_ci, "label"), "95% CI (Unconditional exact)")
+
+  l <- basic_table() |>
+    split_cols_by(var = "grp") |>
+    analyze(
+      vars = "rsp",
+      afun = a_proportion_diff_j,
+      show_labels = "hidden",
+      na_str = default_na_str(),
+      extra_args = list(
+        conf_level = 0.95,
+        method = "uncond_exact_diff",
+        ref_path = c("grp", "B"),
+        .stats = "diff_est_ci",
+        .formats = c("diff_est_ci" = "xx.xx (xx.xx - xx.xx)")
+      )
+    )
+
+  result <- expect_silent(build_table(l, df = dta))
+  fv <- format_value(cell_values(result[1, 2])[[1]], format = "xx.xx (xx.xx - xx.xx)")
+
+  expect_equal(fv, c("21.87 (-4.66 - 46.76)"))
+})
