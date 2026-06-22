@@ -1669,13 +1669,12 @@ tt_to_tlgrtf(string_map = string_map, tt = result,
 ```{r multiple_docs_table2_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 x <- tt_to_flextable_j(string_map = string_map, tt = result, "aetablemultipledocs2", orientation = "landscape",
                   nosplitin = list(cols = c(trtvar)), paginate= TRUE)
-x[[1]]
-knitr::asis_output("<br><br>")
-x[[2]]
-knitr::asis_output("<br><br>")
-x[[3]]
-knitr::asis_output("<br><br>")
 
+
+invisible(lapply(seq_along(x), function(i) {
+  print(x[[i]])
+  knitr::asis_output("<br><br>")
+}))
 ```
 
 If there is a need to provide a single .rtf file that contains the multiple “part” .rtf files, then the `junco::tt_to_tlgrtf` function can be called with the "combined_rtf" argument included with a value of "TRUE". In this case, both the multiple "part" .rtf files and the single .rtf file with all "parts" appended will be created.
