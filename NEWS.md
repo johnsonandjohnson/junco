@@ -27,6 +27,7 @@
 
 ### Added
 - Updated documentation and examples for `label_map` in `a_freq_j` (#235)
+- Added `tern` methods for difference in proportions in `a_freq_j` and  `a_freq_resp_var_j` : `cmh_sato`, `cmh_mn`, `uncond_exact_diff`  (#389)
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 
