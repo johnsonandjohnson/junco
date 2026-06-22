@@ -389,7 +389,6 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
       )
     } else {
       msg <- paste("Unable to reduce label rows required.")
-      msg <- paste0(msg, " Please try with a smaller value of 'max_lbl_lines'.")
     }
     message(msg)
   }
@@ -431,7 +430,7 @@ optimal_widths <- function(possdf, tot_spaces = 320, max_lbl_lines = 3, verbose 
   done <- FALSE
   while (!done) {
     oldwdths <- curdf$colwidth
-    curdf <- constrict_lbl_lns(curdf, possdf, verbose = verbose)
+    curdf <- constrict_lbl_lns(curdf, possdf, avail_spc = spcleft, verbose = verbose)
     if (all.equal(curdf$colwidth, oldwdths)) {
       done <- TRUE
     }
