@@ -24,35 +24,6 @@ get_numbers <- function(tbl, col, rows = c(3)) {
 }
 
 
-test_that("h_ancova works as expected", {
-  set.seed(123)
-  df_row <- iris |>
-    mutate(
-      Color = factor(sample(
-        c("red", "blue"),
-        size = nrow(iris),
-        prob = c(0.8, 0.2),
-        replace = TRUE
-      ))
-    )
-  df <- df_row |>
-    filter(Species == "virginica")
-  variables <- list(
-    arm = "Species",
-    covariates = c("Sepal.Length * Sepal.Width", "Color")
-  )
-  ref_group <- df_row |>
-    filter(Species == "setosa")
-
-  result <- expect_silent(h_ancova(
-    .var = "Petal.Length",
-    .df_row = df_row,
-    variables = variables,
-    weights_emmeans = "equal"
-  ))
-  checkmate::expect_class(result, "emmGrid")
-})
-
 test_that("s_ancova_j works as expected", {
   set.seed(123)
   df_row <- iris |>
@@ -93,7 +64,7 @@ test_that("s_ancova_j works as expected", {
       "lsmean_ci",
       "lsmean_diff",
       "lsmean_diff_ci",
-      "lsmean_diffci",
+      "lsmean_diff_with_ci",
       "pval"
     )
   )
@@ -143,7 +114,7 @@ test_that("s_ancova_j works as expected", {
       "lsmean_ci",
       "lsmean_diff",
       "lsmean_diff_ci",
-      "lsmean_diffci",
+      "lsmean_diff_with_ci",
       "pval"
     )
   )
@@ -189,7 +160,7 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
           "median",
           "range",
           "quantiles",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -209,7 +180,7 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
         conf_level = 0.95,
         ref_path = c("Species", "setosa"),
         .stats = c(
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -276,7 +247,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           weights_combo = weights_combo,
           method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
-          .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+          .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
         ),
         var_labels = "Adjusted comparison (covariates Color)",
         table_names = "adjusted",
@@ -300,7 +271,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           weights_combo = weights_combo,
           method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
-          .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+          .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
         ),
         var_labels = "Adjusted comparison (covariates Color - red)",
         table_names = "adjusted"
@@ -317,7 +288,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           weights_combo = weights_combo,
           method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
-          .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+          .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
         ),
         var_labels = "Adjusted comparison (covariates Color - blue)",
         table_names = "adjusted2"
@@ -547,7 +518,7 @@ test_that("a_summarize_ancova_j with sparse data", {
         ref_path = c("Species", "setosa"),
         .stats = c(
           "lsmean_ci",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -581,7 +552,7 @@ test_that("a_summarize_ancova_j with no data", {
         ref_path = c("Species", "setosa"),
         .stats = c(
           "lsmean_ci",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -615,7 +586,7 @@ test_that("a_summarize_ancova_j with no data in reference group", {
         ref_path = c("Species", "setosa"),
         .stats = c(
           "lsmean_ci",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -678,11 +649,13 @@ test_that("a_summarize_ancova_j with multiple combined columns", {
     make_fake_adsl() |>
     select(USUBJID, TRT01A, SEX)
 
-  advs <- advs_jnj |>
-    filter(PARAMCD == "DIABP" & AVISIT == "Cycle 02") |>
-    borrow_records(adsl) |>
-    select(USUBJID, PARAMCD, AVISIT, AVAL, CHG, BASE) |>
-    inner_join(adsl, by = c("USUBJID"), multiple = "all")
+  invisible(capture.output(
+    advs <- advs_jnj |>
+      filter(PARAMCD == "DIABP" & AVISIT == "Cycle 02") |>
+      borrow_records(adsl) |>
+      select(USUBJID, PARAMCD, AVISIT, AVAL, CHG, BASE) |>
+      inner_join(adsl, by = c("USUBJID"), multiple = "all")
+  ))
 
   # nolint start
   combodf <- tribble(
@@ -708,7 +681,7 @@ test_that("a_summarize_ancova_j with multiple combined columns", {
         weights_combo = "proportional",
         method_combo = "contrasts",
         ref_path = c("TRT01A", "Placebo"),
-        .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+        .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
       ),
       var_labels = "Adjusted comparison (covariates SEX)",
       table_names = "adjusted",

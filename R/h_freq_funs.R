@@ -267,7 +267,7 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
       addi <- df[df[[.var]] %in% levii, ]
       addi[[.var]] <- new_levels[[1]][i]
 
-      df <- dplyr::bind_rows(df, addi)
+      df <- rbind(df, addi)
     }
   }
 
@@ -478,6 +478,11 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
       stop("split_info does not contain required elements.")
     }
 
+    nodata <- FALSE
+    if (length(.labels) == 1 && .labels == no_data_to_report_str) {
+      nodata <- TRUE
+    }
+
     ### if label_map has a variable from row split, apply current splits on label_map tibble as well
     rowsplits <- split_info$split
 
@@ -499,6 +504,12 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
 
     .labels <- label_map$label[match(.labels, label_map$value)]
 
+    if (nodata && anyNA(.labels)) {
+      stop(paste0(
+        "got a label map that doesn't provide labels for all values.\n",
+        "Perhaps convert analysis variable ", .var, " to a factor?"
+      ))
+    }
     if (anyNA(.labels)) {
       stop("got a label map that doesn't provide labels for all values.")
     }

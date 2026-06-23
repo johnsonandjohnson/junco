@@ -23,6 +23,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+NOT_CRAN <- identical(Sys.getenv("NOT_CRAN"), "true")
 ```
 ## Introduction
 
@@ -176,7 +177,7 @@ The algorithm for selecting column widths has two parts. First, for each column 
 
 We will use the following data to illustrate:
 
-```{R}
+```{R, eval=NOT_CRAN}
 library(rlistings)
 
 adae <- pharmaverseadamjnj::adae
@@ -199,27 +200,27 @@ lsting <- as_listing(lstdat,
 
 For example, the last cell in the demographics column contains the value
 
-```{r}
+```{r, eval=NOT_CRAN}
 demcell <- lstdat$demog[nrow(lstdat)]
 demcell
 ```
 
 Broken up according to our definition, it contains the following "words" which must remain whole during column width selection.
 
-```{r}
+```{r, eval=NOT_CRAN}
 wrds <- strsplit(demcell, "[ -]")[[1]]
 wrds
 ```
 
 Assuming a monospace font for simplicity, then, the smallest possible width of the column is
 
-```{r}
+```{r, eval=NOT_CRAN}
 max(nchar(wrds))
 ```
 
 And using that width, the first two words fit into a line, the third into another, the fourth in its own, and "words" five through 8 all fit into a final line, for a total of four lines. We call this *packing lines*
 
-```{r}
+```{r, eval=NOT_CRAN}
 packed_widths <- function(...) {
   lst <- list(...)
   nchar(vapply(lst, paste, collapse = " ", ""))
@@ -238,13 +239,13 @@ The next column width that results in fewer lines for that cell is one where wor
 
 With that column width, we get three lines as we do not have enough room for the space required to consolidate the final two lines into one.
 
-```{r}
+```{r, eval=NOT_CRAN}
 packed_widths(wrds[1:3], wrds[4], wrds[5:8])
 ```
 
 Increasing the column width to 17, however, allows us to get down to two lines:
 
-```{R}
+```{R, eval=NOT_CRAN}
 packed_widths(
   wrds[1:3],
   wrds[4:8]
@@ -280,7 +281,7 @@ for explicitness, and to make the column widths more directly comparable
 via `export_as_txt` output.
 
 
-```{r}
+```{r, eval=NOT_CRAN}
 fspec_times8 <- font_spec("Times", 8, 1)
 cw <- listing_column_widths(lsting, col_gap = 0, fontspec = fspec_times8, verbose = TRUE)
 
@@ -297,7 +298,7 @@ length(txt2)
 
 Versus giving each column an equal portion of the width (admittedly an ill-conceived strategy)
 
-```{r}
+```{r, eval=NOT_CRAN}
 txtbad <- export_as_txt(lsting,
   pg_width = inches_to_spaces(8.88, fontspec = fspec_times8),
   lpp = NULL, colwidths = rep(floor(320 / 11), 11),
@@ -307,7 +308,7 @@ txt2bad <- strsplit(txtbad, "\n", fixed = TRUE)[[1]]
 head(txt2bad)
 length(txt2bad)
 ```
-```{r calc, include = FALSE}
+```{r calc, include = FALSE, eval=NOT_CRAN}
 saved <- (length(txt2bad) - length(txt2)) / length(txt2bad) * 100
 dec_saved <- round(saved, 2)
 ```

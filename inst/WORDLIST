@@ -26,10 +26,10 @@ MMRM
 Miettinen
 Nurminen
 PARAMCD
-Parallelisation
 Parallelise
 RBMI
 RTF
+RowsVerticalSection
 Sato
 TEFOS
 TLG
@@ -48,9 +48,7 @@ altdf
 analyse
 analysing
 ancova
-approxbayes
 args
-bayes
 bugfix
 cfuns
 chisq
@@ -68,6 +66,7 @@ colwidths
 combosdf
 comparator
 comparators
+coxph
 csv
 customizations
 dataprep
@@ -76,7 +75,6 @@ datasplit
 denom
 desc
 df
-dfs
 dirname
 docx
 dps
@@ -98,6 +96,7 @@ goto
 grepl
 hardcoding
 hotfix
+hotfixed
 https
 ie
 iec
@@ -107,6 +106,7 @@ insightsengineering
 jj
 jjcsformat
 johnsonandjohnson
+kaplan
 keeprowtext
 lastcat
 ldots
@@ -115,6 +115,7 @@ lsmean
 lsmeans
 mathbf
 mathrm
+meier
 mmrm
 mmy
 monospace
@@ -122,11 +123,7 @@ multivar
 multivars
 n's
 na
-optimisation
-optimised
 parallelisation
-parallelise
-parallelising
 parentdf
 pathin
 pkgdown
@@ -148,6 +145,7 @@ rlistings
 rowdf
 rowlabel
 rowlabels
+rowsplit
 rr
 rrisk
 rtables
@@ -165,6 +163,7 @@ str
 struct
 subcol
 subfacet
+summarization
 summarizations
 tbldf
 tibble

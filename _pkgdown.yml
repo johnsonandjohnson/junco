@@ -40,11 +40,9 @@ reference:
     - a_proportion_ci_logical
     - a_summarize_aval_chg_diff_j
     - a_summarize_ex_j
-    - a_summary_diff_mvars
-    - a_summary_j
+    - a_summary_subset
     - a_two_tier
     - c_summary_subset_label
-    - rbmi_analyse
     - analyze_values
     - rbmi_ancova
     - rbmi_ancova_single
@@ -55,15 +53,12 @@ reference:
     - find_missing_chg_after_avisit
     - fit_ancova
     - fit_mmrm_j
-    - coxph_hr
     - tabulate_rbmi
     - tabulate_lsmeans
     - h_odds_ratio
-    - make_rbmi_cluster
     - rbmi_mmrm
     - event_free
     - odds_ratio
-    - par_lapply
     - prop_diff
     - prop_post_fun
     - prop_ratio_cmh
@@ -135,7 +130,6 @@ reference:
   - title: junco Miscellaneous Functions
     desc: The following functions are other miscellaneous junco functions used to create common table layouts.
     contents:
-    - filter_df_prior_afun
     - get_mmrm_lsmeans
     - get_ref_info
     - get_visit_levels
@@ -162,3 +156,12 @@ reference:
     - export_graph_as_docx
     - export_TLG_as_docx
     - theme_docx_default_j
+
+  - title: Deprecated Functions
+    desc: The following functions are deprecated and should not be used in new code.
+    contents:
+    - a_coxph_hr
+    - rbmi_analyse
+    - make_rbmi_cluster
+    - par_lapply
+    - a_kaplan_meier

@@ -1,47 +1,3 @@
-#' @note This has been forked from [tern::h_ancova()], because the new
-#'   `weights_emmeans` option was added here.
-h_ancova <- function(
-    .var,
-    .df_row,
-    variables,
-    weights_emmeans,
-    interaction_item = NULL) {
-  checkmate::assert_string(.var)
-  checkmate::assert_list(variables)
-  checkmate::assert_subset(names(variables), c("arm", "covariates"))
-
-  assert_df_with_variables(
-    .df_row,
-    list(rsp = .var)
-  )
-  arm <- variables$arm
-  covariates <- variables$covariates
-  if (!is.null(covariates) && length(covariates) > 0) {
-    var_list <- get_covariates(covariates)
-    assert_df_with_variables(
-      .df_row,
-      var_list
-    )
-  }
-  covariates_part <- paste(covariates, collapse = " + ")
-  formula_str <- paste0(.var, " ~ ", arm)
-  if (covariates_part != "") {
-    formula_str <- paste0(formula_str, "+", covariates_part)
-  }
-  formula <- stats::as.formula(formula_str)
-  specs <- arm
-  if (!is.null(interaction_item)) {
-    specs <- c(specs, interaction_item)
-  }
-  lm_fit <- stats::lm(formula = formula, data = .df_row)
-  emmeans::emmeans(
-    lm_fit,
-    specs = specs,
-    data = .df_row,
-    weights = weights_emmeans
-  )
-}
-
 #' @noRd
 #' @title internal helpers for ancova
 #' @description Internal helper that derives adjusted means and contrasts for a single
@@ -350,7 +306,7 @@ h_ancova_est_combined <- function(
 #' @description Extension to tern:::s_ancova, 3 extra statistics are returned:
 #'   * `lsmean_se`: Marginal mean and estimated SE in the group.
 #'   * `lsmean_ci`: Marginal mean and associated confidence interval in the group.
-#'   * `lsmean_diffci`: Difference in mean and associated confidence level in one combined statistic.
+#'   * `lsmean_diff_with_ci`: Difference in mean and associated confidence level in one combined statistic.
 #'   In addition, the LS mean weights can be specified.
 #'   In addition, also a NULL .ref_group can be specified, the lsmean_diff related estimates will be returned as NA.
 #' @export
@@ -436,7 +392,7 @@ s_ancova_j <- function(
         rep(NA, 2),
         paste("Difference in Adjusted Means", f_conf_level(conf_level))
       ),
-      lsmean_diffci = with_label(
+      lsmean_diff_with_ci = with_label(
         rep(NA, 3),
         paste0(
           "Difference in Adjusted Means",
@@ -464,7 +420,7 @@ s_ancova_j <- function(
       )
     }
 
-    emmeans_fit <- h_ancova(
+    emmeans_fit <- tern::h_ancova(
       .var = .var,
       variables = variables,
       .df_row = .df_row,
@@ -539,7 +495,7 @@ s_ancova_j <- function(
         c(sum_contrasts_level$lower.CL, sum_contrasts_level$upper.CL),
         paste("Difference in Adjusted Means", f_conf_level(conf_level))
       ),
-      lsmean_diffci = with_label(
+      lsmean_diff_with_ci = with_label(
         c(
           sum_contrasts_level$estimate,
           sum_contrasts_level$lower.CL,
@@ -676,7 +632,7 @@ a_summarize_ancova_j <- function(
                "quantiles",
                "lsmean_se",
                "lsmean_ci",
-               "lsmean_diffci",
+               "lsmean_diff_with_ci",
                "pval"),
     .formats = NULL,
     .labels = NULL,

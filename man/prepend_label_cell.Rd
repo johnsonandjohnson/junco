@@ -2,40 +2,50 @@
 % Please edit documentation in R/blank_line.R
 \name{prepend_label_cell}
 \alias{prepend_label_cell}
-\title{Prepend Label Row to Analysis Output}
+\title{Prepend a Label Row to a RowsVerticalSection Object}
 \usage{
 prepend_label_cell(x, label = "", label_indent_mod = 0L)
 }
 \arguments{
-\item{x}{(\code{list} or \code{CellValue} or \code{RowsVerticalSection})\cr
-Analysis result object.}
+\item{x}{(\code{RowsVerticalSection})\cr Analysis result object.}
 
-\item{label}{(\code{character(1)})\cr Label to be inserted as the first row.}
+\item{label}{(\code{character(1)})\cr Label to insert as the first row.}
 
-\item{label_indent_mod}{(\code{integer(1)})\cr Indentation level applied to the
-label row.}
+\item{label_indent_mod}{(\code{integer(1)})\cr Indentation modifier applied to
+the label row.}
 }
 \value{
-A \code{RowsVerticalSection} object with the label row prepended.
+A \code{RowsVerticalSection} object with a label row prepended.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
-Adds a label row at the beginning of analysis output objects, such as
-\code{CellValue}, \code{list} of \code{CellValue}s, or \code{RowsVerticalSection} objects.
-These objects are returned by analysis functions used within the \strong{rtables}
-framework and are typically created via \code{\link[rtables:rcell]{rtables::rcell()}} or
-\code{\link[rtables:in_rows]{rtables::in_rows()}} functions.
+Prepends a label row to a \code{RowsVerticalSection} object.
 
-This is typically used to introduce section headers
-(e.g., "Descriptive Statistics") in tabular or reporting outputs.
+\code{RowsVerticalSection} objects are returned by analysis functions used within
+the \strong{rtables} framework and are typically created with
+\code{\link[rtables:in_rows]{rtables::in_rows()}}.
+
+This function is typically used to introduce section headers
+(e.g., "Descriptive Statistics") in tabular reports and other reporting
+outputs.
 }
 \note{
-If \code{x} is of class \code{RowsVerticalSection}, the attributes
-\code{row_formats}, \code{row_na_strs}, and \code{row_footnotes} are not preserved.
+The \code{row_na_strs} and \code{row_footnotes} attributes of the
+\code{RowsVerticalSection} object are not preserved.
+Since an additional row is added, be aware of recycling rules; that is,
+the length of all attributes of \code{x} should be equal to \code{length(x)}.
 }
 \examples{
-rvs <- rtables::in_rows(Mean = rtables::rcell(5), Range = rtables::rcell(c(1, 8)))
-prepend_label_cell(rvs, "Descriptive Statistics", label_indent_mod = 1L)
+rvs <- rtables::in_rows(
+  Mean = rtables::rcell(5),
+  Range = rtables::rcell(c(1, 8))
+)
+
+prepend_label_cell(
+  rvs,
+  "Descriptive Statistics",
+  label_indent_mod = 1L
+)
 
 }

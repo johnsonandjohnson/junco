@@ -241,7 +241,7 @@ a_diff_means <- function(
   .ref_group <- ref$ref_group
   .in_ref_col <- ref$in_ref_col
 
-  y <- if (is.null(.ref_group) || is.null(.in_ref_col) || .in_ref_col) {
+  y <- if (is.null(.in_ref_col) || .in_ref_col) {
     .stats <- junco_get_stats("diff_means", stats_in = .stats)
     setNames(vector(mode = "list", length = length(.stats)), .stats)
   } else {

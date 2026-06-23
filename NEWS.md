@@ -1,12 +1,36 @@
 # junco 0.1.6.9000
 
 ### Fixed
+- Fixed `get_ref_info()` to accept ref_path = NULL (#359).
+- Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
+- CRITICAL: hotfixed `tt_to_tlgrtf()` lost titles in certain cases (#373)
 
 ### Changed
+- Added a default value for the `label` argument in `c_summary_subset_label()`.
+- Updated the documentation of `a_summary_subset()`.
+- Refactored `prepend_label_cell()`; Only `RowsVerticalSection` is now supported.
+- Removed `filter_df_prior_afun()`, `a_summary_diff_mvars()`, `a_summary_diff_mvars_label()`.
 - Removed formatters exports #317
+- Deprecate `a_coxph_hr` for `tern:::a_coxph_pairwise()` and `s_coxph_hr` for `tern:::s_coxph_pairwise()` #158
+- Reduce sampling of `rbmi` test to make tests shorter (#323)
+- Optimize shared tables in `test-tt_to_tblfile` (#323)
+- Changed forked `h_ancova` for the `tern` one
+- Removed ellipsis argument from `a_freq_resp_var_j` (#236) 
+- Removed `dplyr` from `junco` and replaced by base R #201
+- Replaced `assertthat` by `checkmate` for consistency #201
+- Remove `stringi` from dependencies #201
+- Deprecate `rbmi_analyse()`, `make_rbmi_cluster()`, `par_lapply()` for `rbmi` equivalent functions #367
+- Deprecate `a_kaplan_meier()` for `tern::a_surv_time()`
+- Changed the label for `range_with_cens_info` from `"Min, max"` (junco) to `"Min - Max (with censoring)"` and the argument from `lsmean_diffci` to `lsmean_diff_with_ci`
+- Deprecate `s_coxph_hr()` for `tern:::a_coxph_pairwise()`
+- Changed stop message in `a_freq_j()` when `label_map` option is used in a rowsplit with no data on a character analysis var #386
+
+
 
 ### Added
+- Updated documentation and examples for `label_map` in `a_freq_j` (#235)
+- Added `tern` methods for difference in proportions in `a_freq_j` and  `a_freq_resp_var_j` : `cmh_sato`, `cmh_mn`, `uncond_exact_diff`  (#389)
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 
@@ -31,6 +55,8 @@
 
 ### Changed
 
+- Updated `c_summary_subset_label()`: removed `.spl_context` argument and renamed `subset_expr` to `filter_expr`.
+- Renamed `a_summary_j()` to `a_summary_subset()` and updated its purpose, implementation, and arguments.
 - Added new stats/labels/formats/indents to `junco_utils_default_stats_formats_labels.r` file.
 - Renamed `s_diff_mean_ci()` to `s_diff_means()`, and added new statistics to `s_diff_means()`.
 - Moved `safe_t_test()` from `a_summarize_aval_chg_diff.R` to a new file `safe_t_test.R`,

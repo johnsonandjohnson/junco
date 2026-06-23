@@ -174,6 +174,7 @@ format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in
 }
 
 
+
 # junco_default_stats -----------------------------------------------------------
 
 #' @describeIn default_stats_formats_labels Named list of available statistics by method group for `junco`.
@@ -185,7 +186,6 @@ format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in
 #' @export
 junco_default_stats <- list(
   cmhrms = c("pval"),
-  coxph_hr = c("n_tot", "n_tot_events", "hr", "hr_ci", "hr_ci_3d", "pvalue", "lr_stat_df"),
   event_free = c("pt_at_risk", "event_free_rate", "rate_se", "rate_ci", "event_free_ci"),
   kaplan_meier = c("quantiles_lower", "median_ci_3d", "quantiles_upper", "range_with_cens_info"),
   odds_ratio = c("n_tot", "or_ci", "pval"),
@@ -236,7 +236,7 @@ junco_default_stats <- list(
     "lsmean_ci",
     "lsmean_diff",
     "lsmean_diff_ci",
-    "lsmean_diffci",
+    "lsmean_diff_with_ci",
     "pval"
   ),
   summarize_mmrm = c(
@@ -286,6 +286,10 @@ junco_default_stats <- list(
   a_eair100_j = c("eair", "n_event", "person_years")
 )
 
+not_in_junco <- setdiff(names(tern_default_stats), names(junco_default_stats))
+junco_default_stats <- c(junco_default_stats, tern_default_stats[not_in_junco])
+
+
 # junco_default_formats ---------------------------------------------------------
 junco_default_formats_start <- c(
   adj_mean_se = jjcsformat_xx("xx.xxx (xx.xxx)"),
@@ -323,7 +327,7 @@ junco_default_formats_start <- c(
   lsmean = jjcsformat_xx("xx.xx"),
   lsmean_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   lsmean_diff = jjcsformat_xx("xx.xx"),
-  lsmean_diffci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  lsmean_diff_with_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   lsmean_diff_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
   lsmean_se = jjcsformat_xx("xx.xx (xx.xx)"),
   mean = jjcsformat_xx("xx.xx"),
@@ -400,7 +404,6 @@ junco_default_labels_start <- c(
   # end s_diff_means stats.
   #
   hr = "Hazard Ratio",
-  lr_stat_df = "Log-Rank Chi-Squared",
   mean_sd = "Mean (SD)",
   median = "Median",
   median_range = "Median (min, max)",
