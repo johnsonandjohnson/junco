@@ -274,7 +274,10 @@ s_rel_risk_val_j <- function(
     "newcombe",
     "newcombecc",
     "strat_newcombe",
-    "strat_newcombecc"
+    "strat_newcombecc",
+    "cmh_sato",
+    "cmh_mn",
+    "uncond_exact_diff"
   ),
   weights_method = "cmh"
 ) {
@@ -612,8 +615,8 @@ s_rel_risk_val_j <- function(
 #' # -------------------------------------------------------------------------
 #'
 #' label_map_simple <- data.frame(
-#'  value = c("M", "F", "UNDIFFERENTIATED", "U"),
-#'  label = c("Male", "Female", "Undifferentiated", "Unknown")
+#'   value = c("M", "F", "UNDIFFERENTIATED", "U"),
+#'   label = c("Male", "Female", "Undifferentiated", "Unknown")
 #' )
 #'
 #' lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
@@ -666,8 +669,8 @@ s_rel_risk_val_j <- function(
 #'     show_labels = "hidden"
 #'   )
 #'
-#'   result_lmap2 <- build_table(lyt_lmap1, adslx)
-#'   result_lmap2
+#' result_lmap2 <- build_table(lyt_lmap1, adslx)
+#' result_lmap2
 #'
 #' # -------------------------------------------------------------------------
 #' # 3. Conditional-on-row-split mapping.
@@ -709,10 +712,10 @@ s_rel_risk_val_j <- function(
 #' multi_vars <- c("CRIT1FL", "CRIT2FL", "CRIT3FL")
 #'
 #' map_multi_rowsplit <- data.frame(
-#' PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
-#' var = rep(multi_vars, 2),
-#' value = rep("Y", 6),
-#' label = c(
+#'   PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
+#'   var = rep(multi_vars, 2),
+#'   value = rep("Y", 6),
+#'   label = c(
 #'     "<50 mmHg and with >20 mmHg decrease from baseline",
 #'     ">105 mmHg and with >30 mmHg increase from baseline",
 #'     "Diastolic blood pressure<60",
@@ -776,7 +779,10 @@ a_freq_j <- function(
     "newcombe",
     "newcombecc",
     "strat_newcombe",
-    "strat_newcombecc"
+    "strat_newcombecc",
+    "cmh_sato",
+    "cmh_mn",
+    "uncond_exact_diff"
   ),
   weights_method = "cmh",
   label = NULL,
