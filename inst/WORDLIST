@@ -14,6 +14,8 @@ Customizations
 DOCX
 DataFrame
 Dunnett
+EAIR
+EAIRs
 EQ
 Eg
 Haenszel
@@ -22,6 +24,7 @@ IEC
 JJCS
 Kaplan
 Lapply
+Liu
 MMRM
 Miettinen
 Nurminen
@@ -31,6 +34,7 @@ RBMI
 RTF
 RowsVerticalSection
 Sato
+Snavely
 TEFOS
 TLG
 TLGs
@@ -43,6 +47,7 @@ Unlist
 VTableTree
 XLSX
 afun
+al
 allparts
 altdf
 analyse
@@ -84,6 +89,7 @@ eg
 emmeans
 estimand
 estimands
+et
 exprs
 firstcat
 flextable
@@ -134,6 +140,7 @@ postfun
 pre
 pseudocolumn
 px
+py
 qquad
 rbmi
 referene

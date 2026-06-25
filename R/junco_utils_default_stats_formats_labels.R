@@ -283,7 +283,11 @@ junco_default_stats <- list(
     "count_unique_denom_fraction"
   ),
   a_patyrs_j = c("patyrs"),
-  a_eair100_j = c("eair", "n_event", "person_years")
+  a_eair100_j = c(
+    "n_event", "person_years",
+    "eair", "n_eair", "eair_ci", "eair_est_ci", "eair_n", "eair_n_py",
+    "eair_diff_est_ci", "eair_diff_est", "eair_diff_ci"
+  )
 )
 
 not_in_junco <- setdiff(names(tern_default_stats), names(junco_default_stats))
@@ -367,7 +371,14 @@ junco_default_formats_start <- c(
   rr_ci_3d = jjcsformat_xx("xx.x (xx.x, xx.x)"),
   patyrs = jjcsformat_xx("xx.x"),
   eair = jjcsformat_xx("xx.x"),
-  eair_diff = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  eair_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  eair_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  eair_diff_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  eair_diff_est = jjcsformat_xx("xx.xx"),
+  eair_diff_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  n_eair = jjcsformat_xx("xx (xx.x)"),
+  eair_n = jjcsformat_xx("xx.x (xx)"),
+  eair_n_py = jjcsformat_xx("xx.x (xx/xx.x)"),
   n_event = "xx",
   person_years = jjcsformat_xx("xx.xx"),
   total_subject_years = jjcsformat_xx("xx.x (xx.x)"),
@@ -420,7 +431,6 @@ junco_default_labels_start <- c(
   n_parentdf = "N",
   denom = "N",
   patyrs = "Patient years",
-  n_event = "Number of events",
   person_years = "Person years",
   total_subject_years = "Total treatment (subject years)"
 )
