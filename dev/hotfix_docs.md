@@ -13,7 +13,6 @@ Because we cannot rebuild and redeploy new package versions onto old containes, 
 
 In summary, your PR to 'dev' should look like this: https://github.com/johnsonandjohnson/junco/pull/375/changes
 It should contain:
-
   - your fix in the `R/` folder
   - any unit tests / regression tests.
   - update `NEWS.md` to include keyword **CRITICAL** + description of the fix
@@ -63,8 +62,14 @@ names(deps[deps])
 `feature/hotfix-<your-hotfix-name>`. For example: `feature/hotfix-lost_titles_tt_to_tlgrtf`.
 
 Save your hotfix files in the `dev/` folder. **File names must exactly match the target legacy version:**
-* `dev/junco_hotfix_v0-1-1.R`
-* `dev/junco_hotfix_v0-1-2.R`
+* `dev/junco_hotfix_v0-1-3.R`
+* `dev/junco_hotfix_v0-1-6.R`
+
+In summary, your PR to 'main' should look like this: https://github.com/johnsonandjohnson/junco/pull/378/changes
+It should contain:
+  - the hotfix in files `dev/junco_hotfix_v0-1-3.R` and `dev/junco_hotfix_v0-1-6.R` (remember to add in the header of the script the descriptions of all hotfixes introduced, + individual `TODO` lines within the script)
+  - add description of the hotfix in `dev/hotfix_changelog.md`
+  - if needed, update `.github/workflows/hotfix.yaml` (add new pipelines and remove old ones)
 
 ## Phase 4: CI Validation
 **6. Trigger the Pipeline:** Push your `feature/hotfix-*` branch to GitHub. This automatically triggers the Hotfix CI Pipeline, which will virtually inject your code into the legacy package and run the old test suite.
