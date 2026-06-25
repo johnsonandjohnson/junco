@@ -124,7 +124,7 @@ test_that("Check diff in binomial for MN method against ratesci function scoreci
     conf.level = 0.95, # nolint
     sides = "two.sided",
     method = "mn"
-  ), 3)
+  ), 4)
   res <- as.data.frame(res)
   names(res) <- c("est", "lower", "upper")
   row.names(res) <- NULL
@@ -144,7 +144,7 @@ test_that("Check diff in binomial for MN method against ratesci function scoreci
       or_bias = FALSE
     )$estimates[, c(1:3), drop = FALSE]
     x <- x[1, c("est", "lower", "upper")]
-    x <- round(100 * x, 3)
+    x <- round(100 * x, 4)
   }, simplify = TRUE))
   res_ratesci <- as.data.frame(res_ratesci)
   row.names(res_ratesci) <- NULL
@@ -279,7 +279,7 @@ test_that("Check h_s_eair_diff for Wald method with CC against ratesci  function
       level = 0.95,
       cc = TRUE
     )$estimates
-    x <- x["Continuity adjusted Approximate Normal", c("est", "lower", "upper"), ]
+    x <- x["Approximate Normal_cc", c("est", "lower", "upper"), ]
     x <- round(100 * x, 4)
   }, simplify = TRUE))
   res_ratesci <- as.data.frame(res_ratesci)
