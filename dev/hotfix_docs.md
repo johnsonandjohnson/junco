@@ -30,6 +30,10 @@ To identify these dependencies, use `pkgnet` or the manual environment search sc
 > Make sure you have the relevant package version installed (i.e. v0.1.1, v0.1.2, etc.)
 
 ```r
+# install the relevant package version
+# detach("package:junco", unload = TRUE)
+# remotes::install_version(package = "junco", version = "0.1.6")
+
 # Visual Report
 library(pkgnet)
 CreatePackageReport(pkg_name = "junco", report_path = "report.html")
