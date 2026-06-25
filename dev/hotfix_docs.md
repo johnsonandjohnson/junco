@@ -11,6 +11,14 @@ Because we cannot rebuild and redeploy new package versions onto old containes, 
 > **What is a Regression Test?** > When you fix a bug, you must add a specific unit test that proves the bug is fixed.
 > This is called a regression test because it ensures the codebase never "regresses" back to having this specific bug in the future.
 
+In summary, your PR to 'dev' should look like this: https://github.com/johnsonandjohnson/junco/pull/375/changes
+It should contain:
+
+  - your fix in the `R/` folder
+  - any unit tests / regression tests.
+  - update `NEWS.md` to include keyword **CRITICAL** + description of the fix
+  - if needed, update these docs (`dev/hotfix_docs.md`)
+
 ## Phase 2: The Namespace Trap & Dependency Mapping
 **3. Percolate the Hotfix:** Once merged into the current working branch, the fix must be ported backwards to older legacy versions/containers.
 
