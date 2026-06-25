@@ -112,17 +112,17 @@ test_that("def_colwidths does not fail when a column label is too large", {
   key_cols <- c("COL0", "COL1")
   disp_cols <- paste0("COL", 0:8)
   concat_sep <- " / "
-  
+
   adsl <- pharmaverseadamjnj::adsl |>
     filter(!!rlang::sym(popfl) == "Y" & !(EOTSTT %in% c("COMPLETED", "ONGOING")))
-  
+
   adsl_ds <- adsl
   adsl_ds$DSSCAT <- "TREATMENT"
-  
+
   adexsum <- pharmaverseadamjnj::adexsum |>
     filter(PARAMCD == "CUMDOSE") |>
     select(STUDYID, USUBJID, PARAMCD, PARAM, AVAL)
-  
+
   adsl_ds_adexsum <- left_join(
     adsl_ds,
     adexsum,
@@ -131,7 +131,7 @@ test_that("def_colwidths does not fail when a column label is too large", {
       "USUBJID" = "USUBJID"
     )
   )
-  
+
   to_sentence <- function(x) {
     x <- tolower(x)
     paste0(
@@ -170,10 +170,10 @@ test_that("def_colwidths does not fail when a column label is too large", {
       )
     ) |>
     arrange(COL0, COL1, COL2, COL3)
-  
+
   lsting <- lsting |>
     mutate(COL7 = ifelse(is.na(DCTADY), COL7, sprintf("%s (%s)", COL7, DCTADY)))
-  
+
   lsting <- var_relabel(
     lsting,
     COL0 = "Treatment Group",
@@ -186,17 +186,17 @@ test_that("def_colwidths does not fail when a column label is too large", {
     COL7 = "Date of Discontinuation (Study Day~[super b])",
     COL8 = "Primary Reason for Discontinuation"
   )
-  
+
   result <- rlistings::as_listing(
     df = lsting,
     key_cols = key_cols,
     disp_cols = disp_cols
   )
-  
+
   fontspec <- font_spec("Times", 9L, 1.2)
   col_gap <- 7L
   label_width_ins <- 2
-  
+
   testthat::expect_no_error(
     colwidths <- def_colwidths(
       result,
