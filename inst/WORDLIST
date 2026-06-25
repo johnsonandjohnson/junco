@@ -14,11 +14,10 @@ Customizations
 DOCX
 DataFrame
 Dunnett
+EAIR
 EAIRs
 EQ
 Eg
-et al.
-al
 Haenszel
 Hotfix
 IEC
@@ -48,6 +47,7 @@ Unlist
 VTableTree
 XLSX
 afun
+al
 allparts
 altdf
 analyse
@@ -89,6 +89,7 @@ eg
 emmeans
 estimand
 estimands
+et
 exprs
 firstcat
 flextable
@@ -139,6 +140,7 @@ postfun
 pre
 pseudocolumn
 px
+py
 qquad
 rbmi
 referene
