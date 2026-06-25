@@ -406,7 +406,7 @@ s_eair100_levii_j <- function(
 
   if (vs_ref_group && (!is.expression(cur_col_expr))) {
     stop("cur_col_expr must be an expression when vs_ref_group = TRUE")
-  } 
+  }
   # subset .alt_df_full to current column
   .alt_df_full_cur_group <- subset(.alt_df_full, eval(cur_col_expr))
   cur_dfs <- h_get_eair_df(
