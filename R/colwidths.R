@@ -301,7 +301,8 @@ listing_column_widths <- function(
     col_gap = 0.5,
     pg_width_ins = 8.88,
     fontspec = font_spec("Times", 8, 1.2),
-    verbose = FALSE) {
+    verbose = FALSE,
+    max_lbl_lines = 3) {
   newdev <- open_font_dev(fontspec)
   if (newdev) {
     on.exit(close_font_dev())
@@ -316,7 +317,8 @@ listing_column_widths <- function(
   optimal <- optimal_widths(
     possdf = possdf,
     tot_spaces = inches_to_spaces(pg_width_ins, fontspec = fontspec),
-    verbose = verbose
+    verbose = verbose,
+    max_lbl_lines = max_lbl_lines
   )
   optimal$colwidth
 }
@@ -347,6 +349,15 @@ find_free_colspc <- function(curposs, fullposs, thresh = 0.99, skip = integer(),
 constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
   old_lbl_lns <- max(curdf$lbl_lines)
   cols_to_pack <- which(curdf$lbl_lines == old_lbl_lns)
+  if (verbose) {
+    message(
+      "Current lines required by label rows: ",
+      old_lbl_lns,
+      " [",
+      length(cols_to_pack),
+      " cols]. Attempting to reduce column label lines required."
+    )
+  }
   olddf <- curdf
   success <- TRUE
   for (ii in cols_to_pack) {
@@ -357,7 +368,7 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
       success <- FALSE
       break
     }
-    newrow <- possdfii[ii, ]
+    newrow <- possdfii[which.max(possdfii$colwidth), ]
     if (newrow$colwidth - cwidthii > avail_spc) {
       success <- FALSE
       break
@@ -376,6 +387,7 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
     } else {
       msg <- paste("Unable to reduce label rows required.")
     }
+    message(msg)
   }
 
   if (!success) {
@@ -384,7 +396,7 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
   curdf
 }
 
-optimal_widths <- function(possdf, tot_spaces = 320, max_lbl_lines = 3, verbose = FALSE) {
+optimal_widths <- function(possdf, tot_spaces = 320, max_lbl_lines = 4, verbose = FALSE) {
   odf <- order(possdf$col_num, possdf$colwidth)
   possdf <- possdf[odf, ]
   badlbl <- which(possdf$lbl_lines > max_lbl_lines)
@@ -415,8 +427,8 @@ optimal_widths <- function(possdf, tot_spaces = 320, max_lbl_lines = 3, verbose 
   done <- FALSE
   while (!done) {
     oldwdths <- curdf$colwidth
-    curdf <- constrict_lbl_lns(curdf, possdf, verbose = verbose)
-    if (all.equal(curdf$colwidth, oldwdths)) {
+    curdf <- constrict_lbl_lns(curdf, possdf, verbose = verbose, avail_spc = spcleft)
+    if (isTRUE(all.equal(curdf$colwidth, oldwdths))) {
       done <- TRUE
     }
   }
