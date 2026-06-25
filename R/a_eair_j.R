@@ -404,9 +404,9 @@ s_eair100_levii_j <- function(
   )
   method_eair_part <- paste0(" (", method_eair_part, ")")
 
-  if (is.null(cur_col_expr)) {
-    stop("cur_col_expr must be passed onto s_eair100_levii_j")
-  }
+  if (vs_ref_group && (!is.expression(cur_col_expr))) {
+    stop("cur_col_expr must be an expression when vs_ref_group = TRUE")
+  } 
   # subset .alt_df_full to current column
   .alt_df_full_cur_group <- subset(.alt_df_full, eval(cur_col_expr))
   cur_dfs <- h_get_eair_df(
@@ -707,6 +707,8 @@ a_eair100_j <- function(
     ref <- get_ref_info(ref_path, .spl_context)
     .in_ref_col <- ref$in_ref_col
     ref_col_expr <- h_get_ref_col_expr(ref_path)
+  } else {
+    ref_col_expr <- NULL
   }
 
   # !perform_vs_ref_stats will be passed as .in_ref_col in the s_function s_eair100_levii_j
