@@ -83,8 +83,15 @@ It should contain:
 **8. Update the Changelog:** Document the bug, the affected versions, and the functions modified inside `dev/hotfix_changelog.md`. 
 
 ## Phase 6: Update
-**9. Update the Template:** Go to the Bitbucket `jjcs_templates` repository, do a PR on the `main` branch, open `code_library/junco_hotfix.r` and paste in your new hotfix under the header of the old version and update the date i.e.:
+**9. Update the Template:**
+* Go to the Bitbucket repo `jjcs_tlg_template_scripts` branch "release/.../v1_1_2" (or whichever is the latest)
+* create a new branch from it called "release/.../v1_1_3"
+* create a new PR (name of the branch doesn't matter, could be for example 'hotfix_lost_titles')
+from "release/.../v1_1_3" with the updated hotfix file `code_library/junco_hotfix.r`
 
+In summary, your PR to "release/.../v1_1_3" should look like this: https://sourcecode.jnj.com/projects/ASX-JFYC/repos/jjcs_tlg_template_scripts/pull-requests/135/diff#code_library%2Fjunco_hotfix.r
+It should contain:
+* the hotfix (update file `code_library/junco_hotfix.r`) (remember to update the date in the header of the script, add the descriptions of all hotfixes introduced, + individual `TODO` lines within the script)
 
 ```
 ###############################################################################
@@ -92,7 +99,7 @@ It should contain:
 ## Program Name:              junco_hotfix.r
 ## R version:                 4.5.2
 ## Short Description:         junco package function hotfix changes
-## Author:                    Technology Solutions
+## Author:                    C&SP Methodology
 ## Date:                      TODAY'S DATE XXXXXXXXX
 ###############################################################################
 
