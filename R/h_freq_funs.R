@@ -317,6 +317,26 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
   return(list(trt_var = trt_var, trt_var_refspec = trt_var_refspec, cur_trt_grp = cur_trt_grp, ctrl_grp = ctrl_grp))
 }
 
+# helper function to define expression for retrieving ref_group type of datasets
+h_get_ref_col_expr <- function(ref_path = NULL){
+  if (is.null(ref_path)){
+    stop("h_get_ref_col_expr: ref_path cannot be NULL")
+  }
+  checkmate::assert_character(ref_path, min.len = 2L, names = "unnamed")
+  checkmate::assert_true(length(ref_path) %% 2 == 0)
+  
+  vars <- ref_path[seq(from = 1L, to = length(ref_path) - 1L, by = 2L)]
+  levels <- ref_path[seq(from = 2L, to = length(ref_path), by = 2L)]
+  
+  parts <- paste0(
+    "!is.na(", vars, ") & (", vars, " %in% c(\"", levels, "\"))"
+  )
+  
+  res <- paste(parts, collapse = " & ")
+  call_expr <- parse(text = res)[[1]]
+  
+  as.expression(call_expr)
+}
 
 #' Update Data Frame Row
 #'

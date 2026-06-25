@@ -376,7 +376,8 @@ test_that("Check a_eair100_j numbers are giving expected result relative risk in
         occ_var = "AOCCPFL",
         occ_dy = "ASTDY",
         ref_path = ref_path,
-        drop_levels = TRUE
+        drop_levels = TRUE,
+        row_labels_adj = TRUE
       )
     ) |>
     append_topleft("Preferred Term, EAIR Per 100 SY")

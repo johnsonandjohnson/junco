@@ -12,18 +12,19 @@ s_eair100_levii_j(
   .var,
   .alt_df_full = NULL,
   id = "USUBJID",
-  diff = FALSE,
-  conf_level = 0.95,
-  conf_type = c("wald", "waldcc", "mn", "scas"),
-  trt_var = NULL,
-  ctrl_grp = NULL,
-  cur_trt_grp = NULL,
-  inriskdiffcol = FALSE,
   fup_var,
   occ_var,
   occ_dy,
   num_p_year = 100,
-  count_multiple_events = FALSE
+  count_multiple_events = FALSE,
+  conf_level = 0.95,
+  conf_type_diff = c("wald", "waldcc", "mn", "scas"),
+  conf_type_eair = c("exact", "normal", "normal_log", "byar"),
+  vs_ref_group = FALSE,
+  .in_ref_col,
+  cur_col_expr,
+  ref_col_expr,
+  inriskdiffcol = FALSE
 )
 
 a_eair100_j(
@@ -34,6 +35,11 @@ a_eair100_j(
   .spl_context,
   .alt_df_full = NULL,
   id = "USUBJID",
+  fup_var,
+  occ_var,
+  occ_dy = NULL,
+  num_p_year = 100,
+  count_multiple_events = FALSE,
   drop_levels = FALSE,
   riskdiff = TRUE,
   ref_path = NULL,
@@ -43,12 +49,10 @@ a_eair100_j(
   .indent_mods = NULL,
   na_str = rep("NA", 3),
   conf_level = 0.95,
-  conf_type = c("wald", "waldcc", "mn", "scas"),
-  fup_var,
-  occ_var,
-  occ_dy = NULL,
-  num_p_year = 100,
-  count_multiple_events = FALSE
+  conf_type_diff = c("wald", "waldcc", "mn", "scas"),
+  conf_type_eair = c("normal", "normal_log", "exact", "byar"),
+  row_labels_adj = FALSE,
+  riskdiff_setup = c("horizontal", "vertical")
 )
 }
 \arguments{
@@ -64,34 +68,19 @@ a_eair100_j(
 
 \item{id}{(\code{string})\cr subject variable name.}
 
-\item{diff}{(\code{logical})\cr if TRUE, risk difference calculations will be performed.}
-
-\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
-
-\item{conf_type}{(\code{string})\cr method used to compute the confidence interval for the EAIR difference.
-One of \code{"wald"} (Wald without continuity correction), \code{"waldcc"} (Wald with continuity correction),
-\code{"mn"} (Miettinen-Nurminen score), or \code{"scas"} (skewness-corrected asymptotic score).
-Defaults to \code{"wald"}.}
-
-\item{trt_var}{(\code{string})\cr treatment variable name.}
-
-\item{ctrl_grp}{(\code{string})\cr control group value.}
-
-\item{cur_trt_grp}{(\code{string})\cr current treatment group value.}
-
-\item{inriskdiffcol}{(\code{logical})\cr flag indicating if the function is called within a risk difference column.}
-
 \item{fup_var}{(\code{string})\cr name of the variable containing the total follow-up duration
 for each subject, expressed in \strong{years}.
 Used as the at-risk exposure time for subjects who did \strong{not} experience the event.}
 
 \item{occ_var}{(\code{string} or \code{NULL})\cr name of the flag variable identifying the
 \strong{first} occurrence of the event within each subject and level, encoded as \code{"Y"}.
-Only records where \code{occ_var == "Y"} contribute to the event count (\code{n_event}), and only one event record per subject is allowed.
+Only records where \code{occ_var == "Y"} contribute to the event count (\code{n_event}),
+and only one event record per subject is allowed.
 \cr If \code{NULL}, event occurrence filtering is skipped and time at risk is taken
 from \code{fup_var} in \code{alt_counts_df} for all subjects.}
 
-\item{occ_dy}{(\code{string} or \code{NULL})\cr When \code{occ_var} not \code{NULL}: name of the variable containing the relative day of the
+\item{occ_dy}{(\code{string} or \code{NULL})\cr When \code{occ_var} not \code{NULL}: name of the variable
+containing the relative day of the
 first event occurrence, expressed in \strong{days} (e.g., \code{ASTDY}).
 For subjects with an event (\code{occ_var == "Y"}), this value is converted to years
 as \code{occ_dy / 365.25} and used as the at-risk exposure time instead of \code{fup_var}.
@@ -108,6 +97,28 @@ For example, use \code{1} for a rate per person-year or \code{1000} for a rate p
 per subject rather than treating each subject as contributing 1 to \code{n_event}.
 Only considered when \code{occ_var = NULL}.
 Defaults to \code{FALSE}.}
+
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
+
+\item{conf_type_diff}{(\code{string})\cr method used to compute the confidence interval for the EAIR difference.
+One of \code{"wald"} (Wald without continuity correction), \code{"waldcc"} (Wald with continuity correction),
+\code{"mn"} (Miettinen-Nurminen score), or \code{"scas"} (skewness-corrected asymptotic score).
+Defaults to \code{"wald"}.}
+
+\item{conf_type_eair}{(\code{string})\cr method used to compute the confidence interval for the EAIR rate.
+One of \code{"exact"}, \code{"normal"}, \code{"normal_log"}, \code{"byar"}
+\cr See \code{?tern:::h_incidence_rate} and \code{?tern::incidence_rate}, argument \code{control} for more information.
+Defaults to \code{"exact"}.}
+
+\item{vs_ref_group}{(\code{logical})\cr if TRUE, risk difference (against reference group) calculations will be performed.}
+
+\item{cur_col_expr}{(\code{expression})\cr current column expression taken from \code{rtables} \code{.spl_context}
+splitting machinery (\code{cur_col_expr}).}
+
+\item{ref_col_expr}{(\code{expression} or \code{NULL})\cr column expression for the reference group.
+Required to be an expression if \code{vs_ref_group} is \code{TRUE}}
+
+\item{inriskdiffcol}{(\code{logical})\cr flag indicating if the function is called within a risk difference column.}
 
 \item{labelstr}{(\code{string})\cr Not intended to be set by user, only present to be able to use function as a \code{cfun}.}
 
@@ -128,6 +139,17 @@ Defaults to \code{FALSE}.}
 \item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels.}
 
 \item{na_str}{(\code{string})\cr string used to replace all NA or empty values in the output.}
+
+\item{row_labels_adj}{(\code{logical})\cr If \code{TRUE} and number of requested statistics = 1,
+the row label on the table will reflect the level of the incoming variable rather than
+the label for the statistic.
+\cr Set to default \code{TRUE} for backward-compatibility reasons.}
+
+\item{riskdiff_setup}{(\code{string})\cr Are risk differences presented in horizontal way, or vertical way.
+\cr When horizontal, the statistics for \code{eair}, \code{n_eair}, \code{eair_n} will be replaced by
+\code{ear_diff_est_ci} in the risk difference columns.
+If \code{.stats} include any of difference in eair rates statistics,
+these will be removed as \code{ear_diff_est_ci} will be displayed in the risk difference columns}
 }
 \value{
 \itemize{
@@ -137,9 +159,15 @@ Defaults to \code{FALSE}.}
 \item person_years: Total person-years of follow-up
 \item eair: Exposure-adjusted incidence rate per \code{num_p_year} person-years
 \item n_eair: Combination of \code{n_event} and \code{eair} statistics.
-\item eair_diff: Difference in EAIR between current group and reference group
-(if \code{diff}=TRUE and \code{inriskdiffcol}=TRUE), together with its confidence interval
-computed using the method specified by \code{conf_type}.
+\item eair_n: Combination of \code{eair} and \code{n_event} statistics.
+\item eair_n_py: Combination of \code{eair}, \code{n_event} and \code{person_years} statistics.
+\item eair_ci: Confidence interval for \code{eair}, method specified in \code{conf_type_eair}.
+\item eair_est_ci: Combination of \code{eair} and \code{eair_ci}.
+\item eair_diff_est: Difference in EAIR between current group and reference group
+(if \code{diff}=TRUE and \code{inriskdiffcol}=TRUE)
+\item eair_diff_ci: Confidence interval for difference in EAIR between current group and reference group
+(if \code{diff}=TRUE and \code{inriskdiffcol}=TRUE)
+\item eair_diff_est_ci: Combination of \code{eair_diff_est} and \code{eair_diff_ci}.
 }\cr
 The list of available statistics (core columns) can also be viewed by
 running \code{junco_get_stats("a_eair100_j")}.
@@ -147,7 +175,7 @@ running \code{junco_get_stats("a_eair100_j")}.
 
 \itemize{
 \item \code{a_eair100_j} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.\cr
-Within a risk difference column, the statistics \code{eair} and \code{n_eair} are replaced by \code{eair_diff}
+Within a risk difference column, the statistics \code{eair} and \code{n_eair} are replaced by \code{eair_diff_est_ci}
 (difference in EAIR between current group and reference group, together with it's confidence interval).
 }
 }
@@ -214,7 +242,7 @@ and the \eqn{100(1-\alpha)\%} confidence interval is
 }
 where \eqn{z_{1-\alpha/2}} is the standard normal quantile. \href{https://metricgate.com/docs/poisson-rate-comparison/}{1}
 \cr
-\cr Other methods for confidence interval for difference can be specified in \code{conf_type} argument.
+\cr Other methods for confidence interval for difference can be specified in \code{conf_type_diff} argument.
 
 EAIR is commonly reported per 100 subject-years:
 
