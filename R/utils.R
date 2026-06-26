@@ -16,6 +16,24 @@ leftside <- function(x) {
   res
 }
 
+#' Extract the right-hand side of a formula
+#'
+#' @param x (`formula`)\cr A two-sided formula, e.g., `y ~ x1 + x2`.
+#'
+#' @return (`character(1)`) The right-hand side of the formula.
+#'
+#' @examples
+#' rightside(y ~ x1 + x2)
+#'
+#' @export
+rightside <- function(x) {
+  checkmate::assert_formula(x)
+  res <- x[[3L]]
+  res <- paste(deparse(res), collapse = "")
+  checkmate::assert_string(res)
+  res
+}
+
 #' Custom unlist function
 #'
 #' Unlist a list, but retain `NULL` as `'NULL'` or `NA`.
