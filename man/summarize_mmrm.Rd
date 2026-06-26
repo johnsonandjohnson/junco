@@ -4,6 +4,7 @@
 \alias{summarize_mmrm}
 \alias{s_summarize_mmrm}
 \alias{a_summarize_mmrm}
+\alias{a_summarize_mmrm_with_exclude}
 \title{Dynamic tabulation of MMRM results with tables}
 \usage{
 s_summarize_mmrm(
@@ -20,6 +21,18 @@ s_summarize_mmrm(
 a_summarize_mmrm(
   df,
   .var,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+)
+
+a_summarize_mmrm_with_exclude(
+  df,
+  .var,
+  exclude_levels,
   .spl_context,
   ...,
   .stats = NULL,
@@ -58,6 +71,9 @@ information on the \code{'auto'} setting.}
 
 \item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
+
+\item{exclude_levels}{(\code{list})\cr A named list where names correspond to split variables
+and values are vectors of levels to exclude.}
 }
 \value{
 \itemize{
@@ -79,6 +95,10 @@ estimates when in the reference arm and not in reference visit. It uses
 \code{\link[=s_lsmeans]{s_lsmeans()}} for the final processing.
 
 \item \code{a_summarize_mmrm()}: Formatted analysis function which is used as \code{afun}.
+
+\item \code{a_summarize_mmrm_with_exclude()}: Wrapper for the \code{afun} which can exclude
+row split levels from producing the analysis. These have to be specified in the
+\code{exclude_levels} argument, see \code{?do_exclude_split} for details.
 
 }}
 \examples{
