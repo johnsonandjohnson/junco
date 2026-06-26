@@ -5,6 +5,7 @@
 - Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
 - CRITICAL: hotfixed `tt_to_tlgrtf()` lost titles in certain cases (#373)
+- CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
 - Added a default value for the `label` argument in `c_summary_subset_label()`.
