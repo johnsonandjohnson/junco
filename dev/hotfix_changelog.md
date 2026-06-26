@@ -61,7 +61,7 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
 
 **Target Legacy Version(s):** v0.1.6
 
-**Mainline PR:** [Link to the original fix merged into `dev`]  
+**Mainline PR:** https://github.com/johnsonandjohnson/junco/pull/375
 
 ### The Bug
 * **Impact:** Users highlighted that in some situations, `tt_to_tlgrtf()` was not exporting the title.
@@ -77,4 +77,23 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
 * **Runner Quirks:** None
 
 
+## Hotfix #395- 2026-06-25
+**Author:** Technology Solutions
+
+**Target Legacy Version(s):** v0.1.6
+
+**Mainline PR:** https://github.com/johnsonandjohnson/junco/pull/395
+
+### The Bug
+* **Impact:** Users highlighted that, when a column label is too large, `def_colwidths()` was throwing an error.
+* **Root Cause:** internally, `def_colwidths()` was calling `constrict_lbl_lns()`, which was accessing an out-of-bound index when trying to optimize the column widths.
+
+### Surgical Changes
+* **Primary Function(s) Fixed:**
+    * `constrict_lbl_lns()`:
+        * added a quick fix check that the index is within the boundaries.
+
+### Testing & CI Notes
+* **Snapshot Changes:** None
+* **Runner Quirks:** None
 
