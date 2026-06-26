@@ -40,6 +40,8 @@ reference:
     - a_proportion_ci_logical
     - a_summarize_aval_chg_diff_j
     - a_summarize_ex_j
+    - a_summarize_mmrm_with_exclude
+    - a_summary_j_with_exclude
     - a_summary_subset
     - a_two_tier
     - c_summary_subset_label
@@ -134,6 +136,7 @@ reference:
     - get_ref_info
     - get_visit_levels
     - leftside
+    - rightside
     - remove_col_count
     - rm_levels
     
