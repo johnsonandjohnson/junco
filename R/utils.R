@@ -29,7 +29,11 @@ leftside <- function(x) {
 rightside <- function(x) {
   checkmate::assert_formula(x)
   res <- x[[3L]]
-  res <- paste(deparse(res), collapse = "")
+  if (is.character(res) && length(res) == 1L) {
+    res <- as.character(res)
+  } else {
+    res <- paste(deparse(res), collapse = "")
+  }
   checkmate::assert_string(res)
   res
 }
