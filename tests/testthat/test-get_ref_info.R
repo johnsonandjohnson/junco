@@ -204,7 +204,151 @@ test_that("get_ref_info works with a df in the presence of the overall column", 
 
 test_that("get_ref_info returns NULL values when ref_path is NULL", {
   res <- get_ref_info(NULL, .spl_context = data.frame())
-  exp <- list(ref_group = NULL, in_ref_col = NULL)
+  exp <- list(ref_group = NULL, in_ref_col = NULL, trt_var = NULL, ctrl_grp = NULL, cur_col_val = NULL)
 
   expect_identical(res, exp)
+})
+
+test_that("get_ref_info returns trt_var, ctrl_grp, cur_col_val in the matched-colvars case", {
+  dm <- formatters::DM
+  dm$colspan_trt <- factor(
+    ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
+    levels = c("Active Study Agent", " ")
+  )
+  colspan_trt_map <- create_colspan_map(
+    dm,
+    non_active_grp = "B: Placebo",
+    non_active_grp_span_lbl = " ",
+    active_grp_span_lbl = "Active Study Agent",
+    colspan_var = "colspan_trt",
+    trt_var = "ARM"
+  )
+
+  ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
+
+  captured <- list()
+  spy_afun <- function(df, ref_path, .spl_context) {
+    captured[[length(captured) + 1L]] <<- get_ref_info(ref_path, .spl_context)
+    in_rows("x" = rcell(1, format = "xx"))
+  }
+
+  lyt <- basic_table() |>
+    split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
+    split_cols_by("ARM") |>
+    analyze("AGE", afun = spy_afun, extra_args = list(ref_path = ref_path))
+
+  build_table(lyt, dm)
+
+  for (res in captured) {
+    expect_identical(res$trt_var, "ARM")
+    expect_identical(res$ctrl_grp, "B: Placebo")
+  }
+
+  ref_col <- Filter(function(r) isTRUE(r$in_ref_col), captured)
+  expect_length(ref_col, 1L)
+  expect_identical(ref_col[[1L]]$cur_col_val, "B: Placebo")
+
+  non_ref_cols <- Filter(function(r) isFALSE(r$in_ref_col), captured)
+  expect_true(length(non_ref_cols) >= 1L)
+  for (res in non_ref_cols) {
+    expect_false(res$cur_col_val == "B: Placebo")
+  }
+})
+
+test_that("get_ref_info returns trt_var and ctrl_grp even when ref_path is outside colvars (risk-diff column)", {
+  dm <- formatters::DM
+  dm$colspan_trt <- factor(
+    ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
+    levels = c("Active Study Agent", " ")
+  )
+  dm$rrisk_header <- "Risk Difference (95% CI)"
+  dm$rrisk_label <- paste(dm$ARM, "vs B: Placebo")
+
+  colspan_trt_map <- create_colspan_map(
+    dm,
+    non_active_grp = "B: Placebo",
+    non_active_grp_span_lbl = " ",
+    active_grp_span_lbl = "Active Study Agent",
+    colspan_var = "colspan_trt",
+    trt_var = "ARM"
+  )
+
+  ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
+
+  captured <- list()
+  spy_afun <- function(df, ref_path, .spl_context) {
+    captured[[length(captured) + 1L]] <<- get_ref_info(ref_path, .spl_context)
+    in_rows("x" = rcell(1, format = "xx"))
+  }
+
+  lyt <- basic_table() |>
+    split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
+    split_cols_by("ARM") |>
+    split_cols_by("rrisk_header", nested = FALSE) |>
+    split_cols_by("ARM",
+      labels_var = "rrisk_label",
+      split_fun = remove_split_levels("B: Placebo")
+    ) |>
+    analyze("AGE", afun = spy_afun, extra_args = list(ref_path = ref_path))
+
+  build_table(lyt, dm)
+
+  outside_cols <- Filter(function(r) is.null(r$ref_group) && is.null(r$in_ref_col), captured)
+  expect_true(length(outside_cols) >= 1L)
+  for (res in outside_cols) {
+    expect_identical(res$trt_var, "ARM")
+    expect_identical(res$ctrl_grp, "B: Placebo")
+    expect_false(is.null(res$cur_col_val))
+  }
+})
+
+test_that("h_get_trtvar_refpath returns the expected shape and values in a risk-diff column", {
+  dm <- formatters::DM
+  dm$colspan_trt <- factor(
+    ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
+    levels = c("Active Study Agent", " ")
+  )
+  dm$rrisk_header <- "Risk Difference (95% CI)"
+  dm$rrisk_label <- paste(dm$ARM, "vs B: Placebo")
+
+  colspan_trt_map <- create_colspan_map(
+    dm,
+    non_active_grp = "B: Placebo",
+    non_active_grp_span_lbl = " ",
+    active_grp_span_lbl = "Active Study Agent",
+    colspan_var = "colspan_trt",
+    trt_var = "ARM"
+  )
+
+  ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
+
+  captured <- list()
+  spy_afun <- function(df, ref_path, .spl_context) {
+    colid <- .spl_context$cur_col_id[[1L]]
+    if (grepl("difference", tolower(colid), fixed = TRUE)) {
+      res <- h_get_trtvar_refpath(ref_path, .spl_context, df)
+      captured[[length(captured) + 1L]] <<- res
+    }
+    in_rows("x" = rcell(1, format = "xx"))
+  }
+
+  lyt <- basic_table() |>
+    split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
+    split_cols_by("ARM") |>
+    split_cols_by("rrisk_header", nested = FALSE) |>
+    split_cols_by("ARM",
+      labels_var = "rrisk_label",
+      split_fun = remove_split_levels("B: Placebo")
+    ) |>
+    analyze("AGE", afun = spy_afun, extra_args = list(ref_path = ref_path))
+
+  build_table(lyt, dm)
+
+  expect_true(length(captured) >= 1L)
+  for (res in captured) {
+    expect_identical(res$trt_var, "ARM")
+    expect_identical(res$ctrl_grp, "B: Placebo")
+    expect_identical(res$trt_var_refspec, "ARM") # trt_var_refspec == trt_var by definition
+    expect_false(is.null(res$cur_trt_grp))        # cur_trt_grp is the active arm value
+  }
 })
