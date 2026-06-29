@@ -166,21 +166,25 @@ test_that("layout with horizontal risk diff columns, incomplete ref_path 'ARM' '
   expect_snapshot(cran = TRUE, tbl)
 })
 
-test_that("layout with horizontal risk diff columns, ref_path spec 'colspan_trt' '' 'ARM' 'B: Placebo' but vertical riskdiff_setup", {
-  tbl <- lyt_diffcols |>
-    analyze(
-      vars = "STUDYID", afun = testafun,
-      extra_args = list(
-        ref_path = ref_path,
-        riskdiff = TRUE,
-        riskdiff_setup = "vertical"
-      )
-    ) |>
-    build_table(ae, adsl)
+test_that(
+  "layout with horizontal risk diff columns, ref_path spec 'colspan_trt' '' 'ARM' 'B: Placebo'
+  but vertical riskdiff_setup",
+  {
+    tbl <- lyt_diffcols |>
+      analyze(
+        vars = "STUDYID", afun = testafun,
+        extra_args = list(
+          ref_path = ref_path,
+          riskdiff = TRUE,
+          riskdiff_setup = "vertical"
+        )
+      ) |>
+      build_table(ae, adsl)
 
-  tbl
-  expect_snapshot(cran = TRUE, tbl)
-})
+    tbl
+    expect_snapshot(cran = TRUE, tbl)
+  }
+)
 
 test_that("layout with core columns, and vertical riskdiff_setup", {
   tbl <- lyt |>
