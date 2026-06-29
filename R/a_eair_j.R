@@ -687,18 +687,20 @@ a_eair100_j <- function(
     stop("ref_path cannot be NULL when riskdiff = TRUE, please specify it. See ?get_ref_info for details.")
   }
 
-  ref_info <- get_ref_info_expanded(df,
-                                    .var,
-                                    .df_row,
-                                    .spl_context,
-                                    ref_path,
-                                    riskdiff,
-                                    riskdiff_setup)
-  
+  ref_info <- get_ref_info_expanded(
+    df,
+    .var,
+    .df_row,
+    .spl_context,
+    ref_path,
+    riskdiff,
+    riskdiff_setup
+  )
+
   perform_vs_ref_stats <- ref_info$perform_vs_ref_stats
   ref_col_expr <- ref_info$ref_col_expr
   .in_ref_col <- ref_info$.in_ref_col
-  
+
   ## prepare for column based split
   cur_col_expr <- .spl_context$cur_col_expr[[1]]
   ## colid can be used to figure out if we're in the relative risk columns or not
