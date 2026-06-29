@@ -344,19 +344,19 @@ get_ref_info_expanded <- function(df,
                                   .spl_context,
                                   ref_path,
                                   riskdiff = TRUE,
-                                  riskdiff_setup = c("horizontal", "vertical")){
+                                  riskdiff_setup = c("horizontal", "vertical")) {
   riskdiff_setup <- match.arg(riskdiff_setup)
-  
+
   if (riskdiff && is.null(ref_path)) {
     stop("ref_path cannot be NULL when riskdiff = TRUE, please specify it. See ?get_ref_info for details.")
   }
-  
+
   ## prepare for column based split
   cur_col_expr <- .spl_context$cur_col_expr[[1]]
   ## colid can be used to figure out if we're in the relative risk columns or not
   colid <- .spl_context$cur_col_id[[1]]
   inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
-  
+
   if (!is.null(ref_path)) {
     ref <- get_ref_info(ref_path, .spl_context)
     .in_ref_col <- ref$in_ref_col
@@ -365,7 +365,7 @@ get_ref_info_expanded <- function(df,
   } else {
     ref_col_expr <- NULL
   }
-  
+
   # !perform_vs_ref_stats will be passed as .in_ref_col in the s_function s_eair100_levii_j
   # while it does not entirely reflect
   # whether in ref column or not
@@ -376,18 +376,19 @@ get_ref_info_expanded <- function(df,
     perform_vs_ref_stats <- !.in_ref_col
   } else if (
     riskdiff &&
-    riskdiff_setup == "horizontal" &&
-    inriskdiffcol &&
-    !identical(df, subset(.df_row, eval(ref_col_expr) ))
+      riskdiff_setup == "horizontal" &&
+      inriskdiffcol &&
+      !identical(df, subset(.df_row, eval(ref_col_expr)))
   ) {
     perform_vs_ref_stats <- TRUE
   } else {
     perform_vs_ref_stats <- FALSE
   }
-  return(list(.in_ref_col = .in_ref_col,
-              .ref_group = .ref_group,
-              perform_vs_ref_stats = perform_vs_ref_stats,
-              ref_col_expr = ref_col_expr
+  return(list(
+    .in_ref_col = .in_ref_col,
+    .ref_group = .ref_group,
+    perform_vs_ref_stats = perform_vs_ref_stats,
+    ref_col_expr = ref_col_expr
   ))
 }
 
