@@ -83,7 +83,6 @@ adae <- adae_jnj |>
     AESDISAB,
     AESCONG,
     AESMIE,
-    AEACN_DECODE,
     AESEV
   ) |>
   group_by(USUBJID) |>

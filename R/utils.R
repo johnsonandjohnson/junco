@@ -295,3 +295,35 @@ find_missing_chg_after_avisit <- function(df) {
     NA_character_
   }
 }
+
+
+#'
+#' @description
+#' Helper for transposing a named list of named lists, where inner lists have same names
+#'
+#' @param x (`list`)\cr with depth of 2.
+#'
+#' @return Transposed version of list where inner elements now are outer elements.
+#' @noRd
+#' @keywords internal
+transpose_named_list <- function(x) {
+  # x: named list of named lists
+  keys <- unique(lapply(x, names))
+  if (!length(keys) == 1) {
+    stop("Input list must have same names on all sublists")
+  } else {
+    keys <- keys[[1]]
+  }
+  # rebuild structure
+  setNames(
+    lapply(keys, function(k) {
+      setNames(
+        lapply(x, function(inner_list) {
+          inner_list[[k]]
+        }),
+        names(x)
+      )
+    }),
+    keys
+  )
+}

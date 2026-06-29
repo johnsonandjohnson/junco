@@ -317,6 +317,80 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
   return(list(trt_var = trt_var, trt_var_refspec = trt_var_refspec, cur_trt_grp = cur_trt_grp, ctrl_grp = ctrl_grp))
 }
 
+# helper function to define expression for retrieving ref_group type of datasets
+h_get_ref_col_expr <- function(ref_path = NULL) {
+  if (is.null(ref_path)) {
+    stop("h_get_ref_col_expr: ref_path cannot be NULL")
+  }
+  checkmate::assert_character(ref_path, min.len = 2L, names = "unnamed")
+  checkmate::assert_true(length(ref_path) %% 2 == 0)
+
+  vars <- ref_path[seq(from = 1L, to = length(ref_path) - 1L, by = 2L)]
+  levels <- ref_path[seq(from = 2L, to = length(ref_path), by = 2L)]
+
+  parts <- paste0(
+    "!is.na(", vars, ") & (", vars, " %in% c(\"", levels, "\"))"
+  )
+
+  res <- paste(parts, collapse = " & ")
+  call_expr <- parse(text = res)[[1]]
+
+  as.expression(call_expr)
+}
+
+get_ref_info_expanded <- function(df,
+                                  .var,
+                                  .df_row,
+                                  .spl_context,
+                                  ref_path,
+                                  riskdiff = TRUE,
+                                  riskdiff_setup = c("horizontal", "vertical")) {
+  riskdiff_setup <- match.arg(riskdiff_setup)
+
+  if (riskdiff && is.null(ref_path)) {
+    stop("ref_path cannot be NULL when riskdiff = TRUE, please specify it. See ?get_ref_info for details.")
+  }
+
+  ## prepare for column based split
+  cur_col_expr <- .spl_context$cur_col_expr[[1]]
+  ## colid can be used to figure out if we're in the relative risk columns or not
+  colid <- .spl_context$cur_col_id[[1]]
+  inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
+
+  if (!is.null(ref_path)) {
+    ref <- get_ref_info(ref_path, .spl_context)
+    .in_ref_col <- ref$in_ref_col
+    .ref_group <- ref$ref_group
+    ref_col_expr <- h_get_ref_col_expr(ref_path)
+  } else {
+    ref_col_expr <- NULL
+  }
+
+  # !perform_vs_ref_stats will be passed as .in_ref_col in the s_function s_eair100_levii_j
+  # while it does not entirely reflect
+  # whether in ref column or not
+  # it is the behaviour of performing vs ref group calculations what is important
+  if (riskdiff && riskdiff_setup == "vertical" && is.null(.in_ref_col)) {
+    perform_vs_ref_stats <- FALSE
+  } else if (riskdiff && riskdiff_setup == "vertical" && is.logical(.in_ref_col)) {
+    perform_vs_ref_stats <- !.in_ref_col
+  } else if (
+    riskdiff &&
+      riskdiff_setup == "horizontal" &&
+      inriskdiffcol &&
+      !identical(df, subset(.df_row, eval(ref_col_expr)))
+  ) {
+    perform_vs_ref_stats <- TRUE
+  } else {
+    perform_vs_ref_stats <- FALSE
+  }
+  return(list(
+    .in_ref_col = .in_ref_col,
+    .ref_group = .ref_group,
+    perform_vs_ref_stats = perform_vs_ref_stats,
+    ref_col_expr = ref_col_expr
+  ))
+}
 
 #' Update Data Frame Row
 #'
