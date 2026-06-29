@@ -12,9 +12,14 @@
 #' @param .var (`character`)\cr the variable being analyzed,
 #'   see [rtables::additional_fun_params].
 #'
-#' @return A list with `ref_group` and `in_ref_col`, which can be used as
-#'   `.ref_group` and `.in_ref_col` as if being directly passed to an analysis
-#'   function by `rtables`, see [rtables::additional_fun_params].
+#' @return A list with:
+#'   * `ref_group`: the reference group data (a `data.frame` or vector depending
+#'     on `.var`), equivalent to `.ref_group` from [rtables::additional_fun_params].
+#'   * `in_ref_col`: logical, whether the current column is the reference column,
+#'     equivalent to `.in_ref_col` from [rtables::additional_fun_params].
+#'   * `trt_var`: the treatment variable name (last variable in `ref_path`).
+#'   * `ctrl_grp`: the reference group level (last level in `ref_path`).
+#'   * `cur_col_val`: the current column's value for `trt_var`.
 #'
 #' @details
 #' The reference group is specified in `colpath` hierarchical fashion in
@@ -73,7 +78,7 @@
 #' build_table(lyt, dm)
 get_ref_info <- function(ref_path, .spl_context, .var = NULL) {
   if (is.null(ref_path)) {
-    return(list(ref_group = NULL, in_ref_col = NULL))
+    return(list(ref_group = NULL, in_ref_col = NULL, trt_var = NULL, ctrl_grp = NULL, cur_col_val = NULL))
   }
 
   checkmate::assert_character(ref_path, min.len = 2L, names = "unnamed")
@@ -85,14 +90,22 @@ get_ref_info <- function(ref_path, .spl_context, .var = NULL) {
   level_indices <- seq(from = 2L, to = length(ref_path), by = 2L)
   ref_path_levels <- paste(ref_path[level_indices], collapse = ".")
 
+  trt_var <- ref_path[utils::tail(vars_indices, 1L)]
+  ctrl_grp <- ref_path[utils::tail(level_indices, 1L)]
+
+  leaf_col_split <- leaf_sc$cur_col_split[[1]]
+  leaf_col_split_val <- leaf_sc$cur_col_split_val[[1]]
+  trt_var_pos <- match(trt_var, leaf_col_split)
+  cur_col_val <- if (!is.na(trt_var_pos)) leaf_col_split_val[trt_var_pos] else NULL
+
   # If ref_path variables are outside of the current column split variable.
-  is_ref_in_colvars <- identical(leaf_sc$cur_col_split[[1]], ref_path[vars_indices])
+  is_ref_in_colvars <- identical(leaf_col_split, ref_path[vars_indices])
   if (!is_ref_in_colvars) {
-    return(list(ref_group = NULL, in_ref_col = NULL))
+    return(list(ref_group = NULL, in_ref_col = NULL, trt_var = trt_var, ctrl_grp = ctrl_grp, cur_col_val = cur_col_val))
   }
 
   # Prepare in_ref_col.
-  in_ref_col <- identical(leaf_sc$cur_col_split_val[[1]], ref_path[level_indices])
+  in_ref_col <- identical(leaf_col_split_val, ref_path[level_indices])
 
   # Prepare ref_group.
   full_df <- leaf_sc$full_parent_df[[1]]
@@ -102,5 +115,11 @@ get_ref_info <- function(ref_path, .spl_context, .var = NULL) {
     ref_group <- ref_group[[.var]]
   }
 
-  list(ref_group = ref_group, in_ref_col = in_ref_col)
+  list(
+    ref_group = ref_group,
+    in_ref_col = in_ref_col,
+    trt_var = trt_var,
+    ctrl_grp = ctrl_grp,
+    cur_col_val = cur_col_val
+  )
 }
