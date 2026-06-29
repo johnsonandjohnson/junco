@@ -22,7 +22,7 @@
       in_ref_col                                                                                                                                                           
       vs_ref_stats     FALSE         FALSE            FALSE          FALSE         FALSE                TRUE                         TRUE                      TRUE        
 
-# layout with horizontal risk diff columns, ref_path spec 'colspan_trt' '' 'ARM' 'B: Placebo' but vertical riskdiff_setup
+# layout with horizontal risk diff columns, ref_path spec 'colspan_trt' '' 'ARM' 'B: Placebo'  but vertical riskdiff_setup
 
     Code
       tbl
