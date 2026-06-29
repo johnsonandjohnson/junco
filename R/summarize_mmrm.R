@@ -203,3 +203,34 @@ a_summarize_mmrm <- function(
     indents_in = .indent_mods
   )
 }
+
+#' @describeIn summarize_mmrm Wrapper for the `afun` which can exclude
+#'   row split levels from producing the analysis. These have to be specified in the
+#'   `exclude_levels` argument, see `?do_exclude_split` for details.
+#' @export
+a_summarize_mmrm_with_exclude <- function(
+  df,
+  .var,
+  exclude_levels,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
+  if (do_exclude_split(exclude_levels, .spl_context)) {
+    NULL
+  } else {
+    a_summarize_mmrm(
+      df = df,
+      .var = .var,
+      .spl_context = .spl_context,
+      ...,
+      .stats = .stats,
+      .formats = .formats,
+      .labels = .labels,
+      .indent_mods = .indent_mods
+    )
+  }
+}

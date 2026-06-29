@@ -207,3 +207,72 @@ test_that("a_summarize_mmrm works as expected below row splits", {
   res2 <- prune_table(tbl, all_zero)
   expect_snapshot(cran = TRUE, res2)
 })
+
+test_that("a_summarize_mmrm_with_exclude handles excluded and included row split levels", {
+  df <- data.frame(
+    VISIT = factor(c("V0", "V1")),
+    AVAL = c(0, 1)
+  )
+  excluded_context <- data.frame(
+    split = "VISIT",
+    value = "V0"
+  )
+  included_context <- data.frame(
+    split = "VISIT",
+    value = "V1"
+  )
+
+  expect_null(a_summarize_mmrm_with_exclude(
+    df = df,
+    .var = "AVAL",
+    exclude_levels = list(VISIT = "V0"),
+    .spl_context = excluded_context
+  ))
+
+  mock_a_summarize_mmrm <- function(df,
+                                    .var,
+                                    .spl_context,
+                                    ...,
+                                    .stats = NULL,
+                                    .formats = NULL,
+                                    .labels = NULL,
+                                    .indent_mods = NULL) {
+    list(
+      df = df,
+      .var = .var,
+      .spl_context = .spl_context,
+      .stats = .stats,
+      .formats = .formats,
+      .labels = .labels,
+      .indent_mods = .indent_mods,
+      dots = list(...)
+    )
+  }
+
+  mockery::stub(
+    a_summarize_mmrm_with_exclude,
+    "a_summarize_mmrm",
+    mock_a_summarize_mmrm
+  )
+
+  result <- a_summarize_mmrm_with_exclude(
+    df = df,
+    .var = "AVAL",
+    exclude_levels = list(VISIT = "V0"),
+    .spl_context = included_context,
+    .stats = "adj_mean_est_ci",
+    .formats = c(adj_mean_est_ci = "xx.xx"),
+    .labels = c(adj_mean_est_ci = "Adjusted mean"),
+    .indent_mods = c(adj_mean_est_ci = 1L),
+    variables = list(visit = "VISIT")
+  )
+
+  expect_identical(result$df, df)
+  expect_identical(result$.var, "AVAL")
+  expect_identical(result$.spl_context, included_context)
+  expect_identical(result$.stats, "adj_mean_est_ci")
+  expect_identical(result$.formats, c(adj_mean_est_ci = "xx.xx"))
+  expect_identical(result$.labels, c(adj_mean_est_ci = "Adjusted mean"))
+  expect_identical(result$.indent_mods, c(adj_mean_est_ci = 1L))
+  expect_identical(result$dots$variables, list(visit = "VISIT"))
+})
