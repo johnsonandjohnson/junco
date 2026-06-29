@@ -687,6 +687,18 @@ a_eair100_j <- function(
     stop("ref_path cannot be NULL when riskdiff = TRUE, please specify it. See ?get_ref_info for details.")
   }
 
+  ref_info <- get_ref_info_expanded(df,
+                                    .var,
+                                    .df_row,
+                                    .spl_context,
+                                    ref_path,
+                                    riskdiff,
+                                    riskdiff_setup)
+  
+  perform_vs_ref_stats <- ref_info$perform_vs_ref_stats
+  ref_col_expr <- ref_info$ref_col_expr
+  .in_ref_col <- ref_info$.in_ref_col
+  
   ## prepare for column based split
   cur_col_expr <- .spl_context$cur_col_expr[[1]]
   ## colid can be used to figure out if we're in the relative risk columns or not
@@ -701,33 +713,6 @@ a_eair100_j <- function(
   )
   if (any(.stats %in% c("eair_diff_est_ci", "eair_diff_est", "eair_diff_ci")) && riskdiff_setup == "horizontal") {
     .stats <- .stats[!(.stats %in% c("eair_diff_est_ci", "eair_diff_est", "eair_diff_ci"))]
-  }
-
-  if (!is.null(ref_path)) {
-    ref <- get_ref_info(ref_path, .spl_context)
-    .in_ref_col <- ref$in_ref_col
-    ref_col_expr <- h_get_ref_col_expr(ref_path)
-  } else {
-    ref_col_expr <- NULL
-  }
-
-  # !perform_vs_ref_stats will be passed as .in_ref_col in the s_function s_eair100_levii_j
-  # while it does not entirely reflect
-  # whether in ref column or not
-  # it is the behaviour of performing vs ref group calculations what is important
-  if (riskdiff && riskdiff_setup == "vertical" && is.null(.in_ref_col)) {
-    perform_vs_ref_stats <- FALSE
-  } else if (riskdiff && riskdiff_setup == "vertical" && is.logical(.in_ref_col)) {
-    perform_vs_ref_stats <- !.in_ref_col
-  } else if (
-    riskdiff &&
-      riskdiff_setup == "horizontal" &&
-      inriskdiffcol &&
-      !identical(df, subset(.df_row, eval(ref_col_expr)))
-  ) {
-    perform_vs_ref_stats <- TRUE
-  } else {
-    perform_vs_ref_stats <- FALSE
   }
 
   checkmate::assert_string(fup_var, null.ok = FALSE)
