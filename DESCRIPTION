@@ -33,7 +33,7 @@ BugReports: https://github.com/johnsonandjohnson/junco/issues
 Depends:
     R (>= 4.4),
     formatters (>= 0.5.12.9003),
-    rtables (>= 0.6.16)
+    rtables (>= 0.6.16.9002)
 Imports:
     tidytlg (>= 0.12.0),
     tern (>= 0.9.10.9012),
@@ -78,4 +78,5 @@ VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
     insightsengineering/formatters@main,
-    insightsengineering/tern@main
+    insightsengineering/tern@main,
+    insightsengineering/rtables@main
