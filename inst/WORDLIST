@@ -84,6 +84,7 @@ eg
 emmeans
 estimand
 estimands
+expr
 exprs
 firstcat
 flextable
@@ -158,6 +159,7 @@ sd
 se
 sidedness
 spl
+splv
 sprintf
 str
 struct
