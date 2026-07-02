@@ -33,13 +33,13 @@ BugReports: https://github.com/johnsonandjohnson/junco/issues
 Depends:
     R (>= 4.4),
     formatters (>= 0.5.12.9003),
-    rtables (>= 0.6.16)
+    rtables (>= 0.6.16.9002)
 Imports:
     tidytlg (>= 0.12.0),
-    tern (>= 0.9.10.9012),
+    tern (>= 0.9.10.9020),
     rlistings (>= 0.2.13),
     checkmate (>= 2.1.0),
-    rbmi (>= 1.6.0.9000),
+    rbmi (>= 1.6.0),
     broom,
     methods,
     generics,
@@ -50,7 +50,7 @@ Imports:
     emmeans,
     mmrm,
     vcdExtra (>= 0.8.7),
-    rtables.officer (>= 0.1.0),
+    rtables.officer (>= 0.1.2.9002),
     flextable (>= 0.9.11),
     officer,
     xml2,
@@ -58,7 +58,6 @@ Imports:
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Suggests:
     knitr,
     rmarkdown,
@@ -79,4 +78,6 @@ Config/testthat/edition: 3
 Remotes:
     insightsengineering/formatters@main,
     insightsengineering/tern@main,
-    munoztd0/rbmi@145-multi-ancova
+    insightsengineering/rtables@main,
+    insightsengineering/rtables.officer@main
+Config/roxygen2/version: 8.0.0
