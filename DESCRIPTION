@@ -74,10 +74,9 @@ Suggests:
     multcomp,
     lifecycle,
     dplyr,
-    ratesci (>= 1.0.0.9000)
+    ratesci (>= 1.1.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
     insightsengineering/formatters@main,
-    insightsengineering/tern@main,
-    petelaud/ratesci
+    insightsengineering/tern@main
