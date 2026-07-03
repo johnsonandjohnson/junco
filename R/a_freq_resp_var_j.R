@@ -66,7 +66,10 @@ a_freq_resp_var_j <- function(
       "newcombe",
       "newcombecc",
       "strat_newcombe",
-      "strat_newcombecc"
+      "strat_newcombecc",
+      "cmh_sato",
+      "cmh_mn",
+      "uncond_exact_diff"
     ),
     weights_method = formals(s_proportion_diff)$weights_method,
     .formats = NULL,

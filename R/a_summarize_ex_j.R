@@ -92,7 +92,7 @@ s_summarize_ex_j <- function(
           interaction_item = interaction_item,
           variables = variables
         )
-        diffstat <- x_stats2[["lsmean_diffci"]]
+        diffstat <- x_stats2[["lsmean_diff_with_ci"]]
       } else {
         # descriptive method for diff between group
         x_stats2 <- s_summarize_desc_j(

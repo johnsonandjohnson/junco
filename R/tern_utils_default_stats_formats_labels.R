@@ -289,6 +289,7 @@ tern_get_labels_from_stats <- function(
 .fill_in_vals_by_stats <- function(levels_per_stats, user_in, tern_defaults) {
   out <- list()
 
+  levels_per_stats_list <- NULL
   for (stat_i in names(levels_per_stats)) {
     # Get all levels of the statistic
     all_lvls <- levels_per_stats[[stat_i]]
@@ -305,6 +306,7 @@ tern_get_labels_from_stats <- function(
         # 3. Otherwise stat_i
         stat_i
       }
+      levels_per_stats_list <- c(levels_per_stats_list, stat_i)
     } else {
       # One row per combination of variable level and statistic
       # Loop over levels for each statistic
@@ -331,8 +333,15 @@ tern_get_labels_from_stats <- function(
           # 6. Otherwise lev_i
           lev_i
         }
+        levels_per_stats_list <- c(levels_per_stats_list, row_nm)
       }
     }
+  }
+
+  if (any(duplicated(levels_per_stats_list))) {
+    # this is to cover the same stat more than once
+    # in risk diff column more than one stat transformed into same riskdiff stat
+    out <- out[levels_per_stats_list]
   }
 
   out
@@ -416,3 +425,35 @@ tern_default_labels <- c(
   sum = "Sum",
   unique = "Number of patients with at least one event"
 )
+
+
+# utility function to get labels from x_stats label attribute (or name if no label present)
+#' @keywords internal
+junco_get_labels_from_attrib <- function(.stats, .labels, x_stats) {
+  .labels_out <- unlist(junco_get_labels_from_stats(.stats, .labels, setNames(as.list(.stats), .stats)))
+  .labels_out <- .labels_out[.stats]
+
+  if (!all(names(x_stats) %in% .stats)) {
+    # assumption: incoming x_stats has .stats in inner list
+    # key assumption, all inner lists have same structure
+    inner_names <- unique(lapply(x_stats, names))
+    if (length(inner_names) > 1 || !(all(inner_names[[1]] %in% .stats))) {
+      stop("incorrect .stats/x_stats structure assumption")
+    }
+    # now we can more safely take the first element to retrieve labels
+    nms_stats_pre <- x_stats[[1]]
+  } else {
+    nms_stats_pre <- x_stats
+  }
+
+  nms_stats <- vapply(seq_along(nms_stats_pre), function(i) {
+    el <- nms_stats_pre[[i]]
+    attr(el, "label") %||% names(nms_stats_pre)[i]
+  }, character(1))
+
+  names(nms_stats) <- .stats
+
+  .labels_out[.labels_out == .stats] <- nms_stats[.labels_out == .stats]
+
+  .labels_out
+}

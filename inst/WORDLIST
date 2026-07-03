@@ -14,11 +14,10 @@ Customizations
 DOCX
 DataFrame
 Dunnett
+EAIR
 EAIRs
 EQ
 Eg
-et al.
-al
 Haenszel
 Hotfix
 IEC
@@ -33,6 +32,7 @@ PARAMCD
 Parallelise
 RBMI
 RTF
+RowsVerticalSection
 Sato
 Snavely
 TEFOS
@@ -47,6 +47,7 @@ Unlist
 VTableTree
 XLSX
 afun
+al
 allparts
 altdf
 analyse
@@ -88,6 +89,7 @@ eg
 emmeans
 estimand
 estimands
+et
 exprs
 firstcat
 flextable
@@ -110,6 +112,7 @@ insightsengineering
 jj
 jjcsformat
 johnsonandjohnson
+kaplan
 keeprowtext
 lastcat
 ldots
@@ -118,6 +121,7 @@ lsmean
 lsmeans
 mathbf
 mathrm
+meier
 mmrm
 mmy
 monospace
@@ -136,6 +140,7 @@ postfun
 pre
 pseudocolumn
 px
+py
 qquad
 rbmi
 referene
@@ -147,6 +152,7 @@ rlistings
 rowdf
 rowlabel
 rowlabels
+rowsplit
 rr
 rrisk
 rtables

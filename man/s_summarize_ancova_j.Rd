@@ -13,7 +13,7 @@ a_summarize_ancova_j(
   .spl_context,
   ...,
   .stats = c("n", "mean_sd", "median", "range", "quantiles", "lsmean_se", "lsmean_ci",
-    "lsmean_diffci", "pval"),
+    "lsmean_diff_with_ci", "pval"),
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL

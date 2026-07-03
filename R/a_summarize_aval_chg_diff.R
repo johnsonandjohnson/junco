@@ -106,7 +106,7 @@ s_aval_chg_col23_diff <- function(
       control = control
     )
   } else {
-    mystat1 <- c("lsmean_ci", "lsmean_diffci")
+    mystat1 <- c("lsmean_ci", "lsmean_diff_with_ci")
 
     ### sparse data problems with underlying ancova function 1/ if nrow(.df_row) = 0 NULL (blank columns)
 
@@ -220,7 +220,7 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #' In the difference columns, only 1 column will be presented : difference + CI\cr
 #' When ancova = `TRUE`, the presented statistics will be based on ANCOVA method (`s_summarize_ancova_j`).\cr
 #' mean and ci (both for Value (column 2) and CHG (column 3)) using statistic `lsmean_ci`\cr
-#' mean and ci for the difference column are based on same ANCOVA model using statistic `lsmean_diffci`\cr
+#' mean and ci for the difference column are based on same ANCOVA model using statistic `lsmean_diff_with_ci`\cr
 #' When ancova = `FALSE`, descriptive statistics will be used instead.\cr
 #' In the difference column, the 2-sample t-test will be used.
 #'

@@ -98,9 +98,24 @@ a \code{cfun} in a \code{summarize_row_groups} call.\cr
 It is recommended not to utilize this argument for other purposes.
 The label argument could be used instead (if \code{val} is a single string)\cr}
 
-\item{label_map}{(\code{tibble})\cr
-A mapping tibble to translate levels from the incoming variable into
-a different row label to be presented on the table.\cr}
+\item{label_map}{(\code{data.frame})\cr
+A mapping data frame used to translate levels of the analysis variable(s) into
+the row labels displayed in the table, optionally conditioned on the nearest row-split.\cr
+
+Four types of mappings are supported:
+\enumerate{
+\item Single-variable mapping. Column names: \code{level}, \code{label}.
+\item Multi-variable mapping. Column names: \code{var}, \code{level}, \code{label}.
+\item Conditional-on-row-split mapping. Column names: \verb{<split_var>}, \code{level}, \code{label}.
+\item Conditional-on-row-split multi-variable mapping. Column names: \verb{<split_var>}, \code{var}, \code{level}, \code{label}.
+}
+Here, \verb{<split_var>} is a placeholder for the name of the variable used for the nearest row-split
+(e.g. \code{SEX}, \code{PARAMCD}).\cr
+
+\strong{Recommendation}: ensure input variable(s) are of type factor, to avoid the error
+"got a label map that doesn't provide labels for all values".\cr
+
+See examples for more details.}
 
 \item{.alt_df_full}{(\code{dataframe})\cr Denominator dataset
 for fraction and relative risk calculations.\cr
@@ -175,4 +190,7 @@ lyt <- basic_table(show_colcounts = TRUE) |>
 result <- build_table(lyt, ADAE, alt_counts_df = ADSL)
 
 result
+}
+\seealso{
+\code{\link[=a_freq_j]{a_freq_j()}} for extensive \code{label_map} usage examples.
 }

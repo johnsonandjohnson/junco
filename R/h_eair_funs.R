@@ -1,5 +1,5 @@
 #' @importFrom stats ave
-h_get_eair_df <- function(levii, df, denom_df, .var, id, occ_var, occ_dy, fup_var, count_events = FALSE) {
+h_get_eair_df <- function(levii, df, denom_df, .var, id, occ_var, occ_dy, fup_var, count_multiple_events = FALSE) {
   dfii <- df[df[[.var]] == levii & !is.na(df[[.var]]), ]
 
   df_denom <- unique(denom_df[, c(id, fup_var), drop = FALSE])
@@ -10,7 +10,7 @@ h_get_eair_df <- function(levii, df, denom_df, .var, id, occ_var, occ_dy, fup_va
       stop("Input dataset must uniquely identify one record per subject/.var/occ_var.")
     }
   } else {
-    if (count_events) {
+    if (count_multiple_events) {
       df_num <- dfii[, c(id, .var), drop = FALSE]
       df_num[["n_events"]] <- ave(as.character(df_num[[id]]), as.character(df_num[[id]]), FUN = length)
       df_num <- unique(df_num)

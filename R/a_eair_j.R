@@ -156,7 +156,7 @@ a_patyrs_j <- function(
 
   check_alt_df_full(source, "alt_df", .alt_df_full)
 
-  col_expr <- .spl_context$cur_col_expr[[1]]
+  cur_col_expr <- .spl_context$cur_col_expr[[1]]
   ## colid can be used to figure out if we're in the relative risk columns or not
   colid <- .spl_context$cur_col_id[[1]]
   inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
@@ -175,7 +175,7 @@ a_patyrs_j <- function(
       denom = "n_altdf"
     )
     ## restrict to current column
-    new_denomdf <- subset(alt_df, eval(col_expr))
+    new_denomdf <- subset(alt_df, eval(cur_col_expr))
   } else {
     new_denomdf <- df
   }
@@ -232,25 +232,17 @@ NULL
 #' @param .var (`string`)\cr variable name that is passed by `rtables`.
 #' @param .alt_df_full (`dataframe`)\cr alternative dataset for calculations.
 #' @param id (`string`)\cr subject variable name.
-#' @param diff (`logical`)\cr if TRUE, risk difference calculations will be performed.
-#' @param conf_level (`proportion`)\cr confidence level of the interval.
-#' @param conf_type (`string`)\cr method used to compute the confidence interval for the EAIR difference.
-#'   One of `"wald"` (Wald without continuity correction), `"waldcc"` (Wald with continuity correction),
-#'   `"mn"` (Miettinen-Nurminen score), or `"scas"` (skewness-corrected asymptotic score).
-#'   Defaults to `"wald"`.
-#' @param trt_var (`string`)\cr treatment variable name.
-#' @param ctrl_grp (`string`)\cr control group value.
-#' @param cur_trt_grp (`string`)\cr current treatment group value.
-#' @param inriskdiffcol (`logical`)\cr flag indicating if the function is called within a risk difference column.
 #' @param fup_var (`string`)\cr name of the variable containing the total follow-up duration
 #'   for each subject, expressed in **years**.
 #'   Used as the at-risk exposure time for subjects who did **not** experience the event.
 #' @param occ_var (`string` or `NULL`)\cr name of the flag variable identifying the
 #'   **first** occurrence of the event within each subject and level, encoded as `"Y"`.
-#'   Only records where `occ_var == "Y"` contribute to the event count (`n_event`).
-#'   If `NULL`, event occurrence filtering is skipped and time at risk is taken
+#'   Only records where `occ_var == "Y"` contribute to the event count (`n_event`),
+#'  and only one event record per subject is allowed.
+#'   \cr If `NULL`, event occurrence filtering is skipped and time at risk is taken
 #'   from `fup_var` in `alt_counts_df` for all subjects.
-#' @param occ_dy (`string`)\cr name of the variable containing the relative day of the
+#' @param occ_dy (`string` or `NULL`)\cr When `occ_var` not `NULL`: name of the variable
+#'  containing the relative day of the
 #'   first event occurrence, expressed in **days** (e.g., `ASTDY`).
 #'   For subjects with an event (`occ_var == "Y"`), this value is converted to years
 #'   as `occ_dy / 365.25` and used as the at-risk exposure time instead of `fup_var`.
@@ -261,35 +253,69 @@ NULL
 #'   Defaults to `100`, yielding a rate per 100 person-years.
 #'   For example, use `1` for a rate per person-year or `1000` for a rate per
 #'   1000 person-years.
-#' @param count_events (`logical`)\cr if `TRUE`, counts the total number of events
+#' @param count_multiple_events (`logical`)\cr if `TRUE`, counts the total number of events
 #'   per subject rather than treating each subject as contributing 1 to `n_event`.
-#'   Can only be used when `occ_var = NULL`.
+#'   Only considered when `occ_var = NULL`.
 #'   Defaults to `FALSE`.
+#'
+#' @param conf_level (`proportion`)\cr confidence level of the interval.
+#' @param conf_type_diff (`string`)\cr method used to compute the confidence interval for the EAIR difference.
+#'   One of `"wald"` (Wald without continuity correction), `"waldcc"` (Wald with continuity correction),
+#'   `"mn"` (Miettinen-Nurminen score), or `"scas"` (skewness-corrected asymptotic score).
+#'   Defaults to `"wald"`.
+#' @param conf_type_eair (`string`)\cr method used to compute the confidence interval for the EAIR rate.
+#'   One of `"exact"`, `"normal"`, `"normal_log"`, `"byar"`
+#'   \cr See `?tern:::h_incidence_rate` and `?tern::incidence_rate`, argument `control` for more information.
+#'   Defaults to `"exact"`.
+#' @param vs_ref_group (`logical`)\cr if TRUE, risk difference (against reference group) calculations will be performed.
+#' @param cur_col_expr (`expression`)\cr current column expression taken from `rtables` `.spl_context`
+#' splitting machinery (`cur_col_expr`).
+#' @param ref_col_expr (`expression` or `NULL`)\cr column expression for the reference group.
+#' Required to be an expression if `vs_ref_group` is `TRUE`
+#' @param inriskdiffcol (`logical`)\cr flag indicating if the function is called within a risk difference column.
 #'
 #' @return
 #'  * `s_eair100_levii_j()` returns a list containing the following statistics:
 #' \itemize{
-#'   \item n_event: Number of subjects with the event, or total event count if `count_events = TRUE`
+#'   \item n_event: Number of subjects with the event, or total event count if `count_multiple_events = TRUE`
 #'   \item person_years: Total person-years of follow-up
 #'   \item eair: Exposure-adjusted incidence rate per `num_p_year` person-years
 #'   \item n_eair: Combination of `n_event` and `eair` statistics.
-#'   \item eair_diff: Difference in EAIR between current group and reference group
-#'    (if `diff`=TRUE and `inriskdiffcol`=TRUE), together with its confidence interval
-#'    computed using the method specified by `conf_type`.
+#'   \item eair_n: Combination of `eair` and `n_event` statistics.
+#'   \item eair_n_py: Combination of `eair`, `n_event` and `person_years` statistics.
+#'   \item eair_ci: Confidence interval for `eair`, method specified in `conf_type_eair`.
+#'   \item eair_est_ci: Combination of `eair` and `eair_ci`.
+#'   \item eair_diff_est: Difference in EAIR between current group and reference group
+#'    (if `diff`=TRUE and `inriskdiffcol`=TRUE)
+#'   \item eair_diff_ci: Confidence interval for difference in EAIR between current group and reference group
+#'    (if `diff`=TRUE and `inriskdiffcol`=TRUE)
+#'   \item eair_diff_est_ci: Combination of `eair_diff_est` and `eair_diff_ci`.
 #' }\cr
 #' The list of available statistics (core columns) can also be viewed by
 #' running `junco_get_stats("a_eair100_j")`.
 #' @details
-#' The exposure-adjusted incidence rate (EAIR) is defined as the number of subjects
+#' The exposure-adjusted incidence rate (EAIR) is defined as:
+#' - When (`occ_var` not `NULL`) or `count_multiple_events = FALSE`:
+#' \cr the **number of subjects**
 #' with at least one occurrence of a specified adverse event divided by the total
 #' at-risk exposure time across all subjects.
 #'
-#' At-risk exposure time is calculated for each subject
+#' - When `occ_var = NULL` and `count_multiple_events = TRUE`:
+#' \cr the total **number of events** across of a specified adverse event divided by the total
+#' at-risk exposure time across all subjects.
+#'
+#' Total at-risk exposure time is calculated for each subject
 #' as:
-#' - for subjects with the event: relative day (from the start of exposure) of
+#' - When `occ_var` not `NULL`
+#' \itemize{
+#' \item for subjects with the event: relative day (from the start of exposure) of
 #' the onset date of the **first** occurrence of the specified event (`occ_var` and `occ_dy`),
 #' transformed from days into years as `occ_dy/365.25`, or
-#' - for subjects without the event: total duration of follow-up (expressed in years)
+#' \item for subjects without the event: total duration of follow-up (expressed in years)
+#' (e.g., treatment discontinuation, completion, or censoring) (`fup_var`).
+#' }
+#' - When `occ_var = NULL`\cr
+#' for all subjects: total duration of follow-up (expressed in years)
 #' (e.g., treatment discontinuation, completion, or censoring) (`fup_var`).
 #'
 #' The EAIR is expressed as:
@@ -323,6 +349,8 @@ NULL
 #' (r1 - r2) +/- z_(1-a/2) * SE
 #' }
 #' where \eqn{z_{1-\alpha/2}} is the standard normal quantile. [1](https://metricgate.com/docs/poisson-rate-comparison/)
+#' \cr
+#' \cr Other methods for confidence interval for difference can be specified in `conf_type_diff` argument.
 #'
 #' EAIR is commonly reported per 100 subject-years:
 #'
@@ -343,31 +371,44 @@ s_eair100_levii_j <- function(
   .var,
   .alt_df_full = NULL,
   id = "USUBJID",
-  diff = FALSE,
-  # treatment/ref group related arguments
-  conf_level = 0.95,
-  conf_type = c("wald", "waldcc", "mn", "scas"),
-  trt_var = NULL,
-  ctrl_grp = NULL,
-  cur_trt_grp = NULL,
-  inriskdiffcol = FALSE,
   fup_var,
   occ_var,
   occ_dy,
   num_p_year = 100,
-  count_events = FALSE
+  count_multiple_events = FALSE,
+  conf_level = 0.95,
+  conf_type_diff = c("wald", "waldcc", "mn", "scas"),
+  conf_type_eair = c("exact", "normal", "normal_log", "byar"),
+  vs_ref_group = FALSE,
+  .in_ref_col,
+  cur_col_expr,
+  ref_col_expr,
+  inriskdiffcol = FALSE
 ) {
-  conf_type <- match.arg(conf_type)
-  if (diff && inriskdiffcol) {
-    .alt_df_full_cur_group <- get_ctrl_subset(
-      .alt_df_full,
-      trt_var = trt_var,
-      ctrl_grp = cur_trt_grp
-    )
-  } else {
-    ### within a_eair100_j we need to ensure proper dataframe will be passed to .alt_df_full
-    .alt_df_full_cur_group <- .alt_df_full
+  conf_type_diff <- match.arg(conf_type_diff)
+  method_part <- switch(conf_type_diff,
+    "wald" = "Wald, without correction",
+    "waldcc" = "Wald, with correction",
+    "mn" = "Miettinen and Nurminen",
+    "scas" = "skewness-corrected asymptotic score",
+    stop(paste(conf_type_diff, "does not have a description"))
+  )
+  method_part <- paste0("(", method_part, ")")
+  conf_type_eair <- match.arg(conf_type_eair)
+  method_eair_part <- switch(conf_type_eair,
+    "exact" = "Exact",
+    "byar" = "byar",
+    "normal" = "normal",
+    "normal_log" = "log-normal",
+    stop(paste(conf_type_eair, "does not have a description"))
+  )
+  method_eair_part <- paste0(" (", method_eair_part, ")")
+
+  if (vs_ref_group && (!is.expression(cur_col_expr))) {
+    stop("cur_col_expr must be an expression when vs_ref_group = TRUE")
   }
+  # subset .alt_df_full to current column
+  .alt_df_full_cur_group <- subset(.alt_df_full, eval(cur_col_expr))
   cur_dfs <- h_get_eair_df(
     levii,
     df,
@@ -377,14 +418,14 @@ s_eair100_levii_j <- function(
     fup_var = fup_var,
     occ_var = occ_var,
     occ_dy = occ_dy,
-    count_events = count_events
+    count_multiple_events = count_multiple_events
   )
   cur_df_num <- cur_dfs$df_num
   cur_df_denom <- cur_dfs$df_denom
   ### statistics derivation
   # note: variables n_events and mod_fup_var are derived by h_get_eair_df
-  # when count_events == TRUE, n_events: number of events per subject
-  # when count_events == FALSE, n_events: 1 for subjects with event
+  # when count_multiple_events == TRUE, n_events: number of events per subject
+  # when count_multiple_events == FALSE, n_events: 1 for subjects with event
   x1 <- sum(cur_df_num[["n_events"]])
   n1 <- sum(cur_df_denom[["mod_fup_var"]])
   cur_eair <- num_p_year * x1 / n1
@@ -392,27 +433,59 @@ s_eair100_levii_j <- function(
 
   x <- list()
   eair_lbl <- paste0("eair (per ", num_p_year, " person years)")
+  n_event_lbl <-
+    if (is.null(occ_var) && count_multiple_events) {
+      "Number of events"
+    } else {
+      "Number of subjects with event"
+    }
+
   x$n_event <- c("n_event" = x1)
   x$person_years <- c("person_years" = n1)
-  x$eair <- stats::setNames(c("eair" = cur_eair), eair_lbl)
-  x$n_eair <- stats::setNames(c("n_eair" = cur_n_eair), c("n_event", eair_lbl))
+  x$eair <- stats::setNames(c("eair" = cur_eair), "eair")
+  x$n_eair <- stats::setNames(c("n_eair" = cur_n_eair), c("n_event", "eair"))
+  x$eair_n <- stats::setNames(c("eair_n" = x$n_eair[c(2, 1)]), c("eair", "n_event"))
+  x$eair_n_py <- stats::setNames(c("eair_n_py" = c(x$eair_n, n1)), c("eair", "n_event", "py"))
 
-  if (diff && inriskdiffcol) {
-    x$n_event <- c("n_event" = NULL)
-    x$person_years <- c("person_years" = NULL)
-    x$eair <- c("eair" = NULL)
+  attr(x$n_event, "label") <- n_event_lbl
+  attr(x$eair, "label") <- eair_lbl
+  attr(x$n_eair, "label") <- paste0(n_event_lbl, " (", eair_lbl, ")")
+  attr(x$eair_n, "label") <- paste0(eair_lbl, " (", n_event_lbl, ")")
+  attr(x$eair_n_py, "label") <- paste0(eair_lbl, " (", n_event_lbl, "/", "person-years", ")")
 
-    alt_df_full_ref_group <- get_ctrl_subset(
-      .alt_df_full,
-      trt_var = trt_var,
-      ctrl_grp = ctrl_grp
+  # ci for rates - utilize tern function to derive rate_ci
+  # h_incidence_rate - not exported
+  h_incidence_rate <- utils::getFromNamespace("h_incidence_rate", "tern")
+  tern_incid_rate <- h_incidence_rate(
+    person_years = n1,
+    n_events = x1,
+    control = list(
+      num_pt_year = num_p_year,
+      input_time_unit = "year",
+      conf_level = conf_level,
+      conf_type = conf_type_eair
     )
+  )
 
-    ref_group <- get_ctrl_subset(
-      .df_row,
-      trt_var = trt_var,
-      ctrl_grp = ctrl_grp
-    )
+  x$eair_ci <- stats::setNames(c("eair_ci" = tern_incid_rate$rate_ci), "eair_ci")
+  attr(x$eair_ci, "label") <- paste0(f_conf_level(conf_level), method_eair_part)
+
+  x$eair_est_ci <- stats::setNames(c("eair_est_ci" = c(x$eair, tern_incid_rate$rate_ci)), "eair_est_ci")
+  attr(x$eair_est_ci, "label") <- paste0(eair_lbl, " with (", f_conf_level(conf_level), method_eair_part, ")")
+
+
+  if (vs_ref_group) {
+    # perform vs ref group derivations
+    if (inriskdiffcol) {
+      # stats that will be blanked out in risk diff columns (only applicable to horizontal layout)
+      x$n_event <- c("n_event" = NULL)
+      x$person_years <- c("person_years" = NULL)
+      x$eair_ci <- c("eair_ci" = NULL)
+    }
+
+    # retrieve ref_group info from ref_col_expr for both .alt_df_full and .df_row
+    alt_df_full_ref_group <- subset(.alt_df_full, eval(ref_col_expr))
+    ref_group <- subset(.df_row, eval(ref_col_expr))
 
     ref_dfs <- h_get_eair_df(
       levii,
@@ -423,7 +496,7 @@ s_eair100_levii_j <- function(
       fup_var = fup_var,
       occ_var = occ_var,
       occ_dy = occ_dy,
-      count_events = count_events
+      count_multiple_events = count_multiple_events
     )
 
     ref_df_num <- ref_dfs$df_num
@@ -437,20 +510,33 @@ s_eair100_levii_j <- function(
     ref_n_eair <- c(x2, ref_eair)
 
     rdiff <- cur_eair - ref_eair
-    eair_diff_est <- h_s_eair_diff(x1, n1,
+    eair_diff_est_stats <- h_s_eair_diff(x1, n1,
       x2, n2,
-      conf_type = conf_type,
+      conf_type = conf_type_diff,
       conf_level = conf_level
     )
     # combine est of difference with its ci
-    eair_diff <- num_p_year * c(eair_diff_est$diff_est, eair_diff_est$diff_lcl, eair_diff_est$diff_ucl)
+    eair_diff_est_ci <- num_p_year *
+      c(eair_diff_est_stats$diff_est, eair_diff_est_stats$diff_lcl, eair_diff_est_stats$diff_ucl)
 
-    x$eair_diff <- stats::setNames(
-      c("eair_diff" = eair_diff),
+    x$eair_diff_est_ci <- stats::setNames(
+      c("eair_diff_est_ci" = eair_diff_est_ci),
       nm = c("estimate", "lcl", "ucl")
     )
+    attr(x$eair_diff_est_ci, "label") <-
+      paste0("Difference in eair with (", f_conf_level(conf_level), ") ", method_part)
+
+    x$eair_diff_ci <- x$eair_diff_est_ci[2:3]
+    attr(x$eair_diff_ci, "label") <-
+      paste0(f_conf_level(conf_level), " for difference in eair ", method_part)
+
+    x$eair_diff_est <- x$eair_diff_est_ci[1]
+    attr(x$eair_diff_est, "label") <- "Difference in eair"
   } else {
-    x$eair_diff <- c("eair_diff" = NULL)
+    # no risk diff calculations - set stats to NULL, ie blank
+    x$eair_diff_est_ci <- c("eair_diff_est_ci" = NULL)
+    x$eair_diff_est <- c("eair_diff_est" = NULL)
+    x$eair_diff_ci <- c("eair_diff_ci" = NULL)
   }
 
   return(x)
@@ -470,10 +556,19 @@ s_eair100_levii_j <- function(
 #' @param .labels (named 'character')\cr labels for the statistics.
 #' @param .indent_mods (named `integer`)\cr indent modifiers for the labels.
 #' @param na_str (`string`)\cr string used to replace all NA or empty values in the output.
+#' @param row_labels_adj (`logical`)\cr If `TRUE` and number of requested statistics = 1,
+#' the row label on the table will reflect the level of the incoming variable rather than
+#' the label for the statistic.
+#' \cr Set to default `TRUE` for backward-compatibility reasons.
+#' @param riskdiff_setup (`string`)\cr Are risk differences presented in horizontal way, or vertical way.
+#' \cr When horizontal, the statistics for `eair`, `n_eair`, `eair_n` will be replaced by
+#' `ear_diff_est_ci` in the risk difference columns.
+#' If `.stats` include any of difference in eair rates statistics,
+#' these will be removed as `ear_diff_est_ci` will be displayed in the risk difference columns
 #'
 #' @return
 #'  * `a_eair100_j` returns the corresponding list with formatted [rtables::CellValue()].\cr
-#' Within a risk difference column, the statistics `eair` and `n_eair` are replaced by `eair_diff`
+#' Within a risk difference column, the statistics `eair` and `n_eair` are replaced by `eair_diff_est_ci`
 #' (difference in EAIR between current group and reference group, together with it's confidence interval).
 
 #' @export
@@ -564,6 +659,11 @@ a_eair100_j <- function(
   .spl_context,
   .alt_df_full = NULL,
   id = "USUBJID",
+  fup_var,
+  occ_var,
+  occ_dy = NULL,
+  num_p_year = 100,
+  count_multiple_events = FALSE,
   drop_levels = FALSE,
   riskdiff = TRUE,
   ref_path = NULL,
@@ -574,16 +674,35 @@ a_eair100_j <- function(
   na_str = rep("NA", 3),
   # treatment/ref group related arguments
   conf_level = 0.95,
-  conf_type = c("wald", "waldcc", "mn", "scas"),
-  fup_var,
-  occ_var,
-  occ_dy,
-  num_p_year = 100,
-  count_events = FALSE
+  conf_type_diff = c("wald", "waldcc", "mn", "scas"),
+  conf_type_eair = c("normal", "normal_log", "exact", "byar"),
+  row_labels_adj = FALSE,
+  riskdiff_setup = c("horizontal", "vertical")
 ) {
-  conf_type <- match.arg(conf_type)
+  conf_type_diff <- match.arg(conf_type_diff)
+  conf_type_eair <- match.arg(conf_type_eair)
+  riskdiff_setup <- match.arg(riskdiff_setup)
+
+  if (riskdiff && is.null(ref_path)) {
+    stop("ref_path cannot be NULL when riskdiff = TRUE, please specify it. See ?get_ref_info for details.")
+  }
+
+  ref_info <- get_ref_info_expanded(
+    df,
+    .var,
+    .df_row,
+    .spl_context,
+    ref_path,
+    riskdiff,
+    riskdiff_setup
+  )
+
+  perform_vs_ref_stats <- ref_info$perform_vs_ref_stats
+  ref_col_expr <- ref_info$ref_col_expr
+  .in_ref_col <- ref_info$.in_ref_col
+
   ## prepare for column based split
-  col_expr <- .spl_context$cur_col_expr[[1]]
+  cur_col_expr <- .spl_context$cur_col_expr[[1]]
   ## colid can be used to figure out if we're in the relative risk columns or not
   colid <- .spl_context$cur_col_id[[1]]
   inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
@@ -594,6 +713,9 @@ a_eair100_j <- function(
     stats_in = .stats,
     custom_stats_in = NULL
   )
+  if (any(.stats %in% c("eair_diff_est_ci", "eair_diff_est", "eair_diff_ci")) && riskdiff_setup == "horizontal") {
+    .stats <- .stats[!(.stats %in% c("eair_diff_est_ci", "eair_diff_est", "eair_diff_ci"))]
+  }
 
   checkmate::assert_string(fup_var, null.ok = FALSE)
   checkmate::assert_string(occ_var, null.ok = TRUE)
@@ -609,7 +731,8 @@ a_eair100_j <- function(
   checkmate::assert_names(colnames(.alt_df_full), must.include = c(fup_var))
 
   inrowsplit <- FALSE
-  if (.var == tail(.spl_context$split, 1L)){
+  if (.var == tail(.spl_context$split, 1L)) {
+    # note: this will catch the rowsplit only if parent_name in split_rows_by call is .var (default)
     drop_levels <- TRUE
     inrowsplit <- TRUE
   }
@@ -649,57 +772,27 @@ a_eair100_j <- function(
   )
   new_denomdf <- alt_df
 
+  # gather arguments to pass onto s_function
   fn_Args <- list(
     df = df,
     .df_row = .df_row,
     .var = .var,
     id = id,
-    diff = riskdiff,
-    inriskdiffcol = inriskdiffcol,
     fup_var = fup_var,
     occ_var = occ_var,
     occ_dy = occ_dy,
     num_p_year = num_p_year,
-    count_events = count_events
+    count_multiple_events = count_multiple_events,
+    cur_col_expr = cur_col_expr,
+    ref_col_expr = ref_col_expr,
+    vs_ref_group = perform_vs_ref_stats,
+    .in_ref_col = !perform_vs_ref_stats,
+    inriskdiffcol = riskdiff_setup == "horizontal" && inriskdiffcol,
+    conf_level = conf_level,
+    conf_type_eair = conf_type_eair,
+    .alt_df_full = .alt_df_full,
+    conf_type_diff = conf_type_diff
   )
-
-  if (riskdiff && inriskdiffcol) {
-    trt_var_refpath <- h_get_trtvar_refpath(
-      ref_path,
-      .spl_context,
-      df
-    )
-    # trt_var_refpath is list with elements
-    # trt_var trt_var_refspec cur_trt_grp ctrl_grp
-    # make these elements available in current environment
-    trt_var <- trt_var_refpath$trt_var
-    trt_var_refspec <- trt_var_refpath$trt_var_refspec
-    cur_trt_grp <- trt_var_refpath$cur_trt_grp
-    ctrl_grp <- trt_var_refpath$ctrl_grp
-
-    # for combined facet, .alt_df_full value for the treatment group needs update
-    .alt_df_full <- upd_denom_df_combo(
-      .alt_df_full,
-      trt_var,
-      cur_trt_grp,
-      .spl_context
-    )
-
-    fn_args_x <- list(
-      .alt_df_full = .alt_df_full,
-      # treatment/ref group related arguments
-      conf_level = conf_level,
-      conf_type = conf_type,
-      trt_var = trt_var,
-      ctrl_grp = ctrl_grp,
-      cur_trt_grp = cur_trt_grp
-    )
-  } else {
-    new_denomdf <- subset(new_denomdf, eval(col_expr))
-    fn_args_x <- list(.alt_df_full = new_denomdf)
-  }
-
-  fn_Args <- append(fn_Args, fn_args_x)
 
   levs <- levels(.df_row[[.var]])
   y <- mapply(
@@ -710,14 +803,25 @@ a_eair100_j <- function(
   )
 
   ### rearrange list y to  list to x_stats
+  # y is a nested list with
+  # outer elements levels of incoming variable
+  # inner elements stat elements statistics from
+
   #### this is to ensure the remainder of the code can stay the same as in a_freq_j
-  stnms <- c("eair", "eair_diff", "n_event", "person_years", "n_eair")
+  stnms <- junco_get_stats("a_eair100_j")
   x_stats <- extract_x_stats(y, stnms)
 
-  if (!inriskdiffcol) {
-    .stats_adj <- .stats
+  # x_stats is a nested list with
+  # outer elements stat elements statistics (all 5 from stnms)
+  # inner elements levels of incoming variable
+  # this will ensure we can perform subsetting on .stats
+  # like x_stats[.stats]
+
+  # transpose_named_list cannot be used as this will not ensure all 5 poss stats are in
+  if (inriskdiffcol && riskdiff_setup == "horizontal") {
+    .stats_adj <- replace(.stats, .stats %in% c("eair", "n_eair", "eair_n", "eair_n_py"), "eair_diff_est_ci")
   } else {
-    .stats_adj <- replace(.stats, .stats %in% c("eair", "n_eair"), "eair_diff")
+    .stats_adj <- .stats
   }
 
   .stats <- .stats_adj
@@ -726,24 +830,33 @@ a_eair100_j <- function(
 
 
   x_stats <- x_stats[.stats]
+  x_stats_orig <- x_stats
+  # from now onwards, retransform x_stats back into structure
+  # list with outer elements stats levels from incoming variable
+  # inner elements statistics
   x_stats <- transpose_named_list(x_stats)
 
   levels_per_stats <- lapply(x_stats, names)
+  # in case no default label get the label from the x_stats directly
+  # this is to cover statistics with dynamic label, such as
+  # n_event Either Number of events or Number of subjects with events
+  .labels_pre <- junco_get_labels_from_attrib(.stats, .labels, x_stats)
 
   .formats <- junco_get_formats_from_stats(.stats, .formats, levels_per_stats)
-  .labels <- junco_get_labels_from_stats(.stats, .labels, levels_per_stats)
+  .labels <- junco_get_labels_from_stats(.stats, .labels_pre, levels_per_stats)
   .labels <- .unlist_keep_nulls(.labels)
-  
+
   # make adjustments to rowlabels  when not inrowsplit
   if (!inrowsplit && length(.stats) > 1) {
     # if more than one stat requested and variable is not in a prior splitrowscall
     # prepend the level of the incoming variable (which is now in names of x_stats) to the label
     .labels <- paste(rep(names(x_stats), each = length(.stats)), .labels)
-  } else if (!inrowsplit && length(.stats) == 1){ 
+  } else if (!inrowsplit && length(.stats) == 1 && row_labels_adj) {
     # if one stat requested and variable is not in a prior splitrowscall
     # show the levels of the incoming variable, rather than the statistic
     .labels <- names(x_stats)
   }
+  .labels <- gsub("^\\s+", "", .labels)
 
   .indent_mods <- junco_get_indents_from_stats(
     .stats,

@@ -274,7 +274,10 @@ s_rel_risk_val_j <- function(
     "newcombe",
     "newcombecc",
     "strat_newcombe",
-    "strat_newcombecc"
+    "strat_newcombecc",
+    "cmh_sato",
+    "cmh_mn",
+    "uncond_exact_diff"
   ),
   weights_method = "cmh"
 ) {
@@ -414,9 +417,24 @@ s_rel_risk_val_j <- function(
 #' a `cfun` in a `summarize_row_groups` call.\cr
 #' It is recommended not to utilize this argument for other purposes.
 #' The label argument could be used instead (if `val` is a single string)\cr
-#' @param label_map (`tibble`)\cr
-#' A mapping tibble to translate levels from the incoming variable into
-#' a different row label to be presented on the table.\cr
+#' @param label_map (`data.frame`)\cr
+#' A mapping data frame used to translate levels of the analysis variable(s) into
+#' the row labels displayed in the table, optionally conditioned on the nearest row-split.\cr
+#'
+#' Four types of mappings are supported:
+#' \enumerate{
+#'   \item Single-variable mapping. Column names: `level`, `label`.
+#'   \item Multi-variable mapping. Column names: `var`, `level`, `label`.
+#'   \item Conditional-on-row-split mapping. Column names: `<split_var>`, `level`, `label`.
+#'   \item Conditional-on-row-split multi-variable mapping. Column names: `<split_var>`, `var`, `level`, `label`.
+#' }
+#' Here, `<split_var>` is a placeholder for the name of the variable used for the nearest row-split
+#' (e.g. `SEX`, `PARAMCD`).\cr
+#'
+#' **Recommendation**: ensure input variable(s) are of type factor, to avoid the error
+#' "got a label map that doesn't provide labels for all values".\cr
+#'
+#' See examples for more details.
 #' @param .alt_df_full (`dataframe`)\cr Denominator dataset
 #' for fraction and relative risk calculations.\cr
 #' this argument gets populated by the rtables
@@ -580,6 +598,149 @@ s_rel_risk_val_j <- function(
 #'
 #' result2 <- build_table(lyt2, adae, alt_counts_df = adsl)
 #'
+#' # -------------------------------------------------------------------------
+#' # Examples using the label_map argument
+#' # -------------------------------------------------------------------------
+#'
+#' adsl <- ex_adsl |> select("USUBJID", "SEX", "ARM")
+#' adae <- ex_adae |> select("USUBJID", "AEBODSYS", "AEDECOD")
+#' adae[["TRTEMFL"]] <- "Y"
+#'
+#' trtvar <- "ARM"
+#' adae <- adae |> left_join(adsl)
+#'
+#' # -------------------------------------------------------------------------
+#' # 1. Simple mapping.
+#' # Remaps factor levels (value) to custom new labels (label).
+#' # -------------------------------------------------------------------------
+#'
+#' label_map_simple <- data.frame(
+#'   value = c("M", "F", "UNDIFFERENTIATED", "U"),
+#'   label = c("Male", "Female", "Undifferentiated", "Unknown")
+#' )
+#'
+#' lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
+#'   split_cols_by(trtvar) |>
+#'   analyze("SEX",
+#'     afun = a_freq_j,
+#'     extra_args = list(
+#'       .stats = "count_unique_fraction",
+#'       label_map = label_map_simple
+#'     )
+#'   )
+#'
+#' result_lmap1 <- build_table(lyt_lmap1, adsl, alt_counts_df = adsl)
+#' result_lmap1
+#'
+#' # -------------------------------------------------------------------------
+#' # 2. Multi-variable mapping.
+#' # Useful in situations where multiple Y/N variables can be analyzed in one
+#' # [rtables::analyze()] call.
+#' # -------------------------------------------------------------------------
+#'
+#' multi_vars <- c("DTH30FL", "DTHA30FL", "DTHB30FL")
+#' adslx <- pharmaverseadamjnj::adsl
+#' # ensure the variables are factor with levels Y/N - and variable label is kept
+#' adslx <- adslx |>
+#'   mutate(across(all_of(multi_vars), \(x) structure(
+#'     factor(x, levels = c("Y", "N")),
+#'     label = attr(x, "label")
+#'   )))
+#'
+#' map_multi <- data.frame(
+#'   var = multi_vars,
+#'   value = "Y",
+#'   label = c(
+#'     "Death <=30D of Last Trt Flag",
+#'     "Death >30D from Last Trt Flag",
+#'     "Death <=30D of First Trt Flag"
+#'   )
+#' )
+#'
+#' lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
+#'   split_cols_by("ARM") |>
+#'   analyze(multi_vars,
+#'     afun = a_freq_j,
+#'     extra_args = list(
+#'       .stats = "count_unique_denom_fraction",
+#'       label_map = map_multi,
+#'       val = "Y"
+#'     ),
+#'     show_labels = "hidden"
+#'   )
+#'
+#' result_lmap2 <- build_table(lyt_lmap1, adslx)
+#' result_lmap2
+#'
+#' # -------------------------------------------------------------------------
+#' # 3. Conditional-on-row-split mapping.
+#' # -------------------------------------------------------------------------
+#'
+#' map_rowsplit <- data.frame(
+#'   SEX = c("M", "F"),
+#'   value = c("Y", "Y"),
+#'   label = c("Male subjects with >=1 TE AE", "Female subjects with >=1 TE AE")
+#' )
+#'
+#' adsl <- ex_adsl |> select("USUBJID", "ARM", "SEX")
+#' adae <- ex_adae |> select("USUBJID", "AEBODSYS", "AEDECOD")
+#' adae[["TRTEMFL"]] <- "Y"
+#' adae <- adae |> left_join(adsl)
+#'
+#' lyt_lmap3 <- basic_table(show_colcounts = TRUE) |>
+#'   split_cols_by("ARM") |>
+#'   split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M")), child_labels = "hidden") |>
+#'   analyze("TRTEMFL",
+#'     afun = a_freq_j,
+#'     extra_args = list(
+#'       .stats = "count_unique_denom_fraction",
+#'       label_map = map_rowsplit,
+#'       val = "Y"
+#'     ),
+#'     show_labels = "hidden"
+#'   )
+#'
+#' result_lmap3 <- build_table(lyt_lmap3, adae, alt_counts_df = adsl)
+#' result_lmap3
+#'
+#' # -----------------------------------------------------------------------------------
+#' # 4. Conditional-on-row-split multi-variable mapping.
+#' # -----------------------------------------------------------------------------------
+#' adsl_jnj <- pharmaverseadamjnj::adsl
+#' advs_jnj <- pharmaverseadamjnj::advs
+#'
+#' multi_vars <- c("CRIT1FL", "CRIT2FL", "CRIT3FL")
+#'
+#' map_multi_rowsplit <- data.frame(
+#'   PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
+#'   var = rep(multi_vars, 2),
+#'   value = rep("Y", 6),
+#'   label = c(
+#'     "<50 mmHg and with >20 mmHg decrease from baseline",
+#'     ">105 mmHg and with >30 mmHg increase from baseline",
+#'     "Diastolic blood pressure<60",
+#'     "<90 mmHg and with >30 mmHg decrease from baseline",
+#'     ">180 mmHg and with >40 mmHg increase from baseline",
+#'     "Systolic blood pressure<90"
+#'   )
+#' )
+#'
+#' lyt_lmap4 <- basic_table(show_colcounts = TRUE) |>
+#'   split_cols_by("TRT01A") |>
+#'   split_rows_by("PARAMCD", split_fun = keep_split_levels(c("DIABP", "SYSBP"))) |>
+#'   analyze(multi_vars,
+#'     afun = a_freq_j,
+#'     extra_args = list(
+#'       .stats = "count_unique_denom_fraction",
+#'       label_map = map_multi_rowsplit,
+#'       val = "Y"
+#'     ),
+#'     show_labels = "hidden"
+#'   )
+#'
+#' result_lmap4 <- build_table(lyt_lmap4, advs_jnj, alt_counts_df = adsl_jnj)
+#' result_lmap4
+#'
 #' @return
 #' * `a_freq_j`: returns a list of requested statistics with formatted `rtables::CellValue()`.\cr
 #' Within the relative risk difference columns, the following stats are blanked out:
@@ -618,7 +779,10 @@ a_freq_j <- function(
     "newcombe",
     "newcombecc",
     "strat_newcombe",
-    "strat_newcombecc"
+    "strat_newcombecc",
+    "cmh_sato",
+    "cmh_mn",
+    "uncond_exact_diff"
   ),
   weights_method = "cmh",
   label = NULL,

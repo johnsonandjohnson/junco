@@ -25,7 +25,7 @@
 #' }
 #' @param .formats (named 'character' or 'list')\cr
 #' formats for the statistics.
-#'
+#' @seealso [a_freq_j()] for extensive `label_map` usage examples.
 #' @return list of requested statistics with formatted `rtables::CellValue()`.\cr
 #' @export
 #'
@@ -71,30 +71,31 @@
 #'
 #' result
 a_freq_subcol_j <- function(
-    df,
-    labelstr = NULL,
-    .var = NA,
-    val = NULL,
-    # arguments specific to a_freq_subcol_j
-    subcol_split = NULL,
-    subcol_var = NULL,
-    subcol_val = NULL,
-    # arguments specific to a_freq_subcol_j till here
-    .df_row,
-    .spl_context,
-    .N_col,
-    id = "USUBJID",
-    denom = c("N_col", "n_df", "n_altdf", "n_rowdf", "n_parentdf"),
-    label = NULL,
-    label_fstr = NULL,
-    label_map = NULL,
-    .alt_df_full = NULL,
-    denom_by = NULL,
-    .stats = c("count_unique_denom_fraction"),
-    .formats = NULL,
-    .labels_n = NULL,
-    .indent_mods = NULL,
-    na_str = rep("NA", 3)) {
+  df,
+  labelstr = NULL,
+  .var = NA,
+  val = NULL,
+  # arguments specific to a_freq_subcol_j
+  subcol_split = NULL,
+  subcol_var = NULL,
+  subcol_val = NULL,
+  # arguments specific to a_freq_subcol_j till here
+  .df_row,
+  .spl_context,
+  .N_col,
+  id = "USUBJID",
+  denom = c("N_col", "n_df", "n_altdf", "n_rowdf", "n_parentdf"),
+  label = NULL,
+  label_fstr = NULL,
+  label_map = NULL,
+  .alt_df_full = NULL,
+  denom_by = NULL,
+  .stats = c("count_unique_denom_fraction"),
+  .formats = NULL,
+  .labels_n = NULL,
+  .indent_mods = NULL,
+  na_str = rep("NA", 3)
+) {
   denom <- match.arg(denom)
 
   if (!is.null(labelstr) && is.na(.var)) {

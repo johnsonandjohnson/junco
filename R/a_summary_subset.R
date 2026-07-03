@@ -2,7 +2,7 @@
 #'
 #' @title Wrappers Around `tern::a_summary()` with Optional Subsetting and Labels
 #'
-#' @description `r lifecycle::badge("experimental")`
+#' @description `r lifecycle::badge("stable")`
 #'
 #' These wrappers around [tern::a_summary()] allow optional row subsetting
 #' using a logical expression evaluated in the context of the input data frame.
@@ -28,10 +28,21 @@
 #' @inheritParams proposal_argument_convention
 #' @param filter_expr (`expression`)
 #'   A single logical expression wrapped in `expression(...)` used to subset
-#'   rows of `df` before summarization.
-#'   The expression is evaluated using [eval()] in an environment constructed
-#'   from `df`, meaning that all column names are available as variables.
-#'   Exactly one expression is allowed.
+#'   rows of `df` before summarization. Exactly one expression is allowed.
+#'   The expression is evaluated using [eval()] in an environment containing
+#'   the columns of `df`, meaning that all column names are available as
+#'   variables.
+#'
+#'   In the current implementation, variables used in the expression can only
+#'   be column names of `df`. That is, the following is not supported:
+#'   `min_age <- 45;`
+#'   `a_summary_subset(df, "AVAL", expression(AGE > min_age))`,
+#'   given that `AVAL` is a column in `df` and `min_age` is not a column in `df`.
+#'
+#'   The expression must evaluate to a logical vector whose length is exactly
+#'   equal to `nrow(df)`. No recycling is performed.
+#'   In particular, scalar logical values such as `expression(TRUE)` or
+#'   `expression(FALSE)` are not allowed when `nrow(df) > 1`.
 #' @param ... Additional arguments passed to [tern::a_summary()], excluding
 #'   the `x` argument, which is constructed internally from `df[[.var]]`
 #'   after applying the filter.
@@ -63,8 +74,6 @@ NULL
 #' tern::a_summary(df$AVAL, .stats = stats)
 #'
 #' a_summary_subset(df, "AVAL", expression(!is.na(AGE)), .stats = stats)
-#' min_age <- 45
-#' a_summary_subset(df, "AVAL", expression(AGE > min_age), .stats = stats)
 #' a_summary_subset(df, "AVAL", expression(AGE > 30 & AVAL > 0), .stats = stats)
 #'
 a_summary_subset <- function(df, .var, filter_expr, ...) {
@@ -113,7 +122,7 @@ c_summary_subset_label <- function(df,
                                    labelstr,
                                    .var,
                                    filter_expr,
-                                   label,
+                                   label = "",
                                    label_indent_mod = 0L,
                                    ...) {
   checkmate::assert_data_frame(df)
@@ -121,7 +130,7 @@ c_summary_subset_label <- function(df,
   checkmate::assert_names(colnames(df), must.include = .var)
   checkmate::assert_class(filter_expr, "expression")
   checkmate::assert_true(length(filter_expr) == 1)
-  checkmate::assert_string(label, na.ok = TRUE, null.ok = TRUE)
+  checkmate::assert_string(label, na.ok = TRUE)
   checkmate::assert_int(label_indent_mod)
 
   y <- a_summary_subset(df = df, .var = .var, filter_expr = filter_expr, ...)

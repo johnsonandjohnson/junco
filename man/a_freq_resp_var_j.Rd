@@ -18,7 +18,7 @@ a_freq_resp_var_j(
   variables = formals(s_proportion_diff)$variables,
   conf_level = formals(s_proportion_diff)$conf_level,
   method = c("wald", "waldcc", "cmh", "ha", "newcombe", "newcombecc", "strat_newcombe",
-    "strat_newcombecc"),
+    "strat_newcombecc", "cmh_sato", "cmh_mn", "uncond_exact_diff"),
   weights_method = formals(s_proportion_diff)$weights_method,
   .formats = NULL,
   na_str = rep("NA", 3)

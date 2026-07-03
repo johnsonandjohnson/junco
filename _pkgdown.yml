@@ -161,7 +161,7 @@ reference:
     desc: The following functions are deprecated and should not be used in new code.
     contents:
     - a_coxph_hr
-    - s_coxph_hr
     - rbmi_analyse
     - make_rbmi_cluster
     - par_lapply
+    - a_kaplan_meier
