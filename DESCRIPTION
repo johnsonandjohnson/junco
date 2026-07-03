@@ -73,13 +73,13 @@ Suggests:
     multcomp,
     lifecycle,
     dplyr,
-    ratesci (>= 1.0.0.9000)
+    ratesci (>= 1.1.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
     insightsengineering/formatters@main,
     insightsengineering/tern@main,
-    petelaud/ratesci,
+    petelaud/ratesci@main,
     insightsengineering/rtables@main,
     insightsengineering/rtables.officer@main
 Config/roxygen2/version: 8.0.0
