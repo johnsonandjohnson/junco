@@ -46,10 +46,11 @@ NULL
 #'
 #' @export
 junco_get_stats <- function(
-    method_groups = "analyze_vars_numeric",
-    stats_in = NULL,
-    custom_stats_in = NULL,
-    add_pval = FALSE) {
+  method_groups = "analyze_vars_numeric",
+  stats_in = NULL,
+  custom_stats_in = NULL,
+  add_pval = FALSE
+) {
   tern_get_stats(
     method_groups = method_groups,
     stats_in = stats_in,
@@ -96,10 +97,11 @@ junco_get_formats_from_stats <- function(stats, formats_in = NULL, levels_per_st
 #'
 #' @export
 junco_get_labels_from_stats <- function(
-    stats,
-    labels_in = NULL,
-    levels_per_stats = NULL,
-    label_attr_from_stats = NULL) {
+  stats,
+  labels_in = NULL,
+  levels_per_stats = NULL,
+  label_attr_from_stats = NULL
+) {
   tern_get_labels_from_stats(
     stats = stats,
     labels_in = labels_in,
@@ -287,6 +289,12 @@ junco_default_stats <- list(
     "n_event", "person_years",
     "eair", "n_eair", "eair_ci", "eair_est_ci", "eair_n", "eair_n_py",
     "eair_diff_est_ci", "eair_diff_est", "eair_diff_ci"
+  ),
+  a_eair_strat_j = c(
+    "n_event_total", "person_years_total",
+    "eair_strat", "n_eair_strat", "eair_strat_ci", "eair_strat_est_ci",
+    "eair_strat_n", "eair_strat_n_py",
+    "eair_strat_diff_est_ci", "eair_strat_diff_est", "eair_strat_diff_ci"
   )
 )
 
@@ -381,6 +389,13 @@ junco_default_formats_start <- c(
   eair_n_py = jjcsformat_xx("xx.x (xx/xx.x)"),
   n_event = "xx",
   person_years = jjcsformat_xx("xx.xx"),
+  eair_strat = jjcsformat_xx("xx.x"),
+  n_event_total = "xx",
+  person_years_total = jjcsformat_xx("xx.xx"),
+  n_eair_strat = jjcsformat_xx("xx (xx.x)"),
+  eair_strat_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  eair_strat_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  eair_strat_diff_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   total_subject_years = jjcsformat_xx("xx.x (xx.x)"),
   n_fit = "xx"
 )
@@ -432,6 +447,10 @@ junco_default_labels_start <- c(
   denom = "N",
   patyrs = "Patient years",
   person_years = "Person years",
+  eair_strat = "Stratified EAIR",
+  n_event_total = "n (events)",
+  person_years_total = "Total person-years",
+  n_eair_strat = "n (Stratified EAIR)",
   total_subject_years = "Total treatment (subject years)"
 )
 tern_labels_only <- setdiff(names(tern_default_labels), names(junco_default_labels_start))
