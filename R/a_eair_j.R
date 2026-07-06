@@ -454,8 +454,6 @@ s_eair100_levii_j <- function(
   attr(x$eair_n_py, "label") <- paste0(eair_lbl, " (", n_event_lbl, "/", "person-years", ")")
 
   # ci for rates - utilize tern function to derive rate_ci
-  # h_incidence_rate - not exported
-  h_incidence_rate <- utils::getFromNamespace("h_incidence_rate", "tern")
   tern_incid_rate <- h_incidence_rate(
     person_years = n1,
     n_events = x1,
