@@ -50,7 +50,7 @@ Imports:
     emmeans,
     mmrm,
     vcdExtra (>= 0.8.7),
-    rtables.officer (>= 0.1.0),
+    rtables.officer (>= 0.1.2.9002),
     flextable (>= 0.9.11),
     officer,
     xml2,
@@ -79,4 +79,5 @@ Config/testthat/edition: 3
 Remotes:
     insightsengineering/formatters@main,
     insightsengineering/tern@main,
-    insightsengineering/rtables@main
+    insightsengineering/rtables@main,
+    insightsengineering/rtables.officer@main
