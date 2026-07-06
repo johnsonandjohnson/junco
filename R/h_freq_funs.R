@@ -364,6 +364,8 @@ get_ref_info_expanded <- function(df,
     ref_col_expr <- h_get_ref_col_expr(ref_path)
   } else {
     ref_col_expr <- NULL
+    .in_ref_col <- NULL
+    .ref_group <- NULL
   }
 
   # !perform_vs_ref_stats will be passed as .in_ref_col in the s_function s_eair100_levii_j
