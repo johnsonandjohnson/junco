@@ -1,6 +1,6 @@
 # Junco Hotfix Changelog
 
-This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1.1). Because legacy containers cannot be rebuilt, these fixes are injected globally.
+This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1.1). Because legacy containers cannot be rebuilt, these fixes are injected globally. 
 
 
 ---
