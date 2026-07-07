@@ -6,52 +6,50 @@
 # - Hotfix #395 `def_colwidths()` crashes when long column labels (issue #281) (introduced in junco v0.1.6)
 # ==========================================
 
-
 # ==========================================
 # Surgical Patches
 # ==========================================
 
 tt_to_tlgrtf <- function(
+  tt,
+  file = NULL,
+  orientation = c("portrait", "landscape"),
+  colwidths = def_colwidths(
     tt,
-    file = NULL,
-    orientation = c("portrait", "landscape"),
-    colwidths = def_colwidths(
-      tt,
-      fontspec,
-      col_gap = col_gap,
-      label_width_ins = label_width_ins,
-      type = tlgtype
-    ),
-    label_width_ins = 2,
-    watermark = NULL,
-    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-    fontspec = font_spec("Times", 9L, 1.2),
-    pg_width = pg_width_by_orient(orientation == "landscape"),
-    margins = c(0, 0, 0, 0),
-    paginate = tlg_type(tt) == "Table",
-    col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    nosplitin = list(
-      row = character(),
-      col = character()
-    ),
-    verbose = FALSE,
-    tlgtype = tlg_type(tt),
-    string_map = default_str_map,
-    markup_df = dps_markup_df,
-    combined_rtf = FALSE,
-    one_table = TRUE,
-    border_mat = make_header_bordmat(obj = tt),
-    round_type = obj_round_type(tt),
-    alignments = list(),
-    validate = TRUE,
-    export_csv = FALSE,
-    output_csv_directory = NULL,
-    ...
+    fontspec,
+    col_gap = col_gap,
+    label_width_ins = label_width_ins,
+    type = tlgtype
+  ),
+  label_width_ins = 2,
+  watermark = NULL,
+  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+  fontspec = font_spec("Times", 9L, 1.2),
+  pg_width = junco:::pg_width_by_orient(orientation == "landscape"),
+  margins = c(0, 0, 0, 0),
+  paginate = junco:::tlg_type(tt) == "Table",
+  col_gap = ifelse(tlgtype == "Listing", .5, 3),
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  verbose = FALSE,
+  tlgtype = tlg_type(tt),
+  string_map = default_str_map,
+  markup_df = dps_markup_df,
+  combined_rtf = FALSE,
+  one_table = TRUE,
+  border_mat = junco:::make_header_bordmat(obj = tt),
+  round_type = obj_round_type(tt),
+  alignments = list(),
+  validate = TRUE,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
+  ...
 ) {
-  
   checkmate::assert_flag(export_csv)
   checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
-  
+
   if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
     if (!rtables::validate_table_struct(tt)) {
       message(
@@ -66,7 +64,7 @@ tt_to_tlgrtf <- function(
       )
     }
   }
-  
+
   if (tlgtype != "Listing") {
     pagenum <- FALSE
   }
@@ -75,13 +73,13 @@ tt_to_tlgrtf <- function(
   if (newdev) {
     on.exit(close_font_dev())
   }
-  
+
   if (tlgtype == "Listing" && nrow(tt) == 0) {
     dat <- as.list(c("No data to report", rep("", ncol(tt) - 1)))
     names(dat) <- names(tt)
     df <- as.data.frame(dat)
     var_labels(df) <- var_labels(tt)
-    
+
     tt <- as_listing(
       df,
       key_cols = get_keycols(tt),
@@ -90,7 +88,7 @@ tt_to_tlgrtf <- function(
       main_footer = attr(tt, "main_footer")
     )
   }
-  
+
   if (tlgtype == "Table" && fontspec$size == 8) {
     opts <- options(
       tidytlg.fontsize.table.footnote = 8,
@@ -98,9 +96,9 @@ tt_to_tlgrtf <- function(
     )
     on.exit(options(opts), add = TRUE)
   }
-  
+
   if (length(colwidths) == 1) {
-    nc <- get_ncol(tt)
+    nc <- junco:::get_ncol(tt)
     tot_width <- page_lcpp(
       pg_width = pg_width,
       pg_height = 20, # don't care about this,
@@ -113,16 +111,16 @@ tt_to_tlgrtf <- function(
     wdth_left <- tot_width - colwidths
     colwidths <- c(colwidths, rep(floor(wdth_left / nc), nc))
   }
-  
+
   max_lwidth <- inches_to_spaces(label_width_ins, fontspec)
   if (colwidths[1] > max_lwidth) {
     colwidths[1] <- max_lwidth
   }
-  
+
   if (!requireNamespace("tidytlg")) {
     stop("tidytlg not installed, cannot go out to rtf.")
   }
-  
+
   if (paginate) {
     ## implies type Table
     if (tlgtype != "Table") {
@@ -137,7 +135,7 @@ tt_to_tlgrtf <- function(
     } else {
       hdrmpf <- tt
     }
-    
+
     pags <- paginate_to_mpfs(
       tt,
       fontspec = fontspec,
@@ -173,7 +171,7 @@ tt_to_tlgrtf <- function(
         } else {
           partmpf <- pags[[i]][[1]]
         }
-        subset_border_mat(border_mat, hdrmpf, partmpf)
+        junco:::subset_border_mat(border_mat, hdrmpf, partmpf)
       }
     )
     ret <- lapply(
@@ -188,7 +186,7 @@ tt_to_tlgrtf <- function(
         full_pag_i <- pags[[i]]
         if (
           is.list(full_pag_i) &&
-          !methods::is(full_pag_i, "MatrixPrintForm")
+            !methods::is(full_pag_i, "MatrixPrintForm")
         ) {
           pgi_for_cw <- full_pag_i[[1]]
         } else {
@@ -198,7 +196,7 @@ tt_to_tlgrtf <- function(
           full_pag_i,
           file = fname,
           orientation = orientation,
-          colwidths = j_mf_col_widths(pgi_for_cw),
+          colwidths = junco:::j_mf_col_widths(pgi_for_cw),
           fontspec = fontspec,
           watermark = watermark,
           col_gap = col_gap,
@@ -241,7 +239,8 @@ tt_to_tlgrtf <- function(
           label_width_ins = label_width_ins,
           ...
         )
-      } else if (!is.null(file)) { # only one page after pagination
+      } else if (!is.null(file)) {
+        # only one page after pagination
         message(
           "Table ",
           basename(file),
@@ -254,7 +253,7 @@ tt_to_tlgrtf <- function(
     }
     return(ret)
   }
-  
+
   if (tlgtype == "Table") {
     if (is.list(tt) && !methods::is(tt, "MatrixPrintForm")) {
       df <- lapply(
@@ -294,23 +293,23 @@ tt_to_tlgrtf <- function(
   } else {
     df <- tt[, listing_dispcols(tt)]
     # apply formats and round_type and return df as a dataframe to input in gentlg
-    df <- listingdf_dataframe_formats(df, round_type = round_type)
+    df <- junco:::listingdf_dataframe_formats(df, round_type = round_type)
   }
-  
+
   ## we only care about the col labels here...
   if (tlgtype == "Table" && is.list(tt) && !methods::is(tt, "MatrixPrintForm")) {
     mpf <- tt[[1]]
     if (!one_table) {
       colinfo <- lapply(
         tt,
-        mpf_to_colspan,
+        junco:::mpf_to_colspan,
         markup_df = markup_df,
         string_map = string_map
       )
       csph <- lapply(colinfo, function(x) x$colspan)
       colheader <- lapply(colinfo, function(x) x$colheader)
     } else {
-      colinfo <- mpf_to_colspan(
+      colinfo <- junco:::mpf_to_colspan(
         mpf,
         markup_df = markup_df,
         string_map = string_map
@@ -343,7 +342,7 @@ tt_to_tlgrtf <- function(
     csph <- colinfo$colspan
     colheader <- colinfo$colheader
   }
-  
+
   if (is.null(file)) {
     fname <- NULL
     fpath <- tempdir()
@@ -353,9 +352,12 @@ tt_to_tlgrtf <- function(
     ## this unconditionally as opath
     fpath <- dirname(file)
   }
-  
-  if (!one_table && # nolint start
-      is.list(tt) && !is(tt, "MatrixPrintForm")) {
+
+  if (
+    !one_table && # nolint start
+      is.list(tt) &&
+      !is(tt, "MatrixPrintForm")
+  ) {
     # this should be technically always 1 but just in case
     num_repeated_cols <- ncol(tt[[1]]$strings) - ncol(tt[[1]])
     # the following lines will listify the vector colwidths, this is, convert it
@@ -367,21 +369,15 @@ tt_to_tlgrtf <- function(
       colwidths_subt <- colwidths[c(1:num_repeated_cols, subt_col_idxs)]
       ## jump current col position to first column on next page
       j <- tail(subt_col_idxs, 1) + 1
-      l_colwidths[[i]] <- get_colwidths_as_proportions(colwidths_subt,
-                                                       tlgtype,
-                                                       label_width_ins,
-                                                       pg_width)
+      l_colwidths[[i]] <- junco:::get_colwidths_as_proportions(colwidths_subt, tlgtype, label_width_ins, pg_width)
     }
     colwidths <- l_colwidths
-  } else {  # nolint end
-    colwidths <- get_colwidths_as_proportions(colwidths,
-                                              tlgtype,
-                                              label_width_ins,
-                                              pg_width)
+  } else {
+    # nolint end
+    colwidths <- get_colwidths_as_proportions(colwidths, tlgtype, label_width_ins, pg_width)
   }
-  
-  
-  footer_val <- prep_strs_for_rtf(
+
+  footer_val <- junco:::prep_strs_for_rtf(
     c(
       main_footer(mpf),
       prov_footer(mpf)
@@ -392,18 +388,17 @@ tt_to_tlgrtf <- function(
   if (length(footer_val) == 0) {
     footer_val <- NULL
   }
-  
+
   if (!is.null(fname) && tlgtype == "Table" && is.data.frame(df) && export_csv) {
-    
-    output_csv_filename <- get_output_csv_filename(output_csv_directory, fpath, fname)
-    
+    output_csv_filename <- junco:::get_output_csv_filename(output_csv_directory, fpath, fname)
+
     utils::write.csv(
       df,
       file = output_csv_filename,
       row.names = FALSE
     )
   }
-  
+
   tidytlg::gentlg(
     df,
     tlf = tlgtype,
@@ -432,65 +427,63 @@ tt_to_tlgrtf <- function(
 }
 
 export_TLG_as_docx <- function(
-    obj = NULL,
-    tblid = NULL,
-    output_dir = NULL,
-    theme = theme_docx_default_j(
-      font = "Times New Roman",
-      font_size = 9L,
-      bold = NULL
-    ),
-    add_page_break = FALSE,
-    titles_as_header = TRUE,
-    integrate_footers = TRUE,
-    section_properties = officer::prop_section(
-      page_size = officer::page_size(width = 11, height = 8.5, orient = orientation),
-      page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
-    ),
-    doc_metadata = NULL,
-    template_file = NULL,
-    orientation = "portrait",
-    paginate = tlgtype == "Table",
-    nosplitin = list(
-      row = character(),
-      col = character()
-    ),
-    string_map = default_str_map,
-    markup_df_docx = dps_markup_df_docx,
-    combined_docx = FALSE,
-    tlgtype = ifelse(is.null(obj), "Figure", tlg_type(obj)),
-    col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-    round_type = ifelse(tlgtype %in% c("Table", "Listing"),
-                        formatters::obj_round_type(obj),
-                        "iec"),
-    alignments = list(),
-    border = flextable::fp_border_default(width = 0.875, color = "black"),
-    border_mat = NULL,
-    export_csv = FALSE,
-    output_csv_directory = NULL,
-    markup_df = dps_markup_df,
-    validate = TRUE,
-    watermark = NULL,
-    plotnames = NULL,
-    title = NULL,
-    footers = NULL,
-    plotwidth = 8,
-    plotheight = 5.51,
-    units = c("in", "cm", "mm", "px")[1],
-    ...
+  obj = NULL,
+  tblid = NULL,
+  output_dir = NULL,
+  theme = theme_docx_default_j(
+    font = "Times New Roman",
+    font_size = 9L,
+    bold = NULL
+  ),
+  add_page_break = FALSE,
+  titles_as_header = TRUE,
+  integrate_footers = TRUE,
+  section_properties = officer::prop_section(
+    page_size = officer::page_size(width = 11, height = 8.5, orient = orientation),
+    page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
+  ),
+  doc_metadata = NULL,
+  template_file = NULL,
+  orientation = "portrait",
+  paginate = tlgtype == "Table",
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  string_map = default_str_map,
+  markup_df_docx = dps_markup_df_docx,
+  combined_docx = FALSE,
+  tlgtype = ifelse(is.null(obj), "Figure", tlg_type(obj)),
+  col_gap = ifelse(tlgtype == "Listing", .5, 3),
+  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+  round_type = ifelse(tlgtype %in% c("Table", "Listing"), formatters::obj_round_type(obj), "iec"),
+  alignments = list(),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
+  border_mat = NULL,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
+  validate = TRUE,
+  watermark = NULL,
+  plotnames = NULL,
+  title = NULL,
+  footers = NULL,
+  plotwidth = 8,
+  plotheight = 5.51,
+  units = c("in", "cm", "mm", "px")[1],
+  ...
 ) {
-  
   if (tlgtype %in% c("Table", "Listing") && is.null(border_mat)) {
     border_mat <- make_header_bordmat(obj = obj)
   } else if (tlgtype == "Figure") {
     border_mat <- matrix()
   }
-  
+
   # if 'obj' is provided, it must be of type "TableTree", "listing_df" or list of "ggplot"
   if (!is.null(obj)) {
-    checkmate::assert_true(inherits(obj, "VTableTree") || inherits(obj, "listing_df") ||
-                             ggplot2::is.ggplot(obj) || is.list(obj))
+    checkmate::assert_true(
+      inherits(obj, "VTableTree") || inherits(obj, "listing_df") || ggplot2::is.ggplot(obj) || is.list(obj)
+    )
   }
   checkmate::assert_character(tblid, null.ok = TRUE)
   checkmate::assert_character(output_dir, len = 1, null.ok = TRUE)
@@ -533,81 +526,101 @@ export_TLG_as_docx <- function(
   checkmate::assert_numeric(plotwidth)
   checkmate::assert_numeric(plotheight)
   checkmate::assert_choice(units, choices = c("in", "cm", "mm", "px"))
-  
+
   if (tlgtype %in% c("Table", "Listing")) {
     export_as_docx_j(
-      tt = obj, tblid = tblid, output_dir = output_dir,
-      theme = theme, add_page_break = add_page_break,
+      tt = obj,
+      tblid = tblid,
+      output_dir = output_dir,
+      theme = theme,
+      add_page_break = add_page_break,
       titles_as_header = titles_as_header,
       integrate_footers = integrate_footers,
-      section_properties = section_properties, doc_metadata = doc_metadata,
-      template_file = template_file, orientation = orientation,
-      paginate = paginate, nosplitin = nosplitin,
-      string_map = string_map, markup_df_docx = markup_df_docx,
-      combined_docx = combined_docx, tlgtype = tlgtype,
-      col_gap = col_gap, pagenum = pagenum, round_type = round_type,
-      alignments = alignments, border = border,
-      border_mat = border_mat, watermark = watermark,
-      export_csv = export_csv, output_csv_directory = output_csv_directory,
+      section_properties = section_properties,
+      doc_metadata = doc_metadata,
+      template_file = template_file,
+      orientation = orientation,
+      paginate = paginate,
+      nosplitin = nosplitin,
+      string_map = string_map,
+      markup_df_docx = markup_df_docx,
+      combined_docx = combined_docx,
+      tlgtype = tlgtype,
+      col_gap = col_gap,
+      pagenum = pagenum,
+      round_type = round_type,
+      alignments = alignments,
+      border = border,
+      border_mat = border_mat,
+      watermark = watermark,
+      export_csv = export_csv,
+      output_csv_directory = output_csv_directory,
       markup_df = markup_df,
       validate = validate,
       ...
     )
   } else {
-    export_graph_as_docx(g = obj, plotnames = plotnames,
-                         tblid = tblid, output_dir = output_dir,
-                         title = title, footers = footers,
-                         orientation = orientation, plotwidth = plotwidth,
-                         plotheight = plotheight, units = units, border = border,
-                         watermark = watermark)
+    junco:::export_graph_as_docx(
+      g = obj,
+      plotnames = plotnames,
+      tblid = tblid,
+      output_dir = output_dir,
+      title = title,
+      footers = footers,
+      orientation = orientation,
+      plotwidth = plotwidth,
+      plotheight = plotheight,
+      units = units,
+      border = border,
+      watermark = watermark
+    )
   }
-  
 }
 
 export_as_docx_j <- function(
-    tt,
-    tblid = NULL,
-    output_dir = NULL,
-    theme = theme_docx_default_j(
-      font = "Times New Roman",
-      font_size = 9L,
-      bold = NULL
-    ),
-    add_page_break = FALSE,
-    titles_as_header = TRUE,
-    integrate_footers = TRUE,
-    section_properties = officer::prop_section(
-      page_size = officer::page_size(width = 11, height = 8.5, orient = orientation),
-      page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
-    ),
-    doc_metadata = NULL,
-    template_file = NULL,
-    orientation = "portrait",
-    paginate = tlgtype == "Table",
-    nosplitin = list(
-      row = character(),
-      col = character()
-    ),
-    string_map = default_str_map,
-    markup_df_docx = dps_markup_df_docx,
-    combined_docx = FALSE,
-    tlgtype = tlg_type(tt),
-    col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-    round_type = formatters::obj_round_type(tt),
-    alignments = list(),
-    border = flextable::fp_border_default(width = 0.875, color = "black"),
-    border_mat = make_header_bordmat(obj = tt),
-    watermark = NULL,
-    export_csv = FALSE,
-    output_csv_directory = NULL,
-    markup_df = dps_markup_df,
-    validate = TRUE,
-    ...
+  tt,
+  tblid = NULL,
+  output_dir = NULL,
+  theme = theme_docx_default_j(
+    font = "Times New Roman",
+    font_size = 9L,
+    bold = NULL
+  ),
+  add_page_break = FALSE,
+  titles_as_header = TRUE,
+  integrate_footers = TRUE,
+  section_properties = officer::prop_section(
+    page_size = officer::page_size(width = 11, height = 8.5, orient = orientation),
+    page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
+  ),
+  doc_metadata = NULL,
+  template_file = NULL,
+  orientation = "portrait",
+  paginate = tlgtype == "Table",
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  string_map = default_str_map,
+  markup_df_docx = dps_markup_df_docx,
+  combined_docx = FALSE,
+  tlgtype = tlg_type(tt),
+  col_gap = ifelse(tlgtype == "Listing", .5, 3),
+  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+  round_type = formatters::obj_round_type(tt),
+  alignments = list(),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
+  border_mat = make_header_bordmat(obj = tt),
+  watermark = NULL,
+  export_csv = FALSE,
+  output_csv_directory = NULL,
+  markup_df = dps_markup_df,
+  validate = TRUE,
+  ...
 ) {
-  
-  checkmate::assert_true(inherits(tt, "VTableTree") || inherits(tt, "listing_df") ||
-                           is.list(tt) || inherits(tt, "flextable"))
+  checkmate::assert_true(
+    inherits(tt, "VTableTree") || inherits(tt, "listing_df") || is.list(tt) || inherits(tt, "flextable")
+  )
   checkmate::assert_character(tblid, null.ok = TRUE)
   checkmate::assert_character(output_dir, len = 1, null.ok = TRUE)
   if (!is.null(output_dir)) {
@@ -639,91 +652,97 @@ export_as_docx_j <- function(
   checkmate::assert_matrix(border_mat)
   checkmate::assert_tibble(markup_df)
   checkmate::assert_true(all(colnames(markup_df) == c("keyword", "rtfstart", "rtfend")))
-  
+
   # Validate `alignments` here because of its complicated data structure
   stopifnot("`alignments` must be a list" = is.list(alignments))
   for (alignment in alignments) {
     stopifnot("Each item of `alignments` must be a list" = is.list(alignment))
   }
-  
+
   checkmate::assert_flag(add_page_break)
   checkmate::assert_character(watermark, len = 1, null.ok = TRUE)
   checkmate::assert_flag(export_csv)
   checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1)
-  
+
   if (is.null(tblid) || is.null(output_dir)) {
     temp_file <- tempfile()
     tblid <- basename(temp_file)
     output_dir <- dirname(temp_file)
   }
-  
+
   do_tt_error <- FALSE
   if (tlgtype != "Listing") {
     pagenum <- FALSE
   }
-  
+
   if (inherits(tt, "VTableTree") || inherits(tt, "listing_df")) {
-    tt <- tt_to_flextable_j(tt,
-                            titles_as_header = titles_as_header,
-                            integrate_footers = integrate_footers,
-                            tblid = tblid,
-                            orientation = orientation,
-                            paginate = paginate,
-                            nosplitin = nosplitin,
-                            string_map = string_map,
-                            markup_df_docx = markup_df_docx,
-                            tlgtype = tlgtype,
-                            col_gap = col_gap,
-                            theme = theme,
-                            round_type = round_type,
-                            alignments = alignments,
-                            border = border,
-                            border_mat = border_mat,
-                            export_csv = export_csv,
-                            output_csv_directory = output_csv_directory,
-                            markup_df = markup_df,
-                            output_dir = output_dir, # this argument is needed to guess where to save the csv
-                            validate = validate,
-                            ...
+    tt <- tt_to_flextable_j(
+      tt,
+      titles_as_header = titles_as_header,
+      integrate_footers = integrate_footers,
+      tblid = tblid,
+      orientation = orientation,
+      paginate = paginate,
+      nosplitin = nosplitin,
+      string_map = string_map,
+      markup_df_docx = markup_df_docx,
+      tlgtype = tlgtype,
+      col_gap = col_gap,
+      theme = theme,
+      round_type = round_type,
+      alignments = alignments,
+      border = border,
+      border_mat = border_mat,
+      export_csv = export_csv,
+      output_csv_directory = output_csv_directory,
+      markup_df = markup_df,
+      output_dir = output_dir, # this argument is needed to guess where to save the csv
+      validate = validate,
+      ...
     )
   }
   if (inherits(tt, "flextable")) {
     flex_tbl_list <- list(tt)
   } else if (inherits(tt, "list")) {
-    if (inherits(tt[[1]], "VTableTree") || inherits(
-      tt[[1]],
-      "listing_df"
-    )) {
-      flex_tbl_list <- mapply(tt_to_flextable_j,
-                              tt = tt,
-                              MoreArgs =
-                                list(
-                                  titles_as_header = titles_as_header,
-                                  integrate_footers = integrate_footers,
-                                  tblid = tblid,
-                                  orientation = orientation,
-                                  paginate = paginate,
-                                  nosplitin = nosplitin,
-                                  string_map = string_map,
-                                  markup_df_docx = markup_df_docx,
-                                  tlgtype = tlgtype,
-                                  col_gap = col_gap,
-                                  theme = theme,
-                                  round_type = round_type,
-                                  alignments = alignments,
-                                  border = border,
-                                  border_mat = border_mat,
-                                  export_csv = export_csv,
-                                  output_csv_directory = output_csv_directory,
-                                  markup_df = markup_df,
-                                  output_dir = output_dir, # this argument is needed to guess where to save the csv
-                                  validate = validate,
-                                  ...
-                                ),
-                              SIMPLIFY = FALSE
+    if (
+      inherits(tt[[1]], "VTableTree") ||
+        inherits(
+          tt[[1]],
+          "listing_df"
+        )
+    ) {
+      flex_tbl_list <- mapply(
+        tt_to_flextable_j,
+        tt = tt,
+        MoreArgs = list(
+          titles_as_header = titles_as_header,
+          integrate_footers = integrate_footers,
+          tblid = tblid,
+          orientation = orientation,
+          paginate = paginate,
+          nosplitin = nosplitin,
+          string_map = string_map,
+          markup_df_docx = markup_df_docx,
+          tlgtype = tlgtype,
+          col_gap = col_gap,
+          theme = theme,
+          round_type = round_type,
+          alignments = alignments,
+          border = border,
+          border_mat = border_mat,
+          export_csv = export_csv,
+          output_csv_directory = output_csv_directory,
+          markup_df = markup_df,
+          output_dir = output_dir, # this argument is needed to guess where to save the csv
+          validate = validate,
+          ...
+        ),
+        SIMPLIFY = FALSE
       )
-    } else if (inherits(tt[[1]], "flextable") ||
-               (inherits(tt[[1]], "list") && inherits(tt[[1]][[1]], "flextable"))) {
+    } else if (
+      inherits(tt[[1]], "flextable") ||
+        (inherits(tt[[1]], "list") && inherits(tt[[1]][[1]], "flextable"))
+    ) {
       flex_tbl_list <- tt
     } else {
       do_tt_error <- TRUE
@@ -745,7 +764,7 @@ export_as_docx_j <- function(
       flx_fpt <- .extract_font_and_size_from_flx(flex_tbl_list[[1]])
     }
   }
-  
+
   if (combined_docx) {
     if (length(flex_tbl_list) > 1) {
       export_as_docx_j(
@@ -780,11 +799,13 @@ export_as_docx_j <- function(
       )
     } else {
       message(
-        "Table ", tblid, ": No combined DOCX created, output fit within one part."
+        "Table ",
+        tblid,
+        ": No combined DOCX created, output fit within one part."
       )
     }
   }
-  
+
   if (paginate && length(flex_tbl_list) > 1) {
     # export individual subtables as separate docx files
     for (i in seq(1, length(flex_tbl_list))) {
@@ -824,10 +845,10 @@ export_as_docx_j <- function(
       )
     }
   } else {
-    template_file <- get_template_file()
+    template_file <- junco:::get_template_file()
     doc <- officer::read_docx(template_file)
     doc <- officer::body_remove(doc)
-    
+
     # NOTE: the following block adds the page numbering
     if (tlgtype == "Listing" && pagenum) {
       # nolint start
@@ -845,7 +866,7 @@ export_as_docx_j <- function(
     }
     # END
     doc <- officer::body_set_default_section(doc, section_properties)
-    
+
     flex_tbl_list <- lapply(flex_tbl_list, function(flx) {
       if (flx$properties$layout != "autofit") {
         page_width <- pg_width_by_orient(section_properties$page_size$orient == "landscape")
@@ -878,10 +899,11 @@ export_as_docx_j <- function(
           replacement = paste0("[", tolower(tblid), ".docx]"),
           flex_tbl_i$footer$dataset[n_footer_lines, 1]
         )
-        flex_tbl_i <- flextable::compose(flex_tbl_i,
-                                         part = "footer",
-                                         i = n_footer_lines,
-                                         value = flextable::as_paragraph(tmp)
+        flex_tbl_i <- flextable::compose(
+          flex_tbl_i,
+          part = "footer",
+          i = n_footer_lines,
+          value = flextable::as_paragraph(tmp)
         )
       }
       # NOTE: this align = "left" is the alignment of the entire table relative to the page,
@@ -912,26 +934,29 @@ export_as_docx_j <- function(
       }
     }
     if (!is.null(doc_metadata)) {
-      doc <- do.call(officer::set_doc_properties, c(
-        list(x = doc),
-        doc_metadata
-      ))
+      doc <- do.call(
+        officer::set_doc_properties,
+        c(
+          list(x = doc),
+          doc_metadata
+        )
+      )
     }
-    
-    add_hanging_indent_in_title_XML(doc)
+
+    junco:::add_hanging_indent_in_title_XML(doc)
     if (tlgtype == "Table") {
       n_rows_footer <- flextable::nrow_part(flex_tbl_list[[1]], part = "footer")
-      insert_hanging_indent_first_col_XML(doc, n_rows_footer = n_rows_footer)
+      junco:::insert_hanging_indent_first_col_XML(doc, n_rows_footer = n_rows_footer)
     }
-    add_vertical_pagination_XML(doc)
-    remove_security_popup_page_numbers_XML(doc, tlgtype, pagenum)
-    remove_trHeight_nodes_XML(doc)
+    junco:::add_vertical_pagination_XML(doc)
+    junco:::remove_security_popup_page_numbers_XML(doc, tlgtype, pagenum)
+    junco:::remove_trHeight_nodes_XML(doc)
     if (!is.null(watermark)) {
-      insert_fake_watermark_XML(doc, watermark, orientation, tlgtype)
+      junco:::insert_fake_watermark_XML(doc, watermark, orientation, tlgtype)
     }
-    
-    doc <- align_rows_with_rtf(doc)
-    
+
+    doc <- junco:::align_rows_with_rtf(doc)
+
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
   }
@@ -939,41 +964,42 @@ export_as_docx_j <- function(
 
 
 tt_to_flextable_j <- function(
-    tt,
-    tblid = NULL,
-    theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
-    border = flextable::fp_border_default(width = 0.875, color = "black"),
-    titles_as_header = TRUE,
-    bold_titles = TRUE,
-    integrate_footers = TRUE,
-    counts_in_newline = FALSE,
-    paginate = tlg_type(tt) == "Table",
-    fontspec = formatters::font_spec("Times", 9L, 1.2),
-    colwidths = NULL,
-    label_width_ins = 2,
-    total_page_width = pg_width_by_orient(orientation == "landscape"),
-    orientation = "portrait",
-    nosplitin = list(
-      row = character(),
-      col = character()
-    ),
-    string_map = default_str_map,
-    markup_df_docx = dps_markup_df_docx,
-    reduce_first_col_indentation = FALSE,
-    tlgtype = tlg_type(tt),
-    col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    round_type = formatters::obj_round_type(tt),
-    alignments = list(),
-    border_mat = make_header_bordmat(obj = tt),
-    validate = TRUE,
-    ...) {
+  tt,
+  tblid = NULL,
+  theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
+  titles_as_header = TRUE,
+  bold_titles = TRUE,
+  integrate_footers = TRUE,
+  counts_in_newline = FALSE,
+  paginate = tlg_type(tt) == "Table",
+  fontspec = formatters::font_spec("Times", 9L, 1.2),
+  colwidths = NULL,
+  label_width_ins = 2,
+  total_page_width = pg_width_by_orient(orientation == "landscape"),
+  orientation = "portrait",
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  string_map = default_str_map,
+  markup_df_docx = dps_markup_df_docx,
+  reduce_first_col_indentation = FALSE,
+  tlgtype = tlg_type(tt),
+  col_gap = ifelse(tlgtype == "Listing", .5, 3),
+  round_type = formatters::obj_round_type(tt),
+  alignments = list(),
+  border_mat = make_header_bordmat(obj = tt),
+  validate = TRUE,
+  ...
+) {
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
   }
   if (!inherits(tt, "VTableTree") && !inherits(tt, "listing_df")) {
     stop("Input object is not an rtables' or rlistings' object.")
   }
-  
+
   checkmate::assert_true(inherits(tt, "VTableTree") || inherits(tt, "listing_df"))
   checkmate::assert_character(tblid, null.ok = TRUE)
   checkmate::assert_function(theme)
@@ -989,42 +1015,40 @@ tt_to_flextable_j <- function(
   checkmate::assert_number(total_page_width, lower = 1)
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
   checkmate::assert_list(nosplitin)
-  checkmate::assert_multi_class(x = string_map,
-                                classes = c("tbl_df", "data.frame"))
-  checkmate::assert_multi_class(x = markup_df_docx,
-                                classes = c("tbl_df", "data.frame"))
+  checkmate::assert_multi_class(x = string_map, classes = c("tbl_df", "data.frame"))
+  checkmate::assert_multi_class(x = markup_df_docx, classes = c("tbl_df", "data.frame"))
   checkmate::assert_flag(reduce_first_col_indentation)
   checkmate::assert_character(tlgtype)
   checkmate::assert_numeric(col_gap)
   checkmate::assert_choice(round_type, choices = c("sas", "iec"))
   checkmate::assert_list(alignments)
   checkmate::assert_matrix(border_mat)
-  
+
   # Validate `alignments` here because of its complicated data structure
   stopifnot("`alignments` must be a list" = is.list(alignments))
   for (alignment in alignments) {
     stopifnot("Each item of `alignments` must be a list" = is.list(alignment))
   }
-  
+
   if (is.null(tblid)) {
     temp_file <- tempfile()
     tblid <- basename(temp_file)
   }
-  
-  validate_tabletree(tt, validate, tlgtype)
-  
+
+  junco:::validate_tabletree(tt, validate, tlgtype)
+
   if (tlgtype == "Listing" && nrow(tt) == 0) {
     dat <- as.list(c("No data to report", rep("", ncol(tt) - 1)))
     names(dat) <- names(tt)
     df <- as.data.frame(dat)
     formatters::var_labels(df) <- formatters::var_labels(tt)
-    
+
     titles <- list()
     titles$title <- main_title(tt)
     titles$subtitles <- subtitles(tt)
     titles$main_footer <- main_footer(tt)
     titles$prov_footer <- prov_footer(tt)
-    
+
     tt <- rlistings::as_listing(
       df,
       key_cols = rlistings::get_keycols(tt),
@@ -1032,7 +1056,7 @@ tt_to_flextable_j <- function(
     )
     tt <- set_titles(tt, titles)
   }
-  
+
   if (is.null(colwidths)) {
     colwidths <- def_colwidths(
       tt,
@@ -1044,15 +1068,14 @@ tt_to_flextable_j <- function(
   }
   colwidths_2 <- colwidths
   if (tlgtype == "Table") {
-    colwidths <- cwidths_final_adj(
+    colwidths <- junco:::cwidths_final_adj(
       labwidth_ins = label_width_ins,
       total_width = total_page_width,
       colwidths = colwidths[-1]
     )
     colwidths <- (colwidths / sum(colwidths)) * total_page_width
   }
-  
-  
+
   if (paginate) {
     ## implies type Table
     if (tlgtype != "Table") {
@@ -1067,7 +1090,7 @@ tt_to_flextable_j <- function(
     } else {
       hdrmpf <- tt
     }
-    
+
     pags <- formatters::paginate_to_mpfs(
       tt,
       fontspec = fontspec,
@@ -1122,20 +1145,17 @@ tt_to_flextable_j <- function(
         } else {
           pgi_for_cw <- full_pag_i
         }
-        
+
         # if there is no vertical pagination, make each horizontal pagination
         # a list of 1 page
         if (is.list(full_pag_i) && methods::is(full_pag_i, "MatrixPrintForm")) {
           full_pag_i <- list(full_pag_i)
         }
-        
+
         # Note: slice the big table into multiple subtables, by rows and columns
         jj <- pgi_for_cw$col_info$label
-        subt <- tt[, jj,
-                   drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE,
-                   reindex_refs = FALSE
-        ]
-        
+        subt <- tt[, jj, drop = FALSE, keep_titles = TRUE, keep_topleft = TRUE, reindex_refs = FALSE]
+
         # export csv
         args <- list(...)
         export_csv <- args$export_csv
@@ -1145,26 +1165,31 @@ tt_to_flextable_j <- function(
         if (!isTRUE(export_csv)) {
           export_csv <- FALSE
         }
-        export_as_csv(tlgtype = tlgtype,
-                      export_csv = export_csv,
-                      pags = full_pag_i,
-                      fontspec = fontspec,
-                      string_map = string_map,
-                      markup_df = markup_df,
-                      round_type = round_type,
-                      output_csv_directory = output_csv_directory,
-                      output_dir = output_dir,
-                      fname = fname)
-        
+        junco:::export_as_csv(
+          tlgtype = tlgtype,
+          export_csv = export_csv,
+          pags = full_pag_i,
+          fontspec = fontspec,
+          string_map = string_map,
+          markup_df = markup_df,
+          round_type = round_type,
+          output_csv_directory = output_csv_directory,
+          output_dir = output_dir,
+          fname = fname
+        )
+
         # we want to decrease the indentation of each vertical pagination
         # only if for each vertical pagination only the first row has indentation == 0
         only_first_row_indent_zero <-
-          all(lapply(full_pag_i, function(x) {
-            tmp <- x$row_info
-            tmp <- tmp[tmp$label != " " & tmp$indent == 0, ]
-            return(nrow(tmp))
-          }) == 1)
-        
+          all(
+            lapply(full_pag_i, function(x) {
+              tmp <- x$row_info
+              tmp <- tmp[tmp$label != " " & tmp$indent == 0, ]
+              return(nrow(tmp))
+            }) ==
+              1
+          )
+
         sub_ft <- tt_to_flextable_j(
           tt = subt,
           theme = theme,
@@ -1192,22 +1217,21 @@ tt_to_flextable_j <- function(
           validate = validate,
           ...
         )
-        
+
         return(sub_ft)
       }
     )
-    
+
     if (is.null(file) && length(pags) > 1) {
       ret <- unlist(ret, recursive = FALSE)
     }
-    
+
     if (length(ret) == 1) {
       ret <- ret[[1]]
     }
     return(ret)
   }
-  
-  
+
   matform <- rtables::matrix_form(
     tt,
     fontspec = fontspec,
@@ -1219,12 +1243,10 @@ tt_to_flextable_j <- function(
   mpf_aligns <- formatters::mf_aligns(matform)
   hnum <- formatters::mf_nlheader(matform)
   rdf <- rtables::make_row_df(tt)
-  
-  
+
   # NOTE: convert the '>=', '<=', etc symbols
-  body <- strmodify(body, string_map)
-  
-  
+  body <- junco:::strmodify(body, string_map)
+
   # NOTE:
   # calculate where to place the blank rows
   mpf <- matform
@@ -1234,7 +1256,7 @@ tt_to_flextable_j <- function(
   anbr <- cumsum(!is.na(c(0, utils::head(rowdf$trailing_sep, -1))))[rinds] + 1 ## so it starts at 1
   newrows <- c(0, ifelse(utils::tail(anbr, -1) == utils::head(anbr, -1), 0, 1))
   # END
-  
+
   if (any(grepl("dec", mpf_aligns))) {
     body <- formatters::decimal_align(body, mpf_aligns)
     mpf_aligns[mpf_aligns == "decimal"] <- "center"
@@ -1245,7 +1267,7 @@ tt_to_flextable_j <- function(
     # NOTE: left-align the first column for listings
     mpf_aligns[, 1] <- "left"
   }
-  
+
   content <- as.data.frame(body[-seq_len(hnum), , drop = FALSE])
   content[content == ""] <- " "
   # NOTE:
@@ -1263,10 +1285,10 @@ tt_to_flextable_j <- function(
     mpf_aligns <- new_mpf_aligns
   }
   # END
-  
+
   flx <- flextable::qflextable(content) |>
     flextable::border_remove()
-  
+
   hdr <- body[seq_len(hnum), , drop = FALSE]
   if (hnum > 1) {
     det_nclab <- apply(hdr, 2, grepl, pattern = "\\(N=[0-9]+\\)$")
@@ -1281,15 +1303,10 @@ tt_to_flextable_j <- function(
         } else {
           "\n"
         }
-        hdr[wi, what_is_nclab] <- paste(hdr[wi - 1, what_is_nclab],
-                                        hdr[wi, what_is_nclab],
-                                        sep = colcounts_split_chr
-        )
+        hdr[wi, what_is_nclab] <- paste(hdr[wi - 1, what_is_nclab], hdr[wi, what_is_nclab], sep = colcounts_split_chr)
         hdr[wi - 1, what_is_nclab] <- ""
         row_to_pop <- wi - 1
-        what_to_put_up <- hdr[row_to_pop, what_is_nclab,
-                              drop = FALSE
-        ]
+        what_to_put_up <- hdr[row_to_pop, what_is_nclab, drop = FALSE]
         if (all(!nzchar(what_to_put_up)) && row_to_pop > 1) {
           reconstructed_hdr <-
             rbind(
@@ -1318,7 +1335,7 @@ tt_to_flextable_j <- function(
   }
   hdr[hdr == ""] <- " "
   flx <- flx |> flextable::set_header_labels(values = setNames(as.vector(hdr[hnum, , drop = TRUE]), names(content)))
-  
+
   # NOTE: this block of code calculates where to put horizontal borders
   # within the Header
   l_pos <- list()
@@ -1329,23 +1346,26 @@ tt_to_flextable_j <- function(
       }
     }
   }
-  
+
   if (hnum > 1) {
     for (i in seq(hnum - 1, 1)) {
       sel <- formatters::spans_to_viscell(spans[i, ])
-      flx <- flextable::add_header_row(flx,
-                                       top = TRUE,
-                                       values = as.vector(hdr[i, sel]),
-                                       colwidths = as.integer(spans[i, sel])
+      flx <- flextable::add_header_row(
+        flx,
+        top = TRUE,
+        values = as.vector(hdr[i, sel]),
+        colwidths = as.integer(spans[i, sel])
       )
-      
+
       col_widths_in_header <- as.integer(spans[i, sel])
       cnt <- 1
       for (j in seq(1, length(col_widths_in_header))) {
         cur_width <- col_widths_in_header[j]
-        if (cur_width > 1 &&
+        if (
+          cur_width > 1 &&
             !grepl("^N=", as.vector(hdr[i + 1, sel])[j]) &&
-            trimws(as.vector(hdr[i, sel])[j]) != "") {}
+            trimws(as.vector(hdr[i, sel])[j]) != ""
+        ) {}
         cnt <- cnt + cur_width
       }
     }
@@ -1355,15 +1375,14 @@ tt_to_flextable_j <- function(
   flx <- flx |>
     flextable::border(part = "header", i = 1, border.top = border) |>
     flextable::border(part = "body", i = nr_body, border.bottom = border)
-  
+
   for (ij in l_pos) {
     i <- ij[1]
     j <- ij[2]
     flx <- flx |> flextable::hline(part = "header", i = i, j = j, border = border)
   }
   # END
-  
-  
+
   # check if the user passed 'alignments'
   # if so, overwrite the default ones
   for (al in alignments) {
@@ -1382,7 +1401,8 @@ tt_to_flextable_j <- function(
     for (i in seq_len(hnum)) {
       flx <- flx |>
         flextable::align(
-          part = "header", i = i,
+          part = "header",
+          i = i,
           align = mpf_aligns[i, , drop = FALSE]
         )
     }
@@ -1390,15 +1410,15 @@ tt_to_flextable_j <- function(
     for (j in seq_len(ncol(mpf_aligns))) {
       flx <- flx |>
         flextable::align(
-          part = "body", j = j,
+          part = "body",
+          j = j,
           align = mpf_aligns[-seq_len(hnum), j, drop = FALSE]
         )
     }
   }
-  
+
   flx <- flextable::line_spacing(flx, space = 0, part = "body")
-  
-  
+
   # The following block of code adds indentation in the first column
   # NOTE: 3.175mm = 9 ms word points = 0.125 inches
   indent_size <- rtables.officer::word_mm_to_pt(3.175)
@@ -1410,7 +1430,7 @@ tt_to_flextable_j <- function(
   for (i in rev(idx)) {
     updated_indents <- append(updated_indents, 0, after = i - 1)
   }
-  
+
   # NOTE: this simulates the "indentme" part in tt_to_tlgrtf()
   # basically reduce by 1 the indentation in the first column, if we have vertical pagination
   if (reduce_first_col_indentation) {
@@ -1419,13 +1439,15 @@ tt_to_flextable_j <- function(
   }
   for (i in seq_len(nr_body)) {
     # NOTE: this line adds the left padding to each row in column 1 (Body only)
-    flx <- flextable::padding(flx,
-                              i = i, j = 1,
-                              padding.left = indent_size * updated_indents[[i]],
-                              padding.right = 0,
-                              padding.top = 0,
-                              padding.bottom = 0,
-                              part = "body"
+    flx <- flextable::padding(
+      flx,
+      i = i,
+      j = 1,
+      padding.left = indent_size * updated_indents[[i]],
+      padding.right = 0,
+      padding.top = 0,
+      padding.bottom = 0,
+      part = "body"
     )
   }
   # add indentation in Header
@@ -1435,40 +1457,27 @@ tt_to_flextable_j <- function(
     # interpret every 2 leading whitespaces as 1 indentation level
     header_indent_size <- (leading_spaces_count / 2) * indent_size
     hdr[i, 1] <- trimws(x = hdr[i, 1], which = "left")
-    flx <- flextable::compose(flx,
-                              part = "header",
-                              i = i,
-                              j = 1,
-                              value = flextable::as_paragraph(hdr[i, 1]))
-    
+    flx <- flextable::compose(flx, part = "header", i = i, j = 1, value = flextable::as_paragraph(hdr[i, 1]))
+
     # NOTE: this line adds the left padding to each row in column 1 (Header only)
-    flx <- flextable::padding(flx,
-                              part = "header",
-                              i = i,
-                              j = 1,
-                              padding.left = header_indent_size,
-                              padding.right = 0
-    )
+    flx <- flextable::padding(flx, part = "header", i = i, j = 1, padding.left = header_indent_size, padding.right = 0)
   }
-  
+
   if (length(formatters::all_footers(tt)) > 0 && isTRUE(integrate_footers)) {
     footers <- formatters::all_footers(tt)
     footers <- strmodify(footers, string_map)
     footers_1row <- paste(footers, collapse = "\n")
     footers_1row <- paste0("\n", footers_1row)
     flx <- flextable::add_footer_lines(flx, values = footers_1row) |>
-      flextable::border(part = "footer",
-                        i = length(footers_1row),
-                        border.bottom = border)
+      flextable::border(part = "footer", i = length(footers_1row), border.bottom = border)
   }
-  
+
   # NOTE: the following block adds the footer, this is, the last line below footnotes
-  flx <- insert_footer_text(flx, tblid)
-  
+  flx <- junco:::insert_footer_text(flx, tblid)
+
   # apply theme
   flx <- do.call(theme, list(flx, tbl_row_class = rdf$node_class))
-  
-  
+
   # NOTE: for Listings, vertical alignment is "top" for the whole body
   if (tlgtype == "Listing") {
     flx <- flx |> flextable::valign(part = "body", valign = "top")
@@ -1476,34 +1485,32 @@ tt_to_flextable_j <- function(
     flx <- flx |> flextable::align(part = "body", j = -1, align = "center")
   }
   # END
-  
+
   if (is.null(fontspec)) {
     fontspec <- formatters::font_spec("Times", 9L, 1.2)
   }
   if (is.null(colwidths)) {
-    colwidths <- formatters::propose_column_widths(matform,
-                                                   fontspec = fontspec,
-                                                   indent_size = indent_size
-    )
+    colwidths <- formatters::propose_column_widths(matform, fontspec = fontspec, indent_size = indent_size)
   }
-  if (titles_as_header &&
+  if (
+    titles_as_header &&
       length(formatters::all_titles(tt)) > 0 &&
-      any(nzchar(formatters::all_titles(tt)))) {
+      any(nzchar(formatters::all_titles(tt)))
+  ) {
     # NOTE: the following block appends the Table ID to the Title,
     # inserts the Title with the hanging indent as part of the Header,
     # and adds the borders above and below the Title
     ts_tbl <- formatters::all_titles(tt)
     ts_tbl <- paste0(tblid, ":", ts_tbl)
-    
-    flx <- insert_title_as_header(
+
+    flx <- junco:::insert_title_as_header(
       flx = flx,
       title = ts_tbl,
       border = border
     )
     # END
   }
-  
-  
+
   # NOTE: if it's a listing, set font size = 8 (instead of 9) everywhere
   # except the Titles, which remain font size = 10
   if (tlgtype == "Listing") {
@@ -1518,7 +1525,7 @@ tt_to_flextable_j <- function(
     flx <- flextable::fontsize(flx, part = "body", size = 8)
     flx <- flextable::fontsize(flx, part = "footer", size = 8)
   }
-  
+
   # NOTE: here, even though page width is 8.88 inches, table width has
   # to be 8.82 inches, so leave a gap of 0.03 inches on both sides
   if (orientation == "landscape") {
@@ -1528,11 +1535,13 @@ tt_to_flextable_j <- function(
   }
   flx <- flextable::width(flx, width = final_cwidths)
   autofit_to_page <- FALSE
-  flx <- flextable::set_table_properties(flx,
-                                         layout = ifelse(autofit_to_page, "autofit", "fixed"),
-                                         align = "left", opts_word = list(split = TRUE, keep_with_next = TRUE)
+  flx <- flextable::set_table_properties(
+    flx,
+    layout = ifelse(autofit_to_page, "autofit", "fixed"),
+    align = "left",
+    opts_word = list(split = TRUE, keep_with_next = TRUE)
   )
-  
+
   if (!all(is.na(matform$row_info$trailing_sep))) {
     # NOTE: this block adds indentation after some rows to simulate blank lines
     new_trailing_sep <- matform$row_info$trailing_sep
@@ -1543,14 +1552,11 @@ tt_to_flextable_j <- function(
       new_trailing_sep <- append(new_trailing_sep, NA, after = i - 2)
     }
     new_trailing_sep[length(new_trailing_sep)] <- NA
-    flx <- rtables.officer::add_flextable_separators(flx, new_trailing_sep,
-                                                     border = border,
-                                                     padding = 0
-    ) # NOTE: here, we used to have padding = 10
+    flx <- rtables.officer::add_flextable_separators(flx, new_trailing_sep, border = border, padding = 0) # NOTE: here, we used to have padding = 10
     # END
   }
   flx <- flextable::fix_border_issues(flx)
-  
+
   # NOTE: add the vertical pagination break pages
   if (tlgtype == "Table" && nrow(tt) > 1) {
     pags <- formatters::paginate_to_mpfs(
@@ -1568,22 +1574,23 @@ tt_to_flextable_j <- function(
       round_type = round_type
     )
     if (!is.null(names(pags))) {
-      flx <- insert_keepNext_vertical_pagination(flx = flx,
-                                                 pags = pags,
-                                                 fontspec = fontspec,
-                                                 string_map = string_map,
-                                                 round_type = round_type)
+      flx <- junco:::insert_keepNext_vertical_pagination(
+        flx = flx,
+        pags = pags,
+        fontspec = fontspec,
+        string_map = string_map,
+        round_type = round_type
+      )
     }
   }
   # END
-  
-  
+
   # NOTE:
   # the following block adds the Title with its own style
   if (isFALSE(titles_as_header)) {
     title <- formatters::all_titles(tt)
     title <- paste0(tblid, ":\t", title)
-    
+
     w <- ifelse(orientation == "portrait", 155, 215)
     new_title <- formatters::wrap_string_ttype(
       str = title,
@@ -1593,7 +1600,7 @@ tt_to_flextable_j <- function(
       wordbreak_ok = FALSE
     )
     new_title <- sub(": ", ":\t", new_title)
-    
+
     p <- ifelse(orientation == "portrait", 4.32, 7.8)
     fpp <- officer::fp_par(
       text.align = "left",
@@ -1601,46 +1608,49 @@ tt_to_flextable_j <- function(
       padding.right = p,
       border.top = border
     )
-    
+
     font_sz_body <- flx$header$styles$text$font.size$data[1, 1]
     font_fam <- flx$header$styles$text$font.family$data[1, 1]
     title_style <- officer::fp_text(font.family = font_fam, font.size = font_sz_body)
     title_style$font.size <- title_style$font.size + 1 # 10
     title_style$bold <- bold_titles
-    flx <- flx |> flextable::set_caption(
-      caption = flextable::as_paragraph(flextable::as_chunk(new_title, title_style)),
-      word_stylename = "caption",
-      fp_p = fpp,
-      align_with_table = FALSE
-    )
+    flx <- flx |>
+      flextable::set_caption(
+        caption = flextable::as_paragraph(flextable::as_chunk(new_title, title_style)),
+        word_stylename = "caption",
+        fp_p = fpp,
+        align_with_table = FALSE
+      )
   }
   # END
-  
+
   # NOTE: convert the super- and sub-scripts
-  flx <- interpret_all_cell_content(flx, markup_df_docx)
-  
+  flx <- junco:::interpret_all_cell_content(flx, markup_df_docx)
+
   #  NOTE: add the little gap between the bottom borders of 2 spanning headers
-  flx <- add_little_gap_bottom_borders_spanning_headers(flx, border)
-  
+  flx <- junco:::add_little_gap_bottom_borders_spanning_headers(flx, border)
+
   flx
 }
 
-def_colwidths <- function(tt,
-                          fontspec,
-                          label_width_ins = 2,
-                          col_gap = ifelse(type == "Listing", .5, 3),
-                          type = tlg_type(tt)) {
+def_colwidths <- function(
+  tt,
+  fontspec,
+  label_width_ins = 2,
+  col_gap = ifelse(type == "Listing", .5, 3),
+  type = tlg_type(tt)
+) {
   if (type == "Figure") {
     ret <- NULL
   } else if (type == "Table") {
     if (
       is.list(tt) &&
-      !methods::is(tt, "MatrixPrintForm") &&
-      !is.null(j_mf_col_widths(tt[[1]]))
+        !methods::is(tt, "MatrixPrintForm") &&
+        !is.null(junco:::j_mf_col_widths(tt[[1]]))
     ) {
-      ret <- j_mf_col_widths(tt[[1]])
+      ret <- junco:::j_mf_col_widths(tt[[1]])
     } else {
-      ret <- no_cellwrap_colwidths(tt, fontspec, col_gap = col_gap, label_width_ins = label_width_ins)
+      ret <- junco:::no_cellwrap_colwidths(tt, fontspec, col_gap = col_gap, label_width_ins = label_width_ins)
     }
   } else {
     ret <- listing_column_widths(tt, fontspec = fontspec, col_gap = col_gap)
@@ -1649,17 +1659,18 @@ def_colwidths <- function(tt,
 }
 
 listing_column_widths <- function(
-    mpf,
-    incl_header = TRUE,
-    col_gap = 0.5,
-    pg_width_ins = 8.88,
-    fontspec = font_spec("Times", 8, 1.2),
-    verbose = FALSE) {
+  mpf,
+  incl_header = TRUE,
+  col_gap = 0.5,
+  pg_width_ins = 8.88,
+  fontspec = font_spec("Times", 8, 1.2),
+  verbose = FALSE
+) {
   newdev <- open_font_dev(fontspec)
   if (newdev) {
     on.exit(close_font_dev())
   }
-  possdf <- make_poss_wdf(
+  possdf <- junco:::make_poss_wdf(
     mpf = mpf,
     incl_header = incl_header,
     col_gap = col_gap,
@@ -1728,7 +1739,7 @@ optimal_widths <- function(possdf, tot_spaces = 320, max_lbl_lines = 3, verbose 
       } else {
         candrow <- canddf[nrow(canddf), ]
       }
-      
+
       if (verbose) {
         message(
           "COL ",
@@ -1764,7 +1775,8 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
       break
     }
     newrow <- possdfii[ii, ]
-    if (ii > nrow(possdfii)) { #### TODO: hotfix #395 `def_colwidths()` crashes when long column labels (issue #281)
+    if (ii > nrow(possdfii)) {
+      #### TODO: hotfix #395 `def_colwidths()` crashes when long column labels (issue #281)
       success <- FALSE
       break
     }
@@ -1776,7 +1788,7 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
     curdf[ii, ] <- newrow
     avail_spc <- avail_spc + cwidthii - newrow$colwidth
   }
-  
+
   if (verbose) {
     if (success) {
       msg <- paste(
@@ -1787,12 +1799,9 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
       msg <- paste("Unable to reduce label rows required.")
     }
   }
-  
+
   if (!success) {
     curdf <- olddf
   }
   curdf
 }
-
-
-
