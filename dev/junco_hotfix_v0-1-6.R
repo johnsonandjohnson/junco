@@ -34,7 +34,7 @@ tt_to_tlgrtf <- function(
     col = character()
   ),
   verbose = FALSE,
-  tlgtype = tlg_type(tt),
+  tlgtype = junco:::tlg_type(tt),
   string_map = default_str_map,
   markup_df = dps_markup_df,
   combined_rtf = FALSE,
@@ -319,7 +319,7 @@ tt_to_tlgrtf <- function(
     }
   } else if (methods::is(tt, "MatrixPrintForm")) {
     mpf <- tt
-    colinfo <- mpf_to_colspan(
+    colinfo <- junco:::mpf_to_colspan(
       mpf,
       markup_df = markup_df,
       string_map = string_map
@@ -334,7 +334,7 @@ tt_to_tlgrtf <- function(
       fontspec = fontspec,
       round_type = round_type
     )
-    colinfo <- mpf_to_colspan(
+    colinfo <- junco:::mpf_to_colspan(
       mpf,
       markup_df = markup_df,
       string_map = string_map
@@ -374,7 +374,7 @@ tt_to_tlgrtf <- function(
     colwidths <- l_colwidths
   } else {
     # nolint end
-    colwidths <- get_colwidths_as_proportions(colwidths, tlgtype, label_width_ins, pg_width)
+    colwidths <- junco:::get_colwidths_as_proportions(colwidths, tlgtype, label_width_ins, pg_width)
   }
 
   footer_val <- junco:::prep_strs_for_rtf(
@@ -408,7 +408,7 @@ tt_to_tlgrtf <- function(
     file = fname,
     opath = fpath,
     colheader = colheader,
-    title = prep_strs_for_rtf(
+    title = junco:::prep_strs_for_rtf(
       main_title(mpf),
       string_map,
       markup_df
@@ -453,7 +453,7 @@ export_TLG_as_docx <- function(
   string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   combined_docx = FALSE,
-  tlgtype = ifelse(is.null(obj), "Figure", tlg_type(obj)),
+  tlgtype = ifelse(is.null(obj), "Figure", junco:::tlg_type(obj)),
   col_gap = ifelse(tlgtype == "Listing", .5, 3),
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = ifelse(tlgtype %in% c("Table", "Listing"), formatters::obj_round_type(obj), "iec"),
@@ -474,7 +474,7 @@ export_TLG_as_docx <- function(
   ...
 ) {
   if (tlgtype %in% c("Table", "Listing") && is.null(border_mat)) {
-    border_mat <- make_header_bordmat(obj = obj)
+    border_mat <- junco:::make_header_bordmat(obj = obj)
   } else if (tlgtype == "Figure") {
     border_mat <- matrix()
   }
@@ -604,13 +604,13 @@ export_as_docx_j <- function(
   string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   combined_docx = FALSE,
-  tlgtype = tlg_type(tt),
+  tlgtype = junco:::tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", .5, 3),
   pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
   round_type = formatters::obj_round_type(tt),
   alignments = list(),
   border = flextable::fp_border_default(width = 0.875, color = "black"),
-  border_mat = make_header_bordmat(obj = tt),
+  border_mat = junco:::make_header_bordmat(obj = tt),
   watermark = NULL,
   export_csv = FALSE,
   output_csv_directory = NULL,
@@ -869,7 +869,7 @@ export_as_docx_j <- function(
 
     flex_tbl_list <- lapply(flex_tbl_list, function(flx) {
       if (flx$properties$layout != "autofit") {
-        page_width <- pg_width_by_orient(section_properties$page_size$orient == "landscape")
+        page_width <- junco:::pg_width_by_orient(section_properties$page_size$orient == "landscape")
         # NOTE: here, even though page width is 8.88 inches, table width has
         # to be 8.82 inches, so leave a gap of 0.03 inches on both sides
         if (orientation == "landscape") {
@@ -972,11 +972,11 @@ tt_to_flextable_j <- function(
   bold_titles = TRUE,
   integrate_footers = TRUE,
   counts_in_newline = FALSE,
-  paginate = tlg_type(tt) == "Table",
+  paginate = junco:::tlg_type(tt) == "Table",
   fontspec = formatters::font_spec("Times", 9L, 1.2),
   colwidths = NULL,
   label_width_ins = 2,
-  total_page_width = pg_width_by_orient(orientation == "landscape"),
+  total_page_width = junco:::pg_width_by_orient(orientation == "landscape"),
   orientation = "portrait",
   nosplitin = list(
     row = character(),
@@ -985,11 +985,11 @@ tt_to_flextable_j <- function(
   string_map = default_str_map,
   markup_df_docx = dps_markup_df_docx,
   reduce_first_col_indentation = FALSE,
-  tlgtype = tlg_type(tt),
+  tlgtype = junco:::tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", .5, 3),
   round_type = formatters::obj_round_type(tt),
   alignments = list(),
-  border_mat = make_header_bordmat(obj = tt),
+  border_mat = junco:::make_header_bordmat(obj = tt),
   validate = TRUE,
   ...
 ) {
@@ -1097,7 +1097,7 @@ tt_to_flextable_j <- function(
       landscape = orientation == "landscape",
       colwidths = colwidths_2,
       col_gap = col_gap,
-      pg_width = pg_width_by_orient(orientation == "landscape"),
+      pg_width = junco:::pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
       margins = rep(0, 4),
       lpp = NULL,
@@ -1126,7 +1126,7 @@ tt_to_flextable_j <- function(
         } else {
           partmpf <- pags[[i]][[1]]
         }
-        subset_border_mat(border_mat, hdrmpf, partmpf)
+        junco:::subset_border_mat(border_mat, hdrmpf, partmpf)
       }
     )
     ret <- lapply(
@@ -1465,7 +1465,7 @@ tt_to_flextable_j <- function(
 
   if (length(formatters::all_footers(tt)) > 0 && isTRUE(integrate_footers)) {
     footers <- formatters::all_footers(tt)
-    footers <- strmodify(footers, string_map)
+    footers <- junco:::strmodify(footers, string_map)
     footers_1row <- paste(footers, collapse = "\n")
     footers_1row <- paste0("\n", footers_1row)
     flx <- flextable::add_footer_lines(flx, values = footers_1row) |>
@@ -1565,7 +1565,7 @@ tt_to_flextable_j <- function(
       landscape = orientation == "landscape",
       colwidths = colwidths_2,
       col_gap = col_gap,
-      pg_width = pg_width_by_orient(orientation == "landscape"),
+      pg_width = junco:::pg_width_by_orient(orientation == "landscape"),
       pg_height = NULL,
       margins = rep(0, 4),
       lpp = NULL,
@@ -1638,7 +1638,7 @@ def_colwidths <- function(
   fontspec,
   label_width_ins = 2,
   col_gap = ifelse(type == "Listing", .5, 3),
-  type = tlg_type(tt)
+  type = junco:::tlg_type(tt)
 ) {
   if (type == "Figure") {
     ret <- NULL
