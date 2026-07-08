@@ -7,6 +7,7 @@ library(ggplot2)
 
 options(docx.add_datetime = FALSE)
 skip_on_cran()
+skip_on_os("windows")
 
 adsl <- ex_adsl
 adae <- ex_adae
