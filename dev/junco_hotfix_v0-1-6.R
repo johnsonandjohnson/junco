@@ -1365,7 +1365,8 @@ tt_to_flextable_j <- function(
           cur_width > 1 &&
             !grepl("^N=", as.vector(hdr[i + 1, sel])[j]) &&
             trimws(as.vector(hdr[i, sel])[j]) != ""
-        ) {}
+        ) {
+        }
         cnt <- cnt + cur_width
       }
     }
