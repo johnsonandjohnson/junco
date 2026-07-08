@@ -15,9 +15,6 @@ on:
         description: |
           Github token with read access to repositories
         required: false
-  push:
-    branches:
-      - 'feature/hotfix-*'
   workflow_dispatch:
     inputs:
       chosen-workflow:
