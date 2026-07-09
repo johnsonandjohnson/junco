@@ -5,6 +5,7 @@
 - Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
 - CRITICAL: hotfixed `tt_to_tlgrtf()` lost titles in certain cases (#373)
+- CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
 - Added a default value for the `label` argument in `c_summary_subset_label()`.
@@ -29,12 +30,16 @@
 - Unified `get_ref_info()` which now also returns `trt_var`, `ctrl_grp`, and `cur_col_val` (#295)
 - `h_get_trtvar_refpath()` is marked as superseded
 - `a_summarize_aval_chg_diff_j()` now uses `get_ref_info()` 
+- Use new exported splv_extra and value_expr accessors (insightsengineering#1098)
 
 
 
 ### Added
 - Updated documentation and examples for `label_map` in `a_freq_j` (#235)
 - Added `tern` methods for difference in proportions in `a_freq_j` and  `a_freq_resp_var_j` : `cmh_sato`, `cmh_mn`, `uncond_exact_diff`  (#389)
+- Added `a_summary_j_with_exclude()` to allow `tern::a_summary()` analyses to be skipped for selected row split levels.
+- Added `a_summarize_mmrm_with_exclude()` to allow MMRM summaries to be skipped for selected row split levels.
+- Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 

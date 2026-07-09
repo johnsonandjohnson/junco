@@ -358,6 +358,10 @@ constrict_lbl_lns <- function(curdf, possdf, avail_spc = 0, verbose = TRUE) {
       break
     }
     newrow <- possdfii[ii, ]
+    if (ii > nrow(possdfii)) {
+      success <- FALSE
+      break
+    }
     if (newrow$colwidth - cwidthii > avail_spc) {
       success <- FALSE
       break
