@@ -28,7 +28,7 @@
 - Deprecate `s_coxph_hr()` for `tern:::a_coxph_pairwise()`
 - Changed stop message in `a_freq_j()` when `label_map` option is used in a rowsplit with no data on a character analysis var #386
 - Use new exported splv_extra and value_expr accessors (insightsengineering#1098)
-
+- Update new exported calls from rtables.officer
 
 
 ### Added

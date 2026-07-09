@@ -36,7 +36,7 @@ Depends:
     rtables (>= 0.6.16.9002)
 Imports:
     tidytlg (>= 0.12.0),
-    tern (>= 0.9.10.9020),
+    tern (>= 0.9.10.9012),
     rlistings (>= 0.2.13),
     checkmate (>= 2.1.0),
     rbmi (>= 1.6.0),
@@ -58,6 +58,7 @@ Imports:
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
 Suggests:
     knitr,
     rmarkdown,
@@ -80,4 +81,3 @@ Remotes:
     insightsengineering/tern@main,
     insightsengineering/rtables@main,
     insightsengineering/rtables.officer@main
-Config/roxygen2/version: 8.0.0
