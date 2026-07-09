@@ -203,7 +203,7 @@ test_that("in_ref_col fails for invalid ref_path", {
 
 test_that("in_ref_col fails for invalid .spl_context", {
   .spl_context <- data.frame()
-  expect_error(in_ref_col(c("ARM", "Placebo"), .spl_context), regexp = "length")
+  expect_error(in_ref_col(c("ARM", "Placebo"), .spl_context), regexp = "1 row")
 
   .spl_context <- c(
     cur_col_split = I(list("ARM")),
