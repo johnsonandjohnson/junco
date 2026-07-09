@@ -6,9 +6,9 @@
 #'
 #' These helper functions are intended for use in [rtables] custom analysis
 #' functions that depend on the current column split context.
-#' 
+#'
 #' @inheritParams proposal_argument_convention
-#' 
+#'
 #' @author WW
 #'
 #' @seealso
