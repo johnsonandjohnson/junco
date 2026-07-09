@@ -72,7 +72,7 @@ test_that("cur_col_split_path fails for invalid .spl_context (cur_col_split/cur_
   expect_error(cur_col_split_path(.spl_context), "list")
 })
 
-test_that("cur_col_split_path fails for invalid .spl_context (cur_col_split[[1]]/cur_col_split_val[[1]] are not character)", {
+test_that("cur_col_split_path fails for invalid .spl_context (cur_col_split/_val[[1]] are not character)", {
   .spl_context <- data.frame(
     cur_col_split = I(list(5)),
     cur_col_split_val = I(list("Placebo"))
@@ -86,7 +86,7 @@ test_that("cur_col_split_path fails for invalid .spl_context (cur_col_split[[1]]
   expect_error(cur_col_split_path(.spl_context), "character")
 })
 
-test_that("cur_col_split_path fails for invalid .spl_context (cur_col_split[[1]] and cur_col_split_val[[1]] have different lengths)", {
+test_that("cur_col_split_path fails for invalid .spl_context (cur_col_split/_val[[1]] have different lengths)", {
   .spl_context <- data.frame(
     cur_col_split = I(list("ARM")),
     cur_col_split_val = I(list(c("Placebo", "X")))
