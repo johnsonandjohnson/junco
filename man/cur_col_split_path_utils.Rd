@@ -108,3 +108,6 @@ tbl
 \item \code{\link[rtables:make_col_row_df]{rtables::col_paths()}} for obtaining column paths from a built table.
 }
 }
+\author{
+WW
+}

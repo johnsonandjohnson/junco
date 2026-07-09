@@ -48,6 +48,8 @@
 #' If an error occurs, an `"htest"` object with `NA` inferential statistics and
 #' computed sample mean(s) in `estimate` is returned instead.
 #'
+#' @author WW
+#'
 #' @importFrom stats t.test
 #'
 #' @examples
@@ -68,14 +70,15 @@
 #' t.test(x, x)
 #' safe_t_test(x, x)
 safe_t_test <- function(
-    x,
-    y = NULL,
-    alternative = c("two.sided", "less", "greater"),
-    mu = 0,
-    paired = FALSE,
-    var.equal = FALSE,
-    conf.level = 0.95,
-    ...) {
+  x,
+  y = NULL,
+  alternative = c("two.sided", "less", "greater"),
+  mu = 0,
+  paired = FALSE,
+  var.equal = FALSE,
+  conf.level = 0.95,
+  ...
+) {
   x_expr <- substitute(x)
   y_expr <- substitute(y)
   alternative <- match.arg(alternative)

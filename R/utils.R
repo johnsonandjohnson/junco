@@ -166,6 +166,8 @@ check_alt_df_full <- function(argument, values, .alt_df_full) {
 #' Returned vectors may be shorter than the original inputs due to removal of
 #' unmatched observations, missing values (`NA`).
 #'
+#' @author WW
+#'
 #' @keywords internal
 #'
 #' @importFrom stats complete.cases
