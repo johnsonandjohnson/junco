@@ -37,8 +37,8 @@ impute_and_analyze <- function(dat, p_ctrl, p_trt, trtvar, ctrlab, trtlab, respv
     test_res <- prop_cmh(tbl, transform = "wilson_hilferty")
     rd_est[i] <- rd_res$diff
     rd_se[i] <- rd_res$se_diff
-    p_cmh <- as.numeric(test_res)
-    z_stat <- attr(test_res, "z_stat")
+    p_cmh[i] <- as.numeric(test_res)
+    z_stat[i] <- attr(test_res, "z_stat")
   }
 
   tibble(
@@ -48,30 +48,6 @@ impute_and_analyze <- function(dat, p_ctrl, p_trt, trtvar, ctrlab, trtlab, respv
     p_cmh = p_cmh,
     z_stat = z_stat
   )
-}
-
-
-pool_rubin_scalar <- function(q, u) {
-  # q: vector of estimates
-  # u: vector of within-imputation variances
-  m <- length(q)
-  qbar <- mean(q, na.rm = TRUE)
-  ubar <- mean(u, na.rm = TRUE)
-  b <- stats::var(q, na.rm = TRUE)
-  tvar <- ubar + (1 + 1 / m) * b
-  se <- sqrt(tvar)
-  list(est = qbar, se = se, var = tvar, m = m)
-}
-
-pool_wh_pvalue <- function(z_vals) {
-  m <- length(z_vals)
-  qbar <- mean(z_vals, na.rm = TRUE)
-  b <- stats::var(z_vals, na.rm = TRUE)
-  ubar <- 1 # approx var(z) ~ 1 after WH transform
-  tvar <- ubar + (1 + 1 / m) * b
-  z_pool <- qbar / sqrt(tvar)
-  p_pool <- 2 * stats::pnorm(abs(z_pool), lower.tail = FALSE)
-  list(z = z_pool, p = p_pool)
 }
 
 
@@ -108,7 +84,7 @@ scenario_results <- purrr::pmap_dfr(
       se <- pooled_rd$se
 
       # Pool p-value evidence via WH; fallback to first single-analysis p-value if missing
-      pooled_p <- pool_wh_pvalue(per_imp$z_stat)$p
+      pooled_p <- pool_z_stat(per_imp$z_stat)$p
       if (is.na(pooled_p) || !is.finite(pooled_p)) {
         p_final <- per_imp$p_cmh[1]
         used_fallback <- TRUE
