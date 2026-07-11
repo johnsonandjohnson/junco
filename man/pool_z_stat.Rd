@@ -19,8 +19,8 @@ Combines z statistics from multiple imputed datasets and calculates a
 two-sided p-value for the pooled statistic.
 }
 \details{
-The within-imputation variance of a z statistic is approximated by
-one. The between-imputation variance is pooled using the same
+The within-imputation variance of a z statistic is approximately 1.
+The between-imputation variance is pooled using the same
 \code{(1 + 1 / m)} multiplier as \code{\link[=pool_rubin_scalar]{pool_rubin_scalar()}}. The returned p-value is
 calculated from the standard normal distribution.
 }
@@ -30,4 +30,3 @@ pool_z_stat(c(1.1, 1.3, 1.2))
 \seealso{
 \code{\link[=pool_rubin_scalar]{pool_rubin_scalar()}}
 }
-\keyword{internal}

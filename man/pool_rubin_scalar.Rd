@@ -36,4 +36,3 @@ pool_rubin_scalar(
 \seealso{
 \code{\link[=pool_z_stat]{pool_z_stat()}}
 }
-\keyword{internal}
