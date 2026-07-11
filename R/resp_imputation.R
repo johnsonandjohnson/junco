@@ -192,7 +192,7 @@ resp_multiple_imputation <- function(
   checkmate::assert_numeric(p_trt, min.len = 1, lower = 0, upper = 1, finite = TRUE)
   checkmate::assert_true(length(p_ctrl) == length(p_trt))
   checkmate::assert_count(n_imputations, positive = TRUE)
-  checkmate::assert_matrix(h_normalize_pvalcat(pvalcat)) # Just to check that it works.
+  checkmate::assert_list(h_normalize_pvalcat(pvalcat)) # Just to check that it works.
 
   results <- lapply(seq_along(p_ctrl), function(i) {
     control_probability <- p_ctrl[[i]]
