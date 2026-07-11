@@ -90,6 +90,7 @@ reference:
     - a_two_tier
     - pool_rubin_scalar
     - pool_z_stat
+    - resp_multiple_imputation
     - prop_diff_test
 
   - title: junco Formatting Functions
