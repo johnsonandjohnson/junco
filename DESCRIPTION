@@ -58,7 +58,6 @@ Imports:
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Suggests:
     knitr,
     rmarkdown,
@@ -81,3 +80,4 @@ Remotes:
     insightsengineering/tern@main,
     insightsengineering/rtables@main,
     insightsengineering/rtables.officer@main
+Config/roxygen2/version: 8.0.0
