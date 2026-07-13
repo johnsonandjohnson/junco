@@ -1,5 +1,5 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   ancova_combined: ancova_combined.html
@@ -7,7 +7,7 @@ articles:
   junco: junco.html
   standard_column_structures: standard_column_structures.html
   table_and_listing_customizations: table_and_listing_customizations.html
-last_built: 2026-06-26T08:23Z
+last_built: 2026-07-13T08:44Z
 urls:
   reference: https://johnsonandjohnson.github.io/junco/reference
   article: https://johnsonandjohnson.github.io/junco/articles
