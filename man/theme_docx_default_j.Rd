@@ -32,7 +32,7 @@ content or/and label rows as bold.\cr
 
 \item{bold_manual}{(\verb{named list})\cr list of index lists.
 Accepted groupings/names are c("header", "body").\cr
-See examples in \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::theme_docx_default()}}.\cr
+See examples in \code{\link[rtables.officer:theme_docx_default]{rtables.officer::theme_docx_default()}}.\cr
 (optional) Default = NULL.}
 
 \item{border}{(\code{fp_border})\cr border to use.\cr
@@ -42,7 +42,7 @@ Default = \code{flextable::fp_border_default(width = 0.875, color = "black")}.}
 A function that applies the given theme to a flextable.
 }
 \description{
-This function is based on \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::theme_docx_default()}}.
+This function is based on \code{\link[rtables.officer:theme_docx_default]{rtables.officer::theme_docx_default()}}.
 }
 \section{Note}{
 

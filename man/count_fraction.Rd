@@ -69,7 +69,7 @@ fmt <- jjcsformat_cnt_den_fract_fct(type = "fraction_count_denom", d = 2)
 fmt(c(23, 235, 23 / 235))
 }
 \seealso{
-Other JJCS formatting functions: 
-\code{\link{jjcsformat_xx}()}
+Other JJCS formatting functions:
+\code{\link[=jjcsformat_xx]{jjcsformat_xx()}}
 }
 \concept{JJCS formatting functions}

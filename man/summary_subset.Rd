@@ -42,7 +42,7 @@ equal to \code{nrow(df)}. No recycling is performed.
 In particular, scalar logical values such as \code{expression(TRUE)} or
 \code{expression(FALSE)} are not allowed when \code{nrow(df) > 1}.}
 
-\item{...}{Additional arguments passed to \code{\link[tern:analyze_variables]{tern::a_summary()}}, excluding
+\item{...}{Additional arguments passed to \code{\link[tern:a_summary]{tern::a_summary()}}, excluding
 the \code{x} argument, which is constructed internally from \code{df[[.var]]}
 after applying the filter.}
 
@@ -56,24 +56,24 @@ for more information.}
 the label row.}
 }
 \value{
-Returns the same type of object as \code{\link[tern:analyze_variables]{tern::a_summary()}}.
+Returns the same type of object as \code{\link[tern:a_summary]{tern::a_summary()}}.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
-These wrappers around \code{\link[tern:analyze_variables]{tern::a_summary()}} allow optional row subsetting
+These wrappers around \code{\link[tern:a_summary]{tern::a_summary()}} allow optional row subsetting
 using a logical expression evaluated in the context of the input data frame.
 
-\code{a_summary_subset()} is an \link[rtables:rtables-package]{rtables::rtables} analysis function (see
+\code{a_summary_subset()} is an \link[rtables:rtables]{rtables} analysis function (see
 \code{\link[rtables:analyze]{rtables::analyze()}}), while \code{c_summary_subset_label()} is a content row
 function (see \code{\link[rtables:summarize_row_groups]{rtables::summarize_row_groups()}}) that may optionally
 append a label to the resulting content row.
 }
 \details{
-\code{\link[tern:analyze_variables]{tern::a_summary()}} is a formatted analysis function that computes summary
-statistics for a single variable. In typical use within the \link[rtables:rtables-package]{rtables::rtables}
+\code{\link[tern:a_summary]{tern::a_summary()}} is a formatted analysis function that computes summary
+statistics for a single variable. In typical use within the \link[rtables:rtables]{rtables}
 framework, the analysis variable is first extracted from a data frame and
-then passed to \code{\link[tern:analyze_variables]{tern::a_summary()}} as a standalone vector.
+then passed to \code{\link[tern:a_summary]{tern::a_summary()}} as a standalone vector.
 
 The \code{a_summary_subset()} and \code{c_summary_subset_label()} wrappers extend
 this behavior by:
@@ -81,7 +81,7 @@ this behavior by:
 \item accepting a data frame (\code{df}) as input,
 \item optionally subsetting rows using a logical expression,
 \item extracting the analysis variable \code{.var} after subsetting,
-\item and passing the resulting vector to \code{\link[tern:analyze_variables]{tern::a_summary()}}.
+\item and passing the resulting vector to \code{\link[tern:a_summary]{tern::a_summary()}}.
 }
 }
 \section{Functions}{
@@ -133,5 +133,5 @@ c_summary_subset_label(
 )
 }
 \seealso{
-\code{\link[tern:analyze_variables]{tern::a_summary()}}
+\code{\link[tern:a_summary]{tern::a_summary()}}
 }

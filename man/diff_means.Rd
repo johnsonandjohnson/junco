@@ -49,9 +49,9 @@ Specifically, the second sample is \code{.ref_group[[.var]]}, where
 \code{.ref_group} is computed by \code{\link[=get_ref_info]{get_ref_info()}} using \code{.spl_context} and
 \code{ref_path}.
 
-This is a workaround for an \link[rtables:rtables-package]{rtables::rtables} limitation in supporting
+This is a workaround for an \link[rtables:rtables]{rtables} limitation in supporting
 \code{.ref_group} / \code{.in_ref_col} in the presence of stacked headers.
-Normally, \code{.ref_group} and \code{.in_ref_col} are provided by the \link[rtables:rtables-package]{rtables::rtables}
+Normally, \code{.ref_group} and \code{.in_ref_col} are provided by the \link[rtables:rtables]{rtables}
 tabulation framework when the current column split is within the reference
 variable.}
 
