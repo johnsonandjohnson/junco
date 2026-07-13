@@ -193,3 +193,6 @@ tbl
 \seealso{
 \code{safe_t_test()}, \code{extract_vectors()}
 }
+\author{
+WW
+}

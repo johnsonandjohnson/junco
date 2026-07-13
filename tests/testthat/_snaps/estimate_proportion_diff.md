@@ -13,6 +13,7 @@
     list(diff = structure(c(diff_cmh = 2.88879328887933), label = "Difference in Response rate (%)"), 
         diff_ci = structure(c(diff_ci_cmh_l = -13.1726676720747, 
         diff_ci_cmh_u = 18.9502542498333), label = "90% CI (CMH, without correction)"), 
+        se_diff = structure(c(se_diff_cmh = 9.76467492169616), label = "Standard Error of Difference in Response rate (%)"), 
         diff_est_ci = structure(c(diff_cmh = 2.88879328887933, diff_ci_cmh_l = -13.1726676720747, 
         diff_ci_cmh_u = 18.9502542498333), label = "% Difference (90% CI)"), 
         diff_ci_3d = structure(c(diff_cmh = 2.88879328887933, diff_ci_cmh_l = -13.1726676720747, 
