@@ -8,6 +8,8 @@
 - CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
+- Added the new helper functions `cur_col_split_path()` and `in_ref_col()` to
+  support custom analysis functions that depend on the current column split context.
 - Added a default value for the `label` argument in `c_summary_subset_label()`.
 - Updated the documentation of `a_summary_subset()`.
 - Refactored `prepend_label_cell()`; Only `RowsVerticalSection` is now supported.
