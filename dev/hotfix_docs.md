@@ -56,8 +56,33 @@ Save your hotfix files in the `dev/` folder. **File names must exactly match the
 * `dev/junco_hotfix_v0-1-1.R`
 * `dev/junco_hotfix_v0-1-2.R`
 
+> ** Critical: Use `junco:::` for Internal Function Calls**
+> When your hotfix function calls a **junco internal** (non-exported) function that you are **not** redefining in the hotfix file, you **must** prefix it with `junco:::`. 
+> 
+> Because the hotfix is sourced into the Global Environment, bare calls like `my_internal_helper()` will fail, R won't find them outside the locked package namespace. Use `junco:::my_internal_helper()` instead.
+> 
+> Functions you **are** redefining in the hotfix file do **not** need the prefix, your local definition takes precedence.
+> 
+> The CI test `test-hotfix.R` will catch any missing `junco:::` prefixes and report them as: 
+> `"Bare calls to junco internals found (should use junco::: prefix): <fn_name>"`
+
 ## Phase 4: CI Validation
 **6. Trigger the Pipeline:** Push your `feature/hotfix-*` branch to GitHub. This automatically triggers the Hotfix CI Pipeline, which will virtually inject your code into the legacy package and run the old test suite.
+
+**Local pre-flight check with `test-hotfix.R`:** Before pushing, you can run the hotfix validation tests locally. `dev/test-hotfix.R` is a `testthat` test file — run it via `testthat::test_file()` from your **R console** (Positron Console pane):
+
+```r
+testthat::test_file("dev/test-hotfix.R")
+```
+
+This runs four checks against your hotfix file:
+1. **Sourceable** — the file sources without errors (version guard and `library()` calls are safely stubbed out).
+2. **Expected functions defined** — all required functions (`tt_to_tlgrtf`, `tt_to_flextable_j`, `export_TLG_as_docx`) are present.
+3. **No missing symbols** — every function called inside the hotfix can be resolved (catches forgotten `junco:::` prefixes).
+4. **No bare internal calls** — junco internals that are not redefined in the hotfix must use the `junco:::` prefix.
+
+> **Note:** `test-hotfix.R` resolves the hotfix file path relative to the `testthat` test directory (`tests/testthat/../../code_library/junco_hotfix.r`). Make sure your hotfix file is in place at `code_library/junco_hotfix.r` before running.
+
 **7. Handle Snapshot Failures:** If the pipeline fails, check the logs. It is usually caused by snapshot mismatches in the unit tests (since your hotfix changed the math, formatting, or output). 
 * Evaluate: Are these snapshot changes expected due to your fix? 
 * Discuss with the team. 
