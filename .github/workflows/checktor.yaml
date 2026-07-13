@@ -1,0 +1,25 @@
+---
+name: checktor 🩺
+
+on:
+  workflow_call:
+    secrets:
+      REPO_GITHUB_TOKEN:
+        description: |
+          Github token with read access to repositories
+        required: false
+  workflow_dispatch:
+    inputs:
+      chosen-workflow:
+        description: |
+          Select which workflow you'd like to run
+        required: true
+        type: choice
+        default: checktor
+        options:
+          - checktor
+
+jobs:
+    name: checktor 🩺
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.chosen-workflow == 'checktor' }}
+    uses: johnsonandjohnson/actions/.github/workflows/checktor.yaml@dev
