@@ -135,3 +135,6 @@ c_summary_subset_label(
 \seealso{
 \code{\link[tern:a_summary]{tern::a_summary()}}
 }
+\author{
+WW
+}

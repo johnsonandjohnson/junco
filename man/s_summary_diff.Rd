@@ -86,3 +86,6 @@ s_summary_diff(df, "CHG", .stats, rg)
 s_summary_diff(df, "CHG", .stats, df, .in_ref_col = TRUE)
 
 }
+\author{
+WW
+}
