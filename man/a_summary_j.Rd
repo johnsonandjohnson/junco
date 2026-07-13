@@ -17,7 +17,7 @@ by a statistics function.}
 and values are vectors of levels to exclude.}
 
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
-that is passed by \code{rtables} when requested by a statistics function.}
+that is passed by \code{rtables}.}
 
 \item{...}{Additional arguments passed to \code{\link[tern:analyze_variables]{tern::a_summary()}}, excluding
 the \code{x} argument, which is constructed internally from \code{df[[.var]]}.}
