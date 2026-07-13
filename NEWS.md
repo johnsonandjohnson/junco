@@ -30,7 +30,7 @@
 - Changed stop message in `a_freq_j()` when `label_map` option is used in a rowsplit with no data on a character analysis var #386
 - Use new exported splv_extra and value_expr accessors (insightsengineering#1098)
 - Update new exported calls from rtables.officer
-- update documentation to roxygen 8.0.0 
+- update documentation to `roxygen2` 8.0.0 
 
 ### Added
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
