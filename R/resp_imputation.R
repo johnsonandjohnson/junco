@@ -53,10 +53,10 @@ h_impute_analyze_resp <- function(
   checkmate::assert_string(ctrlab)
   checkmate::assert_string(trtlab)
   checkmate::assert_string(respvar)
-  checkmate::assert_logical(dat[[respvar]], any.missing = TRUE)
   checkmate::assert_character(stratvar, min.len = 1, any.missing = FALSE, unique = TRUE)
   checkmate::assert_count(n_imputations, positive = TRUE)
   checkmate::assert_subset(c(trtvar, respvar, stratvar), choices = names(dat))
+  checkmate::assert_logical(dat[[respvar]], any.missing = TRUE)
   checkmate::assert_true(ctrlab != trtlab)
 
   treatment <- as.character(dat[[trtvar]])
