@@ -20,6 +20,7 @@ on:
           - checktor
 
 jobs:
+  checktor:
     name: checktor 🩺
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.chosen-workflow == 'checktor' }}
     uses: johnsonandjohnson/actions/.github/workflows/checktor.yaml@dev
