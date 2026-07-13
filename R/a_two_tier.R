@@ -4,7 +4,7 @@
 #'
 #' @author GB, WW.
 #'
-#' @description The analysis function used as an `afun` in \link[rtables]{analyze}.
+#' @description `a_two_tier()`: The analysis function used as an `afun` in \link[rtables]{analyze}.
 #'   This function simulates a final additional level of nesting with a
 #'   traditional analyze call inside it.
 #'
@@ -16,7 +16,7 @@
 #'   and ongoing patients with no further detail underneath, but a breakdown of
 #'   specific reasons beneath the count of patients who discontinued treatment.
 #'
-#' @details Both the analysis variable and `inner_var` must be factors.
+#' @details `a_two_tier()`: Both the analysis variable and `inner_var` must be factors.
 #'   Detail rows are differentiated by having an indent mod of one, causing them
 #'   to hang indented under their corresponding group row.
 #'
@@ -48,7 +48,7 @@
 #'   (see [rtables::additional_fun_params]).
 #' @param ... additional arguments passed directly to `grp_fun` and `detail_fun`.
 #'
-#' @return A `RowsVerticalSection` object including both the group row and all
+#' @return `a_two_tier()`: A `RowsVerticalSection` object including both the group row and all
 #'   detail rows, if applicable, for the facet.
 #'
 #' @import checkmate
@@ -170,6 +170,10 @@ a_two_tier <- function(df,
   assert_function(grp_fun)
   assert_function(detail_fun)
 
+  if (!all(sapply(c(.var, inner_var), \(x) is.factor(df[[x]])))) {
+    stop("a_two_tier requires both input variables .var and inner_var as factor")
+  }
+
   cur_grp <- tail(.spl_context$value, 1)
   df[[.var]] <- factor(df[[.var]], levels = cur_grp)
   .df_row[[.var]] <- factor(.df_row[[.var]], levels = cur_grp)
@@ -187,13 +191,19 @@ a_two_tier <- function(df,
   } else {
     args <- c(list(x = df[[.var]]), args)
   }
+  if (identical(grp_fun, a_freq_j)) {
+    # this will ensure row with cur_grp will be presented
+    # even if 0 observed in current row
+    args[["drop_levels"]] <- FALSE
+    args <- c(list(val = cur_grp), args)
+  }
   cell_vals <- unclass(
     do.call(grp_fun, args)
   )
   names(cell_vals) <- attr(cell_vals, "row_label")
 
   ## calculate the drill-down values if necessary
-  if (cur_grp %in% drill_down_levs && any(!is.na(df[[inner_var]]))) {
+  if (cur_grp %in% drill_down_levs && any(!is.na(.df_row[[inner_var]]))) {
     ## have to make sure we use all levels for the whole row group
     ## so that each column gets the same number of values in the same order
     all_inner_levs <- levels(df[[inner_var]])
@@ -231,5 +241,193 @@ a_two_tier <- function(df,
   in_rows(
     .list = c(cell_vals, detail_vals),
     .indent_mods = c(0, rep(1, length.out = length(detail_vals)))
+  )
+}
+
+
+#' @rdname a_two_tier
+#'
+#' @description `a_three_tier()`: Extends `a_two_tier()` by adding a third level
+#'   of nesting: a group summary outer row, mid-level detail rows (one per level
+#'   of `inner_var1`), and innermost detail rows (one per level of `inner_var2`)
+#'   nested beneath each mid-level row.
+#'
+#' @details `a_three_tier()`: The analysis variable, `inner_var1`, and `inner_var2` must all be
+#'   factors. Mid-level rows are indented by one and innermost rows by two,
+#'   relative to the group summary row.
+#'
+#' @inheritParams a_two_tier
+#' @param inner_var1 (`string`)\cr single variable name to use when generating
+#'   the mid-level (second tier) detail rows.
+#' @param inner_var2 (`string`)\cr single variable name to use when generating
+#'   the innermost (third tier) detail rows, nested under each level of `inner_var1`.
+#'
+#' @return `a_three_tier()`: A `RowsVerticalSection` object including the group row, mid-level
+#'   detail rows, and innermost detail rows, if applicable, for the facet.
+#'
+#' @import checkmate
+#' @export
+#'
+a_three_tier <- function(df,
+                         labelstr = NULL,
+                         .var,
+                         .N_col,
+                         .df_row,
+                         inner_var1,
+                         inner_var2,
+                         drill_down_levs,
+                         .spl_context,
+                         use_all_levels = FALSE,
+                         grp_fun,
+                         detail_fun,
+                         .alt_df_full = NULL,
+                         ...) {
+  assert_string(inner_var1)
+  assert_string(inner_var2)
+  assert_character(drill_down_levs)
+  assert_flag(use_all_levels)
+  assert_function(grp_fun)
+  assert_function(detail_fun)
+
+  if (!all(sapply(c(.var, inner_var1, inner_var2), \(x) is.factor(df[[x]])))) {
+    stop("a_three_tier requires all input variables .var, inner_var1 and inner_var2 as factor")
+  }
+
+  cur_grp <- tail(.spl_context$value, 1)
+  df[[.var]] <- factor(df[[.var]], levels = cur_grp)
+  .df_row[[.var]] <- factor(.df_row[[.var]], levels = cur_grp)
+  args <- list(
+    labelstr = labelstr,
+    .var = .var,
+    .N_col = .N_col,
+    .df_row = .df_row,
+    .spl_context = .spl_context,
+    .alt_df_full = .alt_df_full,
+    ...
+  )
+  if (names(formals(grp_fun))[1] == "df") {
+    args <- c(list(df = df), args)
+  } else {
+    args <- c(list(x = df[[.var]]), args)
+  }
+
+  if (identical(grp_fun, a_freq_j)) {
+    # this will ensure row with cur_grp will be presented
+    # even if 0 observed in current row
+    args[["drop_levels"]] <- FALSE
+    args <- c(list(val = cur_grp), args)
+  }
+  # perform calculation for outer level values
+  cell_vals <- unclass(
+    do.call(grp_fun, args)
+  )
+  names(cell_vals) <- attr(cell_vals, "row_label")
+
+  ## calculate the drill-down values if necessary
+  if (cur_grp %in% drill_down_levs && any(!is.na(.df_row[[inner_var1]]))) {
+    ## have to make sure we use all levels for the whole row group
+    ## so that each column gets the same number of values in the same order
+    all_inner_levs <- levels(df[[inner_var1]])
+
+    if (use_all_levels) {
+      detail_levs <- all_inner_levs
+    } else {
+      detail_levs <- all_inner_levs[all_inner_levs %in% all_inner_levs[.df_row[[inner_var1]]]]
+    }
+
+    inner_vec <- factor(df[[inner_var1]], levels = detail_levs)
+    df[[inner_var1]] <- factor(df[[inner_var1]], levels = detail_levs)
+    .df_row[[inner_var1]] <- factor(.df_row[[inner_var1]], levels = detail_levs)
+
+    # inner_vec will be looped over each level separately to act as a row_group
+    # .df_row_inner will reflect .df_row + filter to level of inner_var
+    # inner_vec2 can be done at once
+    # .df_row_inner
+    df_orig <- df
+    df_row_orig <- .df_row
+    detail_vals <- c()
+    indentmods <- c()
+    detail_vals_lbl <- c()
+    for (i in seq_along(detail_levs)) {
+      inner_lev_i <- detail_levs[i]
+      # restrict to current row & i-th level of inner_va1
+      .df_row <- df_row_orig[df_row_orig[[inner_var1]] == inner_lev_i, ]
+      .df_row[[inner_var1]] <- factor(.df_row[[inner_var1]], levels = inner_lev_i)
+      df <- df_orig[df_orig[[inner_var1]] == inner_lev_i, ]
+      df[[inner_var1]] <- factor(df[[inner_var1]], levels = inner_lev_i)
+
+      # get levels of inner_var2
+      all_inner_levs2 <- levels(df[[inner_var2]])
+      if (use_all_levels) {
+        detail_levs2 <- all_inner_levs2
+      } else {
+        # restrict to observed levels of inner_var2 in this updated df_row
+        # cur_grp (level of outer var (.var)) and inner_lev_i (level of mid level var (inner_var1))
+        detail_levs2 <- all_inner_levs2[all_inner_levs2 %in% all_inner_levs2[.df_row[[inner_var2]]]]
+      }
+      inner_vec2 <- factor(df[[inner_var2]], levels = detail_levs2)
+      df[[inner_var2]] <- factor(df[[inner_var2]], levels = detail_levs2)
+      .df_row[[inner_var2]] <- factor(.df_row[[inner_var2]], levels = detail_levs2)
+
+      det_args <- list(
+        .var = inner_var1,
+        .N_col = .N_col,
+        .df_row = .df_row,
+        .spl_context = .spl_context,
+        .alt_df_full = .alt_df_full,
+        ...
+      )
+      if (names(formals(detail_fun))[1] == "df") {
+        det_args <- c(list(df = df), det_args)
+      } else {
+        det_args <- c(list(x = df[[inner_var1]]), det_args)
+      }
+
+      # mid level values at level inner_lev_i
+      detail_vals_i <- unclass(
+        do.call(detail_fun, det_args)
+      )
+
+      names(detail_vals_i) <- attr(detail_vals_i, "row_label")
+
+      # now get the inner level ones
+      if (any(!is.na(.df_row[[inner_var2]]))) {
+        det_args2 <- list(
+          .var = inner_var2,
+          .N_col = .N_col,
+          .df_row = .df_row,
+          .spl_context = .spl_context,
+          .alt_df_full = .alt_df_full,
+          ...
+        )
+        if (names(formals(detail_fun))[1] == "df") {
+          det_args2 <- c(list(df = df), det_args2)
+        } else {
+          det_args2 <- c(list(x = df[[inner_var2]]), det_args2)
+        }
+        detail_vals2 <- unclass(
+          do.call(detail_fun, det_args2)
+        )
+        detail_vals2_lbl <- attr(detail_vals2, "row_label")
+        if (i > 1){
+          names(detail_vals2) <- paste0(attr(detail_vals2, "row_label"),"[[", i, "]]")
+        } else {
+          names(detail_vals2) <- attr(detail_vals2, "row_label")
+        }
+        detail_vals <- c(detail_vals, detail_vals_i, detail_vals2)
+        indentmods <- c(indentmods, c(1, rep(2, length.out = length(detail_vals2))))
+        detail_vals_lbl <- c(detail_vals_lbl, names(detail_vals_i), detail_vals2_lbl)
+      }
+    }
+  } else {
+    detail_vals <- list()
+    indentmods <- NULL
+    detail_vals_lbl <- c()
+  }
+
+  in_rows(
+    .list = c(cell_vals, detail_vals),
+    .indent_mods = c(0, indentmods),
+    .labels = c(names(cell_vals), detail_vals_lbl)
   )
 }
