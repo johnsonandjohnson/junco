@@ -156,7 +156,7 @@ When \code{FALSE}, risk difference columns will remain blank
 the control group for the relative risk derivation.}
 
 \item{variables}{Will be passed onto the relative risk function
-(internal function s_rel_risk_val_j), which is based upon \code{\link[tern:prop_diff]{tern::s_proportion_diff()}}.\cr
+(internal function s_rel_risk_val_j), which is based upon \code{\link[tern:s_proportion_diff]{tern::s_proportion_diff()}}.\cr
 See \code{?tern::s_proportion_diff} for details.}
 
 \item{conf_level}{(\code{proportion})\cr confidence level of the interval.}

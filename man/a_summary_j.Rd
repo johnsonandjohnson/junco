@@ -19,24 +19,24 @@ and values are vectors of levels to exclude.}
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
 that is passed by \code{rtables}.}
 
-\item{...}{Additional arguments passed to \code{\link[tern:analyze_variables]{tern::a_summary()}}, excluding
+\item{...}{Additional arguments passed to \code{\link[tern:a_summary]{tern::a_summary()}}, excluding
 the \code{x} argument, which is constructed internally from \code{df[[.var]]}.}
 }
 \value{
-Returns the same type of object as \code{\link[tern:analyze_variables]{tern::a_summary()}}, or \code{NULL} when the
+Returns the same type of object as \code{\link[tern:a_summary]{tern::a_summary()}}, or \code{NULL} when the
 current row split path is excluded by \code{exclude_levels}.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
-These wrappers around \code{\link[tern:analyze_variables]{tern::a_summary()}} allow selected row split levels to
+These wrappers around \code{\link[tern:a_summary]{tern::a_summary()}} allow selected row split levels to
 be excluded from producing the analysis.
 }
 \details{
-\code{\link[tern:analyze_variables]{tern::a_summary()}} is a formatted analysis function that computes summary
-statistics for a single variable. In typical use within the \link[rtables:rtables-package]{rtables::rtables}
+\code{\link[tern:a_summary]{tern::a_summary()}} is a formatted analysis function that computes summary
+statistics for a single variable. In typical use within the \link[rtables:rtables]{rtables}
 framework, the analysis variable is first extracted from a data frame and
-then passed to \code{\link[tern:analyze_variables]{tern::a_summary()}} as a standalone vector.
+then passed to \code{\link[tern:a_summary]{tern::a_summary()}} as a standalone vector.
 
 \code{a_summary_j_with_exclude()} extends this behavior by:
 \itemize{
@@ -44,7 +44,7 @@ then passed to \code{\link[tern:analyze_variables]{tern::a_summary()}} as a stan
 \item checking whether the current row split path should be excluded,
 \item returning \code{NULL} for excluded row split levels,
 \item extracting the analysis variable \code{.var} for all other row split levels,
-\item and passing the resulting vector to \code{\link[tern:analyze_variables]{tern::a_summary()}}.
+\item and passing the resulting vector to \code{\link[tern:a_summary]{tern::a_summary()}}.
 }
 }
 \section{Functions}{
@@ -74,5 +74,5 @@ lyt <- basic_table() |>
 build_table(lyt, df)
 }
 \seealso{
-\code{\link[tern:analyze_variables]{tern::a_summary()}}, \code{\link[=do_exclude_split]{do_exclude_split()}}
+\code{\link[tern:a_summary]{tern::a_summary()}}, \code{\link[=do_exclude_split]{do_exclude_split()}}
 }

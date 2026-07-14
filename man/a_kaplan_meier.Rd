@@ -30,5 +30,5 @@ a_kaplan_meier(
 \item{.indent_mods}{(\code{list}) indentation modifications (ignored).}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{\link[tern:survival_time]{tern::a_surv_time()}} instead.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{\link[tern:a_surv_time]{tern::a_surv_time()}} instead.
 }

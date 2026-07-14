@@ -7,6 +7,6 @@
 s_kaplan_meier(df, .var, is_event, control = control_surv_time())
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{\link[tern:survival_time]{tern::s_surv_time()}} instead.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{\link[tern:s_surv_time]{tern::s_surv_time()}} instead.
 }
 \keyword{internal}
