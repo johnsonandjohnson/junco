@@ -409,8 +409,8 @@ a_three_tier <- function(df,
           do.call(detail_fun, det_args2)
         )
         detail_vals2_lbl <- attr(detail_vals2, "row_label")
-        if (i > 1){
-          names(detail_vals2) <- paste0(attr(detail_vals2, "row_label"),"[[", i, "]]")
+        if (i > 1) {
+          names(detail_vals2) <- paste0(attr(detail_vals2, "row_label"), "[[", i, "]]")
         } else {
           names(detail_vals2) <- attr(detail_vals2, "row_label")
         }
