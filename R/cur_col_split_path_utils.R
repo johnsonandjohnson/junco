@@ -60,17 +60,21 @@ cur_col_split_path <- function(.spl_context) {
 #' @describeIn cur_col_split_path_utils
 #' Determine whether the current column split path is a reference path.
 #'
-#' @param ref_path (`character`)\cr
+#' @param ref_path (`character` or `NULL`)\cr
 #'   Reference column path specified as alternating split variable names and
-#'   split values, e.g. `c("ARM", "Placebo")` or
+#'   split values. Must have at least two elements and an even length, e.g.
+#'   `c("ARM", "Placebo")` or
 #'   `c("ARM", "*", "desc_stat", "N")`; see [rtables::col_paths()].
 #'
 #'   The special value `"*"` can be used as a wildcard to match any split
 #'   variable name or value.
 #'
+#'   `NULL` can be used to indicate that no reference path is specified,
+#'   in which case the function returns `FALSE`, regardless of `.spl_context`.
+#'
 #' @return
 #' * `in_ref_col()` returns a single logical value indicating whether the
-#' current column split matches `ref_path`.
+#' current column split matches the specified `ref_path`.
 #'
 #' @export
 #'
@@ -117,6 +121,10 @@ cur_col_split_path <- function(.spl_context) {
 #' tbl
 #'
 in_ref_col <- function(ref_path, .spl_context) {
+  if (is.null(ref_path)) {
+    return(FALSE)
+  }
+
   checkmate::assert_character(ref_path, min.len = 2L, names = "unnamed")
   checkmate::assert_true(length(ref_path) %% 2 == 0)
   checkmate::assert_data_frame(.spl_context, min.rows = 1L)
