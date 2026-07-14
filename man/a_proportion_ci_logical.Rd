@@ -13,7 +13,7 @@ a_proportion_ci_logical(x, .alt_df, conf_level, method, formats)
 
 \item{conf_level}{(\code{numeric})\cr confidence level for the confidence interval.}
 
-\item{method}{(\code{string})\cr please see \code{\link[tern:estimate_proportion]{tern::s_proportion()}} for possible
+\item{method}{(\code{string})\cr please see \code{\link[tern:s_proportion]{tern::s_proportion()}} for possible
 methods.}
 
 \item{formats}{(\code{list})\cr including element \code{prop_ci} with the

@@ -17,7 +17,7 @@ that is passed by \code{rtables}.}
 \item{ref_path}{(\code{character})\cr
 Reference column path specified as alternating split variable names and
 split values, e.g. \code{c("ARM", "Placebo")} or
-\code{c("ARM", "*", "desc_stat", "N")}; see \code{\link[rtables:make_col_row_df]{rtables::col_paths()}}.
+\code{c("ARM", "*", "desc_stat", "N")}; see \code{\link[rtables:col_paths]{rtables::col_paths()}}.
 
 The special value \code{"*"} can be used as a wildcard to match any split
 variable name or value.}
@@ -37,7 +37,7 @@ current column split matches \code{ref_path}.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
-These helper functions are intended for use in \link[rtables:rtables-package]{rtables::rtables} custom analysis
+These helper functions are intended for use in \link[rtables:rtables]{rtables} custom analysis
 functions that depend on the current column split context.
 }
 \section{Functions}{
@@ -105,7 +105,7 @@ tbl
 }
 \seealso{
 \itemize{
-\item \code{\link[rtables:make_col_row_df]{rtables::col_paths()}} for obtaining column paths from a built table.
+\item \code{\link[rtables:col_paths]{rtables::col_paths()}} for obtaining column paths from a built table.
 }
 }
 \author{
