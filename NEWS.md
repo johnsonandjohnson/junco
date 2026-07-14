@@ -35,6 +35,9 @@
 - update documentation to `roxygen2` 8.0.0 
 
 ### Added
+- Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
+- Added `pool_rubin_scalar()` and `pool_z_stat()` for pooling scalar estimates and z statistics across imputations.
+- Added `resp_multiple_imputation()` to impute missing binary responses across scenarios and pool CMH risk-difference and p-value results.
 - Updated documentation and examples for `label_map` in `a_freq_j` (#235)
 - Added `tern` methods for difference in proportions in `a_freq_j` and  `a_freq_resp_var_j` : `cmh_sato`, `cmh_mn`, `uncond_exact_diff`  (#389)
 - Added `a_summary_j_with_exclude()` to allow `tern::a_summary()` analyses to be skipped for selected row split levels.
