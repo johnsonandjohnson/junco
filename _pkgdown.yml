@@ -88,6 +88,9 @@ reference:
     - s_cmhrms_j
     - a_cmhrms_j
     - a_two_tier
+    - pool_rubin_scalar
+    - pool_z_stat
+    - resp_multiple_imputation
     - prop_diff_test
 
   - title: junco Formatting Functions
@@ -132,6 +135,7 @@ reference:
   - title: junco Miscellaneous Functions
     desc: The following functions are other miscellaneous junco functions used to create common table layouts.
     contents:
+    - categorize_pval
     - cur_col_split_path
     - in_ref_col
     - get_mmrm_lsmeans
