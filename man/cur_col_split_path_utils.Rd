@@ -18,7 +18,7 @@ that is passed by \code{rtables}.}
 Reference column path specified as alternating split variable names and
 split values. Must have at least two elements and an even length, e.g.
 \code{c("ARM", "Placebo")} or
-\code{c("ARM", "*", "desc_stat", "N")}; see \code{\link[rtables:make_col_row_df]{rtables::col_paths()}}.
+\code{c("ARM", "*", "desc_stat", "N")}; see \code{\link[rtables:col_paths]{rtables::col_paths()}}.
 
 The special value \code{"*"} can be used as a wildcard to match any split
 variable name or value.
