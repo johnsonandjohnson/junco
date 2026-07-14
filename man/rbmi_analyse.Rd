@@ -25,7 +25,7 @@ datasets prior to running \code{fun}. See details.}
 
 \item{cluster_or_cores}{(\code{numeric} or \verb{cluster object})\cr
 The number of parallel processes to use when running this function. Can also be a
-cluster object created by \code{\link[=make_rbmi_cluster]{make_rbmi_cluster()}}. See the parallelisation section below.}
+cluster object created by \code{\link[rbmi:make_rbmi_cluster]{make_rbmi_cluster()}}. See the parallelisation section below.}
 
 \item{.validate}{(\code{logical})\cr
 Should \code{imputations} be checked to ensure it conforms to the required format
