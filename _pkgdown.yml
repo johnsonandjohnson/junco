@@ -44,6 +44,7 @@ reference:
     - a_summary_j_with_exclude
     - a_summary_subset
     - a_two_tier
+    - a_three_tier    
     - c_summary_subset_label
     - analyze_values
     - rbmi_ancova
