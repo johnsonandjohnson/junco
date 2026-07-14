@@ -242,8 +242,8 @@ result <- build_table(lyt, ADEG)
 result
 }
 \seealso{
-Other Inclusion of ANCOVA Functions: 
-\code{\link{a_summarize_ancova_j}()},
-\code{\link{s_ancova_j}()}
+Other Inclusion of ANCOVA Functions:
+\code{\link[=a_summarize_ancova_j]{a_summarize_ancova_j()}},
+\code{\link[=s_ancova_j]{s_ancova_j()}}
 }
 \concept{Inclusion of ANCOVA Functions}

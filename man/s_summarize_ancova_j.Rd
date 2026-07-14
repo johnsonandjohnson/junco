@@ -55,11 +55,11 @@ by a statistics function.}
 returns the statistics from \code{tern::s_summary(x)}, appended with a new statistics based upon ANCOVA
 }
 \description{
-Combination of \link[tern:analyze_variables]{tern::s_summary}, and ANCOVA based estimates for mean and diff between columns,
+Combination of \link[tern:s_summary]{tern::s_summary}, and ANCOVA based estimates for mean and diff between columns,
 based on ANCOVA function \code{s_ancova_j}.
 }
 \details{
-Combination of \link[tern:analyze_variables]{tern::s_summary}, and ANCOVA based estimates for mean and diff between columns,
+Combination of \link[tern:s_summary]{tern::s_summary}, and ANCOVA based estimates for mean and diff between columns,
 based on ANCOVA function \code{s_ancova_j}
 }
 \section{Functions}{
@@ -125,8 +125,8 @@ s_summarize_ancova_j(
 )
 }
 \seealso{
-Other Inclusion of ANCOVA Functions: 
-\code{\link{a_summarize_aval_chg_diff_j}()},
-\code{\link{s_ancova_j}()}
+Other Inclusion of ANCOVA Functions:
+\code{\link[=a_summarize_aval_chg_diff_j]{a_summarize_aval_chg_diff_j()}},
+\code{\link[=s_ancova_j]{s_ancova_j()}}
 }
 \concept{Inclusion of ANCOVA Functions}
