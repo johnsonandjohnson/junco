@@ -136,7 +136,7 @@ reference:
     contents:
     - categorize_pval
     - cur_col_split_path
-    - in_ref_col
+    - in_column
     - get_mmrm_lsmeans
     - get_ref_info
     - get_visit_levels

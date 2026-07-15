@@ -8,6 +8,9 @@
 - CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
+- Renamed `in_ref_col()` to `in_column()` and renamed its `ref_path` argument
+  to `col_path` to better reflect its purpose and avoid confusion with reference
+  paths, which are typically used to indicate control treatment groups.
 - Updated `in_ref_col()` to accept `ref_path = NULL` (#404).
 - Added the new helper functions `cur_col_split_path()` and `in_ref_col()` to
   support custom analysis functions that depend on the current column split
