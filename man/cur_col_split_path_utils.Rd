@@ -14,13 +14,17 @@ in_ref_col(ref_path, .spl_context)
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
 that is passed by \code{rtables}.}
 
-\item{ref_path}{(\code{character})\cr
+\item{ref_path}{(\code{character} or \code{NULL})\cr
 Reference column path specified as alternating split variable names and
-split values, e.g. \code{c("ARM", "Placebo")} or
+split values. Must have at least two elements and an even length, e.g.
+\code{c("ARM", "Placebo")} or
 \code{c("ARM", "*", "desc_stat", "N")}; see \code{\link[rtables:col_paths]{rtables::col_paths()}}.
 
 The special value \code{"*"} can be used as a wildcard to match any split
-variable name or value.}
+variable name or value.
+
+\code{NULL} can be used to indicate that no reference path is specified,
+in which case the function returns \code{FALSE}, regardless of \code{.spl_context}.}
 }
 \value{
 \itemize{
@@ -31,7 +35,7 @@ column split path extracted from \code{.spl_context}, interleaved as
 
 \itemize{
 \item \code{in_ref_col()} returns a single logical value indicating whether the
-current column split matches \code{ref_path}.
+current column split matches the specified \code{ref_path}.
 }
 }
 \description{
