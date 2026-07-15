@@ -16,20 +16,9 @@ that is passed by \code{rtables}.}
 
 \item{ref_path}{(\code{character} or \code{NULL})\cr
 Reference column path specified as alternating split variable names and
-<<<<<<< HEAD
 split values. Must have at least two elements and an even length, e.g.
 \code{c("ARM", "Placebo")} or
 \code{c("ARM", "*", "desc_stat", "N")}; see \code{\link[rtables:col_paths]{rtables::col_paths()}}.
-=======
-<<<<<<< HEAD
-split values, e.g. \code{c("ARM", "Placebo")} or
-\code{c("ARM", "*", "desc_stat", "N")}; see \code{\link[rtables:make_col_row_df]{rtables::col_paths()}}.
-=======
-split values. Must have at least two elements and an even length, e.g.
-\code{c("ARM", "Placebo")} or
-\code{c("ARM", "*", "desc_stat", "N")}; see \code{\link[rtables:col_paths]{rtables::col_paths()}}.
->>>>>>> aa2c87f (in_ref_col() - support ref_path = NULL, minor variables change in uni… (#412))
->>>>>>> b710087 (in_ref_col() - support ref_path = NULL, minor variables change in uni… (#412))
 
 The special value \code{"*"} can be used as a wildcard to match any split
 variable name or value.

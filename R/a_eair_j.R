@@ -277,7 +277,7 @@ NULL
 #' @return
 #'  * `s_eair100_levii_j()` returns a list containing the following statistics:
 #' \itemize{
-#'   \item n_event: Number of subjects with the event, or total event count if `count_events = TRUE`
+#'   \item n_event: Number of subjects with the event, or total event count if `count_multiple_events = TRUE`
 #'   \item person_years: Total person-years of follow-up
 #'   \item eair: Exposure-adjusted incidence rate per `num_p_year` person-years
 #'   \item n_eair: Combination of `n_event` and `eair` statistics.
@@ -295,18 +295,18 @@ NULL
 #' running `junco_get_stats("a_eair100_j")`.
 #' @details
 #' The exposure-adjusted incidence rate (EAIR) is defined as:
-#' - When (`occvar` not `NULL`) or `count_multiple_events = FALSE`:
+#' - When (`occ_var` not `NULL`) or `count_multiple_events = FALSE`:
 #' \cr the **number of subjects**
 #' with at least one occurrence of a specified adverse event divided by the total
 #' at-risk exposure time across all subjects.
-#' 
-#' - When `occvar = NULL` and `count_multiple_events = TRUE`:
+#'
+#' - When `occ_var = NULL` and `count_multiple_events = TRUE`:
 #' \cr the total **number of events** across of a specified adverse event divided by the total
 #' at-risk exposure time across all subjects.
 #'
 #' Total at-risk exposure time is calculated for each subject
 #' as:
-#' - When `occvar` not `NULL`
+#' - When `occ_var` not `NULL`
 #' \itemize{
 #' \item for subjects with the event: relative day (from the start of exposure) of
 #' the onset date of the **first** occurrence of the specified event (`occ_var` and `occ_dy`),
@@ -314,7 +314,7 @@ NULL
 #' \item for subjects without the event: total duration of follow-up (expressed in years)
 #' (e.g., treatment discontinuation, completion, or censoring) (`fup_var`).
 #' }
-#' - When `occvar = NULL`\cr
+#' - When `occ_var = NULL`\cr
 #' for all subjects: total duration of follow-up (expressed in years)
 #' (e.g., treatment discontinuation, completion, or censoring) (`fup_var`).
 #'

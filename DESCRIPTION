@@ -80,7 +80,7 @@ Remotes:
     insightsengineering/formatters@main,
     insightsengineering/tern@main,
     petelaud/ratesci@master,
-    johnsonandjohnson/pharmaverseadamjnj@dev
+    johnsonandjohnson/pharmaverseadamjnj@dev,
     insightsengineering/rtables@main,
     insightsengineering/rtables.officer@main
 Config/roxygen2/version: 8.0.0

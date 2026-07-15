@@ -49,19 +49,10 @@ a_eair100_j(
   .indent_mods = NULL,
   na_str = rep("NA", 3),
   conf_level = 0.95,
-<<<<<<< HEAD
-  conf_type = c("wald", "waldcc", "mn", "scas"),
-  fup_var,
-  occ_var,
-  occ_dy,
-  num_p_year = 100,
-  count_multiple_events = FALSE
-=======
   conf_type_diff = c("wald", "waldcc", "mn", "scas"),
   conf_type_eair = c("normal", "normal_log", "exact", "byar"),
   row_labels_adj = FALSE,
   riskdiff_setup = c("horizontal", "vertical")
->>>>>>> 73f2931 (Several updates)
 )
 }
 \arguments{
@@ -77,40 +68,12 @@ a_eair100_j(
 
 \item{id}{(\code{string})\cr subject variable name.}
 
-<<<<<<< HEAD
-\item{diff}{(\code{logical})\cr if TRUE, risk difference calculations will be performed.}
-
-\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
-
-\item{conf_type}{(\code{string})\cr method used to compute the confidence interval for the EAIR difference.
-One of \code{"wald"} (Wald without continuity correction), \code{"waldcc"} (Wald with continuity correction),
-\code{"mn"} (Miettinen-Nurminen score), or \code{"scas"} (skewness-corrected asymptotic score).
-Defaults to \code{"wald"}.}
-
-\item{trt_var}{(\code{string})\cr treatment variable name.}
-
-\item{ctrl_grp}{(\code{string})\cr control group value.}
-
-\item{cur_trt_grp}{(\code{string})\cr current treatment group value.}
-
-\item{inriskdiffcol}{(\code{logical})\cr flag indicating if the function is called within a risk difference column.}
-
-<<<<<<< HEAD
-=======
->>>>>>> 73f2931 (Several updates)
 \item{fup_var}{(\code{string})\cr name of the variable containing the total follow-up duration
 for each subject, expressed in \strong{years}.
 Used as the at-risk exposure time for subjects who did \strong{not} experience the event.}
 
 \item{occ_var}{(\code{string} or \code{NULL})\cr name of the flag variable identifying the
 \strong{first} occurrence of the event within each subject and level, encoded as \code{"Y"}.
-<<<<<<< HEAD
-Only records where \code{occ_var == "Y"} contribute to the event count (\code{n_event}).
-If \code{NULL}, event occurrence filtering is skipped and time at risk is taken
-from \code{fup_var} in \code{alt_counts_df} for all subjects.}
-
-\item{occ_dy}{(\code{string})\cr name of the variable containing the relative day of the
-=======
 Only records where \code{occ_var == "Y"} contribute to the event count (\code{n_event}),
 and only one event record per subject is allowed.
 \cr If \code{NULL}, event occurrence filtering is skipped and time at risk is taken
@@ -118,7 +81,6 @@ from \code{fup_var} in \code{alt_counts_df} for all subjects.}
 
 \item{occ_dy}{(\code{string} or \code{NULL})\cr When \code{occ_var} not \code{NULL}: name of the variable
 containing the relative day of the
->>>>>>> 73f2931 (Several updates)
 first event occurrence, expressed in \strong{days} (e.g., \code{ASTDY}).
 For subjects with an event (\code{occ_var == "Y"}), this value is converted to years
 as \code{occ_dy / 365.25} and used as the at-risk exposure time instead of \code{fup_var}.
@@ -159,21 +121,6 @@ Required to be an expression if \code{vs_ref_group} is \code{TRUE}}
 \item{inriskdiffcol}{(\code{logical})\cr flag indicating if the function is called within a risk difference column.}
 
 \item{labelstr}{(\code{string})\cr Not intended to be set by user, only present to be able to use function as a \code{cfun}.}
-=======
-\item{fup_var}{(\code{string})\cr follow-up variable name. Note that expected time unit interval is in \strong{years}.}
-
-\item{occ_var}{(\code{string})\cr occurrence variable name.
-\cr Note: expected to be encoded with values \code{Y}, to indicate the first occurrence within a subject & level.}
-
-\item{occ_dy}{(\code{string})\cr occurrence day variable name. Note that expected time unit interval is in \strong{days}.
-\cr Calculations for \code{person_years} will use this variable for subjects who have experienced the event (first occurrence).
-For subjects without an event, \code{fup_var} will be used in the \code{peron_years} calculation.
-\cr If \code{occ_var = NULL}, the entire follow-up interval (\code{fup_var}) will be used for all subjects.}
-
-\item{num_p_year}{(\code{numeric})\cr time unit for desired incidence rate (in person-years)}
-
-\item{labelstr}{(\code{string})\cr label string for the row.}
->>>>>>> b102ea9 (temp commit, not yet finished)
 
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states.}
 
@@ -208,7 +155,7 @@ these will be removed as \code{ear_diff_est_ci} will be displayed in the risk di
 \itemize{
 \item \code{s_eair100_levii_j()} returns a list containing the following statistics:
 \itemize{
-\item n_event: Number of subjects with the event, or total event count if \code{count_events = TRUE}
+\item n_event: Number of subjects with the event, or total event count if \code{count_multiple_events = TRUE}
 \item person_years: Total person-years of follow-up
 \item eair: Exposure-adjusted incidence rate per \code{num_p_year} person-years
 \item n_eair: Combination of \code{n_event} and \code{eair} statistics.
@@ -222,7 +169,6 @@ these will be removed as \code{ear_diff_est_ci} will be displayed in the risk di
 (if \code{diff}=TRUE and \code{inriskdiffcol}=TRUE)
 \item eair_diff_est_ci: Combination of \code{eair_diff_est} and \code{eair_diff_ci}.
 }\cr
-<<<<<<< HEAD
 The list of available statistics (core columns) can also be viewed by
 running \code{junco_get_stats("a_eair100_j")}.
 }
@@ -231,13 +177,6 @@ running \code{junco_get_stats("a_eair100_j")}.
 \item \code{a_eair100_j} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.\cr
 Within a risk difference column, the statistics \code{eair} and \code{n_eair} are replaced by \code{eair_diff_est_ci}
 (difference in EAIR between current group and reference group, together with it's confidence interval).
-=======
-The list of available statistics (core columns) can also be viewed by running \code{junco_get_stats("a_eair100_j")}
-}
-
-\itemize{
-\item \code{a_eair100_j} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
->>>>>>> b102ea9 (temp commit, not yet finished)
 }
 }
 \description{
@@ -246,11 +185,11 @@ Statistical/Analysis Function for presenting Exposure-Adjusted Incidence Rate su
 \details{
 The exposure-adjusted incidence rate (EAIR) is defined as:
 \itemize{
-\item When (\code{occvar} not \code{NULL}) or \code{count_multiple_events = FALSE}:
+\item When (\code{occ_var} not \code{NULL}) or \code{count_multiple_events = FALSE}:
 \cr the \strong{number of subjects}
 with at least one occurrence of a specified adverse event divided by the total
 at-risk exposure time across all subjects.
-\item When \code{occvar = NULL} and \code{count_multiple_events = TRUE}:
+\item When \code{occ_var = NULL} and \code{count_multiple_events = TRUE}:
 \cr the total \strong{number of events} across of a specified adverse event divided by the total
 at-risk exposure time across all subjects.
 }
@@ -258,7 +197,7 @@ at-risk exposure time across all subjects.
 Total at-risk exposure time is calculated for each subject
 as:
 \itemize{
-\item When \code{occvar} not \code{NULL}
+\item When \code{occ_var} not \code{NULL}
 \itemize{
 \item for subjects with the event: relative day (from the start of exposure) of
 the onset date of the \strong{first} occurrence of the specified event (\code{occ_var} and \code{occ_dy}),
@@ -266,7 +205,7 @@ transformed from days into years as \code{occ_dy/365.25}, or
 \item for subjects without the event: total duration of follow-up (expressed in years)
 (e.g., treatment discontinuation, completion, or censoring) (\code{fup_var}).
 }
-\item When \code{occvar = NULL}\cr
+\item When \code{occ_var = NULL}\cr
 for all subjects: total duration of follow-up (expressed in years)
 (e.g., treatment discontinuation, completion, or censoring) (\code{fup_var}).
 }
@@ -288,15 +227,7 @@ expressed in subject-years
 The difference between two EAIRs is
 \eqn{\hat \theta = (\hat r_1 - \hat r_2)}.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-Wald's method for the confidence interval approximation is used (Liu iet al., 2006), which uses the standard error
-=======
-Wald's method for the confidence interval approximation is used, which uses the standard error
->>>>>>> b102ea9 (temp commit, not yet finished)
-=======
 Wald's method for the confidence interval approximation is used (Liu et al., 2006), which uses the standard error
->>>>>>> fc318b7 (lintr + spelling)
 \deqn{
 \mathrm{se}(\hat r_1 - \hat r_2) =
 \sqrt{\frac{n_1}{T_1^2} + \frac{n_2}{T_2^2}}
@@ -321,11 +252,7 @@ EAIR is commonly reported per 100 subject-years:
 }
 \section{Functions}{
 \itemize{
-<<<<<<< HEAD
 \item \code{s_eair100_levii_j()}: calculates exposure-adjusted incidence rates (EAIR) per \code{num_p_year} person-years for a
-=======
-\item \code{s_eair100_levii_j()}: calculates exposure-adjusted incidence rates (EAIR) per 100 person-years for a
->>>>>>> b102ea9 (temp commit, not yet finished)
 specific level of a variable.
 
 \item \code{a_eair100_j()}: Formatted analysis function for exposure adjusted incidence rate summary which is
@@ -411,7 +338,6 @@ result <- build_table(lyt, aefup, alt_counts_df = adexsum)
 head(result, 5)
 
 }
-<<<<<<< HEAD
 \references{
 Liu, G. F., Wang, J., Liu, K., and Snavely, D. B. (2006).
 Confidence intervals for an exposure adjusted incidence rate difference
@@ -419,6 +345,4 @@ with applications to clinical trials.
 \emph{Statistics in Medicine}, \strong{25}(8), 1275--1286.
 \doi{10.1002/sim.2335}
 }
-=======
->>>>>>> b102ea9 (temp commit, not yet finished)
 \keyword{internal}
