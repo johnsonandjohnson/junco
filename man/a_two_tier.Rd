@@ -2,6 +2,7 @@
 % Please edit documentation in R/a_two_tier.R
 \name{a_two_tier}
 \alias{a_two_tier}
+\alias{a_three_tier}
 \title{Two Tier Analysis Function}
 \usage{
 a_two_tier(
@@ -11,6 +12,23 @@ a_two_tier(
   .N_col,
   .df_row,
   inner_var,
+  drill_down_levs,
+  .spl_context,
+  use_all_levels = FALSE,
+  grp_fun,
+  detail_fun,
+  .alt_df_full = NULL,
+  ...
+)
+
+a_three_tier(
+  df,
+  labelstr = NULL,
+  .var,
+  .N_col,
+  .df_row,
+  inner_var1,
+  inner_var2,
   drill_down_levs,
   .spl_context,
   use_all_levels = FALSE,
@@ -65,13 +83,22 @@ this argument gets populated by the rtables split machinery
 (see \link[rtables:additional_fun_params]{rtables::additional_fun_params}).}
 
 \item{...}{additional arguments passed directly to \code{grp_fun} and \code{detail_fun}.}
+
+\item{inner_var1}{(\code{string})\cr single variable name to use when generating
+the mid-level (second tier) detail rows.}
+
+\item{inner_var2}{(\code{string})\cr single variable name to use when generating
+the innermost (third tier) detail rows, nested under each level of \code{inner_var1}.}
 }
 \value{
-A \code{RowsVerticalSection} object including both the group row and all
+\code{a_two_tier()}: A \code{RowsVerticalSection} object including both the group row and all
 detail rows, if applicable, for the facet.
+
+\code{a_three_tier()}: A \code{RowsVerticalSection} object including the group row, mid-level
+detail rows, and innermost detail rows, if applicable, for the facet.
 }
 \description{
-The analysis function used as an \code{afun} in \link[rtables]{analyze}.
+\code{a_two_tier()}: The analysis function used as an \code{afun} in \link[rtables]{analyze}.
 This function simulates a final additional level of nesting with a
 traditional analyze call inside it.
 
@@ -82,11 +109,20 @@ content rows and to \emph{optionally or conditionally} generate one or more
 For example, in a disposition table, one might want counts for completed
 and ongoing patients with no further detail underneath, but a breakdown of
 specific reasons beneath the count of patients who discontinued treatment.
+
+\code{a_three_tier()}: Extends \code{a_two_tier()} by adding a third level
+of nesting: a group summary outer row, mid-level detail rows (one per level
+of \code{inner_var1}), and innermost detail rows (one per level of \code{inner_var2})
+nested beneath each mid-level row.
 }
 \details{
-Both the analysis variable and \code{inner_var} must be factors.
+\code{a_two_tier()}: Both the analysis variable and \code{inner_var} must be factors.
 Detail rows are differentiated by having an indent mod of one, causing them
 to hang indented under their corresponding group row.
+
+\code{a_three_tier()}: The analysis variable, \code{inner_var1}, and \code{inner_var2} must all be
+factors. Mid-level rows are indented by one and innermost rows by two,
+relative to the group summary row.
 }
 \note{
 In its current form, this function may not retain any formatting or

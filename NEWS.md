@@ -8,8 +8,10 @@
 - CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
+- Updated `in_ref_col()` to accept `ref_path = NULL` (#404).
 - Added the new helper functions `cur_col_split_path()` and `in_ref_col()` to
-  support custom analysis functions that depend on the current column split context.
+  support custom analysis functions that depend on the current column split
+  context (#404).
 - Added a default value for the `label` argument in `c_summary_subset_label()`.
 - Updated the documentation of `a_summary_subset()`.
 - Refactored `prepend_label_cell()`; Only `RowsVerticalSection` is now supported.
@@ -34,11 +36,15 @@
 - update documentation to `roxygen2` 8.0.0 
 
 ### Added
+- Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
+- Added `pool_rubin_scalar()` and `pool_z_stat()` for pooling scalar estimates and z statistics across imputations.
+- Added `resp_multiple_imputation()` to impute missing binary responses across scenarios and pool CMH risk-difference and p-value results.
 - Updated documentation and examples for `label_map` in `a_freq_j` (#235)
 - Added `tern` methods for difference in proportions in `a_freq_j` and  `a_freq_resp_var_j` : `cmh_sato`, `cmh_mn`, `uncond_exact_diff`  (#389)
 - Added `a_summary_j_with_exclude()` to allow `tern::a_summary()` analyses to be skipped for selected row split levels.
 - Added `a_summarize_mmrm_with_exclude()` to allow MMRM summaries to be skipped for selected row split levels.
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
+- Added `a_three_tier()` as extension to `a_two_tier()`.
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 
