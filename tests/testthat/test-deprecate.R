@@ -22,10 +22,29 @@ test_that("a_kaplan_meier is deprecated", {
   )
 })
 
-test_that("make_rbmi_cluster is deprecated", {
+test_that("par_lapply is deprecated", {
   expect_error(
     lifecycle::expect_deprecated(
-      make_rbmi_cluster(cluster_or_cores = 1)
+      par_lapply(NULL, function(x) x^2, 1:3)
+    )
+  )
+})
+
+test_that("rbmi_analyse is deprecated", {
+  expect_error(
+    lifecycle::expect_deprecated(
+      rbmi_analyse(imputations = list())
+    )
+  )
+})
+
+test_that("rbmi_ancova is deprecated", {
+  expect_error(
+    lifecycle::expect_deprecated(
+      rbmi_ancova(
+        data = data.frame(),
+        vars = list(outcome = "x", group = "g", covariates = NULL, visit = "v")
+      )
     )
   )
 })
