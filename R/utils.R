@@ -311,7 +311,7 @@ find_missing_chg_after_avisit <- function(df) {
 transpose_named_list <- function(x) {
   # x: named list of named lists
   keys <- unique(lapply(x, names))
-  if (!length(keys) == 1) {
+ if (length(keys) != 1) {
     stop("Input list must have same names on all sublists")
   } else {
     keys <- keys[[1]]
