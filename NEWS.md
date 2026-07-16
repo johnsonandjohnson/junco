@@ -8,6 +8,10 @@
 - CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
+- Updated `in_ref_col()` to accept `ref_path = NULL` (#404).
+- Added the new helper functions `cur_col_split_path()` and `in_ref_col()` to
+  support custom analysis functions that depend on the current column split
+  context (#404).
 - Added a default value for the `label` argument in `c_summary_subset_label()`.
 - Updated the documentation of `a_summary_subset()`.
 - Refactored `prepend_label_cell()`; Only `RowsVerticalSection` is now supported.
@@ -28,10 +32,14 @@
 - Deprecate `s_coxph_hr()` for `tern:::a_coxph_pairwise()`
 - Changed stop message in `a_freq_j()` when `label_map` option is used in a rowsplit with no data on a character analysis var #386
 - Use new exported splv_extra and value_expr accessors (insightsengineering#1098)
-
-
+- Update new exported calls from rtables.officer
+- update documentation to `roxygen2` 8.0.0 
+- Add extra statistics to `a_eair100_j` and introduce scaling factor `num_p_year` (default = 100) (#361)
 
 ### Added
+- Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
+- Added `pool_rubin_scalar()` and `pool_z_stat()` for pooling scalar estimates and z statistics across imputations.
+- Added `resp_multiple_imputation()` to impute missing binary responses across scenarios and pool CMH risk-difference and p-value results.
 - Updated documentation and examples for `label_map` in `a_freq_j` (#235)
 - Added `tern` methods for difference in proportions in `a_freq_j` and  `a_freq_resp_var_j` : `cmh_sato`, `cmh_mn`, `uncond_exact_diff`  (#389)
 - Added `a_summary_j_with_exclude()` to allow `tern::a_summary()` analyses to be skipped for selected row split levels.

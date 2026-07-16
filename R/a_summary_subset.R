@@ -50,6 +50,8 @@
 #' @return
 #' Returns the same type of object as [tern::a_summary()].
 #'
+#' @author WW
+#'
 #' @seealso
 #' [tern::a_summary()]
 #'

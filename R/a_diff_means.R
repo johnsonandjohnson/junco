@@ -36,6 +36,8 @@
 #'   containing observed sample values.
 #' @param ... Additional named arguments passed to `s_diff_means()` and
 #'   `safe_t_test()`.
+#'
+#' @author WW
 NULL
 
 #' @describeIn diff_means Statistical function that computes estimates of the
@@ -219,15 +221,16 @@ s_diff_means <- function(df1,
 #' tbl
 #'
 a_diff_means <- function(
-    df,
-    .var,
-    .spl_context,
-    ref_path = NULL,
-    ...,
-    .stats = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  .var,
+  .spl_context,
+  ref_path = NULL,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
   checkmate::assert_data_frame(df)
   checkmate::assert_string(.var)
   checkmate::assert_data_frame(.spl_context)
