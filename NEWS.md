@@ -23,6 +23,7 @@
 - Reduce sampling of `rbmi` test to make tests shorter (#323)
 - Optimize shared tables in `test-tt_to_tblfile` (#323)
 - Changed forked `h_ancova` for the `tern` one
+- Add extra statistics to `a_eair100_j` and introduce scaling factor `num_p_year` (default = 100) (#361)
 - Removed ellipsis argument from `a_freq_resp_var_j` (#236) 
 - Removed `dplyr` from `junco` and replaced by base R #201
 - Replaced `assertthat` by `checkmate` for consistency #201
@@ -36,6 +37,7 @@
 - Use new exported splv_extra and value_expr accessors (insightsengineering#1098)
 - Update new exported calls from rtables.officer
 - update documentation to `roxygen2` 8.0.0 
+- Add extra statistics to `a_eair100_j` and introduce scaling factor `num_p_year` (default = 100) (#361)
 
 ### Added
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.

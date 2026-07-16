@@ -26,6 +26,8 @@
 #' If you wish to put any category at the top of the list despite any n's, user can specify it here.
 #' @param lastcat (`logical`)\cr
 #' If you wish to put any category at the bottom of the list despite any n's, user can specify it here.
+#' @param cellvalue_index (`integer`)\cr
+#' Index of the cell value to perform the scoring on.
 #' @export
 #' @returns A function which can be used as a score function (scorefun in `sort_at_path`).
 # @examples #result <- sort_at_path(result, c('root', 'AEBODSYS'), scorefun = jj_complex_scorefun())
@@ -147,7 +149,8 @@ jj_complex_scorefun <- function(
   usefirstcol = FALSE,
   colpath = NULL,
   firstcat = NULL,
-  lastcat = NULL
+  lastcat = NULL,
+  cellvalue_index = 1
 ) {
   paths <- NULL
 
@@ -181,7 +184,12 @@ jj_complex_scorefun <- function(
         }
       }
     }
-    score <- unlist(cell_values(tt, colpath = colpath), use.names = FALSE)[1]
+    unl_cv <- unlist(cell_values(tt, colpath = colpath), use.names = FALSE)
+    if (length(unl_cv) < cellvalue_index) {
+      score <- NULL
+    } else {
+      score <- unl_cv[cellvalue_index]
+    }
 
     if (length(score) == 0) {
       score <- 1
