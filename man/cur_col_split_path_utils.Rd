@@ -3,28 +3,28 @@
 \name{cur_col_split_path_utils}
 \alias{cur_col_split_path_utils}
 \alias{cur_col_split_path}
-\alias{in_ref_col}
+\alias{in_column}
 \title{Utilities for the Current Column Split Path}
 \usage{
 cur_col_split_path(.spl_context)
 
-in_ref_col(ref_path, .spl_context)
+in_column(col_path, .spl_context)
 }
 \arguments{
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
 that is passed by \code{rtables}.}
 
-\item{ref_path}{(\code{character} or \code{NULL})\cr
-Reference column path specified as alternating split variable names and
-split values. Must have at least two elements and an even length, e.g.
-\code{c("ARM", "Placebo")} or
-\code{c("ARM", "*", "desc_stat", "N")}; see \code{\link[rtables:col_paths]{rtables::col_paths()}}.
+\item{col_path}{(\code{character} or \code{NULL})\cr
+Column path specified as alternating split variable names and split values.
+Must have at least two elements and an even length, e.g.
+\code{c("ARM", "Placebo")} or \code{c("ARM", "*", "desc_stat", "N")};
+see \code{\link[rtables:col_paths]{rtables::col_paths()}}.
 
 The special value \code{"*"} can be used as a wildcard to match any split
 variable name or value.
 
-\code{NULL} can be used to indicate that no reference path is specified,
-in which case the function returns \code{FALSE}, regardless of \code{.spl_context}.}
+\code{NULL} can be used to indicate that no path is specified, in which case
+the function returns \code{FALSE}, regardless of \code{.spl_context}.}
 }
 \value{
 \itemize{
@@ -34,8 +34,8 @@ column split path extracted from \code{.spl_context}, interleaved as
 }
 
 \itemize{
-\item \code{in_ref_col()} returns a single logical value indicating whether the
-current column split matches the specified \code{ref_path}.
+\item \code{in_column()} returns a single logical value indicating whether the
+current column split matches the specified \code{col_path}.
 }
 }
 \description{
@@ -48,7 +48,7 @@ functions that depend on the current column split context.
 \itemize{
 \item \code{cur_col_split_path()}: Get the current column split path.
 
-\item \code{in_ref_col()}: Determine whether the current column split path is a reference path.
+\item \code{in_column()}: Determine whether a given column path matches the current column split path.
 
 }}
 \examples{
@@ -65,12 +65,12 @@ functions that depend on the current column split context.
 cur_col_split_path(.spl_context_1)
 cur_col_split_path(.spl_context_2)
 
-in_ref_col(c("ARM", "Placebo"), .spl_context_1)
-in_ref_col(c("ARM", "*"), .spl_context_1)
-in_ref_col(c("ARM", "X"), .spl_context_1)
+in_column(c("ARM", "Placebo"), .spl_context_1)
+in_column(c("ARM", "*"), .spl_context_1)
+in_column(c("ARM", "X"), .spl_context_1)
 
-in_ref_col(c("ARM", "*", "desc_stat", "N"), .spl_context_2)
-in_ref_col(c("ARM", "*", "desc_stat", "Mean"), .spl_context_2)
+in_column(c("ARM", "*", "desc_stat", "N"), .spl_context_2)
+in_column(c("ARM", "*", "desc_stat", "Mean"), .spl_context_2)
 
 # Use in an rtables custom analysis function.
 
@@ -79,9 +79,9 @@ data$desc_stat <- "phantom"
 
 # analysis function
 a_N_mean <- function(x, .spl_context) {
-  if (in_ref_col(c("ARM", "*", "desc_stat", "N"), .spl_context)) {
+  if (in_column(c("ARM", "*", "desc_stat", "N"), .spl_context)) {
     rcell(length(x))
-  } else if (in_ref_col(c("ARM", "*", "desc_stat", "Mean"), .spl_context)) {
+  } else if (in_column(c("ARM", "*", "desc_stat", "Mean"), .spl_context)) {
     rcell(mean(x), format = "xx.x")
   } else {
     rcell(NULL)
