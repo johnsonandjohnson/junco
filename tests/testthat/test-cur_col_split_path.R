@@ -1,4 +1,4 @@
-test_that("cur_col_split_path works for a single-level split", {
+test_that("cur_col_split_path() works for a single-level split", {
   spl_context <- data.frame(
     cur_col_split = I(list("ARM")),
     cur_col_split_val = I(list("Placebo"))
@@ -10,7 +10,7 @@ test_that("cur_col_split_path works for a single-level split", {
   expect_identical(res, exp)
 })
 
-test_that("cur_col_split_path uses the leaf row split for a single-level split", {
+test_that("cur_col_split_path() uses the leaf row split for a single-level split", {
   spl_context <- data.frame(
     cur_col_split = I(list("ARM_0", "ARM")),
     cur_col_split_val = I(list("Placebo_0", "Placebo"))
@@ -22,7 +22,7 @@ test_that("cur_col_split_path uses the leaf row split for a single-level split",
   expect_identical(res, exp)
 })
 
-test_that("cur_col_split_path works for a two-level split", {
+test_that("cur_col_split_path() works for a two-level split", {
   spl_context <- data.frame(
     cur_col_split = I(list(c("ARM", "desc_stat"))),
     cur_col_split_val = I(list(c("Placebo", "N")))
@@ -34,7 +34,7 @@ test_that("cur_col_split_path works for a two-level split", {
   expect_identical(res, exp)
 })
 
-test_that("cur_col_split_path uses the leaf row split for a two-level split", {
+test_that("cur_col_split_path() uses the leaf row split for a two-level split", {
   spl_context <- data.frame(
     cur_col_split = I(list(c("ARM_0", "desc_stat_0"), c("ARM", "desc_stat"))),
     cur_col_split_val = I(list(c("Placebo_0", "N_0"), c("Placebo", "N")))
@@ -46,7 +46,7 @@ test_that("cur_col_split_path uses the leaf row split for a two-level split", {
   expect_identical(res, exp)
 })
 
-test_that("cur_col_split_path fails for invalid .spl_context (missing cur_col_split/cur_col_split_val)", {
+test_that("cur_col_split_path() fails for invalid .spl_context (missing cur_col_split/cur_col_split_val)", {
   spl_context <- data.frame(
     cur_col_split_val = I(list("Placebo"))
   )
@@ -58,7 +58,7 @@ test_that("cur_col_split_path fails for invalid .spl_context (missing cur_col_sp
   expect_error(cur_col_split_path(spl_context), regexp = "cur_col_split_val")
 })
 
-test_that("cur_col_split_path fails for invalid .spl_context (cur_col_split/cur_col_split_val are not lists)", {
+test_that("cur_col_split_path() fails for invalid .spl_context (cur_col_split/cur_col_split_val are not lists)", {
   spl_context <- data.frame(
     cur_col_split = c("ARM"),
     cur_col_split_val = I(list("Placebo"))
@@ -72,7 +72,7 @@ test_that("cur_col_split_path fails for invalid .spl_context (cur_col_split/cur_
   expect_error(cur_col_split_path(spl_context), "list")
 })
 
-test_that("cur_col_split_path fails for invalid .spl_context (cur_col_split/_val[[1]] are not character)", {
+test_that("cur_col_split_path() fails for invalid .spl_context (cur_col_split/_val[[1]] are not character)", {
   spl_context <- data.frame(
     cur_col_split = I(list(5)),
     cur_col_split_val = I(list("Placebo"))
@@ -86,7 +86,7 @@ test_that("cur_col_split_path fails for invalid .spl_context (cur_col_split/_val
   expect_error(cur_col_split_path(spl_context), "character")
 })
 
-test_that("cur_col_split_path fails for invalid .spl_context (cur_col_split/_val[[1]] have different lengths)", {
+test_that("cur_col_split_path() fails for invalid .spl_context (cur_col_split/_val[[1]] have different lengths)", {
   spl_context <- data.frame(
     cur_col_split = I(list("ARM")),
     cur_col_split_val = I(list(c("Placebo", "X")))

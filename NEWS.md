@@ -8,6 +8,8 @@
 - CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
+- Renamed `in_ref_col()` to `in_column()` and renamed its `ref_path` argument
+  to `col_path`.
 - Updated `in_ref_col()` to accept `ref_path = NULL` (#404).
 - Added the new helper functions `cur_col_split_path()` and `in_ref_col()` to
   support custom analysis functions that depend on the current column split
@@ -26,6 +28,7 @@
 - Replaced `assertthat` by `checkmate` for consistency #201
 - Remove `stringi` from dependencies #201
 - Deprecate `rbmi_analyse()`, `make_rbmi_cluster()`, `par_lapply()` for `rbmi` equivalent functions #367
+- Deprecate `rbmi_ancova()` for `rbmi::ancova()`
 - Deprecate `a_kaplan_meier()` for `tern::a_surv_time()`
 - Changed the label for `range_with_cens_info` from `"Min, max"` (junco) to `"Min - Max (with censoring)"` and the argument from `lsmean_diffci` to `lsmean_diff_with_ci`
 - Deprecate `s_coxph_hr()` for `tern:::a_coxph_pairwise()`
@@ -44,6 +47,7 @@
 - Added `a_summary_j_with_exclude()` to allow `tern::a_summary()` analyses to be skipped for selected row split levels.
 - Added `a_summarize_mmrm_with_exclude()` to allow MMRM summaries to be skipped for selected row split levels.
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
+- Added `a_three_tier()` as extension to `a_two_tier()`.
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 
