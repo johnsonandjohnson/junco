@@ -209,6 +209,17 @@ test_that("get_ref_info returns NULL values when ref_path is NULL", {
   expect_identical(res, exp)
 })
 
+test_that("get_ref_info identifies cur_col_val from split variables", {
+  spl_context <- data.frame(
+    cur_col_split = I(list(c("COLSPAN", "ARM"))),
+    cur_col_split_val = I(list(c("ARM", "A: Drug X")))
+  )
+
+  result <- get_ref_info(c("ARM", "B: Placebo"), spl_context)
+
+  expect_identical(result$cur_col_val, "A: Drug X")
+})
+
 test_that("get_ref_info returns trt_var, ctrl_grp, cur_col_val in the matched-colvars case", {
   dm <- formatters::DM
   dm$colspan_trt <- factor(
