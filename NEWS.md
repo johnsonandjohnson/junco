@@ -1,4 +1,4 @@
-# junco 0.1.6.9000
+# junco 0.1.6.9001
 
 ### Fixed
 - Fixed `get_ref_info()` to accept ref_path = NULL (#359).
@@ -38,6 +38,11 @@
 - Update new exported calls from rtables.officer
 - update documentation to `roxygen2` 8.0.0 
 - Add extra statistics to `a_eair100_j` and introduce scaling factor `num_p_year` (default = 100) (#361)
+- Unified `get_ref_info()` which now also returns `trt_var`, `ctrl_grp`, and `cur_col_val` (#295)
+- `h_get_trtvar_refpath()` is marked as superseded
+- `a_summarize_aval_chg_diff_j()` now uses `get_ref_info()` 
+
+
 
 ### Added
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.

@@ -284,7 +284,11 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
 
 #' Get Treatment Variable Reference Path
 #'
+#' @description `r lifecycle::badge("superseded")`
+#'
 #' Retrieves the treatment variable reference path from the provided context.
+#' Prefer [get_ref_info()] which now returns `trt_var`, `ctrl_grp`, and
+#' `cur_col_val` in addition to `ref_group` and `in_ref_col`.
 #'
 #' @param ref_path (`character`)\cr Reference path for treatment variable.
 #' @param .spl_context (`data.frame`)\cr Current split context.

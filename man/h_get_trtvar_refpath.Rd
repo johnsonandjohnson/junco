@@ -17,5 +17,9 @@ h_get_trtvar_refpath(ref_path, .spl_context, df)
 List containing treatment variable details.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
+
 Retrieves the treatment variable reference path from the provided context.
+Prefer \code{\link[=get_ref_info]{get_ref_info()}} which now returns \code{trt_var}, \code{ctrl_grp}, and
+\code{cur_col_val} in addition to \code{ref_group} and \code{in_ref_col}.
 }

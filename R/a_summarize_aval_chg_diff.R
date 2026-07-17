@@ -474,11 +474,12 @@ a_summarize_aval_chg_diff_j <- function(
 
   .in_ref_col <- FALSE
   .ref_group <- NULL
+  ctrl_grp <- NULL
   if (comp_btw_group) {
-    trt_var_refspec <- utils::tail(ref_path, n = 2)[1]
+    ref <- get_ref_info(ref_path, .spl_context)
+    trt_var_refspec <- ref$trt_var
     checkmate::assert_true(identical(trt_var, trt_var_refspec))
-    # ctrl_grp
-    ctrl_grp <- utils::tail(ref_path, n = 1)
+    ctrl_grp <- ref$ctrl_grp
 
     ### check that ctrl_grp is a level of the treatment variable, in case riskdiff is requested
     if (!ctrl_grp %in% levels(df[[trt_var]])) {
