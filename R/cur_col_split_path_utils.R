@@ -138,4 +138,3 @@ in_column <- function(col_path, .spl_context) {
     FALSE
   }
 }
-
