@@ -2,21 +2,20 @@
 % Please edit documentation in R/get_ref_info.R
 \name{get_ref_info}
 \alias{get_ref_info}
-\title{Obtain Reference Information for a Global Reference Group}
+\title{Obtain reference information for a global reference group.}
 \usage{
 get_ref_info(ref_path, .spl_context, .var = NULL)
 }
 \arguments{
-\item{ref_path}{(\code{character})\cr reference group specification as an \code{rtables}
-\code{colpath}, see details.}
+\item{ref_path}{(\code{character})
+Reference group specification as an \code{rtables} \code{colpath}; see Details.}
 
-\item{.spl_context}{(\code{data.frame})\cr see \link[rtables:spl_context]{rtables::spl_context}.}
-
-\item{.var}{(\code{character})\cr the variable being analyzed,
-see \link[rtables:additional_fun_params]{rtables::additional_fun_params}.}
+\item{.var}{(\code{character})
+The variable being analyzed; see \link[rtables:additional_fun_params]{rtables::additional_fun_params}.}
 }
 \value{
-A list with:
+\itemize{
+\item \code{get_ref_info()} returns a list with:
 \itemize{
 \item \code{ref_group}: the reference group data (a \code{data.frame} or vector depending
 on \code{.var}), equivalent to \code{.ref_group} from \link[rtables:additional_fun_params]{rtables::additional_fun_params}.
@@ -27,9 +26,8 @@ equivalent to \code{.in_ref_col} from \link[rtables:additional_fun_params]{rtabl
 \item \code{cur_col_val}: the current column's value for \code{trt_var}.
 }
 }
+}
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
-
 This helper function can be used in custom analysis functions, by passing
 an extra argument \code{ref_path} which defines a global reference group by
 the corresponding column split hierarchy levels.

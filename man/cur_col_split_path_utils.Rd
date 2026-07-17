@@ -4,11 +4,14 @@
 \alias{cur_col_split_path_utils}
 \alias{cur_col_split_path}
 \alias{in_column}
+\alias{get_ref_info}
 \title{Utilities for the Current Column Split Path}
 \usage{
 cur_col_split_path(.spl_context)
 
 in_column(col_path, .spl_context)
+
+get_ref_info(ref_path, .spl_context, .var = NULL)
 }
 \arguments{
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
@@ -25,6 +28,12 @@ variable name or value.
 
 \code{NULL} can be used to indicate that no path is specified, in which case
 the function returns \code{FALSE}, regardless of \code{.spl_context}.}
+
+\item{ref_path}{(\code{character})
+Reference group specification as an \code{rtables} \code{colpath}; see Details.}
+
+\item{.var}{(\code{character})
+The variable being analyzed; see \link[rtables:additional_fun_params]{rtables::additional_fun_params}.}
 }
 \value{
 \itemize{
@@ -37,6 +46,19 @@ column split path extracted from \code{.spl_context}, interleaved as
 \item \code{in_column()} returns a single logical value indicating whether the
 current column split matches the specified \code{col_path}.
 }
+
+\itemize{
+\item \code{get_ref_info()} returns a list with:
+\itemize{
+\item \code{ref_group}: the reference group data (a \code{data.frame} or vector depending
+on \code{.var}), equivalent to \code{.ref_group} from \link[rtables:additional_fun_params]{rtables::additional_fun_params}.
+\item \code{in_ref_col}: logical, whether the current column is the reference column,
+equivalent to \code{.in_ref_col} from \link[rtables:additional_fun_params]{rtables::additional_fun_params}.
+\item \code{trt_var}: the treatment variable name (last variable in \code{ref_path}).
+\item \code{ctrl_grp}: the reference group level (last level in \code{ref_path}).
+\item \code{cur_col_val}: the current column's value for \code{trt_var}.
+}
+}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
@@ -44,11 +66,26 @@ current column split matches the specified \code{col_path}.
 These helper functions are intended for use in \link[rtables:rtables]{rtables} custom analysis
 functions that depend on the current column split context.
 }
+\details{
+The reference group is specified in \code{colpath} hierarchical fashion in
+\code{ref_path}: the first column split variable is the first element, and the
+level to use is the second element. It continues until the last column split
+variable with last level to use.
+Note that depending on \code{.var}, either a \code{data.frame} (if \code{.var} is \code{NULL})
+or a vector (otherwise) is returned. This allows usage for analysis
+functions with \code{df} and \code{x} arguments, respectively.
+}
 \section{Functions}{
 \itemize{
 \item \code{cur_col_split_path()}: Get the current column split path.
 
 \item \code{in_column()}: Determine whether a given column path matches the current column split path.
+
+\item \code{get_ref_info()}: Obtain reference information for a global reference group.
+
+This helper function can be used in custom analysis functions, by passing
+an extra argument \code{ref_path} which defines a global reference group by
+the corresponding column split hierarchy levels.
 
 }}
 \examples{
@@ -106,6 +143,49 @@ lyt <- basic_table() |>
 tbl <- build_table(lyt, data)
 tbl
 
+dm <- DM
+dm$colspan_trt <- factor(
+  ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
+  levels = c("Active Study Agent", " ")
+)
+colspan_trt_map <- create_colspan_map(
+  dm,
+  non_active_grp = "B: Placebo",
+  non_active_grp_span_lbl = " ",
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = "ARM"
+)
+
+# A standard analysis function which uses a reference group.
+standard_afun <- function(x, .ref_group, .in_ref_col) {
+  diff_means <- if (isFALSE(.in_ref_col)) {
+    mean(x) - mean(.ref_group)
+  } else {
+    NULL
+  }
+  in_rows(
+    m = rcell(mean(x), label = "Mean"),
+    dm = rcell(diff_means, label = "Difference in Means vs Placebo"),
+    .formats = "xx.xx"
+  )
+}
+
+# The custom analysis function which can work with a global reference group.
+result_afun <- function(x, ref_path, .spl_context, .var) {
+  ref <- get_ref_info(ref_path, .spl_context, .var)
+  standard_afun(x, .ref_group = ref$ref_group, .in_ref_col = ref$in_ref_col)
+}
+
+ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
+
+lyt <- basic_table() |>
+  split_cols_by("colspan_trt", split_fun = trim_levels_to_map(colspan_trt_map)) |>
+  split_cols_by("ARM") |>
+  add_overall_col("Total") |>
+  analyze("AGE", afun = result_afun, extra_args = list(ref_path = ref_path))
+
+build_table(lyt, dm)
 }
 \seealso{
 \itemize{

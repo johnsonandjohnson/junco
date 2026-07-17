@@ -47,7 +47,7 @@ cur_col_split_path <- function(.spl_context) {
   checkmate::assert_list(.spl_context[nrow(.spl_context), "cur_col_split"], min.len = 1L)
   checkmate::assert_list(.spl_context[nrow(.spl_context), "cur_col_split_val"], min.len = 1L)
   checkmate::assert_character(.spl_context[nrow(.spl_context), "cur_col_split"][[1]], names = "unnamed")
-  checkmate::assert_character(.spl_context[nrow(.spl_context), "cur_col_split_val"][[1]], names = "unnamed")
+  checkmate::assert_character(.spl_context[nrow(.spl_context), "cur_col_split_val"][[1]])
   checkmate::assert_true(
     length(.spl_context[nrow(.spl_context), "cur_col_split"][[1]]) ==
       length(.spl_context[nrow(.spl_context), "cur_col_split_val"][[1]])
