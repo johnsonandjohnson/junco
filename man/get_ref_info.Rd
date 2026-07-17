@@ -10,6 +10,9 @@ get_ref_info(ref_path, .spl_context, .var = NULL)
 \item{ref_path}{(\code{character})
 Reference group specification as an \code{rtables} \code{colpath}; see Details.}
 
+\item{.spl_context}{(\code{data.frame})
+Ancestor split-state information passed by \code{rtables}.}
+
 \item{.var}{(\code{character})
 The variable being analyzed; see \link[rtables:additional_fun_params]{rtables::additional_fun_params}.}
 }

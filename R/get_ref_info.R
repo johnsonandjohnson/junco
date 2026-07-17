@@ -6,6 +6,8 @@
 #'
 #' @param ref_path (`character`)
 #'   Reference group specification as an `rtables` `colpath`; see Details.
+#' @param .spl_context (`data.frame`)
+#'   Ancestor split-state information passed by `rtables`.
 #' @param .var (`character`)
 #'   The variable being analyzed; see [rtables::additional_fun_params].
 #'
