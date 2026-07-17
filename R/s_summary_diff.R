@@ -35,8 +35,10 @@
 #'
 #' @returns A named `list` with the requested statistics.
 #'
+#' @author WW
+#'
 #' @export
-
+#'
 #' @examples
 #' df <- data.frame(
 #'   USUBJID = c("X01", "X02", "X03", "X04", "X05"),

@@ -397,7 +397,6 @@ test_that("Check a_eair100_j numbers are giving expected result relative risk in
   eair_numbers_comb <- eair_numbers(adae, adsl, "dcd A.1.1.1.1", comb_group)
   eair_numbers_ctrl <- eair_numbers(adae, adsl, "dcd A.1.1.1.1", ctrl_grp)
 
-
   rdiff <- rdiff_eair(eair_numbers_comb, eair_numbers_ctrl)
 
   # actual comparisons

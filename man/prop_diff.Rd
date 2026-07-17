@@ -89,7 +89,7 @@ in terms of responder proportion.
 }}
 \note{
 The \code{\link[=a_proportion_diff_j]{a_proportion_diff_j()}} function has the \verb{_j} suffix to distinguish it
-from \code{\link[tern:prop_diff]{tern::a_proportion_diff()}}. The functions here are a copy from the \code{tern} package
+from \code{\link[tern:a_proportion_diff]{tern::a_proportion_diff()}}. The functions here are a copy from the \code{tern} package
 with additional features:
 \itemize{
 \item Additional statistic \code{diff_est_ci} is returned.

@@ -20,13 +20,13 @@ s_summary_diff(
 
 \item{.var}{(\code{character(1)})\cr Name of the column in \code{df} containing the
 values for which statistics are computed. The variable type is handled by
-the corresponding methods of \code{\link[tern:analyze_variables]{tern::s_summary()}}.
+the corresponding methods of \code{\link[tern:s_summary]{tern::s_summary()}}.
 If difference-in-means statistics are requested, \code{df[[.var]]} must be
 numeric.}
 
 \item{.stats}{(\code{character} or \code{NULL})\cr Names of statistics to be computed.
 For numerical data, the names of supported statistics are listed via
-\code{\link[tern:default_stats_formats_labels]{tern::get_stats()}} for statistics for a single variable and
+\code{\link[tern:get_stats]{tern::get_stats()}} for statistics for a single variable and
 \code{junco_get_stats("diff_means")} for difference-in-means statistics.
 If \code{NULL}, all available statistics for numerical data are computed.}
 
@@ -35,7 +35,7 @@ If \code{NULL}, all available statistics for numerical data are computed.}
 \item{.in_ref_col}{(\code{logical})\cr \code{TRUE} when working with the reference level, \code{FALSE} otherwise.}
 
 \item{control}{(\code{list})\cr List of control options passed to
-\code{\link[tern:analyze_variables]{tern::s_summary()}}.
+\code{\link[tern:s_summary]{tern::s_summary()}}.
 If difference-in-means statistics are requested, \code{control$conf_level}
 specifies the confidence level of the interval.}
 
@@ -49,7 +49,7 @@ A named \code{list} with the requested statistics.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 Computes descriptive statistics for a single variable \code{df[[.var]]} using
-\code{\link[tern:analyze_variables]{tern::s_summary()}}, which dispatches type-specific methods depending on the
+\code{\link[tern:s_summary]{tern::s_summary()}}, which dispatches type-specific methods depending on the
 S3 class of the input (e.g., character, factor, logical, numeric).
 
 Optionally, it computes estimates and associated inferential statistics for
@@ -85,4 +85,7 @@ s_summary_diff(df, "CHG", .stats, rg)
 # Using df as reference.
 s_summary_diff(df, "CHG", .stats, df, .in_ref_col = TRUE)
 
+}
+\author{
+WW
 }
