@@ -78,36 +78,45 @@
 #' build_table(lyt, dm)
 get_ref_info <- function(ref_path, .spl_context, .var = NULL) {
   if (is.null(ref_path)) {
-    return(list(ref_group = NULL, in_ref_col = NULL, trt_var = NULL, ctrl_grp = NULL, cur_col_val = NULL))
+    return(
+      list(ref_group = NULL, in_ref_col = NULL, trt_var = NULL, ctrl_grp = NULL, cur_col_val = NULL)
+    )
   }
 
   checkmate::assert_character(ref_path, min.len = 2L, names = "unnamed")
-  checkmate::assert_true(length(ref_path) %% 2 == 0)
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
   checkmate::assert_data_frame(.spl_context)
 
-  vars_indices <- seq(from = 1L, to = length(ref_path) - 1L, by = 2L)
-  level_indices <- seq(from = 2L, to = length(ref_path), by = 2L)
-  ref_path_levels <- paste(ref_path[level_indices], collapse = ".")
-
-  trt_var <- ref_path[utils::tail(vars_indices, 1L)]
-  ctrl_grp <- ref_path[utils::tail(level_indices, 1L)]
-
-  cur_colpath <- cur_col_split_path(.spl_context)
-  cur_col_vars <- cur_colpath[seq(from = 1L, to = length(cur_colpath), by = 2L)]
-  cur_col_vals <- cur_colpath[seq(from = 2L, to = length(cur_colpath), by = 2L)]
-  trt_var_pos <- match(trt_var, cur_col_vars)
-  cur_col_val <- if (!is.na(trt_var_pos)) cur_col_vals[trt_var_pos] else NULL
+  cur_col_path <- cur_col_split_path(.spl_context)
+  cur_col_vars <- cur_col_path[seq(1L, length(cur_col_path), by = 2L)]
+  ref_path_last <- utils::tail(ref_path, 2L)
+  last_var_pos <- match(ref_path_last[1L], cur_col_vars)
+  cur_col_last_val <- if (!is.na(last_var_pos)) {
+    cur_col_path[2L * last_var_pos]
+  } else {
+    NULL
+  }
 
   # If ref_path variables are outside of the current column split variable.
-  ref_var_path <- ref_path
-  ref_var_path[level_indices] <- "*"
-  if (!in_column(ref_var_path, .spl_context)) {
-    return(list(ref_group = NULL, in_ref_col = NULL, trt_var = trt_var, ctrl_grp = ctrl_grp, cur_col_val = cur_col_val))
+  ref_path_val_pos <- seq(2L, length(ref_path), by = 2L)
+  ref_path_any_vals <- ref_path
+  ref_path_any_vals[ref_path_val_pos] <- "*"
+  if (!in_column(ref_path_any_vals, .spl_context)) {
+    return(
+      list(
+        ref_group = NULL,
+        in_ref_col = NULL,
+        trt_var = ref_path_last[1L],
+        ctrl_grp = ref_path_last[2L],
+        cur_col_val = cur_col_last_val
+      )
+    )
   }
 
   leaf_sc <- .spl_context[nrow(.spl_context), ]
-  full_df <- leaf_sc$full_parent_df[[1]]
-  row_in_ref_group <- leaf_sc[[ref_path_levels]][[1]]
+  full_df <- leaf_sc$full_parent_df[[1L]]
+  ref_path_levels <- paste(ref_path[ref_path_val_pos], collapse = ".")
+  row_in_ref_group <- leaf_sc[[ref_path_levels]][[1L]]
   ref_group <- full_df[row_in_ref_group, ]
   if (!is.null(.var)) {
     ref_group <- ref_group[[.var]]
@@ -116,8 +125,8 @@ get_ref_info <- function(ref_path, .spl_context, .var = NULL) {
   list(
     ref_group = ref_group,
     in_ref_col = in_column(ref_path, .spl_context),
-    trt_var = trt_var,
-    ctrl_grp = ctrl_grp,
-    cur_col_val = cur_col_val
+    trt_var = ref_path_last[1L],
+    ctrl_grp = ref_path_last[2L],
+    cur_col_val = cur_col_last_val
   )
 }

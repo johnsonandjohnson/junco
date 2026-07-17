@@ -349,7 +349,7 @@ test_that("h_get_trtvar_refpath returns the expected shape and values in a risk-
     expect_identical(res$trt_var, "ARM")
     expect_identical(res$ctrl_grp, "B: Placebo")
     expect_identical(res$trt_var_refspec, "ARM") # trt_var_refspec == trt_var by definition
-    expect_false(is.null(res$cur_trt_grp))        # cur_trt_grp is the active arm value
+    expect_false(is.null(res$cur_trt_grp)) # cur_trt_grp is the active arm value
   }
 })
 
