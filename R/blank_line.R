@@ -90,6 +90,7 @@ add_blank_line_rcells <- function(ret) {
     indent_mods <- lapply(ret, function(obj) {
       attr(obj, "indent_mod")
     })
+    ret <- unclass(ret) # avoid error from new c.RowsVerticalSection
   } else {
     xlabel <- attr(ret, "label")
     indent_mods <- attr(ret, "indent_mod")
