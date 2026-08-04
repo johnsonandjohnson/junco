@@ -419,16 +419,25 @@ is_bijection <- function(x, y) {
       checkmate::test_numeric(y, len = length(x))
   )
 
-  # Missingness must correspond.
+  # Missingness must align perfectly at the vector level.
   if (!all(is.na(x) == is.na(y))) {
     return(FALSE)
   }
 
-  # Check bijection among observed values.
-  tab <- table(x, y) > 0
-  nrow(tab) == ncol(tab) &&
-    all(rowSums(tab) == 1L) &&
-    all(colSums(tab) == 1L)
+  # Check bijection.
+  all(y == y[match(x, x)], na.rm = TRUE)
+
+
+  n_unique_x <- length(unique(x))
+  n_unique_y <- length(unique(y))
+
+  bijection <- if (n_unique_x != n_unique_y) {
+    FALSE
+  } else {
+    x_first_positions <- match(x, x)
+    all(y == y[x_first_positions], na.rm = TRUE)
+  }
+  return(bijection)
 }
 
 #' @title Create a factor with levels ordered by a separate ordering vector
