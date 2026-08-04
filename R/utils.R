@@ -329,3 +329,165 @@ transpose_named_list <- function(x) {
     keys
   )
 }
+
+#' @title Copy missing attributes to an object
+#'
+#' @noRd
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Copies attributes from `source` to `target` that are not already present
+#' on `target`. Existing attributes of `target` are preserved.
+#'
+#' @param source An object providing the attributes to copy.
+#' @param target An object to which missing attributes are copied.
+#'
+#' @return The `target` object with any missing attributes copied from `source`.
+#'
+#' @author WW
+#' @keywords internal
+#' @seealso [factor_by_order()]
+#'
+#' @examples
+#'
+#' x <- factor(c("Placebo", "Placebo", "Drug X"))
+#'
+#' x_labeled <- formatters::with_label(x, label = "Treatment Group")
+#' attributes(x_labeled)
+#'
+#' # Copy the `label` attribute from `x_labeled` to `x`.
+#' x_copy <- copy_attributes(x_labeled, x)
+#' attributes(x_copy)
+#'
+copy_attributes <- function(source, target) {
+  source_attr <- attributes(source)
+  if (is.null(source_attr)) {
+    return(target)
+  }
+
+  target_attr <- attributes(target)
+
+  to_copy <- setdiff(names(source_attr), names(target_attr))
+  attributes(target) <- c(target_attr, source_attr[to_copy])
+  target
+}
+
+#' @title Check whether two vectors define a one-to-one correspondence
+#'
+#' @noRd
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Tests whether `x` and `y` define a bijection between their unique non-missing
+#' values.
+#'
+#' Missing values are treated specially: an `NA` in `x` must correspond to an
+#' `NA` in `y` at the same position for the function to return `TRUE`.
+#' Otherwise, the function returns `FALSE`.
+#'
+#' @note Factors are not supported because they may contain unused levels that
+#'   do not appear in the observed data. For such levels, the corresponding
+#'   values in the other vector are not available, and therefore a bijection
+#'   cannot be determined.
+#'
+#' @param x (`character` or `numeric`)\cr A vector defining one side of the
+#'   mapping.
+#' @param y (`character` or `numeric`)\cr A vector defining the other side of
+#'   the mapping. Must have the same length as `x`.
+#'
+#' @return A single logical value indicating whether `x` and `y` define a
+#'   bijection.
+#'
+#' @seealso [factor_by_order()]
+#' @keywords internal
+#' @author WW
+#'
+#' @examples
+#' is_bijection(c("A", "A", "B"), c(1, 1, 2))
+#'
+#' is_bijection(c("A", "B"), c(1, 1))
+#'
+#' is_bijection(c("A", NA), c(1, NA))
+#'
+#' is_bijection(c("A", NA), c(1, 2))
+is_bijection <- function(x, y) {
+  checkmate::assert(
+    checkmate::test_character(x) || checkmate::test_numeric(x)
+  )
+  checkmate::assert(
+    checkmate::test_character(y, len = length(x)) ||
+      checkmate::test_numeric(y, len = length(x))
+  )
+
+  # Missingness must correspond.
+  if (!all(is.na(x) == is.na(y))) {
+    return(FALSE)
+  }
+
+  # Check bijection among observed values.
+  tab <- table(x, y) > 0
+  nrow(tab) == ncol(tab) &&
+    all(rowSums(tab) == 1L) &&
+    all(colSums(tab) == 1L)
+}
+
+#' @title Create a factor with levels ordered by a separate ordering vector
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Converts a character vector or factor into a factor where the level order is
+#' determined by a second integer-like vector containing the corresponding order
+#' values.
+#'
+#' @details The values in `x` and `y` must define a bijection between the unique
+#'   non-missing values: each unique value in `x` must correspond to exactly one
+#'   unique value in `y`, and vice versa.
+#'   Missing values are handled separately: `NA` values in `x` and `y` must
+#'   occur at the same positions. Missing values are not included as factor
+#'   levels.
+#'
+#' @param x (`character` or `factor`)\cr A vector to be converted to a factor.
+#' @param y (`integerish`)\cr A vector defining the order of levels in `x`.
+#'   Must have the same length as `x`.
+#' @param ordered (`logical(1)`)\cr Indicates whether the result should be
+#'   an ordered factor. Defaults to `FALSE`.
+#'
+#' @return A factor created from `x`, with levels ordered according to `y`.
+#'   Attributes of `x` other than `class` and `levels` are preserved. If
+#'   `ordered = TRUE`, an ordered factor is returned.
+#'
+#' @author WW
+#'
+#' @export
+#' @examples
+#' factor_by_order(c("A", "A", "B"), c(1, 1, 2))
+#'
+#' factor_by_order(c("A", "A", "B"), c(1, 1, 2), ordered = TRUE)
+#'
+#' factor_by_order(c("A", "A", "B"), c(2, 2, 1))
+#'
+#' factor_by_order(c("A", "A", "B", NA), c(1, 1, 2, NA))
+#'
+#' \dontrun{
+#' factor_by_order(c("A", "A", "B", NA), c(1, 2, 2, 4))
+#' # Error: `x` and `y` must define a bijection between their unique non-NA values; NA values must correspond.
+#' }
+#'
+factor_by_order <- function(x, y, ordered = FALSE) {
+  checkmate::assert_multi_class(x, classes = c("character", "factor"))
+  checkmate::assert_integerish(y, len = length(x))
+  checkmate::assert_flag(ordered)
+
+  x_char <- as.character(x)
+
+  if (!is_bijection(x_char, y)) {
+    stop("`x` and `y` must define a bijection between their unique non-NA values; NA values must correspond.")
+  }
+
+  factor_levels <- unique(x_char[order(y)])
+  factor_levels <- factor_levels[!is.na(factor_levels)]
+  f <- factor(x_char, levels = factor_levels, ordered = ordered)
+
+  # Preserve non-factor attributes of `x`.
+  copy_attributes(source = x, target = f)
+}
