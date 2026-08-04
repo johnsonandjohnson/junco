@@ -435,7 +435,7 @@ is_bijection <- function(x, y) {
     all(y == y[x_first_positions], na.rm = TRUE)
   }
 
-  return(bijection)
+  bijection
 }
 
 #' @title Create a factor with levels ordered by a separate ordering vector
