@@ -425,9 +425,6 @@ is_bijection <- function(x, y) {
   }
 
   # Check bijection.
-  all(y == y[match(x, x)], na.rm = TRUE)
-
-
   n_unique_x <- length(unique(x))
   n_unique_y <- length(unique(y))
 
