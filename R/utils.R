@@ -434,6 +434,7 @@ is_bijection <- function(x, y) {
     x_first_positions <- match(x, x)
     all(y == y[x_first_positions], na.rm = TRUE)
   }
+
   return(bijection)
 }
 
