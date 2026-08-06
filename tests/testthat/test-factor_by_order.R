@@ -133,6 +133,6 @@ test_that("factor_by_order() throws an error when x and y do not define a biject
 
 test_that("factor_by_order() throws an error when NAs do not correspond", {
   expect_error(
-    factor_by_order(c("A", NA), c(1, 2)), "correspond"
+    factor_by_order(c("A", NA), c(1, 2)), "positions"
   )
 })

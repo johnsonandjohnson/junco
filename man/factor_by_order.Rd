@@ -17,8 +17,10 @@ an ordered factor. Defaults to \code{FALSE}.}
 }
 \value{
 A factor created from \code{x}, with levels ordered according to \code{y}.
-Attributes of \code{x} other than \code{class} and \code{levels} are preserved. If
-\code{ordered = TRUE}, an ordered factor is returned.
+Attributes of \code{x} other than \code{class} and \code{levels} are preserved.
+If \code{ordered = TRUE}, an ordered factor is returned.
+If \code{x} is empty or consists entirely of missing values, a factor with
+no levels is returned.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
@@ -34,6 +36,9 @@ unique value in \code{y}, and vice versa.
 Missing values are handled separately: \code{NA} values in \code{x} and \code{y} must
 occur at the same positions. Missing values are not included as factor
 levels.
+
+If \code{x} is already a factor containing unobserved (unused) levels, these
+unobserved levels will be dropped in the resulting factor.
 }
 \examples{
 factor_by_order(c("A", "A", "B"), c(1, 1, 2))

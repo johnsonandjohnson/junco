@@ -381,9 +381,10 @@ copy_attributes <- function(source, target) {
 #' Tests whether `x` and `y` define a bijection between their unique non-missing
 #' values.
 #'
-#' Missing values are treated specially: an `NA` in `x` must correspond to an
-#' `NA` in `y` at the same position for the function to return `TRUE`.
-#' Otherwise, the function returns `FALSE`.
+#' Missing values are treated specially: if `match_na = FALSE`, any missing
+#' values will trigger an error. If `match_na = TRUE`, an `NA` in `x`
+#' must correspond to an `NA` in `y` at the same position; otherwise, an error
+#' is thrown.
 #'
 #' @note Factors are not supported because they may contain unused levels that
 #'   do not appear in the observed data. For such levels, the corresponding
@@ -394,6 +395,9 @@ copy_attributes <- function(source, target) {
 #'   mapping.
 #' @param y (`character` or `numeric`)\cr A vector defining the other side of
 #'   the mapping. Must have the same length as `x`.
+#' @param match_na (`logical(1)`)\cr Whether to permit missing values (`NA`)
+#'   if they appear at identical positions in both vectors.
+#'   If `FALSE` (the default), any presence of missing values triggers an error.
 #'
 #' @return A single logical value indicating whether `x` and `y` define a
 #'   bijection.
@@ -410,7 +414,7 @@ copy_attributes <- function(source, target) {
 #' is_bijection(c("A", NA), c(1, NA))
 #'
 #' is_bijection(c("A", NA), c(1, 2))
-is_bijection <- function(x, y) {
+is_bijection <- function(x, y, match_na = FALSE) {
   checkmate::assert(
     checkmate::test_character(x) || checkmate::test_numeric(x)
   )
@@ -418,10 +422,18 @@ is_bijection <- function(x, y) {
     checkmate::test_character(y, len = length(x)) ||
       checkmate::test_numeric(y, len = length(x))
   )
+  checkmate::assert_flag(match_na)
 
-  # Missingness must align perfectly at the vector level.
-  if (!all(is.na(x) == is.na(y))) {
-    return(FALSE)
+  # NA validation.
+  na_x <- is.na(x)
+  na_y <- is.na(y)
+  if (any(na_x != na_y)) {
+    stop("NAs are present in 'x' and 'y', but not at identical positions.")
+  }
+  # At this point, na_x and na_y are component-wise equal;
+  # therefore, any(na_x | na_y) is equivalent to any(na_x).
+  if (!match_na && any(na_x)) {
+    stop("NAs are present in 'x' and 'y', but 'match_na' is set to FALSE.")
   }
 
   # Check bijection.
@@ -453,6 +465,9 @@ is_bijection <- function(x, y) {
 #'   occur at the same positions. Missing values are not included as factor
 #'   levels.
 #'
+#'   If `x` is already a factor containing unobserved (unused) levels, these
+#'   unobserved levels will be dropped in the resulting factor.
+#'
 #' @param x (`character` or `factor`)\cr A vector to be converted to a factor.
 #' @param y (`integerish`)\cr A vector defining the order of levels in `x`.
 #'   Must have the same length as `x`.
@@ -460,8 +475,10 @@ is_bijection <- function(x, y) {
 #'   an ordered factor. Defaults to `FALSE`.
 #'
 #' @return A factor created from `x`, with levels ordered according to `y`.
-#'   Attributes of `x` other than `class` and `levels` are preserved. If
-#'   `ordered = TRUE`, an ordered factor is returned.
+#'   Attributes of `x` other than `class` and `levels` are preserved.
+#'   If `ordered = TRUE`, an ordered factor is returned.
+#'   If `x` is empty or consists entirely of missing values, a factor with
+#'   no levels is returned.
 #'
 #' @author WW
 #'
@@ -487,7 +504,7 @@ factor_by_order <- function(x, y, ordered = FALSE) {
 
   x_char <- as.character(x)
 
-  if (!is_bijection(x_char, y)) {
+  if (!is_bijection(x_char, y, match_na = TRUE)) {
     stop("`x` and `y` must define a bijection between their unique non-NA values; NA values must correspond.")
   }
 
