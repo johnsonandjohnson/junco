@@ -494,7 +494,6 @@ is_bijection <- function(x, y, match_na = FALSE) {
 #'
 #' \dontrun{
 #' factor_by_order(c("A", "A", "B", NA), c(1, 2, 2, 4))
-#' # Error: `x` and `y` must define a bijection between their unique non-NA values; NA values must correspond.
 #' }
 #'
 factor_by_order <- function(x, y, ordered = FALSE) {
