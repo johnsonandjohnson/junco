@@ -5,47 +5,47 @@ expect_error_match_na <- function(x, y, msg = NULL) {
 
 test_that("is_bijection() works as expected for input without missing values", {
   res <- is_bijection(c("A", "A", "B"), c(1, 1, 2))
-  expect_true(res)
+  expect_identical(res, TRUE)
 
   res <- is_bijection(c("A", "A", "B", "B", "C"), c(3, 3, 1, 1, 2))
-  expect_true(res)
+  expect_identical(res, TRUE)
 
   res <- is_bijection(c("A", "B"), c(1, 1))
-  expect_false(res)
+  expect_identical(res, FALSE)
 
   # "B" maps to multiple integers.
   res <- is_bijection(c("A", "A", "B", "B", "C"), c(3, 3, 1, 3, 2))
-  expect_false(res)
+  expect_identical(res, FALSE)
 
   res <- is_bijection(c("A", "A", "B", "B", "C"), c(3, 3, 1, 10, 2))
-  expect_false(res)
+  expect_identical(res, FALSE)
 
   # Integer 3 maps to multiple categories.
   res <- is_bijection(c("A", "C", "B", "B", "C"), c(3, 3, 1, 1, 2))
-  expect_false(res)
+  expect_identical(res, FALSE)
 
   res <- is_bijection(c("A", "D", "B", "B", "C"), c(3, 3, 1, 1, 2))
-  expect_false(res)
+  expect_identical(res, FALSE)
 })
 
 test_that("is_bijection() supports character and numeric vectors", {
   res <- is_bijection(c("A", "A", "B"), c("z", "z", "w"))
-  expect_true(res)
+  expect_identical(res, TRUE)
 
   res <- is_bijection(c(1, 1, 2), c(11, 11, 12))
-  expect_true(res)
+  expect_identical(res, TRUE)
 
   res <- is_bijection(c("A", "A", "B"), c(1, 1, 2))
-  expect_true(res)
+  expect_identical(res, TRUE)
 
   res <- is_bijection(c(1, 1, 2), c("A", "A", "B"))
-  expect_true(res)
+  expect_identical(res, TRUE)
 })
 
 test_that("is_bijection() works for length-one vectors", {
-  expect_true(is_bijection("A", 1))
+  expect_identical(is_bijection("A", 1), TRUE)
   expect_error(is_bijection(NA_character_, NA_real_), )
-  expect_true(is_bijection(NA_character_, NA_real_, TRUE), "NA.*match_na")
+  expect_identical(is_bijection(NA_character_, NA_real_, TRUE), TRUE)
 })
 
 test_that("is_bijection() returns TRUE for empty vectors", {
@@ -79,37 +79,37 @@ test_that("is_bijection() handles NAs on matching positions correctly", {
   x <- c(NA, "A", "B", "B")
   y <- c(NA, 1, 2, 2)
   expect_error(is_bijection(x, y), "NA.*match_na")
-  expect_true(is_bijection(x, y, TRUE))
+  expect_identical(is_bijection(x, y, TRUE), TRUE)
 
   x <- c(NA, "A", "B", "B")
   y <- c(NA, 1, 2, 3)
   expect_error(is_bijection(x, y), "NA.*match_na")
-  expect_false(is_bijection(x, y, TRUE))
+  expect_identical(is_bijection(x, y, TRUE), FALSE)
 
   x <- c(NA, "A", "B", "C")
   y <- c(NA, 1, 2, 2)
   expect_error(is_bijection(x, y), "NA.*match_na")
-  expect_false(is_bijection(x, y, TRUE))
+  expect_identical(is_bijection(x, y, TRUE), FALSE)
 
   # > 1 NA
   x <- c(NA, "A", "B", NA, "B")
   y <- c(NA, 1, 2, NA, 2)
   expect_error(is_bijection(x, y), "NA.*match_na")
-  expect_true(is_bijection(x, y, TRUE))
+  expect_identical(is_bijection(x, y, TRUE), TRUE)
 
   x <- c(NA, "A", "B", NA, "B")
   y <- c(NA, 1, 2, NA, 3)
   expect_error(is_bijection(x, y), "NA.*match_na")
-  expect_false(is_bijection(x, y, TRUE))
+  expect_identical(is_bijection(x, y, TRUE), FALSE)
 
   x <- c(NA, "A", "B", NA, "C")
   y <- c(NA, 1, 2, NA, 2)
   expect_error(is_bijection(x, y), "NA.*match_na")
-  expect_false(is_bijection(x, y, TRUE))
+  expect_identical(is_bijection(x, y, TRUE), FALSE)
 
   x <- c(NA, NA, NA)
   expect_error(is_bijection(x, x), "NA.*match_na")
-  expect_true(is_bijection(x, x, TRUE))
+  expect_identical(is_bijection(x, x, TRUE), TRUE)
 })
 
 test_that("is_bijection() - NA position mismatches take precedence over bijection checking", {
