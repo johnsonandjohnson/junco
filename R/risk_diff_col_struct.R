@@ -688,3 +688,91 @@ add_combo_levs_to_trtmap <- function(trtmap, combo_map) {
 .map_sect_to_post_fun <- function(map) {
   cond_rm_facets(map[[2]], value = unique(map[[1]]), keep_matches = TRUE)
 }
+
+#' @rdname grouped_cols_w_diffs
+#' @param subgroupvar (`character(1)` or `NULL`)\cr the name of the subgroup variable to split by within the `trtvar` split
+#' @param subgrplbl (`character(1)` or `NULL`)\cr the spanning label to plae over the subgroups, if different than `subgrpvar`
+#' 
+#' @details `grouped_cols_w_subgrps` creates a hierarchical column structure that splits by `trtvar`, 
+#' underneath which is a spanning label over a split with a Total column along with columns for
+#' each level of `subgrpvar`.
+#' @export
+grouped_cols_w_subgrps <- function(lyt,
+                                 colspan_trt_map = NULL,
+                                 combo_map_df = NULL,
+                                 trtvar = names(colspan_trt_map)[2],
+                                 subgrpvar = NULL,
+                                 subgrplbl = subgrpvar,
+                                 .pre = list(),
+                                 .post = list()
+                                ) {
+
+  if (is.null(trtvar)) {
+    stop("trtvar must be specified if no colspan map is provided.")
+  }
+
+  if (is.null(subgrpvar)) {
+    stop(
+      "no subgroup variable specified, use grouped_cols_w_diffs with diff_cols=FALSE ",
+      "to create a grouped column structure with no subgrouping."
+    )
+  }
+  spanvar <- names(colspan_trt_map)[1]
+
+  if (!is.null(combo_map_df)) {
+    if (!("is_control" %in% names(combo_map_df))) {
+      combo_map_df$is_control <- FALSE
+    }
+    main_post <- lapply(
+      seq_len(NROW(combo_map_df)),
+      function(i) {
+        force(i)
+        add_combo_facet(
+          name = combo_map_df$valname[i],
+          label = combo_map_df$label[i],
+          levels = combo_map_df$levelcombo[[i]],
+          extra = combo_map_df$exargs[[i]]
+        )
+      }
+    )
+
+    combo_nms <- combo_map_df$valname
+
+    ## we're guaranteed to have some combo levels at this point
+    combo_found <- combo_nms %in% colspan_trt_map[[trtvar]]
+    if (!any(combo_found)) {
+      message(
+        "none of the combination levels appeared in the colspan treatment map;",
+        " adding them automatically."
+      )
+      colspan_trt_map <- add_combo_levs_to_trtmap(colspan_trt_map, combo_map_df)
+    } else if (any(!combo_found)) {
+      warning("some combination levels defined in combo_map_df do not appear in colspan_trt_map")
+    }
+  } else {
+    main_post <- list()
+  }
+
+  main_post <- c(main_post, .trtmap_to_post_funs(colspan_trt_map), .post)
+
+  main_splfun <- make_split_fun(pre = .pre, post = main_post)
+
+  if (!is.null(spanvar)) { ## iff we have a colspan trt map
+     lyt <- lyt |>
+      split_cols_by(spanvar, split_fun = keep_split_levels(only = unique(colspan_trt_map[[spanvar]]), reorder = TRUE ))
+  }
+
+  lyt <- lyt |> 
+    split_cols_by(trtvar, split_fun = main_splfun) |>
+    split_cols_by(trtvar,
+       split_fun = make_split_fun(
+        post = list(
+          add_overall_facet(subgrplbl, subgrplbl),
+          restrict_facets(subgrplbl, op = "keep")
+    ))) |>
+    split_cols_by(
+      subgrpvar, 
+      split_fun = add_overall_level("Total", first = TRUE)
+    )
+  lyt
+} 
