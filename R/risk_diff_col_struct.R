@@ -689,6 +689,14 @@ add_combo_levs_to_trtmap <- function(trtmap, combo_map) {
   cond_rm_facets(map[[2]], value = unique(map[[1]]), keep_matches = TRUE)
 }
 
+#' @rdname grouped_cols_w_diffs
+#' @param subgroupvar (`character(1)` or `NULL`)\cr the name of the subgroup variable to split by within the `trtvar` split
+#' @param subgrplbl (`character(1)` or `NULL`)\cr the spanning label to plae over the subgroups, if different than `subgrpvar`
+#' 
+#' @details `grouped_cols_w_subgrps` creates a hierarchical column structure that splits by `trtvar`, 
+#' underneath which is a spanning label over a split with a Total column along with columns for
+#' each level of `subgrpvar`.
+#' @export
 grouped_cols_w_subgrps <- function(lyt,
                                  colspan_trt_map = NULL,
                                  combo_map_df = NULL,
@@ -766,7 +774,5 @@ grouped_cols_w_subgrps <- function(lyt,
       subgrpvar, 
       split_fun = add_overall_level("Total", first = TRUE)
     )
-
-  
   lyt
 } 

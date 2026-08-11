@@ -2,6 +2,7 @@
 % Please edit documentation in R/risk_diff_col_struct.R
 \name{grouped_cols_w_diffs}
 \alias{grouped_cols_w_diffs}
+\alias{grouped_cols_w_subgrps}
 \title{Standard Column Structure With Grouped Treatments and Difference Columns}
 \usage{
 grouped_cols_w_diffs(
@@ -16,6 +17,17 @@ grouped_cols_w_diffs(
   .rr_pre = list(),
   .rr_post = list()
 )
+
+grouped_cols_w_subgrps(
+  lyt,
+  colspan_trt_map = NULL,
+  combo_map_df = NULL,
+  trtvar = names(colspan_trt_map)[2],
+  subgrpvar = NULL,
+  subgrplbl = subgrpvar,
+  .pre = list(),
+  .post = list()
+)
 }
 \arguments{
 \item{lyt}{(\code{PreDataTableLayouts}). The layout to modify. This
@@ -26,7 +38,7 @@ should virtually always be the object returned by
 the main columns, as given by \code{create_colspan_map}.}
 
 \item{combo_map_df}{(\code{data.frame} or \code{NULL}). A combination data
-frame as defined by \code{\link[rtables:add_overall_level]{rtables::add_combo_levels()}} with an additional
+frame as defined by \code{\link[rtables:add_combo_levels]{add_combo_levels()}} with an additional
 \code{is_control} column indicating whether the virtual level will
 act as a reference (\code{TRUE}) or active (\code{FALSE}) group.}
 
@@ -57,6 +69,10 @@ faceting.}
 \item{.rr_post}{(\code{list} of \code{function}s). Passed to
 \code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}} as \code{.post} for risk difference
 faceting.}
+
+\item{subgrplbl}{(\code{character(1)} or \code{NULL})\cr the spanning label to plae over the subgroups, if different than \code{subgrpvar}}
+
+\item{subgroupvar}{(\code{character(1)} or \code{NULL})\cr the name of the subgroup variable to split by within the \code{trtvar} split}
 }
 \value{
 \code{lyt} updated with the specified main and risk difference
@@ -113,9 +129,13 @@ been added if necessary).
 For the purposes of pathin in the resulting structure,
 \code{diffs_label} will be both the split name and split value of the
 parent containing the individual risk difference columns.
+
+\code{grouped_cols_w_subgrps} creates a hierarchical column structure that splits by \code{trtvar},
+underneath which is a spanning label over a split with a Total column along with columns for
+each level of \code{subgrpvar}.
 }
 \seealso{
-Other riskdiff_col_struct: 
-\code{\link{make_multicomp_splfun}()}
+Other riskdiff_col_struct:
+\code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}}
 }
 \concept{riskdiff_col_struct}
