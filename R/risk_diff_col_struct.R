@@ -567,6 +567,29 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
 #'
 #' @family riskdiff_col_struct
 #' @export
+#' @examples
+#' colspan_var <- create_colspan_var(
+#'   data.frame(TRT01A = factor(c("Placebo", "Active 1", "Active 2"))),
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#' colspan_trt_map <- create_colspan_map(
+#'   colspan_var,
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#'
+#' lyt <- basic_table() |>
+#'   grouped_cols_w_diffs(colspan_trt_map) |>
+#'   analyze("TRT01A", afun = function(x, ...) length(x))
+#'
+#' build_table(lyt, colspan_var)
 
 grouped_cols_w_diffs <- function(lyt,
                                  colspan_trt_map,

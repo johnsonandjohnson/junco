@@ -134,6 +134,30 @@ parent containing the individual risk difference columns.
 underneath which is a spanning label over a split with a Total column along with columns for
 each level of \code{subgrpvar}.
 }
+\examples{
+trt_data <- create_colspan_var(
+  data.frame(TRT01A = factor(c("Placebo", "Active 1", "Active 2"))),
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+colspan_trt_map <- create_colspan_map(
+  trt_data,
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+
+lyt <- basic_table() |>
+  grouped_cols_w_diffs(colspan_trt_map) |>
+  analyze("TRT01A", afun = function(x, ...) length(x))
+
+build_table(lyt, trt_data)
+}
 \seealso{
 Other riskdiff_col_struct:
 \code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}}
