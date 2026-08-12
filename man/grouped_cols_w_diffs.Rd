@@ -135,7 +135,7 @@ underneath which is a spanning label over a split with a Total column along with
 each level of \code{subgrpvar}.
 }
 \examples{
-trt_data <- create_colspan_var(
+colspan_var <- create_colspan_var(
   data.frame(TRT01A = factor(c("Placebo", "Active 1", "Active 2"))),
   non_active_grp = "Placebo",
   non_active_grp_span_lbl = "Control",
@@ -144,7 +144,7 @@ trt_data <- create_colspan_var(
   trt_var = "TRT01A"
 )
 colspan_trt_map <- create_colspan_map(
-  trt_data,
+  colspan_var,
   non_active_grp = "Placebo",
   non_active_grp_span_lbl = "Control",
   active_grp_span_lbl = "Active Treatment",
@@ -156,7 +156,36 @@ lyt <- basic_table() |>
   grouped_cols_w_diffs(colspan_trt_map) |>
   analyze("TRT01A", afun = function(x, ...) length(x))
 
-build_table(lyt, trt_data)
+build_table(lyt, colspan_var)
+colspan_var <- create_colspan_var(
+  data.frame(
+    TRT01A = factor(rep(c("Placebo", "Active 1"), each = 2)),
+    SEX = factor(rep(c("Female", "Male"), 2))
+  ),
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+colspan_trt_map <- create_colspan_map(
+  colspan_var,
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+
+lyt <- basic_table() |>
+  grouped_cols_w_subgrps(
+    colspan_trt_map,
+    subgrpvar = "SEX",
+    subgrplbl = "SUB_*"
+  ) |>
+  analyze("TRT01A", afun = function(x, ...) length(x))
+
+build_table(lyt, colspan_var)
 }
 \seealso{
 Other riskdiff_col_struct:
