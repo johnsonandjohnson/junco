@@ -135,7 +135,8 @@ underneath which is a spanning label over a split with a Total column along with
 each level of \code{subgrpvar}.
 }
 \seealso{
-Other riskdiff_col_struct:
-\code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}}
+Other std_col_struct:
+\code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}},
+\code{\link[=shift_tbl_col_struct]{shift_tbl_col_struct()}}
 }
-\concept{riskdiff_col_struct}
+\concept{std_col_struct}

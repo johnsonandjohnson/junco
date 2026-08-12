@@ -200,7 +200,7 @@ add_sib_facets <- function(comp_level, colspan_trt_map, combo_map_all) {
 #'     functionality please contact the maintainers by filing an issue
 #'     at https://github.com/johnsonandjohnson/junco/issues
 #'
-#' @family riskdiff_col_struct
+#' @family std_col_struct
 #'
 #' @export
 make_multicomp_splfun <- function(colspan_trt_map,
@@ -565,7 +565,7 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
 #'     column structures added
 #'
 #'
-#' @family riskdiff_col_struct
+#' @family std_col_struct
 #' @export
 
 grouped_cols_w_diffs <- function(lyt,
@@ -698,14 +698,13 @@ add_combo_levs_to_trtmap <- function(trtmap, combo_map) {
 #' each level of `subgrpvar`.
 #' @export
 grouped_cols_w_subgrps <- function(lyt,
-                                 colspan_trt_map = NULL,
-                                 combo_map_df = NULL,
-                                 trtvar = names(colspan_trt_map)[2],
-                                 subgrpvar = NULL,
-                                 subgrplbl = subgrpvar,
-                                 .pre = list(),
-                                 .post = list()
-                                ) {
+                                   colspan_trt_map = NULL,
+                                   combo_map_df = NULL,
+                                   trtvar = names(colspan_trt_map)[2],
+                                   subgrpvar = NULL,
+                                   subgrplbl = subgrpvar,
+                                   .pre = list(),
+                                   .post = list()) {
 
   if (is.null(trtvar)) {
     stop("trtvar must be specified if no colspan map is provided.")
@@ -762,17 +761,73 @@ grouped_cols_w_subgrps <- function(lyt,
       split_cols_by(spanvar, split_fun = keep_split_levels(only = unique(colspan_trt_map[[spanvar]]), reorder = TRUE ))
   }
 
-  lyt <- lyt |> 
+  lyt <- lyt |>
     split_cols_by(trtvar, split_fun = main_splfun) |>
     split_cols_by(trtvar,
-       split_fun = make_split_fun(
+      split_fun = make_split_fun(
         post = list(
           add_overall_facet(subgrplbl, subgrplbl),
           restrict_facets(subgrplbl, op = "keep")
-    ))) |>
+        )
+      )
+    ) |>
     split_cols_by(
-      subgrpvar, 
+      subgrpvar,
       split_fun = add_overall_level("Total", first = TRUE)
     )
   lyt
-} 
+}
+
+#' Create Column Structure for a J&J-Style Shift Table
+#'
+#' @param lyt (`PreDataTableLayouts`)\cr The layout, typically as
+#'     returned directly from `basic_table`.
+#' @param var (`character(1)`)\cr The variable defining the partition
+#'     to create a shift table for.
+#' @param span_lbl (`character(1)`)\cr The spanning label for the
+#'     shift portion of the column structure. Defaults to
+#'     `"Baseline"`.
+#' @param .outer_spl_var (`character(1)`)\cr The variable to
+#'     "split on" when creating the spanning labels. Must exist in the
+#'     dataset(s) used in `build_table` but its values are irrelevant.
+#'
+#' @details This function creates a column structure akin to the following
+#' (with Grade 1 through Grade 5 representing the levels of `var`):
+#'
+#' ```
+#'                               Baseline                        
+#'   N   Grade 1   Grade 2   Grade 3   Grade 4   Grade 5   Total
+#' ——————————————————————————————————————————————————————————————
+#' ```
+#' @return `lyt` updated with the specified shift table column structure.
+#' @family std_col_struct
+#' @export
+shift_tbl_col_struct <- function(lyt,
+                                 var,
+                                 span_lbl = "Baseline",
+                                 .outer_spl_var = var) {
+  outer_splfun <- make_split_fun(
+    post = list(
+      add_overall_facet("N", label = " "),
+      add_overall_facet("shift_table", label = span_lbl),
+      restrict_facets(c("N", "shift_table"), op = "keep")
+    )
+  )
+
+  inner_splfun <- make_split_fun(
+    post = list(
+      add_overall_facet("Total", label = "Total"),
+      function(ret, spl, fulldf, .spl_context) {
+        if (.spl_context$value[[1]] == "N") {
+            make_split_result("N", labels = c(N = "N"), list(N = fulldf), subset_exprs = list(N = quote(TRUE)))
+        } else {
+            ret
+        }
+    }
+  ))
+
+  lyt <- lyt |>
+    split_cols_by(.outer_spl_var, split_fun = outer_splfun) |>
+    split_cols_by(var, split_fun = inner_splfun)
+  lyt
+}
