@@ -416,3 +416,45 @@ test_that("grouped_cols_w_diffs works", {
     c("Risk Differences", "Risk Differences", "TRT01P", "Xanomeline High Dose vs Xanomeline Low Dose")
   )
 })
+
+test_that("grouped_cols_w_subgrps works", {
+
+  subgrpvar <- "SEX"
+  subgrplbl <- "SUB_*"
+  subgrp_data <- adsl |>
+    mutate(!!subgrpvar := factor(rep(c("Female", "Male"), length.out = n())))
+
+  lyt1 <- basic_table() |>
+    grouped_cols_w_subgrps(
+      colspan_trt_map,
+      subgrpvar = subgrpvar,
+      subgrplbl = subgrplbl
+    ) |>
+    analyze(trtvar, afun = afun_refpath)
+
+  tbl1 <- build_table(lyt1, subgrp_data)
+
+  spanvar <- names(colspan_trt_map)[1]
+  subgrp_lvls <- c("Total", levels(subgrp_data[[subgrpvar]]))
+  expect_equal(
+    unclass(col_paths(tbl1)),
+    unlist(
+      lapply(
+        seq_len(NROW(colspan_trt_map)),
+        function(i) {
+          rw <- colspan_trt_map[i, ]
+          lapply(
+            subgrp_lvls,
+            function(lvl) {
+              c(
+                spanvar, rw[[spanvar]], trtvar, rw[[trtvar]],
+                trtvar, subgrplbl, subgrpvar, lvl
+              )
+            }
+          )
+        }
+      ),
+      recursive = FALSE
+    )
+  )
+})
