@@ -6,7 +6,6 @@ ANCOVA
 AVAL
 AVISIT
 Analyse
-bijection
 Brueckner
 CMH
 Changelog
@@ -23,6 +22,7 @@ EAIRs
 EQ
 Eg
 Haenszel
+Hilferty
 Hotfix
 IEC
 JJCS
@@ -61,6 +61,7 @@ analyse
 analysing
 ancova
 args
+bijection
 bugfix
 cfuns
 chisq
@@ -157,7 +158,6 @@ referene
 removerowtext
 responder
 responders
-riskdiff
 rlistings
 rowdf
 rowlabel
@@ -181,6 +181,7 @@ str
 struct
 subcol
 subfacet
+subgrouped
 summarization
 summarizations
 tbldf
@@ -197,5 +198,3 @@ unrounded
 unstratified
 wordbreaking
 xlsx
-Hilferty
-
