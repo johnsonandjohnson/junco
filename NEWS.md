@@ -42,6 +42,7 @@
 - Add extra statistics to `a_eair100_j` and introduce scaling factor `num_p_year` (default = 100) (#361)
 
 ### Added
+- Added `grouped_cols_w_diffs()` for grouped treatment and risk-difference columns, `grouped_cols_w_subgrps()` for subgrouped treatment columns, and `shift_tbl_col_struct()` for shift-table column structures.
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
 - Added `pool_rubin_scalar()` and `pool_z_stat()` for pooling scalar estimates and z statistics across imputations.
 - Added `resp_multiple_imputation()` to impute missing binary responses across scenarios and pool CMH risk-difference and p-value results.

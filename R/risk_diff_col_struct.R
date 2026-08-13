@@ -32,7 +32,8 @@ do_sib_val_surgery <- function(splval, comp_lvl, newexargs, spl, comp_label) {
 surgical_suite <- function(orig_ret, comp_lvl, newexargs, spl, combo_map) {
   out <- orig_ret
   comp_label <- get_comp_label(comp_lvl, orig_ret, combo_map)
-  out$values <- lapply(out$values,
+  out$values <- lapply(
+    out$values,
     do_sib_val_surgery,
     comp_lvl = comp_lvl,
     newexargs = newexargs,
@@ -203,11 +204,13 @@ add_sib_facets <- function(comp_level, colspan_trt_map, combo_map_all) {
 #' @family std_col_struct
 #'
 #' @export
-make_multicomp_splfun <- function(colspan_trt_map,
-                                  combo_levels_map = NULL,
-                                  comp_level_map = NULL,
-                                  .pre = list(),
-                                  .post = list()) {
+make_multicomp_splfun <- function(
+  colspan_trt_map,
+  combo_levels_map = NULL,
+  comp_level_map = NULL,
+  .pre = list(),
+  .post = list()
+) {
   colspan_trt_map <- enrich_colspan_map(colspan_trt_map, combo_levels_map)
   if (is.null(comp_level_map)) {
     comp_levels <- get_all_comp_lvls(colspan_trt_map)
@@ -234,9 +237,7 @@ make_multicomp_splfun <- function(colspan_trt_map,
       out <- lapply(
         names(ret),
         function(nm) {
-          unlist(lapply(seq_along(sib_sets), function(ii) sib_sets[[ii]][[nm]]),
-            recursive = FALSE
-          )
+          unlist(lapply(seq_along(sib_sets), function(ii) sib_sets[[ii]][[nm]]), recursive = FALSE)
         }
       )
       names(out) <- names(ret)
@@ -248,10 +249,12 @@ make_multicomp_splfun <- function(colspan_trt_map,
     pre = .pre,
     post = c(
       funlst,
-      apply_comp_map(splvar = names(colspan_trt_map)[2],
-                     comp_levels,
-                     comp_map = comp_level_map,
-                     combo_map = combo_levels_map),
+      apply_comp_map(
+        splvar = names(colspan_trt_map)[2],
+        comp_levels,
+        comp_map = comp_level_map,
+        combo_map = combo_levels_map
+      ),
       .post
     )
   )
@@ -262,8 +265,10 @@ make_multicomp_splfun <- function(colspan_trt_map,
 enrich_colspan_map <- function(colspan_map, combodf) {
   ## assume if any combo levels are present that the
   ## missing ones are intentional
-  if (is.null(combodf) ||
-        any(combodf$valname %in% colspan_map[[2]])) {
+  if (
+    is.null(combodf) ||
+      any(combodf$valname %in% colspan_map[[2]])
+  ) {
     return(colspan_map)
   }
   combo_levs <- combodf$valname
@@ -301,7 +306,6 @@ enrich_colspan_map <- function(colspan_map, combodf) {
 }
 
 
-
 make_comp_name <- function(act_nm, comp_nm) paste0(act_nm, " vs ", comp_nm)
 
 ## conversion of names/labels to comparison versions is now
@@ -333,13 +337,12 @@ expand_combo_map <- function(combo_map, ref_lvls) {
       } else {
         ## TODO this seems overkill for what is left inside
         ## the lapply, refactor into saner form
-        rws_out <- lapply(comp_against,
-                          function(cur_ref_lvl) {
-                            ref_lvl_ind <- match(cur_ref_lvl, ref_lvls)
-                            cur_rw <- combo_map[ii, ]
-                            cur_rw$comparator_level <- cur_ref_lvl
-                            cur_rw
-                          })
+        rws_out <- lapply(comp_against, function(cur_ref_lvl) {
+          ref_lvl_ind <- match(cur_ref_lvl, ref_lvls)
+          cur_rw <- combo_map[ii, ]
+          cur_rw$comparator_level <- cur_ref_lvl
+          cur_rw
+        })
       }
 
       do.call(rbind.data.frame, rws_out)
@@ -423,12 +426,12 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
     combodf$valname[!combodf$is_control]
   )
   if (!("compare_against" %in% names(combodf))) {
-    combodf$compare_against <- ifelse(combodf$is_control,
+    combodf$compare_against <- ifelse(
+      combodf$is_control,
       replicate(nrcombo, list(non_ref_lvls)),
       replicate(nrcombo, list(ref_lvls))
     )
   }
-
 
   if (any(combodf$is_control) && !all(combodf$valname[combodf$is_control] %in% ref_lvls)) {
     stop(
@@ -438,7 +441,6 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
       "missing from specified reference levels"
     )
   }
-
 
   rws <- lapply(
     seq_len(nrcombo),
@@ -591,17 +593,19 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
 #'
 #' build_table(lyt, colspan_var)
 
-grouped_cols_w_diffs <- function(lyt,
-                                 colspan_trt_map,
-                                 combo_map_df = NULL,
-                                 ## default behavior for comp_map is taken care of in make_multicomp_splfun
-                                 comp_map = NULL,
-                                 diff_cols = TRUE,
-                                 diffs_label = "Risk Differences",
-                                 .main_pre = list(),
-                                 .main_post = list(),
-                                 .rr_pre = list(),
-                                 .rr_post = list()) {
+grouped_cols_w_diffs <- function(
+  lyt,
+  colspan_trt_map,
+  combo_map_df = NULL,
+  ## default behavior for comp_map is taken care of in make_multicomp_splfun
+  comp_map = NULL,
+  diff_cols = TRUE,
+  diffs_label = "Risk Differences",
+  .main_pre = list(),
+  .main_post = list(),
+  .rr_pre = list(),
+  .rr_post = list()
+) {
   trtvar <- names(colspan_trt_map)[2]
   spanvar <- names(colspan_trt_map)[1]
 
@@ -642,8 +646,6 @@ grouped_cols_w_diffs <- function(lyt,
   main_post <- c(main_post, .trtmap_to_post_funs(colspan_trt_map), .main_post)
 
   main_splfun <- make_split_fun(pre = .main_pre, post = main_post)
-
-
 
   lyt <- lyt |>
     split_cols_by(names(colspan_trt_map)[1]) |>
@@ -757,15 +759,16 @@ add_combo_levs_to_trtmap <- function(trtmap, combo_map) {
 #'   analyze("TRT01A", afun = function(x, ...) length(x))
 #'
 #' build_table(lyt, colspan_var)
-grouped_cols_w_subgrps <- function(lyt,
-                                   colspan_trt_map = NULL,
-                                   combo_map_df = NULL,
-                                   trtvar = names(colspan_trt_map)[2],
-                                   subgrpvar = NULL,
-                                   subgrplbl = subgrpvar,
-                                   .pre = list(),
-                                   .post = list()) {
-
+grouped_cols_w_subgrps <- function(
+  lyt,
+  colspan_trt_map = NULL,
+  combo_map_df = NULL,
+  trtvar = names(colspan_trt_map)[2],
+  subgrpvar = NULL,
+  subgrplbl = subgrpvar,
+  .pre = list(),
+  .post = list()
+) {
   if (is.null(trtvar)) {
     stop("trtvar must be specified if no colspan map is provided.")
   }
@@ -816,7 +819,8 @@ grouped_cols_w_subgrps <- function(lyt,
 
   main_splfun <- make_split_fun(pre = .pre, post = main_post)
 
-  if (!is.null(spanvar)) { ## iff we have a colspan trt map
+  if (!is.null(spanvar)) {
+    ## iff we have a colspan trt map
     lyt <- lyt |>
       split_cols_by(
         spanvar,
@@ -829,7 +833,8 @@ grouped_cols_w_subgrps <- function(lyt,
 
   lyt <- lyt |>
     split_cols_by(trtvar, split_fun = main_splfun) |>
-    split_cols_by(trtvar,
+    split_cols_by(
+      trtvar,
       split_fun = make_split_fun(
         post = list(
           add_overall_facet(subgrplbl, subgrplbl),
@@ -861,7 +866,7 @@ grouped_cols_w_subgrps <- function(lyt,
 #' (with Grade 1 through Grade 5 representing the levels of `var`):
 #'
 #' ```
-#'                               Baseline                        
+#'                               Baseline
 #'   N   Grade 1   Grade 2   Grade 3   Grade 4   Grade 5   Total
 #' ——————————————————————————————————————————————————————————————
 #' ```
@@ -880,10 +885,7 @@ grouped_cols_w_subgrps <- function(lyt,
 #' @return `lyt` updated with the specified shift table column structure.
 #' @family std_col_struct
 #' @export
-shift_tbl_col_struct <- function(lyt,
-                                 var,
-                                 span_lbl = "Baseline",
-                                 .outer_spl_var = var) {
+shift_tbl_col_struct <- function(lyt, var, span_lbl = "Baseline", .outer_spl_var = var) {
   outer_splfun <- make_split_fun(
     post = list(
       add_overall_facet("N", label = " "),
@@ -897,12 +899,13 @@ shift_tbl_col_struct <- function(lyt,
       add_overall_facet("Total", label = "Total"),
       function(ret, spl, fulldf, .spl_context) {
         if (.spl_context$value[[1]] == "N") {
-            make_split_result("N", labels = c(N = "N"), list(N = fulldf), subset_exprs = list(N = quote(TRUE)))
+          make_split_result("N", labels = c(N = "N"), list(N = fulldf), subset_exprs = list(N = quote(TRUE)))
         } else {
-            ret
+          ret
         }
-    }
-  ))
+      }
+    )
+  )
 
   lyt <- lyt |>
     split_cols_by(.outer_spl_var, split_fun = outer_splfun) |>
