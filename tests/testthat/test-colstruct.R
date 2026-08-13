@@ -458,3 +458,28 @@ test_that("grouped_cols_w_subgrps works", {
     )
   )
 })
+
+test_that("shift_tbl_col_struct works", {
+  var <- "BASE"
+  span_lbl <- "Baseline Grade"
+  shift_data <- data.frame(
+    BASE = factor(c("Grade 1", "Grade 2", "Grade 3")),
+    CHG = c("Improved", "Stable", "Worsened")
+  )
+
+  lyt <- basic_table() |>
+    shift_tbl_col_struct(var, span_lbl = span_lbl) |>
+    analyze("CHG", afun = function(x, ...) length(x))
+  tbl <- build_table(lyt, shift_data)
+
+  expect_equal(
+    unclass(col_paths(tbl)),
+    c(
+      list(c(var, "N", var, "N")),
+      lapply(
+        c(levels(shift_data[[var]]), "Total"),
+        function(lvl) c(var, "shift_table", var, lvl)
+      )
+    )
+  )
+})

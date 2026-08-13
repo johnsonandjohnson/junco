@@ -859,6 +859,18 @@ grouped_cols_w_subgrps <- function(lyt,
 #'   N   Grade 1   Grade 2   Grade 3   Grade 4   Grade 5   Total
 #' ——————————————————————————————————————————————————————————————
 #' ```
+#'
+#' @examples
+#' shift_data <- data.frame(
+#'   BASE = factor(c("Grade 1", "Grade 2", "Grade 3")),
+#'   CHG = c("Improved", "Stable", "Worsened")
+#' )
+#'
+#' lyt <- basic_table() |>
+#'   shift_tbl_col_struct("BASE") |>
+#'   analyze("CHG", afun = function(x, ...) length(x))
+#'
+#' build_table(lyt, shift_data)
 #' @return `lyt` updated with the specified shift table column structure.
 #' @family std_col_struct
 #' @export

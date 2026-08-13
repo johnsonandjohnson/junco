@@ -70,9 +70,11 @@ faceting.}
 \code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}} as \code{.post} for risk difference
 faceting.}
 
-\item{subgrplbl}{(\code{character(1)} or \code{NULL})\cr the spanning label to plae over the subgroups, if different than \code{subgrpvar}}
+\item{subgrplbl}{(\code{character(1)} or \code{NULL})\cr the spanning label to place over the subgroups,
+if different than \code{subgrpvar}}
 
-\item{subgroupvar}{(\code{character(1)} or \code{NULL})\cr the name of the subgroup variable to split by within the \code{trtvar} split}
+\item{subgroupvar}{(\code{character(1)} or \code{NULL})\cr the name of the subgroup variable to split
+by within the \code{trtvar} split}
 }
 \value{
 \code{lyt} updated with the specified main and risk difference

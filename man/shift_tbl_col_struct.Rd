@@ -36,6 +36,18 @@ This function creates a column structure akin to the following
 ——————————————————————————————————————————————————————————————
 }\if{html}{\out{</div>}}
 }
+\examples{
+shift_data <- data.frame(
+  BASE = factor(c("Grade 1", "Grade 2", "Grade 3")),
+  CHG = c("Improved", "Stable", "Worsened")
+)
+
+lyt <- basic_table() |>
+  shift_tbl_col_struct("BASE") |>
+  analyze("CHG", afun = function(x, ...) length(x))
+
+build_table(lyt, shift_data)
+}
 \seealso{
 Other std_col_struct:
 \code{\link[=grouped_cols_w_diffs]{grouped_cols_w_diffs()}},
