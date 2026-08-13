@@ -118,6 +118,7 @@ reference:
     - create_colspan_map
     - create_colspan_var
     - grouped_cols_w_diffs
+    - shift_tbl_col_struct
     - do_exclude_split
     - make_combo_splitfun
     - make_multicomp_splfun
