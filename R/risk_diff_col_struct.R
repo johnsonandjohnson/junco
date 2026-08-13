@@ -713,10 +713,16 @@ add_combo_levs_to_trtmap <- function(trtmap, combo_map) {
 }
 
 #' @rdname grouped_cols_w_diffs
-#' @param subgroupvar (`character(1)` or `NULL`)\cr the name of the subgroup variable to split
+#' @param trtvar (`character(1)` or `NULL`)\cr the treatment variable to split by. Defaults to the
+#'     treatment variable in `colspan_trt_map`.
+#' @param subgrpvar (`character(1)` or `NULL`)\cr the name of the subgroup variable to split
 #' by within the `trtvar` split
 #' @param subgrplbl (`character(1)` or `NULL`)\cr the spanning label to place over the subgroups,
 #' if different than `subgrpvar`
+#' @param .pre (`list` of `function`s)\cr Passed to [rtables::make_split_fun()] as `pre` for
+#'     treatment splitting.
+#' @param .post (`list` of `function`s)\cr Passed to [rtables::make_split_fun()] as `post` for
+#'     treatment splitting after the standard column-structure processing.
 #' @details `grouped_cols_w_subgrps` creates a hierarchical column structure that splits by `trtvar`,
 #' underneath which is a spanning label over a split with a Total column along with columns for
 #' each level of `subgrpvar`.

@@ -70,11 +70,20 @@ faceting.}
 \code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}} as \code{.post} for risk difference
 faceting.}
 
+\item{trtvar}{(\code{character(1)} or \code{NULL})\cr the treatment variable to split by. Defaults to the
+treatment variable in \code{colspan_trt_map}.}
+
+\item{subgrpvar}{(\code{character(1)} or \code{NULL})\cr the name of the subgroup variable to split
+by within the \code{trtvar} split}
+
 \item{subgrplbl}{(\code{character(1)} or \code{NULL})\cr the spanning label to place over the subgroups,
 if different than \code{subgrpvar}}
 
-\item{subgroupvar}{(\code{character(1)} or \code{NULL})\cr the name of the subgroup variable to split
-by within the \code{trtvar} split}
+\item{.pre}{(\code{list} of \code{function}s)\cr Passed to \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{pre} for
+treatment splitting.}
+
+\item{.post}{(\code{list} of \code{function}s)\cr Passed to \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{post} for
+treatment splitting after the standard column-structure processing.}
 }
 \value{
 \code{lyt} updated with the specified main and risk difference
