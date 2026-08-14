@@ -8,6 +8,8 @@
 - CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
+
+- Added the new helper function `factor_by_order()` (#425).
 - Renamed `in_ref_col()` to `in_column()` and renamed its `ref_path` argument
   to `col_path`.
 - Updated `in_ref_col()` to accept `ref_path = NULL` (#404).
