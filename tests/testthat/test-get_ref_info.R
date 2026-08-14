@@ -204,12 +204,12 @@ test_that("get_ref_info works with a df in the presence of the overall column", 
 
 test_that("get_ref_info returns NULL values when ref_path is NULL", {
   res <- get_ref_info(NULL, .spl_context = data.frame())
-  exp <- list(ref_group = NULL, in_ref_col = NULL, trt_var = NULL, ctrl_grp = NULL, cur_col_val = NULL)
+  exp <- list(ref_group = NULL, in_ref_col = NULL, split_var = NULL, ref_level = NULL, cur_col_val = NULL)
 
   expect_identical(res, exp)
 })
 
-test_that("get_ref_info returns trt_var, ctrl_grp, cur_col_val in the matched-colvars case", {
+test_that("get_ref_info returns split_var, ref_level, cur_col_val in the matched-colvars case", {
   dm <- formatters::DM
   dm$colspan_trt <- factor(
     ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
@@ -240,8 +240,8 @@ test_that("get_ref_info returns trt_var, ctrl_grp, cur_col_val in the matched-co
   build_table(lyt, dm)
 
   for (res in captured) {
-    expect_identical(res$trt_var, "ARM")
-    expect_identical(res$ctrl_grp, "B: Placebo")
+    expect_identical(res$split_var, "ARM")
+    expect_identical(res$ref_level, "B: Placebo")
   }
 
   ref_col <- Filter(function(r) isTRUE(r$in_ref_col), captured)
@@ -255,7 +255,7 @@ test_that("get_ref_info returns trt_var, ctrl_grp, cur_col_val in the matched-co
   }
 })
 
-test_that("get_ref_info returns trt_var and ctrl_grp even when ref_path is outside colvars (risk-diff column)", {
+test_that("get_ref_info returns split_var and ref_level even when ref_path is outside colvars (risk-diff column)", {
   dm <- formatters::DM
   dm$colspan_trt <- factor(
     ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
@@ -296,8 +296,8 @@ test_that("get_ref_info returns trt_var and ctrl_grp even when ref_path is outsi
   outside_cols <- Filter(function(r) is.null(r$ref_group) && is.null(r$in_ref_col), captured)
   expect_true(length(outside_cols) >= 1L)
   for (res in outside_cols) {
-    expect_identical(res$trt_var, "ARM")
-    expect_identical(res$ctrl_grp, "B: Placebo")
+    expect_identical(res$split_var, "ARM")
+    expect_identical(res$ref_level, "B: Placebo")
     expect_false(is.null(res$cur_col_val))
   }
 })
