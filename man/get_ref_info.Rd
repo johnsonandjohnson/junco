@@ -24,9 +24,9 @@ The variable being analyzed; see \link[rtables:additional_fun_params]{rtables::a
 on \code{.var}), equivalent to \code{.ref_group} from \link[rtables:additional_fun_params]{rtables::additional_fun_params}.
 \item \code{in_ref_col}: logical, whether the current column is the reference column,
 equivalent to \code{.in_ref_col} from \link[rtables:additional_fun_params]{rtables::additional_fun_params}.
-\item \code{trt_var}: the treatment variable name (last variable in \code{ref_path}).
-\item \code{ctrl_grp}: the reference group level (last level in \code{ref_path}).
-\item \code{cur_col_val}: the current column's value for \code{trt_var}.
+\item \code{split_var}: the split variable name (last variable in \code{ref_path}).
+\item \code{ref_level}: the reference level (last level in \code{ref_path}).
+\item \code{cur_col_val}: the current column's value for \code{split_var}.
 }
 }
 }

@@ -17,9 +17,9 @@
 #'     on `.var`), equivalent to `.ref_group` from [rtables::additional_fun_params].
 #'   * `in_ref_col`: logical, whether the current column is the reference column,
 #'     equivalent to `.in_ref_col` from [rtables::additional_fun_params].
-#'   * `trt_var`: the treatment variable name (last variable in `ref_path`).
-#'   * `ctrl_grp`: the reference group level (last level in `ref_path`).
-#'   * `cur_col_val`: the current column's value for `trt_var`.
+#'   * `split_var`: the split variable name (last variable in `ref_path`).
+#'   * `ref_level`: the reference level (last level in `ref_path`).
+#'   * `cur_col_val`: the current column's value for `split_var`.
 #'
 #' @details
 #' The reference group is specified in `colpath` hierarchical fashion in
@@ -79,7 +79,7 @@
 get_ref_info <- function(ref_path, .spl_context, .var = NULL) {
   if (is.null(ref_path)) {
     return(
-      list(ref_group = NULL, in_ref_col = NULL, trt_var = NULL, ctrl_grp = NULL, cur_col_val = NULL)
+      list(ref_group = NULL, in_ref_col = NULL, split_var = NULL, ref_level = NULL, cur_col_val = NULL)
     )
   }
 
@@ -106,8 +106,8 @@ get_ref_info <- function(ref_path, .spl_context, .var = NULL) {
       list(
         ref_group = NULL,
         in_ref_col = NULL,
-        trt_var = ref_path_last[1L],
-        ctrl_grp = ref_path_last[2L],
+        split_var = ref_path_last[1L],
+        ref_level = ref_path_last[2L],
         cur_col_val = cur_col_last_val
       )
     )
@@ -125,8 +125,8 @@ get_ref_info <- function(ref_path, .spl_context, .var = NULL) {
   list(
     ref_group = ref_group,
     in_ref_col = in_column(ref_path, .spl_context),
-    trt_var = ref_path_last[1L],
-    ctrl_grp = ref_path_last[2L],
+    split_var = ref_path_last[1L],
+    ref_level = ref_path_last[2L],
     cur_col_val = cur_col_last_val
   )
 }
