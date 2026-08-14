@@ -20,6 +20,6 @@ List containing treatment variable details.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
 Retrieves the treatment variable reference path from the provided context.
-Prefer \code{\link[=get_ref_info]{get_ref_info()}} which now returns \code{split_var}, \code{ref_level}, and
+Prefer \code{\link[=get_ref_info]{get_ref_info()}} which now returns \code{split_name}, \code{ref_level}, and
 \code{cur_col_val} in addition to \code{ref_group} and \code{in_ref_col}.
 }

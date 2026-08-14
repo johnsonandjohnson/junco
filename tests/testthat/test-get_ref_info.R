@@ -204,12 +204,12 @@ test_that("get_ref_info works with a df in the presence of the overall column", 
 
 test_that("get_ref_info returns NULL values when ref_path is NULL", {
   res <- get_ref_info(NULL, .spl_context = data.frame())
-  exp <- list(ref_group = NULL, in_ref_col = NULL, split_var = NULL, ref_level = NULL, cur_col_val = NULL)
+  exp <- list(ref_group = NULL, in_ref_col = NULL, split_name = NULL, ref_level = NULL, cur_col_val = NULL)
 
   expect_identical(res, exp)
 })
 
-test_that("get_ref_info returns split_var, ref_level, cur_col_val for matching column splits", {
+test_that("get_ref_info returns split_name, ref_level, cur_col_val for matching column splits", {
   dm <- formatters::DM
   dm$colspan_trt <- factor(
     ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
@@ -240,7 +240,7 @@ test_that("get_ref_info returns split_var, ref_level, cur_col_val for matching c
   build_table(lyt, dm)
 
   for (res in captured) {
-    expect_identical(res$split_var, "ARM")
+    expect_identical(res$split_name, "ARM")
     expect_identical(res$ref_level, "B: Placebo")
   }
 
@@ -255,7 +255,7 @@ test_that("get_ref_info returns split_var, ref_level, cur_col_val for matching c
   }
 })
 
-test_that("get_ref_info returns split_var and ref_level even when ref_path is outside colvars (risk-diff column)", {
+test_that("get_ref_info returns split_name and ref_level even when ref_path is outside column splits (risk-diff column)", {
   dm <- formatters::DM
   dm$colspan_trt <- factor(
     ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
@@ -300,7 +300,7 @@ test_that("get_ref_info returns split_var and ref_level even when ref_path is ou
   for (res in captured) {
     expect_null(res$ref_group)
     expect_null(res$in_ref_col)
-    expect_identical(res$split_var, "ARM")
+    expect_identical(res$split_name, "ARM")
     expect_identical(res$ref_level, "B: Placebo")
     expect_false(is.null(res$cur_col_val))
   }
