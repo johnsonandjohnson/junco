@@ -82,7 +82,8 @@ s_aval_chg_col23_diff <- function(
     cur_lvl,
     weights_emmeans,
     method_combo,
-    weights_combo) {
+    weights_combo
+) {
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
   df <- subset(df, !is.na(df[[.var]]))
   .ref_group <- subset(.ref_group, !is.na(.ref_group[[.var]]))
@@ -396,7 +397,8 @@ a_summarize_aval_chg_diff_j <- function(
     multivars = c("AVAL", "AVAL", "CHG"),
     weights_emmeans = NULL,
     method_combo = c("contrasts", "collapse"),
-    weights_combo = NULL) {
+    weights_combo = NULL
+) {
   denom <- match.arg(denom)
   method_combo <- match.arg(method_combo)
 

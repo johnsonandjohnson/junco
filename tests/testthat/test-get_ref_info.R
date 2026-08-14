@@ -255,7 +255,8 @@ test_that("get_ref_info returns split_name, ref_level, cur_col_val for matching 
   }
 })
 
-test_that("get_ref_info returns split_name and ref_level even when ref_path is outside column splits (risk-diff column)", {
+test_that("get_ref_info returns split_name and ref_level even when ref_path is 
+            outside column splits (risk-diff column)", {
   dm <- formatters::DM
   dm$colspan_trt <- factor(
     ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
