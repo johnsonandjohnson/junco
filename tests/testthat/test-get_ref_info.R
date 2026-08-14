@@ -209,7 +209,7 @@ test_that("get_ref_info returns NULL values when ref_path is NULL", {
   expect_identical(res, exp)
 })
 
-test_that("get_ref_info returns split_var, ref_level, cur_col_val in the matched-colvars case", {
+test_that("get_ref_info returns split_var, ref_level, cur_col_val for matching column splits", {
   dm <- formatters::DM
   dm$colspan_trt <- factor(
     ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
