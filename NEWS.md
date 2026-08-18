@@ -51,6 +51,7 @@
 - Added `a_summarize_mmrm_with_exclude()` to allow MMRM summaries to be skipped for selected row split levels.
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
 - Added `a_three_tier()` as extension to `a_two_tier()`.
+- Added formatting function `format_sigfig_j()` as alternative to `tern::format_sigfig()`. (#436)
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 
