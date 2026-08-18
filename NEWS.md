@@ -13,7 +13,7 @@
 - Renamed `in_ref_col()` to `in_column()` and renamed its `ref_path` argument
   to `col_path`.
 - Updated `in_ref_col()` to accept `ref_path = NULL` (#404).
-- Added the new helper functions `cur_col_split_path()` and `in_ref_col()` to
+- Added the new helper functions `cur_col_split_path()` and `in_column()` to
   support custom analysis functions that depend on the current column split
   context (#404).
 - Added a default value for the `label` argument in `c_summary_subset_label()`.
@@ -40,9 +40,8 @@
 - Update new exported calls from rtables.officer
 - update documentation to `roxygen2` 8.0.0 
 - Add extra statistics to `a_eair100_j` and introduce scaling factor `num_p_year` (default = 100) (#361)
-- Unified `get_ref_info()` which now also returns `split_name`, `ref_level`, and `cur_col_val` (#295)
-- `h_get_trtvar_refpath()` is marked as superseded
-- `a_summarize_aval_chg_diff_j()` now uses `get_ref_info()` 
+- Updated `get_ref_info()` for matching column split paths (#295).
+- `h_get_trtvar_refpath()` now uses `cur_col_split_path()` and is used by `a_summarize_aval_chg_diff_j()` (#295).
 
 
 
