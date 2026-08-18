@@ -204,12 +204,11 @@ test_that("get_ref_info works with a df in the presence of the overall column", 
 
 test_that("get_ref_info returns NULL values when ref_path is NULL", {
   res <- get_ref_info(NULL, .spl_context = data.frame())
-  exp <- list(ref_group = NULL, in_ref_col = NULL, split_name = NULL, ref_level = NULL, cur_col_val = NULL)
 
-  expect_identical(res, exp)
+  expect_null(res)
 })
 
-test_that("get_ref_info returns split_name, ref_level, cur_col_val for matching column splits", {
+test_that("get_ref_info returns reference information for matching column splits", {
   dm <- formatters::DM
   dm$colspan_trt <- factor(
     ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
@@ -226,36 +225,28 @@ test_that("get_ref_info returns split_name, ref_level, cur_col_val for matching 
 
   ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
 
-  captured <- list()
-  spy_afun <- function(df, ref_path, .spl_context) {
-    captured[[length(captured) + 1L]] <<- get_ref_info(ref_path, .spl_context)
-    in_rows("x" = rcell(1, format = "xx"))
+  introspect_ref_info <- function(df, ref_path, .spl_context) {
+    ref_info <- get_ref_info(ref_path, .spl_context)
+    in_rows(
+      "Reference Group Size" = rcell(nrow(ref_info$ref_group)),
+      "In Reference Column" = rcell(ref_info$in_ref_col)
+    )
   }
 
   lyt <- basic_table() |>
     split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
     split_cols_by("ARM") |>
-    analyze("AGE", afun = spy_afun, extra_args = list(ref_path = ref_path))
+    analyze("AGE", afun = introspect_ref_info, extra_args = list(ref_path = ref_path))
 
-  build_table(lyt, dm)
+  result <- build_table(lyt, dm)
 
-  for (res in captured) {
-    expect_identical(res$split_name, "ARM")
-    expect_identical(res$ref_level, "B: Placebo")
-  }
-
-  ref_col <- Filter(function(r) isTRUE(r$in_ref_col), captured)
-  expect_length(ref_col, 1L)
-  expect_identical(ref_col[[1L]]$cur_col_val, "B: Placebo")
-
-  non_ref_cols <- Filter(function(r) isFALSE(r$in_ref_col), captured)
-  expect_true(length(non_ref_cols) >= 1L)
-  for (res in non_ref_cols) {
-    expect_false(res$cur_col_val == "B: Placebo")
-  }
+  expect_snapshot(
+    cran = TRUE,
+    cat(sub("[[:space:]]+$", "", capture.output(result)), sep = "\n")
+  )
 })
 
-test_that("get_ref_info returns split_name and ref_level in risk-diff columns", {
+test_that("get_ref_info returns NULL reference information in risk-diff columns", {
   dm <- formatters::DM
   dm$colspan_trt <- factor(
     ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
@@ -300,9 +291,6 @@ test_that("get_ref_info returns split_name and ref_level in risk-diff columns", 
   for (res in captured) {
     expect_null(res$ref_group)
     expect_null(res$in_ref_col)
-    expect_identical(res$split_name, "ARM")
-    expect_identical(res$ref_level, "B: Placebo")
-    expect_false(is.null(res$cur_col_val))
   }
 })
 
@@ -355,15 +343,4 @@ test_that("h_get_trtvar_refpath returns the expected shape and values in a risk-
     expect_identical(res$trt_var_refspec, "ARM") # trt_var_refspec == trt_var by definition
     expect_false(is.null(res$cur_trt_grp)) # cur_trt_grp is the active arm value
   }
-})
-
-test_that("get_ref_info identifies cur_col_val from split variables", {
-  spl_context <- data.frame(
-    cur_col_split = I(list(c("COLSPAN", "ARM"))),
-    cur_col_split_val = I(list(c("ARM", "A: Drug X")))
-  )
-
-  result <- get_ref_info(c("ARM", "B: Placebo"), spl_context)
-
-  expect_identical(result$cur_col_val, "A: Drug X")
 })

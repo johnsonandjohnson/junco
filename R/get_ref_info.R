@@ -17,9 +17,6 @@
 #'     on `.var`), equivalent to `.ref_group` from [rtables::additional_fun_params].
 #'   * `in_ref_col`: logical, whether the current column is the reference column,
 #'     equivalent to `.in_ref_col` from [rtables::additional_fun_params].
-#'   * `split_name`: the most recent split name (last split in `ref_path`).
-#'   * `ref_level`: the reference level (last level in `ref_path`).
-#'   * `cur_col_val`: the current column's value for `split_name`.
 #'
 #' @details
 #' The reference group is specified in `colpath` hierarchical fashion in
@@ -78,55 +75,33 @@
 #' build_table(lyt, dm)
 get_ref_info <- function(ref_path, .spl_context, .var = NULL) {
   if (is.null(ref_path)) {
-    return(
-      list(ref_group = NULL, in_ref_col = NULL, split_name = NULL, ref_level = NULL, cur_col_val = NULL)
-    )
+    return(NULL)
   }
 
   checkmate::assert_character(ref_path, min.len = 2L, names = "unnamed")
   checkmate::assert_true(length(ref_path) %% 2L == 0L)
   checkmate::assert_data_frame(.spl_context)
+  checkmate::assert_subset("full_parent_df", colnames(.spl_context))
+  checkmate::assert_string(.var, min.chars = 1L, null.ok = TRUE)
 
-  cur_col_path <- cur_col_split_path(.spl_context)
-  cur_col_vars <- cur_col_path[seq(1L, length(cur_col_path), by = 2L)]
-  ref_path_last <- utils::tail(ref_path, 2L)
-  last_var_pos <- match(ref_path_last[1L], cur_col_vars)
-  cur_col_last_val <- if (!is.na(last_var_pos)) {
-    cur_col_path[2L * last_var_pos]
-  } else {
-    NULL
-  }
-
-  # If ref_path variables are outside of the current column split variable.
+  # Compare column split names while ignoring split values.
   ref_path_val_pos <- seq(2L, length(ref_path), by = 2L)
-  ref_path_any_vals <- ref_path
-  ref_path_any_vals[ref_path_val_pos] <- "*"
-  if (!in_column(ref_path_any_vals, .spl_context)) {
-    return(
-      list(
-        ref_group = NULL,
-        in_ref_col = NULL,
-        split_name = ref_path_last[1L],
-        ref_level = ref_path_last[2L],
-        cur_col_val = cur_col_last_val
-      )
-    )
+  ref_path_any_val <- replace(ref_path, ref_path_val_pos, "*")
+  if (!in_column(ref_path_any_val, .spl_context)) {
+    return(list(in_ref_col = NULL, ref_group = NULL))
   }
 
   leaf_sc <- .spl_context[nrow(.spl_context), ]
   full_df <- leaf_sc$full_parent_df[[1L]]
-  ref_path_levels <- paste(ref_path[ref_path_val_pos], collapse = ".")
-  row_in_ref_group <- leaf_sc[[ref_path_levels]][[1L]]
-  ref_group <- full_df[row_in_ref_group, ]
+  ref_path_vals <- paste(ref_path[ref_path_val_pos], collapse = ".")
+  ref_group_rows <- leaf_sc[[ref_path_vals]][[1L]]
+  ref_group <- full_df[ref_group_rows, ]
   if (!is.null(.var)) {
     ref_group <- ref_group[[.var]]
   }
 
   list(
-    ref_group = ref_group,
     in_ref_col = in_column(ref_path, .spl_context),
-    split_name = ref_path_last[1L],
-    ref_level = ref_path_last[2L],
-    cur_col_val = cur_col_last_val
+    ref_group = ref_group
   )
 }
