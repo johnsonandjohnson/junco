@@ -1,31 +1,41 @@
-#' Obtain reference information for a global reference group.
+#' @title Obtain reference group information from split context.
 #'
-#' This helper function can be used in custom analysis functions, by passing
-#' an extra argument `ref_path` which defines a global reference group by
-#' the corresponding column split hierarchy levels.
+#' @description `r lifecycle::badge("stable")`
 #'
-#' @param ref_path (`character`)
+#' `get_ref_info()` identifies a reference group defined by a column-split
+#' path and returns both the reference-group data and an indicator of whether
+#' the current column is the reference column. It is intended for use inside
+#' custom `rtables` analysis functions.
+#'
+#' The reference group is specified using `ref_path`, which consists of
+#' alternating column-split variable names and its corresponding levels.
+#' For example, `c("SEX", "F", "ARM", "Placebo")` specifies the column-split
+#' path where `SEX` is `"F"` and `ARM` is `"Placebo"`.
+#'
+#' @param ref_path (`character`) \cr
 #'   Reference group specification as an `rtables` `colpath`; see Details.
-#' @param .spl_context (`data.frame`)
+#' @param .spl_context (`data.frame`) \cr
 #'   Ancestor split-state information passed by `rtables`.
-#' @param .var (`character`)
+#' @param .var (`character(1)`) \cr
 #'   The variable being analyzed; see [rtables::additional_fun_params].
+#'   If supplied, the corresponding column is extracted from the reference-group
+#'   data. If `NULL`, the complete reference-group data frame is returned.
 #'
 #' @return
-#' * `get_ref_info()` returns a list with:
-#'   * `ref_group`: the reference group data (a `data.frame` or vector depending
-#'     on `.var`), equivalent to `.ref_group` from [rtables::additional_fun_params].
-#'   * `in_ref_col`: logical, whether the current column is the reference column,
-#'     equivalent to `.in_ref_col` from [rtables::additional_fun_params].
+#'   A list with the following elements:
+#'   \itemize{
+#'     \item `in_ref_col` (`logical(1)` or `NULL`) indicates whether the
+#'       current column matches the reference path.
+#'       This corresponds to `.in_ref_col` in [rtables::additional_fun_params].
+#'     \item `ref_group` (`data.frame`, vector, or `NULL`) contains the
+#'       observations belonging to the reference group. If `.var` is `NULL`,
+#'       the complete data frame is returned; otherwise, the column specified
+#'       by `.var` is returned.
+#'       This corresponds to `.ref_group` in [rtables::additional_fun_params].
+#'   }
 #'
-#' @details
-#' The reference group is specified in `colpath` hierarchical fashion in
-#' `ref_path`: the first column split variable is the first element, and the
-#' level to use is the second element. It continues until the last column split
-#' variable with last level to use.
-#' Note that depending on `.var`, either a `data.frame` (if `.var` is `NULL`)
-#' or a vector (otherwise) is returned. This allows usage for analysis
-#' functions with `df` and `x` arguments, respectively.
+#'   If the reference path is not present in the current column-split
+#'   hierarchy, both elements are `NULL`.
 #'
 #' @export
 #'
