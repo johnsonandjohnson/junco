@@ -478,21 +478,8 @@ a_summarize_aval_chg_diff_j <- function(
   .ref_group <- NULL
   ctrl_grp <- NULL
   if (comp_btw_group) {
-    ref <- get_ref_info(ref_path, .spl_context)
-    split_name_refspec <- ref$split_name
-    checkmate::assert_true(identical(trt_var, split_name_refspec))
-    ctrl_grp <- ref$ref_level
-
-    ### check that ctrl_grp is a level of the treatment variable, in case riskdiff is requested
-    if (!ctrl_grp %in% levels(df[[trt_var]])) {
-      stop(paste0(
-        "control group specification in ref_path argument (",
-        ctrl_grp,
-        ") is not a level of your treatment group variable (",
-        trt_var,
-        ")."
-      ))
-    }
+    ref_path_info <- h_get_trtvar_refpath(ref_path, .spl_context, df)
+    ctrl_grp <- ref_path_info$ctrl_grp
 
     if (trt_val == ctrl_grp) .in_ref_col <- TRUE
 

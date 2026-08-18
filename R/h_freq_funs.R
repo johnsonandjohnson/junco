@@ -284,11 +284,7 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
 
 #' Get Treatment Variable Reference Path
 #'
-#' @description `r lifecycle::badge("superseded")`
-#'
 #' Retrieves the treatment variable reference path from the provided context.
-#' Prefer [get_ref_info()] which now returns `split_name`, `ref_level`, and
-#' `cur_col_val` in addition to `ref_group` and `in_ref_col`.
 #'
 #' @param ref_path (`character`)\cr Reference path for treatment variable.
 #' @param .spl_context (`data.frame`)\cr Current split context.
@@ -297,16 +293,18 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
 #' @export
 h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
   checkmate::check_character(ref_path, min.len = 2L, names = "unnamed")
-  checkmate::assert_true(length(ref_path) %% 2 == 0) # Even number of elements in ref_path.
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
 
-  trt_var <- utils::tail(.spl_context$cur_col_split[[length(.spl_context$cur_col_split)]], n = 1)
-  trt_var_refspec <- utils::tail(ref_path, n = 2)[1]
+  cur_col_path <- cur_col_split_path(.spl_context)
+  trt_var_refspec <- utils::tail(ref_path, n = 2L)[1L]
+  cur_col_split_names <- cur_col_path[seq(1L, length(cur_col_path), by = 2L)]
+  trt_var_pos <- match(trt_var_refspec, cur_col_split_names)
 
-  checkmate::assert_true(identical(trt_var, trt_var_refspec))
+  checkmate::assert_true(!is.na(trt_var_pos))
 
-  # current group and ctrl_grp
-  cur_trt_grp <- utils::tail(.spl_context$cur_col_split_val[[length(.spl_context$cur_col_split_val)]], n = 1)
-  ctrl_grp <- utils::tail(ref_path, n = 1)
+  trt_var <- cur_col_split_names[trt_var_pos]
+  cur_trt_grp <- cur_col_path[2L * trt_var_pos]
+  ctrl_grp <- utils::tail(ref_path, n = 1L)
 
   ### check that ctrl_grp is a level of the treatment variable, in case riskdiff is requested
   if (!ctrl_grp %in% levels(df[[trt_var]])) {
