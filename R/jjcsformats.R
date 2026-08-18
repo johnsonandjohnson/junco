@@ -368,3 +368,110 @@ jjcsformat_range_fct <- function(str, censor_char = "+") {
     paste0("(", res[1], ", ", res[2], ")")
   }
 }
+
+
+#' @noRd
+#'
+#' @param x (`numeric`)\cr numeric vector to round.
+#' @param digits (`integer(1)`)\cr number of significant figures to display.
+#' @param round_type (`character(1)`)\cr rounding method. See [formatters::format_value()] for details.
+#' @param whole_integer (`logical(1)`)\cr if `TRUE`, preserves the full integer part when
+#'   `x` has more integer digits than `digits` (i.e., scale is clamped to 1).
+#' @param zero_threshold (`numeric(1)`)\cr values with `abs(x) < zero_threshold` are snapped
+#' to zero before rounding. Defaults to `0` (no snapping).
+
+#' @return numeric vector of the same length as `x`, rounded to `digits` significant figures.
+#' @keywords internal
+signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer = FALSE, zero_threshold = 0) {
+  stopifnot(length(digits) == 1, is.numeric(digits))
+
+  out <- x
+  lt_tol <- abs(out) < zero_threshold
+  out[lt_tol] <- 0
+
+  ok <- is.finite(out) & out != 0
+  exponent <- ceiling(log10(abs(out[ok])))
+  scale <- 10^(digits - exponent)
+  if (whole_integer) {
+    # to ensure entire integer part is presented if x is greater than 10^digits
+    sclt1 <- scale < 1
+    scale[sclt1] <- 1
+  }
+  x_round <- out
+  x_round[ok] <- as.numeric(sapply(x[ok] * scale, round_fmt, round_type = round_type, digits = 0))
+  out[ok] <- x_round[ok] / scale
+
+  out
+}
+
+#' @title Format numeric values by significant figures.
+#' @description Format numeric values by significant figures with controlable round_type,
+#' whole_integer and trailing zeroes.
+#' @details A function factory that produces formatting functions to round values to a
+#' specified number of significant figures, suitable for use with
+#' [formatters::format_value()].\cr
+#' \cr The function is an alternative to [tern::format_sigfig()],
+#' Current function has fixed the `formatC` argument `num_fmt = "fg"`,
+#' and extra options for `whole_integer` and `trail_zero` to control the format behavior.
+#'
+#' @seealso [tern::format_sigfig()]
+#'
+#' @param sigfig (`integer(1)`)\cr number of significant figures to display.
+#' @param round_type (`character(1)`)\cr rounding method. See [formatters::format_value()] for details.\cr
+#' The resulting formatting function is of the type `function(x, round_type, ...)`,
+#' which allows for different rounding types (see [formatters::round_fmt()]).
+#' @param whole_integer (`logical(1)`)\cr if `TRUE`, preserves the full integer part when
+#'   `x` has more integer digits than `sigfig` (i.e., scale is clamped to 1).
+#' @param zero_threshold (`numeric(1)`)\cr values with `abs(x) < zero_threshold` are snapped
+#' to zero before rounding. Defaults to `0` (no snapping).
+#'
+#' @param format (`character(1)`)\cr layout format string controlling how one or two
+#'   values are arranged, e.g. `"xx"`, `"xx (xx)"`, `"(xx, xx)"`. Any decimal
+#'   specification in `xx.` or `xx.x+` is stripped — precision is controlled by
+#'   `sigfig` alone.
+#' @param trail_zero (`logical(1)`)\cr If `TRUE` flag code `"#"` passed to the `flag`
+#'   argument of [formatC()]. Defaults to `TRUE` (present trailing zeros).
+#' @return A formatting function with signature `function(x, round_type, ...)` that
+#'   returns a formatted string.
+#' @export
+#' @examples
+#' fmt <- format_sigfig_j(3)
+#' fmt(0.001234)
+#' fmt(1234.5)
+#'
+#' fmt2 <- format_sigfig_j(3, format = "xx (xx)")
+#' fmt2(c(1234.5, 0.00567))
+#'
+#'
+#' format_sigfig_j(3, trail_zero = TRUE)(0.01)
+#' format_sigfig_j(3, trail_zero = FALSE)(0.01)
+format_sigfig_j <- function(
+  sigfig,
+  format = "xx",
+  whole_integer = TRUE,
+  zero_threshold = 10^(-2 * sigfig),
+  trail_zero = TRUE
+) {
+  checkmate::assert_integerish(sigfig)
+  format <- gsub("xx\\.|xx\\.x+", "xx", format)
+  checkmate::assert_choice(format, c("xx", "xx / xx", "(xx, xx)", "xx - xx", "xx (xx)", "xx, xx"))
+  if (trail_zero) {
+    flag <- "#"
+  } else {
+    flag <- ""
+  }
+  function(x, round_type = valid_round_type, ...) {
+    if (!is.numeric(x)) stop("`format_sigfig_j` cannot be used for non-numeric values. Please choose another format.")
+    x_f <- signif_j(
+      x,
+      digits = sigfig,
+      round_type = round_type,
+      whole_integer = whole_integer,
+      zero_threshold = zero_threshold
+    )
+    num <- formatC(x_f, digits = sigfig, format = "fg", flag = flag)
+    num <- gsub("\\.$", "", num) # remove trailing "."
+
+    format_value(num, format)
+  }
+}

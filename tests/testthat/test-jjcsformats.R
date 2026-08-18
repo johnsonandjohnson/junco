@@ -234,3 +234,212 @@ test_that("jjcsformat_xx works also for cells with 0 length vectors", {
     )
   ))
 })
+
+# tests for format_sigfig_j start here ----
+test_that("format_sigfig_j case 1", {
+  x <- 0.35769
+  x2 <- x * c(1, 10, 100, 1000, 10000)
+  x2
+
+  expect_identical(
+    signif(x2, digits = 3),
+    signif_j(x2, digits = 3)
+  )
+
+  expect_identical(
+    signif(x2, digits = 3)[x2 < 1000],
+    signif_j(x2, digits = 3, whole_integer = TRUE)[x2 < 1000]
+  )
+
+  expect_any_difference(
+    signif(x2, digits = 3)[x2 >= 1000],
+    signif_j(x2, digits = 3, whole_integer = TRUE)[x2 >= 1000]
+  )
+
+  expect_identical(
+    signif_j(x2, digits = 3, whole_integer = TRUE)[x2 >= 1000],
+    round(x2[x2 >= 1000], 0)
+  )
+
+
+  fmt_3sf_j <- format_sigfig_j(3, whole_integer = TRUE)
+  fmt_3sf <- format_sigfig(3)
+
+  expect_identical(
+    fmt_3sf_j(x2)[x2 < 1000],
+    fmt_3sf(x2)[x2 < 1000]
+  )
+
+  expect_any_difference(
+    fmt_3sf_j(x2)[x2 >= 1000],
+    fmt_3sf(x2)[x2 >= 1000]
+  )
+
+  expect_identical(
+    fmt_3sf_j(x2)[x2 >= 1000],
+    as.character(round(x2[x2 >= 1000], 0))
+  )
+})
+
+
+test_that("format_sigfig_j case 2 - focus on rounding", {
+  x <- 0.1645
+  x2 <- x * c(1, 10, 100, 1000, 10000)
+  x2
+
+  fmt_3sf_j <- format_sigfig_j(3, whole_integer = TRUE)
+  fmt_3sf <- format_sigfig(3)
+
+  expect_identical(
+    fmt_3sf_j(x2)[x2 < 1000],
+    fmt_3sf(x2)[x2 < 1000]
+  )
+
+  expect_any_difference(
+    fmt_3sf_j(x2)[x2 >= 1000],
+    fmt_3sf(x2)[x2 >= 1000]
+  )
+
+  expect_identical(
+    fmt_3sf_j(x2)[x2 >= 1000],
+    as.character(round(x2[x2 >= 1000], 0))
+  )
+
+  expect_any_difference(
+    fmt_3sf_j(x2, round_type = "sas")[x2 < 1000],
+    fmt_3sf(x2)[x2 < 1000]
+  )
+
+  expect_equal(
+    fmt_3sf_j(x2, round_type = "sas")[x2 < 1000],
+    fmt_3sf(x2 + 0.0001)[x2 < 1000]
+  )
+
+  expect_identical(
+    fmt_3sf_j(x2)[x2 >= 1000],
+    as.character(round(x2[x2 >= 1000], 0))
+  )
+
+  expect_any_difference(
+    fmt_3sf_j(1645.5, round_type = "sas"),
+    fmt_3sf(1645.5)
+  )
+
+  expect_any_difference(
+    fmt_3sf_j(1644.5, round_type = "sas"),
+    fmt_3sf_j(1644.5, round_type = "iec")
+  )
+
+  expect_any_difference(
+    round(1644.5, 0),
+    roundSAS(1644.5, 0)
+  )
+
+  expect_identical(
+    fmt_3sf_j(1644.5, round_type = "sas"),
+    as.character(roundSAS(1644.5, 0))
+  )
+})
+
+test_that("format_sigfig_j case 3 - focus on values almost zero", {
+  x <- 1e-10
+
+  fmt_3sf_j <- format_sigfig_j(3)
+  fmt_3sf_j_2 <- format_sigfig_j(3, zero_threshold = 0)
+  fmt_3sf <- format_sigfig(3)
+
+  expect_identical(
+    fmt_3sf_j_2(x),
+    fmt_3sf(x)
+  )
+
+  expect_any_difference(
+    fmt_3sf_j(x),
+    fmt_3sf(x)
+  )
+
+  expect_identical(
+    fmt_3sf_j(x),
+    "0"
+  )
+
+  expect_identical(
+    fmt_3sf_j_2(x),
+    "0.000000000100"
+  )
+})
+
+test_that("format_sigfig_j case 4 - focus on trailing zeros", {
+  cur_scipen_opt <- getOption("scipen")
+  options(scipen = 999)
+
+  xx <- 10^seq(2, by = -1, length.out = 7)
+  x <- 4 * xx
+
+  x_target_t0 <- c("400", "40.0", "4.00", "0.400", "0.0400", "0.00400", "0.000400")
+  x_target_nt0 <- c("400", "40", "4", "0.4", "0.04", "0.004", "0.0004")
+
+  fmt_3sf_j <- format_sigfig_j(3, trail_zero = TRUE)
+  fmt_3sf_j_nt0 <- format_sigfig_j(3, trail_zero = FALSE)
+
+  expect_identical(
+    trimws(fmt_3sf_j(x)),
+    x_target_t0
+  )
+
+  expect_identical(
+    trimws(fmt_3sf_j_nt0(x)),
+    x_target_nt0
+  )
+
+  options("scipen" = cur_scipen_opt)
+})
+
+test_that("format_sigfig_j used in rtables framework as format", {
+  adsl <- ex_adsl
+  adsl$BMRKR1[adsl$ARMCD == "ARM A"] <- 1.845
+
+  lyt <- basic_table() |>
+    split_cols_by("ARMCD") |>
+    analyze("BMRKR1",
+      afun = a_summary,
+      extra_args = list(
+        .stats = c("n", "mean_sd", "range"),
+        .formats = c(
+          "mean_sd" = format_sigfig_j(3, format = "xx (xx)"),
+          "range" = format_sigfig_j(3, format = "xx, xx")
+        )
+      )
+    )
+
+  rslt <- build_table(lyt, adsl, round_type = "sas")
+  rslt
+  expect_snapshot(cran = TRUE, rslt)
+
+  rslt2 <- build_table(lyt, adsl, round_type = "iec")
+  rslt2
+  expect_snapshot(cran = TRUE, rslt)
+})
+
+test_that("format_sigfig_j used in rtables framework as format w/wout trailing zeros", {
+  adsl <- ex_adsl
+  adsl$BMRKR1[adsl$ARMCD == "ARM A"] <- 0.0004
+  adsl$BMRKR1[adsl$ARMCD == "ARM B"] <- 4
+
+  lyt <- basic_table() |>
+    split_cols_by("ARMCD") |>
+    analyze("BMRKR1",
+      afun = a_summary,
+      extra_args = list(
+        .stats = c("n", "mean_sd", "range"),
+        .formats = c(
+          "mean_sd" = format_sigfig_j(3, format = "xx (xx)", trail_zero = FALSE),
+          "range" = format_sigfig_j(3, format = "xx, xx", trail_zero = TRUE)
+        )
+      )
+    )
+
+  rslt <- build_table(lyt, adsl)
+  rslt
+  expect_snapshot(cran = TRUE, rslt)
+})
