@@ -296,8 +296,9 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
   checkmate::assert_true(length(ref_path) %% 2L == 0L)
 
   cur_col_path <- cur_col_split_path(.spl_context)
-  trt_var_refspec <- utils::tail(ref_path, n = 2L)[1L]
   cur_col_split_names <- cur_col_path[seq(1L, length(cur_col_path), by = 2L)]
+
+  trt_var_refspec <- utils::tail(ref_path, n = 2L)[1L]
   trt_var_pos <- match(trt_var_refspec, cur_col_split_names)
 
   checkmate::assert_true(!is.na(trt_var_pos))
@@ -309,14 +310,17 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
   ### check that ctrl_grp is a level of the treatment variable, in case riskdiff is requested
   if (!ctrl_grp %in% levels(df[[trt_var]])) {
     stop(paste0(
-      "control group specification in ref_path argument (",
-      ctrl_grp,
-      ") is not a level of your treatment group variable (",
-      trt_var,
-      ")."
+      "control group specification in ref_path argument (", ctrl_grp,
+      ") is not a level of your treatment group variable (", trt_var, ")."
     ))
   }
-  return(list(trt_var = trt_var, trt_var_refspec = trt_var_refspec, cur_trt_grp = cur_trt_grp, ctrl_grp = ctrl_grp))
+
+  list(
+    trt_var = trt_var,
+    trt_var_refspec = trt_var_refspec,
+    cur_trt_grp = cur_trt_grp,
+    ctrl_grp = ctrl_grp
+  )
 }
 
 # helper function to define expression for retrieving ref_group type of datasets
