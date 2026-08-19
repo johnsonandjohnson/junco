@@ -297,6 +297,8 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
 
   cur_col_path <- cur_col_split_path(.spl_context)
 
+  checkmate::assert_true(length(cur_col_path) >= 2L)
+
   trt_var <- cur_col_path[length(cur_col_path) - 1]
   trt_var_ref <- ref_path[length(ref_path) - 1]
 
@@ -307,12 +309,12 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
     ))
   }
 
-  cur_trt_grp <- cur_col_path[length(cur_col_path)]
-  ctrl_grp <- ref_path[length(ref_path)]
+  trt_grp <- cur_col_path[length(cur_col_path)]
+  ctrl_grp_ref  <- ref_path[length(ref_path)]
 
   if (!ctrl_grp %in% levels(df[[trt_var]])) {
     stop(paste0(
-      "control group specification in ref_path argument (", ctrl_grp,
+      "control group specification in ref_path argument (", ctrl_grp_ref,
       ") is not a level of your treatment group variable (", trt_var, ")."
     ))
   }
@@ -320,8 +322,8 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
   list(
     trt_var = trt_var,
     trt_var_ref = trt_var_ref,
-    cur_trt_grp = cur_trt_grp,
-    ctrl_grp = ctrl_grp
+    trt_grp  = trt_grp,
+    ctrl_grp_ref = ctrl_grp_ref
   )
 }
 
