@@ -296,18 +296,20 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
   checkmate::assert_true(length(ref_path) %% 2L == 0L)
 
   cur_col_path <- cur_col_split_path(.spl_context)
-  cur_col_split_names <- cur_col_path[seq(1L, length(cur_col_path), by = 2L)]
 
-  trt_var_refspec <- utils::tail(ref_path, n = 2L)[1L]
-  trt_var_pos <- match(trt_var_refspec, cur_col_split_names)
+  trt_var <- cur_col_path[length(cur_col_path) - 1]
+  trt_var_ref <- ref_path[length(ref_path) - 1]
 
-  checkmate::assert_true(!is.na(trt_var_pos))
+  if (!identical(trt_var, trt_var_ref)) {
+    stop(paste0(
+      "treatment variable in split context (", trt_var,
+      ") does not match ref_path specification (", trt_var_ref, ")."
+    ))
+  }
 
-  trt_var <- cur_col_split_names[trt_var_pos]
-  cur_trt_grp <- cur_col_path[2L * trt_var_pos]
-  ctrl_grp <- utils::tail(ref_path, n = 1L)
+  cur_trt_grp <- cur_col_path[length(cur_col_path)]
+  ctrl_grp <- ref_path[length(ref_path)]
 
-  ### check that ctrl_grp is a level of the treatment variable, in case riskdiff is requested
   if (!ctrl_grp %in% levels(df[[trt_var]])) {
     stop(paste0(
       "control group specification in ref_path argument (", ctrl_grp,
@@ -317,7 +319,7 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
 
   list(
     trt_var = trt_var,
-    trt_var_refspec = trt_var_refspec,
+    trt_var_ref = trt_var_ref,
     cur_trt_grp = cur_trt_grp,
     ctrl_grp = ctrl_grp
   )
