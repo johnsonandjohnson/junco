@@ -299,19 +299,23 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
   cur_col_path <- cur_col_split_path(.spl_context)
   checkmate::assert_true(length(cur_col_path) >= 2L)
 
-  cur_trt_var <- cur_col_path[length(cur_col_path) - 1]
   ref_trt_var <- ref_path[length(ref_path) - 1]
 
-  if (!identical(cur_trt_var, ref_trt_var)) {
+  # Variable names is odd
+  var_positions <- seq(1L, length(cur_col_path), by = 2L)
+  trt_var_pos <- var_positions[cur_col_path[var_positions] == ref_trt_var]
+
+  if (length(trt_var_pos) == 0L) {
     stop(paste0(
       "Treatment variable mismatch: the treatment variable in the current ",
-      "split context is '", cur_trt_var,
+      "split context is '", cur_col_path[length(cur_col_path) - 1L],
       "', but ref_path specifies '", ref_trt_var,
       "'. These treatment variables must be identical."
     ))
   }
 
-  cur_trt_grp <- cur_col_path[length(cur_col_path)]
+  cur_trt_var <- cur_col_path[trt_var_pos]
+  cur_trt_grp <- cur_col_path[trt_var_pos + 1L]
   ref_trt_grp <- ref_path[length(ref_path)]
 
   if (!ref_trt_grp %in% levels(df[[cur_trt_var]])) {
