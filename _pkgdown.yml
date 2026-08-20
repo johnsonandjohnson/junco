@@ -24,6 +24,7 @@ articles:
     - table_and_listing_customizations
     - ancova_combined
     - standard_column_structures
+    - get_ref_info
 reference:
   - title: junco Analysis Functions
     desc: The following functions are the Analysis functions used used to create common table layouts.
