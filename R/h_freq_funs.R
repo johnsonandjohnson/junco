@@ -303,19 +303,22 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
 
   # Variable names is odd
   var_positions <- seq(1L, length(cur_col_path), by = 2L)
-  trt_var_pos <- var_positions[cur_col_path[var_positions] == ref_trt_var]
 
-  if (length(trt_var_pos) == 0L) {
+  if (anyDuplicated(cur_col_path[var_positions]) != 0) {
+    stop("Variable names on the current column split-path must be unique.")
+  }
+
+  trt_var_pos <- match(ref_trt_var, cur_col_path[var_positions])
+
+  if (is.na(trt_var_pos)) {
     stop(paste0(
-      "Treatment variable mismatch: the treatment variable in the current ",
-      "split context is '", cur_col_path[length(cur_col_path) - 1L],
-      "', but ref_path specifies '", ref_trt_var,
-      "'. These treatment variables must be identical."
+      "ref_path treatment variable ('", ref_trt_var,
+      "') not found in the current column split-path."
     ))
   }
 
-  cur_trt_var <- cur_col_path[trt_var_pos]
-  cur_trt_grp <- cur_col_path[trt_var_pos + 1L]
+  cur_trt_var <- cur_col_path[var_positions[trt_var_pos]]
+  cur_trt_grp <- cur_col_path[var_positions[trt_var_pos] + 1L]
   ref_trt_grp <- ref_path[length(ref_path)]
 
   if (!ref_trt_grp %in% levels(df[[cur_trt_var]])) {
