@@ -385,23 +385,26 @@ jjcsformat_range_fct <- function(str, censor_char = "+") {
 signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer = FALSE, zero_threshold = 0) {
   stopifnot(length(digits) == 1, is.numeric(digits))
 
-  out <- x
-  lt_tol <- abs(out) < zero_threshold
-  out[lt_tol] <- 0
+  lt_tol <- abs(x) < zero_threshold
+  x[lt_tol] <- 0
 
-  ok <- is.finite(out) & out != 0
-  exponent <- ceiling(log10(abs(out[ok])))
-  scale <- 10^(digits - exponent)
+  ok <- is.finite(x) & x != 0
+  # see R documentation signif is the same as rounding with  dig - ceiling(log10(abs(x)) digits
+  exponent <- ceiling(log10(abs(x[ok])))
+  new_round <- digits - exponent
   if (whole_integer) {
     # to ensure entire integer part is presented if x is greater than 10^digits
-    sclt1 <- scale < 1
-    scale[sclt1] <- 1
+    round_integer <- new_round < 0
+    new_round[round_integer] <- 0
   }
-  x_round <- out
+  # unlike round round_fmt cannot deal with negative digits
+  # use scale approach instead and round with zero digits
+  scale <- 10^new_round
+  x_round <- x
   x_round[ok] <- as.numeric(sapply(x[ok] * scale, round_fmt, round_type = round_type, digits = 0))
-  out[ok] <- x_round[ok] / scale
 
-  out
+  x_round[ok] <- x_round[ok] / scale
+  x_round
 }
 
 #' @title Format numeric values by significant figures.
