@@ -40,6 +40,7 @@
 - Update new exported calls from rtables.officer
 - update documentation to `roxygen2` 8.0.0 
 - Add extra statistics to `a_eair100_j` and introduce scaling factor `num_p_year` (default = 100) (#361)
+- Updated `insightsengineering` urls to `pharmaverse`
 
 ### Added
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.

@@ -22,7 +22,7 @@ rm_other_facets_fact <- function(nm) {
 #' @param label (`character`)\cr Label for the new facet.
 #'
 #' @note Current add_overall_facet is bugged. Can be used directly after it's fixed
-#' https://github.com/insightsengineering/rtables/issues/768
+#' https://github.com/pharmaverse/rtables/issues/768
 #' @examples
 #' splfun <- make_split_fun(post = list(real_add_overall_facet("Total", "Total")))
 #'
