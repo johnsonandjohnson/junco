@@ -1,7 +1,6 @@
 ---
 title: "Reference Group Handling with get_ref_info"
 date: "`r Sys.Date()`"
-author: "David Munoz Tord"
 output:
     rmarkdown::html_document:
         theme: "spacelab"
@@ -28,15 +27,11 @@ knitr::opts_chunk$set(
 ## Overview
 
 Many clinical tables require statistics computed relative to a reference
-(control) group, for example, a difference in means versus placebo, or
-a risk difference versus a comparator arm. In `rtables`, the reference
-group is normally injected automatically via `.ref_group` and
-`.in_ref_col` when the analysis function is placed inside the reference
-column's split. This works well for simple single-level column splits,
-but breaks down when:
-
-- the reference column is nested under a spanning header (e.g. a
-  `colspan_trt` variable),
+(control) group — for example, a risk difference versus placebo. In
+`rtables`, the reference group can be injected automatically via
+`.ref_group` and `.in_ref_col`, but this breaks down when:
+ 
+- the reference column is nested under a spanning header,
 - a `split_cols_by_multivar` is present, or
 - an `add_overall_col` is used alongside treatment splits.
 
@@ -46,12 +41,7 @@ the reference group itself, using an explicit column path (`ref_path`).
 ```{r load_packages, message=FALSE}
 library(rtables)
 library(junco)
-library(tern)
 library(dplyr)
-```
-
-```{r load_data, message=FALSE}
-adsl <- ex_adsl
 ```
 
 ## The `ref_path` Convention
@@ -78,8 +68,7 @@ ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
 ```
 
 The path must exactly match the column-split hierarchy in the layout.
-Use `col_paths(build_table(lyt, df))` to inspect the available paths
-for a given layout.
+Use `col_paths(build_table(lyt, df))` to inspect the available paths.
 
 ## Basic Usage
 
@@ -91,144 +80,161 @@ for a given layout.
 - `ref_group`: the subset of the row data belonging to the reference
   group (a data frame, or a vector if `.var` is supplied).
 
-Here is a minimal analysis function that uses `get_ref_info()`:
+## Working Example: AE Table with Risk Difference Columns
 
-```{r basic_afun}
-afun_diff_means <- function(x, .var, ref_path, .spl_context) {
-  ref <- get_ref_info(ref_path, .spl_context, .var)
+This example demonstrates the standard pattern for a table with
+spanning headers and risk difference columns — the primary use case
+for `get_ref_info()`.
 
-  diff <- if (isFALSE(ref$in_ref_col)) {
-    mean(x, na.rm = TRUE) - mean(ref$ref_group, na.rm = TRUE)
-  } else {
-    NULL
-  }
+```{r data_prep}
+trtvar <- "TRT01A"
+ctrl_grp <- "Placebo"
 
-  in_rows(
-    m    = rcell(mean(x, na.rm = TRUE), label = "Mean", format = "xx.x"),
-    diff = rcell(diff, label = "Diff vs Placebo", format = "xx.x")
-  )
-}
+adsl <- pharmaverseadamjnj::adsl |>
+  filter(SAFFL == "Y") |>
+  select(STUDYID, USUBJID, all_of(trtvar), SAFFL) |>
+  mutate(!!trtvar := factor(
+    .data[[trtvar]],
+    levels = c("Xanomeline Low Dose", "Xanomeline High Dose", "Placebo")
+  ))
+
+adae <- pharmaverseadamjnj::adae |>
+  filter(TRTEMFL == "Y") |>
+  select(USUBJID, TRTEMFL, AEBODSYS, AEDECOD)
+
+# Add spanning header and risk difference variables
+adsl$colspan_trt <- factor(
+  ifelse(adsl[[trtvar]] == ctrl_grp, " ", "Active Study Agent"),
+  levels = c("Active Study Agent", " ")
+)
+adsl$rrisk_header <- "Risk Difference (%) (95% CI)"
+adsl$rrisk_label <- paste(adsl[[trtvar]], "vs", ctrl_grp)
+
+ae <- adae |> right_join(adsl, by = "USUBJID")
 ```
 
-Applied to a simple single-level column split:
+The `ref_path` must trace the full column-split hierarchy down to the
+reference group:
 
-```{r basic_table}
-ref_path <- c("ARM", "B: Placebo")
-
-lyt <- basic_table() |>
-  split_cols_by("ARM") |>
-  analyze("AGE", afun = afun_diff_means, extra_args = list(ref_path = ref_path))
-
-build_table(lyt, adsl)
-```
-
-## With a Spanning Header
-
-When a spanning header variable (`colspan_trt`) sits above the treatment
-split, the reference column is nested one level deeper. The `ref_path`
-must include the spanning variable:
-
-```{r colspan_setup}
-adsl2 <- adsl |>
-  mutate(
-    colspan_trt = factor(
-      ifelse(ARM == "B: Placebo", " ", "Active Study Agent"),
-      levels = c("Active Study Agent", " ")
-    )
-  )
-
+```{r ref_path}
 colspan_trt_map <- create_colspan_map(
-  adsl2,
-  non_active_grp         = "B: Placebo",
+  adsl,
+  non_active_grp = ctrl_grp,
   non_active_grp_span_lbl = " ",
-  active_grp_span_lbl    = "Active Study Agent",
-  colspan_var            = "colspan_trt",
-  trt_var                = "ARM"
+  active_grp_span_lbl = "Active Study Agent",
+  colspan_var = "colspan_trt",
+  trt_var = trtvar
 )
 
-ref_path_nested <- c("colspan_trt", " ", "ARM", "B: Placebo")
+ref_path <- c("colspan_trt", " ", trtvar, ctrl_grp)
 ```
 
-```{r colspan_table}
-lyt2 <- basic_table() |>
-  split_cols_by("colspan_trt", split_fun = trim_levels_to_map(colspan_trt_map)) |>
-  split_cols_by("ARM") |>
-  analyze("AGE", afun = afun_diff_means, extra_args = list(ref_path = ref_path_nested))
+Now build the layout. The key point: `a_freq_j` uses `get_ref_info()`
+internally to identify the reference group and compute risk differences
+in the dedicated difference columns:
 
-build_table(lyt2, adsl2)
+```{r layout_and_table}
+extra_args <- list(
+  denom = "n_altdf",
+  riskdiff = TRUE,
+  ref_path = ref_path,
+  method = "wald",
+  .stats = "count_unique_fraction",
+  .formats = c(rr_ci_3d = jjcsformat_xx("xx.x (xx.x, xx.x)"))
+)
+
+lyt <- basic_table(show_colcounts = TRUE, colcount_format = "N=xx") |>
+  split_cols_by("colspan_trt",
+    split_fun = trim_levels_to_map(map = colspan_trt_map)
+  ) |>
+  split_cols_by(trtvar) |>
+  split_cols_by("rrisk_header", nested = FALSE) |>
+  split_cols_by(trtvar,
+    labels_var = "rrisk_label",
+    split_fun = remove_split_levels(ctrl_grp)
+  ) |>
+  analyze("TRTEMFL",
+    afun = a_freq_j,
+    extra_args = append(extra_args, list(val = "Y", label = "Subjects with >=1 AE"))
+  ) |>
+  split_rows_by("AEBODSYS",
+    split_label = "System Organ Class",
+    split_fun = trim_levels_in_group("AEDECOD"),
+    label_pos = "topleft",
+    section_div = " ",
+    nested = FALSE
+  ) |>
+  summarize_row_groups("AEBODSYS", cfun = a_freq_j, extra_args = extra_args) |>
+  analyze("AEDECOD", afun = a_freq_j, extra_args = extra_args) |>
+  append_topleft("  Preferred Term, n (%)")
+
+result <- build_table(lyt, ae, alt_counts_df = adsl)
+head(result, 10)
 ```
 
-Note that `get_ref_info()` returns `in_ref_col = NULL` (not `FALSE`)
-when the reference split variable is absent from the current column
-hierarchy — for example, in an overall column added via
-`add_overall_col()`. The analysis function should handle `NULL`
-explicitly:
+## How `get_ref_info` Works Internally
 
-```{r overall_col}
-lyt3 <- basic_table() |>
-  split_cols_by("colspan_trt", split_fun = trim_levels_to_map(colspan_trt_map)) |>
-  split_cols_by("ARM") |>
-  add_overall_col("Total") |>
-  analyze("AGE", afun = afun_diff_means, extra_args = list(ref_path = ref_path_nested))
+When `a_freq_j` (or any analysis function) calls
+`get_ref_info(ref_path, .spl_context)`:
+ 
+1. It checks whether the split variables in `ref_path` are present in
+   the current column hierarchy (using `in_column()` with wildcards).
+2. If present, it subsets the row data to the reference group using the
+   pre-computed column facet indices stored in `.spl_context`.
+3. It returns `in_ref_col = TRUE/FALSE` indicating whether the current
+   column IS the reference column (so the function can skip computing
+   a difference against itself).
 
-build_table(lyt3, adsl2)
-```
+When the reference split is absent from the current column hierarchy
+(e.g. in an `add_overall_col("Total")` column), both `in_ref_col` and
+`ref_group` are `NULL`.
 
-The `Total` column receives `in_ref_col = NULL` because `colspan_trt`
-is not part of its column path. The analysis function returns `NULL` for
-the difference row, producing a blank cell.
+## Wildcard Matching with `in_column()`
 
-## Wildcard Matching
-
-`in_column()` — the underlying helper used by `get_ref_info()` — supports
-`"*"` as a wildcard for any single split variable name or value. This is
-useful when you want to check whether the current column belongs to a
-particular split level regardless of the spanning header above it:
+`in_column()` — the underlying helper used by `get_ref_info()` —
+supports `"*"` as a wildcard for any single split variable name or
+value:
 
 ```{r wildcard}
-# Matches any column where ARM == "B: Placebo", regardless of spanning header
-spl_context_placebo <- data.frame(
+# Simulate a split context for ARM == "B: Placebo" under colspan_trt == " "
+spl_ctx <- data.frame(
   cur_col_split     = I(list(c("colspan_trt", "ARM"))),
   cur_col_split_val = I(list(c(" ", "B: Placebo")))
 )
 
-# exact match
-in_column(c("colspan_trt", " ", "ARM", "B: Placebo"), spl_context_placebo)
+# Exact match
+in_column(c("colspan_trt", " ", "ARM", "B: Placebo"), spl_ctx)
 
-# wildcard on the spanning header — still TRUE
-in_column(c("*", "*", "ARM", "B: Placebo"), spl_context_placebo)
+# Wildcard on spanning header — still TRUE
+in_column(c("*", "*", "ARM", "B: Placebo"), spl_ctx)
 
-# wildcard does not match a different ARM level
-in_column(c("*", "*", "ARM", "A: Drug X"), spl_context_placebo)
+# Different ARM level — FALSE
+in_column(c("*", "*", "ARM", "A: Drug X"), spl_ctx)
 ```
 
 ## Relationship to `h_get_trtvar_refpath`
 
-`get_ref_info()` and `h_get_trtvar_refpath()` serve different purposes
-and are used in different contexts:
+`get_ref_info()` and `h_get_trtvar_refpath()` serve different purposes:
 
 | | `get_ref_info()` | `h_get_trtvar_refpath()` |
 |---|---|---|
 | **Returns** | reference-group data + `in_ref_col` flag | treatment variable name, current group, reference group name |
 | **Used for** | obtaining `.ref_group` / `.in_ref_col` for statistics | identifying the treatment variable when `split_cols_by_multivar` is present |
-| **Typical callers** | `s_*` / `a_*` analysis functions | `a_summarize_aval_chg_diff_j`, `a_freq_j`, `a_eair_j` |
+| **Typical callers** | `a_freq_j`, `a_eair_j`, `s_ancova_j` | `a_summarize_aval_chg_diff_j` |
 
 In layouts that combine `split_cols_by_multivar` with difference
-columns, `h_get_trtvar_refpath()` is called first to resolve the
-treatment variable name from the interleaved column path, and
-`get_ref_info()` is then called to obtain the reference-group data.
+columns, `h_get_trtvar_refpath()` resolves the treatment variable name
+from the interleaved column path, and `get_ref_info()` obtains the
+reference-group data.
 
 ## Inspecting Column Paths
 
-When constructing `ref_path`, it is helpful to inspect the column paths
-of a built table:
+When constructing `ref_path`, inspect the column paths of a built table:
 
 ```{r col_paths}
-tbl <- build_table(lyt2, adsl2)
-col_paths(tbl)
+col_paths(result)
 ```
 
-Each path in the output corresponds to a leaf column. The `ref_path`
-should match one of these paths exactly (or use `"*"` wildcards for
-positions that should not be constrained).
-```
+Each path corresponds to a leaf column. The `ref_path` should match one
+of these paths exactly (or a prefix thereof when the reference column
+has further nested splits below it).
