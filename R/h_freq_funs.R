@@ -296,34 +296,39 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
   checkmate::assert_true(length(ref_path) %% 2L == 0L)
 
   cur_col_path <- cur_col_split_path(.spl_context)
-
   checkmate::assert_true(length(cur_col_path) >= 2L)
 
-  trt_var <- cur_col_path[length(cur_col_path) - 1]
-  trt_var_ref <- ref_path[length(ref_path) - 1]
+  cur_trt_var <- cur_col_path[length(cur_col_path) - 1]
+  ref_trt_var <- ref_path[length(ref_path) - 1]
 
-  if (!identical(trt_var, trt_var_ref)) {
+  if (!identical(cur_trt_var, ref_trt_var)) {
     stop(paste0(
-      "treatment variable in split context (", trt_var,
-      ") does not match ref_path specification (", trt_var_ref, ")."
+      "Treatment variable mismatch: the treatment variable in the current ",
+      "split context is '", cur_trt_var,
+      "', but ref_path specifies '", ref_trt_var,
+      "'. These treatment variables must be identical."
     ))
   }
 
-  trt_grp <- cur_col_path[length(cur_col_path)]
-  ctrl_grp_ref  <- ref_path[length(ref_path)]
+  cur_trt_grp <- cur_col_path[length(cur_col_path)]
+  ref_trt_grp <- ref_path[length(ref_path)]
 
-  if (!ctrl_grp %in% levels(df[[trt_var]])) {
+  if (!ref_trt_grp %in% levels(df[[cur_trt_var]])) {
     stop(paste0(
-      "control group specification in ref_path argument (", ctrl_grp_ref,
-      ") is not a level of your treatment group variable (", trt_var, ")."
+      "Treatment group mismatch: the treatment group specified in ref_path ('",
+      ref_trt_grp,
+      "') is not a level of the treatment variable '",
+      cur_trt_var,
+      "'. Available treatment groups are: ",
+      paste(levels(df[[cur_trt_var]]), collapse = ", "),
+      "."
     ))
   }
 
   list(
-    trt_var = trt_var,
-    trt_var_ref = trt_var_ref,
-    trt_grp  = trt_grp,
-    ctrl_grp_ref = ctrl_grp_ref
+    cur_trt_var = cur_trt_var,
+    cur_trt_grp = cur_trt_grp,
+    ref_trt_grp = ref_trt_grp
   )
 }
 
