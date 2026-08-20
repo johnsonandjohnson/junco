@@ -289,7 +289,8 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
 #' @param ref_path (`character`)\cr Reference path for treatment variable.
 #' @param .spl_context (`data.frame`)\cr Current split context.
 #' @param df (`data.frame`)\cr Data frame.
-#' @return List containing treatment variable details.
+#' @return A character vector containing the treatment variable name, its current
+#' level, and the reference level name.
 #' @export
 h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
   checkmate::check_character(ref_path, min.len = 2L, names = "unnamed")
@@ -325,7 +326,7 @@ h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
     ))
   }
 
-  list(
+  c(
     cur_trt_var = cur_trt_var,
     cur_trt_grp = cur_trt_grp,
     ref_trt_grp = ref_trt_grp

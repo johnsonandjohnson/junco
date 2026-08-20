@@ -14,7 +14,8 @@ h_get_trtvar_refpath(ref_path, .spl_context, df)
 \item{df}{(\code{data.frame})\cr Data frame.}
 }
 \value{
-List containing treatment variable details.
+A character vector containing the treatment variable name, its current
+level, and the reference level name.
 }
 \description{
 Retrieves the treatment variable reference path from the provided context.

@@ -137,18 +137,10 @@ a_freq_resp_var_j <- function(
   inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
 
   if (riskdiff) {
-    trt_var_refpath <- h_get_trtvar_refpath(
-      ref_path,
-      .spl_context,
-      df
-    )
-    # trt_var_refpath is list with elements
-    # trt_var trt_var_refspec cur_trt_grp ctrl_grp
-    # make these elements available in current environment
-    trt_var <- trt_var_refpath$trt_var
-    trt_var_refspec <- trt_var_refpath$trt_var_refspec
-    cur_trt_grp <- trt_var_refpath$cur_trt_grp
-    ctrl_grp <- trt_var_refpath$ctrl_grp
+    trt_var_refpath <- h_get_trtvar_refpath(ref_path, .spl_context, df)
+    trt_var <- trt_var_refpath[["cur_trt_var"]]
+    cur_trt_grp <- trt_var_refpath[["cur_trt_grp"]]
+    ctrl_grp <- trt_var_refpath[["ref_trt_grp"]]
   }
 
   fn <- function(levii) {
