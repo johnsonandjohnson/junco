@@ -46,34 +46,35 @@
 #'
 #' result
 a_freq_resp_var_j <- function(
-    df,
-    .var,
-    .df_row,
-    .N_col,
-    .spl_context,
-    resp_var = NULL,
-    id = "USUBJID",
-    drop_levels = FALSE,
-    riskdiff = TRUE,
-    ref_path = NULL,
-    variables = formals(s_proportion_diff)$variables,
-    conf_level = formals(s_proportion_diff)$conf_level,
-    method = c(
-      "wald",
-      "waldcc",
-      "cmh",
-      "ha",
-      "newcombe",
-      "newcombecc",
-      "strat_newcombe",
-      "strat_newcombecc",
-      "cmh_sato",
-      "cmh_mn",
-      "uncond_exact_diff"
-    ),
-    weights_method = formals(s_proportion_diff)$weights_method,
-    .formats = NULL,
-    na_str = rep("NA", 3)) {
+  df,
+  .var,
+  .df_row,
+  .N_col,
+  .spl_context,
+  resp_var = NULL,
+  id = "USUBJID",
+  drop_levels = FALSE,
+  riskdiff = TRUE,
+  ref_path = NULL,
+  variables = formals(s_proportion_diff)$variables,
+  conf_level = formals(s_proportion_diff)$conf_level,
+  method = c(
+    "wald",
+    "waldcc",
+    "cmh",
+    "ha",
+    "newcombe",
+    "newcombecc",
+    "strat_newcombe",
+    "strat_newcombecc",
+    "cmh_sato",
+    "cmh_mn",
+    "uncond_exact_diff"
+  ),
+  weights_method = formals(s_proportion_diff)$weights_method,
+  .formats = NULL,
+  na_str = rep("NA", 3)
+) {
   # ---- Derive statistics: xx / xx (xx.x%)
 
   if (is.null(resp_var)) {
