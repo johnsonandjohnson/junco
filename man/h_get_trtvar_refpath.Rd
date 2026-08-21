@@ -4,7 +4,7 @@
 \alias{h_get_trtvar_refpath}
 \title{Get Treatment Variable Reference Path}
 \usage{
-h_get_trtvar_refpath(ref_path, .spl_context, df)
+h_get_trtvar_refpath(ref_path, .spl_context, df, trt_var_pos)
 }
 \arguments{
 \item{ref_path}{(\code{character})\cr Reference path for treatment variable.}
@@ -12,6 +12,9 @@ h_get_trtvar_refpath(ref_path, .spl_context, df)
 \item{.spl_context}{(\code{data.frame})\cr Current split context.}
 
 \item{df}{(\code{data.frame})\cr Data frame.}
+
+\item{trt_var_pos}{(\code{integer(1)})\cr Position of the treatment variable in
+the current interleaved column split path.}
 }
 \value{
 A character vector containing the treatment variable name, its current

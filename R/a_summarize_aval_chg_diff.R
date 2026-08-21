@@ -478,7 +478,12 @@ a_summarize_aval_chg_diff_j <- function(
   .ref_group <- NULL
   ctrl_grp <- NULL
   if (comp_btw_group) {
-    ref_path_info <- h_get_trtvar_refpath(ref_path, .spl_context, df)
+    ref_path_info <- h_get_trtvar_refpath(
+      ref_path,
+      .spl_context,
+      df,
+      trt_var_pos = 2L * (colvars_multivars - 1L) - 1L
+    )
     ctrl_grp <- ref_path_info[["ref_trt_grp"]]
 
     if (trt_val == ctrl_grp) .in_ref_col <- TRUE

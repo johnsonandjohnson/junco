@@ -66,7 +66,12 @@ s_summarize_ex_j <- function(
     )
     # diff between group will be updated in mean_sd stat
     if (comp_btw_group) {
-      trt_var_refpath <- h_get_trtvar_refpath(ref_path, .spl_context, df)
+      trt_var_refpath <- h_get_trtvar_refpath(
+        ref_path,
+        .spl_context,
+        df,
+        trt_var_pos = length(cur_col_split_path(.spl_context)) - 1L
+      )
       trt_var <- trt_var_refpath[["cur_trt_var"]]
       cur_trt_grp <- trt_var_refpath[["cur_trt_grp"]]
       ctrl_grp <- trt_var_refpath[["ref_trt_grp"]]

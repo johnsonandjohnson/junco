@@ -289,36 +289,32 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
 #' @param ref_path (`character`)\cr Reference path for treatment variable.
 #' @param .spl_context (`data.frame`)\cr Current split context.
 #' @param df (`data.frame`)\cr Data frame.
+#' @param trt_var_pos (`integer(1)`)\cr Position of the treatment variable in
+#'   the current interleaved column split path.
 #' @return A character vector containing the treatment variable name, its current
 #' level, and the reference level name.
 #' @export
-h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
+h_get_trtvar_refpath <- function(ref_path, .spl_context, df, trt_var_pos) {
   checkmate::check_character(ref_path, min.len = 2L, names = "unnamed")
   checkmate::assert_true(length(ref_path) %% 2L == 0L)
 
   cur_col_path <- cur_col_split_path(.spl_context)
   checkmate::assert_true(length(cur_col_path) >= 2L)
+  checkmate::assert_int(trt_var_pos, lower = 1L, upper = length(cur_col_path) - 1L)
+  checkmate::assert_true(trt_var_pos %% 2L == 1L)
 
   ref_trt_var <- ref_path[length(ref_path) - 1]
 
-  # Variable names is odd
-  var_positions <- seq(1L, length(cur_col_path), by = 2L)
-
-  if (anyDuplicated(cur_col_path[var_positions]) != 0) {
-    stop("Variable names on the current column split-path must be unique.")
-  }
-
-  trt_var_pos <- match(ref_trt_var, cur_col_path[var_positions])
-
-  if (is.na(trt_var_pos)) {
+  cur_trt_var <- cur_col_path[trt_var_pos]
+  if (!identical(cur_trt_var, ref_trt_var)) {
     stop(paste0(
       "ref_path treatment variable ('", ref_trt_var,
-      "') not found in the current column split-path."
+      "') does not match the treatment variable at position ", trt_var_pos,
+      " of the current column split-path ('", cur_trt_var, "')."
     ))
   }
 
-  cur_trt_var <- cur_col_path[var_positions[trt_var_pos]]
-  cur_trt_grp <- cur_col_path[var_positions[trt_var_pos] + 1L]
+  cur_trt_grp <- cur_col_path[trt_var_pos + 1L]
   ref_trt_grp <- ref_path[length(ref_path)]
 
   if (!ref_trt_grp %in% levels(df[[cur_trt_var]])) {
