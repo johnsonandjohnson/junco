@@ -420,9 +420,6 @@ signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer
 #' @seealso [tern::format_sigfig()]
 #'
 #' @param sigfig (`integer(1)`)\cr number of significant figures to display.
-#' @param round_type (`character(1)`)\cr rounding method. See [formatters::format_value()] for details.\cr
-#' The resulting formatting function is of the type `function(x, round_type, ...)`,
-#' which allows for different rounding types (see [formatters::round_fmt()]).
 #' @param whole_integer (`logical(1)`)\cr if `TRUE`, preserves the full integer part when
 #'   `x` has more integer digits than `sigfig` (i.e., scale is clamped to 1).
 #' @param zero_threshold (`numeric(1)`)\cr values with `abs(x) < zero_threshold` are snapped
@@ -435,7 +432,8 @@ signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer
 #' @param trail_zero (`logical(1)`)\cr If `TRUE` flag code `"#"` passed to the `flag`
 #'   argument of [formatC()]. Defaults to `TRUE` (present trailing zeros).
 #' @return A formatting function with signature `function(x, round_type, ...)` that
-#'   returns a formatted string.
+#'   returns a formatted string. The `round_type` argument accepts a rounding method
+#'   (see [formatters::round_fmt()]).
 #' @export
 #' @examples
 #' fmt <- format_sigfig_j(3)

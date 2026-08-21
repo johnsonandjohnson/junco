@@ -28,14 +28,11 @@ to zero before rounding. Defaults to \code{0} (no snapping).}
 
 \item{trail_zero}{(\code{logical(1)})\cr If \code{TRUE} flag code \code{"#"} passed to the \code{flag}
 argument of \code{\link[=formatC]{formatC()}}. Defaults to \code{TRUE} (present trailing zeros).}
-
-\item{round_type}{(\code{character(1)})\cr rounding method. See \code{\link[formatters:format_value]{formatters::format_value()}} for details.\cr
-The resulting formatting function is of the type \verb{function(x, round_type, ...)},
-which allows for different rounding types (see \code{\link[formatters:round_fmt]{formatters::round_fmt()}}).}
 }
 \value{
 A formatting function with signature \verb{function(x, round_type, ...)} that
-returns a formatted string.
+returns a formatted string. The \code{round_type} argument accepts a rounding method
+(see \code{\link[formatters:round_fmt]{formatters::round_fmt()}}).
 }
 \description{
 Format numeric values by significant figures with controllable round_type,
