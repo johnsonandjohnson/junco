@@ -318,7 +318,7 @@ test_that("h_get_trtvar_refpath returns the expected shape and values in a risk-
   spy_afun <- function(df, ref_path, .spl_context) {
     colid <- .spl_context$cur_col_id[[1L]]
     if (grepl("difference", tolower(colid), fixed = TRUE)) {
-      res <- h_get_trtvar_refpath(ref_path, .spl_context, df)
+      res <- h_get_trtvar_refpath(ref_path, .spl_context, df, trt_var_pos = 3L)
       captured[[length(captured) + 1L]] <<- res
     }
     in_rows("x" = rcell(1, format = "xx"))
@@ -342,4 +342,31 @@ test_that("h_get_trtvar_refpath returns the expected shape and values in a risk-
     expect_identical(res[["ref_trt_grp"]], "B: Placebo")
     expect_false(is.null(res[["cur_trt_grp"]])) # cur_trt_grp is the active arm value
   }
+})
+
+test_that("h_get_trtvar_refpath uses the requested trt_var position", {
+  df <- data.frame(
+    ARM = factor("A", levels = c("A", "B", "Placebo")),
+    stringsAsFactors = FALSE
+  )
+  spl_context <- data.frame(
+    cur_col_split = I(list(c("ARM", "stat", "ARM"))),
+    cur_col_split_val = I(list(c("A", "N", "B")))
+  )
+  ref_path <- c("ARM", "Placebo")
+
+  result <- h_get_trtvar_refpath(ref_path, spl_context, df, trt_var_pos = 5L)
+  expect_identical(result[["cur_trt_grp"]], "B")
+  expect_error(
+    h_get_trtvar_refpath(ref_path, spl_context, df, trt_var_pos = 3L),
+    "does not match"
+  )
+  expect_error(
+    h_get_trtvar_refpath(ref_path, spl_context, df, trt_var_pos = 4L),
+    "Must be TRUE"
+  )
+  expect_error(
+    h_get_trtvar_refpath(ref_path, spl_context, df, trt_var_pos = 7L),
+    "not <= 5"
+  )
 })
