@@ -38,7 +38,7 @@ A formatting function with signature \verb{function(x, round_type, ...)} that
 returns a formatted string.
 }
 \description{
-Format numeric values by significant figures with controlable round_type,
+Format numeric values by significant figures with controllable round_type,
 whole_integer and trailing zeroes.
 }
 \details{

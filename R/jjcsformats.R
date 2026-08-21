@@ -408,7 +408,7 @@ signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer
 }
 
 #' @title Format numeric values by significant figures.
-#' @description Format numeric values by significant figures with controlable round_type,
+#' @description Format numeric values by significant figures with controllable round_type,
 #' whole_integer and trailing zeroes.
 #' @details A function factory that produces formatting functions to round values to a
 #' specified number of significant figures, suitable for use with
