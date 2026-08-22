@@ -281,59 +281,67 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
   return(df)
 }
 
-
-#' Get Treatment Variable Reference Path
+#' @title Get Current Treatment Group
 #'
-#' Retrieves the treatment variable reference path from the provided context.
+#' @description `r lifecycle::badge("stable")`
 #'
-#' @param ref_path (`character`)\cr Reference path for treatment variable.
-#' @param .spl_context (`data.frame`)\cr Current split context.
-#' @param df (`data.frame`)\cr Data frame.
-#' @param trt_var_pos (`integer(1)`)\cr Position of the treatment variable in
-#'   the current interleaved column split path.
-#' @return A character vector containing the treatment variable name, its current
-#' level, and the reference level name.
+#' Retrieves the current treatment group from the current column split-path,
+#' given the treatment variable name.
+#'
+#' @param trt_var (`character(1)`)\cr The treatment variable name.
+#' @param .spl_context (`data.frame`)\cr The current split context.
+#' @return A character string containing the treatment group name.
+#'
+#' @author WW
+#' @seealso [cur_col_split_path()]
 #' @export
-h_get_trtvar_refpath <- function(ref_path, .spl_context, df, trt_var_pos) {
-  checkmate::check_character(ref_path, min.len = 2L, names = "unnamed")
-  checkmate::assert_true(length(ref_path) %% 2L == 0L)
+#' @examples
+#' .spl_context <- data.frame(
+#'   cur_col_split = I(list(c("ARM"))),
+#'   cur_col_split_val = I(list(c("Placebo")))
+#' )
+#'
+#' h_get_cur_trt_grp("ARM", .spl_context)
+#'
+#' \dontrun{
+#' h_get_cur_trt_grp("TRT", .spl_context)
+#' }
+#'
+h_get_cur_trt_grp <- function(trt_var, .spl_context) {
+  checkmate::assert_string(trt_var)
+  checkmate::assert_data_frame(.spl_context)
 
   cur_col_path <- cur_col_split_path(.spl_context)
-  checkmate::assert_true(length(cur_col_path) >= 2L)
-  checkmate::assert_int(trt_var_pos, lower = 1L, upper = length(cur_col_path) - 1L)
-  checkmate::assert_true(trt_var_pos %% 2L == 1L)
+  checkmate::assert_true(length(cur_col_path) %% 2L == 0L)
 
-  ref_trt_var <- ref_path[length(ref_path) - 1]
+  trt_var_pos <- which(trt_var == cur_col_path)
 
-  cur_trt_var <- cur_col_path[trt_var_pos]
-  if (!identical(cur_trt_var, ref_trt_var)) {
+  if (length(trt_var_pos) == 0L) {
     stop(paste0(
-      "ref_path treatment variable ('", ref_trt_var,
-      "') does not match the treatment variable at position ", trt_var_pos,
-      " of the current column split-path ('", cur_trt_var, "')."
+      "Treatment variable name ('", trt_var,
+      "') not found in the current column split-path ('",
+      paste(cur_col_path, collapse = "."), "')."
     ))
   }
 
-  cur_trt_grp <- cur_col_path[trt_var_pos + 1L]
-  ref_trt_grp <- ref_path[length(ref_path)]
-
-  if (!ref_trt_grp %in% levels(df[[cur_trt_var]])) {
+  if (length(trt_var_pos) >= 2L) {
     stop(paste0(
-      "Treatment group mismatch: the treatment group specified in ref_path ('",
-      ref_trt_grp,
-      "') is not a level of the treatment variable '",
-      cur_trt_var,
-      "'. Available treatment groups are: ",
-      paste(levels(df[[cur_trt_var]]), collapse = ", "),
-      "."
+      "Treatment variable name ('", trt_var,
+      "') must be unique in the current column split-path ('",
+      paste(cur_col_path, collapse = "."), "')."
     ))
   }
 
-  c(
-    cur_trt_var = cur_trt_var,
-    cur_trt_grp = cur_trt_grp,
-    ref_trt_grp = ref_trt_grp
-  )
+  if (trt_var_pos %% 2 == 0L) {
+    stop(paste0(
+      "Treatment variable ('", trt_var,
+      "') must be in an odd position in the current column split-path ('",
+      paste(cur_col_path, collapse = "."), "')."
+    ))
+  }
+
+  # Previous checks ensure that `trt_var_pos + 1L <= length(cur_col_path)`
+  cur_col_path[trt_var_pos + 1L]
 }
 
 # helper function to define expression for retrieving ref_group type of datasets

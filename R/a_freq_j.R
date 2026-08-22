@@ -801,6 +801,9 @@ a_freq_j <- function(
   colgroup = NULL,
   countsource = c("df", "altdf", "altdf_subset")
 ) {
+  checkmate::check_character(ref_path, min.len = 2L)
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
+
   denom <- match.arg(denom)
   method <- match.arg(method)
 
@@ -926,16 +929,11 @@ a_freq_j <- function(
     }
 
     if (riskdiff) {
-      trt_var_refpath <- h_get_trtvar_refpath(
-        ref_path,
-        .spl_context,
-        df,
-        trt_var_pos = length(cur_col_split_path(.spl_context)) - 1L
-      )
-      trt_var <- trt_var_refpath[["cur_trt_var"]]
-      cur_trt_grp <- trt_var_refpath[["cur_trt_grp"]]
-      ctrl_grp <- trt_var_refpath[["ref_trt_grp"]]
-      # for combined facet, denom_df value for the treatment group needs update
+      trt_var <- ref_path[length(ref_path) - 1L]
+      ctrl_grp <- ref_path[length(ref_path)]
+      stopifnot(ctrl_grp %in% levels(df[[trt_var]]))
+      cur_trt_grp <- h_get_cur_trt_grp(trt_var, .spl_context)
+
       new_denomdf <- upd_denom_df_combo(
         new_denomdf,
         trt_var,

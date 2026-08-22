@@ -82,7 +82,6 @@ reference:
     - summarize_lsmeans_wide
     - summarize_mmrm
     - summarize_row_counts
-    - h_get_trtvar_refpath
     - rbmi_mmrm_single_info
     - rbmi_pool
     - s_cmhrms_j
@@ -156,6 +155,7 @@ reference:
     - smart_colwidths_1page
     - tt_to_tbldf
     - factor_by_order
+    - h_get_cur_trt_grp
 
   - title: junco Functions For generating .rtfs, .docxs and HTMLs
     desc: The following utility functions help to generate the .rtfs, .docxs and HTMLs.
