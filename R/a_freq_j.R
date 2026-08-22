@@ -916,7 +916,6 @@ a_freq_j <- function(
     if (riskdiff && is.null(ref_path)) {
       stop("argument ref_path cannot be NULL.")
     }
-    ### denom N_colgroup should not be used in layout with risk diff columns
     if (denom == "N_colgroup") {
       stop(
         "denom N_colgroup cannot be used in a layout with risk diff columns."
@@ -926,20 +925,11 @@ a_freq_j <- function(
       trt_var <- NULL
       ctrl_grp <- NULL
       cur_trt_grp <- NULL
-    }
-
-    if (riskdiff) {
+    } else {
       trt_var <- ref_path[length(ref_path) - 1L]
       ctrl_grp <- ref_path[length(ref_path)]
       stopifnot(ctrl_grp %in% levels(df[[trt_var]]))
       cur_trt_grp <- h_get_cur_trt_grp(trt_var, .spl_context)
-
-      new_denomdf <- upd_denom_df_combo(
-        new_denomdf,
-        trt_var,
-        cur_trt_grp,
-        .spl_context
-      )
 
       if (!is.null(colgroup) && trt_var == colgroup) {
         stop(
@@ -948,6 +938,13 @@ a_freq_j <- function(
              Either remove risk difference columns from layout, set riskdiff = FALSE, or update colgroup."
         )
       }
+
+      new_denomdf <- upd_denom_df_combo(
+        new_denomdf,
+        trt_var,
+        cur_trt_grp,
+        .spl_context
+      )
     }
 
     x_stats <- s_rel_risk_val_j(
