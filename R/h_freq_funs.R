@@ -314,33 +314,7 @@ h_get_cur_trt_grp <- function(trt_var, .spl_context) {
   cur_col_path <- cur_col_split_path(.spl_context)
   checkmate::assert_true(length(cur_col_path) %% 2L == 0L)
 
-  trt_var_pos <- which(trt_var == cur_col_path)
-
-  if (length(trt_var_pos) == 0L) {
-    stop(paste0(
-      "Treatment variable name ('", trt_var,
-      "') not found in the current column split-path ('",
-      paste(cur_col_path, collapse = "."), "')."
-    ))
-  }
-
-  if (length(trt_var_pos) >= 2L) {
-    stop(paste0(
-      "Treatment variable name ('", trt_var,
-      "') must be unique in the current column split-path ('",
-      paste(cur_col_path, collapse = "."), "')."
-    ))
-  }
-
-  if (trt_var_pos %% 2 == 0L) {
-    stop(paste0(
-      "Treatment variable ('", trt_var,
-      "') must be in an odd position in the current column split-path ('",
-      paste(cur_col_path, collapse = "."), "')."
-    ))
-  }
-
-  # Previous checks ensure that `trt_var_pos + 1L <= length(cur_col_path)`
+  trt_var_pos <- strict_match(trt_var, cur_col_path, odd = TRUE)
   cur_col_path[trt_var_pos + 1L]
 }
 

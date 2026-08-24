@@ -514,3 +514,68 @@ factor_by_order <- function(x, y, ordered = FALSE) {
   # Preserve non-factor attributes of `x`.
   copy_attributes(source = x, target = f)
 }
+
+#' @title Strictly Match a Value in a Character Vector
+#'
+#' @description
+#' Finds a unique match of a value in either the odd or even positions of a
+#' character vector. An error is raised if no match or more than one match is
+#' found in the selected positions.
+#'
+#' @param x (`character(1)`)\cr
+#'   The value to match.
+#' @param y (`character`)\cr
+#'   The character vector in which to search for `x`.
+#' @param odd (`flag`)\cr
+#'   Whether to restrict the match to odd positions. Defaults to `TRUE`.
+#'   If `FALSE`, only even positions are considered.
+#'
+#' @return An integer containing the unique position of `x` in `y`.
+#'
+#' @author WW
+#'
+#' @export
+#' @examples
+#' strict_match("A", c("A", "Placebo"))
+#'
+#' strict_match("SEX", c("SomeVar", "SomeVal", "SEX", "Male"))
+#'
+#' \dontrun{
+#' strict_match("ARM", c("SEX", "Male"))
+#' strict_match("Male", c("SEX", "Male"))
+#' strict_match("ARM", c("ARM", "Placebo", "ARM", "Active"))
+#' }
+#'
+strict_match <- function(x, y, odd = TRUE) {
+  checkmate::assert_string(x)
+  checkmate::assert_character(y, any.missing = FALSE)
+  checkmate::assert_flag(odd)
+
+  pos <- which(x == y)
+
+  # odd = TRUE -> use 1L -> keep odd positions
+  # odd = FALSE -> use 0L -> keep even positions
+  pos <- if (odd) {
+    pos[pos %% 2L != 0L]
+  } else {
+    pos[pos %% 2L == 0L]
+  }
+
+  if (length(pos) == 0L) {
+    stop(paste0(
+      "Value ('", x,
+      "') not found in the ", ifelse(odd, "odd", "even"),
+      " positions of ('", paste(y, collapse = "."), "')."
+    ))
+  }
+
+  if (length(pos) > 1L) {
+    stop(paste0(
+      "Value ('", x,
+      "') must be unique in the ", ifelse(odd, "odd", "even"),
+      " positions of ('", paste(y, collapse = "."), "')."
+    ))
+  }
+
+  pos
+}

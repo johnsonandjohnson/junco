@@ -45,6 +45,7 @@
 - Add extra statistics to `a_eair100_j` and introduce scaling factor `num_p_year` (default = 100) (#361)
 
 ### Added
+- Added `strict_match()` for uniquely matching a value in the odd or even positions of a character vector.
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
 - Added `pool_rubin_scalar()` and `pool_z_stat()` for pooling scalar estimates and z statistics across imputations.
 - Added `resp_multiple_imputation()` to impute missing binary responses across scenarios and pool CMH risk-difference and p-value results.
