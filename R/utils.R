@@ -540,7 +540,7 @@ factor_by_order <- function(x, y, ordered = FALSE) {
 #' strict_match("A", c("A", "Placebo"))
 #'
 #' strict_match("SEX", c("SomeVar", "SomeVal", "SEX", "Male"))
-#' 
+#'
 #' strict_match("ARM", c("SEX", "Male"))
 #' strict_match("Male", c("SEX", "Male"))
 #' strict_match("ARM", c("ARM", "Placebo", "ARM", "Active"))
