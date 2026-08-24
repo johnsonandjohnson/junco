@@ -75,6 +75,9 @@ a_freq_resp_var_j <- function(
   .formats = NULL,
   na_str = rep("NA", 3)
 ) {
+  checkmate::check_character(ref_path, min.len = 2L)
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
+
   # ---- Derive statistics: xx / xx (xx.x%)
 
   if (is.null(resp_var)) {

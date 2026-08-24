@@ -399,6 +399,9 @@ a_summarize_aval_chg_diff_j <- function(
   method_combo = c("contrasts", "collapse"),
   weights_combo = NULL
 ) {
+  checkmate::check_character(ref_path, min.len = 2L)
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
+
   denom <- match.arg(denom)
   method_combo <- match.arg(method_combo)
 

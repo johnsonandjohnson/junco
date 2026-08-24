@@ -201,6 +201,9 @@ a_summarize_ex_j <- function(
   na_str = rep("NA", 3),
   daysconv = 1
 ) {
+  checkmate::check_character(ref_path, min.len = 2L)
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
+
   if (!is.numeric(df[[.var]])) {
     stop("a_summarize_ex_j issue: input variable must be numeric.")
   }
