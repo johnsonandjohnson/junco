@@ -294,7 +294,7 @@ test_that("get_ref_info returns NULL reference information in risk-diff columns"
   }
 })
 
-test_that("h_get_trtvar_refpath returns the expected shape and values in a risk-diff column", {
+test_that("h_get_cur_trt_grp returns the current treatment group in a risk-diff column", {
   dm <- formatters::DM
   dm$colspan_trt <- factor(
     ifelse(dm$ARM == "B: Placebo", " ", "Active Study Agent"),
@@ -318,7 +318,7 @@ test_that("h_get_trtvar_refpath returns the expected shape and values in a risk-
   spy_afun <- function(df, ref_path, .spl_context) {
     colid <- .spl_context$cur_col_id[[1L]]
     if (grepl("difference", tolower(colid), fixed = TRUE)) {
-      res <- h_get_trtvar_refpath(ref_path, .spl_context, df, trt_var_pos = 3L)
+      res <- h_get_cur_trt_grp("ARM", .spl_context)
       captured[[length(captured) + 1L]] <<- res
     }
     in_rows("x" = rcell(1, format = "xx"))
@@ -338,35 +338,16 @@ test_that("h_get_trtvar_refpath returns the expected shape and values in a risk-
 
   expect_length(captured, 2L)
   for (res in captured) {
-    expect_identical(res[["cur_trt_var"]], "ARM")
-    expect_identical(res[["ref_trt_grp"]], "B: Placebo")
-    expect_false(is.null(res[["cur_trt_grp"]])) # cur_trt_grp is the active arm value
+    expect_true(res %in% levels(dm$ARM))
+    expect_false(res == "B: Placebo")
   }
 })
 
-test_that("h_get_trtvar_refpath uses the requested trt_var position", {
-  df <- data.frame(
-    ARM = factor("A", levels = c("A", "B", "Placebo")),
-    stringsAsFactors = FALSE
-  )
+test_that("h_get_cur_trt_grp errors when trt_var not in split context", {
   spl_context <- data.frame(
-    cur_col_split = I(list(c("ARM", "stat", "ARM"))),
-    cur_col_split_val = I(list(c("A", "N", "B")))
+    cur_col_split = I(list(c("SEX"))),
+    cur_col_split_val = I(list(c("Male")))
   )
-  ref_path <- c("ARM", "Placebo")
 
-  result <- h_get_trtvar_refpath(ref_path, spl_context, df, trt_var_pos = 5L)
-  expect_identical(result[["cur_trt_grp"]], "B")
-  expect_error(
-    h_get_trtvar_refpath(ref_path, spl_context, df, trt_var_pos = 3L),
-    "does not match"
-  )
-  expect_error(
-    h_get_trtvar_refpath(ref_path, spl_context, df, trt_var_pos = 4L),
-    "Must be TRUE"
-  )
-  expect_error(
-    h_get_trtvar_refpath(ref_path, spl_context, df, trt_var_pos = 7L),
-    "not <= 5"
-  )
+  expect_error(h_get_cur_trt_grp("ARM", spl_context), "not found")
 })

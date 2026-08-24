@@ -138,15 +138,9 @@ a_freq_resp_var_j <- function(
   inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
 
   if (riskdiff) {
-    trt_var_refpath <- h_get_trtvar_refpath(
-      ref_path,
-      .spl_context,
-      df,
-      trt_var_pos = length(cur_col_split_path(.spl_context)) - 1L
-    )
-    trt_var <- trt_var_refpath[["cur_trt_var"]]
-    cur_trt_grp <- trt_var_refpath[["cur_trt_grp"]]
-    ctrl_grp <- trt_var_refpath[["ref_trt_grp"]]
+    trt_var <- ref_path[length(ref_path) - 1L]
+    ctrl_grp <- ref_path[length(ref_path)]
+    cur_trt_grp <- h_get_cur_trt_grp(trt_var, .spl_context)
   }
 
   fn <- function(levii) {

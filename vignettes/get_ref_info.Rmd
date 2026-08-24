@@ -212,18 +212,18 @@ in_column(c("*", "*", "ARM", "B: Placebo"), spl_ctx)
 in_column(c("*", "*", "ARM", "A: Drug X"), spl_ctx)
 ```
 
-## Relationship to `h_get_trtvar_refpath`
+## Relationship to `h_get_cur_trt_grp`
 
-`get_ref_info()` and `h_get_trtvar_refpath()` serve different purposes:
+`get_ref_info()` and `h_get_cur_trt_grp()` serve different purposes:
 
-| | `get_ref_info()` | `h_get_trtvar_refpath()` |
+| | `get_ref_info()` | `h_get_cur_trt_grp()` |
 |---|---|---|
-| **Returns** | reference-group data + `in_ref_col` flag | treatment variable name, current group, reference group name |
-| **Used for** | obtaining `.ref_group` / `.in_ref_col` for statistics | identifying the treatment variable when `split_cols_by_multivar` is present |
-| **Typical callers** | `a_freq_j`, `a_eair_j`, `s_ancova_j` | `a_summarize_aval_chg_diff_j` |
+| **Returns** | reference-group data + `in_ref_col` flag | current treatment group value (single string) |
+| **Used for** | obtaining `.ref_group` / `.in_ref_col` for statistics | identifying which treatment group the current column belongs to |
+| **Typical callers** | `a_freq_j`, `a_eair_j`, `s_ancova_j` | `a_summarize_aval_chg_diff_j`, `a_freq_j`, `a_freq_resp_var_j` |
 
 In layouts that combine `split_cols_by_multivar` with difference
-columns, `h_get_trtvar_refpath()` resolves the treatment variable name
+columns, `h_get_cur_trt_grp()` resolves the current treatment group
 from the interleaved column path, and `get_ref_info()` obtains the
 reference-group data.
 
