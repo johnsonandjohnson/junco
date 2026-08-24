@@ -155,8 +155,6 @@ reference:
     - smart_colwidths_1page
     - tt_to_tbldf
     - factor_by_order
-    - strict_match
-    - h_get_cur_trt_grp
 
   - title: junco Functions For generating .rtfs, .docxs and HTMLs
     desc: The following utility functions help to generate the .rtfs, .docxs and HTMLs.

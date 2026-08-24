@@ -294,7 +294,6 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
 #'
 #' @author WW
 #' @seealso [cur_col_split_path()]
-#' @export
 #' @examples
 #' .spl_context <- data.frame(
 #'   cur_col_split = I(list(c("ARM"))),

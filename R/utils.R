@@ -534,7 +534,6 @@ factor_by_order <- function(x, y, ordered = FALSE) {
 #'
 #' @author WW
 #'
-#' @export
 #' @examples
 #' strict_match("A", c("A", "Placebo"))
 #'
