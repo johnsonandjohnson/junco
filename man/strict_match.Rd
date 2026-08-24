@@ -26,11 +26,11 @@ character vector. An error is raised if no match or more than one match is
 found in the selected positions.
 }
 \examples{
+\dontrun{
 strict_match("A", c("A", "Placebo"))
 
 strict_match("SEX", c("SomeVar", "SomeVal", "SEX", "Male"))
 
-\dontrun{
 strict_match("ARM", c("SEX", "Male"))
 strict_match("Male", c("SEX", "Male"))
 strict_match("ARM", c("ARM", "Placebo", "ARM", "Active"))
@@ -40,3 +40,4 @@ strict_match("ARM", c("ARM", "Placebo", "ARM", "Active"))
 \author{
 WW
 }
+\keyword{internal}

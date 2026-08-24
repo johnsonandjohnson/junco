@@ -21,15 +21,14 @@ Retrieves the current treatment group from the current column split-path,
 given the treatment variable name.
 }
 \examples{
+\dontrun{
 .spl_context <- data.frame(
   cur_col_split = I(list(c("ARM"))),
   cur_col_split_val = I(list(c("Placebo")))
 )
 
 h_get_cur_trt_grp("ARM", .spl_context)
-
-\dontrun{
-h_get_cur_trt_grp("TRT", .spl_context)
+h_get_cur_trt_grp("TRT", .spl_context) # errors: TRT not found
 }
 
 }
@@ -39,3 +38,4 @@ h_get_cur_trt_grp("TRT", .spl_context)
 \author{
 WW
 }
+\keyword{internal}

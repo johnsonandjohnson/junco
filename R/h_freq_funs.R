@@ -292,18 +292,18 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
 #' @param .spl_context (`data.frame`)\cr The current split context.
 #' @return A character string containing the treatment group name.
 #'
+#' @keywords internal
 #' @author WW
 #' @seealso [cur_col_split_path()]
 #' @examples
+#' \dontrun{
 #' .spl_context <- data.frame(
 #'   cur_col_split = I(list(c("ARM"))),
 #'   cur_col_split_val = I(list(c("Placebo")))
 #' )
 #'
 #' h_get_cur_trt_grp("ARM", .spl_context)
-#'
-#' \dontrun{
-#' h_get_cur_trt_grp("TRT", .spl_context)
+#' h_get_cur_trt_grp("TRT", .spl_context) # errors: TRT not found
 #' }
 #'
 h_get_cur_trt_grp <- function(trt_var, .spl_context) {
