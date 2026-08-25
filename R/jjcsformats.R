@@ -138,7 +138,7 @@ jjcsformat_xx <- function(
 #' See [formatters::format_value()] for more details.
 #' @param output (`string`)\cr output type.
 #' See [formatters::format_value()] for more details.
-#' @param legacy (`logical(1)`)\cr To allow for backward compatibility behavior 
+#' @param legacy (`logical(1)`)\cr To allow for backward compatibility behavior
 #' @return A formatting function to format input into string in the format `count / denom (ratio percent)`. If `count`
 #' is 0, the format is `0`. If fraction is >0.99, the format is
 #' `count / denom (>99.9 percent)`
@@ -209,8 +209,10 @@ jjcsformat_cnt_den_fract_fct <- function(d = 1,
     fmtpct_p2 <- paste0(fmtpct_p2, "%")
     fmtpct_p <- paste0(" (", fmtpct_p2, ")")
 
-    result <- if ((legacy && type == "fraction_count_denom") ||
-                  !legacy && type == "fraction_count_denom"  && count > 0){
+    result <- if (
+      (legacy && type == "fraction_count_denom") ||
+        (!legacy && type == "fraction_count_denom" && count > 0)
+    ) {
       paste0(fmtpct_p2, " (", fmt_cd, ")")
     } else if (!legacy && type == "fraction_count_denom" && count == 0) {
       paste0("(", fmt_cd, ")")

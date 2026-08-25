@@ -473,35 +473,43 @@ test_that("a_freq_j with keep_levels (CHN, NGA) ", {
 test_that("jjcsformat_count_denom_fraction and jjcsformat_fraction_count_denom with 0 counts", {
   expect_identical(
     jjcsformat_count_denom_fraction(c(0, 235, 0 / 235)),
-    "0/235")
-  
+    "0/235"
+  )
+
   expect_identical(
     jjcsformat_fraction_count_denom(c(0, 235, 0 / 235)),
-    "(0/235)")
-  
+    "(0/235)"
+  )
+
   expect_identical(
     jjcsformat_count_denom_fraction_legacy(c(0, 235, 0 / 235)),
-    "0/235 (0.0%)")
-  
+    "0/235 (0.0%)"
+  )
+
   expect_identical(
     jjcsformat_fraction_count_denom_legacy(c(0, 235, 0 / 235)),
-    "0.0% (0/235)")    
+    "0.0% (0/235)"
+  )
 })
 
 test_that("jjcsformat_count_denom_fraction and jjcsformat_fraction_count_denom with 0 denom", {
   expect_identical(
     jjcsformat_count_denom_fraction(c(0, 0, NA)),
-    "-")
-  
+    "-"
+  )
+
   expect_identical(
     jjcsformat_fraction_count_denom(c(0, 0, NA)),
-    "-")
-  
+    "-"
+  )
+
   expect_identical(
     jjcsformat_count_denom_fraction_legacy(c(0, 0, NA)),
-    "-")
-  
+    "-"
+  )
+
   expect_identical(
     jjcsformat_fraction_count_denom_legacy(c(0, 0, NA)),
-    "-")    
+    "-"
+  )
 })

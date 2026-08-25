@@ -46,35 +46,36 @@
 #'
 #' result
 a_freq_resp_var_j <- function(
-    df,
-    .var,
-    .df_row,
-    .N_col,
-    .spl_context,
-    resp_var = NULL,
-    id = "USUBJID",
-    drop_levels = FALSE,
-    riskdiff = TRUE,
-    ref_path = NULL,
-    variables = formals(s_proportion_diff)$variables,
-    conf_level = formals(s_proportion_diff)$conf_level,
-    method = c(
-      "wald",
-      "waldcc",
-      "cmh",
-      "ha",
-      "newcombe",
-      "newcombecc",
-      "strat_newcombe",
-      "strat_newcombecc",
-      "cmh_sato",
-      "cmh_mn",
-      "uncond_exact_diff"
-    ),
-    weights_method = formals(s_proportion_diff)$weights_method,
-    .formats = NULL,
-    na_str = rep("NA", 3),
-    legacy = FALSE) {
+  df,
+  .var,
+  .df_row,
+  .N_col,
+  .spl_context,
+  resp_var = NULL,
+  id = "USUBJID",
+  drop_levels = FALSE,
+  riskdiff = TRUE,
+  ref_path = NULL,
+  variables = formals(s_proportion_diff)$variables,
+  conf_level = formals(s_proportion_diff)$conf_level,
+  method = c(
+    "wald",
+    "waldcc",
+    "cmh",
+    "ha",
+    "newcombe",
+    "newcombecc",
+    "strat_newcombe",
+    "strat_newcombecc",
+    "cmh_sato",
+    "cmh_mn",
+    "uncond_exact_diff"
+  ),
+  weights_method = formals(s_proportion_diff)$weights_method,
+  .formats = NULL,
+  na_str = rep("NA", 3),
+  legacy = FALSE
+) {
   # ---- Derive statistics: xx / xx (xx.x%)
 
   if (is.null(resp_var)) {
@@ -174,11 +175,11 @@ a_freq_resp_var_j <- function(
       x_stat <- rslt[[.stat]]$Y
       # use .formats if provided, otherwise default to jjcsformat_count_denom_fraction
       if (!legacy) {
-        fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction else .formats  
+        fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction else .formats
       } else {
-        fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction_legacy else .formats  
+        fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction_legacy else .formats
       }
-      
+
       rslt <- rcell(x_stat, format = fmt)
     } else {
       # use the risk differenc function s_rel_risk_val_j on the current level of the incoming variable (.var)
