@@ -66,23 +66,24 @@ s_aval_chg_col1 <- function(df, .var, denom, .N_col, id, indatavar) {
 }
 
 s_aval_chg_col23_diff <- function(
-    df,
-    .var,
-    .df_row,
-    .ref_group,
-    .in_ref_col,
-    ancova,
-    interaction_y,
-    interaction_item,
-    conf_level,
-    variables,
-    trt_var,
-    ctrl_grp,
-    cur_param,
-    cur_lvl,
-    weights_emmeans,
-    method_combo,
-    weights_combo) {
+  df,
+  .var,
+  .df_row,
+  .ref_group,
+  .in_ref_col,
+  ancova,
+  interaction_y,
+  interaction_item,
+  conf_level,
+  variables,
+  trt_var,
+  ctrl_grp,
+  cur_param,
+  cur_lvl,
+  weights_emmeans,
+  method_combo,
+  weights_combo
+) {
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
   df <- subset(df, !is.na(df[[.var]]))
   .ref_group <- subset(.ref_group, !is.na(.ref_group[[.var]]))
@@ -374,29 +375,33 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #' result
 #' @family Inclusion of ANCOVA Functions
 a_summarize_aval_chg_diff_j <- function(
-    df,
-    .df_row,
-    .spl_context,
-    ancova = FALSE,
-    comp_btw_group = TRUE,
-    ref_path = NULL,
-    .N_col,
-    denom = c("N", ".N_col"),
-    indatavar = NULL,
-    d = 0,
-    id = "USUBJID",
-    interaction_y = FALSE,
-    interaction_item = NULL,
-    conf_level = 0.95,
-    variables = list(arm = "TRT01A", covariates = NULL),
-    format_na_str = "",
-    .stats = list(col1 = "count_denom_frac", col23 = "mean_ci_3d", coldiff = "meandiff_ci_3d"),
-    .formats = list(col1 = NULL, col23 = "xx.dx (xx.dx, xx.dx)", coldiff = "xx.dx (xx.dx, xx.dx)"),
-    .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx, coldiff = jjcsformat_xx),
-    multivars = c("AVAL", "AVAL", "CHG"),
-    weights_emmeans = NULL,
-    method_combo = c("contrasts", "collapse"),
-    weights_combo = NULL) {
+  df,
+  .df_row,
+  .spl_context,
+  ancova = FALSE,
+  comp_btw_group = TRUE,
+  ref_path = NULL,
+  .N_col,
+  denom = c("N", ".N_col"),
+  indatavar = NULL,
+  d = 0,
+  id = "USUBJID",
+  interaction_y = FALSE,
+  interaction_item = NULL,
+  conf_level = 0.95,
+  variables = list(arm = "TRT01A", covariates = NULL),
+  format_na_str = "",
+  .stats = list(col1 = "count_denom_frac", col23 = "mean_ci_3d", coldiff = "meandiff_ci_3d"),
+  .formats = list(col1 = NULL, col23 = "xx.dx (xx.dx, xx.dx)", coldiff = "xx.dx (xx.dx, xx.dx)"),
+  .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx, coldiff = jjcsformat_xx),
+  multivars = c("AVAL", "AVAL", "CHG"),
+  weights_emmeans = NULL,
+  method_combo = c("contrasts", "collapse"),
+  weights_combo = NULL
+) {
+  checkmate::check_character(ref_path, min.len = 2L)
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
+
   denom <- match.arg(denom)
   method_combo <- match.arg(method_combo)
 
@@ -474,22 +479,11 @@ a_summarize_aval_chg_diff_j <- function(
 
   .in_ref_col <- FALSE
   .ref_group <- NULL
+  ctrl_grp <- NULL
   if (comp_btw_group) {
-    trt_var_refspec <- utils::tail(ref_path, n = 2)[1]
-    checkmate::assert_true(identical(trt_var, trt_var_refspec))
-    # ctrl_grp
-    ctrl_grp <- utils::tail(ref_path, n = 1)
-
-    ### check that ctrl_grp is a level of the treatment variable, in case riskdiff is requested
-    if (!ctrl_grp %in% levels(df[[trt_var]])) {
-      stop(paste0(
-        "control group specification in ref_path argument (",
-        ctrl_grp,
-        ") is not a level of your treatment group variable (",
-        trt_var,
-        ")."
-      ))
-    }
+    checkmate::assert_true(identical(trt_var, ref_path[length(ref_path) - 1L]))
+    ctrl_grp <- ref_path[length(ref_path)]
+    stopifnot(ctrl_grp %in% levels(df[[trt_var]]))
 
     if (trt_val == ctrl_grp) .in_ref_col <- TRUE
 
