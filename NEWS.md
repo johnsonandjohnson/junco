@@ -1,4 +1,4 @@
-# junco 0.1.6.9000
+# junco 0.1.6.9001
 
 ### Fixed
 - Fixed `get_ref_info()` to accept ref_path = NULL (#359).
@@ -9,11 +9,14 @@
 
 ### Changed
 
+- Updated several analysis functions to use `h_get_cur_trt_grp()` (#295).
+- Replaced `h_get_trtvar_refpath()` with `h_get_cur_trt_grp()` (#295).
+- Updated `get_ref_info()` for matching column split paths (#295).
 - Added the new helper function `factor_by_order()` (#425).
 - Renamed `in_ref_col()` to `in_column()` and renamed its `ref_path` argument
   to `col_path`.
 - Updated `in_ref_col()` to accept `ref_path = NULL` (#404).
-- Added the new helper functions `cur_col_split_path()` and `in_ref_col()` to
+- Added the new helper functions `cur_col_split_path()` and `in_column()` to
   support custom analysis functions that depend on the current column split
   context (#404).
 - Added a default value for the `label` argument in `c_summary_subset_label()`.
@@ -43,6 +46,7 @@
 - Updated `insightsengineering` urls to `pharmaverse`
 
 ### Added
+- Added `strict_match()` for uniquely matching a value in the odd or even positions of a character vector.
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
 - Added `pool_rubin_scalar()` and `pool_z_stat()` for pooling scalar estimates and z statistics across imputations.
 - Added `resp_multiple_imputation()` to impute missing binary responses across scenarios and pool CMH risk-difference and p-value results.

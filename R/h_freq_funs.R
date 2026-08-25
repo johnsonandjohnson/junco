@@ -281,40 +281,40 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
   return(df)
 }
 
-
-#' Get Treatment Variable Reference Path
+#' @title Get Current Treatment Group
 #'
-#' Retrieves the treatment variable reference path from the provided context.
+#' @description `r lifecycle::badge("stable")`
 #'
-#' @param ref_path (`character`)\cr Reference path for treatment variable.
-#' @param .spl_context (`data.frame`)\cr Current split context.
-#' @param df (`data.frame`)\cr Data frame.
-#' @return List containing treatment variable details.
-#' @export
-h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
-  checkmate::check_character(ref_path, min.len = 2L, names = "unnamed")
-  checkmate::assert_true(length(ref_path) %% 2 == 0) # Even number of elements in ref_path.
+#' Retrieves the current treatment group from the current column split-path,
+#' given the treatment variable name.
+#'
+#' @param trt_var (`character(1)`)\cr The treatment variable name.
+#' @param .spl_context (`data.frame`)\cr The current split context.
+#' @return A character string containing the treatment group name.
+#'
+#' @keywords internal
+#' @author WW
+#' @seealso [cur_col_split_path()]
+#' @examples
+#' \dontrun{
+#' .spl_context <- data.frame(
+#'   cur_col_split = I(list(c("ARM"))),
+#'   cur_col_split_val = I(list(c("Placebo")))
+#' )
+#'
+#' h_get_cur_trt_grp("ARM", .spl_context)
+#' h_get_cur_trt_grp("TRT", .spl_context) # errors: TRT not found
+#' }
+#'
+h_get_cur_trt_grp <- function(trt_var, .spl_context) {
+  checkmate::assert_string(trt_var)
+  checkmate::assert_data_frame(.spl_context)
 
-  trt_var <- utils::tail(.spl_context$cur_col_split[[length(.spl_context$cur_col_split)]], n = 1)
-  trt_var_refspec <- utils::tail(ref_path, n = 2)[1]
+  cur_col_path <- cur_col_split_path(.spl_context)
+  checkmate::assert_true(length(cur_col_path) %% 2L == 0L)
 
-  checkmate::assert_true(identical(trt_var, trt_var_refspec))
-
-  # current group and ctrl_grp
-  cur_trt_grp <- utils::tail(.spl_context$cur_col_split_val[[length(.spl_context$cur_col_split_val)]], n = 1)
-  ctrl_grp <- utils::tail(ref_path, n = 1)
-
-  ### check that ctrl_grp is a level of the treatment variable, in case riskdiff is requested
-  if (!ctrl_grp %in% levels(df[[trt_var]])) {
-    stop(paste0(
-      "control group specification in ref_path argument (",
-      ctrl_grp,
-      ") is not a level of your treatment group variable (",
-      trt_var,
-      ")."
-    ))
-  }
-  return(list(trt_var = trt_var, trt_var_refspec = trt_var_refspec, cur_trt_grp = cur_trt_grp, ctrl_grp = ctrl_grp))
+  trt_var_pos <- strict_match(trt_var, cur_col_path, odd = TRUE)
+  cur_col_path[trt_var_pos + 1L]
 }
 
 # helper function to define expression for retrieving ref_group type of datasets

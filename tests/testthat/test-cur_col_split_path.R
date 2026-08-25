@@ -10,6 +10,18 @@ test_that("cur_col_split_path() works for a single-level split", {
   expect_identical(res, exp)
 })
 
+test_that("cur_col_split_path() accepts named split values", {
+  spl_context <- data.frame(
+    cur_col_split = I(list("ARM")),
+    cur_col_split_val = I(list(c(ARM = "Placebo")))
+  )
+
+  res <- cur_col_split_path(spl_context)
+  exp <- c("ARM", "Placebo")
+
+  expect_identical(unname(res), exp)
+})
+
 test_that("cur_col_split_path() uses the leaf row split for a single-level split", {
   spl_context <- data.frame(
     cur_col_split = I(list("ARM_0", "ARM")),

@@ -9,7 +9,6 @@
 #' @name a_summarize_ex_j
 NULL
 
-
 #' @inheritParams proposal_argument_convention
 #' @describeIn a_summarize_ex_j Statistics function needed for the exposure tables.
 #'
@@ -31,18 +30,19 @@ NULL
 #'    * covariates (character)\cr
 #' a vector that can contain single variable names (such as 'X1'), and/or interaction terms indicated by 'X1 * X2'.
 s_summarize_ex_j <- function(
-    df,
-    .var,
-    .df_row,
-    .spl_context,
-    comp_btw_group = TRUE,
-    ref_path = NULL,
-    ancova = FALSE,
-    interaction_y,
-    interaction_item,
-    conf_level,
-    daysconv,
-    variables) {
+  df,
+  .var,
+  .df_row,
+  .spl_context,
+  comp_btw_group = TRUE,
+  ref_path = NULL,
+  ancova = FALSE,
+  interaction_y,
+  interaction_item,
+  conf_level,
+  daysconv,
+  variables
+) {
   control <- control_analyze_vars()
   control$conf_level <- conf_level
   x_stats <- s_summary(df[[.var]], na.rm = TRUE, .var, control = control)
@@ -66,16 +66,12 @@ s_summarize_ex_j <- function(
     )
     # diff between group will be updated in mean_sd stat
     if (comp_btw_group) {
-      trt_var_refpath <- h_get_trtvar_refpath(ref_path, .spl_context, df)
-      # trt_var_refpath is list with elements trt_var trt_var_refspec cur_trt_grp ctrl_grp make these elements
-      # available in current environment
-      trt_var <- trt_var_refpath$trt_var
-      trt_var_refspec <- trt_var_refpath$trt_var_refspec
-      cur_trt_grp <- trt_var_refpath$cur_trt_grp
-      ctrl_grp <- trt_var_refpath$ctrl_grp
+      trt_var <- ref_path[length(ref_path) - 1L]
+      ctrl_grp <- ref_path[length(ref_path)]
+      cur_trt_grp <- h_get_cur_trt_grp(trt_var, .spl_context)
 
       .in_ref_col <- FALSE
-      if (trt_var == ctrl_grp) .in_ref_col <- TRUE
+      if (cur_trt_grp == ctrl_grp) .in_ref_col <- TRUE
 
       .ref_group <- .df_row[.df_row[[trt_var]] == ctrl_grp, ]
 
@@ -187,23 +183,27 @@ s_summarize_ex_j <- function(
 #' result
 #' @export
 a_summarize_ex_j <- function(
-    df,
-    .var,
-    .df_row,
-    .spl_context,
-    comp_btw_group = TRUE,
-    ref_path = NULL,
-    ancova = FALSE,
-    interaction_y = FALSE,
-    interaction_item = NULL,
-    conf_level = 0.95,
-    variables,
-    .stats = c("mean_sd", "median", "range", "quantiles", "total_subject_years"),
-    .formats = c(diff_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)")),
-    .labels = c(quantiles = "Interquartile range"),
-    .indent_mods = NULL,
-    na_str = rep("NA", 3),
-    daysconv = 1) {
+  df,
+  .var,
+  .df_row,
+  .spl_context,
+  comp_btw_group = TRUE,
+  ref_path = NULL,
+  ancova = FALSE,
+  interaction_y = FALSE,
+  interaction_item = NULL,
+  conf_level = 0.95,
+  variables,
+  .stats = c("mean_sd", "median", "range", "quantiles", "total_subject_years"),
+  .formats = c(diff_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)")),
+  .labels = c(quantiles = "Interquartile range"),
+  .indent_mods = NULL,
+  na_str = rep("NA", 3),
+  daysconv = 1
+) {
+  checkmate::check_character(ref_path, min.len = 2L)
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
+
   if (!is.numeric(df[[.var]])) {
     stop("a_summarize_ex_j issue: input variable must be numeric.")
   }
