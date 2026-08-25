@@ -481,8 +481,9 @@ a_summarize_aval_chg_diff_j <- function(
   .ref_group <- NULL
   ctrl_grp <- NULL
   if (comp_btw_group) {
+    checkmate::assert_true(identical(trt_var, ref_path[length(ref_path) - 1L]))
     ctrl_grp <- ref_path[length(ref_path)]
-    cur_trt_grp <- h_get_cur_trt_grp(ref_path[length(ref_path) - 1L], .spl_context)
+    stopifnot(ctrl_grp %in% levels(df[[trt_var]]))
 
     if (trt_val == ctrl_grp) .in_ref_col <- TRUE
 
