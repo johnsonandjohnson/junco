@@ -56,8 +56,8 @@ fmt2 <- format_sigfig_j(3, format = "xx (xx)")
 fmt2(c(1234.5, 0.00567))
 
 
-format_sigfig_j(3, trail_zero = TRUE)(0.01)
-format_sigfig_j(3, trail_zero = FALSE)(0.01)
+format_sigfig_j(3, drop0trailing = FALSE)(0.01)
+format_sigfig_j(3, drop0trailing = TRUE)(0.01)
 }
 \seealso{
 \code{\link[tern:format_sigfig]{tern::format_sigfig()}}

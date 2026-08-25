@@ -444,8 +444,8 @@ modified_signif_j <- function(x, digits = 6, round_type = valid_round_type, whol
 #' fmt2(c(1234.5, 0.00567))
 #'
 #'
-#' format_sigfig_j(3, trail_zero = TRUE)(0.01)
-#' format_sigfig_j(3, trail_zero = FALSE)(0.01)
+#' format_sigfig_j(3, drop0trailing = FALSE)(0.01)
+#' format_sigfig_j(3, drop0trailing = TRUE)(0.01)
 format_sigfig_j <- function(
   sigfig,
   format = "xx",
