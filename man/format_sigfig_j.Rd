@@ -9,7 +9,7 @@ format_sigfig_j(
   format = "xx",
   whole_integer = TRUE,
   zero_threshold = 10^(-2 * sigfig),
-  trail_zero = TRUE
+  drop0trailing = FALSE
 )
 }
 \arguments{
@@ -26,8 +26,9 @@ specification in \code{xx.} or \verb{xx.x+} is stripped — precision is control
 \item{zero_threshold}{(\code{numeric(1)})\cr values with \code{abs(x) < zero_threshold} are snapped
 to zero before rounding. Defaults to \code{0} (no snapping).}
 
-\item{trail_zero}{(\code{logical(1)})\cr If \code{TRUE} flag code \code{"#"} passed to the \code{flag}
-argument of \code{\link[=formatC]{formatC()}}. Defaults to \code{TRUE} (present trailing zeros).}
+\item{drop0trailing}{(\code{logical(1)})\cr
+indicating if trailing zeros, i.e., "0" after the decimal mark, should be removed
+\cr argument is passed to function \code{formatC}}
 }
 \value{
 A formatting function with signature \verb{function(x, round_type, ...)} that
@@ -36,7 +37,7 @@ returns a formatted string. The \code{round_type} argument accepts a rounding me
 }
 \description{
 Format numeric values by significant figures with controllable round_type,
-whole_integer and trailing zeroes.
+whole_integer and trailing zeros.
 }
 \details{
 A function factory that produces formatting functions to round values to a
@@ -44,7 +45,7 @@ specified number of significant figures, suitable for use with
 \code{\link[formatters:format_value]{formatters::format_value()}}.\cr
 \cr The function is an alternative to \code{\link[tern:format_sigfig]{tern::format_sigfig()}},
 Current function has fixed the \code{formatC} argument \code{num_fmt = "fg"},
-and extra options for \code{whole_integer} and \code{trail_zero} to control the format behavior.
+and extra options for \code{whole_integer} and \code{drop0trailing} to control the format behavior.
 }
 \examples{
 fmt <- format_sigfig_j(3)

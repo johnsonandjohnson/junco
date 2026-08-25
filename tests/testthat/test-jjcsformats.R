@@ -243,21 +243,21 @@ test_that("format_sigfig_j case 1", {
 
   expect_identical(
     signif(x2, digits = 3),
-    signif_j(x2, digits = 3)
+    modified_signif_j(x2, digits = 3)
   )
 
   expect_identical(
     signif(x2, digits = 3)[x2 < 1000],
-    signif_j(x2, digits = 3, whole_integer = TRUE)[x2 < 1000]
+    modified_signif_j(x2, digits = 3, whole_integer = TRUE)[x2 < 1000]
   )
 
   expect_any_difference(
     signif(x2, digits = 3)[x2 >= 1000],
-    signif_j(x2, digits = 3, whole_integer = TRUE)[x2 >= 1000]
+    modified_signif_j(x2, digits = 3, whole_integer = TRUE)[x2 >= 1000]
   )
 
   expect_identical(
-    signif_j(x2, digits = 3, whole_integer = TRUE)[x2 >= 1000],
+    modified_signif_j(x2, digits = 3, whole_integer = TRUE)[x2 >= 1000],
     round(x2[x2 >= 1000], 0)
   )
 
@@ -379,16 +379,16 @@ test_that("format_sigfig_j case 4 - focus on trailing zeros", {
   x_target_t0 <- c("400", "40.0", "4.00", "0.400", "0.0400", "0.00400", "0.000400")
   x_target_nt0 <- c("400", "40", "4", "0.4", "0.04", "0.004", "0.0004")
 
-  fmt_3sf_j <- format_sigfig_j(3, trail_zero = TRUE)
-  fmt_3sf_j_nt0 <- format_sigfig_j(3, trail_zero = FALSE)
+  fmt_3sf_j <- format_sigfig_j(3, drop0trailing = FALSE)
+  fmt_3sf_j_nt0 <- format_sigfig_j(3, drop0trailing = TRUE)
 
   expect_identical(
-    trimws(fmt_3sf_j(x)),
+    fmt_3sf_j(x),
     x_target_t0
   )
 
   expect_identical(
-    trimws(fmt_3sf_j_nt0(x)),
+    fmt_3sf_j_nt0(x),
     x_target_nt0
   )
 
@@ -433,8 +433,8 @@ test_that("format_sigfig_j used in rtables framework as format w/wout trailing z
       extra_args = list(
         .stats = c("n", "mean_sd", "range"),
         .formats = c(
-          "mean_sd" = format_sigfig_j(3, format = "xx (xx)", trail_zero = FALSE),
-          "range" = format_sigfig_j(3, format = "xx, xx", trail_zero = TRUE)
+          "mean_sd" = format_sigfig_j(3, format = "xx (xx)", drop0trailing = TRUE),
+          "range" = format_sigfig_j(3, format = "xx, xx", drop0trailing = FALSE)
         )
       )
     )

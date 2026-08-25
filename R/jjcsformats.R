@@ -369,7 +369,6 @@ jjcsformat_range_fct <- function(str, censor_char = "+") {
   }
 }
 
-
 #' @noRd
 #'
 #' @param x (`numeric`)\cr numeric vector to round.
@@ -382,7 +381,7 @@ jjcsformat_range_fct <- function(str, censor_char = "+") {
 
 #' @return numeric vector of the same length as `x`, rounded to `digits` significant figures.
 #' @keywords internal
-signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer = FALSE, zero_threshold = 0) {
+modified_signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer = FALSE, zero_threshold = 0) {
   stopifnot(length(digits) == 1, is.numeric(digits))
 
   lt_tol <- abs(x) < zero_threshold
@@ -409,13 +408,13 @@ signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer
 
 #' @title Format numeric values by significant figures.
 #' @description Format numeric values by significant figures with controllable round_type,
-#' whole_integer and trailing zeroes.
+#' whole_integer and trailing zeros.
 #' @details A function factory that produces formatting functions to round values to a
 #' specified number of significant figures, suitable for use with
 #' [formatters::format_value()].\cr
 #' \cr The function is an alternative to [tern::format_sigfig()],
 #' Current function has fixed the `formatC` argument `num_fmt = "fg"`,
-#' and extra options for `whole_integer` and `trail_zero` to control the format behavior.
+#' and extra options for `whole_integer` and `drop0trailing` to control the format behavior.
 #'
 #' @seealso [tern::format_sigfig()]
 #'
@@ -429,8 +428,9 @@ signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer
 #'   values are arranged, e.g. `"xx"`, `"xx (xx)"`, `"(xx, xx)"`. Any decimal
 #'   specification in `xx.` or `xx.x+` is stripped — precision is controlled by
 #'   `sigfig` alone.
-#' @param trail_zero (`logical(1)`)\cr If `TRUE` flag code `"#"` passed to the `flag`
-#'   argument of [formatC()]. Defaults to `TRUE` (present trailing zeros).
+#' @param drop0trailing (`logical(1)`)\cr
+#' indicating if trailing zeros, i.e., "0" after the decimal mark, should be removed
+#' \cr argument is passed to function `formatC`
 #' @return A formatting function with signature `function(x, round_type, ...)` that
 #'   returns a formatted string. The `round_type` argument accepts a rounding method
 #'   (see [formatters::round_fmt()]).
@@ -451,26 +451,22 @@ format_sigfig_j <- function(
   format = "xx",
   whole_integer = TRUE,
   zero_threshold = 10^(-2 * sigfig),
-  trail_zero = TRUE
+  drop0trailing = FALSE
 ) {
   checkmate::assert_integerish(sigfig)
   format <- gsub("xx\\.|xx\\.x+", "xx", format)
   checkmate::assert_choice(format, c("xx", "xx / xx", "(xx, xx)", "xx - xx", "xx (xx)", "xx, xx"))
-  if (trail_zero) {
-    flag <- "#"
-  } else {
-    flag <- ""
-  }
+
   function(x, round_type = valid_round_type, ...) {
     if (!is.numeric(x)) stop("`format_sigfig_j` cannot be used for non-numeric values. Please choose another format.")
-    x_f <- signif_j(
+    x_f <- modified_signif_j(
       x,
       digits = sigfig,
       round_type = round_type,
       whole_integer = whole_integer,
       zero_threshold = zero_threshold
     )
-    num <- formatC(x_f, digits = sigfig, format = "fg", flag = flag)
+    num <- formatC(x_f, digits = sigfig, format = "fg", flag = "#", drop0trailing = drop0trailing)
     num <- gsub("\\.$", "", num) # remove trailing "."
 
     format_value(num, format)
