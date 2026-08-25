@@ -138,6 +138,7 @@ jjcsformat_xx <- function(
 #' See [formatters::format_value()] for more details.
 #' @param output (`string`)\cr output type.
 #' See [formatters::format_value()] for more details.
+#' @param legacy (`logical(1)`)\cr To allow for backward compatibility behavior 
 #' @return A formatting function to format input into string in the format `count / denom (ratio percent)`. If `count`
 #' is 0, the format is `0`. If fraction is >0.99, the format is
 #' `count / denom (>99.9 percent)`
@@ -147,7 +148,8 @@ jjcsformat_xx <- function(
 
 jjcsformat_cnt_den_fract_fct <- function(d = 1,
                                          type = c("count_fraction", "count_denom_fraction", "fraction_count_denom"),
-                                         verbose = FALSE) {
+                                         verbose = FALSE,
+                                         legacy = FALSE) {
   type <- match.arg(type)
 
   function(x,
@@ -207,10 +209,15 @@ jjcsformat_cnt_den_fract_fct <- function(d = 1,
     fmtpct_p2 <- paste0(fmtpct_p2, "%")
     fmtpct_p <- paste0(" (", fmtpct_p2, ")")
 
-    result <- if (type == "fraction_count_denom") {
+    result <- if ((legacy && type == "fraction_count_denom") ||
+                  !legacy && type == "fraction_count_denom"  && count > 0){
       paste0(fmtpct_p2, " (", fmt_cd, ")")
+    } else if (!legacy && type == "fraction_count_denom" && count == 0) {
+      paste0("(", fmt_cd, ")")
     } else if (count == 0 && type == "count_fraction") {
       0
+    } else if (!legacy && count == 0 && type == "count_denom_fraction") {
+      fmt_cd
     } else {
       paste0(fmt_cd, fmtpct_p)
     }
@@ -244,6 +251,13 @@ jjcsformat_count_denom_fraction <- jjcsformat_cnt_den_fract_fct(type = "count_de
 #' @rdname count_fraction
 #' @export
 #' @examples
+#' jjcsformat_count_denom_fraction_legacy(c(0, 235, 0 / 235))
+jjcsformat_count_denom_fraction_legacy <- jjcsformat_cnt_den_fract_fct(type = "count_denom_fraction", legacy = TRUE)
+
+
+#' @rdname count_fraction
+#' @export
+#' @examples
 #'
 #' jjcsformat_fraction_count_denom(c(7, 10, 0.7))
 #' jjcsformat_fraction_count_denom(c(70000, 70001, 70000 / 70001))
@@ -251,6 +265,12 @@ jjcsformat_count_denom_fraction <- jjcsformat_cnt_den_fract_fct(type = "count_de
 #' fmt <- jjcsformat_cnt_den_fract_fct(type = "fraction_count_denom", d = 2)
 #' fmt(c(23, 235, 23 / 235))
 jjcsformat_fraction_count_denom <- jjcsformat_cnt_den_fract_fct(type = "fraction_count_denom")
+
+#' @rdname count_fraction
+#' @export
+#' @examples
+#' jjcsformat_fraction_count_denom_legacy(c(0, 235, 0 / 235))
+jjcsformat_fraction_count_denom_legacy <- jjcsformat_cnt_den_fract_fct(type = "fraction_count_denom", legacy = TRUE)
 
 
 #' @title Function factory for p-value formatting

@@ -19,7 +19,7 @@
 #' @param weights_method (`character`)\cr method for calculating weights.
 #' @param .formats (`character` or NULL)\cr formats to apply to the statistics. If NULL, default formats will be used.
 #' @param na_str (`character`)\cr string to use for NA values. Defaults to `rep("NA", 3)`.
-#'
+#' @param legacy (`logical(1)`)\cr To allow for backward compatibility default of used format.
 #' @return Formatted analysis function which is used as `afun` in `analyze_vars()`
 #' and as `cfun` in `summarize_row_groups()`.
 #'
@@ -73,7 +73,8 @@ a_freq_resp_var_j <- function(
     ),
     weights_method = formals(s_proportion_diff)$weights_method,
     .formats = NULL,
-    na_str = rep("NA", 3)) {
+    na_str = rep("NA", 3),
+    legacy = FALSE) {
   # ---- Derive statistics: xx / xx (xx.x%)
 
   if (is.null(resp_var)) {
@@ -172,7 +173,12 @@ a_freq_resp_var_j <- function(
       .stat <- "count_unique_denom_fraction"
       x_stat <- rslt[[.stat]]$Y
       # use .formats if provided, otherwise default to jjcsformat_count_denom_fraction
-      fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction else .formats
+      if (!legacy) {
+        fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction else .formats  
+      } else {
+        fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction_legacy else .formats  
+      }
+      
       rslt <- rcell(x_stat, format = fmt)
     } else {
       # use the risk differenc function s_rel_risk_val_j on the current level of the incoming variable (.var)
