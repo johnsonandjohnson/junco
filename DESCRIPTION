@@ -77,10 +77,9 @@ Suggests:
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
-    insightsengineering/formatters@main,
-    insightsengineering/tern@main,
-    petelaud/ratesci@master,
+    pharmaverse/formatters@main,
+    pharmaverse/tern@main,
     johnsonandjohnson/pharmaverseadamjnj@dev,
-    insightsengineering/rtables@main,
-    insightsengineering/rtables.officer@main
+    pharmaverse/rtables@main,
+    pharmaverse/rtables.officer@main
 Config/roxygen2/version: 8.0.0
