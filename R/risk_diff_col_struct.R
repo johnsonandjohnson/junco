@@ -714,71 +714,14 @@ add_combo_levs_to_trtmap <- function(trtmap, combo_map) {
   cond_rm_facets(map[[2]], value = unique(map[[1]]), keep_matches = TRUE)
 }
 
-#' @rdname grouped_cols_w_diffs
-#' @param trtvar (`character(1)` or `NULL`)\cr the treatment variable to split by. Defaults to the
-#'     treatment variable in `colspan_trt_map`.
-#' @param subgrpvar (`character(1)` or `NULL`)\cr the name of the subgroup variable to split
-#' by within the `trtvar` split
-#' @param subgrplbl (`character(1)` or `NULL`)\cr the spanning label to place over the subgroups,
-#' if different than `subgrpvar`
-#' @param .pre (`list` of `function`s)\cr Passed to [rtables::make_split_fun()] as `pre` for
-#'     treatment splitting.
-#' @param .post (`list` of `function`s)\cr Passed to [rtables::make_split_fun()] as `post` for
-#'     treatment splitting after the standard column-structure processing.
-#' @details `grouped_cols_w_subgrps` creates a hierarchical column structure that splits by `trtvar`,
-#' underneath which is a spanning label over a split with a Total column along with columns for
-#' each level of `subgrpvar`.
-#' @export
-#' @examples
-#' colspan_var <- create_colspan_var(
-#'   data.frame(
-#'     TRT01A = factor(rep(c("Placebo", "Active 1"), each = 2)),
-#'     SEX = factor(rep(c("Female", "Male"), 2))
-#'   ),
-#'   non_active_grp = "Placebo",
-#'   non_active_grp_span_lbl = "Control",
-#'   active_grp_span_lbl = "Active Treatment",
-#'   colspan_var = "colspan_trt",
-#'   trt_var = "TRT01A"
-#' )
-#' colspan_trt_map <- create_colspan_map(
-#'   colspan_var,
-#'   non_active_grp = "Placebo",
-#'   non_active_grp_span_lbl = "Control",
-#'   active_grp_span_lbl = "Active Treatment",
-#'   colspan_var = "colspan_trt",
-#'   trt_var = "TRT01A"
-#' )
-#'
-#' lyt <- basic_table() |>
-#'   grouped_cols_w_subgrps(
-#'     colspan_trt_map,
-#'     subgrpvar = "SEX",
-#'     subgrplbl = "SUB_*"
-#'   ) |>
-#'   analyze("TRT01A", afun = function(x, ...) length(x))
-#'
-#' build_table(lyt, colspan_var)
-grouped_cols_w_subgrps <- function(
-  lyt,
-  colspan_trt_map = NULL,
+
+spans_trtvar_no_diffs <- function(lyt,
+  colspan_trt_map,
   combo_map_df = NULL,
   trtvar = names(colspan_trt_map)[2],
-  subgrpvar = NULL,
-  subgrplbl = subgrpvar,
   .pre = list(),
-  .post = list()
-) {
-  if (is.null(trtvar)) {
-    stop("trtvar must be specified if no colspan map is provided.")
-  }
+  .post = list()) {
 
-  if (is.null(subgrpvar)) {
-    stop(
-      "no subgroup variable specified, use grouped_cols_w_diffs with diff_cols=FALSE ",
-      "to create a grouped column structure with no subgrouping."
-    )
-  }
   spanvar <- names(colspan_trt_map)[1]
 
   if (!is.null(combo_map_df)) {
@@ -820,19 +763,96 @@ grouped_cols_w_subgrps <- function(
   main_splfun <- make_split_fun(pre = .pre, post = main_post)
 
   if (!is.null(spanvar)) {
-    ## iff we have a colspan trt map
     lyt <- lyt |>
       split_cols_by(
-        spanvar,
-        split_fun = keep_split_levels(
+      spanvar,
+      split_fun = keep_split_levels(
           only = unique(colspan_trt_map[[spanvar]]),
           reorder = TRUE
         )
       )
   }
+  lyt <- split_cols_by(lyt, trtvar, split_fun = main_splfun, show_colcounts = TRUE)
+  lyt
+}
+
+#' @rdname grouped_cols_w_diffs
+#' @param trtvar (`character(1)` or `NULL`)\cr the treatment variable to split by. Defaults to the
+#'     treatment variable in `colspan_trt_map`.
+#' @param subgrpvar (`character(1)` or `NULL`)\cr the name of the subgroup variable to split
+#' by within the `trtvar` split
+#' @param subgrplbl (`character(1)` or `NULL`)\cr the spanning label to place over the subgroups,
+#' if different than `subgrpvar`
+#' @param .pre (`list` of `function`s)\cr Passed to [rtables::make_split_fun()] as `pre` for
+#'     treatment splitting.
+#' @param .post (`list` of `function`s)\cr Passed to [rtables::make_split_fun()] as `post` for
+#'     treatment splitting after the standard column-structure processing.
+#' @details `grouped_cols_w_subgrps` creates a hierarchical column structure that splits by `trtvar`,
+#' underneath which is a spanning label over a split with a Total column along with columns for
+#' each level of `subgrpvar`.
+#' @export
+#' @examples
+#' dat <- create_colspan_var(
+#'   data.frame(
+#'     TRT01A = factor(rep(c("Placebo", "Active 1"), each = 2)),
+#'     SEX = factor(rep(c("Female", "Male"), 2))
+#'   ),
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#' colspan_trt_map <- create_colspan_map(
+#'   dat,
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#'
+#' lyt <- basic_table() |>
+#'   grouped_cols_w_subgrps(
+#'     colspan_trt_map,
+#'     subgrpvar = "SEX",
+#'     subgrplbl = "SUB_*"
+#'   ) |>
+#'   analyze("TRT01A", afun = function(x, ...) length(x))
+#'
+#' build_table(lyt, dat)
+grouped_cols_w_subgrps <- function(
+  lyt,
+  colspan_trt_map = NULL,
+  combo_map_df = NULL,
+  trtvar = names(colspan_trt_map)[2],
+  subgrpvar = NULL,
+  subgrplbl = subgrpvar,
+  .pre = list(),
+  .post = list()
+) {
+  if (is.null(trtvar)) {
+    stop("trtvar must be specified if no colspan map is provided.")
+  }
+
+  if (is.null(subgrpvar)) {
+    stop(
+      "no subgroup variable specified, use grouped_cols_w_diffs with diff_cols=FALSE ",
+      "to create a grouped column structure with no subgrouping."
+    )
+  }
+  
+  ## handles spanning variable if necessary and the treatment var split
+  lyt <- spans_trtvar_no_diffs(
+    lyt,
+    colspan_trt_map = colspan_trt_map,
+    combo_map_df = combo_map_df,
+    trtvar = trtvar,
+    .pre = .pre,
+    .post = .post
+  )
 
   lyt <- lyt |>
-    split_cols_by(trtvar, split_fun = main_splfun) |>
     split_cols_by(
       trtvar,
       split_fun = make_split_fun(
@@ -910,5 +930,107 @@ shift_tbl_col_struct <- function(lyt, var, span_lbl = "Baseline", .outer_spl_var
   lyt <- lyt |>
     split_cols_by(.outer_spl_var, split_fun = outer_splfun) |>
     split_cols_by(var, split_fun = inner_splfun)
+  lyt
+}
+
+#' Standard All vs Some (e.g. Related AEs) column structure
+#' 
+#' @inheritParams grouped_cols_w_subgrps
+#' @param subgrp (`character(1)`)\cr subgroup variable name
+#' @param subgrp_lbl (`character(1)`)\cr The label to put above the combination level representing `subgrp_lvls`
+#' @param all_lbl (`character(1)`)\cr The label to put above the "All" column
+#' @param subgrp_lvls (`characgter`)\cr All level(s) to be included in the `subgrp_lbl` column.
+#' 
+#' @details
+#' This column structure generating function is for comparing a single portion of the data (as represented by 
+#' level(s) of `subgrpvar`) against the full data, comparison of AE counts to treatment-related AE counts
+#' being a motivating example.
+#'
+#' 
+#' @examples
+#' 
+#'  library(junco)  
+#' dat <- create_colspan_var(
+#'   data.frame(
+#'     TRT01A = factor(rep(c("Placebo", "Active 1", "Active 2"), each = 5)),
+#'     GRADE = factor(rep(paste("Grade ", 1:5), 3))
+#'   ),
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#' colspan_trt_map <- create_colspan_map(
+#'   dat,
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#'
+#' lyt <- basic_table() |>
+#'     some_v_all_col_struct(
+#'     colspan_trt_map,
+#'     subgrpvar = "GRADE",
+#'     subgrp_lvls = c("Grade 4", "Grade 5"),
+#'     subgrp_lbl = "High Grade",
+#'     all_lbl = "All Grades")
+#'
+#' build_table(lyt, dat)
+#' 
+#' @export
+some_v_all_col_struct <- function(
+  lyt,
+  colspan_trt_map = NULL,
+  combo_map_df = NULL,
+  trtvar = names(colspan_trt_map)[2],
+  subgrpvar = NULL,
+  subgrp_lbl = subgrpvar,
+  all_lbl, 
+  subgrp_lvls, 
+  .pre = list(),
+  .post = list()
+) {
+   if (is.null(trtvar)) {
+    stop("trtvar must be specified if no colspan map is provided.")
+  }
+
+  if (is.null(subgrpvar)) {
+    stop(
+      "no subgroup variable specified, use grouped_cols_w_diffs with diff_cols=FALSE ",
+      "to create a grouped column structure with no subgrouping."
+    )
+  }
+
+  lyt <- spans_trtvar_no_diffs(
+    lyt,
+    colspan_trt_map = colspan_trt_map,
+    combo_map_df = combo_map_df,
+    trtvar = trtvar,
+    .pre = .pre,
+    .post = .post
+  )
+
+  lyt <- lyt |>
+    split_cols_by(
+      subgrpvar,
+      split_fun = make_split_fun(
+        post = list(
+          add_overall_facet(all_lbl, label = all_lbl),
+          add_combo_facet(
+            name = paste0(subgrpvar, "_subset"),
+            label = subgrp_lbl,
+            levels = subgrp_lvls
+          ),
+          restrict_facets(
+            c(all_lbl, paste0(subgrpvar, "_subset")),
+            op = "keep"
+          )
+      )
+    )
+  )
+
   lyt
 }

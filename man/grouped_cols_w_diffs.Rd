@@ -168,7 +168,7 @@ lyt <- basic_table() |>
   analyze("TRT01A", afun = function(x, ...) length(x))
 
 build_table(lyt, colspan_var)
-colspan_var <- create_colspan_var(
+dat <- create_colspan_var(
   data.frame(
     TRT01A = factor(rep(c("Placebo", "Active 1"), each = 2)),
     SEX = factor(rep(c("Female", "Male"), 2))
@@ -180,7 +180,7 @@ colspan_var <- create_colspan_var(
   trt_var = "TRT01A"
 )
 colspan_trt_map <- create_colspan_map(
-  colspan_var,
+  dat,
   non_active_grp = "Placebo",
   non_active_grp_span_lbl = "Control",
   active_grp_span_lbl = "Active Treatment",
@@ -196,7 +196,7 @@ lyt <- basic_table() |>
   ) |>
   analyze("TRT01A", afun = function(x, ...) length(x))
 
-build_table(lyt, colspan_var)
+build_table(lyt, dat)
 }
 \seealso{
 Other std_col_struct:

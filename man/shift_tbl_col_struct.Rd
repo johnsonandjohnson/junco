@@ -31,7 +31,7 @@ Create Column Structure for a J&J-Style Shift Table
 This function creates a column structure akin to the following
 (with Grade 1 through Grade 5 representing the levels of \code{var}):
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{                              Baseline                        
+\if{html}{\out{<div class="sourceCode">}}\preformatted{                              Baseline
   N   Grade 1   Grade 2   Grade 3   Grade 4   Grade 5   Total
 ——————————————————————————————————————————————————————————————
 }\if{html}{\out{</div>}}
