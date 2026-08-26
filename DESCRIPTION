@@ -79,7 +79,7 @@ Config/testthat/edition: 3
 Remotes:
     pharmaverse/formatters@main,
     pharmaverse/tern@main,
-    pharmaverse/rtables@main,
+    pharmaverse/rtables@1095_intermediate_nesting,
     johnsonandjohnson/pharmaverseadamjnj@dev,
     insightsengineering/rtables.officer@main
 Config/roxygen2/version: 8.0.0
