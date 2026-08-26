@@ -24,6 +24,7 @@ articles:
     - table_and_listing_customizations
     - ancova_combined
     - standard_column_structures
+    - get_ref_info
 reference:
   - title: junco Analysis Functions
     desc: The following functions are the Analysis functions used used to create common table layouts.
@@ -81,7 +82,6 @@ reference:
     - summarize_lsmeans_wide
     - summarize_mmrm
     - summarize_row_counts
-    - h_get_trtvar_refpath
     - rbmi_mmrm_single_info
     - rbmi_pool
     - s_cmhrms_j

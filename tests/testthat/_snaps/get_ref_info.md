@@ -63,3 +63,14 @@
       Mean                               34.91       33.02          34.57        34.22
       Difference in Means vs Placebo     1.89                        1.55             
 
+# get_ref_info returns reference information for matching column splits
+
+    Code
+      cat(sub("[[:space:]]+$", "", capture.output(result)), sep = "\n")
+    Output
+                                 Active Study Agent
+                             A: Drug X   C: Combination   B: Placebo
+      ——————————————————————————————————————————————————————————————
+      Reference Group Size      106           106            106
+      In Reference Column      FALSE         FALSE           TRUE
+

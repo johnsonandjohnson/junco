@@ -801,6 +801,9 @@ a_freq_j <- function(
   colgroup = NULL,
   countsource = c("df", "altdf", "altdf_subset")
 ) {
+  checkmate::check_character(ref_path, min.len = 2L)
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
+
   denom <- match.arg(denom)
   method <- match.arg(method)
 
@@ -913,7 +916,6 @@ a_freq_j <- function(
     if (riskdiff && is.null(ref_path)) {
       stop("argument ref_path cannot be NULL.")
     }
-    ### denom N_colgroup should not be used in layout with risk diff columns
     if (denom == "N_colgroup") {
       stop(
         "denom N_colgroup cannot be used in a layout with risk diff columns."
@@ -923,28 +925,11 @@ a_freq_j <- function(
       trt_var <- NULL
       ctrl_grp <- NULL
       cur_trt_grp <- NULL
-    }
-
-    if (riskdiff) {
-      trt_var_refpath <- h_get_trtvar_refpath(
-        ref_path,
-        .spl_context,
-        df
-      )
-      # trt_var_refpath is list with elements
-      # trt_var trt_var_refspec cur_trt_grp ctrl_grp
-      # make these elements available in current environment
-      trt_var <- trt_var_refpath$trt_var
-      trt_var_refspec <- trt_var_refpath$trt_var_refspec
-      cur_trt_grp <- trt_var_refpath$cur_trt_grp
-      ctrl_grp <- trt_var_refpath$ctrl_grp
-      # for combined facet, denom_df value for the treatment group needs update
-      new_denomdf <- upd_denom_df_combo(
-        new_denomdf,
-        trt_var,
-        cur_trt_grp,
-        .spl_context
-      )
+    } else {
+      trt_var <- ref_path[length(ref_path) - 1L]
+      ctrl_grp <- ref_path[length(ref_path)]
+      stopifnot(ctrl_grp %in% levels(df[[trt_var]]))
+      cur_trt_grp <- h_get_cur_trt_grp(trt_var, .spl_context)
 
       if (!is.null(colgroup) && trt_var == colgroup) {
         stop(
@@ -953,6 +938,13 @@ a_freq_j <- function(
              Either remove risk difference columns from layout, set riskdiff = FALSE, or update colgroup."
         )
       }
+
+      new_denomdf <- upd_denom_df_combo(
+        new_denomdf,
+        trt_var,
+        cur_trt_grp,
+        .spl_context
+      )
     }
 
     x_stats <- s_rel_risk_val_j(
