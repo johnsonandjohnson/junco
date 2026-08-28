@@ -46,6 +46,7 @@
 - Updated `insightsengineering` urls to `pharmaverse`
 
 ### Added
+- Added new standard column structure functions: `make_multicomp_splfun()`, `grouped_cols_w_diffs()`, `grouped_cols_w_subgrps()`, and `shift_tbl_col_struct()`.
 - Added `strict_match()` for uniquely matching a value in the odd or even positions of a character vector.
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
 - Added `pool_rubin_scalar()` and `pool_z_stat()` for pooling scalar estimates and z statistics across imputations.

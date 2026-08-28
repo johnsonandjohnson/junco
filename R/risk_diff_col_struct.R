@@ -32,7 +32,8 @@ do_sib_val_surgery <- function(splval, comp_lvl, newexargs, spl, comp_label) {
 surgical_suite <- function(orig_ret, comp_lvl, newexargs, spl, combo_map) {
   out <- orig_ret
   comp_label <- get_comp_label(comp_lvl, orig_ret, combo_map)
-  out$values <- lapply(out$values,
+  out$values <- lapply(
+    out$values,
     do_sib_val_surgery,
     comp_lvl = comp_lvl,
     newexargs = newexargs,
@@ -200,14 +201,16 @@ add_sib_facets <- function(comp_level, colspan_trt_map, combo_map_all) {
 #'     functionality please contact the maintainers by filing an issue
 #'     at https://github.com/johnsonandjohnson/junco/issues
 #'
-#' @family riskdiff_col_struct
+#' @family std_col_struct
 #'
 #' @export
-make_multicomp_splfun <- function(colspan_trt_map,
-                                  combo_levels_map = NULL,
-                                  comp_level_map = NULL,
-                                  .pre = list(),
-                                  .post = list()) {
+make_multicomp_splfun <- function(
+  colspan_trt_map,
+  combo_levels_map = NULL,
+  comp_level_map = NULL,
+  .pre = list(),
+  .post = list()
+) {
   colspan_trt_map <- enrich_colspan_map(colspan_trt_map, combo_levels_map)
   if (is.null(comp_level_map)) {
     comp_levels <- get_all_comp_lvls(colspan_trt_map)
@@ -234,9 +237,7 @@ make_multicomp_splfun <- function(colspan_trt_map,
       out <- lapply(
         names(ret),
         function(nm) {
-          unlist(lapply(seq_along(sib_sets), function(ii) sib_sets[[ii]][[nm]]),
-            recursive = FALSE
-          )
+          unlist(lapply(seq_along(sib_sets), function(ii) sib_sets[[ii]][[nm]]), recursive = FALSE)
         }
       )
       names(out) <- names(ret)
@@ -248,10 +249,12 @@ make_multicomp_splfun <- function(colspan_trt_map,
     pre = .pre,
     post = c(
       funlst,
-      apply_comp_map(splvar = names(colspan_trt_map)[2],
-                     comp_levels,
-                     comp_map = comp_level_map,
-                     combo_map = combo_levels_map),
+      apply_comp_map(
+        splvar = names(colspan_trt_map)[2],
+        comp_levels,
+        comp_map = comp_level_map,
+        combo_map = combo_levels_map
+      ),
       .post
     )
   )
@@ -262,8 +265,10 @@ make_multicomp_splfun <- function(colspan_trt_map,
 enrich_colspan_map <- function(colspan_map, combodf) {
   ## assume if any combo levels are present that the
   ## missing ones are intentional
-  if (is.null(combodf) ||
-        any(combodf$valname %in% colspan_map[[2]])) {
+  if (
+    is.null(combodf) ||
+      any(combodf$valname %in% colspan_map[[2]])
+  ) {
     return(colspan_map)
   }
   combo_levs <- combodf$valname
@@ -301,7 +306,6 @@ enrich_colspan_map <- function(colspan_map, combodf) {
 }
 
 
-
 make_comp_name <- function(act_nm, comp_nm) paste0(act_nm, " vs ", comp_nm)
 
 ## conversion of names/labels to comparison versions is now
@@ -333,13 +337,12 @@ expand_combo_map <- function(combo_map, ref_lvls) {
       } else {
         ## TODO this seems overkill for what is left inside
         ## the lapply, refactor into saner form
-        rws_out <- lapply(comp_against,
-                          function(cur_ref_lvl) {
-                            ref_lvl_ind <- match(cur_ref_lvl, ref_lvls)
-                            cur_rw <- combo_map[ii, ]
-                            cur_rw$comparator_level <- cur_ref_lvl
-                            cur_rw
-                          })
+        rws_out <- lapply(comp_against, function(cur_ref_lvl) {
+          ref_lvl_ind <- match(cur_ref_lvl, ref_lvls)
+          cur_rw <- combo_map[ii, ]
+          cur_rw$comparator_level <- cur_ref_lvl
+          cur_rw
+        })
       }
 
       do.call(rbind.data.frame, rws_out)
@@ -423,12 +426,12 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
     combodf$valname[!combodf$is_control]
   )
   if (!("compare_against" %in% names(combodf))) {
-    combodf$compare_against <- ifelse(combodf$is_control,
+    combodf$compare_against <- ifelse(
+      combodf$is_control,
       replicate(nrcombo, list(non_ref_lvls)),
       replicate(nrcombo, list(ref_lvls))
     )
   }
-
 
   if (any(combodf$is_control) && !all(combodf$valname[combodf$is_control] %in% ref_lvls)) {
     stop(
@@ -438,7 +441,6 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
       "missing from specified reference levels"
     )
   }
-
 
   rws <- lapply(
     seq_len(nrcombo),
@@ -565,20 +567,45 @@ combodf_to_comp_map <- function(combodf, ref_lvls, all_base_lvls) {
 #'     column structures added
 #'
 #'
-#' @family riskdiff_col_struct
+#' @family std_col_struct
 #' @export
+#' @examples
+#' colspan_var <- create_colspan_var(
+#'   data.frame(TRT01A = factor(c("Placebo", "Active 1", "Active 2"))),
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#' colspan_trt_map <- create_colspan_map(
+#'   colspan_var,
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#'
+#' lyt <- basic_table() |>
+#'   grouped_cols_w_diffs(colspan_trt_map) |>
+#'   analyze("TRT01A", afun = function(x, ...) length(x))
+#'
+#' build_table(lyt, colspan_var)
 
-grouped_cols_w_diffs <- function(lyt,
-                                 colspan_trt_map,
-                                 combo_map_df = NULL,
-                                 ## default behavior for comp_map is taken care of in make_multicomp_splfun
-                                 comp_map = NULL,
-                                 diff_cols = TRUE,
-                                 diffs_label = "Risk Differences",
-                                 .main_pre = list(),
-                                 .main_post = list(),
-                                 .rr_pre = list(),
-                                 .rr_post = list()) {
+grouped_cols_w_diffs <- function(
+  lyt,
+  colspan_trt_map,
+  combo_map_df = NULL,
+  ## default behavior for comp_map is taken care of in make_multicomp_splfun
+  comp_map = NULL,
+  diff_cols = TRUE,
+  diffs_label = "Risk Differences",
+  .main_pre = list(),
+  .main_post = list(),
+  .rr_pre = list(),
+  .rr_post = list()
+) {
   trtvar <- names(colspan_trt_map)[2]
   spanvar <- names(colspan_trt_map)[1]
 
@@ -619,8 +646,6 @@ grouped_cols_w_diffs <- function(lyt,
   main_post <- c(main_post, .trtmap_to_post_funs(colspan_trt_map), .main_post)
 
   main_splfun <- make_split_fun(pre = .main_pre, post = main_post)
-
-
 
   lyt <- lyt |>
     split_cols_by(names(colspan_trt_map)[1]) |>
@@ -687,4 +712,330 @@ add_combo_levs_to_trtmap <- function(trtmap, combo_map) {
 
 .map_sect_to_post_fun <- function(map) {
   cond_rm_facets(map[[2]], value = unique(map[[1]]), keep_matches = TRUE)
+}
+
+
+spans_trtvar_no_diffs <- function(
+  lyt,
+  colspan_trt_map,
+  combo_map_df = NULL,
+  trtvar = names(colspan_trt_map)[2],
+  .pre = list(),
+  .post = list()
+) {
+
+  spanvar <- names(colspan_trt_map)[1]
+
+  if (!is.null(combo_map_df)) {
+    if (!("is_control" %in% names(combo_map_df))) {
+      combo_map_df$is_control <- FALSE
+    }
+    main_post <- lapply(
+      seq_len(NROW(combo_map_df)),
+      function(i) {
+        force(i)
+        add_combo_facet(
+          name = combo_map_df$valname[i],
+          label = combo_map_df$label[i],
+          levels = combo_map_df$levelcombo[[i]],
+          extra = combo_map_df$exargs[[i]]
+        )
+      }
+    )
+
+    combo_nms <- combo_map_df$valname
+
+    ## we're guaranteed to have some combo levels at this point
+    combo_found <- combo_nms %in% colspan_trt_map[[trtvar]]
+    if (!any(combo_found)) {
+      message(
+        "none of the combination levels appeared in the colspan treatment map;",
+        " adding them automatically."
+      )
+      colspan_trt_map <- add_combo_levs_to_trtmap(colspan_trt_map, combo_map_df)
+    } else if (any(!combo_found)) {
+      warning("some combination levels defined in combo_map_df do not appear in colspan_trt_map")
+    }
+  } else {
+    main_post <- list()
+  }
+
+  main_post <- c(
+    main_post,
+    if (!is.null(colspan_trt_map)) .trtmap_to_post_funs(colspan_trt_map),
+    .post
+  )
+
+  main_splfun <- make_split_fun(pre = .pre, post = main_post)
+
+  if (!is.null(spanvar)) {
+    lyt <- lyt |>
+      split_cols_by(
+        spanvar,
+        split_fun = keep_split_levels(
+          only = unique(colspan_trt_map[[spanvar]]),
+          reorder = TRUE
+        )
+      )
+  }
+  lyt <- split_cols_by(lyt, trtvar, split_fun = main_splfun, show_colcounts = TRUE)
+  lyt
+}
+
+#' @rdname grouped_cols_w_diffs
+#' @param trtvar (`character(1)` or `NULL`)\cr the treatment variable to split by. Defaults to the
+#'     treatment variable in `colspan_trt_map`.
+#' @param subgrpvar (`character(1)` or `NULL`)\cr the name of the subgroup variable to split
+#' by within the `trtvar` split
+#' @param subgrplbl (`character(1)` or `NULL`)\cr the spanning label to place over the subgroups,
+#' if different than `subgrpvar`
+#' @param .pre (`list` of `function`s)\cr Passed to [rtables::make_split_fun()] as `pre` for
+#'     treatment splitting.
+#' @param .post (`list` of `function`s)\cr Passed to [rtables::make_split_fun()] as `post` for
+#'     treatment splitting after the standard column-structure processing.
+#' @details `grouped_cols_w_subgrps` creates a hierarchical column structure that splits by `trtvar`,
+#' underneath which is a spanning label over a split with a Total column along with columns for
+#' each level of `subgrpvar`.
+#' @export
+#' @examples
+#' dat <- create_colspan_var(
+#'   data.frame(
+#'     TRT01A = factor(rep(c("Placebo", "Active 1"), each = 2)),
+#'     SEX = factor(rep(c("Female", "Male"), 2))
+#'   ),
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#' colspan_trt_map <- create_colspan_map(
+#'   dat,
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#'
+#' lyt <- basic_table() |>
+#'   grouped_cols_w_subgrps(
+#'     colspan_trt_map,
+#'     subgrpvar = "SEX",
+#'     subgrplbl = "SUB_*"
+#'   ) |>
+#'   analyze("TRT01A", afun = function(x, ...) length(x))
+#'
+#' build_table(lyt, dat)
+grouped_cols_w_subgrps <- function(
+  lyt,
+  colspan_trt_map = NULL,
+  combo_map_df = NULL,
+  trtvar = names(colspan_trt_map)[2],
+  subgrpvar = NULL,
+  subgrplbl = subgrpvar,
+  .pre = list(),
+  .post = list()
+) {
+  if (is.null(trtvar)) {
+    stop("trtvar must be specified if no colspan map is provided.")
+  }
+
+  if (is.null(subgrpvar)) {
+    stop(
+      "no subgroup variable specified, use grouped_cols_w_diffs with diff_cols=FALSE ",
+      "to create a grouped column structure with no subgrouping."
+    )
+  }
+
+  ## handles spanning variable if necessary and the treatment var split
+  lyt <- spans_trtvar_no_diffs(
+    lyt,
+    colspan_trt_map = colspan_trt_map,
+    combo_map_df = combo_map_df,
+    trtvar = trtvar,
+    .pre = .pre,
+    .post = .post
+  )
+
+  lyt <- lyt |>
+    split_cols_by(
+      trtvar,
+      split_fun = make_split_fun(
+        post = list(
+          add_overall_facet(subgrplbl, subgrplbl),
+          restrict_facets(subgrplbl, op = "keep")
+        )
+      )
+    ) |>
+    split_cols_by(
+      subgrpvar,
+      split_fun = add_overall_level("Total", first = TRUE)
+    )
+  lyt
+}
+
+#' Create Column Structure for a J&J-Style Shift Table
+#'
+#' @param lyt (`PreDataTableLayouts`)\cr The layout, typically as
+#'     returned directly from `basic_table`.
+#' @param var (`character(1)`)\cr The variable defining the partition
+#'     to create a shift table for.
+#' @param span_lbl (`character(1)`)\cr The spanning label for the
+#'     shift portion of the column structure. Defaults to
+#'     `"Baseline"`.
+#' @param .outer_spl_var (`character(1)`)\cr The variable to
+#'     "split on" when creating the spanning labels. Must exist in the
+#'     dataset(s) used in `build_table` but its values are irrelevant.
+#'
+#' @details This function creates a column structure akin to the following
+#' (with Grade 1 through Grade 5 representing the levels of `var`):
+#'
+#' ```
+#'                               Baseline
+#'   N   Grade 1   Grade 2   Grade 3   Grade 4   Grade 5   Total
+#' ——————————————————————————————————————————————————————————————
+#' ```
+#'
+#' @examples
+#' shift_data <- data.frame(
+#'   BASE = factor(c("Grade 1", "Grade 2", "Grade 3")),
+#'   CHG = c("Improved", "Stable", "Worsened")
+#' )
+#'
+#' lyt <- basic_table() |>
+#'   shift_tbl_col_struct("BASE") |>
+#'   analyze("CHG", afun = function(x, ...) length(x))
+#'
+#' build_table(lyt, shift_data)
+#' @return `lyt` updated with the specified shift table column structure.
+#' @family std_col_struct
+#' @export
+shift_tbl_col_struct <- function(lyt, var, span_lbl = "Baseline", .outer_spl_var = var) {
+  outer_splfun <- make_split_fun(
+    post = list(
+      add_overall_facet("N", label = " "),
+      add_overall_facet("shift_table", label = span_lbl),
+      restrict_facets(c("N", "shift_table"), op = "keep")
+    )
+  )
+
+  inner_splfun <- make_split_fun(
+    post = list(
+      add_overall_facet("Total", label = "Total"),
+      function(ret, spl, fulldf, .spl_context) {
+        if (.spl_context$value[[1]] == "N") {
+          make_split_result("N", labels = c(N = "N"), list(N = fulldf), subset_exprs = list(N = quote(TRUE)))
+        } else {
+          ret
+        }
+      }
+    )
+  )
+
+  lyt <- lyt |>
+    split_cols_by(.outer_spl_var, split_fun = outer_splfun) |>
+    split_cols_by(var, split_fun = inner_splfun)
+  lyt
+}
+
+#' Standard All vs Some (e.g. Related AEs) column structure
+#'
+#' @inheritParams grouped_cols_w_subgrps
+#' @param subgrp_lbl (`character(1)`)\cr The label to put above the combination level representing `subgrp_lvls`
+#' @param all_lbl (`character(1)`)\cr The label to put above the "All" column
+#' @param subgrp_lvls (`characgter`)\cr All level(s) to be included in the `subgrp_lbl` column.
+#'
+#' @details
+#' This column structure generating function is for comparing a single portion of the data (as represented by
+#' level(s) of `subgrpvar`) against the full data, comparison of AE counts to treatment-related AE counts
+#' being a motivating example.
+#'
+#'
+#' @examples
+#'
+#'  library(junco)
+#' dat <- create_colspan_var(
+#'   data.frame(
+#'     TRT01A = factor(rep(c("Placebo", "Active 1", "Active 2"), each = 5)),
+#'     GRADE = factor(rep(paste("Grade ", 1:5), 3))
+#'   ),
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#' colspan_trt_map <- create_colspan_map(
+#'   dat,
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#'
+#' lyt <- basic_table() |>
+#'     some_v_all_col_struct(
+#'     colspan_trt_map,
+#'     subgrpvar = "GRADE",
+#'     subgrp_lvls = c("Grade 4", "Grade 5"),
+#'     subgrp_lbl = "High Grade",
+#'     all_lbl = "All Grades")
+#'
+#' build_table(lyt, dat)
+#'
+#' @export
+some_v_all_col_struct <- function(
+  lyt,
+  colspan_trt_map = NULL,
+  combo_map_df = NULL,
+  trtvar = names(colspan_trt_map)[2],
+  subgrpvar = NULL,
+  subgrp_lbl = subgrpvar,
+  all_lbl,
+  subgrp_lvls,
+  .pre = list(),
+  .post = list()
+) {
+  if (is.null(trtvar)) {
+    stop("trtvar must be specified if no colspan map is provided.")
+  }
+
+  if (is.null(subgrpvar)) {
+    stop(
+      "no subgroup variable specified, use grouped_cols_w_diffs with diff_cols=FALSE ",
+      "to create a grouped column structure with no subgrouping."
+    )
+  }
+
+  lyt <- spans_trtvar_no_diffs(
+    lyt,
+    colspan_trt_map = colspan_trt_map,
+    combo_map_df = combo_map_df,
+    trtvar = trtvar,
+    .pre = .pre,
+    .post = .post
+  )
+
+  lyt <- lyt |>
+    split_cols_by(
+      subgrpvar,
+      split_fun = make_split_fun(
+        post = list(
+          add_overall_facet(all_lbl, label = all_lbl),
+          add_combo_facet(
+            name = paste0(subgrpvar, "_subset"),
+            label = subgrp_lbl,
+            levels = subgrp_lvls
+          ),
+          restrict_facets(
+            c(all_lbl, paste0(subgrpvar, "_subset")),
+            op = "keep"
+          )
+        )
+      )
+    )
+
+  lyt
 }
