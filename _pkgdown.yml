@@ -124,6 +124,7 @@ reference:
     - make_multicomp_splfun
     - postfun_eq5d
     - real_add_overall_facet
+    - some_v_all_col_struct
 
   - title: junco Functions For titles/footnotes
     desc: The following utility functions help to add titles/footnotes.

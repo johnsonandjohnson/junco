@@ -715,12 +715,14 @@ add_combo_levs_to_trtmap <- function(trtmap, combo_map) {
 }
 
 
-spans_trtvar_no_diffs <- function(lyt,
+spans_trtvar_no_diffs <- function(
+  lyt,
   colspan_trt_map,
   combo_map_df = NULL,
   trtvar = names(colspan_trt_map)[2],
   .pre = list(),
-  .post = list()) {
+  .post = list()
+) {
 
   spanvar <- names(colspan_trt_map)[1]
 
@@ -769,8 +771,8 @@ spans_trtvar_no_diffs <- function(lyt,
   if (!is.null(spanvar)) {
     lyt <- lyt |>
       split_cols_by(
-      spanvar,
-      split_fun = keep_split_levels(
+        spanvar,
+        split_fun = keep_split_levels(
           only = unique(colspan_trt_map[[spanvar]]),
           reorder = TRUE
         )
@@ -845,7 +847,7 @@ grouped_cols_w_subgrps <- function(
       "to create a grouped column structure with no subgrouping."
     )
   }
-  
+
   ## handles spanning variable if necessary and the treatment var split
   lyt <- spans_trtvar_no_diffs(
     lyt,
@@ -938,21 +940,21 @@ shift_tbl_col_struct <- function(lyt, var, span_lbl = "Baseline", .outer_spl_var
 }
 
 #' Standard All vs Some (e.g. Related AEs) column structure
-#' 
+#'
 #' @inheritParams grouped_cols_w_subgrps
 #' @param subgrp_lbl (`character(1)`)\cr The label to put above the combination level representing `subgrp_lvls`
 #' @param all_lbl (`character(1)`)\cr The label to put above the "All" column
 #' @param subgrp_lvls (`characgter`)\cr All level(s) to be included in the `subgrp_lbl` column.
-#' 
+#'
 #' @details
-#' This column structure generating function is for comparing a single portion of the data (as represented by 
+#' This column structure generating function is for comparing a single portion of the data (as represented by
 #' level(s) of `subgrpvar`) against the full data, comparison of AE counts to treatment-related AE counts
 #' being a motivating example.
 #'
-#' 
+#'
 #' @examples
-#' 
-#'  library(junco)  
+#'
+#'  library(junco)
 #' dat <- create_colspan_var(
 #'   data.frame(
 #'     TRT01A = factor(rep(c("Placebo", "Active 1", "Active 2"), each = 5)),
@@ -982,7 +984,7 @@ shift_tbl_col_struct <- function(lyt, var, span_lbl = "Baseline", .outer_spl_var
 #'     all_lbl = "All Grades")
 #'
 #' build_table(lyt, dat)
-#' 
+#'
 #' @export
 some_v_all_col_struct <- function(
   lyt,
@@ -991,12 +993,12 @@ some_v_all_col_struct <- function(
   trtvar = names(colspan_trt_map)[2],
   subgrpvar = NULL,
   subgrp_lbl = subgrpvar,
-  all_lbl, 
-  subgrp_lvls, 
+  all_lbl,
+  subgrp_lvls,
   .pre = list(),
   .post = list()
 ) {
-   if (is.null(trtvar)) {
+  if (is.null(trtvar)) {
     stop("trtvar must be specified if no colspan map is provided.")
   }
 
@@ -1031,9 +1033,9 @@ some_v_all_col_struct <- function(
             c(all_lbl, paste0(subgrpvar, "_subset")),
             op = "keep"
           )
+        )
       )
     )
-  )
 
   lyt
 }
