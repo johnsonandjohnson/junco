@@ -21,7 +21,8 @@ specification in \code{xx.} or \verb{xx.x+} is stripped — precision is control
 \code{sigfig} alone.}
 
 \item{whole_integer}{(\code{logical(1)})\cr if \code{TRUE}, preserves the full integer part when
-\code{x} has more integer digits than \code{sigfig} (i.e., scale is clamped to 1).}
+\code{x} has more integer digits than \code{digits} (i.e., all significant figures to
+the left of the decimal mark are presented).}
 
 \item{zero_threshold}{(\code{numeric(1)})\cr values with \code{abs(x) < zero_threshold} are snapped
 to zero before rounding. Defaults to \code{0} (no snapping).}
@@ -36,6 +37,7 @@ returns a formatted string. The \code{round_type} argument accepts a rounding me
 (see \code{\link[formatters:round_fmt]{formatters::round_fmt()}}).
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Format numeric values by significant figures with controllable round_type,
 whole_integer and trailing zeros.
 }

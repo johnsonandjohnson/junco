@@ -443,3 +443,70 @@ test_that("format_sigfig_j used in rtables framework as format w/wout trailing z
   rslt
   expect_snapshot(cran = TRUE, rslt)
 })
+
+test_that("explicit modified_signif_j tests", {
+  expect_error(
+    modified_signif_j(c(0.1, 1e-9), digits = 3, zero_threshold = 1e-2),
+    "Assertion on 'zero_threshold' failed: Element 1 is not <= 0.001."
+  )
+
+  expect_error(
+    modified_signif_j(c(0.1, 1e-9), digits = 3, zero_threshold = -2),
+    "Assertion on 'zero_threshold' failed: Element 1 is not >= 0."
+  )
+
+  expect_error(
+    modified_signif_j(c(0.1, 1e-9), digits = 3, zero_threshold = TRUE),
+    "Assertion on 'zero_threshold' failed: Must be of type 'numeric'"
+  )
+
+  expect_identical(
+    modified_signif_j(c(0.1, 1e-9), digits = 3, zero_threshold = 1e-5),
+    c(0.1, 0)
+  )
+
+  expect_identical(
+    modified_signif_j(c(0.1, 1e-9), digits = 3, zero_threshold = 0),
+    signif(c(0.1, 1e-9), digits = 3)
+  )
+
+  expect_identical(
+    modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
+      digits = 3,
+      zero_threshold = 0,
+      whole_integer = TRUE,
+      round_type = "sas"
+    ),
+    c(0.1, 1e-9, 1256, 1257, 1256, 1255, 1257)
+  )
+
+  expect_identical(
+    modified_signif_j(c(0.1, 1e-9, 1256.0, 1254.5, 1256.3, 1254.5, 1256.5),
+      digits = 3,
+      zero_threshold = 0,
+      whole_integer = TRUE,
+      round_type = "iec"
+    ),
+    c(0.1, 1e-9, 1256, 1254, 1256, 1254, 1256)
+  )
+
+  expect_identical(
+    modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3),
+      digits = 3,
+      zero_threshold = 0,
+      whole_integer = FALSE,
+      round_type = "sas"
+    ),
+    c(0.1, 1e-9, 1260, 1260, 1260)
+  )
+
+  expect_identical(
+    modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3),
+      digits = 3,
+      zero_threshold = 0,
+      whole_integer = FALSE,
+      round_type = "iec"
+    ),
+    signif(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3), digits = 3)
+  )
+})
