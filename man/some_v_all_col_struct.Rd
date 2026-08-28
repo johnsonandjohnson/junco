@@ -47,8 +47,6 @@ treatment splitting.}
 
 \item{.post}{(\code{list} of \code{function}s)\cr Passed to \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{post} for
 treatment splitting after the standard column-structure processing.}
-
-\item{subgrp}{(\code{character(1)})\cr subgroup variable name}
 }
 \description{
 Standard All vs Some (e.g. Related AEs) column structure

@@ -936,7 +936,6 @@ shift_tbl_col_struct <- function(lyt, var, span_lbl = "Baseline", .outer_spl_var
 #' Standard All vs Some (e.g. Related AEs) column structure
 #' 
 #' @inheritParams grouped_cols_w_subgrps
-#' @param subgrp (`character(1)`)\cr subgroup variable name
 #' @param subgrp_lbl (`character(1)`)\cr The label to put above the combination level representing `subgrp_lvls`
 #' @param all_lbl (`character(1)`)\cr The label to put above the "All" column
 #' @param subgrp_lvls (`characgter`)\cr All level(s) to be included in the `subgrp_lbl` column.
