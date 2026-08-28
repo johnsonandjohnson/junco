@@ -758,7 +758,11 @@ spans_trtvar_no_diffs <- function(lyt,
     main_post <- list()
   }
 
-  main_post <- c(main_post, .trtmap_to_post_funs(colspan_trt_map), .post)
+  main_post <- c(
+    main_post,
+    if (!is.null(colspan_trt_map)) .trtmap_to_post_funs(colspan_trt_map),
+    .post
+  )
 
   main_splfun <- make_split_fun(pre = .pre, post = main_post)
 
