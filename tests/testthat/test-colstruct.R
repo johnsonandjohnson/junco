@@ -417,7 +417,7 @@ test_that("grouped_cols_w_diffs works", {
   )
 })
 
-test_that("grouped_cols_w_subgrps works", {
+test_that("grouped_cols_w_subgrps works with a spanning header", {
 
   subgrpvar <- "SEX"
   subgrplbl <- "SUB_*"
@@ -450,6 +450,46 @@ test_that("grouped_cols_w_subgrps works", {
                 spanvar, rw[[spanvar]], trtvar, rw[[trtvar]],
                 trtvar, subgrplbl, subgrpvar, lvl
               )
+            }
+          )
+        }
+      ),
+      recursive = FALSE
+    )
+  )
+})
+
+test_that("grouped_cols_w_subgrps works without a spanning header", {
+
+  subgrpvar <- "SEX"
+  subgrplbl <- "SUB_*"
+  subgrp_data <- data.frame(
+    ARM = factor(rep(c("Arm A", "Arm B"), each = 4)),
+    SEX = factor(rep(c("Female", "Male"), 4))
+  )
+
+  lyt1 <- basic_table() |>
+    grouped_cols_w_subgrps(
+      colspan_trt_map = NULL,
+      trtvar = "ARM",
+      subgrpvar = subgrpvar,
+      subgrplbl = subgrplbl
+    ) |>
+    analyze(subgrpvar, afun = function(x, ...) length(x))
+
+  tbl1 <- build_table(lyt1, subgrp_data)
+
+  subgrp_lvls <- c("Total", levels(subgrp_data[[subgrpvar]]))
+  expect_equal(
+    unclass(col_paths(tbl1)),
+    unlist(
+      lapply(
+        levels(subgrp_data$ARM),
+        function(lvl) {
+          lapply(
+            subgrp_lvls,
+            function(subgrplvl) {
+              c("ARM", lvl, "ARM", subgrplbl, subgrpvar, subgrplvl)
             }
           )
         }
