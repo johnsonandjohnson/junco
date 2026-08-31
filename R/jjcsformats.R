@@ -369,70 +369,28 @@ jjcsformat_range_fct <- function(str, censor_char = "+") {
   }
 }
 
-#' @noRd
-#' @description `r lifecycle::badge('stable')`
-#' Modified version of base function `signif` on 3 topics.
-#' Rounding approach: also non-iec rounding can be used (`round_type`), through function `formatters::round_fmt`.\cr
-#' Very small absolute values can be considered zero (`zero_threshold`).\cr
-#' Showing all significant figures to the left of the decimal marker (`whole_integer`)
-#' rather than the specified number of significant figures.
-#' @param x (`numeric`)\cr numeric vector to round.
-#' @param digits (`integer(1)`)\cr number of significant figures to display.
-#' @param round_type (`character(1)`)\cr rounding method. See [formatters::format_value()] for details.
-#' @param whole_integer (`logical(1)`)\cr if `TRUE`, preserves the full integer part when
-#'   `x` has more integer digits than `digits` (i.e., all significant figures to
-#'    the left of the decimal mark are presented).
-#' @param zero_threshold (`numeric(1)`)\cr values with `abs(x) < zero_threshold` are snapped
-#' to zero before rounding. Defaults to `0` (no snapping).
-
-#' @return numeric vector of the same length as `x`, rounded to `digits` significant figures.
-#' @keywords internal
-modified_signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer = FALSE, zero_threshold = 0) {
-  stopifnot(length(digits) == 1, is.numeric(digits))
-
-  checkmate::assert_numeric(zero_threshold, lower = 0, upper = 10^(-digits), len = 1)
-
-  lt_tol <- abs(x) < zero_threshold
-  x[lt_tol] <- 0
-
-  ok <- is.finite(x) & x != 0
-  # see R documentation signif is the same as rounding with  dig - ceiling(log10(abs(x)) digits
-  exponent <- ceiling(log10(abs(x[ok])))
-  new_round <- digits - exponent
-  if (whole_integer) {
-    # to ensure entire integer part is presented if x is greater than 10^digits
-    round_integer <- new_round < 0
-    new_round[round_integer] <- 0
-  }
-  # unlike round round_fmt cannot deal with negative digits
-  # use scale approach instead and round with zero digits
-  scale <- 10^new_round
-  x_round <- x
-  x_round[ok] <- as.numeric(sapply(x[ok] * scale, round_fmt, round_type = round_type, digits = 0))
-
-  x_round[ok] <- x_round[ok] / scale
-  x_round
-}
-
 #' @title Format numeric values by significant figures.
 #' @description `r lifecycle::badge('experimental')`\cr
 #' Format numeric values by significant figures with controllable round_type,
-#' whole_integer and trailing zeros.
-#' @details A function factory that produces formatting functions to round values to a
+#' whole_integer and trailing zeros.\cr
+#' The underlying function for significant figures is `modified_signif_j()`, which is a modified version for
+#' [base::signif()]
+#' @details `format_sigfig_j()`\cr A function factory that produces formatting functions to round values to a
 #' specified number of significant figures, suitable for use with
 #' [formatters::format_value()].\cr
 #' \cr The function is an alternative to [tern::format_sigfig()],
-#' Current function has fixed the `formatC` argument `num_fmt = "fg"`,
-#' and extra options for `whole_integer` and `drop0trailing` to control the format behavior.
+#' `format_sigfig_j()` has fixed the `formatC` argument `num_fmt = "fg"`,
+#' and has extra options for `whole_integer` and `drop0trailing` to control the format behavior.
 #'
 #' @seealso [tern::format_sigfig()]
 #'
 #' @param sigfig (`integer(1)`)\cr number of significant figures to display.
-#' @param whole_integer (`logical(1)`)\cr if `TRUE`, preserves the full integer part when
-#'   `x` has more integer digits than `digits` (i.e., all significant figures to
-#'   the left of the decimal mark are presented).
-#' @param zero_threshold (`numeric(1)`)\cr values with `abs(x) < zero_threshold` are snapped
-#' to zero before rounding. Defaults to `0` (no snapping).
+#' @param whole_integer (`logical(1)`)\cr if `TRUE`, all significant figures to
+#' the left of the decimal marker can be shown.
+#' If `FALSE`, the specified number of significant figures is shown.
+#' @param zero_threshold (`numeric(1)`)\cr Very small absolute values (`abs(x) < zero_threshold`)
+#' can be treated as zero.
+#' Defaults to `0` (values are left as is).
 #'
 #' @param format (`character(1)`)\cr layout format string controlling how one or two
 #'   values are arranged, e.g. `"xx"`, `"xx (xx)"`, `"(xx, xx)"`. Any decimal
@@ -442,8 +400,8 @@ modified_signif_j <- function(x, digits = 6, round_type = valid_round_type, whol
 #' indicating if trailing zeros, i.e., "0" after the decimal mark, should be removed
 #' \cr argument is passed to function `formatC`
 #' @return A formatting function with signature `function(x, round_type, ...)` that
-#'   returns a formatted string. The `round_type` argument accepts a rounding method
-#'   (see [formatters::round_fmt()]).
+#'   returns a formatted string. The `round_type` argument accepts rounding methods
+#'   ("iec", "iec_mod", "sas") (see [formatters::round_fmt()]).
 #' @export
 #' @examples
 #' fmt <- format_sigfig_j(3)
@@ -481,4 +439,63 @@ format_sigfig_j <- function(
 
     format_value(num, format)
   }
+}
+
+#' @rdname format_sigfig_j
+#' @details
+#' `modified_signif_j()`:\cr A modified version of base function [base::signif] with 3 extensions:
+#' - Rounding is performed using [formatters::round_fmt()], and allows for round types ("iec", "iec_mod", "sas")\cr
+#' - Very small absolute values can be treated as zero (`zero_threshold`).\cr
+#' - All significant figures to the left of the decimal marker can be shown (whole_integer),
+#' rather than limiting the result to the specified number of significant figures.
+#' @param x (`numeric`)\cr numbers to round.
+#' @param digits (`integer(1)`)\cr number of significant figures to display.
+#' @param round_type (`character(1)`)\cr rounding method, passed onto [formatters::round_fmt()].
+#' See [formatters::format_value()] for details.
+
+#' @return numeric vector of the same length as `x`, rounded to `digits` significant figures.
+#' @examples
+#' # example code
+#' modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
+#'   digits = 3,
+#'   zero_threshold = 0,
+#'   whole_integer = TRUE,
+#'   round_type = "sas"
+#' )
+#'
+#' modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
+#'   digits = 3,
+#'   zero_threshold = 1e-6,
+#'   whole_integer = TRUE,
+#'   round_type = "sas"
+#' )
+#' @keywords internal
+modified_signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer = FALSE, zero_threshold = 0) {
+  round_type <- match.arg(round_type)
+
+  checkmate::assert_numeric(x)
+  checkmate::assert_integerish(digits, lower = 0, len = 1, any.missing = FALSE)
+  checkmate::assert_number(zero_threshold, lower = 0, upper = 10^(-digits))
+  checkmate::assert_logical(whole_integer, len = 1, any.missing = FALSE)
+
+  lt_tol <- abs(x) < zero_threshold
+  x[lt_tol] <- 0
+
+  ok <- is.finite(x) & x != 0
+  # see R documentation signif is the same as rounding with  dig - ceiling(log10(abs(x)) digits
+  exponent <- ceiling(log10(abs(x[ok])))
+  new_round <- digits - exponent
+  if (whole_integer) {
+    # to ensure entire integer part is presented if x is greater than 10^digits
+    round_integer <- new_round < 0
+    new_round[round_integer] <- 0
+  }
+  # unlike round round_fmt cannot deal with negative digits
+  # use scale approach instead and round with zero digits
+  scale <- 10^new_round
+  x_round <- x
+  x_round[ok] <- as.numeric(sapply(x[ok] * scale, round_fmt, round_type = round_type, digits = 0))
+
+  x_round[ok] <- x_round[ok] / scale
+  x_round
 }

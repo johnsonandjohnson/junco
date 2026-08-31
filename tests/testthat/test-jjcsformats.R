@@ -444,7 +444,7 @@ test_that("format_sigfig_j used in rtables framework as format w/wout trailing z
   expect_snapshot(cran = TRUE, rslt)
 })
 
-test_that("explicit modified_signif_j tests", {
+test_that("explicit modified_signif_j tests - assertions", {
   expect_error(
     modified_signif_j(c(0.1, 1e-9), digits = 3, zero_threshold = 1e-2),
     "Assertion on 'zero_threshold' failed: Element 1 is not <= 0.001."
@@ -457,19 +457,25 @@ test_that("explicit modified_signif_j tests", {
 
   expect_error(
     modified_signif_j(c(0.1, 1e-9), digits = 3, zero_threshold = TRUE),
-    "Assertion on 'zero_threshold' failed: Must be of type 'numeric'"
+    "Assertion on 'zero_threshold' failed: Must be of type 'number'"
   )
+})
 
+test_that("explicit modified_signif_j tests - zero_threshold", {
   expect_identical(
     modified_signif_j(c(0.1, 1e-9), digits = 3, zero_threshold = 1e-5),
     c(0.1, 0)
   )
+})
 
+test_that("explicit modified_signif_j tests - same as signif", {
   expect_identical(
     modified_signif_j(c(0.1, 1e-9), digits = 3, zero_threshold = 0),
     signif(c(0.1, 1e-9), digits = 3)
   )
+})
 
+test_that("explicit modified_signif_j tests - round_type", {
   expect_identical(
     modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
       digits = 3,

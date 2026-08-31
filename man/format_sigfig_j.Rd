@@ -2,6 +2,7 @@
 % Please edit documentation in R/jjcsformats.R
 \name{format_sigfig_j}
 \alias{format_sigfig_j}
+\alias{modified_signif_j}
 \title{Format numeric values by significant figures.}
 \usage{
 format_sigfig_j(
@@ -10,6 +11,14 @@ format_sigfig_j(
   whole_integer = TRUE,
   zero_threshold = 10^(-2 * sigfig),
   drop0trailing = FALSE
+)
+
+modified_signif_j(
+  x,
+  digits = 6,
+  round_type = valid_round_type,
+  whole_integer = FALSE,
+  zero_threshold = 0
 )
 }
 \arguments{
@@ -20,34 +29,54 @@ values are arranged, e.g. \code{"xx"}, \code{"xx (xx)"}, \code{"(xx, xx)"}. Any 
 specification in \code{xx.} or \verb{xx.x+} is stripped — precision is controlled by
 \code{sigfig} alone.}
 
-\item{whole_integer}{(\code{logical(1)})\cr if \code{TRUE}, preserves the full integer part when
-\code{x} has more integer digits than \code{digits} (i.e., all significant figures to
-the left of the decimal mark are presented).}
+\item{whole_integer}{(\code{logical(1)})\cr if \code{TRUE}, all significant figures to
+the left of the decimal marker can be shown.
+If \code{FALSE}, the specified number of significant figures is shown.}
 
-\item{zero_threshold}{(\code{numeric(1)})\cr values with \code{abs(x) < zero_threshold} are snapped
-to zero before rounding. Defaults to \code{0} (no snapping).}
+\item{zero_threshold}{(\code{numeric(1)})\cr Very small absolute values (\code{abs(x) < zero_threshold})
+can be treated as zero.
+Defaults to \code{0} (values are left as is).}
 
 \item{drop0trailing}{(\code{logical(1)})\cr
 indicating if trailing zeros, i.e., "0" after the decimal mark, should be removed
 \cr argument is passed to function \code{formatC}}
+
+\item{x}{(\code{numeric})\cr numbers to round.}
+
+\item{digits}{(\code{integer(1)})\cr number of significant figures to display.}
+
+\item{round_type}{(\code{character(1)})\cr rounding method, passed onto \code{\link[formatters:round_fmt]{formatters::round_fmt()}}.
+See \code{\link[formatters:format_value]{formatters::format_value()}} for details.}
 }
 \value{
 A formatting function with signature \verb{function(x, round_type, ...)} that
-returns a formatted string. The \code{round_type} argument accepts a rounding method
-(see \code{\link[formatters:round_fmt]{formatters::round_fmt()}}).
+returns a formatted string. The \code{round_type} argument accepts rounding methods
+("iec", "iec_mod", "sas") (see \code{\link[formatters:round_fmt]{formatters::round_fmt()}}).
+
+numeric vector of the same length as \code{x}, rounded to \code{digits} significant figures.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Format numeric values by significant figures with controllable round_type,
-whole_integer and trailing zeros.
+whole_integer and trailing zeros.\cr
+The underlying function for significant figures is \code{modified_signif_j()}, which is a modified version for
+\code{\link[base:signif]{base::signif()}}
 }
 \details{
-A function factory that produces formatting functions to round values to a
+\code{format_sigfig_j()}\cr A function factory that produces formatting functions to round values to a
 specified number of significant figures, suitable for use with
 \code{\link[formatters:format_value]{formatters::format_value()}}.\cr
 \cr The function is an alternative to \code{\link[tern:format_sigfig]{tern::format_sigfig()}},
-Current function has fixed the \code{formatC} argument \code{num_fmt = "fg"},
-and extra options for \code{whole_integer} and \code{drop0trailing} to control the format behavior.
+\code{format_sigfig_j()} has fixed the \code{formatC} argument \code{num_fmt = "fg"},
+and has extra options for \code{whole_integer} and \code{drop0trailing} to control the format behavior.
+
+\code{modified_signif_j()}:\cr A modified version of base function \link[base:signif]{base::signif} with 3 extensions:
+\itemize{
+\item Rounding is performed using \code{\link[formatters:round_fmt]{formatters::round_fmt()}}, and allows for round types ("iec", "iec_mod", "sas")\cr
+\item Very small absolute values can be treated as zero (\code{zero_threshold}).\cr
+\item All significant figures to the left of the decimal marker can be shown (whole_integer),
+rather than limiting the result to the specified number of significant figures.
+}
 }
 \examples{
 fmt <- format_sigfig_j(3)
@@ -60,7 +89,22 @@ fmt2(c(1234.5, 0.00567))
 
 format_sigfig_j(3, drop0trailing = FALSE)(0.01)
 format_sigfig_j(3, drop0trailing = TRUE)(0.01)
+# example code
+modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
+digits = 3,
+zero_threshold = 0,
+whole_integer = TRUE,
+round_type = "sas"
+)
+
+modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
+digits = 3,
+zero_threshold = 1e-6,
+whole_integer = TRUE,
+round_type = "sas"
+)
 }
 \seealso{
 \code{\link[tern:format_sigfig]{tern::format_sigfig()}}
 }
+\keyword{internal}
