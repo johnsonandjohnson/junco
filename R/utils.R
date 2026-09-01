@@ -579,3 +579,55 @@ strict_match <- function(x, y, odd = TRUE) {
 
   pos
 }
+
+#' @title Remove rows with missing values
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Remove rows containing one or more missing values from a `data.frame`.
+#' If any rows are omitted, a warning is issued reporting the number of
+#' removed rows.
+#'
+#' @param df (data.frame)\cr A data frame.
+#' @param additional_message (character(1))\cr A single character string
+#'   appended to the warning message.
+#'
+#' @return
+#' A `data.frame` containing only complete rows. The original column structure
+#' is preserved.
+#'
+#' @details
+#' A row is considered incomplete if at least one of its values is missing.
+#' Missingness is determined using [stats::complete.cases()].
+#'
+#' If no rows contain missing values, `df` is returned unchanged and no warning
+#' is issued.
+#'
+#' @export
+#' @author WW
+#'
+#' @examples
+#' df <- data.frame(a = c(1:5, NA), b = c(NA, letters[1:5]))
+#' df
+#'
+#' get_complete_cases(df)
+#'
+get_complete_cases <- function(df, additional_message = ".") {
+  checkmate::assert_data_frame(df)
+  checkmate::assert_string(additional_message)
+
+  is_complete <- complete.cases(df)
+  not_complete <- !is_complete
+
+  if (any(not_complete)) {
+    warning(
+      sum(not_complete),
+      " row(s) with missing values were omitted",
+      additional_message,
+      call. = FALSE
+    )
+    df[is_complete, , drop = FALSE]
+  } else {
+    df
+  }
+}
