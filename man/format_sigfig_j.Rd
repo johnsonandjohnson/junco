@@ -90,18 +90,18 @@ fmt2(c(1234.5, 0.00567))
 format_sigfig_j(3, drop0trailing = FALSE)(0.01)
 format_sigfig_j(3, drop0trailing = TRUE)(0.01)
 # example code
-modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
-digits = 3,
-zero_threshold = 0,
-whole_integer = TRUE,
-round_type = "sas"
+junco:::modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
+  digits = 3,
+  zero_threshold = 0,
+  whole_integer = TRUE,
+  round_type = "sas"
 )
 
-modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
-digits = 3,
-zero_threshold = 1e-6,
-whole_integer = TRUE,
-round_type = "sas"
+junco:::modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
+  digits = 3,
+  zero_threshold = 1e-6,
+  whole_integer = TRUE,
+  round_type = "sas"
 )
 }
 \seealso{

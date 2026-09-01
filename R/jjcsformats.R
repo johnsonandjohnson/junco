@@ -456,14 +456,14 @@ format_sigfig_j <- function(
 #' @return numeric vector of the same length as `x`, rounded to `digits` significant figures.
 #' @examples
 #' # example code
-#' modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
+#' junco:::modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
 #'   digits = 3,
 #'   zero_threshold = 0,
 #'   whole_integer = TRUE,
 #'   round_type = "sas"
 #' )
 #'
-#' modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
+#' junco:::modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
 #'   digits = 3,
 #'   zero_threshold = 1e-6,
 #'   whole_integer = TRUE,
