@@ -9,6 +9,8 @@
 
 ### Changed
 
+- Added `get_complete_cases()` to remove observations containing missing values
+  from a `data.frame` and issue a warning when observations are omitted (#454).
 - Updated several analysis functions to use `h_get_cur_trt_grp()` (#295).
 - Replaced `h_get_trtvar_refpath()` with `h_get_cur_trt_grp()` (#295).
 - Updated `get_ref_info()` for matching column split paths (#295).
