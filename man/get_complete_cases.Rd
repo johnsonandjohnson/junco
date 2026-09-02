@@ -4,28 +4,35 @@
 \alias{get_complete_cases}
 \title{Remove rows with missing values}
 \usage{
-get_complete_cases(df, additional_message = ".")
+get_complete_cases(df, quiet = FALSE, additional_message = ".")
 }
 \arguments{
-\item{df}{(data.frame)\cr A data frame.}
+\item{df}{(\code{data.frame})\cr A data frame.}
 
-\item{additional_message}{(character(1))\cr A single character string
-appended to the warning message.}
+\item{quiet}{(\code{logical(1)})\cr Whether to suppress the warning when rows with
+missing values are omitted.}
+
+\item{additional_message}{(\code{character(1)})\cr A message appended to the
+default warning. The default warning reports the number of rows removed.}
 }
 \value{
 A \code{data.frame} containing only complete rows. The original column structure
-is preserved.
+is preserved. If no rows contain missing values, \code{df} is returned unchanged.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
-Remove rows containing one or more missing values from a \code{data.frame}.
+Remove rows containing one or more missing values from a data frame.
 If any rows are omitted, a warning is issued reporting the number of
-removed rows.
+removed rows, unless \code{quiet} is \code{TRUE}.
 }
 \details{
 A row is considered incomplete if at least one of its values is missing.
 Missingness is determined using \code{\link[stats:complete.cases]{stats::complete.cases()}}.
+
+If one or more rows contain missing values, those rows are omitted and a
+warning is issued reporting the number of omitted rows, unless \code{quiet} is
+\code{TRUE}. The value of \code{additional_message} is appended to the warning message.
 
 If no rows contain missing values, \code{df} is returned unchanged and no warning
 is issued.

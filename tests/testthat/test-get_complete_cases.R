@@ -66,3 +66,33 @@ test_that("get_complete_cases() handles data.frame with no rows", {
 
   expect_identical(get_complete_cases(df), df)
 })
+
+test_that("get_complete_cases() appends additional message to warning", {
+  df <- data.frame(a = c(1, NA, 3), b = letters[1:3])
+
+  expect_warning(
+    result <- get_complete_cases(
+      df,
+      additional_message = "Please check the input data."
+    ),
+    "1.*omitted.*Please check the input data\\."
+  )
+
+  expect_identical(
+    result,
+    data.frame(a = c(1, 3), b = c("a", "c"), row.names = c(1L, 3L))
+  )
+})
+
+test_that("get_complete_cases() suppresses warning when quiet is TRUE", {
+  df <- data.frame(a = c(1, NA, 3), b = letters[1:3])
+
+  expect_no_warning(
+    result <- get_complete_cases(df, TRUE)
+  )
+
+  expect_identical(
+    result,
+    data.frame(a = c(1, 3), b = c("a", "c"), row.names = c(1L, 3L))
+  )
+})
