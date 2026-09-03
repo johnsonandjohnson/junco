@@ -18,7 +18,7 @@
 #'   The column name in `df` (and, if supplied, `df_ref`) specifying the
 #'   response variable. The response is converted to a logical vector by
 #'   comparing its values with `val`.
-#' @param val (`character(1)`)\cr
+#' @param val (`character(1)` or `logical(1)`)\cr
 #'   The value of `df[[var]]` (and, if supplied, `df_ref[[var]]`) that defines
 #'   a positive response. Observations matching this value are returned as
 #'   `TRUE` in the `rsp` vector; all other observations are returned as `FALSE`.
@@ -130,7 +130,9 @@ h_prepare_prop_data <- function(df,
   checkmate::assert_data_frame(df)
   checkmate::assert_data_frame(df_ref, null.ok = TRUE)
   checkmate::assert_string(var)
-  checkmate::assert_string(val)
+  checkmate::assert_true(
+    checkmate::test_string(val) || checkmate::test_flag(val)
+  )
   checkmate::assert_subset(var, colnames(df), empty.ok = FALSE)
   if (!is.null(df_ref)) {
     checkmate::assert_subset(var, colnames(df_ref), empty.ok = FALSE)
