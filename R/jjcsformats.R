@@ -370,12 +370,15 @@ jjcsformat_range_fct <- function(str, censor_char = "+") {
 }
 
 #' @title Format numeric values by significant figures.
-#' @description `r lifecycle::badge('experimental')`\cr
+#'
+#' @description `r lifecycle::badge('experimental')`
+#'
 #' Format numeric values by significant figures with controllable round_type,
 #' whole_integer and trailing zeros.\cr
 #' The underlying function for significant figures is `modified_signif_j()`, which is a modified version for
 #' [base::signif()]
-#' @details `format_sigfig_j()`\cr A function factory that produces formatting functions to round values to a
+#'
+#' @describeIn format_sigfig_j A function factory that produces formatting functions to round values to a
 #' specified number of significant figures, suitable for use with
 #' [formatters::format_value()].\cr
 #' \cr The function is an alternative to [tern::format_sigfig()],
@@ -385,10 +388,12 @@ jjcsformat_range_fct <- function(str, censor_char = "+") {
 #' @seealso [tern::format_sigfig()]
 #'
 #' @param sigfig (`integer(1)`)\cr number of significant figures to display.
+#'
 #' @param whole_integer (`logical(1)`)\cr if `TRUE`, all significant figures to
 #' the left of the decimal marker can be shown.
 #' If `FALSE`, the specified number of significant figures is shown.
-#' @param zero_threshold (`numeric(1)`)\cr Very small absolute values (`abs(x) < zero_threshold`)
+#'
+#' @param zero_threshold (`numeric(1)`)\cr very small absolute values (`abs(x) < zero_threshold`)
 #' can be treated as zero.
 #' Defaults to `0` (values are left as is).
 #'
@@ -396,13 +401,17 @@ jjcsformat_range_fct <- function(str, censor_char = "+") {
 #'   values are arranged, e.g. `"xx"`, `"xx (xx)"`, `"(xx, xx)"`. Any decimal
 #'   specification in `xx.` or `xx.x+` is stripped — precision is controlled by
 #'   `sigfig` alone.
+#'
 #' @param drop0trailing (`logical(1)`)\cr
 #' indicating if trailing zeros, i.e., "0" after the decimal mark, should be removed
 #' \cr argument is passed to function `formatC`
+#'
 #' @return A formatting function with signature `function(x, round_type, ...)` that
 #'   returns a formatted string. The `round_type` argument accepts rounding methods
 #'   ("iec", "iec_mod", "sas") (see [formatters::round_fmt()]).
+#'
 #' @export
+#'
 #' @examples
 #' fmt <- format_sigfig_j(3)
 #' fmt(0.001234)
@@ -421,7 +430,8 @@ format_sigfig_j <- function(
   zero_threshold = 10^(-2 * sigfig),
   drop0trailing = FALSE
 ) {
-  checkmate::assert_integerish(sigfig)
+  checkmate::assert_int(sigfig)
+  checkmate::assert_string(format)
   format <- gsub("xx\\.|xx\\.x+", "xx", format)
   checkmate::assert_choice(format, c("xx", "xx / xx", "(xx, xx)", "xx - xx", "xx (xx)", "xx, xx"))
 
@@ -441,19 +451,19 @@ format_sigfig_j <- function(
   }
 }
 
-#' @rdname format_sigfig_j
-#' @details
-#' `modified_signif_j()`:\cr A modified version of base function [base::signif] with 3 extensions:
+#' @describeIn format_sigfig_j A modified version of base function [base::signif] with 3 extensions:
 #' - Rounding is performed using [formatters::round_fmt()], and allows for round types ("iec", "iec_mod", "sas")\cr
 #' - Very small absolute values can be treated as zero (`zero_threshold`).\cr
 #' - All significant figures to the left of the decimal marker can be shown (whole_integer),
 #' rather than limiting the result to the specified number of significant figures.
+#'
+#' Returns a numeric vector of the same length as `x`, rounded to `digits` significant figures.
+#'
 #' @param x (`numeric`)\cr numbers to round.
 #' @param digits (`integer(1)`)\cr number of significant figures to display.
 #' @param round_type (`character(1)`)\cr rounding method, passed onto [formatters::round_fmt()].
 #' See [formatters::format_value()] for details.
-
-#' @return numeric vector of the same length as `x`, rounded to `digits` significant figures.
+#'
 #' @examples
 #' # example code
 #' junco:::modified_signif_j(c(0.1, 1e-9, 1256.0, 1256.5, 1256.3, 1254.5, 1256.5),
@@ -470,13 +480,14 @@ format_sigfig_j <- function(
 #'   round_type = "sas"
 #' )
 #' @keywords internal
+#'
 modified_signif_j <- function(x, digits = 6, round_type = valid_round_type, whole_integer = FALSE, zero_threshold = 0) {
   round_type <- match.arg(round_type)
 
   checkmate::assert_numeric(x)
-  checkmate::assert_integerish(digits, lower = 0, len = 1, any.missing = FALSE)
+  checkmate::assert_int(digits)
   checkmate::assert_number(zero_threshold, lower = 0, upper = 10^(-digits))
-  checkmate::assert_logical(whole_integer, len = 1, any.missing = FALSE)
+  checkmate::assert_flag(whole_integer)
 
   lt_tol <- abs(x) < zero_threshold
   x[lt_tol] <- 0
