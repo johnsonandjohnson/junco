@@ -182,8 +182,10 @@ h_prepare_prop_data <- function(df,
     }
   }
 
+  rsp_logical <- rsp == val
+
   list(
-    rsp = rsp == val,
+    rsp = rsp_logical,
     grp = grp,
     strata = strata
   )
