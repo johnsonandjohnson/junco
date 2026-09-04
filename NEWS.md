@@ -9,6 +9,8 @@
 
 ### Changed
 
+- Added `get_complete_cases()` to remove observations containing missing values
+  from a `data.frame` and issue a warning when observations are omitted (#454).
 - Updated several analysis functions to use `h_get_cur_trt_grp()` (#295).
 - Replaced `h_get_trtvar_refpath()` with `h_get_cur_trt_grp()` (#295).
 - Updated `get_ref_info()` for matching column split paths (#295).
@@ -43,6 +45,8 @@
 - Update new exported calls from rtables.officer
 - update documentation to `roxygen2` 8.0.0 
 - Add extra statistics to `a_eair100_j` and introduce scaling factor `num_p_year` (default = 100) (#361)
+- Updated behavior of formatting functions `jjcsformat_count_denom_fraction` and `jjcsformat_fraction_count_denom` 
+and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat_fraction_count_denom_legacy` for backward compatibility reasons (#450)
 - Updated `insightsengineering` urls to `pharmaverse`
 
 ### Added

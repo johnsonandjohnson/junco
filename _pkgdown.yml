@@ -144,6 +144,7 @@ reference:
     - rightside
     - remove_col_count
     - rm_levels
+    - get_complete_cases
     
   - title: internal
     desc: The following are additional junco functions.

@@ -5,20 +5,37 @@
 \alias{jjcsformat_cnt_den_fract_fct}
 \alias{jjcsformat_count_fraction}
 \alias{jjcsformat_count_denom_fraction}
+\alias{jjcsformat_count_denom_fraction_legacy}
 \alias{jjcsformat_fraction_count_denom}
+\alias{jjcsformat_fraction_count_denom_legacy}
 \title{Formatting functions for count and fraction, and for count denominator and fraction values}
 \usage{
 jjcsformat_cnt_den_fract_fct(
   d = 1,
   type = c("count_fraction", "count_denom_fraction", "fraction_count_denom"),
-  verbose = FALSE
+  verbose = FALSE,
+  legacy = FALSE
 )
 
 jjcsformat_count_fraction(x, round_type = valid_round_type, output, ...)
 
 jjcsformat_count_denom_fraction(x, round_type = valid_round_type, output, ...)
 
+jjcsformat_count_denom_fraction_legacy(
+  x,
+  round_type = valid_round_type,
+  output,
+  ...
+)
+
 jjcsformat_fraction_count_denom(x, round_type = valid_round_type, output, ...)
+
+jjcsformat_fraction_count_denom_legacy(
+  x,
+  round_type = valid_round_type,
+  output,
+  ...
+)
 }
 \arguments{
 \item{d}{(\code{numeric(1)})\cr Number of digits to round fraction to (default = 1)}
@@ -27,6 +44,8 @@ jjcsformat_fraction_count_denom(x, round_type = valid_round_type, output, ...)
 to specify the type of format the function will represent.}
 
 \item{verbose}{(\code{logical})\cr Whether to print verbose output}
+
+\item{legacy}{(\code{logical(1)})\cr To allow for backward compatibility behavior}
 
 \item{x}{(\verb{numeric vector})\cr Vector with elements \code{num} and \code{fraction} or \code{num}, \code{denom} and \code{fraction}.}
 
@@ -61,12 +80,14 @@ jjcsformat_count_denom_fraction(c(70000, 70001, 70000 / 70001))
 jjcsformat_count_denom_fraction(c(235, 235, 235 / 235))
 fmt <- jjcsformat_cnt_den_fract_fct(type = "count_denom_fraction", d = 2)
 fmt(c(23, 235, 23 / 235))
+jjcsformat_count_denom_fraction_legacy(c(0, 235, 0 / 235))
 
 jjcsformat_fraction_count_denom(c(7, 10, 0.7))
 jjcsformat_fraction_count_denom(c(70000, 70001, 70000 / 70001))
 jjcsformat_fraction_count_denom(c(235, 235, 235 / 235))
 fmt <- jjcsformat_cnt_den_fract_fct(type = "fraction_count_denom", d = 2)
 fmt(c(23, 235, 23 / 235))
+jjcsformat_fraction_count_denom_legacy(c(0, 235, 0 / 235))
 }
 \seealso{
 Other JJCS formatting functions:
