@@ -72,7 +72,7 @@ s_cond_proportion_j <- function(
   .N_col
 ) {
   checkmate::assert_flag(long)
-  assert_proportion_value(conf_level)
+  tern::assert_proportion_value(conf_level)
   checkmate::assert_int(num_limit, lower = 0)
   checkmate::assert_int(denom_limit, lower = 0)
 
