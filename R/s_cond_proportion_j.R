@@ -134,3 +134,69 @@ d_cond_proportion_j <- function(conf_level,
   
   paste0(label, " (", method_part, ")")
 }
+
+#' @describeIn estimate_proportion Formatted analysis function which is used as `afun`
+#'   for conditional proportion with adaptive CI selection (exact vs. Wald).
+#'
+#' @return
+#' * `a_cond_proportion_j()` returns the corresponding list with formatted [rtables::CellValue()].
+#'
+#' @examples
+#' nex <- 100
+#' dta <- data.frame(
+#'   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
+#'   "grp" = sample(c("A", "B"), nex, TRUE),
+#'   "f1"  = sample(c("a1", "a2"), nex, TRUE),
+#'   stringsAsFactors = TRUE
+#' )
+#'
+#' l <- basic_table() |>
+#'   split_cols_by(var = "grp") |>
+#'   analyze(
+#'     vars = "rsp",
+#'     afun = a_cond_proportion_j,
+#'     extra_args = list(
+#'       conf_level = 0.90,
+#'       num_limit = 0,
+#'       denom_limit = 10
+#'     )
+#'   )
+#'
+#' build_table(l, df = dta)
+#'
+#' @export
+#' @order 2
+a_cond_proportion_j <- function(
+    df,
+    .var,
+    ...,
+    .stats = NULL,
+    .formats = NULL,
+    .labels = NULL,
+    .indent_mods = NULL) {
+
+  dots_extra_args <- list(...)
+  
+  # Only support default stats, not custom stats
+  .stats <- .split_std_from_custom_stats(.stats)$default_stats
+  
+  x_stats <- .apply_stat_functions(
+    default_stat_fnc = s_cond_proportion_j,
+    custom_stat_fnc_list = NULL,
+    args_list = c(
+      df = list(df),
+      .var = .var,
+      dots_extra_args
+    )
+  )
+  
+  format_stats(
+    x_stats,
+    method_groups = "estimate_proportion",
+    stats_in = .stats,
+    formats_in = .formats,
+    labels_in = .labels,
+    indents_in = .indent_mods
+  )
+}
+
