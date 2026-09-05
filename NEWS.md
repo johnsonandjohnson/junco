@@ -60,6 +60,7 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added `a_summarize_mmrm_with_exclude()` to allow MMRM summaries to be skipped for selected row split levels.
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
 - Added `a_three_tier()` as extension to `a_two_tier()`.
+- Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator.
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 
