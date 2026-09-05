@@ -1,8 +1,8 @@
 test_that("returns structure identical to s_proportion style", {
   rsp <- c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE) # n=12, n_rsp=7
-  
+
   out <- s_cond_proportion_j(rsp)
-  
+
   expect_type(out, "list")
   expect_named(out, c("n_prop", "prop_ci"))
   # n_prop is a 2-length numeric with a label
@@ -123,8 +123,44 @@ test_that("d_cond_proportion_j long label looks as expected", {
   result <- d_cond_proportion_j(conf_level = 0.7, long = TRUE, num_limit = 1, denom_limit = 8)
   expected <- "70% CI for Response Rates (Wald if n >= 8 and x > 1, else Clopper-Pearson)"
   expect_identical(result, expected)
-  
+
   result <- d_cond_proportion_j(conf_level = 0.7, long = FALSE)
   expected <- "70% CI (Wald / Clopper-Pearson)"
   expect_identical(result, expected)
+})
+
+test_that("a_cond_proportion_j returns formatted section consistent with s_cond_proportion_j", {
+  rsp <- c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE) # n=12, n_rsp=7
+  dta <- data.frame(rsp = rsp)
+
+  out <- a_cond_proportion_j(dta, .var = "rsp", conf_level = 0.95)
+  expected <- s_cond_proportion_j(dta, .var = "rsp", conf_level = 0.95)
+
+  expect_s3_class(out, "RowsVerticalSection")
+  expect_named(out, c("n_prop", "prop_ci"))
+
+  expect_equal(as.numeric(out$n_prop[[1]]), as.numeric(expected$n_prop), tolerance = 1e-12)
+  expect_equal(as.numeric(out$prop_ci[[1]]), as.numeric(expected$prop_ci), tolerance = 1e-12)
+  expect_identical(attr(out$n_prop, "label"), attr(expected$n_prop, "label"))
+  expect_identical(attr(out$prop_ci, "label"), attr(expected$prop_ci, "label"))
+})
+
+test_that("a_cond_proportion_j works in full table build", {
+  rsp <- c(rep(TRUE, 7), rep(FALSE, 5))
+  dta <- data.frame(rsp = rsp)
+
+  lyt <- rtables::basic_table() |>
+    rtables::analyze("rsp", afun = a_cond_proportion_j)
+
+  tbl <- rtables::build_table(lyt, dta)
+  vals <- rtables::cell_values(tbl)
+
+  expect_true(!is.null(tbl))
+  expect_named(vals, c("n_prop", "prop_ci"))
+  expect_equal(as.numeric(vals$n_prop[["all obs"]]), c(7, 7 / 12), tolerance = 1e-12)
+  expect_equal(
+    as.numeric(vals$prop_ci[["all obs"]]),
+    as.numeric(100 * tern::prop_wald(rsp, n = length(rsp), conf_level = 0.95)),
+    tolerance = 1e-12
+  )
 })
