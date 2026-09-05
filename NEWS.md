@@ -9,6 +9,7 @@
 
 ### Changed
 
+- Added `h_prepare_prop_data()` to prepare data for proportion-based analyses (#459).
 - Added `get_complete_cases()` to remove observations containing missing values
   from a `data.frame` and issue a warning when observations are omitted (#454).
 - Updated several analysis functions to use `h_get_cur_trt_grp()` (#295).
