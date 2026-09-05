@@ -1,6 +1,6 @@
 #' Conditional proportion with adaptive CI (exact vs. Wald)
 #'
-#' @description r lifecycle::badge("stable")
+#' @description r lifecycle::badge("experimental")
 #'
 #' Statistics function estimating a proportion along with its confidence interval,
 #' automatically selecting the Clopper–Pearson "exact" method when
@@ -100,4 +100,37 @@ s_cond_proportion_j <- function(df,
       )
     )
   )
+}
+
+#' Description of the conditional proportion summary
+#'
+#' @description `r lifecycle::badge("experimental")`
+#'
+#' This is a helper function that describes the analysis in [s_cond_proportion_j()].
+#'
+#' @inheritParams s_cond_proportion_j()
+#' @param long (`flag`)\cr whether a long or a short (default) description is required.
+#'
+#' @return String describing the analysis.
+#'
+#' @export
+d_cond_proportion_j <- function(conf_level,
+                                long = FALSE,
+                                num_limit,
+                                denom_limit) {
+  label <- paste0(conf_level * 100, "% CI")
+  
+  if (long) label <- paste(label, "for Response Rates")
+  
+  method_part <- if (long) {
+    paste0(
+      "Wald if n >= ", denom_limit, 
+      " and x > ", num_limit, 
+      ", else Clopper-Pearson"
+    )
+  } else {
+    "Wald / Clopper-Pearson"
+  }
+  
+  paste0(label, " (", method_part, ")")
 }
