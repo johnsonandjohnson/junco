@@ -98,6 +98,37 @@ test_that("missing .N_col/.N_row raises error when requested by denom", {
   expect_error(s_cond_proportion_j(rsp, denom = "N_row"), "argument.*missing|object.*not found", ignore.case = TRUE)
 })
 
+test_that("na.rm = TRUE removes missing responses before analysis", {
+  rsp_na <- c(TRUE, NA, FALSE, TRUE, NA, FALSE)
+  rsp_clean <- c(TRUE, FALSE, TRUE, FALSE)
+
+  out_na <- s_cond_proportion_j(rsp_na, na.rm = TRUE, conf_level = 0.95, denom = "n")
+  out_clean <- s_cond_proportion_j(rsp_clean, na.rm = TRUE, conf_level = 0.95, denom = "n")
+
+  expect_equal(as.numeric(out_na$n_prop), as.numeric(out_clean$n_prop), tolerance = 1e-12)
+  expect_equal(as.numeric(out_na$prop_ci), as.numeric(out_clean$prop_ci), tolerance = 1e-12)
+})
+
+test_that("na.rm = FALSE errors when missing responses are present", {
+  rsp <- c(TRUE, NA, FALSE)
+
+  expect_error(
+    s_cond_proportion_j(rsp, na.rm = FALSE),
+    "Missing values detected in response and `na.rm = FALSE`.",
+    fixed = TRUE
+  )
+})
+
+test_that("na.rm = FALSE works when no missing responses are present", {
+  dta <- data.frame(rsp = c(TRUE, FALSE, TRUE, FALSE))
+
+  out <- s_cond_proportion_j(dta, .var = "rsp", na.rm = FALSE, conf_level = 0.95, denom = "n")
+  expected_ci <- 100 * tern::prop_clopper_pearson(dta$rsp, n = nrow(dta), conf_level = 0.95)
+
+  expect_equal(as.numeric(out$n_prop), c(2, 0.5), tolerance = 1e-12)
+  expect_equal(as.numeric(out$prop_ci), as.numeric(expected_ci), tolerance = 1e-12)
+})
+
 test_that("conf_level is respected in CI calculation", {
   rsp <- c(rep(TRUE, 8), rep(FALSE, 4)) # n=12, not extreme
   out_90 <- s_cond_proportion_j(rsp, conf_level = 0.90, denom = "n")

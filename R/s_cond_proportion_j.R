@@ -34,6 +34,8 @@
 #' @param .N_row (`int`)
 #' @param .N_col (`int`)
 #' @param long (`flag`)\cr whether a long description is required.
+#' @param na.rm (`flag`)\cr whether `NA` responses should be removed before analysis.
+#'   If `FALSE` and `NA` values are present, an error is raised.
 #' @param num_limit (`int`)\cr numerator limit to trigger the exact method.
 #' @param denom_limit (`int`)\cr denominator limit to trigger the exact method.
 #'
@@ -65,6 +67,7 @@ s_cond_proportion_j <- function(
   .var,
   conf_level = 0.95,
   long = FALSE,
+  na.rm = TRUE,
   num_limit = 0,
   denom_limit = 10,
   denom = c("n", "N_col", "N_row"),
@@ -72,6 +75,7 @@ s_cond_proportion_j <- function(
   .N_col
 ) {
   checkmate::assert_flag(long)
+  checkmate::assert_flag(na.rm)
   tern::assert_proportion_value(conf_level)
   checkmate::assert_int(num_limit, lower = 0)
   checkmate::assert_int(denom_limit, lower = 0)
@@ -84,6 +88,14 @@ s_cond_proportion_j <- function(
     df[[.var]]
   }
   rsp <- safe_as_logical(vec)
+
+  if (anyNA(rsp)) {
+    if (na.rm) {
+      rsp <- rsp[!is.na(rsp)]
+    } else {
+      stop("Missing values detected in response and `na.rm = FALSE`.", call. = FALSE)
+    }
+  }
 
   n_obs <- length(rsp)
   n_rsp <- sum(rsp)
