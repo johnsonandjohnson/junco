@@ -16,22 +16,22 @@ test_that("returns structure identical to s_proportion style", {
 
 test_that("uses Wald when not near boundaries and n_obs >= denom_limit", {
   set.seed(1)
-  # n = 12 >= default denom_limit 10, not extreme successes
-  rsp <- c(rep(TRUE, 8), rep(FALSE, 4)) # n_rsp = 8
+  # n is 12 here and no extreme successes.
+  rsp <- c(rep(TRUE, 8), rep(FALSE, 4))
   out <- s_cond_proportion_j(rsp, conf_level = 0.95, denom = "n")
   expected_ci <- 100 * tern::prop_wald(rsp, n = length(rsp), conf_level = 0.95)
   expect_equal(as.numeric(out$prop_ci), as.numeric(expected_ci), tolerance = 1e-12)
 })
 
 test_that("uses exact when zero responders", {
-  rsp <- rep(FALSE, 12) # n_rsp = 0 -> exact
+  rsp <- rep(FALSE, 12) # No responses therefore use exact method.
   out <- s_cond_proportion_j(rsp, conf_level = 0.95, denom = "n")
   expected_ci <- 100 * tern::prop_clopper_pearson(rsp, n = length(rsp), conf_level = 0.95)
   expect_equal(as.numeric(out$prop_ci), as.numeric(expected_ci), tolerance = 1e-12)
 })
 
 test_that("uses exact when all responders", {
-  rsp <- rep(TRUE, 12) # n_rsp = n_obs -> exact
+  rsp <- rep(TRUE, 12) # All responses therefore use exact method.
   out <- s_cond_proportion_j(rsp, conf_level = 0.95, denom = "n")
   expected_ci <- 100 * tern::prop_clopper_pearson(rsp, n = length(rsp), conf_level = 0.95)
   expect_equal(as.numeric(out$prop_ci), as.numeric(expected_ci), tolerance = 1e-12)
