@@ -75,12 +75,15 @@ s_cond_proportion_j <- function(
   tern::assert_proportion_value(conf_level)
   checkmate::assert_int(num_limit, lower = 0)
   checkmate::assert_int(denom_limit, lower = 0)
+  denom <- match.arg(denom)
 
-  rsp <- if (checkmate::test_atomic_vector(df)) {
-    as.logical(df)
+  vec <- if (checkmate::test_atomic_vector(df)) {
+    df
   } else {
-    as.logical(df[[.var]])
+    tern::assert_df_with_variables(df, list(rsp = .var))
+    df[[.var]]
   }
+  rsp <- safe_as_logical(vec)
 
   n_obs <- length(rsp)
   n_rsp <- sum(rsp)
