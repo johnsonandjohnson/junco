@@ -100,6 +100,7 @@ reference:
     - jjcsformat_count_denom_fraction
     - ac_blank_line
     - insert_blank_line
+    - format_sigfig_j
 
   - title: junco Sorting Functions and Pruning Functions
     desc: The following functions are the junco sorting and pruning functions used to create common table layouts.
