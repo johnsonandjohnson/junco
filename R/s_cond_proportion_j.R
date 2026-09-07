@@ -107,10 +107,15 @@ s_cond_proportion_j <- function(
       N_col = .N_col
     )
 
+  # The denominator cannot be lower than the number of observations here, because
+  # .N_row and .N_col cannot be lower.
+  assert_int(denom_val, lower = n_obs)
   p_hat <- ifelse(denom_val > 0, n_rsp / denom_val, 0)
 
   # Adaptive method selection based on observed data and limits.
-  use_exact <- (n_obs < denom_limit) || (n_rsp <= num_limit) || (n_rsp >= (n_obs - num_limit))
+  use_exact <- (denom_val < denom_limit) ||
+    (n_rsp <= num_limit) ||
+    (n_rsp >= (denom_val - num_limit))
   method <- if (use_exact) "clopper-pearson" else "wald"
 
   prop_ci <- switch(
