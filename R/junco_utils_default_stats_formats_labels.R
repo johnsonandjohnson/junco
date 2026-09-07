@@ -380,6 +380,8 @@ junco_default_formats_start <- c(
   denom = "xx",
   count = "xx",
   count_unique = "xx",
+  count_fraction = jjcsformat_count_fraction,
+  count_fraction_fixed_dp = jjcsformat_count_fraction,
   count_unique_fraction = jjcsformat_count_fraction,
   count_unique_denom_fraction = jjcsformat_count_denom_fraction,
   rr_ci_3d = jjcsformat_xx("xx.x (xx.x, xx.x)"),
@@ -403,7 +405,8 @@ junco_default_formats_start <- c(
   eair_strat_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   eair_strat_diff_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   total_subject_years = jjcsformat_xx("xx.x (xx.x)"),
-  n_fit = "xx"
+  n_fit = "xx",
+  unique = jjcsformat_count_fraction
 )
 
 tern_formats_only <- setdiff(names(tern_default_formats), names(junco_default_formats_start))

@@ -90,23 +90,23 @@ junco_def_d <- c(
 )
 
 myfmts <- fmt_spec_single_d(
- d = 1,
- stats_in = c("mean", "mean_sd"),
- fmt_d_def = junco_def_d,
- fmt_d_in = NULL
- )
- 
+  d = 1,
+  stats_in = c("mean", "mean_sd"),
+  fmt_d_def = junco_def_d,
+  fmt_d_in = NULL
+)
+
 fmt_details <- get_fmt_details(myfmts, as_tibble = TRUE)
 
 myfmts2 <- fmt_spec_single_d(
- d = 3,
- stats_in = c("mean", "mean_sd"),
- fmt_d_def = junco_def_d,
- fmt_d_in = NULL
- )
- fmt_details2 <- get_fmt_details(myfmts2, as_tibble = TRUE)
- fmt_details2
- 
+  d = 3,
+  stats_in = c("mean", "mean_sd"),
+  fmt_d_def = junco_def_d,
+  fmt_d_in = NULL
+)
+fmt_details2 <- get_fmt_details(myfmts2, as_tibble = TRUE)
+fmt_details2
+
 # Example for get_fmt_details using format specs for variables --
 # processed with fmt_spec_var_d
 var <- c("AGE" = 0, "BMI" = 1, "BMRKR1" = 2)

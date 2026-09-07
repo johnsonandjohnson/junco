@@ -79,7 +79,8 @@ Names are to be considered as variables to be analyzed in further processing.}
 }
 \details{
 Format specifications in d-style notation (such as "xx.dx")
-will be translated to string based formats (or wrapped with \code{\link[=jjcsformat_xx]{jjcsformat_xx()}}), eg "xx.dx" will be translated into "xx.xx", when d = 1.
+will be translated to string based formats
+(or wrapped with \code{\link[=jjcsformat_xx]{jjcsformat_xx()}}), eg "xx.dx" will be translated into "xx.xx", when d = 1.
 }
 \section{Functions}{
 \itemize{
@@ -118,18 +119,18 @@ myfmts <- fmt_spec_single_d(
 myfmts
 
 # example for fmt_spec_df_d ----
-  df_d <- tribble(
-~PARAMCD, ~d,
-"DIABP", 2L,
-"PULSE", 3L,
-"RESP", 1L
+df_d <- tribble(
+  ~PARAMCD, ~d,
+  "DIABP", 2L,
+  "PULSE", 3L,
+  "RESP", 1L
 )
 yy <- fmt_spec_df_d(df_d,
-                    d_column = "d",
-                    fmt_column = "fmt_d",
-                    stats_in = NULL,
-                    fmt_d_def = junco_def_d,
-                    fmt_d_in = NULL
+  d_column = "d",
+  fmt_column = "fmt_d",
+  stats_in = NULL,
+  fmt_d_def = junco_def_d,
+  fmt_d_in = NULL
 )
 
 
