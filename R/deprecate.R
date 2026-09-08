@@ -6,15 +6,16 @@
 #' @inheritParams odds_ratio
 #' @export
 a_coxph_hr <- function(
-    df,
-    .var,
-    ref_path,
-    .spl_context,
-    ...,
-    .stats = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  .var,
+  ref_path,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
   lifecycle::deprecate_stop(
     when = "0.1.7",
     what = "a_coxph_hr()",
@@ -31,15 +32,16 @@ a_coxph_hr <- function(
 #' @inheritParams odds_ratio
 #' @keywords internal
 s_coxph_hr <- function(
-    df,
-    .var,
-    ref_path,
-    .spl_context,
-    ...,
-    .stats = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  .var,
+  ref_path,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
   lifecycle::deprecate_stop(
     when = "0.1.7",
     what = "s_coxph_hr()",
@@ -63,26 +65,6 @@ s_kaplan_meier <- function(df, .var, is_event, control = control_surv_time()) {
   )
 }
 
-#' @title rbmi_ancova
-#' @description `r lifecycle::badge("deprecated")` Use [rbmi::ancova()] instead.
-#' @param data (`data.frame`) input data.
-#' @param vars (`list`) vars object from `rbmi::set_vars()`.
-#' @param visits (`character`) optional visit filter.
-#' @param weights (`character`) weighting strategy.
-#' @export
-rbmi_ancova <- function(
-  data,
-  vars,
-  visits = NULL,
-  weights = c("counterfactual", "equal", "proportional_em", "proportional")
-) {
-  lifecycle::deprecate_stop(
-    when = "0.1.7",
-    what = "rbmi_ancova()",
-    with = "rbmi::ancova()"
-  )
-}
-
 #' @title a_kaplan_meier
 #' @description `r lifecycle::badge("deprecated")` Use [tern::a_surv_time()] instead.
 #' @param df (`data.frame`) input data.
@@ -102,6 +84,32 @@ a_kaplan_meier <- function(df, .var, ..., .stats = NULL, .formats = NULL, .label
       "Note: the label for `range_with_cens_info` has changed from ",
       "'Min, max' (junco) to 'Min - Max (with censoring)' (tern)."
     )
+  )
+}
+
+
+#' Create a `rbmi` ready cluster
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")` Use `rbmi::make_rbmi_cluster()` instead.
+#'
+#' @param cluster_or_cores (`integer` or `cluster object`)\cr
+#' Number of parallel processes to use or an existing cluster to make use of
+#' @param objects (`list`)\cr A named list of objects to export into the sub-processes
+#' @param packages (`character vector`)\cr
+#' A character vector of libraries to load in the sub-processes
+#'
+#' @return See `rbmi::make_rbmi_cluster()`.
+#' @export
+make_rbmi_cluster <- function(
+  cluster_or_cores = 1,
+  objects = NULL,
+  packages = NULL
+) {
+  lifecycle::deprecate_stop(
+    when = "0.1.7",
+    what = "make_rbmi_cluster()",
+    with = "rbmi::make_rbmi_cluster()"
   )
 }
 
