@@ -192,8 +192,14 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
 test_that("tern function summarize_ancova cannot deal with a combined column", {
   model_variables <- list(arm = "Species", covariates = c("Color"))
   combodf <- tribble(
-    ~valname      , ~label                         , ~levelcombo              , ~exargs ,
-    "setosa_virg" , "Combined: setosa + virginica" , c("setosa", "virginica") , list()
+    ~valname,
+    ~label,
+    ~levelcombo,
+    ~exargs,
+    "setosa_virg",
+    "Combined: setosa + virginica",
+    c("setosa", "virginica"),
+    list()
   )
 
   lyt_1 <- basic_table() |>
@@ -224,8 +230,14 @@ tbl_ancova_j <- function(
   method_combo = "contrasts"
 ) {
   combodf <- tribble(
-    ~valname      , ~label                         , ~levelcombo              , ~exargs ,
-    "setosa_virg" , "Combined: setosa + virginica" , c("setosa", "virginica") , list()
+    ~valname,
+    ~label,
+    ~levelcombo,
+    ~exargs,
+    "setosa_virg",
+    "Combined: setosa + virginica",
+    c("setosa", "virginica"),
+    list()
   )
 
   if (!interaction) {
@@ -656,10 +668,22 @@ test_that("a_summarize_ancova_j with multiple combined columns", {
 
   # nolint start
   combodf <- tribble(
-    ~valname       , ~label                          , ~levelcombo                                                                , ~exargs ,
-    "low_med"      , "Combined: Low + Medium"        , c("Xanomeline Low Dose", "Xanomeline Medium Dose")                         , list()  ,
-    "med_high"     , "Combined: Medium + High"       , c("Xanomeline Medium Dose", "Xanomeline High Dose")                        , list()  ,
-    "low_med_high" , "Combined: Low + Medium + High" , c("Xanomeline Low Dose", "Xanomeline Medium Dose", "Xanomeline High Dose") , list()
+    ~valname,
+    ~label,
+    ~levelcombo,
+    ~exargs,
+    "low_med",
+    "Combined: Low + Medium",
+    c("Xanomeline Low Dose", "Xanomeline Medium Dose"),
+    list(),
+    "med_high",
+    "Combined: Medium + High",
+    c("Xanomeline Medium Dose", "Xanomeline High Dose"),
+    list(),
+    "low_med_high",
+    "Combined: Low + Medium + High",
+    c("Xanomeline Low Dose", "Xanomeline Medium Dose", "Xanomeline High Dose"),
+    list()
   )
   # nolint end
 
