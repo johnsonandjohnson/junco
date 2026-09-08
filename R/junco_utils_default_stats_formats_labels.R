@@ -202,6 +202,7 @@ junco_default_stats <- list(
     "diff_means_ci",
     "diff_means_est_ci"
   ),
+  estimate_proportion = c("n_prop", "prop_ci"),
   summarize_ancova_j = c(
     "n",
     "sum",
