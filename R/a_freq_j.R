@@ -324,7 +324,7 @@ s_risk_diff_val_j <- function(
     stop(
       "\nProblem: a_freq_j \n
            Denominator has multiple records per id. \n
-           Please specify colgroup and/or denom_by to refine your denominator for proper relative risk derivation."
+           Please specify colgroup and/or denom_by to refine your denominator for proper risk difference derivation."
     )
   }
 
@@ -392,7 +392,7 @@ s_risk_diff_val_j <- function(
 #' (if required risk difference column splits are included).
 #' @param ref_path (`string`)\cr Column path specifications for
 #' the control group for the relative risk derivation.
-#' @param variables Will be passed onto the relative risk function
+#' @param variables Will be passed onto the risk difference function
 #' (internal function s_risk_diff_val_j), which is based upon [tern::s_proportion_diff()].\cr
 #' See `?tern::s_proportion_diff` for details.
 #' @param method Will be passed onto the risk difference function (internal function s_risk_diff_val_j).\cr
