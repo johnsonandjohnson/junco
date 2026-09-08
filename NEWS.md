@@ -1,5 +1,14 @@
 # junco 0.1.6.9001
 
+### Changed
+- Removed duplicate output `diff_ci_3d` from `s_proportion_diff_j()` which had
+  an incorrect "Relative Risk" label; it was identical to `diff_est_ci` (#442).
+- Added `label` argument to `s_proportion_diff_j()` so the caller can customize
+  the `diff_est_ci` label (#442).
+- Renamed internal functions `s_rel_risk_val_j()` and `s_rel_risk_levii_j()` to
+  `s_risk_diff_val_j()` and `s_risk_diff_levii_j()` to correctly reflect that
+  they compute risk difference (p1 - p2), not relative risk (p1 / p2) (#442).
+
 ### Fixed
 - Fixed `get_ref_info()` to accept ref_path = NULL (#359).
 - Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
