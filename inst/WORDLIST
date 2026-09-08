@@ -10,6 +10,7 @@ Brueckner
 CMH
 Changelog
 Chuang
+Clopper
 Colwidths
 Cov
 Crowe
@@ -67,6 +68,7 @@ cfuns
 chisq
 ci
 clinpharm
+clopper
 cmh
 coef
 colcounts
@@ -126,6 +128,7 @@ kaplan
 keeprowtext
 lastcat
 ldots
+lifecycle
 lsm
 lsmean
 lsmeans
@@ -142,6 +145,7 @@ na
 parallelisation
 parentdf
 pathin
+pearson
 pharmaverse
 pkgdown
 plotheight
@@ -197,5 +201,6 @@ unicodify
 unlist
 unrounded
 unstratified
+wald
 wordbreaking
 xlsx
