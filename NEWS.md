@@ -1,5 +1,14 @@
 # junco 0.1.6.9001
 
+### Changed
+- Removed duplicate output `diff_ci_3d` from `s_proportion_diff_j()` which had
+  an incorrect "Relative Risk" label; it was identical to `diff_est_ci` (#442).
+- Added `label` argument to `s_proportion_diff_j()` so the caller can customize
+  the `diff_est_ci` label (#442).
+- Renamed internal functions `s_rel_risk_val_j()` and `s_rel_risk_levii_j()` to
+  `s_risk_diff_val_j()` and `s_risk_diff_levii_j()` to correctly reflect that
+  they compute risk difference (p1 - p2), not relative risk (p1 / p2) (#442).
+
 ### Fixed
 - Fixed `get_ref_info()` to accept ref_path = NULL (#359).
 - Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
@@ -59,6 +68,7 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added `a_summarize_mmrm_with_exclude()` to allow MMRM summaries to be skipped for selected row split levels.
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
 - Added `a_three_tier()` as extension to `a_two_tier()`.
+- Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator.
 - Added formatting function `format_sigfig_j()` as alternative to `tern::format_sigfig()`. (#436)
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
