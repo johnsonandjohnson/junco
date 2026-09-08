@@ -416,3 +416,201 @@ test_that("grouped_cols_w_diffs works", {
     c("Risk Differences", "Risk Differences", "TRT01P", "Xanomeline High Dose vs Xanomeline Low Dose")
   )
 })
+
+test_that("grouped_cols_w_subgrps works with a spanning header", {
+
+  subgrpvar <- "SEX"
+  subgrplbl <- "SUB_*"
+  subgrp_data <- adsl |>
+    mutate(!!subgrpvar := factor(rep(c("Female", "Male"), length.out = n())))
+
+  lyt1 <- basic_table() |>
+    grouped_cols_w_subgrps(
+      colspan_trt_map,
+      subgrpvar = subgrpvar,
+      subgrplbl = subgrplbl
+    ) |>
+    analyze(trtvar, afun = afun_refpath)
+
+  tbl1 <- build_table(lyt1, subgrp_data)
+
+  spanvar <- names(colspan_trt_map)[1]
+  subgrp_lvls <- c("Total", levels(subgrp_data[[subgrpvar]]))
+  expect_equal(
+    unclass(col_paths(tbl1)),
+    unlist(
+      lapply(
+        seq_len(NROW(colspan_trt_map)),
+        function(i) {
+          rw <- colspan_trt_map[i, ]
+          lapply(
+            subgrp_lvls,
+            function(lvl) {
+              c(
+                spanvar, rw[[spanvar]], trtvar, rw[[trtvar]],
+                trtvar, subgrplbl, subgrpvar, lvl
+              )
+            }
+          )
+        }
+      ),
+      recursive = FALSE
+    )
+  )
+})
+
+test_that("grouped_cols_w_subgrps works without a spanning header", {
+
+  subgrpvar <- "SEX"
+  subgrplbl <- "SUB_*"
+  subgrp_data <- data.frame(
+    ARM = factor(rep(c("Arm A", "Arm B"), each = 4)),
+    SEX = factor(rep(c("Female", "Male"), 4))
+  )
+
+  lyt1 <- basic_table() |>
+    grouped_cols_w_subgrps(
+      colspan_trt_map = NULL,
+      trtvar = "ARM",
+      subgrpvar = subgrpvar,
+      subgrplbl = subgrplbl
+    ) |>
+    analyze(subgrpvar, afun = function(x, ...) length(x))
+
+  tbl1 <- build_table(lyt1, subgrp_data)
+
+  subgrp_lvls <- c("Total", levels(subgrp_data[[subgrpvar]]))
+  expect_equal(
+    unclass(col_paths(tbl1)),
+    unlist(
+      lapply(
+        levels(subgrp_data$ARM),
+        function(lvl) {
+          lapply(
+            subgrp_lvls,
+            function(subgrplvl) {
+              c("ARM", lvl, "ARM", subgrplbl, subgrpvar, subgrplvl)
+            }
+          )
+        }
+      ),
+      recursive = FALSE
+    )
+  )
+})
+
+test_that("shift_tbl_col_struct works", {
+  var <- "BASE"
+  span_lbl <- "Baseline Grade"
+  shift_data <- data.frame(
+    BASE = factor(c("Grade 1", "Grade 2", "Grade 3")),
+    CHG = c("Improved", "Stable", "Worsened")
+  )
+
+  lyt <- basic_table() |>
+    shift_tbl_col_struct(var, span_lbl = span_lbl) |>
+    analyze("CHG", afun = function(x, ...) length(x))
+  tbl <- build_table(lyt, shift_data)
+
+  expect_equal(
+    unclass(col_paths(tbl)),
+    c(
+      list(c(var, "N", var, "N")),
+      lapply(
+        c(levels(shift_data[[var]]), "Total"),
+        function(lvl) c(var, "shift_table", var, lvl)
+      )
+    )
+  )
+})
+
+test_that("some_v_all_col_struct works with a spanning header", {
+  subgrpvar <- "GRADE"
+  dat <- data.frame(
+    TRT01A = factor(rep(c("Placebo", "Active 1", "Active 2"), each = 5)),
+    GRADE = factor(rep(paste0("Grade ", 1:5), 3))
+  )
+  dat <- create_colspan_var(
+    dat,
+    non_active_grp = "Placebo",
+    non_active_grp_span_lbl = "Control",
+    active_grp_span_lbl = "Active Treatment",
+    colspan_var = "colspan_trt",
+    trt_var = "TRT01A"
+  )
+  colspan_trt_map <- create_colspan_map(
+    dat,
+    non_active_grp = "Placebo",
+    non_active_grp_span_lbl = "Control",
+    active_grp_span_lbl = "Active Treatment",
+    colspan_var = "colspan_trt",
+    trt_var = "TRT01A"
+  )
+
+  lyt <- basic_table() |>
+    some_v_all_col_struct(
+      colspan_trt_map,
+      subgrpvar = subgrpvar,
+      subgrp_lvls = c("Grade 4", "Grade 5"),
+      subgrp_lbl = "High Grade",
+      all_lbl = "All Grades"
+    ) |>
+    analyze(subgrpvar, afun = function(x, ...) length(x))
+
+  tbl <- build_table(lyt, dat)
+
+  spanvar <- names(colspan_trt_map)[1]
+  trtvar <- names(colspan_trt_map)[2]
+  expected <- unlist(
+    lapply(
+      seq_len(NROW(colspan_trt_map)),
+      function(i) {
+        rw <- colspan_trt_map[i, ]
+        list(
+          c(spanvar, rw[[spanvar]], trtvar, rw[[trtvar]], subgrpvar, "All Grades"),
+          c(spanvar, rw[[spanvar]], trtvar, rw[[trtvar]], subgrpvar, "GRADE_subset")
+        )
+      }
+    ),
+    recursive = FALSE
+  )
+
+  expect_equal(unclass(col_paths(tbl)), expected)
+})
+
+test_that("some_v_all_col_struct works without a spanning header", {
+  trtvar <- "ARM"
+  subgrpvar <- "GRADE"
+  dat <- data.frame(
+    ARM = factor(rep(c("Arm A", "Arm B"), each = 5)),
+    GRADE = factor(rep(paste0("Grade ", 1:5), 2))
+  )
+
+  lyt <- basic_table() |>
+    some_v_all_col_struct(
+      colspan_trt_map = NULL,
+      trtvar = trtvar,
+      subgrpvar = subgrpvar,
+      subgrp_lvls = c("Grade 4", "Grade 5"),
+      subgrp_lbl = "High Grade",
+      all_lbl = "All Grades"
+    ) |>
+    analyze(subgrpvar, afun = function(x, ...) length(x))
+
+  tbl <- build_table(lyt, dat)
+
+  expected <- unlist(
+    lapply(
+      levels(dat[[trtvar]]),
+      function(lvl) {
+        list(
+          c(trtvar, lvl, subgrpvar, "All Grades"),
+          c(trtvar, lvl, subgrpvar, "GRADE_subset")
+        )
+      }
+    ),
+    recursive = FALSE
+  )
+
+  expect_equal(unclass(col_paths(tbl)), expected)
+})
