@@ -207,7 +207,7 @@ s_freq_j <- function(
   return(y)
 }
 
-s_rel_risk_levii_j <- function(
+s_risk_diff_levii_j <- function(
   levii,
   df,
   .var,
@@ -251,7 +251,7 @@ s_rel_risk_levii_j <- function(
 }
 
 
-s_rel_risk_val_j <- function(
+s_risk_diff_val_j <- function(
   df,
   .var,
   .df_row,
@@ -357,7 +357,7 @@ s_rel_risk_val_j <- function(
   # calculate the stats for each of the levels in levs
   rr_ci_3d <- sapply(
     levs,
-    s_rel_risk_levii_j,
+    s_risk_diff_levii_j,
     df = df,
     .var = .var,
     ref_df = ref_df,
@@ -393,10 +393,10 @@ s_rel_risk_val_j <- function(
 #' @param ref_path (`string`)\cr Column path specifications for
 #' the control group for the relative risk derivation.
 #' @param variables Will be passed onto the relative risk function
-#' (internal function s_rel_risk_val_j), which is based upon [tern::s_proportion_diff()].\cr
+#' (internal function s_risk_diff_val_j), which is based upon [tern::s_proportion_diff()].\cr
 #' See `?tern::s_proportion_diff` for details.
-#' @param method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
-#' @param weights_method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
+#' @param method Will be passed onto the risk difference function (internal function s_risk_diff_val_j).\cr
+#' @param weights_method Will be passed onto the risk difference function (internal function s_risk_diff_val_j).\cr
 #' @param label (`string`)\cr
 #' When `val` has length 1,
 #' the row label to be shown on the output can be specified using this argument.\cr
@@ -947,7 +947,7 @@ a_freq_j <- function(
       )
     }
 
-    x_stats <- s_rel_risk_val_j(
+    x_stats <- s_risk_diff_val_j(
       df,
       .var = .var,
       .df_row = .df_row,
