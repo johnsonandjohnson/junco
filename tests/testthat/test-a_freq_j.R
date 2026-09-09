@@ -271,3 +271,59 @@ test_that("a_freq_j with label_map and no data in row error message", {
   dta2$rsp <- factor(dta2$rsp, levels = c("Y", "N"))
   expect_no_error(result3 <- build_table(lyt2, dta2))
 })
+
+test_that("s_freq_j returns zero counts for logical and character values", {
+  logical_stats <- s_freq_j(
+    df = data.frame(id = 1:2, rsp = c(FALSE, FALSE)),
+    .var = "rsp",
+    .df_row = NULL,
+    val = TRUE,
+    alt_df = NULL,
+    parent_df = NULL,
+    id = "id",
+    denom = "n_df",
+    countsource = "df"
+  )
+
+  expect_equal(logical_stats$count$`TRUE`, c(count = 0))
+  expect_equal(logical_stats$count_unique$`TRUE`, c(count_unique = 0))
+  expect_equal(
+    logical_stats$count_unique_denom_fraction$`TRUE`,
+    c(count_unique = 0, d = 2, p = 0)
+  )
+
+  character_stats <- s_freq_j(
+    df = data.frame(id = 1:2, rsp = c("N", "N")),
+    .var = "rsp",
+    .df_row = NULL,
+    val = "Y",
+    alt_df = NULL,
+    parent_df = NULL,
+    id = "id",
+    denom = "n_df",
+    countsource = "df"
+  )
+
+  expect_equal(character_stats$count$Y, c(count = 0))
+  expect_equal(character_stats$count_unique$Y, c(count_unique = 0))
+  expect_equal(
+    character_stats$count_unique_denom_fraction$Y,
+    c(count_unique = 0, d = 2, p = 0)
+  )
+})
+
+test_that("s_freq_j validates class", {
+  expect_error(
+    s_freq_j(
+      df = data.frame(id = 1:2, rsp = 1:2),
+      .var = "rsp",
+      .df_row = NULL,
+      alt_df = NULL,
+      parent_df = NULL,
+      id = "id",
+      denom = "n_df",
+      countsource = "df"
+    ),
+    "Must inherit from class"
+  )
+})
