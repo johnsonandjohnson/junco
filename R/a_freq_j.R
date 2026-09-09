@@ -4,6 +4,8 @@
 #' and (optional) relative risk columns
 #'
 #' @inheritParams proposal_argument_convention
+#' @param .var (`string`) Name of a categorical analysis variable in `df`.
+#' The variable must be a `factor`, `character`, or `logical` vector.
 #' @param val (`character` or NULL)\cr
 #' When NULL, all levels of the incoming variable (variable used in the `analyze` call)
 #' will be considered.\cr
@@ -94,10 +96,41 @@ s_freq_j <- function(
     stop("Argument .var cannot be NA or NULL.")
   }
 
+  checkmate::assert_string(.var)
+
   countsource <- match.arg(countsource)
 
   if (countsource %in% c("altdf", "altdf_subset")) {
     df <- alt_df
+  }
+
+  checkmate::assert_names(names(df), must.include = .var)
+  checkmate::assert_multi_class(
+    df[[.var]],
+    classes = c("factor", "character", "logical")
+  )
+
+  if (is.logical(df[[.var]])) {
+    df[[.var]] <- factor(df[[.var]], levels = c(TRUE, FALSE))
+  } else if (is.character(df[[.var]])) {
+    var_levels <- unique(c(as.character(val), df[[.var]]))
+    var_levels <- var_levels[!is.na(var_levels)]
+    df[[.var]] <- factor(df[[.var]], levels = var_levels)
+  }
+
+  if (!is.null(.df_row) && .var %in% names(.df_row)) {
+    checkmate::assert_multi_class(
+      .df_row[[.var]],
+      classes = c("factor", "character", "logical")
+    )
+
+    if (is.logical(.df_row[[.var]])) {
+      .df_row[[.var]] <- factor(.df_row[[.var]], levels = c(TRUE, FALSE))
+    } else if (is.character(.df_row[[.var]])) {
+      var_levels <- unique(c(as.character(val), .df_row[[.var]]))
+      var_levels <- var_levels[!is.na(var_levels)]
+      .df_row[[.var]] <- factor(.df_row[[.var]], levels = var_levels)
+    }
   }
 
   .alt_df <- alt_df
