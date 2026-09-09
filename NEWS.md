@@ -10,6 +10,7 @@
   they compute risk difference (p1 - p2), not relative risk (p1 / p2) (#442).
 
 ### Fixed
+- Fixed `s_freq_j()` to return zero counts for requested but unobserved `logical` and `character` values (#453).
 - Fixed `get_ref_info()` to accept ref_path = NULL (#359).
 - Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
