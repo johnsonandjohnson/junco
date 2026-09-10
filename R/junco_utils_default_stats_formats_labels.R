@@ -176,7 +176,6 @@ format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in
 }
 
 
-
 # junco_default_stats -----------------------------------------------------------
 
 #' @describeIn default_stats_formats_labels Named list of available statistics by method group for `junco`.
@@ -296,7 +295,11 @@ junco_default_stats <- list(
     "eair_strat", "n_eair_strat", "eair_strat_ci", "eair_strat_est_ci",
     "eair_strat_n", "eair_strat_n_py",
     "eair_strat_diff_est_ci", "eair_strat_diff_est", "eair_strat_diff_ci"
-  )
+  ),
+  analyze_vars_numeric_j = c(tern_default_stats["analyze_vars_numeric"][[1]],
+                             "mean_diff_with_ci"),
+  aval_chg_col1 = c("count_denom_frac", "count_frac", "count"),
+  aval_chg_col23 = c("mean_ci_3d", "mean_diff_with_ci")
 )
 
 not_in_junco <- setdiff(names(tern_default_stats), names(junco_default_stats))
@@ -306,25 +309,25 @@ junco_default_stats <- c(junco_default_stats, tern_default_stats[not_in_junco])
 # junco_default_formats ---------------------------------------------------------
 junco_default_formats_start <- c(
   adj_mean_se = jjcsformat_xx("xx.xxx (xx.xxx)"),
-  adj_mean_ci = jjcsformat_xx("(xx.xxx, xx.xxx)"),
-  adj_mean_est_ci = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)"),
+  adj_mean_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  adj_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   change = "xx.x%",
   cv = jjcsformat_xx("xx.xx"),
-  diff = jjcsformat_xx("xx.x"),
-  diff_ci = jjcsformat_xx("(xx.x, xx.x)"),
-  diff_est_ci = jjcsformat_xx("xx.x (xx.x, xx.x)"),
-  diff_mean_se = jjcsformat_xx("xx.xxx (xx.xxx)"),
-  diff_mean_ci = jjcsformat_xx("(xx.xxx, xx.xxx)"),
-  diff_mean_est_ci = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)"),
+  diff = jjcsformat_xx("xx.xx"),
+  diff_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  diff_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  diff_mean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  diff_mean_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  diff_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   #
   # s_diff_means stats:
   diff_means_n1 = jjcsformat_xx("xx."),
   diff_means_n2 = jjcsformat_xx("xx."),
   diff_means_est = jjcsformat_xx("xx.xx"),
   diff_means_se = jjcsformat_xx("xx.xxx"),
-  diff_means_est_se = jjcsformat_xx("xx.xxx (xx.xxx)"),
-  diff_means_ci = jjcsformat_xx("(xx.xxx, xx.xxx)"),
-  diff_means_est_ci = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)"),
+  diff_means_est_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  diff_means_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  diff_means_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   # end s_diff_means stats.
   #
   event_free_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
@@ -333,19 +336,27 @@ junco_default_formats_start <- c(
   geom_se = jjcsformat_xx("xx.xxx"),
   geom_mean_sd = jjcsformat_xx("xx.xx (xx.xxx)"),
   geom_mean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  geom_cv = jjcsformat_xx("xx.xx"),
+  geom_mean = jjcsformat_xx("xx.xx"),
+  geom_mean_ci_3d = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   hr = jjcsformat_xx("xx.xx"),
   hr_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
   hr_ci_3d = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  iqr = jjcsformat_xx("xx.xx"),
   quantiles_upper = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  quantiles_lower = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   lsmean = jjcsformat_xx("xx.xx"),
   lsmean_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   lsmean_diff = jjcsformat_xx("xx.xx"),
   lsmean_diff_with_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   lsmean_diff_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
-  lsmean_se = jjcsformat_xx("xx.xx (xx.xx)"),
+  lsmean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  mad = jjcsformat_xx("xx.xx"),
   mean = jjcsformat_xx("xx.xx"),
   mean_sd = jjcsformat_xx("xx.xx (xx.xxx)"),
   mean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  mean_ci_3d = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  mean_diff_with_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   mean_pval = jjcsformat_pval_fct(0),
   median = jjcsformat_xx("xx.xx"),
   median_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
@@ -364,8 +375,8 @@ junco_default_formats_start <- c(
   range_with_cens_info = jjcsformat_range_fct("xx.xx"),
   rate_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
   rate_se = jjcsformat_xx("xx.xx"),
+  rate_diff_ci_3d = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   rel_risk_ci = jjcsformat_xx("xx.xx (xx.xx - xx.xx)"),
-  quantiles_upper = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   sd = jjcsformat_xx("xx.xxx"),
   se = jjcsformat_xx("xx.xxx"),
   n_altdf = "xx",
@@ -375,8 +386,12 @@ junco_default_formats_start <- c(
   denom = "xx",
   count = "xx",
   count_unique = "xx",
+  count_fraction = jjcsformat_count_fraction,
+  count_fraction_fixed_dp = jjcsformat_count_fraction,
   count_unique_fraction = jjcsformat_count_fraction,
   count_unique_denom_fraction = jjcsformat_count_denom_fraction,
+  count_denom_frac = jjcsformat_count_denom_fraction,
+  count_frac = jjcsformat_count_fraction,
   rr_ci_3d = jjcsformat_xx("xx.x (xx.x, xx.x)"),
   patyrs = jjcsformat_xx("xx.x"),
   eair = jjcsformat_xx("xx.x"),
@@ -398,7 +413,8 @@ junco_default_formats_start <- c(
   eair_strat_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   eair_strat_diff_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   total_subject_years = jjcsformat_xx("xx.x (xx.x)"),
-  n_fit = "xx"
+  n_fit = "xx",
+  unique = jjcsformat_count_fraction
 )
 
 tern_formats_only <- setdiff(names(tern_default_formats), names(junco_default_formats_start))
