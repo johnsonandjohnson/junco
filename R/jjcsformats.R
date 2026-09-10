@@ -43,6 +43,10 @@ jjcsformat_xx <- function(
   na_str_dflt = "NE",
   replace_na_dflt = TRUE
 ) {
+  if (is.null(str)) {
+    return(str)
+  }  
+  
   if (grepl("xxx.", str, fixed = TRUE)) {
     stop("Error: jjcsformat_xx do not use xxx. in input str, replace by xx. instead.")
   }

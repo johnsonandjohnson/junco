@@ -294,7 +294,11 @@ junco_default_stats <- list(
     "eair_strat", "n_eair_strat", "eair_strat_ci", "eair_strat_est_ci",
     "eair_strat_n", "eair_strat_n_py",
     "eair_strat_diff_est_ci", "eair_strat_diff_est", "eair_strat_diff_ci"
-  )
+  ),
+  analyze_vars_numeric_j = c(tern_default_stats["analyze_vars_numeric"][[1]],
+                             "mean_diff_with_ci"),
+  aval_chg_col1 = c("count_denom_frac", "count_frac", "count"),
+  aval_chg_col23 = c("mean_ci_3d", "mean_diff_with_ci")
 )
 
 not_in_junco <- setdiff(names(tern_default_stats), names(junco_default_stats))
@@ -351,6 +355,7 @@ junco_default_formats_start <- c(
   mean_sd = jjcsformat_xx("xx.xx (xx.xxx)"),
   mean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
   mean_ci_3d = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  mean_diff_with_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   mean_pval = jjcsformat_pval_fct(0),
   median = jjcsformat_xx("xx.xx"),
   median_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
@@ -384,6 +389,8 @@ junco_default_formats_start <- c(
   count_fraction_fixed_dp = jjcsformat_count_fraction,
   count_unique_fraction = jjcsformat_count_fraction,
   count_unique_denom_fraction = jjcsformat_count_denom_fraction,
+  count_denom_frac = jjcsformat_count_denom_fraction,
+  count_frac = jjcsformat_count_fraction,
   rr_ci_3d = jjcsformat_xx("xx.x (xx.x, xx.x)"),
   patyrs = jjcsformat_xx("xx.x"),
   eair = jjcsformat_xx("xx.x"),

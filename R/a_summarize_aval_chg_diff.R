@@ -4,7 +4,7 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = cont
   y2 <- NULL
 
   # diff in means versus control group, based upon 2 sample t.test
-  y2$mean_diffci <- numeric()
+  y2$mean_diff_with_ci <- numeric()
   if (!is.null(.ref_group) && !.in_ref_col) {
     x1 <- df[[.var]]
     x2 <- .ref_group[[.var]]
@@ -18,11 +18,10 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = cont
     stat$diff <- stat$estimate[1] - stat$estimate[2]
     stat <- c(stat$diff, stat$conf.int)
 
-    y2$mean_diffci <- with_label(
-      c(mean_diffci = stat),
+    y2$mean_diff_with_ci <- with_label(
+      c(mean_diff_with_ci = stat),
       paste("Difference in Mean + ", f_conf_level(control$conf_level))
     )
-
   }
   y <- c(y1, y2)
 
@@ -93,9 +92,9 @@ s_aval_chg_col23_diff <- function(
     #### timepoint for analysis variable change only here we want a blank cell, not a cell with all NA's NULL is
     #### generating a blank cell
     x_stats <- NULL
-    mystat1 <- c("mean_ci_3d", "mean_diffci")
+    mystat1 <- c("mean_ci_3d", "mean_diff_with_ci")
   } else if (!ancova) {
-    mystat1 <- c("mean_ci_3d", "mean_diffci")
+    mystat1 <- c("mean_ci_3d", "mean_diff_with_ci")
 
     control <- control_analyze_vars()
     control$conf_level <- conf_level
@@ -165,11 +164,9 @@ s_aval_chg_col23_diff <- function(
     }
   }
 
-  y <- list(mean_ci_3d = x_stats[[mystat1[1]]], meandiff_ci_3d = x_stats[[mystat1[2]]])
+  y <- list(mean_ci_3d = x_stats[[mystat1[1]]], mean_diff_with_ci = x_stats[[mystat1[2]]])
   return(y)
 }
-
-
 
 
 #' @name a_summarize_aval_chg_diff_j
@@ -233,7 +230,7 @@ s_aval_chg_col23_diff <- function(
 #' The following column names are to be used: `col1`, `col23`, `coldiff`.\cr
 #' For `col1`, the following stats can be specified.\cr
 #' For `col23`, only `mean_ci_3d` is available. When ancova = `TRUE` these are LS Means, otherwise, arithmetic means.\cr
-#' For `coldiff`, only `meandiff_ci_3d` is available. When ancova = `TRUE` these
+#' For `coldiff`, only `mean_diff_with_ci` is available. When ancova = `TRUE` these
 #' are LS difference in means, otherwise, difference in means based upon 2-sample t-test.\cr
 #' @param .formats (named `list`)\cr formats for the column statistics. `xx.d` style formats can be used.
 #' @param .formats_fun (named `list`)\cr formatting functions for the column
@@ -494,15 +491,27 @@ a_summarize_aval_chg_diff_j <- function(
     }
     mystat <- .stats[[mystat1]]
 
-    fmt_d <- .formats[[mystat1]]
-    formatting_fun <- .formats_fun[[mystat1]]
+    if (!(identical(.formats, "default"))) {
+      fmt_d <- .formats[[mystat1]]
+      formatting_fun <- .formats_fun[[mystat1]]
 
-    fmt <- format_xxd(fmt_d, d = d, .df_row = .df_row, formatting_fun = formatting_fun)
+      fmt <- format_xxd(fmt_d, d = d, .df_row = .df_row, formatting_fun = formatting_fun)
+    } else {
+      fmt <- NULL
+    }
   }
   x_stats <- x_stats[[mystat]]
 
   ##
-  ret <- rcell(x_stats, format = fmt, label = cur_lvl, format_na_str = format_na_str)
+  x_stats <- list(x_stats)
+  names(x_stats) <- mystat
+  st_nms <- mystat
 
+  ret <- in_rows(
+    .list = x_stats,
+    .formats = fmt,
+    .labels = cur_lvl,
+    .stat_names = st_nms
+  )
   return(ret)
 }

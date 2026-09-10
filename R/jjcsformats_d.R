@@ -1,6 +1,9 @@
 #' @keywords internal
 xxd_to_xx <- function(str, d = 0) {
   checkmate::assert_integerish(d, null.ok = TRUE)
+  if (is.null(str)) {
+    return(str)
+  }
   if (checkmate::test_list(str, null.ok = FALSE)) {
     checkmate::assert_list(str, null.ok = FALSE)
     # Or it may be a vector of characters

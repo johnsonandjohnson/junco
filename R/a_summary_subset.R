@@ -89,7 +89,17 @@ a_summary_subset <- function(df, .var, filter_expr, ...) {
   checkmate::assert_logical(row_mask, len = nrow(df))
   x <- df[row_mask, .var, drop = TRUE]
 
-  tern::a_summary(x, ...)
+  dots <- list(...)
+  dots$x <- x  
+  if (".formats" %in% names(dots)){
+    xfmt <- dots[[".formats"]] 
+    if (assertthat::is.string(xfmt) && xfmt %in% colnames(df)){
+      .formats <- unique(df[[xfmt]])[[1]]
+      dots$.formats <- .formats
+    }
+  }
+
+  do.call(tern::a_summary, dots)
 }
 
 #' @describeIn summary_subset Content row function with optional subsetting
