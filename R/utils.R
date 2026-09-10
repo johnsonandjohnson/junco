@@ -98,7 +98,8 @@ check_alt_df_full <- function(argument, values, .alt_df_full) {
 
   stop(sprintf(
     '`.alt_df_full` cannot be `NULL` when `%s` is `"%s"`',
-    name, argument
+    name,
+    argument
   ))
 }
 
@@ -184,11 +185,7 @@ check_alt_df_full <- function(argument, values, .alt_df_full) {
 #' # Paired
 #' extract_vectors(df1, df2, "value", paired = TRUE, paired_by = "id")
 #'
-extract_vectors <- function(df1,
-                            df2,
-                            .var,
-                            paired = FALSE,
-                            paired_by) {
+extract_vectors <- function(df1, df2, .var, paired = FALSE, paired_by) {
   checkmate::assert_data_frame(df1)
   checkmate::assert_data_frame(df2)
   checkmate::assert_string(.var)
@@ -563,17 +560,25 @@ strict_match <- function(x, y, odd = TRUE) {
 
   if (length(pos) == 0L) {
     stop(paste0(
-      "Value ('", x,
-      "') not found in the ", ifelse(odd, "odd", "even"),
-      " positions of ('", paste(y, collapse = "."), "')."
+      "Value ('",
+      x,
+      "') not found in the ",
+      ifelse(odd, "odd", "even"),
+      " positions of ('",
+      paste(y, collapse = "."),
+      "')."
     ))
   }
 
   if (length(pos) > 1L) {
     stop(paste0(
-      "Value ('", x,
-      "') must be unique in the ", ifelse(odd, "odd", "even"),
-      " positions of ('", paste(y, collapse = "."), "')."
+      "Value ('",
+      x,
+      "') must be unique in the ",
+      ifelse(odd, "odd", "even"),
+      " positions of ('",
+      paste(y, collapse = "."),
+      "')."
     ))
   }
 
@@ -639,4 +644,22 @@ get_complete_cases <- function(df, quiet = FALSE, additional_message = ".") {
   } else {
     df
   }
+}
+
+#' Safe Conversion to Logical Vector
+#'
+#' @param x (`vector`)\cr The input vector to be safely converted to a logical vector.
+#'
+#' @return
+#' A logical vector corresponding to the input `x`. If the conversion introduces
+#' unexpected `NA` values, an error is raised.
+#'
+#' @keywords internal
+safe_as_logical <- function(x) {
+  checkmate::assert_vector(x, strict = TRUE)
+  result <- as.logical(x)
+  if (anyNA(result) && !identical(is.na(x), is.na(result))) {
+    stop("Conversion to logical introduced unexpected NAs.")
+  }
+  result
 }
