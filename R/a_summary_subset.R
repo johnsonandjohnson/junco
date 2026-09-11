@@ -90,12 +90,14 @@ a_summary_subset <- function(df, .var, filter_expr, ...) {
   x <- df[row_mask, .var, drop = TRUE]
 
   dots <- list(...)
-  dots$x <- x  
-  if (".formats" %in% names(dots)){
-    xfmt <- dots[[".formats"]] 
-    if (assertthat::is.string(xfmt) && xfmt %in% colnames(df)){
+  dots$x <- x
+  if (".formats" %in% names(dots) && identical(dots[[".formats"]], "default")) {
+    if ("formats_var" %in% names(dots) && assertthat::is.string(dots[["formats_var"]])) {
+      xfmt <- dots[["formats_var"]]
+      checkmate::assert_names(colnames(df), must.include = xfmt)
       .formats <- unique(df[[xfmt]])[[1]]
       dots$.formats <- .formats
+      dots$formats_var <- NULL
     }
   }
 
