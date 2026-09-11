@@ -146,13 +146,22 @@ junco_get_indents_from_stats <- function(stats, indents_in = NULL, levels_per_st
   )
 }
 
-#' @describeIn default_stats_formats_labels Format statistics results according to format specifications.
+#' @describeIn default_stats_formats_labels
+#' Format statistics results according to format specifications.
 #'
+#' @inheritParams rtables::in_rows .cell_footnotes .row_footnotes
 #' @return
 #' * `format_stats()` returns the correspondingly formatted [rtables::in_rows()] result.
 #'
 #' @export
-format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in, indents_in) {
+format_stats <- function(x_stats,
+                         method_groups,
+                         stats_in,
+                         formats_in,
+                         labels_in,
+                         indents_in,
+                         .cell_footnotes = list(NULL),
+                         .row_footnotes = list(NULL)) {
   .stats <- junco_get_stats(method_groups, stats_in = stats_in)
 
   .formats <- junco_get_formats_from_stats(stats = .stats, formats_in = formats_in)
@@ -171,10 +180,11 @@ format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in
     .formats = .formats,
     .names = names(.labels),
     .labels = .labels,
-    .indent_mods = .indent_mods
+    .indent_mods = .indent_mods,
+    .cell_footnotes = .cell_footnotes,
+    .row_footnotes = .row_footnotes
   )
 }
-
 
 
 # junco_default_stats -----------------------------------------------------------
