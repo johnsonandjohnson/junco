@@ -145,7 +145,7 @@ fmt_spec_single_d <- function(d = 1,
 #'   split_rows_by("AVISIT", split_fun = drop_split_levels) |>
 #'   analyze(
 #'     vars = "AVAL",
-#'     afun = a_summary,
+#'     afun = tern::a_summary,
 #'     extra_args = list(
 #'       .stats = c("n", "mean_se", "range"),
 #'       .formats = "default"
@@ -193,7 +193,7 @@ fmt_spec_df_d <- function(df_d,
 #'   split_cols_by("ARMCD") |>
 #'   analyze(
 #'     vars = c("AGE", "BMRKR1"),
-#'     afun = a_summary,
+#'     afun = tern::a_summary,
 #'     extra_args = list(
 #'       .stats = c("n", "mean_sd", "range"),
 #'       .formats = "default"
