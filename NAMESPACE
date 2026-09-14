@@ -172,6 +172,7 @@ import(rlistings)
 import(rtables)
 import(tern)
 import(tidytlg)
+importFrom(assertthat,is.string)
 importFrom(formatters,
   with_label,
   wrap_string_ttype

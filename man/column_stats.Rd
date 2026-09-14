@@ -15,6 +15,12 @@ column_stats(
 )
 }
 \arguments{
+\item{df}{(\code{data.frame} or \code{tibble})\cr dataset.}
+
+\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables}}
+
+\item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states.}
+
 \item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics.
 When set to \code{"default"} \code{formats_var} argument will be used for format setup.}
 

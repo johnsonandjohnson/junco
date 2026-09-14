@@ -59,6 +59,7 @@ NULL
 
 #' @describeIn summary_subset Analysis function with optional subsetting.
 #' @importFrom tern a_summary
+#' @importFrom assertthat is.string
 #' @export
 #' @examples
 #'

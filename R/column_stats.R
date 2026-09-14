@@ -17,6 +17,7 @@ calc_one_visit_j <- function(datvec, statnm, visit, varnm, exclude_visits,
 #' @description
 #' A function used for obtaining statistics within the columns of your table.
 #' Used in change from baseline tables. This takes the visit names as its row labels.
+#' @importFrom assertthat is.string
 #' @param exclude_visits (`character vector`)\cr Vector of visit(s) for which you do not want the statistics displayed
 #' in the baseline mean or change from baseline sections of the table.
 #' @param var_names (`character vector`)\cr Vector of variable names to use instead of the default AVAL, CHG, BASE.
@@ -27,6 +28,9 @@ calc_one_visit_j <- function(datvec, statnm, visit, varnm, exclude_visits,
 #' @param formats_var (`string` or `NULL`)\cr `NULL` (the default) or the name of the list column containing named
 #' lists of default formats to use. These will not override .formats (other than `"default"`).
 #' @param exclude_visits Visits to exclude for the second/third part of the columns ("BASE", "CHG").
+#' @param .spl_context (`data.frame`)\cr gives information about ancestor split states. 
+#' @param df (`data.frame` or `tibble`)\cr dataset. 
+#' @param .var (`string`)\cr single variable name that is passed by `rtables`
 #' @return An analysis function (for use with [rtables::analyze]) implementing
 #'   the specified statistics.\cr
 #'   Typically used in a layout that has been setup by [stats_in_cols_setup()]
