@@ -303,6 +303,12 @@ test_that("a_rbmi_lsmeans works as expected in table layout", {
           "change",
           "p_value"
         ),
+        .formats = c(
+          "adj_mean_se" = jjcsformat_xx("xx.xxx (xx.xxx)"),
+          "adj_mean_ci" = jjcsformat_xx("(xx.xxx, xx.xxx)"),
+          "diff_mean_se" = jjcsformat_xx("xx.xxx (xx.xxx)"),
+          "diff_mean_ci" = jjcsformat_xx("(xx.xxx, xx.xxx)")
+        ),
         .labels = c(p_value = "p-value (RBMI)")
       )
     )
