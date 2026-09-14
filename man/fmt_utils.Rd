@@ -61,7 +61,7 @@ Only the following known formatting functions are supported:
 \item str_formatters: (\code{logical}) Is the str value a valid format string as in (\code{\link[formatters:list_valid_format_labels]{list_valid_format_labels()}})?
 \item type: when formatting function factory \code{jjcsformat_cnt_den_fract_fct} is used
 \item alpha: when formatting function factory \code{jjcsformat_pval_fct} is used
-\item message: Message when formatting function is unkown, or input string was
+\item message: Message when formatting function is unknown, or input string was
 not valid format string as in (\code{\link[formatters:list_valid_format_labels]{list_valid_format_labels()}})
 \item fmt_package: In which package was the formatting specification defined.
 \item is_fun: (\code{logical}) Is the formatting specification a function?

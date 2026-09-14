@@ -6,6 +6,7 @@ ANCOVA
 AVAL
 AVISIT
 Analyse
+BMI
 Brueckner
 CMH
 Changelog
@@ -20,7 +21,6 @@ DataFrame
 Dunnett
 EAIR
 EAIRs
-EQ
 Eg
 Haenszel
 Hilferty
@@ -70,6 +70,7 @@ ci
 clinpharm
 clopper
 cmh
+cnt
 coef
 colcounts
 colgroup
@@ -93,8 +94,10 @@ df
 dirname
 docx
 doi
+dp
 dps
 dunnett
+dx
 eair
 eg
 emmeans
@@ -103,11 +106,14 @@ estimands
 et
 expr
 exprs
+fct
 firstcat
 flextable
 fmt
 fn
 formatters
+formattings
+fract
 gentlg
 github
 goto
@@ -138,6 +144,7 @@ meier
 mmrm
 mmy
 monospace
+msg
 multivar
 multivars
 n's
@@ -155,6 +162,7 @@ postfun
 pre
 pseudocolumn
 pst
+pval
 px
 py
 qquad
@@ -191,6 +199,7 @@ summarization
 summarizations
 tbldf
 tibble
+tibbles
 tidytlg
 topleft
 trt

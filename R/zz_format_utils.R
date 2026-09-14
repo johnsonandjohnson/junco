@@ -231,7 +231,7 @@ NULL
 #'  - str_formatters: (`logical`) Is the str value a valid format string as in ([list_valid_format_labels()])?
 #'  - type: when formatting function factory `jjcsformat_cnt_den_fract_fct` is used
 #'  - alpha: when formatting function factory `jjcsformat_pval_fct` is used
-#'  - message: Message when formatting function is unkown, or input string was
+#'  - message: Message when formatting function is unknown, or input string was
 #'    not valid format string as in ([list_valid_format_labels()])
 #'  - fmt_package: In which package was the formatting specification defined.
 #'  - is_fun: (`logical`) Is the formatting specification a function?

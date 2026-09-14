@@ -66,7 +66,7 @@ format_xxd <- function(str, d = 0, .df_row = NULL, formatting_fun = NULL) {
 #' @param fmt_d_in Named vector with format specifications where d-style format is allowed.
 #' Formats defined here will take higher precedence over formats in `fmt_d_def`.
 #'
-#' @param var_d Named vector of d specifations.
+#' @param var_d Named vector of d specifications.
 #' Names are to be considered as variables to be analyzed in further processing.
 #'
 #' @param df_d Dataframe in which the d-column specification is available.

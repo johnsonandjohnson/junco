@@ -22,7 +22,7 @@ with d = 1)
 }
 
 \itemize{
-\item \code{junco_def_d_alt2} Another lternative vector of d-style specification defaults.
+\item \code{junco_def_d_alt2} Another alternative vector of d-style specification defaults.
 }
 }
 \usage{
@@ -71,7 +71,7 @@ Formats defined here will take higher precedence over formats in \code{fmt_d_def
 
 \item{fmt_column}{Name of column that will be added to dataframe that will contain resulting format specifications.}
 
-\item{var_d}{Named vector of d specifations.
+\item{var_d}{Named vector of d specifications.
 Names are to be considered as variables to be analyzed in further processing.}
 }
 \description{

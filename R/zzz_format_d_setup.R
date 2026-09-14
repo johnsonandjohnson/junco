@@ -165,6 +165,6 @@ junco_def_d_alt2[!is.na(target_d_style[["str_d"]])] <-
 
 
 #' @describeIn fmt_spec_d Another alternative vector of d-style specification defaults.
-#' @format * `junco_def_d_alt2` Another lternative vector of d-style specification defaults.
+#' @format * `junco_def_d_alt2` Another alternative vector of d-style specification defaults.
 #' @export
 junco_def_d_alt2 <- junco_def_d_alt2
