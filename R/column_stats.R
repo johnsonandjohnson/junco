@@ -38,10 +38,10 @@ calc_one_visit_j <- function(datvec, statnm, visit, varnm, exclude_visits,
 #' # example code
 #' library(dplyr)
 #' advs <- ex_advs |>
-#'   dplyr::filter(AVISIT %in% toupper(c("Screening", "Baseline", "Week 1 Day 8", "Week 2 Day 15"))) |>
-#'   dplyr::mutate(AVISIT = droplevels(AVISIT)) |>
-#'   dplyr::filter(PARAMCD %in% c("DIABP", "SYSBP"))
-#' advs_fmt <- tibble::tribble(
+#'   filter(AVISIT %in% toupper(c("Screening", "Baseline", "Week 1 Day 8", "Week 2 Day 15"))) |>
+#'   mutate(AVISIT = droplevels(AVISIT)) |>
+#'   filter(PARAMCD %in% c("DIABP", "SYSBP"))
+#' advs_fmt <- tribble(
 #'   ~PARAMCD, ~fmt_d,
 #'   "DIABP", list(
 #'     mean = "xx.xx", sd = "xx.xxx", se = "xx.xxx", median = "xx.xx",
@@ -53,7 +53,7 @@ calc_one_visit_j <- function(datvec, statnm, visit, varnm, exclude_visits,
 #'   )
 #' )
 #'
-#' advs <- dplyr::left_join(advs, advs_fmt)
+#' advs <- left_join(advs, advs_fmt)
 #'
 #' mysplitfun <- make_split_fun(
 #'   post = list(stats_in_cols_setup())

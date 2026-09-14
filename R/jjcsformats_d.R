@@ -117,6 +117,7 @@ fmt_spec_single_d <- function(d = 1,
 #'
 #' @examples
 #' # example for fmt_spec_df_d ----
+#' library(dplyr)
 #' df_d <- tribble(
 #'   ~PARAMCD, ~d,
 #'   "DIABP", 2L,
@@ -133,10 +134,10 @@ fmt_spec_single_d <- function(d = 1,
 #'
 #'
 #' df <- ex_advs |>
-#'   dplyr::filter(PARAMCD %in% c("DIABP", "PULSE", "RESP")) |>
-#'   dplyr::filter(AVISIT %in% c("BASELINE", "WEEK 1 DAY 8", "WEEK 2 DAY 15"))
+#'   filter(PARAMCD %in% c("DIABP", "PULSE", "RESP")) |>
+#'   filter(AVISIT %in% c("BASELINE", "WEEK 1 DAY 8", "WEEK 2 DAY 15"))
 #' df <- df |>
-#'   dplyr::left_join(yy)
+#'   left_join(yy)
 #'
 #' lyt <- basic_table() |>
 #'   split_cols_by("ARMCD") |>
