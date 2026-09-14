@@ -5,34 +5,66 @@
 \title{Statistics within the column space}
 \usage{
 column_stats(
+  df,
+  .var,
+  .spl_context,
+  .formats = NULL,
+  formats_var = NULL,
   exclude_visits = c("Baseline (DB)"),
-  var_names = c("AVAL", "CHG", "BASE"),
-  stats = list(main = c(N = "N", mean = "Mean", SD = "SD", SE = "SE", Med = "Med", Min =
-    "Min", Max = "Max"), base = c(mean = "Mean"))
+  var_names = c("AVAL", "CHG", "BASE")
 )
 }
 \arguments{
-\item{exclude_visits}{(\verb{character vector})\cr Vector of visit(s) for which you do not want the statistics displayed
-in the baseline mean or change from baseline sections of the table.}
+\item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics.
+When set to \code{"default"} \code{formats_var} argument will be used for format setup.}
+
+\item{formats_var}{(\code{string} or \code{NULL})\cr \code{NULL} (the default) or the name of the list column containing named
+lists of default formats to use. These will not override .formats (other than \code{"default"}).}
+
+\item{exclude_visits}{Visits to exclude for the second/third part of the columns ("BASE", "CHG").}
 
 \item{var_names}{(\verb{character vector})\cr Vector of variable names to use instead of the default AVAL, CHG, BASE.
-The first two elements are treated as main variables with full statistics, and the third element
-is treated as the base variable. By default, the function expects these specific variable names in your data,
+By default, the function expects these specific variable names in your data,
 but you can customize them to match your dataset's column names.}
-
-\item{stats}{(\code{list})\cr A list with two components, \code{main} and \code{base}, that define the statistics to be calculated
-for the main variables (default: AVAL, CHG) and the base variable (default: BASE).\cr
-Default for main variables: c(N = "N", mean = "Mean", SD = "SD", SE = "SE",
-Med = "Med", Min = "Min", Max = "Max").\cr
-Default for base variable: c(mean = "Mean").\cr
-You can customize these statistics by providing your own named vectors in the list. The names are used
-internally for calculations, and the values are used as display labels in the table.}
 }
 \value{
 An analysis function (for use with \link[rtables:analyze]{rtables::analyze}) implementing
-the specified statistics.
+the specified statistics.\cr
+Typically used in a layout that has been setup by \code{\link[=vars_in_cols_setup]{vars_in_cols_setup()}}
 }
 \description{
-A function factory used for obtaining statistics within the columns of your table.
+A function used for obtaining statistics within the columns of your table.
 Used in change from baseline tables. This takes the visit names as its row labels.
+}
+\examples{
+  
+# example code
+advs <- ex_advs |> 
+  dplyr::filter(AVISIT \%in\% toupper(c("Screening", "Baseline", "Week 1 Day 8", "Week 2 Day 15"))) |> 
+  dplyr::mutate(AVISIT = droplevels(AVISIT)) |> 
+  dplyr::filter(PARAMCD \%in\% c("DIABP", "SYSBP")) 
+advs_fmt <- tibble::tribble( ~PARAMCD, ~fmt_d,
+"DIABP", list(mean = "xx.xx" , sd = "xx.xxx", se = "xx.xxx", median = "xx.xx", min = "xx.x", max = "xx.x", mean_sd = "xx.xx (xx.xxx)"),
+"SYSBP", list(mean = "xx.x" , sd = "xx.xx", se = "xx.xx", median = "xx.x", min = "xx.", max = "xx.", mean_sd = "xx.x (xx.xx)")
+)   
+
+advs <- dplyr::left_join(advs, advs_fmt)   
+
+mysplitfun <- make_split_fun(
+ post = list(vars_in_cols_setup()))
+
+lyt <- basic_table() |>
+  split_cols_by_multivar(
+    c("AVAL", "BASE", "CHG"),
+    varlabels = c("Visit Values", " ", "Change from Baseline")
+  ) |>
+  split_cols_by("STUDYID", split_fun = mysplitfun) |>
+  split_rows_by("PARAM", split_fun = drop_split_levels) |>
+  split_rows_by("ARMCD", labels_var = "ARM") |>
+  analyze("AVISIT", afun = column_stats, extra_args = list(
+  exclude_visits = toupper(c("Baseline", "Screening")),
+  .formats = "default",
+  formats_var = "fmt_d"))
+result <- build_table(lyt, advs, round_type = "sas")
+head(result, 20)   
 }

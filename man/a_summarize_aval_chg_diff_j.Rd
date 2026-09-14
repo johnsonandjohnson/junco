@@ -100,7 +100,7 @@ a vector that can contain single variable names (such as 'X1'), and/or interacti
 The following column names are to be used: \code{col1}, \code{col23}, \code{coldiff}.\cr
 For \code{col1}, the following stats can be specified.\cr
 For \code{col23}, only \code{mean_ci_3d} is available. When ancova = \code{TRUE} these are LS Means, otherwise, arithmetic means.\cr
-For \code{coldiff}, only \code{meandiff_ci_3d} is available. When ancova = \code{TRUE} these
+For \code{coldiff}, only \code{mean_diff_with_ci} is available. When ancova = \code{TRUE} these
 are LS difference in means, otherwise, difference in means based upon 2-sample t-test.\cr}
 
 \item{.formats}{(named \code{list})\cr formats for the column statistics. \code{xx.d} style formats can be used.}
