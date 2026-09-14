@@ -1,6 +1,7 @@
 # junco 0.1.6.9001
 
 ### Changed
+- Added `.cell_footnotes` and `.row_footnotes` arguments to `format_stats()` (#470).
 - Removed duplicate output `diff_ci_3d` from `s_proportion_diff_j()` which had
   an incorrect "Relative Risk" label; it was identical to `diff_est_ci` (#442).
 - Added `label` argument to `s_proportion_diff_j()` so the caller can customize
