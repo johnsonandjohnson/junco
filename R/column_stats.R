@@ -28,8 +28,8 @@ calc_one_visit_j <- function(datvec, statnm, visit, varnm, exclude_visits,
 #' @param formats_var (`string` or `NULL`)\cr `NULL` (the default) or the name of the list column containing named
 #' lists of default formats to use. These will not override .formats (other than `"default"`).
 #' @param exclude_visits Visits to exclude for the second/third part of the columns ("BASE", "CHG").
-#' @param .spl_context (`data.frame`)\cr gives information about ancestor split states. 
-#' @param df (`data.frame` or `tibble`)\cr dataset. 
+#' @param .spl_context (`data.frame`)\cr gives information about ancestor split states.
+#' @param df (`data.frame` or `tibble`)\cr dataset.
 #' @param .var (`string`)\cr single variable name that is passed by `rtables`
 #' @return An analysis function (for use with [rtables::analyze]) implementing
 #'   the specified statistics.\cr
