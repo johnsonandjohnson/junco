@@ -271,3 +271,25 @@ test_that("a_freq_j with label_map and no data in row error message", {
   dta2$rsp <- factor(dta2$rsp, levels = c("Y", "N"))
   expect_no_error(result3 <- build_table(lyt2, dta2))
 })
+
+test_that("a_freq_j raises error when id is missing", {
+  set.seed(12)
+  dta <- data.frame(
+    ID = 1:100,
+    rsp = factor(sample(c(TRUE, FALSE), 100, TRUE)),
+    grp = factor(rep(c("A", "B"), each = 50), levels = c("A", "B"))
+  )
+  lyt <- basic_table() |>
+    split_cols_by("grp") |>
+    analyze(
+      "rsp",
+      afun = a_freq_j,
+      extra_args = list(
+        id = "USUBJID"
+      )
+    )
+  expect_error(
+    build_table(lyt, dta),
+    "Names must include the elements"
+  )
+})
