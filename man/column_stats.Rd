@@ -44,6 +44,7 @@ Used in change from baseline tables. This takes the visit names as its row label
 }
 \examples{
 # example code
+library(dplyr)
 advs <- ex_advs |>
   dplyr::filter(AVISIT \%in\% toupper(c("Screening", "Baseline", "Week 1 Day 8", "Week 2 Day 15"))) |>
   dplyr::mutate(AVISIT = droplevels(AVISIT)) |>

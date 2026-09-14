@@ -36,6 +36,7 @@ calc_one_visit_j <- function(datvec, statnm, visit, varnm, exclude_visits,
 #'   Typically used in a layout that has been setup by [stats_in_cols_setup()]
 #' @examples
 #' # example code
+#' library(dplyr)
 #' advs <- ex_advs |>
 #'   dplyr::filter(AVISIT %in% toupper(c("Screening", "Baseline", "Week 1 Day 8", "Week 2 Day 15"))) |>
 #'   dplyr::mutate(AVISIT = droplevels(AVISIT)) |>
