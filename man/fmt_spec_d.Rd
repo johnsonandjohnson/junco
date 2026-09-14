@@ -110,7 +110,7 @@ junco_def_d <- c(
   "mean_sd" = "xx.dx (xx.dxx)",
   "range" = "(xx.d, xx.d)"
 )
-myfmts <- fmt_spec_single_d(
+myfmts <- junco:::fmt_spec_single_d(
   d = 1,
   stats_in = c("mean", "mean_sd"),
   fmt_d_def = junco_def_d,

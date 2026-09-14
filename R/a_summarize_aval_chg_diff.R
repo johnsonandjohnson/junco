@@ -348,7 +348,7 @@ a_summarize_aval_chg_diff_j <- function(
   conf_level = 0.95,
   variables = list(arm = "TRT01A", covariates = NULL),
   format_na_str = "",
-  .stats = list(col1 = "count_denom_frac", col23 = "mean_ci_3d", coldiff = "meandiff_ci_3d"),
+  .stats = list(col1 = "count_denom_frac", col23 = "mean_ci_3d", coldiff = "mean_diff_with_ci"),
   .formats = list(col1 = NULL, col23 = "xx.dx (xx.dx, xx.dx)", coldiff = "xx.dx (xx.dx, xx.dx)"),
   .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx, coldiff = jjcsformat_xx),
   multivars = c("AVAL", "AVAL", "CHG"),
