@@ -104,6 +104,8 @@ reference:
     - ac_blank_line
     - insert_blank_line
     - format_sigfig_j
+    - fmt_spec_d
+    - fmt_utils
 
   - title: junco Sorting Functions and Pruning Functions
     desc: The following functions are the junco sorting and pruning functions used to create common table layouts.
