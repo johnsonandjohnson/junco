@@ -154,9 +154,10 @@ calc_N <- function(datvec, statnm, trt, varnm) {
 #' @seealso [rtables::make_split_fun()], [rtables::make_split_result()].
 #' @examples
 #' # example code
+#' library(dplyr)
 #' advs <- ex_advs |>
-#'   dplyr::filter(AVISIT %in% toupper(c("Screening", "Baseline", "Week 1 Day 8", "Week 2 Day 15"))) |>
-#'   dplyr::mutate(AVISIT = droplevels(AVISIT))
+#'   filter(AVISIT %in% toupper(c("Screening", "Baseline", "Week 1 Day 8", "Week 2 Day 15"))) |>
+#'   mutate(AVISIT = droplevels(AVISIT))
 #'
 #' mysplitfun <- make_split_fun(
 #'   post = list(stats_in_cols_setup())
@@ -170,7 +171,10 @@ calc_N <- function(datvec, statnm, trt, varnm) {
 #'   split_cols_by("STUDYID", split_fun = mysplitfun) |>
 #'   split_rows_by("PARAM") |>
 #'   split_rows_by("ARMCD", labels_var = "ARM") |>
-#'   analyze("AVISIT", afun = column_stats, extra_args = list(exclude_visits = toupper(c("Baseline", "Screening"))))
+#'   analyze("AVISIT",
+#'    afun = column_stats,
+#'    extra_args = list(exclude_visits = toupper(c("Baseline", "Screening")))
+#'   )
 #' result <- build_table(lyt, advs, round_type = "sas")
 #' head(result, 20)
 #'

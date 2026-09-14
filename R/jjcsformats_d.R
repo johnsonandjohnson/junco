@@ -83,6 +83,7 @@ NULL
 #' junco_def_d <- c(
 #'   "mean" = "xx.dx",
 #'   "mean_sd" = "xx.dx (xx.dxx)",
+#'   "mean_se" = "xx.dx (xx.dxx)",
 #'   "range" = "(xx.d, xx.d)"
 #' )
 #' myfmts <- junco:::fmt_spec_single_d(
@@ -153,7 +154,7 @@ fmt_spec_single_d <- function(d = 1,
 #'     formats_var = "fmt_d"
 #'   )
 #'
-#' rslt <- build_table(lyt, df2, alt_counts_df = ex_adsl)
+#' rslt <- build_table(lyt, df, alt_counts_df = ex_adsl)
 #' rslt
 #'
 #' @export

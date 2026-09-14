@@ -12,7 +12,7 @@
 \format{
 \itemize{
 \item \code{junco_def_d_all} Used as default input vector for argument \code{fmt_d_def}
-in functions \code{fmt_spec_single_d()}, \code{fmt_spec_df_d()} and \code{fmt_spec_var_d()}
+in functions \code{junco:::fmt_spec_single_d()}, \code{fmt_spec_df_d()} and \code{fmt_spec_var_d()}
 (corresponds to the named vector of with default available formats \link{junco_default_formats}
 with d = 1)
 }
@@ -108,6 +108,7 @@ The result can be used as input for argument \code{format} in \code{\link[rtable
 junco_def_d <- c(
   "mean" = "xx.dx",
   "mean_sd" = "xx.dx (xx.dxx)",
+  "mean_se" = "xx.dx (xx.dxx)",
   "range" = "(xx.d, xx.d)"
 )
 myfmts <- junco:::fmt_spec_single_d(
@@ -155,7 +156,7 @@ lyt <- basic_table() |>
     formats_var = "fmt_d"
   )
 
-rslt <- build_table(lyt, df2, alt_counts_df = ex_adsl)
+rslt <- build_table(lyt, df, alt_counts_df = ex_adsl)
 rslt
 
 # example for fmt_spec_var_d ----
