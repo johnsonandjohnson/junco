@@ -94,6 +94,9 @@ s_freq_j <- function(
     stop("Argument .var cannot be NA or NULL.")
   }
 
+  checkmate::assert_string(id, null.ok = FALSE)
+  checkmate::assert_names(colnames(df), must.include = id)
+
   countsource <- match.arg(countsource)
 
   if (countsource %in% c("altdf", "altdf_subset")) {
@@ -801,6 +804,8 @@ a_freq_j <- function(
   colgroup = NULL,
   countsource = c("df", "altdf", "altdf_subset")
 ) {
+  checkmate::assert_string(id, null.ok = FALSE)
+  checkmate::assert_names(colnames(df), must.include = id)
   checkmate::check_character(ref_path, min.len = 2L)
   checkmate::assert_true(length(ref_path) %% 2L == 0L)
 
