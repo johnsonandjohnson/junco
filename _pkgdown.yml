@@ -125,7 +125,7 @@ reference:
     - do_exclude_split
     - make_combo_splitfun
     - make_multicomp_splfun
-    - postfun_eq5d
+    - stats_in_cols_setup
     - real_add_overall_facet
 
   - title: junco Functions For titles/footnotes

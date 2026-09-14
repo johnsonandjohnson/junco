@@ -29,7 +29,7 @@ calc_one_visit_j <- function(datvec, statnm, visit, varnm, exclude_visits,
 #' @param exclude_visits Visits to exclude for the second/third part of the columns ("BASE", "CHG").
 #' @return An analysis function (for use with [rtables::analyze]) implementing
 #'   the specified statistics.\cr
-#'   Typically used in a layout that has been setup by [vars_in_cols_setup()]
+#'   Typically used in a layout that has been setup by [stats_in_cols_setup()]
 #' @examples
 #' # example code
 #' advs <- ex_advs |>
@@ -51,7 +51,7 @@ calc_one_visit_j <- function(datvec, statnm, visit, varnm, exclude_visits,
 #' advs <- dplyr::left_join(advs, advs_fmt)
 #'
 #' mysplitfun <- make_split_fun(
-#'   post = list(vars_in_cols_setup())
+#'   post = list(stats_in_cols_setup())
 #' )
 #'
 #' lyt <- basic_table() |>
@@ -129,13 +129,13 @@ calc_N <- function(datvec, statnm, trt, varnm) {
 #'
 #' Typical usage:
 #'
-#' -  construct a split function like `mysplitfun <- rtables::make_split_fun(post = list(vars_in_cols_setup()))`\cr
+#' -  construct a split function like `mysplitfun <- rtables::make_split_fun(post = list(stats_in_cols_setup()))`\cr
 #' Then use `mysplitfun` in your table layout where you split columns by a
 #' variable whose levels are one of "AVAL", "BASE", or "CHG" and want to
 #' analyze different statistics for each.
 #'
 #' - column layout setup from
-#' [rtables::split_cols_by_multivar()], followed by split_cols_by using `vars_in_cols_setup` in
+#' [rtables::split_cols_by_multivar()], followed by split_cols_by using `stats_in_cols_setup` in
 #' conjunction with an analyze call with `afun` = [column_stats()]
 #'
 #' See examples for typical usage.
@@ -154,7 +154,7 @@ calc_N <- function(datvec, statnm, trt, varnm) {
 #'   dplyr::mutate(AVISIT = droplevels(AVISIT))
 #'
 #' mysplitfun <- make_split_fun(
-#'   post = list(vars_in_cols_setup())
+#'   post = list(stats_in_cols_setup())
 #' )
 
 #' lyt <- basic_table() |>
@@ -170,7 +170,7 @@ calc_N <- function(datvec, statnm, trt, varnm) {
 #' head(result, 20)
 #'
 #' @export
-vars_in_cols_setup <- function(
+stats_in_cols_setup <- function(
   stats_list = list(
     "AVAL" = c("n", "mean", "sd", "se", "median", "min", "max"),
     "BASE" = c("mean_sd"),

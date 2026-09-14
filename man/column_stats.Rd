@@ -30,28 +30,35 @@ but you can customize them to match your dataset's column names.}
 \value{
 An analysis function (for use with \link[rtables:analyze]{rtables::analyze}) implementing
 the specified statistics.\cr
-Typically used in a layout that has been setup by \code{\link[=vars_in_cols_setup]{vars_in_cols_setup()}}
+Typically used in a layout that has been setup by \code{\link[=stats_in_cols_setup]{stats_in_cols_setup()}}
 }
 \description{
 A function used for obtaining statistics within the columns of your table.
 Used in change from baseline tables. This takes the visit names as its row labels.
 }
 \examples{
-  
 # example code
-advs <- ex_advs |> 
-  dplyr::filter(AVISIT \%in\% toupper(c("Screening", "Baseline", "Week 1 Day 8", "Week 2 Day 15"))) |> 
-  dplyr::mutate(AVISIT = droplevels(AVISIT)) |> 
-  dplyr::filter(PARAMCD \%in\% c("DIABP", "SYSBP")) 
-advs_fmt <- tibble::tribble( ~PARAMCD, ~fmt_d,
-"DIABP", list(mean = "xx.xx" , sd = "xx.xxx", se = "xx.xxx", median = "xx.xx", min = "xx.x", max = "xx.x", mean_sd = "xx.xx (xx.xxx)"),
-"SYSBP", list(mean = "xx.x" , sd = "xx.xx", se = "xx.xx", median = "xx.x", min = "xx.", max = "xx.", mean_sd = "xx.x (xx.xx)")
-)   
+advs <- ex_advs |>
+  dplyr::filter(AVISIT \%in\% toupper(c("Screening", "Baseline", "Week 1 Day 8", "Week 2 Day 15"))) |>
+  dplyr::mutate(AVISIT = droplevels(AVISIT)) |>
+  dplyr::filter(PARAMCD \%in\% c("DIABP", "SYSBP"))
+advs_fmt <- tibble::tribble(
+  ~PARAMCD, ~fmt_d,
+  "DIABP", list(
+    mean = "xx.xx", sd = "xx.xxx", se = "xx.xxx", median = "xx.xx",
+    min = "xx.x", max = "xx.x", mean_sd = "xx.xx (xx.xxx)"
+  ),
+  "SYSBP", list(
+    mean = "xx.x", sd = "xx.xx", se = "xx.xx", median = "xx.x",
+    min = "xx.", max = "xx.", mean_sd = "xx.x (xx.xx)"
+  )
+)
 
-advs <- dplyr::left_join(advs, advs_fmt)   
+advs <- dplyr::left_join(advs, advs_fmt)
 
 mysplitfun <- make_split_fun(
- post = list(vars_in_cols_setup()))
+  post = list(stats_in_cols_setup())
+)
 
 lyt <- basic_table() |>
   split_cols_by_multivar(
@@ -62,9 +69,10 @@ lyt <- basic_table() |>
   split_rows_by("PARAM", split_fun = drop_split_levels) |>
   split_rows_by("ARMCD", labels_var = "ARM") |>
   analyze("AVISIT", afun = column_stats, extra_args = list(
-  exclude_visits = toupper(c("Baseline", "Screening")),
-  .formats = "default",
-  formats_var = "fmt_d"))
+    exclude_visits = toupper(c("Baseline", "Screening")),
+    .formats = "default",
+    formats_var = "fmt_d"
+  ))
 result <- build_table(lyt, advs, round_type = "sas")
-head(result, 20)   
+head(result, 20)
 }

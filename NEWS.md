@@ -57,6 +57,7 @@
 - Updated behavior of formatting functions `jjcsformat_count_denom_fraction` and `jjcsformat_fraction_count_denom` 
 and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat_fraction_count_denom_legacy` for backward compatibility reasons (#450)
 - Updated `insightsengineering` urls to `pharmaverse`
+- Renamed and refactored `postfun_eq5d` into `stats_in_cols_setup`
 
 ### Added
 - Added `strict_match()` for uniquely matching a value in the odd or even positions of a character vector.
