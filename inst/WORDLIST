@@ -163,7 +163,6 @@ referene
 removerowtext
 responder
 responders
-riskdiff
 rlistings
 rowdf
 rowlabel
@@ -187,6 +186,7 @@ str
 struct
 subcol
 subfacet
+subgrouped
 summarization
 summarizations
 tbldf

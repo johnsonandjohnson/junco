@@ -2,6 +2,7 @@
 % Please edit documentation in R/risk_diff_col_struct.R
 \name{grouped_cols_w_diffs}
 \alias{grouped_cols_w_diffs}
+\alias{grouped_cols_w_subgrps}
 \title{Standard Column Structure With Grouped Treatments and Difference Columns}
 \usage{
 grouped_cols_w_diffs(
@@ -15,6 +16,17 @@ grouped_cols_w_diffs(
   .main_post = list(),
   .rr_pre = list(),
   .rr_post = list()
+)
+
+grouped_cols_w_subgrps(
+  lyt,
+  colspan_trt_map = NULL,
+  combo_map_df = NULL,
+  trtvar = names(colspan_trt_map)[2],
+  subgrpvar = NULL,
+  subgrplbl = subgrpvar,
+  .pre = list(),
+  .post = list()
 )
 }
 \arguments{
@@ -57,6 +69,21 @@ faceting.}
 \item{.rr_post}{(\code{list} of \code{function}s). Passed to
 \code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}} as \code{.post} for risk difference
 faceting.}
+
+\item{trtvar}{(\code{character(1)} or \code{NULL})\cr the treatment variable to split by. Defaults to the
+treatment variable in \code{colspan_trt_map}.}
+
+\item{subgrpvar}{(\code{character(1)} or \code{NULL})\cr the name of the subgroup variable to split
+by within the \code{trtvar} split}
+
+\item{subgrplbl}{(\code{character(1)} or \code{NULL})\cr the spanning label to place over the subgroups,
+if different than \code{subgrpvar}}
+
+\item{.pre}{(\code{list} of \code{function}s)\cr Passed to \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{pre} for
+treatment splitting.}
+
+\item{.post}{(\code{list} of \code{function}s)\cr Passed to \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{post} for
+treatment splitting after the standard column-structure processing.}
 }
 \value{
 \code{lyt} updated with the specified main and risk difference
@@ -113,9 +140,67 @@ been added if necessary).
 For the purposes of pathin in the resulting structure,
 \code{diffs_label} will be both the split name and split value of the
 parent containing the individual risk difference columns.
+
+\code{grouped_cols_w_subgrps} creates a hierarchical column structure that splits by \code{trtvar},
+underneath which is a spanning label over a split with a Total column along with columns for
+each level of \code{subgrpvar}.
+}
+\examples{
+colspan_var <- create_colspan_var(
+  data.frame(TRT01A = factor(c("Placebo", "Active 1", "Active 2"))),
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+colspan_trt_map <- create_colspan_map(
+  colspan_var,
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+
+lyt <- basic_table() |>
+  grouped_cols_w_diffs(colspan_trt_map) |>
+  analyze("TRT01A", afun = function(x, ...) length(x))
+
+build_table(lyt, colspan_var)
+dat <- create_colspan_var(
+  data.frame(
+    TRT01A = factor(rep(c("Placebo", "Active 1"), each = 2)),
+    SEX = factor(rep(c("Female", "Male"), 2))
+  ),
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+colspan_trt_map <- create_colspan_map(
+  dat,
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+
+lyt <- basic_table() |>
+  grouped_cols_w_subgrps(
+    colspan_trt_map,
+    subgrpvar = "SEX",
+    subgrplbl = "SUB_*"
+  ) |>
+  analyze("TRT01A", afun = function(x, ...) length(x))
+
+build_table(lyt, dat)
 }
 \seealso{
-Other riskdiff_col_struct:
-\code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}}
+Other std_col_struct:
+\code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}},
+\code{\link[=shift_tbl_col_struct]{shift_tbl_col_struct()}}
 }
-\concept{riskdiff_col_struct}
+\concept{std_col_struct}
