@@ -36,7 +36,7 @@ tt_to_tlgrtf <- function(
   verbose = FALSE,
   tlgtype = junco:::tlg_type(tt),
   string_map = default_str_map,
-  markup_df = dps_markup_df,
+  markup_df = junco:::dps_markup_df,
   combined_rtf = FALSE,
   one_table = TRUE,
   border_mat = junco:::make_header_bordmat(obj = tt),
@@ -451,7 +451,7 @@ export_TLG_as_docx <- function(
     col = character()
   ),
   string_map = default_str_map,
-  markup_df_docx = dps_markup_df_docx,
+  markup_df_docx = junco:::dps_markup_df_docx,
   combined_docx = FALSE,
   tlgtype = ifelse(is.null(obj), "Figure", junco:::tlg_type(obj)),
   col_gap = ifelse(tlgtype == "Listing", .5, 3),
@@ -462,7 +462,7 @@ export_TLG_as_docx <- function(
   border_mat = NULL,
   export_csv = FALSE,
   output_csv_directory = NULL,
-  markup_df = dps_markup_df,
+  markup_df = junco:::dps_markup_df,
   validate = TRUE,
   watermark = NULL,
   plotnames = NULL,
@@ -602,7 +602,7 @@ export_as_docx_j <- function(
     col = character()
   ),
   string_map = default_str_map,
-  markup_df_docx = dps_markup_df_docx,
+  markup_df_docx = junco:::dps_markup_df_docx,
   combined_docx = FALSE,
   tlgtype = junco:::tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", .5, 3),
@@ -614,7 +614,7 @@ export_as_docx_j <- function(
   watermark = NULL,
   export_csv = FALSE,
   output_csv_directory = NULL,
-  markup_df = dps_markup_df,
+  markup_df = junco:::dps_markup_df,
   validate = TRUE,
   ...
 ) {
@@ -983,7 +983,7 @@ tt_to_flextable_j <- function(
     col = character()
   ),
   string_map = default_str_map,
-  markup_df_docx = dps_markup_df_docx,
+  markup_df_docx = junco:::dps_markup_df_docx,
   reduce_first_col_indentation = FALSE,
   tlgtype = junco:::tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", .5, 3),
