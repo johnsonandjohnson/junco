@@ -36,7 +36,7 @@ Depends:
     rtables (>= 0.6.16.9002)
 Imports:
     tidytlg (>= 0.12.0),
-    tern (>= 0.9.10.9020),
+    tern (>= 0.9.11.9000),
     rlistings (>= 0.2.13),
     checkmate (>= 2.1.0),
     rbmi (>= 1.6.0),
@@ -79,7 +79,7 @@ Config/testthat/edition: 3
 Remotes:
     pharmaverse/formatters@main,
     pharmaverse/tern@main,
-    pharmaverse/rtables@main,
+    pharmaverse/tern@1514_add_safe_2x2_table,
     johnsonandjohnson/pharmaverseadamjnj@dev,
     insightsengineering/rtables.officer@main
 Config/roxygen2/version: 8.1.0
