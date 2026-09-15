@@ -671,7 +671,7 @@ h_a_freq_dataprep <- function(
 
   val <- upd_dfrow$val
 
-  # from here onwards proceed with drop_levels = FALSE action has already been done in h_upd_dfrow, and proper
+  # from here onwards proceed with drop_levels = FALSE action has already been done in junco:::h_upd_dfrow, and proper
   # observed values will be passed to val for s_freq_j
   drop_levels <- FALSE
   excl_levels <- NULL
@@ -1896,7 +1896,7 @@ export_as_csv <- function(
 
   df <- lapply(
     pags,
-    tt_to_tbldf,
+    junco:::tt_to_tbldf,
     fontspec = fontspec,
     string_map = string_map,
     markup_df = markup_df,
@@ -2236,7 +2236,7 @@ export_TLG_as_docx <- function(
     col = character()
   ),
   string_map = default_str_map,
-  markup_df_docx = dps_markup_df_docx,
+  markup_df_docx = junco:::dps_markup_df_docx,
   combined_docx = FALSE,
   tlgtype = ifelse(is.null(obj), "Figure", junco:::tlg_type(obj)),
   col_gap = ifelse(tlgtype == "Listing", .5, 3),
@@ -2247,7 +2247,7 @@ export_TLG_as_docx <- function(
   border_mat = NULL,
   export_csv = FALSE,
   output_csv_directory = NULL,
-  markup_df = dps_markup_df,
+  markup_df = junco:::dps_markup_df,
   validate = TRUE,
   watermark = NULL,
   plotnames = NULL,
@@ -2387,7 +2387,7 @@ export_as_docx_j <- function(
     col = character()
   ),
   string_map = default_str_map,
-  markup_df_docx = dps_markup_df_docx,
+  markup_df_docx = junco:::dps_markup_df_docx,
   combined_docx = FALSE,
   tlgtype = junco:::tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", .5, 3),
@@ -2399,7 +2399,7 @@ export_as_docx_j <- function(
   watermark = NULL,
   export_csv = FALSE,
   output_csv_directory = NULL,
-  markup_df = dps_markup_df,
+  markup_df = junco:::dps_markup_df,
   validate = TRUE,
   ...
 ) {
@@ -2768,7 +2768,7 @@ tt_to_flextable_j <- function(
     col = character()
   ),
   string_map = default_str_map,
-  markup_df_docx = dps_markup_df_docx,
+  markup_df_docx = junco:::dps_markup_df_docx,
   reduce_first_col_indentation = FALSE,
   tlgtype = junco:::tlg_type(tt),
   col_gap = ifelse(tlgtype == "Listing", .5, 3),
