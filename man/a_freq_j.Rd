@@ -80,8 +80,8 @@ a_freq_j_with_exclude(
 \arguments{
 \item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
-by a statistics function.}
+\item{.var}{(\code{string}) Name of a categorical analysis variable in \code{df}.
+The variable must be a \code{factor}, \code{character}, or \code{logical} vector.}
 
 \item{.df_row}{(\code{data.frame})\cr data frame across all of the columns for the given row split.}
 
