@@ -78,6 +78,7 @@ VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:
     pharmaverse/formatters@main,
+    pharmaverse/rtables@main,
     pharmaverse/tern@main,
     pharmaverse/tern@1514_add_safe_2x2_table,
     johnsonandjohnson/pharmaverseadamjnj@dev,

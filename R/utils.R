@@ -614,7 +614,6 @@ strict_match <- function(x, y, odd = TRUE) {
 #' If no rows contain missing values, `df` is returned unchanged and no warning
 #' is issued.
 #'
-#' @export
 #' @author WW
 #'
 #' @examples
