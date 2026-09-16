@@ -12,6 +12,7 @@ quartile_col_struct(
   trtvar = names(colspan_trt_map)[2],
   span_lbl = paste(var, "Quartiles"),
   digits = 0,
+  round_type = valid_round_type,
   .pre = list(),
   .post = list()
 )
@@ -34,10 +35,12 @@ act as a reference (\code{TRUE}) or active (\code{FALSE}) group.}
 \item{trtvar}{(\code{character(1)} or \code{NULL})\cr the treatment variable to split by. Defaults to the
 treatment variable in \code{colspan_trt_map}.}
 
-\item{span_lbl}{(\code{character(1)})\cr The spanning label to place above the quartile columns.
-Defaults to \code{paste(var, "Quartiles")}.}
+\item{span_lbl}{(\code{character(1)})\cr The spanning label to place above the quartile columns.}
 
 \item{digits}{(\code{integer(1)})\cr Number of decimal places used when formatting the quartile.}
+
+\item{round_type}{(\code{character(1)})\cr rounding method, passed onto
+\code{\link[formatters:round_fmt]{formatters::round_fmt()}} when formatting the quartile.}
 
 \item{.pre}{(\code{list} of \code{function}s)\cr Passed to \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{pre} for
 treatment splitting.}
@@ -52,18 +55,9 @@ treatment splitting after the standard column-structure processing.}
 Standard Quartile Column Structure
 }
 \details{
-\code{quartile_col_struct} creates a column structure that splits \code{trtvar}
-into four quartile-based columns of \code{var}, with a spanning label
-(\code{span_lbl}) placed above them. Quartile cut points (Q1, median, Q3)
-are computed \emph{within} each treatment column separately, using the same
-quantile definition as SAS's default \code{PCTLDEF=5} (equivalent to
-\code{type = 2} in \code{\link[stats:quantile]{stats::quantile()}}).
-
-The resulting four columns are labeled with their boundary values, in
-the form \code{"<lower> to <<upper>"} for the first three quartiles, and
-\code{"<lower> to <upper>"} (inclusive) for the fourth (highest) quartile,
-e.g. \code{"36 to <58"}, ..., \code{"72 to 90"}. Subjects with a missing value
-for \code{var} are excluded from all quartile columns.
+Splits \code{trtvar} into four quartile columns of \code{var}, with \code{span_lbl}
+as a spanning label above them. Cut points (Q1, median, Q3) are worked
+out separately within each treatment column, using the same quantile
 }
 \examples{
 set.seed(1)
