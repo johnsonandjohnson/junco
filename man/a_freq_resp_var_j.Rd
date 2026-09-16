@@ -15,7 +15,7 @@ a_freq_resp_var_j(
   drop_levels = FALSE,
   riskdiff = TRUE,
   ref_path = NULL,
-  variables = formals(s_proportion_diff)$variables,
+  variables = list(strata = NULL),
   conf_level = formals(s_proportion_diff)$conf_level,
   method = c("wald", "waldcc", "cmh", "ha", "newcombe", "newcombecc", "strat_newcombe",
     "strat_newcombecc", "cmh_sato", "cmh_mn", "uncond_exact_diff"),
