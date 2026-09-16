@@ -21,6 +21,8 @@
 #' @param conf_level (`numeric`)\cr confidence level for the confidence interval.
 #' @param method (`string`)\cr method to use for confidence interval calculation.
 #' @param weights_method (`string`)\cr method to use for weights calculation in stratified analysis.
+#' @param label (`string`)\cr label for the `diff_est_ci` statistic. Defaults to
+#'   `"% Difference (conf_level CI)"`. Can be overridden by the caller.
 #'
 #' @name prop_diff
 #' @order 1
@@ -39,7 +41,7 @@ NULL
 #'
 #' @return
 #' * `s_proportion_diff_j()` returns a named list of elements `diff`,
-#'    `diff_ci`, `diff_est_ci` and `diff_ci_3d`.
+#'    `diff_ci`, and `diff_est_ci`.
 #'
 #' @note When performing an unstratified analysis, methods `'cmh'`, `'cmh_sato'`, `'cmh_mn'`,
 #'   `'strat_newcombe'`, and `'strat_newcombecc'` are not permitted.
@@ -79,7 +81,8 @@ s_proportion_diff_j <- function(
     "newcombe", "newcombecc", "strat_newcombe", "strat_newcombecc",
     "cmh_sato", "cmh_mn", "uncond_exact_diff"
   ),
-  weights_method = "cmh"
+  weights_method = "cmh",
+  label = paste0("% Difference (", f_conf_level(conf_level), ")")
 ) {
   start <- s_proportion_diff(
     df = df,
@@ -97,12 +100,9 @@ s_proportion_diff_j <- function(
     list(
       diff_est_ci = with_label(
         c(start$diff, start$diff_ci),
-        paste0("% Difference (", f_conf_level(conf_level), ")")
-      ),
-      diff_ci_3d = with_label(
-        c(start$diff, start$diff_ci),
-        paste0("Relative Risk (", f_conf_level(conf_level), ")")
+        label
       )
+      # diff_ci_3d removed — duplicate of diff_est_ci with wrong "Relative Risk" label
     )
   )
 }

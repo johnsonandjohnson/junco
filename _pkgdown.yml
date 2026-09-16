@@ -48,10 +48,13 @@ reference:
     - a_three_tier    
     - c_summary_subset_label
     - analyze_values
+    - rbmi_ancova
+    - rbmi_ancova_single
     - build_formula
     - c_proportion_logical
     - cmp_cfun
     - cmp_post_fun
+    - cond_proportion_j
     - find_missing_chg_after_avisit
     - fit_ancova
     - fit_mmrm_j
@@ -100,6 +103,7 @@ reference:
     - jjcsformat_count_denom_fraction
     - ac_blank_line
     - insert_blank_line
+    - format_sigfig_j
 
   - title: junco Sorting Functions and Pruning Functions
     desc: The following functions are the junco sorting and pruning functions used to create common table layouts.
@@ -146,6 +150,7 @@ reference:
     - rightside
     - remove_col_count
     - rm_levels
+    - get_complete_cases
     
   - title: internal
     desc: The following are additional junco functions.
@@ -173,6 +178,6 @@ reference:
     contents:
     - a_coxph_hr
     - rbmi_analyse
+    - make_rbmi_cluster
     - par_lapply
     - a_kaplan_meier
-    - rbmi_ancova

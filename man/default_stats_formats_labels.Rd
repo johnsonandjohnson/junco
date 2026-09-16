@@ -62,7 +62,9 @@ format_stats(
   stats_in,
   formats_in,
   labels_in,
-  indents_in
+  indents_in,
+  .cell_footnotes = list(NULL),
+  .row_footnotes = list(NULL)
 )
 
 junco_default_stats
@@ -110,6 +112,10 @@ values are provided.}
 
 \item{indents_in}{(named \code{integer})\cr custom row indent modifiers to use instead of defaults. Defaults to \code{0L} for
 all values.}
+
+\item{.cell_footnotes}{(\code{list})\cr referential footnote messages to be associated by name with \emph{cells}.}
+
+\item{.row_footnotes}{(\code{list})\cr referential footnotes messages to be associated by name with \emph{rows}.}
 }
 \value{
 \itemize{

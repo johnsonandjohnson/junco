@@ -155,15 +155,15 @@ When \code{FALSE}, risk difference columns will remain blank
 \item{ref_path}{(\code{string})\cr Column path specifications for
 the control group for the relative risk derivation.}
 
-\item{variables}{Will be passed onto the relative risk function
-(internal function s_rel_risk_val_j), which is based upon \code{\link[tern:s_proportion_diff]{tern::s_proportion_diff()}}.\cr
+\item{variables}{Will be passed onto the risk difference function
+(internal function s_risk_diff_val_j), which is based upon \code{\link[tern:s_proportion_diff]{tern::s_proportion_diff()}}.\cr
 See \code{?tern::s_proportion_diff} for details.}
 
 \item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
-\item{method}{Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr}
+\item{method}{Will be passed onto the risk difference function (internal function s_risk_diff_val_j).\cr}
 
-\item{weights_method}{Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr}
+\item{weights_method}{Will be passed onto the risk difference function (internal function s_risk_diff_val_j).\cr}
 
 \item{label}{(\code{string})\cr
 When \code{val} has length 1,
