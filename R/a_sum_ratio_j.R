@@ -68,18 +68,22 @@ a_sum_ratio_j <- function(
   valid_stats <- c("sum", "sum_unique", "ratio", "ratio_unique")
 
   # Validation -----------------------------------------------------------------
+  # Core inputs: df must be a data.frame, .var a single column name present in df
   checkmate::assert_data_frame(df)
   checkmate::assert_string(.var)
   checkmate::assert_names(colnames(df), must.include = .var)
+  # .var column must be numeric (integer, double, or logical coerced to numeric)
   checkmate::assert_numeric(df[[.var]], .var.name = .var)
   checkmate::assert_subset(.stats, choices = valid_stats)
 
+  # Conditional checks: only validate denom_by / id_var when the stat needs them
   needs_ratio <- any(.stats %in% c("ratio", "ratio_unique"))
   needs_unique <- any(.stats %in% c("sum_unique", "ratio_unique"))
 
   if (needs_ratio) {
     checkmate::assert_string(denom_by)
     checkmate::assert_names(colnames(df), must.include = denom_by)
+    # denom_by column must also be numeric
     checkmate::assert_numeric(df[[denom_by]], .var.name = denom_by)
   }
   if (needs_unique) {
@@ -88,15 +92,18 @@ a_sum_ratio_j <- function(
   }
 
   # Helpers (NAs always removed) -----------------------------------------------
+  # Plain sum across all rows
   sum_plain <- function(v) {
     sum(df[[v]], na.rm = TRUE)
   }
 
+  # Deduplicated sum: keep one row per subject, then sum
   sum_unique <- function(v) {
     d <- unique(df[!is.na(df[[v]]), c(id_var, v), drop = FALSE])
     sum(d[[v]], na.rm = TRUE)
   }
 
+  # Returns c(numerator, fraction) or c(numerator, NA) when denominator is 0
   safe_ratio <- function(n, d) {
     if (is.na(d) || d == 0) {
       c(n, NA_real_)
@@ -119,7 +126,7 @@ a_sum_ratio_j <- function(
     ratio_unique = "ratio (unique)"
   )
 
-  # Compute requested stats ----------------------------------------------------
+  # Compute requested stats (each block runs at most once) ---------------------
   n_plain <- if (any(.stats %in% c("sum", "ratio"))) {
     sum_plain(.var)
   } else {
@@ -141,7 +148,7 @@ a_sum_ratio_j <- function(
     NULL
   }
 
-  # Build result list ----------------------------------------------------------
+  # Build result list (only requested stats are included) ----------------------
   x_stats <- list()
   if ("sum" %in% .stats) {
     x_stats[["sum"]] <- n_plain
@@ -156,7 +163,7 @@ a_sum_ratio_j <- function(
     x_stats[["ratio_unique"]] <- safe_ratio(n_unique, d_unique)
   }
 
-  # Resolve formats and labels (caller overrides defaults) ---------------------
+  # Resolve formats and labels (caller overrides take precedence) --------------
   fmts <- default_fmt[names(x_stats)]
   labels <- default_lbl[names(x_stats)]
   if (!is.null(.formats)) {
@@ -167,12 +174,14 @@ a_sum_ratio_j <- function(
   }
 
   # Resolve indent mods and na_str --------------------------------------------
+  # When na_str is set, apply it to every stat row (e.g. "-" or "NE")
   .format_na_strs <- if (!is.null(na_str)) {
     lapply(names(fmts), function(x) na_str)
   } else {
     NULL
   }
 
+  # Return formatted rows for rtables
   in_rows(
     .list = x_stats,
     .formats = as.list(fmts),
