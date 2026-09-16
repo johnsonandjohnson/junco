@@ -107,7 +107,7 @@ a_lsmeans(
   three-dimensional statistic.
 
 - For `a_lsmeans`, a `VertalRowsSection` as returned by
-  [rtables::in_rows](https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html).
+  [rtables::in_rows](https://rdrr.io/pkg/rtables/man/in_rows.html).
 
 ## Functions
 

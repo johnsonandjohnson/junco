@@ -141,19 +141,19 @@ default sorting behavior, they can simply specify their own colpath to use for s
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">ADAE</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="st">"colspan_trt"</span>, <span class="st">"rrisk_header"</span>, <span class="st">"rrisk_label"</span>, <span class="st">"TRT01A"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"colspan_trt"</span>,</span></span>
-<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/trim_levels_to_map.html" class="external-link">trim_levels_to_map</a></span><span class="op">(</span>map <span class="op">=</span> <span class="va">colspan_trt_map</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/trim_levels_to_map.html" class="external-link">trim_levels_to_map</a></span><span class="op">(</span>map <span class="op">=</span> <span class="va">colspan_trt_map</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"TRT01A"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"rrisk_header"</span>, nested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"TRT01A"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"rrisk_header"</span>, nested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"TRT01A"</span>,</span></span>
 <span class="r-in"><span>    labels_var <span class="op">=</span> <span class="st">"rrisk_label"</span>,</span></span>
-<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="st">"Placebo"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="st">"Placebo"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"TRTEMFL"</span>,</span></span>
 <span class="r-in"><span>    <span class="va">a_freq_j</span>,</span></span>
 <span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"hidden"</span>,</span></span>
@@ -164,14 +164,14 @@ default sorting behavior, they can simply specify their own colpath to use for s
 <span class="r-in"><span>      .stats <span class="op">=</span> <span class="st">"count_unique_fraction"</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AEBODSYS"</span>,</span></span>
 <span class="r-in"><span>    split_label <span class="op">=</span> <span class="st">"System Organ Class"</span>,</span></span>
-<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_funcs.html" class="external-link">trim_levels_in_group</a></span><span class="op">(</span><span class="st">"AEDECOD"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_funcs.html" class="external-link">trim_levels_in_group</a></span><span class="op">(</span><span class="st">"AEDECOD"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    label_pos <span class="op">=</span> <span class="st">"topleft"</span>,</span></span>
 <span class="r-in"><span>    section_div <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">" "</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    nested <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"AEBODSYS"</span>,</span></span>
 <span class="r-in"><span>    cfun <span class="op">=</span> <span class="va">a_freq_j</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
@@ -180,7 +180,7 @@ default sorting behavior, they can simply specify their own colpath to use for s
 <span class="r-in"><span>      .stats <span class="op">=</span> <span class="st">"count_unique_fraction"</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"AEDECOD"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_freq_j</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
@@ -190,7 +190,7 @@ default sorting behavior, they can simply specify their own colpath to use for s
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ADAE</span>, alt_counts_df <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ADAE</span>, alt_counts_df <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          Active Study Agent                          Risk Difference (%) (95% CI)       </span>
@@ -206,13 +206,13 @@ default sorting behavior, they can simply specify their own colpath to use for s
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 4             0        2 (50.0%)    1 (33.3%)    -33.3 (-86.7, 20.0)    16.7 (-55.8, 89.1) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Coded Term 5             0            0        1 (33.3%)    -33.3 (-86.7, 20.0)    -33.3 (-86.7, 20.0)</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/sort_at_path.html" class="external-link">sort_at_path</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/sort_at_path.html" class="external-link">sort_at_path</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">result</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"root"</span>, <span class="st">"AEBODSYS"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  scorefun <span class="op">=</span> <span class="fu">jj_complex_scorefun</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/sort_at_path.html" class="external-link">sort_at_path</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/sort_at_path.html" class="external-link">sort_at_path</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">result</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"root"</span>, <span class="st">"AEBODSYS"</span>, <span class="st">"*"</span>, <span class="st">"AEDECOD"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  scorefun <span class="op">=</span> <span class="fu">jj_complex_scorefun</span><span class="op">(</span><span class="op">)</span></span></span>

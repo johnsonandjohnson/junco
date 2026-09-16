@@ -77,24 +77,23 @@ advs[advs[["ABLFL"]] == "Y", "CHG"] <- NA
 
 The `junco` analysis functions are used in combination with the
 `rtables` layout functions,
-[`rtables::analyze`](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html)
-and
-[`rtables::summarize_row_groups`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html),
+[`rtables::analyze`](https://rdrr.io/pkg/rtables/man/analyze.html) and
+[`rtables::summarize_row_groups`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html),
 in the pipeline which creates the `rtables` table. They apply some
 statistical logic to the layout of the `rtables` table. The table layout
 is materialized with the
-[`rtables::build_table`](https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html)
+[`rtables::build_table`](https://rdrr.io/pkg/rtables/man/build_table.html)
 function and the data.
 
 The `junco` analysis functions are functions that can be applied as an
 `afun` in either
-[`rtables::analyze`](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html)
-or as a `cfun` in
-[`rtables::summarize_row_groups`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
+[`rtables::analyze`](https://rdrr.io/pkg/rtables/man/analyze.html) or as
+a `cfun` in
+[`rtables::summarize_row_groups`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html)
 function. This is a slightly different approach to `tern`, where the
 table layout is constructed using `analyze` functions, which are
 wrappers around
-[`rtables::analyze`](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html).
+[`rtables::analyze`](https://rdrr.io/pkg/rtables/man/analyze.html).
 
 Just like `tern` analyze functions, the `junco` analysis functions offer
 various methods useful from the perspective of clinical trials and other
@@ -118,9 +117,8 @@ once.
 
 With `junco` package, this table can be created with several calls to
 the same `a_freq_j` function in a tabulation pipeline using
-[`rtables::analyze`](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html)
-and
-[`rtables::summarize_row_groups`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html).
+[`rtables::analyze`](https://rdrr.io/pkg/rtables/man/analyze.html) and
+[`rtables::summarize_row_groups`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html).
 
 In next paragraph, we’ll describe the difference versus using `tern`
 package, for similar AE table. Differences in how to define the layout
@@ -482,8 +480,9 @@ methods.
 ``` r
 
 tern::get_stats("summarize_ancova")
-#> [1] "n"              "lsmean"         "lsmean_diff"    "lsmean_diff_ci"
-#> [5] "pval"
+#> [1] "n"                   "lsmean"              "lsmean_se"          
+#> [4] "lsmean_ci"           "lsmean_diff"         "lsmean_diff_ci"     
+#> [7] "lsmean_diff_with_ci" "pval"
 tern::get_stats("analyze_vars_numeric")
 #>  [1] "n"               "sum"             "mean"            "sd"             
 #>  [5] "se"              "mean_sd"         "mean_se"         "mean_ci"        

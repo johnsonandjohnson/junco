@@ -116,7 +116,7 @@ s_proportion_diff_j(
 ## Value
 
 - `a_proportion_diff_j()` returns the corresponding list with formatted
-  [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
+  [`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).
 
 &nbsp;
 
@@ -127,7 +127,7 @@ s_proportion_diff_j(
 
 - `a_proportion_diff_j()`: Formatted analysis function which is used as
   `afun` in
-  [`estimate_proportion_diff()`](https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff.html).
+  [`estimate_proportion_diff()`](https://rdrr.io/pkg/tern/man/prop_diff.html).
 
 - `s_proportion_diff_j()`: Statistics function estimating the difference
   in terms of responder proportion.
@@ -136,7 +136,7 @@ s_proportion_diff_j(
 
 The `a_proportion_diff_j()` function has the `_j` suffix to distinguish
 it from
-[`tern::a_proportion_diff()`](https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff.html).
+[`tern::a_proportion_diff()`](https://rdrr.io/pkg/tern/man/prop_diff.html).
 The functions here are a copy from the `tern` package with additional
 features:
 
@@ -235,6 +235,12 @@ s_proportion_diff_j(
 #>      -2.67057      26.78750 
 #> attr(,"label")
 #> [1] "90% CI (CMH, without correction)"
+#> 
+#> $se_diff
+#> se_diff_cmh 
+#>    8.954617 
+#> attr(,"label")
+#> [1] "Standard Error of Difference in Response rate (%)"
 #> 
 #> $diff_est_ci
 #>      diff_cmh diff_ci_cmh_l diff_ci_cmh_u 

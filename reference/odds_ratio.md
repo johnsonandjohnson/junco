@@ -125,7 +125,7 @@ s_odds_ratio_j(
 ## Value
 
 - `a_odds_ratio_j()` returns the corresponding list with formatted
-  [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
+  [`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).
 
 &nbsp;
 
@@ -147,9 +147,9 @@ s_odds_ratio_j(
 
 The `a_odds_ratio_j()` and `s_odds_ratio_j()` functions have the `_j`
 suffix to distinguish them from
-[`tern::a_odds_ratio()`](https://insightsengineering.github.io/tern/latest-tag/reference/odds_ratio.html)
+[`tern::a_odds_ratio()`](https://rdrr.io/pkg/tern/man/odds_ratio.html)
 and
-[`tern::s_odds_ratio()`](https://insightsengineering.github.io/tern/latest-tag/reference/odds_ratio.html),
+[`tern::s_odds_ratio()`](https://rdrr.io/pkg/tern/man/odds_ratio.html),
 respectively. These functions differ as follows:
 
 - Additional `method = 'cmh'` option is provided to calculate the

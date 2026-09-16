@@ -75,7 +75,7 @@ s_kaplan_meier(df, .var, is_event, control = control_surv_time())
   (`list`)  
   parameters for comparison details, specified by using the helper
   function
-  [`tern::control_surv_time()`](https://insightsengineering.github.io/tern/latest-tag/reference/control_surv_time.html).
+  [`tern::control_surv_time()`](https://rdrr.io/pkg/tern/man/control_surv_time.html).
   Some possible parameter options are:
 
   - `conf_level` (`proportion`)  
@@ -93,7 +93,7 @@ s_kaplan_meier(df, .var, is_event, control = control_surv_time())
 ## Value
 
 - `a_kaplan_meier()` returns the corresponding list with formatted
-  [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
+  [`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).
 
 &nbsp;
 

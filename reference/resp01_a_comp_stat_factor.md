@@ -35,7 +35,7 @@ resp01_a_comp_stat_factor(df, .var, include, ...)
 ## Value
 
 The formatted result as
-[`rtables::rcell()`](https://insightsengineering.github.io/rtables/latest-tag/reference/rcell.html).
+[`rtables::rcell()`](https://rdrr.io/pkg/rtables/man/rcell.html).
 
 ## Examples
 

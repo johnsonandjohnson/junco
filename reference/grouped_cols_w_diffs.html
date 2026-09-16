@@ -70,7 +70,7 @@ the main columns, as given by <code>create_colspan_map</code>.</p></dd>
 
 <dt id="arg-combo-map-df">combo_map_df<a class="anchor" aria-label="anchor" href="#arg-combo-map-df"></a></dt>
 <dd><p>(<code>data.frame</code> or <code>NULL</code>). A combination data
-frame as defined by <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html" class="external-link">rtables::add_combo_levels()</a></code> with an additional
+frame as defined by <code><a href="https://rdrr.io/pkg/rtables/man/add_overall_level.html" class="external-link">rtables::add_combo_levels()</a></code> with an additional
 <code>is_control</code> column indicating whether the virtual level will
 act as a reference (<code>TRUE</code>) or active (<code>FALSE</code>) group.</p></dd>
 
@@ -95,13 +95,13 @@ risk difference section of columns</p></dd>
 
 <dt id="arg--main-pre">.main_pre<a class="anchor" aria-label="anchor" href="#arg--main-pre"></a></dt>
 <dd><p>(<code>list</code> of <code>function</code>s). Passed to
-<code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html" class="external-link">rtables::make_split_fun()</a></code> as <code>pre</code> for treatment split in main
+<code><a href="https://rdrr.io/pkg/rtables/man/make_split_fun.html" class="external-link">rtables::make_split_fun()</a></code> as <code>pre</code> for treatment split in main
 structure.</p></dd>
 
 
 <dt id="arg--main-post">.main_post<a class="anchor" aria-label="anchor" href="#arg--main-post"></a></dt>
 <dd><p>(<code>list</code> of <code>function</code>s). Passed to
-<code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html" class="external-link">rtables::make_split_fun()</a></code> as <code>post</code> for treatment split in
+<code><a href="https://rdrr.io/pkg/rtables/man/make_split_fun.html" class="external-link">rtables::make_split_fun()</a></code> as <code>post</code> for treatment split in
 main structure.</p></dd>
 
 
@@ -133,7 +133,7 @@ non-active controls. It is intended for use in layouts that will
 use <code><a href="a_freq_j.html">a_freq_j()</a></code> or similar <code>junco</code>-style analysis functions which
 support risk difference columns and accept a <code>ref_path</code> argument.</p>
 <p>It is equivalent to the following sequence of layout instructions:</p><ol><li><p>splitting on a colspan labeling variable with
-<code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/trim_levels_to_map.html" class="external-link">rtables::trim_levels_to_map()</a></code> as the split function;</p></li>
+<code><a href="https://rdrr.io/pkg/rtables/man/trim_levels_to_map.html" class="external-link">rtables::trim_levels_to_map()</a></code> as the split function;</p></li>
 <li><p>splitting on treatment;</p></li>
 <li><p>adding a (non-nested) overall column acting as the risk difference spanning label; and finally</p></li>
 <li><p>splitting on treatment using <code><a href="make_multicomp_splfun.html">make_multicomp_splfun()</a></code> as the

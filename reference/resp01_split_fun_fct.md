@@ -29,7 +29,7 @@ A split function for use in the response table RESP01 and similar ones.
 
 ## See also
 
-[`rtables::make_split_fun()`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html)
+[`rtables::make_split_fun()`](https://rdrr.io/pkg/rtables/man/make_split_fun.html)
 describing the requirements for this kind of post-processing function.
 
 ## Examples

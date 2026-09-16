@@ -48,5 +48,5 @@ column_stats(
 ## Value
 
 An analysis function (for use with
-[rtables::analyze](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html))
+[rtables::analyze](https://rdrr.io/pkg/rtables/man/analyze.html))
 implementing the specified statistics.

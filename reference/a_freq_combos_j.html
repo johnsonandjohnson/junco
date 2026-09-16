@@ -76,7 +76,7 @@
 
 <dt id="arg-labelstr">labelstr<a class="anchor" aria-label="anchor" href="#arg-labelstr"></a></dt>
 <dd><p>(<code>character</code>)<br> label of the level of the parent split currently being summarized
-(must be present as second argument in Content Row Functions). See <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html" class="external-link">rtables::summarize_row_groups()</a></code>
+(must be present as second argument in Content Row Functions). See <code><a href="https://rdrr.io/pkg/rtables/man/summarize_row_groups.html" class="external-link">rtables::summarize_row_groups()</a></code>
 for more information.</p></dd>
 
 
@@ -183,7 +183,7 @@ a different row label to be presented on the table.<br></p></dd>
 <dd><p>(<code>dataframe</code>)<br> Denominator dataset
 for fraction and relative risk calculations.<br>
 this argument gets populated by the rtables
-split machinery (see <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html" class="external-link">rtables::additional_fun_params</a>).</p></dd>
+split machinery (see <a href="https://rdrr.io/pkg/rtables/man/additional_fun_params.html" class="external-link">rtables::additional_fun_params</a>).</p></dd>
 
 
 <dt id="arg-denom-by">denom_by<a class="anchor" aria-label="anchor" href="#arg-denom-by"></a></dt>
@@ -220,7 +220,7 @@ unmodified default behavior. Can be negative.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>list of requested statistics with formatted <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html" class="external-link">rtables::CellValue()</a></code>.<br></p>
+    <p>list of requested statistics with formatted <code><a href="https://rdrr.io/pkg/rtables/man/CellValue.html" class="external-link">rtables::CellValue()</a></code>.<br></p>
     </div>
 
     <div class="section level2">
@@ -265,13 +265,13 @@ unmodified default behavior. Can be negative.</p></dd>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span>show_colcounts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ACAT1"</span>,</span></span>
-<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu">rtables</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html" class="external-link">add_combo_levels</a></span><span class="op">(</span>combosdf <span class="op">=</span> <span class="va">combodf</span>,</span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span>show_colcounts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ACAT1"</span>,</span></span>
+<span class="r-in"><span>    split_fun <span class="op">=</span> <span class="fu">rtables</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/add_overall_level.html" class="external-link">add_combo_levels</a></span><span class="op">(</span>combosdf <span class="op">=</span> <span class="va">combodf</span>,</span></span>
 <span class="r-in"><span>                 trim <span class="op">=</span> <span class="cn">FALSE</span>, keep_levels <span class="op">=</span> <span class="va">combodf</span><span class="op">$</span><span class="va">valname</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"TRTEMFL"</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"TRTEMFL"</span>,</span></span>
 <span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"hidden"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_freq_combos_j</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
@@ -284,7 +284,7 @@ unmodified default behavior. Can be negative.</p></dd>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, df <span class="op">=</span> <span class="va">ADAE</span>, alt_counts_df <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, df <span class="op">=</span> <span class="va">ADAE</span>, alt_counts_df <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                     A: Drug X                                                            B: Placebo                                                         C: Combination                          </span>

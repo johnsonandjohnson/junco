@@ -3,7 +3,7 @@
 Formats a count together with fraction (and/or denominator) with special
 consideration when count is 0, or fraction is 1.  
 See also:
-[`tern::format_count_fraction_fixed_dp()`](https://insightsengineering.github.io/tern/latest-tag/reference/format_count_fraction_fixed_dp.html)
+[`tern::format_count_fraction_fixed_dp()`](https://rdrr.io/pkg/tern/man/format_count_fraction_fixed_dp.html)
 
 ## Usage
 
@@ -50,14 +50,14 @@ jjcsformat_fraction_count_denom(x, round_type = valid_round_type, output, ...)
 
   (`character(1)`)  
   the type of rounding to perform. See
-  [`formatters::format_value()`](https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html)
+  [`formatters::format_value()`](https://pharmaverse.github.io/formatters/latest-tag/reference/format_value.html)
   for more details.
 
 - output:
 
   (`string`)  
   output type. See
-  [`formatters::format_value()`](https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html)
+  [`formatters::format_value()`](https://pharmaverse.github.io/formatters/latest-tag/reference/format_value.html)
   for more details.
 
 - ...:

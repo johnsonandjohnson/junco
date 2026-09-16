@@ -36,7 +36,7 @@ based on ANCOVA function s_ancova_j."><meta property="og:image" content="https:/
     </div>
 
     <div class="ref-description section level2">
-    <p>Combination of <a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::s_summary</a>, and ANCOVA based estimates for mean and diff between columns,
+    <p>Combination of <a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::s_summary</a>, and ANCOVA based estimates for mean and diff between columns,
 based on ANCOVA function <code>s_ancova_j</code>.</p>
     </div>
 
@@ -115,12 +115,12 @@ by a statistics function.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
 
-<ul><li><p><code>a_summarize_ancova_j()</code> returns the corresponding list with formatted <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html" class="external-link">rtables::CellValue()</a></code>.</p></li>
+<ul><li><p><code>a_summarize_ancova_j()</code> returns the corresponding list with formatted <code><a href="https://rdrr.io/pkg/rtables/man/CellValue.html" class="external-link">rtables::CellValue()</a></code>.</p></li>
 </ul><p>returns the statistics from <code>tern::s_summary(x)</code>, appended with a new statistics based upon ANCOVA</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Combination of <a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::s_summary</a>, and ANCOVA based estimates for mean and diff between columns,
+    <p>Combination of <a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::s_summary</a>, and ANCOVA based estimates for mean and diff between columns,
 based on ANCOVA function <code>s_ancova_j</code></p>
     </div>
     <div class="section level2">
@@ -139,14 +139,14 @@ junco specific <code>ref_path</code> and <code>.spl_context</code> arguments are
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_colcounts.html" class="external-link">add_colcounts</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/add_colcounts.html" class="external-link">add_colcounts</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    vars <span class="op">=</span> <span class="st">"Petal.Length"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_summarize_ancova_j</span>,</span></span>
 <span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"hidden"</span>,</span></span>
-<span class="r-in"><span>    na_str <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/default_na_str.html" class="external-link">default_na_str</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    na_str <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tern/man/default_na_str.html" class="external-link">default_na_str</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    table_names <span class="op">=</span> <span class="st">"unadj"</span>,</span></span>
 <span class="r-in"><span>    var_labels <span class="op">=</span> <span class="st">"Unadjusted comparison"</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
@@ -156,11 +156,11 @@ junco specific <code>ref_path</code> and <code>.spl_context</code> arguments are
 <span class="r-in"><span>      ref_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"setosa"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    vars <span class="op">=</span> <span class="st">"Petal.Length"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_summarize_ancova_j</span>,</span></span>
 <span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"hidden"</span>,</span></span>
-<span class="r-in"><span>    na_str <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/default_na_str.html" class="external-link">default_na_str</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    na_str <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tern/man/default_na_str.html" class="external-link">default_na_str</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    table_names <span class="op">=</span> <span class="st">"adj"</span>,</span></span>
 <span class="r-in"><span>    var_labels <span class="op">=</span> <span class="st">"Adjusted comparison (covariates: Sepal.Length and Sepal.Width)"</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
@@ -172,7 +172,7 @@ junco specific <code>ref_path</code> and <code>.spl_context</code> arguments are
 <span class="r-in"><span>      ref_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"setosa"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                              setosa            versicolor           virginica    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                              (N=50)              (N=50)              (N=50)      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> —————————————————————————————————————————————————————————————————————————————————————————————————</span>

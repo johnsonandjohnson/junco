@@ -248,7 +248,7 @@ CRAN release: 2026-05-10
   [`tt_to_tlgrtf()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md)
 
 - Removed
-  [`s_test_proportion_diff()`](https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff_test.html)
+  [`s_test_proportion_diff()`](https://rdrr.io/pkg/tern/man/prop_diff_test.html)
   and corresponding helper functions, as they are now available as
   needed in the `tern` package.
 

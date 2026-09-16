@@ -154,7 +154,7 @@ tt_to_tlgrtf(
 
   (`character(1)`)  
   the type of rounding to perform. See
-  [`formatters::format_value()`](https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html)
+  [`formatters::format_value()`](https://pharmaverse.github.io/formatters/latest-tag/reference/format_value.html)
   for more details.
 
 - alignments:
@@ -171,7 +171,7 @@ tt_to_tlgrtf(
 
   (`logical(1)`)  
   Whether to validate the table structure using
-  [`rtables::validate_table_struct()`](https://insightsengineering.github.io/rtables/latest-tag/reference/validate_table_struct.html).
+  [`rtables::validate_table_struct()`](https://rdrr.io/pkg/rtables/man/validate_table_struct.html).
   Defaults to `TRUE`. If `FALSE`, a message will be displayed when
   validation fails.
 

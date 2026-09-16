@@ -2,7 +2,7 @@
 
 A function used for creating a data frame containing the map that is
 compatible with the rtables split function
-[`rtables::trim_levels_to_map()`](https://insightsengineering.github.io/rtables/latest-tag/reference/trim_levels_to_map.html).
+[`rtables::trim_levels_to_map()`](https://rdrr.io/pkg/rtables/man/trim_levels_to_map.html).
 
 ## Usage
 
@@ -65,20 +65,20 @@ create_colspan_map(
 
 A data frame that contains the map to be used with the rtables split
 function
-[`rtables::trim_levels_to_map()`](https://insightsengineering.github.io/rtables/latest-tag/reference/trim_levels_to_map.html).
+[`rtables::trim_levels_to_map()`](https://rdrr.io/pkg/rtables/man/trim_levels_to_map.html).
 
 ## Details
 
 This function creates a data frame containing the map that is compatible
 with the rtables split function
-[`rtables::trim_levels_to_map()`](https://insightsengineering.github.io/rtables/latest-tag/reference/trim_levels_to_map.html).
+[`rtables::trim_levels_to_map()`](https://rdrr.io/pkg/rtables/man/trim_levels_to_map.html).
 The levels of the specified trt_var variable will be stored within the
 trt_var variable and the colspan_var variable will contain the
 corresponding spanning header value for each treatment group.
 
 ## See also
 
-[`rtables::add_combo_levels()`](https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html)
+[`rtables::add_combo_levels()`](https://rdrr.io/pkg/rtables/man/add_overall_level.html)
 for creating split functions that utilize combination levels.
 
 ## Examples

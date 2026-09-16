@@ -29,8 +29,7 @@ a_proportion_ci_factor(df, .var, ...)
 
 ## Value
 
-The
-[`rtables::rcell()`](https://insightsengineering.github.io/rtables/latest-tag/reference/rcell.html)
+The [`rtables::rcell()`](https://rdrr.io/pkg/rtables/man/rcell.html)
 result.
 
 ## Examples

@@ -22,7 +22,7 @@ cmp_cfun(df, labelstr, .spl_context, variables, formats)
   (`character`)  
   label of the level of the parent split currently being summarized
   (must be present as second argument in Content Row Functions). See
-  [`rtables::summarize_row_groups()`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
+  [`rtables::summarize_row_groups()`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html)
   for more information.
 
 - .spl_context:
@@ -45,8 +45,7 @@ cmp_cfun(df, labelstr, .spl_context, variables, formats)
 
 ## Value
 
-The
-[`rtables::in_rows()`](https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html)
+The [`rtables::in_rows()`](https://rdrr.io/pkg/rtables/man/in_rows.html)
 result with the counts and proportion statistics.
 
 ## See also

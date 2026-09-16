@@ -1,7 +1,7 @@
 # Workaround statistics function to time point survival estimate with CI
 
 This is a workaround for
-[`tern::s_surv_timepoint()`](https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html),
+[`tern::s_surv_timepoint()`](https://rdrr.io/pkg/tern/man/survival_timepoint.html),
 which adds a statistic containing the time point specific survival
 estimate together with the confidence interval.
 
@@ -97,12 +97,12 @@ s_event_free(
 ## Value
 
 - `s_event_free` returns a list as returned by the
-  [`tern::s_surv_timepoint()`](https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html)
+  [`tern::s_surv_timepoint()`](https://rdrr.io/pkg/tern/man/survival_timepoint.html)
   with an additional three-dimensional statistic `event_free_ci` which
   combines the `event_free_rate` and `rate_ci` statistics.
 
 - `a_event_free` is analogous to
-  [tern::a_surv_timepoint](https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html)
+  [tern::a_surv_timepoint](https://rdrr.io/pkg/tern/man/survival_timepoint.html)
   but with the additional three-dimensional statistic described above
   available via `.stats`.
 
@@ -111,7 +111,7 @@ s_event_free(
 - `a_event_free()`: Formatted analysis function which is used as `afun`.
 
 - `s_event_free()`: Statistics function which works like
-  [`tern::s_surv_timepoint()`](https://insightsengineering.github.io/tern/latest-tag/reference/survival_timepoint.html),
+  [`tern::s_surv_timepoint()`](https://rdrr.io/pkg/tern/man/survival_timepoint.html),
   the difference is that it returns the additional statistic
   `event_free_ci`.
 

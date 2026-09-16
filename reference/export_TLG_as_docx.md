@@ -236,7 +236,7 @@ export_TLG_as_docx(
 
   (`logical(1)`)  
   Whether to validate the table structure using
-  [`rtables::validate_table_struct()`](https://insightsengineering.github.io/rtables/latest-tag/reference/validate_table_struct.html).
+  [`rtables::validate_table_struct()`](https://rdrr.io/pkg/rtables/man/validate_table_struct.html).
   Defaults to `TRUE`. If `FALSE`, a message will be displayed when
   validation fails.
 

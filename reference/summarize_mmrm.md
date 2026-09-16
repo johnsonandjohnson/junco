@@ -107,7 +107,7 @@ a_summarize_mmrm(
 ## Value
 
 - `a_summarize_mmrm()` returns the corresponding list with formatted
-  [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
+  [`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).
 
 ## Functions
 

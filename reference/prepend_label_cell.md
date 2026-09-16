@@ -6,9 +6,8 @@ Adds a label row at the beginning of analysis output objects, such as
 `CellValue`, `list` of `CellValue`s, or `RowsVerticalSection` objects.
 These objects are returned by analysis functions used within the
 **rtables** framework and are typically created via
-[`rtables::rcell()`](https://insightsengineering.github.io/rtables/latest-tag/reference/rcell.html)
-or
-[`rtables::in_rows()`](https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html)
+[`rtables::rcell()`](https://rdrr.io/pkg/rtables/man/rcell.html) or
+[`rtables::in_rows()`](https://rdrr.io/pkg/rtables/man/in_rows.html)
 functions.
 
 This is typically used to introduce section headers (e.g., "Descriptive

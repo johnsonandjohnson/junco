@@ -112,11 +112,11 @@ each non-active treatment:</p>
 <span><span class="co">#&gt; 2 Active Study Agent  Xanomeline Low Dose</span></span>
 <span><span class="co">#&gt; 3                                 Placebo</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/grouped_cols_w_diffs.html">grouped_cols_w_diffs</a></span><span class="op">(</span><span class="va">trt_map</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">adsl</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">adsl</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                Active Study Agent                                                 Risk Differences                        </span></span>
 <span><span class="co">#&gt;    Xanomeline High Dose   Xanomeline Low Dose   Placebo   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Placebo</span></span>
 <span><span class="co">#&gt; ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span></span></code></pre></div>
@@ -131,11 +131,11 @@ in the spanning label for the difference columns.
 <code>grouped_cols_w_diffs</code> accepts <code>diffs_label</code> for
 this purpose:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lyt2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">lyt2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/grouped_cols_w_diffs.html">grouped_cols_w_diffs</a></span><span class="op">(</span><span class="va">trt_map</span>, diffs_label <span class="op">=</span> <span class="st">"Mean Differences"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt2</span>, <span class="va">adsl</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt2</span>, <span class="va">adsl</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                Active Study Agent                                                 Mean Differences                        </span></span>
 <span><span class="co">#&gt;    Xanomeline High Dose   Xanomeline Low Dose   Placebo   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Placebo</span></span>
 <span><span class="co">#&gt; ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span></span></code></pre></div>
@@ -151,11 +151,11 @@ argument. This allows us to use the function unconditionally in our
 layouts while retaining the ability to turn off difference columns ,
 e.g., in shells where they are optional.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lyt_nodiff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">lyt_nodiff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/grouped_cols_w_diffs.html">grouped_cols_w_diffs</a></span><span class="op">(</span><span class="va">trt_map</span>, diff_cols <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt_nodiff</span>, <span class="va">adsl</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt_nodiff</span>, <span class="va">adsl</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                Active Study Agent                      </span></span>
 <span><span class="co">#&gt;    Xanomeline High Dose   Xanomeline Low Dose   Placebo</span></span>
 <span><span class="co">#&gt; ———————————————————————————————————————————————————————</span></span></code></pre></div>
@@ -172,7 +172,7 @@ table.</p>
 <h4 id="including-virtual-combination-arms">Including Virtual Combination Arms<a class="anchor" aria-label="anchor" href="#including-virtual-combination-arms"></a>
 </h4>
 <p>Combination levels are declared via a “combo data.frame” similar to
-those accepted by <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html" class="external-link">rtables::add_combo_levels</a></code>. In particular,
+those accepted by <code><a href="https://rdrr.io/pkg/rtables/man/add_overall_level.html" class="external-link">rtables::add_combo_levels</a></code>. In particular,
 we use a data.frame with the following columns:</p>
 <ul>
 <li>
@@ -209,11 +209,11 @@ specified.</li>
 <span>  <span class="st">"all_active"</span>, <span class="st">"All Xanomeline"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Xanomeline High Dose"</span>, <span class="st">"Xanomeline Low Dose"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">lyt3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="va">lyt3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/grouped_cols_w_diffs.html">grouped_cols_w_diffs</a></span><span class="op">(</span><span class="va">trt_map</span>, combo_map_df <span class="op">=</span> <span class="va">combodf1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; none of the combination levels appeared in the colspan treatment map; adding them automatically.</span></span>
 <span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt3</span>, <span class="va">adsl</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt3</span>, <span class="va">adsl</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                        Active Study Agent                                                                        Risk Differences                                      </span></span>
 <span><span class="co">#&gt;    Xanomeline High Dose   Xanomeline Low Dose   All Xanomeline   Placebo   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Placebo   All Xanomeline vs Placebo</span></span>
 <span><span class="co">#&gt; ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span></span></code></pre></div>
@@ -227,11 +227,11 @@ including the <code>is_control</code> column and setting it to
 <span>  <span class="st">"placebo_redux"</span>, <span class="st">"Double Placebo!!"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">lyt4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="va">lyt4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/grouped_cols_w_diffs.html">grouped_cols_w_diffs</a></span><span class="op">(</span><span class="va">trt_map</span>, combo_map_df <span class="op">=</span> <span class="va">combodf2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; none of the combination levels appeared in the colspan treatment map; adding them automatically.</span></span>
 <span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt4</span>, <span class="va">adsl</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt4</span>, <span class="va">adsl</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                        Active Study Agent                                                                                                                                                        Risk Differences                                                                                                   </span></span>
 <span><span class="co">#&gt;    Xanomeline High Dose   Xanomeline Low Dose   All Xanomeline   Placebo   Double Placebo!!   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Placebo   All Xanomeline vs Placebo   Xanomeline High Dose vs Double Placebo!!   Xanomeline Low Dose vs Double Placebo!!   All Xanomeline vs Double Placebo!!</span></span>
 <span><span class="co">#&gt; ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span></span></code></pre></div>
@@ -261,11 +261,11 @@ arms:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">lyt5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="va">lyt5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/grouped_cols_w_diffs.html">grouped_cols_w_diffs</a></span><span class="op">(</span><span class="va">trt_map</span>, combo_map_df <span class="op">=</span> <span class="va">combodf2</span>, comp_map <span class="op">=</span> <span class="va">comp_map1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; none of the combination levels appeared in the colspan treatment map; adding them automatically.</span></span>
 <span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt5</span>, <span class="va">adsl</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt5</span>, <span class="va">adsl</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                        Active Study Agent                                                                                                    Risk Differences                                               </span></span>
 <span><span class="co">#&gt;    Xanomeline High Dose   Xanomeline Low Dose   All Xanomeline   Placebo   Double Placebo!!   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Double Placebo!!   All Xanomeline vs Double Placebo!!</span></span>
 <span><span class="co">#&gt; ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span></span></code></pre></div>
@@ -280,10 +280,10 @@ to another:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">lyt6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="va">lyt6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/grouped_cols_w_diffs.html">grouped_cols_w_diffs</a></span><span class="op">(</span><span class="va">trt_map</span>, comp_map <span class="op">=</span> <span class="va">comp_map2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt6</span>, <span class="va">adsl</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt6</span>, <span class="va">adsl</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                Active Study Agent                                                                        Risk Differences                                               </span></span>
 <span><span class="co">#&gt;    Xanomeline High Dose   Xanomeline Low Dose   Placebo   Xanomeline High Dose vs Xanomeline Low Dose   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Placebo</span></span>
 <span><span class="co">#&gt; ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span></span></code></pre></div>

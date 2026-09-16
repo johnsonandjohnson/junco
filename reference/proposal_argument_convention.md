@@ -14,7 +14,7 @@ that are used repeatedly to express an analysis.
   (`character`)  
   alignment for table contents (not including labels). When `NULL`,
   `'center'` is applied. See
-  [`formatters::list_valid_aligns()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_aligns()`](https://pharmaverse.github.io/formatters/latest-tag/reference/list_formats.html)
   for a list of all currently supported alignments.
 
 - .all_col_counts:
@@ -22,7 +22,7 @@ that are used repeatedly to express an analysis.
   (`vector` of `integer`)  
   each value represents a global count for a column. Values are taken
   from `alt_counts_df` if specified (see
-  [`rtables::build_table()`](https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html)).
+  [`rtables::build_table()`](https://rdrr.io/pkg/rtables/man/build_table.html)).
 
 - .df_row:
 
@@ -178,7 +178,7 @@ that are used repeatedly to express an analysis.
   (`character`)  
   label of the level of the parent split currently being summarized
   (must be present as second argument in Content Row Functions). See
-  [`rtables::summarize_row_groups()`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
+  [`rtables::summarize_row_groups()`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html)
   for more information.
 
 - lyt:
@@ -191,7 +191,7 @@ that are used repeatedly to express an analysis.
   (`string`)  
   specifies the test used to calculate the p-value for the difference
   between two proportions. For options, see
-  [`tern::s_test_proportion_diff()`](https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff_test.html).
+  [`tern::s_test_proportion_diff()`](https://rdrr.io/pkg/tern/man/prop_diff_test.html).
   Default is `NULL` so no test is performed.
 
 - na.rm:
@@ -231,10 +231,10 @@ that are used repeatedly to express an analysis.
 
   (`flag`)  
   whether a risk difference column is present. When set to `TRUE`,
-  [`tern::add_riskdiff()`](https://insightsengineering.github.io/tern/latest-tag/reference/add_riskdiff.html)
+  [`tern::add_riskdiff()`](https://rdrr.io/pkg/tern/man/add_riskdiff.html)
   must be used as `split_fun` in the prior column split of the table
   layout, specifying which columns should be compared. See
-  [`tern::stat_propdiff_ci()`](https://insightsengineering.github.io/tern/latest-tag/reference/stat_propdiff_ci.html)
+  [`tern::stat_propdiff_ci()`](https://rdrr.io/pkg/tern/man/stat_propdiff_ci.html)
   for details on risk difference calculation.
 
 - rsp:

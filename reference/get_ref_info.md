@@ -21,20 +21,20 @@ get_ref_info(ref_path, .spl_context, .var = NULL)
 
   (`data.frame`)  
   see
-  [rtables::spl_context](https://insightsengineering.github.io/rtables/latest-tag/reference/spl_context.html).
+  [rtables::spl_context](https://rdrr.io/pkg/rtables/man/spl_context.html).
 
 - .var:
 
   (`character`)  
   the variable being analyzed, see
-  [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html).
+  [rtables::additional_fun_params](https://rdrr.io/pkg/rtables/man/additional_fun_params.html).
 
 ## Value
 
 A list with `ref_group` and `in_ref_col`, which can be used as
 `.ref_group` and `.in_ref_col` as if being directly passed to an
 analysis function by `rtables`, see
-[rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html).
+[rtables::additional_fun_params](https://rdrr.io/pkg/rtables/man/additional_fun_params.html).
 
 ## Details
 

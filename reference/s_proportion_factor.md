@@ -51,8 +51,7 @@ s_proportion_factor(
 
 ## Value
 
-The
-[`rtables::in_rows()`](https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html)
+The [`rtables::in_rows()`](https://rdrr.io/pkg/rtables/man/in_rows.html)
 result with the proportion statistics.
 
 ## See also

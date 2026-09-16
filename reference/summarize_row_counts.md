@@ -1,7 +1,7 @@
 # Layout Creating Function Adding Row Counts
 
 This is a simple wrapper of
-[`rtables::summarize_row_groups()`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
+[`rtables::summarize_row_groups()`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html)
 and the main additional value is that we can choose whether we want to
 use the alternative (usually ADSL) data set for the counts (default) or
 use the original data set.
@@ -35,7 +35,7 @@ summarize_row_counts(lyt, label_fstr = "%s", alt_counts = TRUE)
 
 A modified layout where the latest row split now has a row group
 summaries (as created by
-[rtables::summarize_row_groups](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
+[rtables::summarize_row_groups](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html)
 for the counts).
 
 ## Examples

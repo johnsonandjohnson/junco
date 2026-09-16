@@ -136,14 +136,14 @@ contrasts (least-squares means) from the linear ANCOVA model.<br>
 This can be achieved by specifying the argument
 <code>method_combo = "contrasts"</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span></span>
 <span>    <span class="st">"TRT01A"</span>,</span>
 <span>    ref_group <span class="op">=</span> <span class="st">"Placebo"</span>,</span>
-<span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html" class="external-link">add_combo_levels</a></span><span class="op">(</span><span class="va">combodf</span><span class="op">)</span></span>
+<span>    split_fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/add_overall_level.html" class="external-link">add_combo_levels</a></span><span class="op">(</span><span class="va">combodf</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_colcounts.html" class="external-link">add_colcounts</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/add_colcounts.html" class="external-link">add_colcounts</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span>
 <span>    vars <span class="op">=</span> <span class="st">"CHG"</span>,</span>
 <span>    afun <span class="op">=</span> <span class="va">a_summarize_ancova_j</span>,</span>
 <span>    var_labels <span class="op">=</span> <span class="st">"Change from Baseline"</span>,</span>
@@ -157,7 +157,7 @@ This can be achieved by specifying the argument
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">adchg</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">adchg</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                              High Dose             Low Dose               Placebo               Active       </span></span>
 <span><span class="co">#&gt;                                               (N=100)               (N=100)               (N=100)               (N=200)      </span></span>
 <span><span class="co">#&gt; —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span></span>

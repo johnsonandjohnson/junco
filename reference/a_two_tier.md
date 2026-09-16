@@ -1,9 +1,9 @@
 # Two Tier Analysis Function
 
 The analysis function used as an `afun` in
-[analyze](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html).
-This function simulates a final additional level of nesting with a
-traditional analyze call inside it.
+[analyze](https://rdrr.io/pkg/rtables/man/analyze.html). This function
+simulates a final additional level of nesting with a traditional analyze
+call inside it.
 
 This makes it possible to create what *appear to be* group summary or
 content rows and to *optionally or conditionally* generate one or more
@@ -46,7 +46,7 @@ a_two_tier(
   (`character`)  
   label of the level of the parent split currently being summarized
   (must be present as second argument in Content Row Functions). See
-  [`rtables::summarize_row_groups()`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
+  [`rtables::summarize_row_groups()`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html)
   for more information.
 
 - .var:
@@ -109,7 +109,7 @@ a_two_tier(
   (`dataframe`)  
   denominator dataset for fraction and relative risk calculations.  
   this argument gets populated by the rtables split machinery (see
-  [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html)).
+  [rtables::additional_fun_params](https://rdrr.io/pkg/rtables/man/additional_fun_params.html)).
 
 - ...:
 

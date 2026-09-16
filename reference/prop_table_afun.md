@@ -36,7 +36,7 @@ prop_table_afun(x, .spl_context, formats, add_total_level = FALSE)
 ## Value
 
 A `VerticalRowsSection` as returned by
-[rtables::in_rows](https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html).
+[rtables::in_rows](https://rdrr.io/pkg/rtables/man/in_rows.html).
 
 ## Details
 

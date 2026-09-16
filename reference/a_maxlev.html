@@ -59,7 +59,7 @@ experienced by a subject is used for reporting."><meta property="og:image" conte
 
     <div class="ref-description section level2">
     <p>A formatted analysis function used as an <code>afun</code> in
-<a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a> and as a <code>cfun</code> in <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a>.</p>
+<a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a> and as a <code>cfun</code> in <a href="https://rdrr.io/pkg/rtables/man/summarize_row_groups.html" class="external-link">summarize_row_groups</a>.</p>
 <p>It computes count and proportion statistics for the maximum level of an
 ordered factor, <code>df[[.var]]</code>, for each unique subject in <code>df[[id]]</code>.
 Specifically, for each subject, the function identifies the highest level
@@ -98,7 +98,7 @@ experienced by a subject is used for reporting.</p>
 
 <dt id="arg-labelstr">labelstr<a class="anchor" aria-label="anchor" href="#arg-labelstr"></a></dt>
 <dd><p>(<code>character</code>)<br> label of the level of the parent split currently being summarized
-(must be present as second argument in Content Row Functions). See <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html" class="external-link">rtables::summarize_row_groups()</a></code>
+(must be present as second argument in Content Row Functions). See <code><a href="https://rdrr.io/pkg/rtables/man/summarize_row_groups.html" class="external-link">rtables::summarize_row_groups()</a></code>
 for more information.</p></dd>
 
 
@@ -122,7 +122,7 @@ denominator for proportions. This is required when the same subject appears
 multiple times in the dataset due to treatment sequences.
 <code>colnames(.alt_df_full)</code> must be a superset of <code>id</code>.
 This argument gets populated by the rtables split machinery
-(see <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html" class="external-link">rtables::additional_fun_params</a>).</p></dd>
+(see <a href="https://rdrr.io/pkg/rtables/man/additional_fun_params.html" class="external-link">rtables::additional_fun_params</a>).</p></dd>
 
 
 <dt id="arg-any-level">any_level<a class="anchor" aria-label="anchor" href="#arg-any-level"></a></dt>
@@ -178,21 +178,21 @@ argument. This serves as a temporary workaround until the next version of
 <span class="r-in"><span>  levels <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"TRT"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_col.html" class="external-link">add_overall_col</a></span><span class="op">(</span><span class="st">"Total"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AESEV"</span>, split_fun <span class="op">=</span> <span class="va">aesevall_spf</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"TRT"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/add_overall_col.html" class="external-link">add_overall_col</a></span><span class="op">(</span><span class="st">"Total"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AESEV"</span>, split_fun <span class="op">=</span> <span class="va">aesevall_spf</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/summarize_row_groups.html" class="external-link">summarize_row_groups</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"AESEV"</span>,</span></span>
 <span class="r-in"><span>    cfun <span class="op">=</span> <span class="va">a_maxlev</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"ID"</span>, any_level <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"AESEV"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_maxlev</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">my_adae</span>, alt_counts_df <span class="op">=</span> <span class="va">my_adsl</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">my_adae</span>, alt_counts_df <span class="op">=</span> <span class="va">my_adsl</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  a           b           c         Total  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ——————————————————————————————————————————————————————————</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Any AE       2 (40.0%)   2 (40.0%)   2 (40.0%)   4 (80.0%)</span>

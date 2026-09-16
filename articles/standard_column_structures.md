@@ -115,7 +115,7 @@ and comparisons between arms displayed in your table.
 
 Combination levels are declared via a “combo data.frame” similar to
 those accepted by
-[`rtables::add_combo_levels`](https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html).
+[`rtables::add_combo_levels`](https://rdrr.io/pkg/rtables/man/add_overall_level.html).
 In particular, we use a data.frame with the following columns:
 
 - **`valname`** - (`character`) Name of the combination level (as it

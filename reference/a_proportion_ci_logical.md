@@ -30,7 +30,7 @@ a_proportion_ci_logical(x, .alt_df, conf_level, method, formats)
 
   (`string`)  
   please see
-  [`tern::s_proportion()`](https://insightsengineering.github.io/tern/latest-tag/reference/estimate_proportion.html)
+  [`tern::s_proportion()`](https://rdrr.io/pkg/tern/man/estimate_proportion.html)
   for possible methods.
 
 - formats:
@@ -41,8 +41,7 @@ a_proportion_ci_logical(x, .alt_df, conf_level, method, formats)
 
 ## Value
 
-The
-[`rtables::rcell()`](https://insightsengineering.github.io/rtables/latest-tag/reference/rcell.html)
+The [`rtables::rcell()`](https://rdrr.io/pkg/rtables/man/rcell.html)
 result.
 
 ## Examples

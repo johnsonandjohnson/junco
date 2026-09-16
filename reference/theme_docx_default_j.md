@@ -42,7 +42,7 @@ theme_docx_default_j(
   of c("header", "content_rows", "label_rows", "top_left"). The first
   one renders all column names bold (not topleft content). The second
   and third option use
-  [`formatters::make_row_df()`](https://insightsengineering.github.io/formatters/latest-tag/reference/make_row_df.html)
+  [`formatters::make_row_df()`](https://pharmaverse.github.io/formatters/latest-tag/reference/make_row_df.html)
   to render content or/and label rows as bold.  
   (optional) Default =
   `c("header", "content_rows", "label_rows", "top_left")`.

@@ -130,7 +130,7 @@ head(tbl3)
 ```
 
 `rtables`’ default column widths (implemented via
-[`formatters::propose_column_widths`](https://insightsengineering.github.io/formatters/latest-tag/reference/propose_column_widths.html))
+[`formatters::propose_column_widths`](https://pharmaverse.github.io/formatters/latest-tag/reference/propose_column_widths.html))
 takes the maximum width required for a *label or value* for each column
 (and the row-label pseudo column):
 

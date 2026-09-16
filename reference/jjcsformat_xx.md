@@ -1,7 +1,7 @@
 # Utility for specifying custom formats
 
 Utility for specifying custom formats that can be used as a format in
-[`formatters::format_value`](https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html)
+[`formatters::format_value`](https://pharmaverse.github.io/formatters/latest-tag/reference/format_value.html)
 
 A function factory to generate formatting functions for p-value
 formatting that support rounding close to the significance level
@@ -62,7 +62,7 @@ jjcsformat_range_fct(str, censor_char = "+")
 
 Either a supported format string, or a formatting function that can be
 used as format in
-[`formatters::format_value`](https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html)
+[`formatters::format_value`](https://pharmaverse.github.io/formatters/latest-tag/reference/format_value.html)
 
 The p-value in the standard format. If `count` is 0, the format is `0`.
 If it is smaller than 0.001, then `<0.001`, if it is larger than 0.999,

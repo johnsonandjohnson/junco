@@ -118,9 +118,9 @@ a_freq_resp_var_j(
 ## Value
 
 Formatted analysis function which is used as `afun` in
-[`analyze_vars()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html)
+[`analyze_vars()`](https://rdrr.io/pkg/tern/man/analyze_variables.html)
 and as `cfun` in
-[`summarize_row_groups()`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html).
+[`summarize_row_groups()`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html).
 
 ## Examples
 

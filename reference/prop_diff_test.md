@@ -55,7 +55,7 @@ a_test_proportion_diff(
 - ...:
 
   Additional arguments passed to
-  [`tern::s_test_proportion_diff()`](https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff_test.html),
+  [`tern::s_test_proportion_diff()`](https://rdrr.io/pkg/tern/man/prop_diff_test.html),
   including:
 
   - `method` (`string`)  
@@ -88,7 +88,7 @@ a_test_proportion_diff(
 
 - `a_test_proportion_diff()` returns the corresponding list with
   formatted
-  [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
+  [`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).
 
 ## Functions
 

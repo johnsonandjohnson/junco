@@ -99,7 +99,7 @@ control or '-1' for 1-sided with smaller than control alternative hypothesis.</p
 
 <dt id="arg-labelstr">labelstr<a class="anchor" aria-label="anchor" href="#arg-labelstr"></a></dt>
 <dd><p>(<code>character</code>)<br> label of the level of the parent split currently being summarized
-(must be present as second argument in Content Row Functions). See <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html" class="external-link">rtables::summarize_row_groups()</a></code>
+(must be present as second argument in Content Row Functions). See <code><a href="https://rdrr.io/pkg/rtables/man/summarize_row_groups.html" class="external-link">rtables::summarize_row_groups()</a></code>
 for more information.</p></dd>
 
 
@@ -128,7 +128,7 @@ variable.</p></dd>
 
 
 <dt id="arg-lyt">lyt<a class="anchor" aria-label="anchor" href="#arg-lyt"></a></dt>
-<dd><p>(<code>layout</code>)<br> empty layout, i.e. result of <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">rtables::basic_table()</a></code></p></dd>
+<dd><p>(<code>layout</code>)<br> empty layout, i.e. result of <code><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">rtables::basic_table()</a></code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -158,7 +158,7 @@ contains additional subgroup row split).</p>
 <span class="r-in"><span>  weights_emmeans <span class="op">=</span> <span class="st">"equal"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">anl</span> <span class="op">&lt;-</span> <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">summarize_lsmeans_wide</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    variables <span class="op">=</span> <span class="va">variables</span>,</span></span>
 <span class="r-in"><span>    ref_level <span class="op">=</span> <span class="va">fit</span><span class="op">$</span><span class="va">ref_level</span>,</span></span>
@@ -166,7 +166,7 @@ contains additional subgroup row split).</p>
 <span class="r-in"><span>    pval_sided <span class="op">=</span> <span class="st">"2"</span>,</span></span>
 <span class="r-in"><span>    conf_level <span class="op">=</span> <span class="fl">0.8</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">anl</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">anl</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Reference Group                    Testing Group                                                         Testing-Reference                    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Treatment   N    LS Mean    SE    Treatment   N    LS Mean    SE    M. S. Error   Error DF   LS Mean    SE       80% CI      2-sided p-value~[super a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span>

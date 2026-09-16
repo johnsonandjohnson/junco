@@ -1,7 +1,7 @@
 # Shortcut for Creating Custom Column Splits
 
 This is a shortcut for a common use of
-[`rtables::make_split_result()`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_result.html)
+[`rtables::make_split_result()`](https://rdrr.io/pkg/rtables/man/make_split_result.html)
 where you need to create custom column splits with different labels but
 using the same full dataset for each column. It automatically sets up
 the values, datasplit (using the same full dataset for each column), and
@@ -28,4 +28,4 @@ short_split_result(..., fulldf)
 ## Value
 
 The result from
-[`rtables::make_split_result()`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_result.html).
+[`rtables::make_split_result()`](https://rdrr.io/pkg/rtables/man/make_split_result.html).

@@ -1,7 +1,7 @@
 # ANCOVA Summary Function
 
 Combination of
-[tern::s_summary](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html),
+[tern::s_summary](https://rdrr.io/pkg/tern/man/analyze_variables.html),
 and ANCOVA based estimates for mean and diff between columns, based on
 ANCOVA function `s_ancova_j`.
 
@@ -91,7 +91,7 @@ s_summarize_ancova_j(df, .var, .df_row, .ref_group, .in_ref_col, ...)
 ## Value
 
 - `a_summarize_ancova_j()` returns the corresponding list with formatted
-  [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
+  [`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).
 
 returns the statistics from `tern::s_summary(x)`, appended with a new
 statistics based upon ANCOVA
@@ -99,7 +99,7 @@ statistics based upon ANCOVA
 ## Details
 
 Combination of
-[tern::s_summary](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html),
+[tern::s_summary](https://rdrr.io/pkg/tern/man/analyze_variables.html),
 and ANCOVA based estimates for mean and diff between columns, based on
 ANCOVA function `s_ancova_j`
 

@@ -1,7 +1,7 @@
 # Workaround statistics function to add HR with CI
 
 This is a workaround for
-[`tern::s_coxph_pairwise()`](https://insightsengineering.github.io/tern/latest-tag/reference/survival_coxph_pairwise.html),
+[`tern::s_coxph_pairwise()`](https://rdrr.io/pkg/tern/man/survival_coxph_pairwise.html),
 which adds a statistic containing the hazard ratio estimate together
 with the confidence interval.
 
@@ -118,7 +118,7 @@ s_coxph_hr(
 ## Value
 
 - `s_coxph_hr` returns a list containing the same statistics returned by
-  [tern::s_coxph_pairwise](https://insightsengineering.github.io/tern/latest-tag/reference/survival_coxph_pairwise.html)
+  [tern::s_coxph_pairwise](https://rdrr.io/pkg/tern/man/survival_coxph_pairwise.html)
   and the additional `lr_stat_df` statistic.
 
 - `a_coxph_hr` returns a `VerticalRowsSection` object.
@@ -128,7 +128,7 @@ s_coxph_hr(
 - `a_coxph_hr()`: Formatted analysis function which is used as `afun`.
 
 - `s_coxph_hr()`: Statistics function forked from
-  [`tern::s_coxph_pairwise()`](https://insightsengineering.github.io/tern/latest-tag/reference/survival_coxph_pairwise.html).
+  [`tern::s_coxph_pairwise()`](https://rdrr.io/pkg/tern/man/survival_coxph_pairwise.html).
   The difference is that it returns the additional statistic
   `lr_stat_df` (log rank statistic with degrees of freedom).
 

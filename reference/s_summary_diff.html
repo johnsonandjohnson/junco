@@ -48,7 +48,7 @@ This statistic is applicable only to numeric variables."><meta property="og:imag
     <div class="ref-description section level2">
     <p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></p>
 <p>Computes descriptive statistics for a single variable <code>df[[.var]]</code> using
-<code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::s_summary()</a></code>, which dispatches type-specific methods depending on the
+<code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::s_summary()</a></code>, which dispatches type-specific methods depending on the
 S3 class of the input (e.g., character, factor, logical, numeric).</p>
 <p>Optionally, it computes a difference in means with confidence interval
 between <code>df[[.var]]</code> and <code>.ref_group[[.var]]</code> using <code><a href="s_diff_mean_ci.html">s_diff_mean_ci()</a></code>.
@@ -63,7 +63,7 @@ This statistic is applicable only to numeric variables.</p>
 <span>  .stats <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  .ref_group <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  .in_ref_col <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  control <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/control_analyze_vars.html" class="external-link">control_analyze_vars</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  control <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tern/man/control_analyze_vars.html" class="external-link">control_analyze_vars</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -79,7 +79,7 @@ This statistic is applicable only to numeric variables.</p>
 <dt id="arg--var">.var<a class="anchor" aria-label="anchor" href="#arg--var"></a></dt>
 <dd><p>(<code>character(1)</code>)<br> Name of the column in <code>df</code> containing the
 values for which statistics are computed. The variable type is handled by
-the corresponding methods of <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::s_summary()</a></code>.
+the corresponding methods of <code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::s_summary()</a></code>.
 The <code>diff_mean_ci</code> statistic is only valid when <code>df[[.var]]</code> is numeric.</p></dd>
 
 
@@ -99,13 +99,13 @@ If <code>NULL</code>, all available statistics for numerical data are computed.<
 
 
 <dt id="arg-control">control<a class="anchor" aria-label="anchor" href="#arg-control"></a></dt>
-<dd><p>(<code>list</code>)<br> List of control options passed to <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::s_summary()</a></code>.
+<dd><p>(<code>list</code>)<br> List of control options passed to <code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::s_summary()</a></code>.
 If <em>diff_mean_ci</em> statistic is requested, <code>control$conf_level</code>
 specifies the confidence level used for the interval.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::s_summary()</a></code> and to
+<dd><p>Additional arguments passed to <code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::s_summary()</a></code> and to
 <code><a href="s_diff_mean_ci.html">s_diff_mean_ci()</a></code> when <em>diff_mean_ci</em> is computed.</p></dd>
 
 </dl></div>

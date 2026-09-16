@@ -1,9 +1,9 @@
 # Calculate Count and Percentage of the Maximum Level of an Ordered Factor per Subject.
 
 A formatted analysis function used as an `afun` in
-[analyze](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html)
-and as a `cfun` in
-[summarize_row_groups](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html).
+[analyze](https://rdrr.io/pkg/rtables/man/analyze.html) and as a `cfun`
+in
+[summarize_row_groups](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html).
 
 It computes count and proportion statistics for the maximum level of an
 ordered factor, `df[[.var]]`, for each unique subject in `df[[id]]`.
@@ -45,7 +45,7 @@ a_maxlev(
   (`character`)  
   label of the level of the parent split currently being summarized
   (must be present as second argument in Content Row Functions). See
-  [`rtables::summarize_row_groups()`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
+  [`rtables::summarize_row_groups()`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html)
   for more information.
 
 - .var:
@@ -73,7 +73,7 @@ a_maxlev(
   due to treatment sequences. `colnames(.alt_df_full)` must be a
   superset of `id`. This argument gets populated by the rtables split
   machinery (see
-  [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html)).
+  [rtables::additional_fun_params](https://rdrr.io/pkg/rtables/man/additional_fun_params.html)).
 
 - any_level:
 

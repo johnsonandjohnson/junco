@@ -3,7 +3,7 @@
 **\[experimental\]**
 
 Computes descriptive statistics for a single variable `df[[.var]]` using
-[`tern::s_summary()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html),
+[`tern::s_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html),
 which dispatches type-specific methods depending on the S3 class of the
 input (e.g., character, factor, logical, numeric).
 
@@ -39,7 +39,7 @@ s_summary_diff(
   Name of the column in `df` containing the values for which statistics
   are computed. The variable type is handled by the corresponding
   methods of
-  [`tern::s_summary()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html).
+  [`tern::s_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html).
   The `diff_mean_ci` statistic is only valid when `df[[.var]]` is
   numeric.
 
@@ -65,14 +65,14 @@ s_summary_diff(
 
   (`list`)  
   List of control options passed to
-  [`tern::s_summary()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html).
+  [`tern::s_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html).
   If *diff_mean_ci* statistic is requested, `control$conf_level`
   specifies the confidence level used for the interval.
 
 - ...:
 
   Additional arguments passed to
-  [`tern::s_summary()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html)
+  [`tern::s_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html)
   and to
   [`s_diff_mean_ci()`](https://johnsonandjohnson.github.io/junco/reference/s_diff_mean_ci.md)
   when *diff_mean_ci* is computed.

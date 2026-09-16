@@ -6,7 +6,7 @@ Utility functions to get valid statistic methods for different method
 groups (`.stats`) and their associated formats (`.formats`), labels
 (`.labels`), and indent modifiers (`.indent_mods`). This utility is used
 across `junco`, but some of its working principles can be seen in
-[`tern::analyze_vars()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html).
+[`tern::analyze_vars()`](https://rdrr.io/pkg/tern/man/analyze_variables.html).
 
 ## Usage
 
@@ -108,7 +108,7 @@ junco_default_indents
   (named `vector`)  
   custom formats to use instead of defaults. Can be a character vector
   with values from
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://pharmaverse.github.io/formatters/latest-tag/reference/list_formats.html)
   or custom format functions. Defaults to `NULL` for any rows with no
   value is provided.
 
@@ -174,13 +174,13 @@ junco_default_indents
 &nbsp;
 
 - `format_stats()` returns the correspondingly formatted
-  [`rtables::in_rows()`](https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html)
+  [`rtables::in_rows()`](https://rdrr.io/pkg/rtables/man/in_rows.html)
   result.
 
 ## Details
 
 Current choices for `type` are `counts` and `numeric` for
-[`tern::analyze_vars()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html)
+[`tern::analyze_vars()`](https://rdrr.io/pkg/tern/man/analyze_variables.html)
 and affect `junco_get_stats()`.
 
 ## Functions
@@ -231,4 +231,4 @@ labels.
 
 Formats in `tern` or `junco` and `rtables` can be functions that take in
 the table cell value and return a string. This is well documented in
-[`vignette('custom_appearance', package = 'rtables')`](https://insightsengineering.github.io/rtables/latest-tag/articles/custom_appearance.html).
+[`vignette('custom_appearance', package = 'rtables')`](https://cran.rstudio.com/web/packages/rtables/vignettes/custom_appearance.html).

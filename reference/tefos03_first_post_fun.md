@@ -10,5 +10,5 @@ tefos03_first_post_fun(ret, spl, fulldf, .spl_context)
 
 ## See also
 
-[`rtables::make_split_fun()`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html)
+[`rtables::make_split_fun()`](https://rdrr.io/pkg/rtables/man/make_split_fun.html)
 for details.

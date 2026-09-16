@@ -3,7 +3,7 @@
 **\[experimental\]**
 
 This function wraps
-[`tern::a_summary()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html)
+[`tern::a_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html)
 and applies junco-specific defaults for formatting-related arguments
 when they are not explicitly provided by the user.
 
@@ -19,7 +19,7 @@ In particular, default values are generated for:
   [`junco_get_indents_from_stats()`](https://johnsonandjohnson.github.io/junco/reference/default_stats_formats_labels.md)
 
 If `.stats` is not provided or is `NULL`, the default statistics from
-[`tern::get_stats()`](https://insightsengineering.github.io/tern/latest-tag/reference/default_stats_formats_labels.html)
+[`tern::get_stats()`](https://rdrr.io/pkg/tern/man/default_stats_formats_labels.html)
 are used.
 
 ## Usage
@@ -46,7 +46,7 @@ a_summary_j(
 - ...:
 
   additional arguments passed to
-  [`s_summary()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html),
+  [`s_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html),
   including:
 
   - `denom`: (`string`) See parameter description below.
@@ -79,7 +79,7 @@ a_summary_j(
   (`character`)  
   names of the statistics that are passed directly to name single
   statistics (`.stats`). This option is visible when producing
-  [`rtables::as_result_df()`](https://insightsengineering.github.io/rtables/latest-tag/reference/data.frame_export.html)
+  [`rtables::as_result_df()`](https://rdrr.io/pkg/rtables/man/data.frame_export.html)
   with `make_ard = TRUE`.
 
 - .formats:
@@ -103,7 +103,7 @@ a_summary_j(
 ## Value
 
 Returns the same type of output as
-[`tern::a_summary()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html),
+[`tern::a_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html),
 with optional junco-based default formatting applied.
 
 ## Details
@@ -115,8 +115,8 @@ fully specified.
 
 ## See also
 
-[`tern::a_summary()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html),
-[`tern::get_stats()`](https://insightsengineering.github.io/tern/latest-tag/reference/default_stats_formats_labels.html)
+[`tern::a_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html),
+[`tern::get_stats()`](https://rdrr.io/pkg/tern/man/default_stats_formats_labels.html)
 
 ## Examples
 

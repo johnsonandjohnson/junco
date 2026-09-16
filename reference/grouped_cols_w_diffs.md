@@ -34,7 +34,7 @@ grouped_cols_w_diffs(
 - combo_map_df:
 
   (`data.frame` or `NULL`). A combination data frame as defined by
-  [`rtables::add_combo_levels()`](https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html)
+  [`rtables::add_combo_levels()`](https://rdrr.io/pkg/rtables/man/add_overall_level.html)
   with an additional `is_control` column indicating whether the virtual
   level will act as a reference (`TRUE`) or active (`FALSE`) group.
 
@@ -57,13 +57,13 @@ grouped_cols_w_diffs(
 - .main_pre:
 
   (`list` of `function`s). Passed to
-  [`rtables::make_split_fun()`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html)
+  [`rtables::make_split_fun()`](https://rdrr.io/pkg/rtables/man/make_split_fun.html)
   as `pre` for treatment split in main structure.
 
 - .main_post:
 
   (`list` of `function`s). Passed to
-  [`rtables::make_split_fun()`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html)
+  [`rtables::make_split_fun()`](https://rdrr.io/pkg/rtables/man/make_split_fun.html)
   as `post` for treatment split in main structure.
 
 - .rr_pre:
@@ -98,7 +98,7 @@ difference columns and accept a `ref_path` argument.
 It is equivalent to the following sequence of layout instructions:
 
 1.  splitting on a colspan labeling variable with
-    [`rtables::trim_levels_to_map()`](https://insightsengineering.github.io/rtables/latest-tag/reference/trim_levels_to_map.html)
+    [`rtables::trim_levels_to_map()`](https://rdrr.io/pkg/rtables/man/trim_levels_to_map.html)
     as the split function;
 
 2.  splitting on treatment;

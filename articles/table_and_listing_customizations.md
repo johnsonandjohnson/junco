@@ -177,7 +177,7 @@ the
 [`junco::tt_to_tlgrtf`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md)
 function can be called with the `fontspec` argument included. The
 `fontspec` argument will specify a
-[`formatters::font_spec`](https://insightsengineering.github.io/formatters/latest-tag/reference/font_spec.html)
+[`formatters::font_spec`](https://pharmaverse.github.io/formatters/latest-tag/reference/font_spec.html)
 function call.
 
 Example of Table with Font Size of 8-pt
@@ -549,19 +549,19 @@ Sometimes it is necessary to add a combined column to a table, which
 contains aggregated data from multiple columns.
 
 The creation of a combined column can be achieved by leveraging
-[`rtables::add_combo_facet`](https://insightsengineering.github.io/rtables/latest-tag/reference/add_combo_facet.html).
+[`rtables::add_combo_facet`](https://rdrr.io/pkg/rtables/man/add_combo_facet.html).
 In the example below, we want to add a column named “Combined”, that
 aggregates the data from the “Example Drug 5 mg”, “Example Drug 10 mg”,
 and “Example Drug 20 mg” columns. This can be achieved by creating an
 object named “add_combo”, that calls
-[`rtables::add_combo_facet`](https://insightsengineering.github.io/rtables/latest-tag/reference/add_combo_facet.html),
+[`rtables::add_combo_facet`](https://rdrr.io/pkg/rtables/man/add_combo_facet.html),
 which creates a new column from other columns in the table. A split
 function can then be constructed using
-[`rtables::make_split_fun`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html),
+[`rtables::make_split_fun`](https://rdrr.io/pkg/rtables/man/make_split_fun.html),
 where the “post” argument contains the “add_combo” object, which calls
-[`rtables::add_combo_facet`](https://insightsengineering.github.io/rtables/latest-tag/reference/add_combo_facet.html).
+[`rtables::add_combo_facet`](https://rdrr.io/pkg/rtables/man/add_combo_facet.html).
 The split function is then included in the
-[`rtables::split_cols_by`](https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html)
+[`rtables::split_cols_by`](https://rdrr.io/pkg/rtables/man/split_cols_by.html)
 function call for the TRT01A variable.
 
 The snippet of code of interest is as follows.
@@ -723,13 +723,13 @@ This can be achieved by creating an object that calls
 [`junco::cond_rm_facets`](https://johnsonandjohnson.github.io/junco/reference/cond_rm_facets.md),
 which removes user-specified columns from facets. A split function can
 then be constructed using
-[`rtables::make_split_fun`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html),
+[`rtables::make_split_fun`](https://rdrr.io/pkg/rtables/man/make_split_fun.html),
 where the”post” argument contains the “add_combo” object, which calls
-[`rtables::add_combo_facet`](https://insightsengineering.github.io/rtables/latest-tag/reference/add_combo_facet.html),
+[`rtables::add_combo_facet`](https://rdrr.io/pkg/rtables/man/add_combo_facet.html),
 and the “rm_combo_from_placebo” object, which calls
 [`junco::cond_rm_facets`](https://johnsonandjohnson.github.io/junco/reference/cond_rm_facets.md).
 Similar to above, the split function is then included in the
-[`rtables::split_cols_by`](https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html)
+[`rtables::split_cols_by`](https://rdrr.io/pkg/rtables/man/split_cols_by.html)
 function call for the TRT01A variable.
 
 The additional code required for to produce the desired result is as
@@ -1961,7 +1961,7 @@ specifying the `page_by` argument with a value of “TRUE”. In the
 following example, the table is being split by the SEX variable. When
 specifying `page_by` = “TRUE”, each new observed value of SEX (and the
 subsequent rows generated form the
-[`rtables::analyze`](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html)
+[`rtables::analyze`](https://rdrr.io/pkg/rtables/man/analyze.html)
 function call) will be separated by a page break.
 
 ``` r

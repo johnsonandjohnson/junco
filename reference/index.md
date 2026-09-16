@@ -56,7 +56,7 @@ common table layouts.
   **\[experimental\]** :
 
   Wrapper around
-  [`tern::a_summary()`](https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html)
+  [`tern::a_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html)
   with junco-specific defaults
 
 - [`a_two_tier()`](https://johnsonandjohnson.github.io/junco/reference/a_two_tier.md)

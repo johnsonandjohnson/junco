@@ -14,7 +14,7 @@ h_extract_coxreg_multivar(x)
 
   (`coxreg.multivar`)  
   from
-  [`tern::fit_coxreg_multivar()`](https://insightsengineering.github.io/tern/latest-tag/reference/fit_coxreg.html).
+  [`tern::fit_coxreg_multivar()`](https://rdrr.io/pkg/tern/man/fit_coxreg.html).
 
 ## Value
 

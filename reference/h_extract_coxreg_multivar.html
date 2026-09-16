@@ -47,7 +47,7 @@
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>(<code>coxreg.multivar</code>)<br> from <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/fit_coxreg.html" class="external-link">tern::fit_coxreg_multivar()</a></code>.</p></dd>
+<dd><p>(<code>coxreg.multivar</code>)<br> from <code><a href="https://rdrr.io/pkg/tern/man/fit_coxreg.html" class="external-link">tern::fit_coxreg_multivar()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -59,7 +59,7 @@ hr_ci (confidence interval for hazard ratio), and labels (formatted term labels)
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">anl</span> <span class="op">&lt;-</span> <span class="fu">tern</span><span class="fu">::</span><span class="va"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/ex_data.html" class="external-link">tern_ex_adtte</a></span> <span class="op">|&gt;</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">anl</span> <span class="op">&lt;-</span> <span class="fu">tern</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tern/man/ex_data.html" class="external-link">tern_ex_adtte</a></span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>EVENT <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">CNSR</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">variables</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
@@ -69,12 +69,12 @@ hr_ci (confidence interval for hazard ratio), and labels (formatted term labels)
 <span class="r-in"><span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SEX"</span>, <span class="st">"AGE"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">control</span> <span class="op">&lt;-</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/control_coxreg.html" class="external-link">control_coxreg</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">control</span> <span class="op">&lt;-</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tern/man/control_coxreg.html" class="external-link">control_coxreg</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  conf_level <span class="op">=</span> <span class="fl">0.9</span>,</span></span>
 <span class="r-in"><span>  ties <span class="op">=</span> <span class="st">"efron"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/fit_coxreg.html" class="external-link">fit_coxreg_multivar</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tern/man/fit_coxreg.html" class="external-link">fit_coxreg_multivar</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">anl</span>,</span></span>
 <span class="r-in"><span>  variables <span class="op">=</span> <span class="va">variables</span>,</span></span>
 <span class="r-in"><span>  control <span class="op">=</span> <span class="va">control</span></span></span>

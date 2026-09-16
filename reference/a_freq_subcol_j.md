@@ -44,7 +44,7 @@ a_freq_subcol_j(
   (`character`)  
   label of the level of the parent split currently being summarized
   (must be present as second argument in Content Row Functions). See
-  [`rtables::summarize_row_groups()`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
+  [`rtables::summarize_row_groups()`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html)
   for more information.
 
 - .var:
@@ -158,7 +158,7 @@ a_freq_subcol_j(
   (`dataframe`)  
   Denominator dataset for fraction and relative risk calculations.  
   this argument gets populated by the rtables split machinery (see
-  [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html)).
+  [rtables::additional_fun_params](https://rdrr.io/pkg/rtables/man/additional_fun_params.html)).
 
 - denom_by:
 
@@ -199,7 +199,7 @@ a_freq_subcol_j(
 ## Value
 
 list of requested statistics with formatted
-[`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).  
+[`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).  
 
 ## Examples
 

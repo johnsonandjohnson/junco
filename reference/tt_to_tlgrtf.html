@@ -48,7 +48,7 @@
 <span>  label_width_ins <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  watermark <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pagenum <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">tlgtype</span> <span class="op">==</span> <span class="st">"Listing"</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  fontspec <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/font_spec.html" class="external-link">font_spec</a></span><span class="op">(</span><span class="st">"Times"</span>, <span class="fl">9L</span>, <span class="fl">1.2</span><span class="op">)</span>,</span>
+<span>  fontspec <span class="op">=</span> <span class="fu"><a href="https://pharmaverse.github.io/formatters/latest-tag/reference/font_spec.html" class="external-link">font_spec</a></span><span class="op">(</span><span class="st">"Times"</span>, <span class="fl">9L</span>, <span class="fl">1.2</span><span class="op">)</span>,</span>
 <span>  pg_width <span class="op">=</span> <span class="fu">pg_width_by_orient</span><span class="op">(</span><span class="va">orientation</span> <span class="op">==</span> <span class="st">"landscape"</span><span class="op">)</span>,</span>
 <span>  margins <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  paginate <span class="op">=</span> <span class="fu">tlg_type</span><span class="op">(</span><span class="va">tt</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Table"</span>,</span>
@@ -61,7 +61,7 @@
 <span>  combined_rtf <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  one_table <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  border_mat <span class="op">=</span> <span class="fu">make_header_bordmat</span><span class="op">(</span>obj <span class="op">=</span> <span class="va">tt</span><span class="op">)</span>,</span>
-<span>  round_type <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/obj_round_type.html" class="external-link">obj_round_type</a></span><span class="op">(</span><span class="va">tt</span><span class="op">)</span>,</span>
+<span>  round_type <span class="op">=</span> <span class="fu"><a href="https://pharmaverse.github.io/formatters/latest-tag/reference/obj_round_type.html" class="external-link">obj_round_type</a></span><span class="op">(</span><span class="va">tt</span><span class="op">)</span>,</span>
 <span>  alignments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  validate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  export_csv <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -167,7 +167,7 @@ default behavior does not meet their needs.</p></dd>
 
 <dt id="arg-round-type">round_type<a class="anchor" aria-label="anchor" href="#arg-round-type"></a></dt>
 <dd><p>(<code>character(1)</code>)<br> the type of rounding to perform.
-See <code><a href="https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html" class="external-link">formatters::format_value()</a></code> for more details.</p></dd>
+See <code><a href="https://pharmaverse.github.io/formatters/latest-tag/reference/format_value.html" class="external-link">formatters::format_value()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-alignments">alignments<a class="anchor" aria-label="anchor" href="#arg-alignments"></a></dt>
@@ -179,7 +179,7 @@ Each named list contains <code>row</code>, <code>col</code>, and <code>value</co
 
 <dt id="arg-validate">validate<a class="anchor" aria-label="anchor" href="#arg-validate"></a></dt>
 <dd><p>(<code>logical(1)</code>)<br> Whether to validate the table structure using
-<code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/validate_table_struct.html" class="external-link">rtables::validate_table_struct()</a></code>. Defaults to <code>TRUE</code>. If <code>FALSE</code>, a message
+<code><a href="https://rdrr.io/pkg/rtables/man/validate_table_struct.html" class="external-link">rtables::validate_table_struct()</a></code>. Defaults to <code>TRUE</code>. If <code>FALSE</code>, a message
 will be displayed when validation fails.</p></dd>
 
 

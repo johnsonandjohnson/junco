@@ -55,13 +55,13 @@ tern::get_stats() are used."><meta property="og:image" content="https://johnsona
 
     <div class="ref-description section level2">
     <p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></p>
-<p>This function wraps <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::a_summary()</a></code> and applies junco-specific defaults
+<p>This function wraps <code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::a_summary()</a></code> and applies junco-specific defaults
 for formatting-related arguments when they are not explicitly provided by the user.</p>
 <p>In particular, default values are generated for:</p><ul><li><p><code>.labels</code> via <code><a href="default_stats_formats_labels.html">junco_get_labels_from_stats()</a></code></p></li>
 <li><p><code>.formats</code> via <code><a href="default_stats_formats_labels.html">junco_get_formats_from_stats()</a></code></p></li>
 <li><p><code>.indent_mods</code> via <code><a href="default_stats_formats_labels.html">junco_get_indents_from_stats()</a></code></p></li>
 </ul><p>If <code>.stats</code> is not provided or is <code>NULL</code>, the default statistics from
-<code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/default_stats_formats_labels.html" class="external-link">tern::get_stats()</a></code> are used.</p>
+<code><a href="https://rdrr.io/pkg/tern/man/default_stats_formats_labels.html" class="external-link">tern::get_stats()</a></code> are used.</p>
     </div>
 
     <div class="section level2">
@@ -86,7 +86,7 @@ for formatting-related arguments when they are not explicitly provided by the us
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>additional arguments passed to <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">s_summary()</a></code>, including:</p><ul><li><p><code>denom</code>: (<code>string</code>) See parameter description below.</p></li>
+<dd><p>additional arguments passed to <code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">s_summary()</a></code>, including:</p><ul><li><p><code>denom</code>: (<code>string</code>) See parameter description below.</p></li>
 <li><p><code>.N_row</code>: (<code>numeric(1)</code>) Row-wise N (row group count) for the group of observations being analyzed (i.e. with no
 column-based subsetting).</p></li>
 <li><p><code>.N_col</code>: (<code>numeric(1)</code>) Column-wise N (column count) for the full column being tabulated within.</p></li>
@@ -103,7 +103,7 @@ information about factor casting. Defaults to <code>TRUE</code>. Used for <code>
 
 <dt id="arg--stat-names">.stat_names<a class="anchor" aria-label="anchor" href="#arg--stat-names"></a></dt>
 <dd><p>(<code>character</code>)<br> names of the statistics that are passed directly to name single statistics
-(<code>.stats</code>). This option is visible when producing <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/data.frame_export.html" class="external-link">rtables::as_result_df()</a></code> with <code>make_ard = TRUE</code>.</p></dd>
+(<code>.stats</code>). This option is visible when producing <code><a href="https://rdrr.io/pkg/rtables/man/data.frame_export.html" class="external-link">rtables::as_result_df()</a></code> with <code>make_ard = TRUE</code>.</p></dd>
 
 
 <dt id="arg--formats">.formats<a class="anchor" aria-label="anchor" href="#arg--formats"></a></dt>
@@ -123,7 +123,7 @@ for that statistic's row label.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns the same type of output as <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::a_summary()</a></code>, with optional
+    <p>Returns the same type of output as <code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::a_summary()</a></code>, with optional
 junco-based default formatting applied.</p>
     </div>
     <div class="section level2">
@@ -134,13 +134,13 @@ functions. No modification is performed if these arguments are fully specified.<
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::a_summary()</a></code>, <code><a href="https://insightsengineering.github.io/tern/latest-tag/reference/default_stats_formats_labels.html" class="external-link">tern::get_stats()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::a_summary()</a></code>, <code><a href="https://rdrr.io/pkg/tern/man/default_stats_formats_labels.html" class="external-link">tern::get_stats()</a></code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">.stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"mean_sd"</span>, <span class="st">"median_range"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">a_summary</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, .stats <span class="op">=</span> <span class="va">.stats</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">a_summary</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, .stats <span class="op">=</span> <span class="va">.stats</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> RowsVerticalSection (in_rows) object print method:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       row_name   formatted_cell indent_mod          row_label</span>

@@ -215,9 +215,9 @@ a_freq_j_with_exclude(
 
   Will be passed onto the relative risk function (internal function
   s_rel_risk_val_j), which is based upon
-  [`tern::s_proportion_diff()`](https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff.html).  
+  [`tern::s_proportion_diff()`](https://rdrr.io/pkg/tern/man/prop_diff.html).  
   See
-  [`?tern::s_proportion_diff`](https://insightsengineering.github.io/tern/latest-tag/reference/prop_diff.html)
+  [`?tern::s_proportion_diff`](https://rdrr.io/pkg/tern/man/prop_diff.html)
   for details.
 
 - conf_level:
@@ -264,7 +264,7 @@ a_freq_j_with_exclude(
   (`dataframe`)  
   Denominator dataset for fraction and relative risk calculations.  
   this argument gets populated by the rtables split machinery (see
-  [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html)).
+  [rtables::additional_fun_params](https://rdrr.io/pkg/rtables/man/additional_fun_params.html)).
 
 - denom_by:
 
@@ -366,7 +366,7 @@ a_freq_j_with_exclude(
 &nbsp;
 
 - `a_freq_j`: returns a list of requested statistics with formatted
-  [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).  
+  [`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).  
   Within the relative risk difference columns, the following stats are
   blanked out:
 
