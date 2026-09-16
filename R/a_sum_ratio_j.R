@@ -1,29 +1,57 @@
-# TODO: move it to junco.
-# Helper functions:
-#' @title Analysis function: sum and ratio of sums (tern-style)
+#' @title Analysis Function: Sum and Ratio of Sums
 #'
-#' @description
-#' Computes one or more of the following statistics for use with [rtables::analyze()]:
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Computes one or more of the following statistics for use with
+#' [rtables::analyze()]:
 #' - `"sum"`: `sum(.var)`
 #' - `"sum_unique"`: `sum(.var)` after deduplicating rows by `id_var`
 #' - `"ratio"`: `sum(.var) / sum(denom_by)`
 #' - `"ratio_unique"`: same ratio after deduplicating rows by `id_var`
 #'
-#' @param df (`data.frame`) analysis data for the current table cell.
-#' @param .var (`string`) name of the numerator column.
-#' @param .stats (`character`) one or more of `"sum"`, `"sum_unique"`,
+#' Both `.var` and `denom_by` columns must be numeric (integer, double, or
+#' logical coerced to numeric).
+#'
+#' @inheritParams proposal_argument_convention
+#' @param .stats (`character`)\cr one or more of `"sum"`, `"sum_unique"`,
 #'   `"ratio"`, `"ratio_unique"`. Default: `"sum"`.
-#' @param denom_by (`string` or `NULL`) denominator column; required for
+#' @param denom_by (`string` or `NULL`)\cr denominator column; required for
 #'   `"ratio"` and `"ratio_unique"`.
-#' @param id_var (`string` or `NULL`) subject-id column for deduplication;
+#' @param id_var (`string` or `NULL`)\cr subject-id column for deduplication;
 #'   required for `"sum_unique"` and `"ratio_unique"`.
-#' @param .formats (`named character` or `NULL`) format string per stat name.
-#'   Defaults: `"xx"` for sum stats, `"xx (xx.x%)"` for ratio stats.
-#' @param .labels (`named character` or `NULL`) row label per stat name.
-#'   Defaults to the stat name itself.
+#' @param .indent_mods (named `integer` or `NULL`)\cr indent modifiers for the
+#'   row labels. Defaults to `NULL` (no modification).
+#' @param na_str (`character` or `NULL`)\cr string(s) used to replace `NA`
+#'   values in the formatted output. Defaults to `NULL` (no replacement).
 #'
 #' @return A `RowsVerticalSection` for use by rtables.
 #'
+#' @author VR
+#'
+#' @export
+#'
+#' @examples
+#' df <- data.frame(
+#'   USUBJID = c("S01", "S01", "S02", "S03"),
+#'   ARM     = factor(c("A", "A", "A", "B")),
+#'   EVENTS  = c(1, 1, 0, 1),
+#'   DAYS    = c(10, 10, 20, 15)
+#' )
+#'
+#' # All 4 stats in a layout (S01 duplicate tests unique logic)
+#' lyt <- basic_table() |>
+#'   split_cols_by("ARM") |>
+#'   analyze(
+#'     "EVENTS",
+#'     afun = a_sum_ratio_j,
+#'     extra_args = list(
+#'       .stats   = c("sum", "sum_unique", "ratio", "ratio_unique"),
+#'       denom_by = "DAYS",
+#'       id_var   = "USUBJID"
+#'     )
+#'   )
+#'
+#' build_table(lyt, df)
 a_sum_ratio_j <- function(
   df,
   .var,
@@ -32,26 +60,34 @@ a_sum_ratio_j <- function(
   id_var = NULL,
   .formats = NULL,
   .labels = NULL,
+  .indent_mods = NULL,
+  na_str = NULL,
   ...
 ) {
-  # test
+  # Valid stats ----------------------------------------------------------------
   valid_stats <- c("sum", "sum_unique", "ratio", "ratio_unique")
 
-  # Validation ---
-  stopifnot(
-    is.character(.var),
-    length(.var) == 1,
-    .var %in% names(df),
-    all(.stats %in% valid_stats)
-  )
-  if (any(.stats %in% c("ratio", "ratio_unique"))) {
-    stopifnot(!is.null(denom_by), denom_by %in% names(df))
+  # Validation -----------------------------------------------------------------
+  checkmate::assert_data_frame(df)
+  checkmate::assert_string(.var)
+  checkmate::assert_names(colnames(df), must.include = .var)
+  checkmate::assert_numeric(df[[.var]], .var.name = .var)
+  checkmate::assert_subset(.stats, choices = valid_stats)
+
+  needs_ratio <- any(.stats %in% c("ratio", "ratio_unique"))
+  needs_unique <- any(.stats %in% c("sum_unique", "ratio_unique"))
+
+  if (needs_ratio) {
+    checkmate::assert_string(denom_by)
+    checkmate::assert_names(colnames(df), must.include = denom_by)
+    checkmate::assert_numeric(df[[denom_by]], .var.name = denom_by)
   }
-  if (any(.stats %in% c("sum_unique", "ratio_unique"))) {
-    stopifnot(!is.null(id_var), id_var %in% names(df))
+  if (needs_unique) {
+    checkmate::assert_string(id_var)
+    checkmate::assert_names(colnames(df), must.include = id_var)
   }
 
-  # Helper functions (NAs always removed) ---
+  # Helpers (NAs always removed) -----------------------------------------------
   sum_plain <- function(v) {
     sum(df[[v]], na.rm = TRUE)
   }
@@ -69,7 +105,7 @@ a_sum_ratio_j <- function(
     }
   }
 
-  # Default formats and labels ---
+  # Default formats and labels -------------------------------------------------
   default_fmt <- c(
     sum = "xx",
     sum_unique = "xx",
@@ -83,7 +119,7 @@ a_sum_ratio_j <- function(
     ratio_unique = "ratio (unique)"
   )
 
-  # Compute only what is needed (DRY: each block computed once) ---
+  # Compute requested stats ----------------------------------------------------
   n_plain <- if (any(.stats %in% c("sum", "ratio"))) {
     sum_plain(.var)
   } else {
@@ -105,7 +141,7 @@ a_sum_ratio_j <- function(
     NULL
   }
 
-  # Build result list ---
+  # Build result list ----------------------------------------------------------
   x_stats <- list()
   if ("sum" %in% .stats) {
     x_stats[["sum"]] <- n_plain
@@ -120,7 +156,7 @@ a_sum_ratio_j <- function(
     x_stats[["ratio_unique"]] <- safe_ratio(n_unique, d_unique)
   }
 
-  # Resolve formats and labels (caller overrides defaults, NULL-safe) ---
+  # Resolve formats and labels (caller overrides defaults) ---------------------
   fmts <- default_fmt[names(x_stats)]
   labels <- default_lbl[names(x_stats)]
   if (!is.null(.formats)) {
@@ -130,10 +166,19 @@ a_sum_ratio_j <- function(
     labels[names(.labels)] <- .labels
   }
 
+  # Resolve indent mods and na_str --------------------------------------------
+  .format_na_strs <- if (!is.null(na_str)) {
+    lapply(names(fmts), function(x) na_str)
+  } else {
+    NULL
+  }
+
   in_rows(
     .list = x_stats,
     .formats = as.list(fmts),
     .names = labels,
-    .labels = labels
+    .labels = labels,
+    .indent_mods = .indent_mods,
+    .format_na_strs = .format_na_strs
   )
 }
