@@ -51,6 +51,7 @@ build_table(lyt, shift_data)
 \seealso{
 Other std_col_struct:
 \code{\link[=grouped_cols_w_diffs]{grouped_cols_w_diffs()}},
-\code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}}
+\code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}},
+\code{\link[=quartile_col_struct]{quartile_col_struct()}}
 }
 \concept{std_col_struct}

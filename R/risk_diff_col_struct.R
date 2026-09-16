@@ -1039,3 +1039,145 @@ some_v_all_col_struct <- function(
 
   lyt
 }
+
+# quartile helpers
+.quartile_cutpoints_sas2 <- function(x) {
+  x <- x[!is.na(x)]
+  if (length(x) == 0) {
+    stop("No non-missing values available to compute quartiles.")
+  }
+  qs <- stats::quantile(x, probs = c(0.25, 0.5, 0.75), type = 2, names = FALSE)
+  c(min(x), qs, max(x))
+}
+
+.quartile_bin_labels <- function(cuts, digits, round_type) {
+  fmt <- function(v) round_fmt(v, digits = digits, round_type = round_type)
+  c(
+    paste0(fmt(cuts[1]), " to <", fmt(cuts[2])),
+    paste0(fmt(cuts[2]), " to <", fmt(cuts[3])),
+    paste0(fmt(cuts[3]), " to <", fmt(cuts[4])),
+    paste0(fmt(cuts[4]), " to ", fmt(cuts[5]))
+  )
+}
+
+.quartile_bin_index <- function(x, cuts) {
+  findInterval(x, cuts[2:4], rightmost.closed = FALSE) + 1L
+}
+
+.quartile_facets_postfun <- function(var, digits, round_type) {
+  function(ret, spl, fulldf, .spl_context) {
+    x <- fulldf[[var]]
+    cuts <- .quartile_cutpoints_sas2(x)
+    labs <- .quartile_bin_labels(cuts, digits = digits, round_type = round_type)
+    grp <- .quartile_bin_index(x, cuts)
+
+    datasplit <- stats::setNames(
+      lapply(seq_len(4), function(i) fulldf[!is.na(grp) & grp == i, , drop = FALSE]),
+      labs
+    )
+    vnm <- as.name(var)
+    subset_exprs <- list(
+      bquote(!is.na(.(vnm)) & .(vnm) < .(cuts[2])),
+      bquote(!is.na(.(vnm)) & .(vnm) >= .(cuts[2]) & .(vnm) < .(cuts[3])),
+      bquote(!is.na(.(vnm)) & .(vnm) >= .(cuts[3]) & .(vnm) < .(cuts[4])),
+      bquote(!is.na(.(vnm)) & .(vnm) >= .(cuts[4]))
+    )
+    make_split_result(
+      labs,
+      datasplit = datasplit,
+      labels = stats::setNames(labs, labs),
+      subset_exprs = subset_exprs
+    )
+  }
+}
+
+#' Standard Quartile Column Structure
+#'
+#' @inheritParams grouped_cols_w_subgrps
+#' @param var (`character(1)`)\cr The continuous variable to compute quartile-based columns for.
+#' @param span_lbl (`character(1)`)\cr The spanning label to place above the quartile columns.
+#' @param digits (`integer(1)`)\cr Number of decimal places used when formatting the quartile.
+#' @param round_type (`character(1)`)\cr rounding method, passed onto
+#'     [formatters::round_fmt()] when formatting the quartile.
+#'
+#' @details
+#' Splits `trtvar` into four quartile columns of `var`, with `span_lbl`
+#' as a spanning label above them. Cut points (Q1, median, Q3) are worked
+#' out separately within each treatment column, using the same quantile
+#'
+#' @returns `lyt` updated with the specified quartile column structure added.
+#'
+#' @family std_col_struct
+#' @export
+#' @examples
+#' set.seed(1)
+#' dat <- create_colspan_var(
+#'   data.frame(
+#'     TRT01A = factor(rep(c("Placebo", "Active 1"), each = 20)),
+#'     BW = c(rnorm(20, 70, 10), rnorm(20, 75, 10))
+#'   ),
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#' colspan_trt_map <- create_colspan_map(
+#'   dat,
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#'
+#' lyt <- basic_table() |>
+#'   quartile_col_struct(
+#'     var = "BW",
+#'     colspan_trt_map = colspan_trt_map,
+#'     span_lbl = "Body Weight (kg) Quartiles"
+#'   ) |>
+#'   analyze("BW", afun = function(x, ...) length(x))
+#'
+#' build_table(lyt, dat)
+quartile_col_struct <- function(
+  lyt,
+  var,
+  colspan_trt_map = NULL,
+  combo_map_df = NULL,
+  trtvar = names(colspan_trt_map)[2],
+  span_lbl = paste(var, "Quartiles"),
+  digits = 0,
+  round_type = valid_round_type,
+  .pre = list(),
+  .post = list()
+) {
+  if (is.null(trtvar)) {
+    stop("trtvar must be specified if no colspan map is provided.")
+  }
+  round_type <- match.arg(round_type)
+
+  lyt <- spans_trtvar_no_diffs(
+    lyt,
+    colspan_trt_map = colspan_trt_map,
+    combo_map_df = combo_map_df,
+    trtvar = trtvar,
+    .pre = .pre,
+    .post = .post
+  )
+
+  span_splfun <- make_split_fun(
+    post = list(
+      real_add_overall_facet("quartiles", label = span_lbl),
+      restrict_facets("quartiles", op = "keep")
+    )
+  )
+
+  quartile_splfun <- make_split_fun(
+    post = list(.quartile_facets_postfun(var, digits = digits, round_type = round_type))
+  )
+
+  lyt |>
+    split_cols_by(trtvar, split_fun = span_splfun) |>
+    split_cols_by(trtvar, split_fun = quartile_splfun)
+}

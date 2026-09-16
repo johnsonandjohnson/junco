@@ -201,6 +201,7 @@ build_table(lyt, dat)
 \seealso{
 Other std_col_struct:
 \code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}},
+\code{\link[=quartile_col_struct]{quartile_col_struct()}},
 \code{\link[=shift_tbl_col_struct]{shift_tbl_col_struct()}}
 }
 \concept{std_col_struct}

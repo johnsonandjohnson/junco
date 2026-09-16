@@ -58,7 +58,7 @@ being a motivating example.
 }
 \examples{
 
- library(junco)  
+ library(junco)
 dat <- create_colspan_var(
   data.frame(
     TRT01A = factor(rep(c("Placebo", "Active 1", "Active 2"), each = 5)),

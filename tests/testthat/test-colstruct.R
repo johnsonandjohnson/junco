@@ -614,3 +614,119 @@ test_that("some_v_all_col_struct works without a spanning header", {
 
   expect_equal(unclass(col_paths(tbl)), expected)
 })
+
+test_that("quartile_col_struct works with a spanning header", {
+  trtvar <- "TRT01A"
+  var <- "WEIGHT"
+  dat <- data.frame(
+    TRT01A = factor(rep(c("Placebo", "Active 1"), each = 10)),
+    WEIGHT = c(seq(10, 100, by = 10), seq(110, 200, by = 10))
+  )
+  dat <- create_colspan_var(
+    dat,
+    non_active_grp = "Placebo",
+    non_active_grp_span_lbl = "Control",
+    active_grp_span_lbl = "Active Treatment",
+    colspan_var = "colspan_trt",
+    trt_var = trtvar
+  )
+  colspan_trt_map <- create_colspan_map(
+    dat,
+    non_active_grp = "Placebo",
+    non_active_grp_span_lbl = "Control",
+    active_grp_span_lbl = "Active Treatment",
+    colspan_var = "colspan_trt",
+    trt_var = trtvar
+  )
+
+  lyt <- basic_table() |>
+    quartile_col_struct(
+      var = var,
+      colspan_trt_map = colspan_trt_map,
+      span_lbl = "Body Weight (kg) Quartiles"
+    ) |>
+    analyze(var, afun = function(x, ...) length(x))
+
+  tbl <- build_table(lyt, dat)
+
+  spanvar <- names(colspan_trt_map)[1]
+  bin_labels <- function(mn, q1, med, q3, mx) {
+    c(
+      paste0(mn, " to <", q1),
+      paste0(q1, " to <", med),
+      paste0(med, " to <", q3),
+      paste0(q3, " to ", mx)
+    )
+  }
+  labs_by_trt <- list(
+    "Placebo" = bin_labels(10, 30, 55, 80, 100),
+    "Active 1" = bin_labels(110, 130, 155, 180, 200)
+  )
+
+  expected <- unlist(
+    lapply(
+      seq_len(NROW(colspan_trt_map)),
+      function(i) {
+        rw <- colspan_trt_map[i, ]
+        lapply(
+          labs_by_trt[[rw[[trtvar]]]],
+          function(lab) {
+            c(spanvar, rw[[spanvar]], trtvar, rw[[trtvar]], trtvar, "quartiles", trtvar, lab)
+          }
+        )
+      }
+    ),
+    recursive = FALSE
+  )
+
+  expect_equal(unclass(col_paths(tbl)), expected)
+  expect_equal(unname(unlist(cell_values(tbl))), rep(c(2, 3, 2, 3), 2))
+})
+
+test_that("quartile_col_struct works without a spanning header", {
+  trtvar <- "ARM"
+  var <- "WEIGHT"
+  dat <- data.frame(
+    ARM = factor(rep(c("Arm A", "Arm B"), each = 10)),
+    WEIGHT = c(seq(10, 100, by = 10), seq(110, 200, by = 10))
+  )
+
+  lyt <- basic_table() |>
+    quartile_col_struct(
+      var = var,
+      trtvar = trtvar,
+      span_lbl = "Body Weight (kg) Quartiles"
+    ) |>
+    analyze(var, afun = function(x, ...) length(x))
+
+  tbl <- build_table(lyt, dat)
+
+  bin_labels <- function(mn, q1, med, q3, mx) {
+    c(
+      paste0(mn, " to <", q1),
+      paste0(q1, " to <", med),
+      paste0(med, " to <", q3),
+      paste0(q3, " to ", mx)
+    )
+  }
+  labs_by_trt <- list(
+    "Arm A" = bin_labels(10, 30, 55, 80, 100),
+    "Arm B" = bin_labels(110, 130, 155, 180, 200)
+  )
+
+  expected <- unlist(
+    lapply(
+      levels(dat[[trtvar]]),
+      function(lvl) {
+        lapply(
+          labs_by_trt[[lvl]],
+          function(lab) c(trtvar, lvl, trtvar, "quartiles", trtvar, lab)
+        )
+      }
+    ),
+    recursive = FALSE
+  )
+
+  expect_equal(unclass(col_paths(tbl)), expected)
+  expect_equal(unname(unlist(cell_values(tbl))), rep(c(2, 3, 2, 3), 2))
+})
