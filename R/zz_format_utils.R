@@ -19,7 +19,8 @@ formatter_references <- list(
   "format_count_fraction" =
     format_count_fraction,
   "format_fraction_fixed_dp" =
-    format_fraction_fixed_dp
+    format_fraction_fixed_dp,
+  "format_sigfig_j" = format_sigfig_j(sigfig = 3, "xx")
 )
 
 #' @keywords internal
@@ -40,6 +41,7 @@ get_input_jjcs_fmtfun <- function(fmtfun) {
   result <- list(
     fun_fact = "",
     str = "",
+    d = NA_integer_,
     str_formatters = NA,
     type = "",
     alpha = "",
@@ -47,7 +49,10 @@ get_input_jjcs_fmtfun <- function(fmtfun) {
     fmt_package = "",
     is_fun = FALSE,
     fun = fmtfun,
-    round_type = FALSE
+    round_type = FALSE,
+    whole_integer = NA,
+    drop0trailing = NA,
+    zero_threshold = 0
   )
 
   valid_fmt_str <- unlist(list_valid_format_labels(), use.names = FALSE)
@@ -168,6 +173,42 @@ get_input_jjcs_fmtfun <- function(fmtfun) {
     "format_fraction_fixed_dp" = {
       result$fun_fact <- "format_fraction_fixed_dp"
       result$fmt_package <- "tern"
+    },
+    "format_sigfig_j" = {
+      result$fun_fact <- "format_sigfig_j"
+      result$str <- as.character(
+        get0(
+          "format",
+          envir = environment(fmtfun),
+          ifnotfound = ""
+        )
+      )
+      result$d <- as.numeric(
+        get0(
+          "sigfig",
+          envir = environment(fmtfun),
+          ifnotfound = ""
+        )
+      )
+      result$whole_integer <-
+        get0(
+          "whole_integer",
+          envir = environment(fmtfun),
+          ifnotfound = FALSE
+        )
+      result$drop0trailing <-
+        get0(
+          "drop0trailing",
+          envir = environment(fmtfun),
+          ifnotfound = FALSE
+        )
+      result$zero_threshold <-
+        get0(
+          "zero_threshold",
+          envir = environment(fmtfun),
+          ifnotfound = 0L
+        )
+      result$fmt_package <- "junco"
     },
     "unknown" = {
       result$fun_fact <- "???"
@@ -305,6 +346,11 @@ get_fmt_details <- function(myfmts, recursive = FALSE, as_tibble = TRUE) {
     lst <- dplyr::bind_rows(lst, .id = "var")
   }
 
+  if (as_tibble && !any(lst[["fun_fact"]] == "format_sigfig_j")) {
+    # drop format_sigfig_j specific columns
+    dropcols <- c("whole_integer", "drop0trailing", "zero_threshold")
+    lst <- lst[, setdiff(names(lst), dropcols), drop = FALSE]
+  }
   lst
 }
 

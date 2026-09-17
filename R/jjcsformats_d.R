@@ -75,6 +75,20 @@ format_xxd <- function(str, d = 0, .df_row = NULL, formatting_fun = NULL) {
 #'
 NULL
 
+#' @keywords internal
+.def_sigfig_fmt <- function(d, fmt_d_details) {
+  fmt_d_sigfig_str <- fmt_d_details$str
+  formats_p2 <- mapply(
+    FUN = format_sigfig_j,
+    format = fmt_d_sigfig_str,
+    whole_integer = fmt_d_details$whole_integer,
+    drop0trailing = fmt_d_details$drop0trailing,
+    zero_threshold = fmt_d_details$zero_threshold,
+    MoreArgs = list(sigfig = d)
+  )
+  formats_p2
+}
+
 #' @describeIn fmt_spec_d Function to convert a named list using d-style string format
 #'  specification into a named list with valid `formatters` formatting specification
 #'
@@ -105,9 +119,25 @@ fmt_spec_single_d <- function(d = 1,
   fmt_d <- c(fmt_d_in, fmt_d_def[setdiff(names(fmt_d_def), names(fmt_d_in))])
   fmt_d <- fmt_d[stats_in]
 
-  formats <- lapply(fmt_d, FUN = format_xxd, d = d, formatting_fun = jjcsformat_xx)
+  fmt_d_details <- get_fmt_details(fmt_d, recursive = FALSE, as_tibble = TRUE)
+  fmt_d_sigfig <- fmt_d_details$fun_fact == "format_sigfig_j"
 
-  formats
+  # separate format_sigfig_j based defaults from all other formatting specs
+  fmt_d_p1 <- fmt_d[!fmt_d_sigfig]
+  formats_p1 <- lapply(fmt_d_p1, FUN = format_xxd, d = d, formatting_fun = jjcsformat_xx)
+
+  if (any(fmt_d_sigfig)) {
+    fmt_d_p2 <- names(fmt_d[fmt_d_sigfig])
+    # apply format_sigfig_j with d as significant digits
+    # all other format_sigfig_j specific arguments are taken from fmt_d_details dataframe
+    # zero_threshold, drop0trailing, whole_integer
+    formats_p2 <- .def_sigfig_fmt(d, fmt_d_details[fmt_d_sigfig, ])
+    names(formats_p2) <- fmt_d_p2
+  } else {
+    formats_p2 <- NULL
+  }
+
+  formats <- append(formats_p1, formats_p2)
 }
 
 
