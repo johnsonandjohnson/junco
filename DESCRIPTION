@@ -80,7 +80,7 @@ Remotes:
     pharmaverse/formatters@main,
     pharmaverse/rtables@main,
     pharmaverse/tern@main,
-    pharmaverse/tern@1514_add_safe_2x2_table,
+    vikram-rawat/tern@feat/add-diff-ci-3d-to-proportion-diff,
     johnsonandjohnson/pharmaverseadamjnj@main,
     insightsengineering/rtables.officer@main
 Config/roxygen2/version: 8.1.0
