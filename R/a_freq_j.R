@@ -97,6 +97,8 @@ s_freq_j <- function(
   }
 
   checkmate::assert_string(.var)
+  checkmate::assert_string(id)
+  checkmate::assert_subset(id, colnames(df), empty.ok = FALSE)
 
   countsource <- match.arg(countsource)
 
@@ -105,7 +107,7 @@ s_freq_j <- function(
   }
 
   checkmate::assert_names(names(df), must.include = .var)
-  checkmate::assert_class(df[[.var]], classes = c("factor"))
+  checkmate::assert_class(df[[.var]], classes = "factor")
 
   .alt_df <- alt_df
 
@@ -808,6 +810,8 @@ a_freq_j <- function(
   colgroup = NULL,
   countsource = c("df", "altdf", "altdf_subset")
 ) {
+  checkmate::assert_string(id)
+  checkmate::assert_subset(id, colnames(df), empty.ok = FALSE)
   checkmate::check_character(ref_path, min.len = 2L)
   checkmate::assert_true(length(ref_path) %% 2L == 0L)
 
