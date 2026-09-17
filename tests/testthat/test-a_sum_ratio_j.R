@@ -1,5 +1,5 @@
 # data setup ----
-# S01 appears twice in ARM=A — this tests that sum_unique deduplicates correctly
+# S01 appears twice in ARM=A — this tests that sum_unique keeps unique rows correctly
 
 df <- data.frame(
   USUBJID = c("S01", "S01", "S02", "S03"),

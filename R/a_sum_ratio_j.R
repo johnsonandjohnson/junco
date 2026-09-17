@@ -5,9 +5,9 @@
 #' Computes one or more of the following statistics for use with
 #' [rtables::analyze()]:
 #' - `"sum"`: `sum(.var)`
-#' - `"sum_unique"`: `sum(.var)` after deduplicating rows by `id_var`
+#' - `"sum_unique"`: `sum(.var)` after keeping unique rows by `id_var`
 #' - `"ratio"`: `sum(.var) / sum(denom_by)`
-#' - `"ratio_unique"`: same ratio after deduplicating rows by `id_var`
+#' - `"ratio_unique"`: same ratio after keeping unique rows by `id_var`
 #'
 #' Both `.var` and `denom_by` columns must be numeric (integer, double, or
 #' logical coerced to numeric).
@@ -17,7 +17,7 @@
 #'   `"ratio"`, `"ratio_unique"`. Default: `"sum"`.
 #' @param denom_by (`string` or `NULL`)\cr denominator column; required for
 #'   `"ratio"` and `"ratio_unique"`.
-#' @param id_var (`string` or `NULL`)\cr subject-id column for deduplication;
+#' @param id_var (`string` or `NULL`)\cr subject-id column for unique row selection;
 #'   required for `"sum_unique"` and `"ratio_unique"`.
 #' @param .indent_mods (named `integer` or `NULL`)\cr indent modifiers for the
 #'   row labels. Defaults to `NULL` (no modification).
@@ -26,8 +26,9 @@
 #'
 #' @return A `RowsVerticalSection` for use by rtables.
 #'
-#' @author VR
+#' @author VR.
 #'
+#' @importFrom rtables in_rows
 #' @export
 #'
 #' @examples

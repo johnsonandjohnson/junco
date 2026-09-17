@@ -29,7 +29,7 @@ by a statistics function.}
 \item{denom_by}{(\code{string} or \code{NULL})\cr denominator column; required for
 \code{"ratio"} and \code{"ratio_unique"}.}
 
-\item{id_var}{(\code{string} or \code{NULL})\cr subject-id column for deduplication;
+\item{id_var}{(\code{string} or \code{NULL})\cr subject-id column for unique row selection;
 required for \code{"sum_unique"} and \code{"ratio_unique"}.}
 
 \item{.formats}{(named \code{character} or \code{list})\cr formats for the statistics. See Details in \code{analyze_vars} for more
@@ -55,9 +55,9 @@ Computes one or more of the following statistics for use with
 \code{\link[rtables:analyze]{rtables::analyze()}}:
 \itemize{
 \item \code{"sum"}: \code{sum(.var)}
-\item \code{"sum_unique"}: \code{sum(.var)} after deduplicating rows by \code{id_var}
+\item \code{"sum_unique"}: \code{sum(.var)} after keeping unique rows by \code{id_var}
 \item \code{"ratio"}: \code{sum(.var) / sum(denom_by)}
-\item \code{"ratio_unique"}: same ratio after deduplicating rows by \code{id_var}
+\item \code{"ratio_unique"}: same ratio after keeping unique rows by \code{id_var}
 }
 
 Both \code{.var} and \code{denom_by} columns must be numeric (integer, double, or
@@ -87,5 +87,5 @@ lyt <- basic_table() |>
 build_table(lyt, df)
 }
 \author{
-VR
+VR.
 }
