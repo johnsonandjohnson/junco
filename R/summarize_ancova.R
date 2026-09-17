@@ -136,12 +136,12 @@ h_ancova_est_single <- function(emmeans_fit,
 #' @keywords internal
 
 make_contrast_weights <- function(
-    sum_fit,
-    sum_levels,
-    arm,
-    data,
-    weight_mode = c("equal", "proportional"),
-    normalize = TRUE) {
+  sum_fit,
+  sum_levels,
+  arm,
+  data,
+  weight_mode = c("equal", "proportional"),
+  normalize = TRUE) {
   weight_mode <- match.arg(weight_mode)
   trt_levels <- levels(sum_fit[[arm]])
   # weights for contrast contains all trt_levels from sum_fit, not just the sum_levels
@@ -181,18 +181,18 @@ make_contrast_weights <- function(
 #' @keywords internal
 
 h_ancova_est_combined <- function(
-    emmeans_fit,
-    sum_level,
-    interaction_y,
-    interaction_item,
-    df,
-    .var,
-    .df_row,
-    .ref_group,
-    arm,
-    conf_level,
-    .in_ref_col,
-    weights_combo) {
+  emmeans_fit,
+  sum_level,
+  interaction_y,
+  interaction_item,
+  df,
+  .var,
+  .df_row,
+  .ref_group,
+  arm,
+  conf_level,
+  .in_ref_col,
+  weights_combo) {
   if (.in_ref_col) {
     stop("not intended for usage in reference column")
   }
@@ -324,18 +324,18 @@ h_ancova_est_combined <- function(
 #' conf_level <- 0.95
 #' s_ancova_j(df, .var, .df_row, variables, .ref_group, .in_ref_col = FALSE, conf_level)
 s_ancova_j <- function(
-    df,
-    .var,
-    .df_row,
-    variables,
-    .ref_group,
-    .in_ref_col,
-    conf_level,
-    interaction_y = FALSE,
-    interaction_item = NULL,
-    weights_emmeans = "counterfactual",
-    method_combo = c("contrasts", "collapse"),
-    weights_combo = NULL) {
+  df,
+  .var,
+  .df_row,
+  variables,
+  .ref_group,
+  .in_ref_col,
+  conf_level,
+  interaction_y = FALSE,
+  interaction_item = NULL,
+  weights_emmeans = "counterfactual",
+  method_combo = c("contrasts", "collapse"),
+  weights_combo = NULL) {
   if ((!is.null(interaction_item) && interaction_y == FALSE) ||
         (is.null(interaction_item) && interaction_y != FALSE)) {
     stop(
@@ -546,12 +546,12 @@ s_ancova_j <- function(
 #'   conf_level = conf_level
 #' )
 s_summarize_ancova_j <- function(
-    df,
-    .var,
-    .df_row,
-    .ref_group,
-    .in_ref_col,
-    ...) {
+  df,
+  .var,
+  .df_row,
+  .ref_group,
+  .in_ref_col,
+  ...) {
   x <- df[[.var]]
   y1 <- s_summary(x)
   y2 <- s_ancova_j(
@@ -619,24 +619,27 @@ s_summarize_ancova_j <- function(
 #' @export
 #' @order 2
 a_summarize_ancova_j <- function(
-    df,
-    .var,
-    .df_row,
-    ref_path,
-    .spl_context,
-    ...,
-    .stats = c("n",
-               "mean_sd",
-               "median",
-               "range",
-               "quantiles",
-               "lsmean_se",
-               "lsmean_ci",
-               "lsmean_diff_with_ci",
-               "pval"),
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  .var,
+  .df_row,
+  ref_path,
+  .spl_context,
+  ...,
+  .stats = c(
+    "n",
+    "mean_sd",
+    "median",
+    "range",
+    "quantiles",
+    "lsmean_se",
+    "lsmean_ci",
+    "lsmean_diff_with_ci",
+    "pval"
+  ),
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

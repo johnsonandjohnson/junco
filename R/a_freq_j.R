@@ -4,6 +4,8 @@
 #' and (optional) relative risk columns
 #'
 #' @inheritParams proposal_argument_convention
+#' @param .var (`character(1)`)\cr Name of a categorical analysis variable in `df`.
+#' The variable must be a `factor`.
 #' @param val (`character` or NULL)\cr
 #' When NULL, all levels of the incoming variable (variable used in the `analyze` call)
 #' will be considered.\cr
@@ -94,11 +96,18 @@ s_freq_j <- function(
     stop("Argument .var cannot be NA or NULL.")
   }
 
+  checkmate::assert_string(.var)
+  checkmate::assert_string(id)
+  checkmate::assert_subset(id, colnames(df), empty.ok = FALSE)
+
   countsource <- match.arg(countsource)
 
   if (countsource %in% c("altdf", "altdf_subset")) {
     df <- alt_df
   }
+
+  checkmate::assert_names(names(df), must.include = .var)
+  checkmate::assert_class(df[[.var]], classes = "factor")
 
   .alt_df <- alt_df
 
@@ -801,6 +810,8 @@ a_freq_j <- function(
   colgroup = NULL,
   countsource = c("df", "altdf", "altdf_subset")
 ) {
+  checkmate::assert_string(id)
+  checkmate::assert_subset(id, colnames(df), empty.ok = FALSE)
   checkmate::check_character(ref_path, min.len = 2L)
   checkmate::assert_true(length(ref_path) %% 2L == 0L)
 
