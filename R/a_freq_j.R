@@ -95,7 +95,7 @@ s_freq_j <- function(
   }
 
   checkmate::assert_string(id)
-  checkmate::assert_subset(id, colnames(df), empty.ok = FALSE) 
+  checkmate::assert_subset(id, colnames(df), empty.ok = FALSE)
 
   countsource <- match.arg(countsource)
 
