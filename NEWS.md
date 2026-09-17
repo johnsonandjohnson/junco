@@ -1,6 +1,7 @@
 # junco 0.1.6.9001
 
 ### Changed
+- Added `.cell_footnotes` and `.row_footnotes` arguments to `format_stats()` (#470).
 - Removed duplicate output `diff_ci_3d` from `s_proportion_diff_j()` which had
   an incorrect "Relative Risk" label; it was identical to `diff_est_ci` (#442).
 - Added `label` argument to `s_proportion_diff_j()` so the caller can customize
@@ -57,6 +58,7 @@
 and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat_fraction_count_denom_legacy` for backward compatibility reasons (#450)
 - Updated `insightsengineering` urls to `pharmaverse`
 - Added factor assertion on `.var` in `s_freq_j` (#453).
+- Added assertions for the `id` argument in `a_freq_j()` and `s_freq_j()` (#424).
 
 ### Added
 - Added `strict_match()` for uniquely matching a value in the odd or even positions of a character vector.
