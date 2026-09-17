@@ -121,10 +121,10 @@ a_sum_ratio_j <- function(
     ratio_unique = "xx (xx.x%)"
   )
   default_lbl <- c(
-    sum = "sum",
-    sum_unique = "sum (unique)",
-    ratio = "ratio",
-    ratio_unique = "ratio (unique)"
+    sum = "Sum",
+    sum_unique = "Sum (unique)",
+    ratio = "Ratio",
+    ratio_unique = "Ratio (unique)"
   )
 
   # Compute requested stats (each block runs at most once) ---------------------

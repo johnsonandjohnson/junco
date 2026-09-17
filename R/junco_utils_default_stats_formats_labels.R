@@ -399,7 +399,11 @@ junco_default_formats_start <- c(
   eair_strat_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   eair_strat_diff_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   total_subject_years = jjcsformat_xx("xx.x (xx.x)"),
-  n_fit = "xx"
+  n_fit = "xx",
+  sum = "xx",
+  sum_unique = "xx",
+  ratio = jjcsformat_xx("xx (xx.x%)"),
+  ratio_unique = jjcsformat_xx("xx (xx.x%)")
 )
 
 tern_formats_only <- setdiff(names(tern_default_formats), names(junco_default_formats_start))
@@ -453,7 +457,11 @@ junco_default_labels_start <- c(
   n_event_total = "n (events)",
   person_years_total = "Total person-years",
   n_eair_strat = "n (Stratified EAIR)",
-  total_subject_years = "Total treatment (subject years)"
+  total_subject_years = "Total treatment (subject years)",
+  sum = "Sum",
+  sum_unique = "Sum (unique)",
+  ratio = "Ratio",
+  ratio_unique = "Ratio (unique)"
 )
 tern_labels_only <- setdiff(names(tern_default_labels), names(junco_default_labels_start))
 
