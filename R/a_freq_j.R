@@ -105,7 +105,7 @@ s_freq_j <- function(
   }
 
   checkmate::assert_names(names(df), must.include = .var)
-  checkmate::assert_class(df[[.var]], classes = c("factor"))
+  checkmate::assert_class(df[[.var]], classes = "factor")
 
   .alt_df <- alt_df
 
