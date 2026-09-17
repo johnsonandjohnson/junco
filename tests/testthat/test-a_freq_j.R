@@ -283,10 +283,7 @@ test_that("a_freq_j raises error when id is missing", {
     split_cols_by("grp") |>
     analyze(
       "rsp",
-      afun = a_freq_j,
-      extra_args = list(
-        id = "USUBJID"
-      )
+      afun = a_freq_j
     )
   expect_error(
     build_table(lyt, dta),
