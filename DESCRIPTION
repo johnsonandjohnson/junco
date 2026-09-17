@@ -70,7 +70,7 @@ Suggests:
     readxl,
     rlang,
     tidyr,
-    pharmaverseadamjnj (>= 0.0.6),
+    pharmaverseadamjnj (>= 0.0.5),
     multcomp,
     lifecycle,
     dplyr,
