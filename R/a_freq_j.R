@@ -4,7 +4,7 @@
 #' and (optional) relative risk columns
 #'
 #' @inheritParams proposal_argument_convention
-#' @param .var (`string`) Name of a categorical analysis variable in `df`.
+#' @param .var (`character(1)`)\cr Name of a categorical analysis variable in `df`.
 #' The variable must be a `factor`.
 #' @param val (`character` or NULL)\cr
 #' When NULL, all levels of the incoming variable (variable used in the `analyze` call)
