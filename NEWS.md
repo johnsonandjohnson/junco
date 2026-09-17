@@ -55,6 +55,7 @@
 - Updated behavior of formatting functions `jjcsformat_count_denom_fraction` and `jjcsformat_fraction_count_denom` 
 and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat_fraction_count_denom_legacy` for backward compatibility reasons (#450)
 - Updated `insightsengineering` urls to `pharmaverse`
+- Renamed and refactored `postfun_eq5d` into `stats_in_cols_setup`
 - Added factor assertion on `.var` in `s_freq_j` (#453).
 - Added assertions for the `id` argument in `a_freq_j()` and `s_freq_j()` (#424).
 
