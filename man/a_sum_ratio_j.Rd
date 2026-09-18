@@ -87,5 +87,5 @@ lyt <- basic_table() |>
 build_table(lyt, df)
 }
 \author{
-VR.
+VR
 }

@@ -26,7 +26,7 @@
 #'
 #' @return A `RowsVerticalSection` for use by rtables.
 #'
-#' @author VR.
+#' @author VR
 #'
 #' @importFrom rtables in_rows
 #' @export
