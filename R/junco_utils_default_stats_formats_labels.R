@@ -297,7 +297,8 @@ junco_default_stats <- list(
     "eair_strat_diff_est_ci", "eair_strat_diff_est", "eair_strat_diff_ci"
   ),
   a_sum_ratio_j = c(
-    "sum", "sum_unique", "ratio", "ratio_unique")
+    "sum", "sum_unique", "ratio", "ratio_unique"
+  )
 )
 
 not_in_junco <- setdiff(names(tern_default_stats), names(junco_default_stats))
