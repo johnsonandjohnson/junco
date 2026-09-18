@@ -80,8 +80,8 @@ a_freq_j_with_exclude(
 \arguments{
 \item{df}{(\code{data.frame})\cr data set containing all analysis variables.}
 
-\item{.var}{(\code{string})\cr single variable name that is passed by \code{rtables} when requested
-by a statistics function.}
+\item{.var}{(\code{string}) Name of a categorical analysis variable in \code{df}.
+The variable must be a \code{factor}.}
 
 \item{.df_row}{(\code{data.frame})\cr data frame across all of the columns for the given row split.}
 
@@ -155,15 +155,15 @@ When \code{FALSE}, risk difference columns will remain blank
 \item{ref_path}{(\code{string})\cr Column path specifications for
 the control group for the relative risk derivation.}
 
-\item{variables}{Will be passed onto the relative risk function
-(internal function s_rel_risk_val_j), which is based upon \code{\link[tern:s_proportion_diff]{tern::s_proportion_diff()}}.\cr
+\item{variables}{Will be passed onto the risk difference function
+(internal function s_risk_diff_val_j), which is based upon \code{\link[tern:s_proportion_diff]{tern::s_proportion_diff()}}.\cr
 See \code{?tern::s_proportion_diff} for details.}
 
 \item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
-\item{method}{Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr}
+\item{method}{Will be passed onto the risk difference function (internal function s_risk_diff_val_j).\cr}
 
-\item{weights_method}{Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr}
+\item{weights_method}{Will be passed onto the risk difference function (internal function s_risk_diff_val_j).\cr}
 
 \item{label}{(\code{string})\cr
 When \code{val} has length 1,

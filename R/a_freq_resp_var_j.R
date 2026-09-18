@@ -56,7 +56,7 @@ a_freq_resp_var_j <- function(
   drop_levels = FALSE,
   riskdiff = TRUE,
   ref_path = NULL,
-  variables = formals(s_proportion_diff)$variables,
+  variables = list(strata = NULL),
   conf_level = formals(s_proportion_diff)$conf_level,
   method = c(
     "wald",
@@ -173,7 +173,7 @@ a_freq_resp_var_j <- function(
 
       rslt <- rcell(x_stat, format = fmt)
     } else {
-      # use the risk differenc function s_rel_risk_val_j on the current level of the incoming variable (.var)
+      # use the risk difference function s_risk_diff_val_j on the current level of the incoming variable (.var)
       # note that the response variable will become .var in the below call
       # val is restricted to Y to show number of response on the current level of .var
       denom_df <- dfrowii
@@ -185,7 +185,7 @@ a_freq_resp_var_j <- function(
         .spl_context
       )
 
-      rslt <- s_rel_risk_val_j(
+      rslt <- s_risk_diff_val_j(
         df = dfii,
         .var = resp_var,
         .df_row = dfrowii,

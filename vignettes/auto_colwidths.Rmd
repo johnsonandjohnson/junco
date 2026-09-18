@@ -233,9 +233,9 @@ packed_widths(
 )
 ```
 
-Recall that we do not care which words are allocated where, only the total number of lines required, so a colwidth of 10, which would allow the fifth word (`r wrds[5]`) to be packed into the same line as the fourth, resulting in `r paste(wrds[4:5], collapse = " ")`, results in the same number of total lines, so will not be considered a distinct possible column width with respect to that cell.
+Recall that we do not care which words are allocated where, only the total number of lines required, so a colwidth of 10, which would allow the fifth word (`r if (NOT_CRAN) wrds[5] else "..."`) to be packed into the same line as the fourth, resulting in `r if (NOT_CRAN) paste(wrds[4:5], collapse = " ") else "..."`, results in the same number of total lines, so will not be considered a distinct possible column width with respect to that cell.
 
-The next column width that results in fewer lines for that cell is one where words one through three are all able to be packed into a single line, with spaces between them, `r nchar(paste(wrds[1:3], collapse = " "))` in this case.
+The next column width that results in fewer lines for that cell is one where words one through three are all able to be packed into a single line, with spaces between them, `r if (NOT_CRAN) nchar(paste(wrds[1:3], collapse = " ")) else "..."` in this case.
 
 With that column width, we get three lines as we do not have enough room for the space required to consolidate the final two lines into one.
 
@@ -252,7 +252,7 @@ packed_widths(
 )
 ```
 
-Finally, the last possible width with a different line total is the smallest width that will fit the entire value, i.e., `r nchar(demcell)`.
+Finally, the last possible width with a different line total is the smallest width that will fit the entire value, i.e., `r if (NOT_CRAN) nchar(demcell) else "..."`.
 
 So for this cell, there are four, and only four, candidate column widths.
 
@@ -312,4 +312,4 @@ length(txt2bad)
 saved <- (length(txt2bad) - length(txt2)) / length(txt2bad) * 100
 dec_saved <- round(saved, 2)
 ```
-So we see that our algorithm saved `r dec_saved` percent of the total lines required by (a set of) naive column widths in this instance.
+So we see that our algorithm saved `r if (NOT_CRAN) dec_saved else "..."` percent of the total lines required by (a set of) naive column widths in this instance.

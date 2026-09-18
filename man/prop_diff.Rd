@@ -28,7 +28,8 @@ s_proportion_diff_j(
   method = c("waldcc", "wald", "cmh", "cmh_sato", "cmh_mn", "ha", "newcombe",
     "newcombecc", "strat_newcombe", "strat_newcombecc", "cmh_sato", "cmh_mn",
     "uncond_exact_diff"),
-  weights_method = "cmh"
+  weights_method = "cmh",
+  label = paste0("\% Difference (", f_conf_level(conf_level), ")")
 )
 }
 \arguments{
@@ -61,6 +62,9 @@ s_proportion_diff_j(
 \item{method}{(\code{string})\cr method to use for confidence interval calculation.}
 
 \item{weights_method}{(\code{string})\cr method to use for weights calculation in stratified analysis.}
+
+\item{label}{(\code{string})\cr label for the \code{diff_est_ci} statistic. Defaults to
+\code{"\% Difference (conf_level CI)"}. Can be overridden by the caller.}
 }
 \value{
 \itemize{
@@ -69,7 +73,7 @@ s_proportion_diff_j(
 
 \itemize{
 \item \code{s_proportion_diff_j()} returns a named list of elements \code{diff},
-\code{diff_ci}, \code{diff_est_ci} and \code{diff_ci_3d}.
+\code{diff_ci}, and \code{diff_est_ci}.
 }
 }
 \description{
