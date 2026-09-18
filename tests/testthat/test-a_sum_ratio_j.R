@@ -8,15 +8,6 @@ df <- data.frame(
   DAYS = c(10, 10, 20, 15)
 )
 
-# Expected results per ARM:
-#
-#          |   A          |   B
-# ---------+--------------+---------
-# sum      |   2          |   1
-# sum_uniq |   1          |   1
-# ratio    |   2/40=0.05  |   1/15=0.067
-# rat_uniq |   1/30=0.033 |   1/15=0.067
-
 # Start of tests ----
 
 # Happy path: all 4 stats together in one layout
