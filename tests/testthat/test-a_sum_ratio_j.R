@@ -8,8 +8,6 @@ df <- data.frame(
   DAYS = c(10, 10, 20, 15)
 )
 
-# Start of tests ----
-
 # Happy path: all 4 stats together in one layout
 test_that("a_sum_ratio_j produces all 4 stats in a layout", {
   lyt <- basic_table() |>
