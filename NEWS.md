@@ -11,6 +11,10 @@
   they compute risk difference (p1 - p2), not relative risk (p1 / p2) (#442).
 
 ### Fixed
+- Fixed `s_proportion_diff_j()` to use `diff_est_ci` returned natively by
+  `tern::s_proportion_diff()` (tern#1523) instead of appending a duplicate.
+  The junco wrapper now only relabels the statistic with the shorter
+  `"% Difference (conf_level CI)"` format (#442, #468).
 - Fixed `get_ref_info()` to accept ref_path = NULL (#359).
 - Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
