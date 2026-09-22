@@ -4,10 +4,8 @@ xxd_to_xx <- function(str, d = 0) {
   if (is.null(str)) {
     return(str)
   }
-  if (checkmate::test_list(str, null.ok = FALSE)) {
-    checkmate::assert_list(str, null.ok = FALSE)
-    # Or it may be a vector of characters
-  } else {
+  # str is a list or vector of characters
+  if (!checkmate::test_list(str, null.ok = FALSE)) {
     checkmate::assert_character(str, null.ok = FALSE)
   }
 
@@ -127,12 +125,14 @@ fmt_spec_single_d <- function(d = 1,
   formats_p1 <- lapply(fmt_d_p1, FUN = format_xxd, d = d, formatting_fun = jjcsformat_xx)
 
   if (any(fmt_d_sigfig)) {
+    # nocov start
     fmt_d_p2 <- names(fmt_d[fmt_d_sigfig])
     # apply format_sigfig_j with d as significant digits
     # all other format_sigfig_j specific arguments are taken from fmt_d_details dataframe
     # zero_threshold, drop0trailing, whole_integer
     formats_p2 <- .def_sigfig_fmt(d, fmt_d_details[fmt_d_sigfig, ])
     names(formats_p2) <- fmt_d_p2
+    # nocov end
   } else {
     formats_p2 <- NULL
   }
