@@ -11,6 +11,10 @@
   they compute risk difference (p1 - p2), not relative risk (p1 / p2) (#442).
 
 ### Fixed
+- Fixed `s_proportion_diff_j()` to use `diff_est_ci` returned natively by
+  `tern::s_proportion_diff()` (tern#1523) instead of appending a duplicate.
+  The junco wrapper now only relabels the statistic with the shorter
+  `"% Difference (conf_level CI)"` format (#442, #468).
 - Fixed `get_ref_info()` to accept ref_path = NULL (#359).
 - Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
@@ -18,8 +22,6 @@
 - CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
-- Added `get_complete_cases()` to remove observations containing missing values
-  from a `data.frame` and issue a warning when observations are omitted (#454).
 - Updated several analysis functions to use `h_get_cur_trt_grp()` (#295).
 - Replaced `h_get_trtvar_refpath()` with `h_get_cur_trt_grp()` (#295).
 - Updated `get_ref_info()` for matching column split paths (#295).
@@ -56,12 +58,15 @@
 - Updated behavior of formatting functions `jjcsformat_count_denom_fraction` and `jjcsformat_fraction_count_denom` 
 and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat_fraction_count_denom_legacy` for backward compatibility reasons (#450)
 - Updated `insightsengineering` urls to `pharmaverse`
+- Added factor assertion on `.var` in `s_freq_j` (#453).
+- Added assertions for the `id` argument in `a_freq_j()` and `s_freq_j()` (#424).
 
 ### Added
 - Added `s_proportion_diff_mf()` and `a_proportion_diff_mf()` adaptive
   estimation of stratified response-proportion differences using the
   Mantel–Fleiss criterion (#456).
 - Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator.
+- Added `a_sum_ratio_j()` analysis function for computing sum, unique-row sum, and their ratios against a denominator column.
 - Added `strict_match()` for uniquely matching a value in the odd or even positions of a character vector.
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
 - Added `pool_rubin_scalar()` and `pool_z_stat()` for pooling scalar estimates and z statistics across imputations.

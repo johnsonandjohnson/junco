@@ -28,10 +28,11 @@
 #' @order 1
 #'
 #' @note The [a_proportion_diff_j()] function has the `_j` suffix to distinguish it
-#'   from [tern::a_proportion_diff()]. The functions here are a copy from the `tern` package
-#'   with additional features:
+#'   from [tern::a_proportion_diff()]. The functions here are a thin wrapper around
+#'   `tern::s_proportion_diff()` with the following additions:
 #'
-#'   * Additional statistic `diff_est_ci` is returned.
+#'   * The `diff_est_ci` statistic (returned natively by tern since tern#1523) is
+#'     relabelled with a shorter junco-style label (`"% Difference (conf_level CI)"`).
 #'   * `ref_path` needs to be provided as extra argument to specify the control group column.
 #'
 NULL
@@ -95,16 +96,10 @@ s_proportion_diff_j <- function(
     weights_method = weights_method
   )
 
-  c(
-    start,
-    list(
-      diff_est_ci = with_label(
-        c(start$diff, start$diff_ci),
-        label
-      )
-      # diff_ci_3d removed — duplicate of diff_est_ci with wrong "Relative Risk" label
-    )
-  )
+  # tern@main (tern#1523) now returns diff_est_ci natively.
+  # Relabel with junco's shorter format.
+  start$diff_est_ci <- with_label(start$diff_est_ci, label)
+  return(start)
 }
 
 #' @describeIn prop_diff Formatted analysis function which is used as `afun` in `estimate_proportion_diff()`.

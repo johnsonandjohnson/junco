@@ -45,6 +45,7 @@ reference:
     - a_summarize_mmrm_with_exclude
     - a_summary_j_with_exclude
     - a_summary_subset
+    - a_sum_ratio_j
     - a_two_tier
     - a_three_tier    
     - c_summary_subset_label
@@ -150,7 +151,6 @@ reference:
     - rightside
     - remove_col_count
     - rm_levels
-    - get_complete_cases
     
   - title: internal
     desc: The following are additional junco functions.
