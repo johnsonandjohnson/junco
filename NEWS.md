@@ -18,7 +18,6 @@
 - CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
-
 - Added `get_complete_cases()` to remove observations containing missing values
   from a `data.frame` and issue a warning when observations are omitted (#454).
 - Updated several analysis functions to use `h_get_cur_trt_grp()` (#295).
@@ -59,6 +58,10 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Updated `insightsengineering` urls to `pharmaverse`
 
 ### Added
+- Added `s_proportion_diff_mf()` and `a_proportion_diff_mf()` adaptive
+  estimation of stratified response-proportion differences using the
+  Mantel–Fleiss criterion (#456).
+- Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator.
 - Added `strict_match()` for uniquely matching a value in the odd or even positions of a character vector.
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
 - Added `pool_rubin_scalar()` and `pool_z_stat()` for pooling scalar estimates and z statistics across imputations.
@@ -69,7 +72,6 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added `a_summarize_mmrm_with_exclude()` to allow MMRM summaries to be skipped for selected row split levels.
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
 - Added `a_three_tier()` as extension to `a_two_tier()`.
-- Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator.
 - Added formatting function `format_sigfig_j()` as alternative to `tern::format_sigfig()`. (#436)
 
 ## [0.1.6] - 2026-05-05 (CRAN release)

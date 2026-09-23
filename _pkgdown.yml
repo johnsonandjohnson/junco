@@ -39,6 +39,7 @@ reference:
     - a_maxlev
     - a_proportion_ci_factor
     - a_proportion_ci_logical
+    - a_proportion_diff_mf
     - a_summarize_aval_chg_diff_j
     - a_summarize_ex_j
     - a_summarize_mmrm_with_exclude
@@ -79,6 +80,7 @@ reference:
     - s_diff_means
     - s_proportion_factor
     - s_proportion_logical
+    - s_proportion_diff_mf
     - s_summarize_ancova_j
     - s_summary_diff
     - summarize_coxreg_multivar
