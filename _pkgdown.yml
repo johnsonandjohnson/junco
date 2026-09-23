@@ -44,6 +44,7 @@ reference:
     - a_summarize_mmrm_with_exclude
     - a_summary_j_with_exclude
     - a_summary_subset
+    - a_sum_ratio_j
     - a_two_tier
     - a_three_tier    
     - c_summary_subset_label
