@@ -245,8 +245,8 @@ s_risk_diff_levii_j <- function(
   # subjects with value levii observed in ref_df TRUE
   ref_df_val$rsp[ref_df_val[[id]] %in% unique(ref_dfii[[id]])] <- TRUE
 
-  ### once 3-d version of diff_ci is available in tern::s_proportion_diff
-  ### we should call tern::s_proportion_diff directly
+  # tern@main (tern#1523) now returns diff_est_ci natively.
+  # s_proportion_diff_j() relabels it with junco's shorter label.
   res_ci_3d <- s_proportion_diff_j(
     df_val,
     .var = "rsp",
