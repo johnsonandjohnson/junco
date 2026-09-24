@@ -293,12 +293,7 @@ a_proportion_diff_mf <- function(df,
                                  .formats = NULL,
                                  .labels = NULL,
                                  .indent_mods = NULL,
-                                 exact_footnote = rtables:::RefFootnote(
-                                   tern::d_proportion_diff(
-                                     method = "uncond_exact_diff", method_only = TRUE
-                                   ),
-                                   1L, "+"
-                                 )) {
+                                 exact_footnote = "Unconditional exact") {
   assert_scalar(.var)
   assert_scalar(.in_ref_col, null.ok = TRUE)
   assert_scalar(val)

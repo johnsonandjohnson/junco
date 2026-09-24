@@ -34,8 +34,7 @@ a_proportion_diff_mf(
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL,
-  exact_footnote = rtables:::RefFootnote(tern::d_proportion_diff(method =
-    "uncond_exact_diff", method_only = TRUE), 1L, "+")
+  exact_footnote = "Unconditional exact"
 )
 }
 \arguments{

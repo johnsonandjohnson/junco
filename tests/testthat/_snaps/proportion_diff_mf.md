@@ -41,12 +41,12 @@
     Output
                                                                                                              X              Placebo
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-      Difference in Response rate (%) (CMH, without correction / Unconditional exact)                     16.7 {+}                 
-        Difference in Response rate (%) 95% CI (CMH, without correction / Unconditional exact)       (-69.8, 87.6) {+}             
-      Difference in Response rate (%) and 95% CI (CMH, without correction / Unconditional exact)   16.7 (-69.8, 87.6) {+}          
+      Difference in Response rate (%) (CMH, without correction / Unconditional exact)                     16.7 {1}                 
+        Difference in Response rate (%) 95% CI (CMH, without correction / Unconditional exact)       (-69.8, 87.6) {1}             
+      Difference in Response rate (%) and 95% CI (CMH, without correction / Unconditional exact)   16.7 (-69.8, 87.6) {1}          
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       
-      {+} - Unconditional exact
+      {1} - Unconditional exact
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       
 
@@ -57,10 +57,10 @@
     Output
                                  X                Placebo
       ———————————————————————————————————————————————————
-          my_label   16.67 (-61.04 - 82.13) {+}          
+          my_label   16.67 (-61.04 - 82.13) {1}          
       ———————————————————————————————————————————————————
       
-      {+} - Unconditional exact
+      {1} - Unconditional exact
       ———————————————————————————————————————————————————
       
 
@@ -94,12 +94,12 @@
     Output
                                                                                                    Placebo             X           
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-      Difference in Response rate (%) (CMH, without correction / Unconditional exact)                               50.0 {+}       
-        Difference in Response rate (%) 95% CI (CMH, without correction / Unconditional exact)                 (-77.0, 98.7) {+}   
-      Difference in Response rate (%) and 95% CI (CMH, without correction / Unconditional exact)             50.0 (-77.0, 98.7) {+}
+      Difference in Response rate (%) (CMH, without correction / Unconditional exact)                               50.0 {1}       
+        Difference in Response rate (%) 95% CI (CMH, without correction / Unconditional exact)                 (-77.0, 98.7) {1}   
+      Difference in Response rate (%) and 95% CI (CMH, without correction / Unconditional exact)             50.0 (-77.0, 98.7) {1}
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       
-      {+} - Unconditional exact
+      {1} - Unconditional exact
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       
 
