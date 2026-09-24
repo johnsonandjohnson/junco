@@ -31,7 +31,7 @@ In some situations the used decimal precision is different for different paramet
 In the `rtables` and `nest` framework formats can be specified, typically in the `format`, `.formats` argument of the used `afun`
 or `analyze` call.
 
-For more information on tabulation, formats and formatting functions, see the vignettes ["Tabulation"](https://pharmaverse.github.io/tern/latest-tag/articles/tables.html) and ["Formatting Functions"](https://pharmaverse.github.io/tern/latest-release/articles/tern_formats.html).
+For more information on tabulation, formats and formatting functions, see the vignettes ["Tabulation"](https://pharmaverse.github.io/tern/latest-tag/articles/tables.html) and ["Formatting Functions"](https://pharmaverse.github.io/tern/latest-tag/articles/tern_formats.html).
 
 
 The purpose in this vignette is to provide some examples on how to utilize the new `junco` functions to facilitate adjustment of decimal precision.
