@@ -82,7 +82,7 @@ The default d-style based input specification is `junco_def_d_all`, and when uti
 
 ```{r junco_def_d_all with d is 1 is junco_default_formats}
 
-fmt_1 <- junco:::fmt_spec_single_d(d = 1, fmt_d_def = junco_def_d_all)
+fmt_1 <- fmt_spec_single_d(d = 1, fmt_d_def = junco_def_d_all)
 fmt_1[["lr_stat_df"]] <- NULL
 
 # get_fmt_details tool applied to a format specification vector
@@ -205,7 +205,7 @@ rslt
 ### Working Example 3: Table with Parameters Analyzed with d = 2 Precision rather than default of d = 1 (eg Lab/Vital Signs Table) {#Ex3}
 
 ```{r bds example 2}
-fmt_2 <- junco:::fmt_spec_single_d(d = 2, fmt_d_def = junco_def_d_all)
+fmt_2 <- fmt_spec_single_d(d = 2, fmt_d_def = junco_def_d_all)
 
 df <- ex_adlb |>
  filter(AVISIT %in% c("BASELINE", "WEEK 1 DAY 8", "WEEK 2 DAY 15"))

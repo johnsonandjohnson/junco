@@ -97,7 +97,7 @@ junco_def_d <- c(
   "range" = "(xx.d, xx.d)"
 )
 
-myfmts <- junco:::fmt_spec_single_d(
+myfmts <- fmt_spec_single_d(
   d = 1,
   stats_in = c("mean", "mean_sd"),
   fmt_d_def = junco_def_d,
@@ -106,7 +106,7 @@ myfmts <- junco:::fmt_spec_single_d(
 
 fmt_details <- get_fmt_details(myfmts, as_tibble = TRUE)
 
-myfmts2 <- junco:::fmt_spec_single_d(
+myfmts2 <- fmt_spec_single_d(
   d = 3,
   stats_in = c("mean", "mean_sd"),
   fmt_d_def = junco_def_d,
@@ -130,7 +130,7 @@ fmt_details2 <- get_fmt_details(vars_fmt, as_tibble = TRUE, recursive = TRUE)
 test1_target <- junco_default_formats
 # junco_def_d_all has been constructed with d = 1 as reference
 # compare against junco_default_formats
-test1_d <- junco:::fmt_spec_single_d(
+test1_d <- fmt_spec_single_d(
   d = 1,
   stats_in = NULL,
   fmt_d_def = junco_def_d_all,
@@ -141,7 +141,7 @@ check1 <- compare_fmt_specs(test1_d, test1_target)
 check1
 
 # more differences when using other d
-test2_d <- junco:::fmt_spec_single_d(
+test2_d <- fmt_spec_single_d(
   d = 2,
   stats_in = NULL,
   fmt_d_def = junco_def_d_all,

@@ -141,7 +141,7 @@ names(junco_def_d_all1) <- target_d_style[["stat"]]
 #' @describeIn fmt_spec_d Named vector of default format specification using d-style notation.
 #'
 #' @format  * `junco_def_d_all` Used as default input vector for argument `fmt_d_def`
-#' in functions `junco:::fmt_spec_single_d()`, `fmt_spec_df_d()` and `fmt_spec_var_d()`
+#' in functions `fmt_spec_single_d()`, `fmt_spec_df_d()` and `fmt_spec_var_d()`
 #' (corresponds to the named vector of with default available formats [junco_default_formats]
 #'  with d = 1)
 #' @export

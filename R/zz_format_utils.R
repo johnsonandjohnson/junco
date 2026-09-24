@@ -294,7 +294,7 @@ NULL
 #'   "range" = "(xx.d, xx.d)"
 #' )
 #'
-#' myfmts <- junco:::fmt_spec_single_d(
+#' myfmts <- fmt_spec_single_d(
 #'   d = 1,
 #'   stats_in = c("mean", "mean_sd"),
 #'   fmt_d_def = junco_def_d,
@@ -303,7 +303,7 @@ NULL
 #'
 #' fmt_details <- get_fmt_details(myfmts, as_tibble = TRUE)
 #'
-#' myfmts2 <- junco:::fmt_spec_single_d(
+#' myfmts2 <- fmt_spec_single_d(
 #'   d = 3,
 #'   stats_in = c("mean", "mean_sd"),
 #'   fmt_d_def = junco_def_d,
@@ -401,7 +401,7 @@ compare_fmt_tibble <- function(fmt_t1, fmt_t2) {
 #' test1_target <- junco_default_formats
 #' # junco_def_d_all has been constructed with d = 1 as reference
 #' # compare against junco_default_formats
-#' test1_d <- junco:::fmt_spec_single_d(
+#' test1_d <- fmt_spec_single_d(
 #'   d = 1,
 #'   stats_in = NULL,
 #'   fmt_d_def = junco_def_d_all,
@@ -412,7 +412,7 @@ compare_fmt_tibble <- function(fmt_t1, fmt_t2) {
 #' check1
 #'
 #' # more differences when using other d
-#' test2_d <- junco:::fmt_spec_single_d(
+#' test2_d <- fmt_spec_single_d(
 #'   d = 2,
 #'   stats_in = NULL,
 #'   fmt_d_def = junco_def_d_all,

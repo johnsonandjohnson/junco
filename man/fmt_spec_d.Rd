@@ -12,7 +12,7 @@
 \format{
 \itemize{
 \item \code{junco_def_d_all} Used as default input vector for argument \code{fmt_d_def}
-in functions \code{junco:::fmt_spec_single_d()}, \code{fmt_spec_df_d()} and \code{fmt_spec_var_d()}
+in functions \code{fmt_spec_single_d()}, \code{fmt_spec_df_d()} and \code{fmt_spec_var_d()}
 (corresponds to the named vector of with default available formats \link{junco_default_formats}
 with d = 1)
 }
@@ -111,7 +111,7 @@ junco_def_d <- c(
   "mean_se" = "xx.dx (xx.dxx)",
   "range" = "(xx.d, xx.d)"
 )
-myfmts <- junco:::fmt_spec_single_d(
+myfmts <- fmt_spec_single_d(
   d = 1,
   stats_in = c("mean", "mean_sd"),
   fmt_d_def = junco_def_d,
