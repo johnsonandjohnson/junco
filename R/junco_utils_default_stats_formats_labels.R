@@ -312,7 +312,10 @@ junco_default_stats <- list(
     "mean_diff_with_ci"
   ),
   aval_chg_col1 = c("count_denom_frac", "count_frac", "count"),
-  aval_chg_col23 = c("mean_ci_3d", "mean_diff_with_ci")
+  aval_chg_col23 = c("mean_ci_3d", "mean_diff_with_ci"),
+  a_sum_ratio_j = c(
+    "sum", "sum_unique", "ratio", "ratio_unique"
+  )
 )
 
 not_in_junco <- setdiff(names(tern_default_stats), names(junco_default_stats))
