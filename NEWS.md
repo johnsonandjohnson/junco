@@ -22,7 +22,6 @@
 - CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
-
 - Updated several analysis functions to use `h_get_cur_trt_grp()` (#295).
 - Replaced `h_get_trtvar_refpath()` with `h_get_cur_trt_grp()` (#295).
 - Updated `get_ref_info()` for matching column split paths (#295).
@@ -64,6 +63,10 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added assertions for the `id` argument in `a_freq_j()` and `s_freq_j()` (#424).
 
 ### Added
+- Added `s_proportion_diff_mf()` and `a_proportion_diff_mf()` adaptive
+  estimation of stratified response-proportion differences using the
+  Mantel–Fleiss criterion (#456).
+- Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator.
 - Added `a_sum_ratio_j()` analysis function for computing sum, unique-row sum, and their ratios against a denominator column.
 - Added `strict_match()` for uniquely matching a value in the odd or even positions of a character vector.
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
@@ -75,7 +78,6 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added `a_summarize_mmrm_with_exclude()` to allow MMRM summaries to be skipped for selected row split levels.
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
 - Added `a_three_tier()` as extension to `a_two_tier()`.
-- Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator.
 - Added formatting function `format_sigfig_j()` as alternative to `tern::format_sigfig()`. (#436)
 - Added varying decimal precision utility functions `fmt_spec_single_d`, `fmt_spec_df_d`, `fmt_spec_var_d`. (#474)
 - Added utility functions `get_fmt_details` and `compare_fmt_specs` for reviewing format specification objects.
