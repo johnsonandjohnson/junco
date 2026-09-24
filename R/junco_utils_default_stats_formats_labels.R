@@ -488,7 +488,11 @@ junco_default_labels_start <- c(
   n_event_total = "n (events)",
   person_years_total = "Total person-years",
   n_eair_strat = "n (Stratified EAIR)",
-  total_subject_years = "Total treatment (subject years)"
+  total_subject_years = "Total treatment (subject years)",
+  sum = "Sum",
+  sum_unique = "Sum (unique)",
+  ratio = "Ratio",
+  ratio_unique = "Ratio (unique)"
 )
 tern_labels_only <- setdiff(names(tern_default_labels), names(junco_default_labels_start))
 

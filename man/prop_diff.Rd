@@ -93,10 +93,11 @@ in terms of responder proportion.
 }}
 \note{
 The \code{\link[=a_proportion_diff_j]{a_proportion_diff_j()}} function has the \verb{_j} suffix to distinguish it
-from \code{\link[tern:a_proportion_diff]{tern::a_proportion_diff()}}. The functions here are a copy from the \code{tern} package
-with additional features:
+from \code{\link[tern:a_proportion_diff]{tern::a_proportion_diff()}}. The functions here are a thin wrapper around
+\code{tern::s_proportion_diff()} with the following additions:
 \itemize{
-\item Additional statistic \code{diff_est_ci} is returned.
+\item The \code{diff_est_ci} statistic (returned natively by tern since tern#1523) is
+relabelled with a shorter junco-style label (\code{"\% Difference (conf_level CI)"}).
 \item \code{ref_path} needs to be provided as extra argument to specify the control group column.
 }
 
