@@ -255,3 +255,6 @@ build_table(lyt, df = dta)
 \seealso{
 \code{\link[=cond_proportion_j]{cond_proportion_j()}}
 }
+\author{
+WW
+}

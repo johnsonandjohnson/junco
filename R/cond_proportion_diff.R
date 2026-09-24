@@ -105,6 +105,7 @@
 #'
 #' @seealso [cond_proportion_j()]
 #' @order 1
+#' @author WW
 #' @examples
 #' n <- 100 # Number of observations.
 #' set.seed(123)
@@ -178,10 +179,10 @@ s_proportion_diff_mf <- function(df,
                                  na.rm = FALSE,
                                  conf_level = 0.95,
                                  mf_method = c("cmh", "cmh_sato", "cmh_mn")) {
-  checkmate::assert_flag(.in_ref_col, null.ok = TRUE)
-  checkmate::assert_data_frame(.ref_group)
-  checkmate::assert_list(variables)
-  checkmate::assert_flag(na.rm)
+  assert_flag(.in_ref_col, null.ok = TRUE)
+  assert_data_frame(.ref_group)
+  assert_list(variables)
+  assert_flag(na.rm)
 
   mf_method <- match.arg(mf_method)
 
@@ -193,7 +194,7 @@ s_proportion_diff_mf <- function(df,
       executed_method = NA_character_
     )
   } else {
-    checkmate::assert_false(is.null(.ref_group))
+    assert_false(is.null(.ref_group))
 
     rsp_data <- h_prepare_rsp_table(
       df = df,
@@ -236,7 +237,7 @@ s_proportion_diff_mf <- function(df,
       )
     }
 
-    checkmate::assert_subset(c("diff", "diff_ci"), names(y))
+    assert_subset(c("diff", "diff_ci"), names(y))
     y <- y[c("diff", "diff_ci")]
     y$diff <- setNames(y$diff * 100, paste0("diff_", executed_method))
     y$diff_ci <- setNames(y$diff_ci * 100, paste0("diff_ci_", executed_method, c("_l", "_u")))
@@ -244,18 +245,7 @@ s_proportion_diff_mf <- function(df,
     y$executed_method <- executed_method
   }
 
-  # Prepare labels.
-  label_prefix <- "Difference in Response rate (%)"
-  mf_method_label <- d_proportion_diff(method = mf_method, method_only = TRUE)
-  non_mf_method_label <- d_proportion_diff(method = "uncond_exact_diff", method_only = TRUE)
-  method_label <- paste0("(", mf_method_label, " / ", non_mf_method_label, ")")
-
-  # Set labels.
-  attr(y$diff, "label") <- paste(label_prefix, method_label)
-  attr(y$diff_ci, "label") <- paste(label_prefix, tern::f_conf_level(conf_level), method_label)
-  attr(y$diff_est_ci, "label") <- paste(label_prefix, "and", tern::f_conf_level(conf_level), method_label)
-
-  y
+  h_set_labels_prop_diff_mf(y, mf_method = mf_method, conf_level = conf_level)
 }
 
 #' @describeIn proportion_diff_mf Formatted analysis function used as `afun`
@@ -309,14 +299,14 @@ a_proportion_diff_mf <- function(df,
                                    ),
                                    1L, "+"
                                  )) {
-  checkmate::assert_scalar(.var)
-  checkmate::assert_scalar(.in_ref_col, null.ok = TRUE)
-  checkmate::assert_scalar(val)
-  checkmate::assert_scalar(na.rm)
-  checkmate::assert_scalar(conf_level)
-  checkmate::assert_true(
+  assert_scalar(.var)
+  assert_scalar(.in_ref_col, null.ok = TRUE)
+  assert_scalar(val)
+  assert_scalar(na.rm)
+  assert_scalar(conf_level)
+  assert_true(
     identical(class(exact_footnote), structure("RefFootnote", package = "rtables")) ||
-      checkmate::test_string(exact_footnote)
+      test_string(exact_footnote)
   )
 
   dots_extra_args <- list(...)
@@ -360,4 +350,63 @@ a_proportion_diff_mf <- function(df,
     indents_in = .indent_mods,
     .cell_footnotes = cell_footnotes
   )
+}
+
+#' @title Helper function to set labels for `s_proportion_diff_mf()` statistics
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Sets descriptive labels on the statistics returned by `s_proportion_diff_mf()`.
+#'
+#' The label includes the detailed names of the two methods that may be selected
+#' according to the Mantel-Fleiss criterion: `mf_method` is selected when the
+#' criterion is satisfied, while `non_mf_method` is selected when the criterion
+#' is not satisfied or cannot be evaluated.
+#'
+#' Specifically, the method part of the label has the form
+#' `"(mf_method_label / non_mf_method_label)"`, where `mf_method_label` and
+#' `non_mf_method_label` are the corresponding detailed method names.
+#'
+#' @param y (`list`) \cr
+#'   The list of statistics returned by `s_proportion_diff_mf()` for which
+#'   labels should be set. Must contain the named elements `"diff"`, `"diff_ci"`,
+#'   and `"diff_est_ci"`.
+#' @param mf_method (`character(1)`) \cr
+#'   The method specified for the Mantel-Fleiss-based analysis.
+#'   Available choices are those accepted by the `method` argument of
+#'   [tern::d_proportion_diff()].
+#' @param non_mf_method (`character(1)`) \cr
+#'   The method used when the Mantel-Fleiss criterion is not satisfied or cannot
+#'   be evaluated.
+#'   Available choices are those accepted by the method argument of
+#'   [tern::d_proportion_diff()].
+#' @param conf_level (`numeric(1)`) \cr
+#'   The confidence level used for the confidence interval.
+#'
+#' @return
+#'   The input `y` with descriptive label attributes added to the `"diff"`,
+#'   `"diff_ci"`, and `"diff_est_ci"` elements.
+#'
+#' @keywords internal
+h_set_labels_prop_diff_mf <- function(y,
+                                      mf_method,
+                                      non_mf_method = "uncond_exact_diff",
+                                      conf_level) {
+  assert_list(y)
+  assert_subset(c("diff", "diff_ci", "diff_est_ci"), choices = names(y))
+
+  label_prefix <- "Difference in Response rate (%)"
+  mf_method_label <- d_proportion_diff(method = mf_method, method_only = TRUE)
+  non_mf_method_label <- d_proportion_diff(method = non_mf_method, method_only = TRUE)
+  method_label <- paste0("(", mf_method_label, " / ", non_mf_method_label, ")")
+
+  # Set labels.
+  attr(y$diff, "label") <- paste(label_prefix, method_label)
+  attr(y$diff_ci, "label") <- paste(
+    label_prefix, tern::f_conf_level(conf_level), method_label
+  )
+  attr(y$diff_est_ci, "label") <- paste(
+    label_prefix, "and", tern::f_conf_level(conf_level), method_label
+  )
+  y
 }
