@@ -80,7 +80,7 @@ Remotes:
     pharmaverse/formatters@main,
     pharmaverse/rtables@main,
     pharmaverse/tern@main,
-    pharmaverse/rtables@main,
+    pharmaverse/rtables@rtables_1095_int_nesting,
     johnsonandjohnson/pharmaverseadamjnj@main,
     insightsengineering/rtables.officer@main
 Config/roxygen2/version: 8.1.0
