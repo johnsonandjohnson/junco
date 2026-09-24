@@ -307,8 +307,10 @@ junco_default_stats <- list(
     "eair_strat_n", "eair_strat_n_py",
     "eair_strat_diff_est_ci", "eair_strat_diff_est", "eair_strat_diff_ci"
   ),
-  analyze_vars_numeric_j = c(tern_default_stats["analyze_vars_numeric"][[1]],
-                             "mean_diff_with_ci"),
+  analyze_vars_numeric_j = c(
+    tern_default_stats["analyze_vars_numeric"][[1]],
+    "mean_diff_with_ci"
+  ),
   aval_chg_col1 = c("count_denom_frac", "count_frac", "count"),
   aval_chg_col23 = c("mean_ci_3d", "mean_diff_with_ci")
 )
@@ -319,7 +321,7 @@ junco_default_stats <- c(junco_default_stats, tern_default_stats[not_in_junco])
 
 # junco_default_formats ---------------------------------------------------------
 junco_default_formats_start <- c(
-  adj_mean_se = jjcsformat_xx("xx.xxx (xx.xxx)"),
+  adj_mean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
   adj_mean_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
   adj_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   change = "xx.x%",

@@ -1,0 +1,235 @@
+---
+title: "Formatting tools to simplify adjustment of decimal precision"
+date: "`r Sys.Date()`"
+output:
+    rmarkdown::html_document:
+        theme: "spacelab"
+        highlight: "kate"
+        toc: true
+        toc_float: true
+vignette: >
+  %\VignetteIndexEntry{Formatting tools to simplify adjustment of decimal precision}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+editor_options:
+  markdown:
+      wrap: 72
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Overview
+
+Many clinical tables require statistics presented on a table with certain decimal precision.
+In some situations the used decimal precision is different for different parameters and/or variables included in the table.
+In the `rtables` and `nest` framework formats can be specified, typically in the `format`, `.formats` argument of the used `afun`
+or `analyze` call.
+
+For more information on tabulation, formats and formatting functions, see the vignettes ["Tabulation"](https://pharmaverse.github.io/tern/latest-tag/articles/tables.html) and ["Formatting Functions"](https://pharmaverse.github.io/rtables/latest-release/articles/tern_formats.html).
+
+
+The purpose in this vignette is to provide some examples on how to utilize the new `junco` functions to facilitate adjustment of decimal precision.
+
+```{r load_packages, message=FALSE}
+library(rtables)
+library(junco)
+library(dplyr)
+```
+
+
+## d-Style Based Format Specifications
+A d-style specification setup is a string specification of type "xx.dx". In the conversion process, the integer value `d` will be replaced by `d` times `x`, eg with d = 1 `xx.dx` is converted into the format specification string `xx.xx`. 
+
+Below is an example on how to set up a d-style based specification manually.
+
+```{r d-style format setup}
+junco_def_d <- c(
+ "mean" = "xx.dx",
+ "mean_sd" = "xx.dx (xx.dxx)",
+ "mean_se" = "xx.dx (xx.dxx)",
+ "range" = "(xx.d, xx.d)",
+ "count_fraction" = jjcsformat_count_fraction
+)
+```
+
+Available d-style based format specifications in junco are: 
+
+- `junco_def_d_all`, used for setup according to default J&J precision rules
+- `junco_def_d_alt1`, used for setup according to J&J precision rules alternative 1
+- `junco_def_d_alt2`, used for setup according to J&J precision rules alternative 2
+
+
+`junco_def_d_all` is a d-based specification setup for `r length(junco_def_d_all)` statistics, of which about a third are using the d-style specification.
+
+```{r invest d-style defaults}
+d_style <- vapply(junco_def_d_all, FUN = function(fmt){ 
+  !is.function(fmt) && is.character(fmt) && grepl("xx.d", fmt, fixed = TRUE)},
+  FUN.VALUE = logical(1))
+
+d_style <- junco_def_d_all[d_style]
+names(d_style)
+d_style[["adj_mean_se"]]
+
+```
+
+The default d-style based input specification is `junco_def_d_all`, and when utilizing these specs with `d = 1` it would result in utilizing the `junco` defaults defined in `junco_default_formats`. One exception is the `tern` statistic `lr_stat_df` from method_group `coxph_pairwise`, for which the default format is not a valid `formatter` format. This is out of scope for current vignette.
+
+```{r junco_def_d_all with d is 1 is junco_default_formats}
+
+fmt_1 <- junco:::fmt_spec_single_d(d = 1, fmt_d_def = junco_def_d_all)
+fmt_1[["lr_stat_df"]] <- NULL
+
+# get_fmt_details tool applied to a format specification vector
+fmt_details <- get_fmt_details(fmt_1, recursive = FALSE, as_tibble = TRUE)
+
+fmt_details[fmt_details$stat == "adj_mean_se", c("stat", "fun_fact", "str", "str_formatters")]
+
+# to compare against junco_default_formats, except lr_stat_df
+junco_default_formats_adj <- junco_default_formats
+junco_default_formats_adj[["lr_stat_df"]] <- NULL
+
+# compare_fmt_specs tool to compare 2 format specification vectors
+comp <- compare_fmt_specs(fmt_1, junco_default_formats)
+
+```
+The tools `get_fmt_details` and  `compare_fmt_specs` used in the above code snippet are out of scope of current vignette, users can refer to the help pages for basic information on these.
+
+## Overview of Most Relevant Functions
+
+| **Function** | **Core Purpose** | **Covered in Example**|
+|---|---|---|
+| `fmt_spec_single_d`  | Convert a d-style based format specification into `formatters` format specification with 1 specific value of `d`  |  [Example BDS-type 2](#Ex3) | 
+| `fmt_spec_df_d`  | Convert a tibble with d-style based format specification into `formatters` format specification with value of `d` coming from column on input tibble  |[Example BDS-type 1](#Ex2)|
+| `fmt_spec_var_d` |Convert a variable based vector with d-style based format specification into `formatters` format specification  |[Example demographic](#Ex1)|
+
+## Examples
+### Working Example 1: Table with Multiple Variables Analyzed with Different Precision (eg Demography Table) {#Ex1}
+
+This example demonstrates the standard pattern for a table with multiple variables, each with a specific precision.
+
+
+
+```{r demographic example}
+set.seed(101)
+f2n <- function(x) as.numeric(x) - 1
+df <- ex_adsl
+df <- df |> 
+  mutate(newvar = rnorm(nrow(df), mean = 50 + 3 * f2n(ARMCD) + 4 * AGE, sd = 20))
+
+# a mix of categorical and continuous variables
+vars_all <- c("AGE", "SEX", "BMRKR1", "newvar")
+
+# set all variables to d = 0
+vars_d <- rep(0, length(vars_all))
+names(vars_d) <- vars_all
+# set some variables to a different d value
+vars_d["BMRKR1"] <- 2
+vars_d["newvar"] <- 1
+
+# conversion of d-style format to valid format specification
+vars_fmt <- fmt_spec_var_d(vars_d,
+ stats_in = NULL,
+ fmt_d_def = junco_def_d,
+ fmt_d_in = NULL
+)
+
+lyt <- basic_table() |>
+ split_cols_by("ARMCD") |>
+ analyze(
+   vars = vars_all,
+   afun = tern::a_summary,
+   # note .formats = "default" in extra_args to afun   
+   extra_args = list(
+     .stats = c("n", "mean_sd", "range", "count_fraction"),
+     .formats = "default"
+   ),
+   # note the usage of format argument to analyze call
+   format = vars_fmt,
+   section_div = " "
+)
+rslt <- build_table(lyt, df)
+rslt
+```
+### Working Example 2: Table with Multiple Parameters Analyzed with Different Precision (eg Lab/Vital Signs Table) {#Ex2}
+
+```{r bds example}
+# set precision d on a parameter by parameter basis 
+df_d <- tribble(
+ ~PARAMCD, ~d,
+ "ALT", 2L,
+ "CRP", 3L,
+ "IGA", 1L
+)
+# convert d-based setup into format specification
+# a new column fmt_d is created with format specifications
+df_d <- fmt_spec_df_d(df_d,
+ d_column = "d",
+ fmt_column = "fmt_d",
+ stats_in = NULL,
+ fmt_d_def = junco_def_d_all,
+ fmt_d_in = NULL
+)
+
+df <- ex_adlb |>
+ filter(AVISIT %in% c("BASELINE", "WEEK 1 DAY 8", "WEEK 2 DAY 15"))
+
+# join with dataframe with format specs
+df <- df |>
+ left_join(df_d)
+ lyt <- basic_table() |>
+ split_cols_by("ARMCD") |>
+ split_rows_by("PARAMCD", split_fun = drop_split_levels) |>
+ split_rows_by("AVISIT", split_fun = drop_split_levels) |>
+ analyze(
+   vars = "AVAL",
+   afun = tern::a_summary,
+   # note .formats = "default" in extra_args to afun
+   extra_args = list(
+     .stats = c("n", "mean_se", "range"),
+     .formats = "default"
+   ),
+   # note the usage of formats_var argument to analyze call   
+   formats_var = "fmt_d"
+ )
+ 
+rslt <- build_table(lyt, df, alt_counts_df = ex_adsl)
+rslt
+```
+
+### Working Example 3: Table with Parameters Analyzed with d = 2 Precision rather than default of d = 1 (eg Lab/Vital Signs Table) {#Ex3}
+
+```{r bds example 2}
+fmt_2 <- junco:::fmt_spec_single_d(d = 2, fmt_d_def = junco_def_d_all)
+
+df <- ex_adlb |>
+ filter(AVISIT %in% c("BASELINE", "WEEK 1 DAY 8", "WEEK 2 DAY 15"))
+
+ lyt <- basic_table() |>
+ split_cols_by("ARMCD") |>
+ split_rows_by("PARAMCD", split_fun = drop_split_levels) |>
+ split_rows_by("AVISIT", split_fun = drop_split_levels) |>
+ analyze(
+   vars = "AVAL",
+   afun = tern::a_summary,
+   extra_args = list(
+     .stats = c("n", "mean_se", "range"),
+     .formats = fmt_2
+   )
+ )
+ 
+rslt <- build_table(lyt, df, alt_counts_df = ex_adsl)
+rslt
+```
+
+## Requirements for afun's
+In order to utilize `rtables::analyze()` with arguments `format` or `formats_var`, the return of the used afun (typically either a call from `rcell` or `in_rows`) should have no formatting specification, ie `rcell(x, format = NULL, ...)` or `in_rows(.list = x, .formats = NULL, ...)`.
+
+The `tern` afuns, such as `a_summary()` have the argument `.formats` to control formats, when these are set to `NULL`, the default formats will be applied. In order to have the afun to return an `rcell`/`in_rows` value without formats, the .formats argument should be set to `"default"`. The function `tern::get_formats_from_stats` will then remove the formats prior to the call to `rcell`/`in_rows`. See also details section of `?tern::get_formats_from_stats`.
+
+As long as the (custom) afun adheres to the above principle of processing a `.formats` argument, the `rtables::analyze()` arguments `format` and `formats_var` can be utilized for this varying decimal setup approach.

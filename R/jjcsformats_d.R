@@ -90,7 +90,7 @@ NULL
 #' @describeIn fmt_spec_d Function to convert a named list using d-style string format
 #'  specification into a named list with valid `formatters` formatting specification
 #'
-#'
+#' @export
 #' @examples
 #' junco_def_d <- c(
 #'   "mean" = "xx.dx",

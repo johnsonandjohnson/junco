@@ -72,6 +72,8 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added `a_three_tier()` as extension to `a_two_tier()`.
 - Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator.
 - Added formatting function `format_sigfig_j()` as alternative to `tern::format_sigfig()`. (#436)
+- Added varying decimal precision utility functions `fmt_spec_single_d`, `fmt_spec_df_d`, `fmt_spec_var_d`. (#474)
+- Added utility functions `get_fmt_details` and `compare_fmt_specs` for reviewing format specification objects.
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 

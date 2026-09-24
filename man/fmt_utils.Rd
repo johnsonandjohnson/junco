@@ -42,9 +42,7 @@ The following information is collected:
 \code{fmt_spec_var_d} function.
 \item stat (name of statistic)
 \item fun_fact : name of function factory that has produced the format specification
-(if spec is from formatting function, blank if spec is string).
-}
-
+(if spec is from formatting function, blank if spec is string).\cr
 Only the following known formatting functions are supported:
 \itemize{
 \item jjcsformat_xx
@@ -56,7 +54,9 @@ Only the following known formatting functions are supported:
 \item tern::format_extreme_values_ci,
 \item tern::format_count_fraction_fixed_dp,
 \item tern::format_count_fraction,
-\item tern::format_fraction_fixed_dp
+\item tern::format_fraction_fixed_dp,
+\item format_sigfig_j
+}
 \item str: string from specification, or str from formatting function factory (\code{jjcsformat_xx}, ....)
 \item str_formatters: (\code{logical}) Is the str value a valid format string as in (\code{\link[formatters:list_valid_format_labels]{list_valid_format_labels()}})?
 \item type: when formatting function factory \code{jjcsformat_cnt_den_fract_fct} is used
@@ -67,6 +67,14 @@ not valid format string as in (\code{\link[formatters:list_valid_format_labels]{
 \item is_fun: (\code{logical}) Is the formatting specification a function?
 \item round_type: (\code{logical}) Does the formatting support \code{round_type} argument/behavior?
 \item fun: Formatting string or body of the formatting function.
+}
+
+Only when one of the formats provided is based upon formatting function factory \code{format_sigfig_j} setup:
+\itemize{
+\item d: value used for \code{sigfig}
+\item whole_integer: value used for \code{whole_integer}
+\item drop0trailing: value used for \code{drop0trailing}
+\item zero_threshold: value used for \code{zero_threshold}
 }
 
 \item \code{compare_fmt_specs()}: A utility to report findings in differences between 2 formatting specification vectors.
