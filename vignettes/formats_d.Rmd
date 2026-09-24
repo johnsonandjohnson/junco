@@ -44,7 +44,7 @@ library(dplyr)
 
 
 ## d-Style Based Format Specifications
-A d-style specification setup is a string specification of type "xx.dx". In the conversion process, the integer value `d` will be replaced by `d` times `x`, eg with d = 1 `xx.dx` is converted into the format specification string `xx.xx`. 
+A d-style specification setup is a string specification of type "xx.dx". In the conversion process, the integer value `d` will be replaced by `d` times `x`, e.g. with d = 1 `xx.dx` is converted into the format specification string `xx.xx`. 
 
 Below is an example on how to set up a d-style based specification manually.
 
@@ -98,7 +98,7 @@ junco_default_formats_adj[["lr_stat_df"]] <- NULL
 comp <- compare_fmt_specs(fmt_1, junco_default_formats)
 
 ```
-The tools `get_fmt_details` and  `compare_fmt_specs` used in the above code snippet are out of scope of current vignette, users can refer to the help pages for basic information on these.
+The tools `get_fmt_details` and `compare_fmt_specs` used in the above code snippet are out of scope of current vignette, users can refer to the help pages for basic information on these.
 
 ## Overview of Most Relevant Functions
 
@@ -109,7 +109,7 @@ The tools `get_fmt_details` and  `compare_fmt_specs` used in the above code snip
 | `fmt_spec_var_d` |Convert a variable based vector with d-style based format specification into `formatters` format specification  |[Example demographic](#Ex1)|
 
 ## Examples
-### Working Example 1: Table with Multiple Variables Analyzed with Different Precision (eg Demography Table) {#Ex1}
+### Working Example 1: Table with Multiple Variables Analyzed with Different Precision (e.g. Demography Table) {#Ex1}
 
 This example demonstrates the standard pattern for a table with multiple variables, each with a specific precision.
 
