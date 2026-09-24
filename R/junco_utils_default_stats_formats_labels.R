@@ -430,7 +430,11 @@ junco_default_formats_start <- c(
   eair_strat_diff_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   total_subject_years = jjcsformat_xx("xx.x (xx.x)"),
   n_fit = "xx",
-  unique = jjcsformat_count_fraction
+  unique = jjcsformat_count_fraction,
+  sum = "xx",
+  sum_unique = "xx",
+  ratio = jjcsformat_xx("xx (xx.x%)"),
+  ratio_unique = jjcsformat_xx("xx (xx.x%)")
 )
 
 tern_formats_only <- setdiff(names(tern_default_formats), names(junco_default_formats_start))
