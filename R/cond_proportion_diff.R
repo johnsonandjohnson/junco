@@ -362,6 +362,7 @@ a_proportion_diff_mf <- function(df,
 #' `"(mf_method_label / non_mf_method_label)"`, where `mf_method_label` and
 #' `non_mf_method_label` are the corresponding detailed method names.
 #'
+#' @inheritParams proportion_diff_mf conf_level
 #' @param y (`list`) \cr
 #'   The list of statistics returned by `s_proportion_diff_mf()` for which
 #'   labels should be set. Must contain the named elements `"diff"`, `"diff_ci"`,
@@ -375,8 +376,6 @@ a_proportion_diff_mf <- function(df,
 #'   be evaluated.
 #'   Available choices are those accepted by the method argument of
 #'   [tern::d_proportion_diff()].
-#' @param conf_level (`numeric(1)`) \cr
-#'   The confidence level used for the confidence interval.
 #'
 #' @return
 #'   The input `y` with descriptive label attributes added to the `"diff"`,

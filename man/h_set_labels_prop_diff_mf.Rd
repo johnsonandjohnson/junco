@@ -28,8 +28,7 @@ be evaluated.
 Available choices are those accepted by the method argument of
 \code{\link[tern:d_proportion_diff]{tern::d_proportion_diff()}}.}
 
-\item{conf_level}{(\code{numeric(1)}) \cr
-The confidence level used for the confidence interval.}
+\item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 }
 \value{
 The input \code{y} with descriptive label attributes added to the \code{"diff"},
