@@ -81,6 +81,7 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
 - Added `a_three_tier()` as extension to `a_two_tier()`.
 - Added formatting function `format_sigfig_j()` as alternative to `tern::format_sigfig()`. (#436)
+- Added new standard column structure functions: `make_multicomp_splfun()`, `grouped_cols_w_diffs()`, `grouped_cols_w_subgrps()`, `shift_tbl_col_struct()`, `some_v_all_col_struct()`, and `quartile_col_struct()`.
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 
