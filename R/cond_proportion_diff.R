@@ -1,3 +1,5 @@
+# Proportion Difference ----
+
 #' @name proportion_diff_mf
 #'
 #' @title Proportion Difference with Method Selection Based on the Mantel-Fleiss
@@ -171,7 +173,7 @@ NULL
 #' prop_d
 #'
 s_proportion_diff_mf <- function(df,
-                                 .var = NULL,
+                                 .var,
                                  .in_ref_col = NULL,
                                  .ref_group = NULL,
                                  val = TRUE,
@@ -403,4 +405,287 @@ h_set_labels_prop_diff_mf <- function(y,
     label_prefix, "and", tern::f_conf_level(conf_level), method_label
   )
   y
+}
+
+# Test Proportion Difference ----
+
+#' @name test_proportion_diff_mf
+#'
+#' @title Test of Proportion Difference with Method Selection Based on the
+#'   Mantel-Fleiss Criterion
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Tests the difference in response proportions between a non-reference group
+#' and a reference group for stratified data. The test method is selected based
+#' on the Mantel-Fleiss (MF) criterion.
+#'
+#' When the Mantel-Fleiss criterion is satisfied, a Cochran-Mantel-Haenszel
+#' (CMH)-type test is performed using the method specified by `mf_method`.
+#' When the criterion is not satisfied, Fisher's exact test is used instead.
+#'
+#' @details
+#' The data are prepared by [tern::h_prepare_rsp_table()], which constructs the
+#' response vector, group indicator, optional strata variable, and the
+#' corresponding 2 x 2 contingency table(s). When multiple strata variables are
+#' supplied, the cross-combinations of their levels define the analysis strata.
+#'
+#' The response variable is converted to a binary response according to `val`.
+#' The analysis compares the response proportion in the non-reference group with
+#' that in the reference group. The difference is calculated as the
+#' non-reference group minus the reference group.
+#'
+#' When strata are provided and the Mantel-Fleiss criterion is satisfied, the
+#' selected CMH test [tern::prop_cmh()] is used to obtain the p-value for the
+#' test of the difference in response proportions. The available
+#' Cochran-Mantel-Haenszel tests are:
+#'
+#' * `"cmh"`: Stratified Cochran-Mantel-Haenszel test.
+#' * `"cmh_sato"`: Stratified CMH test using the Sato variance estimator.
+#' * `"cmh_wh"`: Stratified CMH test using the Wilson-Hilferty transformation.
+#'
+#' See [tern::prop_cmh()] for more details and references.
+#'
+#' When strata are not specified, or when strata are specified but the
+#' Mantel-Fleiss criterion is not satisfied or cannot be evaluated (e.g., when
+#' none of the strata contain any observed values), Fisher's exact test
+#' [tern::prop_fisher()] is used instead.
+#'
+#' The Mantel-Fleiss criterion is evaluated using [tern::mantel_fleiss_crit()].
+#'
+#' The statistics function `s_test_proportion_diff_mf()` follows the usage and
+#' output of [tern::s_test_proportion_diff()] but removes the `method` argument
+#' and selects internally between a Cochran-Mantel-Haenszel-type test and
+#' Fisher's exact test based on the Mantel-Fleiss criterion.
+#'
+#' @inheritParams proportion_diff_mf
+#' @inheritParams proposal_argument_convention alternative
+#' @param mf_method (`character(1)`) \cr
+#'   The method used for testing the difference in response proportions when
+#'   strata are provided and the Mantel-Fleiss criterion is satisfied.
+#'   Available choices are `"cmh"`, `"cmh_sato"`, and `"cmh_wh"`.
+#'   See **Details** for more information.
+#' @param .stats (character) \cr
+#'   Statistics to select. The only available choice is `"pval"`.
+#'   This parameter affects only the formatted analysis function and has no
+#'   effect on the statistics function.
+#'
+#' @seealso [proportion_diff_mf], [cond_proportion_j()]
+#' @order 1
+#' @author WW
+#' @examples
+#' n <- 100 # Number of observations.
+#' set.seed(123)
+#' dta <- data.frame(
+#'   "rsp" = sample(c("Y", "N"), n, TRUE),
+#'   "grp" = c(
+#'     sample(c("A", "Placebo"), round(n - 0.1 * n), TRUE),
+#'     rep("C", round(0.1 * n))
+#'   ),
+#'   "f1" = sample(c("a1", "a2"), n, TRUE),
+#'   "f2" = sample(c("x", "y", "z"), n, TRUE),
+#'   stringsAsFactors = TRUE
+#' )
+#'
+NULL
+
+#' @describeIn test_proportion_diff_mf Statistics function testing the
+#'   difference in response proportions.
+#'   When strata variables are provided and the Mantel-Fleiss criterion is
+#'   satisfied, the CMH test [tern::prop_cmh()] is used, with the values of the
+#'   `diff_se` and `transform` arguments determined by `mf_method`.
+#'   Otherwise, i.e., when strata variables are not provided, or when strata
+#'   variables are provided but the Mantel-Fleiss criterion is not satisfied
+#'   or cannot be evaluated, Fisher's exact test [tern::prop_fisher()] is used.
+#'
+#' @return
+#'   * `s_test_proportion_diff_mf()` returns a list containing:
+#'   \describe{
+#'      \item{`pval` (`numeric(1)` or `numeric(0)`)}{P-value from the test, or
+#'      `numeric(0)` when the function is evaluated for the reference column
+#'      (`.in_ref_col` is NULL or `.in_ref_col` is `TRUE`).}
+#'      \item{`executed_method` (`character(1)`)}{Name of the test actually
+#'      used for the analysis.
+#'      Takes the value `NA_character_` when the function is evaluated for the
+#'      reference column (`.in_ref_col` is `NULL` or `.in_ref_col` is `TRUE`).
+#'      Otherwise, identifies the method used: `"cmh"`, `"cmh_sato"`, `"cmh_wh"`,
+#'      or `"fisher"`.
+#'      Formatted analysis functions can use this value to determine whether an
+#'      appropriate footnote should be added.}
+#'   }
+#'
+#' @order 1
+#' @export
+#' @examples
+#' test_prop_d <- s_test_proportion_diff_mf(
+#'   df = subset(dta, grp == "A"),
+#'   .var = "rsp",
+#'   .ref_group = subset(dta, grp == "Placebo"),
+#'   .in_ref_col = FALSE,
+#'   val = "Y",
+#'   variables = list(strata = c("f1", "f2"))
+#' )
+#' test_prop_d
+#'
+s_test_proportion_diff_mf <- function(df,
+                                      .var,
+                                      .in_ref_col = NULL,
+                                      .ref_group = NULL,
+                                      val = TRUE,
+                                      variables = list(strata = NULL),
+                                      na.rm = FALSE,
+                                      alternative = c("two.sided", "less", "greater"),
+                                      mf_method = c("cmh", "cmh_sato", "cmh_wh")) {
+  assert_flag(.in_ref_col, null.ok = TRUE)
+  assert_data_frame(.ref_group, null.ok = TRUE)
+  assert_list(variables, null.ok = TRUE)
+  assert_flag(na.rm)
+
+  mf_method <- match.arg(mf_method)
+
+  if (is.null(.in_ref_col) || .in_ref_col) {
+    executed_method <- NA_character_
+    pval <- numeric()
+  } else {
+    assert_false(is.null(.ref_group))
+
+    rsp_data <- h_prepare_rsp_table(
+      df = df,
+      df_ref = .ref_group,
+      var = .var,
+      val = val,
+      strata_vars = variables$strata,
+      complete_cases = na.rm
+    )
+    tbl <- rsp_data$tbl
+
+    # Check the Mantel-Fleiss criterion for stratified data.
+    is_mf_satisfied <- if (is.null(variables$strata)) {
+      warning(
+        "No strata variables were supplied; the Mantel-Fleiss criterion ",
+        "cannot be checked. Falling back to Fisher's exact test."
+      )
+      FALSE
+    } else {
+      isTRUE(mantel_fleiss_crit(rsp_data$tbl)) # Note: mantel_fleiss_crit() can return NA.
+    }
+
+    pval <- if (is_mf_satisfied) {
+      executed_method <- mf_method
+      switch(mf_method,
+        cmh = prop_cmh(tbl, alternative = alternative),
+        cmh_sato = prop_cmh(tbl, alternative = alternative, diff_se = "sato"),
+        cmh_wh = prop_cmh(tbl, alternative = alternative, transform = "wilson_hilferty")
+      )
+    } else {
+      executed_method <- "fisher"
+      tbl_unstrat <- margin.table(tbl, 1:2)
+      prop_fisher(tbl_unstrat, alternative = alternative)
+    }
+  }
+
+  # Set labels.
+  method_label <- paste0(
+    "(",
+    d_test_proportion_diff("fisher", method_only = TRUE),
+    " / ",
+    d_test_proportion_diff(mf_method, alternative, method_only = TRUE),
+    ")"
+  )
+
+  list(
+    pval = formatters::with_label(pval, method_label),
+    executed_method = executed_method
+  )
+}
+
+#' @describeIn test_proportion_diff_mf Formatted analysis function used as `afun`
+#'   to test the difference in response proportions, with method selection based
+#'   on the Mantel-Fleiss criterion.
+#'
+#' @return
+#' * `a_test_proportion_diff_mf()` returns the corresponding `RowsVerticalSection`
+#' object with formatted results.
+#'
+#' @order 3
+#' @export
+#' @examples
+#' lyt <- basic_table() |>
+#'   split_cols_by(var = "grp", ref_group = "Placebo") |>
+#'   analyze(
+#'     vars = "rsp",
+#'     afun = a_test_proportion_diff_mf,
+#'     extra_args = list(
+#'       val = "Y",
+#'       variables = list(strata = c("f1", "f2"))
+#'     )
+#'   )
+#'
+#' build_table(lyt, df = dta)
+#'
+a_test_proportion_diff_mf <- function(df,
+                                      .var,
+                                      .in_ref_col = NULL,
+                                      .ref_group = NULL,
+                                      val = TRUE,
+                                      variables = list(strata = NULL),
+                                      na.rm = FALSE,
+                                      alternative = c("two.sided", "less", "greater"),
+                                      mf_method = c("cmh", "cmh_sato", "cmh_wh"),
+                                      ...,
+                                      .stats = NULL,
+                                      .formats = NULL,
+                                      .labels = NULL,
+                                      .indent_mods = NULL,
+                                      exact_footnote = "Fisher's Exact Test") {
+  assert_scalar(.var)
+  assert_scalar(.in_ref_col, null.ok = TRUE)
+  assert_scalar(val)
+  assert_scalar(na.rm)
+  assert_true(
+    identical(class(exact_footnote), structure("RefFootnote", package = "rtables")) ||
+      test_string(exact_footnote)
+  )
+
+  dots_extra_args <- list(...)
+
+  # Only support default stats, not custom stats
+  .stats <- junco:::.split_std_from_custom_stats(.stats)$default_stats
+
+  x_stats <- junco:::.apply_stat_functions(
+    default_stat_fnc = s_test_proportion_diff_mf,
+    custom_stat_fnc_list = NULL,
+    args_list = c(
+      df = list(df),
+      .var = .var,
+      .in_ref_col = .in_ref_col,
+      .ref_group = list(.ref_group),
+      val = val,
+      variables = list(variables),
+      na.rm = na.rm,
+      alternative = list(alternative),
+      mf_method = list(mf_method),
+      dots_extra_args
+    )
+  )
+
+  method <- x_stats$executed_method
+  x_stats$executed_method <- NULL
+
+  cell_footnotes <- if (identical(method, "fisher")) { # method can be NA.
+    fn <- list(list(exact_footnote))
+    setNames(rep(fn, length(x_stats)), names(x_stats))
+  } else {
+    list(NULL)
+  }
+
+  format_stats(
+    x_stats,
+    method_groups = "test_proportion_diff",
+    stats_in = .stats,
+    formats_in = .formats,
+    labels_in = .labels,
+    indents_in = .indent_mods,
+    .cell_footnotes = cell_footnotes
+  )
 }

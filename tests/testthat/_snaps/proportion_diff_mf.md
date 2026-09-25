@@ -34,6 +34,17 @@
       [1] "uncond_exact_diff"
       
 
+# a_proportion_diff_mf() works in full table build (large sample)
+
+    Code
+      tbl
+    Output
+                                                                                                           X           Placebo
+      ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      Difference in Response rate (%) (CMH, without correction / Unconditional exact)                     3.4                 
+        Difference in Response rate (%) 95% CI (CMH, without correction / Unconditional exact)       (-16.1, 22.9)            
+      Difference in Response rate (%) and 95% CI (CMH, without correction / Unconditional exact)   3.4 (-16.1, 22.9)          
+
 # a_proportion_diff_mf() works in full table build
 
     Code
@@ -49,6 +60,15 @@
       {1} - Unconditional exact
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       
+
+# a_proportion_diff_mf() respects custom settings (CMH method)
+
+    Code
+      tbl
+    Output
+                               X             Placebo
+      ——————————————————————————————————————————————
+          my_label   3.40 (-13.22 - 19.92)          
 
 # a_proportion_diff_mf() respects custom settings
 
