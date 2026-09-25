@@ -62,6 +62,9 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added assertions for the `id` argument in `a_freq_j()` and `s_freq_j()` (#424).
 
 ### Added
+- Added `s_test_proportion_diff_mf()` and `a_test_proportion_diff_mf()` adaptive
+  test of stratified response-proportion differences using the Mantel–Fleiss
+  criterion (#457).
 - Added `s_proportion_diff_mf()` and `a_proportion_diff_mf()` adaptive
   estimation of stratified response-proportion differences using the
   Mantel–Fleiss criterion (#456).

@@ -1,63 +1,6 @@
-# h_set_labels_prop_diff_mf() ----
+# s_test_proportion_diff_mf() ----
 
-test_that("h_set_labels_prop_diff_mf() sets labels with default methods", {
-  y <- list(diff = 2, diff_ci = c(1, 3), diff_est_ci = c(2, 1, 3))
-
-  result <- h_set_labels_prop_diff_mf(y = y, mf_method = "cmh", conf_level = 0.95)
-
-  expect_identical(
-    attr(result$diff, "label"),
-    "Difference in Response rate (%) (CMH, without correction / Unconditional exact)"
-  )
-  expect_identical(
-    attr(result$diff_ci, "label"),
-    "Difference in Response rate (%) 95% CI (CMH, without correction / Unconditional exact)"
-  )
-  expect_identical(
-    attr(result$diff_est_ci, "label"),
-    "Difference in Response rate (%) and 95% CI (CMH, without correction / Unconditional exact)"
-  )
-})
-
-test_that("h_set_labels_prop_diff_mf() uses the specified MF method and conf_level", {
-  y <- list(diff = 2, diff_ci = c(1, 3), diff_est_ci = c(2, 1, 3))
-
-  result <- h_set_labels_prop_diff_mf(y = y, mf_method = "cmh_mn", conf_level = 0.90)
-
-  expect_equal(
-    attr(result$diff, "label"),
-    "Difference in Response rate (%) (CMH, Miettinen and Nurminen / Unconditional exact)"
-  )
-  expect_equal(
-    attr(result$diff_ci, "label"),
-    "Difference in Response rate (%) 90% CI (CMH, Miettinen and Nurminen / Unconditional exact)"
-  )
-})
-
-test_that("h_set_labels_prop_diff_mf() uses the specified non-MF method", {
-  y <- list(diff = 2, diff_ci = c(1, 3), diff_est_ci = c(2, 1, 3))
-
-  result <- h_set_labels_prop_diff_mf(
-    y = y, mf_method = "cmh_sato", non_mf_method = "wald", conf_level = 0.91
-  )
-
-  expect_equal(
-    attr(result$diff, "label"),
-    "Difference in Response rate (%) (CMH, Sato variance estimator / Wald, without correction)"
-  )
-  expect_equal(
-    attr(result$diff_ci, "label"),
-    "Difference in Response rate (%) 91% CI (CMH, Sato variance estimator / Wald, without correction)"
-  )
-  expect_equal(
-    attr(result$diff_est_ci, "label"),
-    "Difference in Response rate (%) and 91% CI (CMH, Sato variance estimator / Wald, without correction)"
-  )
-})
-
-# s_proportion_diff_mf() ----
-
-test_that("s_proportion_diff_mf() chooses the CMH method", {
+test_that("s_test_proportion_diff_mf() chooses the CMH method", {
   set.seed(123)
   n <- 100
   data <- data.frame(
@@ -67,7 +10,7 @@ test_that("s_proportion_diff_mf() chooses the CMH method", {
   )
 
   expect_silent(
-    result <- s_proportion_diff_mf(
+    result <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = subset(data, grp == "Placebo"),
@@ -76,19 +19,17 @@ test_that("s_proportion_diff_mf() chooses the CMH method", {
     )
   )
 
+  label <- "(Fisher's Exact Test / Cochran-Mantel-Haenszel Test)"
   expected <- list(
-    diff = c(diff_cmh = -0.6902026),
-    diff_ci = c(diff_ci_cmh_l = -19.76883, diff_ci_cmh_u = 18.38843),
-    diff_est_ci = NA,
+    pval = formatters::with_label(0.9452043, label),
     executed_method = "cmh"
   )
-  expected$diff_est_ci <- c(expected$diff, expected$diff_ci)
-  expected <- h_set_labels_prop_diff_mf(expected, mf_method = "cmh", conf_level = 0.95)
+  attr(expected$pval, "z_stat") <- -0.06873026
 
   expect_equal(result, expected, tolerance = 1e-6)
 })
 
-test_that("s_proportion_diff_mf() chooses custom cmh_sato method", {
+test_that("s_test_proportion_diff_mf() chooses custom cmh_sato method", {
   set.seed(123)
   n <- 100
   data <- data.frame(
@@ -98,7 +39,7 @@ test_that("s_proportion_diff_mf() chooses custom cmh_sato method", {
   )
 
   expect_silent(
-    result <- s_proportion_diff_mf(
+    result <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = subset(data, grp == "Placebo"),
@@ -108,27 +49,25 @@ test_that("s_proportion_diff_mf() chooses custom cmh_sato method", {
     )
   )
 
+  label <- "(Fisher's Exact Test / Cochran-Mantel-Haenszel Test with Sato Variance Estimator)"
   expected <- list(
-    diff = c(diff_cmh_sato = -0.6902026),
-    diff_ci = c(diff_ci_cmh_sato_l = -20.0086550, diff_ci_cmh_sato_u = 18.6282499),
-    diff_est_ci = NA,
+    pval = formatters::with_label(0.9441739, label),
     executed_method = "cmh_sato"
   )
-  expected$diff_est_ci <- c(expected$diff, expected$diff_ci)
-  expected <- h_set_labels_prop_diff_mf(expected, mf_method = "cmh_sato", conf_level = 0.95)
+  attr(expected$pval, "z_stat") <- -0.07002487
 
   expect_equal(result, expected, tolerance = 1e-6)
 })
 
-test_that("s_proportion_diff_mf() chooses the exact method", {
+test_that("s_test_proportion_diff_mf() chooses the exact method", {
   data <- data.frame(
-    rsp = c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE),
-    grp = c("X", "X", "Placebo", "X", "X", "Placebo"),
-    strata = factor(c("A", "A", "B", "B", "B", "A"), levels = c("A", "B", "Z"))
+    rsp = c(TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE),
+    grp = c("Placebo", "Placebo", "X", "Placebo", "Placebo", "X", "X", "Placebo", "X"),
+    strata = factor(c("A", "A", "A", "A", "B", "B", "B", "B", "B"), levels = c("A", "B", "Z"))
   )
 
   expect_silent(
-    result <- s_proportion_diff_mf(
+    result <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = subset(data, grp == "Placebo"),
@@ -137,26 +76,23 @@ test_that("s_proportion_diff_mf() chooses the exact method", {
     )
   )
 
+  label <- "(Fisher's Exact Test / Cochran-Mantel-Haenszel Test)"
   expected <- list(
-    diff = c(diff_uncond_exact_diff = 25),
-    diff_ci = c(diff_ci_uncond_exact_diff_l = -64.20027, diff_ci_uncond_exact_diff_u = 89.00002),
-    diff_est_ci = NA,
-    executed_method = "uncond_exact_diff"
+    pval = formatters::with_label(0.5238095, label),
+    executed_method = "fisher"
   )
-  expected$diff_est_ci <- c(expected$diff, expected$diff_ci)
-  expected <- h_set_labels_prop_diff_mf(expected, mf_method = "cmh", conf_level = 0.95)
 
   expect_equal(result, expected, tolerance = 1e-6)
 })
 
-test_that("s_proportion_diff_mf() chooses the exact method when strata are not specified", {
+test_that("s_test_proportion_diff_mf() chooses the exact method when strata are not specified", {
   data <- data.frame(
     rsp = c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE),
     grp = c("X", "X", "Placebo", "X", "X", "Placebo")
   )
 
   expect_warning(
-    result <- s_proportion_diff_mf(
+    result <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = subset(data, grp == "Placebo"),
@@ -165,19 +101,16 @@ test_that("s_proportion_diff_mf() chooses the exact method when strata are not s
     "strata variables"
   )
 
+  label <- "(Fisher's Exact Test / Cochran-Mantel-Haenszel Test)"
   expected <- list(
-    diff = c(diff_uncond_exact_diff = 25),
-    diff_ci = c(diff_ci_uncond_exact_diff_l = -64.20027, diff_ci_uncond_exact_diff_u = 89.00002),
-    diff_est_ci = NA,
-    executed_method = "uncond_exact_diff"
+    pval = formatters::with_label(1, label),
+    executed_method = "fisher"
   )
-  expected$diff_est_ci <- c(expected$diff, expected$diff_ci)
-  expected <- h_set_labels_prop_diff_mf(expected, mf_method = "cmh", conf_level = 0.95)
 
   expect_equal(result, expected, tolerance = 1e-6)
 })
 
-test_that("s_proportion_diff_mf() returns empty results when .in_ref_col is NULL or TRUE", {
+test_that("s_test_proportion_diff_mf() returns empty results when .in_ref_col is NULL or TRUE", {
   data <- data.frame(
     rsp = c(TRUE, NA, FALSE, TRUE, NA, FALSE),
     grp = factor(c("X", "X", "X", "Placebo", "Placebo", "Placebo")),
@@ -186,7 +119,7 @@ test_that("s_proportion_diff_mf() returns empty results when .in_ref_col is NULL
 
   # .in_ref_col = NULL # nolintr
   expect_silent(
-    result_null <- s_proportion_diff_mf(
+    result_null <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = subset(data, grp == "Placebo"),
@@ -197,7 +130,7 @@ test_that("s_proportion_diff_mf() returns empty results when .in_ref_col is NULL
 
   # .in_ref_col = TRUE # nolintr
   expect_silent(
-    result_true <- s_proportion_diff_mf(
+    result_true <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = subset(data, grp == "Placebo"),
@@ -206,19 +139,17 @@ test_that("s_proportion_diff_mf() returns empty results when .in_ref_col is NULL
     )
   )
 
+  label <- "(Fisher's Exact Test / Cochran-Mantel-Haenszel Test)"
   expected <- list(
-    diff = numeric(0),
-    diff_ci = numeric(0),
-    diff_est_ci = numeric(0),
+    pval = formatters::with_label(numeric(), label),
     executed_method = NA_character_
   )
-  expected <- h_set_labels_prop_diff_mf(expected, mf_method = "cmh", conf_level = 0.95)
 
   expect_identical(result_null, expected)
   expect_identical(result_true, expected)
 })
 
-test_that("s_proportion_diff_mf() errors when .ref_group is NULL", {
+test_that("s_test_proportion_diff_mf() errors when .ref_group is NULL", {
   data <- data.frame(
     rsp = c(TRUE, NA, FALSE, TRUE, NA, FALSE),
     grp = factor(c("X", "X", "X", "Placebo", "Placebo", "Placebo")),
@@ -226,7 +157,7 @@ test_that("s_proportion_diff_mf() errors when .ref_group is NULL", {
   )
 
   expect_error(
-    result <- s_proportion_diff_mf(
+    result <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = NULL,
@@ -237,7 +168,7 @@ test_that("s_proportion_diff_mf() errors when .ref_group is NULL", {
   )
 })
 
-test_that("s_proportion_diff_mf() works with unused strata levels", {
+test_that("s_test_proportion_diff_mf() works with unused strata levels", {
   data <- data.frame(
     rsp = c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE),
     grp = c("X", "X", "X", "Placebo", "Placebo", "Placebo"),
@@ -246,7 +177,7 @@ test_that("s_proportion_diff_mf() works with unused strata levels", {
   )
 
   expect_silent(
-    result <- s_proportion_diff_mf(
+    result <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = subset(data, grp == "Placebo"),
@@ -255,19 +186,16 @@ test_that("s_proportion_diff_mf() works with unused strata levels", {
     )
   )
 
+  label <- "(Fisher's Exact Test / Cochran-Mantel-Haenszel Test)"
   expected <- list(
-    diff = c(diff_uncond_exact_diff = 33.33333),
-    diff_ci = c(diff_ci_uncond_exact_diff_l = -55.44439, diff_ci_uncond_exact_diff_u = 90.94305),
-    diff_est_ci = NA,
-    executed_method = "uncond_exact_diff"
+    pval = formatters::with_label(1, label),
+    executed_method = "fisher"
   )
-  expected$diff_est_ci <- c(expected$diff, expected$diff_ci)
-  expected <- h_set_labels_prop_diff_mf(expected, mf_method = "cmh", conf_level = 0.95)
 
   expect_equal(result, expected, tolerance = 1e-6)
 })
 
-test_that("s_proportion_diff_mf() works with empty df or .ref_group", {
+test_that("s_test_proportion_diff_mf() works with empty df or .ref_group", {
   data <- data.frame(
     rsp = c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE),
     grp = c("X", "X", "X", "Placebo", "Placebo", "Placebo"),
@@ -277,7 +205,7 @@ test_that("s_proportion_diff_mf() works with empty df or .ref_group", {
 
   # Both df and .ref_group empty.
   expect_silent(
-    result <- s_proportion_diff_mf(
+    result <- s_test_proportion_diff_mf(
       df = subset(data, grp == "not_exist"),
       .var = "rsp",
       .ref_group = subset(data, grp == "not_exist"),
@@ -288,7 +216,7 @@ test_that("s_proportion_diff_mf() works with empty df or .ref_group", {
 
   # Only .ref_group empty.
   expect_silent(
-    result_ref_empty <- s_proportion_diff_mf(
+    result_ref_empty <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = subset(data, grp == "not_exist"),
@@ -299,7 +227,7 @@ test_that("s_proportion_diff_mf() works with empty df or .ref_group", {
 
   # Only df empty.
   expect_silent(
-    result_df_empty <- s_proportion_diff_mf(
+    result_df_empty <- s_test_proportion_diff_mf(
       df = subset(data, grp == "not_exist"),
       .var = "rsp",
       .ref_group = subset(data, grp == "Placebo"),
@@ -308,30 +236,27 @@ test_that("s_proportion_diff_mf() works with empty df or .ref_group", {
     )
   )
 
+  label <- "(Fisher's Exact Test / Cochran-Mantel-Haenszel Test)"
   expected <- list(
-    diff = c(diff_uncond_exact_diff = NaN),
-    diff_ci = c(diff_ci_uncond_exact_diff_l = NaN, diff_ci_uncond_exact_diff_u = NaN),
-    diff_est_ci = NA,
-    executed_method = "uncond_exact_diff"
+    pval = formatters::with_label(1, label),
+    executed_method = "fisher"
   )
-  expected$diff_est_ci <- c(expected$diff, expected$diff_ci)
-  expected <- h_set_labels_prop_diff_mf(expected, mf_method = "cmh", conf_level = 0.95)
 
   expect_identical(result, expected)
   expect_identical(result_ref_empty, expected)
   expect_identical(result_df_empty, expected)
 })
 
-test_that("s_proportion_diff_mf() works with string val", {
+test_that("s_test_proportion_diff_mf() works with string val", {
   data <- data.frame(
-    rsp = c("Y", "Y", "N", "Y", "N", "N"),
+    rsp = c("Y", "Y", "Y", "Y", "N", "N"),
     grp = c("X", "X", "X", "Placebo", "Placebo", "Placebo"),
     strata_1 = factor(c("A", "A", "A", "B", "B", "B"), levels = c("A", "B", "Z")),
     strata_2 = factor(c("S1", "S2", "S2", "S1", "S2", "S1"), levels = c("S1", "S2", "XXX"))
   )
 
   expect_silent(
-    result <- s_proportion_diff_mf(
+    result <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .in_ref_col = FALSE,
@@ -341,19 +266,16 @@ test_that("s_proportion_diff_mf() works with string val", {
     )
   )
 
+  label <- "(Fisher's Exact Test / Cochran-Mantel-Haenszel Test)"
   expected <- list(
-    diff = c(diff_uncond_exact_diff = 33.33333),
-    diff_ci = c(diff_ci_uncond_exact_diff_l = -55.44439, diff_ci_uncond_exact_diff_u = 90.94305),
-    diff_est_ci = NA,
-    executed_method = "uncond_exact_diff"
+    pval = formatters::with_label(0.4, label),
+    executed_method = "fisher"
   )
-  expected$diff_est_ci <- c(expected$diff, expected$diff_ci)
-  expected <- h_set_labels_prop_diff_mf(expected, mf_method = "cmh", conf_level = 0.95)
 
   expect_equal(result, expected, tolerance = 1e-6)
 })
 
-test_that("s_proportion_diff_mf() errors when val is incompatible", {
+test_that("s_test_proportion_diff_mf() errors when val is incompatible", {
   data <- data.frame(
     rsp = c("Y", "Y", "Y", "Y", "N", "N"),
     grp = c("X", "X", "X", "Placebo", "Placebo", "Placebo"),
@@ -362,7 +284,7 @@ test_that("s_proportion_diff_mf() errors when val is incompatible", {
   )
 
   expect_error(
-    result <- s_proportion_diff_mf(
+    result <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .in_ref_col = FALSE,
@@ -374,7 +296,7 @@ test_that("s_proportion_diff_mf() errors when val is incompatible", {
   )
 })
 
-test_that("s_proportion_diff_mf() errors when NAs are present", {
+test_that("s_test_proportion_diff_mf() errors when NAs are present", {
   data <- data.frame(
     rsp = c(TRUE, NA, FALSE, TRUE, NA, FALSE),
     grp = factor(c("X", "X", "X", "Placebo", "Placebo", "Placebo")),
@@ -382,7 +304,7 @@ test_that("s_proportion_diff_mf() errors when NAs are present", {
   )
 
   expect_error(
-    result <- s_proportion_diff_mf(
+    result <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = subset(data, grp == "Placebo"),
@@ -393,9 +315,9 @@ test_that("s_proportion_diff_mf() errors when NAs are present", {
   )
 })
 
-test_that("s_proportion_diff_mf() removes NAs from relevant columns and warns when na.rm = TRUE", {
+test_that("s_test_proportion_diff_mf() removes NAs from relevant columns and warns when na.rm = TRUE", {
   data <- data.frame(
-    rsp = c(TRUE, NA, FALSE, TRUE, NA, FALSE),
+    rsp = c(TRUE, NA, TRUE, TRUE, NA, FALSE),
     grp = factor(c("X", "X", "X", "Placebo", "Placebo", "Placebo")),
     strata = factor(c("S1", "S1", NA, "S1", "S2", "S2")),
     some_var_with_NAs = c("v1", "v2", "v2", "v3", "v4", NA)
@@ -403,7 +325,7 @@ test_that("s_proportion_diff_mf() removes NAs from relevant columns and warns wh
 
   # expect_snapshot() captures 2 warnings.
   expect_snapshot(
-    s_proportion_diff_mf(
+    s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = subset(data, grp == "Placebo"),
@@ -414,7 +336,7 @@ test_that("s_proportion_diff_mf() removes NAs from relevant columns and warns wh
   )
 })
 
-test_that("s_proportion_diff_mf() uses custom conf_level", {
+test_that("s_test_proportion_diff_mf() uses custom alternative", {
   data <- data.frame(
     rsp = c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE),
     grp = c("X", "X", "Placebo", "X", "X", "Placebo"),
@@ -422,31 +344,28 @@ test_that("s_proportion_diff_mf() uses custom conf_level", {
   )
 
   expect_silent(
-    result <- s_proportion_diff_mf(
+    result <- s_test_proportion_diff_mf(
       df = subset(data, grp == "X"),
       .var = "rsp",
       .ref_group = subset(data, grp == "Placebo"),
       .in_ref_col = FALSE,
       variables = list(strata = "strata"),
-      conf_level = 0.9
+      alternative = "greater"
     )
   )
 
+  label <- "(Fisher's Exact Test / Cochran-Mantel-Haenszel Test, 1-sided, direction greater)"
   expected <- list(
-    diff = c(diff_uncond_exact_diff = 25),
-    diff_ci = c(diff_ci_uncond_exact_diff_l = -54.40462, diff_ci_uncond_exact_diff_u = 84.07958),
-    diff_est_ci = NA,
-    executed_method = "uncond_exact_diff"
+    pval = formatters::with_label(0.9333333, label),
+    executed_method = "fisher"
   )
-  expected$diff_est_ci <- c(expected$diff, expected$diff_ci)
-  expected <- h_set_labels_prop_diff_mf(expected, mf_method = "cmh", conf_level = 0.9)
 
   expect_equal(result, expected, tolerance = 1e-6)
 })
 
-# a_proportion_diff_mf() ----
+# a_test_proportion_diff_mf() ----
 
-test_that("a_proportion_diff_mf() works in full table build (large sample)", {
+test_that("a_test_proportion_diff_mf() works in full table build (large sample)", {
   set.seed(1)
   n <- 100
   data <- data.frame(
@@ -460,7 +379,7 @@ test_that("a_proportion_diff_mf() works in full table build (large sample)", {
       split_cols_by(var = "grp", ref_group = "Placebo") |>
       analyze(
         vars = "rsp",
-        afun = a_proportion_diff_mf,
+        afun = a_test_proportion_diff_mf,
         extra_args = list(variables = list(strata = "strata"))
       ) |>
       build_table(data)
@@ -469,7 +388,7 @@ test_that("a_proportion_diff_mf() works in full table build (large sample)", {
   expect_snapshot(tbl)
 })
 
-test_that("a_proportion_diff_mf() works in full table build", {
+test_that("a_test_proportion_diff_mf() works in full table build", {
   data <- data.frame(
     rsp = c(TRUE, TRUE, FALSE, TRUE, FALSE),
     grp = c("X", "X", "X", "Placebo", "Placebo"),
@@ -482,7 +401,7 @@ test_that("a_proportion_diff_mf() works in full table build", {
       split_cols_by(var = "grp", ref_group = "Placebo") |>
       analyze(
         vars = "rsp",
-        afun = a_proportion_diff_mf,
+        afun = a_test_proportion_diff_mf,
         extra_args = list(variables = list(strata = c("strata_1", "strata_2")))
       ) |>
       build_table(data)
@@ -491,7 +410,7 @@ test_that("a_proportion_diff_mf() works in full table build", {
   expect_snapshot(tbl)
 })
 
-test_that("a_proportion_diff_mf() respects custom settings (CMH method)", {
+test_that("a_test_proportion_diff_mf() respects custom settings (CMH method)", {
   set.seed(1)
   n <- 100
   data <- data.frame(
@@ -505,16 +424,16 @@ test_that("a_proportion_diff_mf() respects custom settings (CMH method)", {
       split_cols_by(var = "grp", ref_group = "Placebo") |>
       analyze(
         vars = "rsp",
-        afun = a_proportion_diff_mf,
+        afun = a_test_proportion_diff_mf,
         extra_args = list(
           variables = list(strata = "strata"),
           val = "Y",
-          conf_level = 0.90,
-          mf_method = "cmh_mn",
-          .stats = "diff_est_ci",
-          .labels = c(diff_est_ci = "my_label"),
-          .formats = list(diff_est_ci = "xx.xx (xx.xx - xx.xx)"),
-          .indent_mods = c(diff_est_ci = 2L)
+          alternative = "less",
+          mf_method = "cmh_wh",
+          .stats = "pval",
+          .labels = c(pval = "my_label"),
+          .formats = list(pval = "xx.xxxx"),
+          .indent_mods = c(pval = 2L)
         )
       ) |>
       build_table(data)
@@ -523,7 +442,7 @@ test_that("a_proportion_diff_mf() respects custom settings (CMH method)", {
   expect_snapshot(tbl)
 })
 
-test_that("a_proportion_diff_mf() respects custom settings", {
+test_that("a_test_proportion_diff_mf() respects custom settings", {
   data <- data.frame(
     rsp = c("Y", "Y", "N", "Y", "N"),
     grp = c("X", "X", "X", "Placebo", "Placebo"),
@@ -536,16 +455,16 @@ test_that("a_proportion_diff_mf() respects custom settings", {
       split_cols_by(var = "grp", ref_group = "Placebo") |>
       analyze(
         vars = "rsp",
-        afun = a_proportion_diff_mf,
+        afun = a_test_proportion_diff_mf,
         extra_args = list(
           variables = list(strata = c("strata_1", "strata_2")),
           val = "Y",
-          conf_level = 0.90,
-          mf_method = "cmh_mn",
-          .stats = "diff_est_ci",
-          .labels = c(diff_est_ci = "my_label"),
-          .formats = list(diff_est_ci = "xx.xx (xx.xx - xx.xx)"),
-          .indent_mods = c(diff_est_ci = 2L)
+          alternative = "less",
+          mf_method = "cmh_wh",
+          .stats = "pval",
+          .labels = c(pval = "my_label"),
+          .formats = list(pval = "xx.xxxx"),
+          .indent_mods = c(pval = 2L)
         )
       ) |>
       build_table(data)
@@ -554,7 +473,7 @@ test_that("a_proportion_diff_mf() respects custom settings", {
   expect_snapshot(tbl)
 })
 
-test_that("a_proportion_diff_mf() respects custom exact_footnote", {
+test_that("a_test_proportion_diff_mf() respects custom exact_footnote", {
   data <- data.frame(
     rsp = c(TRUE, TRUE, FALSE, TRUE, FALSE),
     grp = c("X", "X", "X", "Placebo", "Placebo"),
@@ -567,10 +486,10 @@ test_that("a_proportion_diff_mf() respects custom exact_footnote", {
       split_cols_by(var = "grp", ref_group = "Placebo") |>
       analyze(
         vars = "rsp",
-        afun = a_proportion_diff_mf,
+        afun = a_test_proportion_diff_mf,
         extra_args = list(
           variables = list(strata = c("strata_1", "strata_2")),
-          exact_footnote = "This was the exact method"
+          exact_footnote = "This was the Fisher's exact test"
         )
       ) |>
       build_table(data)
@@ -579,7 +498,7 @@ test_that("a_proportion_diff_mf() respects custom exact_footnote", {
   expect_snapshot(tbl)
 })
 
-test_that("a_proportion_diff_mf() errors when NAs are present", {
+test_that("a_test_proportion_diff_mf() errors when NAs are present", {
   data <- data.frame(
     rsp = c(TRUE, NA, FALSE, TRUE, NA, FALSE),
     grp = factor(c("X", "X", "X", "Placebo", "Placebo", "Placebo")),
@@ -591,7 +510,7 @@ test_that("a_proportion_diff_mf() errors when NAs are present", {
       split_cols_by(var = "grp", ref_group = "Placebo") |>
       analyze(
         vars = "rsp",
-        afun = a_proportion_diff_mf,
+        afun = a_test_proportion_diff_mf,
         extra_args = list(variables = list(strata = "strata"))
       ) |>
       build_table(data),
@@ -599,7 +518,7 @@ test_that("a_proportion_diff_mf() errors when NAs are present", {
   )
 })
 
-test_that("a_proportion_diff_mf() removes NAs from relevant columns and warns when na.rm = TRUE", {
+test_that("a_test_proportion_diff_mf() removes NAs from relevant columns and warns when na.rm = TRUE", {
   data <- data.frame(
     rsp = c(TRUE, NA, FALSE, TRUE, NA, FALSE),
     grp = factor(c("X", "X", "X", "Placebo", "Placebo", "Placebo")),
@@ -613,7 +532,7 @@ test_that("a_proportion_diff_mf() removes NAs from relevant columns and warns wh
       split_cols_by(var = "grp", ref_group = "Placebo") |>
       analyze(
         vars = "rsp",
-        afun = a_proportion_diff_mf,
+        afun = a_test_proportion_diff_mf,
         extra_args = list(variables = list(strata = "strata"), na.rm = TRUE)
       ) |>
       build_table(data)
