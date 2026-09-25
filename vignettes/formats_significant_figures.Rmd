@@ -1,0 +1,265 @@
+---
+title: "Formatting function for significant figures"
+date: "`r Sys.Date()`"
+output:
+    rmarkdown::html_document:
+        theme: "spacelab"
+        highlight: "kate"
+        toc: true
+        toc_float: true
+vignette: >
+  %\VignetteIndexEntry{Formatting function for significant figures}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+editor_options:
+  markdown:
+      wrap: 72
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Overview
+
+Many clinical tables require statistics presented on a table with certain decimal precision.
+In some situations, the usage of significant figures is preferred over a fixed decimal precision. A typical situation is in the context of PK tables.
+
+The purpose in this vignette is to provide some examples for `format_sigfig_j` and the difference between `tern::format_sigfig()`.
+
+```{r load_packages, message=FALSE}
+library(rtables)
+library(junco)
+library(dplyr)
+library(tern)
+```
+
+
+## Significant Figures and Company Specific Requirements
+
+For PK tables, the requirements within our company to present numerical values of core PK parameters with 3 significant figures, except for values above 1000, the whole integer has to be reported.
+E.g. 3 significant figures for a value 1234.567 is `signif(1234.567, 3)` = `r signif(1234.567, 3)`, while a value of `r round_fmt(1234.567, 0)` is expected.
+
+In addition, we want to adhere to possibility to adjust the type of rounding to be `SAS`, `iec` or `iec_mod`, through the `formatters` functions `format_value` and `round_fmt`.
+The base function `sigfig` relies on `round`, so only supports `iec` rounding type. 
+
+For these 2 reasons, the formatting function factory `format_sigfig_j` has been developed as alternative to `tern::format_sigfig`.
+
+## Basic Examples of Formatting Function Factory `format_sigfig_j`
+Below are a few examples where the difference in behavior between `signif`, `tern::format_sigfig` and `junco::format_sigfig_j` is demonstrated.
+
+```{r example}
+fmt <- format_sigfig_j(3)
+fmt(0.001234)
+fmt(1234.5)
+fmt(1234.5, round_type = "sas")
+signif(1234.5, 3)
+format_sigfig(3)(1234.5)
+
+fmt2 <- format_sigfig_j(3, format = "xx (xx)")
+fmt2(c(1234.5, 0.00567))
+
+format_sigfig_j(3, drop0trailing = FALSE)(0.01)
+format_sigfig_j(3, drop0trailing = TRUE)(0.01)
+format_sigfig(3)(0.01)
+```
+## Formats based upon `junco::format_sigfig_j` in `rtables` Layout
+
+### Example as in Tern TLG Catalog using `analyze_vars_in_cols`
+The following example is taken from the [**tern TLG catalog**](https://insightsengineering.github.io/tlg-catalog/stable/tables/pharmacokinetic/pkct01.html).
+
+Here is the data that is being used. 
+```{r example 2 - datasetup}
+adsl <- random.cdisc.data::cadsl |>
+  filter(ACTARM == "A: Drug X")
+adpc <- random.cdisc.data::cadpc |>
+  filter(ACTARM == "A: Drug X", PARAM %in% c("Plasma Drug X", "Urine Drug X"))
+
+# Setting up the data
+adpc_1 <- adpc |>
+  mutate(
+    NFRLT = as.factor(NFRLT),
+    AVALCAT1 = as.factor(AVALCAT1),
+    NOMTPT = as.factor(paste(NFRLT, "/", PCTPT))
+  ) |>
+  select(STUDYID, NOMTPT, ACTARM, VISIT, AVAL, PARAM, AVALCAT1)
+
+adpc_1$NOMTPT <- factor(
+  adpc_1$NOMTPT,
+  levels = levels(adpc_1$NOMTPT)[order(as.numeric(gsub(".*?([0-9\\.]+).*", "\\1", levels(adpc_1$NOMTPT))))]
+)
+```
+
+The following row-structure setup in the layout definition is utilized.
+```{r example 2 - layout with analyze_vars_in_cols}
+# Row structure
+lyt_rows <- basic_table() |>
+  split_rows_by(
+    var = "PARAM",
+    split_fun = drop_split_levels,
+    split_label = "Parameter",
+    label_pos = "topleft"
+  ) |>      
+  split_rows_by(
+    var = "ACTARM",
+    split_fun = drop_split_levels,
+    split_label = "Treatment Group",
+    label_pos = "topleft"
+  ) |>
+  split_rows_by(
+    var = "VISIT",
+    split_fun = drop_split_levels,
+    split_label = "Visit",
+    label_pos = "topleft"
+  ) |>
+  split_rows_by(
+    var = "NOMTPT",
+    split_fun = drop_split_levels,
+    split_label = "Nominal Time (hr) / Timepoint",
+    label_pos = "topleft",
+    child_labels = "hidden"
+  )
+```
+
+The core component of the layout where the significant figures format specifications are used is in below call to `tern::analyze_vars_in_cols`.
+The only adjustment made here compared to the example in the **tern TLG catalog** is the usage of formatting function `junco::format_sigfig_j(3)` versus `tern::format_sigfig(3)`.
+
+```{r example 2 - continue layout}
+lyt <- lyt_rows |>
+  analyze_vars_in_cols(
+    vars = c("AVAL", "AVALCAT1", rep("AVAL", 8)),
+    .stats = c("n", "n_blq", "mean", "sd", "cv", "geom_mean", "geom_cv", "median", "min", "max"),
+    .formats = c(
+      n = "xx.", n_blq = "xx.", mean = format_sigfig_j(3), sd = format_sigfig_j(3), cv = "xx.x", median = format_sigfig_j(3),
+      geom_mean = format_sigfig_j(3), geom_cv = "xx.x", min = format_sigfig_j(3), max = format_sigfig_j(3)
+    ),
+    .labels = c(
+      n = "n", n_blq = "Number\nof\nLTRs/BLQs", mean = "Mean", sd = "SD", cv = "CV (%) Mean",
+      geom_mean = "Geometric Mean", geom_cv = "CV % Geometric Mean", median = "Median", min = "Minimum", max = "Maximum"
+    ),
+    na_str = "NE",
+    .aligns = "decimal"
+  )
+
+result <- build_table(lyt, df = adpc_1, alt_counts_df = adsl) 
+
+result
+```
+
+### Same Example with `junco` afun `column_stats`
+
+An alternative, very similar layout can be generated using the `junco` afun `column_stats`.
+The advantage of this afun, is that it can deal with so called, varying decimal precision.
+
+In case, not all parameters of the table are to be presented with the same number of significant figures, the following example demonstrates how this can be achieved using `junco::column_stats`.
+
+``` {r setup - stats_in_cols}
+ mysplitfun <- make_split_fun(
+   post = list(stats_in_cols_setup())
+ )
+
+ lyt_stats_in_cols <- basic_table() |>
+   split_cols_by_multivar(
+     c("AVAL"),
+     varlabels = c("Visit Values")
+   ) |>
+   split_cols_by("STUDYID", split_fun = mysplitfun) |>
+   split_rows_by("PARAM", split_fun = drop_split_levels) |>
+   split_rows_by("ACTARM", labels_var = "ACTARM", split_fun = drop_split_levels) |>
+   split_rows_by("VISIT", split_fun = drop_split_levels) 
+ 
+ 
+ adpc_1 <- adpc_1 |> 
+   filter(VISIT == "Day 1", !(NOMTPT %in% "0 / Predose")) 
+```
+
+Here 2 methods of setting up format specification based upon `format_sigfig_j` are presented.
+
+The first one is a manual setup for each parameter separately.
+
+``` {r setup - format 1}
+ adpc_fmt <- tribble(
+   ~PARAM, ~fmt_d,
+   "Plasma Drug X", list(
+     mean = format_sigfig_j(3), sd = format_sigfig_j(3), se = format_sigfig_j(3), median = format_sigfig_j(3),
+     min = format_sigfig_j(3), max = format_sigfig_j(3)
+   ),
+   "Urine Drug X", list(
+     mean = format_sigfig_j(2), sd = format_sigfig_j(2), se = format_sigfig_j(2), median = format_sigfig_j(2),
+     min = format_sigfig_j(2), max = format_sigfig_j(2)
+   )
+ )
+
+adpc_2 <- left_join(adpc_1, adpc_fmt) 
+```
+
+The second one is a setup, using the same tools as in [vignette on Formatting tools to simplify adjustment of decimal precision](vignette("formats_d", package = "junco") (`fmt_spec_df_d`), to convert a simple dataframe setup into a dataframe with formatting specifications.
+
+``` {r setup - format 2}
+junco_def_d_sigfig <- list(
+     mean = format_sigfig_j(3), sd = format_sigfig_j(3), se = format_sigfig_j(3), median = format_sigfig_j(3),
+     min = format_sigfig_j(3), max = format_sigfig_j(3)
+   )
+
+adpc_fmt2 <- tribble(
+   ~PARAM, ~d,
+   "Plasma Drug X", 3,
+   "Urine Drug X", 2
+ )
+
+adpc_fmt2 <- fmt_spec_df_d(adpc_fmt2,
+                    d_column = "d",
+                    fmt_column = "fmt_d2",
+                    fmt_d_def = junco_def_d_sigfig,
+                    fmt_d_in = NULL
+)
+
+
+fmt_details <- lapply(adpc_fmt2$PARAM,
+                      FUN = function(param){
+                        fmt <- adpc_fmt2[adpc_fmt2$PARAM == param, c("fmt_d2"), drop = TRUE][[1]]
+                        fmt
+                        get_fmt_details(fmt, recursive = FALSE, as_tibble = TRUE)
+                      }
+  )
+
+names(fmt_details) <- adpc_fmt2$PARAM
+
+# confirm 2 significant figures for Urine Drug X
+# see column d in tibble
+print(fmt_details[["Urine Drug X"]][, c("stat", "fun_fact", "str", "d", "drop0trailing", "whole_integer")])
+
+adpc_3 <- left_join(adpc_1, adpc_fmt2) 
+```
+
+Now, both layouts are being finalized and results are created. 
+```{r example 2 - layout 2}
+ lyt2 <- lyt_stats_in_cols |> 
+   analyze("NOMTPT", afun = column_stats, extra_args = list(
+     .formats = "default",
+     formats_var = "fmt_d"
+   ))
+ result2 <- build_table(lyt2, adpc_2, round_type = "sas") |> 
+   prune_table()
+ result2
+```
+
+```{r example 2 - layout 3}
+lyt3 <- lyt_stats_in_cols |> 
+ analyze("NOMTPT", afun = column_stats, extra_args = list(
+   .formats = "default",
+   formats_var = "fmt_d2"
+ ))
+result3 <- build_table(lyt3, adpc_3, round_type = "sas") |> 
+ prune_table()
+result3
+```
+Confirmation that both approaches yield the same results (raw + formatted values).
+```{r example 2 - identical result}
+identical(cell_values(result2), cell_values(result3))
+identical(get_formatted_cells(result2), get_formatted_cells(result3))
+```
