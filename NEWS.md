@@ -58,6 +58,7 @@
 - Updated behavior of formatting functions `jjcsformat_count_denom_fraction` and `jjcsformat_fraction_count_denom` 
 and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat_fraction_count_denom_legacy` for backward compatibility reasons (#450)
 - Updated `insightsengineering` urls to `pharmaverse`
+- Renamed and refactored `postfun_eq5d` into `stats_in_cols_setup`
 - Added factor assertion on `.var` in `s_freq_j` (#453).
 - Added assertions for the `id` argument in `a_freq_j()` and `s_freq_j()` (#424).
 
@@ -81,6 +82,8 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
 - Added `a_three_tier()` as extension to `a_two_tier()`.
 - Added formatting function `format_sigfig_j()` as alternative to `tern::format_sigfig()`. (#436)
+- Added varying decimal precision utility functions `fmt_spec_single_d`, `fmt_spec_df_d`, `fmt_spec_var_d`. (#474)
+- Added utility functions `get_fmt_details` and `compare_fmt_specs` for reviewing format specification objects.
 
 ## [0.1.6] - 2026-05-05 (CRAN release)
 

@@ -56,7 +56,8 @@ test_that("a_proportion_diff_j works as expected in a table layout", {
         conf_level = 0.9,
         method = "ha",
         ref_path = c("grp", "B"),
-        .stats = "diff_est_ci"
+        .stats = "diff_est_ci",
+        .formats = c(diff_est_ci = jjcsformat_xx("xx.x (xx.x, xx.x)"))
       )
     )
 
