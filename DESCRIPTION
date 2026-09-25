@@ -74,7 +74,8 @@ Suggests:
     multcomp,
     lifecycle,
     dplyr,
-    ratesci (>= 1.1.0)
+    ratesci (>= 1.1.0),
+    random.cdisc.data
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:

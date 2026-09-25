@@ -73,7 +73,7 @@ format_sigfig(3)(0.01)
 The following example is taken from the [**tern TLG catalog**](https://insightsengineering.github.io/tlg-catalog/stable/tables/pharmacokinetic/pkct01.html).
 
 Here is the data that is being used. 
-```{r example 2 - datasetup}
+```{r example 2 - datasetup, eval = requireNamespace("random.cdisc.data", quietly = TRUE)}
 adsl <- random.cdisc.data::cadsl |>
   filter(ACTARM == "A: Drug X")
 adpc <- random.cdisc.data::cadpc |>
@@ -95,7 +95,7 @@ adpc_1$NOMTPT <- factor(
 ```
 
 The following row-structure setup in the layout definition is utilized.
-```{r example 2 - layout with analyze_vars_in_cols}
+```{r example 2 - layout with analyze_vars_in_cols, eval = requireNamespace("random.cdisc.data", quietly = TRUE)}
 # Row structure
 lyt_rows <- basic_table() |>
   split_rows_by(
@@ -128,7 +128,7 @@ lyt_rows <- basic_table() |>
 The core component of the layout where the significant figures format specifications are used is in below call to `tern::analyze_vars_in_cols`.
 The only adjustment made here compared to the example in the **tern TLG catalog** is the usage of formatting function `junco::format_sigfig_j(3)` versus `tern::format_sigfig(3)`.
 
-```{r example 2 - continue layout}
+```{r example 2 - continue layout, eval = requireNamespace("random.cdisc.data", quietly = TRUE)}
 lyt <- lyt_rows |>
   analyze_vars_in_cols(
     vars = c("AVAL", "AVALCAT1", rep("AVAL", 8)),
@@ -157,7 +157,7 @@ The advantage of this afun, is that it can deal with so called, varying decimal 
 
 In case, not all parameters of the table are to be presented with the same number of significant figures, the following example demonstrates how this can be achieved using `junco::column_stats`.
 
-``` {r setup - stats_in_cols}
+``` {r setup - stats_in_cols, eval = requireNamespace("random.cdisc.data", quietly = TRUE)}
  mysplitfun <- make_split_fun(
    post = list(stats_in_cols_setup())
  )
@@ -181,7 +181,7 @@ Here 2 methods of setting up format specification based upon `format_sigfig_j` a
 
 The first one is a manual setup for each parameter separately.
 
-``` {r setup - format 1}
+``` {r setup - format 1, eval = requireNamespace("random.cdisc.data", quietly = TRUE)}
  adpc_fmt <- tribble(
    ~PARAM, ~fmt_d,
    "Plasma Drug X", list(
@@ -199,7 +199,7 @@ adpc_2 <- left_join(adpc_1, adpc_fmt)
 
 The second one is a setup, using the same tools as in [vignette on Formatting tools to simplify adjustment of decimal precision](vignette("formats_d", package = "junco") (`fmt_spec_df_d`), to convert a simple dataframe setup into a dataframe with formatting specifications.
 
-``` {r setup - format 2}
+``` {r setup - format 2, eval = requireNamespace("random.cdisc.data", quietly = TRUE)}
 junco_def_d_sigfig <- list(
      mean = format_sigfig_j(3), sd = format_sigfig_j(3), se = format_sigfig_j(3), median = format_sigfig_j(3),
      min = format_sigfig_j(3), max = format_sigfig_j(3)
@@ -237,7 +237,7 @@ adpc_3 <- left_join(adpc_1, adpc_fmt2)
 ```
 
 Now, both layouts are being finalized and results are created. 
-```{r example 2 - layout 2}
+```{r example 2 - layout 2, eval = requireNamespace("random.cdisc.data", quietly = TRUE)}
  lyt2 <- lyt_stats_in_cols |> 
    analyze("NOMTPT", afun = column_stats, extra_args = list(
      .formats = "default",
@@ -248,7 +248,7 @@ Now, both layouts are being finalized and results are created.
  result2
 ```
 
-```{r example 2 - layout 3}
+```{r example 2 - layout 3, eval = requireNamespace("random.cdisc.data", quietly = TRUE)}
 lyt3 <- lyt_stats_in_cols |> 
  analyze("NOMTPT", afun = column_stats, extra_args = list(
    .formats = "default",
@@ -259,7 +259,7 @@ result3 <- build_table(lyt3, adpc_3, round_type = "sas") |>
 result3
 ```
 Confirmation that both approaches yield the same results (raw + formatted values).
-```{r example 2 - identical result}
+```{r example 2 - identical result, eval = requireNamespace("random.cdisc.data", quietly = TRUE)}
 identical(cell_values(result2), cell_values(result3))
 identical(get_formatted_cells(result2), get_formatted_cells(result3))
 ```
