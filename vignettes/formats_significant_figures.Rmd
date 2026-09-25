@@ -197,7 +197,7 @@ The first one is a manual setup for each parameter separately.
 adpc_2 <- left_join(adpc_1, adpc_fmt) 
 ```
 
-The second one is a setup, using the same tools as in [vignette on Formatting tools to simplify adjustment of decimal precision](vignette("formats_d", package = "junco") (`fmt_spec_df_d`), to convert a simple dataframe setup into a dataframe with formatting specifications.
+The second one is a setup, using the same tools as in [vignette on Formatting tools to simplify adjustment of decimal precision](formats_d.html) (`fmt_spec_df_d`), to convert a simple dataframe setup into a dataframe with formatting specifications.
 
 ``` {r setup - format 2, eval = requireNamespace("random.cdisc.data", quietly = TRUE)}
 junco_def_d_sigfig <- list(
