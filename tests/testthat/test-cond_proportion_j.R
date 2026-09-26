@@ -196,6 +196,41 @@ test_that("a_cond_proportion_j works in full table build", {
   )
 })
 
+test_that("table workflow uses column count as denominator when requested", {
+  rsp <- c(rep(TRUE, 6), rep(FALSE, 4), NA, NA)
+  dta <- data.frame(rsp = rsp)
+
+  lyt <- rtables::basic_table() |>
+    rtables::analyze("rsp", afun = a_cond_proportion_j, extra_args = list(denom = "N_col"))
+  vals <- rtables::cell_values(rtables::build_table(lyt, dta))
+
+  expect_equal(as.numeric(vals$n_prop[["all obs"]]), c(6, 6 / 12))
+  expect_equal(
+    as.numeric(vals$prop_ci[["all obs"]]),
+    as.numeric(100 * tern::prop_wald(rsp[!is.na(rsp)], n = 12, conf_level = 0.95)),
+    tolerance = 1e-12
+  )
+})
+
+test_that("table workflow uses row count as denominator when requested", {
+  rsp <- c(rep(TRUE, 6), rep(FALSE, 6))
+  dta <- data.frame(grp = rep(c("A", "B"), each = 12), rsp = rep(rsp, 2))
+
+  lyt <- rtables::basic_table() |>
+    rtables::split_cols_by("grp") |>
+    rtables::analyze("rsp", afun = a_cond_proportion_j, extra_args = list(denom = "N_row"))
+  vals <- rtables::cell_values(rtables::build_table(lyt, dta))
+
+  for (grp in c("A", "B")) {
+    expect_equal(as.numeric(vals$n_prop[[grp]]), c(6, 6 / 24))
+    expect_equal(
+      as.numeric(vals$prop_ci[[grp]]),
+      as.numeric(100 * tern::prop_wald(rsp, n = 24, conf_level = 0.95)),
+      tolerance = 1e-12
+    )
+  }
+})
+
 test_that("row-level method uses exact CIs in every column with row-wise method scope", {
   rsp_a <- c(TRUE, TRUE, FALSE, FALSE)
   rsp_b <- rep(FALSE, 4)

@@ -256,6 +256,8 @@ a_cond_proportion_j <- function(
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL,
+  .N_row = NULL,
+  .N_col = NULL,
   .df_row = NULL
 ) {
   dots_extra_args <- list(...)
@@ -270,6 +272,8 @@ a_cond_proportion_j <- function(
       df = list(df),
       .var = .var,
       .df_row = list(.df_row),
+      .N_row = .N_row,
+      .N_col = .N_col,
       dots_extra_args
     )
   )

@@ -15,6 +15,8 @@ a_cond_proportion_j(
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL,
+  .N_row = NULL,
+  .N_col = NULL,
   .df_row = NULL
 )
 
@@ -61,6 +63,10 @@ information on the \code{'auto'} setting.}
 \item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 
+\item{.N_row}{(\code{int})}
+
+\item{.N_col}{(\code{int})}
+
 \item{.df_row}{(\code{data.frame})\cr data for the current row across all columns,
 supplied by \code{rtables} when \code{method_scope = "row"}.}
 
@@ -78,10 +84,6 @@ If \code{FALSE} and \code{NA} values are present, an error is raised.}
 \item{denom}{(\code{character})\cr denominator to use for percentage and CI computation:
 "n" (default, number of observed records), "N_col", or "N_row". When "N_col" or
 "N_row" are chosen, the corresponding \code{.N_col} or \code{.N_row} are used, respectively.}
-
-\item{.N_row}{(\code{int})}
-
-\item{.N_col}{(\code{int})}
 
 \item{method_scope}{(\code{string})\cr select the CI method using counts from the
 current cell (\code{"cell"}) or all columns in the current row (\code{"row"}). See details.}
