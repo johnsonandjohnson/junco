@@ -16,6 +16,20 @@
 #' (a) the number of responders is `num_limit` (or less),
 #' (b) all subjects except `num_limit` (or less) have observed response,
 #' or (c) the observed group size is less than `denom_limit`.
+#' Depending on the `method_scope` choice, this decision is either taken
+#' for each individual cell separately, or for the entire row.
+#'
+#' For the observed group size used for the method decision, the choice depends
+#' on the `method_scope` argument:
+#'
+#' - If `method_scope = "cell"`, the decision is
+#'   made based on the `denom` choice (so either the current cell `n`,
+#'   the column total `.N_col`, or the row total `.N_row`).
+#' - If on the other hand `method_scope = "row"`, the decision is always made based on
+#'   the row total `.N_row`.
+#'
+#' For the number of responders for the method decision, either the number of responses
+#' in each cell or the row total number of responders is used.
 #'
 #' CI computation follows [tern::s_proportion()] conventions: helper functions
 #' are called with `n = denom`, so when `denom = "N_col"` or `"N_row"`, those
@@ -38,6 +52,12 @@
 #'   If `FALSE` and `NA` values are present, an error is raised.
 #' @param num_limit (`int`)\cr numerator limit to trigger the exact method.
 #' @param denom_limit (`int`)\cr denominator limit to trigger the exact method.
+#' @param method_scope (`string`)\cr select the CI method using counts from the
+#'   current cell (`"cell"`) or all columns in the current row (`"row"`). See details.
+#' @param .df_row (`data.frame`)\cr data for the current row across all columns,
+#'   supplied by `rtables` when `method_scope = "row"`.
+#' @param method (`string` or `NULL`)\cr selected CI method to show in the
+#'   label. `NULL` retains the combined method description.
 #'
 #' @name cond_proportion_j
 NULL
@@ -72,7 +92,9 @@ s_cond_proportion_j <- function(
   denom_limit = 10,
   denom = c("n", "N_col", "N_row"),
   .N_row,
-  .N_col
+  .N_col,
+  method_scope = c("cell", "row"),
+  .df_row = NULL
 ) {
   checkmate::assert_flag(long)
   checkmate::assert_flag(na.rm)
@@ -80,6 +102,7 @@ s_cond_proportion_j <- function(
   checkmate::assert_int(num_limit, lower = 0)
   checkmate::assert_int(denom_limit, lower = 0)
   denom <- match.arg(denom)
+  method_scope <- match.arg(method_scope)
 
   vec <- if (checkmate::test_atomic_vector(df)) {
     df
@@ -112,10 +135,30 @@ s_cond_proportion_j <- function(
   assert_int(denom_val, lower = n_obs)
   p_hat <- ifelse(denom_val > 0, n_rsp / denom_val, 0)
 
-  # Adaptive method selection based on observed data and limits.
-  use_exact <- (denom_val < denom_limit) ||
-    (n_rsp <= num_limit) ||
-    (n_rsp >= (denom_val - num_limit))
+  # The method is shared by all cells in a row when requested. The CI itself
+  # still uses the current cell's responses and denominator. Therefore
+  # we separate out here `method_denom` and `method_rsp` for the method decision.
+  if (method_scope == "row") {
+    tern::assert_df_with_variables(.df_row, list(rsp = .var))
+    row_rsp <- safe_as_logical(.df_row[[.var]])
+    if (anyNA(row_rsp)) {
+      if (na.rm) {
+        row_rsp <- row_rsp[!is.na(row_rsp)]
+      } else {
+        stop("Missing values detected in response and `na.rm = FALSE`.", call. = FALSE)
+      }
+    }
+    method_denom <- length(row_rsp)
+    assert_true(identical(method_denom, .N_row))
+    method_rsp <- sum(row_rsp)
+  } else {
+    method_denom <- denom_val
+    method_rsp <- n_rsp
+  }
+
+  use_exact <- (method_denom < denom_limit) ||
+    (method_rsp <= num_limit) ||
+    (method_rsp >= (method_denom - num_limit))
   method <- if (use_exact) "clopper-pearson" else "wald"
 
   prop_ci <- switch(
@@ -132,7 +175,8 @@ s_cond_proportion_j <- function(
         conf_level,
         long = long,
         num_limit = num_limit,
-        denom_limit = denom_limit
+        denom_limit = denom_limit,
+        method = if (method_scope == "row") method else NULL
       )
     )
   )
@@ -145,14 +189,20 @@ s_cond_proportion_j <- function(
 #' * `d_cond_proportion_j()` returns a string describing the analysis label.
 #'
 #' @export
-d_cond_proportion_j <- function(conf_level, long = FALSE, num_limit, denom_limit) {
+d_cond_proportion_j <- function(conf_level, long = FALSE, num_limit, denom_limit, method = NULL) {
   label <- paste0(conf_level * 100, "% CI")
 
   if (long) {
     label <- paste(label, "for Response Rates")
   }
 
-  method_part <- if (long) {
+  method_part <- if (!is.null(method)) {
+    switch(
+      method,
+      "wald" = "Wald",
+      "clopper-pearson" = "Clopper-Pearson"
+    )
+  } else if (long) {
     paste0(
       "Wald if n >= ",
       denom_limit,
@@ -205,7 +255,10 @@ a_cond_proportion_j <- function(
   .stats = NULL,
   .formats = NULL,
   .labels = NULL,
-  .indent_mods = NULL
+  .indent_mods = NULL,
+  .N_row = NULL,
+  .N_col = NULL,
+  .df_row = NULL
 ) {
   dots_extra_args <- list(...)
 
@@ -218,6 +271,9 @@ a_cond_proportion_j <- function(
     args_list = c(
       df = list(df),
       .var = .var,
+      .df_row = list(.df_row),
+      .N_row = .N_row,
+      .N_col = .N_col,
       dots_extra_args
     )
   )

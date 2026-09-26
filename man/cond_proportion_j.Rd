@@ -14,7 +14,10 @@ a_cond_proportion_j(
   .stats = NULL,
   .formats = NULL,
   .labels = NULL,
-  .indent_mods = NULL
+  .indent_mods = NULL,
+  .N_row = NULL,
+  .N_col = NULL,
+  .df_row = NULL
 )
 
 s_cond_proportion_j(
@@ -27,10 +30,18 @@ s_cond_proportion_j(
   denom_limit = 10,
   denom = c("n", "N_col", "N_row"),
   .N_row,
-  .N_col
+  .N_col,
+  method_scope = c("cell", "row"),
+  .df_row = NULL
 )
 
-d_cond_proportion_j(conf_level, long = FALSE, num_limit, denom_limit)
+d_cond_proportion_j(
+  conf_level,
+  long = FALSE,
+  num_limit,
+  denom_limit,
+  method = NULL
+)
 }
 \arguments{
 \item{df}{(\code{logical} or \code{data.frame})\cr if only a logical vector is used,
@@ -52,6 +63,13 @@ information on the \code{'auto'} setting.}
 \item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 
+\item{.N_row}{(\code{int})}
+
+\item{.N_col}{(\code{int})}
+
+\item{.df_row}{(\code{data.frame})\cr data for the current row across all columns,
+supplied by \code{rtables} when \code{method_scope = "row"}.}
+
 \item{conf_level}{(\code{numeric})}
 
 \item{long}{(\code{flag})\cr whether a long description is required.}
@@ -67,9 +85,11 @@ If \code{FALSE} and \code{NA} values are present, an error is raised.}
 "n" (default, number of observed records), "N_col", or "N_row". When "N_col" or
 "N_row" are chosen, the corresponding \code{.N_col} or \code{.N_row} are used, respectively.}
 
-\item{.N_row}{(\code{int})}
+\item{method_scope}{(\code{string})\cr select the CI method using counts from the
+current cell (\code{"cell"}) or all columns in the current row (\code{"row"}). See details.}
 
-\item{.N_col}{(\code{int})}
+\item{method}{(\code{string} or \code{NULL})\cr selected CI method to show in the
+label. \code{NULL} retains the combined method description.}
 }
 \value{
 \itemize{
@@ -102,6 +122,21 @@ The exact method is used when any of these are true:
 (a) the number of responders is \code{num_limit} (or less),
 (b) all subjects except \code{num_limit} (or less) have observed response,
 or (c) the observed group size is less than \code{denom_limit}.
+Depending on the \code{method_scope} choice, this decision is either taken
+for each individual cell separately, or for the entire row.
+
+For the observed group size used for the method decision, the choice depends
+on the \code{method_scope} argument:
+\itemize{
+\item If \code{method_scope = "cell"}, the decision is
+made based on the \code{denom} choice (so either the current cell \code{n},
+the column total \code{.N_col}, or the row total \code{.N_row}).
+\item If on the other hand \code{method_scope = "row"}, the decision is always made based on
+the row total \code{.N_row}.
+}
+
+For the number of responders for the method decision, either the number of responses
+in each cell or the row total number of responders is used.
 
 CI computation follows \code{\link[tern:s_proportion]{tern::s_proportion()}} conventions: helper functions
 are called with \code{n = denom}, so when \code{denom = "N_col"} or \code{"N_row"}, those

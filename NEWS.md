@@ -68,7 +68,7 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added `s_proportion_diff_mf()` and `a_proportion_diff_mf()` adaptive
   estimation of stratified response-proportion differences using the
   Mantel–Fleiss criterion (#456).
-- Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator.
+- Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator (and the method selection can either be done on cell level or on row level).
 - Added `a_sum_ratio_j()` analysis function for computing sum, unique-row sum, and their ratios against a denominator column.
 - Added `strict_match()` for uniquely matching a value in the odd or even positions of a character vector.
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
