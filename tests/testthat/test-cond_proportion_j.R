@@ -195,3 +195,59 @@ test_that("a_cond_proportion_j works in full table build", {
     tolerance = 1e-12
   )
 })
+
+test_that("row-level method uses exact CIs in every column if one column is extreme", {
+  rsp_a <- c(rep(TRUE, 8), rep(FALSE, 4))
+  rsp_b <- rep(FALSE, 12)
+  dta <- data.frame(
+    grp = rep(c("A", "B"), each = 12),
+    rsp = c(rsp_a, rsp_b)
+  )
+
+  lyt <- rtables::basic_table() |>
+    rtables::split_cols_by("grp") |>
+    rtables::analyze("rsp", afun = a_cond_proportion_j, extra_args = list(method_scope = "row"))
+  tbl <- rtables::build_table(lyt, dta)
+  vals <- rtables::cell_values(tbl)$prop_ci
+
+  expect_identical(rtables::make_row_df(tbl)$label[2], "95% CI (Clopper-Pearson)")
+
+  expect_equal(
+    as.numeric(vals[["A"]]),
+    as.numeric(100 * tern::prop_clopper_pearson(rsp_a, n = 12, conf_level = 0.95)),
+    tolerance = 1e-12
+  )
+  expect_equal(
+    as.numeric(vals[["B"]]),
+    as.numeric(100 * tern::prop_clopper_pearson(rsp_b, n = 12, conf_level = 0.95)),
+    tolerance = 1e-12
+  )
+})
+
+test_that("row-level method uses Wald CIs in every column if all columns qualify", {
+  rsp_a <- c(rep(TRUE, 8), rep(FALSE, 4))
+  rsp_b <- c(rep(TRUE, 6), rep(FALSE, 6))
+  dta <- data.frame(
+    grp = rep(c("A", "B"), each = 12),
+    rsp = c(rsp_a, rsp_b)
+  )
+
+  lyt <- rtables::basic_table() |>
+    rtables::split_cols_by("grp") |>
+    rtables::analyze("rsp", afun = a_cond_proportion_j, extra_args = list(method_scope = "row"))
+  tbl <- rtables::build_table(lyt, dta)
+  vals <- rtables::cell_values(tbl)$prop_ci
+
+  expect_identical(rtables::make_row_df(tbl)$label[2], "95% CI (Wald)")
+
+  expect_equal(
+    as.numeric(vals[["A"]]),
+    as.numeric(100 * tern::prop_wald(rsp_a, n = 12, conf_level = 0.95)),
+    tolerance = 1e-12
+  )
+  expect_equal(
+    as.numeric(vals[["B"]]),
+    as.numeric(100 * tern::prop_wald(rsp_b, n = 12, conf_level = 0.95)),
+    tolerance = 1e-12
+  )
+})
