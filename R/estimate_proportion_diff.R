@@ -21,7 +21,7 @@
 #' @param conf_level (`numeric`)\cr confidence level for the confidence interval.
 #' @param method (`string`)\cr method to use for confidence interval calculation.
 #' @param weights_method (`string`)\cr method to use for weights calculation in stratified analysis.
-#' @param label (`string`)\cr label for the `diff_est_ci` statistic. Defaults to
+#' @param label (`string`)\cr label for the `diff_est_ci` statistic in [a_proportion_diff_j()]. Defaults to
 #'   `"% Difference (conf_level CI)"`. Can be overridden by the caller.
 #'
 #' @name prop_diff
@@ -75,6 +75,8 @@ a_proportion_diff_j <- function(
   ref_path,
   .spl_context,
   ...,
+  conf_level = 0.95,
+  label = paste0("% Difference (", f_conf_level(conf_level), ")"),
   .stats = NULL,
   .formats = NULL,
   .labels = NULL,
@@ -91,16 +93,20 @@ a_proportion_diff_j <- function(
 
   # Apply statistics function
   x_stats <- .apply_stat_functions(
-    default_stat_fnc = s_proportion_diff_j,
+    default_stat_fnc = tern::s_proportion_diff,
     custom_stat_fnc_list = NULL,
     args_list = c(
       df = list(df),
       .var = .var,
       .ref_group = list(ref$ref_group),
       .in_ref_col = ref$in_ref_col,
+      conf_level = conf_level,
       dots_extra_args
     )
   )
+
+  # Relabel diff_est_ci with junco-style shorter label
+  x_stats$diff_est_ci <- with_label(x_stats$diff_est_ci, label)
 
   # Format according to specifications
   format_stats(
