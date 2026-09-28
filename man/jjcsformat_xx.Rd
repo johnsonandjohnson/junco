@@ -10,7 +10,8 @@ jjcsformat_xx(
   str,
   na_str = na_str_dflt,
   na_str_dflt = "NE",
-  replace_na_dflt = TRUE
+  replace_na_dflt = TRUE,
+  position_count0 = 0
 )
 
 jjcsformat_pval_fct(alpha = 0.05)
@@ -29,6 +30,10 @@ for the range values, e.g. \code{"xx.xx"}.}
 the formatters framework be overridden by \code{na_str_default}? Defaults to
 \code{TRUE}, as a way to have a different default na string behavior from the
 base \code{formatters} framework.}
+
+\item{position_count0}{integer(1). If >0, when this format is applied to a numerical vector
+and the value at this position is 0,
+the formatted value will be presented as "0", rather than the full string.}
 
 \item{alpha}{(\code{numeric})\cr the significance level to account for during rounding.}
 
@@ -86,6 +91,9 @@ if (is.function(fmt2)) fmt2(value, round_type = "sas")
 value <- c(1.65, NA)
 format_value(value, fmt2, round_type = "iec", na_str = c("ne1", "ne2"))
 if (is.function(fmt2)) fmt2(value, round_type = "iec", na_str = c("ne1", "ne2"))
+
+format_value(c(0, 4), format = jjcsformat_xx("xx (xx.x)", position_count0 = 1))
+
 my_pval_format <- jjcsformat_pval_fct(0.005)
 my_pval_format(0.2802359)
 my_pval_format(0.0048)

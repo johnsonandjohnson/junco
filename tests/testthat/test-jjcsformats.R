@@ -235,6 +235,38 @@ test_that("jjcsformat_xx works also for cells with 0 length vectors", {
   ))
 })
 
+# tests for jjcsformat_xx with position_count0 > 0 ----
+test_that("some tests for jjcsformat_xx with position_count0 > 0", {
+  # default format for n_eair
+  expect_identical(
+    format_value(c(0, 4), format = jjcsformat_xx("xx (xx.x)", position_count0 = 1)),
+    "0"
+  )
+  
+  # default format for n_eair
+  expect_identical(
+    format_value(c(4, 4.123), format = jjcsformat_xx("xx (xx.x)", position_count0 = 1)),
+    "4 (4.1)"
+  )
+  
+  # default format for eair_n
+  expect_identical(
+    format_value(c(4, 0), format = jjcsformat_xx("xx.x (xx)", position_count0 = 2)),
+    "0"
+  )  
+  
+  # default format for eair_n_py
+  expect_identical(
+    format_value(c(4, 0, 3), format = jjcsformat_xx("xx.x (xx/xx.x)", position_count0 = 2)),
+    "0"
+  )    
+  
+  expect_error(
+    format_value(c(0, 4), format = jjcsformat_xx("xx. (xx.xxx)", position_count0 = 1)),
+    "jjcsformat_xx with position_count0 > 0 requires str specification of xx at the proper position"
+  )
+})
+
 # tests for format_sigfig_j start here ----
 test_that("format_sigfig_j case 1", {
   x <- 0.35769
