@@ -60,6 +60,7 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Updated `insightsengineering` urls to `pharmaverse`
 - Added factor assertion on `.var` in `s_freq_j` (#453).
 - Added assertions for the `id` argument in `a_freq_j()` and `s_freq_j()` (#424).
+- Added argument position_count0 to formatting function factory `jjcsformat_xx`.
 
 ### Added
 - Added `s_test_proportion_diff_mf()` and `a_test_proportion_diff_mf()` adaptive

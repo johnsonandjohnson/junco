@@ -12,9 +12,9 @@
 #'    `TRUE`, as a way to have a different default na string behavior from the
 #'    base `formatters` framework.
 #' @param na_str String for NA values.
-#' @param position_count0 integer(1). If >0, when this format is applied to a numerical vector 
+#' @param position_count0 integer(1). If >0, when this format is applied to a numerical vector
 #' and the value at this position is 0,
-#' the formatted value will be presented as "0", rather than the full string. 
+#' the formatted value will be presented as "0", rather than the full string.
 #' @return Either a supported format string, or a formatting function that can be
 #' used as format in `formatters::format_value`
 #' @family JJCS formatting functions
@@ -40,9 +40,9 @@
 #' value <- c(1.65, NA)
 #' format_value(value, fmt2, round_type = "iec", na_str = c("ne1", "ne2"))
 #' if (is.function(fmt2)) fmt2(value, round_type = "iec", na_str = c("ne1", "ne2"))
-#' 
+#'
 #' format_value(c(0, 4), format = jjcsformat_xx("xx (xx.x)", position_count0 = 1))
-#' 
+#'
 jjcsformat_xx <- function(
   str,
   na_str = na_str_dflt,
@@ -58,7 +58,7 @@ jjcsformat_xx <- function(
     return(str)
   }
 
-  checkmate::assert_int(position_count0)  
+  checkmate::assert_int(position_count0)
 
   if (is_valid_format(str) && position_count0 == 0) {
     rtable_format <- str
@@ -72,10 +72,10 @@ jjcsformat_xx <- function(
       perl = TRUE
     )
     x_positions <- regmatches(x = str, m = positions)[[1]]
-    
+
     if (position_count0 > 0 && !x_positions[position_count0] == "xx") {
       stop("jjcsformat_xx with position_count0 > 0 requires str specification of xx at the proper position")
-    }  
+    }
 
     single_rounding <- function(fmt) {
       function(x,
@@ -119,13 +119,13 @@ jjcsformat_xx <- function(
 
         round_type <- match.arg(round_type)
 
-        if (position_count0 > 0 && x[position_count0] == 0 && x_positions[position_count0] == "xx"){
+        if (position_count0 > 0 && x[position_count0] == 0 && x_positions[position_count0] == "xx") {
           str <- "0"
         } else {
           values <- Map(y = x, fun = roundings, na_str = na_str, function(y, fun, na_str, output) {
             fun(y, na_str = na_str, round_type = round_type)
           })
-  
+
           regmatches(x = str, m = positions)[[1]] <- values
         }
         return(str)
