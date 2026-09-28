@@ -28,7 +28,7 @@
 #' @order 1
 #'
 #' @note The [a_proportion_diff_j()] function has the `_j` suffix to distinguish it
-#'   from [tern::a_proportion_diff()]. The functions here are a thin wrapper around
+#'   from [tern::a_proportion_diff()]. It is a thin wrapper around
 #'   `tern::s_proportion_diff()` with the following additions:
 #'
 #'   * The `diff_est_ci` statistic (returned natively by tern since tern#1523) is
@@ -36,71 +36,6 @@
 #'   * `ref_path` needs to be provided as extra argument to specify the control group column.
 #'
 NULL
-
-#' @describeIn prop_diff Statistics function estimating the difference
-#'   in terms of responder proportion.
-#'
-#' @return
-#' * `s_proportion_diff_j()` returns a named list of elements `diff`,
-#'    `diff_ci`, and `diff_est_ci`.
-#'
-#' @note When performing an unstratified analysis, methods `'cmh'`, `'cmh_sato'`, `'cmh_mn'`,
-#'   `'strat_newcombe'`, and `'strat_newcombecc'` are not permitted.
-#'
-#' @examples
-#'
-#' s_proportion_diff_j(
-#'   df = subset(dta, grp == "A"),
-#'   .var = "rsp",
-#'   .ref_group = subset(dta, grp == "B"),
-#'   .in_ref_col = FALSE,
-#'   conf_level = 0.90,
-#'   method = "ha"
-#' )
-#'
-#' s_proportion_diff_j(
-#'   df = subset(dta, grp == "A"),
-#'   .var = "rsp",
-#'   .ref_group = subset(dta, grp == "B"),
-#'   .in_ref_col = FALSE,
-#'   variables = list(strata = c("f1", "f2")),
-#'   conf_level = 0.90,
-#'   method = "cmh"
-#' )
-#'
-#' @export
-#' @order 3
-s_proportion_diff_j <- function(
-  df,
-  .var,
-  .ref_group,
-  .in_ref_col,
-  variables = list(strata = NULL),
-  conf_level = 0.95,
-  method = c(
-    "waldcc", "wald", "cmh", "cmh_sato", "cmh_mn", "ha",
-    "newcombe", "newcombecc", "strat_newcombe", "strat_newcombecc",
-    "cmh_sato", "cmh_mn", "uncond_exact_diff"
-  ),
-  weights_method = "cmh",
-  label = paste0("% Difference (", f_conf_level(conf_level), ")")
-) {
-  start <- s_proportion_diff(
-    df = df,
-    .var = .var,
-    .ref_group = .ref_group,
-    .in_ref_col = .in_ref_col,
-    variables = variables,
-    conf_level = conf_level,
-    method = method,
-    weights_method = weights_method
-  )
-
-  # tern@main (tern#1523) now returns diff_est_ci natively.
-  # Relabel with junco's shorter format.
-  start$diff_est_ci <- with_label(start$diff_est_ci, label)
-  return(start)
-}
 
 #' @describeIn prop_diff Formatted analysis function which is used as `afun` in `estimate_proportion_diff()`.
 #'
