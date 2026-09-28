@@ -11,7 +11,7 @@
     Code
       normalize_fun(res$quantiles_upper)
     Output
-      [1] "{if(anyNA(na_str)||(replace_na_dflt&&any(na_str==\"NA\"))){na_inds<-which(is.na(na_str)|(replace_na_dflt&na_str==\"NA\"))na_str[na_inds]<-rep(na_str_dflt,length.out=length(na_str))[na_inds]}if(length(x)==0||isTRUE(all(x==\"\"))){return(NULL)}elseif(!length(positions[[1]])==length(x)){stop(\"Error:inputstrincalltojjcsformat_xxmustcontainsamenumberofxxasthenumberofstats.\")}round_type<-match.arg(round_type)values<-Map(y=x,fun=roundings,na_str=na_str,function(y,fun,na_str,output){fun(y,na_str=na_str,round_type=round_type)})regmatches(x=str,m=positions)[[1]]<-valuesreturn(str)}"
+      [1] "{if(anyNA(na_str)||(replace_na_dflt&&any(na_str==\"NA\"))){na_inds<-which(is.na(na_str)|(replace_na_dflt&na_str==\"NA\"))na_str[na_inds]<-rep(na_str_dflt,length.out=length(na_str))[na_inds]}if(length(x)==0||isTRUE(all(x==\"\"))){return(NULL)}elseif(!length(positions[[1]])==length(x)){stop(\"Error:inputstrincalltojjcsformat_xxmustcontainsamenumberofxxasthenumberofstats.\")}round_type<-match.arg(round_type)if(position_count0>0&&x[position_count0]==0&&x_positions[position_count0]==\"xx\"){str<-\"0\"}else{values<-Map(y=x,fun=roundings,na_str=na_str,function(y,fun,na_str,output){fun(y,na_str=na_str,round_type=round_type)})regmatches(x=str,m=positions)[[1]]<-values}return(str)}"
 
 ---
 
