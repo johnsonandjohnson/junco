@@ -205,7 +205,8 @@ df <- ex_adlb |>
 # join with dataframe with format specs
 df <- df |>
  left_join(df_d)
- lyt <- basic_table() |>
+
+lyt <- basic_table() |>
  split_cols_by("ARMCD") |>
  split_rows_by("PARAMCD", split_fun = drop_split_levels) |>
  split_rows_by("AVISIT", split_fun = drop_split_levels) |>
@@ -247,6 +248,39 @@ df <- ex_adlb |>
  )
  
 rslt <- build_table(lyt, df, alt_counts_df = ex_adsl)
+rslt
+```
+
+### Working Example 4: Table with Multiple Parameters Analyzed with Different Precision, with statistics presented in columns (e.g. Lab/Vital Signs Table) {#Ex4}
+
+Using the same data as in 2 prior examples, now with a different afun, to present statistics in columns rather than in rows.  
+```{r bds example 3}
+df <- ex_adlb |>
+ filter(AVISIT %in% c("BASELINE", "WEEK 1 DAY 8", "WEEK 2 DAY 15")) |> 
+mutate(AVISIT = droplevels(AVISIT))
+
+# join with dataframe with format specs
+df <- df |>
+ left_join(df_d)
+
+mysplitfun <- make_split_fun(
+   post = list(stats_in_cols_setup())
+)
+
+lyt <- basic_table() |>
+ split_cols_by_multivar(
+   c("AVAL", "BASE", "CHG"),
+   varlabels = c("Visit Values", " ", "Change from Baseline")
+ ) |>
+ split_cols_by("STUDYID", split_fun = mysplitfun) |>
+ split_rows_by("PARAM", split_fun = drop_split_levels) |>
+ split_rows_by("ARMCD", labels_var = "ARM") |>
+ analyze("AVISIT", afun = column_stats, extra_args = list(
+   exclude_visits = toupper(c("Baseline", "Screening")),
+   .formats = "default",
+   formats_var = "fmt_d"
+ ))
+rslt <- build_table(lyt, df, round_type = "sas")
 rslt
 ```
 
