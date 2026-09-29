@@ -3,7 +3,6 @@
 \name{prop_diff}
 \alias{prop_diff}
 \alias{a_proportion_diff_j}
-\alias{s_proportion_diff_j}
 \title{Proportion difference estimation}
 \usage{
 a_proportion_diff_j(
@@ -12,24 +11,12 @@ a_proportion_diff_j(
   ref_path,
   .spl_context,
   ...,
+  conf_level = 0.95,
+  label = paste0("\% Difference (", f_conf_level(conf_level), ")"),
   .stats = NULL,
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL
-)
-
-s_proportion_diff_j(
-  df,
-  .var,
-  .ref_group,
-  .in_ref_col,
-  variables = list(strata = NULL),
-  conf_level = 0.95,
-  method = c("waldcc", "wald", "cmh", "cmh_sato", "cmh_mn", "ha", "newcombe",
-    "newcombecc", "strat_newcombe", "strat_newcombecc", "cmh_sato", "cmh_mn",
-    "uncond_exact_diff"),
-  weights_method = "cmh",
-  label = paste0("\% Difference (", f_conf_level(conf_level), ")")
 )
 }
 \arguments{
@@ -43,6 +30,11 @@ s_proportion_diff_j(
 
 \item{...}{Additional arguments passed to the statistics function.}
 
+\item{conf_level}{(\code{numeric})\cr confidence level for the confidence interval.}
+
+\item{label}{(\code{string})\cr label for the \code{diff_est_ci} statistic in \code{\link[=a_proportion_diff_j]{a_proportion_diff_j()}}. Defaults to
+\code{"\% Difference (conf_level CI)"}. Can be overridden by the caller.}
+
 \item{.stats}{(\code{character})\cr statistics to calculate.}
 
 \item{.formats}{(\code{list})\cr formats for the statistics.}
@@ -50,30 +42,10 @@ s_proportion_diff_j(
 \item{.labels}{(\code{list})\cr labels for the statistics.}
 
 \item{.indent_mods}{(\code{list})\cr indentation modifications for the statistics.}
-
-\item{.ref_group}{(\code{data.frame})\cr reference group data frame.}
-
-\item{.in_ref_col}{(\code{logical})\cr whether the current column is the reference column.}
-
-\item{variables}{(\code{list})\cr list with strata variable names.}
-
-\item{conf_level}{(\code{numeric})\cr confidence level for the confidence interval.}
-
-\item{method}{(\code{string})\cr method to use for confidence interval calculation.}
-
-\item{weights_method}{(\code{string})\cr method to use for weights calculation in stratified analysis.}
-
-\item{label}{(\code{string})\cr label for the \code{diff_est_ci} statistic. Defaults to
-\code{"\% Difference (conf_level CI)"}. Can be overridden by the caller.}
 }
 \value{
 \itemize{
 \item \code{a_proportion_diff_j()} returns the corresponding list with formatted \code{\link[rtables:CellValue]{rtables::CellValue()}}.
-}
-
-\itemize{
-\item \code{s_proportion_diff_j()} returns a named list of elements \code{diff},
-\code{diff_ci}, and \code{diff_est_ci}.
 }
 }
 \description{
@@ -87,22 +59,16 @@ A stratification variable can be supplied via the \code{strata} element of the \
 \itemize{
 \item \code{a_proportion_diff_j()}: Formatted analysis function which is used as \code{afun} in \code{estimate_proportion_diff()}.
 
-\item \code{s_proportion_diff_j()}: Statistics function estimating the difference
-in terms of responder proportion.
-
 }}
 \note{
 The \code{\link[=a_proportion_diff_j]{a_proportion_diff_j()}} function has the \verb{_j} suffix to distinguish it
-from \code{\link[tern:a_proportion_diff]{tern::a_proportion_diff()}}. The functions here are a thin wrapper around
+from \code{\link[tern:a_proportion_diff]{tern::a_proportion_diff()}}. It is a thin wrapper around
 \code{tern::s_proportion_diff()} with the following additions:
 \itemize{
 \item The \code{diff_est_ci} statistic (returned natively by tern since tern#1523) is
 relabelled with a shorter junco-style label (\code{"\% Difference (conf_level CI)"}).
 \item \code{ref_path} needs to be provided as extra argument to specify the control group column.
 }
-
-When performing an unstratified analysis, methods \code{'cmh'}, \code{'cmh_sato'}, \code{'cmh_mn'},
-\code{'strat_newcombe'}, and \code{'strat_newcombecc'} are not permitted.
 }
 \examples{
 nex <- 100
@@ -129,24 +95,4 @@ l <- basic_table() |>
   )
 
 build_table(l, df = dta)
-
-s_proportion_diff_j(
-  df = subset(dta, grp == "A"),
-  .var = "rsp",
-  .ref_group = subset(dta, grp == "B"),
-  .in_ref_col = FALSE,
-  conf_level = 0.90,
-  method = "ha"
-)
-
-s_proportion_diff_j(
-  df = subset(dta, grp == "A"),
-  .var = "rsp",
-  .ref_group = subset(dta, grp == "B"),
-  .in_ref_col = FALSE,
-  variables = list(strata = c("f1", "f2")),
-  conf_level = 0.90,
-  method = "cmh"
-)
-
 }
