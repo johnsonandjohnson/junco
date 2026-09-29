@@ -42,16 +42,6 @@ a_proportion_diff_j(
 \item{.labels}{(\code{list})\cr labels for the statistics.}
 
 \item{.indent_mods}{(\code{list})\cr indentation modifications for the statistics.}
-
-\item{.ref_group}{(\code{data.frame})\cr reference group data frame.}
-
-\item{.in_ref_col}{(\code{logical})\cr whether the current column is the reference column.}
-
-\item{variables}{(\code{list})\cr list with strata variable names.}
-
-\item{method}{(\code{string})\cr method to use for confidence interval calculation.}
-
-\item{weights_method}{(\code{string})\cr method to use for weights calculation in stratified analysis.}
 }
 \value{
 \itemize{

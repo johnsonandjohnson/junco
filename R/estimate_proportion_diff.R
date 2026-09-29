@@ -15,12 +15,7 @@
 #' @param .formats (`list`)\cr formats for the statistics.
 #' @param .labels (`list`)\cr labels for the statistics.
 #' @param .indent_mods (`list`)\cr indentation modifications for the statistics.
-#' @param .ref_group (`data.frame`)\cr reference group data frame.
-#' @param .in_ref_col (`logical`)\cr whether the current column is the reference column.
-#' @param variables (`list`)\cr list with strata variable names.
 #' @param conf_level (`numeric`)\cr confidence level for the confidence interval.
-#' @param method (`string`)\cr method to use for confidence interval calculation.
-#' @param weights_method (`string`)\cr method to use for weights calculation in stratified analysis.
 #' @param label (`string`)\cr label for the `diff_est_ci` statistic in [a_proportion_diff_j()]. Defaults to
 #'   `"% Difference (conf_level CI)"`. Can be overridden by the caller.
 #'
