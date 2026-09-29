@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 Many clinical tables require statistics presented on a table with certain decimal precision.
 In some situations the used decimal precision is different for different parameters and/or variables included in the table.
-In the `rtables` and `nest` framework formats can be specified, typically in the `format`, `.formats` argument of the used `afun`
+In the `rtables` and `nest` framework formats can be specified, typically in the `format` or `.formats` argument of the used `afun`
 or `analyze` call.
 
 For more information on tabulation, formats and formatting functions, see the vignettes ["Tabulation"](https://pharmaverse.github.io/tern/latest-tag/articles/tables.html) and ["Formatting Functions"](https://pharmaverse.github.io/tern/latest-tag/articles/tern_formats.html).
@@ -44,7 +44,18 @@ library(dplyr)
 
 
 ## d-Style Based Format Specifications
-A d-style specification setup is a string specification of type "xx.dx". In the conversion process, the integer value `d` will be replaced by `d` times `x`, e.g. with d = 1 `xx.dx` is converted into the format specification string `xx.xx`. 
+
+The following table summarizes the 3 J&J conventions for mean, SD/SE, median and range that may be used.  In the table below, “X” indicates the number of decimal places to which the raw values are captured or, in the case of derived data, the number of decimal places to which the derived variable is to be expressed.
+
+|                              | Default Conventions | Alternative 1 | Alternative 2 |
+|:-----------------------------|:-------------------:|:-------------:|:-------------:|
+| Individual (raw/derived) values | X                | X             | X             |
+| Mean                         | X+1                 | X+1           | X             |
+| SD or SE                     | X+2                 | X+1           | X             |
+| Median                       | X+1                 | X+1           | X             |
+| Min, max                     | X, X                | X, X          | X, X          |
+
+These rules have been used to set up a d-style specification as a string of type "xx.dx". In the conversion process, the integer value `d` will be replaced by `d` times `x`, e.g. with d = 1 `xx.dx` is converted into the format specification string `xx.xx`. 
 
 Below is an example on how to set up a d-style based specification manually.
 
@@ -58,25 +69,28 @@ junco_def_d <- c(
 )
 ```
 
-Available d-style based format specifications in junco are: 
+The 3 following d-style based format specifications are available in junco: 
 
 - `junco_def_d_all`, used for setup according to default J&J precision rules
 - `junco_def_d_alt1`, used for setup according to J&J precision rules alternative 1
 - `junco_def_d_alt2`, used for setup according to J&J precision rules alternative 2
 
-
-`junco_def_d_all` is a d-based specification setup for `r length(junco_def_d_all)` statistics, of which about a third are using the d-style specification.
+All 3 contain formatting defaults for all statistics defined in `tern`/`junco` (a total of `r length(junco_def_d_all)` statistics), also these that do not follow d-based specifaction setup (such as `count_fraction`, `ztest_pval`, ...).
+For about a third of all statistics (54 out of `r length(junco_def_d_all)`) the specifications in `junco_def_d_all` are defined with the d-style setup. See further in this vignette a note on tools `get_fmt_details` and `compare_fmt_specs` that can be used to investigate format specifications setups. 
 
 ```{r invest d-style defaults}
 d_style <- vapply(junco_def_d_all, FUN = function(fmt){ 
   !is.function(fmt) && is.character(fmt) && grepl("xx.d", fmt, fixed = TRUE)},
   FUN.VALUE = logical(1))
 
+non_d_style <- junco_def_d_all[!d_style]
+
 d_style <- junco_def_d_all[d_style]
 names(d_style)
 d_style[["adj_mean_se"]]
 
 ```
+
 
 The default d-style based input specification is `junco_def_d_all`, and when utilizing these specs with `d = 1` it would result in utilizing the `junco` defaults defined in `junco_default_formats`. One exception is the `tern` statistic `lr_stat_df` from method_group `coxph_pairwise`, for which the default format is not a valid `formatter` format. This is out of scope for current vignette.
 
@@ -98,7 +112,7 @@ junco_default_formats_adj[["lr_stat_df"]] <- NULL
 comp <- compare_fmt_specs(fmt_1, junco_default_formats)
 
 ```
-The tools `get_fmt_details` and `compare_fmt_specs` used in the above code snippet are out of scope of current vignette, users can refer to the help pages for basic information on these.
+The tools `get_fmt_details` and `compare_fmt_specs` used in the above code snippet are useful for understanding how the formatting specifications are constructed. These tools are out of scope of current vignette, users can refer to the help pages for basic information on these.
 
 ## Overview of Most Relevant Functions
 
@@ -162,9 +176,9 @@ rslt
 # set precision d on a parameter by parameter basis 
 df_d <- tribble(
  ~PARAMCD, ~d,
- "ALT", 2L,
- "CRP", 3L,
- "IGA", 1L
+ "ALT", 2,
+ "CRP", 3,
+ "IGA", 1
 )
 # convert d-based setup into format specification
 # a new column fmt_d is created with format specifications
