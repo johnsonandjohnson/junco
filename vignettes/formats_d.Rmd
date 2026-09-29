@@ -69,6 +69,16 @@ junco_def_d <- c(
 )
 ```
 
+```{r invest d-style defaults pre, include=FALSE}
+d_style <- vapply(junco_def_d_all, FUN = function(fmt){ 
+  !is.function(fmt) && is.character(fmt) && grepl("xx.d", fmt, fixed = TRUE)},
+  FUN.VALUE = logical(1))
+
+non_d_style <- junco_def_d_all[!d_style]
+
+d_style <- junco_def_d_all[d_style]
+```
+
 The 3 following d-style based format specifications are available in junco: 
 
 - `junco_def_d_all`, used for setup according to default J&J precision rules
@@ -76,7 +86,7 @@ The 3 following d-style based format specifications are available in junco:
 - `junco_def_d_alt2`, used for setup according to J&J precision rules alternative 2
 
 All 3 contain formatting defaults for all statistics defined in `tern`/`junco` (a total of `r length(junco_def_d_all)` statistics), also these that do not follow d-based specifaction setup (such as `count_fraction`, `ztest_pval`, ...).
-For about a third of all statistics (54 out of `r length(junco_def_d_all)`) the specifications in `junco_def_d_all` are defined with the d-style setup. See further in this vignette a note on tools `get_fmt_details` and `compare_fmt_specs` that can be used to investigate format specifications setups. 
+For about a third of all statistics (`r length(d_style)` out of `r length(junco_def_d_all)`) the specifications in `junco_def_d_all` are defined with the d-style setup. See further in this vignette a note on tools `get_fmt_details` and `compare_fmt_specs` that can be used to investigate format specifications setups. 
 
 ```{r invest d-style defaults}
 d_style <- vapply(junco_def_d_all, FUN = function(fmt){ 
@@ -88,7 +98,6 @@ non_d_style <- junco_def_d_all[!d_style]
 d_style <- junco_def_d_all[d_style]
 names(d_style)
 d_style[["adj_mean_se"]]
-
 ```
 
 
