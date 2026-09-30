@@ -79,7 +79,7 @@ Config/testthat/edition: 3
 Remotes:
     pharmaverse/formatters@main,
     pharmaverse/rtables@main,
-    pharmaverse/tern@main,
+    wwojciech/tern@1535_solves_bug_in_h_diff_cmh,
     pharmaverse/rtables@main,
     johnsonandjohnson/pharmaverseadamjnj@main,
     insightsengineering/rtables.officer@main
