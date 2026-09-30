@@ -2,19 +2,13 @@
 
 ### Changed
 - Added `.cell_footnotes` and `.row_footnotes` arguments to `format_stats()` (#470).
-- Removed duplicate output `diff_ci_3d` from `s_proportion_diff_j()` which had
-  an incorrect "Relative Risk" label; it was identical to `diff_est_ci` (#442).
-- Added `label` argument to `s_proportion_diff_j()` so the caller can customize
-  the `diff_est_ci` label (#442).
+- Removed `s_proportion_diff_j()` which was a wrapper around `tern::s_proportion_diff()`.
+  The `label` and `conf_level` parameters moved to `a_proportion_diff_j()` (#442, #467).
 - Renamed internal functions `s_rel_risk_val_j()` and `s_rel_risk_levii_j()` to
   `s_risk_diff_val_j()` and `s_risk_diff_levii_j()` to correctly reflect that
   they compute risk difference (p1 - p2), not relative risk (p1 / p2) (#442).
 
 ### Fixed
-- Fixed `s_proportion_diff_j()` to use `diff_est_ci` returned natively by
-  `tern::s_proportion_diff()` (tern#1523) instead of appending a duplicate.
-  The junco wrapper now only relabels the statistic with the shorter
-  `"% Difference (conf_level CI)"` format (#442, #468).
 - Fixed `get_ref_info()` to accept ref_path = NULL (#359).
 - Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
 - Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
