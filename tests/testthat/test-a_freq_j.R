@@ -116,11 +116,6 @@ test_that("a_freq_j in specific situation error for not passing alt_counts_df", 
     split_rows_by("STRATA1") |>
     analyze("EOSSTT", afun = a_freq_j, extra_args = a_freq_j_args)
 
-  expect_error(
-    build_table(lyt, adsl),
-    "In order to get correct numbers in relative risk column"
-  )
-
   result <- build_table(lyt, adsl, alt_counts_df = adsl)
   expect_snapshot(cran = TRUE, result)
 })

@@ -92,7 +92,6 @@ test_that("a_freq_j with val = NA and denom option", {
     denom = "n_df",
     ctrl_grp = ctrl_grp,
     ref_path = ref_path,
-    .alt_df_full = adsl,
     method = "wald"
   )
 

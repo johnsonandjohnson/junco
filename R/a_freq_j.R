@@ -813,6 +813,10 @@ a_freq_j <- function(
   checkmate::check_character(ref_path, min.len = 2L)
   checkmate::assert_true(length(ref_path) %% 2L == 0L)
 
+  if (riskdiff && !is.null(ref_path) && is.null(.alt_df_full)) {
+    stop("In order to get correct numbers in relative risk column, please specify alt_counts_df in build_table.")
+  }
+
   denom <- match.arg(denom)
   method <- match.arg(method)
 

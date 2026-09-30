@@ -650,9 +650,9 @@ a_test_proportion_diff_mf <- function(df,
   dots_extra_args <- list(...)
 
   # Only support default stats, not custom stats
-  .stats <- junco:::.split_std_from_custom_stats(.stats)$default_stats
+  .stats <- .split_std_from_custom_stats(.stats)$default_stats
 
-  x_stats <- junco:::.apply_stat_functions(
+  x_stats <- .apply_stat_functions(
     default_stat_fnc = s_test_proportion_diff_mf,
     custom_stat_fnc_list = NULL,
     args_list = c(

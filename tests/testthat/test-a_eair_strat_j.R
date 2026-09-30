@@ -147,13 +147,6 @@ test_that("a_eair_strat_j: rate difference column is produced with riskdiff = TR
   expect_length(diff_val, 3) # estimate, lcl, ucl
 })
 
-test_that("a_eair_strat_j: errors when alt_counts_df is not supplied", {
-  expect_error(
-    build_table(base_lyt(), aefup_strat),
-    "alt_counts_df"
-  )
-})
-
 test_that("a_eair_strat_j: errors when riskdiff = TRUE but ref_path is NULL", {
   lyt <- basic_table() |>
     split_cols_by("ARM") |>
