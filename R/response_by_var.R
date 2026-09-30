@@ -63,14 +63,15 @@
 #' @return a `RowsVerticalSection` for use by the internal tabulation machinery of `rtables`
 #' @export
 response_by_var <- function(
-    df,
-    labelstr = NULL,
-    .var,
-    .N_col,
-    resp_var = NULL,
-    id = "USUBJID",
-    .format = jjcsformat_count_denom_fraction,
-    ...) {
+  df,
+  labelstr = NULL,
+  .var,
+  .N_col,
+  resp_var = NULL,
+  id = "USUBJID",
+  .format = jjcsformat_count_denom_fraction,
+  ...
+) {
   # Derive statistics: xx / xx (xx.x%)
 
   if (is.null(resp_var)) {

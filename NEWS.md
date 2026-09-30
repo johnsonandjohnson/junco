@@ -2,10 +2,8 @@
 
 ### Changed
 - Added `.cell_footnotes` and `.row_footnotes` arguments to `format_stats()` (#470).
-- Removed duplicate output `diff_ci_3d` from `s_proportion_diff_j()` which had
-  an incorrect "Relative Risk" label; it was identical to `diff_est_ci` (#442).
-- Added `label` argument to `s_proportion_diff_j()` so the caller can customize
-  the `diff_est_ci` label (#442).
+- Removed `s_proportion_diff_j()` which was a wrapper around `tern::s_proportion_diff()`.
+  The `label` and `conf_level` parameters moved to `a_proportion_diff_j()` (#442, #467).
 - Renamed internal functions `s_rel_risk_val_j()` and `s_rel_risk_levii_j()` to
   `s_risk_diff_val_j()` and `s_risk_diff_levii_j()` to correctly reflect that
   they compute risk difference (p1 - p2), not relative risk (p1 / p2) (#442).
@@ -18,9 +16,6 @@
 - CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
-
-- Added `get_complete_cases()` to remove observations containing missing values
-  from a `data.frame` and issue a warning when observations are omitted (#454).
 - Updated several analysis functions to use `h_get_cur_trt_grp()` (#295).
 - Replaced `h_get_trtvar_refpath()` with `h_get_cur_trt_grp()` (#295).
 - Updated `get_ref_info()` for matching column split paths (#295).
@@ -57,8 +52,18 @@
 - Updated behavior of formatting functions `jjcsformat_count_denom_fraction` and `jjcsformat_fraction_count_denom` 
 and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat_fraction_count_denom_legacy` for backward compatibility reasons (#450)
 - Updated `insightsengineering` urls to `pharmaverse`
+- Added factor assertion on `.var` in `s_freq_j` (#453).
+- Added assertions for the `id` argument in `a_freq_j()` and `s_freq_j()` (#424).
 
 ### Added
+- Added `s_test_proportion_diff_mf()` and `a_test_proportion_diff_mf()` adaptive
+  test of stratified response-proportion differences using the Mantel–Fleiss
+  criterion (#457).
+- Added `s_proportion_diff_mf()` and `a_proportion_diff_mf()` adaptive
+  estimation of stratified response-proportion differences using the
+  Mantel–Fleiss criterion (#456).
+- Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator.
+- Added `a_sum_ratio_j()` analysis function for computing sum, unique-row sum, and their ratios against a denominator column.
 - Added `strict_match()` for uniquely matching a value in the odd or even positions of a character vector.
 - Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
 - Added `pool_rubin_scalar()` and `pool_z_stat()` for pooling scalar estimates and z statistics across imputations.
@@ -69,7 +74,6 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added `a_summarize_mmrm_with_exclude()` to allow MMRM summaries to be skipped for selected row split levels.
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
 - Added `a_three_tier()` as extension to `a_two_tier()`.
-- Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator.
 - Added formatting function `format_sigfig_j()` as alternative to `tern::format_sigfig()`. (#436)
 - Added new standard column structure functions: `make_multicomp_splfun()`, `grouped_cols_w_diffs()`, `grouped_cols_w_subgrps()`, `shift_tbl_col_struct()`, `some_v_all_col_struct()`, and `quartile_col_struct()`.
 

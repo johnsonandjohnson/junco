@@ -22,6 +22,7 @@ EAIR
 EAIRs
 EQ
 Eg
+Fleiss
 Haenszel
 Hilferty
 Hotfix
@@ -32,6 +33,7 @@ Lapply
 Lettis
 Liu
 MMRM
+MF
 Miettinen
 Nurminen
 PARAMCD
@@ -201,6 +203,10 @@ unicodify
 unlist
 unrounded
 unstratified
+VR
 wald
 wordbreaking
 xlsx
+relabelled
+natively
+

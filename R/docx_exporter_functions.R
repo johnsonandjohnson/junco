@@ -837,34 +837,34 @@ theme_docx_default_j <- function(
 #' @returns a flextable object.
 #' @export
 tt_to_flextable_j <- function(
-    tt,
-    tblid = NULL,
-    theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
-    border = flextable::fp_border_default(width = 0.875, color = "black"),
-    titles_as_header = TRUE,
-    bold_titles = TRUE,
-    integrate_footers = TRUE,
-    counts_in_newline = FALSE,
-    paginate = tlg_type(tt) == "Table",
-    fontspec = formatters::font_spec("Times", 9L, 1.2),
-    colwidths = NULL,
-    label_width_ins = 2,
-    total_page_width = pg_width_by_orient(orientation == "landscape"),
-    orientation = "portrait",
-    nosplitin = list(
-      row = character(),
-      col = character()
-    ),
-    string_map = default_str_map,
-    markup_df_docx = dps_markup_df_docx,
-    reduce_first_col_indentation = FALSE,
-    tlgtype = tlg_type(tt),
-    col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    round_type = formatters::obj_round_type(tt),
-    alignments = list(),
-    border_mat = make_header_bordmat(obj = tt),
-    validate = TRUE,
-    ...) {
+  tt,
+  tblid = NULL,
+  theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
+  titles_as_header = TRUE,
+  bold_titles = TRUE,
+  integrate_footers = TRUE,
+  counts_in_newline = FALSE,
+  paginate = tlg_type(tt) == "Table",
+  fontspec = formatters::font_spec("Times", 9L, 1.2),
+  colwidths = NULL,
+  label_width_ins = 2,
+  total_page_width = pg_width_by_orient(orientation == "landscape"),
+  orientation = "portrait",
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  string_map = default_str_map,
+  markup_df_docx = dps_markup_df_docx,
+  reduce_first_col_indentation = FALSE,
+  tlgtype = tlg_type(tt),
+  col_gap = ifelse(tlgtype == "Listing", .5, 3),
+  round_type = formatters::obj_round_type(tt),
+  alignments = list(),
+  border_mat = make_header_bordmat(obj = tt),
+  validate = TRUE,
+  ...) {
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
   }

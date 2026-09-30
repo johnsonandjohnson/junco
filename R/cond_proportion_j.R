@@ -5,7 +5,7 @@
 #' automatically selecting between exact and Wald methods based on observed
 #' counts and user-defined limits.
 #'
-#' @description r lifecycle::badge("experimental")
+#' @description `r lifecycle::badge("experimental")`
 #'
 #' @details
 #' The statistics function mirrors [tern::s_proportion()] usage and output but

@@ -260,6 +260,7 @@ test_that("a_freq_resp_var_j in layout with relative risk column for combined fa
     resp_var = "TRTEMFL", drop_levels = TRUE,
     riskdiff = TRUE,
     ref_path = c("colspan_trt", " ", trtvar, ctrl_grp),
+    variables = list(strata = NULL),
     method = "wald"
   )
 

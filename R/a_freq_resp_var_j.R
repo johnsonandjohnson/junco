@@ -56,7 +56,7 @@ a_freq_resp_var_j <- function(
   drop_levels = FALSE,
   riskdiff = TRUE,
   ref_path = NULL,
-  variables = formals(s_proportion_diff)$variables,
+  variables = list(strata = NULL),
   conf_level = formals(s_proportion_diff)$conf_level,
   method = c(
     "wald",
