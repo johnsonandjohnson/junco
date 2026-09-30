@@ -39,11 +39,14 @@ reference:
     - a_maxlev
     - a_proportion_ci_factor
     - a_proportion_ci_logical
+    - a_proportion_diff_mf
+    - a_test_proportion_diff_mf
     - a_summarize_aval_chg_diff_j
     - a_summarize_ex_j
     - a_summarize_mmrm_with_exclude
     - a_summary_j_with_exclude
     - a_summary_subset
+    - a_sum_ratio_j
     - a_two_tier
     - a_three_tier    
     - c_summary_subset_label
@@ -79,6 +82,8 @@ reference:
     - s_diff_means
     - s_proportion_factor
     - s_proportion_logical
+    - s_proportion_diff_mf
+    - s_test_proportion_diff_mf
     - s_summarize_ancova_j
     - s_summary_diff
     - summarize_coxreg_multivar
@@ -151,7 +156,6 @@ reference:
     - rightside
     - remove_col_count
     - rm_levels
-    - get_complete_cases
     
   - title: internal
     desc: The following are additional junco functions.
@@ -163,6 +167,7 @@ reference:
     - smart_colwidths_1page
     - tt_to_tbldf
     - factor_by_order
+    - h_set_labels_prop_diff_mf
 
   - title: junco Functions For generating .rtfs, .docxs and HTMLs
     desc: The following utility functions help to generate the .rtfs, .docxs and HTMLs.

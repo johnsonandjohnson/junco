@@ -6,13 +6,11 @@
 \usage{
 quartile_col_struct(
   lyt,
-  var,
+  grp_var,
   colspan_trt_map = NULL,
   combo_map_df = NULL,
   trtvar = names(colspan_trt_map)[2],
-  span_lbl = paste(var, "Quartiles"),
-  digits = 0,
-  round_type = valid_round_type,
+  span_lbl = "Quartiles",
   .pre = list(),
   .post = list()
 )
@@ -22,7 +20,7 @@ quartile_col_struct(
 should virtually always be the object returned by
 \code{basic_table}.}
 
-\item{var}{(\code{character(1)})\cr The continuous variable to compute quartile-based columns for.}
+\item{grp_var}{(\code{character(1)})\cr Variable containing pre-defined quartile group labels (e.g., WGTGR1).}
 
 \item{colspan_trt_map}{(\code{data.frame}). The spanning label map for
 the main columns, as given by \code{create_colspan_map}.}
@@ -37,11 +35,6 @@ treatment variable in \code{colspan_trt_map}.}
 
 \item{span_lbl}{(\code{character(1)})\cr The spanning label to place above the quartile columns.}
 
-\item{digits}{(\code{integer(1)})\cr Number of decimal places used when formatting the quartile.}
-
-\item{round_type}{(\code{character(1)})\cr rounding method, passed onto
-\code{\link[formatters:round_fmt]{formatters::round_fmt()}} when formatting the quartile.}
-
 \item{.pre}{(\code{list} of \code{function}s)\cr Passed to \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{pre} for
 treatment splitting.}
 
@@ -55,17 +48,20 @@ treatment splitting after the standard column-structure processing.}
 Standard Quartile Column Structure
 }
 \details{
-Splits \code{trtvar} into four quartile columns of \code{var}, with \code{span_lbl}
-as a spanning label above them. Cut points (Q1, median, Q3) are worked
-out separately within each treatment column, using the same quantile
+Splits columns by \code{grp_var} which contains pre-defined quartile group labels from the dataset.
+The \code{grp_var} should already contain formatted quartile range labels. These are not calculated
+by the function.
 }
 \examples{
-set.seed(1)
+dat <- data.frame(
+  TRT01A = factor(rep(c("Placebo", "Active 1"), each = 10)),
+  WGTGR1 = factor(
+    rep(c("47 to <62", "62 to <69", "69 to <74", "74 to 95", "47 to <62"), 4),
+    levels = c("47 to <62", "62 to <69", "69 to <74", "74 to 95")
+  )
+)
 dat <- create_colspan_var(
-  data.frame(
-    TRT01A = factor(rep(c("Placebo", "Active 1"), each = 20)),
-    BW = c(rnorm(20, 70, 10), rnorm(20, 75, 10))
-  ),
+  dat,
   non_active_grp = "Placebo",
   non_active_grp_span_lbl = "Control",
   active_grp_span_lbl = "Active Treatment",
@@ -83,11 +79,11 @@ colspan_trt_map <- create_colspan_map(
 
 lyt <- basic_table() |>
   quartile_col_struct(
-    var = "BW",
+    grp_var = "WGTGR1",
     colspan_trt_map = colspan_trt_map,
     span_lbl = "Body Weight (kg) Quartiles"
   ) |>
-  analyze("BW", afun = function(x, ...) length(x))
+  analyze("WGTGR1", afun = function(x, ...) length(x))
 
 build_table(lyt, dat)
 }

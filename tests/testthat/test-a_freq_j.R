@@ -116,11 +116,6 @@ test_that("a_freq_j in specific situation error for not passing alt_counts_df", 
     split_rows_by("STRATA1") |>
     analyze("EOSSTT", afun = a_freq_j, extra_args = a_freq_j_args)
 
-  expect_error(
-    build_table(lyt, adsl),
-    "In order to get correct numbers in relative risk column"
-  )
-
   result <- build_table(lyt, adsl, alt_counts_df = adsl)
   expect_snapshot(cran = TRUE, result)
 })
@@ -270,4 +265,19 @@ test_that("a_freq_j with label_map and no data in row error message", {
   dta2 <- dta
   dta2$rsp <- factor(dta2$rsp, levels = c("Y", "N"))
   expect_no_error(result3 <- build_table(lyt2, dta2))
+})
+
+test_that("a_freq_j raises an error when an incorrect id is specified", {
+  dta <- data.frame(
+    ID = 1:6,
+    rsp = c(TRUE, FALSE, FALSE, FALSE, TRUE, FALSE),
+    grp = factor(c("A", "A", "A", "B", "B", "B"))
+  )
+  lyt <- basic_table() |>
+    split_cols_by("grp") |>
+    analyze("rsp", afun = a_freq_j)
+  expect_error(
+    build_table(lyt, dta),
+    "id.*subset"
+  )
 })

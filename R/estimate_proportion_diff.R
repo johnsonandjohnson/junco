@@ -15,97 +15,22 @@
 #' @param .formats (`list`)\cr formats for the statistics.
 #' @param .labels (`list`)\cr labels for the statistics.
 #' @param .indent_mods (`list`)\cr indentation modifications for the statistics.
-#' @param .ref_group (`data.frame`)\cr reference group data frame.
-#' @param .in_ref_col (`logical`)\cr whether the current column is the reference column.
-#' @param variables (`list`)\cr list with strata variable names.
 #' @param conf_level (`numeric`)\cr confidence level for the confidence interval.
-#' @param method (`string`)\cr method to use for confidence interval calculation.
-#' @param weights_method (`string`)\cr method to use for weights calculation in stratified analysis.
-#' @param label (`string`)\cr label for the `diff_est_ci` statistic. Defaults to
+#' @param label (`string`)\cr label for the `diff_est_ci` statistic in [a_proportion_diff_j()]. Defaults to
 #'   `"% Difference (conf_level CI)"`. Can be overridden by the caller.
 #'
 #' @name prop_diff
 #' @order 1
 #'
 #' @note The [a_proportion_diff_j()] function has the `_j` suffix to distinguish it
-#'   from [tern::a_proportion_diff()]. The functions here are a copy from the `tern` package
-#'   with additional features:
+#'   from [tern::a_proportion_diff()]. It is a thin wrapper around
+#'   `tern::s_proportion_diff()` with the following additions:
 #'
-#'   * Additional statistic `diff_est_ci` is returned.
+#'   * The `diff_est_ci` statistic (returned natively by tern since tern#1523) is
+#'     relabelled with a shorter junco-style label (`"% Difference (conf_level CI)"`).
 #'   * `ref_path` needs to be provided as extra argument to specify the control group column.
 #'
 NULL
-
-#' @describeIn prop_diff Statistics function estimating the difference
-#'   in terms of responder proportion.
-#'
-#' @return
-#' * `s_proportion_diff_j()` returns a named list of elements `diff`,
-#'    `diff_ci`, and `diff_est_ci`.
-#'
-#' @note When performing an unstratified analysis, methods `'cmh'`, `'cmh_sato'`, `'cmh_mn'`,
-#'   `'strat_newcombe'`, and `'strat_newcombecc'` are not permitted.
-#'
-#' @examples
-#'
-#' s_proportion_diff_j(
-#'   df = subset(dta, grp == "A"),
-#'   .var = "rsp",
-#'   .ref_group = subset(dta, grp == "B"),
-#'   .in_ref_col = FALSE,
-#'   conf_level = 0.90,
-#'   method = "ha"
-#' )
-#'
-#' s_proportion_diff_j(
-#'   df = subset(dta, grp == "A"),
-#'   .var = "rsp",
-#'   .ref_group = subset(dta, grp == "B"),
-#'   .in_ref_col = FALSE,
-#'   variables = list(strata = c("f1", "f2")),
-#'   conf_level = 0.90,
-#'   method = "cmh"
-#' )
-#'
-#' @export
-#' @order 3
-s_proportion_diff_j <- function(
-  df,
-  .var,
-  .ref_group,
-  .in_ref_col,
-  variables = list(strata = NULL),
-  conf_level = 0.95,
-  method = c(
-    "waldcc", "wald", "cmh", "cmh_sato", "cmh_mn", "ha",
-    "newcombe", "newcombecc", "strat_newcombe", "strat_newcombecc",
-    "cmh_sato", "cmh_mn", "uncond_exact_diff"
-  ),
-  weights_method = "cmh",
-  label = paste0("% Difference (", f_conf_level(conf_level), ")")
-) {
-  start <- s_proportion_diff(
-    df = df,
-    .var = .var,
-    .ref_group = .ref_group,
-    .in_ref_col = .in_ref_col,
-    variables = variables,
-    conf_level = conf_level,
-    method = method,
-    weights_method = weights_method
-  )
-
-  c(
-    start,
-    list(
-      diff_est_ci = with_label(
-        c(start$diff, start$diff_ci),
-        label
-      )
-      # diff_ci_3d removed — duplicate of diff_est_ci with wrong "Relative Risk" label
-    )
-  )
-}
 
 #' @describeIn prop_diff Formatted analysis function which is used as `afun` in `estimate_proportion_diff()`.
 #'
@@ -145,6 +70,8 @@ a_proportion_diff_j <- function(
   ref_path,
   .spl_context,
   ...,
+  conf_level = 0.95,
+  label = paste0("% Difference (", f_conf_level(conf_level), ")"),
   .stats = NULL,
   .formats = NULL,
   .labels = NULL,
@@ -161,16 +88,20 @@ a_proportion_diff_j <- function(
 
   # Apply statistics function
   x_stats <- .apply_stat_functions(
-    default_stat_fnc = s_proportion_diff_j,
+    default_stat_fnc = tern::s_proportion_diff,
     custom_stat_fnc_list = NULL,
     args_list = c(
       df = list(df),
       .var = .var,
       .ref_group = list(ref$ref_group),
       .in_ref_col = ref$in_ref_col,
+      conf_level = conf_level,
       dots_extra_args
     )
   )
+
+  # Relabel diff_est_ci with junco-style shorter label
+  x_stats$diff_est_ci <- with_label(x_stats$diff_est_ci, label)
 
   # Format according to specifications
   format_stats(

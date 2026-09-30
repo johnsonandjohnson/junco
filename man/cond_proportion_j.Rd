@@ -86,7 +86,7 @@ and \code{prop_ci} (proportion CI), formatted consistently with \code{\link[tern
 }
 }
 \description{
-r lifecycle::badge("experimental")
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \details{
 The analysis function \code{\link[=a_cond_proportion_j]{a_cond_proportion_j()}} is used to create a layout
