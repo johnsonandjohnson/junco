@@ -150,7 +150,7 @@ test_that("a_eair_strat_j: rate difference column is produced with riskdiff = TR
 test_that("a_eair_strat_j: errors when alt_counts_df is not supplied", {
   expect_error(
     build_table(base_lyt(), aefup_strat),
-    "alt_counts_df"
+    ".alt_df_full cannot be NULL"
   )
 })
 

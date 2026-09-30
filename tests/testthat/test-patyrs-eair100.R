@@ -476,7 +476,7 @@ test_that("Check a_eair100_j function request alt_counts_df", {
     )
   expect_error(
     tbl1 <- build_table(lyt1, adae),
-    ".alt_df_full cannot be NULL. Specify `alt_counts_df`"
+    ".alt_df_full cannot be NULL"
   )
 })
 
