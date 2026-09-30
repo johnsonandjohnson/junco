@@ -1039,3 +1039,110 @@ some_v_all_col_struct <- function(
 
   lyt
 }
+
+.quartile_facets_postfun <- function(grp_var) {
+  function(ret, spl, fulldf, .spl_context) {
+    grp <- fulldf[[grp_var]]
+    labs <- unique(grp[!is.na(grp)])
+    labs <- sort(labs)
+    
+    datasplit <- stats::setNames(
+      lapply(labs, function(lbl) fulldf[grp == lbl, , drop = FALSE]),
+      labs
+    )
+    
+    make_split_result(
+      labs,
+      datasplit = datasplit,
+      labels = stats::setNames(labs, labs)
+    )
+  }
+}
+
+#' Standard Quartile Column Structure
+#'
+#' @inheritParams grouped_cols_w_subgrps
+#' @param grp_var (`character(1)`)\cr Variable containing pre-defined quartile group labels (e.g., WGTGR1).
+#' @param span_lbl (`character(1)`)\cr The spanning label to place above the quartile columns.
+#'
+#' @details
+#' Splits columns by `grp_var` which contains pre-defined quartile group labels from the dataset.
+#' The `grp_var` should already contain formatted quartile range labels. These are not calculated 
+#' by the function.
+#'
+#' @returns `lyt` updated with the specified quartile column structure added.
+#'
+#' @family std_col_struct
+#' @export
+#' @examples
+#' dat <- data.frame(
+#'   TRT01A = factor(rep(c("Placebo", "Active 1"), each = 10)),
+#'   WGTGR1 = factor(
+#'     rep(c("47 to <62", "62 to <69", "69 to <74", "74 to 95", "47 to <62"), 4),
+#'     levels = c("47 to <62", "62 to <69", "69 to <74", "74 to 95")
+#'   )
+#' )
+#' dat <- create_colspan_var(
+#'   dat,
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#' colspan_trt_map <- create_colspan_map(
+#'   dat,
+#'   non_active_grp = "Placebo",
+#'   non_active_grp_span_lbl = "Control",
+#'   active_grp_span_lbl = "Active Treatment",
+#'   colspan_var = "colspan_trt",
+#'   trt_var = "TRT01A"
+#' )
+#'
+#' lyt <- basic_table() |>
+#'   quartile_col_struct(
+#'     grp_var = "WGTGR1",
+#'     colspan_trt_map = colspan_trt_map,
+#'     span_lbl = "Body Weight (kg) Quartiles"
+#'   ) |>
+#'   analyze("WGTGR1", afun = function(x, ...) length(x))
+#'
+#' build_table(lyt, dat)
+quartile_col_struct <- function(
+  lyt,
+  grp_var,
+  colspan_trt_map = NULL,
+  combo_map_df = NULL,
+  trtvar = names(colspan_trt_map)[2],
+  span_lbl = "Quartiles",
+  .pre = list(),
+  .post = list()
+) {
+  if (is.null(trtvar)) {
+    stop("trtvar must be specified if no colspan map is provided.")
+  }
+
+  lyt <- spans_trtvar_no_diffs(
+    lyt,
+    colspan_trt_map = colspan_trt_map,
+    combo_map_df = combo_map_df,
+    trtvar = trtvar,
+    .pre = .pre,
+    .post = .post
+  )
+
+  span_splfun <- make_split_fun(
+    post = list(
+      real_add_overall_facet("quartiles", label = span_lbl),
+      restrict_facets("quartiles", op = "keep")
+    )
+  )
+
+  quartile_splfun <- make_split_fun(
+    post = list(.quartile_facets_postfun(grp_var))
+  )
+
+  lyt |>
+    split_cols_by(trtvar, split_fun = span_splfun) |>
+    split_cols_by(grp_var, split_fun = quartile_splfun)
+}

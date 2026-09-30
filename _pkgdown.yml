@@ -127,6 +127,7 @@ reference:
     - make_combo_splitfun
     - make_multicomp_splfun
     - postfun_eq5d
+    - quartile_col_struct
     - real_add_overall_facet
     - some_v_all_col_struct
 

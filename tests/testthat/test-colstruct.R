@@ -614,3 +614,101 @@ test_that("some_v_all_col_struct works without a spanning header", {
 
   expect_equal(unclass(col_paths(tbl)), expected)
 })
+
+test_that("quartile_col_struct works with a spanning header", {
+  trtvar <- "TRT01A"
+  grp_var <- "WGTGR1"
+  dat <- data.frame(
+    TRT01A = factor(rep(c("Placebo", "Active 1"), each = 10)),
+    WGTGR1 = factor(
+      rep(c("47 to <62", "62 to <69", "69 to <74", "74 to 95", "47 to <62"), 4),
+      levels = c("47 to <62", "62 to <69", "69 to <74", "74 to 95")
+    )
+  )
+  dat <- create_colspan_var(
+    dat,
+    non_active_grp = "Placebo",
+    non_active_grp_span_lbl = "Control",
+    active_grp_span_lbl = "Active Treatment",
+    colspan_var = "colspan_trt",
+    trt_var = trtvar
+  )
+  colspan_trt_map <- create_colspan_map(
+    dat,
+    non_active_grp = "Placebo",
+    non_active_grp_span_lbl = "Control",
+    active_grp_span_lbl = "Active Treatment",
+    colspan_var = "colspan_trt",
+    trt_var = trtvar
+  )
+
+  lyt <- basic_table() |>
+    quartile_col_struct(
+      grp_var = grp_var,
+      colspan_trt_map = colspan_trt_map,
+      span_lbl = "Body Weight (kg) Quartiles"
+    ) |>
+    analyze(grp_var, afun = function(x, ...) length(x))
+
+  tbl <- build_table(lyt, dat)
+
+  spanvar <- names(colspan_trt_map)[1]
+  quartile_labs <- c("47 to <62", "62 to <69", "69 to <74", "74 to 95")
+
+  expected <- unlist(
+    lapply(
+      seq_len(NROW(colspan_trt_map)),
+      function(i) {
+        rw <- colspan_trt_map[i, ]
+        lapply(
+          quartile_labs,
+          function(lab) {
+            c(spanvar, rw[[spanvar]], trtvar, rw[[trtvar]], trtvar, "quartiles", grp_var, lab)
+          }
+        )
+      }
+    ),
+    recursive = FALSE
+  )
+
+  expect_equal(unclass(col_paths(tbl)), expected)
+})
+
+test_that("quartile_col_struct works without a spanning header", {
+  trtvar <- "ARM"
+  grp_var <- "WGTGR1"
+  dat <- data.frame(
+    ARM = factor(rep(c("Arm A", "Arm B"), each = 10)),
+    WGTGR1 = factor(
+      rep(c("47 to <62", "62 to <69", "69 to <74", "74 to 95", "47 to <62"), 4),
+      levels = c("47 to <62", "62 to <69", "69 to <74", "74 to 95")
+    )
+  )
+
+  lyt <- basic_table() |>
+    quartile_col_struct(
+      grp_var = grp_var,
+      trtvar = trtvar,
+      span_lbl = "Body Weight (kg) Quartiles"
+    ) |>
+    analyze(grp_var, afun = function(x, ...) length(x))
+
+  tbl <- build_table(lyt, dat)
+
+  quartile_labs <- c("47 to <62", "62 to <69", "69 to <74", "74 to 95")
+
+  expected <- unlist(
+    lapply(
+      levels(dat[[trtvar]]),
+      function(lvl) {
+        lapply(
+          quartile_labs,
+          function(lab) c(trtvar, lvl, trtvar, "quartiles", grp_var, lab)
+        )
+      }
+    ),
+    recursive = FALSE
+  )
+
+  expect_equal(unclass(col_paths(tbl)), expected)
+})
