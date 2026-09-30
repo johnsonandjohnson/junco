@@ -1045,12 +1045,12 @@ some_v_all_col_struct <- function(
     grp <- fulldf[[grp_var]]
     labs <- unique(grp[!is.na(grp)])
     labs <- sort(labs)
-    
+
     datasplit <- stats::setNames(
       lapply(labs, function(lbl) fulldf[grp == lbl, , drop = FALSE]),
       labs
     )
-    
+
     make_split_result(
       labs,
       datasplit = datasplit,
@@ -1067,7 +1067,7 @@ some_v_all_col_struct <- function(
 #'
 #' @details
 #' Splits columns by `grp_var` which contains pre-defined quartile group labels from the dataset.
-#' The `grp_var` should already contain formatted quartile range labels. These are not calculated 
+#' The `grp_var` should already contain formatted quartile range labels. These are not calculated
 #' by the function.
 #'
 #' @returns `lyt` updated with the specified quartile column structure added.
