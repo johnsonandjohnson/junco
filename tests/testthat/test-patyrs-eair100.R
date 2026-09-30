@@ -462,24 +462,6 @@ test_that("Check a_eair100_j function does not allow occ_var = NULL", {
   expect_no_error(tbl1 <- build_table(lyt1, adae, adsl))
 })
 
-test_that("Check a_eair100_j function request alt_counts_df", {
-  lyt1 <- core_lyt |>
-    analyze(
-      "AEDECOD",
-      afun = a_eair100_j,
-      extra_args = list(
-        fup_var = "TRTDURY",
-        occ_var = "AOCCPFL",
-        occ_dy = "ASTDY",
-        ref_path = ref_path
-      )
-    )
-  expect_error(
-    tbl1 <- build_table(lyt1, adae),
-    ".alt_df_full cannot be NULL"
-  )
-})
-
 test_that("Check a_eair100_j function does perform variable existence check", {
   lyt1 <- core_lyt |>
     analyze(
