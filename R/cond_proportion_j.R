@@ -62,6 +62,30 @@
 #' @name cond_proportion_j
 NULL
 
+#' Helper Function to Extract Count Responders
+#'
+#' Converts a response vector, or a response column from a data frame, to logical
+#' values and returns its responder and observation counts.
+#'
+#' @param x (`vector` or `data.frame`)\cr Response data.
+#' @param .var (`string`)\cr Response column in `x` when `x` is a data frame.
+#' @param na.rm (`flag`)\cr Whether to remove missing responses before counting.
+#'
+#' @return A named integer vector with `n_rsp` (responders) and `len_rsp`
+#'   (non-missing observations, when `na.rm = TRUE`).
+#'
+#' @keywords internal
+h_get_rsp_counts <- function(x, .var, na.rm = FALSE) {
+  rsp <- if (checkmate::test_atomic_vector(x)) {
+    x
+  } else {
+    tern::assert_df_with_variables(x, list(rsp = .var))
+    x[[.var]]
+  }
+  rsp <- safe_as_logical(rsp, na.rm = na.rm)
+  c(n_rsp = sum(rsp), len_rsp = length(rsp))
+}
+
 #' @describeIn cond_proportion_j Statistics function estimating a proportion
 #'   along with its confidence interval, with adaptive method selection.
 #'
@@ -111,24 +135,16 @@ s_cond_proportion_j <- function(
   denom <- match.arg(denom)
   method_scope <- match.arg(method_scope)
 
-  vec <- if (checkmate::test_atomic_vector(df)) {
+  rsp <- if (checkmate::test_atomic_vector(df)) {
     df
   } else {
     tern::assert_df_with_variables(df, list(rsp = .var))
     df[[.var]]
   }
-  rsp <- safe_as_logical(vec)
-
-  if (anyNA(rsp)) {
-    if (na.rm) {
-      rsp <- rsp[!is.na(rsp)]
-    } else {
-      stop("Missing values detected in response and `na.rm = FALSE`.", call. = FALSE)
-    }
-  }
-
-  n_obs <- length(rsp)
-  n_rsp <- sum(rsp)
+  rsp <- safe_as_logical(rsp, na.rm = na.rm)
+  rsp_counts <- h_get_rsp_counts(df, .var, na.rm = na.rm)
+  n_obs <- rsp_counts[["len_rsp"]]
+  n_rsp <- rsp_counts[["n_rsp"]]
   denom_val <- match.arg(denom) |>
     switch(
       n = n_obs,
@@ -143,16 +159,9 @@ s_cond_proportion_j <- function(
   # we separate out here `method_denom` and `method_rsp` for the method decision.
   if (method_scope == "row") {
     tern::assert_df_with_variables(.df_row, list(rsp = .var))
-    row_rsp <- safe_as_logical(.df_row[[.var]])
-    if (anyNA(row_rsp)) {
-      if (na.rm) {
-        row_rsp <- row_rsp[!is.na(row_rsp)]
-      } else {
-        stop("Missing values detected in response and `na.rm = FALSE`.", call. = FALSE)
-      }
-    }
-    method_denom <- length(row_rsp)
-    method_rsp <- sum(row_rsp)
+    row_rsp_counts <- h_get_rsp_counts(.df_row, .var, na.rm = na.rm)
+    method_denom <- row_rsp_counts[["len_rsp"]]
+    method_rsp <- row_rsp_counts[["n_rsp"]]
   } else {
     method_denom <- denom_val
     method_rsp <- n_rsp
