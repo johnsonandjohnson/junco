@@ -44,11 +44,12 @@
 #' @param denom (`character`)\cr denominator to use for percentage and CI computation:
 #'   "n" (default, number of observed records), "N_col", or "N_row". When "N_col" or
 #'   "N_row" are chosen, the corresponding `.N_col` or `.N_row` are used, respectively.
-#' @param .N_row (`int`)
 #' @param .N_col (`int`)
 #' @param long (`flag`)\cr whether a long description is required.
 #' @param na.rm (`flag`)\cr whether `NA` responses should be removed before analysis.
 #'   If `FALSE` and `NA` values are present, an error is raised.
+#'   Note that missing values are also removed from the row-wise counts
+#'   which is relevant when `method_scope = "row"` or `denom = "N_row"`.
 #' @param num_limit (`int`)\cr numerator limit to trigger the exact method.
 #' @param denom_limit (`int`)\cr denominator limit to trigger the exact method.
 #' @param method_scope (`string`)\cr select the CI method using counts from the
@@ -105,11 +106,11 @@ h_get_rsp_counts <- function(x, .var, na.rm = FALSE) {
 #' # Using different denominator (requires .N_col in ...)
 #' s_cond_proportion_j(dta, .var = "rsp", denom = "N_col", .N_col = 10)
 #'
-#' # Using method_scope = "row" (requires .df_row and .N_row in ...)
+#' # Using method_scope = "row" (requires .df_row in ...)
 #' df_row <- data.frame(rsp = rep(rsp_v, 2))
 #' s_cond_proportion_j(
 #'   dta, .var = "rsp", method_scope = "row",
-#'   .df_row = df_row, .N_row = nrow(df_row)
+#'   .df_row = df_row
 #' )
 #'
 #' @export
@@ -122,7 +123,6 @@ s_cond_proportion_j <- function(
   num_limit = 0,
   denom_limit = 10,
   denom = c("n", "N_col", "N_row"),
-  .N_row,
   .N_col,
   method_scope = c("cell", "row"),
   .df_row = NULL
@@ -145,10 +145,15 @@ s_cond_proportion_j <- function(
   rsp_counts <- h_get_rsp_counts(df, .var, na.rm = na.rm)
   n_obs <- rsp_counts[["len_rsp"]]
   n_rsp <- rsp_counts[["n_rsp"]]
+
+  if (method_scope == "row" || denom == "N_row") {
+    tern::assert_df_with_variables(.df_row, list(rsp = .var))
+    row_rsp_counts <- h_get_rsp_counts(.df_row, .var, na.rm = na.rm)
+  }
   denom_val <- match.arg(denom) |>
     switch(
       n = n_obs,
-      N_row = .N_row,
+      N_row = row_rsp_counts[["len_rsp"]],
       N_col = .N_col
     )
   assert_int(denom_val, lower = n_obs)
@@ -158,8 +163,6 @@ s_cond_proportion_j <- function(
   # still uses the current cell's responses and denominator. Therefore
   # we separate out here `method_denom` and `method_rsp` for the method decision.
   if (method_scope == "row") {
-    tern::assert_df_with_variables(.df_row, list(rsp = .var))
-    row_rsp_counts <- h_get_rsp_counts(.df_row, .var, na.rm = na.rm)
     method_denom <- row_rsp_counts[["len_rsp"]]
     method_rsp <- row_rsp_counts[["n_rsp"]]
   } else {
@@ -333,7 +336,6 @@ a_cond_proportion_j <- function(
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL,
-  .N_row = NULL,
   .N_col = NULL,
   .df_row = NULL
 ) {
@@ -349,7 +351,6 @@ a_cond_proportion_j <- function(
       df = list(df),
       .var = .var,
       .df_row = list(.df_row),
-      .N_row = .N_row,
       .N_col = .N_col,
       dots_extra_args
     )

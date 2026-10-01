@@ -81,9 +81,10 @@ test_that("denom = 'N_col' uses provided .N_col for p_hat and CI", {
   expect_equal(as.numeric(out$prop_ci), as.numeric(expected_ci), tolerance = 1e-12)
 })
 
-test_that("denom = 'N_row' uses provided .N_row for p_hat and CI", {
+test_that("denom = 'N_row' derives its denominator from .df_row", {
   rsp <- c(rep(TRUE, 6), rep(FALSE, 6)) # n_obs = 12, n_rsp = 6
-  out <- s_cond_proportion_j(rsp, denom = "N_row", .N_row = 15)
+  df_row <- data.frame(rsp = c(rsp, FALSE, FALSE, FALSE))
+  out <- s_cond_proportion_j(rsp, .var = "rsp", denom = "N_row", .df_row = df_row)
   # p_hat should be 6 / 15
   expect_equal(as.numeric(out$n_prop)[1], 6)
   expect_equal(as.numeric(out$n_prop)[2], 6 / 15)
@@ -92,10 +93,64 @@ test_that("denom = 'N_row' uses provided .N_row for p_hat and CI", {
   expect_equal(as.numeric(out$prop_ci), as.numeric(expected_ci), tolerance = 1e-12)
 })
 
-test_that("missing .N_col/.N_row raises error when requested by denom", {
+test_that("missing denominator inputs raise errors when requested by denom", {
   rsp <- c(TRUE, FALSE, TRUE, FALSE)
   expect_error(s_cond_proportion_j(rsp, denom = "N_col"), "argument.*missing|object.*not found", ignore.case = TRUE)
-  expect_error(s_cond_proportion_j(rsp, denom = "N_row"), "argument.*missing|object.*not found", ignore.case = TRUE)
+  expect_error(s_cond_proportion_j(rsp, denom = "N_row"), "df.*data.frame", ignore.case = TRUE)
+})
+
+test_that("data-frame response edge cases have the expected outcomes", {
+  all_false <- data.frame(rsp = rep(FALSE, 12))
+  all_true <- data.frame(rsp = rep(TRUE, 12))
+
+  false_out <- s_cond_proportion_j(all_false, .var = "rsp")
+  true_out <- s_cond_proportion_j(all_true, .var = "rsp")
+
+  expect_equal(as.numeric(false_out$n_prop), c(0, 0))
+  expect_equal(as.numeric(true_out$n_prop), c(12, 1))
+  expect_equal(
+    as.numeric(false_out$prop_ci),
+    as.numeric(100 * tern::prop_clopper_pearson(all_false$rsp, n = 12, conf_level = 0.95))
+  )
+  expect_equal(
+    as.numeric(true_out$prop_ci),
+    as.numeric(100 * tern::prop_clopper_pearson(all_true$rsp, n = 12, conf_level = 0.95))
+  )
+
+  expect_error(
+    s_cond_proportion_j(data.frame(rsp = logical()), .var = "rsp"),
+    "n.*positive integer",
+    ignore.case = TRUE
+  )
+  expect_error(
+    s_cond_proportion_j(data.frame(rsp = c(NA, NA)), .var = "rsp", na.rm = TRUE),
+    "n.*positive integer",
+    ignore.case = TRUE
+  )
+  expect_error(
+    s_cond_proportion_j(data.frame(rsp = c(NA, NA)), .var = "rsp", na.rm = FALSE),
+    "Missing values detected in response and `na.rm = FALSE`.",
+    fixed = TRUE
+  )
+})
+
+test_that("row-derived denominators exclude missing .df_row responses", {
+  rsp <- data.frame(rsp = c(TRUE, FALSE))
+  df_row <- data.frame(rsp = c(TRUE, FALSE, NA, NA))
+
+  out <- s_cond_proportion_j(
+    rsp,
+    .var = "rsp",
+    denom = "N_row",
+    .df_row = df_row,
+    na.rm = TRUE
+  )
+
+  expect_equal(as.numeric(out$n_prop), c(1, 1 / 2))
+  expect_equal(
+    as.numeric(out$prop_ci),
+    as.numeric(100 * tern::prop_clopper_pearson(rsp$rsp, n = 2, conf_level = 0.95))
+  )
 })
 
 test_that("na.rm = TRUE removes missing responses before analysis", {
@@ -379,7 +434,6 @@ test_that("row-wise method selection handles missing values according to na.rm",
     .var = "rsp",
     method_scope = "row",
     .df_row = row_dta,
-    .N_row = 2,
     denom_limit = 2,
     na.rm = TRUE,
     long = TRUE
@@ -395,7 +449,6 @@ test_that("row-wise method selection handles missing values according to na.rm",
       .var = "rsp",
       method_scope = "row",
       .df_row = row_dta,
-      .N_row = 2,
       denom_limit = 2,
       na.rm = FALSE
     ),
@@ -411,7 +464,6 @@ test_that("row-wise labels distinguish upper-boundary exact-method reasons", {
     .var = "rsp",
     method_scope = "row",
     .df_row = data.frame(rsp = all_responders),
-    .N_row = 12,
     long = TRUE
   )
   expect_identical(
@@ -425,7 +477,6 @@ test_that("row-wise labels distinguish upper-boundary exact-method reasons", {
     .var = "rsp",
     method_scope = "row",
     .df_row = data.frame(rsp = near_all_responders),
-    .N_row = 12,
     num_limit = 1,
     long = TRUE
   )
