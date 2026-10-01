@@ -1,6 +1,6 @@
 # Moved from tern prop_diff.R ----
 
-#' @name tern_temp
+#' @name temporary_tern_code
 #'
 #' @title Temporary tern functions
 #'
@@ -15,7 +15,7 @@
 #' @order 1
 NULL
 
-#' @describeIn tern_temp Temporarily moved from `{tern}`
+#' @describeIn temporary_tern_code Temporarily moved from `{tern}`
 s_proportion_diff_jtemp <- function(df,
                                     .var,
                                     .ref_group = NULL,
@@ -104,7 +104,7 @@ s_proportion_diff_jtemp <- function(df,
   y
 }
 
-#' @describeIn tern_temp Temporarily moved from `{tern}`
+#' @describeIn temporary_tern_code Temporarily moved from `{tern}`
 prop_diff_cmh_jtemp <- function(rsp,
                                 grp,
                                 strata,
@@ -158,7 +158,7 @@ prop_diff_cmh_jtemp <- function(rsp,
   )
 }
 
-#' @describeIn tern_temp Temporarily moved from `{tern}`
+#' @describeIn temporary_tern_code Temporarily moved from `{tern}`
 prop_diff_strat_nc_jtemp <- function(rsp,
                                      grp,
                                      strata,
@@ -234,7 +234,7 @@ prop_diff_strat_nc_jtemp <- function(rsp,
   )
 }
 
-#' @describeIn tern_temp Temporarily moved from `{tern}`
+#' @describeIn temporary_tern_code Temporarily moved from `{tern}`
 h_prop_cmh_jtemp <- function(tbl, conf_level = 0.95) {
   checkmate::assert_array(tbl, mode = "integerish", any.missing = FALSE, d = 3L)
   checkmate::assert_true(nrow(tbl) == 2L)
@@ -297,7 +297,7 @@ h_prop_cmh_jtemp <- function(tbl, conf_level = 0.95) {
   )
 }
 
-#' @describeIn tern_temp Temporarily moved from `{tern}`
+#' @describeIn temporary_tern_code Temporarily moved from `{tern}`
 h_cmh_sato_var_jtemp <- function(prop) {
   checkmate::assert_list(prop, min.len = 7L, names = "named")
   checkmate::assert_subset(c("est1", "est2", "x1", "x2", "n1", "n2", "w"), names(prop))
@@ -337,7 +337,7 @@ h_cmh_sato_var_jtemp <- function(prop) {
   }
 }
 
-#' @describeIn tern_temp Temporarily moved from `{tern}`
+#' @describeIn temporary_tern_code Temporarily moved from `{tern}`
 h_miettinen_nurminen_var_jtemp <- function(est1, est2, x1, x2, n1, n2) {
   checkmate::assert_number(est1, lower = -1, upper = 1, na.ok = TRUE, finite = TRUE)
   checkmate::assert_number(est2, lower = -1, upper = 1, na.ok = TRUE, finite = TRUE)
@@ -390,7 +390,7 @@ h_miettinen_nurminen_var_jtemp <- function(est1, est2, x1, x2, n1, n2) {
   )
 }
 
-#' @describeIn tern_temp Temporarily moved from `{tern}`
+#' @describeIn temporary_tern_code Temporarily moved from `{tern}`
 h_miettinen_nurminen_stratified_ci_jtemp <- function(prop, conf_level = 0.95) {
   checkmate::assert_list(prop, min.len = 10L, names = "named")
   checkmate::assert_subset(
@@ -463,7 +463,7 @@ h_miettinen_nurminen_stratified_ci_jtemp <- function(prop, conf_level = 0.95) {
 
 # Moved from tern prop_diff_test.R ----
 
-#' @describeIn tern_temp Temporarily moved from `{tern}`
+#' @describeIn temporary_tern_code Temporarily moved from `{tern}`
 s_test_proportion_diff_jtemp <- function(df,
                                          .var,
                                          .ref_group = NULL,
@@ -524,7 +524,7 @@ s_test_proportion_diff_jtemp <- function(df,
   )
 }
 
-#' @describeIn tern_temp Temporarily moved from `{tern}`
+#' @describeIn temporary_tern_code Temporarily moved from `{tern}`
 prop_cmh_jtemp <- function(ary,
                            alternative = c("two.sided", "less", "greater"),
                            diff_se = c("standard", "sato"),

@@ -27,6 +27,7 @@ articles:
     - get_ref_info
     - formats_d
     - formats_significant_figures
+    - temporary_tern_code
 reference:
   - title: junco Analysis Functions
     desc: The following functions are the Analysis functions used used to create common table layouts.
