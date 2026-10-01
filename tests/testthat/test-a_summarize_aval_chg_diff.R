@@ -152,7 +152,6 @@ test_that("a_summarize_aval_chg_diff_j t-test sparse data works as expected", {
 })
 
 
-
 test_that("a_summarize_aval_chg_diff_j works as expected", {
   # Create test data as shown in the example
   ADEG <- data.frame(
@@ -462,7 +461,7 @@ test_that("s_summarize_desc_j with empty vectors", {
   expect_error(t.test(df[["AVAL"]], df[["AVAL"]]))
 
   stats <- s_summarize_desc_j(df, "AVAL", .ref_group = df, .in_ref_col = FALSE)
-  expect_equal(stats[["mean_diffci"]], rep(NA_real_, 3), ignore_attr = TRUE)
+  expect_equal(stats[["mean_diff_with_ci"]], rep(NA_real_, 3), ignore_attr = TRUE)
 })
 
 test_that("a_summarize_aval_chg_diff_j ancova in a combined column work as expected", {

@@ -12,6 +12,11 @@ longdat <- data.frame(
 ) |>
   dplyr::inner_join(DM, by = "ID")
 
+myformats <- c(
+  "adj_mean_est_ci" = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)"),
+  "diff_mean_est_ci" = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)")
+)
+
 testthat::test_that("h_summarize_mmrm works with healthy input", {
   suppressMessages(result <- h_summarize_mmrm(
     .var = "AVAL",
@@ -161,6 +166,7 @@ test_that("a_summarize_mmrm works as expected in table layout", {
         cor_struct = "toeplitz",
         ref_levels = list(VISIT = "V0", ARM = "B: Placebo"),
         .stats = c("adj_mean_est_ci", "diff_mean_est_ci", "p_value"),
+        .formats = myformats,
         weights_emmeans = "proportional"
       )
     )
@@ -195,6 +201,7 @@ test_that("a_summarize_mmrm works as expected below row splits", {
         cor_struct = "toeplitz",
         ref_levels = list(VISIT = "V0", ARM = "B: Placebo"),
         .stats = c("adj_mean_est_ci", "diff_mean_est_ci", "p_value"),
+        .formats = myformats,
         weights_emmeans = "proportional"
       )
     )

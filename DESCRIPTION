@@ -54,7 +54,8 @@ Imports:
     flextable (>= 0.9.11),
     officer,
     xml2,
-    ggplot2
+    ggplot2,
+    assertthat
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
@@ -73,7 +74,8 @@ Suggests:
     multcomp,
     lifecycle,
     dplyr,
-    ratesci (>= 1.1.0)
+    ratesci (>= 1.1.0),
+    random.cdisc.data
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Remotes:

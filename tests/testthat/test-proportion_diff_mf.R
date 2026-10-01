@@ -444,6 +444,38 @@ test_that("s_proportion_diff_mf() uses custom conf_level", {
   expect_equal(result, expected, tolerance = 1e-6)
 })
 
+test_that("s_proportion_diff_mf() uses custom mf_threshold", {
+  set.seed(123)
+  n <- 100
+  data <- data.frame(
+    rsp = sample(c(TRUE, FALSE), n, replace = TRUE),
+    grp = sample(c("Placebo", "X"), n, replace = TRUE),
+    strata = factor(sample(LETTERS[1:4], n, replace = TRUE))
+  )
+
+  expect_silent(
+    result <- s_proportion_diff_mf(
+      df = subset(data, grp == "X"),
+      .var = "rsp",
+      .ref_group = subset(data, grp == "Placebo"),
+      .in_ref_col = FALSE,
+      variables = list(strata = "strata"),
+      mf_threshold = 21
+    )
+  )
+
+  expected <- list(
+    diff = c(diff_uncond_exact_diff = 0.8856683),
+    diff_ci = c(diff_ci_uncond_exact_diff_l = -18.68883, diff_ci_uncond_exact_diff_u = 20.39184),
+    diff_est_ci = NA,
+    executed_method = "uncond_exact_diff"
+  )
+  expected$diff_est_ci <- c(expected$diff, expected$diff_ci)
+  expected <- h_set_labels_prop_diff_mf(expected, mf_method = "cmh", conf_level = 0.95)
+
+  expect_equal(result, expected, tolerance = 1e-6)
+})
+
 # a_proportion_diff_mf() ----
 
 test_that("a_proportion_diff_mf() works in full table build (large sample)", {
@@ -572,6 +604,29 @@ test_that("a_proportion_diff_mf() respects custom exact_footnote", {
           variables = list(strata = c("strata_1", "strata_2")),
           exact_footnote = "This was the exact method"
         )
+      ) |>
+      build_table(data)
+  )
+
+  expect_snapshot(tbl)
+})
+
+test_that("a_proportion_diff_mf() respects custom mf_threshold", {
+  set.seed(123)
+  n <- 50
+  data <- data.frame(
+    rsp = sample(c(TRUE, FALSE), n, replace = TRUE),
+    grp = sample(c("Placebo", "X"), n, replace = TRUE),
+    strata = factor(sample(LETTERS[1:4], n, replace = TRUE))
+  )
+
+  tbl <- expect_silent(
+    basic_table() |>
+      split_cols_by(var = "grp", ref_group = "Placebo") |>
+      analyze(
+        vars = "rsp",
+        afun = a_proportion_diff_mf,
+        extra_args = list(variables = list(strata = "strata"), mf_threshold = 8)
       ) |>
       build_table(data)
   )

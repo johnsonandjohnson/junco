@@ -35,10 +35,10 @@
     Output
                                                                    X        Placebo
       —————————————————————————————————————————————————————————————————————————————
-        (Fisher's Exact Test / Cochran-Mantel-Haenszel Test)   >0.999 {1}          
+        (Fisher's Exact Test / Cochran-Mantel-Haenszel Test)   >0.999 {+}          
       —————————————————————————————————————————————————————————————————————————————
       
-      {1} - Fisher's Exact Test
+      {+} - Fisher's Exact Test
       —————————————————————————————————————————————————————————————————————————————
       
 
@@ -58,10 +58,10 @@
     Output
                          X        Placebo
       ———————————————————————————————————
-          my_label   0.7000 {1}          
+          my_label   0.7000 {+}          
       ———————————————————————————————————
       
-      {1} - Fisher's Exact Test
+      {+} - Fisher's Exact Test
       ———————————————————————————————————
       
 
@@ -79,6 +79,20 @@
       —————————————————————————————————————————————————————————————————————————————
       
 
+# a_test_proportion_diff_mf() respects custom mf_threshold
+
+    Code
+      tbl
+    Output
+                                                                   X       Placebo
+      ————————————————————————————————————————————————————————————————————————————
+        (Fisher's Exact Test / Cochran-Mantel-Haenszel Test)   0.388 {+}          
+      ————————————————————————————————————————————————————————————————————————————
+      
+      {+} - Fisher's Exact Test
+      ————————————————————————————————————————————————————————————————————————————
+      
+
 # a_test_proportion_diff_mf() removes NAs from relevant columns and warns when na.rm = TRUE
 
     Code
@@ -93,10 +107,10 @@
     Output
                                                                Placebo       X     
       —————————————————————————————————————————————————————————————————————————————
-        (Fisher's Exact Test / Cochran-Mantel-Haenszel Test)             >0.999 {1}
+        (Fisher's Exact Test / Cochran-Mantel-Haenszel Test)             >0.999 {+}
       —————————————————————————————————————————————————————————————————————————————
       
-      {1} - Fisher's Exact Test
+      {+} - Fisher's Exact Test
       —————————————————————————————————————————————————————————————————————————————
       
 

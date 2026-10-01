@@ -2,23 +2,11 @@
 % Please edit documentation in R/cond_proportion_diff.R
 \name{test_proportion_diff_mf}
 \alias{test_proportion_diff_mf}
-\alias{s_test_proportion_diff_mf}
 \alias{a_test_proportion_diff_mf}
+\alias{s_test_proportion_diff_mf}
 \title{Test of Proportion Difference with Method Selection Based on the
 Mantel-Fleiss Criterion}
 \usage{
-s_test_proportion_diff_mf(
-  df,
-  .var,
-  .in_ref_col = NULL,
-  .ref_group = NULL,
-  val = TRUE,
-  variables = list(strata = NULL),
-  na.rm = FALSE,
-  alternative = c("two.sided", "less", "greater"),
-  mf_method = c("cmh", "cmh_sato", "cmh_wh")
-)
-
 a_test_proportion_diff_mf(
   df,
   .var,
@@ -29,12 +17,27 @@ a_test_proportion_diff_mf(
   na.rm = FALSE,
   alternative = c("two.sided", "less", "greater"),
   mf_method = c("cmh", "cmh_sato", "cmh_wh"),
+  mf_threshold = NULL,
   ...,
   .stats = NULL,
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL,
-  exact_footnote = "Fisher's Exact Test"
+  exact_footnote = rtables::RefFootnote(note = tern::d_test_proportion_diff(method =
+    "fisher", method_only = TRUE), index = 1L, symbol = "+")
+)
+
+s_test_proportion_diff_mf(
+  df,
+  .var,
+  .in_ref_col = NULL,
+  .ref_group = NULL,
+  val = TRUE,
+  variables = list(strata = NULL),
+  na.rm = FALSE,
+  alternative = c("two.sided", "less", "greater"),
+  mf_method = c("cmh", "cmh_sato", "cmh_wh"),
+  mf_threshold = NULL
 )
 }
 \arguments{
@@ -94,6 +97,10 @@ strata are provided and the Mantel-Fleiss criterion is satisfied.
 Available choices are \code{"cmh"}, \code{"cmh_sato"}, and \code{"cmh_wh"}.
 See \strong{Details} for more information.}
 
+\item{mf_threshold}{(\code{numeric(1)} or \code{NULL}) \cr
+Threshold for the Mantel-Fleiss criterion.
+If \code{NULL}, the default from \code{\link[tern:mantel_fleiss_crit]{tern::mantel_fleiss_crit()}} is used.}
+
 \item{...}{additional arguments for the lower level functions.}
 
 \item{.stats}{(character) \cr
@@ -115,6 +122,11 @@ used for the analysis.}
 }
 \value{
 \itemize{
+\item \code{a_test_proportion_diff_mf()} returns the corresponding \code{RowsVerticalSection}
+object with formatted results.
+}
+
+\itemize{
 \item \code{s_test_proportion_diff_mf()} returns a list containing:
 \describe{
 \item{\code{pval} (\code{numeric(1)} or \code{numeric(0)})}{P-value from the test, or
@@ -129,11 +141,6 @@ or \code{"fisher"}.
 Formatted analysis functions can use this value to determine whether an
 appropriate footnote should be added.}
 }
-}
-
-\itemize{
-\item \code{a_test_proportion_diff_mf()} returns the corresponding \code{RowsVerticalSection}
-object with formatted results.
 }
 }
 \description{
@@ -184,6 +191,10 @@ Fisher's exact test based on the Mantel-Fleiss criterion.
 }
 \section{Functions}{
 \itemize{
+\item \code{a_test_proportion_diff_mf()}: Formatted analysis function used as \code{afun}
+to test the difference in response proportions, with method selection based
+on the Mantel-Fleiss criterion.
+
 \item \code{s_test_proportion_diff_mf()}: Statistics function testing the
 difference in response proportions.
 When strata variables are provided and the Mantel-Fleiss criterion is
@@ -192,10 +203,6 @@ satisfied, the CMH test \code{\link[tern:prop_cmh]{tern::prop_cmh()}} is used, w
 Otherwise, i.e., when strata variables are not provided, or when strata
 variables are provided but the Mantel-Fleiss criterion is not satisfied
 or cannot be evaluated, Fisher's exact test \code{\link[tern:prop_fisher]{tern::prop_fisher()}} is used.
-
-\item \code{a_test_proportion_diff_mf()}: Formatted analysis function used as \code{afun}
-to test the difference in response proportions, with method selection based
-on the Mantel-Fleiss criterion.
 
 }}
 \examples{
@@ -212,16 +219,6 @@ dta <- data.frame(
   stringsAsFactors = TRUE
 )
 
-test_prop_d <- s_test_proportion_diff_mf(
-  df = subset(dta, grp == "A"),
-  .var = "rsp",
-  .ref_group = subset(dta, grp == "Placebo"),
-  .in_ref_col = FALSE,
-  val = "Y",
-  variables = list(strata = c("f1", "f2"))
-)
-test_prop_d
-
 lyt <- basic_table() |>
   split_cols_by(var = "grp", ref_group = "Placebo") |>
   analyze(
@@ -234,6 +231,16 @@ lyt <- basic_table() |>
   )
 
 build_table(lyt, df = dta)
+
+test_prop_d <- s_test_proportion_diff_mf(
+  df = subset(dta, grp == "A"),
+  .var = "rsp",
+  .ref_group = subset(dta, grp == "Placebo"),
+  .in_ref_col = FALSE,
+  val = "Y",
+  variables = list(strata = c("f1", "f2"))
+)
+test_prop_d
 
 }
 \seealso{
