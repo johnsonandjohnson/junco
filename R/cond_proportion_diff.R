@@ -98,6 +98,9 @@
 #'   its confidence interval when strata are provided and the Mantel-Fleiss
 #'   criterion is satisfied. Available choices are: `"cmh"`, `"cmh_sato"`, and
 #'   `"cmh_mn"`. See **Details** for more information.
+#' @param mf_threshold (`numeric(1)` or `NULL`) \cr
+#'   Threshold for the Mantel-Fleiss criterion.
+#'   If `NULL`, the default from [tern::mantel_fleiss_crit()] is used.
 #' @param .stats (`character`) \cr
 #'   Statistics to select. Available choices are `"diff"`, `"diff_ci"`, and
 #'   `"diff_est_ci"`. This parameter affects only the formatted analysis
@@ -157,7 +160,7 @@ NULL
 #'    appropriate footnote should be added.}
 #'  }
 #'
-#' @order 2
+#' @order 3
 #' @export
 #' @examples
 #' prop_d <- s_proportion_diff_mf(
@@ -180,7 +183,8 @@ s_proportion_diff_mf <- function(df,
                                  variables = list(strata = NULL),
                                  na.rm = FALSE,
                                  conf_level = 0.95,
-                                 mf_method = c("cmh", "cmh_sato", "cmh_mn")) {
+                                 mf_method = c("cmh", "cmh_sato", "cmh_mn"),
+                                 mf_threshold = NULL) {
   assert_flag(.in_ref_col, null.ok = TRUE)
   assert_data_frame(.ref_group)
   assert_list(variables)
@@ -214,8 +218,11 @@ s_proportion_diff_mf <- function(df,
         "cannot be checked. Falling back to unconditional exact analysis."
       )
       FALSE
+    } else if (is.null(mf_threshold)) {
+      # Note: mantel_fleiss_crit() can return NA.
+      isTRUE(mantel_fleiss_crit(rsp_data$tbl))
     } else {
-      isTRUE(mantel_fleiss_crit(rsp_data$tbl)) # Note: mantel_fleiss_crit() can return NA.
+      isTRUE(mantel_fleiss_crit(rsp_data$tbl, threshold = mf_threshold))
     }
 
     y <- if (is_mf_satisfied) {
@@ -262,7 +269,7 @@ s_proportion_diff_mf <- function(df,
 #' * `a_proportion_diff_mf()` returns the corresponding `RowsVerticalSection`
 #' object with formatted results.
 #'
-#' @order 3
+#' @order 2
 #' @export
 #' @examples
 #' lyt <- basic_table() |>
@@ -290,12 +297,19 @@ a_proportion_diff_mf <- function(df,
                                  na.rm = FALSE,
                                  conf_level = 0.95,
                                  mf_method = c("cmh", "cmh_sato", "cmh_mn"),
+                                 mf_threshold = NULL,
                                  ...,
                                  .stats = NULL,
                                  .formats = NULL,
                                  .labels = NULL,
                                  .indent_mods = NULL,
-                                 exact_footnote = "Unconditional exact") {
+                                 exact_footnote = rtables::RefFootnote(
+                                   note = tern::d_proportion_diff(
+                                     method = "uncond_exact_diff", method_only = TRUE
+                                   ),
+                                   index = 1L,
+                                   symbol = "+"
+                                 )) {
   assert_scalar(.var)
   assert_scalar(.in_ref_col, null.ok = TRUE)
   assert_scalar(val)
@@ -324,6 +338,7 @@ a_proportion_diff_mf <- function(df,
       na.rm = na.rm,
       conf_level = conf_level,
       mf_method = list(mf_method),
+      mf_threshold = mf_threshold,
       dots_extra_args
     )
   )
@@ -514,7 +529,7 @@ NULL
 #'      appropriate footnote should be added.}
 #'   }
 #'
-#' @order 1
+#' @order 3
 #' @export
 #' @examples
 #' test_prop_d <- s_test_proportion_diff_mf(
@@ -535,7 +550,8 @@ s_test_proportion_diff_mf <- function(df,
                                       variables = list(strata = NULL),
                                       na.rm = FALSE,
                                       alternative = c("two.sided", "less", "greater"),
-                                      mf_method = c("cmh", "cmh_sato", "cmh_wh")) {
+                                      mf_method = c("cmh", "cmh_sato", "cmh_wh"),
+                                      mf_threshold = NULL) {
   assert_flag(.in_ref_col, null.ok = TRUE)
   assert_data_frame(.ref_group, null.ok = TRUE)
   assert_list(variables, null.ok = TRUE)
@@ -566,8 +582,11 @@ s_test_proportion_diff_mf <- function(df,
         "cannot be checked. Falling back to Fisher's exact test."
       )
       FALSE
+    } else if (is.null(mf_threshold)) {
+      # Note: mantel_fleiss_crit() can return NA.
+      isTRUE(mantel_fleiss_crit(rsp_data$tbl))
     } else {
-      isTRUE(mantel_fleiss_crit(rsp_data$tbl)) # Note: mantel_fleiss_crit() can return NA.
+      isTRUE(mantel_fleiss_crit(rsp_data$tbl, threshold = mf_threshold))
     }
 
     pval <- if (is_mf_satisfied) {
@@ -607,7 +626,7 @@ s_test_proportion_diff_mf <- function(df,
 #' * `a_test_proportion_diff_mf()` returns the corresponding `RowsVerticalSection`
 #' object with formatted results.
 #'
-#' @order 3
+#' @order 2
 #' @export
 #' @examples
 #' lyt <- basic_table() |>
@@ -632,12 +651,19 @@ a_test_proportion_diff_mf <- function(df,
                                       na.rm = FALSE,
                                       alternative = c("two.sided", "less", "greater"),
                                       mf_method = c("cmh", "cmh_sato", "cmh_wh"),
+                                      mf_threshold = NULL,
                                       ...,
                                       .stats = NULL,
                                       .formats = NULL,
                                       .labels = NULL,
                                       .indent_mods = NULL,
-                                      exact_footnote = "Fisher's Exact Test") {
+                                      exact_footnote = rtables::RefFootnote(
+                                        note = tern::d_test_proportion_diff(
+                                          method = "fisher", method_only = TRUE
+                                        ),
+                                        index = 1L,
+                                        symbol = "+"
+                                      )) {
   assert_scalar(.var)
   assert_scalar(.in_ref_col, null.ok = TRUE)
   assert_scalar(val)
@@ -665,6 +691,7 @@ a_test_proportion_diff_mf <- function(df,
       na.rm = na.rm,
       alternative = list(alternative),
       mf_method = list(mf_method),
+      mf_threshold = mf_threshold,
       dots_extra_args
     )
   )

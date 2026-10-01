@@ -52,12 +52,12 @@
     Output
                                                                                                              X              Placebo
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-      Difference in Response rate (%) (CMH, without correction / Unconditional exact)                     16.7 {1}                 
-        Difference in Response rate (%) 95% CI (CMH, without correction / Unconditional exact)       (-69.8, 87.6) {1}             
-      Difference in Response rate (%) and 95% CI (CMH, without correction / Unconditional exact)   16.7 (-69.8, 87.6) {1}          
+      Difference in Response rate (%) (CMH, without correction / Unconditional exact)                     16.7 {+}                 
+        Difference in Response rate (%) 95% CI (CMH, without correction / Unconditional exact)       (-69.8, 87.6) {+}             
+      Difference in Response rate (%) and 95% CI (CMH, without correction / Unconditional exact)   16.7 (-69.8, 87.6) {+}          
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       
-      {1} - Unconditional exact
+      {+} - Unconditional exact
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       
 
@@ -77,10 +77,10 @@
     Output
                                  X                Placebo
       ———————————————————————————————————————————————————
-          my_label   16.67 (-61.04 - 82.13) {1}          
+          my_label   16.67 (-61.04 - 82.13) {+}          
       ———————————————————————————————————————————————————
       
-      {1} - Unconditional exact
+      {+} - Unconditional exact
       ———————————————————————————————————————————————————
       
 
@@ -100,6 +100,22 @@
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       
 
+# a_proportion_diff_mf() respects custom mf_threshold
+
+    Code
+      tbl
+    Output
+                                                                                                              X              Placebo
+      ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      Difference in Response rate (%) (CMH, without correction / Unconditional exact)                     -14.5 {+}                 
+        Difference in Response rate (%) 95% CI (CMH, without correction / Unconditional exact)        (-40.9, 13.7) {+}             
+      Difference in Response rate (%) and 95% CI (CMH, without correction / Unconditional exact)   -14.5 (-40.9, 13.7) {+}          
+      ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      
+      {+} - Unconditional exact
+      ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      
+
 # a_proportion_diff_mf() removes NAs from relevant columns and warns when na.rm = TRUE
 
     Code
@@ -114,12 +130,12 @@
     Output
                                                                                                    Placebo             X           
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-      Difference in Response rate (%) (CMH, without correction / Unconditional exact)                               50.0 {1}       
-        Difference in Response rate (%) 95% CI (CMH, without correction / Unconditional exact)                 (-77.0, 98.7) {1}   
-      Difference in Response rate (%) and 95% CI (CMH, without correction / Unconditional exact)             50.0 (-77.0, 98.7) {1}
+      Difference in Response rate (%) (CMH, without correction / Unconditional exact)                               50.0 {+}       
+        Difference in Response rate (%) 95% CI (CMH, without correction / Unconditional exact)                 (-77.0, 98.7) {+}   
+      Difference in Response rate (%) and 95% CI (CMH, without correction / Unconditional exact)             50.0 (-77.0, 98.7) {+}
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       
-      {1} - Unconditional exact
+      {+} - Unconditional exact
       —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       
 

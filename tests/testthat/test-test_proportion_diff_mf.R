@@ -363,6 +363,35 @@ test_that("s_test_proportion_diff_mf() uses custom alternative", {
   expect_equal(result, expected, tolerance = 1e-6)
 })
 
+test_that("s_test_proportion_diff_mf() uses custom mf_threshold", {
+  set.seed(123)
+  n <- 40
+  data <- data.frame(
+    rsp = sample(c(TRUE, FALSE), n, replace = TRUE),
+    grp = sample(c("Placebo", "X"), n, replace = TRUE),
+    strata = factor(sample(LETTERS[1:4], n, replace = TRUE))
+  )
+
+  expect_silent(
+    result <- s_test_proportion_diff_mf(
+      df = subset(data, grp == "X"),
+      .var = "rsp",
+      .ref_group = subset(data, grp == "Placebo"),
+      .in_ref_col = FALSE,
+      variables = list(strata = "strata"),
+      mf_threshold = 7
+    )
+  )
+
+  label <- "(Fisher's Exact Test / Cochran-Mantel-Haenszel Test)"
+  expected <- list(
+    pval = formatters::with_label(0.5115226, label),
+    executed_method = "fisher"
+  )
+
+  expect_equal(result, expected, tolerance = 1e-6)
+})
+
 # a_test_proportion_diff_mf() ----
 
 test_that("a_test_proportion_diff_mf() works in full table build (large sample)", {
@@ -491,6 +520,29 @@ test_that("a_test_proportion_diff_mf() respects custom exact_footnote", {
           variables = list(strata = c("strata_1", "strata_2")),
           exact_footnote = "This was the Fisher's exact test"
         )
+      ) |>
+      build_table(data)
+  )
+
+  expect_snapshot(tbl)
+})
+
+test_that("a_test_proportion_diff_mf() respects custom mf_threshold", {
+  set.seed(123)
+  n <- 50
+  data <- data.frame(
+    rsp = sample(c(TRUE, FALSE), n, replace = TRUE),
+    grp = sample(c("Placebo", "X"), n, replace = TRUE),
+    strata = factor(sample(LETTERS[1:4], n, replace = TRUE))
+  )
+
+  tbl <- expect_silent(
+    basic_table() |>
+      split_cols_by(var = "grp", ref_group = "Placebo") |>
+      analyze(
+        vars = "rsp",
+        afun = a_test_proportion_diff_mf,
+        extra_args = list(variables = list(strata = "strata"), mf_threshold = 8)
       ) |>
       build_table(data)
   )
