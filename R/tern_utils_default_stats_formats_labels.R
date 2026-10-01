@@ -17,7 +17,7 @@
 NULL
 
 
-# Utility function used to separate custom stats (user-defined functions) from defaults
+#' @keywords internal
 .split_std_from_custom_stats <- function(stats_in) {
   out <- list(default_stats = NULL, custom_stats = NULL, all_stats = NULL)
   if (is.list(stats_in)) {
@@ -38,7 +38,7 @@ NULL
   out
 }
 
-# Utility function to apply statistical functions
+#' @keywords internal
 .apply_stat_functions <- function(
   default_stat_fnc,
   custom_stat_fnc_list,

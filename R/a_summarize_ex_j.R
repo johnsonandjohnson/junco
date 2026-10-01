@@ -98,7 +98,7 @@ s_summarize_ex_j <- function(
           .in_ref_col = .in_ref_col,
           control = control
         )
-        diffstat <- x_stats2[["mean_diffci"]]
+        diffstat <- x_stats2[["mean_diff_with_ci"]]
       }
       # actual update with the diffstat
       x_stats[["mean_sd"]] <- diffstat

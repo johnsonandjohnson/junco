@@ -25,6 +25,8 @@ articles:
     - ancova_combined
     - standard_column_structures
     - get_ref_info
+    - formats_d
+    - formats_significant_figures
 reference:
   - title: junco Analysis Functions
     desc: The following functions are the Analysis functions used used to create common table layouts.
@@ -109,6 +111,8 @@ reference:
     - ac_blank_line
     - insert_blank_line
     - format_sigfig_j
+    - fmt_spec_d
+    - fmt_utils
 
   - title: junco Sorting Functions and Pruning Functions
     desc: The following functions are the junco sorting and pruning functions used to create common table layouts.
@@ -130,7 +134,7 @@ reference:
     - do_exclude_split
     - make_combo_splitfun
     - make_multicomp_splfun
-    - postfun_eq5d
+    - stats_in_cols_setup
     - real_add_overall_facet
 
   - title: junco Functions For titles/footnotes
