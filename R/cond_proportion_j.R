@@ -83,7 +83,10 @@ NULL
 #'
 #' # Using method_scope = "row" (requires .df_row and .N_row in ...)
 #' df_row <- data.frame(rsp = rep(rsp_v, 2))
-#' s_cond_proportion_j(dta, .var = "rsp", method_scope = "row", .df_row = df_row, .N_row = nrow(df_row))
+#' s_cond_proportion_j(
+#'   dta, .var = "rsp", method_scope = "row",
+#'   .df_row = df_row, .N_row = nrow(df_row)
+#' )
 #'
 #' @export
 s_cond_proportion_j <- function(
