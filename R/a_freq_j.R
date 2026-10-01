@@ -81,15 +81,15 @@
 s_freq_j <- function(
   df,
   .var,
-  .df_row,
+  .df_row = NULL,
   val = NULL,
   drop_levels = FALSE,
   excl_levels = NULL,
-  alt_df,
-  parent_df,
+  alt_df = NULL,
+  parent_df = NULL,
   id = "USUBJID",
   denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
-  .N_col,
+  .N_col = NULL,
   countsource = c("df", "altdf", "altdf_subset")
 ) {
   if (is.na(.var) || is.null(.var)) {
