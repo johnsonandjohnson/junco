@@ -25,6 +25,8 @@ grouped_cols_w_subgrps(
   trtvar = names(colspan_trt_map)[2],
   subgrpvar = NULL,
   subgrplbl = subgrpvar,
+  total_facet = TRUE,
+  total_lbl = "Total",
   .pre = list(),
   .post = list()
 )
@@ -70,20 +72,30 @@ faceting.}
 \code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}} as \code{.post} for risk difference
 faceting.}
 
-\item{trtvar}{(\code{character(1)} or \code{NULL})\cr the treatment variable to split by. Defaults to the
-treatment variable in \code{colspan_trt_map}.}
+\item{trtvar}{(\code{character(1)} or \code{NULL})\cr the treatment variable
+to split by. Defaults to the treatment variable in
+\code{colspan_trt_map}.}
 
-\item{subgrpvar}{(\code{character(1)} or \code{NULL})\cr the name of the subgroup variable to split
-by within the \code{trtvar} split}
+\item{subgrpvar}{(\code{character(1)} or \code{NULL})\cr the name of the
+subgroup variable to split by within the \code{trtvar} split}
 
-\item{subgrplbl}{(\code{character(1)} or \code{NULL})\cr the spanning label to place over the subgroups,
-if different than \code{subgrpvar}}
+\item{subgrplbl}{(\code{character(1)} or \code{NULL})\cr the spanning label
+to place over the subgroups, if different than \code{subgrpvar}}
 
-\item{.pre}{(\code{list} of \code{function}s)\cr Passed to \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{pre} for
-treatment splitting.}
+\item{total_facet}{(\code{logical(1)})\cr should an overall facet be
+prepended to the partition defined by \code{subgrpvar}? Defaults to
+\code{TRUE}.}
 
-\item{.post}{(\code{list} of \code{function}s)\cr Passed to \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{post} for
-treatment splitting after the standard column-structure processing.}
+\item{total_lbl}{(\code{character(1)})\cr Label to be used for the
+overall facet, if applicable. Defaults to \code{"Total"}; ignored if
+\code{total_facet} is \code{FALSE}.}
+
+\item{.pre}{(\code{list} of \code{function}s)\cr Passed to
+\code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{pre} for treatment splitting.}
+
+\item{.post}{(\code{list} of \code{function}s)\cr Passed to
+\code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{post} for treatment splitting
+after the standard column-structure processing.}
 }
 \value{
 \code{lyt} updated with the specified main and risk difference
@@ -141,9 +153,10 @@ For the purposes of pathin in the resulting structure,
 \code{diffs_label} will be both the split name and split value of the
 parent containing the individual risk difference columns.
 
-\code{grouped_cols_w_subgrps} creates a hierarchical column structure that splits by \code{trtvar},
-underneath which is a spanning label over a split with a Total column along with columns for
-each level of \code{subgrpvar}.
+\code{grouped_cols_w_subgrps} creates a hierarchical column
+structure that splits by \code{trtvar}, underneath which is a
+spanning label over a split with a Total column along with
+columns for each level of \code{subgrpvar}.
 }
 \examples{
 colspan_var <- create_colspan_var(
@@ -201,7 +214,6 @@ build_table(lyt, dat)
 \seealso{
 Other std_col_struct:
 \code{\link[=make_multicomp_splfun]{make_multicomp_splfun()}},
-\code{\link[=quartile_col_struct]{quartile_col_struct()}},
 \code{\link[=shift_tbl_col_struct]{shift_tbl_col_struct()}}
 }
 \concept{std_col_struct}

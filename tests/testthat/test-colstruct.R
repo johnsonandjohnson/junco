@@ -615,16 +615,21 @@ test_that("some_v_all_col_struct works without a spanning header", {
   expect_equal(unclass(col_paths(tbl)), expected)
 })
 
-test_that("quartile_col_struct works with a spanning header", {
+test_that("We can make quartile column structs withand without spanner via subgrp fun", {
   trtvar <- "TRT01A"
-  grp_var <- "WGTGR1"
+  var <- "WEIGHTGR1"
+  subgrplbl <- "Body Weight (kg) Quartiles"
+  v1 <- seq(10, 100, by = 10)
+  v2 <- seq(110, 200, by = 10)
   dat <- data.frame(
     TRT01A = factor(rep(c("Placebo", "Active 1"), each = 10)),
-    WGTGR1 = factor(
-      rep(c("47 to <62", "62 to <69", "69 to <74", "74 to 95", "47 to <62"), 4),
-      levels = c("47 to <62", "62 to <69", "69 to <74", "74 to 95")
-    )
+    WEIGHT = c(v1, v2),
+    ## we don't need the labels to look like
+    ## we will want them, just splitting behavior
+    ## so this is fine
+    WEIGHTGR1 = cut(c(v1, v2), breaks = fivenum(c(v1, v2)), include.lowest = TRUE)
   )
+
   dat <- create_colspan_var(
     dat,
     non_active_grp = "Placebo",
@@ -643,72 +648,48 @@ test_that("quartile_col_struct works with a spanning header", {
   )
 
   lyt <- basic_table() |>
-    quartile_col_struct(
-      grp_var = grp_var,
+    grouped_cols_w_subgrps(
+      subgrpvar = var,
       colspan_trt_map = colspan_trt_map,
-      span_lbl = "Body Weight (kg) Quartiles"
+      subgrplbl = subgrplbl,
+      total_facet = FALSE
     ) |>
-    analyze(grp_var, afun = function(x, ...) length(x))
+    analyze(var, afun = function(x, ...) length(x))
 
   tbl <- build_table(lyt, dat)
 
   spanvar <- names(colspan_trt_map)[1]
-  quartile_labs <- c("47 to <62", "62 to <69", "69 to <74", "74 to 95")
+ 
+  expect_equal(col_paths(tbl)[[8]],
+               c("colspan_trt", "Control", trtvar, "Placebo", trtvar, subgrplbl, var, "(155,200]"))
+  expect_equal(unname(unlist(cell_values(tbl))), c(0, 0, 5, 5, 5, 5, 0, 0))
+  ## names(tbl) has dumb behavior but oh well
+  expect_equal(names(tbl),
+               c(rep("Active Treatment", 4),
+                 rep("Control", 4)))
 
-  expected <- unlist(
-    lapply(
-      seq_len(NROW(colspan_trt_map)),
-      function(i) {
-        rw <- colspan_trt_map[i, ]
-        lapply(
-          quartile_labs,
-          function(lab) {
-            c(spanvar, rw[[spanvar]], trtvar, rw[[trtvar]], trtvar, "quartiles", grp_var, lab)
-          }
-        )
-      }
-    ),
-    recursive = FALSE
-  )
-
-  expect_equal(unclass(col_paths(tbl)), expected)
-})
-
-test_that("quartile_col_struct works without a spanning header", {
-  trtvar <- "ARM"
-  grp_var <- "WGTGR1"
-  dat <- data.frame(
-    ARM = factor(rep(c("Arm A", "Arm B"), each = 10)),
-    WGTGR1 = factor(
-      rep(c("47 to <62", "62 to <69", "69 to <74", "74 to 95", "47 to <62"), 4),
-      levels = c("47 to <62", "62 to <69", "69 to <74", "74 to 95")
-    )
-  )
-
-  lyt <- basic_table() |>
-    quartile_col_struct(
-      grp_var = grp_var,
+  lyt2 <- basic_table() |>
+    grouped_cols_w_subgrps(
+      ## note we need to specify trtvar here
+      ## since there is no colspan_trt_map 
       trtvar = trtvar,
-      span_lbl = "Body Weight (kg) Quartiles"
+      subgrpvar = var,
+      subgrplbl = subgrplbl,
+      total_facet = FALSE
     ) |>
-    analyze(grp_var, afun = function(x, ...) length(x))
+    analyze(var, afun = function(x, ...) length(x))
 
-  tbl <- build_table(lyt, dat)
+  tbl2 <- build_table(lyt2, dat)
 
-  quartile_labs <- c("47 to <62", "62 to <69", "69 to <74", "74 to 95")
-
-  expected <- unlist(
-    lapply(
-      levels(dat[[trtvar]]),
-      function(lvl) {
-        lapply(
-          quartile_labs,
-          function(lab) c(trtvar, lvl, trtvar, "quartiles", grp_var, lab)
-        )
-      }
-    ),
-    recursive = FALSE
-  )
-
-  expect_equal(unclass(col_paths(tbl)), expected)
+  ## identical col paths to tbl if we strip off the
+  ## first two elements of each path
+  ## unclass is because col_paths comes out as an
+  ## "AsIs" object, annoying but whatever
+  expect_equal(unclass(col_paths(tbl2)),
+               lapply(col_paths(tbl),
+                      function(x) tail(x, -2)))
+  expect_equal(unname(unlist(cell_values(tbl2))), c(0, 0, 5, 5, 5, 5, 0, 0))
+  expect_equal(names(tbl2),
+               c(rep("Active 1", 4),
+                 rep("Placebo", 4)))
 })

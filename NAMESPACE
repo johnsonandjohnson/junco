@@ -117,7 +117,6 @@ export(prepend_label_cell)
 export(prop_ratio_cmh)
 export(prop_split_fun)
 export(prop_table_afun)
-export(quartile_col_struct)
 export(rbmi_analyse)
 export(rbmi_ancova)
 export(rbmi_ancova_single)
@@ -172,33 +171,23 @@ import(rlistings)
 import(rtables)
 import(tern)
 import(tidytlg)
-importFrom(formatters,
-  with_label,
-  wrap_string_ttype
-)
+importFrom(formatters,with_label)
+importFrom(formatters,wrap_string_ttype)
 importFrom(generics,tidy)
-importFrom(rtables,
-  in_rows,
-  rcell
-)
-importFrom(stats,
-  ave,
-  complete.cases,
-  setNames,
-  t.test
-)
+importFrom(rtables,in_rows)
+importFrom(rtables,rcell)
+importFrom(stats,ave)
+importFrom(stats,complete.cases)
+importFrom(stats,setNames)
+importFrom(stats,t.test)
 importFrom(survival,Surv)
-importFrom(tern,
-  a_summary,
-  control_analyze_vars,
-  f_conf_level,
-  fit_coxreg_multivar,
-  get_covariates,
-  get_stats,
-  s_summary
-)
-importFrom(tibble,
-  tibble,
-  tribble
-)
+importFrom(tern,a_summary)
+importFrom(tern,control_analyze_vars)
+importFrom(tern,f_conf_level)
+importFrom(tern,fit_coxreg_multivar)
+importFrom(tern,get_covariates)
+importFrom(tern,get_stats)
+importFrom(tern,s_summary)
+importFrom(tibble,tibble)
+importFrom(tibble,tribble)
 importFrom(utils,read.csv)

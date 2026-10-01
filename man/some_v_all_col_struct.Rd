@@ -30,11 +30,12 @@ frame as defined by \code{\link[rtables:add_combo_levels]{add_combo_levels()}} w
 \code{is_control} column indicating whether the virtual level will
 act as a reference (\code{TRUE}) or active (\code{FALSE}) group.}
 
-\item{trtvar}{(\code{character(1)} or \code{NULL})\cr the treatment variable to split by. Defaults to the
-treatment variable in \code{colspan_trt_map}.}
+\item{trtvar}{(\code{character(1)} or \code{NULL})\cr the treatment variable
+to split by. Defaults to the treatment variable in
+\code{colspan_trt_map}.}
 
-\item{subgrpvar}{(\code{character(1)} or \code{NULL})\cr the name of the subgroup variable to split
-by within the \code{trtvar} split}
+\item{subgrpvar}{(\code{character(1)} or \code{NULL})\cr the name of the
+subgroup variable to split by within the \code{trtvar} split}
 
 \item{subgrp_lbl}{(\code{character(1)})\cr The label to put above the combination level representing \code{subgrp_lvls}}
 
@@ -42,11 +43,12 @@ by within the \code{trtvar} split}
 
 \item{subgrp_lvls}{(\code{characgter})\cr All level(s) to be included in the \code{subgrp_lbl} column.}
 
-\item{.pre}{(\code{list} of \code{function}s)\cr Passed to \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{pre} for
-treatment splitting.}
+\item{.pre}{(\code{list} of \code{function}s)\cr Passed to
+\code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{pre} for treatment splitting.}
 
-\item{.post}{(\code{list} of \code{function}s)\cr Passed to \code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{post} for
-treatment splitting after the standard column-structure processing.}
+\item{.post}{(\code{list} of \code{function}s)\cr Passed to
+\code{\link[rtables:make_split_fun]{rtables::make_split_fun()}} as \code{post} for treatment splitting
+after the standard column-structure processing.}
 }
 \description{
 Standard All vs Some (e.g. Related AEs) column structure

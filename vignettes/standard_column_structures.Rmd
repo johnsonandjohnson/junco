@@ -192,4 +192,64 @@ lyt6 <- basic_table() |>
   grouped_cols_w_diffs(trt_map, comp_map = comp_map2)
 
 build_table(lyt6, adsl)
+
 ```
+
+# Other Standard Column Structures
+
+## Subgroup Column Structures
+
+The `grouped_cols_w_subgrps` function generates columns structures,
+with or without overarching spanning column headers, wherein treatment
+arms are further split by the values of a subgrouping variable.
+
+By default, a Total column is added to the left of the subgroups
+within each treatment, though this can be disabled.
+
+Similar to `grouped_cols_w_diffs`, we can specify a `colspan_trt_map`,
+which will define both the spanning labels and the treatment variable:
+
+```{r}
+lyt_subgrp <- basic_table() |>
+  grouped_cols_w_subgrps(trt_map, subgrpvar = "SEX")
+
+
+build_table(lyt_subgrp, adsl)
+```
+
+Similar to `grouped_cols_w_diffs`, we can get a structure without
+spanning labels by specifying `trtvar` instead of `colspan_trt_map`,
+though this does make the name of the function something of a
+misnomer, as the treatments are no longer grouped:
+
+
+```{r}
+lyt_subgrp2 <- basic_table() |>
+  grouped_cols_w_subgrps(trtvar = "TRT01A", subgrpvar = "SEX")
+
+
+build_table(lyt_subgrp2, adsl)
+```
+
+`grouped_cols_w_subgrps` also accepts `combo_map_df`, with usage
+similar to that explored for `grouped_cols_w_diffs` above.
+
+### Quartiles As A Special Case Of Subgrouping
+
+For pre-computed quartile (or any other binning) groups, we can simply use `grouped_cols_w_subgrps` with `total_facet = FALSE`:
+
+
+```{r}
+lyt_ageqrtls <- basic_table() |>
+    grouped_cols_w_subgrps(colspan_trt_map = trt_map,
+                           subgrpvar = "AGEGR1",
+                           subgrplbl = "Age Quartiles",
+                           total_facet = FALSE)
+
+
+build_table(lyt_ageqrtls, adsl)
+```
+
+## Shift Table Column Structure
+
+We can create the column structure for a standard Shift Table via the `shift_tbl_col_struct` function:
