@@ -184,6 +184,25 @@ test_that("d_cond_proportion_j explains a selected long-label method", {
   )
 })
 
+test_that("d_cond_proportion_j uses concise labels for selected methods", {
+  expect_identical(
+    d_cond_proportion_j(
+      conf_level = 0.95,
+      method = "wald",
+      reason = "n >= 10, x = 8"
+    ),
+    "95% CI (Wald)"
+  )
+  expect_identical(
+    d_cond_proportion_j(
+      conf_level = 0.95,
+      method = "clopper-pearson",
+      reason = "x = 0"
+    ),
+    "95% CI (Clopper-Pearson)"
+  )
+})
+
 test_that("a_cond_proportion_j returns formatted section consistent with s_cond_proportion_j", {
   rsp <- c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE) # n=12, n_rsp=7
   dta <- data.frame(rsp = rsp)
@@ -348,5 +367,70 @@ test_that("row-level numerator limit selects exact CIs across columns with row-w
     as.numeric(vals[["A"]]),
     as.numeric(100 * tern::prop_clopper_pearson(rsp_a, n = 12, conf_level = 0.95)),
     tolerance = 1e-12
+  )
+})
+
+test_that("row-wise method selection handles missing values according to na.rm", {
+  rsp <- c(TRUE, FALSE, TRUE)
+  row_dta <- data.frame(rsp = c(TRUE, FALSE, NA))
+
+  out <- s_cond_proportion_j(
+    rsp,
+    .var = "rsp",
+    method_scope = "row",
+    .df_row = row_dta,
+    .N_row = 2,
+    denom_limit = 2,
+    na.rm = TRUE,
+    long = TRUE
+  )
+  expect_identical(
+    attr(out$prop_ci, "label"),
+    "95% CI for Response Rates (Wald because n >= 2, x = 1)"
+  )
+
+  expect_error(
+    s_cond_proportion_j(
+      rsp,
+      .var = "rsp",
+      method_scope = "row",
+      .df_row = row_dta,
+      .N_row = 2,
+      denom_limit = 2,
+      na.rm = FALSE
+    ),
+    "Missing values detected in response and `na.rm = FALSE`.",
+    fixed = TRUE
+  )
+})
+
+test_that("row-wise labels distinguish upper-boundary exact-method reasons", {
+  all_responders <- rep(TRUE, 12)
+  out <- s_cond_proportion_j(
+    all_responders,
+    .var = "rsp",
+    method_scope = "row",
+    .df_row = data.frame(rsp = all_responders),
+    .N_row = 12,
+    long = TRUE
+  )
+  expect_identical(
+    attr(out$prop_ci, "label"),
+    "95% CI for Response Rates (Clopper-Pearson because x = n)"
+  )
+
+  near_all_responders <- c(rep(TRUE, 11), FALSE)
+  out <- s_cond_proportion_j(
+    near_all_responders,
+    .var = "rsp",
+    method_scope = "row",
+    .df_row = data.frame(rsp = near_all_responders),
+    .N_row = 12,
+    num_limit = 1,
+    long = TRUE
+  )
+  expect_identical(
+    attr(out$prop_ci, "label"),
+    "95% CI for Response Rates (Clopper-Pearson because x >= n - 1)"
   )
 })
