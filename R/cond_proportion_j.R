@@ -57,6 +57,7 @@
 #'   supplied by `rtables` when `method_scope = "row"`.
 #' @param method (`string` or `NULL`)\cr selected CI method to show in the
 #'   label. `NULL` retains the combined method description.
+#' @param reason (`string` or `NULL`)\cr reason for selecting the CI method.
 #'
 #' @name cond_proportion_j
 NULL
