@@ -24,9 +24,12 @@
 #' When multiple levels, those levels/values of the incoming variable
 #' will be excluded.\cr
 #' Cannot be used together with `val`.
-#' @param new_levels (list(2) or NULL)\cr List of length 2.\cr
-#'     First element : names of the new levels\cr
-#'     Second element: list with values of the new levels.\cr
+#' @param new_levels (`list(2)` or NULL)\cr
+#' List of length 2 defining combined/new factor levels to add.\cr
+#' Element 1: `character` vector of new level names.\cr
+#' Element 2: `list` of character vectors — each entry maps existing levels to one new level.\cr
+#' Example: `list(c("M+F"), list(c("M", "F")))` creates a new level `"M+F"` combining `"M"` and `"F"`.\cr
+#' Element 1 and Element 2 must have the same length. No duplicate values across Element 2 entries.
 #' @param new_levels_after (`logical`)\cr If `TRUE` new levels will be added after last level.
 #' @param denom (`string`)\cr See Details.
 #' @param id (`string`)\cr Name of the subject identifier variable. Default: `"USUBJID"`.
@@ -142,6 +145,10 @@ s_freq_j <- function(
   if (match.arg(denom) == "N_col" && is.null(.N_col)) {
     stop("'.N_col' is required when denom = 'N_col'.")
   }
+
+  checkmate::assert_logical(drop_levels, len = 1L)
+  checkmate::assert_character(excl_levels, null.ok = TRUE)
+  checkmate::assert_character(val, null.ok = TRUE)
   # --- Validation end ---------------------------------------------------
 
   countsource <- match.arg(countsource)
