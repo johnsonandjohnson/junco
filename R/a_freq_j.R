@@ -136,6 +136,9 @@ s_freq_j <- function(
   checkmate::assert_string(.var)
   checkmate::assert_string(id)
   checkmate::assert_subset(id, colnames(df), empty.ok = FALSE)
+  checkmate::assert_logical(drop_levels, len = 1L)
+  checkmate::assert_character(excl_levels, null.ok = TRUE)
+  checkmate::assert_character(val, null.ok = TRUE)
 
   # --- Validation -------------------------------------------------------
   if (!is.null(val) && isTRUE(drop_levels)) {
@@ -146,12 +149,27 @@ s_freq_j <- function(
     stop("'.N_col' is required when denom = 'N_col'.")
   }
 
-  checkmate::assert_logical(drop_levels, len = 1L)
-  checkmate::assert_character(excl_levels, null.ok = TRUE)
-  checkmate::assert_character(val, null.ok = TRUE)
-  # --- Validation end ---------------------------------------------------
-
   countsource <- match.arg(countsource)
+
+  if (countsource %in% c("altdf", "altdf_subset") && is.null(alt_df)) {
+    stop("'alt_df' is required when countsource = '", countsource, "'.")
+  }
+
+  if (isTRUE(drop_levels) && is.null(.df_row)) {
+    stop("'.df_row' is required when drop_levels = TRUE.")
+  }
+
+  denom_choice <- match.arg(denom)
+  if (denom_choice == "n_altdf" && is.null(alt_df)) {
+    stop("'alt_df' is required when denom = 'n_altdf'.")
+  }
+  if (denom_choice == "n_parentdf" && is.null(parent_df)) {
+    stop("'parent_df' is required when denom = 'n_parentdf'.")
+  }
+  if (denom_choice == "n_rowdf" && is.null(.df_row)) {
+    stop("'.df_row' is required when denom = 'n_rowdf'.")
+  }
+  # --- Validation end ---------------------------------------------------
 
   # count_df: the df used for counts — never reassigns df itself
   # "altdf_subset": same as "altdf" but count_df is further restricted
