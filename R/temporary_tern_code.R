@@ -13,6 +13,7 @@
 #' from `{tern}` PR  https://github.com/pharmaverse/tern/pull/1538.
 #'
 #' @order 1
+#' @keywords internal
 NULL
 
 #' @describeIn temporary_tern_code Temporarily moved from `{tern}`

@@ -101,3 +101,4 @@ from \code{{tern}} PR  https://github.com/pharmaverse/tern/pull/1538.
 \item \code{prop_cmh_jtemp()}: Temporarily moved from \code{{tern}}
 
 }}
+\keyword{internal}
