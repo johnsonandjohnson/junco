@@ -281,3 +281,99 @@ test_that("a_freq_j raises an error when an incorrect id is specified", {
     "id.*subset"
   )
 })
+
+
+# --- s_freq_j standalone tests ------------------------------------------------
+
+test_that("s_freq_j works with minimal arguments (df, .var, val, denom)", {
+  adae <- data.frame(
+    USUBJID = sprintf("SUBJ-%02d", 1:8),
+    SEX = factor(c("M", "M", "M", "F", "M", "F", "M", "F"))
+  )
+  res <- s_freq_j(df = adae, .var = "SEX", val = "M", denom = "n_df")
+
+  expect_equal(res$n_df, c(n_df = 8L))
+  expect_equal(res$count_unique$M, c(count_unique = 5L))
+  expect_equal(res$denom, c(denom = 8L))
+})
+
+test_that("s_freq_j returns NA for n-stats when optional dfs are NULL", {
+  adae <- data.frame(
+    USUBJID = sprintf("SUBJ-%02d", 1:8),
+    SEX = factor(c("M", "M", "M", "F", "M", "F", "M", "F"))
+  )
+  res <- s_freq_j(df = adae, .var = "SEX", val = "M", denom = "n_df")
+
+  expect_identical(res$n_altdf, c(n_altdf = NA_integer_))
+  expect_identical(res$n_parentdf, c(n_parentdf = NA_integer_))
+  expect_identical(res$n_rowdf, c(n_rowdf = NA_integer_))
+})
+
+test_that("s_freq_j countsource = 'altdf' does not corrupt n_df", {
+  adae <- data.frame(
+    USUBJID = sprintf("SUBJ-%02d", 1:8),
+    SEX = factor(c("M", "M", "M", "F", "M", "F", "M", "F"))
+  )
+  adsl <- data.frame(
+    USUBJID = sprintf("SUBJ-%02d", 1:10),
+    SEX = factor(c("M", "M", "F", "F", "M", "F", "M", "F", "M", "F"))
+  )
+  res <- s_freq_j(
+    df = adae, .var = "SEX", val = "M",
+    denom = "n_altdf", alt_df = adsl, countsource = "altdf"
+  )
+
+  # n_df must reflect adae (8), not adsl (10)
+  expect_equal(res$n_df, c(n_df = 8L))
+  expect_equal(res$n_altdf, c(n_altdf = 10L))
+  # counts come from adsl (5 males in adsl)
+  expect_equal(res$count_unique$M, c(count_unique = 5L))
+})
+
+test_that("s_freq_j validation: val + drop_levels = TRUE errors", {
+  df <- data.frame(USUBJID = "S1", X = factor("a"))
+  expect_error(
+    s_freq_j(df = df, .var = "X", val = "a", drop_levels = TRUE, .df_row = df),
+    "val.*drop_levels"
+  )
+})
+
+test_that("s_freq_j validation: denom = 'N_col' without .N_col errors", {
+  df <- data.frame(USUBJID = "S1", X = factor("a"))
+  expect_error(
+    s_freq_j(df = df, .var = "X", val = "a", denom = "N_col"),
+    "\\.N_col.*required"
+  )
+})
+
+test_that("s_freq_j validation: countsource = 'altdf' without alt_df errors", {
+  df <- data.frame(USUBJID = "S1", X = factor("a"))
+  expect_error(
+    s_freq_j(df = df, .var = "X", val = "a", countsource = "altdf"),
+    "alt_df.*required.*altdf"
+  )
+})
+
+test_that("s_freq_j validation: drop_levels = TRUE without .df_row errors", {
+  df <- data.frame(USUBJID = "S1", X = factor("a"))
+  expect_error(
+    s_freq_j(df = df, .var = "X", drop_levels = TRUE),
+    "\\.df_row.*required.*drop_levels"
+  )
+})
+
+test_that("s_freq_j validation: denom requires its corresponding df", {
+  df <- data.frame(USUBJID = "S1", X = factor("a"))
+  expect_error(
+    s_freq_j(df = df, .var = "X", val = "a", denom = "n_altdf"),
+    "alt_df.*required.*n_altdf"
+  )
+  expect_error(
+    s_freq_j(df = df, .var = "X", val = "a", denom = "n_parentdf"),
+    "parent_df.*required.*n_parentdf"
+  )
+  expect_error(
+    s_freq_j(df = df, .var = "X", val = "a", denom = "n_rowdf"),
+    "\\.df_row.*required.*n_rowdf"
+  )
+})
