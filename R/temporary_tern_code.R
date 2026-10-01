@@ -49,7 +49,7 @@ s_proportion_diff_jtemp <- function(df,
     y <- list(diff = numeric(), diff_ci = numeric(), diff_est_ci = numeric())
   } else {
     checkmate::assert_false(is.null(.ref_group))
-    tern::assert_stratification_compatibility(
+    tern:::assert_stratification_compatibility(
       method = method,
       stratified_methods = c(
         "cmh", "cmh_sato", "cmh_mn", "strat_newcombe", "strat_newcombecc"
@@ -494,7 +494,7 @@ s_test_proportion_diff_jtemp <- function(df,
     numeric()
   } else {
     checkmate::assert_false(is.null(.ref_group))
-    tern::assert_stratification_compatibility(
+    tern:::assert_stratification_compatibility(
       method = method,
       stratified_methods = c("cmh", "cmh_sato", "cmh_wh"),
       strata_vars = variables$strata
