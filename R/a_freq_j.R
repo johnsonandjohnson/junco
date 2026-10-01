@@ -29,18 +29,24 @@
 #'     Second element: list with values of the new levels.\cr
 #' @param new_levels_after (`logical`)\cr If `TRUE` new levels will be added after last level.
 #' @param denom (`string`)\cr See Details.
-#' @param alt_df (`dataframe`)\cr Will be derived based upon alt_df_full and denom_by within a_freq_j.
-#' @param parent_df (`dataframe`)\cr Will be derived within a_freq_j based
-#' upon the input dataframe that goes into build_table (df) and denom_by.\cr
-#' It is a data frame in the higher row-space than the current input df
-#' (which underwent row-splitting by the rtables splitting machinery).
-#'
-#' @param countsource Either `df`, `altdf`, or `altdf_subset`.\cr
-#' When `altdf` the counts will be based upon the alternative dataframe `alt_df`.\cr
-#' When `altdf_subset` the counts will be based upon `alt_df` but first restricted\cr
-#' to the levels/values of the current row split for `.var` (or to `val` when provided).\cr
-#' This is useful for subgroup processing,
-#' to present counts of subjects in a subgroup from the alternative dataframe.
+#' @param alt_df (`data.frame` or NULL)\cr
+#' Secondary dataset used as denominator source when `denom = "n_altdf"` or
+#' `countsource = "altdf"` / `"altdf_subset"`. When NULL, `n_altdf` is `NA`.
+#' @param parent_df (`data.frame` or NULL)\cr
+#' Dataset representing a higher row-space than `df` (e.g. pre-row-split data).
+#' Used as denominator source when `denom = "n_parentdf"`.
+#' When NULL, `n_parentdf` is `NA`. Never falls back to `df`.
+#' @param .df_row (`data.frame` or NULL)\cr
+#' Dataset across all columns for the current row split.
+#' Used for `drop_levels` and `denom = "n_rowdf"`.
+#' When NULL, `n_rowdf` is `NA` and `drop_levels` cannot be used.
+#' @param countsource (`string`)\cr One of `"df"`, `"altdf"`, `"altdf_subset"`.\cr
+#' Controls which dataset is used for counts (numerator).\cr
+#' `"df"` — counts from `df` (default).\cr
+#' `"altdf"` — counts from `alt_df`.\cr
+#' `"altdf_subset"` — counts from `alt_df` restricted to observed levels of `.var`.\cr
+#' Useful for subgroup layouts where the subgroup filter should apply to `alt_df` counts.\cr
+#' Does NOT affect `n_df`, which always reflects subjects in `df`.
 #'
 #' @details
 #'
@@ -76,6 +82,33 @@
 #' \item count_unique_denom_fraction
 #' }
 #'
+#' @examples
+#' # --- s_freq_j standalone examples -----------------------------------
+#'
+#' adae <- data.frame(
+#'   USUBJID = sprintf("SUBJ-%02d", c(1, 1, 2, 3, 5, 6, 6, 7, 8, 10)),
+#'   SEX     = factor(c("M", "M", "M", "F", "M", "F", "F", "M", "F", "F"))
+#' )
+#' adsl <- data.frame(
+#'   USUBJID = sprintf("SUBJ-%02d", 1:10),
+#'   SEX     = factor(c("M", "M", "F", "F", "M", "F", "M", "F", "M", "F"))
+#' )
+#'
+#' # 1. Minimal: count Males in adae, denom = n from adae
+#' s_freq_j(df = adae, .var = "SEX", val = "M", denom = "n_df")
+#'
+#' # 2. With alt_df: denom = n from adsl (10 subjects)
+#' s_freq_j(df = adae, .var = "SEX", val = "M", denom = "n_altdf", alt_df = adsl)
+#'
+#' # 3. parent_df = NULL: n_parentdf is NA, not a silent copy of df
+#' s_freq_j(df = adae, .var = "SEX", val = "M", denom = "n_df", parent_df = NULL)
+#'
+#' # 4. countsource = "altdf": counts from adsl, n_df still reflects adae
+#' s_freq_j(
+#'   df = adae, .var = "SEX", val = "M",
+#'   denom = "n_altdf", alt_df = adsl, countsource = "altdf"
+#' )
+#'
 #' @export
 #' @importFrom stats setNames
 s_freq_j <- function(
@@ -100,9 +133,21 @@ s_freq_j <- function(
   checkmate::assert_string(id)
   checkmate::assert_subset(id, colnames(df), empty.ok = FALSE)
 
+  # --- Validation -------------------------------------------------------
+  if (!is.null(val) && isTRUE(drop_levels)) {
+    stop("'val' cannot be used together with 'drop_levels = TRUE'.")
+  }
+
+  if (match.arg(denom) == "N_col" && is.null(.N_col)) {
+    stop("'.N_col' is required when denom = 'N_col'.")
+  }
+  # --- Validation end ---------------------------------------------------
+
   countsource <- match.arg(countsource)
 
   # count_df: the df used for counts — never reassigns df itself
+  # "altdf_subset": same as "altdf" but count_df is further restricted
+  # to observed val/levels by the val/excl_levels block below
   count_df <- if (countsource %in% c("altdf", "altdf_subset")) {
     alt_df
   } else {
@@ -155,9 +200,6 @@ s_freq_j <- function(
       obs_levs <- setdiff(obs_levs, excl_levels)
     }
 
-    if (!is.null(val)) {
-      stop("argument val cannot be used together with drop_levels = TRUE.")
-    }
     val <- obs_levs
   }
 
