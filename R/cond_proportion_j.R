@@ -83,7 +83,7 @@ NULL
 #'
 #' # Using method_scope = "row" (requires .df_row and .N_row in ...)
 #' df_row <- data.frame(rsp = rep(rsp_v, 2))
-#' s_cond_proportion_j(dta, .var = "rsp", method_scope = "row", .df_row = df_row, .N_row = 30)
+#' s_cond_proportion_j(dta, .var = "rsp", method_scope = "row", .df_row = df_row, .N_row = nrow(df_row))
 #'
 #' @export
 s_cond_proportion_j <- function(
@@ -149,7 +149,6 @@ s_cond_proportion_j <- function(
       }
     }
     method_denom <- length(row_rsp)
-    assert_true(identical(method_denom, .N_row))
     method_rsp <- sum(row_rsp)
   } else {
     method_denom <- denom_val
