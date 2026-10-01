@@ -102,33 +102,42 @@ s_freq_j <- function(
 
   countsource <- match.arg(countsource)
 
-  if (countsource %in% c("altdf", "altdf_subset")) {
-    df <- alt_df
+  # count_df: the df used for counts — never reassigns df itself
+  count_df <- if (countsource %in% c("altdf", "altdf_subset")) {
+    alt_df
+  } else {
+    df
   }
 
-  checkmate::assert_names(names(df), must.include = .var)
-  checkmate::assert_class(df[[.var]], classes = "factor")
+  checkmate::assert_names(names(count_df), must.include = .var)
+  checkmate::assert_class(count_df[[.var]], classes = "factor")
 
-  .alt_df <- alt_df
-
-  n1 <- length(unique(.alt_df[[id]]))
+  # n-stats: each reads from its own dedicated source
+  n1 <- if (!is.null(alt_df)) {
+    length(unique(alt_df[[id]]))
+  } else {
+    NA_integer_
+  }
   n2 <- length(unique(df[[id]]))
-
-  n3 <- length(unique(.df_row[[id]]))
-
-  if (is.null(parent_df)) {
-    parent_df <- df
+  n3 <- if (!is.null(.df_row)) {
+    length(unique(.df_row[[id]]))
+  } else {
+    NA_integer_
   }
-  n4 <- length(unique(parent_df[[id]]))
+  n4 <- if (!is.null(parent_df)) {
+    length(unique(parent_df[[id]]))
+  } else {
+    NA_integer_
+  }
 
-
-  denom <- match.arg(denom) |> switch(
-    "n_altdf" = n1,
-    "n_df" = n2,
-    "n_rowdf" = n3,
-    "N_col" = .N_col,
-    "n_parentdf" = n4
-  )
+  denom <- match.arg(denom) |>
+    switch(
+      "n_altdf" = n1,
+      "n_df" = n2,
+      "n_rowdf" = n3,
+      "N_col" = .N_col,
+      "n_parentdf" = n4
+    )
 
   y <- list()
 
@@ -142,7 +151,9 @@ s_freq_j <- function(
     obs_levs <- unique(.df_row[[.var]])
     obs_levs <- intersect(levels(.df_row[[.var]]), obs_levs)
 
-    if (!is.null(excl_levels)) obs_levs <- setdiff(obs_levs, excl_levels)
+    if (!is.null(excl_levels)) {
+      obs_levs <- setdiff(obs_levs, excl_levels)
+    }
 
     if (!is.null(val)) {
       stop("argument val cannot be used together with drop_levels = TRUE.")
@@ -151,26 +162,29 @@ s_freq_j <- function(
   }
 
   if (!is.null(val)) {
-    df <- df[df[[.var]] %in% val, ]
-    .df_row <- .df_row[.df_row[[.var]] %in% val, ]
+    count_df <- count_df[count_df[[.var]] %in% val, ]
+    if (!is.null(.df_row)) {
+      .df_row <- .df_row[.df_row[[.var]] %in% val, ]
+    }
 
-    df <- h_update_factor(df, .var, val)
-    .df_row <- h_update_factor(.df_row, .var, val)
+    count_df <- h_update_factor(count_df, .var, val)
+    if (!is.null(.df_row)) .df_row <- h_update_factor(.df_row, .var, val)
   }
 
   if (!is.null(excl_levels) && drop_levels == FALSE) {
-    # restrict the levels to the ones specified in val argument
-    df <- df[!(df[[.var]] %in% excl_levels), ]
-    .df_row <- .df_row[!(.df_row[[.var]] %in% excl_levels), ]
+    count_df <- count_df[!(count_df[[.var]] %in% excl_levels), ]
+    if (!is.null(.df_row)) {
+      .df_row <- .df_row[!(.df_row[[.var]] %in% excl_levels), ]
+    }
 
-    df <- h_update_factor(df, .var, excl_levels = excl_levels)
-    .df_row <- h_update_factor(.df_row, .var, excl_levels = excl_levels)
+    count_df <- h_update_factor(count_df, .var, excl_levels = excl_levels)
+    if (!is.null(.df_row)) .df_row <- h_update_factor(.df_row, .var, excl_levels = excl_levels)
   }
 
-  x <- df[[.var]]
-  x_unique <- unique(df[, c(.var, id)])[[.var]]
+  x <- count_df[[.var]]
+  x_unique <- unique(count_df[, c(.var, id)])[[.var]]
 
-  if (identical(levels(df[[.var]]), no_data_to_report_str)) {
+  if (identical(levels(count_df[[.var]]), no_data_to_report_str)) {
     xy <- list()
     nms <- c(
       "count",
@@ -246,13 +260,13 @@ s_risk_diff_levii_j <- function(
   ref_df_val$rsp[ref_df_val[[id]] %in% unique(ref_dfii[[id]])] <- TRUE
 
   res_ci_3d <- tern::s_proportion_diff(
-    df          = df_val,
-    .var        = "rsp",
-    .ref_group  = ref_df_val,
+    df = df_val,
+    .var = "rsp",
+    .ref_group = ref_df_val,
     .in_ref_col = .in_ref_col,
-    variables   = variables,
-    conf_level  = conf_level,
-    method      = method,
+    variables = variables,
+    conf_level = conf_level,
+    method = method,
     weights_method = weights_method
   )$diff_est_ci
 }
