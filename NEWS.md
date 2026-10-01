@@ -1,3 +1,10 @@
+# junco 0.1.7
+
+### Changed
+
+- Updated `rtable` version to 0.6.17.
+
+
 # junco 0.1.6
 
 ### Fixed
