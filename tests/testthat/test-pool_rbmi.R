@@ -4,6 +4,7 @@ suppressPackageStartupMessages({
 })
 
 as_analysis <- getFromNamespace("as_analysis", "rbmi")
+mod_pool_internal_rubin <- getFromNamespace("mod_pool_internal_rubin", "junco")
 
 
 test_that("mod_pool_internal_rubin combines results correctly", {
@@ -14,95 +15,37 @@ test_that("mod_pool_internal_rubin combines results correctly", {
     df = c(12, 15, 10, 14, 11)
   )
 
-  # Create test/mock functions to replace rbmi dependencies
-  mock_rubin_rules <- function(ests, ses, v_com) {
-    list(
-      est_point = mean(ests),
-      var_t = var(ests) + mean(ses^2),
-      df = 10
-    )
-  }
-
-  mock_parametric_ci <- function(
-    point,
-    se,
-    alpha,
-    alternative,
-    qfun,
-    pfun,
-    df
-  ) {
-    q_val <- qfun(1 - alpha / 2, df = df)
-    ci <- switch(alternative,
-      "two.sided" = c(point - q_val * se, point + q_val * se),
-      "less" = c(-Inf, point + q_val * se),
-      "greater" = c(point - q_val * se, Inf)
-    )
-    p_val <- switch(alternative,
-      "two.sided" = 2 * pfun(-abs((point) / se), df = df),
-      "less" = pfun(point / se, df = df),
-      "greater" = pfun(-point / se, df = df)
-    )
-    list(
-      est = point,
-      ci = ci,
-      se = se,
-      pvalue = p_val
-    )
-  }
-
-  # Mock dependencies
-  with_mocks <- function(expr) {
-    mockery::stub(
-      mod_pool_internal_rubin,
-      "rbmi:::rubin_rules",
-      mock_rubin_rules
-    )
-    mockery::stub(
-      mod_pool_internal_rubin,
-      "rbmi:::parametric_ci",
-      mock_parametric_ci
-    )
-    force(expr)
-  }
-
   # Test two-sided
-  with_mocks({
-    out1 <- mod_pool_internal_rubin(
-      results,
-      conf.level = 0.95,
-      alternative = "two.sided",
-      type = "normal",
-      D = 1
-    )
-  })
+  out1 <- mod_pool_internal_rubin(
+    results,
+    conf.level = 0.95,
+    alternative = "two.sided",
+    type = "normal",
+    D = 1
+  )
   expect_type(out1, "list")
   expect_named(out1, c("est", "ci", "se", "pvalue", "df"))
   expect_equal(out1$est, mean(results$est))
 
   # Test one-sided less
-  with_mocks({
-    out2 <- mod_pool_internal_rubin(
-      results,
-      conf.level = 0.90,
-      alternative = "less",
-      type = "normal",
-      D = 1
-    )
-  })
+  out2 <- mod_pool_internal_rubin(
+    results,
+    conf.level = 0.90,
+    alternative = "less",
+    type = "normal",
+    D = 1
+  )
   expect_false(is.infinite(out2$ci[1]))
   expect_true(is.infinite(out2$ci[2]))
 
   # Test one-sided greater
-  with_mocks({
-    out3 <- mod_pool_internal_rubin(
-      results,
-      conf.level = 0.90,
-      alternative = "greater",
-      type = "normal",
-      D = 1
-    )
-  })
+  out3 <- mod_pool_internal_rubin(
+    results,
+    conf.level = 0.90,
+    alternative = "greater",
+    type = "normal",
+    D = 1
+  )
   expect_true(is.infinite(out3$ci[1]))
   expect_false(is.infinite(out3$ci[2]))
 })

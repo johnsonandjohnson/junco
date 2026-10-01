@@ -72,7 +72,12 @@ mod_pool_internal_rubin <- function(results, conf.level, alternative, type, D) {
   # data set analysis.
   v_com <- stats::median(dfs)
 
-  res_rubin <- (utils::getFromNamespace("rubin_rules", "rbmi"))(ests = ests, ses = ses, v_com = v_com)
+  res_rubin <- (utils::getFromNamespace("rubin_rules", "rbmi"))(
+    ests = ests,
+    ses = ses,
+    v_com = v_com,
+    method = "barnard-rubin"
+  )
 
   ret <- (utils::getFromNamespace("parametric_ci", "rbmi"))(
     point = res_rubin$est_point,
