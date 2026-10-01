@@ -10,15 +10,15 @@ and (optional) relative risk columns}
 s_freq_j(
   df,
   .var,
-  .df_row,
+  .df_row = NULL,
   val = NULL,
   drop_levels = FALSE,
   excl_levels = NULL,
-  alt_df,
-  parent_df,
+  alt_df = NULL,
+  parent_df = NULL,
   id = "USUBJID",
   denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
-  .N_col,
+  .N_col = NULL,
   countsource = c("df", "altdf", "altdf_subset")
 )
 
@@ -83,7 +83,9 @@ a_freq_j_with_exclude(
 \item{.var}{(\code{character(1)})\cr Name of a categorical analysis variable in \code{df}.
 The variable must be a \code{factor}.}
 
-\item{.df_row}{(\code{data.frame})\cr data frame across all of the columns for the given row split.}
+\item{.df_row}{(\code{data.frame} or NULL)\cr Dataset across all columns for the
+current row split. Used for \code{drop_levels} and \code{denom = "n_rowdf"}. When NULL,
+\code{n_rowdf} is \code{NA} and \code{drop_levels} cannot be used.}
 
 \item{val}{(\code{character} or NULL)\cr
 When NULL, all levels of the incoming variable (variable used in the \code{analyze} call)
@@ -106,12 +108,13 @@ When multiple levels, those levels/values of the incoming variable
 will be excluded.\cr
 Cannot be used together with \code{val}.}
 
-\item{alt_df}{(\code{dataframe})\cr Will be derived based upon alt_df_full and denom_by within a_freq_j.}
+\item{alt_df}{(\code{data.frame} or NULL)\cr Secondary dataset used as denominator
+source when \code{denom = "n_altdf"} or \code{countsource = "altdf"} / \code{"altdf_subset"}.
+When NULL, \code{n_altdf} is \code{NA}.}
 
-\item{parent_df}{(\code{dataframe})\cr Will be derived within a_freq_j based
-upon the input dataframe that goes into build_table (df) and denom_by.\cr
-It is a data frame in the higher row-space than the current input df
-(which underwent row-splitting by the rtables splitting machinery).}
+\item{parent_df}{(\code{data.frame} or NULL)\cr Dataset representing a higher row-space
+than \code{df} (for example, pre-row-split data). Used as denominator source when
+\code{denom = "n_parentdf"}. When NULL, \code{n_parentdf} is \code{NA}.}
 
 \item{id}{(\code{string})\cr subject variable name.}
 
@@ -120,12 +123,10 @@ It is a data frame in the higher row-space than the current input df
 \item{.N_col}{(\code{integer})\cr column-wise N (column count) for the full column being analyzed that is typically
 passed by \code{rtables}.}
 
-\item{countsource}{Either \code{df}, \code{altdf}, or \code{altdf_subset}.\cr
-When \code{altdf} the counts will be based upon the alternative dataframe \code{alt_df}.\cr
-When \code{altdf_subset} the counts will be based upon \code{alt_df} but first restricted\cr
-to the levels/values of the current row split for \code{.var} (or to \code{val} when provided).\cr
-This is useful for subgroup processing,
-to present counts of subjects in a subgroup from the alternative dataframe.}
+\item{countsource}{(\code{string})\cr One of \code{"df"}, \code{"altdf"}, or \code{"altdf_subset"}.
+Controls which dataset is used for counts. \code{"df"} uses \code{df}; \code{"altdf"} uses
+\code{alt_df}; and \code{"altdf_subset"} uses \code{alt_df} restricted to observed levels of
+\code{.var}. This does not affect \code{n_df}, which always reflects subjects in \code{df}.}
 
 \item{labelstr}{An argument to ensure this function can be used
 as a \code{cfun} in a \code{summarize_row_groups} call.\cr

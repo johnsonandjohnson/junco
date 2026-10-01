@@ -281,3 +281,25 @@ test_that("a_freq_j raises an error when an incorrect id is specified", {
     "id.*subset"
   )
 })
+
+test_that("s_freq_j preserves n_df when counts come from alt_df", {
+  df <- data.frame(
+    USUBJID = c("1", "2"),
+    response = factor(c("Yes", "No"))
+  )
+  alt_df <- data.frame(
+    USUBJID = c("1", "2", "3"),
+    response = factor(c("Yes", "No", "Yes"))
+  )
+
+  result <- s_freq_j(
+    df = df,
+    .var = "response",
+    alt_df = alt_df,
+    countsource = "altdf"
+  )
+
+  expect_identical(result$n_df, c(n_df = 2L))
+  expect_identical(result$n_altdf, c(n_altdf = 3L))
+  expect_identical(result$count_unique$Yes, c(count_unique = 2L))
+})
