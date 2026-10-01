@@ -29,6 +29,7 @@
 #'     Second element: list with values of the new levels.\cr
 #' @param new_levels_after (`logical`)\cr If `TRUE` new levels will be added after last level.
 #' @param denom (`string`)\cr See Details.
+#' @param id (`string`)\cr Name of the subject identifier variable. Default: `"USUBJID"`.
 #' @param alt_df (`data.frame` or NULL)\cr
 #' Secondary dataset used as denominator source when `denom = "n_altdf"` or
 #' `countsource = "altdf"` / `"altdf_subset"`. When NULL, `n_altdf` is `NA`.
@@ -86,8 +87,8 @@
 #' # --- s_freq_j standalone examples -----------------------------------
 #'
 #' adae <- data.frame(
-#'   USUBJID = sprintf("SUBJ-%02d", c(1, 1, 2, 3, 5, 6, 6, 7, 8, 10)),
-#'   SEX     = factor(c("M", "M", "M", "F", "M", "F", "F", "M", "F", "F"))
+#'   USUBJID = sprintf("SUBJ-%02d", 1:8),
+#'   SEX     = factor(c("M", "M", "M", "F", "M", "F", "M", "F"))
 #' )
 #' adsl <- data.frame(
 #'   USUBJID = sprintf("SUBJ-%02d", 1:10),
