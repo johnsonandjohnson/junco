@@ -288,7 +288,6 @@ test_that("s_freq_j works with missing values via na.rm", {
     rsp = factor(c("A", NA, "B"))
   )
 
-  # na.rm = TRUE (default): missing values omitted silently without warning
   expect_silent(
     result <- s_freq_j(
       df = df,
