@@ -19,17 +19,16 @@
 #' Depending on the `method_scope` choice, this decision is either taken
 #' for each individual cell separately, or for the entire row.
 #'
-#' For the observed group size used for the method decision, the choice depends
-#' on the `method_scope` argument:
+#' Depending on the `method_scope` choice, this decision is either taken
+#' based on the response data for an individual cell (`method_scope = "cell"`),
+#' or based on the response data for the entire row (`method_scope = "row"`):
 #'
-#' - If `method_scope = "cell"`, the decision is
-#'   made based on the `denom` choice (so either the current cell `n`,
-#'   the column total `.N_col`, or the row total `.N_row`).
-#' - If on the other hand `method_scope = "row"`, the decision is always made based on
-#'   the row total `.N_row`.
-#'
-#' For the number of responders for the method decision, either the number of responses
-#' in each cell or the row total number of responders is used.
+#' - With `method_scope = "cell"`, the counts used for the decision are:
+#'   - numerator: the number of responders in the current cell;
+#'   - denominator: specified by `denom` (`n`, `.N_col`, or `.N_row`).
+#' - With `method_scope = "row"`, the counts used for the decision are:
+#'   - numerator: the total number of responders across the row (using `.df_row`);
+#'   - denominator: `.N_row`, i.e. the total number of observations across the row.
 #'
 #' CI computation follows [tern::s_proportion()] conventions: helper functions
 #' are called with `n = denom`, so when `denom = "N_col"` or `"N_row"`, those
@@ -81,6 +80,10 @@ NULL
 #' # Using different denominator (requires .N_col in ...)
 #' s_cond_proportion_j(dta, .var = "rsp", denom = "N_col", .N_col = 10)
 #'
+#' # Using method_scope = "row" (requires .df_row in ...)
+#' df_row <- data.frame(rsp = rep(rsp_v, 2))
+#' s_cond_proportion_j(dta, .var = "rsp", method_scope = "row", .df_row = df_row)
+#'
 #' @export
 s_cond_proportion_j <- function(
   df,
@@ -98,7 +101,7 @@ s_cond_proportion_j <- function(
 ) {
   checkmate::assert_flag(long)
   checkmate::assert_flag(na.rm)
-  tern::assert_proportion_value(conf_level)
+  assert_proportion_value(conf_level)
   checkmate::assert_int(num_limit, lower = 0)
   checkmate::assert_int(denom_limit, lower = 0)
   denom <- match.arg(denom)
@@ -122,16 +125,12 @@ s_cond_proportion_j <- function(
 
   n_obs <- length(rsp)
   n_rsp <- sum(rsp)
-
   denom_val <- match.arg(denom) |>
     switch(
       n = n_obs,
       N_row = .N_row,
       N_col = .N_col
     )
-
-  # The denominator cannot be lower than the number of observations here, because
-  # .N_row and .N_col cannot be lower.
   assert_int(denom_val, lower = n_obs)
   p_hat <- ifelse(denom_val > 0, n_rsp / denom_val, 0)
 
@@ -167,17 +166,44 @@ s_cond_proportion_j <- function(
     "wald" = prop_wald(rsp, n = denom_val, conf_level)
   )
 
+  label <- if (method_scope == "row") {
+    reason <- if (use_exact) {
+      # Give exact reason for using Clopper-Pearson method.
+      if (method_denom < denom_limit) {
+        paste0("n < ", denom_limit)
+      } else if (method_rsp <= num_limit) {
+        if (num_limit == 0) "x = 0" else paste0("x <= ", num_limit)
+      } else if (method_rsp >= (method_denom - num_limit)) {
+        if (num_limit == 0) "x = n" else paste0("x >= n - ", num_limit)
+      }
+    } else {
+      paste0(
+        "n >= ",
+        denom_limit,
+        ", x = ",
+        method_rsp
+      )
+    }
+    d_cond_proportion_j(
+      conf_level,
+      long = long,
+      method = method,
+      reason = reason
+    )
+  } else {
+    d_cond_proportion_j(
+      conf_level,
+      long = long,
+      num_limit = num_limit,
+      denom_limit = denom_limit
+    )
+  }
+
   list(
     "n_prop" = formatters::with_label(c(n_rsp, p_hat), "Responders"),
     "prop_ci" = formatters::with_label(
       x = 100 * prop_ci,
-      label = d_cond_proportion_j(
-        conf_level,
-        long = long,
-        num_limit = num_limit,
-        denom_limit = denom_limit,
-        method = if (method_scope == "row") method else NULL
-      )
+      label = label
     )
   )
 }
@@ -188,8 +214,27 @@ s_cond_proportion_j <- function(
 #' @return
 #' * `d_cond_proportion_j()` returns a string describing the analysis label.
 #'
+#' @examples
+#' d_cond_proportion_j(conf_level = 0.90, long = FALSE, num_limit = 0, denom_limit = 10)
+#'
+#' # With dedicated row-wise method:
+#' d_cond_proportion_j(
+#'   conf_level = 0.90, long = TRUE, num_limit = 0, denom_limit = 10,
+#'   method = "wald", reason = "n > 10, x > 0, x < n")
+#'
 #' @export
-d_cond_proportion_j <- function(conf_level, long = FALSE, num_limit, denom_limit, method = NULL) {
+d_cond_proportion_j <- function(
+  conf_level,
+  long = FALSE,
+  num_limit = NULL,
+  denom_limit = NULL,
+  method = NULL,
+  reason = NULL
+) {
+  assert_proportion_value(conf_level)
+  assert_flag(long)
+  assert_string(method, null.ok = TRUE)
+
   label <- paste0(conf_level * 100, "% CI")
 
   if (long) {
@@ -197,18 +242,38 @@ d_cond_proportion_j <- function(conf_level, long = FALSE, num_limit, denom_limit
   }
 
   method_part <- if (!is.null(method)) {
-    switch(
-      method,
-      "wald" = "Wald",
-      "clopper-pearson" = "Clopper-Pearson"
-    )
+    assert_choice(method, choices = c("wald", "clopper-pearson"))
+    assert_string(reason, null.ok = FALSE)
+    if (long) {
+      switch(
+        method,
+        "wald" = paste0(
+          "Wald because ",
+          reason
+        ),
+        "clopper-pearson" = paste0(
+          "Clopper-Pearson because ",
+          reason
+        )
+      )
+    } else {
+      switch(
+        method,
+        "wald" = "Wald",
+        "clopper-pearson" = "Clopper-Pearson"
+      )
+    }
   } else if (long) {
+    assert_count(num_limit)
+    assert_count(denom_limit, positive = TRUE)
     paste0(
       "Wald if n >= ",
       denom_limit,
-      " and x > ",
+      ", x > ",
       num_limit,
-      ", else Clopper-Pearson"
+      ", x < n - ",
+      num_limit,
+      "; else Clopper-Pearson"
     )
   } else {
     "Wald / Clopper-Pearson"

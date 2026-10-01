@@ -38,9 +38,10 @@ s_cond_proportion_j(
 d_cond_proportion_j(
   conf_level,
   long = FALSE,
-  num_limit,
-  denom_limit,
-  method = NULL
+  num_limit = NULL,
+  denom_limit = NULL,
+  method = NULL,
+  reason = NULL
 )
 }
 \arguments{
@@ -125,18 +126,19 @@ or (c) the observed group size is less than \code{denom_limit}.
 Depending on the \code{method_scope} choice, this decision is either taken
 for each individual cell separately, or for the entire row.
 
-For the observed group size used for the method decision, the choice depends
-on the \code{method_scope} argument:
+Depending on the \verb{method_scope`` choice, this decision is either taken based on the response data for an individual cell (}method_scope = "cell"\verb{), or based on the response data for the entire row (}method_scope = "row"`):
 \itemize{
-\item If \code{method_scope = "cell"}, the decision is
-made based on the \code{denom} choice (so either the current cell \code{n},
-the column total \code{.N_col}, or the row total \code{.N_row}).
-\item If on the other hand \code{method_scope = "row"}, the decision is always made based on
-the row total \code{.N_row}.
+\item With \code{method_scope = "cell"}, the counts used for the decision are:
+\itemize{
+\item numerator: the number of responders in the current cell;
+\item denominator: specified by \code{denom} (\code{n}, \code{.N_col}, or \code{.N_row}).
 }
-
-For the number of responders for the method decision, either the number of responses
-in each cell or the row total number of responders is used.
+\item With \code{method_scope = "row"}, the counts used for the decision are:
+\itemize{
+\item numerator: the total number of responders across the row (using \code{.df_row});
+\item denominator: \code{.N_row}, i.e. the total number of observations across the row.
+}
+}
 
 CI computation follows \code{\link[tern:s_proportion]{tern::s_proportion()}} conventions: helper functions
 are called with \code{n = denom}, so when \code{denom = "N_col"} or \code{"N_row"}, those
@@ -187,5 +189,16 @@ s_cond_proportion_j(dta, .var = "rsp")
 
 # Using different denominator (requires .N_col in ...)
 s_cond_proportion_j(dta, .var = "rsp", denom = "N_col", .N_col = 10)
+
+# Using method_scope = "row" (requires .df_row in ...)
+df_row <- data.frame(rsp = rep(rsp_v, 2))
+s_cond_proportion_j(dta, .var = "rsp", method_scope = "row", .df_row = df_row)
+
+d_cond_proportion_j(conf_level = 0.90, long = FALSE, num_limit = 0, denom_limit = 10)
+
+# With dedicated row-wise method:
+d_cond_proportion_j(
+  conf_level = 0.90, long = TRUE, num_limit = 0, denom_limit = 10,
+  method = "wald", reason = "n > 10, x > 0, x < n")
 
 }

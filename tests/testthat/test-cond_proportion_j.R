@@ -152,12 +152,36 @@ test_that("label is set via d_cond_proportion_j", {
 
 test_that("d_cond_proportion_j long label looks as expected", {
   result <- d_cond_proportion_j(conf_level = 0.7, long = TRUE, num_limit = 1, denom_limit = 8)
-  expected <- "70% CI for Response Rates (Wald if n >= 8 and x > 1, else Clopper-Pearson)"
+  expected <- "70% CI for Response Rates (Wald if n >= 8, x > 1, x < n - 1; else Clopper-Pearson)"
   expect_identical(result, expected)
 
   result <- d_cond_proportion_j(conf_level = 0.7, long = FALSE)
   expected <- "70% CI (Wald / Clopper-Pearson)"
   expect_identical(result, expected)
+})
+
+test_that("d_cond_proportion_j explains a selected long-label method", {
+  result <- d_cond_proportion_j(
+    conf_level = 0.95,
+    long = TRUE,
+    method = "wald",
+    reason = "n >= 10, x = 8"
+  )
+  expect_identical(
+    result,
+    "95% CI for Response Rates (Wald because n >= 10, x = 8)"
+  )
+
+  result <- d_cond_proportion_j(
+    conf_level = 0.95,
+    long = TRUE,
+    method = "clopper-pearson",
+    reason = "x = 0"
+  )
+  expect_identical(
+    result,
+    "95% CI for Response Rates (Clopper-Pearson because x = 0)"
+  )
 })
 
 test_that("a_cond_proportion_j returns formatted section consistent with s_cond_proportion_j", {
@@ -244,12 +268,15 @@ test_that("row-level method uses exact CIs in every column with row-wise method 
     rtables::analyze(
       "rsp",
       afun = a_cond_proportion_j,
-      extra_args = list(denom_limit = 10, method_scope = "row")
+      extra_args = list(denom_limit = 10, long = TRUE, method_scope = "row")
     )
   tbl <- rtables::build_table(lyt, dta)
   vals <- rtables::cell_values(tbl)$prop_ci
 
-  expect_identical(rtables::make_row_df(tbl)$label[2], "95% CI (Clopper-Pearson)")
+  expect_identical(
+    rtables::make_row_df(tbl)$label[2],
+    "95% CI for Response Rates (Clopper-Pearson because n < 10)"
+  )
 
   expect_equal(
     as.numeric(vals[["A"]]),
@@ -276,12 +303,15 @@ test_that("row-level method uses Wald CIs in every column with row-wise method s
     rtables::analyze(
       "rsp",
       afun = a_cond_proportion_j,
-      extra_args = list(denom_limit = 20, method_scope = "row")
+      extra_args = list(denom_limit = 20, long = TRUE, method_scope = "row")
     )
   tbl <- rtables::build_table(lyt, dta)
   vals <- rtables::cell_values(tbl)$prop_ci
 
-  expect_identical(rtables::make_row_df(tbl)$label[2], "95% CI (Wald)")
+  expect_identical(
+    rtables::make_row_df(tbl)$label[2],
+    "95% CI for Response Rates (Wald because n >= 20, x = 8)"
+  )
 
   expect_equal(
     as.numeric(vals[["A"]]),
@@ -305,12 +335,15 @@ test_that("row-level numerator limit selects exact CIs across columns with row-w
     rtables::analyze(
       "rsp",
       afun = a_cond_proportion_j,
-      extra_args = list(method_scope = "row", num_limit = 1)
+      extra_args = list(method_scope = "row", long = TRUE, num_limit = 1)
     )
   tbl <- rtables::build_table(lyt, dta)
   vals <- rtables::cell_values(tbl)$prop_ci
 
-  expect_identical(rtables::make_row_df(tbl)$label[2], "95% CI (Clopper-Pearson)")
+  expect_identical(
+    rtables::make_row_df(tbl)$label[2],
+    "95% CI for Response Rates (Clopper-Pearson because x <= 1)"
+  )
   expect_equal(
     as.numeric(vals[["A"]]),
     as.numeric(100 * tern::prop_clopper_pearson(rsp_a, n = 12, conf_level = 0.95)),
