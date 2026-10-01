@@ -91,6 +91,8 @@ current cell (\code{"cell"}) or all columns in the current row (\code{"row"}). S
 
 \item{method}{(\code{string} or \code{NULL})\cr selected CI method to show in the
 label. \code{NULL} retains the combined method description.}
+
+\item{reason}{(\code{string} or \code{NULL})\cr reason for selecting the CI method.}
 }
 \value{
 \itemize{
@@ -126,7 +128,9 @@ or (c) the observed group size is less than \code{denom_limit}.
 Depending on the \code{method_scope} choice, this decision is either taken
 for each individual cell separately, or for the entire row.
 
-Depending on the \verb{method_scope`` choice, this decision is either taken based on the response data for an individual cell (}method_scope = "cell"\verb{), or based on the response data for the entire row (}method_scope = "row"`):
+Depending on the \code{method_scope} choice, this decision is either taken
+based on the response data for an individual cell (\code{method_scope = "cell"}),
+or based on the response data for the entire row (\code{method_scope = "row"}):
 \itemize{
 \item With \code{method_scope = "cell"}, the counts used for the decision are:
 \itemize{
@@ -190,9 +194,9 @@ s_cond_proportion_j(dta, .var = "rsp")
 # Using different denominator (requires .N_col in ...)
 s_cond_proportion_j(dta, .var = "rsp", denom = "N_col", .N_col = 10)
 
-# Using method_scope = "row" (requires .df_row in ...)
+# Using method_scope = "row" (requires .df_row and .N_row in ...)
 df_row <- data.frame(rsp = rep(rsp_v, 2))
-s_cond_proportion_j(dta, .var = "rsp", method_scope = "row", .df_row = df_row)
+s_cond_proportion_j(dta, .var = "rsp", method_scope = "row", .df_row = df_row, .N_row = 30)
 
 d_cond_proportion_j(conf_level = 0.90, long = FALSE, num_limit = 0, denom_limit = 10)
 
