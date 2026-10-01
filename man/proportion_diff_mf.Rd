@@ -2,23 +2,11 @@
 % Please edit documentation in R/cond_proportion_diff.R
 \name{proportion_diff_mf}
 \alias{proportion_diff_mf}
-\alias{s_proportion_diff_mf}
 \alias{a_proportion_diff_mf}
+\alias{s_proportion_diff_mf}
 \title{Proportion Difference with Method Selection Based on the Mantel-Fleiss
 Criterion}
 \usage{
-s_proportion_diff_mf(
-  df,
-  .var,
-  .in_ref_col = NULL,
-  .ref_group = NULL,
-  val = TRUE,
-  variables = list(strata = NULL),
-  na.rm = FALSE,
-  conf_level = 0.95,
-  mf_method = c("cmh", "cmh_sato", "cmh_mn")
-)
-
 a_proportion_diff_mf(
   df,
   .var,
@@ -29,12 +17,27 @@ a_proportion_diff_mf(
   na.rm = FALSE,
   conf_level = 0.95,
   mf_method = c("cmh", "cmh_sato", "cmh_mn"),
+  mf_threshold = NULL,
   ...,
   .stats = NULL,
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL,
-  exact_footnote = "Unconditional exact"
+  exact_footnote = rtables::RefFootnote(note = tern::d_proportion_diff(method =
+    "uncond_exact_diff", method_only = TRUE), index = 1L, symbol = "+")
+)
+
+s_proportion_diff_mf(
+  df,
+  .var,
+  .in_ref_col = NULL,
+  .ref_group = NULL,
+  val = TRUE,
+  variables = list(strata = NULL),
+  na.rm = FALSE,
+  conf_level = 0.95,
+  mf_method = c("cmh", "cmh_sato", "cmh_mn"),
+  mf_threshold = NULL
 )
 }
 \arguments{
@@ -93,6 +96,10 @@ its confidence interval when strata are provided and the Mantel-Fleiss
 criterion is satisfied. Available choices are: \code{"cmh"}, \code{"cmh_sato"}, and
 \code{"cmh_mn"}. See \strong{Details} for more information.}
 
+\item{mf_threshold}{(\code{numeric(1)} or \code{NULL}) \cr
+Threshold for the Mantel-Fleiss criterion.
+If \code{NULL}, the default from \code{\link[tern:mantel_fleiss_crit]{tern::mantel_fleiss_crit()}} is used.}
+
 \item{...}{additional arguments for the lower level functions.}
 
 \item{.stats}{(\code{character}) \cr
@@ -113,6 +120,11 @@ Footnote used to indicate that the unconditional exact method was actually
 used for the analysis.}
 }
 \value{
+\itemize{
+\item \code{a_proportion_diff_mf()} returns the corresponding \code{RowsVerticalSection}
+object with formatted results.
+}
+
 \itemize{
 \item \code{s_proportion_diff_mf()} returns a list containing:
 \describe{
@@ -136,11 +148,6 @@ evaluated for the reference column (\code{.in_ref_col} is \code{NULL} or
 Formatted analysis functions can use this value to determine whether an
 appropriate footnote should be added.}
 }
-}
-
-\itemize{
-\item \code{a_proportion_diff_mf()} returns the corresponding \code{RowsVerticalSection}
-object with formatted results.
 }
 }
 \description{
@@ -194,6 +201,10 @@ exact method based on the Mantel-Fleiss criterion.
 }
 \section{Functions}{
 \itemize{
+\item \code{a_proportion_diff_mf()}: Formatted analysis function used as \code{afun}
+for the difference in response proportions with method selection based on
+the Mantel-Fleiss criterion.
+
 \item \code{s_proportion_diff_mf()}: Statistics function estimating the difference
 in response proportions and its confidence interval.
 When strata variables are provided and the Mantel-Fleiss criterion is
@@ -202,10 +213,6 @@ satisfied, the CMH method \code{\link[tern:prop_diff_cmh]{tern::prop_diff_cmh()}
 variables are not provided, or when strata variables are provided but the
 Mantel-Fleiss criterion is not satisfied or cannot be evaluated,
 the unconditional exact method \code{\link[tern:prop_diff_uncond_exact]{tern::prop_diff_uncond_exact()}} is used.
-
-\item \code{a_proportion_diff_mf()}: Formatted analysis function used as \code{afun}
-for the difference in response proportions with method selection based on
-the Mantel-Fleiss criterion.
 
 }}
 \examples{
@@ -222,18 +229,6 @@ dta <- data.frame(
   stringsAsFactors = TRUE
 )
 
-prop_d <- s_proportion_diff_mf(
-  df = subset(dta, grp == "A"),
-  .var = "rsp",
-  .ref_group = subset(dta, grp == "Placebo"),
-  .in_ref_col = FALSE,
-  val = "Y",
-  variables = list(strata = c("f1", "f2")),
-  conf_level = 0.90,
-  mf_method = "cmh_mn"
-)
-prop_d
-
 lyt <- basic_table() |>
   split_cols_by(var = "grp", ref_group = "Placebo") |>
   analyze(
@@ -249,6 +244,18 @@ lyt <- basic_table() |>
   )
 
 build_table(lyt, df = dta)
+
+prop_d <- s_proportion_diff_mf(
+  df = subset(dta, grp == "A"),
+  .var = "rsp",
+  .ref_group = subset(dta, grp == "Placebo"),
+  .in_ref_col = FALSE,
+  val = "Y",
+  variables = list(strata = c("f1", "f2")),
+  conf_level = 0.90,
+  mf_method = "cmh_mn"
+)
+prop_d
 
 }
 \seealso{
