@@ -659,7 +659,7 @@ test_that("We can make quartile column structs withand without spanner via subgr
   tbl <- build_table(lyt, dat)
 
   spanvar <- names(colspan_trt_map)[1]
- 
+
   expect_equal(col_paths(tbl)[[8]],
                c("colspan_trt", "Control", trtvar, "Placebo", trtvar, subgrplbl, var, "(155,200]"))
   expect_equal(unname(unlist(cell_values(tbl))), c(0, 0, 5, 5, 5, 5, 0, 0))
@@ -671,7 +671,7 @@ test_that("We can make quartile column structs withand without spanner via subgr
   lyt2 <- basic_table() |>
     grouped_cols_w_subgrps(
       ## note we need to specify trtvar here
-      ## since there is no colspan_trt_map 
+      ## since there is no colspan_trt_map
       trtvar = trtvar,
       subgrpvar = var,
       subgrplbl = subgrplbl,
