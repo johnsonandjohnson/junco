@@ -41,6 +41,9 @@
 #' to the levels/values of the current row split for `.var` (or to `val` when provided).\cr
 #' This is useful for subgroup processing,
 #' to present counts of subjects in a subgroup from the alternative dataframe.
+#' @param na.rm (`logical(1)`)\cr whether `NA` values in `.var` should be removed before
+#'   analysis. If `TRUE` (default), rows with missing values in `.var` are omitted
+#'   silently. If `FALSE` and `NA` values are present, a warning is triggered.
 #'
 #' @details
 #'
@@ -90,7 +93,8 @@ s_freq_j <- function(
   id = "USUBJID",
   denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
   .N_col,
-  countsource = c("df", "altdf", "altdf_subset")
+  countsource = c("df", "altdf", "altdf_subset"),
+  na.rm = TRUE
 ) {
   if (is.na(.var) || is.null(.var)) {
     stop("Argument .var cannot be NA or NULL.")
@@ -99,6 +103,7 @@ s_freq_j <- function(
   checkmate::assert_string(.var)
   checkmate::assert_string(id)
   checkmate::assert_subset(id, colnames(df), empty.ok = FALSE)
+  checkmate::assert_flag(na.rm)
 
   countsource <- match.arg(countsource)
 
@@ -108,6 +113,11 @@ s_freq_j <- function(
 
   checkmate::assert_names(names(df), must.include = .var)
   checkmate::assert_class(df[[.var]], classes = "factor")
+
+  if (anyNA(df[[.var]])) {
+    cc <- tern::get_complete_cases(df[c(id, .var)], quiet = na.rm)
+    df <- df[rownames(cc), , drop = FALSE]
+  }
 
   .alt_df <- alt_df
 
