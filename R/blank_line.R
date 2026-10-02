@@ -100,7 +100,10 @@ add_blank_line_rcells <- function(ret) {
   na_strs <- lapply(ret, obj_na_str)
   # ret <- append(ret,rcell(NA_real_,format = 'xx')) use a character version for the new line, rather than NA - to
   # allow NA processing for other stuff
-  ret <- append(ret, rcell(NA, format = "xx"))
+  # Coerce to a plain list before appending: the new rtables `c.RowsVerticalSection`
+  # method errors when combining a RowsVerticalSection with a non-RowsVerticalSection
+  # object (e.g. a CellValue). The list is rebuilt via in_rows() below.
+  ret <- c(unclass(ret), list(rcell(NA, format = "xx")))
   fmts <- append(fmts, "xx")
   na_strs <- append(na_strs, " ")
   indent_mods <- append(indent_mods, 0L)
