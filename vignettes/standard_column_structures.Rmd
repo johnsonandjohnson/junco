@@ -267,7 +267,7 @@ build_table(lyt_shift, adlb)
 ## Some Vs All Column Structure
 
 The "some vs all" case, motivated by comparing counts of AEs to counts
-of treatment-relatead AEs, is similar to the subgroup column
+of treatment-related AEs, is similar to the subgroup column
 structures, with the exception that the groups being compared are not
 mutually exclusive.
 
@@ -275,7 +275,7 @@ In light of this, `some_v_all_col_struct` creates two subgroup facets
 within each treatment group, one containing one or more levels of a
 specified subgrouping variable, the other being all levels of the
 subgrouping variable. We control this behavior by the combination of
-`subgrp_var`, delcaring the variable, and `subgrp_lvls` defining which
+`subgrp_var`, declaring the variable, and `subgrp_lvls` defining which
 levels should be included in the smaller group.
 
 ```{r}
