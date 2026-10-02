@@ -9,8 +9,8 @@ some_v_all_col_struct(
   colspan_trt_map = NULL,
   combo_map_df = NULL,
   trtvar = names(colspan_trt_map)[2],
-  subgrpvar = NULL,
-  subgrp_lbl = subgrpvar,
+  subgrp_var = NULL,
+  subgrp_lbl = subgrp_var,
   all_lbl,
   subgrp_lvls,
   .pre = list(),
@@ -34,7 +34,7 @@ act as a reference (\code{TRUE}) or active (\code{FALSE}) group.}
 to split by. Defaults to the treatment variable in
 \code{colspan_trt_map}.}
 
-\item{subgrpvar}{(\code{character(1)} or \code{NULL})\cr the name of the
+\item{subgrp_var}{(\code{character(1)} or \code{NULL})\cr the name of the
 subgroup variable to split by within the \code{trtvar} split}
 
 \item{subgrp_lbl}{(\code{character(1)})\cr The label to put above the combination level representing \code{subgrp_lvls}}
@@ -55,7 +55,7 @@ Standard All vs Some (e.g. Related AEs) column structure
 }
 \details{
 This column structure generating function is for comparing a single portion of the data (as represented by
-level(s) of \code{subgrpvar}) against the full data, comparison of AE counts to treatment-related AE counts
+level(s) of \code{subgrp_var}) against the full data, comparison of AE counts to treatment-related AE counts
 being a motivating example.
 }
 \examples{
@@ -84,7 +84,7 @@ colspan_trt_map <- create_colspan_map(
 lyt <- basic_table() |>
     some_v_all_col_struct(
     colspan_trt_map,
-    subgrpvar = "GRADE",
+    subgrp_var = "GRADE",
     subgrp_lvls = c("Grade 4", "Grade 5"),
     subgrp_lbl = "High Grade",
     all_lbl = "All Grades")

@@ -786,12 +786,12 @@ spans_trtvar_no_diffs <- function(
 #' @param trtvar (`character(1)` or `NULL`)\cr the treatment variable
 #'     to split by. Defaults to the treatment variable in
 #'     `colspan_trt_map`.
-#' @param subgrpvar (`character(1)` or `NULL`)\cr the name of the
+#' @param subgrp_var (`character(1)` or `NULL`)\cr the name of the
 #'     subgroup variable to split by within the `trtvar` split
-#' @param subgrplbl (`character(1)` or `NULL`)\cr the spanning label
-#'     to place over the subgroups, if different than `subgrpvar`
+#' @param subgrp_lbl (`character(1)` or `NULL`)\cr the spanning label
+#'     to place over the subgroups, if different than `subgrp_var`
 #' @param total_facet (`logical(1)`)\cr should an overall facet be
-#'     prepended to the partition defined by `subgrpvar`? Defaults to
+#'     prepended to the partition defined by `subgrp_var`? Defaults to
 #'     `TRUE`.
 #' @param total_lbl (`character(1)`)\cr Label to be used for the
 #'     overall facet, if applicable. Defaults to `"Total"`; ignored if
@@ -804,7 +804,7 @@ spans_trtvar_no_diffs <- function(
 #' @details `grouped_cols_w_subgrps` creates a hierarchical column
 #'     structure that splits by `trtvar`, underneath which is a
 #'     spanning label over a split with a Total column along with
-#'     columns for each level of `subgrpvar`.
+#'     columns for each level of `subgrp_var`.
 #' @export
 #' @examples
 #' dat <- create_colspan_var(
@@ -830,8 +830,8 @@ spans_trtvar_no_diffs <- function(
 #' lyt <- basic_table() |>
 #'   grouped_cols_w_subgrps(
 #'     colspan_trt_map,
-#'     subgrpvar = "SEX",
-#'     subgrplbl = "SUB_*"
+#'     subgrp_var = "SEX",
+#'     subgrp_lbl = "SUB_*"
 #'   ) |>
 #'   analyze("TRT01A", afun = function(x, ...) length(x))
 #'
@@ -841,8 +841,8 @@ grouped_cols_w_subgrps <- function(
   colspan_trt_map = NULL,
   combo_map_df = NULL,
   trtvar = names(colspan_trt_map)[2],
-  subgrpvar = NULL,
-  subgrplbl = subgrpvar,
+  subgrp_var = NULL,
+  subgrp_lbl = subgrp_var,
   total_facet = TRUE,
   total_lbl = "Total",
   .pre = list(),
@@ -852,7 +852,7 @@ grouped_cols_w_subgrps <- function(
     stop("trtvar must be specified if no colspan map is provided.")
   }
 
-  if (is.null(subgrpvar)) {
+  if (is.null(subgrp_var)) {
     stop(
       "no subgroup variable specified, use grouped_cols_w_diffs with diff_cols=FALSE ",
       "to create a grouped column structure with no subgrouping."
@@ -874,13 +874,13 @@ grouped_cols_w_subgrps <- function(
       trtvar,
       split_fun = make_split_fun(
         post = list(
-          add_overall_facet(subgrplbl, subgrplbl),
-          restrict_facets(subgrplbl, op = "keep")
+          add_overall_facet(subgrp_lbl, subgrp_lbl),
+          restrict_facets(subgrp_lbl, op = "keep")
         )
       )
     ) |>
     split_cols_by(
-      subgrpvar,
+      subgrp_var,
       ## NULL is default behavior so this is ok
       split_fun = if (total_facet) add_overall_level(total_lbl, first = TRUE)
     )
@@ -960,7 +960,7 @@ shift_tbl_col_struct <- function(lyt, var, span_lbl = "Baseline", .outer_spl_var
 #'
 #' @details
 #' This column structure generating function is for comparing a single portion of the data (as represented by
-#' level(s) of `subgrpvar`) against the full data, comparison of AE counts to treatment-related AE counts
+#' level(s) of `subgrp_var`) against the full data, comparison of AE counts to treatment-related AE counts
 #' being a motivating example.
 #'
 #'
@@ -990,7 +990,7 @@ shift_tbl_col_struct <- function(lyt, var, span_lbl = "Baseline", .outer_spl_var
 #' lyt <- basic_table() |>
 #'     some_v_all_col_struct(
 #'     colspan_trt_map,
-#'     subgrpvar = "GRADE",
+#'     subgrp_var = "GRADE",
 #'     subgrp_lvls = c("Grade 4", "Grade 5"),
 #'     subgrp_lbl = "High Grade",
 #'     all_lbl = "All Grades")
@@ -1003,8 +1003,8 @@ some_v_all_col_struct <- function(
   colspan_trt_map = NULL,
   combo_map_df = NULL,
   trtvar = names(colspan_trt_map)[2],
-  subgrpvar = NULL,
-  subgrp_lbl = subgrpvar,
+  subgrp_var = NULL,
+  subgrp_lbl = subgrp_var,
   all_lbl,
   subgrp_lvls,
   .pre = list(),
@@ -1014,7 +1014,7 @@ some_v_all_col_struct <- function(
     stop("trtvar must be specified if no colspan map is provided.")
   }
 
-  if (is.null(subgrpvar)) {
+  if (is.null(subgrp_var)) {
     stop(
       "no subgroup variable specified, use grouped_cols_w_diffs with diff_cols=FALSE ",
       "to create a grouped column structure with no subgrouping."
@@ -1032,17 +1032,17 @@ some_v_all_col_struct <- function(
 
   lyt <- lyt |>
     split_cols_by(
-      subgrpvar,
+      subgrp_var,
       split_fun = make_split_fun(
         post = list(
           add_overall_facet(all_lbl, label = all_lbl),
           add_combo_facet(
-            name = paste0(subgrpvar, "_subset"),
+            name = paste0(subgrp_var, "_subset"),
             label = subgrp_lbl,
             levels = subgrp_lvls
           ),
           restrict_facets(
-            c(all_lbl, paste0(subgrpvar, "_subset")),
+            c(all_lbl, paste0(subgrp_var, "_subset")),
             op = "keep"
           )
         )

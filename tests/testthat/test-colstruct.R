@@ -419,23 +419,23 @@ test_that("grouped_cols_w_diffs works", {
 
 test_that("grouped_cols_w_subgrps works with a spanning header", {
 
-  subgrpvar <- "SEX"
-  subgrplbl <- "SUB_*"
+  subgrp_var <- "SEX"
+  subgrp_lbl <- "SUB_*"
   subgrp_data <- adsl |>
-    mutate(!!subgrpvar := factor(rep(c("Female", "Male"), length.out = n())))
+    mutate(!!subgrp_var := factor(rep(c("Female", "Male"), length.out = n())))
 
   lyt1 <- basic_table() |>
     grouped_cols_w_subgrps(
       colspan_trt_map,
-      subgrpvar = subgrpvar,
-      subgrplbl = subgrplbl
+      subgrp_var = subgrp_var,
+      subgrp_lbl = subgrp_lbl
     ) |>
     analyze(trtvar, afun = afun_refpath)
 
   tbl1 <- build_table(lyt1, subgrp_data)
 
   spanvar <- names(colspan_trt_map)[1]
-  subgrp_lvls <- c("Total", levels(subgrp_data[[subgrpvar]]))
+  subgrp_lvls <- c("Total", levels(subgrp_data[[subgrp_var]]))
   expect_equal(
     unclass(col_paths(tbl1)),
     unlist(
@@ -448,7 +448,7 @@ test_that("grouped_cols_w_subgrps works with a spanning header", {
             function(lvl) {
               c(
                 spanvar, rw[[spanvar]], trtvar, rw[[trtvar]],
-                trtvar, subgrplbl, subgrpvar, lvl
+                trtvar, subgrp_lbl, subgrp_var, lvl
               )
             }
           )
@@ -461,8 +461,8 @@ test_that("grouped_cols_w_subgrps works with a spanning header", {
 
 test_that("grouped_cols_w_subgrps works without a spanning header", {
 
-  subgrpvar <- "SEX"
-  subgrplbl <- "SUB_*"
+  subgrp_var <- "SEX"
+  subgrp_lbl <- "SUB_*"
   subgrp_data <- data.frame(
     ARM = factor(rep(c("Arm A", "Arm B"), each = 4)),
     SEX = factor(rep(c("Female", "Male"), 4))
@@ -472,14 +472,14 @@ test_that("grouped_cols_w_subgrps works without a spanning header", {
     grouped_cols_w_subgrps(
       colspan_trt_map = NULL,
       trtvar = "ARM",
-      subgrpvar = subgrpvar,
-      subgrplbl = subgrplbl
+      subgrp_var = subgrp_var,
+      subgrp_lbl = subgrp_lbl
     ) |>
-    analyze(subgrpvar, afun = function(x, ...) length(x))
+    analyze(subgrp_var, afun = function(x, ...) length(x))
 
   tbl1 <- build_table(lyt1, subgrp_data)
 
-  subgrp_lvls <- c("Total", levels(subgrp_data[[subgrpvar]]))
+  subgrp_lvls <- c("Total", levels(subgrp_data[[subgrp_var]]))
   expect_equal(
     unclass(col_paths(tbl1)),
     unlist(
@@ -489,7 +489,7 @@ test_that("grouped_cols_w_subgrps works without a spanning header", {
           lapply(
             subgrp_lvls,
             function(subgrplvl) {
-              c("ARM", lvl, "ARM", subgrplbl, subgrpvar, subgrplvl)
+              c("ARM", lvl, "ARM", subgrp_lbl, subgrp_var, subgrplvl)
             }
           )
         }
@@ -525,7 +525,7 @@ test_that("shift_tbl_col_struct works", {
 })
 
 test_that("some_v_all_col_struct works with a spanning header", {
-  subgrpvar <- "GRADE"
+  subgrp_var <- "GRADE"
   dat <- data.frame(
     TRT01A = factor(rep(c("Placebo", "Active 1", "Active 2"), each = 5)),
     GRADE = factor(rep(paste0("Grade ", 1:5), 3))
@@ -550,12 +550,12 @@ test_that("some_v_all_col_struct works with a spanning header", {
   lyt <- basic_table() |>
     some_v_all_col_struct(
       colspan_trt_map,
-      subgrpvar = subgrpvar,
+      subgrp_var = subgrp_var,
       subgrp_lvls = c("Grade 4", "Grade 5"),
       subgrp_lbl = "High Grade",
       all_lbl = "All Grades"
     ) |>
-    analyze(subgrpvar, afun = function(x, ...) length(x))
+    analyze(subgrp_var, afun = function(x, ...) length(x))
 
   tbl <- build_table(lyt, dat)
 
@@ -567,8 +567,8 @@ test_that("some_v_all_col_struct works with a spanning header", {
       function(i) {
         rw <- colspan_trt_map[i, ]
         list(
-          c(spanvar, rw[[spanvar]], trtvar, rw[[trtvar]], subgrpvar, "All Grades"),
-          c(spanvar, rw[[spanvar]], trtvar, rw[[trtvar]], subgrpvar, "GRADE_subset")
+          c(spanvar, rw[[spanvar]], trtvar, rw[[trtvar]], subgrp_var, "All Grades"),
+          c(spanvar, rw[[spanvar]], trtvar, rw[[trtvar]], subgrp_var, "GRADE_subset")
         )
       }
     ),
@@ -580,7 +580,7 @@ test_that("some_v_all_col_struct works with a spanning header", {
 
 test_that("some_v_all_col_struct works without a spanning header", {
   trtvar <- "ARM"
-  subgrpvar <- "GRADE"
+  subgrp_var <- "GRADE"
   dat <- data.frame(
     ARM = factor(rep(c("Arm A", "Arm B"), each = 5)),
     GRADE = factor(rep(paste0("Grade ", 1:5), 2))
@@ -590,12 +590,12 @@ test_that("some_v_all_col_struct works without a spanning header", {
     some_v_all_col_struct(
       colspan_trt_map = NULL,
       trtvar = trtvar,
-      subgrpvar = subgrpvar,
+      subgrp_var = subgrp_var,
       subgrp_lvls = c("Grade 4", "Grade 5"),
       subgrp_lbl = "High Grade",
       all_lbl = "All Grades"
     ) |>
-    analyze(subgrpvar, afun = function(x, ...) length(x))
+    analyze(subgrp_var, afun = function(x, ...) length(x))
 
   tbl <- build_table(lyt, dat)
 
@@ -604,8 +604,8 @@ test_that("some_v_all_col_struct works without a spanning header", {
       levels(dat[[trtvar]]),
       function(lvl) {
         list(
-          c(trtvar, lvl, subgrpvar, "All Grades"),
-          c(trtvar, lvl, subgrpvar, "GRADE_subset")
+          c(trtvar, lvl, subgrp_var, "All Grades"),
+          c(trtvar, lvl, subgrp_var, "GRADE_subset")
         )
       }
     ),
@@ -618,7 +618,7 @@ test_that("some_v_all_col_struct works without a spanning header", {
 test_that("We can make quartile column structs withand without spanner via subgrp fun", {
   trtvar <- "TRT01A"
   var <- "WEIGHTGR1"
-  subgrplbl <- "Body Weight (kg) Quartiles"
+  subgrp_lbl <- "Body Weight (kg) Quartiles"
   v1 <- seq(10, 100, by = 10)
   v2 <- seq(110, 200, by = 10)
   dat <- data.frame(
@@ -649,9 +649,9 @@ test_that("We can make quartile column structs withand without spanner via subgr
 
   lyt <- basic_table() |>
     grouped_cols_w_subgrps(
-      subgrpvar = var,
+      subgrp_var = var,
       colspan_trt_map = colspan_trt_map,
-      subgrplbl = subgrplbl,
+      subgrp_lbl = subgrp_lbl,
       total_facet = FALSE
     ) |>
     analyze(var, afun = function(x, ...) length(x))
@@ -661,7 +661,7 @@ test_that("We can make quartile column structs withand without spanner via subgr
   spanvar <- names(colspan_trt_map)[1]
 
   expect_equal(col_paths(tbl)[[8]],
-               c("colspan_trt", "Control", trtvar, "Placebo", trtvar, subgrplbl, var, "(155,200]"))
+               c("colspan_trt", "Control", trtvar, "Placebo", trtvar, subgrp_lbl, var, "(155,200]"))
   expect_equal(unname(unlist(cell_values(tbl))), c(0, 0, 5, 5, 5, 5, 0, 0))
   ## names(tbl) has dumb behavior but oh well
   expect_equal(names(tbl),
@@ -673,8 +673,8 @@ test_that("We can make quartile column structs withand without spanner via subgr
       ## note we need to specify trtvar here
       ## since there is no colspan_trt_map
       trtvar = trtvar,
-      subgrpvar = var,
-      subgrplbl = subgrplbl,
+      subgrp_var = var,
+      subgrp_lbl = subgrp_lbl,
       total_facet = FALSE
     ) |>
     analyze(var, afun = function(x, ...) length(x))

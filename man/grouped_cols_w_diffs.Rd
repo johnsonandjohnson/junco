@@ -23,8 +23,8 @@ grouped_cols_w_subgrps(
   colspan_trt_map = NULL,
   combo_map_df = NULL,
   trtvar = names(colspan_trt_map)[2],
-  subgrpvar = NULL,
-  subgrplbl = subgrpvar,
+  subgrp_var = NULL,
+  subgrp_lbl = subgrp_var,
   total_facet = TRUE,
   total_lbl = "Total",
   .pre = list(),
@@ -76,14 +76,14 @@ faceting.}
 to split by. Defaults to the treatment variable in
 \code{colspan_trt_map}.}
 
-\item{subgrpvar}{(\code{character(1)} or \code{NULL})\cr the name of the
+\item{subgrp_var}{(\code{character(1)} or \code{NULL})\cr the name of the
 subgroup variable to split by within the \code{trtvar} split}
 
-\item{subgrplbl}{(\code{character(1)} or \code{NULL})\cr the spanning label
-to place over the subgroups, if different than \code{subgrpvar}}
+\item{subgrp_lbl}{(\code{character(1)} or \code{NULL})\cr the spanning label
+to place over the subgroups, if different than \code{subgrp_var}}
 
 \item{total_facet}{(\code{logical(1)})\cr should an overall facet be
-prepended to the partition defined by \code{subgrpvar}? Defaults to
+prepended to the partition defined by \code{subgrp_var}? Defaults to
 \code{TRUE}.}
 
 \item{total_lbl}{(\code{character(1)})\cr Label to be used for the
@@ -156,7 +156,7 @@ parent containing the individual risk difference columns.
 \code{grouped_cols_w_subgrps} creates a hierarchical column
 structure that splits by \code{trtvar}, underneath which is a
 spanning label over a split with a Total column along with
-columns for each level of \code{subgrpvar}.
+columns for each level of \code{subgrp_var}.
 }
 \examples{
 colspan_var <- create_colspan_var(
@@ -204,8 +204,8 @@ colspan_trt_map <- create_colspan_map(
 lyt <- basic_table() |>
   grouped_cols_w_subgrps(
     colspan_trt_map,
-    subgrpvar = "SEX",
-    subgrplbl = "SUB_*"
+    subgrp_var = "SEX",
+    subgrp_lbl = "SUB_*"
   ) |>
   analyze("TRT01A", afun = function(x, ...) length(x))
 
