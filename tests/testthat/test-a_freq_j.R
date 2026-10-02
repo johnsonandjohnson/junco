@@ -281,3 +281,40 @@ test_that("a_freq_j raises an error when an incorrect id is specified", {
     "id.*subset"
   )
 })
+
+test_that("s_freq_j works with missing values via na.rm", {
+  df <- data.frame(
+    USUBJID = c("1", "2", "3"),
+    rsp = factor(c("A", NA, "B"))
+  )
+
+  expect_silent(
+    result <- s_freq_j(
+      df = df,
+      .var = "rsp",
+      .df_row = df,
+      alt_df = df,
+      parent_df = df,
+      denom = "n_df",
+      na.rm = TRUE
+    )
+  )
+  expect_identical(result$count$A, c(count = 1L))
+  expect_identical(result$count$B, c(count = 1L))
+  expect_null(result$count[["<NA>"]])
+  expect_identical(result$n_df, c(n_df = 2L))
+
+  expect_warning(
+    result_warn <- s_freq_j(
+      df = df,
+      .var = "rsp",
+      .df_row = df,
+      alt_df = df,
+      parent_df = df,
+      denom = "n_df",
+      na.rm = FALSE
+    ),
+    "1 row\\(s\\) with missing values were omitted"
+  )
+  expect_identical(result_warn$n_df, c(n_df = 2L))
+})

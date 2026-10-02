@@ -19,7 +19,8 @@ s_freq_j(
   id = "USUBJID",
   denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
   .N_col,
-  countsource = c("df", "altdf", "altdf_subset")
+  countsource = c("df", "altdf", "altdf_subset"),
+  na.rm = TRUE
 )
 
 a_freq_j(
@@ -126,6 +127,10 @@ When \code{altdf_subset} the counts will be based upon \code{alt_df} but first r
 to the levels/values of the current row split for \code{.var} (or to \code{val} when provided).\cr
 This is useful for subgroup processing,
 to present counts of subjects in a subgroup from the alternative dataframe.}
+
+\item{na.rm}{(\code{logical(1)})\cr whether \code{NA} values in \code{.var} should be removed before
+analysis. If \code{TRUE} (default), rows with missing values in \code{.var} are omitted
+silently. If \code{FALSE} and \code{NA} values are present, a warning is triggered.}
 
 \item{labelstr}{An argument to ensure this function can be used
 as a \code{cfun} in a \code{summarize_row_groups} call.\cr
