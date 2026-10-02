@@ -190,9 +190,6 @@ s_cond_proportion_j(rsp_v)
 dta <- data.frame(rsp = c(TRUE, TRUE, FALSE, TRUE, FALSE, NA))
 s_cond_proportion_j(dta, .var = "rsp")
 
-# Using different denominator (requires .N_col in ...)
-s_cond_proportion_j(dta, .var = "rsp", denom = "N_col", .N_col = 10)
-
 # Using method_scope = "row" (requires .df_row in ...)
 df_row <- data.frame(rsp = rep(rsp_v, 2))
 s_cond_proportion_j(
