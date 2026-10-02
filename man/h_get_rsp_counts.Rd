@@ -14,7 +14,7 @@ h_get_rsp_counts(x, .var, na.rm = FALSE)
 \item{na.rm}{(\code{flag})\cr Whether to remove missing responses before counting.}
 }
 \value{
-A named integer vector with \code{n_rsp} (responders) and \code{len_rsp}
+A named list with \code{rsp} (logical response vector), \code{n_rsp} (responders) and \code{len_rsp}
 (non-missing observations, when \code{na.rm = TRUE}).
 }
 \description{

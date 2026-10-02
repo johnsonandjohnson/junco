@@ -16,8 +16,6 @@
 #' (a) the number of responders is `num_limit` (or less),
 #' (b) all subjects except `num_limit` (or less) have observed response,
 #' or (c) the observed group size is less than `denom_limit`.
-#' Depending on the `method_scope` choice, this decision is either taken
-#' for each individual cell separately, or for the entire row.
 #'
 #' Depending on the `method_scope` choice, this decision is either taken
 #' based on the response data for an individual cell (`method_scope = "cell"`),
@@ -28,11 +26,11 @@
 #'   - denominator: specified by `denom` (`n` or `N_row`).
 #' - With `method_scope = "row"`, the counts used for the decision are:
 #'   - numerator: the total number of responders across the row (using `.df_row`);
-#'   - denominator: `.N_row`, i.e. the total number of observations across the row.
+#'   - denominator: the total number of observations across the row (from `.df_row`).
 #'
 #' CI computation follows [tern::s_proportion()] conventions: helper functions
-#' are called with `n = denom`, so when `denom = "N_col"` or `"N_row"`, those
-#' denominators are used for the interval.
+#' are called with `n = denom`, so when `denom = "N_row"`, this row-level
+#' denominator is used for the interval.
 #'
 #' @inheritParams proposal_argument_convention
 #' @param df (`logical` or `data.frame`)\cr if only a logical vector is used,
@@ -53,10 +51,11 @@
 #' @param method_scope (`string`)\cr select the CI method using counts from the
 #'   current cell (`"cell"`) or all columns in the current row (`"row"`). See details.
 #' @param .df_row (`data.frame`)\cr data for the current row across all columns,
-#'   supplied by `rtables` when `method_scope = "row"`.
+#'   automatically supplied by `rtables`.
 #' @param method (`string` or `NULL`)\cr selected CI method to show in the
 #'   label. `NULL` retains the combined method description.
-#' @param reason (`string` or `NULL`)\cr reason for selecting the CI method.
+#' @param method_denom (`int`)\cr denominator used for the selected CI method.
+#' @param method_rsp (`int`)\cr numerator used for the selected CI method.
 #'
 #' @name cond_proportion_j
 NULL
@@ -212,7 +211,6 @@ d_cond_proportion_j <- function(
   num_limit = NULL,
   denom_limit = NULL,
   method = NULL,
-  reason = NULL,
   method_denom = NULL,
   method_rsp = NULL
 ) {
@@ -228,24 +226,21 @@ d_cond_proportion_j <- function(
 
   method_part <- if (!is.null(method)) {
     assert_choice(method, choices = c("wald", "clopper-pearson"))
-    if (is.null(reason)) {
-      assert_count(num_limit)
-      assert_count(denom_limit)
-      assert_count(method_denom)
-      assert_count(method_rsp)
-      reason <- if (method == "wald") {
-        paste0("n >= ", denom_limit, ", x = ", method_rsp)
-      } else if (method_denom < denom_limit) {
-        paste0("n < ", denom_limit)
-      } else if (method_rsp <= num_limit) {
-        if (num_limit == 0) "x = 0" else paste0("x <= ", num_limit)
-      } else if (method_rsp >= (method_denom - num_limit)) {
-        if (num_limit == 0) "x = n" else paste0("x >= n - ", num_limit)
-      } else {
-        stop("Selected Clopper-Pearson method has no matching selection criterion.")
-      }
+    assert_count(num_limit)
+    assert_count(denom_limit)
+    assert_count(method_denom)
+    assert_count(method_rsp)
+    reason <- if (method == "wald") {
+      paste0("n >= ", denom_limit, ", x = ", method_rsp)
+    } else if (method_denom < denom_limit) {
+      paste0("n < ", denom_limit)
+    } else if (method_rsp <= num_limit) {
+      if (num_limit == 0) "x = 0" else paste0("x <= ", num_limit)
+    } else if (method_rsp >= (method_denom - num_limit)) {
+      if (num_limit == 0) "x = n" else paste0("x >= n - ", num_limit)
+    } else {
+      stop("Selected Clopper-Pearson method has no matching selection criterion.")
     }
-    assert_string(reason, null.ok = FALSE)
     if (long) {
       switch(
         method,

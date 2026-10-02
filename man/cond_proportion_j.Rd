@@ -15,7 +15,6 @@ a_cond_proportion_j(
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL,
-  .N_row = NULL,
   .N_col = NULL,
   .df_row = NULL
 )
@@ -29,7 +28,6 @@ s_cond_proportion_j(
   num_limit = 0,
   denom_limit = 10,
   denom = c("n", "N_col", "N_row"),
-  .N_row,
   .N_col,
   method_scope = c("cell", "row"),
   .df_row = NULL
@@ -41,7 +39,8 @@ d_cond_proportion_j(
   num_limit = NULL,
   denom_limit = NULL,
   method = NULL,
-  reason = NULL
+  method_denom = NULL,
+  method_rsp = NULL
 )
 }
 \arguments{
@@ -64,27 +63,27 @@ information on the \code{'auto'} setting.}
 \item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
 
-\item{.N_row}{(\code{int})}
-
-\item{.N_col}{(\code{int})}
+\item{.N_col}{(\code{integer})\cr column-wise N (column count) for the full column being analyzed that is typically
+passed by \code{rtables}.}
 
 \item{.df_row}{(\code{data.frame})\cr data for the current row across all columns,
-supplied by \code{rtables} when \code{method_scope = "row"}.}
+automatically supplied by \code{rtables}.}
 
 \item{conf_level}{(\code{numeric})}
 
 \item{long}{(\code{flag})\cr whether a long description is required.}
 
 \item{na.rm}{(\code{flag})\cr whether \code{NA} responses should be removed before analysis.
-If \code{FALSE} and \code{NA} values are present, an error is raised.}
+If \code{FALSE} and \code{NA} values are present, an error is raised.
+Note that missing values are also removed from the row-wise counts
+which is relevant when \code{method_scope = "row"} or \code{denom = "N_row"}.}
 
 \item{num_limit}{(\code{int})\cr numerator limit to trigger the exact method.}
 
 \item{denom_limit}{(\code{int})\cr denominator limit to trigger the exact method.}
 
 \item{denom}{(\code{character})\cr denominator to use for percentage and CI computation:
-"n" (default, number of observed records), "N_col", or "N_row". When "N_col" or
-"N_row" are chosen, the corresponding \code{.N_col} or \code{.N_row} are used, respectively.}
+"n" (default, number of observed records), or "N_row" (number of observations in the row).}
 
 \item{method_scope}{(\code{string})\cr select the CI method using counts from the
 current cell (\code{"cell"}) or all columns in the current row (\code{"row"}). See details.}
@@ -92,7 +91,9 @@ current cell (\code{"cell"}) or all columns in the current row (\code{"row"}). S
 \item{method}{(\code{string} or \code{NULL})\cr selected CI method to show in the
 label. \code{NULL} retains the combined method description.}
 
-\item{reason}{(\code{string} or \code{NULL})\cr reason for selecting the CI method.}
+\item{method_denom}{(\code{int})\cr denominator used for the selected CI method.}
+
+\item{method_rsp}{(\code{int})\cr numerator used for the selected CI method.}
 }
 \value{
 \itemize{
@@ -125,8 +126,6 @@ The exact method is used when any of these are true:
 (a) the number of responders is \code{num_limit} (or less),
 (b) all subjects except \code{num_limit} (or less) have observed response,
 or (c) the observed group size is less than \code{denom_limit}.
-Depending on the \code{method_scope} choice, this decision is either taken
-for each individual cell separately, or for the entire row.
 
 Depending on the \code{method_scope} choice, this decision is either taken
 based on the response data for an individual cell (\code{method_scope = "cell"}),
@@ -135,18 +134,18 @@ or based on the response data for the entire row (\code{method_scope = "row"}):
 \item With \code{method_scope = "cell"}, the counts used for the decision are:
 \itemize{
 \item numerator: the number of responders in the current cell;
-\item denominator: specified by \code{denom} (\code{n}, \code{.N_col}, or \code{.N_row}).
+\item denominator: specified by \code{denom} (\code{n} or \code{N_row}).
 }
 \item With \code{method_scope = "row"}, the counts used for the decision are:
 \itemize{
 \item numerator: the total number of responders across the row (using \code{.df_row});
-\item denominator: \code{.N_row}, i.e. the total number of observations across the row.
+\item denominator: the total number of observations across the row (from \code{.df_row}).
 }
 }
 
 CI computation follows \code{\link[tern:s_proportion]{tern::s_proportion()}} conventions: helper functions
-are called with \code{n = denom}, so when \code{denom = "N_col"} or \code{"N_row"}, those
-denominators are used for the interval.
+are called with \code{n = denom}, so when \code{denom = "N_row"}, this row-level
+denominator is used for the interval.
 }
 \section{Functions}{
 \itemize{
@@ -194,11 +193,11 @@ s_cond_proportion_j(dta, .var = "rsp")
 # Using different denominator (requires .N_col in ...)
 s_cond_proportion_j(dta, .var = "rsp", denom = "N_col", .N_col = 10)
 
-# Using method_scope = "row" (requires .df_row and .N_row in ...)
+# Using method_scope = "row" (requires .df_row in ...)
 df_row <- data.frame(rsp = rep(rsp_v, 2))
 s_cond_proportion_j(
   dta, .var = "rsp", method_scope = "row",
-  .df_row = df_row, .N_row = nrow(df_row)
+  .df_row = df_row
 )
 
 d_cond_proportion_j(conf_level = 0.90, long = FALSE, num_limit = 0, denom_limit = 10)

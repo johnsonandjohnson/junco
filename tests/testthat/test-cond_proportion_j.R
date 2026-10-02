@@ -219,8 +219,11 @@ test_that("d_cond_proportion_j explains a selected long-label method", {
   result <- d_cond_proportion_j(
     conf_level = 0.95,
     long = TRUE,
+    num_limit = 0,
+    denom_limit = 10,
     method = "wald",
-    reason = "n >= 10, x = 8"
+    method_denom = 10,
+    method_rsp = 8
   )
   expect_identical(
     result,
@@ -231,7 +234,10 @@ test_that("d_cond_proportion_j explains a selected long-label method", {
     conf_level = 0.95,
     long = TRUE,
     method = "clopper-pearson",
-    reason = "x = 0"
+    num_limit = 0,
+    denom_limit = 10,
+    method_rsp = 0,
+    method_denom = 10
   )
   expect_identical(
     result,
@@ -244,7 +250,10 @@ test_that("d_cond_proportion_j uses concise labels for selected methods", {
     d_cond_proportion_j(
       conf_level = 0.95,
       method = "wald",
-      reason = "n >= 10, x = 8"
+      num_limit = 0,
+      denom_limit = 10,
+      method_denom = 10,
+      method_rsp = 8
     ),
     "95% CI (Wald)"
   )
@@ -252,7 +261,10 @@ test_that("d_cond_proportion_j uses concise labels for selected methods", {
     d_cond_proportion_j(
       conf_level = 0.95,
       method = "clopper-pearson",
-      reason = "x = 0"
+      num_limit = 0,
+      denom_limit = 10,
+      method_rsp = 0,
+      method_denom = 10
     ),
     "95% CI (Clopper-Pearson)"
   )
