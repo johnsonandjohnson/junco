@@ -1,26 +1,41 @@
-#' Obtain Reference Information for a Global Reference Group
+#' @title Obtain reference group information from split context.
 #'
-#' This helper function can be used in custom analysis functions, by passing
-#' an extra argument `ref_path` which defines a global reference group by
-#' the corresponding column split hierarchy levels.
+#' @description `r lifecycle::badge("stable")`
 #'
-#' @param ref_path (`character`)\cr reference group specification as an `rtables`
-#'   `colpath`, see details.
-#' @param .spl_context (`data.frame`)\cr see [rtables::spl_context].
-#' @param .var (`character`)\cr the variable being analyzed, see [rtables::additional_fun_params].
+#' `get_ref_info()` identifies a reference group defined by a column-split
+#' path and returns both the reference-group data and an indicator of whether
+#' the current column is the reference column. It is intended for use inside
+#' custom `rtables` analysis functions.
 #'
-#' @return A list with `ref_group` and `in_ref_col`, which can be used as
-#'   `.ref_group` and `.in_ref_col` as if being directly passed to an analysis
-#'   function by `rtables`, see [rtables::additional_fun_params].
+#' The reference group is specified using `ref_path`, which consists of
+#' alternating column-split variable names and its corresponding levels.
+#' For example, `c("SEX", "F", "ARM", "Placebo")` specifies the column-split
+#' path where `SEX` is `"F"` and `ARM` is `"Placebo"`.
 #'
-#' @details
-#' The reference group is specified in `colpath` hierarchical fashion in `ref_path`:
-#' the first column split variable is the first element, and the level to use is the
-#' second element. It continues until the last column split variable with last
-#' level to use.
-#' Note that depending on `.var`, either a `data.frame` (if `.var` is `NULL`) or
-#' a vector (otherwise) is returned. This allows usage for analysis functions with
-#' `df` and `x` arguments, respectively.
+#' @param ref_path (`character`) \cr
+#'   Reference group specification as an `rtables` `colpath`; see Details.
+#' @param .spl_context (`data.frame`) \cr
+#'   Ancestor split-state information passed by `rtables`.
+#' @param .var (`character(1)`) \cr
+#'   The variable being analyzed; see [rtables::additional_fun_params].
+#'   If supplied, the corresponding column is extracted from the reference-group
+#'   data. If `NULL`, the complete reference-group data frame is returned.
+#'
+#' @return
+#'   A list with the following elements:
+#'   \itemize{
+#'     \item `in_ref_col` (`logical(1)` or `NULL`) indicates whether the
+#'       current column matches the reference path.
+#'       This corresponds to `.in_ref_col` in [rtables::additional_fun_params].
+#'     \item `ref_group` (`data.frame`, vector, or `NULL`) contains the
+#'       observations belonging to the reference group. If `.var` is `NULL`,
+#'       the complete data frame is returned; otherwise, the column specified
+#'       by `.var` is returned.
+#'       This corresponds to `.ref_group` in [rtables::additional_fun_params].
+#'   }
+#'
+#'   If the reference path is not present in the current column-split
+#'   hierarchy, both elements are `NULL`.
 #'
 #' @export
 #'
@@ -39,16 +54,21 @@
 #'   trt_var = "ARM"
 #' )
 #'
+#' # A standard analysis function which uses a reference group.
 #' standard_afun <- function(x, .ref_group, .in_ref_col) {
+#'   diff_means <- if (isFALSE(.in_ref_col)) {
+#'     mean(x) - mean(.ref_group)
+#'   } else {
+#'     NULL
+#'   }
 #'   in_rows(
-#'     "Difference of Averages" = non_ref_rcell(
-#'       mean(x) - mean(.ref_group),
-#'       is_ref = .in_ref_col,
-#'       format = "xx.xx"
-#'     )
+#'     m = rcell(mean(x), label = "Mean"),
+#'     dm = rcell(diff_means, label = "Difference in Means vs Placebo"),
+#'     .formats = "xx.xx"
 #'   )
 #' }
 #'
+#' # The custom analysis function which can work with a global reference group.
 #' result_afun <- function(x, ref_path, .spl_context, .var) {
 #'   ref <- get_ref_info(ref_path, .spl_context, .var)
 #'   standard_afun(x, .ref_group = ref$ref_group, .in_ref_col = ref$in_ref_col)
@@ -57,32 +77,41 @@
 #' ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
 #'
 #' lyt <- basic_table() |>
-#'   split_cols_by(
-#'     "colspan_trt",
-#'     split_fun = trim_levels_to_map(map = colspan_trt_map)
-#'   ) |>
+#'   split_cols_by("colspan_trt", split_fun = trim_levels_to_map(colspan_trt_map)) |>
 #'   split_cols_by("ARM") |>
-#'   analyze(
-#'     "AGE",
-#'     extra_args = list(ref_path = ref_path),
-#'     afun = result_afun
-#'   )
+#'   add_overall_col("Total") |>
+#'   analyze("AGE", afun = result_afun, extra_args = list(ref_path = ref_path))
 #'
 #' build_table(lyt, dm)
 get_ref_info <- function(ref_path, .spl_context, .var = NULL) {
-  checkmate::check_character(ref_path, min.len = 2L, names = "unnamed")
-  checkmate::assert_true(length(ref_path) %% 2 == 0) # Even number of elements in ref_path.
-  leaf_spl_context <- .spl_context[nrow(.spl_context), ]
-  full_df <- leaf_spl_context$full_parent_df[[1]]
-  level_indices <- seq(from = 2L, to = length(ref_path), by = 2L)
-  ref_group_string <- paste(ref_path[level_indices], collapse = ".")
-  row_in_ref_group <- leaf_spl_context[[ref_group_string]][[1]]
-  ref_group <- full_df[row_in_ref_group, ]
+  if (is.null(ref_path)) {
+    return(NULL)
+  }
+
+  checkmate::assert_character(ref_path, min.len = 2L, names = "unnamed")
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
+  checkmate::assert_data_frame(.spl_context)
+  checkmate::assert_subset("full_parent_df", colnames(.spl_context))
+  checkmate::assert_string(.var, min.chars = 1L, null.ok = TRUE)
+
+  # Compare column split names while ignoring split values.
+  ref_path_val_pos <- seq(2L, length(ref_path), by = 2L)
+  ref_path_any_val <- replace(ref_path, ref_path_val_pos, "*")
+  if (!in_column(ref_path_any_val, .spl_context)) {
+    return(list(in_ref_col = NULL, ref_group = NULL))
+  }
+
+  leaf_sc <- .spl_context[nrow(.spl_context), ]
+  full_df <- leaf_sc$full_parent_df[[1L]]
+  ref_path_vals <- paste(ref_path[ref_path_val_pos], collapse = ".")
+  ref_group_rows <- leaf_sc[[ref_path_vals]][[1L]]
+  ref_group <- full_df[ref_group_rows, ]
   if (!is.null(.var)) {
     ref_group <- ref_group[[.var]]
   }
-  colvars_indices <- seq(from = 1L, to = length(ref_path) - 1L, by = 2L)
-  checkmate::assert_true(identical(leaf_spl_context$cur_col_split[[1]], ref_path[colvars_indices]))
-  in_ref_col <- identical(leaf_spl_context$cur_col_split_val[[1]], ref_path[level_indices])
-  list(ref_group = ref_group, in_ref_col = in_ref_col)
+
+  list(
+    in_ref_col = in_column(ref_path, .spl_context),
+    ref_group = ref_group
+  )
 }

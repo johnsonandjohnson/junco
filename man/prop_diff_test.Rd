@@ -28,7 +28,7 @@ by a statistics function.}
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
 that is passed by \code{rtables}.}
 
-\item{...}{Additional arguments passed to \code{\link[tern:prop_diff_test]{tern::s_test_proportion_diff()}}, including:
+\item{...}{Additional arguments passed to \code{\link[tern:s_test_proportion_diff]{tern::s_test_proportion_diff()}}, including:
 \itemize{
 \item \code{method} (\code{string})\cr one of \code{chisq}, \code{cmh}, \code{cmh_wh}, \code{fisher} or \code{schouten};
 specifies the test used to calculate the p-value.

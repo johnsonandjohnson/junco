@@ -4,7 +4,7 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = cont
   y2 <- NULL
 
   # diff in means versus control group, based upon 2 sample t.test
-  y2$mean_diffci <- numeric()
+  y2$mean_diff_with_ci <- numeric()
   if (!is.null(.ref_group) && !.in_ref_col) {
     x1 <- df[[.var]]
     x2 <- .ref_group[[.var]]
@@ -18,11 +18,10 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = cont
     stat$diff <- stat$estimate[1] - stat$estimate[2]
     stat <- c(stat$diff, stat$conf.int)
 
-    y2$mean_diffci <- with_label(
-      c(mean_diffci = stat),
+    y2$mean_diff_with_ci <- with_label(
+      c(mean_diff_with_ci = stat),
       paste("Difference in Mean + ", f_conf_level(control$conf_level))
     )
-
   }
   y <- c(y1, y2)
 
@@ -66,23 +65,24 @@ s_aval_chg_col1 <- function(df, .var, denom, .N_col, id, indatavar) {
 }
 
 s_aval_chg_col23_diff <- function(
-    df,
-    .var,
-    .df_row,
-    .ref_group,
-    .in_ref_col,
-    ancova,
-    interaction_y,
-    interaction_item,
-    conf_level,
-    variables,
-    trt_var,
-    ctrl_grp,
-    cur_param,
-    cur_lvl,
-    weights_emmeans,
-    method_combo,
-    weights_combo) {
+  df,
+  .var,
+  .df_row,
+  .ref_group,
+  .in_ref_col,
+  ancova,
+  interaction_y,
+  interaction_item,
+  conf_level,
+  variables,
+  trt_var,
+  ctrl_grp,
+  cur_param,
+  cur_lvl,
+  weights_emmeans,
+  method_combo,
+  weights_combo
+) {
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
   df <- subset(df, !is.na(df[[.var]]))
   .ref_group <- subset(.ref_group, !is.na(.ref_group[[.var]]))
@@ -92,9 +92,9 @@ s_aval_chg_col23_diff <- function(
     #### timepoint for analysis variable change only here we want a blank cell, not a cell with all NA's NULL is
     #### generating a blank cell
     x_stats <- NULL
-    mystat1 <- c("mean_ci_3d", "mean_diffci")
+    mystat1 <- c("mean_ci_3d", "mean_diff_with_ci")
   } else if (!ancova) {
-    mystat1 <- c("mean_ci_3d", "mean_diffci")
+    mystat1 <- c("mean_ci_3d", "mean_diff_with_ci")
 
     control <- control_analyze_vars()
     control$conf_level <- conf_level
@@ -106,7 +106,7 @@ s_aval_chg_col23_diff <- function(
       control = control
     )
   } else {
-    mystat1 <- c("lsmean_ci", "lsmean_diffci")
+    mystat1 <- c("lsmean_ci", "lsmean_diff_with_ci")
 
     ### sparse data problems with underlying ancova function 1/ if nrow(.df_row) = 0 NULL (blank columns)
 
@@ -164,52 +164,10 @@ s_aval_chg_col23_diff <- function(
     }
   }
 
-  y <- list(mean_ci_3d = x_stats[[mystat1[1]]], meandiff_ci_3d = x_stats[[mystat1[2]]])
+  y <- list(mean_ci_3d = x_stats[[mystat1[1]]], mean_diff_with_ci = x_stats[[mystat1[2]]])
   return(y)
 }
 
-
-xxd_to_xx <- function(str, d = 0) {
-  checkmate::assert_integerish(d, null.ok = TRUE)
-  if (checkmate::test_list(str, null.ok = FALSE)) {
-    checkmate::assert_list(str, null.ok = FALSE)
-    # Or it may be a vector of characters
-  } else {
-    checkmate::assert_character(str, null.ok = FALSE)
-  }
-
-  nmstr <- names(str)
-
-  if (any(grepl("xx.d", str, fixed = TRUE))) {
-    checkmate::assert_integerish(d)
-    str <- gsub("xx.d", paste0("xx.", strrep("x", times = d)), str, fixed = TRUE)
-  }
-  str <- stats::setNames(str, nmstr)
-  return(str)
-}
-
-format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
-  # Handling of data precision
-  if (!is.numeric(d)) {
-    if (is.character(d) && length(d) == 1) {
-      # check if d is a variable name available in .df_row
-      if (d %in% names(.df_row)) {
-        d <- max(.df_row[[d]], na.rm = TRUE)
-      } else {
-        message(paste("precision has been reset to d = 0, as variable", d, "not present on input"))
-        d <- 0
-      }
-    }
-  }
-  # convert xxd type of string to xx
-  fmt <- xxd_to_xx(str = str, d = d)
-
-  if (!is.null(formatting_fun)) {
-    fmt <- formatting_fun(fmt)
-  }
-
-  return(fmt)
-}
 
 #' @name a_summarize_aval_chg_diff_j
 #'
@@ -220,7 +178,7 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #' In the difference columns, only 1 column will be presented : difference + CI\cr
 #' When ancova = `TRUE`, the presented statistics will be based on ANCOVA method (`s_summarize_ancova_j`).\cr
 #' mean and ci (both for Value (column 2) and CHG (column 3)) using statistic `lsmean_ci`\cr
-#' mean and ci for the difference column are based on same ANCOVA model using statistic `lsmean_diffci`\cr
+#' mean and ci for the difference column are based on same ANCOVA model using statistic `lsmean_diff_with_ci`\cr
 #' When ancova = `FALSE`, descriptive statistics will be used instead.\cr
 #' In the difference column, the 2-sample t-test will be used.
 #'
@@ -272,7 +230,7 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #' The following column names are to be used: `col1`, `col23`, `coldiff`.\cr
 #' For `col1`, the following stats can be specified.\cr
 #' For `col23`, only `mean_ci_3d` is available. When ancova = `TRUE` these are LS Means, otherwise, arithmetic means.\cr
-#' For `coldiff`, only `meandiff_ci_3d` is available. When ancova = `TRUE` these
+#' For `coldiff`, only `mean_diff_with_ci` is available. When ancova = `TRUE` these
 #' are LS difference in means, otherwise, difference in means based upon 2-sample t-test.\cr
 #' @param .formats (named `list`)\cr formats for the column statistics. `xx.d` style formats can be used.
 #' @param .formats_fun (named `list`)\cr formatting functions for the column
@@ -374,29 +332,33 @@ format_xxd <- function(str, d = 0, .df_row, formatting_fun = NULL) {
 #' result
 #' @family Inclusion of ANCOVA Functions
 a_summarize_aval_chg_diff_j <- function(
-    df,
-    .df_row,
-    .spl_context,
-    ancova = FALSE,
-    comp_btw_group = TRUE,
-    ref_path = NULL,
-    .N_col,
-    denom = c("N", ".N_col"),
-    indatavar = NULL,
-    d = 0,
-    id = "USUBJID",
-    interaction_y = FALSE,
-    interaction_item = NULL,
-    conf_level = 0.95,
-    variables = list(arm = "TRT01A", covariates = NULL),
-    format_na_str = "",
-    .stats = list(col1 = "count_denom_frac", col23 = "mean_ci_3d", coldiff = "meandiff_ci_3d"),
-    .formats = list(col1 = NULL, col23 = "xx.dx (xx.dx, xx.dx)", coldiff = "xx.dx (xx.dx, xx.dx)"),
-    .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx, coldiff = jjcsformat_xx),
-    multivars = c("AVAL", "AVAL", "CHG"),
-    weights_emmeans = NULL,
-    method_combo = c("contrasts", "collapse"),
-    weights_combo = NULL) {
+  df,
+  .df_row,
+  .spl_context,
+  ancova = FALSE,
+  comp_btw_group = TRUE,
+  ref_path = NULL,
+  .N_col,
+  denom = c("N", ".N_col"),
+  indatavar = NULL,
+  d = 0,
+  id = "USUBJID",
+  interaction_y = FALSE,
+  interaction_item = NULL,
+  conf_level = 0.95,
+  variables = list(arm = "TRT01A", covariates = NULL),
+  format_na_str = "",
+  .stats = list(col1 = "count_denom_frac", col23 = "mean_ci_3d", coldiff = "mean_diff_with_ci"),
+  .formats = list(col1 = NULL, col23 = "xx.dx (xx.dx, xx.dx)", coldiff = "xx.dx (xx.dx, xx.dx)"),
+  .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx, coldiff = jjcsformat_xx),
+  multivars = c("AVAL", "AVAL", "CHG"),
+  weights_emmeans = NULL,
+  method_combo = c("contrasts", "collapse"),
+  weights_combo = NULL
+) {
+  checkmate::check_character(ref_path, min.len = 2L)
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
+
   denom <- match.arg(denom)
   method_combo <- match.arg(method_combo)
 
@@ -474,22 +436,11 @@ a_summarize_aval_chg_diff_j <- function(
 
   .in_ref_col <- FALSE
   .ref_group <- NULL
+  ctrl_grp <- NULL
   if (comp_btw_group) {
-    trt_var_refspec <- utils::tail(ref_path, n = 2)[1]
-    checkmate::assert_true(identical(trt_var, trt_var_refspec))
-    # ctrl_grp
-    ctrl_grp <- utils::tail(ref_path, n = 1)
-
-    ### check that ctrl_grp is a level of the treatment variable, in case riskdiff is requested
-    if (!ctrl_grp %in% levels(df[[trt_var]])) {
-      stop(paste0(
-        "control group specification in ref_path argument (",
-        ctrl_grp,
-        ") is not a level of your treatment group variable (",
-        trt_var,
-        ")."
-      ))
-    }
+    checkmate::assert_true(identical(trt_var, ref_path[length(ref_path) - 1L]))
+    ctrl_grp <- ref_path[length(ref_path)]
+    stopifnot(ctrl_grp %in% levels(df[[trt_var]]))
 
     if (trt_val == ctrl_grp) .in_ref_col <- TRUE
 
@@ -540,15 +491,27 @@ a_summarize_aval_chg_diff_j <- function(
     }
     mystat <- .stats[[mystat1]]
 
-    fmt_d <- .formats[[mystat1]]
-    formatting_fun <- .formats_fun[[mystat1]]
+    if (!(identical(.formats, "default"))) {
+      fmt_d <- .formats[[mystat1]]
+      formatting_fun <- .formats_fun[[mystat1]]
 
-    fmt <- format_xxd(fmt_d, d = d, .df_row = .df_row, formatting_fun = formatting_fun)
+      fmt <- format_xxd(fmt_d, d = d, .df_row = .df_row, formatting_fun = formatting_fun)
+    } else {
+      fmt <- NULL
+    }
   }
   x_stats <- x_stats[[mystat]]
 
   ##
-  ret <- rcell(x_stats, format = fmt, label = cur_lvl, format_na_str = format_na_str)
+  x_stats <- list(x_stats)
+  names(x_stats) <- mystat
+  st_nms <- mystat
 
+  ret <- in_rows(
+    .list = x_stats,
+    .formats = fmt,
+    .labels = cur_lvl,
+    .stat_names = st_nms
+  )
   return(ret)
 }

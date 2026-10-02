@@ -80,7 +80,7 @@ Extension to tern:::s_ancova, 3 extra statistics are returned:
 \itemize{
 \item \code{lsmean_se}: Marginal mean and estimated SE in the group.
 \item \code{lsmean_ci}: Marginal mean and associated confidence interval in the group.
-\item \code{lsmean_diffci}: Difference in mean and associated confidence level in one combined statistic.
+\item \code{lsmean_diff_with_ci}: Difference in mean and associated confidence level in one combined statistic.
 In addition, the LS mean weights can be specified.
 In addition, also a NULL .ref_group can be specified, the lsmean_diff related estimates will be returned as NA.
 }
@@ -98,8 +98,8 @@ conf_level <- 0.95
 s_ancova_j(df, .var, .df_row, variables, .ref_group, .in_ref_col = FALSE, conf_level)
 }
 \seealso{
-Other Inclusion of ANCOVA Functions: 
-\code{\link{a_summarize_ancova_j}()},
-\code{\link{a_summarize_aval_chg_diff_j}()}
+Other Inclusion of ANCOVA Functions:
+\code{\link[=a_summarize_ancova_j]{a_summarize_ancova_j()}},
+\code{\link[=a_summarize_aval_chg_diff_j]{a_summarize_aval_chg_diff_j()}}
 }
 \concept{Inclusion of ANCOVA Functions}

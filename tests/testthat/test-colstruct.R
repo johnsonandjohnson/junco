@@ -363,9 +363,11 @@ test_that("grouped_cols_w_diffs works", {
     "none"
   )
 
-  lyt3 <- basic_table() |>
-    grouped_cols_w_diffs(colspan_trt_map, combo_map_df = combodf) |>
-    analyze(trtvar, afun = afun_refpath)
+  suppressMessages(
+    lyt3 <- basic_table() |>
+      grouped_cols_w_diffs(colspan_trt_map, combo_map_df = combodf) |>
+      analyze(trtvar, afun = afun_refpath)
+  )
 
   tbl3 <- build_table(lyt3, adae, adsl)
   spanvar <- names(colspan_trt_map)[1]
@@ -376,9 +378,11 @@ test_that("grouped_cols_w_diffs works", {
     make_expected_paths(colspan_trt_map, combodf)
   )
 
-  lyt4 <- basic_table() |>
-    grouped_cols_w_diffs(colspan_trt_map, combo_map_df = combodf2) |>
-    analyze(trtvar, afun = afun_refpath)
+  suppressMessages(
+    lyt4 <- basic_table() |>
+      grouped_cols_w_diffs(colspan_trt_map, combo_map_df = combodf2) |>
+      analyze(trtvar, afun = afun_refpath)
+  )
   tbl4 <- build_table(lyt4, adae, adsl)
 
   expect_equal(
@@ -395,8 +399,11 @@ test_that("grouped_cols_w_diffs works", {
   )
 
 
-  lyt5 <- basic_table() |>
-    grouped_cols_w_diffs(colspan_trt_map, combo_map_df = combodf2, comp_map = comp_map2)
+  suppressMessages(
+    lyt5 <- basic_table() |>
+      grouped_cols_w_diffs(colspan_trt_map, combo_map_df = combodf2, comp_map = comp_map2)
+  )
+
 
   tbl5 <- build_table(lyt5, adsl)
   expect_equal(

@@ -144,7 +144,7 @@ functionality please contact the maintainers by filing an issue
 at https://github.com/johnsonandjohnson/junco/issues
 }
 \seealso{
-Other riskdiff_col_struct: 
-\code{\link{grouped_cols_w_diffs}()}
+Other riskdiff_col_struct:
+\code{\link[=grouped_cols_w_diffs]{grouped_cols_w_diffs()}}
 }
 \concept{riskdiff_col_struct}

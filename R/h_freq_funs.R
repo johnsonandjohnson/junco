@@ -267,7 +267,7 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
       addi <- df[df[[.var]] %in% levii, ]
       addi[[.var]] <- new_levels[[1]][i]
 
-      df <- dplyr::bind_rows(df, addi)
+      df <- rbind(df, addi)
     }
   }
 
@@ -281,42 +281,118 @@ h_df_add_newlevels <- function(df, .var, new_levels, addstr2levs = NULL, new_lev
   return(df)
 }
 
-
-#' Get Treatment Variable Reference Path
+#' @title Get Current Treatment Group
 #'
-#' Retrieves the treatment variable reference path from the provided context.
+#' @description `r lifecycle::badge("stable")`
 #'
-#' @param ref_path (`character`)\cr Reference path for treatment variable.
-#' @param .spl_context (`data.frame`)\cr Current split context.
-#' @param df (`data.frame`)\cr Data frame.
-#' @return List containing treatment variable details.
-#' @export
-h_get_trtvar_refpath <- function(ref_path, .spl_context, df) {
-  checkmate::check_character(ref_path, min.len = 2L, names = "unnamed")
-  checkmate::assert_true(length(ref_path) %% 2 == 0) # Even number of elements in ref_path.
+#' Retrieves the current treatment group from the current column split-path,
+#' given the treatment variable name.
+#'
+#' @param trt_var (`character(1)`)\cr The treatment variable name.
+#' @param .spl_context (`data.frame`)\cr The current split context.
+#' @return A character string containing the treatment group name.
+#'
+#' @keywords internal
+#' @author WW
+#' @seealso [cur_col_split_path()]
+#' @examples
+#' \dontrun{
+#' .spl_context <- data.frame(
+#'   cur_col_split = I(list(c("ARM"))),
+#'   cur_col_split_val = I(list(c("Placebo")))
+#' )
+#'
+#' h_get_cur_trt_grp("ARM", .spl_context)
+#' h_get_cur_trt_grp("TRT", .spl_context) # errors: TRT not found
+#' }
+#'
+h_get_cur_trt_grp <- function(trt_var, .spl_context) {
+  checkmate::assert_string(trt_var)
+  checkmate::assert_data_frame(.spl_context)
 
-  trt_var <- utils::tail(.spl_context$cur_col_split[[length(.spl_context$cur_col_split)]], n = 1)
-  trt_var_refspec <- utils::tail(ref_path, n = 2)[1]
+  cur_col_path <- cur_col_split_path(.spl_context)
+  checkmate::assert_true(length(cur_col_path) %% 2L == 0L)
 
-  checkmate::assert_true(identical(trt_var, trt_var_refspec))
-
-  # current group and ctrl_grp
-  cur_trt_grp <- utils::tail(.spl_context$cur_col_split_val[[length(.spl_context$cur_col_split_val)]], n = 1)
-  ctrl_grp <- utils::tail(ref_path, n = 1)
-
-  ### check that ctrl_grp is a level of the treatment variable, in case riskdiff is requested
-  if (!ctrl_grp %in% levels(df[[trt_var]])) {
-    stop(paste0(
-      "control group specification in ref_path argument (",
-      ctrl_grp,
-      ") is not a level of your treatment group variable (",
-      trt_var,
-      ")."
-    ))
-  }
-  return(list(trt_var = trt_var, trt_var_refspec = trt_var_refspec, cur_trt_grp = cur_trt_grp, ctrl_grp = ctrl_grp))
+  trt_var_pos <- strict_match(trt_var, cur_col_path, odd = TRUE)
+  cur_col_path[trt_var_pos + 1L]
 }
 
+# helper function to define expression for retrieving ref_group type of datasets
+h_get_ref_col_expr <- function(ref_path = NULL) {
+  if (is.null(ref_path)) {
+    stop("h_get_ref_col_expr: ref_path cannot be NULL")
+  }
+  checkmate::assert_character(ref_path, min.len = 2L, names = "unnamed")
+  checkmate::assert_true(length(ref_path) %% 2 == 0)
+
+  vars <- ref_path[seq(from = 1L, to = length(ref_path) - 1L, by = 2L)]
+  levels <- ref_path[seq(from = 2L, to = length(ref_path), by = 2L)]
+
+  parts <- paste0(
+    "!is.na(", vars, ") & (", vars, " %in% c(\"", levels, "\"))"
+  )
+
+  res <- paste(parts, collapse = " & ")
+  call_expr <- parse(text = res)[[1]]
+
+  as.expression(call_expr)
+}
+
+get_ref_info_expanded <- function(df,
+                                  .var,
+                                  .df_row,
+                                  .spl_context,
+                                  ref_path,
+                                  riskdiff = TRUE,
+                                  riskdiff_setup = c("horizontal", "vertical")) {
+  riskdiff_setup <- match.arg(riskdiff_setup)
+
+  if (riskdiff && is.null(ref_path)) {
+    stop("ref_path cannot be NULL when riskdiff = TRUE, please specify it. See ?get_ref_info for details.")
+  }
+
+  ## prepare for column based split
+  cur_col_expr <- .spl_context$cur_col_expr[[1]]
+  ## colid can be used to figure out if we're in the relative risk columns or not
+  colid <- .spl_context$cur_col_id[[1]]
+  inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
+
+  if (!is.null(ref_path)) {
+    ref <- get_ref_info(ref_path, .spl_context)
+    .in_ref_col <- ref$in_ref_col
+    .ref_group <- ref$ref_group
+    ref_col_expr <- h_get_ref_col_expr(ref_path)
+  } else {
+    ref_col_expr <- NULL
+    .in_ref_col <- NULL
+    .ref_group <- NULL
+  }
+
+  # !perform_vs_ref_stats will be passed as .in_ref_col in the s_function s_eair100_levii_j
+  # while it does not entirely reflect
+  # whether in ref column or not
+  # it is the behaviour of performing vs ref group calculations what is important
+  if (riskdiff && riskdiff_setup == "vertical" && is.null(.in_ref_col)) {
+    perform_vs_ref_stats <- FALSE
+  } else if (riskdiff && riskdiff_setup == "vertical" && is.logical(.in_ref_col)) {
+    perform_vs_ref_stats <- !.in_ref_col
+  } else if (
+    riskdiff &&
+      riskdiff_setup == "horizontal" &&
+      inriskdiffcol &&
+      !identical(df, subset(.df_row, eval(ref_col_expr)))
+  ) {
+    perform_vs_ref_stats <- TRUE
+  } else {
+    perform_vs_ref_stats <- FALSE
+  }
+  return(list(
+    .in_ref_col = .in_ref_col,
+    .ref_group = .ref_group,
+    perform_vs_ref_stats = perform_vs_ref_stats,
+    ref_col_expr = ref_col_expr
+  ))
+}
 
 #' Update Data Frame Row
 #'
@@ -478,6 +554,11 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
       stop("split_info does not contain required elements.")
     }
 
+    nodata <- FALSE
+    if (length(.labels) == 1 && .labels == no_data_to_report_str) {
+      nodata <- TRUE
+    }
+
     ### if label_map has a variable from row split, apply current splits on label_map tibble as well
     rowsplits <- split_info$split
 
@@ -499,6 +580,12 @@ h_get_label_map <- function(.labels, label_map, .var, split_info) {
 
     .labels <- label_map$label[match(.labels, label_map$value)]
 
+    if (nodata && anyNA(.labels)) {
+      stop(paste0(
+        "got a label map that doesn't provide labels for all values.\n",
+        "Perhaps convert analysis variable ", .var, " to a factor?"
+      ))
+    }
     if (anyNA(.labels)) {
       stop("got a label map that doesn't provide labels for all values.")
     }

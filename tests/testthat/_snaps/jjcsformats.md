@@ -275,3 +275,36 @@
     Output
       [1] "0.0050000000"
 
+# format_sigfig_j used in rtables framework as format
+
+    Code
+      rslt
+    Output
+                    ARM A         ARM B         ARM C   
+      ——————————————————————————————————————————————————
+      n              134           134           132    
+      Mean (SD)    1.85 (0)    5.70 (3.31)   5.62 (3.49)
+      Min - Max   1.85, 1.85   0.648, 14.2   0.165, 21.4
+
+---
+
+    Code
+      rslt
+    Output
+                    ARM A         ARM B         ARM C   
+      ——————————————————————————————————————————————————
+      n              134           134           132    
+      Mean (SD)    1.85 (0)    5.70 (3.31)   5.62 (3.49)
+      Min - Max   1.85, 1.85   0.648, 14.2   0.165, 21.4
+
+# format_sigfig_j used in rtables framework as format w/wout trailing zeros
+
+    Code
+      rslt
+    Output
+                        ARM A            ARM B         ARM C   
+      —————————————————————————————————————————————————————————
+      n                  134              134           132    
+      Mean (SD)       0.0004 (0)         4 (0)      5.62 (3.49)
+      Min - Max   0.000400, 0.000400   4.00, 4.00   0.165, 21.4
+

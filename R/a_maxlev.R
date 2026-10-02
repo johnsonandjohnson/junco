@@ -39,6 +39,9 @@
 #'  to exclude from the statistic (default = "Missing").
 #'
 #' @returns A `RowsVerticalSection` object.
+#'
+#' @author WW
+#'
 #' @export
 #'
 #' @examples
