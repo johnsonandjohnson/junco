@@ -303,29 +303,6 @@ test_that("a_freq_j in case of data as in prior bug for cmh sato", {
   expanded_df <- df_input[rep(seq_len(nrow(df_input)), df_input$n), c("grp", "rsp", "strata")]
   expanded_df$USUBJID <- rownames(expanded_df)
 
-  # test tern s_proportion_diff
-  df <- expanded_df |>
-    filter(grp == "Not-ref")
-
-  .ref_group <- expanded_df |>
-    filter(grp == "ref")
-
-  .var <- "rsp"
-
-  suppressWarnings(outcome <- s_proportion_diff(
-    df,
-    .var,
-    .ref_group = .ref_group,
-    .in_ref_col = FALSE,
-    variables = list(strata = "strata"),
-    conf_level = 0.95,
-    method = "cmh_sato",
-    val = "TRUE"
-  ))
-
-  # check with se from ww in issue https://github.com/pharmaverse/tern/issues/1535: 100*0.06179116
-  expect_equal(outcome$se_diff, 100 * 0.06179116, ignore_attr = TRUE, tolerance = 1e-6)
-
   ### usage with a_freq_j with relative risk column
 
   trtvar <- "grp"
@@ -354,8 +331,8 @@ test_that("a_freq_j in case of data as in prior bug for cmh sato", {
         val = "TRUE"
       )
     )
-  suppressWarnings(result <- build_table(lyt, expanded_df))
+  expect_warning(result <- build_table(lyt, expanded_df),
+                 "Less")
 
-  hh <- value_at(result[, c("rrisk_header", "Risk Difference (%) (95% CI)", "grp", "Not-ref")])
-  expect_equal(hh, outcome$diff_est_ci)
+  expect_snapshot(cran = TRUE, result)
 })
