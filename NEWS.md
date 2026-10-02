@@ -1,4 +1,4 @@
-# junco 0.1.6.9001
+# junco 0.1.7
 
 ### Changed
 - Added `.cell_footnotes` and `.row_footnotes` arguments to `format_stats()` (#470).
