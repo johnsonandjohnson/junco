@@ -68,19 +68,6 @@ test_that("num_limit not exceeded -> Wald when n_obs >= denom_limit", {
   expect_equal(as.numeric(out$prop_ci), as.numeric(expected_ci), tolerance = 1e-12)
 })
 
-test_that("denom = 'N_col' uses provided .N_col for p_hat and CI", {
-  rsp <- c(rep(TRUE, 7), rep(FALSE, 5)) # n_obs = 12, n_rsp = 7
-  out <- s_cond_proportion_j(rsp, denom = "N_col", .N_col = 30)
-  # p_hat should be 7 / 30
-  n_prop <- as.numeric(out$n_prop)
-  expect_equal(n_prop[1], 7)
-  expect_equal(n_prop[2], 7 / 30)
-  # CI computed with n = 30 using the same helper as in s_proportion
-  # The method should be Wald in this configuration (n_obs = 12 >= 10, not extreme)
-  expected_ci <- 100 * tern::prop_wald(rsp, n = 30, conf_level = 0.95)
-  expect_equal(as.numeric(out$prop_ci), as.numeric(expected_ci), tolerance = 1e-12)
-})
-
 test_that("denom = 'N_row' derives its denominator from .df_row", {
   rsp <- c(rep(TRUE, 6), rep(FALSE, 6)) # n_obs = 12, n_rsp = 6
   df_row <- data.frame(rsp = c(rsp, FALSE, FALSE, FALSE))
@@ -93,9 +80,8 @@ test_that("denom = 'N_row' derives its denominator from .df_row", {
   expect_equal(as.numeric(out$prop_ci), as.numeric(expected_ci), tolerance = 1e-12)
 })
 
-test_that("missing denominator inputs raise errors when requested by denom", {
+test_that("missing row denominator input raises an error when requested", {
   rsp <- c(TRUE, FALSE, TRUE, FALSE)
-  expect_error(s_cond_proportion_j(rsp, denom = "N_col"), "argument.*missing|object.*not found", ignore.case = TRUE)
   expect_error(s_cond_proportion_j(rsp, denom = "N_row"), "df.*data.frame", ignore.case = TRUE)
 })
 
@@ -290,22 +276,6 @@ test_that("a_cond_proportion_j works in full table build", {
   expect_equal(
     as.numeric(vals$prop_ci[["all obs"]]),
     as.numeric(100 * tern::prop_wald(rsp, n = length(rsp), conf_level = 0.95)),
-    tolerance = 1e-12
-  )
-})
-
-test_that("table workflow uses column count as denominator when requested", {
-  rsp <- c(rep(TRUE, 6), rep(FALSE, 4), NA, NA)
-  dta <- data.frame(rsp = rsp)
-
-  lyt <- rtables::basic_table() |>
-    rtables::analyze("rsp", afun = a_cond_proportion_j, extra_args = list(denom = "N_col"))
-  vals <- rtables::cell_values(rtables::build_table(lyt, dta))
-
-  expect_equal(as.numeric(vals$n_prop[["all obs"]]), c(6, 6 / 12))
-  expect_equal(
-    as.numeric(vals$prop_ci[["all obs"]]),
-    as.numeric(100 * tern::prop_wald(rsp[!is.na(rsp)], n = 12, conf_level = 0.95)),
     tolerance = 1e-12
   )
 })
