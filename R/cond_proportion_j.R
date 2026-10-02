@@ -172,38 +172,15 @@ s_cond_proportion_j <- function(
     "wald" = prop_wald(rsp, n = denom_val, conf_level)
   )
 
-  label <- if (method_scope == "row") {
-    reason <- if (use_exact) {
-      # Give exact reason for using Clopper-Pearson method.
-      if (method_denom < denom_limit) {
-        paste0("n < ", denom_limit)
-      } else if (method_rsp <= num_limit) {
-        if (num_limit == 0) "x = 0" else paste0("x <= ", num_limit)
-      } else if (method_rsp >= (method_denom - num_limit)) {
-        if (num_limit == 0) "x = n" else paste0("x >= n - ", num_limit)
-      }
-    } else {
-      paste0(
-        "n >= ",
-        denom_limit,
-        ", x = ",
-        method_rsp
-      )
-    }
-    d_cond_proportion_j(
-      conf_level,
-      long = long,
-      method = method,
-      reason = reason
-    )
-  } else {
-    d_cond_proportion_j(
-      conf_level,
-      long = long,
-      num_limit = num_limit,
-      denom_limit = denom_limit
-    )
-  }
+  label <- d_cond_proportion_j(
+    conf_level,
+    long = long,
+    num_limit = num_limit,
+    denom_limit = denom_limit,
+    method = if (method_scope == "row") method else NULL,
+    method_denom = if (method_scope == "row") method_denom else NULL,
+    method_rsp = if (method_scope == "row") method_rsp else NULL
+  )
 
   list(
     "n_prop" = formatters::with_label(c(n_rsp, p_hat), "Responders"),
@@ -235,7 +212,9 @@ d_cond_proportion_j <- function(
   num_limit = NULL,
   denom_limit = NULL,
   method = NULL,
-  reason = NULL
+  reason = NULL,
+  method_denom = NULL,
+  method_rsp = NULL
 ) {
   assert_proportion_value(conf_level)
   assert_flag(long)
@@ -249,6 +228,23 @@ d_cond_proportion_j <- function(
 
   method_part <- if (!is.null(method)) {
     assert_choice(method, choices = c("wald", "clopper-pearson"))
+    if (is.null(reason)) {
+      assert_count(num_limit)
+      assert_count(denom_limit)
+      assert_count(method_denom)
+      assert_count(method_rsp)
+      reason <- if (method == "wald") {
+        paste0("n >= ", denom_limit, ", x = ", method_rsp)
+      } else if (method_denom < denom_limit) {
+        paste0("n < ", denom_limit)
+      } else if (method_rsp <= num_limit) {
+        if (num_limit == 0) "x = 0" else paste0("x <= ", num_limit)
+      } else if (method_rsp >= (method_denom - num_limit)) {
+        if (num_limit == 0) "x = n" else paste0("x >= n - ", num_limit)
+      } else {
+        stop("Selected Clopper-Pearson method has no matching selection criterion.")
+      }
+    }
     assert_string(reason, null.ok = FALSE)
     if (long) {
       switch(

@@ -205,6 +205,20 @@ test_that("d_cond_proportion_j explains a selected long-label method", {
   result <- d_cond_proportion_j(
     conf_level = 0.95,
     long = TRUE,
+    num_limit = 1,
+    denom_limit = 10,
+    method = "clopper-pearson",
+    method_denom = 12,
+    method_rsp = 11
+  )
+  expect_identical(
+    result,
+    "95% CI for Response Rates (Clopper-Pearson because x >= n - 1)"
+  )
+
+  result <- d_cond_proportion_j(
+    conf_level = 0.95,
+    long = TRUE,
     method = "wald",
     reason = "n >= 10, x = 8"
   )
