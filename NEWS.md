@@ -76,6 +76,7 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
 - Added `a_three_tier()` as extension to `a_two_tier()`.
 - Added formatting function `format_sigfig_j()` as alternative to `tern::format_sigfig()`. (#436)
+- Added new standard column structure functions: `make_multicomp_splfun()`, `grouped_cols_w_diffs()`, `grouped_cols_w_subgrps()`, `shift_tbl_col_struct()`, and `some_v_all_col_struct()`.
 - Added varying decimal precision utility functions `fmt_spec_single_d`, `fmt_spec_df_d`, `fmt_spec_var_d`. (#474)
 - Added utility functions `get_fmt_details` and `compare_fmt_specs` for reviewing format specification objects.
 
