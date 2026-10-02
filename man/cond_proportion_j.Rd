@@ -202,6 +202,6 @@ d_cond_proportion_j(conf_level = 0.90, long = FALSE, num_limit = 0, denom_limit 
 # With dedicated row-wise method:
 d_cond_proportion_j(
   conf_level = 0.90, long = TRUE, num_limit = 0, denom_limit = 10,
-  method = "wald", reason = "n > 10, x > 0, x < n")
+  method = "wald", method_denom = 10, method_rsp = 8)
 
 }
