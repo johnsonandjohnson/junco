@@ -550,7 +550,7 @@ tt_to_tlgrtf <- function(
           full_pag_i,
           file = fname,
           orientation = orientation,
-          colwidths = j_mf_col_widths(pgi_for_cw),
+          colwidths = formatters::mf_col_widths(pgi_for_cw),
           fontspec = fontspec,
           watermark = watermark,
           col_gap = col_gap,
@@ -681,7 +681,7 @@ tt_to_tlgrtf <- function(
     colheader <- colinfo$colheader
   } else {
     mpf <- matrix_form(
-      utils::head(tt, 1),
+      rtables::head(tt, 1),
       indent_rownames = FALSE,
       expand_newlines = FALSE,
       fontspec = fontspec,

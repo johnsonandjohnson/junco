@@ -77,5 +77,5 @@ colspan_map <- create_colspan_map(
 colspan_map
 }
 \seealso{
-\code{\link[rtables:add_overall_level]{rtables::add_combo_levels()}} for creating split functions that utilize combination levels.
+\code{\link[rtables:add_combo_levels]{rtables::add_combo_levels()}} for creating split functions that utilize combination levels.
 }

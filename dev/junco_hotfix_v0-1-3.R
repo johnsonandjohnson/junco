@@ -8,9 +8,8 @@
 # - Hotfix #221: Fixes a bug where a_freq_j fails with countsource = altdf in nested row splits #200 (introduced in junco v0.1.5)
 #         (applies to h_a_freq_dataprep, s_freq_j, and a_freq_j).
 # - Hotfix #257 `s_summarize_desc_j()` fixed when applied to almost constant data due to behavior from `t.test.default()` (introduced in junco v0.1.5)
-# - Hotfix #375 `tt_to_tlgrtf()` sometimes missed the titles (issue #373) (introduced in junco v0.1.6)
-# - Hotfix #395 `def_colwidths()` crashes when long column labels (issue #281) (introduced in junco v0.1.6)
 # ==========================================
+
 
 # ==========================================
 # Surgical Patches
@@ -35,10 +34,10 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = tern
         list(
           statistic = NA_real_,
           parameter = NA_real_,
-          p.value = NA_real_,
-          estimate = estimate,
-          conf.int = c(NA_real_, NA_real_),
-          method = "t-test (failed)",
+          p.value   = NA_real_,
+          estimate  = estimate,
+          conf.int  = c(NA_real_, NA_real_),
+          method    = "t-test (failed)",
           data.name = dname,
           error_text = e$message
         )
@@ -69,6 +68,7 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = tern
       c(mean_diffci = stat),
       paste("Difference in Mean + ", tern::f_conf_level(control$conf_level))
     )
+
   }
   y <- c(y1, y2)
 
@@ -79,21 +79,20 @@ s_summarize_desc_j <- function(df, .var, .ref_group, .in_ref_col, control = tern
 # Percolations:
 
 s_aval_chg_col23_diff <- function(
-  df,
-  .var,
-  .df_row,
-  .ref_group,
-  .in_ref_col,
-  ancova,
-  interaction_y,
-  interaction_item,
-  conf_level,
-  variables,
-  trt_var,
-  ctrl_grp,
-  cur_param,
-  cur_lvl
-) {
+    df,
+    .var,
+    .df_row,
+    .ref_group,
+    .in_ref_col,
+    ancova,
+    interaction_y,
+    interaction_item,
+    conf_level,
+    variables,
+    trt_var,
+    ctrl_grp,
+    cur_param,
+    cur_lvl) {
   .df_row <- subset(.df_row, !is.na(.df_row[[.var]]))
   df <- subset(df, !is.na(df[[.var]]))
   .ref_group <- subset(.ref_group, !is.na(.ref_group[[.var]]))
@@ -186,55 +185,57 @@ get_output_csv_filename <- function(output_csv_directory, fpath, fname) {
     output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
   } else if (!dir.exists(output_csv_directory)) {
     output_csv_filename <- file.path(fpath, paste0(tolower(fname), ".csv"))
-    message("Output dir for csv ", output_csv_directory, " does not exist; csv will be saved as ", output_csv_filename)
+    message("Output dir for csv ", output_csv_directory,
+            " does not exist; csv will be saved as ",
+            output_csv_filename)
   } else {
-    output_csv_filename <- file.path(output_csv_directory, paste0(tolower(fname), ".csv"))
+    output_csv_filename <- file.path(output_csv_directory,
+                                     paste0(tolower(fname), ".csv"))
     message("Saving csv as ", output_csv_filename)
   }
   return(output_csv_filename)
 } #### TODO: hotfix :142 optional csv #165
 
-# - Hotfix #395 `def_colwidths()` crashes when long column labels (issue #281) (introduced in junco v0.1.6)
+
 tt_to_tlgrtf <- function(
-  tt,
-  file = NULL,
-  orientation = c("portrait", "landscape"),
-  colwidths = def_colwidths(
     tt,
-    fontspec,
-    col_gap = col_gap,
-    label_width_ins = label_width_ins,
-    type = tlgtype
-  ),
-  label_width_ins = 2,
-  watermark = NULL,
-  pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
-  fontspec = font_spec("Times", 9L, 1.2),
-  pg_width = junco:::pg_width_by_orient(orientation == "landscape"),
-  margins = c(0, 0, 0, 0),
-  paginate = junco:::tlg_type(tt) == "Table",
-  col_gap = ifelse(tlgtype == "Listing", .5, 3),
-  nosplitin = list(
-    row = character(),
-    col = character()
-  ),
-  verbose = FALSE,
-  tlgtype = junco:::tlg_type(tt),
-  string_map = default_str_map,
-  markup_df = junco:::dps_markup_df,
-  combined_rtf = FALSE,
-  one_table = TRUE,
-  border_mat = junco:::make_header_bordmat(obj = tt),
-  round_type = obj_round_type(tt),
-  alignments = list(),
-  validate = TRUE,
-  export_csv = FALSE, #### TODO: hotfix :142 optional csv #165
-  output_csv_directory = NULL, #### TODO: hotfix :142 optional csv #165
-  ...
-) {
+    file = NULL,
+    orientation = c("portrait", "landscape"),
+    colwidths = def_colwidths(
+      tt,
+      fontspec,
+      col_gap = col_gap,
+      label_width_ins = label_width_ins,
+      type = tlgtype
+    ),
+    label_width_ins = 2,
+    watermark = NULL,
+    pagenum = ifelse(tlgtype == "Listing", TRUE, FALSE),
+    fontspec = font_spec("Times", 9L, 1.2),
+    pg_width = junco:::pg_width_by_orient(orientation == "landscape"),
+    margins = c(0, 0, 0, 0),
+    paginate = junco:::tlg_type(tt) == "Table",
+    col_gap = ifelse(tlgtype == "Listing", .5, 3),
+    nosplitin = list(
+      row = character(),
+      col = character()
+    ),
+    verbose = FALSE,
+    tlgtype = junco:::tlg_type(tt),
+    string_map = default_str_map,
+    markup_df = junco:::dps_markup_df,
+    combined_rtf = FALSE,
+    one_table = TRUE,
+    border_mat = junco:::make_header_bordmat(obj = tt),
+    round_type = obj_round_type(tt),
+    alignments = list(),
+    validate = TRUE,
+    export_csv = FALSE, #### TODO: hotfix :142 optional csv #165
+    output_csv_directory = NULL, #### TODO: hotfix :142 optional csv #165
+    ...) {
   checkmate::assert_flag(export_csv) #### TODO: hotfix :142 optional csv #165
   checkmate::assert_character(output_csv_directory, null.ok = TRUE, len = 1) #### TODO: hotfix :142 optional csv #165
-
+  
   if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
     if (!rtables::validate_table_struct(tt)) {
       message(
@@ -249,7 +250,7 @@ tt_to_tlgrtf <- function(
       )
     }
   }
-
+  
   if (tlgtype != "Listing") {
     pagenum <- FALSE
   }
@@ -371,7 +372,7 @@ tt_to_tlgrtf <- function(
         full_pag_i <- pags[[i]]
         if (
           is.list(full_pag_i) &&
-            !methods::is(full_pag_i, "MatrixPrintForm")
+          !methods::is(full_pag_i, "MatrixPrintForm")
         ) {
           pgi_for_cw <- full_pag_i[[1]]
         } else {
@@ -381,7 +382,7 @@ tt_to_tlgrtf <- function(
           full_pag_i,
           file = fname,
           orientation = orientation,
-          colwidths = junco:::j_mf_col_widths(pgi_for_cw),
+          colwidths = formatters::mf_col_widths(pgi_for_cw),
           fontspec = fontspec,
           watermark = watermark,
           col_gap = col_gap,
@@ -424,8 +425,7 @@ tt_to_tlgrtf <- function(
           label_width_ins = label_width_ins, #### TODO: hotfix:  label_width_ins was not being passed recursively #166
           ...
         )
-      } else if (!is.null(file)) {
-        # only one page after pagination
+      } else if (!is.null(file)) { # only one page after pagination
         message(
           "Table ",
           basename(file),
@@ -513,7 +513,7 @@ tt_to_tlgrtf <- function(
     colheader <- colinfo$colheader
   } else {
     mpf <- matrix_form(
-      rtables::head(tt, 1), #### TODO: hotfix #375 `tt_to_tlgrtf()` sometimes missed the titles (issue #373)
+      utils::head(tt, 1),
       indent_rownames = FALSE,
       expand_newlines = FALSE,
       fontspec = fontspec,
@@ -552,11 +552,8 @@ tt_to_tlgrtf <- function(
     colwidths <- colwidths - 0.00000000001 ## much smaller than a twip = 1/20 printing point
   }
 
-  if (
-    !one_table && # nolint start
-      is.list(tt) &&
-      !is(tt, "MatrixPrintForm")
-  ) {
+  if (!one_table && # nolint start
+      is.list(tt) && !is(tt, "MatrixPrintForm")) {
     ### gentlg is not vectorized on wcol.  x.x x.x x.x
     ### but it won't break if we only give it one number...
     ### Calling this an ugly hack is an insult to all the hard working hacks
@@ -576,8 +573,7 @@ tt_to_tlgrtf <- function(
     footer_val <- NULL
   }
 
-  if (!is.null(fname) && tlgtype == "Table" && is.data.frame(df) && export_csv) {
-    #### TODO: hotfix :142 optional csv #165
+  if (!is.null(fname) && tlgtype == "Table" && is.data.frame(df) && export_csv) { #### TODO: hotfix :142 optional csv #165
     output_csv_filename <- get_output_csv_filename(output_csv_directory, fpath, fname) #### TODO: hotfix :142 optional csv #165
     utils::write.csv(
       df,
@@ -616,29 +612,31 @@ tt_to_tlgrtf <- function(
 # - Hotfix #221: Fixes a bug where a_freq_j fails with countsource = altdf in nested row splits #200
 #         (applies to h_a_freq_dataprep, s_freq_j, and a_freq_j).
 
+
+
 h_a_freq_dataprep <- function(
-  df,
-  labelstr = NULL,
-  .var = NA,
-  val = NULL,
-  drop_levels = FALSE,
-  excl_levels = NULL,
-  new_levels = NULL,
-  new_levels_after = FALSE,
-  addstr2levs = NULL,
-  .df_row,
-  .spl_context,
-  .N_col,
-  id = "USUBJID",
-  denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
-  variables,
-  label = NULL,
-  label_fstr = NULL,
-  label_map = NULL,
-  .alt_df_full = NULL,
-  denom_by = NULL,
-  .stats,
-  countsource = c("df", "altdf", "altdf_subset") #### TODO: hotfix: a freq j fails with countsource = altdf in nested row splits (#221)
+    df,
+    labelstr = NULL,
+    .var = NA,
+    val = NULL,
+    drop_levels = FALSE,
+    excl_levels = NULL,
+    new_levels = NULL,
+    new_levels_after = FALSE,
+    addstr2levs = NULL,
+    .df_row,
+    .spl_context,
+    .N_col,
+    id = "USUBJID",
+    denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
+    variables,
+    label = NULL,
+    label_fstr = NULL,
+    label_map = NULL,
+    .alt_df_full = NULL,
+    denom_by = NULL,
+    .stats,
+    countsource = c("df", "altdf", "altdf_subset") #### TODO: hotfix: a freq j fails with countsource = altdf in nested row splits (#221)
 ) {
   denom <- match.arg(denom)
 
@@ -729,19 +727,20 @@ h_a_freq_dataprep <- function(
 }
 
 
+
 s_freq_j <- function(
-  df,
-  .var,
-  .df_row,
-  val = NULL,
-  drop_levels = FALSE,
-  excl_levels = NULL,
-  alt_df,
-  parent_df,
-  id = "USUBJID",
-  denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
-  .N_col,
-  countsource = c("df", "altdf", "altdf_subset") #### TODO: hotfix: a freq j fails with countsource = altdf in nested row splits (#221)
+    df,
+    .var,
+    .df_row,
+    val = NULL,
+    drop_levels = FALSE,
+    excl_levels = NULL,
+    alt_df,
+    parent_df,
+    id = "USUBJID",
+    denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
+    .N_col,
+    countsource = c("df", "altdf", "altdf_subset") #### TODO: hotfix: a freq j fails with countsource = altdf in nested row splits (#221)
 ) {
   if (is.na(.var) || is.null(.var)) {
     stop("Argument .var cannot be NA or NULL.")
@@ -749,8 +748,7 @@ s_freq_j <- function(
 
   countsource <- match.arg(countsource)
 
-  if (countsource %in% c("altdf", "altdf_subset")) {
-    #### TODO: hotfix: a freq j fails with countsource = altdf in nested row splits (#221)
+  if (countsource %in% c("altdf", "altdf_subset")) { #### TODO: hotfix: a freq j fails with countsource = altdf in nested row splits (#221)
     df <- alt_df
   }
 
@@ -766,14 +764,14 @@ s_freq_j <- function(
   }
   n4 <- length(unique(parent_df[[id]]))
 
-  denom <- match.arg(denom) |>
-    switch(
-      "n_altdf" = n1,
-      "n_df" = n2,
-      "n_rowdf" = n3,
-      "N_col" = .N_col,
-      "n_parentdf" = n4
-    )
+
+  denom <- match.arg(denom) |> switch(
+    "n_altdf" = n1,
+    "n_df" = n2,
+    "n_rowdf" = n3,
+    "N_col" = .N_col,
+    "n_parentdf" = n4
+  )
 
   y <- list()
 
@@ -863,50 +861,50 @@ s_freq_j <- function(
 
 
 a_freq_j <- function(
-  df,
-  labelstr = NULL,
-  .var = NA,
-  val = NULL,
-  drop_levels = FALSE,
-  excl_levels = NULL,
-  new_levels = NULL,
-  new_levels_after = FALSE,
-  addstr2levs = NULL,
-  .df_row,
-  .spl_context,
-  .N_col,
-  id = "USUBJID",
-  denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
-  riskdiff = TRUE,
-  ref_path = NULL,
-  variables = list(strata = NULL),
-  conf_level = 0.95,
-  method = c(
-    "wald",
-    "waldcc",
-    "cmh",
-    "ha",
-    "newcombe",
-    "newcombecc",
-    "strat_newcombe",
-    "strat_newcombecc"
-  ),
-  weights_method = "cmh",
-  label = NULL,
-  label_fstr = NULL,
-  label_map = NULL,
-  .alt_df_full = NULL,
-  denom_by = NULL,
-  .stats = c("count_unique_denom_fraction"),
-  .formats = NULL,
-  .indent_mods = NULL,
-  na_str = rep("NA", 3),
-  .labels_n = NULL,
-  extrablankline = FALSE,
-  extrablanklineafter = NULL,
-  restr_columns = NULL,
-  colgroup = NULL,
-  countsource = c("df", "altdf", "altdf_subset") #### TODO: hotfix: a freq j fails with countsource = altdf in nested row splits (#221)
+    df,
+    labelstr = NULL,
+    .var = NA,
+    val = NULL,
+    drop_levels = FALSE,
+    excl_levels = NULL,
+    new_levels = NULL,
+    new_levels_after = FALSE,
+    addstr2levs = NULL,
+    .df_row,
+    .spl_context,
+    .N_col,
+    id = "USUBJID",
+    denom = c("N_col", "n_df", "n_altdf", "N_colgroup", "n_rowdf", "n_parentdf"),
+    riskdiff = TRUE,
+    ref_path = NULL,
+    variables = list(strata = NULL),
+    conf_level = 0.95,
+    method = c(
+      "wald",
+      "waldcc",
+      "cmh",
+      "ha",
+      "newcombe",
+      "newcombecc",
+      "strat_newcombe",
+      "strat_newcombecc"
+    ),
+    weights_method = "cmh",
+    label = NULL,
+    label_fstr = NULL,
+    label_map = NULL,
+    .alt_df_full = NULL,
+    denom_by = NULL,
+    .stats = c("count_unique_denom_fraction"),
+    .formats = NULL,
+    .indent_mods = NULL,
+    na_str = rep("NA", 3),
+    .labels_n = NULL,
+    extrablankline = FALSE,
+    extrablanklineafter = NULL,
+    restr_columns = NULL,
+    colgroup = NULL,
+    countsource = c("df", "altdf", "altdf_subset") #### TODO: hotfix: a freq j fails with countsource = altdf in nested row splits (#221)
 ) {
   denom <- match.arg(denom)
   method <- match.arg(method)
@@ -1154,11 +1152,8 @@ a_freq_j <- function(
 
   ### add extra blankline to the end of inrows --- as long as section_div is not working as expected
   # nolint start
-  if (
-    !is.null(inrows) &&
-      extrablankline ||
-      (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)
-  ) {
+  if (!is.null(inrows) && extrablankline ||
+      (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
     inrows <- junco:::add_blank_line_rcells(inrows)
   } # nolint end
 
@@ -1168,32 +1163,31 @@ a_freq_j <- function(
 # Percolations:
 
 a_freq_combos_j <- function(
-  df,
-  labelstr = NULL,
-  .var = NA,
-  val = NULL,
-  # arguments specific to a_freq_combos_j
-  combosdf = NULL,
-  do_not_filter = NULL,
-  filter_var = NULL,
-  flag_var = NULL,
-  # arguments specific to a_freq_combos_j till here
-  .df_row,
-  .spl_context,
-  .N_col,
-  id = "USUBJID",
-  denom = c("N_col", "n_df", "n_altdf", "n_rowdf", "n_parentdf"),
-  label = NULL,
-  label_fstr = NULL,
-  label_map = NULL,
-  .alt_df_full = NULL,
-  denom_by = NULL,
-  .stats = "count_unique_denom_fraction",
-  .formats = NULL,
-  .labels_n = NULL,
-  .indent_mods = NULL,
-  na_str = rep("NA", 3)
-) {
+    df,
+    labelstr = NULL,
+    .var = NA,
+    val = NULL,
+    # arguments specific to a_freq_combos_j
+    combosdf = NULL,
+    do_not_filter = NULL,
+    filter_var = NULL,
+    flag_var = NULL,
+    # arguments specific to a_freq_combos_j till here
+    .df_row,
+    .spl_context,
+    .N_col,
+    id = "USUBJID",
+    denom = c("N_col", "n_df", "n_altdf", "n_rowdf", "n_parentdf"),
+    label = NULL,
+    label_fstr = NULL,
+    label_map = NULL,
+    .alt_df_full = NULL,
+    denom_by = NULL,
+    .stats = "count_unique_denom_fraction",
+    .formats = NULL,
+    .labels_n = NULL,
+    .indent_mods = NULL,
+    na_str = rep("NA", 3)) {
   denom <- match.arg(denom)
 
   junco:::check_alt_df_full(denom, "n_altdf", .alt_df_full)
@@ -1301,19 +1295,19 @@ a_freq_combos_j <- function(
 
 
 a_freq_j_with_exclude <- function(
-  df,
-  labelstr = NULL,
-  exclude_levels,
-  .var = NA,
-  .spl_context,
-  .df_row,
-  .N_col,
-  .alt_df_full = NULL,
-  .stats = "count_unique_denom_fraction",
-  .formats = NULL,
-  .indent_mods = NULL,
-  .labels_n = NULL,
-  ...
+    df,
+    labelstr = NULL,
+    exclude_levels,
+    .var = NA,
+    .spl_context,
+    .df_row,
+    .N_col,
+    .alt_df_full = NULL,
+    .stats = "count_unique_denom_fraction",
+    .formats = NULL,
+    .indent_mods = NULL,
+    .labels_n = NULL,
+    ...
 ) {
   if (do_exclude_split(exclude_levels, .spl_context)) {
     NULL
@@ -1336,31 +1330,30 @@ a_freq_j_with_exclude <- function(
 }
 
 a_freq_subcol_j <- function(
-  df,
-  labelstr = NULL,
-  .var = NA,
-  val = NULL,
-  # arguments specific to a_freq_subcol_j
-  subcol_split = NULL,
-  subcol_var = NULL,
-  subcol_val = NULL,
-  # arguments specific to a_freq_subcol_j till here
-  .df_row,
-  .spl_context,
-  .N_col,
-  id = "USUBJID",
-  denom = c("N_col", "n_df", "n_altdf", "n_rowdf", "n_parentdf"),
-  label = NULL,
-  label_fstr = NULL,
-  label_map = NULL,
-  .alt_df_full = NULL,
-  denom_by = NULL,
-  .stats = c("count_unique_denom_fraction"),
-  .formats = NULL,
-  .labels_n = NULL,
-  .indent_mods = NULL,
-  na_str = rep("NA", 3)
-) {
+    df,
+    labelstr = NULL,
+    .var = NA,
+    val = NULL,
+    # arguments specific to a_freq_subcol_j
+    subcol_split = NULL,
+    subcol_var = NULL,
+    subcol_val = NULL,
+    # arguments specific to a_freq_subcol_j till here
+    .df_row,
+    .spl_context,
+    .N_col,
+    id = "USUBJID",
+    denom = c("N_col", "n_df", "n_altdf", "n_rowdf", "n_parentdf"),
+    label = NULL,
+    label_fstr = NULL,
+    label_map = NULL,
+    .alt_df_full = NULL,
+    denom_by = NULL,
+    .stats = c("count_unique_denom_fraction"),
+    .formats = NULL,
+    .labels_n = NULL,
+    .indent_mods = NULL,
+    na_str = rep("NA", 3)) {
   denom <- match.arg(denom)
 
   if (!is.null(labelstr) && is.na(.var)) {
@@ -1465,33 +1458,32 @@ a_freq_subcol_j <- function(
 }
 
 a_freq_resp_var_j <- function(
-  df,
-  .var,
-  .df_row,
-  .N_col,
-  .spl_context,
-  resp_var = NULL,
-  id = "USUBJID",
-  drop_levels = FALSE,
-  riskdiff = TRUE,
-  ref_path = NULL,
-  variables = formals(s_proportion_diff)$variables,
-  conf_level = formals(s_proportion_diff)$conf_level,
-  method = c(
-    "wald",
-    "waldcc",
-    "cmh",
-    "ha",
-    "newcombe",
-    "newcombecc",
-    "strat_newcombe",
-    "strat_newcombecc"
-  ),
-  weights_method = formals(s_proportion_diff)$weights_method,
-  .formats = NULL,
-  na_str = rep("NA", 3),
-  ...
-) {
+    df,
+    .var,
+    .df_row,
+    .N_col,
+    .spl_context,
+    resp_var = NULL,
+    id = "USUBJID",
+    drop_levels = FALSE,
+    riskdiff = TRUE,
+    ref_path = NULL,
+    variables = formals(s_proportion_diff)$variables,
+    conf_level = formals(s_proportion_diff)$conf_level,
+    method = c(
+      "wald",
+      "waldcc",
+      "cmh",
+      "ha",
+      "newcombe",
+      "newcombecc",
+      "strat_newcombe",
+      "strat_newcombecc"
+    ),
+    weights_method = formals(s_proportion_diff)$weights_method,
+    .formats = NULL,
+    na_str = rep("NA", 3),
+    ...) {
   # ---- Derive statistics: xx / xx (xx.x%)
 
   if (is.null(resp_var)) {
@@ -1503,8 +1495,8 @@ a_freq_resp_var_j <- function(
   resp_var_values <- unique(df[[resp_var]][!is.na(df[[resp_var]])])
   if (
     is.character(df[[resp_var]]) &&
-      any(is.na(df[[resp_var]])) &&
-      all(resp_var_values == "Y")
+    any(is.na(df[[resp_var]])) &&
+    all(resp_var_values == "Y")
   ) {
     stop(
       paste0(
@@ -1525,12 +1517,10 @@ a_freq_resp_var_j <- function(
   df <- df[!is.na(df[[.var]]), ]
 
   # nolint start
-  if (
-    (is.factor(df[[resp_var]]) &&
-      (identical(levels(df[[resp_var]]), c("Y", "N")) || identical(levels(df[[resp_var]]), c("N", "Y")))) ||
+  if ((is.factor(df[[resp_var]]) &&
+       (identical(levels(df[[resp_var]]), c("Y", "N")) || identical(levels(df[[resp_var]]), c("N", "Y")))) ||
       is.character(df[[resp_var]])
-  ) {
-    # nolint end
+  ) { # nolint end
     # missing values in resp_var should be excluded, not considered as not met response
     # subject will then not contribute to denominator
     df <- df[!is.na(df[[resp_var]]), ]
@@ -1605,8 +1595,7 @@ a_freq_resp_var_j <- function(
         denom_df,
         trt_var,
         cur_trt_grp,
-        .spl_context
-      )
+        .spl_context)
 
       rslt <- junco:::s_rel_risk_val_j(
         df = dfii,

@@ -20,7 +20,6 @@ LICENSE
 # lintr
 ^\.lintr$
 
-
 # pkgdown
 ^_pkgdown\.yml$
 pkgdown
@@ -43,6 +42,7 @@ pkgdown
 ^\.covrignore$
 ^\.idea$
 ^dev$
+
 # output
 ^output$
 ^[^/]*\.R$

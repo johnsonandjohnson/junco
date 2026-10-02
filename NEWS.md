@@ -1,4 +1,86 @@
-# junco 0.1.6
+# junco 0.1.6.9001
+
+### Changed
+- Added `.cell_footnotes` and `.row_footnotes` arguments to `format_stats()` (#470).
+- Removed `s_proportion_diff_j()` which was a wrapper around `tern::s_proportion_diff()`.
+  The `label` and `conf_level` parameters moved to `a_proportion_diff_j()` (#442, #467).
+- Renamed internal functions `s_rel_risk_val_j()` and `s_rel_risk_levii_j()` to
+  `s_risk_diff_val_j()` and `s_risk_diff_levii_j()` to correctly reflect that
+  they compute risk difference (p1 - p2), not relative risk (p1 / p2) (#442).
+
+### Fixed
+- Fixed `get_ref_info()` to accept ref_path = NULL (#359).
+- Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
+- Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
+- CRITICAL: hotfixed `tt_to_tlgrtf()` lost titles in certain cases (#373)
+- CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
+
+### Changed
+- Updated several analysis functions to use `h_get_cur_trt_grp()` (#295).
+- Replaced `h_get_trtvar_refpath()` with `h_get_cur_trt_grp()` (#295).
+- Updated `get_ref_info()` for matching column split paths (#295).
+- Added the new helper function `factor_by_order()` (#425).
+- Renamed `in_ref_col()` to `in_column()` and renamed its `ref_path` argument
+  to `col_path`.
+- Updated `in_ref_col()` to accept `ref_path = NULL` (#404).
+- Added the new helper functions `cur_col_split_path()` and `in_column()` to
+  support custom analysis functions that depend on the current column split
+  context (#404).
+- Added a default value for the `label` argument in `c_summary_subset_label()`.
+- Updated the documentation of `a_summary_subset()`.
+- Refactored `prepend_label_cell()`; Only `RowsVerticalSection` is now supported.
+- Removed `filter_df_prior_afun()`, `a_summary_diff_mvars()`, `a_summary_diff_mvars_label()`.
+- Removed formatters exports #317
+- Deprecate `a_coxph_hr` for `tern:::a_coxph_pairwise()` and `s_coxph_hr` for `tern:::s_coxph_pairwise()` #158
+- Reduce sampling of `rbmi` test to make tests shorter (#323)
+- Optimize shared tables in `test-tt_to_tblfile` (#323)
+- Changed forked `h_ancova` for the `tern` one
+- Add extra statistics to `a_eair100_j` and introduce scaling factor `num_p_year` (default = 100) (#361)
+- Removed ellipsis argument from `a_freq_resp_var_j` (#236) 
+- Removed `dplyr` from `junco` and replaced by base R #201
+- Replaced `assertthat` by `checkmate` for consistency #201
+- Remove `stringi` from dependencies #201
+- Deprecate `rbmi_analyse()`, `make_rbmi_cluster()`, `par_lapply()` for `rbmi` equivalent functions #367
+- Deprecate `a_kaplan_meier()` for `tern::a_surv_time()`
+- Changed the label for `range_with_cens_info` from `"Min, max"` (junco) to `"Min - Max (with censoring)"` and the argument from `lsmean_diffci` to `lsmean_diff_with_ci`
+- Deprecate `s_coxph_hr()` for `tern:::a_coxph_pairwise()`
+- Changed stop message in `a_freq_j()` when `label_map` option is used in a rowsplit with no data on a character analysis var #386
+- Use new exported splv_extra and value_expr accessors (insightsengineering#1098)
+- Update new exported calls from rtables.officer
+- update documentation to `roxygen2` 8.0.0 
+- Add extra statistics to `a_eair100_j` and introduce scaling factor `num_p_year` (default = 100) (#361)
+- Updated behavior of formatting functions `jjcsformat_count_denom_fraction` and `jjcsformat_fraction_count_denom` 
+and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat_fraction_count_denom_legacy` for backward compatibility reasons (#450)
+- Updated `insightsengineering` urls to `pharmaverse`
+- Renamed and refactored `postfun_eq5d` into `stats_in_cols_setup`
+- Added factor assertion on `.var` in `s_freq_j` (#453).
+- Added assertions for the `id` argument in `a_freq_j()` and `s_freq_j()` (#424).
+
+### Added
+- Added `s_test_proportion_diff_mf()` and `a_test_proportion_diff_mf()` adaptive
+  test of stratified response-proportion differences using the Mantel–Fleiss
+  criterion (#457).
+- Added `s_proportion_diff_mf()` and `a_proportion_diff_mf()` adaptive
+  estimation of stratified response-proportion differences using the
+  Mantel–Fleiss criterion (#456).
+- Added `a_cond_proportion_j()` which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator (and the method selection can either be done on cell level or on row level).
+- Added `a_sum_ratio_j()` analysis function for computing sum, unique-row sum, and their ratios against a denominator column.
+- Added `strict_match()` for uniquely matching a value in the odd or even positions of a character vector.
+- Added `categorize_pval()` for assigning p-values to validated, user-defined categories.
+- Added `pool_rubin_scalar()` and `pool_z_stat()` for pooling scalar estimates and z statistics across imputations.
+- Added `resp_multiple_imputation()` to impute missing binary responses across scenarios and pool CMH risk-difference and p-value results.
+- Updated documentation and examples for `label_map` in `a_freq_j` (#235)
+- Added `tern` methods for difference in proportions in `a_freq_j` and  `a_freq_resp_var_j` : `cmh_sato`, `cmh_mn`, `uncond_exact_diff`  (#389)
+- Added `a_summary_j_with_exclude()` to allow `tern::a_summary()` analyses to be skipped for selected row split levels.
+- Added `a_summarize_mmrm_with_exclude()` to allow MMRM summaries to be skipped for selected row split levels.
+- Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
+- Added `a_three_tier()` as extension to `a_two_tier()`.
+- Added formatting function `format_sigfig_j()` as alternative to `tern::format_sigfig()`. (#436)
+- Added varying decimal precision utility functions `fmt_spec_single_d`, `fmt_spec_df_d`, `fmt_spec_var_d`. (#474)
+- Added utility functions `get_fmt_details` and `compare_fmt_specs` for reviewing format specification objects.
+
+## [0.1.6] - 2026-05-05 (CRAN release)
+
 
 ### Fixed
 
@@ -20,6 +102,10 @@
 
 ### Changed
 
+- Updated `c_summary_subset_label()`: removed `.spl_context` argument and renamed `subset_expr` to `filter_expr`.
+- Renamed `a_summary_j()` to `a_summary_subset()` and updated its purpose, implementation, and arguments.
+- Added new stats/labels/formats/indents to `junco_utils_default_stats_formats_labels.r` file.
+- Renamed `s_diff_mean_ci()` to `s_diff_means()`, and added new statistics to `s_diff_means()`.
 - Moved `safe_t_test()` from `a_summarize_aval_chg_diff.R` to a new file `safe_t_test.R`,
 - Moved `add_blank_line_rcells()` from `s_functions.R` to `blank_line.R`.
 - changed return value `n` for `s_ancova_j` into `n_fit`, to differentiate between these two statistics for combined function `s_summarize_ancova_j()` (#117)
@@ -42,6 +128,7 @@
 
 ### Added
 
+- Added `a_diff_means()`, which is based on the existing `s_diff_means()`.
 - Added multi-comparator functionality (#271)
 - Hotfix: Added several new functions for creating the Vital Sign tables for core and clinpharm:
   `a_summary_diff_mvars()`, `a_summary_j()`, `c_summary_subset_label()`, `filter_df_prior_afun()`,
@@ -116,6 +203,10 @@
 
 - Initial CRAN release
 
+
+## Changelog
+
+[0.1.6]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.6-rc
 [0.1.5]: https://github.com/johnsonandjohnson/junco/releases/tag/v-0.1.5
 [0.1.4]: https://github.com/johnsonandjohnson/junco/releases/tag/0.1.4
 [0.1.3]: https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.3

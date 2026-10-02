@@ -4,6 +4,8 @@
 #' and (optional) relative risk columns
 #'
 #' @inheritParams proposal_argument_convention
+#' @param .var (`character(1)`)\cr Name of a categorical analysis variable in `df`.
+#' The variable must be a `factor`.
 #' @param val (`character` or NULL)\cr
 #' When NULL, all levels of the incoming variable (variable used in the `analyze` call)
 #' will be considered.\cr
@@ -94,11 +96,18 @@ s_freq_j <- function(
     stop("Argument .var cannot be NA or NULL.")
   }
 
+  checkmate::assert_string(.var)
+  checkmate::assert_string(id)
+  checkmate::assert_subset(id, colnames(df), empty.ok = FALSE)
+
   countsource <- match.arg(countsource)
 
   if (countsource %in% c("altdf", "altdf_subset")) {
     df <- alt_df
   }
+
+  checkmate::assert_names(names(df), must.include = .var)
+  checkmate::assert_class(df[[.var]], classes = "factor")
 
   .alt_df <- alt_df
 
@@ -207,7 +216,7 @@ s_freq_j <- function(
   return(y)
 }
 
-s_rel_risk_levii_j <- function(
+s_risk_diff_levii_j <- function(
   levii,
   df,
   .var,
@@ -236,22 +245,20 @@ s_rel_risk_levii_j <- function(
   # subjects with value levii observed in ref_df TRUE
   ref_df_val$rsp[ref_df_val[[id]] %in% unique(ref_dfii[[id]])] <- TRUE
 
-  ### once 3-d version of diff_ci is available in tern::s_proportion_diff
-  ### we should call tern::s_proportion_diff directly
-  res_ci_3d <- s_proportion_diff_j(
-    df_val,
-    .var = "rsp",
-    .ref_group = ref_df_val,
-    .in_ref_col,
-    variables = variables,
-    conf_level = conf_level,
-    method = method,
+  res_ci_3d <- tern::s_proportion_diff(
+    df          = df_val,
+    .var        = "rsp",
+    .ref_group  = ref_df_val,
+    .in_ref_col = .in_ref_col,
+    variables   = variables,
+    conf_level  = conf_level,
+    method      = method,
     weights_method = weights_method
   )$diff_est_ci
 }
 
 
-s_rel_risk_val_j <- function(
+s_risk_diff_val_j <- function(
   df,
   .var,
   .df_row,
@@ -274,7 +281,10 @@ s_rel_risk_val_j <- function(
     "newcombe",
     "newcombecc",
     "strat_newcombe",
-    "strat_newcombecc"
+    "strat_newcombecc",
+    "cmh_sato",
+    "cmh_mn",
+    "uncond_exact_diff"
   ),
   weights_method = "cmh"
 ) {
@@ -321,7 +331,7 @@ s_rel_risk_val_j <- function(
     stop(
       "\nProblem: a_freq_j \n
            Denominator has multiple records per id. \n
-           Please specify colgroup and/or denom_by to refine your denominator for proper relative risk derivation."
+           Please specify colgroup and/or denom_by to refine your denominator for proper risk difference derivation."
     )
   }
 
@@ -354,7 +364,7 @@ s_rel_risk_val_j <- function(
   # calculate the stats for each of the levels in levs
   rr_ci_3d <- sapply(
     levs,
-    s_rel_risk_levii_j,
+    s_risk_diff_levii_j,
     df = df,
     .var = .var,
     ref_df = ref_df,
@@ -389,11 +399,11 @@ s_rel_risk_val_j <- function(
 #' (if required risk difference column splits are included).
 #' @param ref_path (`string`)\cr Column path specifications for
 #' the control group for the relative risk derivation.
-#' @param variables Will be passed onto the relative risk function
-#' (internal function s_rel_risk_val_j), which is based upon [tern::s_proportion_diff()].\cr
+#' @param variables Will be passed onto the risk difference function
+#' (internal function s_risk_diff_val_j), which is based upon [tern::s_proportion_diff()].\cr
 #' See `?tern::s_proportion_diff` for details.
-#' @param method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
-#' @param weights_method Will be passed onto the relative risk function (internal function s_rel_risk_val_j).\cr
+#' @param method Will be passed onto the risk difference function (internal function s_risk_diff_val_j).\cr
+#' @param weights_method Will be passed onto the risk difference function (internal function s_risk_diff_val_j).\cr
 #' @param label (`string`)\cr
 #' When `val` has length 1,
 #' the row label to be shown on the output can be specified using this argument.\cr
@@ -414,9 +424,24 @@ s_rel_risk_val_j <- function(
 #' a `cfun` in a `summarize_row_groups` call.\cr
 #' It is recommended not to utilize this argument for other purposes.
 #' The label argument could be used instead (if `val` is a single string)\cr
-#' @param label_map (`tibble`)\cr
-#' A mapping tibble to translate levels from the incoming variable into
-#' a different row label to be presented on the table.\cr
+#' @param label_map (`data.frame`)\cr
+#' A mapping data frame used to translate levels of the analysis variable(s) into
+#' the row labels displayed in the table, optionally conditioned on the nearest row-split.\cr
+#'
+#' Four types of mappings are supported:
+#' \enumerate{
+#'   \item Single-variable mapping. Column names: `level`, `label`.
+#'   \item Multi-variable mapping. Column names: `var`, `level`, `label`.
+#'   \item Conditional-on-row-split mapping. Column names: `<split_var>`, `level`, `label`.
+#'   \item Conditional-on-row-split multi-variable mapping. Column names: `<split_var>`, `var`, `level`, `label`.
+#' }
+#' Here, `<split_var>` is a placeholder for the name of the variable used for the nearest row-split
+#' (e.g. `SEX`, `PARAMCD`).\cr
+#'
+#' **Recommendation**: ensure input variable(s) are of type factor, to avoid the error
+#' "got a label map that doesn't provide labels for all values".\cr
+#'
+#' See examples for more details.
 #' @param .alt_df_full (`dataframe`)\cr Denominator dataset
 #' for fraction and relative risk calculations.\cr
 #' this argument gets populated by the rtables
@@ -580,6 +605,149 @@ s_rel_risk_val_j <- function(
 #'
 #' result2 <- build_table(lyt2, adae, alt_counts_df = adsl)
 #'
+#' # -------------------------------------------------------------------------
+#' # Examples using the label_map argument
+#' # -------------------------------------------------------------------------
+#'
+#' adsl <- ex_adsl |> select("USUBJID", "SEX", "ARM")
+#' adae <- ex_adae |> select("USUBJID", "AEBODSYS", "AEDECOD")
+#' adae[["TRTEMFL"]] <- "Y"
+#'
+#' trtvar <- "ARM"
+#' adae <- adae |> left_join(adsl)
+#'
+#' # -------------------------------------------------------------------------
+#' # 1. Simple mapping.
+#' # Remaps factor levels (value) to custom new labels (label).
+#' # -------------------------------------------------------------------------
+#'
+#' label_map_simple <- data.frame(
+#'   value = c("M", "F", "UNDIFFERENTIATED", "U"),
+#'   label = c("Male", "Female", "Undifferentiated", "Unknown")
+#' )
+#'
+#' lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
+#'   split_cols_by(trtvar) |>
+#'   analyze("SEX",
+#'     afun = a_freq_j,
+#'     extra_args = list(
+#'       .stats = "count_unique_fraction",
+#'       label_map = label_map_simple
+#'     )
+#'   )
+#'
+#' result_lmap1 <- build_table(lyt_lmap1, adsl, alt_counts_df = adsl)
+#' result_lmap1
+#'
+#' # -------------------------------------------------------------------------
+#' # 2. Multi-variable mapping.
+#' # Useful in situations where multiple Y/N variables can be analyzed in one
+#' # [rtables::analyze()] call.
+#' # -------------------------------------------------------------------------
+#'
+#' multi_vars <- c("DTH30FL", "DTHA30FL", "DTHB30FL")
+#' adslx <- pharmaverseadamjnj::adsl
+#' # ensure the variables are factor with levels Y/N - and variable label is kept
+#' adslx <- adslx |>
+#'   mutate(across(all_of(multi_vars), \(x) structure(
+#'     factor(x, levels = c("Y", "N")),
+#'     label = attr(x, "label")
+#'   )))
+#'
+#' map_multi <- data.frame(
+#'   var = multi_vars,
+#'   value = "Y",
+#'   label = c(
+#'     "Death <=30D of Last Trt Flag",
+#'     "Death >30D from Last Trt Flag",
+#'     "Death <=30D of First Trt Flag"
+#'   )
+#' )
+#'
+#' lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
+#'   split_cols_by("ARM") |>
+#'   analyze(multi_vars,
+#'     afun = a_freq_j,
+#'     extra_args = list(
+#'       .stats = "count_unique_denom_fraction",
+#'       label_map = map_multi,
+#'       val = "Y"
+#'     ),
+#'     show_labels = "hidden"
+#'   )
+#'
+#' result_lmap2 <- build_table(lyt_lmap1, adslx)
+#' result_lmap2
+#'
+#' # -------------------------------------------------------------------------
+#' # 3. Conditional-on-row-split mapping.
+#' # -------------------------------------------------------------------------
+#'
+#' map_rowsplit <- data.frame(
+#'   SEX = c("M", "F"),
+#'   value = c("Y", "Y"),
+#'   label = c("Male subjects with >=1 TE AE", "Female subjects with >=1 TE AE")
+#' )
+#'
+#' adsl <- ex_adsl |> select("USUBJID", "ARM", "SEX")
+#' adae <- ex_adae |> select("USUBJID", "AEBODSYS", "AEDECOD")
+#' adae[["TRTEMFL"]] <- "Y"
+#' adae <- adae |> left_join(adsl)
+#'
+#' lyt_lmap3 <- basic_table(show_colcounts = TRUE) |>
+#'   split_cols_by("ARM") |>
+#'   split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M")), child_labels = "hidden") |>
+#'   analyze("TRTEMFL",
+#'     afun = a_freq_j,
+#'     extra_args = list(
+#'       .stats = "count_unique_denom_fraction",
+#'       label_map = map_rowsplit,
+#'       val = "Y"
+#'     ),
+#'     show_labels = "hidden"
+#'   )
+#'
+#' result_lmap3 <- build_table(lyt_lmap3, adae, alt_counts_df = adsl)
+#' result_lmap3
+#'
+#' # -----------------------------------------------------------------------------------
+#' # 4. Conditional-on-row-split multi-variable mapping.
+#' # -----------------------------------------------------------------------------------
+#' adsl_jnj <- pharmaverseadamjnj::adsl
+#' advs_jnj <- pharmaverseadamjnj::advs
+#'
+#' multi_vars <- c("CRIT1FL", "CRIT2FL", "CRIT3FL")
+#'
+#' map_multi_rowsplit <- data.frame(
+#'   PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
+#'   var = rep(multi_vars, 2),
+#'   value = rep("Y", 6),
+#'   label = c(
+#'     "<50 mmHg and with >20 mmHg decrease from baseline",
+#'     ">105 mmHg and with >30 mmHg increase from baseline",
+#'     "Diastolic blood pressure<60",
+#'     "<90 mmHg and with >30 mmHg decrease from baseline",
+#'     ">180 mmHg and with >40 mmHg increase from baseline",
+#'     "Systolic blood pressure<90"
+#'   )
+#' )
+#'
+#' lyt_lmap4 <- basic_table(show_colcounts = TRUE) |>
+#'   split_cols_by("TRT01A") |>
+#'   split_rows_by("PARAMCD", split_fun = keep_split_levels(c("DIABP", "SYSBP"))) |>
+#'   analyze(multi_vars,
+#'     afun = a_freq_j,
+#'     extra_args = list(
+#'       .stats = "count_unique_denom_fraction",
+#'       label_map = map_multi_rowsplit,
+#'       val = "Y"
+#'     ),
+#'     show_labels = "hidden"
+#'   )
+#'
+#' result_lmap4 <- build_table(lyt_lmap4, advs_jnj, alt_counts_df = adsl_jnj)
+#' result_lmap4
+#'
 #' @return
 #' * `a_freq_j`: returns a list of requested statistics with formatted `rtables::CellValue()`.\cr
 #' Within the relative risk difference columns, the following stats are blanked out:
@@ -618,7 +786,10 @@ a_freq_j <- function(
     "newcombe",
     "newcombecc",
     "strat_newcombe",
-    "strat_newcombecc"
+    "strat_newcombecc",
+    "cmh_sato",
+    "cmh_mn",
+    "uncond_exact_diff"
   ),
   weights_method = "cmh",
   label = NULL,
@@ -637,6 +808,15 @@ a_freq_j <- function(
   colgroup = NULL,
   countsource = c("df", "altdf", "altdf_subset")
 ) {
+  checkmate::assert_string(id)
+  checkmate::assert_subset(id, colnames(df), empty.ok = FALSE)
+  checkmate::check_character(ref_path, min.len = 2L)
+  checkmate::assert_true(length(ref_path) %% 2L == 0L)
+
+  if (riskdiff && !is.null(ref_path) && is.null(.alt_df_full)) {
+    stop("In order to get correct numbers in relative risk column, please specify alt_counts_df in build_table.")
+  }
+
   denom <- match.arg(denom)
   method <- match.arg(method)
 
@@ -749,7 +929,6 @@ a_freq_j <- function(
     if (riskdiff && is.null(ref_path)) {
       stop("argument ref_path cannot be NULL.")
     }
-    ### denom N_colgroup should not be used in layout with risk diff columns
     if (denom == "N_colgroup") {
       stop(
         "denom N_colgroup cannot be used in a layout with risk diff columns."
@@ -759,28 +938,11 @@ a_freq_j <- function(
       trt_var <- NULL
       ctrl_grp <- NULL
       cur_trt_grp <- NULL
-    }
-
-    if (riskdiff) {
-      trt_var_refpath <- h_get_trtvar_refpath(
-        ref_path,
-        .spl_context,
-        df
-      )
-      # trt_var_refpath is list with elements
-      # trt_var trt_var_refspec cur_trt_grp ctrl_grp
-      # make these elements available in current environment
-      trt_var <- trt_var_refpath$trt_var
-      trt_var_refspec <- trt_var_refpath$trt_var_refspec
-      cur_trt_grp <- trt_var_refpath$cur_trt_grp
-      ctrl_grp <- trt_var_refpath$ctrl_grp
-      # for combined facet, denom_df value for the treatment group needs update
-      new_denomdf <- upd_denom_df_combo(
-        new_denomdf,
-        trt_var,
-        cur_trt_grp,
-        .spl_context
-      )
+    } else {
+      trt_var <- ref_path[length(ref_path) - 1L]
+      ctrl_grp <- ref_path[length(ref_path)]
+      stopifnot(ctrl_grp %in% levels(df[[trt_var]]))
+      cur_trt_grp <- h_get_cur_trt_grp(trt_var, .spl_context)
 
       if (!is.null(colgroup) && trt_var == colgroup) {
         stop(
@@ -789,9 +951,16 @@ a_freq_j <- function(
              Either remove risk difference columns from layout, set riskdiff = FALSE, or update colgroup."
         )
       }
+
+      new_denomdf <- upd_denom_df_combo(
+        new_denomdf,
+        trt_var,
+        cur_trt_grp,
+        .spl_context
+      )
     }
 
-    x_stats <- s_rel_risk_val_j(
+    x_stats <- s_risk_diff_val_j(
       df,
       .var = .var,
       .df_row = .df_row,

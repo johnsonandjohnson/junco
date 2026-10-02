@@ -2,7 +2,7 @@
 % Please edit documentation in R/tabulate_rbmi.R
 \name{tidy.pool}
 \alias{tidy.pool}
-\title{Helper method (for \code{\link[broom:reexports]{broom::tidy()}}) to prepare a data frame from an
+\title{Helper method (for \code{\link[broom:tidy]{broom::tidy()}}) to prepare a data frame from an
 \code{pool} \code{rbmi} object containing the LS means and contrasts and multiple visits}
 \usage{
 \method{tidy}{pool}(x, visits, ...)
@@ -19,7 +19,7 @@ analysis results, confidence level, hypothesis testing type.}
 A \code{data.frame}.
 }
 \description{
-Helper method (for \code{\link[broom:reexports]{broom::tidy()}}) to prepare a data frame from an
+Helper method (for \code{\link[broom:tidy]{broom::tidy()}}) to prepare a data frame from an
 \code{pool} \code{rbmi} object containing the LS means and contrasts and multiple visits
 }
 \keyword{internal}
