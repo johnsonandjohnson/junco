@@ -105,7 +105,7 @@ h_get_rsp_counts <- function(x, .var, na.rm = FALSE) {
 #' df_row <- data.frame(rsp = rep(rsp_v, 2))
 #' s_cond_proportion_j(
 #'   dta, .var = "rsp", method_scope = "row",
-#'   .df_row = df_row
+#'   .df_row = df_row, na.rm = TRUE
 #' )
 #'
 #' @export

@@ -190,7 +190,7 @@ s_cond_proportion_j(dta, .var = "rsp", na.rm = TRUE)
 df_row <- data.frame(rsp = rep(rsp_v, 2))
 s_cond_proportion_j(
   dta, .var = "rsp", method_scope = "row",
-  .df_row = df_row
+  .df_row = df_row, na.rm = TRUE
 )
 
 d_cond_proportion_j(conf_level = 0.90, long = FALSE, num_limit = 0, denom_limit = 10)
