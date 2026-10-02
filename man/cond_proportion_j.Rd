@@ -15,7 +15,6 @@ a_cond_proportion_j(
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL,
-  .N_col = NULL,
   .df_row = NULL
 )
 
@@ -24,11 +23,10 @@ s_cond_proportion_j(
   .var,
   conf_level = 0.95,
   long = FALSE,
-  na.rm = TRUE,
+  na.rm = FALSE,
   num_limit = 0,
   denom_limit = 10,
-  denom = c("n", "N_col", "N_row"),
-  .N_col,
+  denom = c("n", "N_row"),
   method_scope = c("cell", "row"),
   .df_row = NULL
 )
@@ -62,9 +60,6 @@ information on the \code{'auto'} setting.}
 
 \item{.indent_mods}{(named \code{integer})\cr indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.}
-
-\item{.N_col}{(\code{integer})\cr column-wise N (column count) for the full column being analyzed that is typically
-passed by \code{rtables}.}
 
 \item{.df_row}{(\code{data.frame})\cr data for the current row across all columns,
 automatically supplied by \code{rtables}.}
@@ -134,7 +129,8 @@ or based on the response data for the entire row (\code{method_scope = "row"}):
 \item With \code{method_scope = "cell"}, the counts used for the decision are:
 \itemize{
 \item numerator: the number of responders in the current cell;
-\item denominator: specified by \code{denom} (\code{n} or \code{N_row}).
+\item denominator: the total number of observations in the cell (using \code{df})
+if \code{denom = "n"}, or across the row (using \code{.df_row}) if \code{denom = "N_row"}.
 }
 \item With \code{method_scope = "row"}, the counts used for the decision are:
 \itemize{

@@ -23,7 +23,8 @@
 #'
 #' - With `method_scope = "cell"`, the counts used for the decision are:
 #'   - numerator: the number of responders in the current cell;
-#'   - denominator: specified by `denom` (`n` or `N_row`).
+#'   - denominator: the total number of observations in the cell (using `df`)
+#'     if `denom = "n"`, or across the row (using `.df_row`) if `denom = "N_row"`.
 #' - With `method_scope = "row"`, the counts used for the decision are:
 #'   - numerator: the total number of responders across the row (using `.df_row`);
 #'   - denominator: the total number of observations across the row (from `.df_row`).
@@ -113,11 +114,10 @@ s_cond_proportion_j <- function(
   .var,
   conf_level = 0.95,
   long = FALSE,
-  na.rm = TRUE,
+  na.rm = FALSE,
   num_limit = 0,
   denom_limit = 10,
-  denom = c("n", "N_col", "N_row"),
-  .N_col,
+  denom = c("n", "N_row"),
   method_scope = c("cell", "row"),
   .df_row = NULL
 ) {
@@ -135,20 +135,17 @@ s_cond_proportion_j <- function(
   n_rsp <- rsp_counts[["n_rsp"]]
 
   if (method_scope == "row" || denom == "N_row") {
-    tern::assert_df_with_variables(.df_row, list(rsp = .var))
     row_rsp_counts <- h_get_rsp_counts(.df_row, .var, na.rm = na.rm)
   }
-  denom_val <- match.arg(denom) |>
-    switch(
-      n = n_obs,
-      N_row = row_rsp_counts[["len_rsp"]]
-    )
+  denom_val <- switch(
+    denom,
+    n = n_obs,
+    N_row = row_rsp_counts[["len_rsp"]]
+  )
   assert_int(denom_val, lower = n_obs)
   p_hat <- ifelse(denom_val > 0, n_rsp / denom_val, 0)
 
-  # The method is shared by all cells in a row when requested. The CI itself
-  # still uses the current cell's responses and denominator. Therefore
-  # we separate out here `method_denom` and `method_rsp` for the method decision.
+  # Define the numerator and denominator used for the CI method selection.
   if (method_scope == "row") {
     method_denom <- row_rsp_counts[["len_rsp"]]
     method_rsp <- row_rsp_counts[["n_rsp"]]
@@ -315,7 +312,6 @@ a_cond_proportion_j <- function(
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL,
-  .N_col = NULL,
   .df_row = NULL
 ) {
   dots_extra_args <- list(...)
@@ -330,7 +326,6 @@ a_cond_proportion_j <- function(
       df = list(df),
       .var = .var,
       .df_row = list(.df_row),
-      .N_col = .N_col,
       dots_extra_args
     )
   )
