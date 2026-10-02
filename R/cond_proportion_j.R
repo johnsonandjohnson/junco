@@ -25,7 +25,7 @@
 #'
 #' - With `method_scope = "cell"`, the counts used for the decision are:
 #'   - numerator: the number of responders in the current cell;
-#'   - denominator: specified by `denom` (`n`, `.N_col`, or `.N_row`).
+#'   - denominator: specified by `denom` (`n` or `N_row`).
 #' - With `method_scope = "row"`, the counts used for the decision are:
 #'   - numerator: the total number of responders across the row (using `.df_row`);
 #'   - denominator: `.N_row`, i.e. the total number of observations across the row.
@@ -42,9 +42,7 @@
 #' @param .var (`string`)
 #' @param conf_level (`numeric`)
 #' @param denom (`character`)\cr denominator to use for percentage and CI computation:
-#'   "n" (default, number of observed records), "N_col", or "N_row". When "N_col" or
-#'   "N_row" are chosen, the corresponding `.N_col` or `.N_row` are used, respectively.
-#' @param .N_col (`int`)
+#'   "n" (default, number of observed records), or "N_row" (number of observations in the row).
 #' @param long (`flag`)\cr whether a long description is required.
 #' @param na.rm (`flag`)\cr whether `NA` responses should be removed before analysis.
 #'   If `FALSE` and `NA` values are present, an error is raised.
@@ -72,7 +70,7 @@ NULL
 #' @param .var (`string`)\cr Response column in `x` when `x` is a data frame.
 #' @param na.rm (`flag`)\cr Whether to remove missing responses before counting.
 #'
-#' @return A named integer vector with `n_rsp` (responders) and `len_rsp`
+#' @return A named list with `rsp` (logical response vector), `n_rsp` (responders) and `len_rsp`
 #'   (non-missing observations, when `na.rm = TRUE`).
 #'
 #' @keywords internal
@@ -84,7 +82,7 @@ h_get_rsp_counts <- function(x, .var, na.rm = FALSE) {
     x[[.var]]
   }
   rsp <- safe_as_logical(rsp, na.rm = na.rm)
-  c(n_rsp = sum(rsp), len_rsp = length(rsp))
+  list(rsp = rsp, n_rsp = sum(rsp), len_rsp = length(rsp))
 }
 
 #' @describeIn cond_proportion_j Statistics function estimating a proportion
@@ -135,14 +133,8 @@ s_cond_proportion_j <- function(
   denom <- match.arg(denom)
   method_scope <- match.arg(method_scope)
 
-  rsp <- if (checkmate::test_atomic_vector(df)) {
-    df
-  } else {
-    tern::assert_df_with_variables(df, list(rsp = .var))
-    df[[.var]]
-  }
-  rsp <- safe_as_logical(rsp, na.rm = na.rm)
   rsp_counts <- h_get_rsp_counts(df, .var, na.rm = na.rm)
+  rsp <- rsp_counts[["rsp"]]
   n_obs <- rsp_counts[["len_rsp"]]
   n_rsp <- rsp_counts[["n_rsp"]]
 
@@ -153,8 +145,7 @@ s_cond_proportion_j <- function(
   denom_val <- match.arg(denom) |>
     switch(
       n = n_obs,
-      N_row = row_rsp_counts[["len_rsp"]],
-      N_col = .N_col
+      N_row = row_rsp_counts[["len_rsp"]]
     )
   assert_int(denom_val, lower = n_obs)
   p_hat <- ifelse(denom_val > 0, n_rsp / denom_val, 0)
