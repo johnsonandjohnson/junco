@@ -17,9 +17,21 @@
 #' (b) all subjects except `num_limit` (or less) have observed response,
 #' or (c) the observed group size is less than `denom_limit`.
 #'
+#' Depending on the `method_scope` choice, this decision is either taken
+#' based on the response data for an individual cell (`method_scope = "cell"`),
+#' or based on the response data for the entire row (`method_scope = "row"`):
+#'
+#' - With `method_scope = "cell"`, the counts used for the decision are:
+#'   - numerator: the number of responders in the current cell;
+#'   - denominator: the total number of observations in the cell (using `df`)
+#'     if `denom = "n"`, or across the row (using `.df_row`) if `denom = "N_row"`.
+#' - With `method_scope = "row"`, the counts used for the decision are:
+#'   - numerator: the total number of responders across the row (using `.df_row`);
+#'   - denominator: the total number of observations across the row (from `.df_row`).
+#'
 #' CI computation follows [tern::s_proportion()] conventions: helper functions
-#' are called with `n = denom`, so when `denom = "N_col"` or `"N_row"`, those
-#' denominators are used for the interval.
+#' are called with `n = denom`, so when `denom = "N_row"`, this row-level
+#' denominator is used for the interval.
 #'
 #' @inheritParams proposal_argument_convention
 #' @param df (`logical` or `data.frame`)\cr if only a logical vector is used,
@@ -29,18 +41,49 @@
 #' @param .var (`string`)
 #' @param conf_level (`numeric`)
 #' @param denom (`character`)\cr denominator to use for percentage and CI computation:
-#'   "n" (default, number of observed records), "N_col", or "N_row". When "N_col" or
-#'   "N_row" are chosen, the corresponding `.N_col` or `.N_row` are used, respectively.
-#' @param .N_row (`int`)
-#' @param .N_col (`int`)
+#'   "n" (default, number of observed records), or "N_row" (number of observations in the row).
 #' @param long (`flag`)\cr whether a long description is required.
 #' @param na.rm (`flag`)\cr whether `NA` responses should be removed before analysis.
 #'   If `FALSE` and `NA` values are present, an error is raised.
+#'   Note that missing values are also removed from the row-wise counts
+#'   which is relevant when `method_scope = "row"` or `denom = "N_row"`.
 #' @param num_limit (`int`)\cr numerator limit to trigger the exact method.
 #' @param denom_limit (`int`)\cr denominator limit to trigger the exact method.
+#' @param method_scope (`string`)\cr select the CI method using counts from the
+#'   current cell (`"cell"`) or all columns in the current row (`"row"`). See details.
+#' @param .df_row (`data.frame`)\cr data for the current row across all columns,
+#'   automatically supplied by `rtables`.
+#' @param method (`string` or `NULL`)\cr selected CI method to show in the
+#'   label. `NULL` retains the combined method description.
+#' @param method_denom (`int`)\cr denominator used for the selected CI method.
+#' @param method_rsp (`int`)\cr numerator used for the selected CI method.
 #'
 #' @name cond_proportion_j
 NULL
+
+#' Helper Function to Extract Count Responders
+#'
+#' Converts a response vector, or a response column from a data frame, to logical
+#' values and returns its responder and observation counts.
+#'
+#' @param x (`vector` or `data.frame`)\cr Response data.
+#' @param .var (`string`)\cr Response column in `x` when `x` is a data frame.
+#' @param na.rm (`flag`)\cr Whether to remove missing responses before counting.
+#'
+#' @return A named list with `rsp` (logical response vector), `n_rsp` (responders) and `len_rsp`
+#'   (non-missing observations, when `na.rm = TRUE`).
+#'
+#' @keywords internal
+h_get_rsp_counts <- function(x, .var, na.rm = FALSE) {
+  rsp <- if (checkmate::test_atomic_vector(x)) {
+    x
+  } else {
+    tern::assert_df_with_variables(x, list(rsp = .var))
+    x[[.var]]
+  }
+  rsp <- safe_as_logical(rsp, na.rm = na.rm)
+  list(rsp = rsp, n_rsp = sum(rsp), len_rsp = length(rsp))
+}
 
 #' @describeIn cond_proportion_j Statistics function estimating a proportion
 #'   along with its confidence interval, with adaptive method selection.
@@ -56,10 +99,14 @@ NULL
 #'
 #' # Data frame input
 #' dta <- data.frame(rsp = c(TRUE, TRUE, FALSE, TRUE, FALSE, NA))
-#' s_cond_proportion_j(dta, .var = "rsp")
+#' s_cond_proportion_j(dta, .var = "rsp", na.rm = TRUE)
 #'
-#' # Using different denominator (requires .N_col in ...)
-#' s_cond_proportion_j(dta, .var = "rsp", denom = "N_col", .N_col = 10)
+#' # Using method_scope = "row" (requires .df_row in ...)
+#' df_row <- data.frame(rsp = rep(rsp_v, 2))
+#' s_cond_proportion_j(
+#'   dta, .var = "rsp", method_scope = "row",
+#'   .df_row = df_row, na.rm = TRUE
+#' )
 #'
 #' @export
 s_cond_proportion_j <- function(
@@ -67,55 +114,49 @@ s_cond_proportion_j <- function(
   .var,
   conf_level = 0.95,
   long = FALSE,
-  na.rm = TRUE,
+  na.rm = FALSE,
   num_limit = 0,
   denom_limit = 10,
-  denom = c("n", "N_col", "N_row"),
-  .N_row,
-  .N_col
+  denom = c("n", "N_row"),
+  method_scope = c("cell", "row"),
+  .df_row = NULL
 ) {
   checkmate::assert_flag(long)
   checkmate::assert_flag(na.rm)
-  tern::assert_proportion_value(conf_level)
+  assert_proportion_value(conf_level)
   checkmate::assert_int(num_limit, lower = 0)
   checkmate::assert_int(denom_limit, lower = 0)
   denom <- match.arg(denom)
+  method_scope <- match.arg(method_scope)
 
-  vec <- if (checkmate::test_atomic_vector(df)) {
-    df
-  } else {
-    tern::assert_df_with_variables(df, list(rsp = .var))
-    df[[.var]]
+  rsp_counts <- h_get_rsp_counts(df, .var, na.rm = na.rm)
+  rsp <- rsp_counts[["rsp"]]
+  n_obs <- rsp_counts[["len_rsp"]]
+  n_rsp <- rsp_counts[["n_rsp"]]
+
+  if (method_scope == "row" || denom == "N_row") {
+    row_rsp_counts <- h_get_rsp_counts(.df_row, .var, na.rm = na.rm)
   }
-  rsp <- safe_as_logical(vec)
-
-  if (anyNA(rsp)) {
-    if (na.rm) {
-      rsp <- rsp[!is.na(rsp)]
-    } else {
-      stop("Missing values detected in response and `na.rm = FALSE`.", call. = FALSE)
-    }
-  }
-
-  n_obs <- length(rsp)
-  n_rsp <- sum(rsp)
-
-  denom_val <- match.arg(denom) |>
-    switch(
-      n = n_obs,
-      N_row = .N_row,
-      N_col = .N_col
-    )
-
-  # The denominator cannot be lower than the number of observations here, because
-  # .N_row and .N_col cannot be lower.
+  denom_val <- switch(
+    denom,
+    n = n_obs,
+    N_row = row_rsp_counts[["len_rsp"]]
+  )
   assert_int(denom_val, lower = n_obs)
   p_hat <- ifelse(denom_val > 0, n_rsp / denom_val, 0)
 
-  # Adaptive method selection based on observed data and limits.
-  use_exact <- (denom_val < denom_limit) ||
-    (n_rsp <= num_limit) ||
-    (n_rsp >= (denom_val - num_limit))
+  # Define the numerator and denominator used for the CI method selection.
+  if (method_scope == "row") {
+    method_denom <- row_rsp_counts[["len_rsp"]]
+    method_rsp <- row_rsp_counts[["n_rsp"]]
+  } else {
+    method_denom <- denom_val
+    method_rsp <- n_rsp
+  }
+
+  use_exact <- (method_denom < denom_limit) ||
+    (method_rsp <= num_limit) ||
+    (method_rsp >= (method_denom - num_limit))
   method <- if (use_exact) "clopper-pearson" else "wald"
 
   prop_ci <- switch(
@@ -124,16 +165,21 @@ s_cond_proportion_j <- function(
     "wald" = prop_wald(rsp, n = denom_val, conf_level)
   )
 
+  label <- d_cond_proportion_j(
+    conf_level,
+    long = long,
+    num_limit = num_limit,
+    denom_limit = denom_limit,
+    method = if (method_scope == "row") method else NULL,
+    method_denom = if (method_scope == "row") method_denom else NULL,
+    method_rsp = if (method_scope == "row") method_rsp else NULL
+  )
+
   list(
     "n_prop" = formatters::with_label(c(n_rsp, p_hat), "Responders"),
     "prop_ci" = formatters::with_label(
       x = 100 * prop_ci,
-      label = d_cond_proportion_j(
-        conf_level,
-        long = long,
-        num_limit = num_limit,
-        denom_limit = denom_limit
-      )
+      label = label
     )
   )
 }
@@ -144,21 +190,81 @@ s_cond_proportion_j <- function(
 #' @return
 #' * `d_cond_proportion_j()` returns a string describing the analysis label.
 #'
+#' @examples
+#' d_cond_proportion_j(conf_level = 0.90, long = FALSE, num_limit = 0, denom_limit = 10)
+#'
+#' # With dedicated row-wise method:
+#' d_cond_proportion_j(
+#'   conf_level = 0.90, long = TRUE, num_limit = 0, denom_limit = 10,
+#'   method = "wald", method_denom = 10, method_rsp = 8)
+#'
 #' @export
-d_cond_proportion_j <- function(conf_level, long = FALSE, num_limit, denom_limit) {
+d_cond_proportion_j <- function(
+  conf_level,
+  long = FALSE,
+  num_limit = NULL,
+  denom_limit = NULL,
+  method = NULL,
+  method_denom = NULL,
+  method_rsp = NULL
+) {
+  assert_proportion_value(conf_level)
+  assert_flag(long)
+  assert_string(method, null.ok = TRUE)
+
   label <- paste0(conf_level * 100, "% CI")
 
   if (long) {
     label <- paste(label, "for Response Rates")
   }
 
-  method_part <- if (long) {
+  method_part <- if (!is.null(method)) {
+    assert_choice(method, choices = c("wald", "clopper-pearson"))
+    assert_count(num_limit)
+    assert_count(denom_limit)
+    assert_count(method_denom)
+    assert_count(method_rsp)
+    reason <- if (method == "wald") {
+      paste0("n >= ", denom_limit, ", x = ", method_rsp)
+    } else if (method_denom < denom_limit) {
+      paste0("n < ", denom_limit)
+    } else if (method_rsp <= num_limit) {
+      if (num_limit == 0) "x = 0" else paste0("x <= ", num_limit)
+    } else if (method_rsp >= (method_denom - num_limit)) {
+      if (num_limit == 0) "x = n" else paste0("x >= n - ", num_limit)
+    } else {
+      stop("Selected Clopper-Pearson method has no matching selection criterion.")
+    }
+    if (long) {
+      switch(
+        method,
+        "wald" = paste0(
+          "Wald because ",
+          reason
+        ),
+        "clopper-pearson" = paste0(
+          "Clopper-Pearson because ",
+          reason
+        )
+      )
+    } else {
+      switch(
+        method,
+        "wald" = "Wald",
+        "clopper-pearson" = "Clopper-Pearson"
+      )
+    }
+  } else if (long) {
+    assert_count(num_limit)
+    assert_count(denom_limit, positive = TRUE)
     paste0(
       "Wald if n >= ",
       denom_limit,
-      " and x > ",
+      ", x > ",
       num_limit,
-      ", else Clopper-Pearson"
+      ", x < n - ",
+      num_limit,
+      "; else Clopper-Pearson"
     )
   } else {
     "Wald / Clopper-Pearson"
@@ -205,7 +311,8 @@ a_cond_proportion_j <- function(
   .stats = NULL,
   .formats = NULL,
   .labels = NULL,
-  .indent_mods = NULL
+  .indent_mods = NULL,
+  .df_row = NULL
 ) {
   dots_extra_args <- list(...)
 
@@ -218,6 +325,7 @@ a_cond_proportion_j <- function(
     args_list = c(
       df = list(df),
       .var = .var,
+      .df_row = list(.df_row),
       dots_extra_args
     )
   )

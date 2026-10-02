@@ -588,17 +588,26 @@ strict_match <- function(x, y, odd = TRUE) {
 #' Safe Conversion to Logical Vector
 #'
 #' @param x (`vector`)\cr The input vector to be safely converted to a logical vector.
+#' @param na.rm (`flag`)\cr Whether to remove missing values after conversion.
 #'
 #' @return
 #' A logical vector corresponding to the input `x`. If the conversion introduces
 #' unexpected `NA` values, an error is raised.
 #'
 #' @keywords internal
-safe_as_logical <- function(x) {
+safe_as_logical <- function(x, na.rm = FALSE) {
   checkmate::assert_vector(x, strict = TRUE)
+  checkmate::assert_flag(na.rm)
   result <- as.logical(x)
   if (anyNA(result) && !identical(is.na(x), is.na(result))) {
     stop("Conversion to logical introduced unexpected NAs.")
+  }
+  if (anyNA(result)) {
+    if (na.rm) {
+      result <- result[!is.na(result)]
+    } else {
+      stop("Missing values detected in response and `na.rm = FALSE`.", call. = FALSE)
+    }
   }
   result
 }
