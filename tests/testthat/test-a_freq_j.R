@@ -147,7 +147,6 @@ test_that("a_freq_j in layout with relative risk column for combined facet", {
     ref_path = c("colspan_trt", " ", trtvar, ctrl_grp)
   )
 
-
   # Set up levels and label for the required combined columns
   add_combo <- add_combo_facet(
     "Combined",
@@ -180,7 +179,6 @@ test_that("a_freq_j in layout with relative risk column for combined facet", {
 
   mysplit_comb2 <- make_split_fun(post = list(add_combo2, rm_combo_from_placebo2))
 
-
   lyt <- basic_table(show_colcounts = TRUE) |>
     split_cols_by("colspan_trt", split_fun = trim_levels_to_map(map = colspan_trt_map)) |>
     split_cols_by(trtvar, split_fun = mysplit_comb) |>
@@ -188,7 +186,6 @@ test_that("a_freq_j in layout with relative risk column for combined facet", {
     split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = mysplit_comb2) |>
     split_rows_by("STRATA1") |>
     analyze("EOSSTT", afun = a_freq_j, extra_args = a_freq_j_args)
-
 
   result <- build_table(lyt, adsl, alt_counts_df = adsl)
 
@@ -257,7 +254,8 @@ test_that("a_freq_j with label_map and no data in row error message", {
         id = "id"
       )
     )
-  expect_error(result2 <- build_table(lyt2, dta),
+  expect_error(
+    result2 <- build_table(lyt2, dta),
     regexp = "Perhaps convert analysis variable rsp to a factor"
   )
 
@@ -284,6 +282,41 @@ test_that("a_freq_j raises an error when an incorrect id is specified", {
 
 
 # --- s_freq_j standalone tests ------------------------------------------------
+
+test_that("s_freq_j with all args supplied matches expected values (backward compat)", {
+  adae <- data.frame(
+    USUBJID = sprintf("SUBJ-%02d", c(1, 1, 2, 3, 4, 5)),
+    SEX = factor(c("M", "M", "M", "F", "M", "F"), levels = c("M", "F"))
+  )
+  adsl <- data.frame(
+    USUBJID = sprintf("SUBJ-%02d", 1:10),
+    SEX = factor(c("M", "M", "F", "F", "M", "F", "M", "F", "M", "F"))
+  )
+  parent <- data.frame(
+    USUBJID = sprintf("SUBJ-%02d", 1:7),
+    SEX = factor(c("M", "M", "F", "F", "M", "F", "M"))
+  )
+
+  res <- s_freq_j(
+    df = adae,
+    .var = "SEX",
+    .df_row = adae,
+    val = "M",
+    alt_df = adsl,
+    parent_df = parent,
+    id = "USUBJID",
+    denom = "n_df",
+    .N_col = 100L
+  )
+
+  expect_equal(res$n_df, c(n_df = 5L))
+  expect_equal(res$n_altdf, c(n_altdf = 10L))
+  expect_equal(res$n_rowdf, c(n_rowdf = 5L))
+  expect_equal(res$n_parentdf, c(n_parentdf = 7L))
+  expect_equal(res$denom, c(denom = 5L))
+  expect_equal(res$count_unique$M, c(count_unique = 3L))
+  expect_equal(res$count_unique_fraction$M, c(count_unique = 3L, p = 3 / 5))
+})
 
 test_that("s_freq_j works with minimal arguments (df, .var, val, denom)", {
   adae <- data.frame(
@@ -319,8 +352,12 @@ test_that("s_freq_j countsource = 'altdf' does not corrupt n_df", {
     SEX = factor(c("M", "M", "F", "F", "M", "F", "M", "F", "M", "F"))
   )
   res <- s_freq_j(
-    df = adae, .var = "SEX", val = "M",
-    denom = "n_altdf", alt_df = adsl, countsource = "altdf"
+    df = adae,
+    .var = "SEX",
+    val = "M",
+    denom = "n_altdf",
+    alt_df = adsl,
+    countsource = "altdf"
   )
 
   # n_df must reflect adae (8), not adsl (10)
