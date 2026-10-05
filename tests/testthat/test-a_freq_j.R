@@ -280,6 +280,61 @@ test_that("a_freq_j raises an error when an incorrect id is specified", {
   )
 })
 
+test_that("a_freq_j in case of data as in prior bug for cmh sato", {
+  library(dplyr)
+  ## example as in tern bug report https://github.com/pharmaverse/tern/issues/1535
+
+  tbl <- array(
+    c(
+      14, 15, 13, 19, # stratum S1
+      4, 0, 0, 0, # stratum S2
+      45, 32, 53, 61, # stratum S3
+      0, 8, 0, 0 # stratum S4
+    ),
+    dim = c(2L, 2L, 4L),
+    dimnames = list(grp = c("ref", "Not-ref"), rsp = c("TRUE", "FALSE"), strata = c("S1", "S2", "S3", "S4"))
+  )
+
+  # convert to data for usage with a_freq_j
+  df_input <- as.data.frame.table(tbl, responseName = "n")
+
+  expanded_df <- df_input[rep(seq_len(nrow(df_input)), df_input$n), c("grp", "rsp", "strata")]
+  expanded_df$USUBJID <- rownames(expanded_df)
+
+  ### usage with a_freq_j with relative risk column
+
+  trtvar <- "grp"
+  ctrl_grp <- "ref"
+
+  expanded_df$colspan_trt <- factor(
+    ifelse(expanded_df[[trtvar]] == ctrl_grp, " ", "Active Study Agent"),
+    levels = c("Active Study Agent", " ")
+  )
+  expanded_df$rrisk_header <- "Risk Difference (%) (95% CI)"
+  expanded_df$rrisk_label <- paste(expanded_df[[trtvar]], paste("vs", ctrl_grp))
+
+
+  lyt <- basic_table() |>
+    split_cols_by("colspan_trt", split_fun = drop_split_levels) |>
+    split_cols_by(trtvar, split_fun = drop_split_levels) |>
+    split_cols_by("rrisk_header", nested = FALSE) |>
+    split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = keep_split_levels("Not-ref")) |>
+    analyze(
+      "rsp",
+      afun = a_freq_j,
+      extra_args = list(
+        variables = list(strata = "strata"),
+        method = "cmh_sato",
+        ref_path = c("colspan_trt", " ", trtvar, ctrl_grp),
+        val = "TRUE"
+      )
+    )
+  expect_warning(result <- build_table(lyt, expanded_df),
+                 "Less")
+
+  expect_snapshot(cran = TRUE, result)
+})
+
 
 # --- s_freq_j standalone tests ------------------------------------------------
 
