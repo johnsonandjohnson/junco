@@ -141,25 +141,21 @@ s_freq_j <- function(
   checkmate::assert_character(val, null.ok = TRUE)
 
   # --- Validation -------------------------------------------------------
+  denom_choice <- match.arg(denom)
+  countsource <- match.arg(countsource)
+
   if (!is.null(val) && isTRUE(drop_levels)) {
     stop("'val' cannot be used together with 'drop_levels = TRUE'.")
   }
-
-  if (match.arg(denom) == "N_col" && is.null(.N_col)) {
+  if (denom_choice == "N_col" && is.null(.N_col)) {
     stop("'.N_col' is required when denom = 'N_col'.")
   }
-
-  countsource <- match.arg(countsource)
-
   if (countsource %in% c("altdf", "altdf_subset") && is.null(alt_df)) {
     stop("'alt_df' is required when countsource = '", countsource, "'.")
   }
-
   if (isTRUE(drop_levels) && is.null(.df_row)) {
     stop("'.df_row' is required when drop_levels = TRUE.")
   }
-
-  denom_choice <- match.arg(denom)
   if (denom_choice == "n_altdf" && is.null(alt_df)) {
     stop("'alt_df' is required when denom = 'n_altdf'.")
   }
@@ -201,14 +197,13 @@ s_freq_j <- function(
     NA_integer_
   }
 
-  denom <- match.arg(denom) |>
-    switch(
-      "n_altdf" = n1,
-      "n_df" = n2,
-      "n_rowdf" = n3,
-      "N_col" = .N_col,
-      "n_parentdf" = n4
-    )
+  denom <- switch(denom_choice,
+    "n_altdf" = n1,
+    "n_df" = n2,
+    "n_rowdf" = n3,
+    "N_col" = .N_col,
+    "n_parentdf" = n4
+  )
 
   y <- list()
 
