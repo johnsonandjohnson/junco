@@ -181,6 +181,51 @@
     Output
       [1] "NA"
 
+# jjcsformat_percentage works as expected
+
+    Code
+      jjcsformat_percentage(NA)
+    Output
+      [1] "-"
+    Code
+      jjcsformat_percentage(23)
+    Output
+      [1] "23.0"
+    Code
+      jjcsformat_percentage(1e-07)
+    Output
+      [1] "<0.1"
+    Code
+      jjcsformat_percentage(100)
+    Output
+      [1] "100.0"
+    Code
+      jjcsformat_percentage(100.12)
+    Output
+      [1] "100.1"
+    Code
+      jjcsformat_percentage(23.4321231, d = 4)
+    Output
+      [1] "23.4321"
+    Code
+      jjcsformat_percentage(23.45, round_type = "sas")
+    Output
+      [1] "23.5"
+    Code
+      jjcsformat_percentage(23.45)
+    Output
+      [1] "23.4"
+    Code
+      jjcsformat_percentage(23.4321231, output = "html")
+    Output
+      $`23.4`
+      23.4
+      
+    Code
+      jjcsformat_percentage(23.4321231, add_pct = TRUE)
+    Output
+      [1] "23.4%"
+
 # jjcsformat_range_fct is formatting ranges as expected
 
     Code

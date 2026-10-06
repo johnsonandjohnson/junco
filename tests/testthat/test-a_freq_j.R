@@ -331,8 +331,28 @@ test_that("a_freq_j in case of data as in prior bug for cmh sato", {
         val = "TRUE"
       )
     )
-  expect_warning(result <- build_table(lyt, expanded_df),
-                 "Less")
+  expect_warning(
+    result <- build_table(lyt, expanded_df),
+    "Less"
+  )
 
+  expect_snapshot(cran = TRUE, result)
+})
+
+test_that("a_freq_j with unique_percentage produces expected table output", {
+  set.seed(12)
+  dta <- data.frame(
+    id = 1:100,
+    rsp = factor(sample(c(TRUE, FALSE), 100, TRUE)),
+    grp = factor(rep(c("A", "B"), each = 50), levels = c("A", "B"))
+  )
+  lyt <- basic_table() |>
+    split_cols_by("grp") |>
+    analyze(
+      "rsp",
+      afun = a_freq_j,
+      extra_args = list(id = "id", .stats = "unique_percentage")
+    )
+  result <- build_table(lyt, dta)
   expect_snapshot(cran = TRUE, result)
 })

@@ -232,6 +232,84 @@ jjcsformat_cnt_den_fract_fct <- function(d = 1,
   }
 }
 
+#' @title Formatting functions for percentage values
+#'
+#' @description `r lifecycle::badge("experimental")`
+#'
+#' Formats percentage values with special consideration for values that
+#' round to 0 or 100, as well as missing values.
+#' Missing values are formatted as "-".
+#'
+#' @param x (`numeric(1)`)\cr Number to format. `NA` is formatted as `"-"`.
+#' @param round_type (`character(1)`)\cr The type of rounding to perform.
+#'   See [formatters::format_value()] for more details.
+#' @param output (`character(1)`)\cr Output type.
+#'   See [formatters::format_value()] for more details.
+#' @param d (`numeric(1)`)\cr Number of digits to round `x`.
+#' @param add_pct (`logical(1)`)\cr Whether to append the percentage symbol ("%")
+#'   to the formatted value.
+#' @param verbose (`logical(1)`)\cr Whether to print verbose output.
+#' @param ... Additional arguments passed to other methods.
+#'
+#' @return A formatted string.
+#'
+#' @family JJCS formatting functions
+#' @author WW
+#' @export
+#' @examples
+#' jjcsformat_percentage(15)
+#' jjcsformat_percentage(15, d = 2)
+#' jjcsformat_percentage(15, d = 2, verbose = TRUE)
+jjcsformat_percentage <- function(x,
+                                  round_type = valid_round_type,
+                                  output = c("ascii", "html"),
+                                  d = 1,
+                                  add_pct = FALSE,
+                                  verbose = FALSE,
+                                  ...) {
+  checkmate::assert_number(x, na.ok = TRUE)
+  checkmate::assert_int(d)
+  checkmate::assert_flag(add_pct)
+  checkmate::assert_flag(verbose)
+  round_type <- match.arg(round_type)
+  output <- match.arg(output)
+
+  obj_label(x) <- NULL
+
+  if (is.na(x)) {
+    return("-")
+  }
+
+  if (verbose) {
+    message(paste0("round_type used: ", round_type))
+  }
+
+  fmtpct <- format_value(
+    x,
+    format = paste0("xx.", strrep("x", times = d)),
+    output = output,
+    round_type = round_type
+  )
+
+  # Handle special cases.
+  if (x == 100) {
+    fmtpct <- "100.0"
+  } else if (fmtpct == format(100, nsmall = d)) {
+    fmtpct <- paste0(">", 100 - 10**(-d))
+  } else if (x != 0 && fmtpct == format(0, nsmall = d)) {
+    fmtpct <- paste0("<", 10**(-d))
+  }
+
+  fmtpct <- if (add_pct) {
+    paste0(fmtpct, "%")
+  } else {
+    fmtpct
+  }
+
+  fmtpct
+}
+
+
 #' @rdname count_fraction
 #' @export
 #' @examples
