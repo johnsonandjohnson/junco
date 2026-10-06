@@ -88,7 +88,7 @@ a_proportion_diff_j <- function(
 
   # Apply statistics function
   x_stats <- .apply_stat_functions(
-    default_stat_fnc = tern::s_proportion_diff,
+    default_stat_fnc = s_proportion_diff_jtemp,
     custom_stat_fnc_list = NULL,
     args_list = c(
       df = list(df),

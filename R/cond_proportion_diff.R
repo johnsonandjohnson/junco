@@ -241,7 +241,7 @@ s_proportion_diff_mf <- function(df,
       )
     } else {
       executed_method <- "uncond_exact_diff"
-      prop_diff_uncond_exact(
+      prop_diff_uncond_exact_jtemp(
         rsp = rsp_data$rsp, grp = rsp_data$grp, conf_level = conf_level
       )
     }

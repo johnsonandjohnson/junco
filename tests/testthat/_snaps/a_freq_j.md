@@ -65,3 +65,13 @@
       —————————————————————————————————————————————————————————————————————————
       TRUE     55/135 (40.7%)     63/129 (48.8%)        -10.6 (-22.7, 1.5)     
 
+# a_freq_j in case of data as in prior inconsistency with SAS for method uncond_exact
+
+    Code
+      result
+    Output
+             Active Study Agent                  Risk Difference (%) (95% CI)
+                  Not-ref             ref               Not-ref vs ref       
+      ———————————————————————————————————————————————————————————————————————
+      TRUE      7/15 (46.7%)      5/15 (33.3%)        13.3 (-25.1, 49.1)     
+

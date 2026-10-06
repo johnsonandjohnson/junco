@@ -166,7 +166,7 @@ resp01_a_comp_stat_logical <- function(df,
         checkmate::assert_subset(methods$pval, c("fisher", "chisq"))
 
         # If not stratified, then the p-value can come either from Fisher's exact or chi-square test.
-        p_res <- s_test_proportion_diff(
+        p_res <- s_test_proportion_diff_jtemp(
           this_df,
           .var = .var,
           .ref_group = this_ref_group,
