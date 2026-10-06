@@ -331,8 +331,10 @@ test_that("a_freq_j in case of data as in prior bug for cmh sato", {
         val = "TRUE"
       )
     )
-  expect_warning(result <- build_table(lyt, expanded_df),
-                 "Less")
+  expect_warning(
+    result <- build_table(lyt, expanded_df),
+    "Less"
+  )
 
   expect_snapshot(cran = TRUE, result)
 })
@@ -344,28 +346,28 @@ test_that("a_freq_j in case of data as in prior inconsistency with SAS for metho
     TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE
   )
   grp <- factor(c(rep("ref", 15), rep("Not-ref", 15)), levels = c("ref", "Not-ref"))
- 
+
   old <- tern::prop_diff_uncond_exact(rsp = rsp, grp = grp, conf_level = 0.95)
   new <- prop_diff_uncond_exact_jtemp(rsp = rsp, grp = grp, conf_level = 0.95)
   expect_any_difference(old, new)
-  expect_identical(new$diff_ci, c(-0.2514531,  0.4907849), tolerance = 1e-6)
-  
+  expect_identical(new$diff_ci, c(-0.2514531, 0.4907849), tolerance = 1e-6)
+
   ### usage with a_freq_j with relative risk column
   expanded_df <- data.frame(grp, rsp)
   expanded_df$rsp <- factor(as.character(expanded_df$rsp), levels = c("TRUE", "FALSE"))
   expanded_df$USUBJID <- sprintf("SUBJ%02d", seq_len(nrow(expanded_df)))
-  
+
   trtvar <- "grp"
   ctrl_grp <- "ref"
-  
+
   expanded_df$colspan_trt <- factor(
     ifelse(expanded_df[[trtvar]] == ctrl_grp, " ", "Active Study Agent"),
     levels = c("Active Study Agent", " ")
   )
   expanded_df$rrisk_header <- "Risk Difference (%) (95% CI)"
   expanded_df$rrisk_label <- paste(expanded_df[[trtvar]], paste("vs", ctrl_grp))
-  
-  
+
+
   lyt <- basic_table() |>
     split_cols_by("colspan_trt", split_fun = drop_split_levels) |>
     split_cols_by(trtvar, split_fun = drop_split_levels) |>
@@ -381,6 +383,6 @@ test_that("a_freq_j in case of data as in prior inconsistency with SAS for metho
       )
     )
   result <- build_table(lyt, expanded_df)
-  
+
   expect_snapshot(cran = TRUE, result)
 })
