@@ -4,10 +4,12 @@
 \alias{safe_as_logical}
 \title{Safe Conversion to Logical Vector}
 \usage{
-safe_as_logical(x)
+safe_as_logical(x, na.rm = FALSE)
 }
 \arguments{
 \item{x}{(\code{vector})\cr The input vector to be safely converted to a logical vector.}
+
+\item{na.rm}{(\code{flag})\cr Whether to remove missing values after conversion.}
 }
 \value{
 A logical vector corresponding to the input \code{x}. If the conversion introduces
