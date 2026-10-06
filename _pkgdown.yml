@@ -32,6 +32,7 @@ reference:
     desc: The following functions are the Analysis functions used used to create common table layouts.
     contents:
     - column_stats
+    - a_combo_prop_diff_pval_mf
     - a_eair100_j
     - a_diff_means
     - a_freq_combos_j
