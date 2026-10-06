@@ -57,6 +57,9 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added assertions for the `id` argument in `a_freq_j()` and `s_freq_j()` (#424).
 
 ### Added
+- Added a new analysis function `a_combo_prop_diff_pval_mf()` for proportions,
+  risk differences, and risk difference tests with adaptive Mantel-Fleiss-based
+  method selection.
 - Added `s_test_proportion_diff_mf()` and `a_test_proportion_diff_mf()` adaptive
   test of stratified response-proportion differences using the Mantel–Fleiss
   criterion (#457).

@@ -55,3 +55,13 @@
         DISCONTINUED   15 (11.2%)     12 (9.1%)      12 (9.0%)        2.2 (-5.0, 9.4)             0.1 (-6.8, 7.0)       
         ONGOING        10 (7.5%)      10 (7.6%)       6 (4.5%)        3.0 (-2.7, 8.6)             3.1 (-2.6, 8.8)       
 
+# a_freq_j in case of data as in prior bug for cmh sato
+
+    Code
+      result
+    Output
+             Active Study Agent                    Risk Difference (%) (95% CI)
+                  Not-ref              ref                Not-ref vs ref       
+      —————————————————————————————————————————————————————————————————————————
+      TRUE     55/135 (40.7%)     63/129 (48.8%)        -10.6 (-22.7, 1.5)     
+
