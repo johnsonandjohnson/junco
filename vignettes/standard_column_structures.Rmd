@@ -44,6 +44,7 @@ At it's most basic, `grouped_cols_w_diffs` takes a column-span treatment map, as
 library(junco)
 adsl <- create_colspan_var(pharmaverseadamjnj::adsl)
 adae <- create_colspan_var(pharmaverseadamjnj::adae)
+adlb <- create_colspan_var(pharmaverseadamjnj::adlb)
 trt_map <- create_colspan_map(adsl)
 print(trt_map)
 ```
@@ -192,4 +193,97 @@ lyt6 <- basic_table() |>
   grouped_cols_w_diffs(trt_map, comp_map = comp_map2)
 
 build_table(lyt6, adsl)
+
+```
+
+# Other Standard Column Structures
+
+## Subgroup Column Structures
+
+The `grouped_cols_w_subgrps` function generates columns structures,
+with or without overarching spanning column headers, wherein treatment
+arms are further split by the values of a subgrouping variable.
+
+By default, a Total column is added to the left of the subgroups
+within each treatment, though this can be disabled.
+
+Similar to `grouped_cols_w_diffs`, we can specify a `colspan_trt_map`,
+which will define both the spanning labels and the treatment variable:
+
+```{r}
+lyt_subgrp <- basic_table() |>
+  grouped_cols_w_subgrps(trt_map, subgrp_var = "SEX")
+
+
+build_table(lyt_subgrp, adsl)
+```
+
+Similar to `grouped_cols_w_diffs`, we can get a structure without
+spanning labels by specifying `trtvar` instead of `colspan_trt_map`,
+though this does make the name of the function something of a
+misnomer, as the treatments are no longer grouped:
+
+
+```{r}
+lyt_subgrp2 <- basic_table() |>
+  grouped_cols_w_subgrps(trtvar = "TRT01A", subgrp_var = "SEX")
+
+
+build_table(lyt_subgrp2, adsl)
+```
+
+`grouped_cols_w_subgrps` also accepts `combo_map_df`, with usage
+similar to that explored for `grouped_cols_w_diffs` above.
+
+### Quartiles As A Special Case Of Subgrouping
+
+For pre-computed quartile (or any other binning) groups, we can simply use `grouped_cols_w_subgrps` with `total_facet = FALSE`:
+
+
+```{r}
+lyt_ageqrtls <- basic_table() |>
+    grouped_cols_w_subgrps(colspan_trt_map = trt_map,
+                           subgrp_var = "AGEGR1",
+                           subgrp_lbl = "Age Quartiles",
+                           total_facet = FALSE)
+
+
+build_table(lyt_ageqrtls, adsl)
+```
+
+## Shift Table Column Structure
+
+We can create the column structure for a standard Shift Table via the `shift_tbl_col_struct` function (assuming `BNRIND` is a classification at baseline and `ANRIND` is the same classification applied at analysis date):
+
+```{r}
+param <- levels(adlb$PARAMCD)[1]
+lyt_shift <- basic_table() |>
+  shift_tbl_col_struct(var = "BNRIND",
+                       span_lbl = paste("Baseline", param))
+
+build_table(lyt_shift, adlb)
+```
+
+## Some Vs All Column Structure
+
+The "some vs all" case, motivated by comparing counts of AEs to counts
+of treatment-related AEs, is similar to the subgroup column
+structures, with the exception that the groups being compared are not
+mutually exclusive.
+
+In light of this, `some_v_all_col_struct` creates two subgroup facets
+within each treatment group, one containing one or more levels of a
+specified subgrouping variable, the other being all levels of the
+subgrouping variable. We control this behavior by the combination of
+`subgrp_var`, declaring the variable, and `subgrp_lvls` defining which
+levels should be included in the smaller group.
+
+```{r}
+lyt <- basic_table() |>
+    some_v_all_col_struct(trt_map,
+                          subgrp_var = "AETOXGR",
+                          subgrp_lvls = c("4", "5"),
+                          all_lbl = "All Grades",
+                          subgrp_lbl = "High Toxicity")
+build_table(lyt, adae)
 ```
