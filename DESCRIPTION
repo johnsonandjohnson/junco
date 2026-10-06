@@ -78,10 +78,4 @@ Suggests:
     random.cdisc.data
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-Remotes:
-    pharmaverse/formatters@main,
-    pharmaverse/rtables@main,
-    pharmaverse/tern@main,
-    pharmaverse/rtables@main,
-    johnsonandjohnson/pharmaverseadamjnj@main,
 Config/roxygen2/version: 8.1.0
