@@ -6,11 +6,14 @@
 #'
 #' @description `r lifecycle::badge("experimental")`
 #'
-#' Functions extracted from `{tern}` until the issue
-#' https://github.com/pharmaverse/tern/issues/1535 s resolved.
+#' Functions extracted from `{tern}` until the issues
+#' https://github.com/pharmaverse/tern/issues/1535 and
+#' https://github.com/pharmaverse/tern/issues/1539 are resolved.
 #'
 #' They are temporarily copied from prop_diff.R and prop_diff_test.R.
-#' from `{tern}` PR  https://github.com/pharmaverse/tern/pull/1538.
+#' from `{tern}` PRs:
+#' https://github.com/pharmaverse/tern/pull/1538 and
+#' https://github.com/pharmaverse/tern/pull/1542.
 #'
 #' @order 1
 #' @keywords internal
@@ -84,7 +87,7 @@ s_proportion_diff_jtemp <- function(df,
       "cmh" = prop_diff_cmh_jtemp(rsp, grp, strata, conf_level, diff_se = "standard")[cmh_stats],
       "cmh_sato" = prop_diff_cmh_jtemp(rsp, grp, strata, conf_level, diff_se = "sato")[cmh_stats],
       "cmh_mn" = prop_diff_cmh_jtemp(rsp, grp, strata, conf_level, diff_se = "miettinen_nurminen")[cmh_stats],
-      "uncond_exact_diff" = tern::prop_diff_uncond_exact(rsp, grp, conf_level)
+      "uncond_exact_diff" = prop_diff_uncond_exact_jtemp(rsp, grp, conf_level)
     )
 
     y$diff <- setNames(y$diff * 100, paste0("diff_", method))
@@ -232,6 +235,100 @@ prop_diff_strat_nc_jtemp <- function(rsp,
   list(
     "diff" = diff_est,
     "diff_ci" = c("lower" = lower, "upper" = upper)
+  )
+}
+
+#' @describeIn temporary_tern_code Temporarily moved from `{tern}`
+prop_diff_uncond_exact_jtemp <- function(rsp,
+                                         grp,
+                                         conf_level = 0.95) {
+  grp <- tern::as_factor_keep_attributes(grp)
+  tern::check_diff_prop_ci(rsp = rsp, grp = grp, conf_level = conf_level)
+
+  alpha <- 1 - conf_level
+  cutoff <- alpha / 2
+
+  tbl <- table(grp, factor(rsp, levels = c(TRUE, FALSE)))
+
+  # Step 0: Calculate the observed difference in proportions
+  # and the observed test statistic value.
+  # Store counts as doubles to avoid 32-bit integer overflow in cross-products.
+  n2 <- as.double(sum(tbl[1, ]))
+  n1 <- as.double(sum(tbl[2, ]))
+
+  if (n1 == 0 || n2 == 0) {
+    return(list(
+      diff = NaN,
+      diff_ci = c(NaN, NaN)
+    ))
+  }
+
+  n21_obs <- tbl[1, 1]
+  n11_obs <- tbl[2, 1]
+  diff_est <- n11_obs / n1 - n21_obs / n2
+
+  # Step 1: Enumerate all tables in A with fixed row margins
+  # n1 and n2.
+  if (n1 * n2 > 2^53) {
+    stop("uncond_exact_diff: Sample sizes exceed the exact integer comparison limit.")
+  }
+  if (n1 * n2 > 1e5) {
+    warning("uncond_exact_diff: Large sample sizes may lead to long computation time.")
+  }
+  tables <- expand.grid(
+    n11 = 0:n1,
+    n21 = 0:n2
+  )
+
+  # Step 2: Compare integer numerators of T(a) = n11 / n1 - n21 / n2.
+  # The positive denominator n1 * n2 is common to all tables. These cross-products
+  # and their differences are exact for n1 * n2 <= 2^53, preserving ties without
+  # a floating-point tolerance. Compute the observed numerator from counts too.
+  t_values <- tables$n11 * n2 - tables$n21 * n1
+  t0 <- n11_obs * n2 - n21_obs * n1
+
+  # Step 3: For each hypothesized difference d*, compute the worst-case
+  # tail probabilities P_U(d*) and P_L(d*) by maximizing over the nuisance
+  # parameter p2.
+  p_upper <- function(d_star) {
+    # Step 4a: Compute worst-case one-sided tail probability:
+    # P_U(d*) = sup_p2 sum_{T(a) >= t0} f(...)
+    tern:::h_worst_case_tail_probability(
+      d_star = d_star,
+      n1 = n1,
+      n2 = n2,
+      t_values = t_values,
+      t0 = t0,
+      tables = tables,
+      tail = "upper"
+    )
+  }
+  p_lower <- function(d_star) {
+    # Step 4b: Compute worst-case one-sided tail probability:
+    # P_L(d*) = sup_p2 sum_{T(a) <= t0} f(...)
+    tern:::h_worst_case_tail_probability(
+      d_star = d_star,
+      n1 = n1,
+      n2 = n2,
+      t_values = t_values,
+      t0 = t0,
+      tables = tables,
+      tail = "lower"
+    )
+  }
+
+  # Step 5: Invert one-sided tests to obtain the two-sided
+  # 100 * (1 - alpha)% CI for d = p1 - p2.
+  # For monotone one-sided p-value functions, use uniroot to solve
+  # P_U(d) = alpha/2 and P_L(d) = alpha/2 directly.
+  diff_ci <- c(
+    tern:::h_find_ci_bound_uniroot(p_upper, cutoff = cutoff, direction = "increasing"),
+    tern:::h_find_ci_bound_uniroot(p_lower, cutoff = cutoff, direction = "decreasing")
+  )
+
+  list(
+    diff = diff_est,
+    diff_ci = diff_ci
   )
 }
 

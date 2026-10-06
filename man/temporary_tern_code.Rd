@@ -5,6 +5,7 @@
 \alias{s_proportion_diff_jtemp}
 \alias{prop_diff_cmh_jtemp}
 \alias{prop_diff_strat_nc_jtemp}
+\alias{prop_diff_uncond_exact_jtemp}
 \alias{h_prop_cmh_jtemp}
 \alias{h_cmh_sato_var_jtemp}
 \alias{h_miettinen_nurminen_var_jtemp}
@@ -44,6 +45,8 @@ prop_diff_strat_nc_jtemp(
   correct = FALSE
 )
 
+prop_diff_uncond_exact_jtemp(rsp, grp, conf_level = 0.95)
+
 h_prop_cmh_jtemp(tbl, conf_level = 0.95)
 
 h_cmh_sato_var_jtemp(prop)
@@ -74,11 +77,14 @@ prop_cmh_jtemp(
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-Functions extracted from \code{{tern}} until the issue
-https://github.com/pharmaverse/tern/issues/1535 s resolved.
+Functions extracted from \code{{tern}} until the issues
+https://github.com/pharmaverse/tern/issues/1535 and
+https://github.com/pharmaverse/tern/issues/1539 are resolved.
 
 They are temporarily copied from prop_diff.R and prop_diff_test.R.
-from \code{{tern}} PR  https://github.com/pharmaverse/tern/pull/1538.
+from \code{{tern}} PRs:
+https://github.com/pharmaverse/tern/pull/1538 and
+https://github.com/pharmaverse/tern/pull/1542.
 }
 \section{Functions}{
 \itemize{
@@ -87,6 +93,8 @@ from \code{{tern}} PR  https://github.com/pharmaverse/tern/pull/1538.
 \item \code{prop_diff_cmh_jtemp()}: Temporarily moved from \code{{tern}}
 
 \item \code{prop_diff_strat_nc_jtemp()}: Temporarily moved from \code{{tern}}
+
+\item \code{prop_diff_uncond_exact_jtemp()}: Temporarily moved from \code{{tern}}
 
 \item \code{h_prop_cmh_jtemp()}: Temporarily moved from \code{{tern}}
 
