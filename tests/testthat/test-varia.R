@@ -739,7 +739,7 @@ testthat::test_that("a_summarize_ex_j works", {
   xx_1. <- xx_1[["EOSDY"]]
 
   ## quantiles rather than IQR, label misleading
-  stats_1 <- tern:::s_summary(xx_1.)[c(
+  stats_1 <- tern::s_summary(xx_1.)[c(
     "mean_sd",
     "median",
     "range",
@@ -778,7 +778,7 @@ testthat::test_that("a_summarize_ex_j works", {
   xx_2. <- xx_2[["EOSDY"]]
 
   ## quantiles rather than IQR, label misleading
-  stats_2 <- tern:::s_summary(xx_2.)[c(
+  stats_2 <- tern::s_summary(xx_2.)[c(
     "mean_sd",
     "median",
     "range",
@@ -811,7 +811,7 @@ testthat::test_that("a_summarize_ex_j works", {
   .ref_group <- xx_2
   .in_ref_col <- FALSE
 
-  stats_3 <- tern:::s_ancova(
+  stats_3 <- tern::s_ancova(
     df = df,
     .var = "EOSDY",
     .df_row = .df_row,

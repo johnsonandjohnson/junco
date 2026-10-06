@@ -52,7 +52,7 @@ s_proportion_diff_jtemp <- function(df,
     y <- list(diff = numeric(), diff_ci = numeric(), diff_est_ci = numeric())
   } else {
     checkmate::assert_false(is.null(.ref_group))
-    tern:::assert_stratification_compatibility(
+    utils::getFromNamespace("assert_stratification_compatibility", "tern")(
       method = method,
       stratified_methods = c(
         "cmh", "cmh_sato", "cmh_mn", "strat_newcombe", "strat_newcombecc"
@@ -293,7 +293,7 @@ prop_diff_uncond_exact_jtemp <- function(rsp,
   p_upper <- function(d_star) {
     # Step 4a: Compute worst-case one-sided tail probability:
     # P_U(d*) = sup_p2 sum_{T(a) >= t0} f(...)
-    tern:::h_worst_case_tail_probability(
+    utils::getFromNamespace("h_worst_case_tail_probability", "tern")(
       d_star = d_star,
       n1 = n1,
       n2 = n2,
@@ -306,7 +306,7 @@ prop_diff_uncond_exact_jtemp <- function(rsp,
   p_lower <- function(d_star) {
     # Step 4b: Compute worst-case one-sided tail probability:
     # P_L(d*) = sup_p2 sum_{T(a) <= t0} f(...)
-    tern:::h_worst_case_tail_probability(
+    utils::getFromNamespace("h_worst_case_tail_probability", "tern")(
       d_star = d_star,
       n1 = n1,
       n2 = n2,
@@ -322,8 +322,8 @@ prop_diff_uncond_exact_jtemp <- function(rsp,
   # For monotone one-sided p-value functions, use uniroot to solve
   # P_U(d) = alpha/2 and P_L(d) = alpha/2 directly.
   diff_ci <- c(
-    tern:::h_find_ci_bound_uniroot(p_upper, cutoff = cutoff, direction = "increasing"),
-    tern:::h_find_ci_bound_uniroot(p_lower, cutoff = cutoff, direction = "decreasing")
+    utils::getFromNamespace("h_find_ci_bound_uniroot", "tern")(p_upper, cutoff = cutoff, direction = "increasing"),
+    utils::getFromNamespace("h_find_ci_bound_uniroot", "tern")(p_lower, cutoff = cutoff, direction = "decreasing")
   )
 
   list(
@@ -591,7 +591,7 @@ s_test_proportion_diff_jtemp <- function(df,
     numeric()
   } else {
     checkmate::assert_false(is.null(.ref_group))
-    tern:::assert_stratification_compatibility(
+    utils::getFromNamespace("assert_stratification_compatibility", "tern")(
       method = method,
       stratified_methods = c("cmh", "cmh_sato", "cmh_wh"),
       strata_vars = variables$strata
