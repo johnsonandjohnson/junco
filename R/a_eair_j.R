@@ -290,7 +290,7 @@ NULL
 #'   \item eair_diff_ci: Confidence interval for difference in EAIR between current group and reference group
 #'    (if `diff`=TRUE and `inriskdiffcol`=TRUE)
 #'   \item eair_diff_est_ci: Combination of `eair_diff_est` and `eair_diff_ci`.
-#' }\cr
+#' }
 #' The list of available statistics (core columns) can also be viewed by
 #' running `junco_get_stats("a_eair100_j")`.
 #' @details
