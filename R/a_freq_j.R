@@ -245,7 +245,7 @@ s_risk_diff_levii_j <- function(
   # subjects with value levii observed in ref_df TRUE
   ref_df_val$rsp[ref_df_val[[id]] %in% unique(ref_dfii[[id]])] <- TRUE
 
-  res_ci_3d <- tern::s_proportion_diff(
+  res_ci_3d <- s_proportion_diff_jtemp(
     df          = df_val,
     .var        = "rsp",
     .ref_group  = ref_df_val,
@@ -400,8 +400,8 @@ s_risk_diff_val_j <- function(
 #' @param ref_path (`string`)\cr Column path specifications for
 #' the control group for the relative risk derivation.
 #' @param variables Will be passed onto the risk difference function
-#' (internal function s_risk_diff_val_j), which is based upon [tern::s_proportion_diff()].\cr
-#' See `?tern::s_proportion_diff` for details.
+#' (internal function s_risk_diff_val_j), which is based upon [s_proportion_diff_jtemp()].\cr
+#' See `?s_proportion_diff_jtemp` and `?tern::s_proportion_diff` for details.
 #' @param method Will be passed onto the risk difference function (internal function s_risk_diff_val_j).\cr
 #' @param weights_method Will be passed onto the risk difference function (internal function s_risk_diff_val_j).\cr
 #' @param label (`string`)\cr

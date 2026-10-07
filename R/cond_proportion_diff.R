@@ -232,7 +232,7 @@ s_proportion_diff_mf <- function(df,
         cmh_sato = "sato",
         cmh_mn = "miettinen_nurminen"
       )
-      prop_diff_cmh(
+      prop_diff_cmh_jtemp(
         rsp = rsp_data$rsp,
         grp = rsp_data$grp,
         strata = rsp_data$strata,
@@ -241,7 +241,7 @@ s_proportion_diff_mf <- function(df,
       )
     } else {
       executed_method <- "uncond_exact_diff"
-      prop_diff_uncond_exact(
+      prop_diff_uncond_exact_jtemp(
         rsp = rsp_data$rsp, grp = rsp_data$grp, conf_level = conf_level
       )
     }
@@ -592,9 +592,9 @@ s_test_proportion_diff_mf <- function(df,
     pval <- if (is_mf_satisfied) {
       executed_method <- mf_method
       switch(mf_method,
-        cmh = prop_cmh(tbl, alternative = alternative),
-        cmh_sato = prop_cmh(tbl, alternative = alternative, diff_se = "sato"),
-        cmh_wh = prop_cmh(tbl, alternative = alternative, transform = "wilson_hilferty")
+        cmh = prop_cmh_jtemp(tbl, alternative = alternative),
+        cmh_sato = prop_cmh_jtemp(tbl, alternative = alternative, diff_se = "sato"),
+        cmh_wh = prop_cmh_jtemp(tbl, alternative = alternative, transform = "wilson_hilferty")
       )
     } else {
       executed_method <- "fisher"

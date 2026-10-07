@@ -257,7 +257,7 @@ test_that("s_proportion_diff_mf() works with unused strata levels", {
 
   expected <- list(
     diff = c(diff_uncond_exact_diff = 33.33333),
-    diff_ci = c(diff_ci_uncond_exact_diff_l = -55.44439, diff_ci_uncond_exact_diff_u = 90.94305),
+    diff_ci = c(diff_ci_uncond_exact_diff_l = -55.44439, diff_ci_uncond_exact_diff_u = 91.34565),
     diff_est_ci = NA,
     executed_method = "uncond_exact_diff"
   )
@@ -343,7 +343,7 @@ test_that("s_proportion_diff_mf() works with string val", {
 
   expected <- list(
     diff = c(diff_uncond_exact_diff = 33.33333),
-    diff_ci = c(diff_ci_uncond_exact_diff_l = -55.44439, diff_ci_uncond_exact_diff_u = 90.94305),
+    diff_ci = c(diff_ci_uncond_exact_diff_l = -55.44439, diff_ci_uncond_exact_diff_u = 91.34565),
     diff_est_ci = NA,
     executed_method = "uncond_exact_diff"
   )

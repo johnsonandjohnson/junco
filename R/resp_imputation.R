@@ -96,7 +96,7 @@ h_impute_analyze_resp <- function(
         prob = p_trt
       ))
     }
-    rd_result <- tern::prop_diff_cmh(imputed_response, group, strata, diff_se = "standard")
+    rd_result <- prop_diff_cmh_jtemp(imputed_response, group, strata, diff_se = "standard")
     cmh_result <- tern::prop_cmh(
       table(group, imputed_response, strata),
       transform = "wilson_hilferty"
