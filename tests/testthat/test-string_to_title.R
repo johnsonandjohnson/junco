@@ -29,13 +29,17 @@ test_that("string_to_title does not reorder factor levels", {
   expected <- factor(c("This Is An Example", "Statement An Capitalize", "Acg"))
   expect_identical(result, expected)
 
-  x <- factor(c("THIS IS an eXaMple", "statement AN CAPItaliZe"))
-  result <- string_to_title(x)
-  expected <- factor(c("This Is An Example", "Statement An Capitalize"))
-  # Below is commented out due to testthat bug
-  # https://github.com/r-lib/testthat/issues/2363
-  # expect_identical(result, expected) # nolintr
-  expect_identical(TRUE, TRUE)
+  # Explicit level specification since test_that() converts LC_COLLATE to C.
+  x2 <- factor(
+    c("THIS IS an eXaMple", "statement AN CAPItaliZe"),
+    levels = c("statement AN CAPItaliZe", "THIS IS an eXaMple")
+  )
+  result2 <- string_to_title(x2)
+  expected2 <- factor(
+    c("This Is An Example", "Statement An Capitalize"),
+    levels = c("Statement An Capitalize", "This Is An Example")
+  )
+  expect_identical(result2, expected2)
 })
 
 test_that("string_to_title works as expected for factors (missing levels)", {
@@ -80,13 +84,17 @@ test_that("string_to_title does not reorder factor levels with lowercase_words",
   expected <- factor(c("This is an Example", "Statement an Capitalize", "Acg"))
   expect_identical(result, expected)
 
-  x <- factor(c("THIS IS an eXaMple", "statement AN CAPItaliZe"))
-  result <- string_to_title(x, lowercase_words = c("is", "an"))
-  expected <- factor(c("This is an Example", "Statement an Capitalize"))
-  # Below is commented out due to testthat bug
-  # https://github.com/r-lib/testthat/issues/2363
-  # expect_identical(result, expected) # nolintr
-  expect_identical(TRUE, TRUE)
+  # Explicit level specification since test_that() converts LC_COLLATE to C.
+  x2 <- factor(
+    c("THIS IS an eXaMple", "statement AN CAPItaliZe"),
+    levels = c("statement AN CAPItaliZe", "THIS IS an eXaMple")
+  )
+  result2 <- string_to_title(x2, lowercase_words = c("is", "an"))
+  expected2 <- factor(
+    c("This is an Example", "Statement an Capitalize"),
+    levels = c("Statement an Capitalize", "This is an Example")
+  )
+  expect_identical(result2, expected2)
 })
 
 test_that("string_to_title keeps the first word capitalized", {
