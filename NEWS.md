@@ -1,6 +1,8 @@
 # junco 0.1.6.9001
 
 ### Changed
+- Added `lowercase_words` argument to `string_to_title()` to keep specified words
+  lowercase (#524).
 - Added `.cell_footnotes` and `.row_footnotes` arguments to `format_stats()` (#470).
 - Removed `s_proportion_diff_j()` which was a wrapper around `tern::s_proportion_diff()`.
   The `label` and `conf_level` parameters moved to `a_proportion_diff_j()` (#442, #467).

@@ -48,15 +48,29 @@ rightside <- function(x) {
     unlist(recursive = recursive)
 }
 
-#' Title Case Conversion
+#' @title Title Case Conversion
 #'
-#' @param x (`character` or `factor`)\cr Input string
-#' @return x converted to title case (first letter of each word capitalized)
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Convert strings to title case (first letter of each word capitalized),
+#' with the option to keep specified words, such as conjunctions, lowercase.
+#'
+#' @param x (`character` or `factor`)\cr
+#'   Input string.
+#' @param lowercase_words (`character` or `NULL`)\cr
+#'   Words that should remain lowercase when converting to title case.
+#'   Matching is case-insensitive. Specified words are only converted to
+#'   lowercase when they are not the first word in the string. The first word is
+#'   always capitalized, even if it is included in `lowercase_words`.
+#' @return `x` converted to title case, with words specified in
+#'   `lowercase_words` kept lowercase.
+#'
 #' @export
-#' @keywords internal
+#'
 #' @examples
 #' x <- c("THIS IS an eXaMple", "statement TO CAPItaliZe")
 #' string_to_title(x)
+#' string_to_title(x, c("is", "an", "to"))
 #'
 #' x <- factor(
 #'   c("OPTIMAL DOSE", "UNDERDOSE"),
@@ -64,23 +78,52 @@ rightside <- function(x) {
 #' )
 #' string_to_title(x)
 #'
-string_to_title <- function(x) {
+string_to_title <- function(x, lowercase_words = NULL) {
   checkmate::assert(
     checkmate::check_character(x, null.ok = TRUE),
     checkmate::check_factor(x, null.ok = TRUE)
   )
+  checkmate::assert_character(lowercase_words, min.chars = 1L, any.missing = FALSE, null.ok = TRUE)
+
+  if (is.null(x)) {
+    return(character())
+  }
+
+  # Step 1. Apply initial title case (capitalize the first letter of every word).
+  y <- if (is.factor(x)) {
+    levels(x)
+  } else {
+    x
+  }
 
   pattern <- "(^|\\s)(\\w)"
   replacement <- "\\1\\U\\2"
+  y <- gsub(pattern, replacement, tolower(y), perl = TRUE)
 
-  if (is.factor(x)) {
-    y <- levels(x)
-    y_title <- gsub(pattern, replacement, tolower(y), perl = TRUE)
-    levels(x) <- y_title
+  # Step 2. Apply lowercase exceptions for specified words.
+  if (!is.null(lowercase_words)) {
+    # Match specified words only when preceded by whitespace that follows
+    # a non-whitespace character, ensuring the first word is excluded.
+    pattern_lw <- paste0(
+      "(?<=\\S)(\\s+)(",
+      paste(lowercase_words, collapse = "|"),
+      ")(?=\\s|$)"
+    )
+
+    # Preserve the preceding whitespace and convert the word to lowercase.
+    replacement_lw <- "\\1\\L\\2"
+
+    y <- gsub(pattern_lw, replacement_lw, y, ignore.case = TRUE, perl = TRUE)
+  }
+
+  ret <- if (is.factor(x)) {
+    levels(x) <- y
     x
   } else {
-    gsub(pattern, replacement, tolower(x), perl = TRUE)
+    y
   }
+
+  ret
 }
 
 #' Check If `.alt_df_full` Is `NULL`
