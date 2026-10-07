@@ -144,6 +144,8 @@ these will be removed as \code{ear_diff_est_ci} will be displayed in the risk di
 \value{
 \itemize{
 \item \code{s_eair_strat_levii_j()} returns a list containing the following statistics:
+}
+
 \itemize{
 \item \code{n_event_total}: total event count across strata (current arm)
 \item \code{person_years_total}: total person-years across strata (current arm)
@@ -157,10 +159,10 @@ these will be removed as \code{ear_diff_est_ci} will be displayed in the risk di
 (only when \code{vs_ref_group = TRUE}, otherwise \code{NULL})
 \item \code{eair_strat_diff_est}: estimate for the difference in stratified rate
 \item \code{eair_strat_diff_ci}: CI (Wald type) for the difference in stratified rate
-}\cr
+}
+
 The list of available statistics (core columns) can also be viewed by
 running \code{junco_get_stats("a_eair_strat_j")}.
-}
 
 \itemize{
 \item \code{a_eair_strat_j()} returns a list of formatted \code{\link[rtables:CellValue]{rtables::CellValue()}} rows.

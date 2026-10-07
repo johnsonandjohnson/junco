@@ -3,6 +3,8 @@
 ### Changed
 - Added `"unique_percentage"` as a new statistic supported by `s_freq_j()` and
   `a_freq_j()` (#519).
+- Added `lowercase_words` argument to `string_to_title()` to keep specified words
+  lowercase (#524).
 - Added `.cell_footnotes` and `.row_footnotes` arguments to `format_stats()` (#470).
 - Removed `s_proportion_diff_j()` which was a wrapper around `tern::s_proportion_diff()`.
   The `label` and `conf_level` parameters moved to `a_proportion_diff_j()` (#442, #467).
@@ -82,6 +84,7 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added `rightside()` to extract the right-hand side of a formula as a scalar character value.
 - Added `a_three_tier()` as extension to `a_two_tier()`.
 - Added formatting function `format_sigfig_j()` as alternative to `tern::format_sigfig()`. (#436)
+- Added new standard column structure functions: `make_multicomp_splfun()`, `grouped_cols_w_diffs()`, `grouped_cols_w_subgrps()`, `shift_tbl_col_struct()`, and `some_v_all_col_struct()`.
 - Added varying decimal precision utility functions `fmt_spec_single_d`, `fmt_spec_df_d`, `fmt_spec_var_d`. (#474)
 - Added utility functions `get_fmt_details` and `compare_fmt_specs` for reviewing format specification objects.
 

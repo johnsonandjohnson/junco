@@ -2,6 +2,7 @@ ADSL
 AE
 AEBODSYS
 AEDECOD
+AEs
 ANCOVA
 AVAL
 AVISIT
@@ -33,8 +34,8 @@ Kaplan
 Lapply
 Lettis
 Liu
-MMRM
 MF
+MMRM
 Miettinen
 Nurminen
 PARAMCD
@@ -46,6 +47,7 @@ RowsVerticalSection
 Sato
 Scosyrev
 Snavely
+Subgrouping
 TEFOS
 TLG
 TLGs
@@ -55,6 +57,7 @@ TableTree
 Toeplitz
 TrueType
 Unlist
+VR
 VTableTree
 XLSX
 afun
@@ -138,7 +141,6 @@ kaplan
 keeprowtext
 lastcat
 ldots
-lifecycle
 lsm
 lsmean
 lsmeans
@@ -153,6 +155,7 @@ multivar
 multivars
 n's
 na
+natively
 parallelisation
 parentdf
 pathin
@@ -172,10 +175,10 @@ py
 qquad
 rbmi
 referene
+relabelled
 removerowtext
 responder
 responders
-riskdiff
 rlistings
 rowdf
 rowlabel
@@ -200,6 +203,7 @@ str
 struct
 subcol
 subfacet
+subgrouping
 summarization
 summarizations
 tbldf
@@ -215,10 +219,6 @@ unicodify
 unlist
 unrounded
 unstratified
-VR
 wald
 wordbreaking
 xlsx
-relabelled
-natively
-

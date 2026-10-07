@@ -168,7 +168,7 @@ these will be removed as \code{ear_diff_est_ci} will be displayed in the risk di
 \item eair_diff_ci: Confidence interval for difference in EAIR between current group and reference group
 (if \code{diff}=TRUE and \code{inriskdiffcol}=TRUE)
 \item eair_diff_est_ci: Combination of \code{eair_diff_est} and \code{eair_diff_ci}.
-}\cr
+}
 The list of available statistics (core columns) can also be viewed by
 running \code{junco_get_stats("a_eair100_j")}.
 }

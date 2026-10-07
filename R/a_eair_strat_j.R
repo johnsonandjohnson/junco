@@ -32,6 +32,7 @@
 #'
 #' @return
 #' * `s_eair_strat_levii_j()` returns a list containing the following statistics:
+#'
 #' \itemize{
 #'   \item `n_event_total`: total event count across strata (current arm)
 #'   \item `person_years_total`: total person-years across strata (current arm)
@@ -45,7 +46,9 @@
 #'     (only when `vs_ref_group = TRUE`, otherwise `NULL`)
 #'   \item `eair_strat_diff_est`: estimate for the difference in stratified rate
 #'   \item `eair_strat_diff_ci`: CI (Wald type) for the difference in stratified rate
-#' }\cr
+#' }
+#'
+#'
 #' The list of available statistics (core columns) can also be viewed by
 #' running `junco_get_stats("a_eair_strat_j")`.
 #' @seealso [a_eair100_j()]
