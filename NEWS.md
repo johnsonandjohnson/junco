@@ -2,6 +2,8 @@
 
 ### Changed
 - Refactored `s_freq_j()` so that `alt_df`, `parent_df`, `.df_row`, and `.N_col` are genuinely optional, added argument validation, and improved documentation (#439).
+- Added `lowercase_words` argument to `string_to_title()` to keep specified words
+  lowercase (#524).
 - Added `.cell_footnotes` and `.row_footnotes` arguments to `format_stats()` (#470).
 - Removed `s_proportion_diff_j()` which was a wrapper around `tern::s_proportion_diff()`.
   The `label` and `conf_level` parameters moved to `a_proportion_diff_j()` (#442, #467).

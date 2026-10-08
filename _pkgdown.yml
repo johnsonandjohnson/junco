@@ -172,6 +172,7 @@ reference:
     - tt_to_tbldf
     - factor_by_order
     - h_set_labels_prop_diff_mf
+    - string_to_title
 
   - title: junco Functions For generating .rtfs, .docxs and HTMLs
     desc: The following utility functions help to generate the .rtfs, .docxs and HTMLs.
