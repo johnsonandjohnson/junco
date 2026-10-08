@@ -109,7 +109,7 @@ reference:
     - jjcsformat_xx
     - jjcs_num_formats
     - jjcsformat_count_denom_fraction
-    - jjcsformat_percentage
+    - jjcsformat_fraction
     - ac_blank_line
     - insert_blank_line
     - format_sigfig_j
