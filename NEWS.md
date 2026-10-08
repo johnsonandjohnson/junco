@@ -1,4 +1,4 @@
-# junco 0.1.6.9001
+# junco 0.1.7
 
 ### Changed
 - Added `"unique_fraction"` as a new statistic supported by `s_freq_j()` and

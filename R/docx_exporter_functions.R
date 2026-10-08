@@ -515,7 +515,7 @@ insert_title_as_header <- function(flx,
     title_font_size <- 10
     title_font_family <- "Times New Roman"
   } else {
-    flx_fpt <- rtables.officer::extract_font_and_size_from_flx(flx)
+    flx_fpt <- utils::getFromNamespace(".extract_font_and_size_from_flx", "rtables.officer")(flx)
     title_style <- flx_fpt$fpt
     title_font_size <- title_style$font.size + 1 # 10
     title_font_family <- title_style$font.family
@@ -782,7 +782,7 @@ theme_docx_default_j <- function(
     if (any(bold == "top_left")) {
       flx <- flextable::bold(flx, j = 1, part = "header")
     }
-    flx <- rtables.officer::apply_bold_manual(flx, bold_manual)
+    flx <- utils::getFromNamespace(".apply_bold_manual", "rtables.officer")(flx, bold_manual)
 
     # NOTE: the following block styles the footer and footnotes
     n_footnotes <- flextable::nrow_part(flx, "footer")
@@ -1268,7 +1268,7 @@ tt_to_flextable_j <- function(
     mpf_aligns[al$row, al$col] <- al$value
   }
   if (length(alignments) == 0) {
-    .apply_alignments <- rtables.officer::apply_alignments
+    .apply_alignments <- utils::getFromNamespace(".apply_alignments", "rtables.officer")
     flx <- flx |>
       .apply_alignments(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") |>
       .apply_alignments(mpf_aligns[-seq_len(hnum), , drop = FALSE], "body")
@@ -1701,9 +1701,9 @@ export_as_docx_j <- function(
   }
   if (isFALSE(titles_as_header) || isFALSE(integrate_footers)) {
     if (inherits(flex_tbl_list[[1]], "list")) {
-      flx_fpt <- rtables.officer::extract_font_and_size_from_flx(flex_tbl_list[[1]][[1]])
+      flx_fpt <- utils::getFromNamespace(".extract_font_and_size_from_flx", "rtables.officer")(flex_tbl_list[[1]][[1]])
     } else {
-      flx_fpt <- rtables.officer::extract_font_and_size_from_flx(flex_tbl_list[[1]])
+      flx_fpt <- utils::getFromNamespace(".extract_font_and_size_from_flx", "rtables.officer")(flex_tbl_list[[1]])
     }
   }
 
