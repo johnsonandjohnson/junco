@@ -491,27 +491,13 @@ a_summarize_aval_chg_diff_j <- function(
     }
     mystat <- .stats[[mystat1]]
 
-    if (!(identical(.formats, "default"))) {
-      fmt_d <- .formats[[mystat1]]
-      formatting_fun <- .formats_fun[[mystat1]]
+    fmt_d <- .formats[[mystat1]]
+    formatting_fun <- .formats_fun[[mystat1]]
 
-      fmt <- format_xxd(fmt_d, d = d, .df_row = .df_row, formatting_fun = formatting_fun)
-    } else {
-      fmt <- NULL
-    }
+    fmt <- format_xxd(fmt_d, d = d, .df_row = .df_row, formatting_fun = formatting_fun)
   }
   x_stats <- x_stats[[mystat]]
 
-  ##
-  x_stats <- list(x_stats)
-  names(x_stats) <- mystat
-  st_nms <- mystat
-
-  ret <- in_rows(
-    .list = x_stats,
-    .formats = fmt,
-    .labels = cur_lvl,
-    .stat_names = st_nms
-  )
+  ret <- rcell(x_stats, format = fmt, label = cur_lvl, format_na_str = format_na_str)
   return(ret)
 }
