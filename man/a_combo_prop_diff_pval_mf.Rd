@@ -20,7 +20,7 @@ a_combo_prop_diff_pval_mf(
   mf_threshold = NULL,
   conf_level = 0.95,
   alternative = c("two.sided", "less", "greater"),
-  exact_footnote = rtables:::RefFootnote("Exact Inference", 1L, "+"),
+  exact_footnote = rtables::RefFootnote("Exact Inference", 1L, "+"),
   .stats = NULL,
   .formats = NULL,
   ...
