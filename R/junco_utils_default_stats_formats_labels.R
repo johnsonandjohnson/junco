@@ -294,7 +294,7 @@ junco_default_stats <- list(
     "count_unique",
     "count_unique_fraction",
     "count_unique_denom_fraction",
-    "unique_percentage"
+    "unique_fraction"
   ),
   a_patyrs_j = c("patyrs"),
   a_eair100_j = c(
@@ -409,7 +409,7 @@ junco_default_formats_start <- c(
   count_unique_denom_fraction = jjcsformat_count_denom_fraction,
   count_denom_frac = jjcsformat_count_denom_fraction,
   count_frac = jjcsformat_count_fraction,
-  unique_percentage = jjcsformat_percentage,
+  unique_fraction = jjcsformat_fraction,
   rr_ci_3d = jjcsformat_xx("xx.x (xx.x, xx.x)"),
   patyrs = jjcsformat_xx("xx.x"),
   eair = jjcsformat_xx("xx.x"),

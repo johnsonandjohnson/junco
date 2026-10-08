@@ -152,18 +152,25 @@ test_that("round_type support works", {
   # nolint end
 })
 
-test_that("jjcsformat_percentage works as expected", {
+test_that("jjcsformat_fraction works as expected", {
   expect_snapshot(cran = TRUE, {
-    jjcsformat_percentage(NA)
-    jjcsformat_percentage(23)
-    jjcsformat_percentage(0.0000001)
-    jjcsformat_percentage(100)
-    jjcsformat_percentage(100.12)
-    jjcsformat_percentage(23.4321231, d = 4)
-    jjcsformat_percentage(23.45, round_type = "sas")
-    jjcsformat_percentage(23.45)
-    jjcsformat_percentage(23.4321231, output = "html")
-    jjcsformat_percentage(23.4321231, add_pct = TRUE)
+    jjcsformat_fraction(NA)
+    jjcsformat_fraction(0.23)
+    jjcsformat_fraction(0.001)
+    jjcsformat_fraction(0.0001)
+    jjcsformat_fraction(0.9994)
+    jjcsformat_fraction(0.9995)
+    jjcsformat_fraction(1)
+    jjcsformat_fraction(.23432145, d = 4)
+    jjcsformat_fraction(0.00001, d = 3)
+    jjcsformat_fraction(0.000001, d = 3)
+    jjcsformat_fraction(0.999994, d = 3)
+    jjcsformat_fraction(0.999995, d = 3)
+    jjcsformat_fraction(1, d = 3)
+    jjcsformat_fraction(.2345, round_type = "sas")
+    jjcsformat_fraction(.2345)
+    jjcsformat_fraction(.4, output = "html")
+    jjcsformat_fraction(.4, add_pct = TRUE)
   })
 })
 

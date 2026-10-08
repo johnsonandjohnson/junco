@@ -106,6 +106,6 @@ my_range_format(c(0.35235, 99.2342, 1, 1))
 \seealso{
 Other JJCS formatting functions:
 \code{\link{count and fraction related formatting functions}},
-\code{\link[=jjcsformat_percentage]{jjcsformat_percentage()}}
+\code{\link[=jjcsformat_fraction]{jjcsformat_fraction()}}
 }
 \concept{JJCS formatting functions}

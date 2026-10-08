@@ -213,7 +213,7 @@ in combination with \code{denom_by} argument}
 
 \item{.stats}{(\code{character})\cr Statistics to include in the table. May contain one or more of:
 \code{"count"}, \code{"count_unique"}, \code{"count_unique_fraction"},
-\code{"count_unique_denom_fraction"}, \code{"unique_percentage"},
+\code{"count_unique_denom_fraction"}, \code{"unique_fraction"},
 \code{"n_df"}, \code{"n_altdf"}, \code{"n_rowdf"}, \code{"n_parentdf"}, \code{"denom"}.
 See Value for the full list of available statistics.}
 
@@ -262,7 +262,7 @@ and values are vectors of levels to exclude.}
 \item count_unique
 \item count_unique_fraction
 \item count_unique_denom_fraction
-\item unique_percentage
+\item unique_fraction
 }
 }
 
@@ -274,7 +274,7 @@ Within the relative risk difference columns, the following stats are blanked out
 \item count
 \item count_unique
 }
-For the others (count_unique_fraction, count_unique_denom_fraction, unique_percentage),
+For the others (count_unique_fraction, count_unique_denom_fraction, unique_fraction),
 the statistic is replaced by the relative risk difference + confidence interval.
 }
 }

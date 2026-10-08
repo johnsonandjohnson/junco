@@ -1,7 +1,7 @@
 # junco 0.1.6.9001
 
 ### Changed
-- Added `"unique_percentage"` as a new statistic supported by `s_freq_j()` and
+- Added `"unique_fraction"` as a new statistic supported by `s_freq_j()` and
   `a_freq_j()` (#519).
 - Added `lowercase_words` argument to `string_to_title()` to keep specified words
   lowercase (#524).

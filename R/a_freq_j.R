@@ -74,7 +74,7 @@
 #' \item count_unique
 #' \item count_unique_fraction
 #' \item count_unique_denom_fraction
-#' \item unique_percentage
+#' \item unique_fraction
 #' }
 #'
 #' @export
@@ -178,7 +178,7 @@ s_freq_j <- function(
       "count_unique",
       "count_unique_fraction",
       "count_unique_denom_fraction",
-      "unique_percentage"
+      "unique_fraction"
     )
     xy <- replicate(length(nms), list(setNames(list(NULL), no_data_to_report_str)))
     names(xy) <- nms
@@ -214,12 +214,12 @@ s_freq_j <- function(
       }
     )
 
-    y$unique_percentage <- lapply(
+    y$unique_fraction <- lapply(
       y$count_unique,
       function(x) {
         # Return NA when the denom = 0.
         # The formatting function converts NA values to "-" for display.
-        c("pct" = ifelse(denom > 0, 100 * (x / denom), NA_real_))
+        c("p" = ifelse(denom > 0, x / denom, NA_real_))
       }
     )
   }
@@ -400,7 +400,7 @@ s_risk_diff_val_j <- function(
 #' @inheritParams proposal_argument_convention
 #' @param .stats (`character`)\cr Statistics to include in the table. May contain one or more of:
 #' `"count"`, `"count_unique"`, `"count_unique_fraction"`,
-#' `"count_unique_denom_fraction"`, `"unique_percentage"`,
+#' `"count_unique_denom_fraction"`, `"unique_fraction"`,
 #' `"n_df"`, `"n_altdf"`, `"n_rowdf"`, `"n_parentdf"`, `"denom"`.
 #' See Value for the full list of available statistics.
 #' @param riskdiff (`logical`)\cr
@@ -767,7 +767,7 @@ s_risk_diff_val_j <- function(
 #' \item count
 #' \item count_unique
 #' }
-#' For the others (count_unique_fraction, count_unique_denom_fraction, unique_percentage),
+#' For the others (count_unique_fraction, count_unique_denom_fraction, unique_fraction),
 #' the statistic is replaced by the relative risk difference + confidence interval.
 #' @export
 a_freq_j <- function(
@@ -1022,7 +1022,7 @@ a_freq_j <- function(
           "count_unique_fraction",
           "count_unique_denom_fraction",
           "fraction_count_unique_denom",
-          "unique_percentage"
+          "unique_fraction"
         ),
       "rr_ci_3d"
     )
