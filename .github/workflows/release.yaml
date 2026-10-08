@@ -8,7 +8,7 @@ on:
       - synchronize
       - reopened
       - ready_for_review
-    branches: [CRAN]
+    branches: [main, CRAN]
   workflow_call:
     secrets:
       REPO_GITHUB_TOKEN:
