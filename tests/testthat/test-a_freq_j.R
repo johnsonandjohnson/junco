@@ -403,7 +403,7 @@ test_that("s_freq_j with all args supplied matches expected values (backward com
   expect_equal(res$count_unique_fraction$M, c(count_unique = 3L, p = 3 / 5))
 })
 
-test_that("s_freq_j works with minimal arguments (df, .var, val, denom)", {
+test_that("s_freq_j works with minimal arguments and returns NA for unprovided dfs", {
   adae <- data.frame(
     USUBJID = sprintf("SUBJ-%02d", 1:8),
     SEX = factor(c("M", "M", "M", "F", "M", "F", "M", "F"))
@@ -413,15 +413,6 @@ test_that("s_freq_j works with minimal arguments (df, .var, val, denom)", {
   expect_equal(res$n_df, c(n_df = 8L))
   expect_equal(res$count_unique$M, c(count_unique = 5L))
   expect_equal(res$denom, c(denom = 8L))
-})
-
-test_that("s_freq_j returns NA for n-stats when optional dfs are NULL", {
-  adae <- data.frame(
-    USUBJID = sprintf("SUBJ-%02d", 1:8),
-    SEX = factor(c("M", "M", "M", "F", "M", "F", "M", "F"))
-  )
-  res <- s_freq_j(df = adae, .var = "SEX", val = "M", denom = "n_df")
-
   expect_identical(res$n_altdf, c(n_altdf = NA_integer_))
   expect_identical(res$n_parentdf, c(n_parentdf = NA_integer_))
   expect_identical(res$n_rowdf, c(n_rowdf = NA_integer_))
