@@ -89,6 +89,7 @@ export(jjcsformat_cnt_den_fract_fct)
 export(jjcsformat_count_denom_fraction)
 export(jjcsformat_count_denom_fraction_legacy)
 export(jjcsformat_count_fraction)
+export(jjcsformat_fraction)
 export(jjcsformat_fraction_count_denom)
 export(jjcsformat_fraction_count_denom_legacy)
 export(jjcsformat_pval_fct)
@@ -181,23 +182,33 @@ import(rtables)
 import(tern)
 import(tidytlg)
 importFrom(assertthat,is.string)
-importFrom(formatters,with_label)
-importFrom(formatters,wrap_string_ttype)
+importFrom(formatters,
+  with_label,
+  wrap_string_ttype
+)
 importFrom(generics,tidy)
-importFrom(rtables,in_rows)
-importFrom(rtables,rcell)
-importFrom(stats,ave)
-importFrom(stats,complete.cases)
-importFrom(stats,setNames)
-importFrom(stats,t.test)
+importFrom(rtables,
+  in_rows,
+  rcell
+)
+importFrom(stats,
+  ave,
+  complete.cases,
+  setNames,
+  t.test
+)
 importFrom(survival,Surv)
-importFrom(tern,a_summary)
-importFrom(tern,control_analyze_vars)
-importFrom(tern,f_conf_level)
-importFrom(tern,fit_coxreg_multivar)
-importFrom(tern,get_covariates)
-importFrom(tern,get_stats)
-importFrom(tern,s_summary)
-importFrom(tibble,tibble)
-importFrom(tibble,tribble)
+importFrom(tern,
+  a_summary,
+  control_analyze_vars,
+  f_conf_level,
+  fit_coxreg_multivar,
+  get_covariates,
+  get_stats,
+  s_summary
+)
+importFrom(tibble,
+  tibble,
+  tribble
+)
 importFrom(utils,read.csv)

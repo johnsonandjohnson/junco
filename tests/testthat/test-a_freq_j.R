@@ -82,11 +82,11 @@ test_that("a_freq_j_with_exclude allows to exclude row split levels from the ana
 })
 
 test_that("a_freq_j in specific situation error for not passing alt_counts_df", {
-  suppressMessages(library(dplyr))
   trtvar <- "ARM"
   ctrl_grp <- "B: Placebo"
+  cols <- c("USUBJID", "STRATA1", "EOSSTT", trtvar)
 
-  adsl <- ex_adsl |> select(c("USUBJID", "STRATA1", "EOSSTT", all_of(trtvar)))
+  adsl <- ex_adsl[, cols]
   adsl$colspan_trt <- factor(
     ifelse(adsl[[trtvar]] == ctrl_grp, " ", "Active Study Agent"),
     levels = c("Active Study Agent", " ")
@@ -121,11 +121,11 @@ test_that("a_freq_j in specific situation error for not passing alt_counts_df", 
 })
 
 test_that("a_freq_j in layout with relative risk column for combined facet", {
-  library(dplyr)
   trtvar <- "ARM"
   ctrl_grp <- "B: Placebo"
+  cols <- c("USUBJID", "STRATA1", "EOSSTT", trtvar)
 
-  adsl <- ex_adsl |> select(c("USUBJID", "STRATA1", "EOSSTT", all_of(trtvar)))
+  adsl <- ex_adsl[, cols]
   adsl$colspan_trt <- factor(
     ifelse(adsl[[trtvar]] == ctrl_grp, " ", "Active Study Agent"),
     levels = c("Active Study Agent", " ")
@@ -281,15 +281,26 @@ test_that("a_freq_j raises an error when an incorrect id is specified", {
 })
 
 test_that("a_freq_j in case of data as in prior bug for cmh sato", {
-  library(dplyr)
-  ## example as in tern bug report https://github.com/pharmaverse/tern/issues/1535
+  # Example as in tern bug report https://github.com/pharmaverse/tern/issues/1535
 
   tbl <- array(
     c(
-      14, 15, 13, 19, # stratum S1
-      4, 0, 0, 0, # stratum S2
-      45, 32, 53, 61, # stratum S3
-      0, 8, 0, 0 # stratum S4
+      14,
+      15,
+      13,
+      19, # stratum S1
+      4,
+      0,
+      0,
+      0, # stratum S2
+      45,
+      32,
+      53,
+      61, # stratum S3
+      0,
+      8,
+      0,
+      0 # stratum S4
     ),
     dim = c(2L, 2L, 4L),
     dimnames = list(grp = c("ref", "Not-ref"), rsp = c("TRUE", "FALSE"), strata = c("S1", "S2", "S3", "S4"))
@@ -313,7 +324,6 @@ test_that("a_freq_j in case of data as in prior bug for cmh sato", {
   expanded_df$rrisk_header <- "Risk Difference (%) (95% CI)"
   expanded_df$rrisk_label <- paste(expanded_df[[trtvar]], paste("vs", ctrl_grp))
 
-
   lyt <- basic_table() |>
     split_cols_by("colspan_trt", split_fun = drop_split_levels) |>
     split_cols_by(trtvar, split_fun = drop_split_levels) |>
@@ -329,9 +339,29 @@ test_that("a_freq_j in case of data as in prior bug for cmh sato", {
         val = "TRUE"
       )
     )
-  expect_warning(result <- build_table(lyt, expanded_df),
-                 "Less")
+  expect_warning(
+    result <- build_table(lyt, expanded_df),
+    "Less"
+  )
 
+  expect_snapshot(cran = TRUE, result)
+})
+
+test_that("a_freq_j with unique_fraction produces expected table output", {
+  set.seed(12)
+  dta <- data.frame(
+    id = 1:100,
+    rsp = factor(sample(c(TRUE, FALSE), 100, TRUE)),
+    grp = factor(rep(c("A", "B"), each = 50), levels = c("A", "B"))
+  )
+  lyt <- basic_table() |>
+    split_cols_by("grp") |>
+    analyze(
+      "rsp",
+      afun = a_freq_j,
+      extra_args = list(id = "id", .stats = "unique_fraction")
+    )
+  result <- build_table(lyt, dta)
   expect_snapshot(cran = TRUE, result)
 })
 

@@ -1,7 +1,9 @@
-# junco 0.1.6.9001
+# junco 0.1.7
 
 ### Changed
 - Refactored `s_freq_j()` so that `alt_df`, `parent_df`, `.df_row`, and `.N_col` are genuinely optional, added argument validation, and improved documentation (#439).
+- Added `"unique_fraction"` as a new statistic supported by `s_freq_j()` and
+  `a_freq_j()` (#519).
 - Added `lowercase_words` argument to `string_to_title()` to keep specified words
   lowercase (#524).
 - Added `.cell_footnotes` and `.row_footnotes` arguments to `format_stats()` (#470).
@@ -60,9 +62,10 @@ and introduce functions `jjcsformat_count_denom_fraction_legacy` and `jjcsformat
 - Added assertions for the `id` argument in `a_freq_j()` and `s_freq_j()` (#424).
 
 ### Added
+- Added `jjcsformat_percentage()` for formatting percentage values (#519).
 - Added a new analysis function `a_combo_prop_diff_pval_mf()` for proportions,
   risk differences, and risk difference tests with adaptive Mantel-Fleiss-based
-  method selection.
+  method selection (#517).
 - Added `s_test_proportion_diff_mf()` and `a_test_proportion_diff_mf()` adaptive
   test of stratified response-proportion differences using the Mantel–Fleiss
   criterion (#457).
