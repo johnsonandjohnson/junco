@@ -181,6 +181,79 @@
     Output
       [1] "NA"
 
+# jjcsformat_fraction works as expected
+
+    Code
+      jjcsformat_fraction(NA)
+    Output
+      [1] "-"
+    Code
+      jjcsformat_fraction(0.23)
+    Output
+      [1] "23.0"
+    Code
+      jjcsformat_fraction(0.001)
+    Output
+      [1] "0.1"
+    Code
+      jjcsformat_fraction(1e-04)
+    Output
+      [1] "<0.1"
+    Code
+      jjcsformat_fraction(0.9994)
+    Output
+      [1] "99.9"
+    Code
+      jjcsformat_fraction(0.9995)
+    Output
+      [1] ">99.9"
+    Code
+      jjcsformat_fraction(1)
+    Output
+      [1] "100.0"
+    Code
+      jjcsformat_fraction(0.23432145, d = 4)
+    Output
+      [1] "23.4321"
+    Code
+      jjcsformat_fraction(1e-05, d = 3)
+    Output
+      [1] "0.001"
+    Code
+      jjcsformat_fraction(1e-06, d = 3)
+    Output
+      [1] "<0.001"
+    Code
+      jjcsformat_fraction(0.999994, d = 3)
+    Output
+      [1] "99.999"
+    Code
+      jjcsformat_fraction(0.999995, d = 3)
+    Output
+      [1] ">99.999"
+    Code
+      jjcsformat_fraction(1, d = 3)
+    Output
+      [1] "100.0"
+    Code
+      jjcsformat_fraction(0.2345, round_type = "sas")
+    Output
+      [1] "23.5"
+    Code
+      jjcsformat_fraction(0.2345)
+    Output
+      [1] "23.4"
+    Code
+      jjcsformat_fraction(0.4, output = "html")
+    Output
+      $`40.0`
+      40.0
+      
+    Code
+      jjcsformat_fraction(0.4, add_pct = TRUE)
+    Output
+      [1] "40.0%"
+
 # jjcsformat_range_fct is formatting ranges as expected
 
     Code

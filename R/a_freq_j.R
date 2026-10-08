@@ -74,6 +74,7 @@
 #' \item count_unique
 #' \item count_unique_fraction
 #' \item count_unique_denom_fraction
+#' \item unique_fraction
 #' }
 #'
 #' @export
@@ -176,7 +177,8 @@ s_freq_j <- function(
       "count",
       "count_unique",
       "count_unique_fraction",
-      "count_unique_denom_fraction"
+      "count_unique_denom_fraction",
+      "unique_fraction"
     )
     xy <- replicate(length(nms), list(setNames(list(NULL), no_data_to_report_str)))
     names(xy) <- nms
@@ -197,8 +199,8 @@ s_freq_j <- function(
     y$count_unique_fraction <- lapply(
       y$count_unique,
       function(x) {
-        ## we want to return - when denom = 0
-        ## this is built into formatting function, when fraction is NA
+        # Return NA when the denom = 0.
+        # The formatting function converts NA values to "-" for display.
         c(x, "p" = ifelse(denom > 0, x / denom, NA))
       }
     )
@@ -206,9 +208,18 @@ s_freq_j <- function(
     y$count_unique_denom_fraction <- lapply(
       y$count_unique,
       function(x) {
-        ## we want to return - when denom = 0
-        ## this is built into formatting function, when fraction is NA
+        # Return NA when the denom = 0.
+        # The formatting function converts NA values to "-" for display.
         c(x, "d" = denom, "p" = ifelse(denom > 0, x / denom, NA))
+      }
+    )
+
+    y$unique_fraction <- lapply(
+      y$count_unique,
+      function(x) {
+        # Return NA when the denom = 0.
+        # The formatting function converts NA values to "-" for display.
+        c("p" = ifelse(denom > 0, x / denom, NA_real_))
       }
     )
   }
@@ -246,13 +257,13 @@ s_risk_diff_levii_j <- function(
   ref_df_val$rsp[ref_df_val[[id]] %in% unique(ref_dfii[[id]])] <- TRUE
 
   res_ci_3d <- tern::s_proportion_diff(
-    df          = df_val,
-    .var        = "rsp",
-    .ref_group  = ref_df_val,
+    df = df_val,
+    .var = "rsp",
+    .ref_group = ref_df_val,
     .in_ref_col = .in_ref_col,
-    variables   = variables,
-    conf_level  = conf_level,
-    method      = method,
+    variables = variables,
+    conf_level = conf_level,
+    method = method,
     weights_method = weights_method
   )$diff_est_ci
 }
@@ -389,8 +400,8 @@ s_risk_diff_val_j <- function(
 #' @inheritParams proposal_argument_convention
 #' @param .stats (`character`)\cr Statistics to include in the table. May contain one or more of:
 #' `"count"`, `"count_unique"`, `"count_unique_fraction"`,
-#' `"count_unique_denom_fraction"`, `"n_df"`, `"n_altdf"`,
-#' `"n_rowdf"`, `"n_parentdf"`, `"denom"`.
+#' `"count_unique_denom_fraction"`, `"unique_fraction"`,
+#' `"n_df"`, `"n_altdf"`, `"n_rowdf"`, `"n_parentdf"`, `"denom"`.
 #' See Value for the full list of available statistics.
 #' @param riskdiff (`logical`)\cr
 #' When `TRUE`, risk difference calculations will be performed and
@@ -756,7 +767,7 @@ s_risk_diff_val_j <- function(
 #' \item count
 #' \item count_unique
 #' }
-#' For the others (count_unique_fraction, count_unique_denom_fraction),
+#' For the others (count_unique_fraction, count_unique_denom_fraction, unique_fraction),
 #' the statistic is replaced by the relative risk difference + confidence interval.
 #' @export
 a_freq_j <- function(
@@ -797,7 +808,7 @@ a_freq_j <- function(
   label_map = NULL,
   .alt_df_full = NULL,
   denom_by = NULL,
-  .stats = c("count_unique_denom_fraction"),
+  .stats = "count_unique_denom_fraction",
   .formats = NULL,
   .indent_mods = NULL,
   na_str = rep("NA", 3),
@@ -1010,7 +1021,8 @@ a_freq_j <- function(
         c(
           "count_unique_fraction",
           "count_unique_denom_fraction",
-          "fraction_count_unique_denom"
+          "fraction_count_unique_denom",
+          "unique_fraction"
         ),
       "rr_ci_3d"
     )
