@@ -121,7 +121,8 @@ test_that("a_summarize_aval_chg_diff_j t-test sparse data works as expected", {
     ancova = FALSE,
     comp_btw_group = TRUE,
     ref_path = c("colspan_trt", " ", "ARM", "B: Placebo"),
-    multivars = multivars
+    multivars = multivars,
+    format_na_str = rep("NE", 3)
   )
 
 
