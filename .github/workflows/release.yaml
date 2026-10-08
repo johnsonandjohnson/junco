@@ -8,7 +8,7 @@ on:
       - synchronize
       - reopened
       - ready_for_review
-    branches: [main, CRAN]
+    branches: [CRAN]
   workflow_call:
     secrets:
       REPO_GITHUB_TOKEN:
@@ -25,13 +25,13 @@ on:
         default: rhub
         options:
           - rhub
-          - revdepcheck
+          #- revdepcheck
 
 jobs:
-  revdepcheck:
-    name: revdepcheck 🧑‍🔬
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.chosen-workflow == 'revdepcheck' }}
-    uses: johnsonandjohnson/actions/.github/workflows/revdepcheck.yaml@dev
+  # revdepcheck:
+  #   name: revdepcheck 🧑‍🔬
+  #   if: ${{ github.event_name != 'workflow_dispatch' || inputs.chosen-workflow == 'revdepcheck' }}
+  #   uses: johnsonandjohnson/actions/.github/workflows/revdepcheck.yaml@dev
   rhub:
     name: R-hub 🌐
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.chosen-workflow == 'rhub' }}
