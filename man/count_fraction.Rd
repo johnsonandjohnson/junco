@@ -91,6 +91,7 @@ jjcsformat_fraction_count_denom_legacy(c(0, 235, 0 / 235))
 }
 \seealso{
 Other JJCS formatting functions:
+\code{\link[=jjcsformat_fraction]{jjcsformat_fraction()}},
 \code{\link[=jjcsformat_xx]{jjcsformat_xx()}}
 }
 \concept{JJCS formatting functions}

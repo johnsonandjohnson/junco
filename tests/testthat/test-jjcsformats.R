@@ -152,6 +152,28 @@ test_that("round_type support works", {
   # nolint end
 })
 
+test_that("jjcsformat_fraction works as expected", {
+  expect_snapshot(cran = TRUE, {
+    jjcsformat_fraction(NA)
+    jjcsformat_fraction(0.23)
+    jjcsformat_fraction(0.001)
+    jjcsformat_fraction(0.0001)
+    jjcsformat_fraction(0.9994)
+    jjcsformat_fraction(0.9995)
+    jjcsformat_fraction(1)
+    jjcsformat_fraction(.23432145, d = 4)
+    jjcsformat_fraction(0.00001, d = 3)
+    jjcsformat_fraction(0.000001, d = 3)
+    jjcsformat_fraction(0.999994, d = 3)
+    jjcsformat_fraction(0.999995, d = 3)
+    jjcsformat_fraction(1, d = 3)
+    jjcsformat_fraction(.2345, round_type = "sas")
+    jjcsformat_fraction(.2345)
+    jjcsformat_fraction(.4, output = "html")
+    jjcsformat_fraction(.4, add_pct = TRUE)
+  })
+})
+
 test_that("jjcsformat_range_fct is formatting ranges as expected", {
   my_range_format <- jjcsformat_range_fct("xx.xx")
   my_range_format2 <- jjcsformat_range_fct("xx.xx", censor_char = "*")
@@ -236,6 +258,7 @@ test_that("jjcsformat_xx works also for cells with 0 length vectors", {
 })
 
 # tests for format_sigfig_j start here ----
+
 test_that("format_sigfig_j case 1", {
   x <- 0.35769
   x2 <- x * c(1, 10, 100, 1000, 10000)

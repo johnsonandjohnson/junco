@@ -65,3 +65,13 @@
       —————————————————————————————————————————————————————————————————————————
       TRUE     55/135 (40.7%)     63/129 (48.8%)        -10.6 (-22.7, 1.5)     
 
+# a_freq_j with unique_fraction produces expected table output
+
+    Code
+      result
+    Output
+                 A      B  
+      —————————————————————
+        FALSE   60.0   56.0
+        TRUE    40.0   44.0
+
