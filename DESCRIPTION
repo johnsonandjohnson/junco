@@ -1,7 +1,7 @@
 Package: junco
 Title: Create Common Tables and Listings Used in Clinical Trials
 Version: 0.1.7
-Date: 2026-05-22
+Date: 2026-10-09
 Authors@R: c(
     person("Gabriel", "Becker", , "gabembecker@gmail.com", role = c("cre", "aut"),
            comment = "Original creator of the package, and author of included rtables functions"),
@@ -36,7 +36,7 @@ Depends:
     rtables (>= 0.6.17)
 Imports:
     tidytlg (>= 0.12.0),
-    tern (>= 0.9.12),
+    tern (>= 0.9.13),
     rlistings (>= 0.2.13),
     checkmate (>= 2.1.0),
     rbmi (>= 1.6.0),
