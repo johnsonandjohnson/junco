@@ -563,7 +563,7 @@ interpret_cell_content <- function(str_before, markup_df_docx = dps_markup_df_do
     }) |>
     unlist()
   pos <- data.frame(pos_start = pos_start, pos_end = pos_end)
-  pos <- pos |> dplyr::filter(!is.na(pos_end))
+  pos <- pos[!is.na(pos$pos_end), ]
   pos$replacement <- ""
 
   for (i in seq_len(nrow(pos))) {
@@ -782,11 +782,7 @@ theme_docx_default_j <- function(
     if (any(bold == "top_left")) {
       flx <- flextable::bold(flx, j = 1, part = "header")
     }
-    .apply_bold_manual <- utils::getFromNamespace(
-      ".apply_bold_manual",
-      "rtables.officer"
-    )
-    flx <- .apply_bold_manual(flx, bold_manual)
+    flx <- utils::getFromNamespace(".apply_bold_manual", "rtables.officer")(flx, bold_manual)
 
     # NOTE: the following block styles the footer and footnotes
     n_footnotes <- flextable::nrow_part(flx, "footer")
@@ -841,34 +837,34 @@ theme_docx_default_j <- function(
 #' @returns a flextable object.
 #' @export
 tt_to_flextable_j <- function(
-    tt,
-    tblid = NULL,
-    theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
-    border = flextable::fp_border_default(width = 0.875, color = "black"),
-    titles_as_header = TRUE,
-    bold_titles = TRUE,
-    integrate_footers = TRUE,
-    counts_in_newline = FALSE,
-    paginate = tlg_type(tt) == "Table",
-    fontspec = formatters::font_spec("Times", 9L, 1.2),
-    colwidths = NULL,
-    label_width_ins = 2,
-    total_page_width = pg_width_by_orient(orientation == "landscape"),
-    orientation = "portrait",
-    nosplitin = list(
-      row = character(),
-      col = character()
-    ),
-    string_map = default_str_map,
-    markup_df_docx = dps_markup_df_docx,
-    reduce_first_col_indentation = FALSE,
-    tlgtype = tlg_type(tt),
-    col_gap = ifelse(tlgtype == "Listing", .5, 3),
-    round_type = formatters::obj_round_type(tt),
-    alignments = list(),
-    border_mat = make_header_bordmat(obj = tt),
-    validate = TRUE,
-    ...) {
+  tt,
+  tblid = NULL,
+  theme = theme_docx_default_j(font = "Times New Roman", font_size = 9L, bold = NULL),
+  border = flextable::fp_border_default(width = 0.875, color = "black"),
+  titles_as_header = TRUE,
+  bold_titles = TRUE,
+  integrate_footers = TRUE,
+  counts_in_newline = FALSE,
+  paginate = tlg_type(tt) == "Table",
+  fontspec = formatters::font_spec("Times", 9L, 1.2),
+  colwidths = NULL,
+  label_width_ins = 2,
+  total_page_width = pg_width_by_orient(orientation == "landscape"),
+  orientation = "portrait",
+  nosplitin = list(
+    row = character(),
+    col = character()
+  ),
+  string_map = default_str_map,
+  markup_df_docx = dps_markup_df_docx,
+  reduce_first_col_indentation = FALSE,
+  tlgtype = tlg_type(tt),
+  col_gap = ifelse(tlgtype == "Listing", .5, 3),
+  round_type = formatters::obj_round_type(tt),
+  alignments = list(),
+  border_mat = make_header_bordmat(obj = tt),
+  validate = TRUE,
+  ...) {
   if (inherits(tt, "list")) {
     stop("Please use paginate = TRUE or mapply() to create multiple outputs. export_as_docx accepts lists.")
   }
@@ -1272,10 +1268,7 @@ tt_to_flextable_j <- function(
     mpf_aligns[al$row, al$col] <- al$value
   }
   if (length(alignments) == 0) {
-    .apply_alignments <- utils::getFromNamespace(
-      ".apply_alignments",
-      "rtables.officer"
-    )
+    .apply_alignments <- utils::getFromNamespace(".apply_alignments", "rtables.officer")
     flx <- flx |>
       .apply_alignments(mpf_aligns[seq_len(hnum), , drop = FALSE], "header") |>
       .apply_alignments(mpf_aligns[-seq_len(hnum), , drop = FALSE], "body")
@@ -1333,7 +1326,7 @@ tt_to_flextable_j <- function(
   # add indentation in Header
   for (i in seq_len(nr_header)) {
     leading_spaces_count <- nchar(hdr[i, 1]) -
-      nchar(stringi::stri_replace(hdr[i, 1], regex = "^ +", ""))
+      nchar(sub("^ +", "", hdr[i, 1]))
     # interpret every 2 leading whitespaces as 1 indentation level
     header_indent_size <- (leading_spaces_count / 2) * indent_size
     hdr[i, 1] <- trimws(x = hdr[i, 1], which = "left")
@@ -1707,14 +1700,10 @@ export_as_docx_j <- function(
     stop("tt must be a TableTree/listing_df, a flextable, or a list of TableTree/listing_df or flextable objects.")
   }
   if (isFALSE(titles_as_header) || isFALSE(integrate_footers)) {
-    .extract_font_and_size_from_flx <- utils::getFromNamespace(
-      ".extract_font_and_size_from_flx",
-      "rtables.officer"
-    )
     if (inherits(flex_tbl_list[[1]], "list")) {
-      flx_fpt <- .extract_font_and_size_from_flx(flex_tbl_list[[1]][[1]])
+      flx_fpt <- utils::getFromNamespace(".extract_font_and_size_from_flx", "rtables.officer")(flex_tbl_list[[1]][[1]])
     } else {
-      flx_fpt <- .extract_font_and_size_from_flx(flex_tbl_list[[1]])
+      flx_fpt <- utils::getFromNamespace(".extract_font_and_size_from_flx", "rtables.officer")(flex_tbl_list[[1]])
     }
   }
 

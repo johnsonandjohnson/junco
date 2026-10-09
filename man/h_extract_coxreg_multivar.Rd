@@ -7,7 +7,7 @@
 h_extract_coxreg_multivar(x)
 }
 \arguments{
-\item{x}{(\code{coxreg.multivar})\cr from \code{\link[tern:fit_coxreg]{tern::fit_coxreg_multivar()}}.}
+\item{x}{(\code{coxreg.multivar})\cr from \code{\link[tern:fit_coxreg_multivar]{tern::fit_coxreg_multivar()}}.}
 }
 \value{
 A data frame containing Cox regression results with columns for term,

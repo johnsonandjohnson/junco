@@ -24,12 +24,17 @@ articles:
     - table_and_listing_customizations
     - ancova_combined
     - standard_column_structures
+    - get_ref_info
+    - formats_d
+    - formats_significant_figures
 reference:
   - title: junco Analysis Functions
     desc: The following functions are the Analysis functions used used to create common table layouts.
     contents:
     - column_stats
+    - a_combo_prop_diff_pval_mf
     - a_eair100_j
+    - a_diff_means
     - a_freq_combos_j
     - a_freq_j
     - a_freq_subcol_j
@@ -37,13 +42,17 @@ reference:
     - a_maxlev
     - a_proportion_ci_factor
     - a_proportion_ci_logical
+    - a_proportion_diff_mf
+    - a_test_proportion_diff_mf
     - a_summarize_aval_chg_diff_j
     - a_summarize_ex_j
-    - a_summary_diff_mvars
-    - a_summary_j
+    - a_summarize_mmrm_with_exclude
+    - a_summary_j_with_exclude
+    - a_summary_subset
+    - a_sum_ratio_j
     - a_two_tier
+    - a_three_tier    
     - c_summary_subset_label
-    - rbmi_analyse
     - analyze_values
     - rbmi_ancova
     - rbmi_ancova_single
@@ -51,18 +60,16 @@ reference:
     - c_proportion_logical
     - cmp_cfun
     - cmp_post_fun
+    - cond_proportion_j
     - find_missing_chg_after_avisit
     - fit_ancova
     - fit_mmrm_j
-    - coxph_hr
     - tabulate_rbmi
     - tabulate_lsmeans
     - h_odds_ratio
-    - make_rbmi_cluster
     - rbmi_mmrm
     - event_free
     - odds_ratio
-    - par_lapply
     - prop_diff
     - prop_post_fun
     - prop_ratio_cmh
@@ -75,21 +82,25 @@ reference:
     - resp01_split_fun_fct
     - response_by_var
     - s_ancova_j
-    - s_diff_mean_ci
+    - s_diff_means
     - s_proportion_factor
     - s_proportion_logical
+    - s_proportion_diff_mf
+    - s_test_proportion_diff_mf
     - s_summarize_ancova_j
     - s_summary_diff
     - summarize_coxreg_multivar
     - summarize_lsmeans_wide
     - summarize_mmrm
     - summarize_row_counts
-    - h_get_trtvar_refpath
     - rbmi_mmrm_single_info
     - rbmi_pool
     - s_cmhrms_j
     - a_cmhrms_j
     - a_two_tier
+    - pool_rubin_scalar
+    - pool_z_stat
+    - resp_multiple_imputation
     - prop_diff_test
 
   - title: junco Formatting Functions
@@ -98,8 +109,12 @@ reference:
     - jjcsformat_xx
     - jjcs_num_formats
     - jjcsformat_count_denom_fraction
+    - jjcsformat_fraction
     - ac_blank_line
     - insert_blank_line
+    - format_sigfig_j
+    - fmt_spec_d
+    - fmt_utils
 
   - title: junco Sorting Functions and Pruning Functions
     desc: The following functions are the junco sorting and pruning functions used to create common table layouts.
@@ -118,11 +133,13 @@ reference:
     - create_colspan_map
     - create_colspan_var
     - grouped_cols_w_diffs
+    - shift_tbl_col_struct
     - do_exclude_split
     - make_combo_splitfun
     - make_multicomp_splfun
-    - postfun_eq5d
+    - stats_in_cols_setup
     - real_add_overall_facet
+    - some_v_all_col_struct
 
   - title: junco Functions For titles/footnotes
     desc: The following utility functions help to add titles/footnotes.
@@ -134,15 +151,16 @@ reference:
   - title: junco Miscellaneous Functions
     desc: The following functions are other miscellaneous junco functions used to create common table layouts.
     contents:
-    - filter_df_prior_afun
+    - categorize_pval
+    - cur_col_split_path
+    - in_column
     - get_mmrm_lsmeans
     - get_ref_info
     - get_visit_levels
     - leftside
+    - rightside
     - remove_col_count
     - rm_levels
-    - safe_t_test
-
     
   - title: internal
     desc: The following are additional junco functions.
@@ -151,9 +169,11 @@ reference:
     - inches_to_spaces
     - prepend_label_cell
     - rm_other_facets_fact
-    - safe_t_test
     - smart_colwidths_1page
     - tt_to_tbldf
+    - factor_by_order
+    - h_set_labels_prop_diff_mf
+    - string_to_title
 
   - title: junco Functions For generating .rtfs, .docxs and HTMLs
     desc: The following utility functions help to generate the .rtfs, .docxs and HTMLs.
@@ -164,3 +184,12 @@ reference:
     - export_graph_as_docx
     - export_TLG_as_docx
     - theme_docx_default_j
+
+  - title: Deprecated Functions
+    desc: The following functions are deprecated and should not be used in new code.
+    contents:
+    - a_coxph_hr
+    - rbmi_analyse
+    - make_rbmi_cluster
+    - par_lapply
+    - a_kaplan_meier

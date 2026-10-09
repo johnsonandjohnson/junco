@@ -172,14 +172,15 @@ s_rbmi_lsmeans <- function(df, .in_ref_col, show_relative = c("reduction", "incr
 #' @inheritParams proposal_argument_convention
 #' @export
 a_rbmi_lsmeans <- function(
-    df,
-    ref_path,
-    .spl_context,
-    ...,
-    .stats = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  ref_path,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

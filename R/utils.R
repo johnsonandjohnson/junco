@@ -16,6 +16,28 @@ leftside <- function(x) {
   res
 }
 
+#' Extract the right-hand side of a formula
+#'
+#' @param x (`formula`)\cr A two-sided formula, e.g., `y ~ x1 + x2`.
+#'
+#' @return (`character(1)`) The right-hand side of the formula.
+#'
+#' @examples
+#' rightside(y ~ x1 + x2)
+#'
+#' @export
+rightside <- function(x) {
+  checkmate::assert_formula(x)
+  res <- x[[3L]]
+  if (is.character(res) && length(res) == 1L) {
+    res <- as.character(res)
+  } else {
+    res <- paste(deparse(res), collapse = "")
+  }
+  checkmate::assert_string(res)
+  res
+}
+
 #' Custom unlist function
 #'
 #' Unlist a list, but retain `NULL` as `'NULL'` or `NA`.
@@ -26,15 +48,29 @@ leftside <- function(x) {
     unlist(recursive = recursive)
 }
 
-#' Title Case Conversion
+#' @title Title Case Conversion
 #'
-#' @param x (`character` or `factor`)\cr Input string
-#' @return x converted to title case (first letter of each word capitalized)
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Convert strings to title case (first letter of each word capitalized),
+#' with the option to keep specified words, such as conjunctions, lowercase.
+#'
+#' @param x (`character` or `factor`)\cr
+#'   Input string.
+#' @param lowercase_words (`character` or `NULL`)\cr
+#'   Words that should remain lowercase when converting to title case.
+#'   Matching is case-insensitive. Specified words are only converted to
+#'   lowercase when they are not the first word in the string. The first word is
+#'   always capitalized, even if it is included in `lowercase_words`.
+#' @return `x` converted to title case, with words specified in
+#'   `lowercase_words` kept lowercase.
+#'
 #' @export
-#' @keywords internal
+#'
 #' @examples
 #' x <- c("THIS IS an eXaMple", "statement TO CAPItaliZe")
 #' string_to_title(x)
+#' string_to_title(x, c("is", "an", "to"))
 #'
 #' x <- factor(
 #'   c("OPTIMAL DOSE", "UNDERDOSE"),
@@ -42,23 +78,52 @@ leftside <- function(x) {
 #' )
 #' string_to_title(x)
 #'
-string_to_title <- function(x) {
+string_to_title <- function(x, lowercase_words = NULL) {
   checkmate::assert(
     checkmate::check_character(x, null.ok = TRUE),
     checkmate::check_factor(x, null.ok = TRUE)
   )
+  checkmate::assert_character(lowercase_words, min.chars = 1L, any.missing = FALSE, null.ok = TRUE)
+
+  if (is.null(x)) {
+    return(character())
+  }
+
+  # Step 1. Apply initial title case (capitalize the first letter of every word).
+  y <- if (is.factor(x)) {
+    levels(x)
+  } else {
+    x
+  }
 
   pattern <- "(^|\\s)(\\w)"
   replacement <- "\\1\\U\\2"
+  y <- gsub(pattern, replacement, tolower(y), perl = TRUE)
 
-  if (is.factor(x)) {
-    y <- levels(x)
-    y_title <- gsub(pattern, replacement, tolower(y), perl = TRUE)
-    levels(x) <- y_title
+  # Step 2. Apply lowercase exceptions for specified words.
+  if (!is.null(lowercase_words)) {
+    # Match specified words only when preceded by whitespace that follows
+    # a non-whitespace character, ensuring the first word is excluded.
+    pattern_lw <- paste0(
+      "(?<=\\S)(\\s+)(",
+      paste(lowercase_words, collapse = "|"),
+      ")(?=\\s|$)"
+    )
+
+    # Preserve the preceding whitespace and convert the word to lowercase.
+    replacement_lw <- "\\1\\L\\2"
+
+    y <- gsub(pattern_lw, replacement_lw, y, ignore.case = TRUE, perl = TRUE)
+  }
+
+  ret <- if (is.factor(x)) {
+    levels(x) <- y
     x
   } else {
-    gsub(pattern, replacement, tolower(x), perl = TRUE)
+    y
   }
+
+  ret
 }
 
 #' Check If `.alt_df_full` Is `NULL`
@@ -76,6 +141,516 @@ check_alt_df_full <- function(argument, values, .alt_df_full) {
 
   stop(sprintf(
     '`.alt_df_full` cannot be `NULL` when `%s` is `"%s"`',
-    name, argument
+    name,
+    argument
   ))
+}
+
+#' @title Extract Vectors for Two-Sample Analysis
+#'
+#' @noRd
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Extract (aligned) vectors from two data frames for two-sample statistical
+#' analysis using complete-case (non-missing) observations.
+#'
+#' For unpaired data, values are extracted directly from each dataset with
+#' missing values (`NA`) removed independently.
+#'
+#' For paired data, observations are first matched using the key variable(s)
+#' specified in `paired_by`, and only complete pairs are retained.
+#'
+#' The function validates that `paired_by` uniquely identifies rows in each
+#' dataset (after removing rows with incomplete values in `paired_by` columns)
+#' and raises an error if duplicates are detected.
+#'
+#' @details
+#' The function performs the following steps depending on the `paired` flag:
+#'
+#' \strong{Unpaired case (`paired = FALSE`):}
+#' \enumerate{
+#'   \item Extract `.var` from each dataset.
+#'   \item Remove `NA` values independently from each vector.
+#' }
+#'
+#' \strong{Paired case (`paired = TRUE`):}
+#' \enumerate{
+#'   \item Check that `paired_by` uniquely identifies rows in each dataset,
+#'     considering only rows that are complete cases for the `paired_by` columns.
+#'
+#'   \item Merge `df1` and `df2` by the columns specified in `paired_by`.
+#'   The merged data contains only the `paired_by` columns and the `.var` column
+#'   from each dataset.
+#'
+#'   \item Remove rows containing any missing values (`NA`) in the merged data.
+#'
+#'   \item Extract aligned vectors corresponding to `.var`.
+#' }
+#'
+#' This function is intended for internal use in two-sample statistical
+#' procedures such as paired and unpaired t-tests.
+#'
+#' @param df1 (`data.frame`)\cr First dataset.
+#' @param df2 (`data.frame`)\cr Second dataset.
+#' @param .var (`character(1)`)\cr Name of the variable to extract from both
+#'   datasets.
+#' @param paired (`logical(1)`)\cr Whether the values in `df1[[.var]]` and
+#'   `df2[[.var]]` should be treated as paired (matched) samples.
+#' @param paired_by (`character`)\cr Column name(s) used to match observations
+#'   between `df1` and `df2`. Required only if `paired = TRUE`.
+#'
+#' @return
+#' A named `list` with:
+#' \describe{
+#'   \item{x1}{Non-missing values from `df1[[.var]]` after optional pairing.}
+#'   \item{x2}{Non-missing values from `df2[[.var]]` after optional pairing.}
+#' }
+#'
+#' Returned vectors may be shorter than the original inputs due to removal of
+#' unmatched observations, missing values (`NA`).
+#'
+#' @author WW
+#'
+#' @keywords internal
+#'
+#' @importFrom stats complete.cases
+#'
+#' @examples
+#' df1 <- data.frame(id = c("A", "B", "C", "D"), value = 1:4)
+#' df2 <- data.frame(id = c("A", "C", "D", "E", "F"), value = c(11, 13:14, NA, 16))
+#' df1
+#' df2
+#'
+#' # Unpaired
+#' extract_vectors(df1, df2, "value")
+#'
+#' # Paired
+#' extract_vectors(df1, df2, "value", paired = TRUE, paired_by = "id")
+#'
+extract_vectors <- function(df1, df2, .var, paired = FALSE, paired_by) {
+  checkmate::assert_data_frame(df1)
+  checkmate::assert_data_frame(df2)
+  checkmate::assert_string(.var)
+  checkmate::assert_names(colnames(df1), must.include = .var)
+  checkmate::assert_names(colnames(df2), must.include = .var)
+  checkmate::assert_flag(paired)
+
+  if (paired) {
+    checkmate::assert_character(paired_by)
+    checkmate::assert_names(colnames(df1), must.include = paired_by)
+    checkmate::assert_names(colnames(df2), must.include = paired_by)
+
+    df1_keys <- df1[complete.cases(df1[, paired_by]), paired_by]
+    df2_keys <- df2[complete.cases(df2[, paired_by]), paired_by]
+
+    if (any(duplicated(df1_keys))) {
+      stop("Duplicate values in 'paired_by' columns in df1 (complete cases only).")
+    }
+
+    if (any(duplicated(df2_keys))) {
+      stop("Duplicate values in 'paired_by' columns in df2 (complete cases only).")
+    }
+
+    suffixes <- c("_df1", "_df2")
+
+    df <- merge(
+      df1[, c(paired_by, .var), drop = FALSE],
+      df2[, c(paired_by, .var), drop = FALSE],
+      by = paired_by,
+      suffixes = suffixes
+    )
+    df <- df[complete.cases(df), , drop = FALSE]
+
+    varsfx <- paste0(.var, suffixes)
+    x1 <- df[[varsfx[1]]]
+    x2 <- df[[varsfx[2]]]
+  } else {
+    x1 <- df1[[.var]]
+    x2 <- df2[[.var]]
+
+    x1 <- x1[!is.na(x1)]
+    x2 <- x2[!is.na(x2)]
+  }
+
+  list(x1 = x1, x2 = x2)
+}
+
+
+#' Helper for Finding AVISIT after which CHG are all Missing
+#'
+#' @description
+#' Helper for Finding AVISIT after which CHG are all Missing.
+#'
+#' @param df (`data.frame`)\cr with `CHG` and `AVISIT` variables.
+#'
+#' @return A string with either the factor level after which `AVISIT` is all missing,
+#'   or `NA`.
+#' @export
+#'
+#' @examples
+#' df <- data.frame(
+#'   AVISIT = factor(c(1, 2, 3, 4, 5)),
+#'   CHG = c(5, NA, NA, NA, 3)
+#' )
+#' find_missing_chg_after_avisit(df)
+#'
+#' df2 <- data.frame(
+#'   AVISIT = factor(c(1, 2, 3, 4, 5)),
+#'   CHG = c(5, NA, 3, NA, NA)
+#' )
+#' find_missing_chg_after_avisit(df2)
+#'
+#' df3 <- data.frame(
+#'   AVISIT = factor(c(1, 2, 3, 4, 5)),
+#'   CHG = c(NA, NA, NA, NA, NA)
+#' )
+#' find_missing_chg_after_avisit(df3)
+find_missing_chg_after_avisit <- function(df) {
+  checkmate::assert_data_frame(df)
+  checkmate::assert_factor(df$AVISIT, unique = TRUE, any.missing = FALSE)
+  checkmate::assert_numeric(df$CHG)
+
+  # Ensure the dataframe is sorted by AVISIT
+  df <- df[order(df$AVISIT), ]
+
+  # Last visit with available data.
+  visit_levels_available <- as.integer(df[!is.na(df$CHG), ]$AVISIT)
+
+  if (!length(visit_levels_available)) {
+    return(levels(df$AVISIT)[1])
+  }
+  visit_levels_max_available <- max(visit_levels_available)
+
+  # Visits with missing data.
+  visit_levels_missing <- as.integer(df[is.na(df$CHG), ]$AVISIT)
+
+  # Missing visits at the end.
+  visit_levels_missing_end <- visit_levels_missing[
+    visit_levels_missing > visit_levels_max_available
+  ]
+
+  # Return first one if there is any.
+  if (length(visit_levels_missing_end)) {
+    levels(df$AVISIT)[min(visit_levels_missing_end)]
+  } else {
+    NA_character_
+  }
+}
+
+
+#'
+#' @description
+#' Helper for transposing a named list of named lists, where inner lists have same names
+#'
+#' @param x (`list`)\cr with depth of 2.
+#'
+#' @return Transposed version of list where inner elements now are outer elements.
+#' @noRd
+#' @keywords internal
+transpose_named_list <- function(x) {
+  # x: named list of named lists
+  keys <- unique(lapply(x, names))
+  if (length(keys) != 1) {
+    stop("Input list must have same names on all sublists")
+  } else {
+    keys <- keys[[1]]
+  }
+  # rebuild structure
+  setNames(
+    lapply(keys, function(k) {
+      setNames(
+        lapply(x, function(inner_list) {
+          inner_list[[k]]
+        }),
+        names(x)
+      )
+    }),
+    keys
+  )
+}
+
+#' @title Copy missing attributes to an object
+#'
+#' @noRd
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Copies attributes from `source` to `target` that are not already present
+#' on `target`. Existing attributes of `target` are preserved.
+#'
+#' @param source An object providing the attributes to copy.
+#' @param target An object to which missing attributes are copied.
+#'
+#' @return The `target` object with any missing attributes copied from `source`.
+#'
+#' @author WW
+#' @keywords internal
+#' @seealso [factor_by_order()]
+#'
+#' @examples
+#'
+#' x <- factor(c("Placebo", "Placebo", "Drug X"))
+#'
+#' x_labeled <- formatters::with_label(x, label = "Treatment Group")
+#' attributes(x_labeled)
+#'
+#' # Copy the `label` attribute from `x_labeled` to `x`.
+#' x_copy <- copy_attributes(x_labeled, x)
+#' attributes(x_copy)
+#'
+copy_attributes <- function(source, target) {
+  source_attr <- attributes(source)
+  if (is.null(source_attr)) {
+    return(target)
+  }
+
+  target_attr <- attributes(target)
+
+  to_copy <- setdiff(names(source_attr), names(target_attr))
+  attributes(target) <- c(target_attr, source_attr[to_copy])
+  target
+}
+
+#' @title Check whether two vectors define a one-to-one correspondence
+#'
+#' @noRd
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Tests whether `x` and `y` define a bijection between their unique non-missing
+#' values.
+#'
+#' Missing values are treated specially: if `match_na = FALSE`, any missing
+#' values will trigger an error. If `match_na = TRUE`, an `NA` in `x`
+#' must correspond to an `NA` in `y` at the same position; otherwise, an error
+#' is thrown.
+#'
+#' @note Factors are not supported because they may contain unused levels that
+#'   do not appear in the observed data. For such levels, the corresponding
+#'   values in the other vector are not available, and therefore a bijection
+#'   cannot be determined.
+#'
+#' @param x (`character` or `numeric`)\cr A vector defining one side of the
+#'   mapping.
+#' @param y (`character` or `numeric`)\cr A vector defining the other side of
+#'   the mapping. Must have the same length as `x`.
+#' @param match_na (`logical(1)`)\cr Whether to permit missing values (`NA`)
+#'   if they appear at identical positions in both vectors.
+#'   If `FALSE` (the default), any presence of missing values triggers an error.
+#'
+#' @return A single logical value indicating whether `x` and `y` define a
+#'   bijection.
+#'
+#' @seealso [factor_by_order()]
+#' @keywords internal
+#' @author WW
+#'
+#' @examples
+#' is_bijection(c("A", "A", "B"), c(1, 1, 2))
+#'
+#' is_bijection(c("A", "B"), c(1, 1))
+#'
+#' is_bijection(c("A", NA), c(1, NA))
+#'
+#' is_bijection(c("A", NA), c(1, 2))
+is_bijection <- function(x, y, match_na = FALSE) {
+  checkmate::assert(
+    checkmate::test_character(x) || checkmate::test_numeric(x)
+  )
+  checkmate::assert(
+    checkmate::test_character(y, len = length(x)) ||
+      checkmate::test_numeric(y, len = length(x))
+  )
+  checkmate::assert_flag(match_na)
+
+  # NA validation.
+  na_x <- is.na(x)
+  na_y <- is.na(y)
+  if (any(na_x != na_y)) {
+    stop("NAs are present in 'x' and 'y', but not at identical positions.")
+  }
+  # At this point, na_x and na_y are component-wise equal;
+  # therefore, any(na_x | na_y) is equivalent to any(na_x).
+  if (!match_na && any(na_x)) {
+    stop("NAs are present in 'x' and 'y', but 'match_na' is set to FALSE.")
+  }
+
+  # Check bijection.
+  n_unique_x <- length(unique(x))
+  n_unique_y <- length(unique(y))
+
+  bijection <- if (n_unique_x != n_unique_y) {
+    FALSE
+  } else {
+    x_first_positions <- match(x, x)
+    all(y == y[x_first_positions], na.rm = TRUE)
+  }
+
+  bijection
+}
+
+#' @title Create a factor with levels ordered by a separate ordering vector
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' Converts a character vector or factor into a factor where the level order is
+#' determined by a second integer-like vector containing the corresponding order
+#' values.
+#'
+#' @details The values in `x` and `y` must define a bijection between the unique
+#'   non-missing values: each unique value in `x` must correspond to exactly one
+#'   unique value in `y`, and vice versa.
+#'   Missing values are handled separately: `NA` values in `x` and `y` must
+#'   occur at the same positions. Missing values are not included as factor
+#'   levels.
+#'
+#'   If `x` is already a factor containing unobserved (unused) levels, these
+#'   unobserved levels will be dropped in the resulting factor.
+#'
+#' @param x (`character` or `factor`)\cr A vector to be converted to a factor.
+#' @param y (`integerish`)\cr A vector defining the order of levels in `x`.
+#'   Must have the same length as `x`.
+#' @param ordered (`logical(1)`)\cr Indicates whether the result should be
+#'   an ordered factor. Defaults to `FALSE`.
+#'
+#' @return A factor created from `x`, with levels ordered according to `y`.
+#'   Attributes of `x` other than `class` and `levels` are preserved.
+#'   If `ordered = TRUE`, an ordered factor is returned.
+#'   If `x` is empty or consists entirely of missing values, a factor with
+#'   no levels is returned.
+#'
+#' @author WW
+#'
+#' @export
+#' @examples
+#' factor_by_order(c("A", "A", "B"), c(1, 1, 2))
+#'
+#' factor_by_order(c("A", "A", "B"), c(1, 1, 2), ordered = TRUE)
+#'
+#' factor_by_order(c("A", "A", "B"), c(2, 2, 1))
+#'
+#' factor_by_order(c("A", "A", "B", NA), c(1, 1, 2, NA))
+#'
+#' \dontrun{
+#' factor_by_order(c("A", "A", "B", NA), c(1, 2, 2, 4))
+#' }
+#'
+factor_by_order <- function(x, y, ordered = FALSE) {
+  checkmate::assert_multi_class(x, classes = c("character", "factor"))
+  checkmate::assert_integerish(y, len = length(x))
+  checkmate::assert_flag(ordered)
+
+  x_char <- as.character(x)
+
+  if (!is_bijection(x_char, y, match_na = TRUE)) {
+    stop("`x` and `y` must define a bijection between their unique non-NA values; NA values must correspond.")
+  }
+
+  factor_levels <- unique(x_char[order(y)])
+  factor_levels <- factor_levels[!is.na(factor_levels)]
+  f <- factor(x_char, levels = factor_levels, ordered = ordered)
+
+  # Preserve non-factor attributes of `x`.
+  copy_attributes(source = x, target = f)
+}
+
+#' @title Strictly Match a Value in a Character Vector
+#'
+#' @description
+#' Finds a unique match of a value in either the odd or even positions of a
+#' character vector. An error is raised if no match or more than one match is
+#' found in the selected positions.
+#'
+#' @param x (`character(1)`)\cr
+#'   The value to match.
+#' @param y (`character`)\cr
+#'   The character vector in which to search for `x`.
+#' @param odd (`flag`)\cr
+#'   Whether to restrict the match to odd positions. Defaults to `TRUE`.
+#'   If `FALSE`, only even positions are considered.
+#'
+#' @return An integer containing the unique position of `x` in `y`.
+#'
+#' @keywords internal
+#' @author WW
+#'
+#' @examples
+#' \dontrun{
+#' strict_match("A", c("A", "Placebo"))
+#'
+#' strict_match("SEX", c("SomeVar", "SomeVal", "SEX", "Male"))
+#'
+#' strict_match("ARM", c("SEX", "Male"))
+#' strict_match("Male", c("SEX", "Male"))
+#' strict_match("ARM", c("ARM", "Placebo", "ARM", "Active"))
+#' }
+#'
+strict_match <- function(x, y, odd = TRUE) {
+  checkmate::assert_string(x)
+  checkmate::assert_character(y, any.missing = FALSE)
+  checkmate::assert_flag(odd)
+
+  pos <- which(x == y)
+
+  # odd = TRUE -> use 1L -> keep odd positions
+  # odd = FALSE -> use 0L -> keep even positions
+  pos <- if (odd) {
+    pos[pos %% 2L != 0L]
+  } else {
+    pos[pos %% 2L == 0L]
+  }
+
+  if (length(pos) == 0L) {
+    stop(paste0(
+      "Value ('",
+      x,
+      "') not found in the ",
+      ifelse(odd, "odd", "even"),
+      " positions of ('",
+      paste(y, collapse = "."),
+      "')."
+    ))
+  }
+
+  if (length(pos) > 1L) {
+    stop(paste0(
+      "Value ('",
+      x,
+      "') must be unique in the ",
+      ifelse(odd, "odd", "even"),
+      " positions of ('",
+      paste(y, collapse = "."),
+      "')."
+    ))
+  }
+
+  pos
+}
+
+#' Safe Conversion to Logical Vector
+#'
+#' @param x (`vector`)\cr The input vector to be safely converted to a logical vector.
+#' @param na.rm (`flag`)\cr Whether to remove missing values after conversion.
+#'
+#' @return
+#' A logical vector corresponding to the input `x`. If the conversion introduces
+#' unexpected `NA` values, an error is raised.
+#'
+#' @keywords internal
+safe_as_logical <- function(x, na.rm = FALSE) {
+  checkmate::assert_vector(x, strict = TRUE)
+  checkmate::assert_flag(na.rm)
+  result <- as.logical(x)
+  if (anyNA(result) && !identical(is.na(x), is.na(result))) {
+    stop("Conversion to logical introduced unexpected NAs.")
+  }
+  if (anyNA(result)) {
+    if (na.rm) {
+      result <- result[!is.na(result)]
+    } else {
+      stop("Missing values detected in response and `na.rm = FALSE`.", call. = FALSE)
+    }
+  }
+  result
 }

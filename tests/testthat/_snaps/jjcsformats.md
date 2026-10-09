@@ -181,6 +181,79 @@
     Output
       [1] "NA"
 
+# jjcsformat_fraction works as expected
+
+    Code
+      jjcsformat_fraction(NA)
+    Output
+      [1] "-"
+    Code
+      jjcsformat_fraction(0.23)
+    Output
+      [1] "23.0"
+    Code
+      jjcsformat_fraction(0.001)
+    Output
+      [1] "0.1"
+    Code
+      jjcsformat_fraction(1e-04)
+    Output
+      [1] "<0.1"
+    Code
+      jjcsformat_fraction(0.9994)
+    Output
+      [1] "99.9"
+    Code
+      jjcsformat_fraction(0.9995)
+    Output
+      [1] ">99.9"
+    Code
+      jjcsformat_fraction(1)
+    Output
+      [1] "100.0"
+    Code
+      jjcsformat_fraction(0.23432145, d = 4)
+    Output
+      [1] "23.4321"
+    Code
+      jjcsformat_fraction(1e-05, d = 3)
+    Output
+      [1] "0.001"
+    Code
+      jjcsformat_fraction(1e-06, d = 3)
+    Output
+      [1] "<0.001"
+    Code
+      jjcsformat_fraction(0.999994, d = 3)
+    Output
+      [1] "99.999"
+    Code
+      jjcsformat_fraction(0.999995, d = 3)
+    Output
+      [1] ">99.999"
+    Code
+      jjcsformat_fraction(1, d = 3)
+    Output
+      [1] "100.0"
+    Code
+      jjcsformat_fraction(0.2345, round_type = "sas")
+    Output
+      [1] "23.5"
+    Code
+      jjcsformat_fraction(0.2345)
+    Output
+      [1] "23.4"
+    Code
+      jjcsformat_fraction(0.4, output = "html")
+    Output
+      $`40.0`
+      40.0
+      
+    Code
+      jjcsformat_fraction(0.4, add_pct = TRUE)
+    Output
+      [1] "40.0%"
+
 # jjcsformat_range_fct is formatting ranges as expected
 
     Code
@@ -274,4 +347,37 @@
       jjcsformat_pval_fct(0.005)(0.00499999999)
     Output
       [1] "0.0050000000"
+
+# format_sigfig_j used in rtables framework as format
+
+    Code
+      rslt
+    Output
+                    ARM A         ARM B         ARM C   
+      ——————————————————————————————————————————————————
+      n              134           134           132    
+      Mean (SD)    1.85 (0)    5.70 (3.31)   5.62 (3.49)
+      Min - Max   1.85, 1.85   0.648, 14.2   0.165, 21.4
+
+---
+
+    Code
+      rslt
+    Output
+                    ARM A         ARM B         ARM C   
+      ——————————————————————————————————————————————————
+      n              134           134           132    
+      Mean (SD)    1.85 (0)    5.70 (3.31)   5.62 (3.49)
+      Min - Max   1.85, 1.85   0.648, 14.2   0.165, 21.4
+
+# format_sigfig_j used in rtables framework as format w/wout trailing zeros
+
+    Code
+      rslt
+    Output
+                        ARM A            ARM B         ARM C   
+      —————————————————————————————————————————————————————————
+      n                  134              134           132    
+      Mean (SD)       0.0004 (0)         4 (0)      5.62 (3.49)
+      Min - Max   0.000400, 0.000400   4.00, 4.00   0.165, 21.4
 

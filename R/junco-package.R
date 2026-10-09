@@ -2,6 +2,6 @@
 #' @import rtables
 #' @import tern
 #' @import tidytlg
-#' @import tibble
+#' @importFrom tibble tibble tribble
 #' @import methods
 NULL

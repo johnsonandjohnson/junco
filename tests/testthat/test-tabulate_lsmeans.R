@@ -1,4 +1,12 @@
 # tidy.tern_model ----
+myformats <- c(
+  "adj_mean_se" = jjcsformat_xx("xx.xxx (xx.xxx)"),
+  "adj_mean_ci" = jjcsformat_xx("(xx.xxx, xx.xxx)"),
+  "adj_mean_est_ci" = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)"),
+  "diff_mean_se" = jjcsformat_xx("xx.xxx (xx.xxx)"),
+  "diff_mean_ci" = jjcsformat_xx("(xx.xxx, xx.xxx)"),
+  "diff_mean_est_ci" = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)")
+)
 
 test_that("tidy.tern_model works as expected", {
   fit <- fit_mmrm_j(
@@ -157,7 +165,8 @@ test_that("a_lsmeans can show two- and one-sided p-values correctly", {
       show_labels = "hidden",
       na_str = default_na_str(),
       extra_args = list(
-        ref_path = c("ARMCD", mmrm_results$ref_level)
+        ref_path = c("ARMCD", mmrm_results$ref_level),
+        .formats = myformats
       )
     )
   result_two_sided <- build_table(
@@ -175,7 +184,8 @@ test_that("a_lsmeans can show two- and one-sided p-values correctly", {
       na_str = default_na_str(),
       extra_args = list(
         ref_path = c("ARMCD", mmrm_results$ref_level),
-        alternative = "less"
+        alternative = "less",
+        .formats = myformats
       )
     )
   result_one_sided_less <- build_table(
@@ -193,7 +203,8 @@ test_that("a_lsmeans can show two- and one-sided p-values correctly", {
       na_str = default_na_str(),
       extra_args = list(
         ref_path = c("ARMCD", mmrm_results$ref_level),
-        alternative = "greater"
+        alternative = "greater",
+        .formats = myformats
       )
     )
   result_one_sided_greater <- build_table(
@@ -233,7 +244,8 @@ test_that("a_lsmeans works well together with subgroup variable", {
       show_labels = "hidden",
       na_str = default_na_str(),
       extra_args = list(
-        ref_path = c("ARMCD", mmrm_results$ref_level)
+        ref_path = c("ARMCD", mmrm_results$ref_level),
+        .formats = myformats
       )
     )
   result <- build_table(
