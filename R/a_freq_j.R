@@ -24,23 +24,33 @@
 #' When multiple levels, those levels/values of the incoming variable
 #' will be excluded.\cr
 #' Cannot be used together with `val`.
-#' @param new_levels (list(2) or NULL)\cr List of length 2.\cr
-#'     First element : names of the new levels\cr
-#'     Second element: list with values of the new levels.\cr
+#' @param new_levels (`list(2)` or NULL)\cr
+#' List of length 2 defining combined/new factor levels to add.\cr
+#' Element 1: `character` vector of new level names.\cr
+#' Element 2: `list` of character vectors — each entry maps existing levels to one new level.\cr
+#' Example: `list(c("M+F"), list(c("M", "F")))` creates a new level `"M+F"` combining `"M"` and `"F"`.\cr
+#' Element 1 and Element 2 must have the same length. No duplicate values across Element 2 entries.
 #' @param new_levels_after (`logical`)\cr If `TRUE` new levels will be added after last level.
 #' @param denom (`string`)\cr See Details.
-#' @param alt_df (`dataframe`)\cr Will be derived based upon alt_df_full and denom_by within a_freq_j.
-#' @param parent_df (`dataframe`)\cr Will be derived within a_freq_j based
-#' upon the input dataframe that goes into build_table (df) and denom_by.\cr
-#' It is a data frame in the higher row-space than the current input df
-#' (which underwent row-splitting by the rtables splitting machinery).
-#'
-#' @param countsource Either `df`, `altdf`, or `altdf_subset`.\cr
-#' When `altdf` the counts will be based upon the alternative dataframe `alt_df`.\cr
-#' When `altdf_subset` the counts will be based upon `alt_df` but first restricted\cr
-#' to the levels/values of the current row split for `.var` (or to `val` when provided).\cr
-#' This is useful for subgroup processing,
-#' to present counts of subjects in a subgroup from the alternative dataframe.
+#' @param id (`string`)\cr Name of the subject identifier variable. Default: `"USUBJID"`.
+#' @param alt_df (`data.frame` or NULL)\cr
+#' Secondary dataset used as denominator source when `denom = "n_altdf"` or
+#' `countsource = "altdf"` / `"altdf_subset"`. When NULL, `n_altdf` is `NA`.
+#' @param parent_df (`data.frame` or NULL)\cr
+#' Dataset representing a higher row-space than `df` (e.g. pre-row-split data).
+#' Used as denominator source when `denom = "n_parentdf"`.
+#' When NULL, `n_parentdf` is `NA`. Never falls back to `df`.
+#' @param .df_row (`data.frame` or NULL)\cr
+#' Dataset across all columns for the current row split.
+#' Used for `drop_levels` and `denom = "n_rowdf"`.
+#' When NULL, `n_rowdf` is `NA` and `drop_levels` cannot be used.
+#' @param countsource (`string`)\cr One of `"df"`, `"altdf"`, `"altdf_subset"`.\cr
+#' Controls which dataset is used for counts (numerator).\cr
+#' `"df"` — counts from `df` (default).\cr
+#' `"altdf"` — counts from `alt_df`.\cr
+#' `"altdf_subset"` — counts from `alt_df` restricted to observed levels of `.var`.\cr
+#' Useful for subgroup layouts where the subgroup filter should apply to `alt_df` counts.\cr
+#' Does NOT affect `n_df`, which always reflects subjects in `df`.
 #'
 #' @details
 #'
@@ -77,20 +87,47 @@
 #' \item unique_fraction
 #' }
 #'
+#' @examples
+#' # --- s_freq_j standalone examples -----------------------------------
+#'
+#' adae <- data.frame(
+#'   USUBJID = sprintf("SUBJ-%02d", 1:8),
+#'   SEX     = factor(c("M", "M", "M", "F", "M", "F", "M", "F"))
+#' )
+#' adsl <- data.frame(
+#'   USUBJID = sprintf("SUBJ-%02d", 1:10),
+#'   SEX     = factor(c("M", "M", "F", "F", "M", "F", "M", "F", "M", "F"))
+#' )
+#'
+#' # 1. Minimal: count Males in adae, denom = n from adae
+#' s_freq_j(df = adae, .var = "SEX", val = "M", denom = "n_df")
+#'
+#' # 2. With alt_df: denom = n from adsl (10 subjects)
+#' s_freq_j(df = adae, .var = "SEX", val = "M", denom = "n_altdf", alt_df = adsl)
+#'
+#' # 3. parent_df = NULL: n_parentdf is NA, not a silent copy of df
+#' s_freq_j(df = adae, .var = "SEX", val = "M", denom = "n_df", parent_df = NULL)
+#'
+#' # 4. countsource = "altdf": counts from adsl, n_df still reflects adae
+#' s_freq_j(
+#'   df = adae, .var = "SEX", val = "M",
+#'   denom = "n_altdf", alt_df = adsl, countsource = "altdf"
+#' )
+#'
 #' @export
 #' @importFrom stats setNames
 s_freq_j <- function(
   df,
   .var,
-  .df_row,
+  .df_row = NULL,
   val = NULL,
   drop_levels = FALSE,
   excl_levels = NULL,
-  alt_df,
-  parent_df,
+  alt_df = NULL,
+  parent_df = NULL,
   id = "USUBJID",
   denom = c("n_df", "n_altdf", "N_col", "n_rowdf", "n_parentdf"),
-  .N_col,
+  .N_col = NULL,
   countsource = c("df", "altdf", "altdf_subset")
 ) {
   if (is.na(.var) || is.null(.var)) {
@@ -100,30 +137,68 @@ s_freq_j <- function(
   checkmate::assert_string(.var)
   checkmate::assert_string(id)
   checkmate::assert_subset(id, colnames(df), empty.ok = FALSE)
+  checkmate::assert_logical(drop_levels, len = 1L)
+  checkmate::assert_character(excl_levels, null.ok = TRUE)
+  checkmate::assert_character(val, null.ok = TRUE)
 
+  # --- Validation -------------------------------------------------------
+  denom_choice <- match.arg(denom)
   countsource <- match.arg(countsource)
 
-  if (countsource %in% c("altdf", "altdf_subset")) {
-    df <- alt_df
+  if (!is.null(val) && isTRUE(drop_levels)) {
+    stop("'val' cannot be used together with 'drop_levels = TRUE'.")
+  }
+  if (denom_choice == "N_col" && is.null(.N_col)) {
+    stop("'.N_col' is required when denom = 'N_col'.")
+  }
+  if (countsource %in% c("altdf", "altdf_subset") && is.null(alt_df)) {
+    stop("'alt_df' is required when countsource = '", countsource, "'.")
+  }
+  if (isTRUE(drop_levels) && is.null(.df_row)) {
+    stop("'.df_row' is required when drop_levels = TRUE.")
+  }
+  if (denom_choice == "n_altdf" && is.null(alt_df)) {
+    stop("'alt_df' is required when denom = 'n_altdf'.")
+  }
+  if (denom_choice == "n_parentdf" && is.null(parent_df)) {
+    stop("'parent_df' is required when denom = 'n_parentdf'.")
+  }
+  if (denom_choice == "n_rowdf" && is.null(.df_row)) {
+    stop("'.df_row' is required when denom = 'n_rowdf'.")
+  }
+  # --- Validation end ---------------------------------------------------
+
+  # count_df: the df used for counts — never reassigns df itself
+  # "altdf_subset": same as "altdf" but count_df is further restricted
+  # to observed val/levels by the val/excl_levels block below
+  count_df <- if (countsource %in% c("altdf", "altdf_subset")) {
+    alt_df
+  } else {
+    df
   }
 
-  checkmate::assert_names(names(df), must.include = .var)
-  checkmate::assert_class(df[[.var]], classes = "factor")
+  checkmate::assert_names(names(count_df), must.include = .var)
+  checkmate::assert_class(count_df[[.var]], classes = "factor")
 
-  .alt_df <- alt_df
-
-  n1 <- length(unique(.alt_df[[id]]))
+  # n-stats: each reads from its own dedicated source
+  n1 <- if (!is.null(alt_df)) {
+    length(unique(alt_df[[id]]))
+  } else {
+    NA_integer_
+  }
   n2 <- length(unique(df[[id]]))
-
-  n3 <- length(unique(.df_row[[id]]))
-
-  if (is.null(parent_df)) {
-    parent_df <- df
+  n3 <- if (!is.null(.df_row)) {
+    length(unique(.df_row[[id]]))
+  } else {
+    NA_integer_
   }
-  n4 <- length(unique(parent_df[[id]]))
+  n4 <- if (!is.null(parent_df)) {
+    length(unique(parent_df[[id]]))
+  } else {
+    NA_integer_
+  }
 
-
-  denom <- match.arg(denom) |> switch(
+  denom <- switch(denom_choice,
     "n_altdf" = n1,
     "n_df" = n2,
     "n_rowdf" = n3,
@@ -143,35 +218,37 @@ s_freq_j <- function(
     obs_levs <- unique(.df_row[[.var]])
     obs_levs <- intersect(levels(.df_row[[.var]]), obs_levs)
 
-    if (!is.null(excl_levels)) obs_levs <- setdiff(obs_levs, excl_levels)
-
-    if (!is.null(val)) {
-      stop("argument val cannot be used together with drop_levels = TRUE.")
+    if (!is.null(excl_levels)) {
+      obs_levs <- setdiff(obs_levs, excl_levels)
     }
+
     val <- obs_levs
   }
 
   if (!is.null(val)) {
-    df <- df[df[[.var]] %in% val, ]
-    .df_row <- .df_row[.df_row[[.var]] %in% val, ]
+    count_df <- count_df[count_df[[.var]] %in% val, ]
+    if (!is.null(.df_row)) {
+      .df_row <- .df_row[.df_row[[.var]] %in% val, ]
+    }
 
-    df <- h_update_factor(df, .var, val)
-    .df_row <- h_update_factor(.df_row, .var, val)
+    count_df <- h_update_factor(count_df, .var, val)
+    if (!is.null(.df_row)) .df_row <- h_update_factor(.df_row, .var, val)
   }
 
   if (!is.null(excl_levels) && drop_levels == FALSE) {
-    # restrict the levels to the ones specified in val argument
-    df <- df[!(df[[.var]] %in% excl_levels), ]
-    .df_row <- .df_row[!(.df_row[[.var]] %in% excl_levels), ]
+    count_df <- count_df[!(count_df[[.var]] %in% excl_levels), ]
+    if (!is.null(.df_row)) {
+      .df_row <- .df_row[!(.df_row[[.var]] %in% excl_levels), ]
+    }
 
-    df <- h_update_factor(df, .var, excl_levels = excl_levels)
-    .df_row <- h_update_factor(.df_row, .var, excl_levels = excl_levels)
+    count_df <- h_update_factor(count_df, .var, excl_levels = excl_levels)
+    if (!is.null(.df_row)) .df_row <- h_update_factor(.df_row, .var, excl_levels = excl_levels)
   }
 
-  x <- df[[.var]]
-  x_unique <- unique(df[, c(.var, id)])[[.var]]
+  x <- count_df[[.var]]
+  x_unique <- unique(count_df[, c(.var, id)])[[.var]]
 
-  if (identical(levels(df[[.var]]), no_data_to_report_str)) {
+  if (identical(levels(count_df[[.var]]), no_data_to_report_str)) {
     xy <- list()
     nms <- c(
       "count",
