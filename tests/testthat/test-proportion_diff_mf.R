@@ -256,8 +256,8 @@ test_that("s_proportion_diff_mf() works with unused strata levels", {
   )
 
   expected <- list(
-    diff = c(diff_uncond_exact_diff = 33.33333),
-    diff_ci = c(diff_ci_uncond_exact_diff_l = -55.44439, diff_ci_uncond_exact_diff_u = 90.94305),
+    diff = c(diff_uncond_exact_diff = 33.3333300),
+    diff_ci = c(diff_ci_uncond_exact_diff_l = -55.4443900, diff_ci_uncond_exact_diff_u = 91.3456458),
     diff_est_ci = NA,
     executed_method = "uncond_exact_diff"
   )
@@ -309,9 +309,9 @@ test_that("s_proportion_diff_mf() works with empty df or .ref_group", {
   )
 
   expected <- list(
-    diff = c(diff_uncond_exact_diff = NaN),
-    diff_ci = c(diff_ci_uncond_exact_diff_l = NaN, diff_ci_uncond_exact_diff_u = NaN),
-    diff_est_ci = NA,
+    diff = c(diff_uncond_exact_diff = NA_real_),
+    diff_ci = c(diff_ci_uncond_exact_diff_l = NA_real_, diff_ci_uncond_exact_diff_u = NA_real_),
+    diff_est_ci = NA_real_,
     executed_method = "uncond_exact_diff"
   )
   expected$diff_est_ci <- c(expected$diff, expected$diff_ci)
@@ -342,8 +342,8 @@ test_that("s_proportion_diff_mf() works with string val", {
   )
 
   expected <- list(
-    diff = c(diff_uncond_exact_diff = 33.33333),
-    diff_ci = c(diff_ci_uncond_exact_diff_l = -55.44439, diff_ci_uncond_exact_diff_u = 90.94305),
+    diff = c(diff_uncond_exact_diff = 33.3333300),
+    diff_ci = c(diff_ci_uncond_exact_diff_l = -55.4443900, diff_ci_uncond_exact_diff_u = 90.94305),
     diff_est_ci = NA,
     executed_method = "uncond_exact_diff"
   )
