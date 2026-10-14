@@ -1,9 +1,9 @@
 # Two Tier Analysis Function
 
-The analysis function used as an `afun` in
-[analyze](https://rdrr.io/pkg/rtables/man/analyze.html). This function
-simulates a final additional level of nesting with a traditional analyze
-call inside it.
+`a_two_tier()`: The analysis function used as an `afun` in
+[analyze](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html).
+This function simulates a final additional level of nesting with a
+traditional analyze call inside it.
 
 This makes it possible to create what *appear to be* group summary or
 content rows and to *optionally or conditionally* generate one or more
@@ -13,6 +13,11 @@ For example, in a disposition table, one might want counts for completed
 and ongoing patients with no further detail underneath, but a breakdown
 of specific reasons beneath the count of patients who discontinued
 treatment.
+
+`a_three_tier()`: Extends `a_two_tier()` by adding a third level of
+nesting: a group summary outer row, mid-level detail rows (one per level
+of `inner_var1`), and innermost detail rows (one per level of
+`inner_var2`) nested beneath each mid-level row.
 
 ## Usage
 
@@ -24,6 +29,23 @@ a_two_tier(
   .N_col,
   .df_row,
   inner_var,
+  drill_down_levs,
+  .spl_context,
+  use_all_levels = FALSE,
+  grp_fun,
+  detail_fun,
+  .alt_df_full = NULL,
+  ...
+)
+
+a_three_tier(
+  df,
+  labelstr = NULL,
+  .var,
+  .N_col,
+  .df_row,
+  inner_var1,
+  inner_var2,
   drill_down_levs,
   .spl_context,
   use_all_levels = FALSE,
@@ -46,7 +68,7 @@ a_two_tier(
   (`character`)  
   label of the level of the parent split currently being summarized
   (must be present as second argument in Content Row Functions). See
-  [`rtables::summarize_row_groups()`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html)
+  [`rtables::summarize_row_groups()`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
   for more information.
 
 - .var:
@@ -109,22 +131,42 @@ a_two_tier(
   (`dataframe`)  
   denominator dataset for fraction and relative risk calculations.  
   this argument gets populated by the rtables split machinery (see
-  [rtables::additional_fun_params](https://rdrr.io/pkg/rtables/man/additional_fun_params.html)).
+  [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html)).
 
 - ...:
 
   additional arguments passed directly to `grp_fun` and `detail_fun`.
 
+- inner_var1:
+
+  (`string`)  
+  single variable name to use when generating the mid-level (second
+  tier) detail rows.
+
+- inner_var2:
+
+  (`string`)  
+  single variable name to use when generating the innermost (third tier)
+  detail rows, nested under each level of `inner_var1`.
+
 ## Value
 
-A `RowsVerticalSection` object including both the group row and all
-detail rows, if applicable, for the facet.
+`a_two_tier()`: A `RowsVerticalSection` object including both the group
+row and all detail rows, if applicable, for the facet.
+
+`a_three_tier()`: A `RowsVerticalSection` object including the group
+row, mid-level detail rows, and innermost detail rows, if applicable,
+for the facet.
 
 ## Details
 
-Both the analysis variable and `inner_var` must be factors. Detail rows
-are differentiated by having an indent mod of one, causing them to hang
-indented under their corresponding group row.
+`a_two_tier()`: Both the analysis variable and `inner_var` must be
+factors. Detail rows are differentiated by having an indent mod of one,
+causing them to hang indented under their corresponding group row.
+
+`a_three_tier()`: The analysis variable, `inner_var1`, and `inner_var2`
+must all be factors. Mid-level rows are indented by one and innermost
+rows by two, relative to the group summary row.
 
 ## Note
 

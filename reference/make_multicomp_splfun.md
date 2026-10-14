@@ -181,5 +181,6 @@ https://github.com/johnsonandjohnson/junco/issues
 
 ## See also
 
-Other riskdiff_col_struct:
-[`grouped_cols_w_diffs()`](https://johnsonandjohnson.github.io/junco/reference/grouped_cols_w_diffs.md)
+Other std_col_struct:
+[`grouped_cols_w_diffs()`](https://johnsonandjohnson.github.io/junco/reference/grouped_cols_w_diffs.md),
+[`shift_tbl_col_struct()`](https://johnsonandjohnson.github.io/junco/reference/shift_tbl_col_struct.md)

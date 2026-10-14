@@ -5,7 +5,7 @@
 [![Docs
 📚](https://github.com/johnsonandjohnson/junco/actions/workflows/pkgdown.yaml/badge.svg)](https://johnsonandjohnson.github.io/junco/)
 [![Code Coverage
-📔](https://raw.githubusercontent.com/johnsonandjohnson/junco/refs/heads/_xml_coverage_reports/data/main/badge.svg)](https://johnsonandjohnson.github.io/junco/_xml_coverage_reports/coverage.html)
+📔](https://github.com/johnsonandjohnson/junco/blob/_xml_coverage_reports/data/main/badge.svg)](https://johnsonandjohnson.github.io/junco/_xml_coverage_reports/coverage.html)
 
 ![GitHub
 forks](https://img.shields.io/github/forks/johnsonandjohnson/junco?style=social)![GitHub
@@ -142,8 +142,18 @@ common table layouts.
 - [`column_stats()`](https://johnsonandjohnson.github.io/junco/reference/column_stats.md)
   : Statistics within the column space
 
-- [`a_eair100_j()`](https://johnsonandjohnson.github.io/junco/reference/a_eair100_j.md)
+- [`a_combo_prop_diff_pval_mf()`](https://johnsonandjohnson.github.io/junco/reference/a_combo_prop_diff_pval_mf.md)
+  : Combined Proportion, Risk Difference, and Risk Difference Test
+  Analysis Function with Method Selection Based on the Mantel-Fleiss
+  Criterion
+
+- [`s_eair100_levii_j()`](https://johnsonandjohnson.github.io/junco/reference/a_eair100_j.md)
+  [`a_eair100_j()`](https://johnsonandjohnson.github.io/junco/reference/a_eair100_j.md)
   : Exposure-Adjusted Incidence Rate
+
+- [`s_diff_means()`](https://johnsonandjohnson.github.io/junco/reference/diff_means.md)
+  [`a_diff_means()`](https://johnsonandjohnson.github.io/junco/reference/diff_means.md)
+  **\[stable\]** : Difference in Means
 
 - [`a_freq_combos_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_combos_j.md)
   : Analysis function count and percentage in column design controlled
@@ -174,6 +184,16 @@ common table layouts.
   : Formatted Analysis Function For Proportion Confidence Interval for
   Logical
 
+- [`a_proportion_diff_mf()`](https://johnsonandjohnson.github.io/junco/reference/proportion_diff_mf.md)
+  [`s_proportion_diff_mf()`](https://johnsonandjohnson.github.io/junco/reference/proportion_diff_mf.md)
+  **\[stable\]** : Proportion Difference with Method Selection Based on
+  the Mantel-Fleiss Criterion
+
+- [`a_test_proportion_diff_mf()`](https://johnsonandjohnson.github.io/junco/reference/test_proportion_diff_mf.md)
+  [`s_test_proportion_diff_mf()`](https://johnsonandjohnson.github.io/junco/reference/test_proportion_diff_mf.md)
+  **\[stable\]** : Test of Proportion Difference with Method Selection
+  Based on the Mantel-Fleiss Criterion
+
 - [`a_summarize_aval_chg_diff_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summarize_aval_chg_diff_j.md)
   : Analysis function 3-column presentation
 
@@ -181,26 +201,32 @@ common table layouts.
   [`a_summarize_ex_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summarize_ex_j.md)
   : Tabulation for Exposure Tables
 
-- [`a_summary_diff_mvars()`](https://johnsonandjohnson.github.io/junco/reference/a_summary_diff_mvars.md)
-  [`a_summary_diff_mvars_label()`](https://johnsonandjohnson.github.io/junco/reference/a_summary_diff_mvars.md)
-  **\[experimental\]** : Descriptive Statistics for Multiple Univariate
-  Variables with Optional Reference-Based Comparison
+- [`s_summarize_mmrm()`](https://johnsonandjohnson.github.io/junco/reference/summarize_mmrm.md)
+  [`a_summarize_mmrm()`](https://johnsonandjohnson.github.io/junco/reference/summarize_mmrm.md)
+  [`a_summarize_mmrm_with_exclude()`](https://johnsonandjohnson.github.io/junco/reference/summarize_mmrm.md)
+  **\[stable\]** : Dynamic tabulation of MMRM results with tables
 
-- [`a_summary_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summary_j.md)
-  **\[experimental\]** :
+- [`a_summary_j_with_exclude()`](https://johnsonandjohnson.github.io/junco/reference/a_summary_j.md)
+  **\[stable\]** :
 
-  Wrapper around
-  [`tern::a_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html)
-  with junco-specific defaults
+  Wrappers Around
+  [`tern::a_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html)
+  with Row Split Exclusion
+
+- [`a_summary_subset()`](https://johnsonandjohnson.github.io/junco/reference/summary_subset.md)
+  [`c_summary_subset_label()`](https://johnsonandjohnson.github.io/junco/reference/summary_subset.md)
+  **\[stable\]** :
+
+  Wrappers Around
+  [`tern::a_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html)
+  with Optional Subsetting and Labels
+
+- [`a_sum_ratio_j()`](https://johnsonandjohnson.github.io/junco/reference/a_sum_ratio_j.md)
+  **\[stable\]** : Analysis Function: Sum and Ratio of Sums
 
 - [`a_two_tier()`](https://johnsonandjohnson.github.io/junco/reference/a_two_tier.md)
+  [`a_three_tier()`](https://johnsonandjohnson.github.io/junco/reference/a_two_tier.md)
   : Two Tier Analysis Function
-
-- [`c_summary_subset_label()`](https://johnsonandjohnson.github.io/junco/reference/c_summary_subset_label.md)
-  **\[experimental\]** : Summary Statistics for Filtered Data with Label
-
-- [`rbmi_analyse()`](https://johnsonandjohnson.github.io/junco/reference/rbmi_analyse.md)
-  : Analyse Multiple Imputed Datasets
 
 - [`analyze_values()`](https://johnsonandjohnson.github.io/junco/reference/analyze_values.md)
   : Shortcut Layout Function for Standard Continuous Variable Analysis
@@ -226,6 +252,12 @@ common table layouts.
   [`cmp_split_fun()`](https://johnsonandjohnson.github.io/junco/reference/cmp_post_fun.md)
   : Split Function for Compliance Columns
 
+- [`a_cond_proportion_j()`](https://johnsonandjohnson.github.io/junco/reference/cond_proportion_j.md)
+  [`s_cond_proportion_j()`](https://johnsonandjohnson.github.io/junco/reference/cond_proportion_j.md)
+  [`d_cond_proportion_j()`](https://johnsonandjohnson.github.io/junco/reference/cond_proportion_j.md)
+  **\[experimental\]** : Conditional proportion with adaptive CI (exact
+  vs. Wald)
+
 - [`find_missing_chg_after_avisit()`](https://johnsonandjohnson.github.io/junco/reference/find_missing_chg_after_avisit.md)
   : Helper for Finding AVISIT after which CHG are all Missing
 
@@ -238,10 +270,6 @@ common table layouts.
   :
 
   `MMRM` Analysis
-
-- [`a_coxph_hr()`](https://johnsonandjohnson.github.io/junco/reference/coxph_hr.md)
-  [`s_coxph_hr()`](https://johnsonandjohnson.github.io/junco/reference/coxph_hr.md)
-  : Workaround statistics function to add HR with CI
 
 - [`h_tidy_pool()`](https://johnsonandjohnson.github.io/junco/reference/tabulate_rbmi.md)
   [`s_rbmi_lsmeans()`](https://johnsonandjohnson.github.io/junco/reference/tabulate_rbmi.md)
@@ -258,11 +286,6 @@ common table layouts.
   [`or_cmh()`](https://johnsonandjohnson.github.io/junco/reference/h_odds_ratio.md)
   **\[stable\]** : Helper functions for odds ratio estimation
 
-- [`make_rbmi_cluster()`](https://johnsonandjohnson.github.io/junco/reference/make_rbmi_cluster.md)
-  :
-
-  Create a `rbmi` ready cluster
-
 - [`rbmi_mmrm()`](https://johnsonandjohnson.github.io/junco/reference/rbmi_mmrm.md)
   : MMRM Analysis for Imputed Datasets
 
@@ -275,11 +298,7 @@ common table layouts.
   [`s_odds_ratio_j()`](https://johnsonandjohnson.github.io/junco/reference/odds_ratio.md)
   **\[stable\]** : Odds ratio estimation
 
-- [`par_lapply()`](https://johnsonandjohnson.github.io/junco/reference/par_lapply.md)
-  : Parallelise Lapply
-
 - [`a_proportion_diff_j()`](https://johnsonandjohnson.github.io/junco/reference/prop_diff.md)
-  [`s_proportion_diff_j()`](https://johnsonandjohnson.github.io/junco/reference/prop_diff.md)
   : Proportion difference estimation
 
 - [`prop_post_fun()`](https://johnsonandjohnson.github.io/junco/reference/prop_post_fun.md)
@@ -321,9 +340,6 @@ common table layouts.
 - [`s_ancova_j()`](https://johnsonandjohnson.github.io/junco/reference/s_ancova_j.md)
   : Junco Extended ANCOVA Function
 
-- [`s_diff_mean_ci()`](https://johnsonandjohnson.github.io/junco/reference/s_diff_mean_ci.md)
-  **\[experimental\]** : Difference in Means with Confidence Interval
-
 - [`s_proportion_factor()`](https://johnsonandjohnson.github.io/junco/reference/s_proportion_factor.md)
   : s_function for proportion of factor levels
 
@@ -350,15 +366,8 @@ common table layouts.
   [`summarize_lsmeans_wide()`](https://johnsonandjohnson.github.io/junco/reference/summarize_lsmeans_wide.md)
   : Layout Generating Function for LS Means Wide Table Layouts
 
-- [`s_summarize_mmrm()`](https://johnsonandjohnson.github.io/junco/reference/summarize_mmrm.md)
-  [`a_summarize_mmrm()`](https://johnsonandjohnson.github.io/junco/reference/summarize_mmrm.md)
-  **\[stable\]** : Dynamic tabulation of MMRM results with tables
-
 - [`summarize_row_counts()`](https://johnsonandjohnson.github.io/junco/reference/summarize_row_counts.md)
   : Layout Creating Function Adding Row Counts
-
-- [`h_get_trtvar_refpath()`](https://johnsonandjohnson.github.io/junco/reference/h_get_trtvar_refpath.md)
-  : Get Treatment Variable Reference Path
 
 - [`rbmi_mmrm_single_info()`](https://johnsonandjohnson.github.io/junco/reference/rbmi_mmrm_single_info.md)
   : Extract Single Visit Information from a Fitted MMRM for Multiple
@@ -371,6 +380,15 @@ common table layouts.
   [`s_cmhrms_j()`](https://johnsonandjohnson.github.io/junco/reference/cmhrms.md)
   [`a_cmhrms_j_with_exclude()`](https://johnsonandjohnson.github.io/junco/reference/cmhrms.md)
   : Cochran-Mantel-Haenszel Row Mean Scores test
+
+- [`pool_rubin_scalar()`](https://johnsonandjohnson.github.io/junco/reference/pool_rubin_scalar.md)
+  : Pool a scalar estimate across imputations
+
+- [`pool_z_stat()`](https://johnsonandjohnson.github.io/junco/reference/pool_z_stat.md)
+  : Pool z statistics across imputations
+
+- [`resp_multiple_imputation()`](https://johnsonandjohnson.github.io/junco/reference/resp_multiple_imputation.md)
+  : Calculate results across binary-imputation scenarios
 
 - [`a_test_proportion_diff()`](https://johnsonandjohnson.github.io/junco/reference/prop_diff_test.md)
   **\[stable\]** : Difference test for two proportions
@@ -389,13 +407,32 @@ create common table layouts.
 - [`jjcsformat_cnt_den_fract_fct()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
   [`jjcsformat_count_fraction()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
   [`jjcsformat_count_denom_fraction()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
+  [`jjcsformat_count_denom_fraction_legacy()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
   [`jjcsformat_fraction_count_denom()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
+  [`jjcsformat_fraction_count_denom_legacy()`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
   : Formatting functions for count and fraction, and for count
   denominator and fraction values
+- [`jjcsformat_fraction()`](https://johnsonandjohnson.github.io/junco/reference/jjcsformat_fraction.md)
+  **\[experimental\]** : Formatting function for percentage values
 - [`ac_blank_line()`](https://johnsonandjohnson.github.io/junco/reference/ac_blank_line.md)
   : Analysis and Content Summary Function Producing Blank Line
 - [`insert_blank_line()`](https://johnsonandjohnson.github.io/junco/reference/insert_blank_line.md)
   : Insertion of Blank Lines in a Layout
+- [`format_sigfig_j()`](https://johnsonandjohnson.github.io/junco/reference/format_sigfig_j.md)
+  [`modified_signif_j()`](https://johnsonandjohnson.github.io/junco/reference/format_sigfig_j.md)
+  **\[experimental\]** : Format numeric values by significant figures.
+- [`fmt_spec_single_d()`](https://johnsonandjohnson.github.io/junco/reference/fmt_spec_d.md)
+  [`fmt_spec_df_d()`](https://johnsonandjohnson.github.io/junco/reference/fmt_spec_d.md)
+  [`fmt_spec_var_d()`](https://johnsonandjohnson.github.io/junco/reference/fmt_spec_d.md)
+  [`junco_def_d_all`](https://johnsonandjohnson.github.io/junco/reference/fmt_spec_d.md)
+  [`junco_def_d_alt1`](https://johnsonandjohnson.github.io/junco/reference/fmt_spec_d.md)
+  [`junco_def_d_alt2`](https://johnsonandjohnson.github.io/junco/reference/fmt_spec_d.md)
+  **\[experimental\]** : Utilities for processing d-style string
+  formatting specifications (eg "xx.dx")
+- [`get_fmt_details()`](https://johnsonandjohnson.github.io/junco/reference/fmt_utils.md)
+  [`compare_fmt_specs()`](https://johnsonandjohnson.github.io/junco/reference/fmt_utils.md)
+  **\[experimental\]** : Utilities for reviewing format specification
+  objects
 
 ## junco Sorting Functions and Pruning Functions
 
@@ -430,8 +467,11 @@ create common table layouts.
 - [`create_colspan_var()`](https://johnsonandjohnson.github.io/junco/reference/colspan_var.md)
   : Creation of Column Spanning Variables
 - [`grouped_cols_w_diffs()`](https://johnsonandjohnson.github.io/junco/reference/grouped_cols_w_diffs.md)
+  [`grouped_cols_w_subgrps()`](https://johnsonandjohnson.github.io/junco/reference/grouped_cols_w_diffs.md)
   : Standard Column Structure With Grouped Treatments and Difference
   Columns
+- [`shift_tbl_col_struct()`](https://johnsonandjohnson.github.io/junco/reference/shift_tbl_col_struct.md)
+  : Create Column Structure for a J&J-Style Shift Table
 - [`do_exclude_split()`](https://johnsonandjohnson.github.io/junco/reference/do_exclude_split.md)
   : Predicate to Check if Split Should be Excluded
 - [`make_combo_splitfun()`](https://johnsonandjohnson.github.io/junco/reference/make_combo_splitfun.md)
@@ -439,10 +479,13 @@ create common table layouts.
 - [`make_multicomp_splfun()`](https://johnsonandjohnson.github.io/junco/reference/make_multicomp_splfun.md)
   [`make_dflt_comp_map()`](https://johnsonandjohnson.github.io/junco/reference/make_multicomp_splfun.md)
   : Make Multi-comparator Split Function
-- [`postfun_eq5d()`](https://johnsonandjohnson.github.io/junco/reference/postfun_eq5d.md)
-  : Post-processing split function for EQ-5D style column statistics
+- [`stats_in_cols_setup()`](https://johnsonandjohnson.github.io/junco/reference/stats_in_cols_setup.md)
+  : Function factory to be used as Post-processing split function for
+  setup of stats in column structure
 - [`real_add_overall_facet()`](https://johnsonandjohnson.github.io/junco/reference/real_add_overall_facet.md)
   : Add Overall Facet
+- [`some_v_all_col_struct()`](https://johnsonandjohnson.github.io/junco/reference/some_v_all_col_struct.md)
+  : Standard All vs Some (e.g. Related AEs) column structure
 
 ## junco Functions For titles/footnotes
 
@@ -461,8 +504,12 @@ The following utility functions help to add titles/footnotes.
 The following functions are other miscellaneous junco functions used to
 create common table layouts.
 
-- [`filter_df_prior_afun()`](https://johnsonandjohnson.github.io/junco/reference/filter_df_prior_afun.md)
-  **\[experimental\]** : Filter Data Prior To Analysis Function
+- [`categorize_pval()`](https://johnsonandjohnson.github.io/junco/reference/categorize_pval.md)
+  : Categorize p-values
+
+- [`cur_col_split_path()`](https://johnsonandjohnson.github.io/junco/reference/cur_col_split_path_utils.md)
+  [`in_column()`](https://johnsonandjohnson.github.io/junco/reference/cur_col_split_path_utils.md)
+  **\[stable\]** : Utilities for the Current Column Split Path
 
 - [`get_mmrm_lsmeans()`](https://johnsonandjohnson.github.io/junco/reference/get_mmrm_lsmeans.md)
   :
@@ -470,7 +517,8 @@ create common table layouts.
   Extract Least Square Means from `MMRM`
 
 - [`get_ref_info()`](https://johnsonandjohnson.github.io/junco/reference/get_ref_info.md)
-  : Obtain Reference Information for a Global Reference Group
+  **\[stable\]** : Obtain reference group information from split
+  context.
 
 - [`get_visit_levels()`](https://johnsonandjohnson.github.io/junco/reference/get_visit_levels.md)
   : Get Visit Levels in Order Defined by Numeric Version
@@ -478,17 +526,14 @@ create common table layouts.
 - [`leftside()`](https://johnsonandjohnson.github.io/junco/reference/leftside.md)
   : Extract the left-hand side of a formula
 
+- [`rightside()`](https://johnsonandjohnson.github.io/junco/reference/rightside.md)
+  : Extract the right-hand side of a formula
+
 - [`remove_col_count()`](https://johnsonandjohnson.github.io/junco/reference/remove_col_count.md)
   : Removal of Unwanted Column Counts
 
 - [`rm_levels()`](https://johnsonandjohnson.github.io/junco/reference/rm_levels.md)
   : Removal of Levels
-
-- [`safe_t_test()`](https://johnsonandjohnson.github.io/junco/reference/safe_t_test.md)
-  **\[experimental\]** :
-
-  Safe Wrapper for
-  [`stats::t.test()`](https://rdrr.io/r/stats/t.test.html)
 
 ## junco Functions For generating .rtfs, .docxs and HTMLs
 
@@ -508,6 +553,28 @@ HTMLs.
 - [`theme_docx_default_j()`](https://johnsonandjohnson.github.io/junco/reference/theme_docx_default_j.md)
   : Obtain the default theme for the docx
 
+## Deprecated Functions
+
+The following functions are deprecated and should not be used in new
+code.
+
+- [`a_coxph_hr()`](https://johnsonandjohnson.github.io/junco/reference/a_coxph_hr.md)
+  **\[deprecated\]** : a_coxph_hr
+
+- [`rbmi_analyse()`](https://johnsonandjohnson.github.io/junco/reference/rbmi_analyse.md)
+  **\[deprecated\]** : Analyse Multiple Imputed Datasets
+
+- [`make_rbmi_cluster()`](https://johnsonandjohnson.github.io/junco/reference/make_rbmi_cluster.md)
+  **\[deprecated\]** :
+
+  Create a `rbmi` ready cluster
+
+- [`par_lapply()`](https://johnsonandjohnson.github.io/junco/reference/par_lapply.md)
+  **\[deprecated\]** : Parallelise Lapply
+
+- [`a_kaplan_meier()`](https://johnsonandjohnson.github.io/junco/reference/a_kaplan_meier.md)
+  **\[deprecated\]** : a_kaplan_meier
+
 # Articles
 
 ### Junco
@@ -521,3 +588,9 @@ HTMLs.
   Groups](https://johnsonandjohnson.github.io/junco/articles/ancova_combined.md):
 - [Standard Column
   Structures](https://johnsonandjohnson.github.io/junco/articles/standard_column_structures.md):
+- [Reference Group Handling with
+  get_ref_info](https://johnsonandjohnson.github.io/junco/articles/get_ref_info.md):
+- [Formatting tools to simplify adjustment of decimal
+  precision](https://johnsonandjohnson.github.io/junco/articles/formats_d.md):
+- [Formatting function for significant
+  figures](https://johnsonandjohnson.github.io/junco/articles/formats_significant_figures.md):

@@ -1,8 +1,8 @@
-# Helper method (for [`broom::tidy()`](https://broom.tidymodels.org/reference/reexports.html)) to prepare a data frame from an `pool` `rbmi` object containing the LS means and contrasts and multiple visits
+# Helper method (for [`broom::tidy()`](https://generics.r-lib.org/reference/tidy.html)) to prepare a data frame from an `pool` `rbmi` object containing the LS means and contrasts and multiple visits
 
 Helper method (for
-[`broom::tidy()`](https://broom.tidymodels.org/reference/reexports.html))
-to prepare a data frame from an `pool` `rbmi` object containing the LS
+[`broom::tidy()`](https://generics.r-lib.org/reference/tidy.html)) to
+prepare a data frame from an `pool` `rbmi` object containing the LS
 means and contrasts and multiple visits
 
 ## Usage

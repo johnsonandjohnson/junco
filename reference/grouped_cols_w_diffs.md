@@ -17,6 +17,19 @@ grouped_cols_w_diffs(
   .rr_pre = list(),
   .rr_post = list()
 )
+
+grouped_cols_w_subgrps(
+  lyt,
+  colspan_trt_map = NULL,
+  combo_map_df = NULL,
+  trtvar = names(colspan_trt_map)[2],
+  subgrp_var = NULL,
+  subgrp_lbl = subgrp_var,
+  total_facet = TRUE,
+  total_lbl = "Total",
+  .pre = list(),
+  .post = list()
+)
 ```
 
 ## Arguments
@@ -34,7 +47,7 @@ grouped_cols_w_diffs(
 - combo_map_df:
 
   (`data.frame` or `NULL`). A combination data frame as defined by
-  [`rtables::add_combo_levels()`](https://rdrr.io/pkg/rtables/man/add_overall_level.html)
+  [`add_combo_levels()`](https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html)
   with an additional `is_control` column indicating whether the virtual
   level will act as a reference (`TRUE`) or active (`FALSE`) group.
 
@@ -57,13 +70,13 @@ grouped_cols_w_diffs(
 - .main_pre:
 
   (`list` of `function`s). Passed to
-  [`rtables::make_split_fun()`](https://rdrr.io/pkg/rtables/man/make_split_fun.html)
+  [`rtables::make_split_fun()`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html)
   as `pre` for treatment split in main structure.
 
 - .main_post:
 
   (`list` of `function`s). Passed to
-  [`rtables::make_split_fun()`](https://rdrr.io/pkg/rtables/man/make_split_fun.html)
+  [`rtables::make_split_fun()`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html)
   as `post` for treatment split in main structure.
 
 - .rr_pre:
@@ -77,6 +90,51 @@ grouped_cols_w_diffs(
   (`list` of `function`s). Passed to
   [`make_multicomp_splfun()`](https://johnsonandjohnson.github.io/junco/reference/make_multicomp_splfun.md)
   as `.post` for risk difference faceting.
+
+- trtvar:
+
+  (`character(1)` or `NULL`)  
+  the treatment variable to split by. Defaults to the treatment variable
+  in `colspan_trt_map`.
+
+- subgrp_var:
+
+  (`character(1)` or `NULL`)  
+  the name of the subgroup variable to split by within the `trtvar`
+  split
+
+- subgrp_lbl:
+
+  (`character(1)` or `NULL`)  
+  the spanning label to place over the subgroups, if different than
+  `subgrp_var`
+
+- total_facet:
+
+  (`logical(1)`)  
+  should an overall facet be prepended to the partition defined by
+  `subgrp_var`? Defaults to `TRUE`.
+
+- total_lbl:
+
+  (`character(1)`)  
+  Label to be used for the overall facet, if applicable. Defaults to
+  `"Total"`; ignored if `total_facet` is `FALSE`.
+
+- .pre:
+
+  (`list` of `function`s)  
+  Passed to
+  [`rtables::make_split_fun()`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html)
+  as `pre` for treatment splitting.
+
+- .post:
+
+  (`list` of `function`s)  
+  Passed to
+  [`rtables::make_split_fun()`](https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html)
+  as `post` for treatment splitting after the standard column-structure
+  processing.
 
 ## Value
 
@@ -98,7 +156,7 @@ difference columns and accept a `ref_path` argument.
 It is equivalent to the following sequence of layout instructions:
 
 1.  splitting on a colspan labeling variable with
-    [`rtables::trim_levels_to_map()`](https://rdrr.io/pkg/rtables/man/trim_levels_to_map.html)
+    [`rtables::trim_levels_to_map()`](https://insightsengineering.github.io/rtables/latest-tag/reference/trim_levels_to_map.html)
     as the split function;
 
 2.  splitting on treatment;
@@ -142,7 +200,79 @@ For the purposes of pathin in the resulting structure, `diffs_label`
 will be both the split name and split value of the parent containing the
 individual risk difference columns.
 
+`grouped_cols_w_subgrps` creates a hierarchical column structure that
+splits by `trtvar`, underneath which is a spanning label over a split
+with a Total column along with columns for each level of `subgrp_var`.
+
 ## See also
 
-Other riskdiff_col_struct:
-[`make_multicomp_splfun()`](https://johnsonandjohnson.github.io/junco/reference/make_multicomp_splfun.md)
+Other std_col_struct:
+[`make_multicomp_splfun()`](https://johnsonandjohnson.github.io/junco/reference/make_multicomp_splfun.md),
+[`shift_tbl_col_struct()`](https://johnsonandjohnson.github.io/junco/reference/shift_tbl_col_struct.md)
+
+## Examples
+
+``` r
+colspan_var <- create_colspan_var(
+  data.frame(TRT01A = factor(c("Placebo", "Active 1", "Active 2"))),
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+colspan_trt_map <- create_colspan_map(
+  colspan_var,
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+
+lyt <- basic_table() |>
+  grouped_cols_w_diffs(colspan_trt_map) |>
+  analyze("TRT01A", afun = function(x, ...) length(x))
+
+build_table(lyt, colspan_var)
+#>           Active Treatment     Control               Risk Differences             
+#>          Active 1   Active 2   Placebo   Active 1 vs Placebo   Active 2 vs Placebo
+#> ——————————————————————————————————————————————————————————————————————————————————
+#> TRT01A      1          1          1               1                     1         
+dat <- create_colspan_var(
+  data.frame(
+    TRT01A = factor(rep(c("Placebo", "Active 1"), each = 2)),
+    SEX = factor(rep(c("Female", "Male"), 2))
+  ),
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+colspan_trt_map <- create_colspan_map(
+  dat,
+  non_active_grp = "Placebo",
+  non_active_grp_span_lbl = "Control",
+  active_grp_span_lbl = "Active Treatment",
+  colspan_var = "colspan_trt",
+  trt_var = "TRT01A"
+)
+
+lyt <- basic_table() |>
+  grouped_cols_w_subgrps(
+    colspan_trt_map,
+    subgrp_var = "SEX",
+    subgrp_lbl = "SUB_*"
+  ) |>
+  analyze("TRT01A", afun = function(x, ...) length(x))
+
+build_table(lyt, dat)
+#>             Active Treatment             Control       
+#>                 Active 1                 Placebo       
+#>                  (N=2)                    (N=2)        
+#>                  SUB_*                    SUB_*        
+#>          Total    Female   Male   Total   Female   Male
+#> ———————————————————————————————————————————————————————
+#> TRT01A     2        1       1       2       1       1  
+```

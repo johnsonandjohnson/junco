@@ -1,13 +1,254 @@
 # Changelog
 
-## junco 0.1.6
+## junco 0.1.7
 
-CRAN release: 2026-05-10
+CRAN release: 2026-10-13
+
+#### Changed
+
+- Added `"unique_fraction"` as a new statistic supported by
+  [`s_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
+  and
+  [`a_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
+  ([\#519](https://github.com/johnsonandjohnson/junco/issues/519)).
+- Added `lowercase_words` argument to
+  [`string_to_title()`](https://johnsonandjohnson.github.io/junco/reference/string_to_title.md)
+  to keep specified words lowercase
+  ([\#524](https://github.com/johnsonandjohnson/junco/issues/524)).
+- Added `.cell_footnotes` and `.row_footnotes` arguments to
+  [`format_stats()`](https://johnsonandjohnson.github.io/junco/reference/default_stats_formats_labels.md)
+  ([\#470](https://github.com/johnsonandjohnson/junco/issues/470)).
+- Removed `s_proportion_diff_j()` which was a wrapper around
+  [`tern::s_proportion_diff()`](https://pharmaverse.github.io/tern/latest-tag/reference/prop_diff.html).
+  The `label` and `conf_level` parameters moved to
+  [`a_proportion_diff_j()`](https://johnsonandjohnson.github.io/junco/reference/prop_diff.md)
+  ([\#442](https://github.com/johnsonandjohnson/junco/issues/442),
+  [\#467](https://github.com/johnsonandjohnson/junco/issues/467)).
+- Renamed internal functions `s_rel_risk_val_j()` and
+  `s_rel_risk_levii_j()` to `s_risk_diff_val_j()` and
+  `s_risk_diff_levii_j()` to correctly reflect that they compute risk
+  difference (p1 - p2), not relative risk (p1 / p2)
+  ([\#442](https://github.com/johnsonandjohnson/junco/issues/442)).
 
 #### Fixed
 
 - Fixed
-  [`s_kaplan_meier()`](https://johnsonandjohnson.github.io/junco/reference/kaplan_meier.md)
+  [`get_ref_info()`](https://johnsonandjohnson.github.io/junco/reference/get_ref_info.md)
+  to accept ref_path = NULL
+  ([\#359](https://github.com/johnsonandjohnson/junco/issues/359)).
+- Fixed
+  [`junco_get_stats()`](https://johnsonandjohnson.github.io/junco/reference/default_stats_formats_labels.md)
+  to inherit any default stats from `tern` that are not explicitly
+  defined in junco.
+- Fixed
+  [`get_ref_info()`](https://johnsonandjohnson.github.io/junco/reference/get_ref_info.md)
+  so that is works in the presence of “overall” column
+  ([\#332](https://github.com/johnsonandjohnson/junco/issues/332))
+- CRITICAL: hotfixed
+  [`tt_to_tlgrtf()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md)
+  lost titles in certain cases
+  ([\#373](https://github.com/johnsonandjohnson/junco/issues/373))
+- CRITICAL: hotfixed
+  [`def_colwidths()`](https://johnsonandjohnson.github.io/junco/reference/def_colwidths.md)
+  when a column label is too long
+  ([\#281](https://github.com/johnsonandjohnson/junco/issues/281))
+
+#### Changed
+
+- Updated several analysis functions to use
+  [`h_get_cur_trt_grp()`](https://johnsonandjohnson.github.io/junco/reference/h_get_cur_trt_grp.md)
+  ([\#295](https://github.com/johnsonandjohnson/junco/issues/295)).
+- Replaced `h_get_trtvar_refpath()` with
+  [`h_get_cur_trt_grp()`](https://johnsonandjohnson.github.io/junco/reference/h_get_cur_trt_grp.md)
+  ([\#295](https://github.com/johnsonandjohnson/junco/issues/295)).
+- Updated
+  [`get_ref_info()`](https://johnsonandjohnson.github.io/junco/reference/get_ref_info.md)
+  for matching column split paths
+  ([\#295](https://github.com/johnsonandjohnson/junco/issues/295)).
+- Added the new helper function
+  [`factor_by_order()`](https://johnsonandjohnson.github.io/junco/reference/factor_by_order.md)
+  ([\#425](https://github.com/johnsonandjohnson/junco/issues/425)).
+- Renamed `in_ref_col()` to
+  [`in_column()`](https://johnsonandjohnson.github.io/junco/reference/cur_col_split_path_utils.md)
+  and renamed its `ref_path` argument to `col_path`.
+- Updated `in_ref_col()` to accept `ref_path = NULL`
+  ([\#404](https://github.com/johnsonandjohnson/junco/issues/404)).
+- Added the new helper functions
+  [`cur_col_split_path()`](https://johnsonandjohnson.github.io/junco/reference/cur_col_split_path_utils.md)
+  and
+  [`in_column()`](https://johnsonandjohnson.github.io/junco/reference/cur_col_split_path_utils.md)
+  to support custom analysis functions that depend on the current column
+  split context
+  ([\#404](https://github.com/johnsonandjohnson/junco/issues/404)).
+- Added a default value for the `label` argument in
+  [`c_summary_subset_label()`](https://johnsonandjohnson.github.io/junco/reference/summary_subset.md).
+- Updated the documentation of
+  [`a_summary_subset()`](https://johnsonandjohnson.github.io/junco/reference/summary_subset.md).
+- Refactored
+  [`prepend_label_cell()`](https://johnsonandjohnson.github.io/junco/reference/prepend_label_cell.md);
+  Only `RowsVerticalSection` is now supported.
+- Removed `filter_df_prior_afun()`, `a_summary_diff_mvars()`,
+  `a_summary_diff_mvars_label()`.
+- Removed formatters exports
+  [\#317](https://github.com/johnsonandjohnson/junco/issues/317)
+- Deprecate `a_coxph_hr` for `tern:::a_coxph_pairwise()` and
+  `s_coxph_hr` for `tern:::s_coxph_pairwise()`
+  [\#158](https://github.com/johnsonandjohnson/junco/issues/158)
+- Reduce sampling of `rbmi` test to make tests shorter
+  ([\#323](https://github.com/johnsonandjohnson/junco/issues/323))
+- Optimize shared tables in `test-tt_to_tblfile`
+  ([\#323](https://github.com/johnsonandjohnson/junco/issues/323))
+- Changed forked `h_ancova` for the `tern` one
+- Add extra statistics to `a_eair100_j` and introduce scaling factor
+  `num_p_year` (default = 100)
+  ([\#361](https://github.com/johnsonandjohnson/junco/issues/361))
+- Removed ellipsis argument from `a_freq_resp_var_j`
+  ([\#236](https://github.com/johnsonandjohnson/junco/issues/236))
+- Removed `dplyr` from `junco` and replaced by base R
+  [\#201](https://github.com/johnsonandjohnson/junco/issues/201)
+- Replaced `assertthat` by `checkmate` for consistency
+  [\#201](https://github.com/johnsonandjohnson/junco/issues/201)
+- Remove `stringi` from dependencies
+  [\#201](https://github.com/johnsonandjohnson/junco/issues/201)
+- Deprecate
+  [`rbmi_analyse()`](https://johnsonandjohnson.github.io/junco/reference/rbmi_analyse.md),
+  [`make_rbmi_cluster()`](https://johnsonandjohnson.github.io/junco/reference/make_rbmi_cluster.md),
+  [`par_lapply()`](https://johnsonandjohnson.github.io/junco/reference/par_lapply.md)
+  for `rbmi` equivalent functions
+  [\#367](https://github.com/johnsonandjohnson/junco/issues/367)
+- Deprecate
+  [`a_kaplan_meier()`](https://johnsonandjohnson.github.io/junco/reference/a_kaplan_meier.md)
+  for
+  [`tern::a_surv_time()`](https://pharmaverse.github.io/tern/latest-tag/reference/survival_time.html)
+- Changed the label for `range_with_cens_info` from `"Min, max"` (junco)
+  to `"Min - Max (with censoring)"` and the argument from
+  `lsmean_diffci` to `lsmean_diff_with_ci`
+- Deprecate
+  [`s_coxph_hr()`](https://johnsonandjohnson.github.io/junco/reference/s_coxph_hr.md)
+  for `tern:::a_coxph_pairwise()`
+- Changed stop message in
+  [`a_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
+  when `label_map` option is used in a rowsplit with no data on a
+  character analysis var
+  [\#386](https://github.com/johnsonandjohnson/junco/issues/386)
+- Use new exported splv_extra and value_expr accessors
+  (insightsengineering#1098)
+- Update new exported calls from rtables.officer
+- update documentation to `roxygen2` 8.0.0
+- Add extra statistics to `a_eair100_j` and introduce scaling factor
+  `num_p_year` (default = 100)
+  ([\#361](https://github.com/johnsonandjohnson/junco/issues/361))
+- Updated behavior of formatting functions
+  `jjcsformat_count_denom_fraction` and
+  `jjcsformat_fraction_count_denom` and introduce functions
+  `jjcsformat_count_denom_fraction_legacy` and
+  `jjcsformat_fraction_count_denom_legacy` for backward compatibility
+  reasons
+  ([\#450](https://github.com/johnsonandjohnson/junco/issues/450))
+- Updated `insightsengineering` urls to `pharmaverse`
+- Renamed and refactored `postfun_eq5d` into `stats_in_cols_setup`
+- Added factor assertion on `.var` in `s_freq_j`
+  ([\#453](https://github.com/johnsonandjohnson/junco/issues/453)).
+- Added assertions for the `id` argument in
+  [`a_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
+  and
+  [`s_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
+  ([\#424](https://github.com/johnsonandjohnson/junco/issues/424)).
+
+#### Added
+
+- Added `jjcsformat_percentage()` for formatting percentage values
+  ([\#519](https://github.com/johnsonandjohnson/junco/issues/519)).
+- Added a new analysis function
+  [`a_combo_prop_diff_pval_mf()`](https://johnsonandjohnson.github.io/junco/reference/a_combo_prop_diff_pval_mf.md)
+  for proportions, risk differences, and risk difference tests with
+  adaptive Mantel-Fleiss-based method selection
+  ([\#517](https://github.com/johnsonandjohnson/junco/issues/517)).
+- Added
+  [`s_test_proportion_diff_mf()`](https://johnsonandjohnson.github.io/junco/reference/test_proportion_diff_mf.md)
+  and
+  [`a_test_proportion_diff_mf()`](https://johnsonandjohnson.github.io/junco/reference/test_proportion_diff_mf.md)
+  adaptive test of stratified response-proportion differences using the
+  Mantel–Fleiss criterion
+  ([\#457](https://github.com/johnsonandjohnson/junco/issues/457)).
+- Added
+  [`s_proportion_diff_mf()`](https://johnsonandjohnson.github.io/junco/reference/proportion_diff_mf.md)
+  and
+  [`a_proportion_diff_mf()`](https://johnsonandjohnson.github.io/junco/reference/proportion_diff_mf.md)
+  adaptive estimation of stratified response-proportion differences
+  using the Mantel–Fleiss criterion
+  ([\#456](https://github.com/johnsonandjohnson/junco/issues/456)).
+- Added
+  [`a_cond_proportion_j()`](https://johnsonandjohnson.github.io/junco/reference/cond_proportion_j.md)
+  which implements conditional method selection between Wald and
+  Clopper-Pearson confidence intervals based on the number of responses
+  and the denominator (and the method selection can either be done on
+  cell level or on row level).
+- Added
+  [`a_sum_ratio_j()`](https://johnsonandjohnson.github.io/junco/reference/a_sum_ratio_j.md)
+  analysis function for computing sum, unique-row sum, and their ratios
+  against a denominator column.
+- Added
+  [`strict_match()`](https://johnsonandjohnson.github.io/junco/reference/strict_match.md)
+  for uniquely matching a value in the odd or even positions of a
+  character vector.
+- Added
+  [`categorize_pval()`](https://johnsonandjohnson.github.io/junco/reference/categorize_pval.md)
+  for assigning p-values to validated, user-defined categories.
+- Added
+  [`pool_rubin_scalar()`](https://johnsonandjohnson.github.io/junco/reference/pool_rubin_scalar.md)
+  and
+  [`pool_z_stat()`](https://johnsonandjohnson.github.io/junco/reference/pool_z_stat.md)
+  for pooling scalar estimates and z statistics across imputations.
+- Added
+  [`resp_multiple_imputation()`](https://johnsonandjohnson.github.io/junco/reference/resp_multiple_imputation.md)
+  to impute missing binary responses across scenarios and pool CMH
+  risk-difference and p-value results.
+- Updated documentation and examples for `label_map` in `a_freq_j`
+  ([\#235](https://github.com/johnsonandjohnson/junco/issues/235))
+- Added `tern` methods for difference in proportions in `a_freq_j` and
+  `a_freq_resp_var_j` : `cmh_sato`, `cmh_mn`, `uncond_exact_diff`
+  ([\#389](https://github.com/johnsonandjohnson/junco/issues/389))
+- Added
+  [`a_summary_j_with_exclude()`](https://johnsonandjohnson.github.io/junco/reference/a_summary_j.md)
+  to allow
+  [`tern::a_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html)
+  analyses to be skipped for selected row split levels.
+- Added
+  [`a_summarize_mmrm_with_exclude()`](https://johnsonandjohnson.github.io/junco/reference/summarize_mmrm.md)
+  to allow MMRM summaries to be skipped for selected row split levels.
+- Added
+  [`rightside()`](https://johnsonandjohnson.github.io/junco/reference/rightside.md)
+  to extract the right-hand side of a formula as a scalar character
+  value.
+- Added
+  [`a_three_tier()`](https://johnsonandjohnson.github.io/junco/reference/a_two_tier.md)
+  as extension to
+  [`a_two_tier()`](https://johnsonandjohnson.github.io/junco/reference/a_two_tier.md).
+- Added formatting function
+  [`format_sigfig_j()`](https://johnsonandjohnson.github.io/junco/reference/format_sigfig_j.md)
+  as alternative to
+  [`tern::format_sigfig()`](https://pharmaverse.github.io/tern/latest-tag/reference/format_sigfig.html).
+  ([\#436](https://github.com/johnsonandjohnson/junco/issues/436))
+- Added new standard column structure functions:
+  [`make_multicomp_splfun()`](https://johnsonandjohnson.github.io/junco/reference/make_multicomp_splfun.md),
+  [`grouped_cols_w_diffs()`](https://johnsonandjohnson.github.io/junco/reference/grouped_cols_w_diffs.md),
+  [`grouped_cols_w_subgrps()`](https://johnsonandjohnson.github.io/junco/reference/grouped_cols_w_diffs.md),
+  [`shift_tbl_col_struct()`](https://johnsonandjohnson.github.io/junco/reference/shift_tbl_col_struct.md),
+  and
+  [`some_v_all_col_struct()`](https://johnsonandjohnson.github.io/junco/reference/some_v_all_col_struct.md).
+- Added varying decimal precision utility functions `fmt_spec_single_d`,
+  `fmt_spec_df_d`, `fmt_spec_var_d`.
+  ([\#474](https://github.com/johnsonandjohnson/junco/issues/474))
+- Added utility functions `get_fmt_details` and `compare_fmt_specs` for
+  reviewing format specification objects.
+
+### [0.1.6](https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.6-rc) - 2026-05-05 (CRAN release)
+
+#### Fixed
+
+- Fixed
+  [`s_kaplan_meier()`](https://johnsonandjohnson.github.io/junco/reference/s_kaplan_meier.md)
   range censoring indicator handling to no longer produce `NA` values in
   the output when either all subjects are censored or none are censored.
 - Aligned
@@ -59,9 +300,23 @@ CRAN release: 2026-05-10
 
 #### Changed
 
-- Moved
-  [`safe_t_test()`](https://johnsonandjohnson.github.io/junco/reference/safe_t_test.md)
-  from `a_summarize_aval_chg_diff.R` to a new file `safe_t_test.R`,
+- Updated
+  [`c_summary_subset_label()`](https://johnsonandjohnson.github.io/junco/reference/summary_subset.md):
+  removed `.spl_context` argument and renamed `subset_expr` to
+  `filter_expr`.
+- Renamed
+  [`a_summary_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summary_j.md)
+  to
+  [`a_summary_subset()`](https://johnsonandjohnson.github.io/junco/reference/summary_subset.md)
+  and updated its purpose, implementation, and arguments.
+- Added new stats/labels/formats/indents to
+  `junco_utils_default_stats_formats_labels.r` file.
+- Renamed `s_diff_mean_ci()` to
+  [`s_diff_means()`](https://johnsonandjohnson.github.io/junco/reference/diff_means.md),
+  and added new statistics to
+  [`s_diff_means()`](https://johnsonandjohnson.github.io/junco/reference/diff_means.md).
+- Moved `safe_t_test()` from `a_summarize_aval_chg_diff.R` to a new file
+  `safe_t_test.R`,
 - Moved `add_blank_line_rcells()` from `s_functions.R` to
   `blank_line.R`.
 - changed return value `n` for `s_ancova_j` into `n_fit`, to
@@ -112,18 +367,21 @@ CRAN release: 2026-05-10
 
 #### Added
 
+- Added
+  [`a_diff_means()`](https://johnsonandjohnson.github.io/junco/reference/diff_means.md),
+  which is based on the existing
+  [`s_diff_means()`](https://johnsonandjohnson.github.io/junco/reference/diff_means.md).
 - Added multi-comparator functionality
   ([\#271](https://github.com/johnsonandjohnson/junco/issues/271))
 - Hotfix: Added several new functions for creating the Vital Sign tables
-  for core and clinpharm:
-  [`a_summary_diff_mvars()`](https://johnsonandjohnson.github.io/junco/reference/a_summary_diff_mvars.md),
+  for core and clinpharm: `a_summary_diff_mvars()`,
   [`a_summary_j()`](https://johnsonandjohnson.github.io/junco/reference/a_summary_j.md),
-  [`c_summary_subset_label()`](https://johnsonandjohnson.github.io/junco/reference/c_summary_subset_label.md),
-  [`filter_df_prior_afun()`](https://johnsonandjohnson.github.io/junco/reference/filter_df_prior_afun.md),
+  [`c_summary_subset_label()`](https://johnsonandjohnson.github.io/junco/reference/summary_subset.md),
+  `filter_df_prior_afun()`,
   [`prepend_label_cell()`](https://johnsonandjohnson.github.io/junco/reference/prepend_label_cell.md),
-  [`s_diff_mean_ci()`](https://johnsonandjohnson.github.io/junco/reference/s_diff_mean_ci.md),
+  `s_diff_mean_ci()`,
   [`s_summary_diff()`](https://johnsonandjohnson.github.io/junco/reference/s_summary_diff.md),
-  [`safe_t_test()`](https://johnsonandjohnson.github.io/junco/reference/safe_t_test.md)
+  `safe_t_test()`
   ([\#304](https://github.com/johnsonandjohnson/junco/issues/304)).
 - Added option to perform `a_summarize_ancova_j` in a layout with a
   combined column facet
@@ -248,15 +506,14 @@ CRAN release: 2026-05-10
   [`tt_to_tlgrtf()`](https://johnsonandjohnson.github.io/junco/reference/tt_to_tlgrtf.md)
 
 - Removed
-  [`s_test_proportion_diff()`](https://rdrr.io/pkg/tern/man/prop_diff_test.html)
+  [`s_test_proportion_diff()`](https://pharmaverse.github.io/tern/latest-tag/reference/prop_diff_test.html)
   and corresponding helper functions, as they are now available as
   needed in the `tern` package.
 
 - Added `cmh_sato` and `cmh_mn` (Cochran-Mantel-Haenszel stratified
   proportion difference estimation with Sato variance and Miettinen
   Nurminen method, respectively) `method` options to the
-  [`s_proportion_diff_j()`](https://johnsonandjohnson.github.io/junco/reference/prop_diff.md)
-  function.
+  `s_proportion_diff_j()` function.
 
 - Added formatting function round type
   ([\#76](https://github.com/johnsonandjohnson/junco/issues/76))
@@ -278,6 +535,8 @@ CRAN release: 2026-05-10
 #### Changed
 
 - Initial CRAN release
+
+### Changelog
 
 All notable changes to this project will be documented in this file.
 

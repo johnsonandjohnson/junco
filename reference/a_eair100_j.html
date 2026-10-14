@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,29 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">a_eair100_j</span><span class="op">(</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">s_eair100_levii_j</span><span class="op">(</span></span>
+<span>  <span class="va">levii</span>,</span>
+<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">.df_row</span>,</span>
+<span>  <span class="va">.var</span>,</span>
+<span>  .alt_df_full <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  id <span class="op">=</span> <span class="st">"USUBJID"</span>,</span>
+<span>  <span class="va">fup_var</span>,</span>
+<span>  <span class="va">occ_var</span>,</span>
+<span>  <span class="va">occ_dy</span>,</span>
+<span>  num_p_year <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  count_multiple_events <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  conf_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  conf_type_diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wald"</span>, <span class="st">"waldcc"</span>, <span class="st">"mn"</span>, <span class="st">"scas"</span><span class="op">)</span>,</span>
+<span>  conf_type_eair <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exact"</span>, <span class="st">"normal"</span>, <span class="st">"normal_log"</span>, <span class="st">"byar"</span><span class="op">)</span>,</span>
+<span>  vs_ref_group <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">.in_ref_col</span>,</span>
+<span>  <span class="va">cur_col_expr</span>,</span>
+<span>  <span class="va">ref_col_expr</span>,</span>
+<span>  inriskdiffcol <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">a_eair100_j</span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
 <span>  labelstr <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">.var</span>,</span>
@@ -47,6 +69,11 @@
 <span>  <span class="va">.spl_context</span>,</span>
 <span>  .alt_df_full <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  id <span class="op">=</span> <span class="st">"USUBJID"</span>,</span>
+<span>  <span class="va">fup_var</span>,</span>
+<span>  <span class="va">occ_var</span>,</span>
+<span>  occ_dy <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  num_p_year <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  count_multiple_events <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  drop_levels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  riskdiff <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ref_path <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -56,9 +83,10 @@
 <span>  .indent_mods <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  na_str <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="fl">3</span><span class="op">)</span>,</span>
 <span>  conf_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  <span class="va">fup_var</span>,</span>
-<span>  <span class="va">occ_var</span>,</span>
-<span>  <span class="va">occ_dy</span></span>
+<span>  conf_type_diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wald"</span>, <span class="st">"waldcc"</span>, <span class="st">"mn"</span>, <span class="st">"scas"</span><span class="op">)</span>,</span>
+<span>  conf_type_eair <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"normal"</span>, <span class="st">"normal_log"</span>, <span class="st">"exact"</span>, <span class="st">"byar"</span><span class="op">)</span>,</span>
+<span>  row_labels_adj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  riskdiff_setup <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"horizontal"</span>, <span class="st">"vertical"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -66,32 +94,112 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
+<dl><dt id="arg-levii">levii<a class="anchor" aria-label="anchor" href="#arg-levii"></a></dt>
+<dd><p>(<code>string</code>)<br> the specific level of the variable to calculate EAIR for.</p></dd>
+
+
+<dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
 <dd><p>(<code>data.frame</code>)<br> data set containing all analysis variables.</p></dd>
-
-
-<dt id="arg-labelstr">labelstr<a class="anchor" aria-label="anchor" href="#arg-labelstr"></a></dt>
-<dd><p>(<code>string</code>)<br> label string for the row.</p></dd>
-
-
-<dt id="arg--var">.var<a class="anchor" aria-label="anchor" href="#arg--var"></a></dt>
-<dd><p>(<code>string</code>)<br> variable name for analysis.</p></dd>
 
 
 <dt id="arg--df-row">.df_row<a class="anchor" aria-label="anchor" href="#arg--df-row"></a></dt>
 <dd><p>(<code>data.frame</code>)<br> data frame across all of the columns for the given row split.</p></dd>
 
 
-<dt id="arg--spl-context">.spl_context<a class="anchor" aria-label="anchor" href="#arg--spl-context"></a></dt>
-<dd><p>(<code>data.frame</code>)<br> gives information about ancestor split states.</p></dd>
+<dt id="arg--var">.var<a class="anchor" aria-label="anchor" href="#arg--var"></a></dt>
+<dd><p>(<code>string</code>)<br> variable name that is passed by <code>rtables</code>.</p></dd>
 
 
 <dt id="arg--alt-df-full">.alt_df_full<a class="anchor" aria-label="anchor" href="#arg--alt-df-full"></a></dt>
-<dd><p>(<code>dataframe</code>)<br> denominator dataset for calculations.</p></dd>
+<dd><p>(<code>dataframe</code>)<br> alternative dataset for calculations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
 <dd><p>(<code>string</code>)<br> subject variable name.</p></dd>
+
+
+<dt id="arg-fup-var">fup_var<a class="anchor" aria-label="anchor" href="#arg-fup-var"></a></dt>
+<dd><p>(<code>string</code>)<br> name of the variable containing the total follow-up duration
+for each subject, expressed in <strong>years</strong>.
+Used as the at-risk exposure time for subjects who did <strong>not</strong> experience the event.</p></dd>
+
+
+<dt id="arg-occ-var">occ_var<a class="anchor" aria-label="anchor" href="#arg-occ-var"></a></dt>
+<dd><p>(<code>string</code> or <code>NULL</code>)<br> name of the flag variable identifying the
+<strong>first</strong> occurrence of the event within each subject and level, encoded as <code>"Y"</code>.
+Only records where <code>occ_var == "Y"</code> contribute to the event count (<code>n_event</code>),
+and only one event record per subject is allowed.
+<br> If <code>NULL</code>, event occurrence filtering is skipped and time at risk is taken
+from <code>fup_var</code> in <code>alt_counts_df</code> for all subjects.</p></dd>
+
+
+<dt id="arg-occ-dy">occ_dy<a class="anchor" aria-label="anchor" href="#arg-occ-dy"></a></dt>
+<dd><p>(<code>string</code> or <code>NULL</code>)<br> When <code>occ_var</code> not <code>NULL</code>: name of the variable
+containing the relative day of the
+first event occurrence, expressed in <strong>days</strong> (e.g., <code>ASTDY</code>).
+For subjects with an event (<code>occ_var == "Y"</code>), this value is converted to years
+as <code>occ_dy / 365.25</code> and used as the at-risk exposure time instead of <code>fup_var</code>.
+Must be on the same time origin as <code>fup_var</code> (i.e., relative to start of exposure).</p></dd>
+
+
+<dt id="arg-num-p-year">num_p_year<a class="anchor" aria-label="anchor" href="#arg-num-p-year"></a></dt>
+<dd><p>(<code>numeric</code>)<br> scaling factor for the incidence rate, representing
+the number of person-years used as the denominator base.
+The EAIR is calculated as <code>num_p_year * n_event / total_person_years</code>.
+Defaults to <code>100</code>, yielding a rate per 100 person-years.
+For example, use <code>1</code> for a rate per person-year or <code>1000</code> for a rate per
+1000 person-years.</p></dd>
+
+
+<dt id="arg-count-multiple-events">count_multiple_events<a class="anchor" aria-label="anchor" href="#arg-count-multiple-events"></a></dt>
+<dd><p>(<code>logical</code>)<br> if <code>TRUE</code>, counts the total number of events
+per subject rather than treating each subject as contributing 1 to <code>n_event</code>.
+Only considered when <code>occ_var = NULL</code>.
+Defaults to <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-conf-level">conf_level<a class="anchor" aria-label="anchor" href="#arg-conf-level"></a></dt>
+<dd><p>(<code>proportion</code>)<br> confidence level of the interval.</p></dd>
+
+
+<dt id="arg-conf-type-diff">conf_type_diff<a class="anchor" aria-label="anchor" href="#arg-conf-type-diff"></a></dt>
+<dd><p>(<code>string</code>)<br> method used to compute the confidence interval for the EAIR difference.
+One of <code>"wald"</code> (Wald without continuity correction), <code>"waldcc"</code> (Wald with continuity correction),
+<code>"mn"</code> (Miettinen-Nurminen score), or <code>"scas"</code> (skewness-corrected asymptotic score).
+Defaults to <code>"wald"</code>.</p></dd>
+
+
+<dt id="arg-conf-type-eair">conf_type_eair<a class="anchor" aria-label="anchor" href="#arg-conf-type-eair"></a></dt>
+<dd><p>(<code>string</code>)<br> method used to compute the confidence interval for the EAIR rate.
+One of <code>"exact"</code>, <code>"normal"</code>, <code>"normal_log"</code>, <code>"byar"</code>
+<br> See <code>?tern:::h_incidence_rate</code> and <code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/incidence_rate.html" class="external-link">?tern::incidence_rate</a></code>, argument <code>control</code> for more information.
+Defaults to <code>"exact"</code>.</p></dd>
+
+
+<dt id="arg-vs-ref-group">vs_ref_group<a class="anchor" aria-label="anchor" href="#arg-vs-ref-group"></a></dt>
+<dd><p>(<code>logical</code>)<br> if TRUE, risk difference (against reference group) calculations will be performed.</p></dd>
+
+
+<dt id="arg-cur-col-expr">cur_col_expr<a class="anchor" aria-label="anchor" href="#arg-cur-col-expr"></a></dt>
+<dd><p>(<code>expression</code>)<br> current column expression taken from <code>rtables</code> <code>.spl_context</code>
+splitting machinery (<code>cur_col_expr</code>).</p></dd>
+
+
+<dt id="arg-ref-col-expr">ref_col_expr<a class="anchor" aria-label="anchor" href="#arg-ref-col-expr"></a></dt>
+<dd><p>(<code>expression</code> or <code>NULL</code>)<br> column expression for the reference group.
+Required to be an expression if <code>vs_ref_group</code> is <code>TRUE</code></p></dd>
+
+
+<dt id="arg-inriskdiffcol">inriskdiffcol<a class="anchor" aria-label="anchor" href="#arg-inriskdiffcol"></a></dt>
+<dd><p>(<code>logical</code>)<br> flag indicating if the function is called within a risk difference column.</p></dd>
+
+
+<dt id="arg-labelstr">labelstr<a class="anchor" aria-label="anchor" href="#arg-labelstr"></a></dt>
+<dd><p>(<code>string</code>)<br> Not intended to be set by user, only present to be able to use function as a <code>cfun</code>.</p></dd>
+
+
+<dt id="arg--spl-context">.spl_context<a class="anchor" aria-label="anchor" href="#arg--spl-context"></a></dt>
+<dd><p>(<code>data.frame</code>)<br> gives information about ancestor split states.</p></dd>
 
 
 <dt id="arg-drop-levels">drop_levels<a class="anchor" aria-label="anchor" href="#arg-drop-levels"></a></dt>
@@ -107,7 +215,7 @@
 
 
 <dt id="arg--stats">.stats<a class="anchor" aria-label="anchor" href="#arg--stats"></a></dt>
-<dd><p>(<code>character</code>)<br> statistics to select for the table.</p></dd>
+<dd><p>(<code>character</code>)<br> statistics to select for the table.<br></p></dd>
 
 
 <dt id="arg--formats">.formats<a class="anchor" aria-label="anchor" href="#arg--formats"></a></dt>
@@ -126,46 +234,109 @@
 <dd><p>(<code>string</code>)<br> string used to replace all NA or empty values in the output.</p></dd>
 
 
-<dt id="arg-conf-level">conf_level<a class="anchor" aria-label="anchor" href="#arg-conf-level"></a></dt>
-<dd><p>(<code>proportion</code>)<br> confidence level of the interval.</p></dd>
+<dt id="arg-row-labels-adj">row_labels_adj<a class="anchor" aria-label="anchor" href="#arg-row-labels-adj"></a></dt>
+<dd><p>(<code>logical</code>)<br> If <code>TRUE</code> and number of requested statistics = 1,
+the row label on the table will reflect the level of the incoming variable rather than
+the label for the statistic.
+<br> Set to default <code>TRUE</code> for backward-compatibility reasons.</p></dd>
 
 
-<dt id="arg-fup-var">fup_var<a class="anchor" aria-label="anchor" href="#arg-fup-var"></a></dt>
-<dd><p>(<code>string</code>)<br> variable name for follow-up time.</p></dd>
-
-
-<dt id="arg-occ-var">occ_var<a class="anchor" aria-label="anchor" href="#arg-occ-var"></a></dt>
-<dd><p>(<code>string</code>)<br> variable name for occurrence.</p></dd>
-
-
-<dt id="arg-occ-dy">occ_dy<a class="anchor" aria-label="anchor" href="#arg-occ-dy"></a></dt>
-<dd><p>(<code>string</code>)<br> variable name for occurrence day.</p></dd>
+<dt id="arg-riskdiff-setup">riskdiff_setup<a class="anchor" aria-label="anchor" href="#arg-riskdiff-setup"></a></dt>
+<dd><p>(<code>string</code>)<br> Are risk differences presented in horizontal way, or vertical way.
+<br> When horizontal, the statistics for <code>eair</code>, <code>n_eair</code>, <code>eair_n</code> will be replaced by
+<code>ear_diff_est_ci</code> in the risk difference columns.
+If <code>.stats</code> include any of difference in eair rates statistics,
+these will be removed as <code>ear_diff_est_ci</code> will be displayed in the risk difference columns</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
 
-<ul><li><p><code>a_eair100_j</code> returns the corresponding list with formatted <code><a href="https://rdrr.io/pkg/rtables/man/CellValue.html" class="external-link">rtables::CellValue()</a></code>.</p></li>
+<ul><li><p><code>s_eair100_levii_j()</code> returns a list containing the following statistics:</p><ul><li><p>n_event: Number of subjects with the event, or total event count if <code>count_multiple_events = TRUE</code></p></li>
+<li><p>person_years: Total person-years of follow-up</p></li>
+<li><p>eair: Exposure-adjusted incidence rate per <code>num_p_year</code> person-years</p></li>
+<li><p>n_eair: Combination of <code>n_event</code> and <code>eair</code> statistics.</p></li>
+<li><p>eair_n: Combination of <code>eair</code> and <code>n_event</code> statistics.</p></li>
+<li><p>eair_n_py: Combination of <code>eair</code>, <code>n_event</code> and <code>person_years</code> statistics.</p></li>
+<li><p>eair_ci: Confidence interval for <code>eair</code>, method specified in <code>conf_type_eair</code>.</p></li>
+<li><p>eair_est_ci: Combination of <code>eair</code> and <code>eair_ci</code>.</p></li>
+<li><p>eair_diff_est: Difference in EAIR between current group and reference group
+(if <code>diff</code>=TRUE and <code>inriskdiffcol</code>=TRUE)</p></li>
+<li><p>eair_diff_ci: Confidence interval for difference in EAIR between current group and reference group
+(if <code>diff</code>=TRUE and <code>inriskdiffcol</code>=TRUE)</p></li>
+<li><p>eair_diff_est_ci: Combination of <code>eair_diff_est</code> and <code>eair_diff_ci</code>.</p></li>
+</ul><p>The list of available statistics (core columns) can also be viewed by
+running <code>junco_get_stats("a_eair100_j")</code>.</p></li>
+</ul><ul><li><p><code>a_eair100_j</code> returns the corresponding list with formatted <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html" class="external-link">rtables::CellValue()</a></code>.<br>
+Within a risk difference column, the statistics <code>eair</code> and <code>n_eair</code> are replaced by <code>eair_diff_est_ci</code>
+(difference in EAIR between current group and reference group, together with it's confidence interval).</p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The exposure-adjusted incidence rate (EAIR) is defined as:</p><ul><li><p>When (<code>occ_var</code> not <code>NULL</code>) or <code>count_multiple_events = FALSE</code>:
+<br> the <strong>number of subjects</strong>
+with at least one occurrence of a specified adverse event divided by the total
+at-risk exposure time across all subjects.</p></li>
+<li><p>When <code>occ_var = NULL</code> and <code>count_multiple_events = TRUE</code>:
+<br> the total <strong>number of events</strong> across of a specified adverse event divided by the total
+at-risk exposure time across all subjects.</p></li>
+</ul><p>Total at-risk exposure time is calculated for each subject
+as:</p><ul><li><p>When <code>occ_var</code> not <code>NULL</code></p><ul><li><p>for subjects with the event: relative day (from the start of exposure) of
+the onset date of the <strong>first</strong> occurrence of the specified event (<code>occ_var</code> and <code>occ_dy</code>),
+transformed from days into years as <code>occ_dy/365.25</code>, or</p></li>
+<li><p>for subjects without the event: total duration of follow-up (expressed in years)
+(e.g., treatment discontinuation, completion, or censoring) (<code>fup_var</code>).</p></li>
+</ul></li>
+<li><p>When <code>occ_var = NULL</code><br>
+for all subjects: total duration of follow-up (expressed in years)
+(e.g., treatment discontinuation, completion, or censoring) (<code>fup_var</code>).</p></li>
+</ul><p>The EAIR is expressed as:</p>
+<p>$$
+  \mathrm{EAIR} = \hat r = \frac{n}{T}
+$$</p>
+<p>where:</p><ul><li><p>\(n\) is the number of subjects with at least one occurrence of the event</p></li>
+<li><p>T = \( \sum_{i=1}^{N} t_i\), with</p></li>
+<li><p>\(t_i\) is the at-risk exposure time for subject \(i\),
+expressed in subject-years</p></li>
+</ul><p>The difference between two EAIRs is
+\(\hat \theta = (\hat r_1 - \hat r_2)\).</p>
+<p>Wald's method for the confidence interval approximation is used (Liu et al., 2006), which uses the standard error
+$$
+\mathrm{se}(\hat r_1 - \hat r_2) =
+\sqrt{\frac{n_1}{T_1^2} + \frac{n_2}{T_2^2}}
+$$
+and the \(100(1-\alpha)\%\) confidence interval is
+$$
+(\hat r_1 - \hat r_2) \pm z_{1-\alpha/2}\,\mathrm{se}(\hat r_1 - \hat r_2)
+$$
+where \(z_{1-\alpha/2}\) is the standard normal quantile. <a href="https://metricgate.com/docs/poisson-rate-comparison/" class="external-link">1</a>
+<br><br> Other methods for confidence interval for difference can be specified in <code>conf_type_diff</code> argument.</p>
+<p>EAIR is commonly reported per 100 subject-years:</p>
+<p>$$
+  \mathrm{EAIR}_{100} = 100 \times \hat r
+$$</p>
+    </div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
-<ul><li><p><code>a_eair100_j()</code>: Formatted analysis function for exposure adjusted incidence rate summary which is
-used as <code>afun</code> in <code>analyze</code> or <code>cfun</code> in <code>summarize_row_groups</code>.</p></li>
+<ul><li><p><code>s_eair100_levii_j()</code>: calculates exposure-adjusted incidence rates (EAIR) per <code>num_p_year</code> person-years for a
+specific level of a variable.</p></li>
+<li><p><code>a_eair100_j()</code>: Formatted analysis function for exposure adjusted incidence rate summary which is
+used as <code>afun</code> in <code>analyze</code> or <code>cfun</code> in <code>summarize_row_groups</code>.<br></p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Liu, G. F., Wang, J., Liu, K., and Snavely, D. B. (2006).
+Confidence intervals for an exposure adjusted incidence rate difference
+with applications to clinical trials.
+<em>Statistics in Medicine</em>, <strong>25</strong>(8), 1275–1286.
+<a href="https://doi.org/10.1002/sim.2335" class="external-link">doi:10.1002/sim.2335</a></p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://insightsengineering.github.io/tern/" class="external-link">tern</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pharmaverse.github.io/tern/" class="external-link">tern</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘dplyr’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:stats’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     filter, lag</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     intersect, setdiff, setequal, union</span>
 <span class="r-in"><span><span class="va">trtvar</span> <span class="op">&lt;-</span> <span class="st">"ARM"</span></span></span>
 <span class="r-in"><span><span class="va">ctrl_grp</span> <span class="op">&lt;-</span> <span class="st">"B: Placebo"</span></span></span>
 <span class="r-in"><span><span class="va">cutoffd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2023-09-24"</span><span class="op">)</span></span></span>
@@ -217,19 +388,17 @@ used as <code>afun</code> in <code>analyze</code> or <code>cfun</code> in <code>
 <span class="r-in"><span><span class="co"># Define layout and build table:</span></span></span>
 <span class="r-in"><span><span class="co">################################################################################</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span>show_colcounts <span class="op">=</span> <span class="cn">TRUE</span>, colcount_format <span class="op">=</span> <span class="st">"N=xx"</span>, top_level_section_div <span class="op">=</span> <span class="st">" "</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"colspan_trt"</span>, split_fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/trim_levels_to_map.html" class="external-link">trim_levels_to_map</a></span><span class="op">(</span>map <span class="op">=</span> <span class="va">colspan_trt_map</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"rrisk_header"</span>, nested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>, labels_var <span class="op">=</span> <span class="st">"rrisk_label"</span>, split_fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="va">ctrl_grp</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"TRTDURY"</span>,</span></span>
-<span class="r-in"><span>    nested <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span>show_colcounts <span class="op">=</span> <span class="cn">TRUE</span>, colcount_format <span class="op">=</span> <span class="st">"N=xx"</span>, top_level_section_div <span class="op">=</span> <span class="st">" "</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"colspan_trt"</span>, split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/trim_levels_to_map.html" class="external-link">trim_levels_to_map</a></span><span class="op">(</span>map <span class="op">=</span> <span class="va">colspan_trt_map</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"rrisk_header"</span>, nested <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="va">trtvar</span>, labels_var <span class="op">=</span> <span class="st">"rrisk_label"</span>, split_fun <span class="op">=</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_funcs.html" class="external-link">remove_split_levels</a></span><span class="op">(</span><span class="va">ctrl_grp</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"TRTDURY"</span>,</span></span>
 <span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"hidden"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_patyrs_j</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    vars <span class="op">=</span> <span class="st">"AEDECOD"</span>,</span></span>
-<span class="r-in"><span>    nested <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_eair100_j</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      fup_var <span class="op">=</span> <span class="st">"TRTDURY"</span>,</span></span>
@@ -240,18 +409,17 @@ used as <code>afun</code> in <code>analyze</code> or <code>cfun</code> in <code>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">aefup</span>, alt_counts_df <span class="op">=</span> <span class="va">adexsum</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">aefup</span>, alt_counts_df <span class="op">=</span> <span class="va">adexsum</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span>, <span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     Active Study Agent                                   Risk Difference (95% CI)               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 A: Drug X   C: Combination   B: Placebo   A: Drug X vs B: Placebo   C: Combination vs B: Placebo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   N=134         N=132          N=134               N=134                       N=132            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Patient years    96200.0       91753.0        91431.0                                                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dcd A.1.1.1.1      0.1           0.1            0.1         0.00 (-0.03, 0.04)           0.05 (0.01, 0.09)      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dcd A.1.1.1.2      0.1           0.1            0.1         0.00 (-0.03, 0.03)           0.01 (-0.02, 0.04)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dcd B.1.1.1.1      0.1           0.1            0.1         -0.01 (-0.04, 0.02)         -0.02 (-0.05, 0.02)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dcd B.2.1.2.1      0.1           0.1            0.1         0.01 (-0.02, 0.05)           0.03 (-0.01, 0.06)     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                     Active Study Agent                                   Risk Difference (95% CI)               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                 A: Drug X   C: Combination   B: Placebo   A: Drug X vs B: Placebo   C: Combination vs B: Placebo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   N=134         N=132          N=134               N=134                       N=132            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Patient years                    96200.0       91753.0        91431.0                                                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AEDECOD                                                                                                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   eair (per 100 person years)      0.1           0.1            0.1         0.00 (-0.03, 0.04)           0.05 (0.01, 0.09)      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   eair (per 100 person years)      0.1           0.1            0.1         0.00 (-0.03, 0.03)           0.01 (-0.02, 0.04)     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   eair (per 100 person years)      0.1           0.1            0.1         -0.01 (-0.04, 0.02)         -0.02 (-0.05, 0.02)     </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -1,8 +1,8 @@
 # Parallelise Lapply
 
-Simple wrapper around `lapply` and
-[`parallel::clusterApplyLB`](https://rdrr.io/r/parallel/clusterApply.html)
-to abstract away the logic of deciding which one to use.
+**\[deprecated\]** This internal helper is no longer exported. Use
+[`rbmi::analyse()`](https://openpharma.github.io/rbmi/latest-tag/reference/analyse.html)
+directly.
 
 ## Usage
 

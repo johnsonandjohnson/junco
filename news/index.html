@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,10 +33,95 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.6" id="junco-016">junco 0.1.6<a class="anchor" aria-label="anchor" href="#junco-016"></a></h2><p class="text-muted">CRAN release: 2026-05-10</p>
+<h2 class="pkg-version" data-toc-text="0.1.7" id="junco-017">junco 0.1.7<a class="anchor" aria-label="anchor" href="#junco-017"></a></h2><p class="text-muted">CRAN release: 2026-10-13</p>
 <div class="section level4">
-<h4 id="fixed-0-1-6">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-6"></a></h4>
-<ul><li>Fixed <code><a href="../reference/kaplan_meier.html">s_kaplan_meier()</a></code> range censoring indicator handling to no longer produce <code>NA</code> values in the output when either all subjects are censored or none are censored.</li>
+<h4 id="changed-0-1-7">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7"></a></h4>
+<ul><li>Added <code>"unique_fraction"</code> as a new statistic supported by <code><a href="../reference/a_freq_j.html">s_freq_j()</a></code> and <code><a href="../reference/a_freq_j.html">a_freq_j()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/519" class="external-link">#519</a>).</li>
+<li>Added <code>lowercase_words</code> argument to <code><a href="../reference/string_to_title.html">string_to_title()</a></code> to keep specified words lowercase (<a href="https://github.com/johnsonandjohnson/junco/issues/524" class="external-link">#524</a>).</li>
+<li>Added <code>.cell_footnotes</code> and <code>.row_footnotes</code> arguments to <code><a href="../reference/default_stats_formats_labels.html">format_stats()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/470" class="external-link">#470</a>).</li>
+<li>Removed <code>s_proportion_diff_j()</code> which was a wrapper around <code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/prop_diff.html" class="external-link">tern::s_proportion_diff()</a></code>. The <code>label</code> and <code>conf_level</code> parameters moved to <code><a href="../reference/prop_diff.html">a_proportion_diff_j()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/442" class="external-link">#442</a>, <a href="https://github.com/johnsonandjohnson/junco/issues/467" class="external-link">#467</a>).</li>
+<li>Renamed internal functions <code>s_rel_risk_val_j()</code> and <code>s_rel_risk_levii_j()</code> to <code>s_risk_diff_val_j()</code> and <code>s_risk_diff_levii_j()</code> to correctly reflect that they compute risk difference (p1 - p2), not relative risk (p1 / p2) (<a href="https://github.com/johnsonandjohnson/junco/issues/442" class="external-link">#442</a>).</li>
+</ul></div>
+<div class="section level4">
+<h4 id="fixed-0-1-7">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-7"></a></h4>
+<ul><li>Fixed <code><a href="../reference/get_ref_info.html">get_ref_info()</a></code> to accept ref_path = NULL (<a href="https://github.com/johnsonandjohnson/junco/issues/359" class="external-link">#359</a>).</li>
+<li>Fixed <code><a href="../reference/default_stats_formats_labels.html">junco_get_stats()</a></code> to inherit any default stats from <code>tern</code> that are not explicitly defined in junco.</li>
+<li>Fixed <code><a href="../reference/get_ref_info.html">get_ref_info()</a></code> so that is works in the presence of “overall” column (<a href="https://github.com/johnsonandjohnson/junco/issues/332" class="external-link">#332</a>)</li>
+<li>CRITICAL: hotfixed <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> lost titles in certain cases (<a href="https://github.com/johnsonandjohnson/junco/issues/373" class="external-link">#373</a>)</li>
+<li>CRITICAL: hotfixed <code><a href="../reference/def_colwidths.html">def_colwidths()</a></code> when a column label is too long (<a href="https://github.com/johnsonandjohnson/junco/issues/281" class="external-link">#281</a>)</li>
+</ul></div>
+<div class="section level4">
+<h4 id="changed-0-1-7-1">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7-1"></a></h4>
+<ul><li>Updated several analysis functions to use <code><a href="../reference/h_get_cur_trt_grp.html">h_get_cur_trt_grp()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/295" class="external-link">#295</a>).</li>
+<li>Replaced <code>h_get_trtvar_refpath()</code> with <code><a href="../reference/h_get_cur_trt_grp.html">h_get_cur_trt_grp()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/295" class="external-link">#295</a>).</li>
+<li>Updated <code><a href="../reference/get_ref_info.html">get_ref_info()</a></code> for matching column split paths (<a href="https://github.com/johnsonandjohnson/junco/issues/295" class="external-link">#295</a>).</li>
+<li>Added the new helper function <code><a href="../reference/factor_by_order.html">factor_by_order()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/425" class="external-link">#425</a>).</li>
+<li>Renamed <code>in_ref_col()</code> to <code><a href="../reference/cur_col_split_path_utils.html">in_column()</a></code> and renamed its <code>ref_path</code> argument to <code>col_path</code>.</li>
+<li>Updated <code>in_ref_col()</code> to accept <code>ref_path = NULL</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/404" class="external-link">#404</a>).</li>
+<li>Added the new helper functions <code><a href="../reference/cur_col_split_path_utils.html">cur_col_split_path()</a></code> and <code><a href="../reference/cur_col_split_path_utils.html">in_column()</a></code> to support custom analysis functions that depend on the current column split context (<a href="https://github.com/johnsonandjohnson/junco/issues/404" class="external-link">#404</a>).</li>
+<li>Added a default value for the <code>label</code> argument in <code><a href="../reference/summary_subset.html">c_summary_subset_label()</a></code>.</li>
+<li>Updated the documentation of <code><a href="../reference/summary_subset.html">a_summary_subset()</a></code>.</li>
+<li>Refactored <code><a href="../reference/prepend_label_cell.html">prepend_label_cell()</a></code>; Only <code>RowsVerticalSection</code> is now supported.</li>
+<li>Removed <code>filter_df_prior_afun()</code>, <code>a_summary_diff_mvars()</code>, <code>a_summary_diff_mvars_label()</code>.</li>
+<li>Removed formatters exports <a href="https://github.com/johnsonandjohnson/junco/issues/317" class="external-link">#317</a></li>
+<li>Deprecate <code>a_coxph_hr</code> for <code>tern:::a_coxph_pairwise()</code> and <code>s_coxph_hr</code> for <code>tern:::s_coxph_pairwise()</code> <a href="https://github.com/johnsonandjohnson/junco/issues/158" class="external-link">#158</a></li>
+<li>Reduce sampling of <code>rbmi</code> test to make tests shorter (<a href="https://github.com/johnsonandjohnson/junco/issues/323" class="external-link">#323</a>)</li>
+<li>Optimize shared tables in <code>test-tt_to_tblfile</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/323" class="external-link">#323</a>)</li>
+<li>Changed forked <code>h_ancova</code> for the <code>tern</code> one</li>
+<li>Add extra statistics to <code>a_eair100_j</code> and introduce scaling factor <code>num_p_year</code> (default = 100) (<a href="https://github.com/johnsonandjohnson/junco/issues/361" class="external-link">#361</a>)</li>
+<li>Removed ellipsis argument from <code>a_freq_resp_var_j</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/236" class="external-link">#236</a>)</li>
+<li>Removed <code>dplyr</code> from <code>junco</code> and replaced by base R <a href="https://github.com/johnsonandjohnson/junco/issues/201" class="external-link">#201</a></li>
+<li>Replaced <code>assertthat</code> by <code>checkmate</code> for consistency <a href="https://github.com/johnsonandjohnson/junco/issues/201" class="external-link">#201</a></li>
+<li>Remove <code>stringi</code> from dependencies <a href="https://github.com/johnsonandjohnson/junco/issues/201" class="external-link">#201</a></li>
+<li>Deprecate <code><a href="../reference/rbmi_analyse.html">rbmi_analyse()</a></code>, <code><a href="../reference/make_rbmi_cluster.html">make_rbmi_cluster()</a></code>, <code><a href="../reference/par_lapply.html">par_lapply()</a></code> for <code>rbmi</code> equivalent functions <a href="https://github.com/johnsonandjohnson/junco/issues/367" class="external-link">#367</a></li>
+<li>Deprecate <code><a href="../reference/a_kaplan_meier.html">a_kaplan_meier()</a></code> for <code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/survival_time.html" class="external-link">tern::a_surv_time()</a></code>
+</li>
+<li>Changed the label for <code>range_with_cens_info</code> from <code>"Min, max"</code> (junco) to <code>"Min - Max (with censoring)"</code> and the argument from <code>lsmean_diffci</code> to <code>lsmean_diff_with_ci</code>
+</li>
+<li>Deprecate <code><a href="../reference/s_coxph_hr.html">s_coxph_hr()</a></code> for <code>tern:::a_coxph_pairwise()</code>
+</li>
+<li>Changed stop message in <code><a href="../reference/a_freq_j.html">a_freq_j()</a></code> when <code>label_map</code> option is used in a rowsplit with no data on a character analysis var <a href="https://github.com/johnsonandjohnson/junco/issues/386" class="external-link">#386</a></li>
+<li>Use new exported splv_extra and value_expr accessors (insightsengineering#1098)</li>
+<li>Update new exported calls from rtables.officer</li>
+<li>update documentation to <code>roxygen2</code> 8.0.0</li>
+<li>Add extra statistics to <code>a_eair100_j</code> and introduce scaling factor <code>num_p_year</code> (default = 100) (<a href="https://github.com/johnsonandjohnson/junco/issues/361" class="external-link">#361</a>)</li>
+<li>Updated behavior of formatting functions <code>jjcsformat_count_denom_fraction</code> and <code>jjcsformat_fraction_count_denom</code> and introduce functions <code>jjcsformat_count_denom_fraction_legacy</code> and <code>jjcsformat_fraction_count_denom_legacy</code> for backward compatibility reasons (<a href="https://github.com/johnsonandjohnson/junco/issues/450" class="external-link">#450</a>)</li>
+<li>Updated <code>insightsengineering</code> urls to <code>pharmaverse</code>
+</li>
+<li>Renamed and refactored <code>postfun_eq5d</code> into <code>stats_in_cols_setup</code>
+</li>
+<li>Added factor assertion on <code>.var</code> in <code>s_freq_j</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/453" class="external-link">#453</a>).</li>
+<li>Added assertions for the <code>id</code> argument in <code><a href="../reference/a_freq_j.html">a_freq_j()</a></code> and <code><a href="../reference/a_freq_j.html">s_freq_j()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/424" class="external-link">#424</a>).</li>
+</ul></div>
+<div class="section level4">
+<h4 id="added-0-1-7">Added<a class="anchor" aria-label="anchor" href="#added-0-1-7"></a></h4>
+<ul><li>Added <code>jjcsformat_percentage()</code> for formatting percentage values (<a href="https://github.com/johnsonandjohnson/junco/issues/519" class="external-link">#519</a>).</li>
+<li>Added a new analysis function <code><a href="../reference/a_combo_prop_diff_pval_mf.html">a_combo_prop_diff_pval_mf()</a></code> for proportions, risk differences, and risk difference tests with adaptive Mantel-Fleiss-based method selection (<a href="https://github.com/johnsonandjohnson/junco/issues/517" class="external-link">#517</a>).</li>
+<li>Added <code><a href="../reference/test_proportion_diff_mf.html">s_test_proportion_diff_mf()</a></code> and <code><a href="../reference/test_proportion_diff_mf.html">a_test_proportion_diff_mf()</a></code> adaptive test of stratified response-proportion differences using the Mantel–Fleiss criterion (<a href="https://github.com/johnsonandjohnson/junco/issues/457" class="external-link">#457</a>).</li>
+<li>Added <code><a href="../reference/proportion_diff_mf.html">s_proportion_diff_mf()</a></code> and <code><a href="../reference/proportion_diff_mf.html">a_proportion_diff_mf()</a></code> adaptive estimation of stratified response-proportion differences using the Mantel–Fleiss criterion (<a href="https://github.com/johnsonandjohnson/junco/issues/456" class="external-link">#456</a>).</li>
+<li>Added <code><a href="../reference/cond_proportion_j.html">a_cond_proportion_j()</a></code> which implements conditional method selection between Wald and Clopper-Pearson confidence intervals based on the number of responses and the denominator (and the method selection can either be done on cell level or on row level).</li>
+<li>Added <code><a href="../reference/a_sum_ratio_j.html">a_sum_ratio_j()</a></code> analysis function for computing sum, unique-row sum, and their ratios against a denominator column.</li>
+<li>Added <code><a href="../reference/strict_match.html">strict_match()</a></code> for uniquely matching a value in the odd or even positions of a character vector.</li>
+<li>Added <code><a href="../reference/categorize_pval.html">categorize_pval()</a></code> for assigning p-values to validated, user-defined categories.</li>
+<li>Added <code><a href="../reference/pool_rubin_scalar.html">pool_rubin_scalar()</a></code> and <code><a href="../reference/pool_z_stat.html">pool_z_stat()</a></code> for pooling scalar estimates and z statistics across imputations.</li>
+<li>Added <code><a href="../reference/resp_multiple_imputation.html">resp_multiple_imputation()</a></code> to impute missing binary responses across scenarios and pool CMH risk-difference and p-value results.</li>
+<li>Updated documentation and examples for <code>label_map</code> in <code>a_freq_j</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/235" class="external-link">#235</a>)</li>
+<li>Added <code>tern</code> methods for difference in proportions in <code>a_freq_j</code> and <code>a_freq_resp_var_j</code> : <code>cmh_sato</code>, <code>cmh_mn</code>, <code>uncond_exact_diff</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/389" class="external-link">#389</a>)</li>
+<li>Added <code><a href="../reference/a_summary_j.html">a_summary_j_with_exclude()</a></code> to allow <code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::a_summary()</a></code> analyses to be skipped for selected row split levels.</li>
+<li>Added <code><a href="../reference/summarize_mmrm.html">a_summarize_mmrm_with_exclude()</a></code> to allow MMRM summaries to be skipped for selected row split levels.</li>
+<li>Added <code><a href="../reference/rightside.html">rightside()</a></code> to extract the right-hand side of a formula as a scalar character value.</li>
+<li>Added <code><a href="../reference/a_two_tier.html">a_three_tier()</a></code> as extension to <code><a href="../reference/a_two_tier.html">a_two_tier()</a></code>.</li>
+<li>Added formatting function <code><a href="../reference/format_sigfig_j.html">format_sigfig_j()</a></code> as alternative to <code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/format_sigfig.html" class="external-link">tern::format_sigfig()</a></code>. (<a href="https://github.com/johnsonandjohnson/junco/issues/436" class="external-link">#436</a>)</li>
+<li>Added new standard column structure functions: <code><a href="../reference/make_multicomp_splfun.html">make_multicomp_splfun()</a></code>, <code><a href="../reference/grouped_cols_w_diffs.html">grouped_cols_w_diffs()</a></code>, <code><a href="../reference/grouped_cols_w_diffs.html">grouped_cols_w_subgrps()</a></code>, <code><a href="../reference/shift_tbl_col_struct.html">shift_tbl_col_struct()</a></code>, and <code><a href="../reference/some_v_all_col_struct.html">some_v_all_col_struct()</a></code>.</li>
+<li>Added varying decimal precision utility functions <code>fmt_spec_single_d</code>, <code>fmt_spec_df_d</code>, <code>fmt_spec_var_d</code>. (<a href="https://github.com/johnsonandjohnson/junco/issues/474" class="external-link">#474</a>)</li>
+<li>Added utility functions <code>get_fmt_details</code> and <code>compare_fmt_specs</code> for reviewing format specification objects.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="id_016---cran-release-0-1-7">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.6-rc" class="external-link">0.1.6</a> - 2026-05-05 (CRAN release)<a class="anchor" aria-label="anchor" href="#id_016---cran-release-0-1-7"></a></h3>
+<div class="section level4">
+<h4 id="fixed-0-1-7-1">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-7-1"></a></h4>
+<ul><li>Fixed <code><a href="../reference/s_kaplan_meier.html">s_kaplan_meier()</a></code> range censoring indicator handling to no longer produce <code>NA</code> values in the output when either all subjects are censored or none are censored.</li>
 <li>Aligned <code><a href="../reference/a_freq_resp_var_j.html">a_freq_resp_var_j()</a></code> with <code><a href="../reference/a_freq_j.html">a_freq_j()</a></code> by adding <code>.formats</code> and <code>na_str</code> parameters to allow user customization of output formatting and NA string representation (<a href="https://github.com/johnsonandjohnson/junco/issues/67" class="external-link">#67</a>).</li>
 <li>Fixed the hanging indent in the first column of the body of the table (<a href="https://github.com/johnsonandjohnson/junco/issues/138" class="external-link">#138</a>)</li>
 <li>Export <code><a href="../reference/leftside.html">leftside()</a></code>, <code>postfun_eq5d</code> <code>ac_blank_line</code> and <code>tt_to_tblfile</code>
@@ -55,8 +140,12 @@
 <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> now is passing vectorized colwidths when exporting ‘allparts’ to match the colwidths of the individual parts (<a href="https://github.com/johnsonandjohnson/junco/issues/225" class="external-link">#225</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-0-1-6">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-6"></a></h4>
-<ul><li>Moved <code><a href="../reference/safe_t_test.html">safe_t_test()</a></code> from <code>a_summarize_aval_chg_diff.R</code> to a new file <code>safe_t_test.R</code>,</li>
+<h4 id="changed-0-1-7-2">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7-2"></a></h4>
+<ul><li>Updated <code><a href="../reference/summary_subset.html">c_summary_subset_label()</a></code>: removed <code>.spl_context</code> argument and renamed <code>subset_expr</code> to <code>filter_expr</code>.</li>
+<li>Renamed <code><a href="../reference/a_summary_j.html">a_summary_j()</a></code> to <code><a href="../reference/summary_subset.html">a_summary_subset()</a></code> and updated its purpose, implementation, and arguments.</li>
+<li>Added new stats/labels/formats/indents to <code>junco_utils_default_stats_formats_labels.r</code> file.</li>
+<li>Renamed <code>s_diff_mean_ci()</code> to <code><a href="../reference/diff_means.html">s_diff_means()</a></code>, and added new statistics to <code><a href="../reference/diff_means.html">s_diff_means()</a></code>.</li>
+<li>Moved <code>safe_t_test()</code> from <code>a_summarize_aval_chg_diff.R</code> to a new file <code>safe_t_test.R</code>,</li>
 <li>Moved <code>add_blank_line_rcells()</code> from <code>s_functions.R</code> to <code>blank_line.R</code>.</li>
 <li>changed return value <code>n</code> for <code>s_ancova_j</code> into <code>n_fit</code>, to differentiate between these two statistics for combined function <code><a href="../reference/s_summarize_ancova_j.html">s_summarize_ancova_j()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/117" class="external-link">#117</a>)</li>
 <li>added default label for median_range “Median (min, max)” in <code>junco_default_labels_start</code>
@@ -82,9 +171,10 @@
 </li>
 </ul></div>
 <div class="section level4">
-<h4 id="added-0-1-6">Added<a class="anchor" aria-label="anchor" href="#added-0-1-6"></a></h4>
-<ul><li>Added multi-comparator functionality (<a href="https://github.com/johnsonandjohnson/junco/issues/271" class="external-link">#271</a>)</li>
-<li>Hotfix: Added several new functions for creating the Vital Sign tables for core and clinpharm: <code><a href="../reference/a_summary_diff_mvars.html">a_summary_diff_mvars()</a></code>, <code><a href="../reference/a_summary_j.html">a_summary_j()</a></code>, <code><a href="../reference/c_summary_subset_label.html">c_summary_subset_label()</a></code>, <code><a href="../reference/filter_df_prior_afun.html">filter_df_prior_afun()</a></code>, <code><a href="../reference/prepend_label_cell.html">prepend_label_cell()</a></code>, <code><a href="../reference/s_diff_mean_ci.html">s_diff_mean_ci()</a></code>, <code><a href="../reference/s_summary_diff.html">s_summary_diff()</a></code>, <code><a href="../reference/safe_t_test.html">safe_t_test()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/304" class="external-link">#304</a>).</li>
+<h4 id="added-0-1-7-1">Added<a class="anchor" aria-label="anchor" href="#added-0-1-7-1"></a></h4>
+<ul><li>Added <code><a href="../reference/diff_means.html">a_diff_means()</a></code>, which is based on the existing <code><a href="../reference/diff_means.html">s_diff_means()</a></code>.</li>
+<li>Added multi-comparator functionality (<a href="https://github.com/johnsonandjohnson/junco/issues/271" class="external-link">#271</a>)</li>
+<li>Hotfix: Added several new functions for creating the Vital Sign tables for core and clinpharm: <code>a_summary_diff_mvars()</code>, <code><a href="../reference/a_summary_j.html">a_summary_j()</a></code>, <code><a href="../reference/summary_subset.html">c_summary_subset_label()</a></code>, <code>filter_df_prior_afun()</code>, <code><a href="../reference/prepend_label_cell.html">prepend_label_cell()</a></code>, <code>s_diff_mean_ci()</code>, <code><a href="../reference/s_summary_diff.html">s_summary_diff()</a></code>, <code>safe_t_test()</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/304" class="external-link">#304</a>).</li>
 <li>Added option to perform <code>a_summarize_ancova_j</code> in a layout with a combined column facet (<a href="https://github.com/johnsonandjohnson/junco/issues/117" class="external-link">#117</a>) + slight change in return value for <code><a href="../reference/s_ancova_j.html">s_ancova_j()</a></code>, now we have n_fit instead of n returned</li>
 <li>Added option to switch on/off the export of the csv in both <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> and <code><a href="../reference/export_as_docx_j.html">export_as_docx_j()</a></code>
 </li>
@@ -97,41 +187,42 @@
 </li>
 <li>Added <code>lifecycle</code> to suggests</li>
 </ul></div>
+</div>
 <div class="section level3">
-<h3 id="id_015---minor-hotfix-release-0-1-6">
-<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v-0.1.5" class="external-link">0.1.5</a> - 2026-03-03 (minor hotfix release)<a class="anchor" aria-label="anchor" href="#id_015---minor-hotfix-release-0-1-6"></a></h3>
+<h3 id="id_015---minor-hotfix-release-0-1-7">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v-0.1.5" class="external-link">0.1.5</a> - 2026-03-03 (minor hotfix release)<a class="anchor" aria-label="anchor" href="#id_015---minor-hotfix-release-0-1-7"></a></h3>
 <div class="section level4">
-<h4 id="added-and-removed-0-1-6">Added and Removed<a class="anchor" aria-label="anchor" href="#added-and-removed-0-1-6"></a></h4>
+<h4 id="added-and-removed-0-1-7">Added and Removed<a class="anchor" aria-label="anchor" href="#added-and-removed-0-1-7"></a></h4>
 <ul><li>Added new behavior for nested <code>countsource</code> in h_a_freq_dataprep <code>altdf_subset</code> (<a href="https://github.com/johnsonandjohnson/junco/issues/200" class="external-link">#200</a>)</li>
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="id_014---minor-hotfix-release-0-1-6">
-<a href="https://github.com/johnsonandjohnson/junco/releases/tag/0.1.4" class="external-link">0.1.4</a> - 2026-02-02 (minor hotfix release)<a class="anchor" aria-label="anchor" href="#id_014---minor-hotfix-release-0-1-6"></a></h3>
+<h3 id="id_014---minor-hotfix-release-0-1-7">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/0.1.4" class="external-link">0.1.4</a> - 2026-02-02 (minor hotfix release)<a class="anchor" aria-label="anchor" href="#id_014---minor-hotfix-release-0-1-7"></a></h3>
 <div class="section level4">
-<h4 id="fixed-0-1-6-1">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-6-1"></a></h4>
+<h4 id="fixed-0-1-7-2">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-7-2"></a></h4>
 <ul><li>“caption” paragraph style in the docx exporter is now handled by flextable (<a href="https://github.com/johnsonandjohnson/junco/issues/182" class="external-link">#182</a>)</li>
 <li>Fixed <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code>, when exporting an empty listing do not lose Title and Footers</li>
 <li>Fixed <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> argument <code>label_width_ins</code> which was not applying the change in the row label column width (<a href="https://github.com/johnsonandjohnson/junco/issues/166" class="external-link">#166</a>).</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-0-1-6-1">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-6-1"></a></h4>
+<h4 id="changed-0-1-7-3">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7-3"></a></h4>
 <ul><li>Reinstate rbmi as dependency</li>
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="id_013---minor-hotfix-release-0-1-6">
-<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.3" class="external-link">0.1.3</a> - 2026-01-12 (minor hotfix release)<a class="anchor" aria-label="anchor" href="#id_013---minor-hotfix-release-0-1-6"></a></h3>
+<h3 id="id_013---minor-hotfix-release-0-1-7">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.3" class="external-link">0.1.3</a> - 2026-01-12 (minor hotfix release)<a class="anchor" aria-label="anchor" href="#id_013---minor-hotfix-release-0-1-7"></a></h3>
 <div class="section level4">
-<h4 id="changed-0-1-6-2">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-6-2"></a></h4>
+<h4 id="changed-0-1-7-4">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7-4"></a></h4>
 <ul><li>Address CRAN NOTES.</li>
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="id_012---0-1-6">
-<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.2-rc1" class="external-link">0.1.2</a> - 2025-12-10<a class="anchor" aria-label="anchor" href="#id_012---0-1-6"></a></h3>
+<h3 id="id_012---0-1-7">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.2-rc1" class="external-link">0.1.2</a> - 2025-12-10<a class="anchor" aria-label="anchor" href="#id_012---0-1-7"></a></h3>
 <div class="section level4">
-<h4 id="added-and-removed-0-1-6-1">Added and Removed<a class="anchor" aria-label="anchor" href="#added-and-removed-0-1-6-1"></a></h4>
+<h4 id="added-and-removed-0-1-7-1">Added and Removed<a class="anchor" aria-label="anchor" href="#added-and-removed-0-1-7-1"></a></h4>
 <ul><li><p>Add <code><a href="../reference/a_two_tier.html">a_two_tier()</a></code> analysis function</p></li>
 <li><p>Add <code><a href="../reference/a_maxlev.html">a_maxlev()</a></code> to be able to calculate count and percentage of the maximum level of an ordered factor per subject</p></li>
 <li><p>Remove <code>brackets_to_rtf()</code></p></li>
@@ -144,28 +235,31 @@
 <li><p>Add extra check for existence of <code>.alt_df_full</code> when layout has risk difference column and a row-split (h_create_alt_df) <a href="https://github.com/johnsonandjohnson/junco/issues/120" class="external-link">#120</a>.</p></li>
 <li><p>Add docx exporter for Tables, Listings and Figures.</p></li>
 <li><p>Add <code>alignments</code> argument in <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code></p></li>
-<li><p>Removed <code><a href="https://rdrr.io/pkg/tern/man/prop_diff_test.html" class="external-link">s_test_proportion_diff()</a></code> and corresponding helper functions, as they are now available as needed in the <code>tern</code> package.</p></li>
-<li><p>Added <code>cmh_sato</code> and <code>cmh_mn</code> (Cochran-Mantel-Haenszel stratified proportion difference estimation with Sato variance and Miettinen Nurminen method, respectively) <code>method</code> options to the <code><a href="../reference/prop_diff.html">s_proportion_diff_j()</a></code> function.</p></li>
+<li><p>Removed <code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/prop_diff_test.html" class="external-link">s_test_proportion_diff()</a></code> and corresponding helper functions, as they are now available as needed in the <code>tern</code> package.</p></li>
+<li><p>Added <code>cmh_sato</code> and <code>cmh_mn</code> (Cochran-Mantel-Haenszel stratified proportion difference estimation with Sato variance and Miettinen Nurminen method, respectively) <code>method</code> options to the <code>s_proportion_diff_j()</code> function.</p></li>
 <li><p>Added formatting function round type (<a href="https://github.com/johnsonandjohnson/junco/issues/76" class="external-link">#76</a>)</p></li>
 <li><p>Fixed bug in s_summarize_desc_j function to handle sparse data (zero variance) cases (<a href="https://github.com/johnsonandjohnson/junco/issues/78" class="external-link">#78</a>)</p></li>
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="id_011---0-1-6">
-<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.1" class="external-link">0.1.1</a> - 2025-07-28<a class="anchor" aria-label="anchor" href="#id_011---0-1-6"></a></h3>
+<h3 id="id_011---0-1-7">
+<a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.1" class="external-link">0.1.1</a> - 2025-07-28<a class="anchor" aria-label="anchor" href="#id_011---0-1-7"></a></h3>
 <div class="section level4">
-<h4 id="added-0-1-6-1">Added<a class="anchor" aria-label="anchor" href="#added-0-1-6-1"></a></h4>
+<h4 id="added-0-1-7-2">Added<a class="anchor" aria-label="anchor" href="#added-0-1-7-2"></a></h4>
 <ul><li>First release of the junco package for Table and Listing (TL) Reporting</li>
 <li>Functions to produce tables and listings in R</li>
 <li>Built on the rtables package framework</li>
 <li>Integration with formatters, rtables, tidytlg, and tern packages</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-0-1-6-3">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-6-3"></a></h4>
+<h4 id="changed-0-1-7-5">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7-5"></a></h4>
 <ul><li>Initial CRAN release</li>
-</ul><p>All notable changes to this project will be documented in this file.</p>
-<p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/" class="external-link">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html" class="external-link">Semantic Versioning</a>.</p>
+</ul></div>
 </div>
+<div class="section level3">
+<h3 id="changelog-0-1-7">Changelog<a class="anchor" aria-label="anchor" href="#changelog-0-1-7"></a></h3>
+<p>All notable changes to this project will be documented in this file.</p>
+<p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/" class="external-link">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html" class="external-link">Semantic Versioning</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

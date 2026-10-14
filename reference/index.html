@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,10 +50,24 @@
 
         <dt>
 
-          <code><a href="a_eair100_j.html">a_eair100_j()</a></code>
+          <code><a href="a_combo_prop_diff_pval_mf.html">a_combo_prop_diff_pval_mf()</a></code>
+
+        </dt>
+        <dd>Combined Proportion, Risk Difference, and Risk Difference Test Analysis Function with Method Selection Based on the Mantel-Fleiss Criterion</dd>
+
+        <dt>
+
+          <code><a href="a_eair100_j.html">s_eair100_levii_j()</a></code> <code><a href="a_eair100_j.html">a_eair100_j()</a></code>
 
         </dt>
         <dd>Exposure-Adjusted Incidence Rate</dd>
+
+        <dt>
+
+          <code><a href="diff_means.html">s_diff_means()</a></code> <code><a href="diff_means.html">a_diff_means()</a></code>
+          <span class="badge lifecycle lifecycle-stable">stable</span>
+        </dt>
+        <dd>Difference in Means</dd>
 
         <dt>
 
@@ -106,6 +120,20 @@
 
         <dt>
 
+          <code><a href="proportion_diff_mf.html">a_proportion_diff_mf()</a></code> <code><a href="proportion_diff_mf.html">s_proportion_diff_mf()</a></code>
+          <span class="badge lifecycle lifecycle-stable">stable</span>
+        </dt>
+        <dd>Proportion Difference with Method Selection Based on the Mantel-Fleiss Criterion</dd>
+
+        <dt>
+
+          <code><a href="test_proportion_diff_mf.html">a_test_proportion_diff_mf()</a></code> <code><a href="test_proportion_diff_mf.html">s_test_proportion_diff_mf()</a></code>
+          <span class="badge lifecycle lifecycle-stable">stable</span>
+        </dt>
+        <dd>Test of Proportion Difference with Method Selection Based on the Mantel-Fleiss Criterion</dd>
+
+        <dt>
+
           <code><a href="a_summarize_aval_chg_diff_j.html">a_summarize_aval_chg_diff_j()</a></code>
 
         </dt>
@@ -120,38 +148,38 @@
 
         <dt>
 
-          <code><a href="a_summary_diff_mvars.html">a_summary_diff_mvars()</a></code> <code><a href="a_summary_diff_mvars.html">a_summary_diff_mvars_label()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+          <code><a href="summarize_mmrm.html">s_summarize_mmrm()</a></code> <code><a href="summarize_mmrm.html">a_summarize_mmrm()</a></code> <code><a href="summarize_mmrm.html">a_summarize_mmrm_with_exclude()</a></code>
+          <span class="badge lifecycle lifecycle-stable">stable</span>
         </dt>
-        <dd>Descriptive Statistics for Multiple Univariate Variables with Optional Reference-Based Comparison</dd>
+        <dd>Dynamic tabulation of MMRM results with tables</dd>
 
         <dt>
 
-          <code><a href="a_summary_j.html">a_summary_j()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+          <code><a href="a_summary_j.html">a_summary_j_with_exclude()</a></code>
+          <span class="badge lifecycle lifecycle-stable">stable</span>
         </dt>
-        <dd>Wrapper around <code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::a_summary()</a></code> with junco-specific defaults</dd>
+        <dd>Wrappers Around <code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::a_summary()</a></code> with Row Split Exclusion</dd>
 
         <dt>
 
-          <code><a href="a_two_tier.html">a_two_tier()</a></code>
+          <code><a href="summary_subset.html">a_summary_subset()</a></code> <code><a href="summary_subset.html">c_summary_subset_label()</a></code>
+          <span class="badge lifecycle lifecycle-stable">stable</span>
+        </dt>
+        <dd>Wrappers Around <code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::a_summary()</a></code> with Optional Subsetting and Labels</dd>
+
+        <dt>
+
+          <code><a href="a_sum_ratio_j.html">a_sum_ratio_j()</a></code>
+          <span class="badge lifecycle lifecycle-stable">stable</span>
+        </dt>
+        <dd>Analysis Function: Sum and Ratio of Sums</dd>
+
+        <dt>
+
+          <code><a href="a_two_tier.html">a_two_tier()</a></code> <code><a href="a_two_tier.html">a_three_tier()</a></code>
 
         </dt>
         <dd>Two Tier Analysis Function</dd>
-
-        <dt>
-
-          <code><a href="c_summary_subset_label.html">c_summary_subset_label()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
-        </dt>
-        <dd>Summary Statistics for Filtered Data with Label</dd>
-
-        <dt>
-
-          <code><a href="rbmi_analyse.html">rbmi_analyse()</a></code>
-
-        </dt>
-        <dd>Analyse Multiple Imputed Datasets</dd>
 
         <dt>
 
@@ -204,6 +232,13 @@
 
         <dt>
 
+          <code><a href="cond_proportion_j.html">a_cond_proportion_j()</a></code> <code><a href="cond_proportion_j.html">s_cond_proportion_j()</a></code> <code><a href="cond_proportion_j.html">d_cond_proportion_j()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Conditional proportion with adaptive CI (exact vs. Wald)</dd>
+
+        <dt>
+
           <code><a href="find_missing_chg_after_avisit.html">find_missing_chg_after_avisit()</a></code>
 
         </dt>
@@ -222,13 +257,6 @@
 
         </dt>
         <dd><code>MMRM</code> Analysis</dd>
-
-        <dt>
-
-          <code><a href="coxph_hr.html">a_coxph_hr()</a></code> <code><a href="coxph_hr.html">s_coxph_hr()</a></code>
-
-        </dt>
-        <dd>Workaround statistics function to add HR with CI</dd>
 
         <dt>
 
@@ -253,13 +281,6 @@
 
         <dt>
 
-          <code><a href="make_rbmi_cluster.html">make_rbmi_cluster()</a></code>
-
-        </dt>
-        <dd>Create a <code>rbmi</code> ready cluster</dd>
-
-        <dt>
-
           <code><a href="rbmi_mmrm.html">rbmi_mmrm()</a></code>
 
         </dt>
@@ -281,14 +302,7 @@
 
         <dt>
 
-          <code><a href="par_lapply.html">par_lapply()</a></code>
-
-        </dt>
-        <dd>Parallelise Lapply</dd>
-
-        <dt>
-
-          <code><a href="prop_diff.html">a_proportion_diff_j()</a></code> <code><a href="prop_diff.html">s_proportion_diff_j()</a></code>
+          <code><a href="prop_diff.html">a_proportion_diff_j()</a></code>
 
         </dt>
         <dd>Proportion difference estimation</dd>
@@ -372,13 +386,6 @@
 
         <dt>
 
-          <code><a href="s_diff_mean_ci.html">s_diff_mean_ci()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
-        </dt>
-        <dd>Difference in Means with Confidence Interval</dd>
-
-        <dt>
-
           <code><a href="s_proportion_factor.html">s_proportion_factor()</a></code>
 
         </dt>
@@ -421,24 +428,10 @@
 
         <dt>
 
-          <code><a href="summarize_mmrm.html">s_summarize_mmrm()</a></code> <code><a href="summarize_mmrm.html">a_summarize_mmrm()</a></code>
-          <span class="badge lifecycle lifecycle-stable">stable</span>
-        </dt>
-        <dd>Dynamic tabulation of MMRM results with tables</dd>
-
-        <dt>
-
           <code><a href="summarize_row_counts.html">summarize_row_counts()</a></code>
 
         </dt>
         <dd>Layout Creating Function Adding Row Counts</dd>
-
-        <dt>
-
-          <code><a href="h_get_trtvar_refpath.html">h_get_trtvar_refpath()</a></code>
-
-        </dt>
-        <dd>Get Treatment Variable Reference Path</dd>
 
         <dt>
 
@@ -460,6 +453,27 @@
 
         </dt>
         <dd>Cochran-Mantel-Haenszel Row Mean Scores test</dd>
+
+        <dt>
+
+          <code><a href="pool_rubin_scalar.html">pool_rubin_scalar()</a></code>
+
+        </dt>
+        <dd>Pool a scalar estimate across imputations</dd>
+
+        <dt>
+
+          <code><a href="pool_z_stat.html">pool_z_stat()</a></code>
+
+        </dt>
+        <dd>Pool z statistics across imputations</dd>
+
+        <dt>
+
+          <code><a href="resp_multiple_imputation.html">resp_multiple_imputation()</a></code>
+
+        </dt>
+        <dd>Calculate results across binary-imputation scenarios</dd>
 
         <dt>
 
@@ -493,10 +507,17 @@
 
         <dt>
 
-          <code><a href="count_fraction.html">jjcsformat_cnt_den_fract_fct()</a></code> <code><a href="count_fraction.html">jjcsformat_count_fraction()</a></code> <code><a href="count_fraction.html">jjcsformat_count_denom_fraction()</a></code> <code><a href="count_fraction.html">jjcsformat_fraction_count_denom()</a></code>
+          <code><a href="count_fraction.html">jjcsformat_cnt_den_fract_fct()</a></code> <code><a href="count_fraction.html">jjcsformat_count_fraction()</a></code> <code><a href="count_fraction.html">jjcsformat_count_denom_fraction()</a></code> <code><a href="count_fraction.html">jjcsformat_count_denom_fraction_legacy()</a></code> <code><a href="count_fraction.html">jjcsformat_fraction_count_denom()</a></code> <code><a href="count_fraction.html">jjcsformat_fraction_count_denom_legacy()</a></code>
 
         </dt>
         <dd>Formatting functions for count and fraction, and for count denominator and fraction values</dd>
+
+        <dt>
+
+          <code><a href="jjcsformat_fraction.html">jjcsformat_fraction()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Formatting function for percentage values</dd>
 
         <dt>
 
@@ -511,6 +532,27 @@
 
         </dt>
         <dd>Insertion of Blank Lines in a Layout</dd>
+
+        <dt>
+
+          <code><a href="format_sigfig_j.html">format_sigfig_j()</a></code> <code><a href="format_sigfig_j.html">modified_signif_j()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Format numeric values by significant figures.</dd>
+
+        <dt>
+
+          <code><a href="fmt_spec_d.html">fmt_spec_single_d()</a></code> <code><a href="fmt_spec_d.html">fmt_spec_df_d()</a></code> <code><a href="fmt_spec_d.html">fmt_spec_var_d()</a></code> <code><a href="fmt_spec_d.html">junco_def_d_all</a></code> <code><a href="fmt_spec_d.html">junco_def_d_alt1</a></code> <code><a href="fmt_spec_d.html">junco_def_d_alt2</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Utilities for processing d-style string formatting specifications (eg "xx.dx")</dd>
+
+        <dt>
+
+          <code><a href="fmt_utils.html">get_fmt_details()</a></code> <code><a href="fmt_utils.html">compare_fmt_specs()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Utilities for reviewing format specification objects</dd>
       </dl></div><div class="section level2">
       <h2 id="junco-sorting-functions-and-pruning-functions">junco Sorting Functions and Pruning Functions<a class="anchor" aria-label="anchor" href="#junco-sorting-functions-and-pruning-functions"></a></h2>
 
@@ -595,10 +637,17 @@
 
         <dt>
 
-          <code><a href="grouped_cols_w_diffs.html">grouped_cols_w_diffs()</a></code>
+          <code><a href="grouped_cols_w_diffs.html">grouped_cols_w_diffs()</a></code> <code><a href="grouped_cols_w_diffs.html">grouped_cols_w_subgrps()</a></code>
 
         </dt>
         <dd>Standard Column Structure With Grouped Treatments and Difference Columns</dd>
+
+        <dt>
+
+          <code><a href="shift_tbl_col_struct.html">shift_tbl_col_struct()</a></code>
+
+        </dt>
+        <dd>Create Column Structure for a J&amp;J-Style Shift Table</dd>
 
         <dt>
 
@@ -623,10 +672,10 @@
 
         <dt>
 
-          <code><a href="postfun_eq5d.html">postfun_eq5d()</a></code>
+          <code><a href="stats_in_cols_setup.html">stats_in_cols_setup()</a></code>
 
         </dt>
-        <dd>Post-processing split function for EQ-5D style column statistics</dd>
+        <dd>Function factory to be used as Post-processing split function for setup of stats in column structure</dd>
 
         <dt>
 
@@ -634,6 +683,13 @@
 
         </dt>
         <dd>Add Overall Facet</dd>
+
+        <dt>
+
+          <code><a href="some_v_all_col_struct.html">some_v_all_col_struct()</a></code>
+
+        </dt>
+        <dd>Standard All vs Some (e.g. Related AEs) column structure</dd>
       </dl></div><div class="section level2">
       <h2 id="junco-functions-for-titles-footnotes">junco Functions For titles/footnotes<a class="anchor" aria-label="anchor" href="#junco-functions-for-titles-footnotes"></a></h2>
 
@@ -676,10 +732,17 @@
 
       <dl><dt>
 
-          <code><a href="filter_df_prior_afun.html">filter_df_prior_afun()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+          <code><a href="categorize_pval.html">categorize_pval()</a></code>
+
         </dt>
-        <dd>Filter Data Prior To Analysis Function</dd>
+        <dd>Categorize p-values</dd>
+
+        <dt>
+
+          <code><a href="cur_col_split_path_utils.html">cur_col_split_path()</a></code> <code><a href="cur_col_split_path_utils.html">in_column()</a></code>
+          <span class="badge lifecycle lifecycle-stable">stable</span>
+        </dt>
+        <dd>Utilities for the Current Column Split Path</dd>
 
         <dt>
 
@@ -691,9 +754,9 @@
         <dt>
 
           <code><a href="get_ref_info.html">get_ref_info()</a></code>
-
+          <span class="badge lifecycle lifecycle-stable">stable</span>
         </dt>
-        <dd>Obtain Reference Information for a Global Reference Group</dd>
+        <dd>Obtain reference group information from split context.</dd>
 
         <dt>
 
@@ -711,6 +774,13 @@
 
         <dt>
 
+          <code><a href="rightside.html">rightside()</a></code>
+
+        </dt>
+        <dd>Extract the right-hand side of a formula</dd>
+
+        <dt>
+
           <code><a href="remove_col_count.html">remove_col_count()</a></code>
 
         </dt>
@@ -722,13 +792,6 @@
 
         </dt>
         <dd>Removal of Levels</dd>
-
-        <dt>
-
-          <code><a href="safe_t_test.html">safe_t_test()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
-        </dt>
-        <dd>Safe Wrapper for <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">stats::t.test()</a></code></dd>
       </dl></div><div class="section level2">
       <h2 id="junco-functions-for-generating-rtfs-docxs-and-htmls">junco Functions For generating .rtfs, .docxs and HTMLs<a class="anchor" aria-label="anchor" href="#junco-functions-for-generating-rtfs-docxs-and-htmls"></a></h2>
 
@@ -780,6 +843,50 @@
 
         </dt>
         <dd>Obtain the default theme for the docx</dd>
+      </dl></div><div class="section level2">
+      <h2 id="deprecated-functions">Deprecated Functions<a class="anchor" aria-label="anchor" href="#deprecated-functions"></a></h2>
+
+      <div class="section-desc"><p>The following functions are deprecated and should not be used in new code.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="a_coxph_hr.html">a_coxph_hr()</a></code>
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
+        </dt>
+        <dd>a_coxph_hr</dd>
+
+        <dt>
+
+          <code><a href="rbmi_analyse.html">rbmi_analyse()</a></code>
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
+        </dt>
+        <dd>Analyse Multiple Imputed Datasets</dd>
+
+        <dt>
+
+          <code><a href="make_rbmi_cluster.html">make_rbmi_cluster()</a></code>
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
+        </dt>
+        <dd>Create a <code>rbmi</code> ready cluster</dd>
+
+        <dt>
+
+          <code><a href="par_lapply.html">par_lapply()</a></code>
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
+        </dt>
+        <dd>Parallelise Lapply</dd>
+
+        <dt>
+
+          <code><a href="a_kaplan_meier.html">a_kaplan_meier()</a></code>
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
+        </dt>
+        <dd>a_kaplan_meier</dd>
       </dl></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

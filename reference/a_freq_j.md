@@ -41,14 +41,14 @@ a_freq_j(
   variables = list(strata = NULL),
   conf_level = 0.95,
   method = c("wald", "waldcc", "cmh", "ha", "newcombe", "newcombecc", "strat_newcombe",
-    "strat_newcombecc"),
+    "strat_newcombecc", "cmh_sato", "cmh_mn", "uncond_exact_diff"),
   weights_method = "cmh",
   label = NULL,
   label_fstr = NULL,
   label_map = NULL,
   .alt_df_full = NULL,
   denom_by = NULL,
-  .stats = c("count_unique_denom_fraction"),
+  .stats = "count_unique_denom_fraction",
   .formats = NULL,
   .indent_mods = NULL,
   na_str = rep("NA", 3),
@@ -86,9 +86,9 @@ a_freq_j_with_exclude(
 
 - .var:
 
-  (`string`)  
-  single variable name that is passed by `rtables` when requested by a
-  statistics function.
+  (`character(1)`)  
+  Name of a categorical analysis variable in `df`. The variable must be
+  a `factor`.
 
 - .df_row:
 
@@ -213,11 +213,11 @@ a_freq_j_with_exclude(
 
 - variables:
 
-  Will be passed onto the relative risk function (internal function
-  s_rel_risk_val_j), which is based upon
-  [`tern::s_proportion_diff()`](https://rdrr.io/pkg/tern/man/prop_diff.html).  
+  Will be passed onto the risk difference function (internal function
+  s_risk_diff_val_j), which is based upon
+  [`tern::s_proportion_diff()`](https://pharmaverse.github.io/tern/latest-tag/reference/prop_diff.html).  
   See
-  [`?tern::s_proportion_diff`](https://rdrr.io/pkg/tern/man/prop_diff.html)
+  [`?tern::s_proportion_diff`](https://pharmaverse.github.io/tern/latest-tag/reference/prop_diff.html)
   for details.
 
 - conf_level:
@@ -227,13 +227,13 @@ a_freq_j_with_exclude(
 
 - method:
 
-  Will be passed onto the relative risk function (internal function
-  s_rel_risk_val_j).  
+  Will be passed onto the risk difference function (internal function
+  s_risk_diff_val_j).  
 
 - weights_method:
 
-  Will be passed onto the relative risk function (internal function
-  s_rel_risk_val_j).  
+  Will be passed onto the risk difference function (internal function
+  s_risk_diff_val_j).  
 
 - label:
 
@@ -255,16 +255,38 @@ a_freq_j_with_exclude(
 
 - label_map:
 
-  (`tibble`)  
-  A mapping tibble to translate levels from the incoming variable into a
-  different row label to be presented on the table.  
+  (`data.frame`)  
+  A mapping data frame used to translate levels of the analysis
+  variable(s) into the row labels displayed in the table, optionally
+  conditioned on the nearest row-split.  
+
+  Four types of mappings are supported:
+
+  1.  Single-variable mapping. Column names: `level`, `label`.
+
+  2.  Multi-variable mapping. Column names: `var`, `level`, `label`.
+
+  3.  Conditional-on-row-split mapping. Column names: `<split_var>`,
+      `level`, `label`.
+
+  4.  Conditional-on-row-split multi-variable mapping. Column names:
+      `<split_var>`, `var`, `level`, `label`.
+
+  Here, `<split_var>` is a placeholder for the name of the variable used
+  for the nearest row-split (e.g. `SEX`, `PARAMCD`).  
+
+  **Recommendation**: ensure input variable(s) are of type factor, to
+  avoid the error "got a label map that doesn't provide labels for all
+  values".  
+
+  See examples for more details.
 
 - .alt_df_full:
 
   (`dataframe`)  
   Denominator dataset for fraction and relative risk calculations.  
   this argument gets populated by the rtables split machinery (see
-  [rtables::additional_fun_params](https://rdrr.io/pkg/rtables/man/additional_fun_params.html)).
+  [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html)).
 
 - denom_by:
 
@@ -279,9 +301,9 @@ a_freq_j_with_exclude(
   (`character`)  
   Statistics to include in the table. May contain one or more of:
   `"count"`, `"count_unique"`, `"count_unique_fraction"`,
-  `"count_unique_denom_fraction"`, `"n_df"`, `"n_altdf"`, `"n_rowdf"`,
-  `"n_parentdf"`, `"denom"`. See Value for the full list of available
-  statistics.
+  `"count_unique_denom_fraction"`, `"unique_fraction"`, `"n_df"`,
+  `"n_altdf"`, `"n_rowdf"`, `"n_parentdf"`, `"denom"`. See Value for the
+  full list of available statistics.
 
 - .formats:
 
@@ -363,10 +385,12 @@ a_freq_j_with_exclude(
 
   - count_unique_denom_fraction
 
+  - unique_fraction
+
 &nbsp;
 
 - `a_freq_j`: returns a list of requested statistics with formatted
-  [`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).  
+  [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).  
   Within the relative risk difference columns, the following stats are
   blanked out:
 
@@ -376,9 +400,9 @@ a_freq_j_with_exclude(
 
   - count_unique
 
-  For the others (count_unique_fraction, count_unique_denom_fraction),
-  the statistic is replaced by the relative risk difference + confidence
-  interval.
+  For the others (count_unique_fraction, count_unique_denom_fraction,
+  unique_fraction), the statistic is replaced by the relative risk
+  difference + confidence interval.
 
 ## Details
 
@@ -566,4 +590,178 @@ lyt2 <- basic_table(
   )
 
 result2 <- build_table(lyt2, adae, alt_counts_df = adsl)
+
+# -------------------------------------------------------------------------
+# Examples using the label_map argument
+# -------------------------------------------------------------------------
+
+adsl <- ex_adsl |> select("USUBJID", "SEX", "ARM")
+adae <- ex_adae |> select("USUBJID", "AEBODSYS", "AEDECOD")
+adae[["TRTEMFL"]] <- "Y"
+
+trtvar <- "ARM"
+adae <- adae |> left_join(adsl)
+#> Joining with `by = join_by(USUBJID)`
+
+# -------------------------------------------------------------------------
+# 1. Simple mapping.
+# Remaps factor levels (value) to custom new labels (label).
+# -------------------------------------------------------------------------
+
+label_map_simple <- data.frame(
+  value = c("M", "F", "UNDIFFERENTIATED", "U"),
+  label = c("Male", "Female", "Undifferentiated", "Unknown")
+)
+
+lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by(trtvar) |>
+  analyze("SEX",
+    afun = a_freq_j,
+    extra_args = list(
+      .stats = "count_unique_fraction",
+      label_map = label_map_simple
+    )
+  )
+
+result_lmap1 <- build_table(lyt_lmap1, adsl, alt_counts_df = adsl)
+result_lmap1
+#>                    A: Drug X    B: Placebo   C: Combination
+#>                     (N=134)      (N=134)        (N=132)    
+#> ———————————————————————————————————————————————————————————
+#> Female             79 (59.0%)   77 (57.5%)     66 (50.0%)  
+#> Male               51 (38.1%)   55 (41.0%)     60 (45.5%)  
+#> Unknown             3 (2.2%)     2 (1.5%)       4 (3.0%)   
+#> Undifferentiated    1 (0.7%)        0           2 (1.5%)   
+
+# -------------------------------------------------------------------------
+# 2. Multi-variable mapping.
+# Useful in situations where multiple Y/N variables can be analyzed in one
+# [rtables::analyze()] call.
+# -------------------------------------------------------------------------
+
+multi_vars <- c("DTH30FL", "DTHA30FL", "DTHB30FL")
+adslx <- pharmaverseadamjnj::adsl
+# ensure the variables are factor with levels Y/N - and variable label is kept
+adslx <- adslx |>
+  mutate(across(all_of(multi_vars), \(x) structure(
+    factor(x, levels = c("Y", "N")),
+    label = attr(x, "label")
+  )))
+
+map_multi <- data.frame(
+  var = multi_vars,
+  value = "Y",
+  label = c(
+    "Death <=30D of Last Trt Flag",
+    "Death >30D from Last Trt Flag",
+    "Death <=30D of First Trt Flag"
+  )
+)
+
+lyt_lmap1 <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("ARM") |>
+  analyze(multi_vars,
+    afun = a_freq_j,
+    extra_args = list(
+      .stats = "count_unique_denom_fraction",
+      label_map = map_multi,
+      val = "Y"
+    ),
+    show_labels = "hidden"
+  )
+
+result_lmap2 <- build_table(lyt_lmap1, adslx)
+result_lmap2
+#>                                   Placebo     Screen Failure   Xanomeline High Dose   Xanomeline Low Dose
+#>                                   (N=86)          (N=52)              (N=84)                (N=84)       
+#> —————————————————————————————————————————————————————————————————————————————————————————————————————————
+#> Death <=30D of Last Trt Flag    2/86 (2.3%)        0/52                0/84               2/84 (2.4%)    
+#> Death >30D from Last Trt Flag      0/86            0/52                0/84                  0/84        
+#> Death <=30D of First Trt Flag   1/86 (1.2%)        0/52                0/84                  0/84        
+
+# -------------------------------------------------------------------------
+# 3. Conditional-on-row-split mapping.
+# -------------------------------------------------------------------------
+
+map_rowsplit <- data.frame(
+  SEX = c("M", "F"),
+  value = c("Y", "Y"),
+  label = c("Male subjects with >=1 TE AE", "Female subjects with >=1 TE AE")
+)
+
+adsl <- ex_adsl |> select("USUBJID", "ARM", "SEX")
+adae <- ex_adae |> select("USUBJID", "AEBODSYS", "AEDECOD")
+adae[["TRTEMFL"]] <- "Y"
+adae <- adae |> left_join(adsl)
+#> Joining with `by = join_by(USUBJID)`
+
+lyt_lmap3 <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("ARM") |>
+  split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M")), child_labels = "hidden") |>
+  analyze("TRTEMFL",
+    afun = a_freq_j,
+    extra_args = list(
+      .stats = "count_unique_denom_fraction",
+      label_map = map_rowsplit,
+      val = "Y"
+    ),
+    show_labels = "hidden"
+  )
+
+result_lmap3 <- build_table(lyt_lmap3, adae, alt_counts_df = adsl)
+result_lmap3
+#>                                    A: Drug X        B: Placebo     C: Combination
+#>                                     (N=134)          (N=134)          (N=132)    
+#> —————————————————————————————————————————————————————————————————————————————————
+#> Female subjects with >=1 TE AE   72/134 (53.7%)   73/134 (54.5%)   61/132 (46.2%)
+#> Male subjects with >=1 TE AE     46/134 (34.3%)   48/134 (35.8%)   53/132 (40.2%)
+
+# -----------------------------------------------------------------------------------
+# 4. Conditional-on-row-split multi-variable mapping.
+# -----------------------------------------------------------------------------------
+adsl_jnj <- pharmaverseadamjnj::adsl
+advs_jnj <- pharmaverseadamjnj::advs
+
+multi_vars <- c("CRIT1FL", "CRIT2FL", "CRIT3FL")
+
+map_multi_rowsplit <- data.frame(
+  PARAMCD = c(rep("DIABP", 3), rep("SYSBP", 3)),
+  var = rep(multi_vars, 2),
+  value = rep("Y", 6),
+  label = c(
+    "<50 mmHg and with >20 mmHg decrease from baseline",
+    ">105 mmHg and with >30 mmHg increase from baseline",
+    "Diastolic blood pressure<60",
+    "<90 mmHg and with >30 mmHg decrease from baseline",
+    ">180 mmHg and with >40 mmHg increase from baseline",
+    "Systolic blood pressure<90"
+  )
+)
+
+lyt_lmap4 <- basic_table(show_colcounts = TRUE) |>
+  split_cols_by("TRT01A") |>
+  split_rows_by("PARAMCD", split_fun = keep_split_levels(c("DIABP", "SYSBP"))) |>
+  analyze(multi_vars,
+    afun = a_freq_j,
+    extra_args = list(
+      .stats = "count_unique_denom_fraction",
+      label_map = map_multi_rowsplit,
+      val = "Y"
+    ),
+    show_labels = "hidden"
+  )
+
+result_lmap4 <- build_table(lyt_lmap4, advs_jnj, alt_counts_df = adsl_jnj)
+result_lmap4
+#>                                                        Xanomeline Low Dose   Xanomeline High Dose      Placebo   
+#>                                                              (N=96)                 (N=72)             (N=86)    
+#> —————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+#> DIABP                                                                                                            
+#>   <50 mmHg and with >20 mmHg decrease from baseline           0/96                   0/72               0/86     
+#>   >105 mmHg and with >30 mmHg increase from baseline          0/96                   0/72               0/86     
+#>   Diastolic blood pressure<60                             57/96 (59.4%)         52/72 (72.2%)       56/86 (65.1%)
+#> SYSBP                                                                                                            
+#>   <90 mmHg and with >30 mmHg decrease from baseline           0/96                   0/72            1/86 (1.2%) 
+#>   >180 mmHg and with >40 mmHg increase from baseline       1/96 (1.0%)               0/72            1/86 (1.2%) 
+#>   Systolic blood pressure<90                              91/96 (94.8%)         69/72 (95.8%)       83/86 (96.5%)
 ```

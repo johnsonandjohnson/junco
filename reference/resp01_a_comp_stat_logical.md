@@ -76,7 +76,7 @@ resp01_a_comp_stat_logical(
 ## Value
 
 The formatted result as
-[`rtables::rcell()`](https://rdrr.io/pkg/rtables/man/rcell.html).
+[`rtables::rcell()`](https://insightsengineering.github.io/rtables/latest-tag/reference/rcell.html).
 
 ## See also
 
@@ -103,5 +103,5 @@ resp01_a_comp_stat_logical(
     pval = jjcsformat_pval_fct(0.05)
   )
 )
-#> rcell: 0.79 (0.56 - 1.13) 
+#> rcell: 1.11 (0.79 - 1.58) 
 ```

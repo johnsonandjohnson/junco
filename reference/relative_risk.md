@@ -113,7 +113,7 @@ s_relative_risk(
 ## Value
 
 - `a_relative_risk()` returns the corresponding list with formatted
-  [`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).
+  [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
 
 &nbsp;
 
@@ -166,8 +166,8 @@ l <- basic_table() |>
 build_table(l, df = dta)
 #>                                    A            B
 #> —————————————————————————————————————————————————
-#>   Relative risk (90% CI)   1.04 (0.73 - 1.50)    
-#>   p-value                        0.843           
+#>   Relative risk (90% CI)   1.40 (1.00 - 1.97)    
+#>   p-value                        0.109           
 nex <- 100
 dta <- data.frame(
   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
@@ -187,11 +187,11 @@ s_relative_risk(
 )
 #> $rel_risk_ci
 #>       est       lcl       ucl 
-#> 1.1968767 0.8206461 1.7455926 
+#> 1.1893424 0.8714401 1.6232159 
 #> attr(,"label")
 #> [1] "Relative risk (90% CI)"
 #> 
 #> $pval
-#> [1] 0.4443066
+#> [1] 0.3714946
 #> 
 ```

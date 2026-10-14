@@ -9,9 +9,9 @@ for analysis functions with main focus for clinical trials. The core
 functionality for tabulation is built on the more general purpose
 `rtables` package. New users should first begin by reading the
 [“Introduction to
-`tern`”](https://insightsengineering.github.io/tern/latest-tag/articles/tern.html)
+`tern`”](https://pharmaverse.github.io/tern/latest-tag/articles/tern.html)
 and [“Introduction to
-`rtables`”](https://insightsengineering.github.io/rtables/latest-release/articles/rtables.html)
+`rtables`”](https://pharmaverse.github.io/rtables/latest-release/articles/rtables.html)
 vignettes.
 
 The packages used in this vignette are:
@@ -77,23 +77,24 @@ advs[advs[["ABLFL"]] == "Y", "CHG"] <- NA
 
 The `junco` analysis functions are used in combination with the
 `rtables` layout functions,
-[`rtables::analyze`](https://rdrr.io/pkg/rtables/man/analyze.html) and
-[`rtables::summarize_row_groups`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html),
+[`rtables::analyze`](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html)
+and
+[`rtables::summarize_row_groups`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html),
 in the pipeline which creates the `rtables` table. They apply some
 statistical logic to the layout of the `rtables` table. The table layout
 is materialized with the
-[`rtables::build_table`](https://rdrr.io/pkg/rtables/man/build_table.html)
+[`rtables::build_table`](https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html)
 function and the data.
 
 The `junco` analysis functions are functions that can be applied as an
 `afun` in either
-[`rtables::analyze`](https://rdrr.io/pkg/rtables/man/analyze.html) or as
-a `cfun` in
-[`rtables::summarize_row_groups`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html)
+[`rtables::analyze`](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html)
+or as a `cfun` in
+[`rtables::summarize_row_groups`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
 function. This is a slightly different approach to `tern`, where the
 table layout is constructed using `analyze` functions, which are
 wrappers around
-[`rtables::analyze`](https://rdrr.io/pkg/rtables/man/analyze.html).
+[`rtables::analyze`](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html).
 
 Just like `tern` analyze functions, the `junco` analysis functions offer
 various methods useful from the perspective of clinical trials and other
@@ -117,8 +118,9 @@ once.
 
 With `junco` package, this table can be created with several calls to
 the same `a_freq_j` function in a tabulation pipeline using
-[`rtables::analyze`](https://rdrr.io/pkg/rtables/man/analyze.html) and
-[`rtables::summarize_row_groups`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html).
+[`rtables::analyze`](https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html)
+and
+[`rtables::summarize_row_groups`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html).
 
 In next paragraph, we’ll describe the difference versus using `tern`
 package, for similar AE table. Differences in how to define the layout

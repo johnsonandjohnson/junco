@@ -17,14 +17,14 @@ a_freq_resp_var_j(
   drop_levels = FALSE,
   riskdiff = TRUE,
   ref_path = NULL,
-  variables = formals(s_proportion_diff)$variables,
+  variables = list(strata = NULL),
   conf_level = formals(s_proportion_diff)$conf_level,
   method = c("wald", "waldcc", "cmh", "ha", "newcombe", "newcombecc", "strat_newcombe",
-    "strat_newcombecc"),
+    "strat_newcombecc", "cmh_sato", "cmh_mn", "uncond_exact_diff"),
   weights_method = formals(s_proportion_diff)$weights_method,
   .formats = NULL,
   na_str = rep("NA", 3),
-  ...
+  legacy = FALSE
 )
 ```
 
@@ -111,16 +111,17 @@ a_freq_resp_var_j(
   (`character`)  
   string to use for NA values. Defaults to `rep("NA", 3)`.
 
-- ...:
+- legacy:
 
-  Additional arguments passed to other functions.
+  (`logical(1)`)  
+  To allow for backward compatibility default of used format.
 
 ## Value
 
 Formatted analysis function which is used as `afun` in
-[`analyze_vars()`](https://rdrr.io/pkg/tern/man/analyze_variables.html)
+[`analyze_vars()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html)
 and as `cfun` in
-[`summarize_row_groups()`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html).
+[`summarize_row_groups()`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html).
 
 ## Examples
 

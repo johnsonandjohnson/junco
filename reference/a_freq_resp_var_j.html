@@ -9,7 +9,7 @@ with optional risk difference calculations."><meta property="og:image" content="
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,14 +53,14 @@ with optional risk difference calculations.</p>
 <span>  drop_levels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  riskdiff <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ref_path <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formals.html" class="external-link">formals</a></span><span class="op">(</span><span class="va">s_proportion_diff</span><span class="op">)</span><span class="op">$</span><span class="va">variables</span>,</span>
+<span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
 <span>  conf_level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formals.html" class="external-link">formals</a></span><span class="op">(</span><span class="va">s_proportion_diff</span><span class="op">)</span><span class="op">$</span><span class="va">conf_level</span>,</span>
 <span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wald"</span>, <span class="st">"waldcc"</span>, <span class="st">"cmh"</span>, <span class="st">"ha"</span>, <span class="st">"newcombe"</span>, <span class="st">"newcombecc"</span>, <span class="st">"strat_newcombe"</span>,</span>
-<span>    <span class="st">"strat_newcombecc"</span><span class="op">)</span>,</span>
+<span>    <span class="st">"strat_newcombecc"</span>, <span class="st">"cmh_sato"</span>, <span class="st">"cmh_mn"</span>, <span class="st">"uncond_exact_diff"</span><span class="op">)</span>,</span>
 <span>  weights_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/formals.html" class="external-link">formals</a></span><span class="op">(</span><span class="va">s_proportion_diff</span><span class="op">)</span><span class="op">$</span><span class="va">weights_method</span>,</span>
 <span>  .formats <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  na_str <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span>  <span class="va">...</span></span>
+<span>  legacy <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -132,14 +132,14 @@ with optional risk difference calculations.</p>
 <dd><p>(<code>character</code>)<br> string to use for NA values. Defaults to <code>rep("NA", 3)</code>.</p></dd>
 
 
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to other functions.</p></dd>
+<dt id="arg-legacy">legacy<a class="anchor" aria-label="anchor" href="#arg-legacy"></a></dt>
+<dd><p>(<code>logical(1)</code>)<br> To allow for backward compatibility default of used format.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Formatted analysis function which is used as <code>afun</code> in <code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">analyze_vars()</a></code>
-and as <code>cfun</code> in <code><a href="https://rdrr.io/pkg/rtables/man/summarize_row_groups.html" class="external-link">summarize_row_groups()</a></code>.</p>
+    <p>Formatted analysis function which is used as <code>afun</code> in <code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">analyze_vars()</a></code>
+and as <code>cfun</code> in <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html" class="external-link">summarize_row_groups()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -152,15 +152,15 @@ and as <code>cfun</code> in <code><a href="https://rdrr.io/pkg/rtables/man/summa
 <span class="r-in"><span><span class="va">ADAE</span> <span class="op">&lt;-</span> <span class="va">ADAE</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>TRTEMFL <span class="op">=</span> <span class="st">"Y"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span>show_colcounts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"SEX"</span>,</span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span>show_colcounts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"SEX"</span>,</span></span>
 <span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"visible"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_freq_resp_var_j</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>resp_var <span class="op">=</span> <span class="st">"TRTEMFL"</span>, riskdiff <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, df <span class="op">=</span> <span class="va">ADAE</span>, alt_counts_df <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, df <span class="op">=</span> <span class="va">ADAE</span>, alt_counts_df <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        A: Drug X        B: Placebo     C: Combination</span>

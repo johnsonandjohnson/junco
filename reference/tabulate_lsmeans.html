@@ -11,7 +11,7 @@ or fit_ancova()."><meta property="og:image" content="https://johnsonandjohnson.g
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,12 +129,12 @@ unmodified default behavior. Can be negative.</p></dd>
 
 <ul><li><p>For <code>s_lsmeans</code>, a list containing the same statistics returned by tern.mmrm::s_mmrm_lsmeans,
 with the additional <code>diff_mean_est_ci</code> three-dimensional statistic.</p></li>
-<li><p>For <code>a_lsmeans</code>, a <code>VertalRowsSection</code> as returned by <a href="https://rdrr.io/pkg/rtables/man/in_rows.html" class="external-link">rtables::in_rows</a>.</p></li>
+<li><p>For <code>a_lsmeans</code>, a <code>VertalRowsSection</code> as returned by <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html" class="external-link">rtables::in_rows</a>.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
-<ul><li><p><code>tidy(tern_model)</code>: Helper method (for <code><a href="https://broom.tidymodels.org/reference/reexports.html" class="external-link">broom::tidy()</a></code>) to prepare a <code>data.frame</code> from an
+<ul><li><p><code>tidy(tern_model)</code>: Helper method (for <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">broom::tidy()</a></code>) to prepare a <code>data.frame</code> from an
 <code>tern_model</code> object containing the least-squares means and contrasts.</p></li>
 <li><p><code>s_lsmeans()</code>: Statistics function which is extracting estimates from a tidied least-squares means
 data frame.</p></li>
@@ -251,15 +251,15 @@ are:</p><ul><li><p>Additional <code>ref_path</code> argument for tern.mmrm::summ
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARMCD</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARMCD"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/add_colcounts.html" class="external-link">add_colcounts</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AVISIT"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARMCD"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_colcounts.html" class="external-link">add_colcounts</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"AVISIT"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"AVISIT"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_lsmeans</span>,</span></span>
 <span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"hidden"</span>,</span></span>
-<span class="r-in"><span>    na_str <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tern/man/default_na_str.html" class="external-link">default_na_str</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    na_str <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://pharmaverse.github.io/tern/latest-tag/reference/default_na_str.html" class="external-link">default_na_str</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      .stats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>        <span class="st">"n"</span>,</span></span>
@@ -278,37 +278,37 @@ are:</p><ul><li><p>Additional <code>ref_path</code> argument for tern.mmrm::summ
 <span class="r-in"><span>      ref_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ARMCD"</span>, <span class="va">result</span><span class="op">$</span><span class="va">ref_level</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    df <span class="op">=</span> <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    alt_counts_df <span class="op">=</span> <span class="va">dat_adsl</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                             PBO                TRT       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                           (N=105)             (N=95)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> —————————————————————————————————————————————————————————————————————————</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> VIS1                                                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                          68                 66       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Adj. LS Mean (Std. Error)             33.3 (0.76)        37.1 (0.76)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                            (31.839, 34.825)   (35.599, 38.613)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)                       3.774 (1.074)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                                                (1.651, 5.897) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> VIS2                                                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                          69                 71       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Adj. LS Mean (Std. Error)             38.2 (0.61)        41.9 (0.60)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                            (36.963, 39.380)   (40.713, 43.094)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)                       3.732 (0.859)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                                                (2.035, 5.430) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> VIS3                                                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                          71                 58       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Adj. LS Mean (Std. Error)             43.7 (0.46)        46.8 (0.51)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                            (42.760, 44.588)   (45.748, 47.761)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)                       3.081 (0.690)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                                                (1.716, 4.445) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> VIS4                                                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                          67                 67       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Adj. LS Mean (Std. Error)             48.4 (1.19)        52.8 (1.19)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                            (46.035, 50.737)   (50.435, 55.134)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)                       4.398 (1.681)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                                                (1.074, 7.722) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                            PBO              TRT      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                          (N=105)           (N=95)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> —————————————————————————————————————————————————————————————————————</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> VIS1                                                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                         68               66      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Adj. LS Mean (Std. Error)            33.3 (0.76)      37.1 (0.76)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                            (31.84, 34.82)   (35.60, 38.61)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)                     3.77 (1.074) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                                              (1.65, 5.90) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> VIS2                                                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                         69               71      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Adj. LS Mean (Std. Error)            38.2 (0.61)      41.9 (0.60)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                            (36.96, 39.38)   (40.71, 43.09)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)                     3.73 (0.859) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                                              (2.03, 5.43) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> VIS3                                                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                         71               58      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Adj. LS Mean (Std. Error)            43.7 (0.46)      46.8 (0.51)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                            (42.76, 44.59)   (45.75, 47.76)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)                     3.08 (0.690) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                                              (1.72, 4.44) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> VIS4                                                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                         67               67      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Adj. LS Mean (Std. Error)            48.4 (1.19)      52.8 (1.19)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                            (46.03, 50.74)   (50.43, 55.13)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)                     4.40 (1.681) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI                                              (1.07, 7.72) </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

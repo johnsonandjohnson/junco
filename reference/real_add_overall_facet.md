@@ -27,7 +27,7 @@ Function usable directly as a split function.
 ## Note
 
 Current add_overall_facet is bugged. Can be used directly after it's
-fixed https://github.com/insightsengineering/rtables/issues/768
+fixed https://github.com/pharmaverse/rtables/issues/768
 
 ## Examples
 

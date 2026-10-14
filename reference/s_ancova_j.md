@@ -7,10 +7,10 @@ Extension to tern:::s_ancova, 3 extra statistics are returned:
 - `lsmean_ci`: Marginal mean and associated confidence interval in the
   group.
 
-- `lsmean_diffci`: Difference in mean and associated confidence level in
-  one combined statistic. In addition, the LS mean weights can be
-  specified. In addition, also a NULL .ref_group can be specified, the
-  lsmean_diff related estimates will be returned as NA.
+- `lsmean_diff_with_ci`: Difference in mean and associated confidence
+  level in one combined statistic. In addition, the LS mean weights can
+  be specified. In addition, also a NULL .ref_group can be specified,
+  the lsmean_diff related estimates will be returned as NA.
 
 ## Usage
 
@@ -189,7 +189,7 @@ s_ancova_j(df, .var, .df_row, variables, .ref_group, .in_ref_col = FALSE, conf_l
 #> attr(,"label")
 #> [1] "Difference in Adjusted Means 95% CI"
 #> 
-#> $lsmean_diffci
+#> $lsmean_diff_with_ci
 #> [1] 3.062603 2.808526 3.316680
 #> attr(,"label")
 #> [1] "Difference in Adjusted Means (95% CI)"

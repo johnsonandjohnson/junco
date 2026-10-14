@@ -3,7 +3,7 @@
 Formats a count together with fraction (and/or denominator) with special
 consideration when count is 0, or fraction is 1.  
 See also:
-[`tern::format_count_fraction_fixed_dp()`](https://rdrr.io/pkg/tern/man/format_count_fraction_fixed_dp.html)
+[`tern::format_count_fraction_fixed_dp()`](https://pharmaverse.github.io/tern/latest-tag/reference/format_count_fraction_fixed_dp.html)
 
 ## Usage
 
@@ -11,14 +11,29 @@ See also:
 jjcsformat_cnt_den_fract_fct(
   d = 1,
   type = c("count_fraction", "count_denom_fraction", "fraction_count_denom"),
-  verbose = FALSE
+  verbose = FALSE,
+  legacy = FALSE
 )
 
 jjcsformat_count_fraction(x, round_type = valid_round_type, output, ...)
 
 jjcsformat_count_denom_fraction(x, round_type = valid_round_type, output, ...)
 
+jjcsformat_count_denom_fraction_legacy(
+  x,
+  round_type = valid_round_type,
+  output,
+  ...
+)
+
 jjcsformat_fraction_count_denom(x, round_type = valid_round_type, output, ...)
+
+jjcsformat_fraction_count_denom_legacy(
+  x,
+  round_type = valid_round_type,
+  output,
+  ...
+)
 ```
 
 ## Arguments
@@ -39,6 +54,11 @@ jjcsformat_fraction_count_denom(x, round_type = valid_round_type, output, ...)
 
   (`logical`)  
   Whether to print verbose output
+
+- legacy:
+
+  (`logical(1)`)  
+  To allow for backward compatibility behavior
 
 - x:
 
@@ -73,6 +93,7 @@ fraction is \>0.99, the format is `count / denom (>99.9 percent)`
 ## See also
 
 Other JJCS formatting functions:
+[`jjcsformat_fraction()`](https://johnsonandjohnson.github.io/junco/reference/jjcsformat_fraction.md),
 [`jjcsformat_xx()`](https://johnsonandjohnson.github.io/junco/reference/jjcsformat_xx.md)
 
 ## Examples
@@ -98,6 +119,8 @@ jjcsformat_count_denom_fraction(c(235, 235, 235 / 235))
 fmt <- jjcsformat_cnt_den_fract_fct(type = "count_denom_fraction", d = 2)
 fmt(c(23, 235, 23 / 235))
 #> [1] "23/235 (9.79%)"
+jjcsformat_count_denom_fraction_legacy(c(0, 235, 0 / 235))
+#> [1] "0/235 (0.0%)"
 
 jjcsformat_fraction_count_denom(c(7, 10, 0.7))
 #> [1] "70.0% (7/10)"
@@ -108,4 +131,6 @@ jjcsformat_fraction_count_denom(c(235, 235, 235 / 235))
 fmt <- jjcsformat_cnt_den_fract_fct(type = "fraction_count_denom", d = 2)
 fmt(c(23, 235, 23 / 235))
 #> [1] "9.79% (23/235)"
+jjcsformat_fraction_count_denom_legacy(c(0, 235, 0 / 235))
+#> [1] "0.0% (0/235)"
 ```

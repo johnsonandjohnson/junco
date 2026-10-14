@@ -10,7 +10,8 @@ jj_complex_scorefun(
   usefirstcol = FALSE,
   colpath = NULL,
   firstcat = NULL,
-  lastcat = NULL
+  lastcat = NULL,
+  cellvalue_index = 1
 )
 ```
 
@@ -46,6 +47,11 @@ jj_complex_scorefun(
   (`logical`)  
   If you wish to put any category at the bottom of the list despite any
   n's, user can specify it here.
+
+- cellvalue_index:
+
+  (`integer`)  
+  Index of the cell value to perform the scoring on.
 
 ## Value
 

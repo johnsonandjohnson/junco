@@ -88,7 +88,8 @@ A function that formats a numeric vector with 4 elements:
 ## See also
 
 Other JJCS formatting functions:
-[`count and fraction related formatting functions`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md)
+[`count and fraction related formatting functions`](https://johnsonandjohnson.github.io/junco/reference/count_fraction.md),
+[`jjcsformat_fraction()`](https://johnsonandjohnson.github.io/junco/reference/jjcsformat_fraction.md)
 
 ## Examples
 

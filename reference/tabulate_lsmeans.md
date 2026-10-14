@@ -107,13 +107,13 @@ a_lsmeans(
   three-dimensional statistic.
 
 - For `a_lsmeans`, a `VertalRowsSection` as returned by
-  [rtables::in_rows](https://rdrr.io/pkg/rtables/man/in_rows.html).
+  [rtables::in_rows](https://insightsengineering.github.io/rtables/latest-tag/reference/in_rows.html).
 
 ## Functions
 
 - `tidy(tern_model)`: Helper method (for
-  [`broom::tidy()`](https://broom.tidymodels.org/reference/reexports.html))
-  to prepare a `data.frame` from an `tern_model` object containing the
+  [`broom::tidy()`](https://generics.r-lib.org/reference/tidy.html)) to
+  prepare a `data.frame` from an `tern_model` object containing the
   least-squares means and contrasts.
 
 - `s_lsmeans()`: Statistics function which is extracting estimates from
@@ -269,31 +269,31 @@ basic_table() |>
     df = broom::tidy(result),
     alt_counts_df = dat_adsl
   )
-#>                                             PBO                TRT       
-#>                                           (N=105)             (N=95)     
-#> —————————————————————————————————————————————————————————————————————————
-#> VIS1                                                                     
-#>   n                                          68                 66       
-#>   Adj. LS Mean (Std. Error)             33.3 (0.76)        37.1 (0.76)   
-#>     95% CI                            (31.839, 34.825)   (35.599, 38.613)
-#>   Difference in Adjusted Means (SE)                       3.774 (1.074)  
-#>     95% CI                                                (1.651, 5.897) 
-#> VIS2                                                                     
-#>   n                                          69                 71       
-#>   Adj. LS Mean (Std. Error)             38.2 (0.61)        41.9 (0.60)   
-#>     95% CI                            (36.963, 39.380)   (40.713, 43.094)
-#>   Difference in Adjusted Means (SE)                       3.732 (0.859)  
-#>     95% CI                                                (2.035, 5.430) 
-#> VIS3                                                                     
-#>   n                                          71                 58       
-#>   Adj. LS Mean (Std. Error)             43.7 (0.46)        46.8 (0.51)   
-#>     95% CI                            (42.760, 44.588)   (45.748, 47.761)
-#>   Difference in Adjusted Means (SE)                       3.081 (0.690)  
-#>     95% CI                                                (1.716, 4.445) 
-#> VIS4                                                                     
-#>   n                                          67                 67       
-#>   Adj. LS Mean (Std. Error)             48.4 (1.19)        52.8 (1.19)   
-#>     95% CI                            (46.035, 50.737)   (50.435, 55.134)
-#>   Difference in Adjusted Means (SE)                       4.398 (1.681)  
-#>     95% CI                                                (1.074, 7.722) 
+#>                                            PBO              TRT      
+#>                                          (N=105)           (N=95)    
+#> —————————————————————————————————————————————————————————————————————
+#> VIS1                                                                 
+#>   n                                         68               66      
+#>   Adj. LS Mean (Std. Error)            33.3 (0.76)      37.1 (0.76)  
+#>     95% CI                            (31.84, 34.82)   (35.60, 38.61)
+#>   Difference in Adjusted Means (SE)                     3.77 (1.074) 
+#>     95% CI                                              (1.65, 5.90) 
+#> VIS2                                                                 
+#>   n                                         69               71      
+#>   Adj. LS Mean (Std. Error)            38.2 (0.61)      41.9 (0.60)  
+#>     95% CI                            (36.96, 39.38)   (40.71, 43.09)
+#>   Difference in Adjusted Means (SE)                     3.73 (0.859) 
+#>     95% CI                                              (2.03, 5.43) 
+#> VIS3                                                                 
+#>   n                                         71               58      
+#>   Adj. LS Mean (Std. Error)            43.7 (0.46)      46.8 (0.51)  
+#>     95% CI                            (42.76, 44.59)   (45.75, 47.76)
+#>   Difference in Adjusted Means (SE)                     3.08 (0.690) 
+#>     95% CI                                              (1.72, 4.44) 
+#> VIS4                                                                 
+#>   n                                         67               67      
+#>   Adj. LS Mean (Std. Error)            48.4 (1.19)      52.8 (1.19)  
+#>     95% CI                            (46.03, 50.74)   (50.43, 55.13)
+#>   Difference in Adjusted Means (SE)                     4.40 (1.681) 
+#>     95% CI                                              (1.07, 7.72) 
 ```

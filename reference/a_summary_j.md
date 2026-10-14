@@ -1,179 +1,147 @@
-# Wrapper around `tern::a_summary()` with junco-specific defaults
+# Wrappers Around `tern::a_summary()` with Row Split Exclusion
 
-**\[experimental\]**
+**\[stable\]**
 
-This function wraps
-[`tern::a_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html)
-and applies junco-specific defaults for formatting-related arguments
-when they are not explicitly provided by the user.
-
-In particular, default values are generated for:
-
-- `.labels` via
-  [`junco_get_labels_from_stats()`](https://johnsonandjohnson.github.io/junco/reference/default_stats_formats_labels.md)
-
-- `.formats` via
-  [`junco_get_formats_from_stats()`](https://johnsonandjohnson.github.io/junco/reference/default_stats_formats_labels.md)
-
-- `.indent_mods` via
-  [`junco_get_indents_from_stats()`](https://johnsonandjohnson.github.io/junco/reference/default_stats_formats_labels.md)
-
-If `.stats` is not provided or is `NULL`, the default statistics from
-[`tern::get_stats()`](https://rdrr.io/pkg/tern/man/default_stats_formats_labels.html)
-are used.
+These wrappers around
+[`tern::a_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html)
+allow selected row split levels to be excluded from producing the
+analysis.
 
 ## Usage
 
 ``` r
-a_summary_j(
-  x,
-  ...,
-  .stats = NULL,
-  .stat_names = NULL,
-  .formats = NULL,
-  .labels = NULL,
-  .indent_mods = NULL
-)
+a_summary_j_with_exclude(df, .var, exclude_levels, .spl_context, ...)
 ```
 
 ## Arguments
 
-- x:
+- df:
 
-  (`numeric`)  
-  vector of numbers we want to analyze.
+  (`data.frame`)  
+  data set containing all analysis variables.
+
+- .var:
+
+  (`string`)  
+  single variable name that is passed by `rtables` when requested by a
+  statistics function.
+
+- exclude_levels:
+
+  (`list`)  
+  A named list where names correspond to split variables and values are
+  vectors of levels to exclude.
+
+- .spl_context:
+
+  (`data.frame`)  
+  gives information about ancestor split states that is passed by
+  `rtables`.
 
 - ...:
 
-  additional arguments passed to
-  [`s_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html),
-  including:
-
-  - `denom`: (`string`) See parameter description below.
-
-  - `.N_row`: (`numeric(1)`) Row-wise N (row group count) for the group
-    of observations being analyzed (i.e. with no column-based
-    subsetting).
-
-  - `.N_col`: (`numeric(1)`) Column-wise N (column count) for the full
-    column being tabulated within.
-
-  - `verbose`: (`flag`) Whether additional warnings and messages should
-    be printed. Mainly used to print out information about factor
-    casting. Defaults to `TRUE`. Used for `character`/`factor` variables
-    only.
-
-- .stats:
-
-  (`character`)  
-  statistics to select for the table.
-
-  Options for numeric variables are:
-  `'n', 'sum', 'mean', 'sd', 'se', 'mean_sd', 'mean_se', 'mean_ci', 'mean_sei', 'mean_sdi', 'mean_pval', 'median', 'mad', 'median_ci', 'quantiles', 'iqr', 'range', 'min', 'max', 'median_range', 'cv', 'geom_mean', 'geom_sd', 'geom_mean_sd', 'geom_mean_ci', 'geom_cv', 'median_ci_3d', 'mean_ci_3d', 'geom_mean_ci_3d'`
-
-  Options for non-numeric variables are:
-  `'n', 'count', 'count_fraction', 'count_fraction_fixed_dp', 'fraction', 'n_blq'`
-
-- .stat_names:
-
-  (`character`)  
-  names of the statistics that are passed directly to name single
-  statistics (`.stats`). This option is visible when producing
-  [`rtables::as_result_df()`](https://rdrr.io/pkg/rtables/man/data.frame_export.html)
-  with `make_ard = TRUE`.
-
-- .formats:
-
-  (named `character` or `list`)  
-  formats for the statistics. See Details in `analyze_vars` for more
-  information on the `"auto"` setting.
-
-- .labels:
-
-  (named `character`)  
-  labels for the statistics (without indent).
-
-- .indent_mods:
-
-  (named `integer`)  
-  indent modifiers for the labels. Each element of the vector should be
-  a name-value pair with name corresponding to a statistic specified in
-  `.stats` and value the indentation for that statistic's row label.
+  Additional arguments passed to
+  [`tern::a_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html),
+  excluding the `x` argument, which is constructed internally from
+  `df[[.var]]`.
 
 ## Value
 
-Returns the same type of output as
-[`tern::a_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html),
-with optional junco-based default formatting applied.
+Returns the same type of object as
+[`tern::a_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html),
+or `NULL` when the current row split path is excluded by
+`exclude_levels`.
 
 ## Details
 
-User-supplied values for `.labels`, `.formats`, and `.indent_mods` are
-used as-is and only completed where needed by the corresponding junco
-helper functions. No modification is performed if these arguments are
-fully specified.
+[`tern::a_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html)
+is a formatted analysis function that computes summary statistics for a
+single variable. In typical use within the
+[rtables](https://insightsengineering.github.io/rtables/latest-tag/reference/rtables-package.html)
+framework, the analysis variable is first extracted from a data frame
+and then passed to
+[`tern::a_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html)
+as a standalone vector.
+
+`a_summary_j_with_exclude()` extends this behavior by:
+
+- accepting a data frame (`df`) as input,
+
+- checking whether the current row split path should be excluded,
+
+- returning `NULL` for excluded row split levels,
+
+- extracting the analysis variable `.var` for all other row split
+  levels,
+
+- and passing the resulting vector to
+  [`tern::a_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html).
+
+## Functions
+
+- `a_summary_j_with_exclude()`: Analysis function which can exclude row
+  split levels from producing the analysis. These have to be specified
+  in the `exclude_levels` argument, see
+  [`?do_exclude_split`](https://johnsonandjohnson.github.io/junco/reference/do_exclude_split.md)
+  for details.
 
 ## See also
 
-[`tern::a_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html),
-[`tern::get_stats()`](https://rdrr.io/pkg/tern/man/default_stats_formats_labels.html)
+[`tern::a_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html),
+[`do_exclude_split()`](https://johnsonandjohnson.github.io/junco/reference/do_exclude_split.md)
 
 ## Examples
 
 ``` r
-.stats <- c("n", "mean_sd", "median_range")
-tern::a_summary(1:10, .stats = .stats)
-#> RowsVerticalSection (in_rows) object print method:
-#> ----------------------------
-#>       row_name   formatted_cell indent_mod          row_label
-#> 1            n               10          0                  n
-#> 2      mean_sd        5.5 (3.0)          0          Mean (SD)
-#> 3 median_range 5.5 (1.0 - 10.0)          0 Median (Min - Max)
-a_summary_j(1:10, .stats = .stats)
-#> RowsVerticalSection (in_rows) object print method:
-#> ----------------------------
-#>       row_name   formatted_cell indent_mod         row_label
-#> 1            n               10          0                 n
-#> 2      mean_sd     5.50 (3.028)          0         Mean (SD)
-#> 3 median_range 5.50 (1.0, 10.0)          0 Median (min, max)
-a_summary_j(1:10, .stats = .stats, .formats = c(mean_sd = "xx (xx.x)"))
-#> RowsVerticalSection (in_rows) object print method:
-#> ----------------------------
-#>       row_name   formatted_cell indent_mod         row_label
-#> 1            n               10          0                 n
-#> 2      mean_sd        5.5 (3.0)          0         Mean (SD)
-#> 3 median_range 5.50 (1.0, 10.0)          0 Median (min, max)
-a_summary_j(1:10)
-#> RowsVerticalSection (in_rows) object print method:
-#> ----------------------------
-#>           row_name     formatted_cell indent_mod                   row_label
-#> 1                n                 10          0                           n
-#> 2              sum               55.0          0                         Sum
-#> 3             mean               5.50          0                        Mean
-#> 4               sd              3.028          0                          SD
-#> 5               se              0.957          0                          SE
-#> 6          mean_sd       5.50 (3.028)          0                   Mean (SD)
-#> 7          mean_se       5.50 (0.957)          0                   Mean (SE)
-#> 8          mean_ci       (3.33, 7.67)          0                 Mean 95% CI
-#> 9         mean_sei       (4.54, 6.46)          0               Mean -/+ 1xSE
-#> 10        mean_sdi       (2.47, 8.53)          0               Mean -/+ 1xSD
-#> 11       mean_pval             <0.001          0 Mean p-value (H0: mean = 0)
-#> 12          median               5.50          0                      Median
-#> 13             mad                0.0          0   Median Absolute Deviation
-#> 14       median_ci       (2.00, 9.00)          0               Median 95% CI
-#> 15       quantiles         3.00, 8.00          0             25% and 75%-ile
-#> 16             iqr                5.0          0                         IQR
-#> 17           range          1.0, 10.0          0                    Min, max
-#> 18             min                1.0          0                     Minimum
-#> 19             max               10.0          0                     Maximum
-#> 20    median_range   5.50 (1.0, 10.0)          0           Median (min, max)
-#> 21              cv              55.05          0                      CV (%)
-#> 22       geom_mean                4.5          0              Geometric Mean
-#> 23         geom_sd              2.081          0                Geometric SD
-#> 24    geom_mean_sd       4.53 (2.081)          0         Geometric Mean (SD)
-#> 25    geom_mean_ci       (2.68, 7.65)          0       Geometric Mean 95% CI
-#> 26         geom_cv               84.3          0         CV % Geometric Mean
-#> 27    median_ci_3d  5.50 (2.00, 9.00)          0             Median (95% CI)
-#> 28      mean_ci_3d 5.50 (3.33 - 7.67)          0               Mean (95% CI)
-#> 29 geom_mean_ci_3d 4.53 (2.68 - 7.65)          0     Geometric Mean (95% CI)
+df <- data.frame(
+  USUBJID = 1:8,
+  AVISIT = factor(rep(c("Baseline", "Week 1"), 4)),
+  ARM = factor(rep(c("A", "B"), each = 4)),
+  AVAL = c(1.2, 3, -1.5, 0.8, 3.5, 2, -1.1, 0.3)
+)
+
+lyt <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("AVISIT") |>
+  analyze(
+    "AVAL",
+    afun = a_summary_j_with_exclude,
+    extra_args = list(exclude_levels = list(AVISIT = "Baseline"))
+  )
+
+build_table(lyt, df)
+#>                                           A                        B           
+#> ———————————————————————————————————————————————————————————————————————————————
+#> Baseline                                                                       
+#>   a_summary_j_with_exclude                                                     
+#> Week 1                                                                         
+#>   n                                       2                        2           
+#>   Sum                                    3.8                      2.3          
+#>   Mean                                   1.9                      1.1          
+#>   SD                                     1.6                      1.2          
+#>   SE                                     1.1                      0.8          
+#>   Mean (SD)                           1.9 (1.6)                1.1 (1.2)       
+#>   Mean (SE)                           1.9 (1.1)                1.1 (0.8)       
+#>   Mean 95% CI                      (-12.08, 15.88)          (-9.65, 11.95)     
+#>   Mean -/+ 1xSE                     (0.80, 3.00)             (0.30, 2.00)      
+#>   Mean -/+ 1xSD                     (0.34, 3.46)             (-0.05, 2.35)     
+#>   Mean p-value (H0: mean = 0)          0.3341                   0.4052         
+#>   Median                                 1.9                      1.1          
+#>   Median Absolute Deviation              0.0                      0.0          
+#>   Median 95% CI                          NA                       NA           
+#>   25% and 75%-ile                     0.8 - 3.0                0.3 - 2.0       
+#>   IQR                                    2.2                      1.7          
+#>   Min - Max                           0.8 - 3.0                0.3 - 2.0       
+#>   Minimum                                0.8                      0.3          
+#>   Maximum                                3.0                      2.0          
+#>   Median (Min - Max)               1.9 (0.8 - 3.0)          1.1 (0.3 - 2.0)    
+#>   CV (%)                                81.9                     104.5         
+#>   Geometric Mean                         1.5                      0.8          
+#>   Geometric SD                           2.5                      3.8          
+#>   Geometric Mean (SD)                 1.5 (2.5)                0.8 (3.8)       
+#>   Geometric Mean 95% CI            (0.00, 6870.45)         (0.00, 132877.73)   
+#>   CV % Geometric Mean                   118.1                    224.7         
+#>   Median (95% CI)                  1.90 (NA - NA)           1.15 (NA - NA)     
+#>   Mean (95% CI)                 1.90 (-12.08 - 15.88)    1.15 (-9.65 - 11.95)  
+#>   Geometric Mean (95% CI)       1.55 (0.00 - 6870.45)   0.77 (0.00 - 132877.73)
 ```

@@ -11,3 +11,9 @@
   Groups](https://johnsonandjohnson.github.io/junco/articles/ancova_combined.md):
 - [Standard Column
   Structures](https://johnsonandjohnson.github.io/junco/articles/standard_column_structures.md):
+- [Reference Group Handling with
+  get_ref_info](https://johnsonandjohnson.github.io/junco/articles/get_ref_info.md):
+- [Formatting tools to simplify adjustment of decimal
+  precision](https://johnsonandjohnson.github.io/junco/articles/formats_d.md):
+- [Formatting function for significant
+  figures](https://johnsonandjohnson.github.io/junco/articles/formats_significant_figures.md):

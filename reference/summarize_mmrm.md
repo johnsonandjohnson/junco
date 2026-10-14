@@ -31,6 +31,18 @@ a_summarize_mmrm(
   .labels = NULL,
   .indent_mods = NULL
 )
+
+a_summarize_mmrm_with_exclude(
+  df,
+  .var,
+  exclude_levels,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+)
 ```
 
 ## Arguments
@@ -104,10 +116,16 @@ a_summarize_mmrm(
   indent modifiers for the labels. Defaults to 0, which corresponds to
   the unmodified default behavior. Can be negative.
 
+- exclude_levels:
+
+  (`list`)  
+  A named list where names correspond to split variables and values are
+  vectors of levels to exclude.
+
 ## Value
 
 - `a_summarize_mmrm()` returns the corresponding list with formatted
-  [`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).
+  [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
 
 ## Functions
 
@@ -120,6 +138,12 @@ a_summarize_mmrm(
 
 - `a_summarize_mmrm()`: Formatted analysis function which is used as
   `afun`.
+
+- `a_summarize_mmrm_with_exclude()`: Wrapper for the `afun` which can
+  exclude row split levels from producing the analysis. These have to be
+  specified in the `exclude_levels` argument, see
+  [`?do_exclude_split`](https://johnsonandjohnson.github.io/junco/reference/do_exclude_split.md)
+  for details.
 
 ## Examples
 
@@ -157,46 +181,46 @@ basic_table() |>
   ) |>
   build_table(longdat) |>
   prune_table(all_zero)
-#>                                                   A: Drug X                B: Placebo             C: Combination    
-#> ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-#> V1                                                                                                                  
-#>   n                                                  121                      106                      129          
-#>   Adjusted Mean (SE)                            0.081 (0.090)            -0.139 (0.096)           0.104 (0.087)     
-#>     Adjusted Mean 90% CI                       (-0.066, 0.229)          (-0.297, 0.019)          (-0.039, 0.247)    
-#>     Adjusted Mean (90% CI)                  0.081 (-0.066, 0.229)    -0.139 (-0.297, 0.019)   0.104 (-0.039, 0.247) 
-#>   Difference in Adjusted Means (SE)             0.220 (0.132)                                     0.243 (0.130)     
-#>     Difference in Adjusted Means 90% CI         (0.004, 0.437)                                    (0.030, 0.457)    
-#>     Difference in Adjusted Means (90% CI)    0.220 (0.004, 0.437)                              0.243 (0.030, 0.457) 
-#>     Relative Reduction (%)                          158.6%                                            175.1%        
-#>     2-sided p-value                                 0.094                                             0.061         
-#> V2                                                                                                                  
-#>   n                                                  121                      106                      129          
-#>   Adjusted Mean (SE)                            -0.079 (0.090)           -0.124 (0.096)           0.076 (0.087)     
-#>     Adjusted Mean 90% CI                       (-0.226, 0.069)          (-0.282, 0.034)          (-0.067, 0.219)    
-#>     Adjusted Mean (90% CI)                  -0.079 (-0.226, 0.069)   -0.124 (-0.282, 0.034)   0.076 (-0.067, 0.219) 
-#>   Difference in Adjusted Means (SE)             0.046 (0.132)                                     0.200 (0.130)     
-#>     Difference in Adjusted Means 90% CI        (-0.171, 0.262)                                   (-0.013, 0.413)    
-#>     Difference in Adjusted Means (90% CI)   0.046 (-0.171, 0.262)                             0.200 (-0.013, 0.413) 
-#>     Relative Reduction (%)                          36.8%                                             161.0%        
-#>     2-sided p-value                                 0.728                                             0.123         
-#> V3                                                                                                                  
-#>   n                                                  121                      106                      129          
-#>   Adjusted Mean (SE)                            0.060 (0.090)            0.101 (0.096)            0.110 (0.087)     
-#>     Adjusted Mean 90% CI                       (-0.088, 0.208)          (-0.057, 0.259)          (-0.033, 0.253)    
-#>     Adjusted Mean (90% CI)                  0.060 (-0.088, 0.208)    0.101 (-0.057, 0.259)    0.110 (-0.033, 0.253) 
-#>   Difference in Adjusted Means (SE)             -0.041 (0.132)                                    0.009 (0.130)     
-#>     Difference in Adjusted Means 90% CI        (-0.257, 0.176)                                   (-0.204, 0.223)    
-#>     Difference in Adjusted Means (90% CI)   -0.041 (-0.257, 0.176)                            0.009 (-0.204, 0.223) 
-#>     Relative Reduction (%)                          40.3%                                             -9.1%         
-#>     2-sided p-value                                 0.757                                             0.943         
-#> V4                                                                                                                  
-#>   n                                                  121                      106                      129          
-#>   Adjusted Mean (SE)                            0.113 (0.090)            -0.133 (0.096)           -0.022 (0.087)    
-#>     Adjusted Mean 90% CI                       (-0.035, 0.260)          (-0.291, 0.025)          (-0.165, 0.121)    
-#>     Adjusted Mean (90% CI)                  0.113 (-0.035, 0.260)    -0.133 (-0.291, 0.025)   -0.022 (-0.165, 0.121)
-#>   Difference in Adjusted Means (SE)             0.245 (0.132)                                     0.111 (0.130)     
-#>     Difference in Adjusted Means 90% CI         (0.029, 0.462)                                   (-0.103, 0.324)    
-#>     Difference in Adjusted Means (90% CI)    0.245 (0.029, 0.462)                             0.111 (-0.103, 0.324) 
-#>     Relative Reduction (%)                          184.9%                                            83.5%         
-#>     2-sided p-value                                 0.062                                             0.393         
+#>                                                  A: Drug X            B: Placebo          C: Combination   
+#> ———————————————————————————————————————————————————————————————————————————————————————————————————————————
+#> V1                                                                                                         
+#>   n                                                 121                   106                   129        
+#>   Adjusted Mean (SE)                           0.08 (0.090)          -0.14 (0.096)         0.10 (0.087)    
+#>     Adjusted Mean 90% CI                       (-0.07, 0.23)         (-0.30, 0.02)         (-0.04, 0.25)   
+#>     Adjusted Mean (90% CI)                  0.08 (-0.07, 0.23)    -0.14 (-0.30, 0.02)   0.10 (-0.04, 0.25) 
+#>   Difference in Adjusted Means (SE)            0.22 (0.132)                                0.24 (0.130)    
+#>     Difference in Adjusted Means 90% CI        (0.00, 0.44)                                (0.03, 0.46)    
+#>     Difference in Adjusted Means (90% CI)    0.22 (0.00, 0.44)                           0.24 (0.03, 0.46) 
+#>     Relative Reduction (%)                        158.6%                                      175.1%       
+#>     2-sided p-value                                0.094                                       0.061       
+#> V2                                                                                                         
+#>   n                                                 121                   106                   129        
+#>   Adjusted Mean (SE)                           -0.08 (0.090)         -0.12 (0.096)         0.08 (0.087)    
+#>     Adjusted Mean 90% CI                       (-0.23, 0.07)         (-0.28, 0.03)         (-0.07, 0.22)   
+#>     Adjusted Mean (90% CI)                  -0.08 (-0.23, 0.07)   -0.12 (-0.28, 0.03)   0.08 (-0.07, 0.22) 
+#>   Difference in Adjusted Means (SE)            0.05 (0.132)                                0.20 (0.130)    
+#>     Difference in Adjusted Means 90% CI        (-0.17, 0.26)                               (-0.01, 0.41)   
+#>     Difference in Adjusted Means (90% CI)   0.05 (-0.17, 0.26)                          0.20 (-0.01, 0.41) 
+#>     Relative Reduction (%)                         36.8%                                      161.0%       
+#>     2-sided p-value                                0.728                                       0.123       
+#> V3                                                                                                         
+#>   n                                                 121                   106                   129        
+#>   Adjusted Mean (SE)                           0.06 (0.090)          0.10 (0.096)          0.11 (0.087)    
+#>     Adjusted Mean 90% CI                       (-0.09, 0.21)         (-0.06, 0.26)         (-0.03, 0.25)   
+#>     Adjusted Mean (90% CI)                  0.06 (-0.09, 0.21)    0.10 (-0.06, 0.26)    0.11 (-0.03, 0.25) 
+#>   Difference in Adjusted Means (SE)            -0.04 (0.132)                               0.01 (0.130)    
+#>     Difference in Adjusted Means 90% CI        (-0.26, 0.18)                               (-0.20, 0.22)   
+#>     Difference in Adjusted Means (90% CI)   -0.04 (-0.26, 0.18)                         0.01 (-0.20, 0.22) 
+#>     Relative Reduction (%)                         40.3%                                       -9.1%       
+#>     2-sided p-value                                0.757                                       0.943       
+#> V4                                                                                                         
+#>   n                                                 121                   106                   129        
+#>   Adjusted Mean (SE)                           0.11 (0.090)          -0.13 (0.096)         -0.02 (0.087)   
+#>     Adjusted Mean 90% CI                       (-0.04, 0.26)         (-0.29, 0.03)         (-0.17, 0.12)   
+#>     Adjusted Mean (90% CI)                  0.11 (-0.04, 0.26)    -0.13 (-0.29, 0.03)   -0.02 (-0.17, 0.12)
+#>   Difference in Adjusted Means (SE)            0.25 (0.132)                                0.11 (0.130)    
+#>     Difference in Adjusted Means 90% CI        (0.03, 0.46)                                (-0.10, 0.32)   
+#>     Difference in Adjusted Means (90% CI)    0.25 (0.03, 0.46)                          0.11 (-0.10, 0.32) 
+#>     Relative Reduction (%)                        184.9%                                       83.5%       
+#>     2-sided p-value                                0.062                                       0.393       
 ```

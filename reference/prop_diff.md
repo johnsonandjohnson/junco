@@ -18,22 +18,12 @@ a_proportion_diff_j(
   ref_path,
   .spl_context,
   ...,
+  conf_level = 0.95,
+  label = paste0("% Difference (", f_conf_level(conf_level), ")"),
   .stats = NULL,
   .formats = NULL,
   .labels = NULL,
   .indent_mods = NULL
-)
-
-s_proportion_diff_j(
-  df,
-  .var,
-  .ref_group,
-  .in_ref_col,
-  variables = list(strata = NULL),
-  conf_level = 0.95,
-  method = c("waldcc", "wald", "cmh", "cmh_sato", "cmh_mn", "ha", "newcombe",
-    "newcombecc", "strat_newcombe", "strat_newcombecc"),
-  weights_method = "cmh"
 )
 ```
 
@@ -63,6 +53,18 @@ s_proportion_diff_j(
 
   Additional arguments passed to the statistics function.
 
+- conf_level:
+
+  (`numeric`)  
+  confidence level for the confidence interval.
+
+- label:
+
+  (`string`)  
+  label for the `diff_est_ci` statistic in `a_proportion_diff_j()`.
+  Defaults to `"% Difference (conf_level CI)"`. Can be overridden by the
+  caller.
+
 - .stats:
 
   (`character`)  
@@ -83,71 +85,32 @@ s_proportion_diff_j(
   (`list`)  
   indentation modifications for the statistics.
 
-- .ref_group:
-
-  (`data.frame`)  
-  reference group data frame.
-
-- .in_ref_col:
-
-  (`logical`)  
-  whether the current column is the reference column.
-
-- variables:
-
-  (`list`)  
-  list with strata variable names.
-
-- conf_level:
-
-  (`numeric`)  
-  confidence level for the confidence interval.
-
-- method:
-
-  (`string`)  
-  method to use for confidence interval calculation.
-
-- weights_method:
-
-  (`string`)  
-  method to use for weights calculation in stratified analysis.
-
 ## Value
 
 - `a_proportion_diff_j()` returns the corresponding list with formatted
-  [`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).
-
-&nbsp;
-
-- `s_proportion_diff_j()` returns a named list of elements `diff`,
-  `diff_ci`, `diff_est_ci` and `diff_ci_3d`.
+  [`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).
 
 ## Functions
 
 - `a_proportion_diff_j()`: Formatted analysis function which is used as
   `afun` in
-  [`estimate_proportion_diff()`](https://rdrr.io/pkg/tern/man/prop_diff.html).
-
-- `s_proportion_diff_j()`: Statistics function estimating the difference
-  in terms of responder proportion.
+  [`estimate_proportion_diff()`](https://pharmaverse.github.io/tern/latest-tag/reference/prop_diff.html).
 
 ## Note
 
 The `a_proportion_diff_j()` function has the `_j` suffix to distinguish
 it from
-[`tern::a_proportion_diff()`](https://rdrr.io/pkg/tern/man/prop_diff.html).
-The functions here are a copy from the `tern` package with additional
-features:
+[`tern::a_proportion_diff()`](https://pharmaverse.github.io/tern/latest-tag/reference/prop_diff.html).
+It is a thin wrapper around
+[`tern::s_proportion_diff()`](https://pharmaverse.github.io/tern/latest-tag/reference/prop_diff.html)
+with the following additions:
 
-- Additional statistic `diff_est_ci` is returned.
+- The `diff_est_ci` statistic (returned natively by tern since
+  tern#1523) is relabelled with a shorter junco-style label
+  (`"% Difference (conf_level CI)"`).
 
 - `ref_path` needs to be provided as extra argument to specify the
   control group column.
-
-When performing an unstratified analysis, methods `'cmh'`, `'cmh_sato'`,
-`'cmh_mn'`, `'strat_newcombe'`, and `'strat_newcombecc'` are not
-permitted.
 
 ## Examples
 
@@ -181,77 +144,4 @@ build_table(l, df = dta)
 #> Difference in Response rate (%)         12.0           
 #>   90% CI (Anderson-Hauck)           (-5.4, 29.4)       
 #> % Difference (90% CI)             12.0 (-5.4, 29.4)    
-
-s_proportion_diff_j(
-  df = subset(dta, grp == "A"),
-  .var = "rsp",
-  .ref_group = subset(dta, grp == "B"),
-  .in_ref_col = FALSE,
-  conf_level = 0.90,
-  method = "ha"
-)
-#> $diff
-#> diff_ha 
-#>      12 
-#> attr(,"label")
-#> [1] "Difference in Response rate (%)"
-#> 
-#> $diff_ci
-#> diff_ci_ha_l diff_ci_ha_u 
-#>    -5.374519    29.374519 
-#> attr(,"label")
-#> [1] "90% CI (Anderson-Hauck)"
-#> 
-#> $diff_est_ci
-#>      diff_ha diff_ci_ha_l diff_ci_ha_u 
-#>    12.000000    -5.374519    29.374519 
-#> attr(,"label")
-#> [1] "% Difference (90% CI)"
-#> 
-#> $diff_ci_3d
-#>      diff_ha diff_ci_ha_l diff_ci_ha_u 
-#>    12.000000    -5.374519    29.374519 
-#> attr(,"label")
-#> [1] "Relative Risk (90% CI)"
-#> 
-
-s_proportion_diff_j(
-  df = subset(dta, grp == "A"),
-  .var = "rsp",
-  .ref_group = subset(dta, grp == "B"),
-  .in_ref_col = FALSE,
-  variables = list(strata = c("f1", "f2")),
-  conf_level = 0.90,
-  method = "cmh"
-)
-#> $diff
-#> diff_cmh 
-#> 12.05847 
-#> attr(,"label")
-#> [1] "Difference in Response rate (%)"
-#> 
-#> $diff_ci
-#> diff_ci_cmh_l diff_ci_cmh_u 
-#>      -2.67057      26.78750 
-#> attr(,"label")
-#> [1] "90% CI (CMH, without correction)"
-#> 
-#> $se_diff
-#> se_diff_cmh 
-#>    8.954617 
-#> attr(,"label")
-#> [1] "Standard Error of Difference in Response rate (%)"
-#> 
-#> $diff_est_ci
-#>      diff_cmh diff_ci_cmh_l diff_ci_cmh_u 
-#>      12.05847      -2.67057      26.78750 
-#> attr(,"label")
-#> [1] "% Difference (90% CI)"
-#> 
-#> $diff_ci_3d
-#>      diff_cmh diff_ci_cmh_l diff_ci_cmh_u 
-#>      12.05847      -2.67057      26.78750 
-#> attr(,"label")
-#> [1] "Relative Risk (90% CI)"
-#> 
 ```

@@ -38,10 +38,6 @@ tern_get_indents_from_stats(
 tern_default_labels
 ```
 
-## Format
-
-An object of class `character` of length 40.
-
 ## Functions
 
 - `tern_get_stats()`: Get statistics available for a given method group

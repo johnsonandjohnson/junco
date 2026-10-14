@@ -10,10 +10,6 @@ particular category.
 no_data_to_report_str
 ```
 
-## Format
-
-An object of class `character` of length 1.
-
 ## Value
 
 A character string with the value "No data to report".

@@ -10,7 +10,7 @@ method (`s_summarize_ancova_j`).
 mean and ci (both for Value (column 2) and CHG (column 3)) using
 statistic `lsmean_ci`  
 mean and ci for the difference column are based on same ANCOVA model
-using statistic `lsmean_diffci`  
+using statistic `lsmean_diff_with_ci`  
 When ancova = `FALSE`, descriptive statistics will be used instead.  
 In the difference column, the 2-sample t-test will be used.
 
@@ -35,7 +35,7 @@ a_summarize_aval_chg_diff_j(
   variables = list(arm = "TRT01A", covariates = NULL),
   format_na_str = "",
   .stats = list(col1 = "count_denom_frac", col23 = "mean_ci_3d", coldiff =
-    "meandiff_ci_3d"),
+    "mean_diff_with_ci"),
   .formats = list(col1 = NULL, col23 = "xx.dx (xx.dx, xx.dx)", coldiff =
     "xx.dx (xx.dx, xx.dx)"),
   .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx,
@@ -174,7 +174,7 @@ a_summarize_aval_chg_diff_j(
   For `col1`, the following stats can be specified.  
   For `col23`, only `mean_ci_3d` is available. When ancova = `TRUE`
   these are LS Means, otherwise, arithmetic means.  
-  For `coldiff`, only `meandiff_ci_3d` is available. When ancova =
+  For `coldiff`, only `mean_diff_with_ci` is available. When ancova =
   `TRUE` these are LS difference in means, otherwise, difference in
   means based upon 2-sample t-test.  
 

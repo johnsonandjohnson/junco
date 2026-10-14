@@ -11,7 +11,7 @@ consideration when count is 0, or fraction is 1.
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@ consideration when count is 0, or fraction is 1.
     <div class="ref-description section level2">
     <p>Formats a count together with fraction (and/or denominator) with special
 consideration when count is 0, or fraction is 1.
-<br> See also: <code><a href="https://rdrr.io/pkg/tern/man/format_count_fraction_fixed_dp.html" class="external-link">tern::format_count_fraction_fixed_dp()</a></code></p>
+<br> See also: <code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/format_count_fraction_fixed_dp.html" class="external-link">tern::format_count_fraction_fixed_dp()</a></code></p>
     </div>
 
     <div class="section level2">
@@ -48,14 +48,29 @@ consideration when count is 0, or fraction is 1.
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">jjcsformat_cnt_den_fract_fct</span><span class="op">(</span></span>
 <span>  d <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"count_fraction"</span>, <span class="st">"count_denom_fraction"</span>, <span class="st">"fraction_count_denom"</span><span class="op">)</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  legacy <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">jjcsformat_count_fraction</span><span class="op">(</span><span class="va">x</span>, round_type <span class="op">=</span> <span class="va">valid_round_type</span>, <span class="va">output</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">jjcsformat_count_denom_fraction</span><span class="op">(</span><span class="va">x</span>, round_type <span class="op">=</span> <span class="va">valid_round_type</span>, <span class="va">output</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">jjcsformat_fraction_count_denom</span><span class="op">(</span><span class="va">x</span>, round_type <span class="op">=</span> <span class="va">valid_round_type</span>, <span class="va">output</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">jjcsformat_count_denom_fraction_legacy</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  round_type <span class="op">=</span> <span class="va">valid_round_type</span>,</span>
+<span>  <span class="va">output</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">jjcsformat_fraction_count_denom</span><span class="op">(</span><span class="va">x</span>, round_type <span class="op">=</span> <span class="va">valid_round_type</span>, <span class="va">output</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">jjcsformat_fraction_count_denom_legacy</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  round_type <span class="op">=</span> <span class="va">valid_round_type</span>,</span>
+<span>  <span class="va">output</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -73,6 +88,10 @@ to specify the type of format the function will represent.</p></dd>
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>(<code>logical</code>)<br> Whether to print verbose output</p></dd>
+
+
+<dt id="arg-legacy">legacy<a class="anchor" aria-label="anchor" href="#arg-legacy"></a></dt>
+<dd><p>(<code>logical(1)</code>)<br> To allow for backward compatibility behavior</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
@@ -102,6 +121,7 @@ is 0, the format is <code>0</code>. If fraction is &gt;0.99, the format is
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other JJCS formatting functions:
+<code><a href="jjcsformat_fraction.html">jjcsformat_fraction()</a></code>,
 <code><a href="jjcsformat_xx.html">jjcsformat_xx()</a></code></p></div>
     </div>
 
@@ -127,6 +147,8 @@ is 0, the format is <code>0</code>. If fraction is &gt;0.99, the format is
 <span class="r-in"><span><span class="va">fmt</span> <span class="op">&lt;-</span> <span class="fu">jjcsformat_cnt_den_fract_fct</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"count_denom_fraction"</span>, d <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">fmt</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>, <span class="fl">235</span>, <span class="fl">23</span> <span class="op">/</span> <span class="fl">235</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "23/235 (9.79%)"</span>
+<span class="r-in"><span><span class="fu">jjcsformat_count_denom_fraction_legacy</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">235</span>, <span class="fl">0</span> <span class="op">/</span> <span class="fl">235</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0/235 (0.0%)"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">jjcsformat_fraction_count_denom</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "70.0% (7/10)"</span>
@@ -137,6 +159,8 @@ is 0, the format is <code>0</code>. If fraction is &gt;0.99, the format is
 <span class="r-in"><span><span class="va">fmt</span> <span class="op">&lt;-</span> <span class="fu">jjcsformat_cnt_den_fract_fct</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"fraction_count_denom"</span>, d <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">fmt</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>, <span class="fl">235</span>, <span class="fl">23</span> <span class="op">/</span> <span class="fl">235</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "9.79% (23/235)"</span>
+<span class="r-in"><span><span class="fu">jjcsformat_fraction_count_denom_legacy</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">235</span>, <span class="fl">0</span> <span class="op">/</span> <span class="fl">235</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0.0% (0/235)"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -13,7 +13,7 @@ row splits are needed (e.g. splits by parameter or subgroup)."><meta property="o
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,18 @@ row splits are needed (e.g. splits by parameter or subgroup).</p>
 <span><span class="fu">a_summarize_mmrm</span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
 <span>  <span class="va">.var</span>,</span>
+<span>  <span class="va">.spl_context</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  .stats <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .formats <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .indent_mods <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">a_summarize_mmrm_with_exclude</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">.var</span>,</span>
+<span>  <span class="va">exclude_levels</span>,</span>
 <span>  <span class="va">.spl_context</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  .stats <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -128,11 +140,16 @@ information on the <code>'auto'</code> setting.</p></dd>
 <dd><p>(named <code>integer</code>)<br> indent modifiers for the labels. Defaults to 0, which corresponds to the
 unmodified default behavior. Can be negative.</p></dd>
 
+
+<dt id="arg-exclude-levels">exclude_levels<a class="anchor" aria-label="anchor" href="#arg-exclude-levels"></a></dt>
+<dd><p>(<code>list</code>)<br> A named list where names correspond to split variables
+and values are vectors of levels to exclude.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
 
-<ul><li><p><code>a_summarize_mmrm()</code> returns the corresponding list with formatted <code><a href="https://rdrr.io/pkg/rtables/man/CellValue.html" class="external-link">rtables::CellValue()</a></code>.</p></li>
+<ul><li><p><code>a_summarize_mmrm()</code> returns the corresponding list with formatted <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html" class="external-link">rtables::CellValue()</a></code>.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
@@ -142,6 +159,9 @@ not including any results when in the reference visit, and only showing LS mean
 estimates when in the reference arm and not in reference visit. It uses
 <code><a href="tabulate_lsmeans.html">s_lsmeans()</a></code> for the final processing.</p></li>
 <li><p><code>a_summarize_mmrm()</code>: Formatted analysis function which is used as <code>afun</code>.</p></li>
+<li><p><code>a_summarize_mmrm_with_exclude()</code>: Wrapper for the <code>afun</code> which can exclude
+row split levels from producing the analysis. These have to be specified in the
+<code>exclude_levels</code> argument, see <code><a href="do_exclude_split.html">?do_exclude_split</a></code> for details.</p></li>
 </ul></div>
 
     <div class="section level2">
@@ -157,13 +177,13 @@ estimates when in the reference arm and not in reference visit. It uses
 <span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">DM</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"VISIT"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_rows_by.html" class="external-link">split_rows_by</a></span><span class="op">(</span><span class="st">"VISIT"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    vars <span class="op">=</span> <span class="st">"AVAL"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_summarize_mmrm</span>,</span></span>
-<span class="r-in"><span>    na_str <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tern/man/default_na_str.html" class="external-link">default_na_str</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    na_str <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://pharmaverse.github.io/tern/latest-tag/reference/default_na_str.html" class="external-link">default_na_str</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    show_labels <span class="op">=</span> <span class="st">"hidden"</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
@@ -177,50 +197,50 @@ estimates when in the reference arm and not in reference visit. It uses
 <span class="r-in"><span>      ref_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VISIT <span class="op">=</span> <span class="st">"V0"</span>, ARM <span class="op">=</span> <span class="st">"B: Placebo"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">longdat</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/prune_table.html" class="external-link">prune_table</a></span><span class="op">(</span><span class="va">all_zero</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                   A: Drug X                B: Placebo             C: Combination    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> V1                                                                                                                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                                  121                      106                      129          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Adjusted Mean (SE)                            0.081 (0.090)            -0.139 (0.096)           0.104 (0.087)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean 90% CI                       (-0.066, 0.229)          (-0.297, 0.019)          (-0.039, 0.247)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean (90% CI)                  0.081 (-0.066, 0.229)    -0.139 (-0.297, 0.019)   0.104 (-0.039, 0.247) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)             0.220 (0.132)                                     0.243 (0.130)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means 90% CI         (0.004, 0.437)                                    (0.030, 0.457)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means (90% CI)    0.220 (0.004, 0.437)                              0.243 (0.030, 0.457) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Relative Reduction (%)                          158.6%                                            175.1%        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2-sided p-value                                 0.094                                             0.061         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> V2                                                                                                                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                                  121                      106                      129          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Adjusted Mean (SE)                            -0.079 (0.090)           -0.124 (0.096)           0.076 (0.087)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean 90% CI                       (-0.226, 0.069)          (-0.282, 0.034)          (-0.067, 0.219)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean (90% CI)                  -0.079 (-0.226, 0.069)   -0.124 (-0.282, 0.034)   0.076 (-0.067, 0.219) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)             0.046 (0.132)                                     0.200 (0.130)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means 90% CI        (-0.171, 0.262)                                   (-0.013, 0.413)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means (90% CI)   0.046 (-0.171, 0.262)                             0.200 (-0.013, 0.413) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Relative Reduction (%)                          36.8%                                             161.0%        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2-sided p-value                                 0.728                                             0.123         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> V3                                                                                                                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                                  121                      106                      129          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Adjusted Mean (SE)                            0.060 (0.090)            0.101 (0.096)            0.110 (0.087)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean 90% CI                       (-0.088, 0.208)          (-0.057, 0.259)          (-0.033, 0.253)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean (90% CI)                  0.060 (-0.088, 0.208)    0.101 (-0.057, 0.259)    0.110 (-0.033, 0.253) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)             -0.041 (0.132)                                    0.009 (0.130)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means 90% CI        (-0.257, 0.176)                                   (-0.204, 0.223)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means (90% CI)   -0.041 (-0.257, 0.176)                            0.009 (-0.204, 0.223) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Relative Reduction (%)                          40.3%                                             -9.1%         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2-sided p-value                                 0.757                                             0.943         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> V4                                                                                                                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                                  121                      106                      129          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Adjusted Mean (SE)                            0.113 (0.090)            -0.133 (0.096)           -0.022 (0.087)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean 90% CI                       (-0.035, 0.260)          (-0.291, 0.025)          (-0.165, 0.121)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean (90% CI)                  0.113 (-0.035, 0.260)    -0.133 (-0.291, 0.025)   -0.022 (-0.165, 0.121)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)             0.245 (0.132)                                     0.111 (0.130)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means 90% CI         (0.029, 0.462)                                   (-0.103, 0.324)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means (90% CI)    0.245 (0.029, 0.462)                             0.111 (-0.103, 0.324) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Relative Reduction (%)                          184.9%                                            83.5%         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2-sided p-value                                 0.062                                             0.393         </span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">longdat</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/prune_table.html" class="external-link">prune_table</a></span><span class="op">(</span><span class="va">all_zero</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  A: Drug X            B: Placebo          C: Combination   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ———————————————————————————————————————————————————————————————————————————————————————————————————————————</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V1                                                                                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                                 121                   106                   129        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Adjusted Mean (SE)                           0.08 (0.090)          -0.14 (0.096)         0.10 (0.087)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean 90% CI                       (-0.07, 0.23)         (-0.30, 0.02)         (-0.04, 0.25)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean (90% CI)                  0.08 (-0.07, 0.23)    -0.14 (-0.30, 0.02)   0.10 (-0.04, 0.25) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)            0.22 (0.132)                                0.24 (0.130)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means 90% CI        (0.00, 0.44)                                (0.03, 0.46)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means (90% CI)    0.22 (0.00, 0.44)                           0.24 (0.03, 0.46) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Relative Reduction (%)                        158.6%                                      175.1%       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2-sided p-value                                0.094                                       0.061       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V2                                                                                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                                 121                   106                   129        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Adjusted Mean (SE)                           -0.08 (0.090)         -0.12 (0.096)         0.08 (0.087)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean 90% CI                       (-0.23, 0.07)         (-0.28, 0.03)         (-0.07, 0.22)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean (90% CI)                  -0.08 (-0.23, 0.07)   -0.12 (-0.28, 0.03)   0.08 (-0.07, 0.22) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)            0.05 (0.132)                                0.20 (0.130)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means 90% CI        (-0.17, 0.26)                               (-0.01, 0.41)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means (90% CI)   0.05 (-0.17, 0.26)                          0.20 (-0.01, 0.41) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Relative Reduction (%)                         36.8%                                      161.0%       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2-sided p-value                                0.728                                       0.123       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V3                                                                                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                                 121                   106                   129        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Adjusted Mean (SE)                           0.06 (0.090)          0.10 (0.096)          0.11 (0.087)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean 90% CI                       (-0.09, 0.21)         (-0.06, 0.26)         (-0.03, 0.25)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean (90% CI)                  0.06 (-0.09, 0.21)    0.10 (-0.06, 0.26)    0.11 (-0.03, 0.25) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)            -0.04 (0.132)                               0.01 (0.130)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means 90% CI        (-0.26, 0.18)                               (-0.20, 0.22)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means (90% CI)   -0.04 (-0.26, 0.18)                         0.01 (-0.20, 0.22) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Relative Reduction (%)                         40.3%                                       -9.1%       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2-sided p-value                                0.757                                       0.943       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V4                                                                                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n                                                 121                   106                   129        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Adjusted Mean (SE)                           0.11 (0.090)          -0.13 (0.096)         -0.02 (0.087)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean 90% CI                       (-0.04, 0.26)         (-0.29, 0.03)         (-0.17, 0.12)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Adjusted Mean (90% CI)                  0.11 (-0.04, 0.26)    -0.13 (-0.29, 0.03)   -0.02 (-0.17, 0.12)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Difference in Adjusted Means (SE)            0.25 (0.132)                                0.11 (0.130)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means 90% CI        (0.03, 0.46)                                (-0.10, 0.32)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Difference in Adjusted Means (90% CI)    0.25 (0.03, 0.46)                          0.11 (-0.10, 0.32) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Relative Reduction (%)                        184.9%                                       83.5%       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2-sided p-value                                0.062                                       0.393       </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

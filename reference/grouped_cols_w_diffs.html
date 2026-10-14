@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,6 +50,19 @@
 <span>  .main_post <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  .rr_pre <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  .rr_post <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">grouped_cols_w_subgrps</span><span class="op">(</span></span>
+<span>  <span class="va">lyt</span>,</span>
+<span>  colspan_trt_map <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  combo_map_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trtvar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">colspan_trt_map</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
+<span>  subgrp_var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  subgrp_lbl <span class="op">=</span> <span class="va">subgrp_var</span>,</span>
+<span>  total_facet <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  total_lbl <span class="op">=</span> <span class="st">"Total"</span>,</span>
+<span>  .pre <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .post <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -70,7 +83,7 @@ the main columns, as given by <code>create_colspan_map</code>.</p></dd>
 
 <dt id="arg-combo-map-df">combo_map_df<a class="anchor" aria-label="anchor" href="#arg-combo-map-df"></a></dt>
 <dd><p>(<code>data.frame</code> or <code>NULL</code>). A combination data
-frame as defined by <code><a href="https://rdrr.io/pkg/rtables/man/add_overall_level.html" class="external-link">rtables::add_combo_levels()</a></code> with an additional
+frame as defined by <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html" class="external-link">add_combo_levels()</a></code> with an additional
 <code>is_control</code> column indicating whether the virtual level will
 act as a reference (<code>TRUE</code>) or active (<code>FALSE</code>) group.</p></dd>
 
@@ -95,13 +108,13 @@ risk difference section of columns</p></dd>
 
 <dt id="arg--main-pre">.main_pre<a class="anchor" aria-label="anchor" href="#arg--main-pre"></a></dt>
 <dd><p>(<code>list</code> of <code>function</code>s). Passed to
-<code><a href="https://rdrr.io/pkg/rtables/man/make_split_fun.html" class="external-link">rtables::make_split_fun()</a></code> as <code>pre</code> for treatment split in main
+<code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html" class="external-link">rtables::make_split_fun()</a></code> as <code>pre</code> for treatment split in main
 structure.</p></dd>
 
 
 <dt id="arg--main-post">.main_post<a class="anchor" aria-label="anchor" href="#arg--main-post"></a></dt>
 <dd><p>(<code>list</code> of <code>function</code>s). Passed to
-<code><a href="https://rdrr.io/pkg/rtables/man/make_split_fun.html" class="external-link">rtables::make_split_fun()</a></code> as <code>post</code> for treatment split in
+<code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html" class="external-link">rtables::make_split_fun()</a></code> as <code>post</code> for treatment split in
 main structure.</p></dd>
 
 
@@ -115,6 +128,45 @@ faceting.</p></dd>
 <dd><p>(<code>list</code> of <code>function</code>s). Passed to
 <code><a href="make_multicomp_splfun.html">make_multicomp_splfun()</a></code> as <code>.post</code> for risk difference
 faceting.</p></dd>
+
+
+<dt id="arg-trtvar">trtvar<a class="anchor" aria-label="anchor" href="#arg-trtvar"></a></dt>
+<dd><p>(<code>character(1)</code> or <code>NULL</code>)<br> the treatment variable
+to split by. Defaults to the treatment variable in
+<code>colspan_trt_map</code>.</p></dd>
+
+
+<dt id="arg-subgrp-var">subgrp_var<a class="anchor" aria-label="anchor" href="#arg-subgrp-var"></a></dt>
+<dd><p>(<code>character(1)</code> or <code>NULL</code>)<br> the name of the
+subgroup variable to split by within the <code>trtvar</code> split</p></dd>
+
+
+<dt id="arg-subgrp-lbl">subgrp_lbl<a class="anchor" aria-label="anchor" href="#arg-subgrp-lbl"></a></dt>
+<dd><p>(<code>character(1)</code> or <code>NULL</code>)<br> the spanning label
+to place over the subgroups, if different than <code>subgrp_var</code></p></dd>
+
+
+<dt id="arg-total-facet">total_facet<a class="anchor" aria-label="anchor" href="#arg-total-facet"></a></dt>
+<dd><p>(<code>logical(1)</code>)<br> should an overall facet be
+prepended to the partition defined by <code>subgrp_var</code>? Defaults to
+<code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-total-lbl">total_lbl<a class="anchor" aria-label="anchor" href="#arg-total-lbl"></a></dt>
+<dd><p>(<code>character(1)</code>)<br> Label to be used for the
+overall facet, if applicable. Defaults to <code>"Total"</code>; ignored if
+<code>total_facet</code> is <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg--pre">.pre<a class="anchor" aria-label="anchor" href="#arg--pre"></a></dt>
+<dd><p>(<code>list</code> of <code>function</code>s)<br> Passed to
+<code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html" class="external-link">rtables::make_split_fun()</a></code> as <code>pre</code> for treatment splitting.</p></dd>
+
+
+<dt id="arg--post">.post<a class="anchor" aria-label="anchor" href="#arg--post"></a></dt>
+<dd><p>(<code>list</code> of <code>function</code>s)<br> Passed to
+<code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/make_split_fun.html" class="external-link">rtables::make_split_fun()</a></code> as <code>post</code> for treatment splitting
+after the standard column-structure processing.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -133,7 +185,7 @@ non-active controls. It is intended for use in layouts that will
 use <code><a href="a_freq_j.html">a_freq_j()</a></code> or similar <code>junco</code>-style analysis functions which
 support risk difference columns and accept a <code>ref_path</code> argument.</p>
 <p>It is equivalent to the following sequence of layout instructions:</p><ol><li><p>splitting on a colspan labeling variable with
-<code><a href="https://rdrr.io/pkg/rtables/man/trim_levels_to_map.html" class="external-link">rtables::trim_levels_to_map()</a></code> as the split function;</p></li>
+<code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/trim_levels_to_map.html" class="external-link">rtables::trim_levels_to_map()</a></code> as the split function;</p></li>
 <li><p>splitting on treatment;</p></li>
 <li><p>adding a (non-nested) overall column acting as the risk difference spanning label; and finally</p></li>
 <li><p>splitting on treatment using <code><a href="make_multicomp_splfun.html">make_multicomp_splfun()</a></code> as the
@@ -158,13 +210,84 @@ been added if necessary).</p>
 <p>For the purposes of pathin in the resulting structure,
 <code>diffs_label</code> will be both the split name and split value of the
 parent containing the individual risk difference columns.</p>
+<p><code>grouped_cols_w_subgrps</code> creates a hierarchical column
+structure that splits by <code>trtvar</code>, underneath which is a
+spanning label over a split with a Total column along with
+columns for each level of <code>subgrp_var</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other riskdiff_col_struct:
-<code><a href="make_multicomp_splfun.html">make_multicomp_splfun()</a></code></p></div>
+    <div class="dont-index"><p>Other std_col_struct:
+<code><a href="make_multicomp_splfun.html">make_multicomp_splfun()</a></code>,
+<code><a href="shift_tbl_col_struct.html">shift_tbl_col_struct()</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">colspan_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspan_var.html">create_colspan_var</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>TRT01A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="st">"Active 1"</span>, <span class="st">"Active 2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  non_active_grp <span class="op">=</span> <span class="st">"Placebo"</span>,</span></span>
+<span class="r-in"><span>  non_active_grp_span_lbl <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
+<span class="r-in"><span>  active_grp_span_lbl <span class="op">=</span> <span class="st">"Active Treatment"</span>,</span></span>
+<span class="r-in"><span>  colspan_var <span class="op">=</span> <span class="st">"colspan_trt"</span>,</span></span>
+<span class="r-in"><span>  trt_var <span class="op">=</span> <span class="st">"TRT01A"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">colspan_trt_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspan_map.html">create_colspan_map</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">colspan_var</span>,</span></span>
+<span class="r-in"><span>  non_active_grp <span class="op">=</span> <span class="st">"Placebo"</span>,</span></span>
+<span class="r-in"><span>  non_active_grp_span_lbl <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
+<span class="r-in"><span>  active_grp_span_lbl <span class="op">=</span> <span class="st">"Active Treatment"</span>,</span></span>
+<span class="r-in"><span>  colspan_var <span class="op">=</span> <span class="st">"colspan_trt"</span>,</span></span>
+<span class="r-in"><span>  trt_var <span class="op">=</span> <span class="st">"TRT01A"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">grouped_cols_w_diffs</span><span class="op">(</span><span class="va">colspan_trt_map</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"TRT01A"</span>, afun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">colspan_var</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Active Treatment     Control               Risk Differences             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Active 1   Active 2   Placebo   Active 1 vs Placebo   Active 2 vs Placebo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ——————————————————————————————————————————————————————————————————————————————————</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TRT01A      1          1          1               1                     1         </span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspan_var.html">create_colspan_var</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    TRT01A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="st">"Active 1"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    SEX <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  non_active_grp <span class="op">=</span> <span class="st">"Placebo"</span>,</span></span>
+<span class="r-in"><span>  non_active_grp_span_lbl <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
+<span class="r-in"><span>  active_grp_span_lbl <span class="op">=</span> <span class="st">"Active Treatment"</span>,</span></span>
+<span class="r-in"><span>  colspan_var <span class="op">=</span> <span class="st">"colspan_trt"</span>,</span></span>
+<span class="r-in"><span>  trt_var <span class="op">=</span> <span class="st">"TRT01A"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">colspan_trt_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspan_map.html">create_colspan_map</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">dat</span>,</span></span>
+<span class="r-in"><span>  non_active_grp <span class="op">=</span> <span class="st">"Placebo"</span>,</span></span>
+<span class="r-in"><span>  non_active_grp_span_lbl <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
+<span class="r-in"><span>  active_grp_span_lbl <span class="op">=</span> <span class="st">"Active Treatment"</span>,</span></span>
+<span class="r-in"><span>  colspan_var <span class="op">=</span> <span class="st">"colspan_trt"</span>,</span></span>
+<span class="r-in"><span>  trt_var <span class="op">=</span> <span class="st">"TRT01A"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">grouped_cols_w_subgrps</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">colspan_trt_map</span>,</span></span>
+<span class="r-in"><span>    subgrp_var <span class="op">=</span> <span class="st">"SEX"</span>,</span></span>
+<span class="r-in"><span>    subgrp_lbl <span class="op">=</span> <span class="st">"SUB_*"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"TRT01A"</span>, afun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Active Treatment             Control       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 Active 1                 Placebo       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  (N=2)                    (N=2)        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  SUB_*                    SUB_*        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Total    Female   Male   Total   Female   Male</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ———————————————————————————————————————————————————————</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TRT01A     2        1       1       2       1       1  </span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

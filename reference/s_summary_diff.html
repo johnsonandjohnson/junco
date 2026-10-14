@@ -3,15 +3,19 @@
 Computes descriptive statistics for a single variable df[[.var]] using
 tern::s_summary(), which dispatches type-specific methods depending on the
 S3 class of the input (e.g., character, factor, logical, numeric).
-Optionally, it computes a difference in means with confidence interval
-between df[[.var]] and .ref_group[[.var]] using s_diff_mean_ci().
-This statistic is applicable only to numeric variables."><meta property="og:description" content="
+Optionally, it computes estimates and associated inferential statistics for
+the difference in population means between two underlying distributions,
+based on observed samples df[[.var]] and .ref_group[[.var]] using
+s_diff_means().
+These statistics are applicable only to numeric data."><meta property="og:description" content="
 Computes descriptive statistics for a single variable df[[.var]] using
 tern::s_summary(), which dispatches type-specific methods depending on the
 S3 class of the input (e.g., character, factor, logical, numeric).
-Optionally, it computes a difference in means with confidence interval
-between df[[.var]] and .ref_group[[.var]] using s_diff_mean_ci().
-This statistic is applicable only to numeric variables."><meta property="og:image" content="https://johnsonandjohnson.github.io/junco/logo.png"></head><body>
+Optionally, it computes estimates and associated inferential statistics for
+the difference in population means between two underlying distributions,
+based on observed samples df[[.var]] and .ref_group[[.var]] using
+s_diff_means().
+These statistics are applicable only to numeric data."><meta property="og:image" content="https://johnsonandjohnson.github.io/junco/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -19,7 +23,7 @@ This statistic is applicable only to numeric variables."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,18 +45,20 @@ This statistic is applicable only to numeric variables."><meta property="og:imag
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Descriptive Statistics for Univariate Data with Optional Reference Comparison</h1>
-      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/s_summary_diff.r" class="external-link"><code>R/s_summary_diff.r</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/johnsonandjohnson/junco/blob/main/R/s_summary_diff.R" class="external-link"><code>R/s_summary_diff.R</code></a></small>
       <div class="d-none name"><code>s_summary_diff.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
     <p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></p>
 <p>Computes descriptive statistics for a single variable <code>df[[.var]]</code> using
-<code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::s_summary()</a></code>, which dispatches type-specific methods depending on the
+<code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::s_summary()</a></code>, which dispatches type-specific methods depending on the
 S3 class of the input (e.g., character, factor, logical, numeric).</p>
-<p>Optionally, it computes a difference in means with confidence interval
-between <code>df[[.var]]</code> and <code>.ref_group[[.var]]</code> using <code><a href="s_diff_mean_ci.html">s_diff_mean_ci()</a></code>.
-This statistic is applicable only to numeric variables.</p>
+<p>Optionally, it computes estimates and associated inferential statistics for
+the difference in population means between two underlying distributions,
+based on observed samples <code>df[[.var]]</code> and <code>.ref_group[[.var]]</code> using
+<code><a href="diff_means.html">s_diff_means()</a></code>.
+These statistics are applicable only to numeric data.</p>
     </div>
 
     <div class="section level2">
@@ -63,7 +69,7 @@ This statistic is applicable only to numeric variables.</p>
 <span>  .stats <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  .ref_group <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  .in_ref_col <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  control <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tern/man/control_analyze_vars.html" class="external-link">control_analyze_vars</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  control <span class="op">=</span> <span class="fu">tern</span><span class="fu">::</span><span class="fu"><a href="https://pharmaverse.github.io/tern/latest-tag/reference/control_analyze_vars.html" class="external-link">control_analyze_vars</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -79,14 +85,16 @@ This statistic is applicable only to numeric variables.</p>
 <dt id="arg--var">.var<a class="anchor" aria-label="anchor" href="#arg--var"></a></dt>
 <dd><p>(<code>character(1)</code>)<br> Name of the column in <code>df</code> containing the
 values for which statistics are computed. The variable type is handled by
-the corresponding methods of <code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::s_summary()</a></code>.
-The <code>diff_mean_ci</code> statistic is only valid when <code>df[[.var]]</code> is numeric.</p></dd>
+the corresponding methods of <code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::s_summary()</a></code>.
+If difference-in-means statistics are requested, <code>df[[.var]]</code> must be
+numeric.</p></dd>
 
 
 <dt id="arg--stats">.stats<a class="anchor" aria-label="anchor" href="#arg--stats"></a></dt>
 <dd><p>(<code>character</code> or <code>NULL</code>)<br> Names of statistics to be computed.
-For numerical data, supported statistics are listed via
-<code>tern::get_stats(method_groups = "analyze_vars_numeric", custom_stats_in = "diff_mean_ci")</code>.
+For numerical data, the names of supported statistics are listed via
+<code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/default_stats_formats_labels.html" class="external-link">tern::get_stats()</a></code> for statistics for a single variable and
+<code>junco_get_stats("diff_means")</code> for difference-in-means statistics.
 If <code>NULL</code>, all available statistics for numerical data are computed.</p></dd>
 
 
@@ -99,19 +107,24 @@ If <code>NULL</code>, all available statistics for numerical data are computed.<
 
 
 <dt id="arg-control">control<a class="anchor" aria-label="anchor" href="#arg-control"></a></dt>
-<dd><p>(<code>list</code>)<br> List of control options passed to <code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::s_summary()</a></code>.
-If <em>diff_mean_ci</em> statistic is requested, <code>control$conf_level</code>
-specifies the confidence level used for the interval.</p></dd>
+<dd><p>(<code>list</code>)<br> List of control options passed to
+<code><a href="https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html" class="external-link">tern::s_summary()</a></code>.
+If difference-in-means statistics are requested, <code>control$conf_level</code>
+specifies the confidence level of the interval.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to <code><a href="https://rdrr.io/pkg/tern/man/analyze_variables.html" class="external-link">tern::s_summary()</a></code> and to
-<code><a href="s_diff_mean_ci.html">s_diff_mean_ci()</a></code> when <em>diff_mean_ci</em> is computed.</p></dd>
+<dd><p>Additional named arguments passed to <code><a href="diff_means.html">s_diff_means()</a></code>, except
+<code>df1</code>, <code>df2</code>, <code>.var</code>, and <code>conf.level</code>, which are already passed.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A named <code>list</code> with the requested statistics.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
+    <p>WW</p>
     </div>
 
     <div class="section level2">
@@ -146,7 +159,7 @@ specifies the confidence level used for the interval.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4     X09 Placebo   SYSBP Visit 1   5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5     X10 Placebo   SYSBP Visit 1   2</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">.stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"mean_sd"</span>, <span class="st">"diff_mean_ci"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">.stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"mean_sd"</span>, <span class="st">"diff_means_n1"</span>, <span class="st">"diff_means_n2"</span>, <span class="st">"diff_means_est_ci"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># With reference group.</span></span></span>
 <span class="r-in"><span><span class="fu">s_summary_diff</span><span class="op">(</span><span class="va">df</span>, <span class="st">"CHG"</span>, <span class="va">.stats</span>, <span class="va">rg</span><span class="op">)</span></span></span>
@@ -158,11 +171,25 @@ specifies the confidence level used for the interval.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mean       sd </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2.200000 4.438468 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $diff_mean_ci</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> diff_mean    ci_lwr    ci_upr </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  0.400000 -5.632096  6.432096 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $diff_means_n1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> diff_means_n1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             5 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"label")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Difference in Means + 95% CI"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Difference in Means Sample Size (Group 1)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $diff_means_n2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> diff_means_n2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"label")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Difference in Means Sample Size (Group 2)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $diff_means_est_ci</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    diff_means_est diff_means_ci_lwr diff_means_ci_upr </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          0.400000         -5.632096          6.432096 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"conf.level")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"label")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Difference in Means (95% CI)"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using df as reference.</span></span></span>
@@ -175,7 +202,13 @@ specifies the confidence level used for the interval.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mean       sd </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2.200000 4.438468 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $diff_mean_ci</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $diff_means_n1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $diff_means_n2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $diff_means_est_ci</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>

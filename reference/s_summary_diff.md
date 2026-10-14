@@ -3,14 +3,16 @@
 **\[experimental\]**
 
 Computes descriptive statistics for a single variable `df[[.var]]` using
-[`tern::s_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html),
+[`tern::s_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html),
 which dispatches type-specific methods depending on the S3 class of the
 input (e.g., character, factor, logical, numeric).
 
-Optionally, it computes a difference in means with confidence interval
-between `df[[.var]]` and `.ref_group[[.var]]` using
-[`s_diff_mean_ci()`](https://johnsonandjohnson.github.io/junco/reference/s_diff_mean_ci.md).
-This statistic is applicable only to numeric variables.
+Optionally, it computes estimates and associated inferential statistics
+for the difference in population means between two underlying
+distributions, based on observed samples `df[[.var]]` and
+`.ref_group[[.var]]` using
+[`s_diff_means()`](https://johnsonandjohnson.github.io/junco/reference/diff_means.md).
+These statistics are applicable only to numeric data.
 
 ## Usage
 
@@ -39,17 +41,19 @@ s_summary_diff(
   Name of the column in `df` containing the values for which statistics
   are computed. The variable type is handled by the corresponding
   methods of
-  [`tern::s_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html).
-  The `diff_mean_ci` statistic is only valid when `df[[.var]]` is
+  [`tern::s_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html).
+  If difference-in-means statistics are requested, `df[[.var]]` must be
   numeric.
 
 - .stats:
 
   (`character` or `NULL`)  
-  Names of statistics to be computed. For numerical data, supported
-  statistics are listed via
-  `tern::get_stats(method_groups = "analyze_vars_numeric", custom_stats_in = "diff_mean_ci")`.
-  If `NULL`, all available statistics for numerical data are computed.
+  Names of statistics to be computed. For numerical data, the names of
+  supported statistics are listed via
+  [`tern::get_stats()`](https://pharmaverse.github.io/tern/latest-tag/reference/default_stats_formats_labels.html)
+  for statistics for a single variable and
+  `junco_get_stats("diff_means")` for difference-in-means statistics. If
+  `NULL`, all available statistics for numerical data are computed.
 
 - .ref_group:
 
@@ -65,21 +69,24 @@ s_summary_diff(
 
   (`list`)  
   List of control options passed to
-  [`tern::s_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html).
-  If *diff_mean_ci* statistic is requested, `control$conf_level`
-  specifies the confidence level used for the interval.
+  [`tern::s_summary()`](https://pharmaverse.github.io/tern/latest-tag/reference/analyze_variables.html).
+  If difference-in-means statistics are requested, `control$conf_level`
+  specifies the confidence level of the interval.
 
 - ...:
 
-  Additional arguments passed to
-  [`tern::s_summary()`](https://rdrr.io/pkg/tern/man/analyze_variables.html)
-  and to
-  [`s_diff_mean_ci()`](https://johnsonandjohnson.github.io/junco/reference/s_diff_mean_ci.md)
-  when *diff_mean_ci* is computed.
+  Additional named arguments passed to
+  [`s_diff_means()`](https://johnsonandjohnson.github.io/junco/reference/diff_means.md),
+  except `df1`, `df2`, `.var`, and `conf.level`, which are already
+  passed.
 
 ## Value
 
 A named `list` with the requested statistics.
+
+## Author
+
+WW
 
 ## Examples
 
@@ -114,7 +121,7 @@ rg
 #> 4     X09 Placebo   SYSBP Visit 1   5
 #> 5     X10 Placebo   SYSBP Visit 1   2
 
-.stats <- c("n", "mean_sd", "diff_mean_ci")
+.stats <- c("n", "mean_sd", "diff_means_n1", "diff_means_n2", "diff_means_est_ci")
 
 # With reference group.
 s_summary_diff(df, "CHG", .stats, rg)
@@ -126,11 +133,25 @@ s_summary_diff(df, "CHG", .stats, rg)
 #>     mean       sd 
 #> 2.200000 4.438468 
 #> 
-#> $diff_mean_ci
-#> diff_mean    ci_lwr    ci_upr 
-#>  0.400000 -5.632096  6.432096 
+#> $diff_means_n1
+#> diff_means_n1 
+#>             5 
 #> attr(,"label")
-#> [1] "Difference in Means + 95% CI"
+#> [1] "Difference in Means Sample Size (Group 1)"
+#> 
+#> $diff_means_n2
+#> diff_means_n2 
+#>             5 
+#> attr(,"label")
+#> [1] "Difference in Means Sample Size (Group 2)"
+#> 
+#> $diff_means_est_ci
+#>    diff_means_est diff_means_ci_lwr diff_means_ci_upr 
+#>          0.400000         -5.632096          6.432096 
+#> attr(,"conf.level")
+#> [1] 0.95
+#> attr(,"label")
+#> [1] "Difference in Means (95% CI)"
 #> 
 
 # Using df as reference.
@@ -143,7 +164,13 @@ s_summary_diff(df, "CHG", .stats, df, .in_ref_col = TRUE)
 #>     mean       sd 
 #> 2.200000 4.438468 
 #> 
-#> $diff_mean_ci
+#> $diff_means_n1
+#> NULL
+#> 
+#> $diff_means_n2
+#> NULL
+#> 
+#> $diff_means_est_ci
 #> NULL
 #> 
 ```

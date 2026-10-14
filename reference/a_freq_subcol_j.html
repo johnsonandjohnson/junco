@@ -9,7 +9,7 @@ selected columns (controlled by subcol_* arguments)"><meta property="og:image" c
 
     <a class="navbar-brand me-2" href="../index.html">junco</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@ selected columns (controlled by subcol_* arguments)</p>
 
 <dt id="arg-labelstr">labelstr<a class="anchor" aria-label="anchor" href="#arg-labelstr"></a></dt>
 <dd><p>(<code>character</code>)<br> label of the level of the parent split currently being summarized
-(must be present as second argument in Content Row Functions). See <code><a href="https://rdrr.io/pkg/rtables/man/summarize_row_groups.html" class="external-link">rtables::summarize_row_groups()</a></code>
+(must be present as second argument in Content Row Functions). See <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html" class="external-link">rtables::summarize_row_groups()</a></code>
 for more information.</p></dd>
 
 
@@ -166,16 +166,25 @@ The label argument could be used instead (if <code>val</code> is a single string
 
 
 <dt id="arg-label-map">label_map<a class="anchor" aria-label="anchor" href="#arg-label-map"></a></dt>
-<dd><p>(<code>tibble</code>)<br>
-A mapping tibble to translate levels from the incoming variable into
-a different row label to be presented on the table.<br></p></dd>
+<dd><p>(<code>data.frame</code>)<br>
+A mapping data frame used to translate levels of the analysis variable(s) into
+the row labels displayed in the table, optionally conditioned on the nearest row-split.<br></p>
+<p>Four types of mappings are supported:</p><ol><li><p>Single-variable mapping. Column names: <code>level</code>, <code>label</code>.</p></li>
+<li><p>Multi-variable mapping. Column names: <code>var</code>, <code>level</code>, <code>label</code>.</p></li>
+<li><p>Conditional-on-row-split mapping. Column names: <code>&lt;split_var&gt;</code>, <code>level</code>, <code>label</code>.</p></li>
+<li><p>Conditional-on-row-split multi-variable mapping. Column names: <code>&lt;split_var&gt;</code>, <code>var</code>, <code>level</code>, <code>label</code>.</p></li>
+</ol><p>Here, <code>&lt;split_var&gt;</code> is a placeholder for the name of the variable used for the nearest row-split
+(e.g. <code>SEX</code>, <code>PARAMCD</code>).<br></p>
+<p><strong>Recommendation</strong>: ensure input variable(s) are of type factor, to avoid the error
+"got a label map that doesn't provide labels for all values".<br></p>
+<p>See examples for more details.</p></dd>
 
 
 <dt id="arg--alt-df-full">.alt_df_full<a class="anchor" aria-label="anchor" href="#arg--alt-df-full"></a></dt>
 <dd><p>(<code>dataframe</code>)<br> Denominator dataset
 for fraction and relative risk calculations.<br>
 this argument gets populated by the rtables
-split machinery (see <a href="https://rdrr.io/pkg/rtables/man/additional_fun_params.html" class="external-link">rtables::additional_fun_params</a>).</p></dd>
+split machinery (see <a href="https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html" class="external-link">rtables::additional_fun_params</a>).</p></dd>
 
 
 <dt id="arg-denom-by">denom_by<a class="anchor" aria-label="anchor" href="#arg-denom-by"></a></dt>
@@ -212,7 +221,11 @@ unmodified default behavior. Can be negative.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>list of requested statistics with formatted <code><a href="https://rdrr.io/pkg/rtables/man/CellValue.html" class="external-link">rtables::CellValue()</a></code>.<br></p>
+    <p>list of requested statistics with formatted <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html" class="external-link">rtables::CellValue()</a></code>.<br></p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="a_freq_j.html">a_freq_j()</a></code> for extensive <code>label_map</code> usage examples.</p></div>
     </div>
 
     <div class="section level2">
@@ -242,10 +255,10 @@ unmodified default behavior. Can be negative.</p></dd>
 <span class="r-in"><span>  <span class="st">"RELATED"</span>, <span class="st">"Related AEs"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AEs"</span><span class="op">)</span>,    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span>show_colcounts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"COLSPAN_REL"</span>, split_fun <span class="op">=</span> <span class="fu">rtables</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rtables/man/add_overall_level.html" class="external-link">add_combo_levels</a></span><span class="op">(</span><span class="va">combodf</span>, trim <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AEDECOD"</span>,</span></span>
+<span class="r-in"><span><span class="va">lyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/basic_table.html" class="external-link">basic_table</a></span><span class="op">(</span>show_colcounts <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"COLSPAN_REL"</span>, split_fun <span class="op">=</span> <span class="fu">rtables</span><span class="fu">::</span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html" class="external-link">add_combo_levels</a></span><span class="op">(</span><span class="va">combodf</span>, trim <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/split_cols_by.html" class="external-link">split_cols_by</a></span><span class="op">(</span><span class="st">"ARM"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/analyze.html" class="external-link">analyze</a></span><span class="op">(</span><span class="st">"AEDECOD"</span>,</span></span>
 <span class="r-in"><span>    afun <span class="op">=</span> <span class="va">a_freq_subcol_j</span>,</span></span>
 <span class="r-in"><span>    extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      subcol_split <span class="op">=</span> <span class="st">"RELATED"</span>,</span></span>
@@ -254,22 +267,22 @@ unmodified default behavior. Can be negative.</p></dd>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtables/man/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ADAE</span>, alt_counts_df <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">lyt</span>, <span class="va">ADAE</span>, alt_counts_df <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                       AEs                                            Related AEs                   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   A: Drug X        B: Placebo     C: Combination     A: Drug X        B: Placebo     C: Combination</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    (N=134)          (N=134)          (N=132)          (N=134)          (N=134)          (N=132)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dcd A.1.1.1.1   50/134 (37.3%)   45/134 (33.6%)   63/132 (47.7%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dcd A.1.1.1.2   48/134 (35.8%)   48/134 (35.8%)   50/132 (37.9%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dcd A.1.1.1.1   50/134 (37.3%)   45/134 (33.6%)   63/132 (47.7%)       0/134            0/134            0/132     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dcd A.1.1.1.2   48/134 (35.8%)   48/134 (35.8%)   50/132 (37.9%)       0/134            0/134            0/132     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dcd B.1.1.1.1   47/134 (35.1%)   49/134 (36.6%)   43/132 (32.6%)   47/134 (35.1%)   49/134 (36.6%)   43/132 (32.6%)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dcd B.2.1.2.1   49/134 (36.6%)   44/134 (32.8%)   52/132 (39.4%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dcd B.2.2.3.1   48/134 (35.8%)   54/134 (40.3%)   51/132 (38.6%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dcd B.2.1.2.1   49/134 (36.6%)   44/134 (32.8%)   52/132 (39.4%)       0/134            0/134            0/132     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dcd B.2.2.3.1   48/134 (35.8%)   54/134 (40.3%)   51/132 (38.6%)       0/134            0/134            0/132     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dcd C.1.1.1.3   43/134 (32.1%)   46/134 (34.3%)   43/132 (32.6%)   43/134 (32.1%)   46/134 (34.3%)   43/132 (32.6%)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dcd C.2.1.2.1   35/134 (26.1%)   48/134 (35.8%)   55/132 (41.7%)   35/134 (26.1%)   48/134 (35.8%)   55/132 (41.7%)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dcd D.1.1.1.1   50/134 (37.3%)   42/134 (31.3%)   51/132 (38.6%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dcd D.1.1.4.2   48/134 (35.8%)   42/134 (31.3%)   50/132 (37.9%)    0/134 (0.0%)     0/134 (0.0%)     0/132 (0.0%) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dcd D.1.1.1.1   50/134 (37.3%)   42/134 (31.3%)   51/132 (38.6%)       0/134            0/134            0/132     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dcd D.1.1.4.2   48/134 (35.8%)   42/134 (31.3%)   50/132 (37.9%)       0/134            0/134            0/132     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dcd D.2.1.5.3   47/134 (35.1%)   58/134 (43.3%)   57/132 (43.2%)   47/134 (35.1%)   58/134 (43.3%)   57/132 (43.2%)</span>
 </code></pre></div>
     </div>

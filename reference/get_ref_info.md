@@ -1,8 +1,16 @@
-# Obtain Reference Information for a Global Reference Group
+# Obtain reference group information from split context.
 
-This helper function can be used in custom analysis functions, by
-passing an extra argument `ref_path` which defines a global reference
-group by the corresponding column split hierarchy levels.
+**\[stable\]**
+
+`get_ref_info()` identifies a reference group defined by a column-split
+path and returns both the reference-group data and an indicator of
+whether the current column is the reference column. It is intended for
+use inside custom `rtables` analysis functions.
+
+The reference group is specified using `ref_path`, which consists of
+alternating column-split variable names and its corresponding levels.
+For example, `c("SEX", "F", "ARM", "Placebo")` specifies the
+column-split path where `SEX` is `"F"` and `ARM` is `"Placebo"`.
 
 ## Usage
 
@@ -15,36 +23,39 @@ get_ref_info(ref_path, .spl_context, .var = NULL)
 - ref_path:
 
   (`character`)  
-  reference group specification as an `rtables` `colpath`, see details.
+  Reference group specification as an `rtables` `colpath`; see Details.
 
 - .spl_context:
 
   (`data.frame`)  
-  see
-  [rtables::spl_context](https://rdrr.io/pkg/rtables/man/spl_context.html).
+  Ancestor split-state information passed by `rtables`.
 
 - .var:
 
-  (`character`)  
-  the variable being analyzed, see
-  [rtables::additional_fun_params](https://rdrr.io/pkg/rtables/man/additional_fun_params.html).
+  (`character(1)`)  
+  The variable being analyzed; see
+  [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html).
+  If supplied, the corresponding column is extracted from the
+  reference-group data. If `NULL`, the complete reference-group data
+  frame is returned.
 
 ## Value
 
-A list with `ref_group` and `in_ref_col`, which can be used as
-`.ref_group` and `.in_ref_col` as if being directly passed to an
-analysis function by `rtables`, see
-[rtables::additional_fun_params](https://rdrr.io/pkg/rtables/man/additional_fun_params.html).
+A list with the following elements:
 
-## Details
+- `in_ref_col` (`logical(1)` or `NULL`) indicates whether the current
+  column matches the reference path. This corresponds to `.in_ref_col`
+  in
+  [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html).
 
-The reference group is specified in `colpath` hierarchical fashion in
-`ref_path`: the first column split variable is the first element, and
-the level to use is the second element. It continues until the last
-column split variable with last level to use. Note that depending on
-`.var`, either a `data.frame` (if `.var` is `NULL`) or a vector
-(otherwise) is returned. This allows usage for analysis functions with
-`df` and `x` arguments, respectively.
+- `ref_group` (`data.frame`, vector, or `NULL`) contains the
+  observations belonging to the reference group. If `.var` is `NULL`,
+  the complete data frame is returned; otherwise, the column specified
+  by `.var` is returned. This corresponds to `.ref_group` in
+  [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html).
+
+If the reference path is not present in the current column-split
+hierarchy, both elements are `NULL`.
 
 ## Examples
 
@@ -63,16 +74,21 @@ colspan_trt_map <- create_colspan_map(
   trt_var = "ARM"
 )
 
+# A standard analysis function which uses a reference group.
 standard_afun <- function(x, .ref_group, .in_ref_col) {
+  diff_means <- if (isFALSE(.in_ref_col)) {
+    mean(x) - mean(.ref_group)
+  } else {
+    NULL
+  }
   in_rows(
-    "Difference of Averages" = non_ref_rcell(
-      mean(x) - mean(.ref_group),
-      is_ref = .in_ref_col,
-      format = "xx.xx"
-    )
+    m = rcell(mean(x), label = "Mean"),
+    dm = rcell(diff_means, label = "Difference in Means vs Placebo"),
+    .formats = "xx.xx"
   )
 }
 
+# The custom analysis function which can work with a global reference group.
 result_afun <- function(x, ref_path, .spl_context, .var) {
   ref <- get_ref_info(ref_path, .spl_context, .var)
   standard_afun(x, .ref_group = ref$ref_group, .in_ref_col = ref$in_ref_col)
@@ -81,20 +97,15 @@ result_afun <- function(x, ref_path, .spl_context, .var) {
 ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
 
 lyt <- basic_table() |>
-  split_cols_by(
-    "colspan_trt",
-    split_fun = trim_levels_to_map(map = colspan_trt_map)
-  ) |>
+  split_cols_by("colspan_trt", split_fun = trim_levels_to_map(colspan_trt_map)) |>
   split_cols_by("ARM") |>
-  analyze(
-    "AGE",
-    extra_args = list(ref_path = ref_path),
-    afun = result_afun
-  )
+  add_overall_col("Total") |>
+  analyze("AGE", afun = result_afun, extra_args = list(ref_path = ref_path))
 
 build_table(lyt, dm)
-#>                              Active Study Agent                 
-#>                          A: Drug X   C: Combination   B: Placebo
-#> ————————————————————————————————————————————————————————————————
-#> Difference of Averages     1.89           1.55                  
+#>                                      Active Study Agent                         
+#>                                  A: Drug X   C: Combination   B: Placebo   Total
+#> ————————————————————————————————————————————————————————————————————————————————
+#> Mean                               34.91         34.57          33.02      34.22
+#> Difference in Means vs Placebo     1.89           1.55                          
 ```

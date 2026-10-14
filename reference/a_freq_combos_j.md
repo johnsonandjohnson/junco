@@ -45,7 +45,7 @@ a_freq_combos_j(
   (`character`)  
   label of the level of the parent split currently being summarized
   (must be present as second argument in Content Row Functions). See
-  [`rtables::summarize_row_groups()`](https://rdrr.io/pkg/rtables/man/summarize_row_groups.html)
+  [`rtables::summarize_row_groups()`](https://insightsengineering.github.io/rtables/latest-tag/reference/summarize_row_groups.html)
   for more information.
 
 - .var:
@@ -160,16 +160,38 @@ a_freq_combos_j(
 
 - label_map:
 
-  (`tibble`)  
-  A mapping tibble to translate levels from the incoming variable into a
-  different row label to be presented on the table.  
+  (`data.frame`)  
+  A mapping data frame used to translate levels of the analysis
+  variable(s) into the row labels displayed in the table, optionally
+  conditioned on the nearest row-split.  
+
+  Four types of mappings are supported:
+
+  1.  Single-variable mapping. Column names: `level`, `label`.
+
+  2.  Multi-variable mapping. Column names: `var`, `level`, `label`.
+
+  3.  Conditional-on-row-split mapping. Column names: `<split_var>`,
+      `level`, `label`.
+
+  4.  Conditional-on-row-split multi-variable mapping. Column names:
+      `<split_var>`, `var`, `level`, `label`.
+
+  Here, `<split_var>` is a placeholder for the name of the variable used
+  for the nearest row-split (e.g. `SEX`, `PARAMCD`).  
+
+  **Recommendation**: ensure input variable(s) are of type factor, to
+  avoid the error "got a label map that doesn't provide labels for all
+  values".  
+
+  See examples for more details.
 
 - .alt_df_full:
 
   (`dataframe`)  
   Denominator dataset for fraction and relative risk calculations.  
   this argument gets populated by the rtables split machinery (see
-  [rtables::additional_fun_params](https://rdrr.io/pkg/rtables/man/additional_fun_params.html)).
+  [rtables::additional_fun_params](https://insightsengineering.github.io/rtables/latest-tag/reference/additional_fun_params.html)).
 
 - denom_by:
 
@@ -210,7 +232,12 @@ a_freq_combos_j(
 ## Value
 
 list of requested statistics with formatted
-[`rtables::CellValue()`](https://rdrr.io/pkg/rtables/man/CellValue.html).  
+[`rtables::CellValue()`](https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html).  
+
+## See also
+
+[`a_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
+for extensive `label_map` usage examples.
 
 ## Examples
 
@@ -258,8 +285,10 @@ combodf <- tribble(
 lyt <- basic_table(show_colcounts = TRUE) |>
   split_cols_by("ARM") |>
   split_cols_by("ACAT1",
-    split_fun = rtables::add_combo_levels(combosdf = combodf,
-                 trim = FALSE, keep_levels = combodf$valname)
+    split_fun = rtables::add_combo_levels(
+      combosdf = combodf,
+      trim = FALSE, keep_levels = combodf$valname
+    )
   ) |>
   analyze("TRTEMFL",
     show_labels = "hidden",

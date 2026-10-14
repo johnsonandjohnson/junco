@@ -30,7 +30,6 @@ library(junco)
 #> 
 #>     %||%
 #> Loading required package: rtables
-#> Loading required package: magrittr
 #> 
 #> Attaching package: 'rtables'
 #> The following object is masked from 'package:utils':
@@ -41,11 +40,12 @@ library(junco)
 #>   tidy.glm broom
 adsl <- create_colspan_var(pharmaverseadamjnj::adsl)
 adae <- create_colspan_var(pharmaverseadamjnj::adae)
+adlb <- create_colspan_var(pharmaverseadamjnj::adlb)
 trt_map <- create_colspan_map(adsl)
 print(trt_map)
 #>          colspan_trt               TRT01A
-#> 1 Active Study Agent Xanomeline High Dose
-#> 2 Active Study Agent  Xanomeline Low Dose
+#> 1 Active Study Agent  Xanomeline Low Dose
+#> 2 Active Study Agent Xanomeline High Dose
 #> 3                                 Placebo
 ```
 
@@ -57,7 +57,7 @@ lyt <- basic_table() |>
 
 build_table(lyt, adsl)
 #>                Active Study Agent                                                 Risk Differences                        
-#>    Xanomeline High Dose   Xanomeline Low Dose   Placebo   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Placebo
+#>    Xanomeline Low Dose   Xanomeline High Dose   Placebo   Xanomeline Low Dose vs Placebo   Xanomeline High Dose vs Placebo
 #> ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 ```
 
@@ -78,7 +78,7 @@ lyt2 <- basic_table() |>
 
 build_table(lyt2, adsl)
 #>                Active Study Agent                                                 Mean Differences                        
-#>    Xanomeline High Dose   Xanomeline Low Dose   Placebo   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Placebo
+#>    Xanomeline Low Dose   Xanomeline High Dose   Placebo   Xanomeline Low Dose vs Placebo   Xanomeline High Dose vs Placebo
 #> ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 ```
 
@@ -101,7 +101,7 @@ lyt_nodiff <- basic_table() |>
 
 build_table(lyt_nodiff, adsl)
 #>                Active Study Agent                      
-#>    Xanomeline High Dose   Xanomeline Low Dose   Placebo
+#>    Xanomeline Low Dose   Xanomeline High Dose   Placebo
 #> ———————————————————————————————————————————————————————
 ```
 
@@ -115,7 +115,7 @@ and comparisons between arms displayed in your table.
 
 Combination levels are declared via a “combo data.frame” similar to
 those accepted by
-[`rtables::add_combo_levels`](https://rdrr.io/pkg/rtables/man/add_overall_level.html).
+[`rtables::add_combo_levels`](https://insightsengineering.github.io/rtables/latest-tag/reference/add_overall_level.html).
 In particular, we use a data.frame with the following columns:
 
 - **`valname`** - (`character`) Name of the combination level (as it
@@ -149,7 +149,7 @@ lyt3 <- basic_table() |>
 
 build_table(lyt3, adsl)
 #>                        Active Study Agent                                                                        Risk Differences                                      
-#>    Xanomeline High Dose   Xanomeline Low Dose   All Xanomeline   Placebo   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Placebo   All Xanomeline vs Placebo
+#>    Xanomeline Low Dose   Xanomeline High Dose   All Xanomeline   Placebo   Xanomeline Low Dose vs Placebo   Xanomeline High Dose vs Placebo   All Xanomeline vs Placebo
 #> ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 ```
 
@@ -171,7 +171,7 @@ lyt4 <- basic_table() |>
 
 build_table(lyt4, adsl)
 #>                        Active Study Agent                                                                                                                                                        Risk Differences                                                                                                   
-#>    Xanomeline High Dose   Xanomeline Low Dose   All Xanomeline   Placebo   Double Placebo!!   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Placebo   All Xanomeline vs Placebo   Xanomeline High Dose vs Double Placebo!!   Xanomeline Low Dose vs Double Placebo!!   All Xanomeline vs Double Placebo!!
+#>    Xanomeline Low Dose   Xanomeline High Dose   All Xanomeline   Placebo   Double Placebo!!   Xanomeline Low Dose vs Placebo   Xanomeline High Dose vs Placebo   All Xanomeline vs Placebo   Xanomeline Low Dose vs Double Placebo!!   Xanomeline High Dose vs Double Placebo!!   All Xanomeline vs Double Placebo!!
 #> ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 ```
 
@@ -206,7 +206,7 @@ lyt5 <- basic_table() |>
 
 build_table(lyt5, adsl)
 #>                        Active Study Agent                                                                                                    Risk Differences                                               
-#>    Xanomeline High Dose   Xanomeline Low Dose   All Xanomeline   Placebo   Double Placebo!!   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Double Placebo!!   All Xanomeline vs Double Placebo!!
+#>    Xanomeline Low Dose   Xanomeline High Dose   All Xanomeline   Placebo   Double Placebo!!   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Double Placebo!!   All Xanomeline vs Double Placebo!!
 #> ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 ```
 
@@ -227,6 +227,130 @@ lyt6 <- basic_table() |>
 
 build_table(lyt6, adsl)
 #>                Active Study Agent                                                                        Risk Differences                                               
-#>    Xanomeline High Dose   Xanomeline Low Dose   Placebo   Xanomeline High Dose vs Xanomeline Low Dose   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Placebo
+#>    Xanomeline Low Dose   Xanomeline High Dose   Placebo   Xanomeline High Dose vs Xanomeline Low Dose   Xanomeline High Dose vs Placebo   Xanomeline Low Dose vs Placebo
 #> ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+```
+
+## Other Standard Column Structures
+
+### Subgroup Column Structures
+
+The `grouped_cols_w_subgrps` function generates columns structures, with
+or without overarching spanning column headers, wherein treatment arms
+are further split by the values of a subgrouping variable.
+
+By default, a Total column is added to the left of the subgroups within
+each treatment, though this can be disabled.
+
+Similar to `grouped_cols_w_diffs`, we can specify a `colspan_trt_map`,
+which will define both the spanning labels and the treatment variable:
+
+``` r
+
+lyt_subgrp <- basic_table() |>
+  grouped_cols_w_subgrps(trt_map, subgrp_var = "SEX")
+
+
+build_table(lyt_subgrp, adsl)
+#>                      Active Study Agent                                  
+#>       Xanomeline Low Dose         Xanomeline High Dose         Placebo   
+#>             (N=96)                       (N=72)                (N=86)    
+#>               SEX                         SEX                    SEX     
+#>      Total       F       M       Total        F       M     Total   F   M
+#> —————————————————————————————————————————————————————————————————————————
+```
+
+Similar to `grouped_cols_w_diffs`, we can get a structure without
+spanning labels by specifying `trtvar` instead of `colspan_trt_map`,
+though this does make the name of the function something of a misnomer,
+as the treatments are no longer grouped:
+
+``` r
+
+lyt_subgrp2 <- basic_table() |>
+  grouped_cols_w_subgrps(trtvar = "TRT01A", subgrp_var = "SEX")
+
+
+build_table(lyt_subgrp2, adsl)
+#>       Xanomeline Low Dose         Xanomeline High Dose         Placebo   
+#>             (N=96)                       (N=72)                (N=86)    
+#>               SEX                         SEX                    SEX     
+#>      Total       F       M       Total        F       M     Total   F   M
+#> —————————————————————————————————————————————————————————————————————————
+```
+
+`grouped_cols_w_subgrps` also accepts `combo_map_df`, with usage similar
+to that explored for `grouped_cols_w_diffs` above.
+
+#### Quartiles As A Special Case Of Subgrouping
+
+For pre-computed quartile (or any other binning) groups, we can simply
+use `grouped_cols_w_subgrps` with `total_facet = FALSE`:
+
+``` r
+
+lyt_ageqrtls <- basic_table() |>
+    grouped_cols_w_subgrps(colspan_trt_map = trt_map,
+                           subgrp_var = "AGEGR1",
+                           subgrp_lbl = "Age Quartiles",
+                           total_facet = FALSE)
+
+
+build_table(lyt_ageqrtls, adsl)
+#>                            Active Study Agent                                                            
+#>          Xanomeline Low Dose                Xanomeline High Dose                     Placebo             
+#>                 (N=96)                             (N=72)                             (N=86)             
+#>             Age Quartiles                      Age Quartiles                      Age Quartiles          
+#>    >=18 to <65   >=65 to <75   >=75   >=18 to <65   >=65 to <75   >=75   >=18 to <65   >=65 to <75   >=75
+#> —————————————————————————————————————————————————————————————————————————————————————————————————————————
+```
+
+### Shift Table Column Structure
+
+We can create the column structure for a standard Shift Table via the
+`shift_tbl_col_struct` function (assuming `BNRIND` is a classification
+at baseline and `ANRIND` is the same classification applied at analysis
+date):
+
+``` r
+
+param <- levels(adlb$PARAMCD)[1]
+lyt_shift <- basic_table() |>
+  shift_tbl_col_struct(var = "BNRIND",
+                       span_lbl = paste("Baseline", param))
+
+build_table(lyt_shift, adlb)
+#>               Baseline ALB        
+#>    N   HIGH   LOW   NORMAL   Total
+#> ——————————————————————————————————
+```
+
+### Some Vs All Column Structure
+
+The “some vs all” case, motivated by comparing counts of AEs to counts
+of treatment-related AEs, is similar to the subgroup column structures,
+with the exception that the groups being compared are not mutually
+exclusive.
+
+In light of this, `some_v_all_col_struct` creates two subgroup facets
+within each treatment group, one containing one or more levels of a
+specified subgrouping variable, the other being all levels of the
+subgrouping variable. We control this behavior by the combination of
+`subgrp_var`, declaring the variable, and `subgrp_lvls` defining which
+levels should be included in the smaller group.
+
+``` r
+
+lyt <- basic_table() |>
+    some_v_all_col_struct(trt_map,
+                          subgrp_var = "AETOXGR",
+                          subgrp_lvls = c("4", "5"),
+                          all_lbl = "All Grades",
+                          subgrp_lbl = "High Toxicity")
+build_table(lyt, adae)
+#>                      Active Study Agent                                                
+#>       Xanomeline Low Dose          Xanomeline High Dose               Placebo          
+#>             (N=454)                      (N=436)                      (N=301)          
+#>    All Grades   High Toxicity   All Grades   High Toxicity   All Grades   High Toxicity
+#> ———————————————————————————————————————————————————————————————————————————————————————
 ```
