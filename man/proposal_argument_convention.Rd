@@ -7,7 +7,7 @@
 \item{...}{additional arguments for the lower level functions.}
 
 \item{.aligns}{(\code{character})\cr alignment for table contents (not including labels). When \code{NULL}, \code{'center'}
-is applied. See \code{\link[formatters:list_formats]{formatters::list_valid_aligns()}} for a list of all currently supported alignments.}
+is applied. See \code{\link[formatters:list_valid_aligns]{formatters::list_valid_aligns()}} for a list of all currently supported alignments.}
 
 \item{.all_col_counts}{(\code{vector} of \code{integer})\cr each value represents a global count for a column. Values are
 taken from \code{alt_counts_df} if specified (see \code{\link[rtables:build_table]{rtables::build_table()}}).}
@@ -85,7 +85,7 @@ for more information.}
 \item{lyt}{(\code{layout})\cr input layout where analyses will be added to.}
 
 \item{method}{(\code{string})\cr specifies the test used to calculate the p-value for the difference between
-two proportions. For options, see \code{\link[tern:prop_diff_test]{tern::s_test_proportion_diff()}}. Default is \code{NULL} so no test is performed.}
+two proportions. For options, see \code{\link[tern:s_test_proportion_diff]{tern::s_test_proportion_diff()}}. Default is \code{NULL} so no test is performed.}
 
 \item{na.rm}{(\code{flag})\cr whether \code{NA} values should be removed from \code{x} prior to analysis.}
 

@@ -22,7 +22,7 @@ rm_other_facets_fact <- function(nm) {
 #' @param label (`character`)\cr Label for the new facet.
 #'
 #' @note Current add_overall_facet is bugged. Can be used directly after it's fixed
-#' https://github.com/insightsengineering/rtables/issues/768
+#' https://github.com/pharmaverse/rtables/issues/768
 #' @examples
 #' splfun <- make_split_fun(post = list(real_add_overall_facet("Total", "Total")))
 #'
@@ -395,11 +395,10 @@ insert_subset_exprs <- function(partinfo, spl, comp_path = NULL) {
   names(rvs) <- names(partinfo$values)
   exprs <- lapply(rvs, function(rvi) make_subset_expr(spl, rvi))
   newvals <- mapply(function(val, expr) {
-    exvals <- utils::getFromNamespace("splv_extra", "rtables")(val)
-    if (!is.null(utils::getFromNamespace("value_expr", "rtables")(val))) {
+    exvals <- rtables::splv_extra(val)
+    if (!is.null(rtables::value_expr(val))) {
       return(val)
     }
-    ## XXX fix ASAP, export setter from rtables
     val@subset_expression <- expr
     val
   },

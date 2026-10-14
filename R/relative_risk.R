@@ -57,14 +57,15 @@ NULL
 #' )
 #' @export
 s_relative_risk <- function(
-    df,
-    .var,
-    .ref_group,
-    .in_ref_col,
-    variables = list(strata = NULL),
-    conf_level = 0.95,
-    method = "cmh",
-    weights_method = "cmh") {
+  df,
+  .var,
+  .ref_group,
+  .in_ref_col,
+  variables = list(strata = NULL),
+  conf_level = 0.95,
+  method = "cmh",
+  weights_method = "cmh"
+) {
   method <- match.arg(method)
   weights_method <- match.arg(weights_method)
   checkmate::assert_character(variables$strata, null.ok = FALSE)
@@ -134,15 +135,16 @@ s_relative_risk <- function(
 #' @export
 #' @order 2
 a_relative_risk <- function(
-    df,
-    .var,
-    ref_path,
-    .spl_context,
-    ...,
-    .stats = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  .var,
+  ref_path,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 

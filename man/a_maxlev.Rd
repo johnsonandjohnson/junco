@@ -114,3 +114,6 @@ lyt <- basic_table() |>
   )
 build_table(lyt, my_adae, alt_counts_df = my_adsl)
 }
+\author{
+WW
+}

@@ -57,15 +57,15 @@ unmodified default behavior. Can be negative.}
 }
 \value{
 \itemize{
-\item \code{s_event_free} returns a list as returned by the \code{\link[tern:survival_timepoint]{tern::s_surv_timepoint()}}
+\item \code{s_event_free} returns a list as returned by the \code{\link[tern:s_surv_timepoint]{tern::s_surv_timepoint()}}
 with an additional three-dimensional statistic \code{event_free_ci} which
 combines the \code{event_free_rate} and \code{rate_ci} statistics.
-\item \code{a_event_free} is analogous to \link[tern:survival_timepoint]{tern::a_surv_timepoint} but with the additional
+\item \code{a_event_free} is analogous to \link[tern:a_surv_timepoint]{tern::a_surv_timepoint} but with the additional
 three-dimensional statistic described above  available via \code{.stats}.
 }
 }
 \description{
-This is a workaround for \code{\link[tern:survival_timepoint]{tern::s_surv_timepoint()}}, which adds a statistic
+This is a workaround for \code{\link[tern:s_surv_timepoint]{tern::s_surv_timepoint()}}, which adds a statistic
 containing the time point specific survival estimate together with the
 confidence interval.
 }
@@ -73,7 +73,7 @@ confidence interval.
 \itemize{
 \item \code{a_event_free()}: Formatted analysis function which is used as \code{afun}.
 
-\item \code{s_event_free()}: Statistics function which works like \code{\link[tern:survival_timepoint]{tern::s_surv_timepoint()}},
+\item \code{s_event_free()}: Statistics function which works like \code{\link[tern:s_surv_timepoint]{tern::s_surv_timepoint()}},
 the difference is that it returns the additional statistic \code{event_free_ci}.
 
 }}

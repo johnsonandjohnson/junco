@@ -9,7 +9,8 @@ jj_complex_scorefun(
   usefirstcol = FALSE,
   colpath = NULL,
   firstcat = NULL,
-  lastcat = NULL
+  lastcat = NULL,
+  cellvalue_index = 1
 )
 }
 \arguments{
@@ -30,6 +31,9 @@ If you wish to put any category at the top of the list despite any n's, user can
 
 \item{lastcat}{(\code{logical})\cr
 If you wish to put any category at the bottom of the list despite any n's, user can specify it here.}
+
+\item{cellvalue_index}{(\code{integer})\cr
+Index of the cell value to perform the scoring on.}
 }
 \value{
 A function which can be used as a score function (scorefun in \code{sort_at_path}).

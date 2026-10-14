@@ -73,7 +73,7 @@ elements \code{coefs} (coefficient list) and \code{grid} (corresponding \code{da
 
 \item{contrast_df}{(\code{numeric})
 Degrees of freedom from the unadjusted contrast estimates, used to derive
-a single df for \code{\link[emmeans:glht-support]{emmeans::as.glht()}}.}
+a single df for \code{\link[emmeans:as.glht]{emmeans::as.glht()}}.}
 }
 \description{
 Helpers for Processing Least Square Means

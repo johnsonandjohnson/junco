@@ -2,36 +2,50 @@
 % Please edit documentation in R/get_ref_info.R
 \name{get_ref_info}
 \alias{get_ref_info}
-\title{Obtain Reference Information for a Global Reference Group}
+\title{Obtain reference group information from split context.}
 \usage{
 get_ref_info(ref_path, .spl_context, .var = NULL)
 }
 \arguments{
-\item{ref_path}{(\code{character})\cr reference group specification as an \code{rtables}
-\code{colpath}, see details.}
+\item{ref_path}{(\code{character}) \cr
+Reference group specification as an \code{rtables} \code{colpath}; see Details.}
 
-\item{.spl_context}{(\code{data.frame})\cr see \link[rtables:spl_context]{rtables::spl_context}.}
+\item{.spl_context}{(\code{data.frame}) \cr
+Ancestor split-state information passed by \code{rtables}.}
 
-\item{.var}{(\code{character})\cr the variable being analyzed, see \link[rtables:additional_fun_params]{rtables::additional_fun_params}.}
+\item{.var}{(\code{character(1)}) \cr
+The variable being analyzed; see \link[rtables:additional_fun_params]{rtables::additional_fun_params}.
+If supplied, the corresponding column is extracted from the reference-group
+data. If \code{NULL}, the complete reference-group data frame is returned.}
 }
 \value{
-A list with \code{ref_group} and \code{in_ref_col}, which can be used as
-\code{.ref_group} and \code{.in_ref_col} as if being directly passed to an analysis
-function by \code{rtables}, see \link[rtables:additional_fun_params]{rtables::additional_fun_params}.
+A list with the following elements:
+\itemize{
+\item \code{in_ref_col} (\code{logical(1)} or \code{NULL}) indicates whether the
+current column matches the reference path.
+This corresponds to \code{.in_ref_col} in \link[rtables:additional_fun_params]{rtables::additional_fun_params}.
+\item \code{ref_group} (\code{data.frame}, vector, or \code{NULL}) contains the
+observations belonging to the reference group. If \code{.var} is \code{NULL},
+the complete data frame is returned; otherwise, the column specified
+by \code{.var} is returned.
+This corresponds to \code{.ref_group} in \link[rtables:additional_fun_params]{rtables::additional_fun_params}.
+}
+
+If the reference path is not present in the current column-split
+hierarchy, both elements are \code{NULL}.
 }
 \description{
-This helper function can be used in custom analysis functions, by passing
-an extra argument \code{ref_path} which defines a global reference group by
-the corresponding column split hierarchy levels.
-}
-\details{
-The reference group is specified in \code{colpath} hierarchical fashion in \code{ref_path}:
-the first column split variable is the first element, and the level to use is the
-second element. It continues until the last column split variable with last
-level to use.
-Note that depending on \code{.var}, either a \code{data.frame} (if \code{.var} is \code{NULL}) or
-a vector (otherwise) is returned. This allows usage for analysis functions with
-\code{df} and \code{x} arguments, respectively.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
+\code{get_ref_info()} identifies a reference group defined by a column-split
+path and returns both the reference-group data and an indicator of whether
+the current column is the reference column. It is intended for use inside
+custom \code{rtables} analysis functions.
+
+The reference group is specified using \code{ref_path}, which consists of
+alternating column-split variable names and its corresponding levels.
+For example, \code{c("SEX", "F", "ARM", "Placebo")} specifies the column-split
+path where \code{SEX} is \code{"F"} and \code{ARM} is \code{"Placebo"}.
 }
 \examples{
 dm <- DM
@@ -48,16 +62,21 @@ colspan_trt_map <- create_colspan_map(
   trt_var = "ARM"
 )
 
+# A standard analysis function which uses a reference group.
 standard_afun <- function(x, .ref_group, .in_ref_col) {
+  diff_means <- if (isFALSE(.in_ref_col)) {
+    mean(x) - mean(.ref_group)
+  } else {
+    NULL
+  }
   in_rows(
-    "Difference of Averages" = non_ref_rcell(
-      mean(x) - mean(.ref_group),
-      is_ref = .in_ref_col,
-      format = "xx.xx"
-    )
+    m = rcell(mean(x), label = "Mean"),
+    dm = rcell(diff_means, label = "Difference in Means vs Placebo"),
+    .formats = "xx.xx"
   )
 }
 
+# The custom analysis function which can work with a global reference group.
 result_afun <- function(x, ref_path, .spl_context, .var) {
   ref <- get_ref_info(ref_path, .spl_context, .var)
   standard_afun(x, .ref_group = ref$ref_group, .in_ref_col = ref$in_ref_col)
@@ -66,16 +85,10 @@ result_afun <- function(x, ref_path, .spl_context, .var) {
 ref_path <- c("colspan_trt", " ", "ARM", "B: Placebo")
 
 lyt <- basic_table() |>
-  split_cols_by(
-    "colspan_trt",
-    split_fun = trim_levels_to_map(map = colspan_trt_map)
-  ) |>
+  split_cols_by("colspan_trt", split_fun = trim_levels_to_map(colspan_trt_map)) |>
   split_cols_by("ARM") |>
-  analyze(
-    "AGE",
-    extra_args = list(ref_path = ref_path),
-    afun = result_afun
-  )
+  add_overall_col("Total") |>
+  analyze("AGE", afun = result_afun, extra_args = list(ref_path = ref_path))
 
 build_table(lyt, dm)
 }

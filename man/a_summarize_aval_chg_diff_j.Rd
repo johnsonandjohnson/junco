@@ -22,7 +22,7 @@ a_summarize_aval_chg_diff_j(
   variables = list(arm = "TRT01A", covariates = NULL),
   format_na_str = "",
   .stats = list(col1 = "count_denom_frac", col23 = "mean_ci_3d", coldiff =
-    "meandiff_ci_3d"),
+    "mean_diff_with_ci"),
   .formats = list(col1 = NULL, col23 = "xx.dx (xx.dx, xx.dx)", coldiff =
     "xx.dx (xx.dx, xx.dx)"),
   .formats_fun = list(col1 = jjcsformat_count_denom_fraction, col23 = jjcsformat_xx,
@@ -100,7 +100,7 @@ a vector that can contain single variable names (such as 'X1'), and/or interacti
 The following column names are to be used: \code{col1}, \code{col23}, \code{coldiff}.\cr
 For \code{col1}, the following stats can be specified.\cr
 For \code{col23}, only \code{mean_ci_3d} is available. When ancova = \code{TRUE} these are LS Means, otherwise, arithmetic means.\cr
-For \code{coldiff}, only \code{meandiff_ci_3d} is available. When ancova = \code{TRUE} these
+For \code{coldiff}, only \code{mean_diff_with_ci} is available. When ancova = \code{TRUE} these
 are LS difference in means, otherwise, difference in means based upon 2-sample t-test.\cr}
 
 \item{.formats}{(named \code{list})\cr formats for the column statistics. \code{xx.d} style formats can be used.}
@@ -145,7 +145,7 @@ a 3-column layout in the columns (column 1 = N, column 2 = Value, column 3 = Cha
 In the difference columns, only 1 column will be presented : difference + CI\cr
 When ancova = \code{TRUE}, the presented statistics will be based on ANCOVA method (\code{s_summarize_ancova_j}).\cr
 mean and ci (both for Value (column 2) and CHG (column 3)) using statistic \code{lsmean_ci}\cr
-mean and ci for the difference column are based on same ANCOVA model using statistic \code{lsmean_diffci}\cr
+mean and ci for the difference column are based on same ANCOVA model using statistic \code{lsmean_diff_with_ci}\cr
 When ancova = \code{FALSE}, descriptive statistics will be used instead.\cr
 In the difference column, the 2-sample t-test will be used.
 }
@@ -242,8 +242,8 @@ result <- build_table(lyt, ADEG)
 result
 }
 \seealso{
-Other Inclusion of ANCOVA Functions: 
-\code{\link{a_summarize_ancova_j}()},
-\code{\link{s_ancova_j}()}
+Other Inclusion of ANCOVA Functions:
+\code{\link[=a_summarize_ancova_j]{a_summarize_ancova_j()}},
+\code{\link[=s_ancova_j]{s_ancova_j()}}
 }
 \concept{Inclusion of ANCOVA Functions}

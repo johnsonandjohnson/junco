@@ -511,8 +511,7 @@ testthat::test_that("a_freq_j works (old count_subject case)", {
         new_levels = list(c("Total"), list(ANRIND_levels)),
         new_levels_after = TRUE,
         .indent_mods = 1L,
-        restr_columns = c(toupper(ANRIND_levels), "TOTAL"),
-        .alt_full_df = adsl
+        restr_columns = c(toupper(ANRIND_levels), "TOTAL")
       )
     )
 
@@ -625,8 +624,6 @@ testthat::test_that("a_freq_j works (old a_countpat_newlevels case)", {
       afun = a_freq_j,
       extra_args = list(
         .stats = c("count_unique_fraction"),
-        .alt_df_full = adsl,
-        ## END
         denom = "n_df",
         new_levels = new_BMRKR2_levels,
         .indent_mods = 1L,

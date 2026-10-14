@@ -104,7 +104,8 @@ my_range_format <- jjcsformat_range_fct("xx.xx", censor_char = "*")
 my_range_format(c(0.35235, 99.2342, 1, 1))
 }
 \seealso{
-Other JJCS formatting functions: 
-\code{\link{count and fraction related formatting functions}}
+Other JJCS formatting functions:
+\code{\link{count and fraction related formatting functions}},
+\code{\link[=jjcsformat_fraction]{jjcsformat_fraction()}}
 }
 \concept{JJCS formatting functions}

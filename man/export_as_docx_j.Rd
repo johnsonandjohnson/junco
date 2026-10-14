@@ -54,7 +54,7 @@ and its basename will replace argument \code{tblid}.\cr
 
 \item{theme}{(function factory)\cr the theme to apply to the flextable.\cr
 (optional) Default = \code{\link[=theme_docx_default_j]{theme_docx_default_j()}}.\cr
-See \code{\link[=theme_docx_default_j]{theme_docx_default_j()}} or \code{\link[rtables.officer:tt_to_flextable]{rtables.officer::theme_docx_default()}}
+See \code{\link[=theme_docx_default_j]{theme_docx_default_j()}} or \code{\link[rtables.officer:theme_docx_default]{rtables.officer::theme_docx_default()}}
 for more details.}
 
 \item{add_page_break}{(\code{logical})\cr (optional) Default = FALSE.}

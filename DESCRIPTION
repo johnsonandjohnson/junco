@@ -1,7 +1,7 @@
 Package: junco
 Title: Create Common Tables and Listings Used in Clinical Trials
-Version: 0.1.6
-Date: 2026-05-06
+Version: 0.1.7
+Date: 2026-10-09
 Authors@R: c(
     person("Gabriel", "Becker", , "gabembecker@gmail.com", role = c("cre", "aut"),
            comment = "Original creator of the package, and author of included rtables functions"),
@@ -32,17 +32,16 @@ URL: https://github.com/johnsonandjohnson/junco, https://johnsonandjohnson.githu
 BugReports: https://github.com/johnsonandjohnson/junco/issues
 Depends:
     R (>= 4.4),
-    formatters (>= 0.5.12),
-    rtables (>= 0.6.16)
+    formatters (>= 0.5.13),
+    rtables (>= 0.6.17)
 Imports:
     tidytlg (>= 0.12.0),
-    tern (>= 0.9.10),
+    tern (>= 0.9.13),
     rlistings (>= 0.2.13),
     checkmate (>= 2.1.0),
     rbmi (>= 1.6.0),
     broom,
     methods,
-    dplyr,
     generics,
     stats,
     survival,
@@ -50,18 +49,16 @@ Imports:
     utils,
     emmeans,
     mmrm,
-    assertthat,
     vcdExtra (>= 0.8.7),
-    rtables.officer (>= 0.1.0),
+    rtables.officer (>= 0.1.2),
     flextable (>= 0.9.11),
     officer,
     xml2,
     ggplot2,
-    stringi
+    assertthat
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Suggests:
     knitr,
     rmarkdown,
@@ -73,8 +70,12 @@ Suggests:
     readxl,
     rlang,
     tidyr,
-    pharmaverseadamjnj (>= 0.0.4),
+    pharmaverseadamjnj (>= 0.0.5),
     multcomp,
-    lifecycle
+    lifecycle,
+    dplyr,
+    ratesci (>= 1.1.0),
+    random.cdisc.data
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.1.0

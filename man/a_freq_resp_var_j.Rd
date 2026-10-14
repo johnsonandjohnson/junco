@@ -15,14 +15,14 @@ a_freq_resp_var_j(
   drop_levels = FALSE,
   riskdiff = TRUE,
   ref_path = NULL,
-  variables = formals(s_proportion_diff)$variables,
+  variables = list(strata = NULL),
   conf_level = formals(s_proportion_diff)$conf_level,
   method = c("wald", "waldcc", "cmh", "ha", "newcombe", "newcombecc", "strat_newcombe",
-    "strat_newcombecc"),
+    "strat_newcombecc", "cmh_sato", "cmh_mn", "uncond_exact_diff"),
   weights_method = formals(s_proportion_diff)$weights_method,
   .formats = NULL,
   na_str = rep("NA", 3),
-  ...
+  legacy = FALSE
 )
 }
 \arguments{
@@ -58,7 +58,7 @@ a_freq_resp_var_j(
 
 \item{na_str}{(\code{character})\cr string to use for NA values. Defaults to \code{rep("NA", 3)}.}
 
-\item{...}{Additional arguments passed to other functions.}
+\item{legacy}{(\code{logical(1)})\cr To allow for backward compatibility default of used format.}
 }
 \value{
 Formatted analysis function which is used as \code{afun} in \code{analyze_vars()}

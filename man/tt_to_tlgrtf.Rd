@@ -92,7 +92,7 @@ See \code{\link[formatters:format_value]{formatters::format_value()}} for more d
 \item{alignments}{(\code{list})\cr List of named lists. Vectorized.
 (Default = \code{list()}) Used to specify individual column or cell alignments.
 Each named list contains \code{row}, \code{col}, and \code{value}, which are passed to
-\code{\link[huxtable:align]{huxtable::set_align()}} to set the alignments.}
+\code{\link[huxtable:set_align]{huxtable::set_align()}} to set the alignments.}
 
 \item{validate}{(\code{logical(1)})\cr Whether to validate the table structure using
 \code{rtables::validate_table_struct()}. Defaults to \code{TRUE}. If \code{FALSE}, a message

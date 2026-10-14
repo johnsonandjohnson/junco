@@ -82,11 +82,11 @@ test_that("a_freq_j_with_exclude allows to exclude row split levels from the ana
 })
 
 test_that("a_freq_j in specific situation error for not passing alt_counts_df", {
-  library(dplyr)
   trtvar <- "ARM"
   ctrl_grp <- "B: Placebo"
+  cols <- c("USUBJID", "STRATA1", "EOSSTT", trtvar)
 
-  adsl <- ex_adsl |> select(c("USUBJID", "STRATA1", "EOSSTT", all_of(trtvar)))
+  adsl <- ex_adsl[, cols]
   adsl$colspan_trt <- factor(
     ifelse(adsl[[trtvar]] == ctrl_grp, " ", "Active Study Agent"),
     levels = c("Active Study Agent", " ")
@@ -116,21 +116,16 @@ test_that("a_freq_j in specific situation error for not passing alt_counts_df", 
     split_rows_by("STRATA1") |>
     analyze("EOSSTT", afun = a_freq_j, extra_args = a_freq_j_args)
 
-  expect_error(
-    build_table(lyt, adsl),
-    "In order to get correct numbers in relative risk column"
-  )
-
   result <- build_table(lyt, adsl, alt_counts_df = adsl)
   expect_snapshot(cran = TRUE, result)
 })
 
 test_that("a_freq_j in layout with relative risk column for combined facet", {
-  library(dplyr)
   trtvar <- "ARM"
   ctrl_grp <- "B: Placebo"
+  cols <- c("USUBJID", "STRATA1", "EOSSTT", trtvar)
 
-  adsl <- ex_adsl |> select(c("USUBJID", "STRATA1", "EOSSTT", all_of(trtvar)))
+  adsl <- ex_adsl[, cols]
   adsl$colspan_trt <- factor(
     ifelse(adsl[[trtvar]] == ctrl_grp, " ", "Active Study Agent"),
     levels = c("Active Study Agent", " ")
@@ -220,4 +215,143 @@ test_that("a_freq_j in layout with relative risk column for combined facet", {
   )
 
   testthat::expect_equal(actual, expected, ignore_attr = TRUE)
+})
+
+test_that("a_freq_j with label_map and no data in row error message", {
+  set.seed(12)
+  dta <- data.frame(
+    id = 1:100,
+    visit = factor(rep(c("Baseline", "Week 1"), length.out = 100)),
+    rsp = sample(c("Y", "N"), 100, TRUE),
+    grp = factor(rep(c("A", "B"), each = 50), levels = c("A", "B"))
+  )
+  label_map <- data.frame(
+    visit = rep(c("Baseline", "Week 1"), each = 2),
+    value = c("Y"),
+    label = c("Yes")
+  )
+  dta$rsp[dta$visit == "Baseline"] <- "N"
+
+  lyt1 <- basic_table() |>
+    split_cols_by("grp") |>
+    split_rows_by("visit") |>
+    analyze(
+      "rsp",
+      afun = a_freq_j,
+      extra_args = list(
+        val = "Y",
+        id = "id"
+      )
+    )
+  expect_no_error(result1 <- build_table(lyt1, dta))
+
+  lyt2 <- basic_table() |>
+    split_cols_by("grp") |>
+    split_rows_by("visit") |>
+    analyze(
+      "rsp",
+      afun = a_freq_j,
+      extra_args = list(
+        label_map = label_map,
+        val = "Y",
+        id = "id"
+      )
+    )
+  expect_error(result2 <- build_table(lyt2, dta),
+    regexp = "Perhaps convert analysis variable rsp to a factor"
+  )
+
+  # same layout works fine with analysis variable being factor
+  dta2 <- dta
+  dta2$rsp <- factor(dta2$rsp, levels = c("Y", "N"))
+  expect_no_error(result3 <- build_table(lyt2, dta2))
+})
+
+test_that("a_freq_j raises an error when an incorrect id is specified", {
+  dta <- data.frame(
+    ID = 1:6,
+    rsp = c(TRUE, FALSE, FALSE, FALSE, TRUE, FALSE),
+    grp = factor(c("A", "A", "A", "B", "B", "B"))
+  )
+  lyt <- basic_table() |>
+    split_cols_by("grp") |>
+    analyze("rsp", afun = a_freq_j)
+  expect_error(
+    build_table(lyt, dta),
+    "id.*subset"
+  )
+})
+
+test_that("a_freq_j in case of data as in prior bug for cmh sato", {
+  # Example as in tern bug report https://github.com/pharmaverse/tern/issues/1535
+
+  tbl <- array(
+    c(
+      14, 15, 13, 19, # stratum S1
+      4, 0, 0, 0, # stratum S2
+      45, 32, 53, 61, # stratum S3
+      0, 8, 0, 0 # stratum S4
+    ),
+    dim = c(2L, 2L, 4L),
+    dimnames = list(grp = c("ref", "Not-ref"), rsp = c("TRUE", "FALSE"), strata = c("S1", "S2", "S3", "S4"))
+  )
+
+  # convert to data for usage with a_freq_j
+  df_input <- as.data.frame.table(tbl, responseName = "n")
+
+  expanded_df <- df_input[rep(seq_len(nrow(df_input)), df_input$n), c("grp", "rsp", "strata")]
+  expanded_df$USUBJID <- rownames(expanded_df)
+
+  ### usage with a_freq_j with relative risk column
+
+  trtvar <- "grp"
+  ctrl_grp <- "ref"
+
+  expanded_df$colspan_trt <- factor(
+    ifelse(expanded_df[[trtvar]] == ctrl_grp, " ", "Active Study Agent"),
+    levels = c("Active Study Agent", " ")
+  )
+  expanded_df$rrisk_header <- "Risk Difference (%) (95% CI)"
+  expanded_df$rrisk_label <- paste(expanded_df[[trtvar]], paste("vs", ctrl_grp))
+
+
+  lyt <- basic_table() |>
+    split_cols_by("colspan_trt", split_fun = drop_split_levels) |>
+    split_cols_by(trtvar, split_fun = drop_split_levels) |>
+    split_cols_by("rrisk_header", nested = FALSE) |>
+    split_cols_by(trtvar, labels_var = "rrisk_label", split_fun = keep_split_levels("Not-ref")) |>
+    analyze(
+      "rsp",
+      afun = a_freq_j,
+      extra_args = list(
+        variables = list(strata = "strata"),
+        method = "cmh_sato",
+        ref_path = c("colspan_trt", " ", trtvar, ctrl_grp),
+        val = "TRUE"
+      )
+    )
+  expect_warning(
+    result <- build_table(lyt, expanded_df),
+    "Less"
+  )
+
+  expect_snapshot(cran = TRUE, result)
+})
+
+test_that("a_freq_j with unique_fraction produces expected table output", {
+  set.seed(12)
+  dta <- data.frame(
+    id = 1:100,
+    rsp = factor(sample(c(TRUE, FALSE), 100, TRUE)),
+    grp = factor(rep(c("A", "B"), each = 50), levels = c("A", "B"))
+  )
+  lyt <- basic_table() |>
+    split_cols_by("grp") |>
+    analyze(
+      "rsp",
+      afun = a_freq_j,
+      extra_args = list(id = "id", .stats = "unique_fraction")
+    )
+  result <- build_table(lyt, dta)
+  expect_snapshot(cran = TRUE, result)
 })

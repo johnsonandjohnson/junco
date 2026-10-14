@@ -25,14 +25,24 @@ on:
         default: rhub
         options:
           - rhub
-          - revdepcheck
+          - coverage
 
 jobs:
-  revdepcheck:
-    name: revdepcheck 🧑‍🔬
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.chosen-workflow == 'revdepcheck' }}
-    uses: johnsonandjohnson/actions/.github/workflows/revdepcheck.yaml@dev
+  # revdepcheck:
+  #   name: revdepcheck 🧑‍🔬
+  #   if: ${{ github.event_name != 'workflow_dispatch' || inputs.chosen-workflow == 'revdepcheck' }}
+  #   uses: johnsonandjohnson/actions/.github/workflows/revdepcheck.yaml@dev
   rhub:
     name: R-hub 🌐
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.chosen-workflow == 'rhub' }}
     uses: johnsonandjohnson/actions/.github/workflows/rhub.yaml@dev
+
+  coverage:
+     name: Coverage 📔
+     uses: insightsengineering/r.pkg.template/.github/workflows/test-coverage.yaml@main
+     secrets:
+       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
+     with:
+       deps-installation-method: setup-r-dependencies
+       additional-env-vars: |
+         NOT_CRAN=true

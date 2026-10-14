@@ -121,7 +121,8 @@ test_that("a_summarize_aval_chg_diff_j t-test sparse data works as expected", {
     ancova = FALSE,
     comp_btw_group = TRUE,
     ref_path = c("colspan_trt", " ", "ARM", "B: Placebo"),
-    multivars = multivars
+    multivars = multivars,
+    format_na_str = rep("NE", 3)
   )
 
 
@@ -150,7 +151,6 @@ test_that("a_summarize_aval_chg_diff_j t-test sparse data works as expected", {
   expect_s4_class(tbl2, "TableTree")
   expect_snapshot(cran = TRUE, tbl2)
 })
-
 
 
 test_that("a_summarize_aval_chg_diff_j works as expected", {
@@ -440,22 +440,19 @@ test_that("a_summarize_aval_chg_diff_j works with ancova = TRUE", {
   expect_equal(ncol(result), 7) # 3 columns for ARMA, 3 for Placebo, 1 for Blood Pressure
 })
 
-test_that("s_summarize_desc_j and safe_t_test does not fail for almost constant data", {
+test_that("s_summarize_desc_j does not fail for almost constant data", {
   df <- data.frame(
-    "AVAL" = c(1.709999999999999964473,
-               1.710000000000000186517,
-               1.710000000000000186517,
-               1.710000000000000186517,
-               1.710000000000000186517)
+    "AVAL" = c(
+      1.709999999999999964473,
+      1.710000000000000186517,
+      1.710000000000000186517,
+      1.710000000000000186517,
+      1.710000000000000186517
+    )
   )
-  expect_error(t.test(df[["AVAL"]], df[["AVAL"]]))
 
   stats <- s_summarize_desc_j(df, "AVAL", .ref_group = df, .in_ref_col = FALSE)
   expect_no_error(stats)
-
-  stats <- safe_t_test(df[["AVAL"]], df[["AVAL"]])
-  expect_no_error(stats)
-
 })
 
 test_that("s_summarize_desc_j with empty vectors", {
@@ -465,8 +462,7 @@ test_that("s_summarize_desc_j with empty vectors", {
   expect_error(t.test(df[["AVAL"]], df[["AVAL"]]))
 
   stats <- s_summarize_desc_j(df, "AVAL", .ref_group = df, .in_ref_col = FALSE)
-  expect_equal(stats[["mean_diffci"]], rep(NA_real_, 3), ignore_attr = TRUE)
-
+  expect_equal(stats[["mean_diff_with_ci"]], rep(NA_real_, 3), ignore_attr = TRUE)
 })
 
 test_that("a_summarize_aval_chg_diff_j ancova in a combined column work as expected", {
@@ -484,7 +480,7 @@ test_that("a_summarize_aval_chg_diff_j ancova in a combined column work as expec
       PARAMCD = droplevels(PARAMCD),
       AVISIT = droplevels(AVISIT)
     ) |>
-    left_join(adsl)
+    left_join(adsl, by = c("USUBJID", "ARM"))
 
   multivars <- c("AVAL", "AVAL", "CHG")
   extra_args_3col <- list(
@@ -543,7 +539,6 @@ test_that("a_summarize_aval_chg_diff_j ancova in a combined column work as expec
   lyt <- lyt |>
     split_rows_by("PARAMCD") |>
     split_rows_by("AVISIT", child_labels = "hidden") |>
-
     analyze("STUDYID", afun = a_summarize_aval_chg_diff_j, extra_args = extra_args_3col)
 
   tbl <- expect_silent(build_table(lyt, advs, alt_counts_df = adsl))

@@ -19,8 +19,7 @@
 #' @param weights_method (`character`)\cr method for calculating weights.
 #' @param .formats (`character` or NULL)\cr formats to apply to the statistics. If NULL, default formats will be used.
 #' @param na_str (`character`)\cr string to use for NA values. Defaults to `rep("NA", 3)`.
-#' @param ... Additional arguments passed to other functions.
-#'
+#' @param legacy (`logical(1)`)\cr To allow for backward compatibility default of used format.
 #' @return Formatted analysis function which is used as `afun` in `analyze_vars()`
 #' and as `cfun` in `summarize_row_groups()`.
 #'
@@ -47,32 +46,36 @@
 #'
 #' result
 a_freq_resp_var_j <- function(
-    df,
-    .var,
-    .df_row,
-    .N_col,
-    .spl_context,
-    resp_var = NULL,
-    id = "USUBJID",
-    drop_levels = FALSE,
-    riskdiff = TRUE,
-    ref_path = NULL,
-    variables = formals(s_proportion_diff)$variables,
-    conf_level = formals(s_proportion_diff)$conf_level,
-    method = c(
-      "wald",
-      "waldcc",
-      "cmh",
-      "ha",
-      "newcombe",
-      "newcombecc",
-      "strat_newcombe",
-      "strat_newcombecc"
-    ),
-    weights_method = formals(s_proportion_diff)$weights_method,
-    .formats = NULL,
-    na_str = rep("NA", 3),
-    ...) {
+  df,
+  .var,
+  .df_row,
+  .N_col,
+  .spl_context,
+  resp_var = NULL,
+  id = "USUBJID",
+  drop_levels = FALSE,
+  riskdiff = TRUE,
+  ref_path = NULL,
+  variables = list(strata = NULL),
+  conf_level = formals(s_proportion_diff)$conf_level,
+  method = c(
+    "wald",
+    "waldcc",
+    "cmh",
+    "ha",
+    "newcombe",
+    "newcombecc",
+    "strat_newcombe",
+    "strat_newcombecc",
+    "cmh_sato",
+    "cmh_mn",
+    "uncond_exact_diff"
+  ),
+  weights_method = formals(s_proportion_diff)$weights_method,
+  .formats = NULL,
+  na_str = rep("NA", 3),
+  legacy = FALSE
+) {
   # ---- Derive statistics: xx / xx (xx.x%)
 
   if (is.null(resp_var)) {
@@ -136,18 +139,9 @@ a_freq_resp_var_j <- function(
   inriskdiffcol <- grepl("difference", tolower(colid), fixed = TRUE)
 
   if (riskdiff) {
-    trt_var_refpath <- h_get_trtvar_refpath(
-      ref_path,
-      .spl_context,
-      df
-    )
-    # trt_var_refpath is list with elements
-    # trt_var trt_var_refspec cur_trt_grp ctrl_grp
-    # make these elements available in current environment
-    trt_var <- trt_var_refpath$trt_var
-    trt_var_refspec <- trt_var_refpath$trt_var_refspec
-    cur_trt_grp <- trt_var_refpath$cur_trt_grp
-    ctrl_grp <- trt_var_refpath$ctrl_grp
+    trt_var <- ref_path[length(ref_path) - 1L]
+    ctrl_grp <- ref_path[length(ref_path)]
+    cur_trt_grp <- h_get_cur_trt_grp(trt_var, .spl_context)
   }
 
   fn <- function(levii) {
@@ -171,10 +165,15 @@ a_freq_resp_var_j <- function(
       .stat <- "count_unique_denom_fraction"
       x_stat <- rslt[[.stat]]$Y
       # use .formats if provided, otherwise default to jjcsformat_count_denom_fraction
-      fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction else .formats
+      if (!legacy) {
+        fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction else .formats
+      } else {
+        fmt <- if (is.null(.formats)) jjcsformat_count_denom_fraction_legacy else .formats
+      }
+
       rslt <- rcell(x_stat, format = fmt)
     } else {
-      # use the risk differenc function s_rel_risk_val_j on the current level of the incoming variable (.var)
+      # use the risk difference function s_risk_diff_val_j on the current level of the incoming variable (.var)
       # note that the response variable will become .var in the below call
       # val is restricted to Y to show number of response on the current level of .var
       denom_df <- dfrowii
@@ -186,7 +185,7 @@ a_freq_resp_var_j <- function(
         .spl_context
       )
 
-      rslt <- s_rel_risk_val_j(
+      rslt <- s_risk_diff_val_j(
         df = dfii,
         .var = resp_var,
         .df_row = dfrowii,

@@ -95,7 +95,7 @@ variable names must be passed if a stratified analysis is required.
 }}
 \note{
 The \code{a_odds_ratio_j()} and \code{s_odds_ratio_j()} functions have the \verb{_j} suffix to distinguish them
-from \code{\link[tern:odds_ratio]{tern::a_odds_ratio()}} and \code{\link[tern:odds_ratio]{tern::s_odds_ratio()}}, respectively.
+from \code{\link[tern:a_odds_ratio]{tern::a_odds_ratio()}} and \code{\link[tern:s_odds_ratio]{tern::s_odds_ratio()}}, respectively.
 These functions differ as follows:
 \itemize{
 \item Additional \code{method = 'cmh'} option is provided to calculate the Cochran-Mantel-Haenszel estimate.

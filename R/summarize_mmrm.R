@@ -68,14 +68,14 @@ NULL
 #' @param ... eventually passed to [fit_mmrm_j()] via [h_summarize_mmrm()].
 #' @export
 s_summarize_mmrm <- function(
-    df,
-    .var,
-    variables,
-    ref_levels,
-    .spl_context,
-    alternative = c("two.sided", "less", "greater"),
-    show_relative = c("reduction", "increase"),
-    ...) {
+  df,
+  .var,
+  variables,
+  ref_levels,
+  .spl_context,
+  alternative = c("two.sided", "less", "greater"),
+  show_relative = c("reduction", "increase"),
+  ...) {
   alternative <- match.arg(alternative)
 
   checkmate::assert_list(variables, names = "unique")
@@ -172,14 +172,14 @@ s_summarize_mmrm <- function(
 #'   prune_table(all_zero)
 #' @export
 a_summarize_mmrm <- function(
-    df,
-    .var,
-    .spl_context,
-    ...,
-    .stats = NULL,
-    .formats = NULL,
-    .labels = NULL,
-    .indent_mods = NULL) {
+  df,
+  .var,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL) {
   # Check for additional parameters to the statistics function
   dots_extra_args <- list(...)
 
@@ -202,4 +202,35 @@ a_summarize_mmrm <- function(
     labels_in = .labels,
     indents_in = .indent_mods
   )
+}
+
+#' @describeIn summarize_mmrm Wrapper for the `afun` which can exclude
+#'   row split levels from producing the analysis. These have to be specified in the
+#'   `exclude_levels` argument, see `?do_exclude_split` for details.
+#' @export
+a_summarize_mmrm_with_exclude <- function(
+  df,
+  .var,
+  exclude_levels,
+  .spl_context,
+  ...,
+  .stats = NULL,
+  .formats = NULL,
+  .labels = NULL,
+  .indent_mods = NULL
+) {
+  if (do_exclude_split(exclude_levels, .spl_context)) {
+    NULL
+  } else {
+    a_summarize_mmrm(
+      df = df,
+      .var = .var,
+      .spl_context = .spl_context,
+      ...,
+      .stats = .stats,
+      .formats = .formats,
+      .labels = .labels,
+      .indent_mods = .indent_mods
+    )
+  }
 }

@@ -31,7 +31,7 @@ knitr::opts_chunk$set(
 The `junco` R package provides functions to create analyses for clinical trials in `R`.
 It is considered as an add-on/alternative to the `tern` package, which is the first package available in the `NEST` framework for analysis functions with main focus for clinical trials.
 The core functionality for tabulation is built on the more general purpose `rtables` package.
-New users should first begin by reading the ["Introduction to `tern`"](https://insightsengineering.github.io/tern/latest-tag/articles/tern.html) and ["Introduction to `rtables`"](https://insightsengineering.github.io/rtables/latest-release/articles/rtables.html) vignettes.
+New users should first begin by reading the ["Introduction to `tern`"](https://pharmaverse.github.io/tern/latest-tag/articles/tern.html) and ["Introduction to `rtables`"](https://pharmaverse.github.io/rtables/latest-release/articles/rtables.html) vignettes.
 
 The packages used in this vignette are:
 

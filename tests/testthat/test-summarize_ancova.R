@@ -14,44 +14,13 @@ iris_plus <- iris |>
 iris_plus2 <- iris_plus |>
   group_by(Species) |>
   mutate(id = row_number()) |>
-  filter(Species == "setosa" & id < 45 |
-           Species == "versicolor" & id < 30 |
-           Species == "virginica" & id < 50) |>
+  filter(Species == "setosa" & id < 45 | Species == "versicolor" & id < 30 | Species == "virginica" & id < 50) |>
   ungroup()
 
 get_numbers <- function(tbl, col, rows = c(3)) {
   numbers <- unname(unlist(cell_values(tbl[rows, col])))
 }
 
-
-test_that("h_ancova works as expected", {
-  set.seed(123)
-  df_row <- iris |>
-    mutate(
-      Color = factor(sample(
-        c("red", "blue"),
-        size = nrow(iris),
-        prob = c(0.8, 0.2),
-        replace = TRUE
-      ))
-    )
-  df <- df_row |>
-    filter(Species == "virginica")
-  variables <- list(
-    arm = "Species",
-    covariates = c("Sepal.Length * Sepal.Width", "Color")
-  )
-  ref_group <- df_row |>
-    filter(Species == "setosa")
-
-  result <- expect_silent(h_ancova(
-    .var = "Petal.Length",
-    .df_row = df_row,
-    variables = variables,
-    weights_emmeans = "equal"
-  ))
-  checkmate::expect_class(result, "emmGrid")
-})
 
 test_that("s_ancova_j works as expected", {
   set.seed(123)
@@ -93,7 +62,7 @@ test_that("s_ancova_j works as expected", {
       "lsmean_ci",
       "lsmean_diff",
       "lsmean_diff_ci",
-      "lsmean_diffci",
+      "lsmean_diff_with_ci",
       "pval"
     )
   )
@@ -143,7 +112,7 @@ test_that("s_ancova_j works as expected", {
       "lsmean_ci",
       "lsmean_diff",
       "lsmean_diff_ci",
-      "lsmean_diffci",
+      "lsmean_diff_with_ci",
       "pval"
     )
   )
@@ -189,7 +158,7 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
           "median",
           "range",
           "quantiles",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -209,7 +178,7 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
         conf_level = 0.95,
         ref_path = c("Species", "setosa"),
         .stats = c(
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -223,13 +192,18 @@ test_that("a_summarize_ancova_j  works as expected in table layout", {
 test_that("tern function summarize_ancova cannot deal with a combined column", {
   model_variables <- list(arm = "Species", covariates = c("Color"))
   combodf <- tribble(
-    ~valname, ~label, ~levelcombo, ~exargs,
-    "setosa_virg", "Combined: setosa + virginica", c("setosa", "virginica"), list()
+    ~valname,
+    ~label,
+    ~levelcombo,
+    ~exargs,
+    "setosa_virg",
+    "Combined: setosa + virginica",
+    c("setosa", "virginica"),
+    list()
   )
 
   lyt_1 <- basic_table() |>
-    split_cols_by("Species", ref_group = "versicolor",
-                  split_fun = add_combo_levels(combodf)) |>
+    split_cols_by("Species", ref_group = "versicolor", split_fun = add_combo_levels(combodf)) |>
     add_colcounts() |>
     summarize_ancova(
       vars = "Sepal.Length",
@@ -248,14 +222,22 @@ test_that("tern function summarize_ancova cannot deal with a combined column", {
   )
 })
 
-tbl_ancova_j <- function(weights_emmeans = "proportional",
-                         weights_combo = "equal",
-                         inputdf = iris_plus2,
-                         interaction = TRUE,
-                         method_combo = "contrasts") {
+tbl_ancova_j <- function(
+  weights_emmeans = "proportional",
+  weights_combo = "equal",
+  inputdf = iris_plus2,
+  interaction = TRUE,
+  method_combo = "contrasts"
+) {
   combodf <- tribble(
-    ~valname, ~label, ~levelcombo, ~exargs,
-    "setosa_virg", "Combined: setosa + virginica", c("setosa", "virginica"), list()
+    ~valname,
+    ~label,
+    ~levelcombo,
+    ~exargs,
+    "setosa_virg",
+    "Combined: setosa + virginica",
+    c("setosa", "virginica"),
+    list()
   )
 
   if (!interaction) {
@@ -276,7 +258,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           weights_combo = weights_combo,
           method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
-          .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+          .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
         ),
         var_labels = "Adjusted comparison (covariates Color)",
         table_names = "adjusted",
@@ -300,7 +282,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           weights_combo = weights_combo,
           method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
-          .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+          .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
         ),
         var_labels = "Adjusted comparison (covariates Color - red)",
         table_names = "adjusted"
@@ -317,7 +299,7 @@ tbl_ancova_j <- function(weights_emmeans = "proportional",
           weights_combo = weights_combo,
           method_combo = method_combo,
           ref_path = c("Species", "versicolor"),
-          .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+          .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
         ),
         var_labels = "Adjusted comparison (covariates Color - blue)",
         table_names = "adjusted2"
@@ -437,10 +419,11 @@ test_that("a_summarize_ancova_j (s_ancova_j) with a combined column and method_c
 
   # use summarize_ancova on data where combined column is level of the input data
   iris_plus2_fix <- iris_plus2
-  iris_plus2_fix[["Species"]] <- factor(as.character(iris_plus2_fix[["Species"]]),
-                                        levels = c("setosa", "versicolor", "virginica"),
-                                        labels = c("Combined: setosa + virginica", "versicolor",
-                                                   "Combined: setosa + virginica"))
+  iris_plus2_fix[["Species"]] <- factor(
+    as.character(iris_plus2_fix[["Species"]]),
+    levels = c("setosa", "versicolor", "virginica"),
+    labels = c("Combined: setosa + virginica", "versicolor", "Combined: setosa + virginica")
+  )
 
   weights_emmeans <- "equal"
   result2 <- basic_table() |>
@@ -524,7 +507,6 @@ test_that("a_summarize_ancova_j combined column and interaction, diff versions f
 })
 
 test_that("a_summarize_ancova_j with sparse data", {
-
   iris_sparse <- iris_plus2 |>
     filter(Species != "versicolor")
 
@@ -547,7 +529,7 @@ test_that("a_summarize_ancova_j with sparse data", {
         ref_path = c("Species", "setosa"),
         .stats = c(
           "lsmean_ci",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -558,7 +540,6 @@ test_that("a_summarize_ancova_j with sparse data", {
 })
 
 test_that("a_summarize_ancova_j with no data", {
-
   iris_sparse <- iris_plus2 |>
     filter(Species == "dumb")
 
@@ -581,7 +562,7 @@ test_that("a_summarize_ancova_j with no data", {
         ref_path = c("Species", "setosa"),
         .stats = c(
           "lsmean_ci",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -592,7 +573,6 @@ test_that("a_summarize_ancova_j with no data", {
 })
 
 test_that("a_summarize_ancova_j with no data in reference group", {
-
   iris_sparse <- iris_plus2 |>
     filter(Species != "setosa")
 
@@ -615,7 +595,7 @@ test_that("a_summarize_ancova_j with no data in reference group", {
         ref_path = c("Species", "setosa"),
         .stats = c(
           "lsmean_ci",
-          "lsmean_diffci",
+          "lsmean_diff_with_ci",
           "pval"
         )
       )
@@ -649,19 +629,19 @@ test_that("a_summarize_ancova_j with multiple combined columns", {
   make_fake_adsl <- function(adsl) {
     fakeyfake <- filter(adsl, TRT01A == "Placebo")
     fakeyfake$TRT01A <- "Xanomeline Medium Dose"
-    fakeyfake$AGE <- floor(runif(NROW(fakeyfake), 30,  90))
+    fakeyfake$AGE <- floor(runif(NROW(fakeyfake), 30, 90))
     adsl$TRT01A <- as.character(adsl$TRT01A)
     adsl <- rbind(adsl, fakeyfake)
-    adsl$TRT01A <- factor(adsl$TRT01A,
-                          levels = c("Placebo",
-                                     "Xanomeline Low Dose",
-                                     "Xanomeline Medium Dose",
-                                     "Xanomeline High Dose"))
+    adsl$TRT01A <- factor(
+      adsl$TRT01A,
+      levels = c("Placebo", "Xanomeline Low Dose", "Xanomeline Medium Dose", "Xanomeline High Dose")
+    )
 
     fix_usubjid(adsl)
   }
 
-  borrow_records <- function(df, adsl, mult = 1) { #runif(1, .9, 1.1)) {
+  borrow_records <- function(df, adsl, mult = 1) {
+    #runif(1, .9, 1.1)) {
     plac_count <- sum(df$TRT01A == "Placebo", na.rm = TRUE)
     new_count <- floor(plac_count * mult)
     soc_usubjids <- as.character(adsl$USUBJID)[!is.na(adsl$TRT01A) & adsl$TRT01A == "Xanomeline Medium Dose"]
@@ -676,20 +656,34 @@ test_that("a_summarize_ancova_j with multiple combined columns", {
 
   adsl <- adsl_jnj |>
     make_fake_adsl() |>
-    dplyr::select(USUBJID, TRT01A, SEX)
+    select(USUBJID, TRT01A, SEX)
 
-  advs <- advs_jnj |>
-    filter(PARAMCD == "DIABP" & AVISIT == "Cycle 02") |>
-    borrow_records(adsl) |>
-    dplyr::select(USUBJID, PARAMCD, AVISIT, AVAL, CHG, BASE) |>
-    inner_join(adsl, by = c("USUBJID"), multiple = "all")
+  invisible(capture.output(
+    advs <- advs_jnj |>
+      filter(PARAMCD == "DIABP" & AVISIT == "Cycle 02") |>
+      borrow_records(adsl) |>
+      select(USUBJID, PARAMCD, AVISIT, AVAL, CHG, BASE) |>
+      inner_join(adsl, by = c("USUBJID"), multiple = "all")
+  ))
 
   # nolint start
   combodf <- tribble(
-    ~valname, ~label, ~levelcombo, ~exargs,
-    "low_med", "Combined: Low + Medium", c("Xanomeline Low Dose", "Xanomeline Medium Dose"), list(),
-    "med_high", "Combined: Medium + High", c("Xanomeline Medium Dose", "Xanomeline High Dose"), list(),
-    "low_med_high", "Combined: Low + Medium + High", c("Xanomeline Low Dose", "Xanomeline Medium Dose", "Xanomeline High Dose"), list()
+    ~valname,
+    ~label,
+    ~levelcombo,
+    ~exargs,
+    "low_med",
+    "Combined: Low + Medium",
+    c("Xanomeline Low Dose", "Xanomeline Medium Dose"),
+    list(),
+    "med_high",
+    "Combined: Medium + High",
+    c("Xanomeline Medium Dose", "Xanomeline High Dose"),
+    list(),
+    "low_med_high",
+    "Combined: Low + Medium + High",
+    c("Xanomeline Low Dose", "Xanomeline Medium Dose", "Xanomeline High Dose"),
+    list()
   )
   # nolint end
 
@@ -708,7 +702,7 @@ test_that("a_summarize_ancova_j with multiple combined columns", {
         weights_combo = "proportional",
         method_combo = "contrasts",
         ref_path = c("TRT01A", "Placebo"),
-        .stats = c("n_fit", "lsmean_ci", "lsmean_diffci")
+        .stats = c("n_fit", "lsmean_ci", "lsmean_diff_with_ci")
       ),
       var_labels = "Adjusted comparison (covariates SEX)",
       table_names = "adjusted",
@@ -717,5 +711,4 @@ test_that("a_summarize_ancova_j with multiple combined columns", {
 
   result <- build_table(lyt, advs, adsl)
   expect_snapshot(cran = TRUE, result)
-
 })

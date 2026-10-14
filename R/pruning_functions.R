@@ -30,11 +30,11 @@
 #'
 #' safe_prune_table(tbl, prfun)
 safe_prune_table <- function(
-    tt,
-    prune_func = prune_empty_level,
-    stop_depth = NA,
-    empty_msg = " - No Data To Display - ",
-    spancols = FALSE) {
+  tt,
+  prune_func = prune_empty_level,
+  stop_depth = NA,
+  empty_msg = " - No Data To Display - ",
+  spancols = FALSE) {
   ret <- prune_table(tt = tt, prune_func = prune_func, stop_depth = stop_depth, depth = 0)
   if (is.null(ret)) {
     ret <- tt[integer(), , keep_titles = TRUE, keep_topleft = TRUE, keep_footers = TRUE]
@@ -294,13 +294,13 @@ count_pruner <- function(count = 0, cat_include = NULL, cat_exclude = NULL, cols
 #' @returns  Function that can be utilized as pruning function in prune_table.
 #'
 bspt_pruner <- function(
-    fraction = 0.05,
-    keeprowtext = "Analysis set: Safety",
-    reg_expr = FALSE,
-    control = NULL,
-    diff_from_control = NULL,
-    only_more_often = TRUE,
-    cols = c("TRT01A")) {
+  fraction = 0.05,
+  keeprowtext = "Analysis set: Safety",
+  reg_expr = FALSE,
+  control = NULL,
+  diff_from_control = NULL,
+  only_more_often = TRUE,
+  cols = c("TRT01A")) {
   if (is.null(fraction) && is.null(diff_from_control)) {
     stop("At least one of fraction or diff_from_control must be non-NULL.")
   }
@@ -365,7 +365,7 @@ bspt_pruner <- function(
 
       checkmate::check_integerish(counts)
       # similarly check that pcts is indeed a percentage
-      if (!all(dplyr::between(pcts, 0, 1))) {
+      if (!all(pcts >= 0 & pcts <= 1)) {
         stop("second value column cell is not a percentage.")
       }
 
@@ -401,7 +401,7 @@ bspt_pruner <- function(
           # get percent from control group
           pct0 <- cell_values(tt_all_cols, colpath = c(control))[[1]][2]
 
-          if (!dplyr::between(pct0, 0, 1)) {
+          if (!(pct0 >= 0 && pct0 <= 1)) {
             stop("second value of control column cell is not a percentage.")
           }
         }

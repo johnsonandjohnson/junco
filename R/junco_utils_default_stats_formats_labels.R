@@ -46,10 +46,11 @@ NULL
 #'
 #' @export
 junco_get_stats <- function(
-    method_groups = "analyze_vars_numeric",
-    stats_in = NULL,
-    custom_stats_in = NULL,
-    add_pval = FALSE) {
+  method_groups = "analyze_vars_numeric",
+  stats_in = NULL,
+  custom_stats_in = NULL,
+  add_pval = FALSE
+) {
   tern_get_stats(
     method_groups = method_groups,
     stats_in = stats_in,
@@ -96,10 +97,11 @@ junco_get_formats_from_stats <- function(stats, formats_in = NULL, levels_per_st
 #'
 #' @export
 junco_get_labels_from_stats <- function(
-    stats,
-    labels_in = NULL,
-    levels_per_stats = NULL,
-    label_attr_from_stats = NULL) {
+  stats,
+  labels_in = NULL,
+  levels_per_stats = NULL,
+  label_attr_from_stats = NULL
+) {
   tern_get_labels_from_stats(
     stats = stats,
     labels_in = labels_in,
@@ -144,13 +146,22 @@ junco_get_indents_from_stats <- function(stats, indents_in = NULL, levels_per_st
   )
 }
 
-#' @describeIn default_stats_formats_labels Format statistics results according to format specifications.
+#' @describeIn default_stats_formats_labels
+#' Format statistics results according to format specifications.
 #'
+#' @inheritParams rtables::in_rows .cell_footnotes .row_footnotes
 #' @return
 #' * `format_stats()` returns the correspondingly formatted [rtables::in_rows()] result.
 #'
 #' @export
-format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in, indents_in) {
+format_stats <- function(x_stats,
+                         method_groups,
+                         stats_in,
+                         formats_in,
+                         labels_in,
+                         indents_in,
+                         .cell_footnotes = list(NULL),
+                         .row_footnotes = list(NULL)) {
   .stats <- junco_get_stats(method_groups, stats_in = stats_in)
 
   .formats <- junco_get_formats_from_stats(stats = .stats, formats_in = formats_in)
@@ -169,7 +180,9 @@ format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in
     .formats = .formats,
     .names = names(.labels),
     .labels = .labels,
-    .indent_mods = .indent_mods
+    .indent_mods = .indent_mods,
+    .cell_footnotes = .cell_footnotes,
+    .row_footnotes = .row_footnotes
   )
 }
 
@@ -185,12 +198,21 @@ format_stats <- function(x_stats, method_groups, stats_in, formats_in, labels_in
 #' @export
 junco_default_stats <- list(
   cmhrms = c("pval"),
-  coxph_hr = c("n_tot", "n_tot_events", "hr", "hr_ci", "hr_ci_3d", "pvalue", "lr_stat_df"),
   event_free = c("pt_at_risk", "event_free_rate", "rate_se", "rate_ci", "event_free_ci"),
   kaplan_meier = c("quantiles_lower", "median_ci_3d", "quantiles_upper", "range_with_cens_info"),
   odds_ratio = c("n_tot", "or_ci", "pval"),
   proportion_diff = c("diff", "diff_ci", "diff_est_ci"),
   relative_risk = c("rel_risk_ci", "pval"),
+  diff_means = c(
+    "diff_means_n1",
+    "diff_means_n2",
+    "diff_means_est",
+    "diff_means_se",
+    "diff_means_est_se",
+    "diff_means_ci",
+    "diff_means_est_ci"
+  ),
+  estimate_proportion = c("n_prop", "prop_ci"),
   summarize_ancova_j = c(
     "n",
     "sum",
@@ -221,14 +243,13 @@ junco_default_stats <- list(
     "geom_mean_ci",
     "geom_cv",
     "geom_mean_ci_3d",
-
     "n_fit",
     "lsmean",
     "lsmean_se",
     "lsmean_ci",
     "lsmean_diff",
     "lsmean_diff_ci",
-    "lsmean_diffci",
+    "lsmean_diff_with_ci",
     "pval"
   ),
   summarize_mmrm = c(
@@ -272,44 +293,87 @@ junco_default_stats <- list(
     "count",
     "count_unique",
     "count_unique_fraction",
-    "count_unique_denom_fraction"
+    "count_unique_denom_fraction",
+    "unique_fraction"
   ),
   a_patyrs_j = c("patyrs"),
-  a_eair100_j = c("eair", "n_event", "person_years")
+  a_eair100_j = c(
+    "n_event", "person_years",
+    "eair", "n_eair", "eair_ci", "eair_est_ci", "eair_n", "eair_n_py",
+    "eair_diff_est_ci", "eair_diff_est", "eair_diff_ci"
+  ),
+  a_eair_strat_j = c(
+    "n_event_total", "person_years_total",
+    "eair_strat", "n_eair_strat", "eair_strat_ci", "eair_strat_est_ci",
+    "eair_strat_n", "eair_strat_n_py",
+    "eair_strat_diff_est_ci", "eair_strat_diff_est", "eair_strat_diff_ci"
+  ),
+  analyze_vars_numeric_j = c(
+    tern_default_stats["analyze_vars_numeric"][[1]],
+    "mean_diff_with_ci"
+  ),
+  aval_chg_col1 = c("count_denom_frac", "count_frac", "count"),
+  aval_chg_col23 = c("mean_ci_3d", "mean_diff_with_ci"),
+  a_sum_ratio_j = c(
+    "sum", "sum_unique", "ratio", "ratio_unique"
+  )
 )
+
+not_in_junco <- setdiff(names(tern_default_stats), names(junco_default_stats))
+junco_default_stats <- c(junco_default_stats, tern_default_stats[not_in_junco])
+
 
 # junco_default_formats ---------------------------------------------------------
 junco_default_formats_start <- c(
-  adj_mean_se = jjcsformat_xx("xx.xxx (xx.xxx)"),
-  adj_mean_ci = jjcsformat_xx("(xx.xxx, xx.xxx)"),
-  adj_mean_est_ci = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)"),
+  adj_mean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  adj_mean_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  adj_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   change = "xx.x%",
   cv = jjcsformat_xx("xx.xx"),
   diff = jjcsformat_xx("xx.x"),
   diff_ci = jjcsformat_xx("(xx.x, xx.x)"),
   diff_est_ci = jjcsformat_xx("xx.x (xx.x, xx.x)"),
-  diff_mean_se = jjcsformat_xx("xx.xxx (xx.xxx)"),
-  diff_mean_ci = jjcsformat_xx("(xx.xxx, xx.xxx)"),
-  diff_mean_est_ci = jjcsformat_xx("xx.xxx (xx.xxx, xx.xxx)"),
+  diff_mean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  diff_mean_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  diff_mean_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  #
+  # s_diff_means stats:
+  diff_means_n1 = jjcsformat_xx("xx."),
+  diff_means_n2 = jjcsformat_xx("xx."),
+  diff_means_est = jjcsformat_xx("xx.xx"),
+  diff_means_se = jjcsformat_xx("xx.xxx"),
+  diff_means_est_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  diff_means_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  diff_means_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  # end s_diff_means stats.
+  #
   event_free_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   event_free_rate = jjcsformat_xx("xx.xx"),
   geom_sd = jjcsformat_xx("xx.xxx"),
   geom_se = jjcsformat_xx("xx.xxx"),
   geom_mean_sd = jjcsformat_xx("xx.xx (xx.xxx)"),
   geom_mean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  geom_cv = jjcsformat_xx("xx.xx"),
+  geom_mean = jjcsformat_xx("xx.xx"),
+  geom_mean_ci_3d = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   hr = jjcsformat_xx("xx.xx"),
   hr_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
   hr_ci_3d = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  iqr = jjcsformat_xx("xx.xx"),
   quantiles_upper = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  quantiles_lower = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   lsmean = jjcsformat_xx("xx.xx"),
   lsmean_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   lsmean_diff = jjcsformat_xx("xx.xx"),
-  lsmean_diffci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  lsmean_diff_with_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   lsmean_diff_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
-  lsmean_se = jjcsformat_xx("xx.xx (xx.xx)"),
+  lsmean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  mad = jjcsformat_xx("xx.xx"),
   mean = jjcsformat_xx("xx.xx"),
   mean_sd = jjcsformat_xx("xx.xx (xx.xxx)"),
   mean_se = jjcsformat_xx("xx.xx (xx.xxx)"),
+  mean_ci_3d = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  mean_diff_with_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   mean_pval = jjcsformat_pval_fct(0),
   median = jjcsformat_xx("xx.xx"),
   median_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
@@ -328,8 +392,8 @@ junco_default_formats_start <- c(
   range_with_cens_info = jjcsformat_range_fct("xx.xx"),
   rate_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
   rate_se = jjcsformat_xx("xx.xx"),
+  rate_diff_ci_3d = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   rel_risk_ci = jjcsformat_xx("xx.xx (xx.xx - xx.xx)"),
-  quantiles_upper = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   sd = jjcsformat_xx("xx.xxx"),
   se = jjcsformat_xx("xx.xxx"),
   n_altdf = "xx",
@@ -339,16 +403,40 @@ junco_default_formats_start <- c(
   denom = "xx",
   count = "xx",
   count_unique = "xx",
+  count_fraction = jjcsformat_count_fraction,
+  count_fraction_fixed_dp = jjcsformat_count_fraction,
   count_unique_fraction = jjcsformat_count_fraction,
   count_unique_denom_fraction = jjcsformat_count_denom_fraction,
+  count_denom_frac = jjcsformat_count_denom_fraction,
+  count_frac = jjcsformat_count_fraction,
+  unique_fraction = jjcsformat_fraction,
   rr_ci_3d = jjcsformat_xx("xx.x (xx.x, xx.x)"),
   patyrs = jjcsformat_xx("xx.x"),
   eair = jjcsformat_xx("xx.x"),
-  eair_diff = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  eair_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  eair_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  eair_diff_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  eair_diff_est = jjcsformat_xx("xx.xx"),
+  eair_diff_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  n_eair = jjcsformat_xx("xx (xx.x)"),
+  eair_n = jjcsformat_xx("xx.x (xx)"),
+  eair_n_py = jjcsformat_xx("xx.x (xx/xx.x)"),
   n_event = "xx",
   person_years = jjcsformat_xx("xx.xx"),
+  eair_strat = jjcsformat_xx("xx.x"),
+  n_event_total = "xx",
+  person_years_total = jjcsformat_xx("xx.xx"),
+  n_eair_strat = jjcsformat_xx("xx (xx.x)"),
+  eair_strat_ci = jjcsformat_xx("(xx.xx, xx.xx)"),
+  eair_strat_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
+  eair_strat_diff_est_ci = jjcsformat_xx("xx.xx (xx.xx, xx.xx)"),
   total_subject_years = jjcsformat_xx("xx.x (xx.x)"),
-  n_fit = "xx"
+  n_fit = "xx",
+  unique = jjcsformat_count_fraction,
+  sum = "xx",
+  sum_unique = "xx",
+  ratio = jjcsformat_xx("xx (xx.x%)"),
+  ratio_unique = jjcsformat_xx("xx (xx.x%)")
 )
 
 tern_formats_only <- setdiff(names(tern_default_formats), names(junco_default_formats_start))
@@ -369,8 +457,18 @@ junco_default_labels_start <- c(
   diff = "Difference in Response rate (%)",
   diff_mean_se = "Difference in Adjusted Means (SE)",
   diff_mean_est_ci = "Difference in Adjusted Means (CI)",
+  #
+  # s_diff_means stats:
+  diff_means_n1 = "Difference in Means Sample Size (Group 1)",
+  diff_means_n2 = "Difference in Means Sample Size (Group 2)",
+  diff_means_est = "Difference in Means",
+  diff_means_se = "Difference in Means SE",
+  diff_means_est_se = "Difference in Means (SE)",
+  diff_means_ci = "Difference in Means CI",
+  diff_means_est_ci = "Difference in Means (CI)",
+  # end s_diff_means stats.
+  #
   hr = "Hazard Ratio",
-  lr_stat_df = "Log-Rank Chi-Squared",
   mean_sd = "Mean (SD)",
   median = "Median",
   median_range = "Median (min, max)",
@@ -387,9 +485,16 @@ junco_default_labels_start <- c(
   n_parentdf = "N",
   denom = "N",
   patyrs = "Patient years",
-  n_event = "Number of events",
   person_years = "Person years",
-  total_subject_years = "Total treatment (subject years)"
+  eair_strat = "Stratified EAIR",
+  n_event_total = "n (events)",
+  person_years_total = "Total person-years",
+  n_eair_strat = "n (Stratified EAIR)",
+  total_subject_years = "Total treatment (subject years)",
+  sum = "Sum",
+  sum_unique = "Sum (unique)",
+  ratio = "Ratio",
+  ratio_unique = "Ratio (unique)"
 )
 tern_labels_only <- setdiff(names(tern_default_labels), names(junco_default_labels_start))
 
@@ -418,6 +523,17 @@ junco_default_indents <- c(
   diff_ci = 1L,
   diff_mean_ci = 1L,
   diff_mean_est_ci = 1L,
+  #
+  # s_diff_means stats:
+  diff_means_n1 = 0L,
+  diff_means_n2 = 0L,
+  diff_means_est = 0L,
+  diff_means_se = 0L,
+  diff_means_est_se = 0L,
+  diff_means_ci = 0L,
+  diff_means_est_ci = 0L,
+  # end s_diff_means stats.
+  #
   hr_ci = 1L,
   or_ci = 1L,
   pval = 1L,

@@ -15,11 +15,12 @@
 #' @seealso [s_proportion_logical()] for tabulating logical `x`.
 #' @export
 s_proportion_factor <- function(
-    x,
-    .alt_df,
-    use_alt_counts = TRUE,
-    show_total = c("none", "top", "bottom"),
-    total_label = "Total") {
+  x,
+  .alt_df,
+  use_alt_counts = TRUE,
+  show_total = c("none", "top", "bottom"),
+  total_label = "Total"
+) {
   checkmate::assert_factor(x)
   checkmate::assert_flag(use_alt_counts)
   show_total <- match.arg(show_total)

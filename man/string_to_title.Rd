@@ -4,20 +4,32 @@
 \alias{string_to_title}
 \title{Title Case Conversion}
 \usage{
-string_to_title(x)
+string_to_title(x, lowercase_words = NULL)
 }
 \arguments{
-\item{x}{(\code{character} or \code{factor})\cr Input string}
+\item{x}{(\code{character} or \code{factor})\cr
+Input string.}
+
+\item{lowercase_words}{(\code{character} or \code{NULL})\cr
+Words that should remain lowercase when converting to title case.
+Matching is case-insensitive. Specified words are only converted to
+lowercase when they are not the first word in the string. The first word is
+always capitalized, even if it is included in \code{lowercase_words}.}
 }
 \value{
-x converted to title case (first letter of each word capitalized)
+\code{x} converted to title case, with words specified in
+\code{lowercase_words} kept lowercase.
 }
 \description{
-Title Case Conversion
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
+Convert strings to title case (first letter of each word capitalized),
+with the option to keep specified words, such as conjunctions, lowercase.
 }
 \examples{
 x <- c("THIS IS an eXaMple", "statement TO CAPItaliZe")
 string_to_title(x)
+string_to_title(x, c("is", "an", "to"))
 
 x <- factor(
   c("OPTIMAL DOSE", "UNDERDOSE"),
@@ -26,4 +38,3 @@ x <- factor(
 string_to_title(x)
 
 }
-\keyword{internal}

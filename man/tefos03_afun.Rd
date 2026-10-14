@@ -15,7 +15,7 @@ by a statistics function.}
 \item{.spl_context}{(\code{data.frame})\cr gives information about ancestor split states
 that is passed by \code{rtables}.}
 
-\item{variables}{(\code{list})\cr see \code{\link[tern:fit_coxreg]{tern::fit_coxreg_multivar()}} for required variable
+\item{variables}{(\code{list})\cr see \code{\link[tern:fit_coxreg_multivar]{tern::fit_coxreg_multivar()}} for required variable
 specifications.}
 
 \item{control}{(\code{list})\cr from \code{\link[tern:control_coxreg]{tern::control_coxreg()}}.}
