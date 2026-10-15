@@ -1,4 +1,14 @@
-# junco 0.1.7
+# junco 0.1.7009
+
+
+## [0.1.7] - 2026-10-15 (CRAN release)
+
+### Fixed
+- Fixed `get_ref_info()` to accept ref_path = NULL (#359).
+- Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
+- Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
+- CRITICAL: hotfixed `tt_to_tlgrtf()` lost titles in certain cases (#373)
+- CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
 
 ### Changed
 - Refactored `s_freq_j()` so that `alt_df`, `parent_df`, `.df_row`, and `.N_col` are genuinely optional, added argument validation, and improved documentation (#439).
@@ -12,15 +22,6 @@
 - Renamed internal functions `s_rel_risk_val_j()` and `s_rel_risk_levii_j()` to
   `s_risk_diff_val_j()` and `s_risk_diff_levii_j()` to correctly reflect that
   they compute risk difference (p1 - p2), not relative risk (p1 / p2) (#442).
-
-### Fixed
-- Fixed `get_ref_info()` to accept ref_path = NULL (#359).
-- Fixed `junco_get_stats()` to inherit any default stats from `tern` that are not explicitly defined in junco.
-- Fixed `get_ref_info()` so that is works in the presence of "overall" column (#332)
-- CRITICAL: hotfixed `tt_to_tlgrtf()` lost titles in certain cases (#373)
-- CRITICAL: hotfixed `def_colwidths()` when a column label is too long (#281)
-
-### Changed
 - Updated several analysis functions to use `h_get_cur_trt_grp()` (#295).
 - Replaced `h_get_trtvar_refpath()` with `h_get_cur_trt_grp()` (#295).
 - Updated `get_ref_info()` for matching column split paths (#295).
