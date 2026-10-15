@@ -85,7 +85,9 @@ test_that("a_freq_j in specific situation error for not passing alt_counts_df", 
   trtvar <- "ARM"
   ctrl_grp <- "B: Placebo"
   cols <- c("USUBJID", "STRATA1", "EOSSTT", trtvar)
+  cols <- c("USUBJID", "STRATA1", "EOSSTT", trtvar)
 
+  adsl <- ex_adsl[, cols]
   adsl <- ex_adsl[, cols]
   adsl$colspan_trt <- factor(
     ifelse(adsl[[trtvar]] == ctrl_grp, " ", "Active Study Agent"),
@@ -124,7 +126,9 @@ test_that("a_freq_j in layout with relative risk column for combined facet", {
   trtvar <- "ARM"
   ctrl_grp <- "B: Placebo"
   cols <- c("USUBJID", "STRATA1", "EOSSTT", trtvar)
+  cols <- c("USUBJID", "STRATA1", "EOSSTT", trtvar)
 
+  adsl <- ex_adsl[, cols]
   adsl <- ex_adsl[, cols]
   adsl$colspan_trt <- factor(
     ifelse(adsl[[trtvar]] == ctrl_grp, " ", "Active Study Agent"),

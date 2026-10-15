@@ -198,13 +198,7 @@ s_freq_j <- function(
     NA_integer_
   }
 
-  denom <- switch(denom_choice,
-    "n_altdf" = n1,
-    "n_df" = n2,
-    "n_rowdf" = n3,
-    "N_col" = .N_col,
-    "n_parentdf" = n4
-  )
+  denom <- switch(denom_choice, "n_altdf" = n1, "n_df" = n2, "n_rowdf" = n3, "N_col" = .N_col, "n_parentdf" = n4)
 
   y <- list()
 
@@ -380,7 +374,9 @@ s_risk_diff_val_j <- function(
     obs_levs <- unique(.df_row[[.var]])
     obs_levs <- intersect(levels(.df_row[[.var]]), obs_levs)
 
-    if (!is.null(excl_levels)) obs_levs <- setdiff(obs_levs, excl_levels)
+    if (!is.null(excl_levels)) {
+      obs_levs <- setdiff(obs_levs, excl_levels)
+    }
 
     if (!is.null(val)) {
       stop("argument val cannot be used together with drop_levels = TRUE, please specify one or the other.")
@@ -1148,8 +1144,11 @@ a_freq_j <- function(
 
   ### add extra blankline to the end of inrows --- as long as section_div is not working as expected
   # nolint start
-  if (!is.null(inrows) && extrablankline ||
-    (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)) {
+  if (
+    !is.null(inrows) &&
+      extrablankline ||
+      (!is.null(extrablanklineafter) && length(.labels) == 1 && .labels == extrablanklineafter)
+  ) {
     inrows <- add_blank_line_rcells(inrows)
   } # nolint end
 
