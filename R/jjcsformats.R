@@ -1,3 +1,4 @@
+# nocov start
 #' @name jjcsformat_xx
 #' @title Utility for specifying custom formats
 #'
@@ -617,3 +618,4 @@ modified_signif_j <- function(x, digits = 6, round_type = valid_round_type, whol
   x_round[ok] <- x_round[ok] / scale
   x_round
 }
+# nocov end
