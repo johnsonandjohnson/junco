@@ -1,34 +1,8 @@
 # Changelog
 
-## junco 0.1.7
+## junco 0.1.7009
 
-CRAN release: 2026-10-13
-
-#### Changed
-
-- Added `"unique_fraction"` as a new statistic supported by
-  [`s_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
-  and
-  [`a_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
-  ([\#519](https://github.com/johnsonandjohnson/junco/issues/519)).
-- Added `lowercase_words` argument to
-  [`string_to_title()`](https://johnsonandjohnson.github.io/junco/reference/string_to_title.md)
-  to keep specified words lowercase
-  ([\#524](https://github.com/johnsonandjohnson/junco/issues/524)).
-- Added `.cell_footnotes` and `.row_footnotes` arguments to
-  [`format_stats()`](https://johnsonandjohnson.github.io/junco/reference/default_stats_formats_labels.md)
-  ([\#470](https://github.com/johnsonandjohnson/junco/issues/470)).
-- Removed `s_proportion_diff_j()` which was a wrapper around
-  [`tern::s_proportion_diff()`](https://pharmaverse.github.io/tern/latest-tag/reference/prop_diff.html).
-  The `label` and `conf_level` parameters moved to
-  [`a_proportion_diff_j()`](https://johnsonandjohnson.github.io/junco/reference/prop_diff.md)
-  ([\#442](https://github.com/johnsonandjohnson/junco/issues/442),
-  [\#467](https://github.com/johnsonandjohnson/junco/issues/467)).
-- Renamed internal functions `s_rel_risk_val_j()` and
-  `s_rel_risk_levii_j()` to `s_risk_diff_val_j()` and
-  `s_risk_diff_levii_j()` to correctly reflect that they compute risk
-  difference (p1 - p2), not relative risk (p1 / p2)
-  ([\#442](https://github.com/johnsonandjohnson/junco/issues/442)).
+### \[0.1.7\] - 2026-10-15 (CRAN release)
 
 #### Fixed
 
@@ -55,6 +29,29 @@ CRAN release: 2026-10-13
 
 #### Changed
 
+- Added `"unique_fraction"` as a new statistic supported by
+  [`s_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
+  and
+  [`a_freq_j()`](https://johnsonandjohnson.github.io/junco/reference/a_freq_j.md)
+  ([\#519](https://github.com/johnsonandjohnson/junco/issues/519)).
+- Added `lowercase_words` argument to
+  [`string_to_title()`](https://johnsonandjohnson.github.io/junco/reference/string_to_title.md)
+  to keep specified words lowercase
+  ([\#524](https://github.com/johnsonandjohnson/junco/issues/524)).
+- Added `.cell_footnotes` and `.row_footnotes` arguments to
+  [`format_stats()`](https://johnsonandjohnson.github.io/junco/reference/default_stats_formats_labels.md)
+  ([\#470](https://github.com/johnsonandjohnson/junco/issues/470)).
+- Removed `s_proportion_diff_j()` which was a wrapper around
+  [`tern::s_proportion_diff()`](https://pharmaverse.github.io/tern/latest-tag/reference/prop_diff.html).
+  The `label` and `conf_level` parameters moved to
+  [`a_proportion_diff_j()`](https://johnsonandjohnson.github.io/junco/reference/prop_diff.md)
+  ([\#442](https://github.com/johnsonandjohnson/junco/issues/442),
+  [\#467](https://github.com/johnsonandjohnson/junco/issues/467)).
+- Renamed internal functions `s_rel_risk_val_j()` and
+  `s_rel_risk_levii_j()` to `s_risk_diff_val_j()` and
+  `s_risk_diff_levii_j()` to correctly reflect that they compute risk
+  difference (p1 - p2), not relative risk (p1 / p2)
+  ([\#442](https://github.com/johnsonandjohnson/junco/issues/442)).
 - Updated several analysis functions to use
   [`h_get_cur_trt_grp()`](https://johnsonandjohnson.github.io/junco/reference/h_get_cur_trt_grp.md)
   ([\#295](https://github.com/johnsonandjohnson/junco/issues/295)).
