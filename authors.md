@@ -36,7 +36,7 @@ Page](https://johnsonandjohnson.github.io/junco/).
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/johnsonandjohnson/junco/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/johnsonandjohnson/junco/blob/v0.1.7-rc/DESCRIPTION)
 
 Becker G, Augustyns I, Jenkins P, Hofstaedter D, Kovach J, Munoz Tord D,
 Sabanes Bove D (2026). *junco: Create Common Tables and Listings Used in
