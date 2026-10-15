@@ -2415,5 +2415,4 @@ export_TLG_as_docx <- function(
                          watermark = watermark)
   }
 
-}
-# nocov end
+} # nocov end

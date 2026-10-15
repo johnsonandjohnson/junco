@@ -250,5 +250,4 @@ fmt_spec_var_d <- function(var_d,
   )
 
   var_fmt
-}
-# nocov end
+} # nocov end
