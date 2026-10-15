@@ -1,3 +1,4 @@
+
 name: Coverage
 
 on:
@@ -17,12 +18,18 @@ permissions: read-all
 
 jobs:
   coverage:
-    if: github.event.pull_request.draft == false
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
+
     concurrency:
       group: coverage-${{ github.event_name != 'pull_request' || github.run_id }}
+
     permissions:
       contents: write
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -32,24 +39,71 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::covr
-          needs: coverage
+          extra-packages: |
+            github::munoztd0/covr2
+            any::DT
+            any::htmltools
 
       - name: Generate report and badge
         run: |
-          dir.create("cov-out", showWarnings = FALSE)
-          library(covr)
-          cov <- package_coverage()
-          report(cov, file = "cov-out/index.html")
-          pct <- round(percent_coverage(cov), 1)
-          color <- ifelse(pct >= 90, "brightgreen", ifelse(pct >= 80, "yellow", ifelse(pct >= 70, "orange", "red")))
-          url <- sprintf("https://img.shields.io/badge/coverage-%.1f%%25-%s.svg", pct, color)
-          download.file(url, destfile = "cov-out/coverage-badge.svg", mode = "wb")
+          dir.create("cov-out", showWarnings = FALSE, recursive = TRUE)
+
+          stopifnot(
+            requireNamespace("covr2", quietly = TRUE),
+            requireNamespace("DT", quietly = TRUE),
+            requireNamespace("htmltools", quietly = TRUE)
+          )
+
+          cov <- covr2::package_coverage(
+            path = ".",
+            quiet = FALSE,
+            clean = FALSE
+          )
+
+          covr2::report(
+            cov,
+            file = "cov-out/index.html",
+            browse = FALSE
+          )
+
+          pct <- round(covr2::percent_coverage(cov), 1)
+
+          if (is.na(pct)) {
+            badge_value <- "NA"
+            color <- "lightgrey"
+          } else {
+            badge_value <- sprintf("%.1f%%25", pct)
+            color <- if (pct >= 90) {
+              "brightgreen"
+            } else if (pct >= 80) {
+              "yellow"
+            } else if (pct >= 70) {
+              "orange"
+            } else {
+              "red"
+            }
+          }
+
+          url <- sprintf(
+            "https://img.shields.io/badge/coverage-%s-%s.svg",
+            badge_value,
+            color
+          )
+
+          download.file(
+            url,
+            destfile = "cov-out/coverage-badge.svg",
+            mode = "wb"
+          )
+
+          message("Coverage: ", pct, "%")
+          message("Report: cov-out/index.html")
         shell: Rscript {0}
 
-      - name: Deploy to GitHub pages
+      - name: Deploy to GitHub Pages
         if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
