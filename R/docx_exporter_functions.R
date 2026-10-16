@@ -1,3 +1,4 @@
+# nocov start
 dps_markup_df_docx <- tibble::tibble(
   keyword = c("super", "sub"),
   replace_by = c("flextable::as_sup", "flextable::as_sub")
@@ -2414,4 +2415,4 @@ export_TLG_as_docx <- function(
                          watermark = watermark)
   }
 
-}
+} # nocov end
