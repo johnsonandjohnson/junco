@@ -1,3 +1,4 @@
+# nocov start
 #' @keywords internal
 xxd_to_xx <- function(str, d = 0) {
   checkmate::assert_integerish(d, null.ok = TRUE)
@@ -249,4 +250,4 @@ fmt_spec_var_d <- function(var_d,
   )
 
   var_fmt
-}
+} # nocov end
