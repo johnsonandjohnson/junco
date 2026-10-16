@@ -279,7 +279,6 @@ extra_args_rr <- append(
   extra_args_rr_common,
   list(
     riskdiff = FALSE,
-    extrablankline = TRUE,
     .stats = c("n_altdf"),
     label_fstr = "Gender: %s"
   )
@@ -321,7 +320,12 @@ tbl <- basic_table(
   ) %>%
   summarize_row_groups("TRTEMFL",
     cfun = a_freq_j,
-    extra_args = append(extra_args_rr2, list(label = "Subjects with >=1 AE", extrablankline = TRUE))
+    extra_args = append(
+      extra_args_rr2, 
+      list(
+        label = "Subjects with >=1 AE"
+      )
+    )
   ) %>%
   split_rows_by("AEBODSYS",
     split_label = "System Organ Class",
