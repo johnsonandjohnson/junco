@@ -300,8 +300,8 @@ vars_fmt
 #>     regmatches(x = str, m = positions)[[1]] <- values
 #>     return(str)
 #> }
-#> <bytecode: 0x560efdcc7198>
-#> <environment: 0x560ef875ec90>
+#> <bytecode: 0x55a4a82f4208>
+#> <environment: 0x55a4a358a608>
 #> 
 #> $BMRKR1$mean_se
 #> function (x, output, round_type = valid_round_type, na_str = na_str_dflt) 
@@ -325,8 +325,8 @@ vars_fmt
 #>     regmatches(x = str, m = positions)[[1]] <- values
 #>     return(str)
 #> }
-#> <bytecode: 0x560efdcc7198>
-#> <environment: 0x560ef8747ea8>
+#> <bytecode: 0x55a4a82f4208>
+#> <environment: 0x55a4a3579280>
 #> 
 #> $BMRKR1$range
 #> [1] "(xx.xx, xx.xx)"
