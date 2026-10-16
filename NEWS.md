@@ -1,5 +1,7 @@
 # junco 0.1.7009
 
+### Changed
+- Removed `extrablankline = TRUE` usage from vignettes and tests as part of deprecation (#374, #344).
 
 ## [0.1.7] - 2026-10-15 (CRAN release)
 
