@@ -1,5 +1,8 @@
 # junco 0.1.7009
 
+### Changed
+- Refactored `s_freq_j()` so that `alt_df`, `parent_df`, `.df_row`, and `.N_col` are genuinely optional, added argument validation, and improved documentation (#439).
+
 
 ## [0.1.7] - 2026-10-15 (CRAN release)
 
