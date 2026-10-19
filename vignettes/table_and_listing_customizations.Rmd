@@ -1795,7 +1795,7 @@ tt_to_tlgrtf(result,
 ### Visual Output (HTML Representation)
 > **Note:** HTML output notoriously does not handle well page break, so here it is represented in two parts to show the point.
 ```{r page_break_table_display, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
-male <- result[1:5, keep_titles = TRUE, keep_footers = FALSE]
+male <- result[1:4, keep_titles = TRUE, keep_footers = FALSE]
 tt_to_flextable_j(male, "examplepagebreak")
 knitr::asis_output("<br><br>")
 ```
@@ -1803,7 +1803,7 @@ knitr::asis_output("<br><br>")
 
 ```{r page_break_table_display_part2, echo=FALSE, eval=NOT_CRAN, fig.align="center", out.width="100%", out.height="200px"}
 
-female <- result[6:10, keep_titles = TRUE, keep_footers = TRUE]
+female <- result[5:8, keep_titles = TRUE, keep_footers = TRUE]
 tt_to_flextable_j(female, "examplepagebreak")
 ```
 
