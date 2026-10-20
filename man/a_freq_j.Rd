@@ -422,7 +422,7 @@ lyt2 <- basic_table(
     cfun = a_freq_j,
     extra_args = append(extra_args_rr2, list(
       label =
-        "Subjects with >=1 AE", extrablankline = TRUE
+        "Subjects with >=1 AE"
     ))
   ) |>
   split_rows_by("AEBODSYS",
