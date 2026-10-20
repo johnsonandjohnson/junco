@@ -3,7 +3,7 @@
 <!-- start badges -->
 [![Check 🛠](https://github.com/johnsonandjohnson/junco/actions/workflows/inspect.yaml/badge.svg)](https://johnsonandjohnson.github.io/junco/unit-test-report-non-cran/)
 [![Docs 📚](https://github.com/johnsonandjohnson/junco/actions/workflows/pkgdown.yaml/badge.svg)](https://johnsonandjohnson.github.io/junco/)
-[![Code Coverage 📔](https://github.com/johnsonandjohnson/junco/blob/_xml_coverage_reports/data/main/badge.svg)](https://johnsonandjohnson.github.io/junco/_xml_coverage_reports/coverage.html)
+[![Code Coverage 📔](https://johnsonandjohnson.github.io/junco/coverage/coverage-badge.svg)](https://johnsonandjohnson.github.io/junco/coverage/)
 
 ![GitHub forks](https://img.shields.io/github/forks/johnsonandjohnson/junco?style=social)
 ![GitHub repo stars](https://img.shields.io/github/stars/johnsonandjohnson/junco?style=social)
@@ -49,7 +49,7 @@ Or you can install the development version from GitHub:
 
 ```r
 require('remotes')
-remotes::install_github("johnsonandjohnson/junco", ref = "dev") #for the rolling dev release
+remotes::install_github("johnsonandjohnson/junco") #for the rolling development release
 ```
 
 ## Usage
@@ -66,10 +66,6 @@ Key vignettes and what they cover:
   - Article: https://johnsonandjohnson.github.io/junco/articles/junco.html
   - What you’ll learn: how to set up data, create common analyses, and produce TLG-ready outputs using core helpers.
 To understand how to use this package, please refer to the vignettes (also available on the pkgdown site). You can list them locally with:
-
-```r
-browseVignettes(package = "junco")
-```
 
 Key vignettes and what they cover:
 

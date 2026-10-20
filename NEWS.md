@@ -2,7 +2,7 @@
 
 ### Changed
 - Refactored `s_freq_j()` so that `alt_df`, `parent_df`, `.df_row`, and `.N_col` are genuinely optional, added argument validation, and improved documentation (#439).
-
+- Removed `extrablankline = TRUE` usage from vignettes and tests as part of deprecation (#374, #344).
 
 ## [0.1.7] - 2026-10-15 (CRAN release)
 

@@ -1,3 +1,5 @@
+skip_on_covr()
+
 junco_def_d <- c(
   "mean" = "xx.dxxx",
   "mean_sd" = "xx.dx (xx.dxx)",

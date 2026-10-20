@@ -1,5 +1,5 @@
 test_that("dps markup works with ~{ and ~[", {
-  skip_if(Sys.getenv("COVR") == "TRUE", "Skipping test when COVR is TRUE")
+  skip_on_covr()
   strs <- c(
     "~{super a} and some ~{optional [a,b]} more st~{super a,b}uff",
     "~[super a] and some ~[optional {a,b}] more st~[super a,b]uff"

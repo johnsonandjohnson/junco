@@ -3,11 +3,10 @@ library(tern)
 library(rtables)
 library(ggplot2)
 
-
-
 options(docx.add_datetime = FALSE)
 skip_on_cran()
 skip_on_os("windows")
+skip_on_covr()
 
 adsl <- ex_adsl
 adae <- ex_adae
@@ -415,7 +414,6 @@ testthat::test_that("export_TLG_as_docx() works with pagination", {
       var = .subgrpvar, cfun = a_freq_j,
       extra_args = list(
         label_fstr = .subgrplbl,
-        extrablankline = TRUE,
         restr_columns = "AVAL",
         .stats = c("n_altdf"),
         riskdiff = FALSE, denom_by = .subgrpvar

@@ -42,6 +42,7 @@ pkgdown
 ^\.covrignore$
 ^\.idea$
 ^dev$
+^coverage$
 
 # output
 ^output$
