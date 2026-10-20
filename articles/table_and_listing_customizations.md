@@ -114,7 +114,6 @@ lyt <- basic_table(
                        extra_args = list(denom = "n_df",
                                          denom_by = "SEX",
                                          riskdiff = FALSE,
-                                         extrablankline = TRUE,
                                          .stats = c("count_unique")
                                          )
                        ) |>
@@ -252,7 +251,6 @@ lyt <- basic_table(
                        extra_args = list(denom = "n_df",
                                          denom_by = "SEX",
                                          riskdiff = FALSE,
-                                         extrablankline = TRUE,
                                          .stats = c("count_unique")
                                          )
                        ) |>
@@ -510,7 +508,6 @@ lyt <- basic_table(
                        extra_args = list(denom = "n_df",
                                          denom_by = "SEX",
                                          riskdiff = FALSE,
-                                         extrablankline = TRUE,
                                          .stats = c("count_unique")
                                          )
                        ) |>
@@ -680,7 +677,6 @@ lyt <- basic_table(
                        extra_args = list(denom = "n_df",
                                          denom_by = "SEX",
                                          riskdiff = FALSE,
-                                         extrablankline = TRUE,
                                          .stats = c("count_unique")
                                          )
                        ) |>
@@ -860,7 +856,6 @@ lyt <- basic_table(
                        extra_args = list(denom = "n_df",
                                          denom_by = "SEX",
                                          riskdiff = FALSE,
-                                         extrablankline = TRUE,
                                          .stats = c("count_unique")
                                          )
                        ) |>
@@ -1998,7 +1993,6 @@ lyt <- basic_table(
                        extra_args = list(denom = "n_df",
                                          denom_by = "SEX",
                                          riskdiff = FALSE,
-                                         extrablankline = TRUE,
                                          .stats = c("count_unique")
                                          )
                        ) |>
@@ -2036,7 +2030,6 @@ tt_to_tlgrtf(result,
 |  | Example Drug 5 mg | Example Drug 10 mg | Example Drug 20 mg | Placebo |
 |  | N=2 | N=2 | N=2 | N=2 |
 | Male | 1 | 1 | 1 | 1 |
-|  |  |  |  |  |
 | Response |  |  |  |  |
 | Yes | 1 (100.0%) | 0 | 1 (100.0%) | 0 |
 | No | 0 | 1 (100.0%) | 0 | 1 (100.0%) |

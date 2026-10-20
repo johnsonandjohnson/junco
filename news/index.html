@@ -34,6 +34,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.7009" id="junco-017009">junco 0.1.7009<a class="anchor" aria-label="anchor" href="#junco-017009"></a></h2>
+<div class="section level4">
+<h4 id="changed-0-1-7009">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7009"></a></h4>
+<ul><li>Removed <code>extrablankline = TRUE</code> usage from vignettes and tests as part of deprecation (<a href="https://github.com/johnsonandjohnson/junco/issues/374" class="external-link">#374</a>, <a href="https://github.com/johnsonandjohnson/junco/issues/344" class="external-link">#344</a>).</li>
+</ul></div>
 <div class="section level3">
 <h3 id="id_017---cran-release-0-1-7009">[0.1.7] - 2026-10-15 (CRAN release)<a class="anchor" aria-label="anchor" href="#id_017---cran-release-0-1-7009"></a></h3>
 <div class="section level4">
@@ -45,7 +49,7 @@
 <li>CRITICAL: hotfixed <code><a href="../reference/def_colwidths.html">def_colwidths()</a></code> when a column label is too long (<a href="https://github.com/johnsonandjohnson/junco/issues/281" class="external-link">#281</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-0-1-7009">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7009"></a></h4>
+<h4 id="changed-0-1-7009-1">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7009-1"></a></h4>
 <ul><li>Added <code>"unique_fraction"</code> as a new statistic supported by <code><a href="../reference/a_freq_j.html">s_freq_j()</a></code> and <code><a href="../reference/a_freq_j.html">a_freq_j()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/519" class="external-link">#519</a>).</li>
 <li>Added <code>lowercase_words</code> argument to <code><a href="../reference/string_to_title.html">string_to_title()</a></code> to keep specified words lowercase (<a href="https://github.com/johnsonandjohnson/junco/issues/524" class="external-link">#524</a>).</li>
 <li>Added <code>.cell_footnotes</code> and <code>.row_footnotes</code> arguments to <code><a href="../reference/default_stats_formats_labels.html">format_stats()</a></code> (<a href="https://github.com/johnsonandjohnson/junco/issues/470" class="external-link">#470</a>).</li>
@@ -140,7 +144,7 @@
 <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> now is passing vectorized colwidths when exporting ‘allparts’ to match the colwidths of the individual parts (<a href="https://github.com/johnsonandjohnson/junco/issues/225" class="external-link">#225</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-0-1-7009-1">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7009-1"></a></h4>
+<h4 id="changed-0-1-7009-2">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7009-2"></a></h4>
 <ul><li>Updated <code><a href="../reference/summary_subset.html">c_summary_subset_label()</a></code>: removed <code>.spl_context</code> argument and renamed <code>subset_expr</code> to <code>filter_expr</code>.</li>
 <li>Renamed <code><a href="../reference/a_summary_j.html">a_summary_j()</a></code> to <code><a href="../reference/summary_subset.html">a_summary_subset()</a></code> and updated its purpose, implementation, and arguments.</li>
 <li>Added new stats/labels/formats/indents to <code>junco_utils_default_stats_formats_labels.r</code> file.</li>
@@ -206,7 +210,7 @@
 <li>Fixed <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> argument <code>label_width_ins</code> which was not applying the change in the row label column width (<a href="https://github.com/johnsonandjohnson/junco/issues/166" class="external-link">#166</a>).</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-0-1-7009-2">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7009-2"></a></h4>
+<h4 id="changed-0-1-7009-3">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7009-3"></a></h4>
 <ul><li>Reinstate rbmi as dependency</li>
 </ul></div>
 </div>
@@ -214,7 +218,7 @@
 <h3 id="id_013---minor-hotfix-release-0-1-7009">
 <a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.3" class="external-link">0.1.3</a> - 2026-01-12 (minor hotfix release)<a class="anchor" aria-label="anchor" href="#id_013---minor-hotfix-release-0-1-7009"></a></h3>
 <div class="section level4">
-<h4 id="changed-0-1-7009-3">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7009-3"></a></h4>
+<h4 id="changed-0-1-7009-4">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7009-4"></a></h4>
 <ul><li>Address CRAN NOTES.</li>
 </ul></div>
 </div>
@@ -252,7 +256,7 @@
 <li>Integration with formatters, rtables, tidytlg, and tern packages</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-0-1-7009-4">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7009-4"></a></h4>
+<h4 id="changed-0-1-7009-5">Changed<a class="anchor" aria-label="anchor" href="#changed-0-1-7009-5"></a></h4>
 <ul><li>Initial CRAN release</li>
 </ul></div>
 </div>
