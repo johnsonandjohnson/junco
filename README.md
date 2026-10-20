@@ -49,7 +49,7 @@ Or you can install the development version from GitHub:
 
 ```r
 require('remotes')
-remotes::install_github("johnsonandjohnson/junco", ref = "dev") #for the rolling dev release
+remotes::install_github("johnsonandjohnson/junco") #for the rolling development release
 ```
 
 ## Usage
@@ -66,10 +66,6 @@ Key vignettes and what they cover:
   - Article: https://johnsonandjohnson.github.io/junco/articles/junco.html
   - What you’ll learn: how to set up data, create common analyses, and produce TLG-ready outputs using core helpers.
 To understand how to use this package, please refer to the vignettes (also available on the pkgdown site). You can list them locally with:
-
-```r
-browseVignettes(package = "junco")
-```
 
 Key vignettes and what they cover:
 
