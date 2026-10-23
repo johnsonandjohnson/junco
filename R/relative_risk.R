@@ -75,11 +75,11 @@ s_relative_risk <- function(
   y <- list(rel_risk_ci = list(), pval = list())
 
   if (!.in_ref_col) {
+    # Note: We could use tern:::assert_stratification_compatibility if it was
+    # exported, or consider moving to tern.
     if (method == "cmh") {
       checkmate::assert_character(variables$strata, null.ok = FALSE)
     } else {
-      # Note: We could use tern:::assert_stratification_compatibility if it was
-      # exported, or consider moving to tern.
       checkmate::assert_character(variables$strata, len = 0, null.ok = TRUE)
     }
     checkmate::assert_logical(df[[.var]], any.missing = FALSE)
@@ -226,46 +226,26 @@ prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
   checkmate::assert_true(identical(dim(tbl)[1:2], c(2L, 2L)))
   checkmate::assert_numeric(as.vector(tbl), lower = 0, finite = TRUE)
   checkmate::assert_number(conf_level, lower = 0, upper = 1)
-  has_single_stratum <- dim(tbl)[3] == 1L
   if (any(apply(tbl, 3, sum) < 5)) {
     warning("Less than 5 observations in some strata.")
   }
-  # CMH calculations below use treatment first and reference second.
-  t_tbl <- tbl[2:1, , , drop = FALSE]
-  # Index 1 is for treatment, index 2 is for control, e.g. n1 is number of treatment patients per stratum.
-  n1resp <- t_tbl[1, 1, ]
-  n2resp <- t_tbl[2, 1, ]
-
-  t1 <- t_tbl[1, 1:2, , drop = TRUE]
-  t2 <- t_tbl[2, 1:2, , drop = TRUE]
-  if (has_single_stratum) {
-    n1 <- sum(t1)
-    n2 <- sum(t2)
-    checkmate::assert_count(n1)
-    checkmate::assert_count(n2)
-  } else {
-    n1 <- colSums(t1)
-    n2 <- colSums(t2)
-    checkmate::assert_integerish(n1)
-    checkmate::assert_integerish(n2)
-    checkmate::assert_true(identical(length(n1), length(n2)))
-  }
+  # Rows are reference then treatment; columns are strata, including a single stratum.
+  n_resp <- matrix(tbl[, 1, ], nrow = 2)
+  n <- apply(tbl, c(1, 3), sum)
+  checkmate::assert_integerish(as.vector(n), lower = 0)
 
   # CMH statistic for relative risk, Treatment over Control
-  use_stratum <- (n1 > 0) & (n2 > 0)
-  n1 <- n1[use_stratum]
-  n2 <- n2[use_stratum]
-  n1resp <- n1resp[use_stratum]
-  n2resp <- n2resp[use_stratum]
-  nresp <- n1resp + n2resp
-  n <- n1 + n2
+  use_stratum <- colSums(n > 0) == 2L
+  n <- n[, use_stratum, drop = FALSE]
+  n_resp <- n_resp[, use_stratum, drop = FALSE]
+  n_total <- colSums(n)
 
-  rel_risk_num <- sum(n1resp * n2 / n)
-  rel_risk_denom <- sum(n2resp * n1 / n)
+  rel_risk_num <- sum(n_resp[2, ] * n[1, ] / n_total)
+  rel_risk_denom <- sum(n_resp[1, ] * n[2, ] / n_total)
   log_rel_risk <- log(rel_risk_num) - log(rel_risk_denom)
   rel_risk <- exp(log_rel_risk)
 
-  var_num <- sum((n1 * n2 * nresp - n1resp * n2resp * n) / n^2)
+  var_num <- sum((n[1, ] * n[2, ] * colSums(n_resp) - n_resp[1, ] * n_resp[2, ] * n_total) / n_total^2)
   var_denom <- rel_risk_num * rel_risk_denom
   var_log_rel_risk <- var_num / var_denom
   se_log_rel_risk <- sqrt(var_log_rel_risk)
@@ -274,11 +254,12 @@ prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
   log_rel_risk_ci <- log_rel_risk + c(-1, +1) * z * se_log_rel_risk
   ci <- exp(log_rel_risk_ci)
   rel_risk_ci <- stats::setNames(c(rel_risk, ci), c("est", "lcl", "ucl"))
-  if (any(apply(tbl[, 1, , drop = FALSE], 1, sum) == 0)) {
+
+  if (any(rowSums(tbl[, 1, , drop = FALSE]) == 0)) {
     rel_risk_ci <- c(est = NA_real_, lcl = 0, ucl = Inf)
   }
 
-  pval <- safe_mh_test(t_tbl, correct = FALSE)$p.value
+  pval <- safe_mh_test(tbl, correct = FALSE)$p.value
 
   list(rel_risk_ci = rel_risk_ci, pval = pval)
 }
@@ -308,22 +289,24 @@ prop_ratio_wald <- function(tbl, conf_level = 0.95, correction = FALSE) {
   checkmate::assert_numeric(as.vector(tbl), lower = 0, finite = TRUE)
   checkmate::assert_number(conf_level, lower = 0, upper = 1)
   checkmate::assert_flag(correction)
-  events <- tbl[, 1]
-  totals <- rowSums(tbl)
-  checkmate::assert_true(all(totals > 0))
-  addon <- if (correction) 0.5 else 0
-  events <- events + addon
-  totals <- totals + addon
 
-  estimate <- (events[2] / totals[2]) / (events[1] / totals[1])
-  if (any(events == 0)) {
+  n_resp <- tbl[, 1]
+  n <- rowSums(tbl)
+  checkmate::assert_true(all(n > 0))
+
+  addon <- if (correction) 0.5 else 0
+  n_resp <- n_resp + addon
+  n <- n + addon
+
+  estimate <- (n_resp[2] / n[2]) / (n_resp[1] / n[1])
+  if (any(n_resp == 0)) {
     if (is.nan(estimate)) {
       estimate <- NA_real_
     }
     ci <- c(NA_real_, NA_real_)
     pval <- NA_real_
   } else {
-    se <- sqrt(sum(1 / events - 1 / totals))
+    se <- sqrt(sum(1 / n_resp - 1 / n))
     log_rr <- log(estimate)
     z <- stats::qnorm((1 + conf_level) / 2)
     ci <- exp(log_rr + c(-1, 1) * z * se)

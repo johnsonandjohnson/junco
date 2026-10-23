@@ -479,7 +479,7 @@ test_that("prop_ratio_wald validates inputs", {
   expect_error(prop_ratio_wald(tbl = rbind(c(NA, 1), c(1, 1))), "missing")
   expect_error(prop_ratio_wald(tbl = matrix(data = -1, nrow = 2, ncol = 2)), ">= 0", fixed = TRUE)
   expect_error(prop_ratio_wald(tbl = matrix(data = 1, nrow = 1, ncol = 2)), "rows")
-  expect_error(prop_ratio_wald(tbl = rbind(c(0, 0), c(1, 1))), "totals")
+  expect_error(prop_ratio_wald(tbl = rbind(c(0, 0), c(1, 1))), "all(n > 0)", fixed = TRUE)
 })
 
 test_that("a_relative_risk renders unstratified Wald results", {
