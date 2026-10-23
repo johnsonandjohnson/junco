@@ -4,14 +4,13 @@
 \alias{prop_ratio_cmh}
 \title{Relative Risk CMH Statistic}
 \usage{
-prop_ratio_cmh(rsp, grp, strata, conf_level = 0.95)
+prop_ratio_cmh(tbl, conf_level = 0.95)
 }
 \arguments{
-\item{rsp}{(\code{logical})\cr whether each subject is a responder or not.}
-
-\item{grp}{(\code{factor})\cr defining the groups.}
-
-\item{strata}{(\code{factor})\cr variable with one level per stratum and same length as \code{rsp}.}
+\item{tbl}{(\code{array})\cr a 2 by 2 by number of strata contingency table, as returned
+in the \code{tbl} element of \code{\link[tern:h_prepare_rsp_table]{tern::h_prepare_rsp_table()}}. Rows (first dimension) are reference
+then treatment; columns (second dimension) are responders then nonresponders;
+the third dimension represents the strata.}
 
 \item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 }
@@ -26,7 +25,10 @@ for stratification factors by applying Cochran-Mantel-Haenszel (CMH) weights.
 \examples{
 
 set.seed(2)
-rsp <- sample(c(TRUE, FALSE), 100, TRUE)
+rsp <- factor(
+  sample(c(TRUE, FALSE), 100, TRUE),
+  levels = c(TRUE, FALSE)
+)
 grp <- sample(c("Placebo", "Treatment"), 100, TRUE)
 grp <- factor(grp, levels = c("Placebo", "Treatment"))
 strata_data <- data.frame(
@@ -35,8 +37,9 @@ strata_data <- data.frame(
   stringsAsFactors = TRUE
 )
 
+tbl <- table(grp, rsp, interaction(strata_data))
 prop_ratio_cmh(
-  rsp = rsp, grp = grp, strata = interaction(strata_data),
+  tbl = tbl,
   conf_level = 0.90
 )
 

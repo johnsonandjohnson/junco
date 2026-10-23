@@ -1,15 +1,21 @@
 #' Relative risk estimation
 #'
 #' The analysis function [a_relative_risk()] is used to create a layout element
-#' to estimate the relative risk for response within a studied population. Only
-#' the CMH method is available currently.
+#' to estimate the relative risk for response within a studied population using
+#' stratified CMH or unstratified Wald methods.
 #' The primary analysis variable, `vars`, is a logical variable indicating
 #' whether a response has occurred for each record.
-#' A stratification variable must be supplied via the
+#' For CMH, a stratification variable must be supplied via the
 #' `strata` element of the `variables` argument.
 #'
 #' @details The variance of the CMH relative risk estimate is calculated using
 #'   the Greenland and Robins (1985) variance estimation.
+#'   The unstratified `wald` and `waldcc` methods use a normal approximation
+#'   for the log relative risk.
+#'   `waldcc` adds 0.5 to
+#'   each response count and each group total in both the estimate and variance.
+#'   With `wald`, a zero response count gives undefined confidence limits and
+#'   p-value (`NA`).
 #'
 #' @param df (`data.frame`)\cr input data frame.
 #' @param .var (`string`)\cr name of the response variable.
@@ -24,10 +30,8 @@
 #' @param .in_ref_col (`logical`)\cr whether the current column is the reference column.
 #' @param variables (`list`)\cr list with strata variable names.
 #' @param conf_level (`numeric`)\cr confidence level for the confidence interval.
-#' @param method (`string`)\cr method to use for relative risk calculation.
+#' @param method (`string`)\cr relative risk method: `cmh`, `wald`, or `waldcc`.
 #' @param weights_method (`string`)\cr method to use for weights calculation in stratified analysis.
-#'
-#' @note This has been adapted from the `odds_ratio` functions in the `tern` package.
 #'
 #' @name relative_risk
 NULL
@@ -63,34 +67,38 @@ s_relative_risk <- function(
   .in_ref_col,
   variables = list(strata = NULL),
   conf_level = 0.95,
-  method = "cmh",
+  method = c("cmh", "wald", "waldcc"),
   weights_method = "cmh"
 ) {
   method <- match.arg(method)
   weights_method <- match.arg(weights_method)
-  checkmate::assert_character(variables$strata, null.ok = FALSE)
-  y <- list(rel_risk_ci = list(), pval = list())
+
+  y <- list(
+    rel_risk_ci = list(),
+    pval = list()
+  )
 
   if (!.in_ref_col) {
-    rsp <- c(.ref_group[[.var]], df[[.var]])
-    grp <- factor(rep(c("ref", "Not-ref"), c(nrow(.ref_group), nrow(df))), levels = c("ref", "Not-ref"))
+    # Note: We could use tern:::assert_stratification_compatibility if it was
+    # exported, or consider moving to tern.
+    if (method == "cmh") {
+      checkmate::assert_character(variables$strata, null.ok = FALSE)
+    } else {
+      checkmate::assert_character(variables$strata, len = 0, null.ok = TRUE)
+    }
+    checkmate::assert_logical(df[[.var]], any.missing = FALSE)
+    checkmate::assert_logical(.ref_group[[.var]], any.missing = FALSE)
+    prepared <- tern::h_prepare_rsp_table(
+      df = df,
+      df_ref = .ref_group,
+      var = .var,
+      strata_vars = if (method == "cmh") variables$strata else NULL
+    )
 
-    strata_colnames <- variables$strata
-    checkmate::assert_character(strata_colnames, null.ok = FALSE)
-    strata_vars <- stats::setNames(as.list(strata_colnames), strata_colnames)
-
-    assert_df_with_variables(df, strata_vars)
-    assert_df_with_variables(.ref_group, strata_vars)
-
-    # Merging interaction strata for reference group rows data and remaining
-    strata <- c(interaction(.ref_group[strata_colnames]), interaction(df[strata_colnames]))
-    strata <- as.factor(strata)
-
-    y <- prop_ratio_cmh(rsp, grp, strata, conf_level)[c("rel_risk_ci", "pval")]
-
-    one_group_no_events <- (sum(.ref_group[[.var]]) == 0) || (sum(df[[.var]]) == 0)
-    if (one_group_no_events) {
-      y$rel_risk_ci <- c(est = NA_real_, lcl = 0, ucl = Inf)
+    if (method == "cmh") {
+      y <- prop_ratio_cmh(tbl = prepared$tbl, conf_level = conf_level)
+    } else {
+      y <- prop_ratio_wald(tbl = prepared$tbl, conf_level = conf_level, correction = method == "waldcc")
     }
   }
 
@@ -194,13 +202,19 @@ safe_mh_test <- function(...) {
 #' for stratification factors by applying Cochran-Mantel-Haenszel (CMH) weights.
 #'
 #' @inheritParams proposal_argument_convention
-#' @param strata (`factor`)\cr variable with one level per stratum and same length as `rsp`.
+#' @param tbl (`array`)\cr a 2 by 2 by number of strata contingency table, as returned
+#'   in the `tbl` element of [tern::h_prepare_rsp_table()]. Rows (first dimension) are reference
+#'   then treatment; columns (second dimension) are responders then nonresponders;
+#'   the third dimension represents the strata.
 #'
 #' @return A list with elements `rel_risk_ci` and `pval`.
 #' @examples
 #'
 #' set.seed(2)
-#' rsp <- sample(c(TRUE, FALSE), 100, TRUE)
+#' rsp <- factor(
+#'   sample(c(TRUE, FALSE), 100, TRUE),
+#'   levels = c(TRUE, FALSE)
+#' )
 #' grp <- sample(c("Placebo", "Treatment"), 100, TRUE)
 #' grp <- factor(grp, levels = c("Placebo", "Treatment"))
 #' strata_data <- data.frame(
@@ -209,65 +223,35 @@ safe_mh_test <- function(...) {
 #'   stringsAsFactors = TRUE
 #' )
 #'
+#' tbl <- table(grp, rsp, interaction(strata_data))
 #' prop_ratio_cmh(
-#'   rsp = rsp, grp = grp, strata = interaction(strata_data),
+#'   tbl = tbl,
 #'   conf_level = 0.90
 #' )
 #'
 #' @export
-prop_ratio_cmh <- function(rsp, grp, strata, conf_level = 0.95) {
-  grp <- as_factor_keep_attributes(grp)
-  strata <- as_factor_keep_attributes(strata)
-  has_single_stratum <- nlevels(strata) == 1
-  check_diff_prop_ci(
-    rsp = rsp,
-    grp = grp,
-    conf_level = conf_level,
-    strata = strata
-  )
-
-  if (any(tapply(rsp, strata, length) < 5)) {
+prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
+  check_prop_ratio(tbl = tbl, conf_level = conf_level, stratified = TRUE)
+  if (any(apply(tbl, 3L, sum) < 5)) {
     warning("Less than 5 observations in some strata.")
   }
-
-  # first dimension: treatment, control - therefore we reverse the levels order 2nd dimension: TRUE, FALSE 3rd
-  # dimension: levels of strata rsp as factor rsp to handle edge case of no FALSE (or TRUE) rsp records
-  t_tbl <- table(factor(grp, levels = rev(levels(grp))), factor(rsp, levels = c("TRUE", "FALSE")), strata)
-
-  # Index 1 is for treatment, index 2 is for control, e.g. n1 is number of treatment patients per stratum.
-  n1resp <- t_tbl[1, 1, levels(strata)]
-  n2resp <- t_tbl[2, 1, levels(strata)]
-
-  t1 <- t_tbl[1, 1:2, , drop = TRUE]
-  t2 <- t_tbl[2, 1:2, , drop = TRUE]
-  if (has_single_stratum) {
-    n1 <- sum(t1)
-    n2 <- sum(t2)
-    checkmate::assert_count(n1)
-    checkmate::assert_count(n2)
-  } else {
-    n1 <- colSums(t1)
-    n2 <- colSums(t2)
-    checkmate::assert_integerish(n1)
-    checkmate::assert_integerish(n2)
-    checkmate::assert_true(identical(length(n1), length(n2)))
-  }
+  # Rows are reference then treatment; columns are strata, including a single stratum.
+  n_resp <- matrix(tbl[, 1L, ], nrow = 2)
+  n <- apply(tbl, c(1L, 3L), sum)
+  checkmate::assert_integerish(as.vector(n), lower = 0)
 
   # CMH statistic for relative risk, Treatment over Control
-  use_stratum <- (n1 > 0) & (n2 > 0)
-  n1 <- n1[use_stratum]
-  n2 <- n2[use_stratum]
-  n1resp <- n1resp[use_stratum]
-  n2resp <- n2resp[use_stratum]
-  nresp <- n1resp + n2resp
-  n <- n1 + n2
+  use_stratum <- colSums(n > 0) == 2L
+  n <- n[, use_stratum, drop = FALSE]
+  n_resp <- n_resp[, use_stratum, drop = FALSE]
+  n_total <- colSums(n)
 
-  rel_risk_num <- sum(n1resp * n2 / n)
-  rel_risk_denom <- sum(n2resp * n1 / n)
+  rel_risk_num <- sum(n_resp[2L, ] * n[1L, ] / n_total)
+  rel_risk_denom <- sum(n_resp[1L, ] * n[2L, ] / n_total)
   log_rel_risk <- log(rel_risk_num) - log(rel_risk_denom)
   rel_risk <- exp(log_rel_risk)
 
-  var_num <- sum((n1 * n2 * nresp - n1resp * n2resp * n) / n^2)
+  var_num <- sum((n[1L, ] * n[2L, ] * colSums(n_resp) - n_resp[1L, ] * n_resp[2L, ] * n_total) / n_total^2)
   var_denom <- rel_risk_num * rel_risk_denom
   var_log_rel_risk <- var_num / var_denom
   se_log_rel_risk <- sqrt(var_log_rel_risk)
@@ -277,7 +261,71 @@ prop_ratio_cmh <- function(rsp, grp, strata, conf_level = 0.95) {
   ci <- exp(log_rel_risk_ci)
   rel_risk_ci <- stats::setNames(c(rel_risk, ci), c("est", "lcl", "ucl"))
 
-  pval <- safe_mh_test(t_tbl, correct = FALSE)$p.value
+  if (any(rowSums(tbl[, 1L, , drop = FALSE]) == 0)) {
+    rel_risk_ci <- c(est = NA_real_, lcl = 0, ucl = Inf)
+  }
 
-  list(rel_risk_ci = rel_risk_ci, pval = pval)
+  pval <- safe_mh_test(tbl, correct = FALSE)$p.value
+
+  list(
+    rel_risk_ci = rel_risk_ci,
+    pval = pval
+  )
+}
+
+
+#' Relative Risk Wald Statistic
+#'
+#' Estimates the relative response risk in the second group divided by that in the first
+#' group, with log-scale Wald confidence limits and a two-sided Wald p-value.
+#'
+#' @inheritParams proposal_argument_convention
+#' @param tbl (`matrix`)\cr a 2 by 2 contingency table, as returned in the
+#'   `tbl` element of [tern::h_prepare_rsp_table()]. Rows are reference then
+#'   treatment; columns are responders then nonresponders.
+#' @param correction (`flag`)\cr whether to add 0.5 to the response counts and
+#'   group totals, in order to support the case where there are zero responses in either group.
+#' @return A list with elements `rel_risk_ci` (named `est`, `lcl`, `ucl`) and `pval`.
+#'
+#' @examples
+#' prop_ratio_wald(
+#'   tbl = rbind(ref = c(1, 1), trt = c(2, 1)),
+#'   correction = TRUE
+#' )
+#' @export
+prop_ratio_wald <- function(tbl, conf_level = 0.95, correction = FALSE) {
+  check_prop_ratio(tbl = tbl, conf_level = conf_level, correction = correction)
+
+  n_resp <- tbl[, 1L]
+  n <- rowSums(tbl)
+  checkmate::assert_true(all(n > 0))
+
+  if (correction) {
+    add_on <- 0.5
+    n_resp <- n_resp + add_on
+    n <- n + add_on
+  }
+  estimate <- (n_resp[2L] / n[2L]) / (n_resp[1L] / n[1L])
+
+  if (any(n_resp == 0)) {
+    if (is.nan(estimate)) {
+      estimate <- NA_real_
+    }
+    ci <- c(NA_real_, NA_real_)
+    pval <- NA_real_
+  } else {
+    se <- sqrt(sum(1 / n_resp - 1 / n))
+    log_rr <- log(estimate)
+    z <- stats::qnorm((1 + conf_level) / 2)
+    ci <- exp(log_rr + c(-1, 1) * z * se)
+    pval <- if (se == 0) 1 else 2 * stats::pnorm(-abs(log_rr / se))
+  }
+
+  list(
+    rel_risk_ci = stats::setNames(
+      c(unname(estimate), ci),
+      c("est", "lcl", "ucl")
+    ),
+    pval = unname(pval)
+  )
 }
