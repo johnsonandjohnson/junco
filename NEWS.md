@@ -1,5 +1,9 @@
 # junco 0.1.7009
 
+### Added
+- Added unstratified `wald` and `waldcc` relative risk methods to `s_relative_risk()`
+  and the shared `prop_ratio_wald()` estimator (#533).
+
 ### Changed
 - Removed `extrablankline = TRUE` usage from vignettes and tests as part of deprecation (#374, #344).
 
