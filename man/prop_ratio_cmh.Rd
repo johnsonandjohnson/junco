@@ -4,14 +4,12 @@
 \alias{prop_ratio_cmh}
 \title{Relative Risk CMH Statistic}
 \usage{
-prop_ratio_cmh(rsp, grp, strata, conf_level = 0.95)
+prop_ratio_cmh(tbl, conf_level = 0.95)
 }
 \arguments{
-\item{rsp}{(\code{logical})\cr whether each subject is a responder or not.}
-
-\item{grp}{(\code{factor})\cr defining the groups.}
-
-\item{strata}{(\code{factor})\cr variable with one level per stratum and same length as \code{rsp}.}
+\item{tbl}{(\code{array})\cr a 2 by 2 by stratum contingency table, as returned
+in the \code{tbl} element of \code{\link[tern:h_prepare_rsp_table]{tern::h_prepare_rsp_table()}}. Rows are reference
+then treatment; columns are responders then nonresponders.}
 
 \item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 }
@@ -36,7 +34,7 @@ strata_data <- data.frame(
 )
 
 prop_ratio_cmh(
-  rsp = rsp, grp = grp, strata = interaction(strata_data),
+  tbl = table(grp, factor(rsp, levels = c(TRUE, FALSE)), interaction(strata_data)),
   conf_level = 0.90
 )
 

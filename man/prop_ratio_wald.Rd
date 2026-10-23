@@ -4,12 +4,12 @@
 \alias{prop_ratio_wald}
 \title{Relative Risk Wald Statistic}
 \usage{
-prop_ratio_wald(rsp, grp, conf_level = 0.95, correction = FALSE)
+prop_ratio_wald(tbl, conf_level = 0.95, correction = FALSE)
 }
 \arguments{
-\item{rsp}{(\code{logical})\cr whether each subject is a responder or not.}
-
-\item{grp}{(\code{factor})\cr defining the groups.}
+\item{tbl}{(\code{matrix})\cr a 2 by 2 contingency table, as returned in the
+\code{tbl} element of \code{\link[tern:h_prepare_rsp_table]{tern::h_prepare_rsp_table()}}. Rows are reference then
+treatment; columns are responders then nonresponders.}
 
 \item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
@@ -25,8 +25,7 @@ group, with log-scale Wald confidence limits and a two-sided Wald p-value.
 }
 \examples{
 prop_ratio_wald(
-  rsp = c(TRUE, FALSE, TRUE, TRUE, FALSE),
-  grp = factor(c("ref", "ref", "trt", "trt", "trt"), levels = c("ref", "trt")),
+  tbl = rbind(ref = c(1, 1), trt = c(2, 1)),
   correction = TRUE
 )
 }

@@ -75,32 +75,26 @@ s_relative_risk <- function(
   y <- list(rel_risk_ci = list(), pval = list())
 
   if (!.in_ref_col) {
-    rsp <- c(.ref_group[[.var]], df[[.var]])
-    grp <- factor(rep(c("ref", "Not-ref"), c(nrow(.ref_group), nrow(df))), levels = c("ref", "Not-ref"))
-
     if (method == "cmh") {
-      strata_colnames <- variables$strata
-      checkmate::assert_character(strata_colnames, null.ok = FALSE)
-      strata_vars <- stats::setNames(as.list(strata_colnames), strata_colnames)
-
-      assert_df_with_variables(df, strata_vars)
-      assert_df_with_variables(.ref_group, strata_vars)
-
-      # Merging interaction strata for reference group rows data and remaining
-      strata <- c(interaction(.ref_group[strata_colnames]), interaction(df[strata_colnames]))
-      strata <- as.factor(strata)
-
-      y <- prop_ratio_cmh(rsp, grp, strata, conf_level)[c("rel_risk_ci", "pval")]
-
-      one_group_no_events <- (sum(.ref_group[[.var]]) == 0) || (sum(df[[.var]]) == 0)
-      if (one_group_no_events) {
-        y$rel_risk_ci <- c(est = NA_real_, lcl = 0, ucl = Inf)
-      }
+      checkmate::assert_character(variables$strata, null.ok = FALSE)
     } else {
       # Note: We could use tern:::assert_stratification_compatibility if it was
       # exported, or consider moving to tern.
       checkmate::assert_character(variables$strata, len = 0, null.ok = TRUE)
-      y <- prop_ratio_wald(rsp, grp, conf_level, correction = method == "waldcc")
+    }
+    checkmate::assert_logical(df[[.var]], any.missing = FALSE)
+    checkmate::assert_logical(.ref_group[[.var]], any.missing = FALSE)
+    prepared <- tern::h_prepare_rsp_table(
+      df = df,
+      df_ref = .ref_group,
+      var = .var,
+      strata_vars = if (method == "cmh") variables$strata else NULL
+    )
+
+    if (method == "cmh") {
+      y <- prop_ratio_cmh(tbl = prepared$tbl, conf_level = conf_level)
+    } else {
+      y <- prop_ratio_wald(tbl = prepared$tbl, conf_level = conf_level, correction = method == "waldcc")
     }
   }
 
@@ -204,7 +198,9 @@ safe_mh_test <- function(...) {
 #' for stratification factors by applying Cochran-Mantel-Haenszel (CMH) weights.
 #'
 #' @inheritParams proposal_argument_convention
-#' @param strata (`factor`)\cr variable with one level per stratum and same length as `rsp`.
+#' @param tbl (`array`)\cr a 2 by 2 by stratum contingency table, as returned
+#'   in the `tbl` element of [tern::h_prepare_rsp_table()]. Rows are reference
+#'   then treatment; columns are responders then nonresponders.
 #'
 #' @return A list with elements `rel_risk_ci` and `pval`.
 #' @examples
@@ -220,33 +216,25 @@ safe_mh_test <- function(...) {
 #' )
 #'
 #' prop_ratio_cmh(
-#'   rsp = rsp, grp = grp, strata = interaction(strata_data),
+#'   tbl = table(grp, factor(rsp, levels = c(TRUE, FALSE)), interaction(strata_data)),
 #'   conf_level = 0.90
 #' )
 #'
 #' @export
-prop_ratio_cmh <- function(rsp, grp, strata, conf_level = 0.95) {
-  grp <- as_factor_keep_attributes(grp)
-  strata <- as_factor_keep_attributes(strata)
-  has_single_stratum <- nlevels(strata) == 1
-  check_diff_prop_ci(
-    rsp = rsp,
-    grp = grp,
-    conf_level = conf_level,
-    strata = strata
-  )
-
-  if (any(tapply(rsp, strata, length) < 5)) {
+prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
+  checkmate::assert_array(tbl, mode = "numeric", d = 3, any.missing = FALSE)
+  checkmate::assert_true(identical(dim(tbl)[1:2], c(2L, 2L)))
+  checkmate::assert_numeric(as.vector(tbl), lower = 0, finite = TRUE)
+  checkmate::assert_number(conf_level, lower = 0, upper = 1)
+  has_single_stratum <- dim(tbl)[3] == 1L
+  if (any(apply(tbl, 3, sum) < 5)) {
     warning("Less than 5 observations in some strata.")
   }
-
-  # first dimension: treatment, control - therefore we reverse the levels order 2nd dimension: TRUE, FALSE 3rd
-  # dimension: levels of strata rsp as factor rsp to handle edge case of no FALSE (or TRUE) rsp records
-  t_tbl <- table(factor(grp, levels = rev(levels(grp))), factor(rsp, levels = c("TRUE", "FALSE")), strata)
-
+  # CMH calculations below use treatment first and reference second.
+  t_tbl <- tbl[2:1, , , drop = FALSE]
   # Index 1 is for treatment, index 2 is for control, e.g. n1 is number of treatment patients per stratum.
-  n1resp <- t_tbl[1, 1, levels(strata)]
-  n2resp <- t_tbl[2, 1, levels(strata)]
+  n1resp <- t_tbl[1, 1, ]
+  n2resp <- t_tbl[2, 1, ]
 
   t1 <- t_tbl[1, 1:2, , drop = TRUE]
   t2 <- t_tbl[2, 1:2, , drop = TRUE]
@@ -286,6 +274,9 @@ prop_ratio_cmh <- function(rsp, grp, strata, conf_level = 0.95) {
   log_rel_risk_ci <- log_rel_risk + c(-1, +1) * z * se_log_rel_risk
   ci <- exp(log_rel_risk_ci)
   rel_risk_ci <- stats::setNames(c(rel_risk, ci), c("est", "lcl", "ucl"))
+  if (any(apply(tbl[, 1, , drop = FALSE], 1, sum) == 0)) {
+    rel_risk_ci <- c(est = NA_real_, lcl = 0, ucl = Inf)
+  }
 
   pval <- safe_mh_test(t_tbl, correct = FALSE)$p.value
 
@@ -299,27 +290,24 @@ prop_ratio_cmh <- function(rsp, grp, strata, conf_level = 0.95) {
 #' group, with log-scale Wald confidence limits and a two-sided Wald p-value.
 #'
 #' @inheritParams proposal_argument_convention
+#' @param tbl (`matrix`)\cr a 2 by 2 contingency table, as returned in the
+#'   `tbl` element of [tern::h_prepare_rsp_table()]. Rows are reference then
+#'   treatment; columns are responders then nonresponders.
 #' @param correction (`flag`)\cr whether to add 0.5 to the response counts and
 #'   group totals, in order to support the case where there are zero responses in either group.
 #' @return A list with elements `rel_risk_ci` (named `est`, `lcl`, `ucl`) and `pval`.
 #'
 #' @examples
 #' prop_ratio_wald(
-#'   rsp = c(TRUE, FALSE, TRUE, TRUE, FALSE),
-#'   grp = factor(c("ref", "ref", "trt", "trt", "trt"), levels = c("ref", "trt")),
+#'   tbl = rbind(ref = c(1, 1), trt = c(2, 1)),
 #'   correction = TRUE
 #' )
 #' @export
-prop_ratio_wald <- function(rsp, grp, conf_level = 0.95, correction = FALSE) {
-  grp <- as_factor_keep_attributes(grp)
-  check_diff_prop_ci(rsp = rsp, grp = grp, conf_level = conf_level)
+prop_ratio_wald <- function(tbl, conf_level = 0.95, correction = FALSE) {
+  checkmate::assert_matrix(tbl, mode = "numeric", nrows = 2, ncols = 2, any.missing = FALSE)
+  checkmate::assert_numeric(as.vector(tbl), lower = 0, finite = TRUE)
+  checkmate::assert_number(conf_level, lower = 0, upper = 1)
   checkmate::assert_flag(correction)
-  tbl <- tern::h_prepare_rsp_table(
-    df = data.frame(rsp = rsp[grp == levels(grp)[2]]),
-    df_ref = data.frame(rsp = rsp[grp == levels(grp)[1]]),
-    var = "rsp"
-  )$tbl
-
   events <- tbl[, 1]
   totals <- rowSums(tbl)
   checkmate::assert_true(all(totals > 0))
