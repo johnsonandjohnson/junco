@@ -1,3 +1,29 @@
+#' Check Inputs for Relative Risk Estimators
+#'
+#' These are used by [prop_ratio_cmh()] and [prop_ratio_wald()] to check input validity.
+#'
+#' @param tbl A numeric contingency table with two rows and two columns.
+#' @param conf_level Confidence level between zero and one.
+#' @param correction Whether to apply a continuity correction.
+#' @param stratified Whether `tbl` must have a third dimension for strata.
+#'
+#' @return Invisibly returns `NULL`.
+#' @keywords internal
+#' @noRd
+check_prop_ratio <- function(tbl, conf_level, correction = FALSE, stratified = FALSE) {
+  checkmate::assert_flag(stratified)
+  if (stratified) {
+    checkmate::assert_array(tbl, mode = "numeric", d = 3, any.missing = FALSE)
+    checkmate::assert_true(identical(dim(tbl)[1:2], c(2L, 2L)))
+  } else {
+    checkmate::assert_matrix(tbl, mode = "numeric", nrows = 2, ncols = 2, any.missing = FALSE)
+  }
+  checkmate::assert_numeric(as.vector(tbl), lower = 0, finite = TRUE)
+  checkmate::assert_number(conf_level, lower = 0, upper = 1)
+  checkmate::assert_flag(correction)
+  invisible(NULL)
+}
+
 #' Extract the left-hand side of a formula
 #'
 #' @param x (`formula`)\cr A two-sided formula, e.g., `y ~ x1 + x2`.

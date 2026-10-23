@@ -72,7 +72,11 @@ s_relative_risk <- function(
 ) {
   method <- match.arg(method)
   weights_method <- match.arg(weights_method)
-  y <- list(rel_risk_ci = list(), pval = list())
+
+  y <- list(
+    rel_risk_ci = list(),
+    pval = list()
+  )
 
   if (!.in_ref_col) {
     # Note: We could use tern:::assert_stratification_compatibility if it was
@@ -198,15 +202,19 @@ safe_mh_test <- function(...) {
 #' for stratification factors by applying Cochran-Mantel-Haenszel (CMH) weights.
 #'
 #' @inheritParams proposal_argument_convention
-#' @param tbl (`array`)\cr a 2 by 2 by stratum contingency table, as returned
-#'   in the `tbl` element of [tern::h_prepare_rsp_table()]. Rows are reference
-#'   then treatment; columns are responders then nonresponders.
+#' @param tbl (`array`)\cr a 2 by 2 by number of strata contingency table, as returned
+#'   in the `tbl` element of [tern::h_prepare_rsp_table()]. Rows (first dimension) are reference
+#'   then treatment; columns (second dimension) are responders then nonresponders;
+#'   the third dimension represents the strata.
 #'
 #' @return A list with elements `rel_risk_ci` and `pval`.
 #' @examples
 #'
 #' set.seed(2)
-#' rsp <- sample(c(TRUE, FALSE), 100, TRUE)
+#' rsp <- factor(
+#'   sample(c(TRUE, FALSE), 100, TRUE),
+#'   levels = c(TRUE, FALSE)
+#' )
 #' grp <- sample(c("Placebo", "Treatment"), 100, TRUE)
 #' grp <- factor(grp, levels = c("Placebo", "Treatment"))
 #' strata_data <- data.frame(
@@ -215,23 +223,21 @@ safe_mh_test <- function(...) {
 #'   stringsAsFactors = TRUE
 #' )
 #'
+#' tbl <- table(grp, rsp, interaction(strata_data))
 #' prop_ratio_cmh(
-#'   tbl = table(grp, factor(rsp, levels = c(TRUE, FALSE)), interaction(strata_data)),
+#'   tbl = tbl,
 #'   conf_level = 0.90
 #' )
 #'
 #' @export
 prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
-  checkmate::assert_array(tbl, mode = "numeric", d = 3, any.missing = FALSE)
-  checkmate::assert_true(identical(dim(tbl)[1:2], c(2L, 2L)))
-  checkmate::assert_numeric(as.vector(tbl), lower = 0, finite = TRUE)
-  checkmate::assert_number(conf_level, lower = 0, upper = 1)
-  if (any(apply(tbl, 3, sum) < 5)) {
+  check_prop_ratio(tbl = tbl, conf_level = conf_level, stratified = TRUE)
+  if (any(apply(tbl, 3L, sum) < 5)) {
     warning("Less than 5 observations in some strata.")
   }
   # Rows are reference then treatment; columns are strata, including a single stratum.
-  n_resp <- matrix(tbl[, 1, ], nrow = 2)
-  n <- apply(tbl, c(1, 3), sum)
+  n_resp <- matrix(tbl[, 1L, ], nrow = 2)
+  n <- apply(tbl, c(1L, 3L), sum)
   checkmate::assert_integerish(as.vector(n), lower = 0)
 
   # CMH statistic for relative risk, Treatment over Control
@@ -240,12 +246,12 @@ prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
   n_resp <- n_resp[, use_stratum, drop = FALSE]
   n_total <- colSums(n)
 
-  rel_risk_num <- sum(n_resp[2, ] * n[1, ] / n_total)
-  rel_risk_denom <- sum(n_resp[1, ] * n[2, ] / n_total)
+  rel_risk_num <- sum(n_resp[2L, ] * n[1L, ] / n_total)
+  rel_risk_denom <- sum(n_resp[1L, ] * n[2L, ] / n_total)
   log_rel_risk <- log(rel_risk_num) - log(rel_risk_denom)
   rel_risk <- exp(log_rel_risk)
 
-  var_num <- sum((n[1, ] * n[2, ] * colSums(n_resp) - n_resp[1, ] * n_resp[2, ] * n_total) / n_total^2)
+  var_num <- sum((n[1L, ] * n[2L, ] * colSums(n_resp) - n_resp[1L, ] * n_resp[2L, ] * n_total) / n_total^2)
   var_denom <- rel_risk_num * rel_risk_denom
   var_log_rel_risk <- var_num / var_denom
   se_log_rel_risk <- sqrt(var_log_rel_risk)
@@ -255,13 +261,16 @@ prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
   ci <- exp(log_rel_risk_ci)
   rel_risk_ci <- stats::setNames(c(rel_risk, ci), c("est", "lcl", "ucl"))
 
-  if (any(rowSums(tbl[, 1, , drop = FALSE]) == 0)) {
+  if (any(rowSums(tbl[, 1L, , drop = FALSE]) == 0)) {
     rel_risk_ci <- c(est = NA_real_, lcl = 0, ucl = Inf)
   }
 
   pval <- safe_mh_test(tbl, correct = FALSE)$p.value
 
-  list(rel_risk_ci = rel_risk_ci, pval = pval)
+  list(
+    rel_risk_ci = rel_risk_ci,
+    pval = pval
+  )
 }
 
 
@@ -285,20 +294,19 @@ prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
 #' )
 #' @export
 prop_ratio_wald <- function(tbl, conf_level = 0.95, correction = FALSE) {
-  checkmate::assert_matrix(tbl, mode = "numeric", nrows = 2, ncols = 2, any.missing = FALSE)
-  checkmate::assert_numeric(as.vector(tbl), lower = 0, finite = TRUE)
-  checkmate::assert_number(conf_level, lower = 0, upper = 1)
-  checkmate::assert_flag(correction)
+  check_prop_ratio(tbl = tbl, conf_level = conf_level, correction = correction)
 
-  n_resp <- tbl[, 1]
+  n_resp <- tbl[, 1L]
   n <- rowSums(tbl)
   checkmate::assert_true(all(n > 0))
 
-  addon <- if (correction) 0.5 else 0
-  n_resp <- n_resp + addon
-  n <- n + addon
+  if (correction) {
+    add_on <- 0.5
+    n_resp <- n_resp + add_on
+    n <- n + add_on
+  }
+  estimate <- (n_resp[2L] / n[2L]) / (n_resp[1L] / n[1L])
 
-  estimate <- (n_resp[2] / n[2]) / (n_resp[1] / n[1])
   if (any(n_resp == 0)) {
     if (is.nan(estimate)) {
       estimate <- NA_real_
