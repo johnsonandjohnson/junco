@@ -74,29 +74,29 @@ response_by_var <- function(
 ) {
   # Derive statistics: xx / xx (xx.x%)
 
-  if (is.null(resp_var)) {
-    stop("afun response_by_var: resp_var cannot be NULL.")
-  }
+  # --- assertions -------------------------------------------------------------
+  checkmate::assert_data_frame(df, min.rows = 0L)
+  checkmate::assert_string(resp_var)
+  checkmate::assert_string(id)
+  checkmate::assert_choice(resp_var, names(df))
+  checkmate::assert_choice(.var, names(df))
+  checkmate::assert_choice(id, names(df))
+  checkmate::assert_multi_class(df[[resp_var]], c("character", "factor"))
 
-  resp_var_values <- unique(df[[resp_var]][!is.na(df[[resp_var]])])
-  if (is.character(df[[resp_var]]) && any(is.na(df[[resp_var]])) && all(resp_var_values == "Y")) {
-    stop(paste(
-      "afun response_by_var: not clear if missing resp_var should be considered",
-      "non-response. Please make it a factor with appropriate Y(/N) levels."
-    ))
-  }
-
-  if (length(setdiff(resp_var_values, c("Y", "N"))) > 0) {
-    stop("afun response_by_var: resp_var must contain only Y/N values.")
+  resp_vals <- unique(df[[resp_var]][!is.na(df[[resp_var]])])
+  if (length(resp_vals) > 0L) {
+    checkmate::assert_subset(resp_vals, c("Y", "N"))
   }
 
   df <- df[!is.na(df[[.var]]), ]
 
-  if ( # nolint start
+  # nolint start
+  if (
     (is.factor(df[[resp_var]]) &&
       (identical(levels(df[[resp_var]]), c("Y", "N")) || identical(levels(df[[resp_var]]), c("N", "Y")))) ||
       is.character(df[[resp_var]])
-  ) { # nolint end
+  ) {
+    # nolint end
     # missing values in resp_var should be excluded, not considered as not met response subject will then not
     # contribute to denominator
     df <- df[!is.na(df[[resp_var]]), ]
