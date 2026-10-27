@@ -88,22 +88,9 @@ response_by_var <- function(
     checkmate::assert_subset(resp_vals, c("Y", "N"))
   }
 
-  df <- df[!is.na(df[[.var]]), ]
+  # --- remove NAs --------------------------------------------------------------
+  df <- df[!is.na(df[[.var]]) & !is.na(df[[resp_var]]), ]
 
-  # nolint start
-  if (
-    (is.factor(df[[resp_var]]) &&
-      (identical(levels(df[[resp_var]]), c("Y", "N")) || identical(levels(df[[resp_var]]), c("N", "Y")))) ||
-      is.character(df[[resp_var]])
-  ) {
-    # nolint end
-    # missing values in resp_var should be excluded, not considered as not met response subject will then not
-    # contribute to denominator
-    df <- df[!is.na(df[[resp_var]]), ]
-  }
-
-  ## in other cases, missing values in resp_var will be considered not met response and subject will contribute to
-  ## denominator
   varvec <- df[[.var]]
 
   # For group summaries, varvec will be a singular value, equal to the current split, whereas for afun summaries,
