@@ -3,6 +3,7 @@
 ### Fixed
 - Fixed `response_by_var()` error caused by subgroup-dependent validation
   after column splitting (#438).
+- Updated `response_by_var()` input validation to use `checkmate` assertions (#438).
 
 ### Changed
 - Removed `extrablankline = TRUE` usage from vignettes and tests as part of deprecation (#374, #344).
