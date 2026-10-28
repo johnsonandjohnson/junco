@@ -83,13 +83,21 @@ response_by_var <- function(
   checkmate::assert_choice(id, names(df))
   checkmate::assert_multi_class(df[[resp_var]], c("character", "factor"))
 
-  resp_vals <- unique(df[[resp_var]][!is.na(df[[resp_var]])])
+  resp_vals <- as.character(unique(df[[resp_var]][!is.na(df[[resp_var]])]))
   if (length(resp_vals) > 0L) {
     checkmate::assert_subset(resp_vals, c("Y", "N"))
   }
 
   # --- remove NAs --------------------------------------------------------------
-  df <- df[!is.na(df[[.var]]) & !is.na(df[[resp_var]]), ]
+  df <- df[!is.na(df[[.var]]), ]
+
+  # For character or factor with Y/N levels: exclude NAs from denominator.
+  # For factor with other levels (e.g. only "Y"): keep NAs in denominator
+  # (NAs treated as non-responders).
+  if (is.character(df[[resp_var]]) ||
+    (is.factor(df[[resp_var]]) && setequal(levels(df[[resp_var]]), c("Y", "N")))) {
+    df <- df[!is.na(df[[resp_var]]), ]
+  }
 
   varvec <- df[[.var]]
 

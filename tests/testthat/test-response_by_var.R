@@ -43,6 +43,7 @@ test_that("response_by_var various scenarios", {
   expect_snapshot(cran = TRUE, tbl)
 
   ## Scenario 2: TRTEMFL has missing values and Y only, but is factor with just this level
+  ## NAs in resp_var are kept in denominator (treated as non-responders)
   adsl2 <- adsl
   adsl2$TRTEMFL <- ifelse(adsl2$TRTEMFL == "Y", "Y", NA)
   adsl2$TRTEMFL <- factor(adsl2$TRTEMFL, levels = "Y")
@@ -51,6 +52,7 @@ test_that("response_by_var various scenarios", {
   expect_snapshot(cran = TRUE, tbl2)
 
   ## Scenario 3: TRTEMFL has missing values and Y only, and analysis variable has missing values
+  ## NAs in resp_var kept in denom, NAs in .var excluded
   adsl3 <- adsl |> select(USUBJID, ARM, SEX, TRTEMFL)
   adsl3$TRTEMFL <- ifelse(adsl3$TRTEMFL == "Y", "Y", NA)
   adsl3$TRTEMFL <- factor(adsl3$TRTEMFL, levels = "Y")
@@ -110,4 +112,51 @@ test_that("response_by_var various scenarios", {
 
   ## Snapshot for the full table
   expect_snapshot(cran = TRUE, tbl5)
+})
+
+# --- character resp_var with Y + NA in subgroup after split -------------------
+test_that("character resp_var with Y + NA in subgroup works after split", {
+  adae_bug <- data.frame(
+    USUBJID = c("XXXXX01", "XXXXX02", "XXXXX03", "XXXXX04"),
+    SEX = factor(c("Female", "Female", "Male", "Male")),
+    TRT01A = c("ARMA", "ARMB", "ARMA", "ARMB"),
+    TRTEMFL = c("Y", NA, "N", "Y")
+  )
+
+  lyt <- basic_table() |>
+    split_cols_by("TRT01A") |>
+    analyze(
+      vars = "SEX",
+      var_labels = "Sex, n/Ns (%)",
+      show_labels = "visible",
+      afun = response_by_var,
+      extra_args = list(resp_var = "TRTEMFL"),
+      nested = FALSE
+    )
+
+  expect_no_error(tbl <- build_table(lyt, adae_bug))
+  expect_snapshot(cran = TRUE, tbl)
+})
+
+# --- input validation ---------------------------------------------------------
+test_that("response_by_var rejects invalid resp_var", {
+  df <- data.frame(
+    USUBJID = c("A", "B"),
+    SEX = factor(c("F", "M")),
+    TRTEMFL = c("Y", "N")
+  )
+
+  lyt_factory <- function(resp) {
+    basic_table() |>
+      analyze(
+        vars = "SEX",
+        afun = response_by_var,
+        extra_args = list(resp_var = resp),
+        nested = FALSE
+      )
+  }
+
+  expect_error(build_table(lyt_factory(NULL), df))
+  expect_error(build_table(lyt_factory(NA_character_), df))
+  expect_error(build_table(lyt_factory("NONEXISTENT"), df))
 })

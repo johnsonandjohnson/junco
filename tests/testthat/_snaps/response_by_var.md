@@ -69,3 +69,14 @@
         UNDIFFERENTIATED   1/1 (100.0%)          -          2/2 (100.0%) 
         extra level              -               -               -       
 
+# character resp_var with Y + NA in subgroup works after split
+
+    Code
+      tbl
+    Output
+                          ARMA           ARMB    
+      ———————————————————————————————————————————
+      Sex, n/Ns (%)                              
+        Female        1/1 (100.0%)        -      
+        Male              0/1        1/1 (100.0%)
+
