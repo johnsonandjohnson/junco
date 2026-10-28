@@ -49,10 +49,9 @@ This is an analysis function for use within \code{analyze}. Arguments
 \code{df}, \code{.var} will be populated automatically by rtables during
 the tabulation process.
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{     Rows with `NA` in `.var` or `resp_var` are excluded from both
-     numerator and denominator. The `resp_var` column must be character
-     or factor with values limited to `"Y"`, `"N"`, or `NA`.
-}\if{html}{\out{</div>}}
+Rows with \code{NA} in \code{.var} or \code{resp_var} are excluded from both
+numerator and denominator. The \code{resp_var} column must be character
+or factor with values limited to \code{"Y"}, \code{"N"}, or \code{NA}.
 }
 \examples{
 library(dplyr)
