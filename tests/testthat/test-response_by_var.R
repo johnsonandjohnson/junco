@@ -154,7 +154,25 @@ test_that("character resp_var with Y + NA in subgroup works after split", {
   expect_snapshot(cran = TRUE, tbl)
 })
 
-# --- input validation ---------------------------------------------------------
+# --- h_check_char_resp_var -----------------------------------------------------
+test_that("h_check_char_resp_var rejects invalid inputs", {
+  df <- data.frame(
+    USUBJID = c("A", "B"),
+    SEX = factor(c("F", "M")),
+    TRTEMFL = c("Y", "N"),
+    NUMVAR = c(1, 2)
+  )
+
+  # valid input passes silently
+  expect_invisible(h_check_char_resp_var(df, "TRTEMFL", "SEX", "USUBJID"))
+
+  # resp_var must be character/factor, not numeric
+  expect_error(h_check_char_resp_var(df, "NUMVAR", "SEX", "USUBJID"))
+
+  # resp_var values must be Y/N only
+  df$BAD <- c("Y", "X")
+  expect_error(h_check_char_resp_var(df, "BAD", "SEX", "USUBJID"))
+})
 test_that("response_by_var rejects invalid resp_var", {
   df <- data.frame(
     USUBJID = c("A", "B"),
