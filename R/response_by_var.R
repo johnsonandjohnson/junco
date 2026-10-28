@@ -78,19 +78,7 @@ response_by_var <- function(
 ) {
   # Derive statistics: xx / xx (xx.x%)
 
-  # --- assertions -------------------------------------------------------------
-  checkmate::assert_data_frame(df, min.rows = 0L)
-  checkmate::assert_string(resp_var)
-  checkmate::assert_string(id)
-  checkmate::assert_choice(resp_var, names(df))
-  checkmate::assert_choice(.var, names(df))
-  checkmate::assert_choice(id, names(df))
-  checkmate::assert_multi_class(df[[resp_var]], c("character", "factor"))
-
-  resp_vals <- as.character(unique(df[[resp_var]][!is.na(df[[resp_var]])]))
-  if (length(resp_vals) > 0L) {
-    checkmate::assert_subset(resp_vals, c("Y", "N"))
-  }
+  h_validate_response_by_var(df, resp_var, .var, id)
 
   # --- remove NAs --------------------------------------------------------------
   df <- df[!is.na(df[[.var]]) & !is.na(df[[resp_var]]), ]
@@ -120,4 +108,30 @@ response_by_var <- function(
   # Hand off results to analyze
 
   in_rows(.list = cls)
+}
+
+#' Validate inputs for [response_by_var()]
+#'
+#' @param df (`data.frame`)\cr data to validate.
+#' @param resp_var (`string`)\cr response variable name.
+#' @param .var (`string`)\cr analysis variable name.
+#' @param id (`string`)\cr subject identifier column name.
+#'
+#' @return `NULL` invisibly. Raises an error on invalid input.
+#' @keywords internal
+h_validate_response_by_var <- function(df, resp_var, .var, id) {
+  checkmate::assert_data_frame(df, min.rows = 0L)
+  checkmate::assert_string(resp_var)
+  checkmate::assert_string(id)
+  checkmate::assert_choice(resp_var, names(df))
+  checkmate::assert_choice(.var, names(df))
+  checkmate::assert_choice(id, names(df))
+  checkmate::assert_multi_class(df[[resp_var]], c("character", "factor"))
+
+  resp_vals <- as.character(unique(df[[resp_var]][!is.na(df[[resp_var]])]))
+  if (length(resp_vals) > 0L) {
+    checkmate::assert_subset(resp_vals, c("Y", "N"))
+  }
+
+  invisible(NULL)
 }
