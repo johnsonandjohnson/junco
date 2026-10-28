@@ -11,9 +11,9 @@
 #'          `df`, `.var` will be populated automatically by rtables during
 #'          the tabulation process.
 #'
-#'          Rows with `NA` in `.var` or `resp_var` are excluded from both
-#'          numerator and denominator. The `resp_var` column must be character
-#'          or factor with values limited to `"Y"`, `"N"`, or `NA`.
+#' Rows with `NA` in `.var` or `resp_var` are excluded from both
+#' numerator and denominator. The `resp_var` column must be character
+#' or factor with values limited to `"Y"`, `"N"`, or `NA`.
 #'
 #' @param df           (`data.frame`)\cr Name of dataframe being analyzed.
 #' @param labelstr     (`character vector`)\cr Custom label for the variable being analyzed.
