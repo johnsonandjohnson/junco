@@ -43,16 +43,27 @@ test_that("response_by_var various scenarios", {
   expect_snapshot(cran = TRUE, tbl)
 
   ## Scenario 2: TRTEMFL has missing values and Y only, but is factor with just this level
-  ## NAs in resp_var are kept in denominator (treated as non-responders)
+  ## NAs in resp_var are excluded from denominator
   adsl2 <- adsl
   adsl2$TRTEMFL <- ifelse(adsl2$TRTEMFL == "Y", "Y", NA)
   adsl2$TRTEMFL <- factor(adsl2$TRTEMFL, levels = "Y")
 
   tbl2 <- build_table(lyt, adsl2)
+
+  res2 <- cell_values(tbl2[c("SEX", "F"), "A: Drug X"])
+  res2 <- unlist(unname(res2))
+
+  resp2 <- table(adsl2[!is.na(adsl2$TRTEMFL), c("ARM", "SEX", "TRTEMFL")])
+  resp_val2 <- resp2["A: Drug X", "F", "Y"]
+  denom_val2 <- sum(resp2["A: Drug X", "F", ])
+
+  expected2 <- c(resp_val2, denom_val2, resp_val2 / denom_val2)
+  expect_identical(res2, expected2)
+
   expect_snapshot(cran = TRUE, tbl2)
 
   ## Scenario 3: TRTEMFL has missing values and Y only, and analysis variable has missing values
-  ## NAs in resp_var kept in denom, NAs in .var excluded
+  ## NAs in both .var and resp_var excluded from denominator
   adsl3 <- adsl |> select(USUBJID, ARM, SEX, TRTEMFL)
   adsl3$TRTEMFL <- ifelse(adsl3$TRTEMFL == "Y", "Y", NA)
   adsl3$TRTEMFL <- factor(adsl3$TRTEMFL, levels = "Y")
@@ -62,9 +73,14 @@ test_that("response_by_var various scenarios", {
   res3 <- cell_values(tbl3[c("SEX", "F"), "A: Drug X"])
   res3 <- unlist(unname(res3))
 
-  resp3 <- table(adsl3[, c("ARM", "SEX", "TRTEMFL")], useNA = "ifany")
+  ## Only rows where both SEX and TRTEMFL are non-NA count
+  adsl3_clean <- adsl3[!is.na(adsl3$SEX) & !is.na(adsl3$TRTEMFL), ]
+  resp3 <- table(adsl3_clean[, c("ARM", "SEX", "TRTEMFL")])
   resp_val3 <- resp3["A: Drug X", "F", "Y"]
   denom_val3 <- sum(resp3["A: Drug X", "F", ])
+
+  expected3 <- c(resp_val3, denom_val3, resp_val3 / denom_val3)
+  expect_identical(res3, expected3)
 
   expected3 <- c(resp_val3, denom_val3, resp_val3 / denom_val3)
   expect_identical(res3, expected3)
@@ -158,5 +174,7 @@ test_that("response_by_var rejects invalid resp_var", {
 
   expect_error(build_table(lyt_factory(NULL), df))
   expect_error(build_table(lyt_factory(NA_character_), df))
+  expect_error(build_table(lyt_factory(""), df))
+  expect_error(build_table(lyt_factory(TRUE), df))
   expect_error(build_table(lyt_factory("NONEXISTENT"), df))
 })

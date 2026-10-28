@@ -11,6 +11,10 @@
 #'          `df`, `.var` will be populated automatically by rtables during
 #'          the tabulation process.
 #'
+#'          Rows with `NA` in `.var` or `resp_var` are excluded from both
+#'          numerator and denominator. The `resp_var` column must be character
+#'          or factor with values limited to `"Y"`, `"N"`, or `NA`.
+#'
 #' @param df           (`data.frame`)\cr Name of dataframe being analyzed.
 #' @param labelstr     (`character vector`)\cr Custom label for the variable being analyzed.
 #' @param .var         (`character`)\cr Name of the variable being analyzed. Records with non-missing
@@ -89,17 +93,7 @@ response_by_var <- function(
   }
 
   # --- remove NAs --------------------------------------------------------------
-  df <- df[!is.na(df[[.var]]), ]
-
-  # For character or factor with Y/N levels: exclude NAs from denominator.
-  # For factor with other levels (e.g. only "Y"): keep NAs in denominator
-  # (NAs treated as non-responders).
-  if (
-    is.character(df[[resp_var]]) ||
-      (is.factor(df[[resp_var]]) && setequal(levels(df[[resp_var]]), c("Y", "N")))
-  ) {
-    df <- df[!is.na(df[[resp_var]]), ]
-  }
+  df <- df[!is.na(df[[.var]]) & !is.na(df[[resp_var]]), ]
 
   varvec <- df[[.var]]
 
