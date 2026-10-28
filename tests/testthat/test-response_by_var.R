@@ -173,6 +173,7 @@ test_that("h_check_char_resp_var rejects invalid inputs", {
   df$BAD <- c("Y", "X")
   expect_error(h_check_char_resp_var(df, "BAD", "SEX", "USUBJID"))
 })
+
 test_that("response_by_var rejects invalid resp_var", {
   df <- data.frame(
     USUBJID = c("A", "B"),
