@@ -78,7 +78,7 @@ response_by_var <- function(
 ) {
   # Derive statistics: xx / xx (xx.x%)
 
-  h_validate_response_by_var(df, resp_var, .var, id)
+  h_check_char_resp_var(df, resp_var, .var, id)
 
   # --- remove NAs --------------------------------------------------------------
   df <- df[!is.na(df[[.var]]) & !is.na(df[[resp_var]]), ]
@@ -110,7 +110,7 @@ response_by_var <- function(
   in_rows(.list = cls)
 }
 
-#' Validate inputs for [response_by_var()]
+#' Check that the response variable is a valid character/factor Y/N column
 #'
 #' @param df (`data.frame`)\cr data to validate.
 #' @param resp_var (`string`)\cr response variable name.
@@ -119,7 +119,7 @@ response_by_var <- function(
 #'
 #' @return `NULL` invisibly. Raises an error on invalid input.
 #' @keywords internal
-h_validate_response_by_var <- function(df, resp_var, .var, id) {
+h_check_char_resp_var <- function(df, resp_var, .var, id) {
   checkmate::assert_data_frame(df, min.rows = 0L)
   checkmate::assert_string(resp_var)
   checkmate::assert_string(id)
