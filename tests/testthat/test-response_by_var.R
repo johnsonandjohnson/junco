@@ -82,9 +82,6 @@ test_that("response_by_var various scenarios", {
   expected3 <- c(resp_val3, denom_val3, resp_val3 / denom_val3)
   expect_identical(res3, expected3)
 
-  expected3 <- c(resp_val3, denom_val3, resp_val3 / denom_val3)
-  expect_identical(res3, expected3)
-
   ## Snapshot for the full table
   expect_snapshot(cran = TRUE, tbl3)
 
