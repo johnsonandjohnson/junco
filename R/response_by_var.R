@@ -97,7 +97,7 @@ response_by_var <- function(
     dfii <- df[df[[.var]] == levii, ]
 
     den <- NROW(unique(dfii[, id]))
-    num <- NROW(unique(dfii[dfii[[resp_var]] == "Y" & !is.na(dfii[[resp_var]]), id]))
+    num <- NROW(unique(dfii[dfii[[resp_var]] == "Y", id]))
 
     rcell(c(num * 1, den * 1, num * 1 / den), format = .format)
   }
