@@ -94,8 +94,10 @@ response_by_var <- function(
   # For character or factor with Y/N levels: exclude NAs from denominator.
   # For factor with other levels (e.g. only "Y"): keep NAs in denominator
   # (NAs treated as non-responders).
-  if (is.character(df[[resp_var]]) ||
-    (is.factor(df[[resp_var]]) && setequal(levels(df[[resp_var]]), c("Y", "N")))) {
+  if (
+    is.character(df[[resp_var]]) ||
+      (is.factor(df[[resp_var]]) && setequal(levels(df[[resp_var]]), c("Y", "N")))
+  ) {
     df <- df[!is.na(df[[resp_var]]), ]
   }
 

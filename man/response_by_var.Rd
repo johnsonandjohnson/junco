@@ -48,6 +48,16 @@ in order to have these aligned with alt_source_df, it is expected that df includ
 This is an analysis function for use within \code{analyze}. Arguments
 \code{df}, \code{.var} will be populated automatically by rtables during
 the tabulation process.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{     **NA handling in `resp_var`:**
+     - Character or factor with levels `c("Y", "N")`: NAs are excluded
+       from both numerator and denominator.
+     - Factor with other levels (e.g. only `"Y"`): NAs are kept in the
+       denominator and treated as non-responders.
+
+     The `resp_var` column must be character or factor with values
+     limited to `"Y"`, `"N"`, or `NA`.
+}\if{html}{\out{</div>}}
 }
 \examples{
 library(dplyr)
