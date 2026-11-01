@@ -27,9 +27,11 @@
 #' @param .labels (`list`)\cr labels for the statistics.
 #' @param .indent_mods (`list`)\cr indentation modifications for the statistics.
 #' @param .ref_group (`data.frame`)\cr reference group data frame.
-#' @param .in_ref_col (`logical`)\cr whether the current column is the reference column.
+#' @param .in_ref_col (`logical(1)`)\cr whether the current column is the reference column.
 #' @param variables (`list`)\cr list with strata variable names.
 #' @param conf_level (`numeric`)\cr confidence level for the confidence interval.
+#' @param complete_cases (`logical(1)`) \cr whether to remove incomplete rows from `df`
+#'   before constructing the response, group, strata, and contingency table.
 #' @param method (`string`)\cr relative risk method: `cmh`, `wald`, or `waldcc`.
 #' @param weights_method (`string`)\cr method to use for weights calculation in stratified analysis.
 #'
@@ -63,42 +65,36 @@ NULL
 s_relative_risk <- function(
   df,
   .var,
-  .ref_group,
-  .in_ref_col,
+  .ref_group = NULL,
+  .in_ref_col = NULL,
   variables = list(strata = NULL),
   conf_level = 0.95,
+  complete_cases = FALSE,
   method = c("cmh", "wald", "waldcc"),
   weights_method = "cmh"
 ) {
+  checkmate::assert_flag(.in_ref_col, null.ok = TRUE)
   method <- match.arg(method)
   weights_method <- match.arg(weights_method)
 
-  y <- list(
-    rel_risk_ci = list(),
-    pval = list()
-  )
-
-  if (!.in_ref_col) {
-    # Note: We could use tern:::assert_stratification_compatibility if it was
-    # exported, or consider moving to tern.
-    if (method == "cmh") {
-      checkmate::assert_character(variables$strata, null.ok = FALSE)
-    } else {
-      checkmate::assert_character(variables$strata, len = 0, null.ok = TRUE)
-    }
-    checkmate::assert_logical(df[[.var]], any.missing = FALSE)
-    checkmate::assert_logical(.ref_group[[.var]], any.missing = FALSE)
+  y <- if (is.null(.in_ref_col) || .in_ref_col) {
+    list(
+      rel_risk_ci = c(est = NA_real_, lcl = NA_real_, ucl = NA_real_),
+      pval = NA_real
+    )
+  } else {
     prepared <- tern::h_prepare_rsp_table(
       df = df,
       df_ref = .ref_group,
       var = .var,
-      strata_vars = if (method == "cmh") variables$strata else NULL
+      strata_vars = if (method == "cmh") variables$strata else NULL,
+      complete_cases = complete_cases
     )
 
     if (method == "cmh") {
-      y <- prop_ratio_cmh(tbl = prepared$tbl, conf_level = conf_level)
+      prop_ratio_cmh(tbl = prepared$tbl, conf_level = conf_level)
     } else {
-      y <- prop_ratio_wald(tbl = prepared$tbl, conf_level = conf_level, correction = method == "waldcc")
+      prop_ratio_wald(tbl = prepared$tbl, conf_level = conf_level, correction = (method == "waldcc"))
     }
   }
 
@@ -237,7 +233,7 @@ prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
   }
   # Rows are reference then treatment; columns are strata, including a single stratum.
   n_resp <- matrix(tbl[, 1L, ], nrow = 2)
-  n <- apply(tbl, c(1L, 3L), sum)
+  n <- margin.table(tbl, margin = c(1L, 3L))
   checkmate::assert_integerish(as.vector(n), lower = 0)
 
   # CMH statistic for relative risk, Treatment over Control
@@ -284,8 +280,12 @@ prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
 #'   `tbl` element of [tern::h_prepare_rsp_table()]. Rows are reference then
 #'   treatment; columns are responders then nonresponders.
 #' @param correction (`flag`)\cr whether to add 0.5 to the response counts and
-#'   group totals, in order to support the case where there are zero responses in either group.
-#' @return A list with elements `rel_risk_ci` (named `est`, `lcl`, `ucl`) and `pval`.
+#'   group totals, in order to support the case where there are zero responses in either group
+#'   (Haldane-Anscombe correction).
+#' @return A `list` containing two elements:
+#'   * `rel_risk_ci`: A named numeric vector (`est`, `lcl`, `ucl`) specifying the point estimate,
+#'      lower confidence limit, and upper confidence limit of the relative risk.
+#'   * `pval`: A numeric scalar representing the two-sided Wald p-value.
 #'
 #' @examples
 #' prop_ratio_wald(
@@ -323,7 +323,7 @@ prop_ratio_wald <- function(tbl, conf_level = 0.95, correction = FALSE) {
 
   list(
     rel_risk_ci = stats::setNames(
-      c(unname(estimate), ci),
+      c(estimate, ci),
       c("est", "lcl", "ucl")
     ),
     pval = unname(pval)

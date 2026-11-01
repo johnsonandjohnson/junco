@@ -21,10 +21,11 @@ a_relative_risk(
 s_relative_risk(
   df,
   .var,
-  .ref_group,
-  .in_ref_col,
+  .ref_group = NULL,
+  .in_ref_col = NULL,
   variables = list(strata = NULL),
   conf_level = 0.95,
+  complete_cases = FALSE,
   method = c("cmh", "wald", "waldcc"),
   weights_method = "cmh"
 )
@@ -50,11 +51,14 @@ s_relative_risk(
 
 \item{.ref_group}{(\code{data.frame})\cr reference group data frame.}
 
-\item{.in_ref_col}{(\code{logical})\cr whether the current column is the reference column.}
+\item{.in_ref_col}{(\code{logical(1)})\cr whether the current column is the reference column.}
 
 \item{variables}{(\code{list})\cr list with strata variable names.}
 
 \item{conf_level}{(\code{numeric})\cr confidence level for the confidence interval.}
+
+\item{complete_cases}{(\code{logical(1)}) \cr whether to remove incomplete rows from \code{df}
+before constructing the response, group, strata, and contingency table.}
 
 \item{method}{(\code{string})\cr relative risk method: \code{cmh}, \code{wald}, or \code{waldcc}.}
 

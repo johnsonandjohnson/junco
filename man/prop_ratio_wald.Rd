@@ -14,10 +14,16 @@ treatment; columns are responders then nonresponders.}
 \item{conf_level}{(\code{proportion})\cr confidence level of the interval.}
 
 \item{correction}{(\code{flag})\cr whether to add 0.5 to the response counts and
-group totals, in order to support the case where there are zero responses in either group.}
+group totals, in order to support the case where there are zero responses in either group
+(Haldane-Anscombe correction).}
 }
 \value{
-A list with elements \code{rel_risk_ci} (named \code{est}, \code{lcl}, \code{ucl}) and \code{pval}.
+A \code{list} containing two elements:
+\itemize{
+\item \code{rel_risk_ci}: A named numeric vector (\code{est}, \code{lcl}, \code{ucl}) specifying the point estimate,
+lower confidence limit, and upper confidence limit of the relative risk.
+\item \code{pval}: A numeric scalar representing the two-sided Wald p-value.
+}
 }
 \description{
 Estimates the relative response risk in the second group divided by that in the first
