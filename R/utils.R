@@ -1,26 +1,21 @@
-#' Check Inputs for Relative Risk Estimators
+#' Assert a Response Contingency Table
 #'
-#' These are used by [prop_ratio_cmh()] and [prop_ratio_wald()] to check input validity.
+#' Checks that a response table contains finite, non-negative integer-like counts
+#' in a 2 by 2 table, optionally with a third dimension for strata.
 #'
-#' @param tbl A numeric contingency table with two rows and two columns.
-#' @param conf_level Confidence level between zero and one.
-#' @param correction Whether to apply a continuity correction.
-#' @param stratified Whether `tbl` must have a third dimension for strata.
+#' @param tbl (`array`)\cr A 2 by 2 response table, or a 2 by 2 by strata array,
+#'   containing finite, non-negative integer-like counts without missing values.
+#' @param stratified (`flag`)\cr Whether `tbl` must have a third dimension for strata.
 #'
 #' @return Invisibly returns `NULL`.
 #' @keywords internal
 #' @noRd
-check_prop_ratio <- function(tbl, conf_level, correction = FALSE, stratified = FALSE) {
+assert_response_table <- function(tbl, stratified = FALSE) {
   checkmate::assert_flag(stratified)
-  if (stratified) {
-    checkmate::assert_array(tbl, mode = "numeric", d = 3, any.missing = FALSE)
-    checkmate::assert_true(identical(dim(tbl)[1:2], c(2L, 2L)))
-  } else {
-    checkmate::assert_matrix(tbl, mode = "numeric", nrows = 2, ncols = 2, any.missing = FALSE)
-  }
-  checkmate::assert_numeric(as.vector(tbl), lower = 0, finite = TRUE)
-  checkmate::assert_number(conf_level, lower = 0, upper = 1)
-  checkmate::assert_flag(correction)
+  d <- if (stratified) 3L else 2L
+  checkmate::assert_array(tbl, mode = "integerish", d = d)
+  checkmate::assert_true(identical(dim(tbl)[1:2], c(2L, 2L)))
+  checkmate::assert_numeric(tbl, lower = 0, finite = TRUE, any.missing = FALSE)
   invisible(NULL)
 }
 

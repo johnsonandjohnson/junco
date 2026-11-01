@@ -227,7 +227,8 @@ safe_mh_test <- function(...) {
 #'
 #' @export
 prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
-  check_prop_ratio(tbl = tbl, conf_level = conf_level, stratified = TRUE)
+  assert_response_table(tbl, stratified = TRUE)
+  checkmate::assert_number(conf_level, lower = 0, upper = 1)
   if (any(apply(tbl, 3L, sum) < 5)) {
     warning("Less than 5 observations in some strata.")
   }
@@ -294,7 +295,9 @@ prop_ratio_cmh <- function(tbl, conf_level = 0.95) {
 #' )
 #' @export
 prop_ratio_wald <- function(tbl, conf_level = 0.95, correction = FALSE) {
-  check_prop_ratio(tbl = tbl, conf_level = conf_level, correction = correction)
+  assert_response_table(tbl)
+  checkmate::assert_number(conf_level, lower = 0, upper = 1)
+  checkmate::assert_flag(correction)
 
   n_resp <- tbl[, 1L]
   n <- rowSums(tbl)
