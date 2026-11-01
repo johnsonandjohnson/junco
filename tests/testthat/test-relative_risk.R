@@ -391,7 +391,8 @@ test_that("Wald confidence limits agree with CAMIS examples", {
     }
     # Reversing reference group inverts the estimate and limits.
     reverse <- prop_ratio_wald(
-      tbl = table(grp, factor(rsp, levels = c(TRUE, FALSE)))[2:1, ], correction = correction
+      tbl = table(grp, factor(rsp, levels = c(TRUE, FALSE)))[2:1, ],
+      correction = correction
     )
     expect_equal(unname(reverse$rel_risk_ci), 1 / unname(result$rel_risk_ci[c(1, 3, 2)]))
     expect_equal(reverse$pval, result$pval)
@@ -419,7 +420,8 @@ test_that("Wald methods handle boundary response counts", {
     expect_true(all(is.na(result$rel_risk_ci[2:3])))
     expect_true(is.na(result$pval))
     corrected <- expect_silent(prop_ratio_wald(
-      tbl = table(grp, factor(rsp, levels = c(TRUE, FALSE))), correction = TRUE
+      tbl = table(grp, factor(rsp, levels = c(TRUE, FALSE))),
+      correction = TRUE
     ))
     expect_true(all(is.finite(corrected$rel_risk_ci)))
     expect_true(is.finite(corrected$pval))
@@ -462,10 +464,18 @@ test_that("s_relative_risk supports unstratified Wald methods", {
       result
     )
     reference <- s_relative_risk(df = ref, .var = "rsp", .ref_group = ref, .in_ref_col = TRUE, method = method)
-    expect_length(reference$rel_risk_ci, 0)
-    expect_length(reference$pval, 0)
+    expect_equal(
+      reference$rel_risk_ci,
+      c(est = NA_real_, lcl = NA_real_, ucl = NA_real_),
+      ignore_attr = TRUE
+    )
+    expect_equal(reference$pval, NA_real_)
   }
-  expect_error(s_relative_risk(df = trt, .var = "rsp", .ref_group = ref, .in_ref_col = FALSE), "strata", fixed = TRUE)
+  expect_error(
+    s_relative_risk(df = trt, .var = "rsp", .ref_group = ref, .in_ref_col = FALSE),
+    "Must be a 3-d array",
+    fixed = TRUE
+  )
   expect_error(
     s_relative_risk(df = trt, .var = "rsp", .ref_group = ref, .in_ref_col = FALSE, method = "unknown"),
     "arg"
@@ -500,7 +510,8 @@ test_that("a_relative_risk renders unstratified Wald results", {
       )
     result <- build_table(lyt = lyt, df = dat)
     expected <- prop_ratio_wald(
-      tbl = table(dat$arm, factor(dat$rsp, levels = c(TRUE, FALSE))), correction = method == "waldcc"
+      tbl = table(dat$arm, factor(dat$rsp, levels = c(TRUE, FALSE))),
+      correction = method == "waldcc"
     )
     expect_equal(
       unname(unlist(as.list(result[c("rsp", "rel_risk_ci"), c("arm", "trt")]))),
@@ -523,7 +534,10 @@ test_that("s_relative_risk reuses prepared tables for single-stratum CMH", {
   expected$rel_risk_ci <- with_label(x = expected$rel_risk_ci, label = "Relative risk (95% CI)")
   expect_equal(
     s_relative_risk(
-      df = trt, .var = "rsp", .ref_group = ref, .in_ref_col = FALSE,
+      df = trt,
+      .var = "rsp",
+      .ref_group = ref,
+      .in_ref_col = FALSE,
       variables = list(strata = "strata")
     ),
     expected

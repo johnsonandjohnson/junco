@@ -80,7 +80,7 @@ s_relative_risk <- function(
   y <- if (is.null(.in_ref_col) || .in_ref_col) {
     list(
       rel_risk_ci = c(est = NA_real_, lcl = NA_real_, ucl = NA_real_),
-      pval = NA_real
+      pval = NA_real_
     )
   } else {
     prepared <- tern::h_prepare_rsp_table(
