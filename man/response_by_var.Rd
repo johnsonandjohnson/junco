@@ -48,6 +48,10 @@ in order to have these aligned with alt_source_df, it is expected that df includ
 This is an analysis function for use within \code{analyze}. Arguments
 \code{df}, \code{.var} will be populated automatically by rtables during
 the tabulation process.
+
+Rows with \code{NA} in \code{.var} or \code{resp_var} are excluded from both
+numerator and denominator. The \code{resp_var} column must be character
+or factor with values limited to \code{"Y"}, \code{"N"}, or \code{NA}.
 }
 \examples{
 library(dplyr)
