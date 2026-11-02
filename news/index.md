@@ -2,8 +2,20 @@
 
 ## junco 0.1.7009
 
+#### Added
+
+- Added unstratified `wald` and `waldcc` relative risk methods to
+  [`s_relative_risk()`](https://johnsonandjohnson.github.io/junco/reference/relative_risk.md)
+  and the shared
+  [`prop_ratio_wald()`](https://johnsonandjohnson.github.io/junco/reference/prop_ratio_wald.md)
+  estimator
+  ([\#533](https://github.com/johnsonandjohnson/junco/issues/533)).
+
 #### Changed
 
+- Changed
+  [`prop_ratio_cmh()`](https://johnsonandjohnson.github.io/junco/reference/prop_ratio_cmh.md)
+  to accept a prepared contingency table (`tbl`).
 - Removed `extrablankline = TRUE` usage from vignettes and tests as part
   of deprecation
   ([\#374](https://github.com/johnsonandjohnson/junco/issues/374),

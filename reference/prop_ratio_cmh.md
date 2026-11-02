@@ -8,25 +8,20 @@ Cochran-Mantel-Haenszel (CMH) weights.
 ## Usage
 
 ``` r
-prop_ratio_cmh(rsp, grp, strata, conf_level = 0.95)
+prop_ratio_cmh(tbl, conf_level = 0.95)
 ```
 
 ## Arguments
 
-- rsp:
+- tbl:
 
-  (`logical`)  
-  whether each subject is a responder or not.
-
-- grp:
-
-  (`factor`)  
-  defining the groups.
-
-- strata:
-
-  (`factor`)  
-  variable with one level per stratum and same length as `rsp`.
+  (`array`)  
+  a 2 by 2 by number of strata contingency table, as returned in the
+  `tbl` element of
+  [`tern::h_prepare_rsp_table()`](https://pharmaverse.github.io/tern/latest-tag/reference/h_prepare_rsp_table.html).
+  Rows (first dimension) are reference then treatment; columns (second
+  dimension) are responders then nonresponders; the third dimension
+  represents the strata.
 
 - conf_level:
 
@@ -42,7 +37,10 @@ A list with elements `rel_risk_ci` and `pval`.
 ``` r
 
 set.seed(2)
-rsp <- sample(c(TRUE, FALSE), 100, TRUE)
+rsp <- factor(
+  sample(c(TRUE, FALSE), 100, TRUE),
+  levels = c(TRUE, FALSE)
+)
 grp <- sample(c("Placebo", "Treatment"), 100, TRUE)
 grp <- factor(grp, levels = c("Placebo", "Treatment"))
 strata_data <- data.frame(
@@ -51,8 +49,9 @@ strata_data <- data.frame(
   stringsAsFactors = TRUE
 )
 
+tbl <- table(grp, rsp, interaction(strata_data))
 prop_ratio_cmh(
-  rsp = rsp, grp = grp, strata = interaction(strata_data),
+  tbl = tbl,
   conf_level = 0.90
 )
 #> $rel_risk_ci

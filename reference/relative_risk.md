@@ -2,10 +2,11 @@
 
 The analysis function `a_relative_risk()` is used to create a layout
 element to estimate the relative risk for response within a studied
-population. Only the CMH method is available currently. The primary
-analysis variable, `vars`, is a logical variable indicating whether a
-response has occurred for each record. A stratification variable must be
-supplied via the `strata` element of the `variables` argument.
+population using stratified CMH or unstratified Wald methods. The
+primary analysis variable, `vars`, is a logical variable indicating
+whether a response has occurred for each record. For CMH, a
+stratification variable must be supplied via the `strata` element of the
+`variables` argument.
 
 ## Usage
 
@@ -25,11 +26,12 @@ a_relative_risk(
 s_relative_risk(
   df,
   .var,
-  .ref_group,
-  .in_ref_col,
+  .ref_group = NULL,
+  .in_ref_col = NULL,
   variables = list(strata = NULL),
   conf_level = 0.95,
-  method = "cmh",
+  complete_cases = FALSE,
+  method = c("cmh", "wald", "waldcc"),
   weights_method = "cmh"
 )
 ```
@@ -87,7 +89,7 @@ s_relative_risk(
 
 - .in_ref_col:
 
-  (`logical`)  
+  (`logical(1)`)  
   whether the current column is the reference column.
 
 - variables:
@@ -100,10 +102,16 @@ s_relative_risk(
   (`numeric`)  
   confidence level for the confidence interval.
 
+- complete_cases:
+
+  (`logical(1)`)  
+  whether to remove incomplete rows from `df` before constructing the
+  response, group, strata, and contingency table.
+
 - method:
 
   (`string`)  
-  method to use for relative risk calculation.
+  relative risk method: `cmh`, `wald`, or `waldcc`.
 
 - weights_method:
 
@@ -123,7 +131,11 @@ s_relative_risk(
 ## Details
 
 The variance of the CMH relative risk estimate is calculated using the
-Greenland and Robins (1985) variance estimation.
+Greenland and Robins (1985) variance estimation. The unstratified `wald`
+and `waldcc` methods use a normal approximation for the log relative
+risk. `waldcc` adds 0.5 to each response count and each group total in
+both the estimate and variance. With `wald`, a zero response count gives
+undefined confidence limits and p-value (`NA`).
 
 ## Functions
 
@@ -133,11 +145,6 @@ Greenland and Robins (1985) variance estimation.
 
 - `s_relative_risk()`: Statistics function estimating the relative risk
   for response.
-
-## Note
-
-This has been adapted from the `odds_ratio` functions in the `tern`
-package.
 
 ## Examples
 
@@ -164,10 +171,10 @@ l <- basic_table() |>
   )
 
 build_table(l, df = dta)
-#>                                    A            B
-#> —————————————————————————————————————————————————
-#>   Relative risk (90% CI)   1.40 (1.00 - 1.97)    
-#>   p-value                        0.109           
+#>                                    A            B 
+#> ——————————————————————————————————————————————————
+#>   Relative risk (90% CI)   1.40 (1.00 - 1.97)   NA
+#>   p-value                        0.109          NA
 nex <- 100
 dta <- data.frame(
   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),

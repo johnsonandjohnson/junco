@@ -174,6 +174,9 @@ common table layouts.
 - [`prop_ratio_cmh()`](https://johnsonandjohnson.github.io/junco/reference/prop_ratio_cmh.md)
   : Relative Risk CMH Statistic
 
+- [`prop_ratio_wald()`](https://johnsonandjohnson.github.io/junco/reference/prop_ratio_wald.md)
+  : Relative Risk Wald Statistic
+
 - [`prop_table_afun()`](https://johnsonandjohnson.github.io/junco/reference/prop_table_afun.md)
   : Formatted Analysis Function for Proportion Analysis
 
