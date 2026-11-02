@@ -73,6 +73,7 @@ reference:
     - prop_diff
     - prop_post_fun
     - prop_ratio_cmh
+    - prop_ratio_wald
     - prop_table_afun
     - a_relative_risk
     - resp01_a_comp_stat_factor

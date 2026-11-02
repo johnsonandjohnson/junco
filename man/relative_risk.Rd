@@ -21,11 +21,12 @@ a_relative_risk(
 s_relative_risk(
   df,
   .var,
-  .ref_group,
-  .in_ref_col,
+  .ref_group = NULL,
+  .in_ref_col = NULL,
   variables = list(strata = NULL),
   conf_level = 0.95,
-  method = "cmh",
+  complete_cases = FALSE,
+  method = c("cmh", "wald", "waldcc"),
   weights_method = "cmh"
 )
 }
@@ -50,13 +51,16 @@ s_relative_risk(
 
 \item{.ref_group}{(\code{data.frame})\cr reference group data frame.}
 
-\item{.in_ref_col}{(\code{logical})\cr whether the current column is the reference column.}
+\item{.in_ref_col}{(\code{logical(1)})\cr whether the current column is the reference column.}
 
 \item{variables}{(\code{list})\cr list with strata variable names.}
 
 \item{conf_level}{(\code{numeric})\cr confidence level for the confidence interval.}
 
-\item{method}{(\code{string})\cr method to use for relative risk calculation.}
+\item{complete_cases}{(\code{logical(1)}) \cr whether to remove incomplete rows from \code{df}
+before constructing the response, group, strata, and contingency table.}
+
+\item{method}{(\code{string})\cr relative risk method: \code{cmh}, \code{wald}, or \code{waldcc}.}
 
 \item{weights_method}{(\code{string})\cr method to use for weights calculation in stratified analysis.}
 }
@@ -71,16 +75,22 @@ s_relative_risk(
 }
 \description{
 The analysis function \code{\link[=a_relative_risk]{a_relative_risk()}} is used to create a layout element
-to estimate the relative risk for response within a studied population. Only
-the CMH method is available currently.
+to estimate the relative risk for response within a studied population using
+stratified CMH or unstratified Wald methods.
 The primary analysis variable, \code{vars}, is a logical variable indicating
 whether a response has occurred for each record.
-A stratification variable must be supplied via the
+For CMH, a stratification variable must be supplied via the
 \code{strata} element of the \code{variables} argument.
 }
 \details{
 The variance of the CMH relative risk estimate is calculated using
 the Greenland and Robins (1985) variance estimation.
+The unstratified \code{wald} and \code{waldcc} methods use a normal approximation
+for the log relative risk.
+\code{waldcc} adds 0.5 to
+each response count and each group total in both the estimate and variance.
+With \code{wald}, a zero response count gives undefined confidence limits and
+p-value (\code{NA}).
 }
 \section{Functions}{
 \itemize{
@@ -90,9 +100,6 @@ junco specific \code{ref_path} and \code{.spl_context} arguments are used for re
 \item \code{s_relative_risk()}: Statistics function estimating the relative risk for response.
 
 }}
-\note{
-This has been adapted from the \code{odds_ratio} functions in the \code{tern} package.
-}
 \examples{
 nex <- 100
 dta <- data.frame(

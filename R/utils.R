@@ -1,3 +1,24 @@
+#' Assert a Response Contingency Table
+#'
+#' Checks that a response table contains finite, non-negative integer-like counts
+#' in a 2 by 2 table, optionally with a third dimension for strata.
+#'
+#' @param tbl (`array`)\cr A 2 by 2 response table, or a 2 by 2 by strata array,
+#'   containing finite, non-negative integer-like counts without missing values.
+#' @param stratified (`flag`)\cr Whether `tbl` must have a third dimension for strata.
+#'
+#' @return Invisibly returns `NULL`.
+#' @keywords internal
+#' @noRd
+assert_response_table <- function(tbl, stratified = FALSE) {
+  checkmate::assert_flag(stratified)
+  d <- if (stratified) 3L else 2L
+  checkmate::assert_array(tbl, mode = "integerish", d = d)
+  checkmate::assert_true(identical(dim(tbl)[1:2], c(2L, 2L)))
+  checkmate::assert_numeric(tbl, lower = 0, finite = TRUE, any.missing = FALSE)
+  invisible(NULL)
+}
+
 #' Extract the left-hand side of a formula
 #'
 #' @param x (`formula`)\cr A two-sided formula, e.g., `y ~ x1 + x2`.
