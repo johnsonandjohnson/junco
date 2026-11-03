@@ -5,6 +5,7 @@
   and the shared `prop_ratio_wald()` estimator (#533).
 
 ### Changed
+- Refactored `s_freq_j()` so that `alt_df`, `parent_df`, `.df_row`, and `.N_col` are genuinely optional, added argument validation, and improved documentation (#439).
 - Changed `prop_ratio_cmh()` to accept a prepared contingency table (`tbl`).
 - Removed `extrablankline = TRUE` usage from vignettes and tests as part of deprecation (#374, #344).
 
