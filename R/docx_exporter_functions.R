@@ -125,6 +125,159 @@ fix_namespaces_Graphs_XML <- function(doc) {
   }
 }
 
+insert_fake_watermark_XML <- function(doc, watermark, orientation, tlgtype) {
+  # This function inserts a fake watermark WordArt in the Title of
+  # the flextable (that is, in the document body) by inserting an XML node.
+  # This function should only be called when exporting Figures.
+  # This ensures the watermark is duplicated on every page.
+  # Argument 'orientation' is needed to calculate the location of the watermark.
+  
+  checkmate::assert_character(watermark, len = 1)
+  checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
+  
+  if (orientation == "portrait") {
+    margin_left <- -114
+    margin_top <- 266
+  } else {
+    # to shift to the right, increase margin_left
+    # to shift upwards, decrease margin_top
+    margin_left <- -24
+    margin_top <- ifelse(tlgtype == "Listing", 165, 176)
+    if (tlgtype == "Figure") {
+      margin_left <- -30
+    }
+  }
+  
+  
+  # find out where to insert the node
+  nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:tbl")
+  for (node in nodes) {
+    node <- xml2::xml_find_first(node, ".//w:tr")
+    node <- xml2::xml_find_first(node, ".//w:tc")
+    node <- xml2::xml_find_first(node, ".//w:p")
+    node <- xml2::xml_find_first(node, ".//w:r")
+    
+    # nolint start
+    node_to_insert <- paste0('
+      <w:r>
+				<w:rPr>
+					<w:noProof/>
+					<w:szCs w:val="24"/>
+					<w:lang w:val="en-GB" w:eastAsia="en-GB"/>
+				</w:rPr>
+				<w:pict w14:anchorId="7C7FF34C">
+					<v:shapetype id="_x0000_t136" coordsize="21600,21600" o:spt="136" adj="10800" path="m@7,l@8,m@5,21600l@6,21600e">
+						<v:formulas>
+							<v:f eqn="sum #0 0 10800"/>
+							<v:f eqn="prod #0 2 1"/>
+							<v:f eqn="sum 21600 0 @1"/>
+							<v:f eqn="sum 0 0 @2"/>
+							<v:f eqn="sum 21600 0 @3"/>
+							<v:f eqn="if @0 @3 0"/>
+							<v:f eqn="if @0 21600 @1"/>
+							<v:f eqn="if @0 0 @2"/>
+							<v:f eqn="if @0 @4 21600"/>
+							<v:f eqn="mid @5 @6"/>
+							<v:f eqn="mid @8 @5"/>
+							<v:f eqn="mid @7 @8"/>
+							<v:f eqn="mid @6 @7"/>
+							<v:f eqn="sum @6 0 @5"/>
+						</v:formulas>
+						<v:path textpathok="t" o:connecttype="custom" o:connectlocs="@9,0;@10,10800;@11,21600;@12,10800" o:connectangles="270,180,90,0"/>
+						<v:textpath on="t" fitshape="t"/>
+						<v:handles>
+							<v:h position="#0,bottomRight" xrange="6629,14971"/>
+						</v:handles>
+						<o:lock v:ext="edit" text="t" shapetype="t"/>
+					</v:shapetype>
+					<v:shape id="         PowerPlusWaterMarkObject357476642" o:spid="_x0000_s1026" type="#_x0000_t136" style="position:absolute;margin-left:', margin_left, 'pt;margin-top:', margin_top, 'pt;width:696.05pt;height:116pt;rotation:315;z-index:251657728;mso-position-horizontal-relative:margin;mso-position-vertical-relative:margin" o:allowincell="f" fillcolor="silver" stroked="f">
+						<v:fill opacity="15000f"/>
+						<v:textpath style="font-family:&quot;      Calibri&quot;;font-size:1pt" string="   ', watermark, '"/>
+					</v:shape>
+				</w:pict>
+			</w:r>
+    ')
+    
+    node_to_insert <- paste0(
+      '<w:tmp ',
+      '  xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"',
+      '  xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"',
+      '  xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml"',
+      '  xmlns:o="urn:schemas-microsoft-com:office:office"',
+      '  xmlns:v="urn:schemas-microsoft-com:vml"',
+      '  xmlns:w10="urn:schemas-microsoft-com:office:word"',
+      '  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"',
+      '  xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing"',
+      '  xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14"',
+      '  xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"',
+      '  xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"',
+      '>',
+      node_to_insert,
+      '</w:tmp>'
+    )
+    # nolint end
+    node_to_insert <- xml2::read_xml(node_to_insert)
+    node_to_insert <- xml2::xml_root(node_to_insert)
+    xml2::xml_add_sibling(node, node_to_insert, .where = "before")
+  }
+}
+
+remove_security_popup_page_numbers_XML <- function(doc) {
+  # if we are working with listings, we previously had added
+  # the page numbers using officer::run_word_field()
+  # the problem with this function is that it inserts in the XML
+  # the field w:dirty="true", see:
+  # https://github.com/davidgohel/officer/blob/master/R/ooxml_run_objects.R#L225
+  # w:dirty="true" tells Word that the current "Page" and "NumPages" fields
+  # are outdated and need to updated.
+  # when trying to open such docx, a security pop up emerges saying:
+  # "This document contains fields that may refer to other files. Do you want
+  # to update the fields in the document?"
+  # To disable that pop up, we just need to remove field w:dirty="true".
+  # This functions does that.
+  
+  # this function must only be run for Word docs that
+  # contain page numbers in the footers, i.e. listings
+  # look for all nodes with attribute w:dirty="true"
+  # for example:
+  # [1] <w:fldChar w:fldCharType="begin" w:dirty="true"/>
+  # [2] <w:instrText xml:space="preserve" w:dirty="true">Page</w:instrText>
+  # [3] <w:fldChar w:fldCharType="end" w:dirty="true"/>
+  # [4] <w:fldChar w:fldCharType="begin" w:dirty="true"/>
+  # [5] <w:instrText xml:space="preserve" w:dirty="true">NumPages</w:instrText>
+  # [6] <w:fldChar w:fldCharType="end" w:dirty="true"/>
+  # and remove that attribute
+  
+  l_x <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
+  for (x in l_x) {
+    xml2::xml_set_attr(x = x, attr = "w:dirty", value = "NULL")
+  }
+}
+
+add_vertical_pagination_XML <- function(doc) {
+  # look for all nodes '<w:keepNext/>'
+  l_x <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:keepNext")
+  
+  # look for a parent 'w:pPr'
+  # this parent should have a first child 'w:pageBreakBefore'
+  for (x in l_x) {
+    siblings <- x |> xml2::xml_siblings()
+    
+    has_jc_left <- any(
+      sapply(siblings, function(node) {
+        xml2::xml_name(node) == "jc" && xml2::xml_attr(node, "val") == "left"
+      })
+    )
+    
+    if (has_jc_left) {
+      # insert pageBreakBefore only if one of the siblings is:
+      # <w:jc w:val="left"/>
+      # i.e. the first column in that row
+      x |> xml2::xml_add_sibling(.value = "w:pageBreakBefore")
+    }
+  }
+}
+
 align_rows_with_rtf <- function(doc) {
   # when we have vertical pagination in the case of tables and listings,
   # from page 2 onwards, the rows visually look a little bit shifted downwards
@@ -220,136 +373,6 @@ export_as_csv <- function(tlgtype, export_csv, pags, fontspec,
   )
 }
 
-
-insert_fake_watermark_XML <- function(doc, watermark, orientation, tlgtype) {
-  # This function inserts a fake watermark WordArt in the Title of
-  # the flextable (that is, in the document body) by inserting an XML node.
-  # This function should only be called when exporting Figures.
-  # This ensures the watermark is duplicated on every page.
-  # Argument 'orientation' is needed to calculate the location of the watermark.
-
-  checkmate::assert_character(watermark, len = 1)
-  checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
-
-  if (orientation == "portrait") {
-    margin_left <- -114
-    margin_top <- 266
-  } else {
-    # to shift to the right, increase margin_left
-    # to shift upwards, decrease margin_top
-    margin_left <- -24
-    margin_top <- ifelse(tlgtype == "Listing", 165, 176)
-    if (tlgtype == "Figure") {
-      margin_left <- -30
-    }
-  }
-
-
-  # find out where to insert the node
-  nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:tbl")
-  for (node in nodes) {
-    node <- xml2::xml_find_first(node, ".//w:tr")
-    node <- xml2::xml_find_first(node, ".//w:tc")
-    node <- xml2::xml_find_first(node, ".//w:p")
-    node <- xml2::xml_find_first(node, ".//w:r")
-
-    # nolint start
-    node_to_insert <- paste0('
-      <w:r>
-				<w:rPr>
-					<w:noProof/>
-					<w:szCs w:val="24"/>
-					<w:lang w:val="en-GB" w:eastAsia="en-GB"/>
-				</w:rPr>
-				<w:pict w14:anchorId="7C7FF34C">
-					<v:shapetype id="_x0000_t136" coordsize="21600,21600" o:spt="136" adj="10800" path="m@7,l@8,m@5,21600l@6,21600e">
-						<v:formulas>
-							<v:f eqn="sum #0 0 10800"/>
-							<v:f eqn="prod #0 2 1"/>
-							<v:f eqn="sum 21600 0 @1"/>
-							<v:f eqn="sum 0 0 @2"/>
-							<v:f eqn="sum 21600 0 @3"/>
-							<v:f eqn="if @0 @3 0"/>
-							<v:f eqn="if @0 21600 @1"/>
-							<v:f eqn="if @0 0 @2"/>
-							<v:f eqn="if @0 @4 21600"/>
-							<v:f eqn="mid @5 @6"/>
-							<v:f eqn="mid @8 @5"/>
-							<v:f eqn="mid @7 @8"/>
-							<v:f eqn="mid @6 @7"/>
-							<v:f eqn="sum @6 0 @5"/>
-						</v:formulas>
-						<v:path textpathok="t" o:connecttype="custom" o:connectlocs="@9,0;@10,10800;@11,21600;@12,10800" o:connectangles="270,180,90,0"/>
-						<v:textpath on="t" fitshape="t"/>
-						<v:handles>
-							<v:h position="#0,bottomRight" xrange="6629,14971"/>
-						</v:handles>
-						<o:lock v:ext="edit" text="t" shapetype="t"/>
-					</v:shapetype>
-					<v:shape id="         PowerPlusWaterMarkObject357476642" o:spid="_x0000_s1026" type="#_x0000_t136" style="position:absolute;margin-left:', margin_left, 'pt;margin-top:', margin_top, 'pt;width:696.05pt;height:116pt;rotation:315;z-index:251657728;mso-position-horizontal-relative:margin;mso-position-vertical-relative:margin" o:allowincell="f" fillcolor="silver" stroked="f">
-						<v:fill opacity="15000f"/>
-						<v:textpath style="font-family:&quot;      Calibri&quot;;font-size:1pt" string="   ', watermark, '"/>
-					</v:shape>
-				</w:pict>
-			</w:r>
-    ')
-
-    node_to_insert <- paste0(
-      '<w:tmp ',
-      '  xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"',
-      '  xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"',
-      '  xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml"',
-      '  xmlns:o="urn:schemas-microsoft-com:office:office"',
-      '  xmlns:v="urn:schemas-microsoft-com:vml"',
-      '  xmlns:w10="urn:schemas-microsoft-com:office:word"',
-      '  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"',
-      '  xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing"',
-      '  xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 w15 w16se w16cid w16 w16cex w16sdtdh w16sdtfl w16du wp14"',
-      '  xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"',
-      '  xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"',
-      '>',
-      node_to_insert,
-      '</w:tmp>'
-    )
-    # nolint end
-    node_to_insert <- xml2::read_xml(node_to_insert)
-    node_to_insert <- xml2::xml_root(node_to_insert)
-    xml2::xml_add_sibling(node, node_to_insert, .where = "before")
-  }
-}
-
-remove_security_popup_page_numbers_XML <- function(doc) {
-  # if we are working with listings, we previously had added
-  # the page numbers using officer::run_word_field()
-  # the problem with this function is that it inserts in the XML
-  # the field w:dirty="true", see:
-  # https://github.com/davidgohel/officer/blob/master/R/ooxml_run_objects.R#L225
-  # w:dirty="true" tells Word that the current "Page" and "NumPages" fields
-  # are outdated and need to updated.
-  # when trying to open such docx, a security pop up emerges saying:
-  # "This document contains fields that may refer to other files. Do you want
-  # to update the fields in the document?"
-  # To disable that pop up, we just need to remove field w:dirty="true".
-  # This functions does that.
-
-  # this function must only be run for Word docs that
-  # contain page numbers in the footers, i.e. listings
-  # look for all nodes with attribute w:dirty="true"
-  # for example:
-  # [1] <w:fldChar w:fldCharType="begin" w:dirty="true"/>
-  # [2] <w:instrText xml:space="preserve" w:dirty="true">Page</w:instrText>
-  # [3] <w:fldChar w:fldCharType="end" w:dirty="true"/>
-  # [4] <w:fldChar w:fldCharType="begin" w:dirty="true"/>
-  # [5] <w:instrText xml:space="preserve" w:dirty="true">NumPages</w:instrText>
-  # [6] <w:fldChar w:fldCharType="end" w:dirty="true"/>
-  # and remove that attribute
-
-  l_x <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
-  for (x in l_x) {
-    xml2::xml_set_attr(x = x, attr = "w:dirty", value = "NULL")
-  }
-}
-
 insert_keepNext_vertical_pagination <- function(flx, pags, fontspec,
                                                 string_map, round_type) {
   df <- lapply(
@@ -402,30 +425,6 @@ insert_keepNext_vertical_pagination <- function(flx, pags, fontspec,
   flx <- flx |> flextable::delete_rows(part = "body", i = lines_to_remove)
 
   return(flx)
-}
-
-add_vertical_pagination_XML <- function(doc) {
-  # look for all nodes '<w:keepNext/>'
-  l_x <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:keepNext")
-
-  # look for a parent 'w:pPr'
-  # this parent should have a first child 'w:pageBreakBefore'
-  for (x in l_x) {
-    siblings <- x |> xml2::xml_siblings()
-
-    has_jc_left <- any(
-      sapply(siblings, function(node) {
-        xml2::xml_name(node) == "jc" && xml2::xml_attr(node, "val") == "left"
-      })
-    )
-
-    if (has_jc_left) {
-      # insert pageBreakBefore only if one of the siblings is:
-      # <w:jc w:val="left"/>
-      # i.e. the first column in that row
-      x |> xml2::xml_add_sibling(.value = "w:pageBreakBefore")
-    }
-  }
 }
 
 add_little_gap_bottom_borders_spanning_headers <- function(
