@@ -5,6 +5,7 @@ dps_markup_df_docx <- tibble::tibble(
 )
 
 remove_redundant_nodes_XML <- function(doc) {
+  # nolint start
   # this function removes nodes that are useless.
   # This is to prevent the following error when printing the rdocx object:
   # "Memory allocation failed : growing nodeset hit limit"
@@ -41,9 +42,10 @@ remove_redundant_nodes_XML <- function(doc) {
   #   <w:color w:val="000000"/>
   # </w:rPr>
   # can all be entirely removed with their children.
-  
+  # nolint end
+
   xml <- doc$doc_obj$get()
-  
+
   xpath <- paste(
     # tcBorders with only empty borders
     ".//w:tcBorders[
@@ -53,7 +55,7 @@ remove_redundant_nodes_XML <- function(doc) {
       w:left[@w:val='none'] and
       w:right[@w:val='none']
    ]",
-    
+
     # pBdr with only empty borders
     ".//w:pBdr[
       count(*) = 4 and
@@ -62,17 +64,17 @@ remove_redundant_nodes_XML <- function(doc) {
       w:left[@w:val='none'] and
       w:right[@w:val='none']
    ]",
-    
+
     # formatting nodes
     ".//w:i[@w:val='false']",
     ".//w:b[@w:val='false']",
     ".//w:u[@w:val='none']",
     ".//w:strike[@w:val='false']",
     ".//w:color[@w:val='000000']",
-    
+
     sep = " | "
   )
-  
+
   nodes <- xml2::xml_find_all(xml, xpath)
   xml2::xml_remove(nodes)
   # for an example of a listing of 3k rows and 12 columns (cells),
@@ -131,10 +133,10 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation, tlgtype) {
   # This function should only be called when exporting Figures.
   # This ensures the watermark is duplicated on every page.
   # Argument 'orientation' is needed to calculate the location of the watermark.
-  
+
   checkmate::assert_character(watermark, len = 1)
   checkmate::assert_choice(orientation, choices = c("portrait", "landscape"))
-  
+
   if (orientation == "portrait") {
     margin_left <- -114
     margin_top <- 266
@@ -147,8 +149,8 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation, tlgtype) {
       margin_left <- -30
     }
   }
-  
-  
+
+
   # find out where to insert the node
   nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:tbl")
   for (node in nodes) {
@@ -156,7 +158,7 @@ insert_fake_watermark_XML <- function(doc, watermark, orientation, tlgtype) {
     node <- xml2::xml_find_first(node, ".//w:tc")
     node <- xml2::xml_find_first(node, ".//w:p")
     node <- xml2::xml_find_first(node, ".//w:r")
-    
+
     # nolint start
     node_to_insert <- paste0('
       <w:r>
@@ -235,7 +237,7 @@ remove_security_popup_page_numbers_XML <- function(doc) {
   # to update the fields in the document?"
   # To disable that pop up, we just need to remove field w:dirty="true".
   # This functions does that.
-  
+
   # this function must only be run for Word docs that
   # contain page numbers in the footers, i.e. listings
   # look for all nodes with attribute w:dirty="true"
@@ -247,7 +249,7 @@ remove_security_popup_page_numbers_XML <- function(doc) {
   # [5] <w:instrText xml:space="preserve" w:dirty="true">NumPages</w:instrText>
   # [6] <w:fldChar w:fldCharType="end" w:dirty="true"/>
   # and remove that attribute
-  
+
   l_x <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
   for (x in l_x) {
     xml2::xml_set_attr(x = x, attr = "w:dirty", value = "NULL")
@@ -257,18 +259,18 @@ remove_security_popup_page_numbers_XML <- function(doc) {
 add_vertical_pagination_XML <- function(doc) {
   # look for all nodes '<w:keepNext/>'
   l_x <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:keepNext")
-  
+
   # look for a parent 'w:pPr'
   # this parent should have a first child 'w:pageBreakBefore'
   for (x in l_x) {
     siblings <- x |> xml2::xml_siblings()
-    
+
     has_jc_left <- any(
       sapply(siblings, function(node) {
         xml2::xml_name(node) == "jc" && xml2::xml_attr(node, "val") == "left"
       })
     )
-    
+
     if (has_jc_left) {
       # insert pageBreakBefore only if one of the siblings is:
       # <w:jc w:val="left"/>
@@ -534,7 +536,7 @@ insert_title_as_header <- function(flx,
   # nolint end
 
   flx <- flextable::style(x = flx, part = "header", i = 1, pr_p = officer::fp_par(word_style = "caption"))
-  
+
   # insert hanging indent of 0.8 inches (57.6 MS points, 1152 twips)
   # 1 inch = 72 pts = 1440 twips
   flx <- flx |>
@@ -1315,22 +1317,19 @@ tt_to_flextable_j <- function(
     # insert hanging indent of 0.06 inches (4.32 MS points, 86.4 twips)
     # 1 inch = 72 pts = 1440 twips
     flx <- flx |>
-      flextable::indentation(
-        part = "body",
-        j = 1,
-        hanging = 4.32)
+      flextable::indentation(part = "body", j = 1, hanging = 4.32)
     extra_padding <- 4.32
   } else {
     extra_padding <- 0
   }
   # NOTE: this line adds the left padding to each row in column 1 (Body only)
   flx <- flextable::padding(flx,
-                            j = 1,
-                            padding.left = indent_size * updated_indents + extra_padding,
-                            padding.right = 0,
-                            padding.top = 0,
-                            padding.bottom = 0,
-                            part = "body"
+    j = 1,
+    padding.left = indent_size * updated_indents + extra_padding,
+    padding.right = 0,
+    padding.top = 0,
+    padding.bottom = 0,
+    part = "body"
   )
   # add indentation in Header
   for (i in seq_len(nr_header)) {
@@ -1889,34 +1888,67 @@ export_as_docx_j <- function(
     }
 
     # start of XML manipulation
+    t1 <- Sys.time()
     add_vertical_pagination_XML(doc)
+    t2 <- Sys.time()
+    print("Runtime add_vertical_pagination_XML:")
+    print(t2 - t1)
+
     if (tlgtype == "Listing" && isTRUE(pagenum)) {
+      t1 <- Sys.time()
       remove_security_popup_page_numbers_XML(doc)
+      t2 <- Sys.time()
+      print("Runtime remove_security_popup_page_numbers_XML:")
+      print(t2 - t1)
     }
+
+    t1 <- Sys.time()
     remove_trHeight_nodes_XML(doc)
+    t2 <- Sys.time()
+    print("Runtime remove_trHeight_nodes_XML:")
+    print(t2 - t1)
+
     if (!is.null(watermark)) {
+      t1 <- Sys.time()
       insert_fake_watermark_XML(doc, watermark, orientation, tlgtype)
+      t2 <- Sys.time()
+      print("Runtime insert_fake_watermark_XML:")
+      print(t2 - t1)
     }
+
     if (tlgtype == "Listing") {
       num_cells <- lapply(flex_tbl_list, function(flx) {
         flx$body$content$nrow * flx$body$content$ncol
-      }) |> unlist() |> sum()
+      }) |>
+        unlist() |>
+        sum()
       if (num_cells > 8000 * 12) {
         # simplify the XML if we are exporting a listing with more than
         # 8000 * 12 cells (this value was calculated empirically).
         # any listing longer than this exceeds the node-list threshold,
         # resulting in a memory allocation error when printing the rdocx
+        t1 <- Sys.time()
         remove_redundant_nodes_XML(doc)
+        t2 <- Sys.time()
+        print("Runtime remove_redundant_nodes_XML:")
+        print(t2 - t1)
       }
     }
     # end of XML manipulation
 
+    t1 <- Sys.time()
     doc <- align_rows_with_rtf(doc)
+    t2 <- Sys.time()
+    print("Runtime align_rows_with_rtf:")
+    print(t2 - t1)
 
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
   }
 }
+
+
+
 
 
 #' export_graph_as_docx
@@ -2115,14 +2147,14 @@ export_graph_as_docx <- function(g = NULL,
   doc <- officer::body_remove(doc)
   doc <- officer::body_set_default_section(doc, section_properties)
   doc <- flextable::body_add_flextable(doc, flx, align = "center")
-  
+
   # start of XML manipulation
   fix_namespaces_Graphs_XML(doc)
   if (!is.null(watermark)) {
     insert_fake_watermark_XML(doc, watermark, orientation, "Figure")
   }
   # end of XML manipulation
-  
+
   print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
 }
 
