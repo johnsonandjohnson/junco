@@ -1922,7 +1922,8 @@ export_as_docx_j <- function(
       }) |>
         unlist() |>
         sum()
-      if (num_cells > 8000 * 12) {
+      # if (num_cells > 8000 * 12) {
+      if (TRUE) {
         # simplify the XML if we are exporting a listing with more than
         # 8000 * 12 cells (this value was calculated empirically).
         # any listing longer than this exceeds the node-list threshold,
