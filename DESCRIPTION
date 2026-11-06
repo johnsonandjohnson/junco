@@ -51,8 +51,8 @@ Imports:
     mmrm,
     vcdExtra (>= 0.8.7),
     rtables.officer (>= 0.1.2),
-    flextable (>= 0.9.11),
-    officer,
+    flextable (>= 0.10.0),
+    officer (>= 0.7.5),
     xml2,
     ggplot2,
     assertthat

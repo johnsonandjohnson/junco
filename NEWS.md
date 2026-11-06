@@ -7,6 +7,7 @@
 ### Changed
 - Changed `prop_ratio_cmh()` to accept a prepared contingency table (`tbl`).
 - Removed `extrablankline = TRUE` usage from vignettes and tests as part of deprecation (#374, #344).
+- Improved `export_TLG_as_docx()` runtime and addressed "memory allocation" error when exporting large listings (e.g. 750+ pages)
 
 ## [0.1.7] - 2026-10-15 (CRAN release)
 
