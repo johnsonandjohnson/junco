@@ -1936,11 +1936,7 @@ export_as_docx_j <- function(
     }
     # end of XML manipulation
 
-    t1 <- Sys.time()
     doc <- align_rows_with_rtf(doc)
-    t2 <- Sys.time()
-    print("Runtime align_rows_with_rtf:")
-    print(t2 - t1)
 
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
     invisible(TRUE)
