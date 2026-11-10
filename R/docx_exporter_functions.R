@@ -4,6 +4,94 @@ dps_markup_df_docx <- tibble::tibble(
   replace_by = c("flextable::as_sup", "flextable::as_sub")
 )
 
+remove_matches <- function(xml, xpath) {
+  nodes <- xml2::xml_find_all(xml, xpath)
+  
+  n_removed <- length(nodes)
+  
+  if (n_removed > 0L) {
+    xml2::xml_remove(nodes)
+  }
+  
+  rm(nodes)
+  
+  n_removed
+}
+
+remove_redundant_nodes_XML_2 <- function(doc) {
+  xml <- doc$doc_obj$get()
+  n_removed <- integer()
+  
+  # Remove parent containers rather than individual border nodes.
+  t1 <- Sys.time()
+  n_removed["tcBorders"] <- remove_matches(
+    xml,
+    paste0(
+      ".//w:tcBorders[",
+      "count(*) = 4",
+      " and w:bottom[@w:val='none']",
+      " and w:top[@w:val='none']",
+      " and w:left[@w:val='none']",
+      " and w:right[@w:val='none']",
+      "]"
+    )
+  )
+  t2 <- Sys.time()
+  print("first removal:")
+  print(t2 - t1)
+  
+  t1 <- Sys.time()
+  n_removed["pBdr"] <- remove_matches(
+    xml,
+    paste0(
+      ".//w:pBdr[",
+      "count(*) = 4",
+      " and w:bottom[@w:val='none']",
+      " and w:top[@w:val='none']",
+      " and w:left[@w:val='none']",
+      " and w:right[@w:val='none']",
+      "]"
+    )
+  )
+  t2 <- Sys.time()
+  print("first removal:")
+  print(t2 - t1)
+  
+  t1 <- Sys.time()
+  n_removed["disabled_boolean_properties"] <- remove_matches(
+    xml,
+    paste0(
+      ".//w:rPr/*[",
+      "(self::w:b or self::w:i or self::w:strike)",
+      " and @w:val='false'",
+      "]"
+    )
+  )
+  t2 <- Sys.time()
+  print("first removal:")
+  print(t2 - t1)
+  
+  t1 <- Sys.time()
+  n_removed["underline_none"] <- remove_matches(
+    xml,
+    ".//w:rPr/w:u[@w:val='none']"
+  )
+  t2 <- Sys.time()
+  print("first removal:")
+  print(t2 - t1)
+  
+  t1 <- Sys.time()
+  n_removed["black_color"] <- remove_matches(
+    xml,
+    ".//w:rPr/w:color[@w:val='000000']"
+  )
+  t2 <- Sys.time()
+  print("first removal:")
+  print(t2 - t1)
+  
+  print(n_removed)
+}
+
 remove_redundant_nodes_XML <- function(doc) {
   # nolint start
   # this function removes nodes that are useless.
@@ -1925,15 +2013,16 @@ export_as_docx_j <- function(
       }) |>
         unlist() |>
         sum()
-      if (num_cells > 8000 * 12) {
+      # if (num_cells > 8000 * 12) {
+      if (TRUE) {
         # simplify the XML if we are exporting a listing with more than
         # 8000 * 12 cells (this value was calculated empirically).
         # any listing longer than this exceeds the node-list threshold,
         # resulting in a memory allocation error when printing the rdocx
         t1 <- Sys.time()
-        remove_redundant_nodes_XML(doc)
+        remove_redundant_nodes_XML_2(doc)
         t2 <- Sys.time()
-        print("Runtime remove_redundant_nodes_XML:")
+        print("Runtime remove_redundant_nodes_XML_2:")
         print(t2 - t1)
       }
     }
