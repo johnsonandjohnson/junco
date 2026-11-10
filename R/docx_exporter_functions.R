@@ -231,7 +231,7 @@ remove_security_popup_page_numbers_XML <- function(doc) {
   # the field w:dirty="true", see:
   # https://github.com/davidgohel/officer/blob/master/R/ooxml_run_objects.R#L225
   # w:dirty="true" tells Word that the current "Page" and "NumPages" fields
-  # are outdated and need to updated.
+  # are outdated and need to be updated.
   # when trying to open such docx, a security pop up emerges saying:
   # "This document contains fields that may refer to other files. Do you want
   # to update the fields in the document?"
@@ -1578,6 +1578,8 @@ export_as_docx_j <- function(
   validate = TRUE,
   ...
 ) {
+  
+  t1 <- Sys.time()
 
   checkmate::assert_true(inherits(tt, "VTableTree") || inherits(tt, "listing_df") ||
                            is.list(tt) || inherits(tt, "flextable"))
@@ -1886,7 +1888,12 @@ export_as_docx_j <- function(
         doc_metadata
       ))
     }
+    
+    t2 <- Sys.time()
+    print("Runtime R code:")
+    print(t2 - t1)
 
+    
     # start of XML manipulation
     t1 <- Sys.time()
     add_vertical_pagination_XML(doc)
@@ -1902,11 +1909,7 @@ export_as_docx_j <- function(
       print(t2 - t1)
     }
 
-    t1 <- Sys.time()
-    remove_trHeight_nodes_XML(doc)
-    t2 <- Sys.time()
-    print("Runtime remove_trHeight_nodes_XML:")
-    print(t2 - t1)
+    # remove_trHeight_nodes_XML(doc)
 
     if (!is.null(watermark)) {
       t1 <- Sys.time()
@@ -1922,8 +1925,7 @@ export_as_docx_j <- function(
       }) |>
         unlist() |>
         sum()
-      # if (num_cells > 8000 * 12) {
-      if (TRUE) {
+      if (num_cells > 8000 * 12) {
         # simplify the XML if we are exporting a listing with more than
         # 8000 * 12 cells (this value was calculated empirically).
         # any listing longer than this exceeds the node-list threshold,
@@ -1939,7 +1941,11 @@ export_as_docx_j <- function(
 
     doc <- align_rows_with_rtf(doc)
 
+    t1 <- Sys.time()
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
+    t2 <- Sys.time()
+    print("Runtime print.rdocx:")
+    print(t2 - t1)
     invisible(TRUE)
   }
 }
