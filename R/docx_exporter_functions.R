@@ -37,7 +37,7 @@ remove_redundant_nodes_XML_2 <- function(doc) {
     )
   )
   t2 <- Sys.time()
-  print("first removal:")
+  print("1st removal:")
   print(t2 - t1)
   
   t1 <- Sys.time()
@@ -54,7 +54,7 @@ remove_redundant_nodes_XML_2 <- function(doc) {
     )
   )
   t2 <- Sys.time()
-  print("first removal:")
+  print("2nd removal:")
   print(t2 - t1)
   
   t1 <- Sys.time()
@@ -68,7 +68,7 @@ remove_redundant_nodes_XML_2 <- function(doc) {
     )
   )
   t2 <- Sys.time()
-  print("first removal:")
+  print("3rd removal:")
   print(t2 - t1)
   
   t1 <- Sys.time()
@@ -77,7 +77,7 @@ remove_redundant_nodes_XML_2 <- function(doc) {
     ".//w:rPr/w:u[@w:val='none']"
   )
   t2 <- Sys.time()
-  print("first removal:")
+  print("4th removal:")
   print(t2 - t1)
   
   t1 <- Sys.time()
@@ -86,7 +86,7 @@ remove_redundant_nodes_XML_2 <- function(doc) {
     ".//w:rPr/w:color[@w:val='000000']"
   )
   t2 <- Sys.time()
-  print("first removal:")
+  print("5th removal:")
   print(t2 - t1)
   
   print(n_removed)
@@ -2013,8 +2013,7 @@ export_as_docx_j <- function(
       }) |>
         unlist() |>
         sum()
-      # if (num_cells > 8000 * 12) {
-      if (TRUE) {
+      if (num_cells > 8000 * 12) {
         # simplify the XML if we are exporting a listing with more than
         # 8000 * 12 cells (this value was calculated empirically).
         # any listing longer than this exceeds the node-list threshold,
