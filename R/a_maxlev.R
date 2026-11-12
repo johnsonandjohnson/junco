@@ -104,7 +104,11 @@ a_maxlev <- function(df,
   }
 
   N_row <- nrow(df)
-  count_pct <- if (N_row != 0) {
+
+  cur_col <- subset(.alt_df_full, eval(.spl_context$cur_col_expr[[1]]))
+  N <- length(unique(cur_col[[id]]))
+  
+  count_pct <- if (N_row != 0 && N > 0) {
     max_per_id <- tapply(varvec, df[[id]], max)
     max_per_id <- ordered(levs[max_per_id], levels = levs) # tapply loses levels of varvec.
 
@@ -114,9 +118,9 @@ a_maxlev <- function(df,
       table(max_per_id)
     }
 
-    cur_col <- subset(.alt_df_full, eval(.spl_context$cur_col_expr[[1]]))
-    N <- length(unique(cur_col[[id]]))
     as.list(data.frame(rbind(count_max, count_max / N)))
+  } else if (N > 0) {
+    rep(list(c(0, 0)), length(levs_lab))
   } else {
     rep(list(NA), length(levs_lab))
   }
