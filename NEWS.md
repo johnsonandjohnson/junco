@@ -1,5 +1,8 @@
 # junco 0.1.7009
 
+### Fixed
+- Fixed `a_maxlev()` to return 0 instead of `-` when `alt_counts_df` provides a known denominator but the analysis dataset has no records for a treatment group (#538).
+
 ### Added
 - Added unstratified `wald` and `waldcc` relative risk methods to `s_relative_risk()`
   and the shared `prop_ratio_wald()` estimator (#533).
