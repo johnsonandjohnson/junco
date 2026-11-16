@@ -11,6 +11,10 @@
 #'          `df`, `.var` will be populated automatically by rtables during
 #'          the tabulation process.
 #'
+#' Rows with `NA` in `.var` or `resp_var` are excluded from both
+#' numerator and denominator. The `resp_var` column must be character
+#' or factor with values limited to `"Y"`, `"N"`, or `NA`.
+#'
 #' @param df           (`data.frame`)\cr Name of dataframe being analyzed.
 #' @param labelstr     (`character vector`)\cr Custom label for the variable being analyzed.
 #' @param .var         (`character`)\cr Name of the variable being analyzed. Records with non-missing
@@ -74,36 +78,11 @@ response_by_var <- function(
 ) {
   # Derive statistics: xx / xx (xx.x%)
 
-  if (is.null(resp_var)) {
-    stop("afun response_by_var: resp_var cannot be NULL.")
-  }
+  h_check_char_resp_var(df, resp_var, .var, id)
 
-  resp_var_values <- unique(df[[resp_var]][!is.na(df[[resp_var]])])
-  if (is.character(df[[resp_var]]) && any(is.na(df[[resp_var]])) && all(resp_var_values == "Y")) {
-    stop(paste(
-      "afun response_by_var: not clear if missing resp_var should be considered",
-      "non-response. Please make it a factor with appropriate Y(/N) levels."
-    ))
-  }
+  # --- remove NAs --------------------------------------------------------------
+  df <- df[!is.na(df[[.var]]) & !is.na(df[[resp_var]]), ]
 
-  if (length(setdiff(resp_var_values, c("Y", "N"))) > 0) {
-    stop("afun response_by_var: resp_var must contain only Y/N values.")
-  }
-
-  df <- df[!is.na(df[[.var]]), ]
-
-  if ( # nolint start
-    (is.factor(df[[resp_var]]) &&
-      (identical(levels(df[[resp_var]]), c("Y", "N")) || identical(levels(df[[resp_var]]), c("N", "Y")))) ||
-      is.character(df[[resp_var]])
-  ) { # nolint end
-    # missing values in resp_var should be excluded, not considered as not met response subject will then not
-    # contribute to denominator
-    df <- df[!is.na(df[[resp_var]]), ]
-  }
-
-  ## in other cases, missing values in resp_var will be considered not met response and subject will contribute to
-  ## denominator
   varvec <- df[[.var]]
 
   # For group summaries, varvec will be a singular value, equal to the current split, whereas for afun summaries,
@@ -118,7 +97,7 @@ response_by_var <- function(
     dfii <- df[df[[.var]] == levii, ]
 
     den <- NROW(unique(dfii[, id]))
-    num <- NROW(unique(dfii[dfii[[resp_var]] == "Y" & !is.na(dfii[[resp_var]]), id]))
+    num <- NROW(unique(dfii[dfii[[resp_var]] == "Y", id]))
 
     rcell(c(num * 1, den * 1, num * 1 / den), format = .format)
   }
@@ -129,4 +108,30 @@ response_by_var <- function(
   # Hand off results to analyze
 
   in_rows(.list = cls)
+}
+
+#' Check that the response variable is a valid character/factor Y/N column
+#'
+#' @param df (`data.frame`)\cr data to validate.
+#' @param resp_var (`string`)\cr response variable name.
+#' @param .var (`string`)\cr analysis variable name.
+#' @param id (`string`)\cr subject identifier column name.
+#'
+#' @return `NULL` invisibly. Raises an error on invalid input.
+#' @keywords internal
+h_check_char_resp_var <- function(df, resp_var, .var, id) {
+  checkmate::assert_data_frame(df, min.rows = 0L)
+  checkmate::assert_string(resp_var)
+  checkmate::assert_string(id)
+  checkmate::assert_choice(resp_var, names(df))
+  checkmate::assert_choice(.var, names(df))
+  checkmate::assert_choice(id, names(df))
+  checkmate::assert_multi_class(df[[resp_var]], c("character", "factor"))
+
+  resp_vals <- as.character(unique(df[[resp_var]][!is.na(df[[resp_var]])]))
+  if (length(resp_vals) > 0L) {
+    checkmate::assert_subset(resp_vals, c("Y", "N"))
+  }
+
+  invisible(NULL)
 }
