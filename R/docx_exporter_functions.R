@@ -2154,10 +2154,10 @@ export_as_docx_j <- function(
 
     doc <- align_rows_with_rtf(doc)
     
-    print("number of total XML nodes:")
-    xml <- doc$doc_obj$get()
-    all_nodes <- xml2::xml_find_all(xml, ".//*")
-    print(length(all_nodes))
+    # print("number of total XML nodes:")
+    # xml <- doc$doc_obj$get()
+    # all_nodes <- xml2::xml_find_all(xml, ".//*")
+    # print(length(all_nodes))
 
     t1 <- Sys.time()
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
