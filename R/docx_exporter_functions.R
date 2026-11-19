@@ -369,6 +369,160 @@ get_clean_WML <- function(flex_tbl_i, align = "center") {
   wml
 }
 
+get_clean_WML_2 <- function(flex_tbl_i, align = "center") {
+  
+  # nolint start
+  # This function is called when exporting a listing, and removes
+  # redundant nodes to prevent the following error when printing
+  # the rdocx object:
+  # "Memory allocation failed : growing nodeset hit limit"
+  # For example, nodes like:
+  # <w:tcBorders>
+  #   <w:bottom w:val="none" w:sz="0" w:space="0" w:color="666666"/>
+  #   <w:top w:val="none" w:sz="0" w:space="0" w:color="000000"/>
+  #   <w:left w:val="none" w:sz="0" w:space="0" w:color="FFFFFF"/>
+  #   <w:right w:val="none" w:sz="0" w:space="0" w:color="FFFFFF"/>
+  # </w:tcBorders>
+  # or:
+  # <w:tcMar>
+  #   <w:top w:w="0" w:type="dxa"/>
+  #   <w:bottom w:w="0" w:type="dxa"/>
+  #   <w:left w:w="0" w:type="dxa"/>
+  #   <w:right w:w="0" w:type="dxa"/>
+  # </w:tcMar>
+  # or:
+  # <w:pBdr>
+  #   <w:bottom w:val="none" w:sz="0" w:space="0" w:color="000000"/>
+  #   <w:top w:val="none" w:sz="0" w:space="0" w:color="000000"/>
+  #   <w:left w:val="none" w:sz="0" w:space="0" w:color="000000"/>
+  #   <w:right w:val="none" w:sz="0" w:space="0" w:color="000000"/>
+  # </w:pBdr>
+  # or:
+  # <w:rPr>
+  #   <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:eastAsia="Times New Roman" w:cs="Times New Roman"/>
+  #   <w:i w:val="false"/>
+  #   <w:b w:val="false"/>
+  #   <w:u w:val="none"/>
+  #   <w:strike w:val="false"/>
+  #   <w:sz w:val="16"/>
+  #   <w:szCs w:val="16"/>
+  #   <w:color w:val="000000"/>
+  # </w:rPr>
+  # can all be entirely removed with their children.
+  # nolint end
+  # for an example of a listing of 3k rows and 12 columns,
+  # this code reduces the number of nodes from 1,629,910 to 441,540 (27%)
+  
+  stopifnot(
+    is.character(align),
+    length(align) == 1L,
+    align %in% c("left", "center", "right", "start", "end")
+  )
+  
+  to_wml.flextable <- utils::getFromNamespace(
+    "to_wml.flextable",
+    "flextable"
+  )
+  
+  wml <- to_wml.flextable(flex_tbl_i)
+  
+  # Match a border element only when w:val="none".
+  #
+  # Attribute order and the values of w:sz, w:space, and w:color
+  # do not matter.
+  border_none <- function(side) {
+    paste0(
+      "<w:", side,
+      "\\b",
+      "(?=[^>]*\\bw:val=\"none\")",
+      "[^>]*/>"
+    )
+  }
+  
+  empty_border_children <- paste0(
+    border_none("bottom"),
+    border_none("top"),
+    border_none("left"),
+    border_none("right")
+  )
+  
+  empty_tc_borders <- paste0(
+    "<w:tcBorders>",
+    empty_border_children,
+    "</w:tcBorders>"
+  )
+  
+  empty_p_borders <- paste0(
+    "<w:pBdr>",
+    empty_border_children,
+    "</w:pBdr>"
+  )
+  
+  redundant_nodes <- c(
+    empty_tc_borders,
+    empty_p_borders,
+    
+    # Remove complete run-properties elements, including all children.
+    "<w:rPr\\b[^>]*>.*?</w:rPr>",
+    
+    # Remove complete w:tcMar elements, including all children.
+    "<w:tcMar\\b[^>]*>.*?</w:tcMar>"
+  )
+  
+  combined_pattern <- paste(
+    redundant_nodes,
+    collapse = "|"
+  )
+  
+  # One traversal of the WML string for all redundant nodes.
+  wml <- stringi::stri_replace_all_regex(
+    str = wml,
+    pattern = combined_pattern,
+    replacement = "",
+    opts_regex = stringi::stri_opts_regex(
+      case_insensitive = FALSE,
+      dotall = TRUE
+    )
+  )
+  
+  # The first w:jc under the generated w:tblPr is the table
+  # justification. Cell paragraph justification follows later.
+  wml <- stringi::stri_replace_first_regex(
+    str = wml,
+    pattern = paste0(
+      '<w:jc\\b',
+      '(?=[^>]*\\bw:val="(?:left|right|center|start|end)")',
+      '[^>]*/>'
+    ),
+    replacement = sprintf(
+      '<w:jc w:val="%s"/>',
+      align
+    )
+  )
+  
+  # Set default cell margins once at table level.
+  tbl_cell_mar <- paste0(
+    '<w:tblCellMar>',
+    '<w:top w:w="0" w:type="dxa"/>',
+    '<w:left w:w="0" w:type="dxa"/>',
+    '<w:bottom w:w="0" w:type="dxa"/>',
+    '<w:right w:w="0" w:type="dxa"/>',
+    '</w:tblCellMar>'
+  )
+  
+  # Insert into the table properties.
+  wml <- stringi::stri_replace_first_fixed(
+    str = wml,
+    pattern = "</w:tblPr>",
+    replacement = paste0(
+      tbl_cell_mar,
+      "</w:tblPr>"
+    )
+  )
+  
+  wml
+}
+
 validate_tabletree <- function(tt, validate, tlgtype) {
   if (validate && tlgtype == "Table" && methods::is(tt, "VTableTree")) {
     if (!rtables::validate_table_struct(tt)) {
@@ -386,8 +540,13 @@ validate_tabletree <- function(tt, validate, tlgtype) {
   }
 }
 
-get_template_file <- function() {
-  template_file <- "template_file.docx"
+get_template_file <- function(tlgtype) {
+  if (tlgtype == "Listing") {
+    template_file <- "template_file_listing.docx"
+  } else {
+    template_file <- "template_file.docx"
+  }
+  
   template_file <- system.file(template_file, package = "junco")
   return(template_file)
 }
@@ -1867,7 +2026,7 @@ export_as_docx_j <- function(
       )
     }
   } else {
-    template_file <- get_template_file()
+    template_file <- get_template_file(tlgtype)
     doc <- officer::read_docx(template_file)
     doc <- officer::body_remove(doc)
 
@@ -1936,15 +2095,8 @@ export_as_docx_j <- function(
         doc <- flextable::body_add_flextable(doc, flex_tbl_i, align = "center")
       } else {
         # clean up the flextable WML as a character string for efficiency
-        t1 <- Sys.time()
-        wml_clean <- get_clean_WML(flex_tbl_i, align = "center")
-        t2 <- Sys.time()
+        wml_clean <- get_clean_WML_2(flex_tbl_i, align = "center")
         doc <- officer::body_add_xml(doc, str = wml_clean)
-        t3 <- Sys.time()
-        print("Runtime get_clean_WML:")
-        print(t2 - t1)
-        print("Runtime body_add_xml:")
-        print(t3 - t2)
       }
 
       if (isTRUE(add_page_break) && ii < length(flex_tbl_list)) {
@@ -1983,13 +2135,9 @@ export_as_docx_j <- function(
 
 
     # start of XML manipulation
-    t1 <- Sys.time()
     if (tlgtype == "Table") {
       add_vertical_pagination_XML(doc)
     }
-    t2 <- Sys.time()
-    print("Runtime add_vertical_pagination_XML:")
-    print(t2 - t1)
     
     # if (tlgtype == "Listing" && isTRUE(pagenum)) {
     #   remove_security_popup_page_numbers_XML(doc)
@@ -2005,6 +2153,11 @@ export_as_docx_j <- function(
     # end of XML manipulation
 
     doc <- align_rows_with_rtf(doc)
+    
+    print("number of total XML nodes:")
+    xml <- doc$doc_obj$get()
+    all_nodes <- xml2::xml_find_all(xml, ".//*")
+    print(length(all_nodes))
 
     t1 <- Sys.time()
     print(doc, target = paste0(output_dir, "/", tolower(tblid), ".docx"))
@@ -2207,7 +2360,7 @@ export_graph_as_docx <- function(g = NULL,
 
 
   # Export as docx ----
-  template_file <- get_template_file()
+  template_file <- get_template_file(tlgtype)
   section_properties <- officer::prop_section(
     page_size = officer::page_size(width = 11, height = 8.5, orient = orientation),
     page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
