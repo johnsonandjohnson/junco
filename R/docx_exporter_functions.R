@@ -542,7 +542,7 @@ validate_tabletree <- function(tt, validate, tlgtype) {
 
 get_template_file <- function(tlgtype) {
   if (tlgtype == "Listing") {
-    template_file <- "template_file_listing.docx"
+    template_file <- "template_file_listings.docx"
   } else {
     template_file <- "template_file.docx"
   }
