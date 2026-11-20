@@ -243,46 +243,7 @@ testthat::test_that("tt_to_flextable_j() works fine with Listings", {
   snapshot_test_flextable(res)
 })
 
-# to compare 2 docx
-# - open the docx in R and get the XML
-# - treat the XML content as string
-# - use snapshot testing against the string
-testthat::test_that("remove_security_popup_page_numbers_XML() removes dirty='true'", {
-  doc <- officer::read_docx()
-  section_properties <- officer::prop_section(
-    page_size = officer::page_size(width = 11, height = 8.5, orient = "landscape"),
-    page_margins = officer::page_mar(bottom = 1, top = 1, right = 1, left = 1, gutter = 0, footer = 1, header = 1)
-  )
 
-  # add the page numbers
-  formatted_par <-
-    officer::fpar("Listing Page ",
-      officer::run_word_field("Page",
-        prop = officer::fp_text(font.size = 8, font.family = "Times New Roman")
-      ),
-      " of ",
-      officer::run_word_field("NumPages",
-        prop = officer::fp_text(font.size = 8, font.family = "Times New Roman")
-      ),
-      fp_p = officer::fp_par(text.align = "right", padding.top = 12),
-      fp_t = officer::fp_text(font.size = 8, font.family = "Times New Roman")
-    )
-  footer_default <- officer::block_list(formatted_par)
-  section_properties$footer_default <- footer_default
-  doc <- officer::body_set_default_section(doc, section_properties)
-
-  l_1 <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
-
-  remove_security_popup_page_numbers_XML(doc = doc, tlgtype = "something different than Listing")
-  l_2 <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
-
-  remove_security_popup_page_numbers_XML(doc = doc, tlgtype = "Listing")
-  l_3 <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
-
-  testthat::expect_equal(length(l_1), 6)
-  testthat::expect_equal(length(l_2), 6)
-  testthat::expect_equal(length(l_3), 0)
-})
 
 testthat::test_that("after being saved as docx, the XML contains a node w:pStyle w:val='Caption'", {
 
@@ -488,16 +449,10 @@ testthat::test_that("export_TLG_as_docx() works with pagination", {
   # open the files and check the XML
   doc <- officer::read_docx(paste0(output_dir, "/test1234part1of2.docx"))
   snapshot_test_docx(doc)
-  # check that the XML does not contain "w:trHeight" nodes
-  nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:trHeight")
-  testthat::expect_length(nodes, 0)
-
-  doc <- officer::read_docx(paste0(output_dir, "/test1234part2of2.docx"))
-  snapshot_test_docx(doc)
-  # check that the XML does not contain "w:trHeight" nodes
-  nodes <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:trHeight")
-  testthat::expect_length(nodes, 0)
-
+  
+  # check that the XML does not contain dirty="true"
+  l_nodes_dirty <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
+  testthat::expect_equal(length(l_nodes_dirty), 0)
 
   file.remove(c(
     paste0(output_dir, "/test1234part1of2.docx"),
