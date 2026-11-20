@@ -71,8 +71,8 @@ before constructing the response, group, strata, and contingency table.}
 
 \itemize{
 \item \code{s_relative_risk()} returns a named list of elements \code{rel_risk_ci} and \code{pval}.
-  Both are empty numeric vectors for the reference column (or when
-  \code{.in_ref_col} is \code{NULL}), so they then display as blank.
+Both are empty numeric vectors for the reference column (or when
+\code{.in_ref_col} is \code{NULL}), so they then display as blank.
 }
 }
 \description{
