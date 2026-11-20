@@ -2,6 +2,15 @@
 
 ## junco 0.1.7009
 
+#### Fixed
+
+- CRITICAL: hotfixed
+  [`a_maxlev()`](https://johnsonandjohnson.github.io/junco/reference/a_maxlev.md)
+  to return 0 instead of `-` when `alt_counts_df` provides a known
+  denominator but the analysis dataset has no records for a treatment
+  group
+  ([\#538](https://github.com/johnsonandjohnson/junco/issues/538)).
+
 #### Added
 
 - Added unstratified `wald` and `waldcc` relative risk methods to

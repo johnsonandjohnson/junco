@@ -35,6 +35,10 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.7009" id="junco-017009">junco 0.1.7009<a class="anchor" aria-label="anchor" href="#junco-017009"></a></h2>
 <div class="section level4">
+<h4 id="fixed-0-1-7009">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-7009"></a></h4>
+<ul><li>CRITICAL: hotfixed <code><a href="../reference/a_maxlev.html">a_maxlev()</a></code> to return 0 instead of <code>-</code> when <code>alt_counts_df</code> provides a known denominator but the analysis dataset has no records for a treatment group (<a href="https://github.com/johnsonandjohnson/junco/issues/538" class="external-link">#538</a>).</li>
+</ul></div>
+<div class="section level4">
 <h4 id="added-0-1-7009">Added<a class="anchor" aria-label="anchor" href="#added-0-1-7009"></a></h4>
 <ul><li>Added unstratified <code>wald</code> and <code>waldcc</code> relative risk methods to <code><a href="../reference/relative_risk.html">s_relative_risk()</a></code> and the shared <code><a href="../reference/prop_ratio_wald.html">prop_ratio_wald()</a></code> estimator (<a href="https://github.com/johnsonandjohnson/junco/issues/533" class="external-link">#533</a>).</li>
 </ul></div>
@@ -46,7 +50,7 @@
 <div class="section level3">
 <h3 id="id_017---cran-release-0-1-7009">[0.1.7] - 2026-10-15 (CRAN release)<a class="anchor" aria-label="anchor" href="#id_017---cran-release-0-1-7009"></a></h3>
 <div class="section level4">
-<h4 id="fixed-0-1-7009">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-7009"></a></h4>
+<h4 id="fixed-0-1-7009-1">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-7009-1"></a></h4>
 <ul><li>Fixed <code><a href="../reference/get_ref_info.html">get_ref_info()</a></code> to accept ref_path = NULL (<a href="https://github.com/johnsonandjohnson/junco/issues/359" class="external-link">#359</a>).</li>
 <li>Fixed <code><a href="../reference/default_stats_formats_labels.html">junco_get_stats()</a></code> to inherit any default stats from <code>tern</code> that are not explicitly defined in junco.</li>
 <li>Fixed <code><a href="../reference/get_ref_info.html">get_ref_info()</a></code> so that is works in the presence of “overall” column (<a href="https://github.com/johnsonandjohnson/junco/issues/332" class="external-link">#332</a>)</li>
@@ -129,7 +133,7 @@
 <h3 id="id_016---cran-release-0-1-7009">
 <a href="https://github.com/johnsonandjohnson/junco/releases/tag/v0.1.6-rc" class="external-link">0.1.6</a> - 2026-05-05 (CRAN release)<a class="anchor" aria-label="anchor" href="#id_016---cran-release-0-1-7009"></a></h3>
 <div class="section level4">
-<h4 id="fixed-0-1-7009-1">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-7009-1"></a></h4>
+<h4 id="fixed-0-1-7009-2">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-7009-2"></a></h4>
 <ul><li>Fixed <code><a href="../reference/s_kaplan_meier.html">s_kaplan_meier()</a></code> range censoring indicator handling to no longer produce <code>NA</code> values in the output when either all subjects are censored or none are censored.</li>
 <li>Aligned <code><a href="../reference/a_freq_resp_var_j.html">a_freq_resp_var_j()</a></code> with <code><a href="../reference/a_freq_j.html">a_freq_j()</a></code> by adding <code>.formats</code> and <code>na_str</code> parameters to allow user customization of output formatting and NA string representation (<a href="https://github.com/johnsonandjohnson/junco/issues/67" class="external-link">#67</a>).</li>
 <li>Fixed the hanging indent in the first column of the body of the table (<a href="https://github.com/johnsonandjohnson/junco/issues/138" class="external-link">#138</a>)</li>
@@ -209,7 +213,7 @@
 <h3 id="id_014---minor-hotfix-release-0-1-7009">
 <a href="https://github.com/johnsonandjohnson/junco/releases/tag/0.1.4" class="external-link">0.1.4</a> - 2026-02-02 (minor hotfix release)<a class="anchor" aria-label="anchor" href="#id_014---minor-hotfix-release-0-1-7009"></a></h3>
 <div class="section level4">
-<h4 id="fixed-0-1-7009-2">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-7009-2"></a></h4>
+<h4 id="fixed-0-1-7009-3">Fixed<a class="anchor" aria-label="anchor" href="#fixed-0-1-7009-3"></a></h4>
 <ul><li>“caption” paragraph style in the docx exporter is now handled by flextable (<a href="https://github.com/johnsonandjohnson/junco/issues/182" class="external-link">#182</a>)</li>
 <li>Fixed <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code>, when exporting an empty listing do not lose Title and Footers</li>
 <li>Fixed <code><a href="../reference/tt_to_tlgrtf.html">tt_to_tlgrtf()</a></code> argument <code>label_width_ins</code> which was not applying the change in the row label column width (<a href="https://github.com/johnsonandjohnson/junco/issues/166" class="external-link">#166</a>).</li>
