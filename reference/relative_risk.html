@@ -155,7 +155,9 @@ before constructing the response, group, strata, and contingency table.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
 
 <ul><li><p><code>a_relative_risk()</code> returns the corresponding list with formatted <code><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/CellValue.html" class="external-link">rtables::CellValue()</a></code>.</p></li>
-</ul><ul><li><p><code>s_relative_risk()</code> returns a named list of elements <code>rel_risk_ci</code> and <code>pval</code>.</p></li>
+</ul><ul><li><p><code>s_relative_risk()</code> returns a named list of elements <code>rel_risk_ci</code> and <code>pval</code>.
+Both are empty numeric vectors for the reference column (or when
+<code>.in_ref_col</code> is <code>NULL</code>), so they then display as blank.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -200,10 +202,10 @@ junco specific <code>ref_path</code> and <code>.spl_context</code> arguments are
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/rtables/latest-tag/reference/build_table.html" class="external-link">build_table</a></span><span class="op">(</span><span class="va">l</span>, df <span class="op">=</span> <span class="va">dta</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    A            B </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ——————————————————————————————————————————————————</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Relative risk (90% CI)   1.40 (1.00 - 1.97)   NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value                        0.109          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    A            B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> —————————————————————————————————————————————————</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Relative risk (90% CI)   1.40 (1.00 - 1.97)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value                        0.109           </span>
 <span class="r-in"><span><span class="va">nex</span> <span class="op">&lt;-</span> <span class="fl">100</span></span></span>
 <span class="r-in"><span><span class="va">dta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"rsp"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="va">nex</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span></span>

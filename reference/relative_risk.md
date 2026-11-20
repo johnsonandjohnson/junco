@@ -126,7 +126,8 @@ s_relative_risk(
 &nbsp;
 
 - `s_relative_risk()` returns a named list of elements `rel_risk_ci` and
-  `pval`.
+  `pval`. Both are empty numeric vectors for the reference column (or
+  when `.in_ref_col` is `NULL`), so they then display as blank.
 
 ## Details
 
@@ -171,10 +172,10 @@ l <- basic_table() |>
   )
 
 build_table(l, df = dta)
-#>                                    A            B 
-#> ——————————————————————————————————————————————————
-#>   Relative risk (90% CI)   1.40 (1.00 - 1.97)   NA
-#>   p-value                        0.109          NA
+#>                                    A            B
+#> —————————————————————————————————————————————————
+#>   Relative risk (90% CI)   1.40 (1.00 - 1.97)    
+#>   p-value                        0.109           
 nex <- 100
 dta <- data.frame(
   "rsp" = sample(c(TRUE, FALSE), nex, TRUE),
