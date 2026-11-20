@@ -7,11 +7,11 @@ Because we cannot rebuild and redeploy new package versions onto old containes, 
 ## Phase 1: The Mainline Fix
 **1. PM Approval:** A critical bug is identified in production. The Project Manager (PM) formally decides that a hotfix is necessary.
 
-**2. Mainline PR & Regression Testing:** The developer fixes the bug in the current `dev` branch via a standard Pull Request. 
+**2. Mainline PR & Regression Testing:** The developer fixes the bug in the current `main` branch via a standard Pull Request. 
 > **What is a Regression Test?** > When you fix a bug, you must add a specific unit test that proves the bug is fixed.
 > This is called a regression test because it ensures the codebase never "regresses" back to having this specific bug in the future.
 
-In summary, your PR to 'dev' should look like this: https://github.com/johnsonandjohnson/junco/pull/375/changes
+In summary, your PR to 'main' should look like this: https://github.com/johnsonandjohnson/junco/pull/375/changes
 It should contain:
   - your fix in the `R/` folder
   - any unit tests / regression tests.
