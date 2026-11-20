@@ -42,6 +42,8 @@ NULL
 #'
 #' @return
 #' * `s_relative_risk()` returns a named list of elements `rel_risk_ci` and `pval`.
+#'   Both are empty numeric vectors for the reference column (or when
+#'   `.in_ref_col` is `NULL`), so they then display as blank.
 #'
 #' @examples
 #' nex <- 100
@@ -79,8 +81,8 @@ s_relative_risk <- function(
 
   y <- if (is.null(.in_ref_col) || .in_ref_col) {
     list(
-      rel_risk_ci = c(est = NA_real_, lcl = NA_real_, ucl = NA_real_),
-      pval = NA_real_
+      rel_risk_ci = numeric(),
+      pval = numeric()
     )
   } else {
     prepared <- tern::h_prepare_rsp_table(
