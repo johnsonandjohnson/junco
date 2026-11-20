@@ -466,10 +466,10 @@ test_that("s_relative_risk supports unstratified Wald methods", {
     reference <- s_relative_risk(df = ref, .var = "rsp", .ref_group = ref, .in_ref_col = TRUE, method = method)
     expect_equal(
       reference$rel_risk_ci,
-      c(est = NA_real_, lcl = NA_real_, ucl = NA_real_),
+      numeric(),
       ignore_attr = TRUE
     )
-    expect_equal(reference$pval, NA_real_)
+    expect_equal(reference$pval, numeric())
   }
   expect_error(
     s_relative_risk(df = trt, .var = "rsp", .ref_group = ref, .in_ref_col = FALSE),
@@ -556,5 +556,38 @@ test_that("prop_ratio_cmh handles groups without responders directly", {
     result <- expect_silent(prop_ratio_cmh(tbl = tbl))
     expect_equal(result$rel_risk_ci, c(est = NA_real_, lcl = 0, ucl = Inf))
     expect_equal(result$pval, safe_mh_test(tbl, correct = FALSE)$p.value)
+  }
+})
+
+test_that("relative risk leaves reference cells empty and preserves treatment NAs", {
+  dat <- data.frame(
+    rsp = c(rep(TRUE, 10), rep(FALSE, 30)),
+    arm = factor(rep(c("ref", "trt"), each = 20))
+  )
+  for (in_ref_col in list(TRUE, NULL)) {
+    result <- s_relative_risk(dat, "rsp", .in_ref_col = in_ref_col)
+    expect_length(result$rel_risk_ci, 0L)
+    expect_identical(result$pval, numeric())
+  }
+  # Include spanning headers to exercise a nested reference path.
+  dat$span <- factor(ifelse(dat$arm == "ref", "Control", "Active"))
+  for (method in c("cmh", "wald", "waldcc")) {
+    dat$stratum <- factor("one")
+    lyt <- basic_table() |>
+      split_cols_by("span") |>
+      split_cols_by("arm", split_fun = drop_split_levels) |>
+      analyze("rsp", afun = a_relative_risk, extra_args = list(
+        ref_path = c("span", "Control", "arm", "ref"),
+        method = method,
+        variables = list(strata = "stratum")
+      ))
+    result <- build_table(lyt, dat)
+    strings <- tail(matrix_form(result)$strings, 2L)
+    # Active sorts before Control; both reference statistics must be blank.
+    expect_true(all(strings[, 3] == ""))
+    if (method == "wald") {
+      expect_match(strings[1, 2], "NA", fixed = TRUE)
+      expect_identical(unname(strings[2, 2]), "NA")
+    }
   }
 })
