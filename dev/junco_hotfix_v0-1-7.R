@@ -62,4 +62,4 @@ a_maxlev <- function(df,
     .formats = jjcsformat_count_fraction,
     .format_na_strs = "-"
   )
-} #### TODO: hotfix #539 
+}
