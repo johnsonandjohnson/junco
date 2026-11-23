@@ -30,6 +30,24 @@ This log tracks surgical hotfixes applied to legacy `junco` versions (e.g., v0.1
 
 ---
 
+## Hotfix #538 - 2026-11-23
+**Author:** Technology Solutions  
+**Target Legacy Version(s):** v0.1.7  
+
+### The Bug
+* **Impact:** Previously, when $N_{row} == 0$, the function returned `NA`, which was rendered as "-" via .format_na_strs. This caused treatment groups that had subjects present in `alt_counts_df` but no events in the analysis dataset to be displayed as missing rather than showing zero events.  
+* **Root Cause:** The count/formatting helper returned `NA` for empty rows instead of returning zero when a valid denominator was available.
+
+### Surgical Changes
+* **Primary Function(s) Fixed:**
+    * Internal count/formatting helper used for row-level denominators:
+        * When a denominator is available and $N_{row} == 0$, return zero counts instead of `NA` so formatted output shows `0` (not `-`).
+
+### Testing & CI Notes
+* **Snapshot Changes:** None expected.  
+* **Tests Added:** Unit test covering groups present in `alt_counts_df` but absent from the analysis dataset to ensure zeros are returned and rendered correctly.
+
+
 ## Hotfixes #165, #178, #221 and #257 - 2026-04-20
 **Author:** Technology Solutions  
 **Target Legacy Version(s):** v0.1.3  
