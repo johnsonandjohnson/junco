@@ -2,7 +2,7 @@
 # Junco Hotfix Patch File
 # ==========================================
 # Summary of injected hotfixes:
-# - Hotfix #539 `a_maxlev()` a_maxlev() displays "-" instead of 0 when denominator exists but no records are presen (issue #538) (introduced in junco v0.1.7)
+# - Hotfix #539 `a_maxlev()` a_maxlev() displays "-" instead of 0 when denominator exists but no records are present (issue #538) (introduced in junco v0.1.7)
 # ==========================================
 
 # ==========================================
