@@ -162,6 +162,72 @@ test_that("a_maxlev produces correct numbers when any_level is active for custom
   expect_identical(res_act, res_exp)
 })
 
+test_that("a_maxlev produces 0 when N > 0 but no records in analysis dataset", {
+  sev_levels <- c("Mild", "Moderate", "Severe")
+  my_adae <- data.frame(
+    ID = c(1, 2),
+    TRT = factor(c("a", "a"), levels = c("a", "b")),
+    AESEV = ordered(c("Mild", "Severe"), levels = sev_levels)
+  )
+  my_adsl <- data.frame(
+    ID = c(1, 2, 3, 4),
+    TRT = factor(c("a", "a", "b", "b"), levels = c("a", "b"))
+  )
+
+  lyt <- basic_table() |>
+    split_cols_by("TRT") |>
+    analyze(
+      "AESEV",
+      afun = a_maxlev,
+      extra_args = list(id = "ID")
+    )
+
+  res <- expect_silent(build_table(lyt, my_adae, alt_counts_df = my_adsl))
+  res_act <- matrix_form(res)$string
+  res_exp <- structure(
+    c(
+      "", "Mild", "Moderate", "Severe",
+      "a", "1 (50.0%)", "0", "1 (50.0%)",
+      "b", "0", "0", "0"
+    ),
+    dim = c(4L, 3L)
+  )
+  expect_identical(res_act, res_exp)
+})
+
+test_that("a_maxlev produces '-' when N is 0 and no records in analysis dataset", {
+  sev_levels <- c("Mild", "Moderate", "Severe")
+  my_adae <- data.frame(
+    ID = c(1, 2),
+    TRT = factor(c("a", "a"), levels = c("a", "b")),
+    AESEV = ordered(c("Mild", "Severe"), levels = sev_levels)
+  )
+  my_adsl <- data.frame(
+    ID = c(1, 2),
+    TRT = factor(c("a", "a"), levels = c("a", "b"))
+  )
+
+  lyt <- basic_table() |>
+    split_cols_by("TRT") |>
+    analyze(
+      "AESEV",
+      afun = a_maxlev,
+      extra_args = list(id = "ID")
+    )
+
+  res <- expect_silent(build_table(lyt, my_adae, alt_counts_df = my_adsl))
+  res_act <- matrix_form(res)$string
+  res_exp <- structure(
+    c(
+      "", "Mild", "Moderate", "Severe",
+      "a", "1 (50.0%)", "0", "1 (50.0%)",
+      "b", "-", "-", "-"
+    ),
+    dim = c(4L, 3L)
+  )
+  expect_identical(res_act, res_exp)
+})
+
 test_that("a_maxlev throws an error for not ordered variable", {
   treatments <- factor(c("a", "b", "c"))
   ae_severities <- c("Missing", "MILD", "Moderate", "Severe")

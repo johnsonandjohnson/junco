@@ -8,7 +8,7 @@ on:
       - synchronize
       - reopened
       - ready_for_review
-    branches: [CRAN]
+    branches: [hotfix]
   workflow_call:
     secrets:
       REPO_GITHUB_TOKEN:
@@ -22,11 +22,12 @@ on:
           Select which workflow you'd like to run
         required: true
         type: choice
-        default: hotfix_v0-1-6
+        default: hotfix_v0-1-7
         options:
           - hotfix_v0-1-1
           - hotfix_v0-1-3
           - hotfix_v0-1-6
+          - hotfix_v0-1-7
 
 jobs:
   hotfix_v0-1-1:
@@ -38,3 +39,6 @@ jobs:
   hotfix_v0-1-6:
     name: hotfix v0.1.6
     uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-6.yaml@dev
+  hotfix_v0-1-7:
+     name: hotfix v0.1.7
+     uses: johnsonandjohnson/actions/.github/workflows/hotfix_v0-1-7.yaml@dev
