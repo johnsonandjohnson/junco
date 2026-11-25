@@ -27,7 +27,7 @@ run_word_field_clean <- function(field, prop = NULL) {
 #' @importFrom officer to_wml
 #' @export
 to_wml.run_word_field_clean <- function(x, add_ns = FALSE, ...) {
-  
+
   # if we are working with listings, we previously had added
   # the page numbers using officer::run_word_field()
   # the problem with this function is that it inserts in the XML
@@ -346,6 +346,7 @@ get_clean_WML <- function(flex_tbl_i, align = "center") {
 
   # The first w:jc under the generated w:tblPr is the table
   # justification. Cell paragraph justification follows later.
+  # nolint start
   wml <- stringi::stri_replace_first_regex(
     str = wml,
     pattern = paste0(
@@ -368,6 +369,7 @@ get_clean_WML <- function(flex_tbl_i, align = "center") {
     '<w:right w:w="0" w:type="dxa"/>',
     '</w:tblCellMar>'
   )
+  # nolint end
 
   # Insert into the table properties.
   wml <- stringi::stri_replace_first_fixed(
