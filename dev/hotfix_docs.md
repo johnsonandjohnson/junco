@@ -75,8 +75,32 @@ It should contain:
   - add description of the hotfix in `dev/hotfix_changelog.md`
   - if needed, update `.github/workflows/hotfix.yaml` (add new pipelines and remove old ones)
 
-## Phase 4: CI Validation
-**6. Trigger the Pipeline:** Push your `feature/hotfix-*` branch to GitHub. This automatically triggers the Hotfix CI Pipeline, which will virtually inject your code into the legacy package and run the old test suite.
+
+## Phase 4: CI Validation (updated)
+
+We have decoupled CI/CD into a separate Actions repository: https://github.com/johnsonandjohnson/actions (You need access to it).
+It default branch is dev !!!
+
+Before you can trigger the pipeline you must create a new workflow YAML inside the actions repo named for your version, for example:
+- `.github/workflows/hotfix_v0-1-7.yaml`
+
+Recommended steps:
+1. Copy the previous hotfix pipeline YAML into a new file named for the new version (e.g. `hotfix_v0-1-7.yaml`).
+2. Update the version references and any job names so they reflect the new hotfix version (e.g. change `0.1.6` → `0.1.7`).
+3. Update the R version used by the workflow to match the candidate version for the container. Example:
+   - `r: '4.6.0'`
+4. Update the RSPM (Posit package manager) URL to a date that will include the junco CRAN release binaries. Use CRAN snapshot date ≈ release date + 10 days to ensure needed binaries are available. Example:
+   - `RSPM: "https://packagemanager.posit.co/cran/2026-10-20/"`
+
+
+## Quick checklist before creating PR
+- [ ] Hotfix scripts contain header descriptions and TODO lines
+- [ ] `dev/hotfix_changelog.md` updated
+- [ ] New workflow YAML added to `actions` repo under `dev/.github/workflows/` (named with the new version)
+- [ ] R version and RSPM URL set appropriately in the new workflow
+- [ ] Push `feature/hotfix-*` branch to trigger the pipeline
+
+
 
 **7. Handle Snapshot Failures:** If the pipeline fails, check the logs. It is usually caused by snapshot mismatches in the unit tests (since your hotfix changed the math, formatting, or output). 
 * Evaluate: Are these snapshot changes expected due to your fix? 
@@ -101,7 +125,7 @@ It should contain:
 ###############################################################################
 ## Original Reporting Effort: Standards
 ## Program Name:              junco_hotfix.r
-## R version:                 4.5.2
+## R version:                 X.X.X
 ## Short Description:         junco package function hotfix changes
 ## Author:                    C&SP Methodology
 ## Date:                      TODAY'S DATE XXXXXXXXX
@@ -111,8 +135,8 @@ It should contain:
 
 rver <- getRversion()
 
-if(rver != "4.5.2"){
-  stop("This hotfix should only be run on the 2026q2_r452_1_0_0 container !")
+if(rver != "X.X.X"){
+  stop("This hotfix should only be run on the 202XqX_rXXX_1_0_0 container !")
 }
 
 library(junco)
