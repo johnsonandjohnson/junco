@@ -449,9 +449,10 @@ testthat::test_that("export_TLG_as_docx() works with pagination", {
   # open the files and check the XML
   doc <- officer::read_docx(paste0(output_dir, "/test1234part1of2.docx"))
   snapshot_test_docx(doc)
-  
+
   # check that the XML does not contain dirty="true"
-  l_nodes_dirty <- xml2::xml_find_all(doc$doc_obj$get(), ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
+  l_nodes_dirty <- xml2::xml_find_all(doc$doc_obj$get(),
+                                      ".//w:instrText[@w:dirty='true'] | .//w:fldChar[@w:dirty='true']")
   testthat::expect_equal(length(l_nodes_dirty), 0)
 
   file.remove(c(
