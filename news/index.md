@@ -29,6 +29,10 @@
   of deprecation
   ([\#374](https://github.com/johnsonandjohnson/junco/issues/374),
   [\#344](https://github.com/johnsonandjohnson/junco/issues/344)).
+- Improved
+  [`export_TLG_as_docx()`](https://johnsonandjohnson.github.io/junco/reference/export_TLG_as_docx.md)
+  runtime and addressed “memory allocation” error when exporting large
+  listings (e.g. 750+ pages)
 
 ### \[0.1.7\] - 2026-10-15 (CRAN release)
 
