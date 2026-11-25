@@ -55,7 +55,8 @@ Imports:
     officer (>= 0.7.5),
     xml2,
     ggplot2,
-    assertthat
+    assertthat,
+    stringi
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
